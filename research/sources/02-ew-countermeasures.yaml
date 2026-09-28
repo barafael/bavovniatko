@@ -1,0 +1,588 @@
+# Sources for research/02-ew-countermeasures.md
+# Topic 02: electronic warfare and the measure/countermeasure cycle
+# accessed 2026-09-28. Russian state media deliberately excluded.
+
+- id: rusi-2022-zabrodskyi-preliminary-lessons
+  title: "Preliminary Lessons in Conventional Warfighting from Russia's Invasion of Ukraine: February–July 2022"
+  url: https://static.rusi.org/359-SR-Ukraine-Preliminary-Lessons-Feb-July-2022-web-final.pdf
+  publisher: RUSI
+  authors: [Mykhaylo Zabrodskyi, Jack Watling, Oleksandr V Danylyuk, Nick Reynolds]
+  published: "2022-11-30"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [ew, uas, precision-fires]
+  notes: "Baseline for 2022: 90% of UAS employed are lost; EW is the primary counter-UAS means; precision weapons 'can be defeated by EW'; Russian EW rarely deconflicts, which causes fratricide. Co-written with a former Ukrainian commander, based on General Staff data."
+
+- id: rusi-2023-watling-meatgrinder
+  title: "Meatgrinder: Russian Tactics in the Second Year of Its Invasion of Ukraine"
+  url: https://static.rusi.org/403-SR-Russian-Tactics-web-final.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2023-05"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [ew, uas, russian-ew, comms-intercept]
+  notes: "Key Russian EW snapshot: about one major EW system per 10 km of front, sited about 7 km back; Ukrainian UAV losses about 10,000 a month; Shipovnik-Aero rated especially effective; platoon-level jammers; near real-time decryption of Motorola 256-bit radios; a proportion of GMLRS intercepted."
+
+- id: rusi-2023-watling-stormbreak
+  title: "Stormbreak: Fighting Through Russian Defences in Ukraine's 2023 Offensive"
+  url: https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2023-09"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [ew, uas, russian-ew, gnss]
+  notes: "UAV use was 'binary' on whether Russian EW was active. Russia lifted GPS jamming before its own aviation strikes. Russia now uses Zhitel more subtly, disperses antennas and treats Pole-21 as disposable because emitters get targeted. Russia hardened Shahed navigation. Note: the often-quoted '70% to 6% Excalibur' line is NOT in this report's text; the figure comes from the Washington Post, via kyivpost-2024-chiu-gps-weapons."
+
+- id: rusi-2024-watling-offensive-lessons
+  title: "Preliminary Lessons from Ukraine's Offensive Operations, 2022–23"
+  url: https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Oleksandr V Danylyuk, Nick Reynolds]
+  published: "2024-07"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22, e5-counteroffensive-23]
+  topics: [ew, precision-fires, software-updates]
+  notes: "Software-defined systems were critical but vulnerable to targeted EW. Russia 'developed hard counters' to Excalibur and GMLRS, so keeping an edge 'requires the ability to rapidly update systems in the field'. Fratricide in the electromagnetic spectrum was a major problem."
+
+- id: rusi-2025-watling-third-year
+  title: "Tactical Developments During the Third Year of the Russo–Ukrainian War"
+  url: https://static.rusi.org/tactical-developments-third-year-russo-ukrainian-war-february-2205.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2025-02"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk]
+  topics: [ew, uas, fiber-optic, interceptors, shahed, counter-uas]
+  notes: "Core 2024–25 numbers: 60–80% of Ukrainian FPVs fail to reach target; tactical UAVs cause 60–70% of damaged or destroyed Russian systems; fibre FPV range is about 10 km; Ukraine opens EW gaps with artillery or planned pauses in its own jamming; most vehicles carry jammers; 1,000–1,500 Russian Orlan/Zala orbits a day (Aug 2024); radar-cued interceptor UAVs; humans reach about 25% efficiency against UAS versus automated turrets."
+
+- id: kyivpost-2024-chiu-gps-weapons
+  title: "Analysis: Off Target – Are Kyiv's GPS-Aided Weapons Susceptible to Kremlin EW Jamming?"
+  url: https://www.kyivpost.com/analysis/33448
+  publisher: Kyiv Post
+  authors: [Leo Chiu, Christopher Stewart]
+  published: "2024-05-29"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [gnss, precision-fires, ew]
+  notes: "Relays the Washington Post's reporting on internal Ukrainian assessments: Excalibur hit rate fell from 55% (Jan 2023) to 6% (Aug 2023), based on about 3,000 shells; cost per successful strike rose from $300k to $1.9M; JDAM-ER (from Feb 2023) missed by 19 m to about 3/4 mile; HIMARS also degraded. It is a secondary source, but the figure is widely cited."
+
+- id: eurosd-2024-withington-excalibur
+  title: "Blunting Excalibur's edge"
+  url: https://euro-sd.com/2024/07/articles/39533/blunting-excaliburs-edge/
+  publisher: European Security & Defence
+  authors: [Thomas Withington]
+  published: "2024-07-31"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [gnss, precision-fires, ew]
+  notes: "Technical explainer on why GPS is easy to jam (a weak signal against Zhitel's 30 km jamming), and on the counters: P(Y) code, M-code, and JDAM home-on-jam (contract due Oct 2025). Trade journal with few battlefield numbers."
+
+- id: wikipedia-zhitel
+  title: "R-330Zh Zhitel"
+  url: https://en.wikipedia.org/wiki/R-330Zh_Zhitel
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut]
+  topics: [russian-ew, gnss]
+  notes: "For navigation. Zhitel jams satcom, GSM and GPS (100 MHz–2 GHz, about 30 km). JDAM error grows from about 5 m to about 30 m under jamming, and the US modified GMLRS software. Lists Ukrainian kills of Zhitel units (May 2022, Sep 2022 by TB2, Mar 2023 by Excalibur)."
+
+- id: wikipedia-bukovel
+  title: "Bukovel (counter unmanned aircraft system)"
+  url: https://en.wikipedia.org/wiki/Bukovel_(counter_unmanned_aircraft_system)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [ukrainian-ew, counter-uas]
+  notes: "Ukrainian Proximus Bukovel-AD, fielded since 2016: detects UAVs at up to 100 km, jams control links at 20 km, jams GNSS; used against Orlan-10. Navigation only; the figures are the maker's."
+
+- id: wikipedia-starlink-war
+  title: "Starlink in the Russo-Ukrainian war"
+  url: https://en.wikipedia.org/wiki/Starlink_in_the_Russo-Ukrainian_war
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e3-counteroffensives-22, e6-avdiivka-attrition, e9-counteroffensive-26]
+  topics: [starlink, comms]
+  notes: "Timeline: request and delivery on 26–28 Feb 2022; more than 5,000 terminals by 6 Apr 2022; 22,000 by Dec 2022; Crimea coverage refused in Sep 2022; GUR confirms smuggled Russian terminals in Feb 2024; claimed block in May 2024; whitelist in Feb 2026. The claim that the 2026 counteroffensive 'began in April' conflicts with the project's Feb 2026 framing."
+
+- id: aljazeera-2024-gur-starlink
+  title: "Ukraine intelligence 'confirms' Russian forces using Starlink"
+  url: https://www.aljazeera.com/news/2024/2/11/ukraine-intelligence-confirms-russian-forces-using-starlink
+  publisher: Al Jazeera
+  authors: []
+  published: "2024-02-11"
+  accessed: "2026-09-28"
+  type: news
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [starlink, russian-comms]
+  notes: "GUR (Andriy Yusov) says Russian use is 'beginning to take on a systemic nature'; cites the 83rd Air Assault Brigade near Klishchiivka and Andriivka; terminals sourced via third countries such as Dubai; SpaceX denies doing business with Russia."
+
+- id: kyivindependent-2026-myronyshena-starlink-whitelist
+  title: "Ukraine implementing Starlink registration to counter Russian use of US-produced terminals"
+  url: https://kyivindependent.com/ukraine-launches-verification-system-for-starlink-in-ukraine/
+  publisher: Kyiv Independent
+  authors: [Tania Myronyshena]
+  published: "2026-02-02"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [starlink, comms]
+  notes: "Cabinet resolution of 2 Feb 2026 creates a Starlink whitelist. Civilians register at administrative service centres, businesses via Diia, the military via DELTA. Fedorov calls it 'the only technical solution' against Russian use."
+
+- id: ukrinform-2026-liskovych-starlink-c2
+  title: "Russia Scrambles to Restore Connectivity as Starlink Restrictions Disrupt Battlefield C2"
+  url: https://www.ukrinform.net/rubric-ato/4090806-russia-scrambles-to-restore-connectivity-as-starlink-restrictions-disrupt-battlefield-c2.html
+  publisher: Ukrinform
+  authors: [Myroslav Liskovych]
+  published: "2026-02-13"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [starlink, russian-comms, adaptation]
+  notes: "The whitelist plus a 75–90 km/h speed cap (which blocks use on drones). Beskrestnov: Russia's 'entire C2 system has collapsed'. Workarounds: bribing Ukrainians to register terminals (from about 10,000 UAH), legacy radios, Rassvet satellites, mesh and fibre. Claims more than 50,000 terminals were smuggled. A state news agency relaying official claims."
+
+- id: atlanticcouncil-2026-spencer-starlink-crisis
+  title: "Russian army faces comms crisis amid Starlink cut and Kremlin crackdown"
+  url: https://www.atlanticcouncil.org/blogs/ukrainealert/russian-army-faces-comms-crisis-amid-starlink-cut-and-kremlin-crackdown/
+  publisher: Atlantic Council
+  authors: [Katherine Spencer, Marc Goedemans]
+  published: "2026-03-05"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [starlink, russian-comms]
+  notes: "Reports a 'sharp drop' in Russian bombardment and drone attacks, 12 Russians killed by friendly fire after a terminal failure (Zaporizhzhia), and more than 200 km2 liberated within 5 days, matching Russia's December gains. Also covers the Telegram throttling. A blog that relays Ukrainian claims."
+
+- id: kyivindependent-2025-farrell-fiber-optic
+  title: "As Russia's fiber optic drones flood the battlefield, Ukraine is racing to catch up"
+  url: https://kyivindependent.com/as-russias-fiber-optic-drones-flood-the-battlefield-ukraine-is-racing-to-catch-up/
+  publisher: Kyiv Independent
+  authors: [Francis Farrell]
+  published: "2025-05-20"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [fiber-optic, uas, adaptation]
+  notes: "The KVN fibre FPV first appeared in Kursk in Aug 2024 (Ushkuinik accelerator). Range 10–15 km, with 20 km spools in test. Rubicon and Sudny Den moved to Donetsk. Ukraine's Silkworm spool appeared in Feb 2025, but only about 1 in 10 Ukrainian drone teams used fibre (May 2025). Nets are breached from below."
+
+- id: atlanticcouncil-2026-sutea-fiber-optic
+  title: "Fiber-optic drones have emerged as critical kit for both Russia and Ukraine"
+  url: https://www.atlanticcouncil.org/blogs/ukrainealert/fiber-optics-drones-have-emerged-as-critical-kit-for-both-russia-and-ukraine/
+  publisher: Atlantic Council
+  authors: [Vlad Sutea]
+  published: "2026-02-24"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [fiber-optic, counter-uas]
+  notes: "Retrospective: fibre drones ranging beyond 30 km, with Birds of Magyar reaching about 40 km. Claims Ukraine lost 25% more vehicles than Russia in Kursk. By mid-2025, more than 80 Ukrainian fibre systems were approved. Counters: shotguns, barriers, radar tripwires, acoustic sensors, AI detection. The author works for a VC firm."
+
+- id: united24-2025-barkhush-fiber-counters
+  title: "How Ukraine is Adapting to the Threat of Fiber-Optic Drones: Countermeasures and Tactics"
+  url: https://united24media.com/war-in-ukraine/can-fiber-optic-drones-be-stopped-how-ukraine-faces-the-unjammable-threat-12502
+  publisher: United24 Media
+  authors: [Amira Barkhush]
+  published: "2025-10-15"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [fiber-optic, counter-uas, passive-defence]
+  notes: "Ground-level counters from units (93rd Brigade; 21st Unmanned Systems Regiment): nets, which burn, melt and hide 'waiting' drones; heated tungsten wire that snaps fibre; shotgun teams; net guns; switching logistics to daytime and foot movement; varied routes. Government-run outlet."
+
+- id: euromaidan-2025-murdoch-net-tunnels
+  title: "Zaporizhzhia building anti-drone tunnels over roads to protect civilians and logistics"
+  url: https://euromaidanpress.com/2025/09/19/zaporizhzhia-building-anti-drone-tunnels-over-roads-to-protect-civilians-and-logistics/
+  publisher: Euromaidan Press
+  authors: [Benjamin Murdoch]
+  published: "2025-09-19"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [passive-defence, fiber-optic]
+  notes: "Zaporizhzhia oblast: first 6.4 km test tunnel, with plans for tens and then hundreds of km. Fibre FPVs threaten roads 25–30 km from the front. Governor Ivan Fedorov calls nets 'the only effective way' to protect people."
+
+- id: defenseexpress-2025-russian-net-tunnels
+  title: "Radical Solution: russian Forces Deploy Entire Anti-Drone Tunnels in Ukraine"
+  url: https://en.defence-ua.com/weapon_and_tech/radical_solution_russian_forces_deploy_entire_anti_drone_tunnels_in_ukraine-13487.html
+  publisher: Defense Express
+  authors: []
+  published: "2025-02-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [passive-defence, russian-adaptation]
+  notes: "Russian 3rd Army Corps sappers netted about 2 km of road between Bakhmut and Chasiv Yar against Ukrainian FPVs and bombers. Shows Russia adopting the same passive counter; its value is making Ukraine spend more drones per kill."
+
+- id: kyivpost-2024-turtle-tanks
+  title: "From Sublime to Ridiculous – Russia's T-80 'Super Turtle Tank'"
+  url: https://www.kyivpost.com/post/37897
+  publisher: Kyiv Post
+  authors: []
+  published: "2024-08-25"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk]
+  topics: [passive-defence, cope-cage, russian-adaptation]
+  notes: "Dated passive-armour chain: improvised cope cages from mid-2023, then factory cages, then 'turtle' boxes plus jammers from early Apr 2024, then a T-80 'super turtle' with 8 mm steel in Aug 2024. Trade-off: loss of visibility, mobility and gun traverse."
+
+- id: defenseexpress-2025-kometa-m-16
+  title: "Kometa-M Navigation Unit With 16 Antennas Found in russian Iskander-K: What It Means"
+  url: https://en.defence-ua.com/weapon_and_tech/kometa_m_navigation_unit_with_16_antennas_found_in_russian_iskander_k_what_it_means-14876.html
+  publisher: Defense Express
+  authors: []
+  published: "2025-06-17"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [gnss, crpa, shahed, russian-adaptation]
+  notes: "The Kometa-M ladder: 4 elements (R-500, since 2022), then 12 (UMPK, Apr 2025), then 16 (Iskander-K and Shahed, from Mar 2025). In theory you need as many jammers as the antenna has elements. The CRPA arms race in one page."
+
+- id: united24-2025-khomenko-kometa-umpk
+  title: "Russia Equips Glide Bombs With 12-Channel 'Kometa' Antennas to Counter Ukrainian Jamming"
+  url: https://united24media.com/latest-news/russia-equips-glide-bombs-with-12-channel-kometa-antennas-to-counter-ukrainian-jamming-7653
+  publisher: United24 Media
+  authors: [Ivan Khomenko]
+  published: "2025-04-16"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [gnss, crpa, kab, russian-adaptation]
+  notes: "Citing Militarnyi: new UMPK kits with 12-channel Kometa from Apr 2025; 12-element CRPA seen earlier on Shahed-136 and a 16-channel Chinese variant in Jan 2025. INS fallback degrades accuracy over time. Ukraine's Lima is the counter."
+
+- id: kyivpost-2026-lima
+  title: "Ukraine's €58,000 Lima System Jams 20,000+ Russian Drones, Spoofs Missiles – Politico Report"
+  url: https://www.kyivpost.com/post/76818
+  publisher: Kyiv Post
+  authors: []
+  published: "2026-05-25"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [gnss, spoofing, ukrainian-ew, shahed]
+  notes: "Relays Politico. Lima (Cascade Systems) is a GNSS jamming and spoofing system: deployed from Jul 2024, more than 400 systems, a claimed 20,500+ Shaheds jammed and dozens of missiles misdirected; about 2 km of drift per 100 km without GNSS; up to 3M UAH per unit. These are maker claims."
+
+- id: euromaidan-2024-martyniuk-ew-backpacks
+  title: "The EW backpack revolution: How Ukrainian portable tech jams Russian drones"
+  url: https://euromaidanpress.com/2024/05/17/the-ew-backpack-revolution-how-ukrainian-portable-tech-jams-russian-drones/
+  publisher: Euromaidan Press
+  authors: [Yevheniia Martyniuk]
+  published: "2024-05-17"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [ukrainian-ew, frequency-shift, counter-uas]
+  notes: "Republished from Ekonomichna Pravda. Kvertus backpack ($7k, 720–1050 MHz, 2 h); Obrii ANTIFPV ($1.4k, 200 m); Pluton detector (70 km). Russian FPVs moved from 850–930 MHz to 720–1020 MHz and mix bands, while 65–70% still used standard bands. Kvertus output grew from dozens a month (2022) to thousands (2024)."
+
+- id: defensepost-2025-encarnacion-atlas
+  title: "Ukraine Unveils New System That Links 'Thousands' of EW Units Against Drones"
+  url: https://thedefensepost.com/2025/07/10/ukraine-system-ew-drones/
+  publisher: The Defense Post
+  authors: [Ethan M. Encarnacion]
+  published: "2025-07-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ukrainian-ew, networked-ew]
+  notes: "Kvertus Atlas networks thousands of jamming and detection nodes into one real-time picture with automated responses; in National Guard service. Marks the shift from standalone jammers to networked EW. Mostly maker claims."
+
+- id: united24-2026-brizard-detectors
+  title: "What Are the ZORKO and Chuika Drone Detectors Revolutionizing Ukraine's Defense?"
+  url: https://united24media.com/war-in-ukraine/with-this-ukrainian-tech-you-can-spy-on-russian-drones-15687
+  publisher: United24 Media
+  authors: [Lucile Brizard]
+  published: "2026-02-06"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [detectors, counter-uas, frequency-shift]
+  notes: "Chuika 3.0 (BlueBird, Brave1) reads analogue FPV video at 900–1680, 3060–3700 and 4990–6000 MHz, out to about 4 km. ZORKO (Stinex) covers 1.2, 3.3 and 5.8 GHz. BlueBird says Russians 'frequently shift to custom or non-standard frequencies', which forces monthly hardware updates."
+
+- id: pravda-2025-fpv-ew-shield
+  title: "A shield against FPV drones: is Ukraine's electronic warfare capability matching drone advancements?"
+  url: https://www.pravda.com.ua/eng/articles/2025/08/08/7525279/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2025-08-08"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: search-only
+  eras: [e8-drone-kill-zone]
+  topics: [frequency-shift, ukrainian-ew, adaptation]
+  notes: "Fetch blocked (403); content confirmed only from the search snippet. Per Beskrestnov, on one sector 20% of drones use 400–490 MHz, 30% use 720–1020 MHz and the rest 2.1–2.3 GHz. Some drones hop frequency and have auto-target lock. New variants appear 'every month and every week'."
+
+- id: euromaidan-2026-mukhina-molniya
+  title: "Ukraine's prominent drone expert 'Flash': Russia's cheap Molniya drones fly too low for radar and hop frequencies too fast for standard jamming"
+  url: https://euromaidanpress.com/2026/04/25/ukraines-prominent-drone-expert-flash-russias-cheap-molniya-drones-fly-too-low-for-radar-and-hop-frequencies-too-fast-for-standard-jamming/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-04-25"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [frequency-hopping, russian-adaptation, ukrainian-ew]
+  notes: "Beskrestnov (MoD adviser): Molniya fixed-wing drones use pseudo-random frequency hopping across 300–600 MHz with 5–10 W directional links, fly under radar and defeat broadband jamming. He calls for video-EW 'curtains' and a redesign of EW."
+
+- id: kyivpost-2025-orlova-tfl1
+  title: "'Fire and Forget': Ukraine Rolls Out FPV Drones With Autonomous Terminal Guidance"
+  url: https://www.kyivpost.com/post/60152
+  publisher: Kyiv Post
+  authors: [Alisa Orlova]
+  published: "2025-09-15"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [autonomy, machine-vision, uas]
+  notes: "The Fourth Law TFL-1 module flies the last about 500 m autonomously and goes into mass production with Vyriy (Vyriy-10-TFL-1 at about 18,500 UAH). The maker claims 2–4x strike effectiveness for about 10–20% extra cost. This is autonomy as the answer to last-mile jamming; the claims are the makers'."
+
+- id: militarnyi-2025-kushnikov-ew-hunter-fpv
+  title: "Ukraine Tests FPV Drone With System for Detecting EW Systems"
+  url: https://militarnyi.com/en/news/ukraine-tests-fpv-drone-with-system-for-detecting-ew-systems/
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2025-04-08"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [direction-finding, emit-and-die, uas]
+  notes: "An FPV with a 12-band emission receiver and directional antennas homes on Russian trench EW and then strikes it. Pairs with fibre-optic drones to 'break through' EW bubbles. A good example of 'emit and die' at the lowest echelon."
+
+- id: kse-2025-drone-innovations
+  title: "Harnessing Ukraine's Drone Innovations to Advance U.S. Capabilities"
+  url: https://kse.ua/wp-content/uploads/2025/11/KSE_Institute_Report_Harnessing_Ukraines_Drone_Innovations_to_Advance.pdf
+  publisher: KSE Institute
+  authors: []
+  published: "2025-11"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [interceptors, adaptation, autonomy, uas]
+  notes: "80–85% of frontline targets engaged by UAVs; at least 215,000 UAV strikes in summer 2025. The dev–combat test–modify cycle runs in 'months', with innovation cycles 'measured in weeks'. Interceptors grew from several hundred kills a month (Oct 2024) to more than 1,000 a month (summer 2025). First interceptor-drone Shahed kills in early 2025. Russia has fielded its own interceptors since mid-2025. An advocacy report for US policymakers."
+
+- id: militarnyi-2026-pryhodko-interceptors
+  title: "Interceptor Drones Downed Over 40% of Shahed UAVs During Massive May 24 Attack"
+  url: https://militarnyi.com/en/news/interceptor-drones-downed-over-40-of-shahed-uavs-during-massive-may-24-attack/
+  publisher: Militarnyi
+  authors: [Roman Pryhodko]
+  published: "2026-05-25"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [interceptors, shahed, air-defence]
+  notes: "Beskrestnov: more than 40% of Shaheds killed on 24 May 2026 fell to interceptor drones. Syrskyi: interceptors destroyed more than 1,500 targets (Feb 2026), more than 2,300 (Mar) and nearly 950 in one USF count (Apr, of which 670 were Shaheds). The monthly figures are official claims and use differing scopes."
+
+- id: isis-2026-anokhin-shahed-monthly
+  title: "Monthly Analysis of Russian Shahed 136 Deployment Against Ukraine (August 2025 - June 2026)"
+  url: https://isis-online.org/isis-reports/monthly-analysis-of-russian-shahed-136-deployment-against-ukraine
+  publisher: Institute for Science and International Security
+  authors: [Igor Anokhin]
+  published: "2026-07-07"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [shahed, interceptors, crpa, air-defence]
+  notes: "Data series built from Ukrainian Air Force figures. The hit rate fell to about 6.7% in May 2026 despite a record volume (8,161 UAVs). Interceptors flew about 6,300 sorties and killed more than 1,500 UAVs in Feb 2026, with more than 70% of Shaheds near Kyiv killed by interceptors. Jets were 0.5–1.5% of launches (May 2026). Also covers 16-element CRPA and low-altitude routing. Some table values extracted inconsistently, so use the prose figures."
+
+- id: united24-2026-place-jet-gerans
+  title: "Why Russia's New Jet-Powered Drones Are Harder to Stop"
+  url: https://united24media.com/war-in-ukraine/why-russias-new-jet-powered-drones-are-harder-to-stop-22666
+  publisher: United24 Media
+  authors: [Joseph Place]
+  published: "2026-09-21"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [shahed, jet-geran, interceptors, crpa]
+  notes: "Geran-3 (300–370 km/h), Geran-4 (about 500 km/h at 5,000 m), Geran-5 (450–600 km/h). HUR says Russia builds about 3,000 Geran-4/5 a month. Interception fell from 90%+ against piston drones to about 60% against jets. Counters: LITAVR+ and Sting 2.0."
+
+- id: euromaidan-2026-mukhina-jet-interceptors
+  title: "Combat shows speed alone can't catch Russia's jet-powered drones, despite eight Ukrainian makers' assurances. So why can't they stop them?"
+  url: https://euromaidanpress.com/2026/09/26/combat-shows-speed-alone-cant-catch-russias-jet-powered-drones-despite-eight-ukrainian-makers-assurances-so-why-cant-they-stop-them/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-09-26"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [jet-geran, interceptors, machine-vision]
+  notes: "Beskrestnov explains why the eight makers' 'ready' jet interceptors failed: no machine-vision auto-capture or terminal guidance, too little loiter fuel, and poor manoeuvrability. Jets fly 450–500 km/h and vary speed. A new interceptor has scored its first jet kills and is heading to mass production."
+
+- id: kyivindependent-2026-farrell-vivaldi
+  title: "Analysis: Through the fog of war, Ukraine reveals 'Operation Vivaldi' counterattack near Lyman"
+  url: https://kyivindependent.com/analysis-through-the-fog-of-war-ukraine-goes-on-operation-vivaldi-counterattack-near-lyman/
+  publisher: Kyiv Independent
+  authors: [Francis Farrell]
+  published: "2026-09-15"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [operations, uas]
+  notes: "3rd Army Corps (Biletskyi) near Lyman: 75 km2 cleared of infiltrators and 10 km2 liberated, including Serednie (with analysts suggesting 200+ km2). Run under 'maximum information silence'. Shows the small-team, drone-led method; gives few EW specifics."
+
+- id: mwi-2026-rose-vivaldi
+  title: "An Overture to Victory: Operation Vivaldi and Ukraine's Path to Battlefield Decision"
+  url: https://mwi.westpoint.edu/an-overture-to-victory-operation-vivaldi-and-ukraines-path-to-battlefield-decision/
+  publisher: Modern War Institute at West Point
+  authors: [Robert G. Rose]
+  published: "2026-09-24"
+  accessed: "2026-09-28"
+  type: academic
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [operations, drone-dominance, starlink, emit-and-die]
+  notes: "Commentary. Two USF brigades 'blind' Russian depth; the Rubicon unit was 'neutralised' via strikes on logistics, launch sites and operators; 81 air-defence systems were reportedly destroyed Mar–May 2026; drone strikes beyond 50 km rose 44x between Jan and Jun 2026. Relays Ukrainian claims."
+
+- id: euobserver-2026-vasilko-vivaldi
+  title: "First blind the Russians, then catch them with robots: Ukraine's Operation Vivaldi shows cutting edge of modern warfare"
+  url: https://euobserver.com/239734/first-blind-the-russians-then-catch-them-with-robots-ukraines-operation-vivaldi-shows-cutting-edge-of-modern-warfare-ukraine-battlefield-update-day-1674/
+  publisher: EUobserver
+  authors: [Tomáš Vasilko]
+  published: "2026-09-25"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [operations, ukrainian-ew, counter-uas]
+  notes: "The EW preparation for Vivaldi took nine months with 24/7 EW; one unit claims 150 Russian drones killed over a 5 km patch; strikes then deepened from 50 km to 120 km; robots cleared about 30 km of roads in 48 h. The 'blind first, then manoeuvre' sequence."
+
+- id: cnas-2024-pettyjohn-evolution
+  title: "Evolution Not Revolution: Drone Warfare in Russia's 2022 Invasion of Ukraine"
+  url: https://www.cnas.org/publications/reports/evolution-not-revolution
+  publisher: CNAS
+  authors: [Stacie Pettyjohn]
+  published: "2024-02-08"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [uas, ew, counter-uas]
+  notes: "Early-2024 Western framing: EW is 'the most effective way to stop drones'; counters range from wire nets to drone dogfights; operators are hunted with AeroScope-type drone tracking. Mostly qualitative."

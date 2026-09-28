@@ -1,0 +1,543 @@
+# Sources for research/00-timeline-eras.md
+# Accessed 2026-09-28. "verified: fetched" = page (or PDF) retrieved and read during research.
+# Wikipedia entries are used for navigation/chronology only (reliability medium).
+
+- id: kiel-ukraine-support-tracker
+  title: "Ukraine Support Tracker"
+  url: https://www.kielinstitut.de/topics/war-against-ukraine/ukraine-support-tracker
+  publisher: Kiel Institute for the World Economy
+  authors: []
+  published: "2026-08"
+  accessed: "2026-09-28"
+  type: dataset
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [aid, timeline, dataset]
+  notes: "Government-to-government military, financial and humanitarian aid database since Feb 2022 (41 countries plus EU institutions); latest release 13 Aug 2026 covering allocations to June 2026. Consistent methodology; excludes private and IMF/UN flows."
+
+- id: kiel-2026-trebesch-four-years
+  title: "Ukraine support after 4 years of war: Europe steps up"
+  url: https://www.kielinstitut.de/publications/news/ukraine-support-after-4-years-of-war-europe-steps-up/
+  publisher: Kiel Institute for the World Economy
+  authors: [Christoph Trebesch, Taro Nishikawa]
+  published: "2026-02-11"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [aid, timeline]
+  notes: "2025 review: European military aid up 67% vs 2022-24 average, but total military aid 13% below that average because US allocations stopped; EU institutions provide about 90% of financial aid. Key source for the US-to-Europe shift."
+
+- id: kiel-2026-nishikawa-h1-2026
+  title: "Ukraine Support Tracker: Europe leads on aid – US weapons remain key"
+  url: https://www.kielinstitut.de/publications/news/ukraine-support-tracker-europe-leads-on-aid-us-weapons-remain-key/
+  publisher: Kiel Institute for the World Economy
+  authors: [Taro Nishikawa, Federico Mellace]
+  published: "2026-08-13"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [aid, timeline]
+  notes: "Jan-Jun 2026 update: about EUR 11bn allocated by European institutions in May-Jun via the new EUR 90bn Ukraine Support Loan (2026-27); 30% of European military aid bought from US firms; over 90% of NATO PURL weapons come from US stocks; Patriot dependence."
+
+- id: deepstate-map
+  title: "DeepStateMAP (interactive frontline map)"
+  url: https://deepstatemap.live/en
+  publisher: DeepState
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: map
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [territory, map, dataset]
+  notes: "Ukrainian OSINT frontline map, updated continuously, and the standard Ukrainian reference for occupied area. Reliable for geometry, though it can lag or run conservative on marking losses. The page is JS-only, so pull the numbers from its periodic reports (see kyivindependent-2026-basmat-deepstate-2025)."
+
+- id: oryx-russian-equipment-losses
+  title: "Attack On Europe: Documenting Russian Equipment Losses During The Russian Invasion Of Ukraine"
+  url: https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html
+  publisher: Oryx
+  authors: []
+  published: "2022-02"
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [losses, equipment, dataset]
+  notes: "Counts only losses with photo or video evidence, so it is a lower bound. At fetch it listed 24,138 Russian items (19,105 destroyed), including 4,448 tanks. The best era-by-era equipment attrition baseline."
+
+- id: mediazona-2026-casualties-count
+  title: "Russian losses in the war with Ukraine. Mediazona count, updated"
+  url: https://en.zona.media/article/2026/09/21/casualties_eng-trl
+  publisher: Mediazona
+  authors: []
+  published: "2026-09-21"
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: other
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e3-counteroffensives-22, e4-bakhmut, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [casualties, manpower, russia]
+  notes: "Independent Russian exile outlet with BBC Russian: the named-dead count (a lower bound). Shows composition shifts: regulars/VDV (early 2022), prisoners the largest category by Mar 2023, volunteers the largest again from Sep 2024. 7,692 officers confirmed dead."
+
+- id: kyivpost-2026-korshak-confirmed-dead
+  title: "Confirmed Russian War Dead Top a Quarter Million"
+  url: https://www.kyivpost.com/post/85241
+  publisher: Kyiv Post
+  authors: [Stefan Korshak]
+  published: "2026-09-23"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [casualties, russia]
+  notes: "Secondary compilation of competing figures: Mediazona/BBC 258,980 named dead (to 22 Sep 2026); British intelligence about 1.5m casualties and about 500k killed; Ukrainian General Staff 1,520,880 'liquidated' (killed or seriously wounded)."
+
+- id: rusi-2022-zabrodskyi-preliminary-lessons
+  title: "Preliminary Lessons in Conventional Warfighting from Russia's Invasion of Ukraine: February–July 2022"
+  url: https://www.rusi.org/explore-our-research/publications/special-resources/preliminary-lessons-conventional-warfighting-russias-invasion-ukraine-february-july-2022
+  publisher: RUSI
+  authors: [Mykhaylo Zabrodskyi, Jack Watling, Oleksandr V Danylyuk, Nick Reynolds]
+  published: "2022-11-30"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [timeline, artillery, force-ratios]
+  notes: "Based on Ukrainian General Staff data. Gives a 12:1 Russian force ratio north of Kyiv, starting artillery inventories, a 10:1 Russian volume-of-fire edge by June 2022, and 90% UAS attrition. It is testimony, not an academic study."
+
+- id: rusi-2024-watling-offensive-lessons
+  title: "Preliminary Lessons from Ukraine's Offensive Operations, 2022–23"
+  url: https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Oleksandr V Danylyuk, Nick Reynolds]
+  published: "2024-07"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23]
+  topics: [timeline, counteroffensive, artillery, aid]
+  notes: "Written with the Ukrainian General Staff. Covers the Kherson and Kharkiv 2022 offensives, Wagner losses at Bakhmut (19,547 killed, 88% convicts), the 2023 plan (12 brigades, Tokmak in 7 days) against 105,000 Russian defenders, 70 vs 10 rounds/gun/day, about 7 GMLRS a day, Krynky, and late ATACMS/demining gear. Not impartial by its own admission."
+
+- id: rusi-2025-watling-third-year
+  title: "Tactical Developments During the Third Year of the Russo–Ukrainian War"
+  url: https://www.rusi.org/explore-our-research/publications/special-resources/tactical-developments-during-third-year-russo-ukrainian-war
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2025-02-14"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [tactics, drones, glide-bombs, manpower, russia]
+  notes: "Fieldwork Nov 2024-Jan 2025. Russia contracted 400k+ troops in 2024 and fielded about 580k in its operational group (70k plus about 10k DPRK in Kursk). UMPK output 40k (2024) rising to 70k (2025). Tactical UAVs cause 60-70% of Russian system losses; transparency within 3 km, observation to 15 km; fibre-optic FPVs appear. Full PDF: https://static.rusi.org/tactical-developments-third-year-russo-ukrainian-war-february-2205.pdf"
+
+- id: csis-2026-jones-10-charts
+  title: "Russia-Ukraine War in 10 Charts"
+  url: https://www.csis.org/analysis/russia-ukraine-war-10-charts
+  publisher: CSIS
+  authors: [Seth G. Jones, Riley McCabe, Yasir Atalan, Benjamin Jensen, Romina Bandura, Emma Curtis, Caitlin Welsh, Otto Svendsen, Max Bergmann, Mark F. Cancian, Chris H. Park]
+  published: "2026-02-24"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [casualties, territory, drones, aid]
+  notes: "Russia about 1.2m casualties (275-325k dead) vs Ukraine 500-600k (100-140k dead) to Dec 2025. Russian gains 3,604 km2 (2024) and 4,831 km2 (2025); about 70 m/day Avdiivka-Pokrovsk. Shahed launches about 75 to 900/week from Sep 2024, over 50,000 in 2025. US aid effectively ceased early 2025; PURL created Jul 2025."
+
+- id: csis-2026-bondar-shahed-geran
+  title: "From Shahed to Geran: How Russia Continues to Reinvent the One-Way Attack Drone"
+  url: https://www.csis.org/analysis/shahed-geran-how-russia-continues-reinvent-one-way-attack-drone
+  publisher: CSIS
+  authors: [Kateryna Bondar, Nicole Errera]
+  published: "2026-09-04"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22, e6-avdiivka-attrition, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [shahed, air-defence, russia]
+  notes: "Shahed/Geran lineage: first Iranian shipment mid-Aug 2022, first Ukrainian recovery 13 Sep 2022; interception 77% (Feb 2024) to 97% (May 2024); Geran-3 jet (Telefly JT80, about 300 mph) produced domestically by early 2025 and halted by Aug 2026 in favour of Geran-4/5. Lead author is Ukrainian-born."
+
+- id: kyivindependent-2026-basmat-deepstate-2025
+  title: "Russia captured over 4,300 square kilometers of Ukraine in 2025, DeepState reports"
+  url: https://kyivindependent.com/russia-captured-over-4-300-square-kilometers-of-ukraine-in-2025-deepstate-reports/
+  publisher: The Kyiv Independent
+  authors: [Dmytro Basmat]
+  published: "2026-01-02"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [territory]
+  notes: "DeepState year-end figure: 4,336 km2 (0.72% of Ukraine) taken by Russia in 2025; about 19% of Ukraine occupied overall; Donetsk 78% occupied; first Russian inroads into Dnipropetrovsk and Sumy oblasts."
+
+- id: kyivindependent-2026-farrell-vivaldi
+  title: "Analysis: Through the fog of war, Ukraine reveals 'Operation Vivaldi' counterattack near Lyman"
+  url: https://kyivindependent.com/analysis-through-the-fog-of-war-ukraine-goes-on-operation-vivaldi-counterattack-near-lyman/
+  publisher: The Kyiv Independent
+  authors: [Francis Farrell]
+  published: "2026-09-15"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [counteroffensive, timeline]
+  notes: "3rd Army Corps (Biletskyi) with 60th Mech and 3rd Assault brigades, about 2.5 months of counterattacks north of Lyman under information silence. Official claim 75 km2 cleared plus 10 km2 liberated; analysts suggest over 200 km2. Drone-led rather than mechanized."
+
+- id: euromaidanpress-2026-thomas-vivaldi
+  title: "Vivaldi erased Russia's Lyman pincer. Now Moscow is pushing toward Sloviansk instead"
+  url: https://euromaidanpress.com/2026/09/23/vivaldi-russia-shifts-south-lyman-mykolaivka/
+  publisher: Euromaidan Press
+  authors: [Daniel Thomas]
+  published: "2026-09-23"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [counteroffensive, territory]
+  notes: "Vivaldi phases 1-2: 125 km2 incl. 50 km2 previously occupied (3rd Corps claim, unverified), 3,000+ Russian losses claimed. Russia shifts to infiltrate Mykolaivka toward Sloviansk; Russian claim of Dobropillia encirclement (22 Sep) not supported by ISW."
+
+- id: united24-2026-litnarovych-starlink
+  title: "Ukrainian Forces Launch Counterattacks as Russian Starlink and Telegram Communications Falter"
+  url: https://united24media.com/latest-news/ukrainian-forces-launch-counterattacks-as-russian-starlink-and-telegram-communications-falter-15881
+  publisher: UNITED24 Media
+  authors: [Vlad Litnarovych]
+  published: "2026-02-12"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [starlink, c2, counteroffensive]
+  notes: "Russian Telegram restrictions from 9 Feb 2026 plus Starlink disruptions. Cites ISW that both together degraded Russian C2. Counterattacks near the Dnipropetrovsk-Zaporizhzhia boundary, around Dobropillia and northwest of Huliaipole. State-run Ukrainian outlet."
+
+- id: ukrinform-2026-liskovych-front-spring
+  title: "Pokrovsk and the Zaporizhzhia Bounce-Back: How the Front Is Shifting Into Spring"
+  url: https://www.ukrinform.net/rubric-ato/4094587-pokrovsk-and-the-zaporizhzhia-bounceback-how-the-front-is-shifting-into-spring.html
+  publisher: Ukrinform
+  authors: [Myroslav Liskovych]
+  published: "2026-02-23"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [territory, timeline, manpower]
+  notes: "State news agency. Pokrovsk/Myrnohrad largely lost and Ukrainian forces regrouped. Ukrainian advance up to 10 km on a ~45 km front on the Haichur. Russian gains fell from 130-150 km2/week (Jun-Jul 2025) to 33 km2/week (mid-Feb 2026). Russian losses estimated at 30-32k/month."
+
+- id: militarnyi-2026-jet-geran-interceptors
+  title: "Ukraine Tests Four Interceptors to Counter Jet-Powered Geran Drones"
+  url: https://militarnyi.com/en/news/ukraine-tests-four-interceptors-to-counter-jet-powered-geran-drones/
+  publisher: Militarnyi
+  authors: []
+  published: "2026-08"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [shahed, interceptors, air-defence]
+  notes: "Jet-powered Gerans: about 180 launched in all of 2025 vs about 1,400 by early June 2026; 15-20% of Shaheds launched in April 2026 had jet engines; Geran-4 cruises at 350-500 km/h; four new interceptor types in field tests."
+
+- id: kyivindependent-2025-hodunova-aid-resume
+  title: "US to 'immediately' resume security assistance, intelligence sharing to Ukraine"
+  url: https://kyivindependent.com/us-to-immediately-resume-security-assistance-intelligence-sharing-to-ukraine/
+  publisher: The Kyiv Independent
+  authors: [Kateryna Hodunova]
+  published: "2025-03-11"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aid, peace-talks]
+  notes: "The US pause on military aid and intelligence sharing that followed the 28 Feb 2025 Oval Office row was lifted after the Jeddah talks. Ukraine accepted a US 30-day ceasefire proposal conditional on Russian reciprocity."
+
+- id: kyivindependent-2024-court-f16
+  title: "Zelensky confirms F-16s already being used by Ukrainian Air Force"
+  url: https://kyivindependent.com/ukraine-received-f-16s/
+  publisher: The Kyiv Independent
+  authors: [Elsa Court]
+  published: "2024-08-04"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [aid, air-power]
+  notes: "First F-16s confirmed in Ukraine on 4 Aug 2024, with at least 79 pledged (NL, DK, NO, BE). The first batch was reportedly 6 (The Times) to 10 (The Economist) jets."
+
+- id: kyivindependent-2024-york-atacms-kursk
+  title: "ATACMS, Trump, and the increasing importance of Kursk Oblast for Ukraine"
+  url: https://kyivindependent.com/atacms-boost-for-ukraine-as-trump-inauguration-looms/
+  publisher: The Kyiv Independent
+  authors: [Chris York]
+  published: "2024-11-20"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [aid, kursk, north-korea]
+  notes: "US permission to use ATACMS inside Russia; first strike on 19 Nov 2024 (Karachev, Bryansk Oblast). Ukraine held ground around Sudzha against about 50k Russian troops including over 10k North Koreans (Zelensky, 11 Nov). Kursk as leverage before the Trump inauguration."
+
+- id: csmonitor-2026-weir-peace-talks
+  title: "As US pitches peace talks, Russia trusts in its military strategy"
+  url: https://www.csmonitor.com/World/Europe/2026/0926/russia-ukraine-peace-talks-donbas-europe-trump
+  publisher: The Christian Science Monitor
+  authors: [Fred Weir]
+  published: "2026-09-26"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [peace-talks]
+  notes: "Early Sep 2026: Witkoff and Kushner visited Moscow and Kyiv with a new plan, which Zelensky rejected (with German, French and UK representatives present). Russia's terms are all occupied land plus the rest of Donbas, neutrality and demilitarization. Moscow-based correspondent."
+
+- id: wikipedia-russo-ukrainian-war
+  title: "Russo-Ukrainian war"
+  url: https://en.wikipedia.org/wiki/Russo-Ukrainian_war
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [timeline, prelude]
+  notes: "Navigation hub for the 2014-2021 prelude (Crimea, Donbas, Ilovaisk, MH17, Minsk II, Debaltseve, about 14k killed) and headline 2022-24 dates (mobilization 21 Sep 2022, annexation 30 Sep 2022, Bakhmut May 2023, dam and Wagner mutiny Jun 2023). Weak on 2025-26."
+
+- id: wikipedia-2022-kharkiv-counteroffensive
+  title: "2022 Kharkiv counteroffensive"
+  url: https://en.wikipedia.org/wiki/2022_Kharkiv_counteroffensive
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [counteroffensive, territory]
+  notes: "Dates (6 Sep to 1 Oct 2022; Balakliia 8 Sep, Izium and Kupiansk 10 Sep, Lyman 1 Oct) and contested area: Ukraine claimed 12,000 km2 vs ISW about 2,500 km2 for the breakthrough phase."
+
+- id: wikipedia-2022-russian-mobilization
+  title: "2022 Russian mobilization"
+  url: https://en.wikipedia.org/wiki/2022_Russian_mobilization
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [manpower, russia]
+  notes: "Partial mobilization declared 21 Sep 2022 (300,000 target, announced complete 28 Oct) and the resulting exodus. Later coercive recruitment: raids, at least 20,000 Central Asians coerced, and year-round conscription from 2026."
+
+- id: wikipedia-battle-of-avdiivka
+  title: "Battle of Avdiivka (2023–2024)"
+  url: https://en.wikipedia.org/wiki/Battle_of_Avdiivka_(2023%E2%80%932024)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [battle, glide-bombs, artillery]
+  notes: "10 Oct 2023 to 17 Feb 2024. UK MoD reported 30-50 guided bombs a day by early Feb 2024 (about 600 in four weeks). Ukrainian troops reported 5:1 shell disadvantage (8-9:1 at worst), blamed on delayed US/EU aid."
+
+- id: wikipedia-2024-kharkiv-offensive
+  title: "2024 Kharkiv offensive"
+  url: https://en.wikipedia.org/wiki/2024_Kharkiv_offensive
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [battle, timeline]
+  notes: "Russian cross-border push from 10 May 2024 (Vovchansk, Lyptsi axes) stalled at about 10 km depth; Biden allowed US weapons against targets in Russia near Kharkiv on 30 May 2024."
+
+- id: wikipedia-2024-kursk-offensive
+  title: "2024 Kursk offensive"
+  url: https://en.wikipedia.org/wiki/2024_Kursk_offensive
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [kursk, north-korea, territory]
+  notes: "Start 6 Aug 2024; peak 1,250 km2 and 92 settlements claimed by Zelensky (19 Aug). DPRK troops from Nov 2024 (about 12k). DPRK casualty claims: Ukraine 4,500, South Korea 6,000, BBC 2,304 killed. Ukraine left Sudzha 12 Mar 2025."
+
+- id: wikipedia-north-korean-involvement
+  title: "North Korean involvement in the Russian invasion of Ukraine"
+  url: https://en.wikipedia.org/wiki/North_Korean_involvement_in_the_Russian_invasion_of_Ukraine
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [north-korea, ammunition, russia]
+  notes: "Contested shell figures: OSC about 4m shells (Sep 2023-Apr 2025) vs a reported 12m (CFR, by Jul 2025). Ukrainian intel says up to 50% of Russian 122/152 mm needs by end-2025; 148 KN-23/24 missiles by early 2025, a new batch of 50 reported Aug 2026. Troops: 11-12k initially, 16-22k in total."
+
+- id: wikipedia-operation-spiderweb
+  title: "Operation Spiderweb"
+  url: https://en.wikipedia.org/wiki/Operation_Spiderweb
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [deep-strike, drones]
+  notes: "SBU strike on 1 Jun 2025 with 117 FPVs launched from trucks against five airbases (up to 4,300 km away). Claims range from SBU 41 aircraft hit (at least 13 destroyed) to independent 12-13 destroyed and a US estimate of about 20 hit / 10 destroyed."
+
+- id: wikipedia-sting-drone
+  title: "Sting (drone)"
+  url: https://en.wikipedia.org/wiki/Sting_(drone)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [interceptors, shahed, air-defence]
+  notes: "Wild Hornets interceptor, first publicised kills Apr 2025, about USD 2,100 each, 10,000+/month by Mar 2026, 9,000+ Shaheds downed by Jun 2026. First interceptor to kill a Geran-3 (Dec 2025); said to account for 70% of jet-Shahed intercepts in Apr 2026."
+
+- id: wikipedia-2026-ukrainian-counteroffensive
+  title: "2026 Ukrainian counteroffensive"
+  url: https://en.wikipedia.org/wiki/2026_Ukrainian_counteroffensive
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [counteroffensive, starlink, territory]
+  notes: "SpaceX cut Russian frontline Starlink access at Ukraine's request on 5 Feb 2026; offensive began 11 Feb. Syrskyi claims: 400 km2 (late Feb), 470 (27 Mar), 600 (8 Jun), 745 km2 and 26 settlements (12 Aug). Phases: Feb-Apr, May-Jun, and Vivaldi near Lyman (about 240 km2)."
+
+- id: wikipedia-2025-alaska-summit
+  title: "2025 Russia–United States summit"
+  url: https://en.wikipedia.org/wiki/2025_Russia%E2%80%93United_States_summit
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [peace-talks]
+  notes: "Trump-Putin meeting in Anchorage, 15 Aug 2025, ended with no agreement because Putin demanded Donbas. Followed by the 18 Aug White House meeting with Zelensky and European leaders, Russia calling the Anchorage momentum exhausted (Oct 2025), and the 28-point US draft plan (reported 19 Nov 2025)."
+
+- id: wikipedia-2026-abu-dhabi-talks
+  title: "2026 United States–Ukraine–Russia meetings in Abu Dhabi"
+  url: https://en.wikipedia.org/wiki/2026_United_States%E2%80%93Ukraine%E2%80%93Russia_meetings_in_Abu_Dhabi
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [peace-talks]
+  notes: "Trilateral rounds on 23-24 Jan and 4-5 Feb 2026 (Witkoff/Kushner; Umerov/Budanov; Kostyukov/Dmitriev). Donbas cession was the main sticking point; outcome was a 314-person POW swap (5 Feb) and no ceasefire."
+
+- id: wikipedia-april-2026-truce
+  title: "April 2026 Russo-Ukrainian truce"
+  url: https://en.wikipedia.org/wiki/April_2026_Russo-Ukrainian_truce
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [peace-talks, ceasefire]
+  notes: "Orthodox Easter truce, 11-13 Apr 2026 (32 hours), proposed by Zelensky with the duration set by Putin. Ukraine logged 469 Russian violations (mostly drones), with a roughly 175-person POW swap beforehand; full fighting resumed on expiry."
+
+- id: wikipedia-peace-negotiations
+  title: "Peace negotiations in the Russo-Ukrainian war"
+  url: https://en.wikipedia.org/wiki/Peace_negotiations_in_the_Russo-Ukrainian_war
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [peace-talks]
+  notes: "Navigation hub. First talks were in Belarus on 28 Feb 2022, then on the Belarus border and in Antalya/Istanbul; they halted over disagreements and Bucha. Talks were renewed from Mar 2025 under Trump, and Zelensky has proposed an unconditional ceasefire since Mar 2025. Thin on 2025-26 detail."

@@ -1,0 +1,434 @@
+- id: deepstate-map-live
+  title: "DeepStateMAP | Map of the war in Ukraine"
+  url: https://deepstatemap.live/en
+  publisher: DeepState UA
+  authors: []
+  published: "2022-02-24"
+  accessed: "2026-09-28"
+  type: map
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, ui, deepstate, frontline]
+  notes: "The live JS map app. Its HTML reveals the stack (Leaflet, PixiJS overlay, Highcharts, fabric.js, leaflet.pattern) and meta text ('News of russia's war against Ukraine on the map'). Reliability is high because it is military-sourced and carefully verified, but it is openly pro-Ukrainian and lags 2-3 days by design."
+
+- id: deepstate-api-history
+  title: "DeepStateMap history endpoints (/api/history/public and /api/history/last)"
+  url: https://deepstatemap.live/api/history/public
+  publisher: DeepState UA
+  authors: []
+  published: "2022-04-03"
+  accessed: "2026-09-28"
+  type: dataset
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, data-access, deepstate, legend, colors]
+  notes: "Undocumented JSON used by the web app. /public lists 1,771 map versions (2022-04-03 to 2026-09-27) with UA/EN changelogs. /last is a GeoJSON FeatureCollection with stated fills (Occupied #a52714, Liberated #0f9d58, recent #0288d1, Unknown #bcaaa4, ORDLO/Crimea #880e4f, foreign #ff5252) and i18n keys. It is primary data, but there is no documented licence or API terms."
+
+- id: wikipedia-deepstatemap-live
+  title: "DeepStateMap.Live"
+  url: https://en.wikipedia.org/wiki/DeepStateMap.Live
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e3-counteroffensives-22, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [maps, deepstate, history, controversies]
+  notes: "Best single overview: founders, Feb 2020 Telegram origins, Google Maps block (Mar 2022), colour legend, layers, MoD memorandum (13 Mar 2024), apps, DeepStateMap 2.0, controversies (2023 complaints, Dobropillia 2025, Polymarket 2025). Medium reliability because it is a tertiary source whose dates need cross-checking."
+
+- id: kyivpost-2025-ashcroft-inside-deepstate
+  title: "Inside DeepState: the Secretive Map Tracking Russia's Deadly War With Ukraine"
+  url: https://www.kyivpost.com/post/57024
+  publisher: Kyiv Post
+  authors: [Lord Ashcroft]
+  published: "2025-07-27"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [maps, deepstate, methodology, opsec]
+  notes: "Profile with access to the founders: 100+ staff, secret Kyiv base, polygraph vetting, military as the main source, enemy-only positions, red/green/blue code, 800k+ Telegram subscribers, 70/30 domestic/foreign audience. Republished from Express, so it is a feature piece rather than an investigation."
+
+- id: kyivindependent-2025-farrell-front-line-mapping
+  title: "Where is Ukraine's front line? The answer is getting harder, and more political"
+  url: https://kyivindependent.com/the-blurred-front-line-of-ukraines-drone-dominated-battlefield-is-making-mapping-harder-and-more-political/
+  publisher: Kyiv Independent
+  authors: [Francis Farrell]
+  published: "2025-12-02"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [maps, grey-zone, deepstate, black-bird-group, uacontrolmap, liveuamap, politics]
+  notes: "Key piece on mapping in the infiltration era. The grey zone widened into a contact zone, the Dobropillia dispute with the General Staff, flag operations, the 2-3 day lag, and Black Bird's control definition (Kastehelmi). It also names ISW, Liveuamap and UAControlMap (clickable source links)."
+
+- id: onlineua-2026-deepstate-legend
+  title: "Ukraine War Map Online: DeepStateMap and Frontline Updates"
+  url: https://www.online.ua/en/interactive-map-of-the-war-in-ukraine-879033/
+  publisher: online.ua
+  authors: []
+  published: "2026-07-24"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [maps, deepstate, legend, grey-zone]
+  notes: "Ukrainian explainer of the DeepState legend and layers (FIRMS fires, artillery ranges, timeline compare). It reports the 2026 redefinition of grey as areas of Russian infiltration with intermixed positions. Medium reliability as an aggregator explainer; datePublished 2026-07-24 in page metadata."
+
+- id: kyivpost-2026-zavadska-deepstate-july
+  title: "Russia Captured More Territory Than Ukraine Reclaimed in July, DeepState Reports"
+  url: https://www.kyivpost.com/post/81621
+  publisher: Kyiv Post
+  authors: [Yuliia Zavadska]
+  published: "2026-08-03"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "DeepState monthly km2 figures. July 2026: Russia +36 km2 confirmed (possibly 88); Ukraine at least 49 + 83 km2 pending for OPSEC. May 2026: Russia about 130 vs Ukraine about 250 km2. Model for a statistics screen."
+
+- id: devua-2024-deepstate-makarivka
+  title: "Could the independent analytical project DeepState be closed? What is currently known about the situation and the possible pressure on the team"
+  url: https://dev.ua/en/news/deepstate-mozhe-zakrytys
+  publisher: dev.ua
+  authors: []
+  published: "2024-12-24"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [maps, deepstate, controversies, military-relations]
+  notes: "Makarivka encirclement dispute. DeepState warned on 17 Dec, Khortytsia denied it on 23 Dec, MP Bezuhla alleged pressure from Syrskyi, and AFU leadership denied any conflict. Quote: 'not all commanders-in-chief like the truth'. Medium reliability: tech-news outlet relaying claims."
+
+- id: github-cyterat-deepstate-map-data
+  title: "cyterat/deepstate-map-data: DeepState Map | Occupied | GeoJSON Multipolygon | Daily update"
+  url: https://github.com/cyterat/deepstate-map-data
+  publisher: GitHub (cyterat)
+  authors: [cyterat]
+  published: "2024-07-08"
+  accessed: "2026-09-28"
+  type: dataset
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, data-access, deepstate, geojson]
+  notes: "Community scraper (GPL-3.0 code) that pulls deepstatemap.live/api/history/last daily at 03:00 UTC. It merges Occupied, CADR and CALR, and Occupied Crimea into one multipolygon and keeps a gzip history since 2024-07-08. Medium reliability: derived and unofficial, and the data rights stay with DeepState."
+
+- id: isw-arcgis-control-of-terrain
+  title: "Assessed Control of Terrain in Ukraine (ISW ArcGIS web map)"
+  url: https://www.arcgis.com/apps/mapviewer/index.html?webmap=9f04944a2fe84edab9da31750c2b15eb
+  publisher: Institute for the Study of War
+  authors: [George Barros]
+  published: "2022-04-24"
+  accessed: "2026-09-28"
+  type: map
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, isw, legend, data-access, licensing]
+  notes: "Fetched through the ArcGIS REST item and data JSON (owner gbarros_understandingwar). Layers: Assessed Russian-Controlled Terrain, Assessed Russian Advances, Assessed Russian Infiltration Areas (service created 2025-12-20), Claimed Russian Territory, Claimed Ukrainian Counteroffensives, pre-2022 occupied, fortifications. Features are stamped pub_date 2026-09-27. Licence: exclusive ISW IP, written consent required. The same org hosts the partisan StoryMap and feature services and the embedding StoryMap (storymaps.arcgis.com/stories/36a7f6a6f5a9448496de641cf64bd375)."
+
+- id: isw-cta-roca-2026-09-26
+  title: "Russian Offensive Campaign Assessment, September 26, 2026"
+  url: https://www.criticalthreats.org/analysis/russian-offensive-campaign-assessment-september-26-2026
+  publisher: Institute for the Study of War and AEI Critical Threats Project
+  authors: []
+  published: "2026-09-26"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: search-only
+  eras: [e9-counteroffensive-26]
+  topics: [maps, isw, methodology]
+  notes: "Representative daily ROCA with static control-of-terrain maps. The page returned 403. Search excerpts from ROCAs give the methodology: public info only; the map shows the furthest assessed extent of Russian advances until evidence shows otherwise; this may underestimate Ukrainian advances; the front is porous."
+
+- id: blackbirdgroup-map
+  title: "Russo-Ukrainian War Map - Black Bird Group"
+  url: https://blackbirdgroup.fi/map/
+  publisher: Black Bird Group
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: map
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, legend, frontline]
+  notes: "Finnish OSINT NGO map. Legend: Russian-held territory, front line (RU side), front line (UA side), RU movements, UA movements. Explicitly follows the NATO 'red is the Russian adversary, blue is Ukrainian' convention. OpenFreeMap/OSM basemap. A public product for non-profit adaptations, with no formal licence."
+
+- id: acled-ukraine-conflict-monitor
+  title: "Ukraine Conflict Monitor"
+  url: https://acleddata.com/monitor/ukraine-conflict-monitor
+  publisher: ACLED
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, events, data-access]
+  notes: "Event map (scaled circles plus oblast choropleth), infrastructure tags, conservative civilian-fatality counts, weekly updates. The territorial layer comes from Black Bird Group, 'correct as of the most recent Friday'. Curated data needs registration."
+
+- id: acled-eula
+  title: "ACLED End User License Agreement"
+  url: https://acleddata.com/eula
+  publisher: ACLED
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: [licensing, data-access]
+  notes: "Primary licence text. A royalty-free, non-exclusive, non-transferable licence for non-commercial use; commercial businesses need a corporate licence and governments a public-sector licence; no raw-data redistribution; derivatives must be transformative; attribution is mandatory."
+
+- id: geoconfirmed-home
+  title: "GeoConfirmed - Open-Source Conflict Geolocation & Verification"
+  url: https://geoconfirmed.org/
+  publisher: GeoConfirmed
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, osint, geolocation, data-access]
+  notes: "Volunteer geolocation project. Each marker is a verified clip with sources and a public geolocation breakdown. It has a Ukraine map (2013-present), timeline playback, ORBAT trees, 77,859 events worldwide, and advertises a free, documented public API. Medium reliability: volunteer-run but transparent."
+
+- id: wikipedia-liveuamap
+  title: "Liveuamap"
+  url: https://en.wikipedia.org/wiki/Liveuamap
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [maps, events, liveuamap]
+  notes: "Liveuamap was founded on 18 Feb 2014 by Dnipro engineers Rodion Rozhkovskiy and Oleksandr Bilchenko. Algorithms correlate social-media posts and flag events for verification by at least two humans. The article has no icon or colour details, and liveuamap.com itself returned 403."
+
+- id: bbc-2022-ukraine-in-maps
+  title: "Ukraine in maps: Tracking the war with Russia"
+  url: https://www.bbc.com/news/world-europe-60506682
+  publisher: BBC News
+  authors: [Dominic Bailey, Mike Hills, Paul Sargeant, Chris Clayton, Kady Wardell, Camilla Costa, Mark Bryson, Sana Dionysiou, Gerry Fletcher, Kate Gaynor, Erwan Rivault]
+  published: "2022-02-24"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, visual-journalism, isw]
+  notes: "Fetched with curl because WebFetch is blocked for bbc.com. A long-running explainer, last updated Sep 2026. It states it uses ISW/CTP daily assessments for Russian control, and quotes ISW on about 4,700 km2 of Russian gains in 2025 against Russia's claimed 6,000 km2."
+
+- id: nyt-2022-ukraine-maps
+  title: "Maps: Tracking the Russian Invasion of Ukraine"
+  url: https://www.nytimes.com/interactive/2022/world/europe/ukraine-maps.html
+  publisher: The New York Times
+  authors: []
+  published: "2022"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: high
+  verified: search-only
+  eras: [e1-invasion]
+  topics: [maps, visual-journalism]
+  notes: "The NYT's long-running interactive front-line map. The URL and title were confirmed via a Wikipedia citation, but the page fetch was blocked, so its methodology and data sources were not verified."
+
+- id: wikipedia-nato-joint-military-symbology
+  title: "NATO Joint Military Symbology"
+  url: https://en.wikipedia.org/wiki/NATO_Joint_Military_Symbology
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [symbology, app-6, mil-std-2525, ui]
+  notes: "Overview of APP-6 editions and their equivalence to MIL-STD-2525. It covers affiliation frames and colours (friend blue rectangle, hostile red diamond, neutral green square, unknown yellow quatrefoil), solid vs dashed status, frame dimension variants, and the 15-character SIDC. Medium: the standards documents themselves were not fetched."
+
+- id: github-milsymbol
+  title: "milsymbol - Military Symbols in JavaScript"
+  url: https://github.com/spatialillusions/milsymbol
+  publisher: GitHub (spatialillusions)
+  authors: [Måns Beckman]
+  published: "2014-10-26"
+  accessed: "2026-09-28"
+  type: software
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: [symbology, software, licensing, renderer]
+  notes: "MIT-licensed JS renderer (latest v3.0.4, 2026-03-10) with SVG/Canvas output. Supports MIL-STD-2525C/D/E, FM 1-02.2 and APP-6 B/D/E, and both letter and numeric SIDCs. Since v3.0 it renders to 2525E/APP-6E style. Its source lists the echelons Team to Command. The best candidate for game symbology assets."
+
+- id: spatialillusions-battle-staff-tools
+  title: "Battle Staff Tools (unit generator)"
+  url: https://spatialillusions.com/unitgenerator/
+  publisher: Spatial Illusions
+  authors: [Måns Beckman]
+  published: "2025"
+  accessed: "2026-09-28"
+  type: software
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: [symbology, software, licensing]
+  notes: "Browser tool for MIL-STD-2525E/APP-6E and 2525C/APP-6B symbols, with amplifier fields, ORBAT building and PNG/SVG export. Copyright 2025 Måns Beckman. Free online with watermarks and donation prompts; offline use or use on other sites needs a paid licence file."
+
+- id: wikipedia-delta
+  title: "Delta (situational awareness system)"
+  url: https://en.wikipedia.org/wiki/Delta_(situational_awareness_system)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e3-counteroffensives-22, e4-bakhmut, e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [military-ui, delta, drones, ai]
+  notes: "Delta was built by the MoD innovation centre with Aerorozvidka. It was tested in 2017, became broadly operational in Aug 2022, and full deployment was approved on 4 Feb 2023. The article covers the Vezha video-stream module and Avengers AI (about 70% detection, 2.2 s, about 12k targets a week) shown at TIDE Sprint 2025 and the London Defence Conference 2025. Medium: tertiary and relies on MoD claims."
+
+- id: militarnyi-2022-delta-unveiled
+  title: "Ukraine unveiled its own Delta situational awareness system"
+  url: https://militarnyi.com/en/news/ukraine-unveiled-its-own-delta-situational-awareness-system/
+  publisher: Militarnyi
+  authors: []
+  published: "2022-10-27"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [military-ui, delta, nato]
+  notes: "Delta was presented at the NATO TIDE Sprint in Virginia Beach. It was built to NATO standards, runs on laptops, tablets and phones, integrates the eVorog and STOP Russian War chatbots, and grew out of TIDE Hackathon/Sprint/CWIX work since 2017. Ukrainian military outlet."
+
+- id: forbes-2022-hambling-kropyva
+  title: "How A Ukrainian Gunner Scored A Record-Breaking Tank-To-Tank Kill From 6 Miles Away"
+  url: https://www.forbes.com/sites/davidhambling/2022/09/01/how-ukrainian-gunner-scored-a-record-breaking-tank-to-tank-kill-from-six-miles-away/
+  publisher: Forbes
+  authors: [David Hambling]
+  published: "2022-09-01"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery, e3-counteroffensives-22]
+  topics: [military-ui, kropyva, artillery, drones]
+  notes: "Read via a Wayback Machine snapshot (web.archive.org/web/20240716225153) because Forbes returned 403. Kropyva is Army SOS's proprietary Android-tablet mapping and fire-mission software, drone-integrated and used from division down to single vehicles. Medium: contributor piece."
+
+- id: kyivpost-2026-korshak-epoints
+  title: "Ukraine Drone Troops Claim Big Russian Kill Scores, Announce Expansion Plans for 2026"
+  url: https://www.kyivpost.com/post/68951
+  publisher: Kyiv Post
+  authors: [Stefan Korshak]
+  published: "2026-01-28"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [military-ui, e-points, gamification, drones]
+  notes: "Army of Drones Bonus e-points price list (killed 12, wounded 8, drone operator 25, tank 40, MLRS 50, helicopter 100, POW 120). Video verification is required and the programme began in 2023. It also gives the 414th brigade's 2025 tallies and the 2026 production goals."
+
+- id: defensenews-2026-ruitenberg-epoints
+  title: "Ukraine says more than 80% of enemy targets now destroyed by drones"
+  url: https://www.defensenews.com/global/europe/2026/01/28/ukraine-says-more-than-80-of-enemy-targets-now-destroyed-by-drones/
+  publisher: Defense News
+  authors: [Rudy Ruitenberg]
+  published: "2026-01-28"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [military-ui, e-points, gamification, brave1]
+  notes: "Units spend e-points on drones, EW and other equipment in the Brave1 marketplace. 2025 totals: about 240k strikes on personnel, 62k light vehicles, 29k heavy, 32k UAVs."
+
+- id: united24-2026-petriv-army-of-drones
+  title: "Ukraine's drone army hit 820,000 Russian targets in 2025, defense minister says"
+  url: https://united24media.com/latest-news/ukraines-drone-army-hit-820000-russian-targets-in-2025-defense-minister-says-15351
+  publisher: United24 Media
+  authors: [Liubava Petriv]
+  published: "2026-01-26"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [military-ui, e-points, leaderboard, gamification]
+  notes: "Reports 819,737 verified strikes in 2025 and the top-10 unit leaderboard (414th 'Birds of Madyar' first). In 2026 e-points extend to air defence, army aviation and snipers, with range multipliers. Medium: a state media platform relaying official figures."
+
+- id: betaflight-osd-tab
+  title: "OSD Tab - Betaflight documentation"
+  url: https://betaflight.com/docs/wiki/app/osd-tab
+  publisher: Betaflight
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [ui, fpv, hud, drones]
+  notes: "Primary docs (source in the betaflight/betaflight.com GitHub repo). The OSD overlays telemetry on the FPV feed on a character grid (PAL 30x16, NTSC 30x13, HD 53x20), with timers, alarms, warnings, post-flight stats and uploadable fonts. It explains the look of FPV strike-footage HUDs."
+
+- id: warontherocks-2026-maurin-front-line
+  title: "The Strange Transformation of the Front Line in Ukraine"
+  url: https://warontherocks.com/the-strange-transformation-of-the-front-line-in-ukraine/
+  publisher: War on the Rocks
+  authors: [Édouard Maurin]
+  published: "2026-09-09"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, grey-zone, frontline]
+  notes: "Uses DeepState grey areas to show the contested zone near Kotlyne growing from about 1 km deep (Jan 2025) to 5-8 times wider, and argues a front 'thickened into a depth of 12 kilometers' is no longer the stake. An opinion piece by a French veteran."

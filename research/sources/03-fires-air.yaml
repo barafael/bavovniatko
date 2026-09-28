@@ -1,0 +1,497 @@
+# Sources for research/03-fires-air.md (fires and air: artillery, glide bombs, helicopters, aviation, missiles, air defence)
+# accessed 2026-09-28. verified: fetched = page or PDF retrieved and read; search-only = confirmed only via search results.
+
+- id: rusi-2022-zabrodskyi-preliminary-lessons
+  title: "Preliminary Lessons in Conventional Warfighting from Russia's Invasion of Ukraine: February-July 2022"
+  url: https://static.rusi.org/359-SR-Ukraine-Preliminary-Lessons-Feb-July-2022-web-final.pdf
+  publisher: RUSI
+  authors: [Mykhaylo Zabrodskyi, Jack Watling, Oleksandr V Danylyuk, Nick Reynolds]
+  published: "2022-11-30"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [fires, artillery, missiles, air-defence, aviation, sensor-to-shooter]
+  notes: "Co-written with Ukrainian General Staff officers. Core 2022 fires baseline: Russian ~20,000 rounds/day (peak >32,000) vs Ukrainian <=6,000; 12:1 in May-June; kill chain 3-5 min with organic UAV, 20-30 min via HQ, ~48 h operational; HIMARS/GMLRS ended the Donbas offensive; Iskander >200 strikes Feb-May 2022, 6 x 9M723 produced per month."
+
+- id: rusi-2022-bronk-russian-air-war
+  title: "The Russian Air War and Ukrainian Requirements for Air Defence"
+  url: https://www.rusi.org/explore-our-research/publications/special-resources/russian-air-war-and-ukrainian-requirements-air-defence
+  publisher: RUSI
+  authors: [Justin Bronk, Nick Reynolds, Jack Watling]
+  published: "2022-11-07"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e3-counteroffensives-22]
+  topics: [aviation, air-defence, shahed]
+  notes: "Why the VKS never won air superiority: from early March 2022 it could only operate at very low altitude over Ukrainian-held ground because mobile SAMs survived. Also covers the start of the Shahed-136 campaign on substations."
+
+- id: rusi-2023-watling-meatgrinder
+  title: "Meatgrinder: Russian Tactics in the Second Year of Its Invasion of Ukraine"
+  url: https://static.rusi.org/403-SR-Russian-Tactics-web-final.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2023-05-19"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut]
+  topics: [fires, artillery, glide-bombs, aviation, helicopters, sensor-to-shooter]
+  notes: "Russian 2022 expenditure ~12 million rounds (20,000-60,000/day); Q1 2023 12,000-38,000/day, 2023 trending to ~7 million; production ~2.5 million/yr (Ukrainian estimate). Kill chain 3-5 min from UAV, 20-30 min from EW detection; Krasnopol, Lancet counter-battery, Strelets; early FAB-500 glide kits to 70 km; S-8 lofting; ~40 long-range missiles/month."
+
+- id: rusi-2023-watling-stormbreak
+  title: "Stormbreak: Fighting Through Russian Defences in Ukraine's 2023 Offensive"
+  url: https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2023-09-04"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [fires, artillery, helicopters, sensor-to-shooter]
+  notes: "Ka-52 with Vikhr/Ataka as the leading aviation threat to the 2023 Zaporizhzhia offensive; strikes from 8-10 km; GPS jamming lifted before helicopter attacks. Ukrainian M777s had to displace 2-15 min after opening fire. Russia abandons the '720 rounds per platoon position' norm for Krasnopol and Lancet precision."
+
+- id: rusi-2025-watling-third-year
+  title: "Tactical Developments During the Third Year of the Russo-Ukrainian War"
+  url: https://static.rusi.org/tactical-developments-third-year-russo-ukrainian-war-february-2205.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2025-02"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [fires, artillery, drones, glide-bombs, air-defence, missiles]
+  notes: "Fieldwork Nov 2024-Jan 2025. Tactical UAVs account for 60-70% of damaged/destroyed Russian systems; artillery still needed and dispersed >500 m apart. UMPK production 40,000 (2024) to 70,000 ordered (2025), released 30-90 km out. Ukraine received ~1.6M (2023) and 1.5M (2024) 155mm shells. Russia planned >750 9M723 and >560 Kh-101 for 2025."
+
+- id: twz-2022-newdick-helicopter-lob
+  title: "Russian Attack Helicopters Are Now Wildly Lobbing Rockets Over Ukraine (Updated)"
+  url: https://www.twz.com/44803/russian-attack-helicopters-are-now-wildly-lobbing-rockets-over-ukraine
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2022-03-18"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [helicopters, fires]
+  notes: "Documents Ka-52 and Mi-28N pitch-up lob firing of unguided S-8 rockets to stay out of MANPADS range. Adds about 6-7 km of range at a large cost in accuracy. Cited by RUSI Meatgrinder. Specialist defence outlet that analyses footage."
+
+- id: stripes-2024-khurshudyan-jamming
+  title: "Russian jamming leaves some high-tech US weapons ineffective in Ukraine"
+  url: https://www.stripes.com/theaters/europe/2024-05-24/russian-jamming-high-tech-weapons-ukraine-13964032.html
+  publisher: Stars and Stripes (reprinting The Washington Post)
+  authors: [Isabelle Khurshudyan, Alex Horton]
+  published: "2024-05-24"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [fires, electronic-warfare, precision-munitions]
+  notes: "Based on internal Ukrainian assessments. Excalibur hit rate fell from >50% in early 2023 to 6-7% by summer 2023. GMLRS and JDAM-ER (from Feb 2023) degraded by jamming, while GBU-39 (from Nov 2023) kept ~90% hits. The key source on EW defeating GPS-guided fires."
+
+- id: liga-2025-shell-ratio
+  title: "Russians use 27,000 artillery shells every day - a year ago it was one and a half times more"
+  url: https://news.liga.net/en/politics/news/russians-use-27-000-artillery-shells-every-day-a-year-ago-it-was-one-and-a-half-times-more
+  publisher: LIGA.net
+  authors: [Tetiana Lanchukovska]
+  published: "2025-07-23"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [fires, artillery]
+  notes: "Relays official Ukrainian figures: Russia ~27,000 rounds/day (July 2025) vs >44,000 (Aug 2024, Syrskyi). Ukraine:Russia ratio 1:10 (Feb 2024), 1:3 (Aug 2024), 1:1.8 (July 2025). Official Ukrainian counts run far above Western open-source estimates."
+
+- id: militarnyi-2025-budanov-dprk-shells
+  title: "Budanov: North Korea Covers 40% of Russian Army's Need for Artillery Shells"
+  url: https://militarnyi.com/en/news/budanov-north-korea-covers-40-of-russian-army-s-need-for-artillery-shells/
+  publisher: Militarnyi
+  authors: [Roman Pryhodko]
+  published: "2025-07-12"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [fires, artillery, supply]
+  notes: "HUR chief Budanov, via Bloomberg: North Korea supplies about 40% of Russian artillery ammunition, plus Koksan 170mm SPGs, 240mm/KN-09 MRLs and ballistic missiles. Other estimates range up to 'half' (HUR earlier) or 12M shells in total (South Korea)."
+
+- id: kyivindependent-2025-czech-initiative
+  title: "Czech initiative to deliver up to 1.8 million shells to Ukraine in 2025, Pavel says"
+  url: https://kyivindependent.com/czech-initiative-to-deliver-up-to-1-8-million-shells-to-ukraine-pavel-says/
+  publisher: The Kyiv Independent
+  authors: [Ray Baseley, Dmytro Basmat]
+  published: "2025-05-04"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e8-drone-kill-zone]
+  topics: [fires, artillery, supply]
+  notes: "Czech initiative supplied 1.5M rounds in 2024 and up to 1.8M in 2025. President Pavel says it moved the shell ratio from 1:10 to 1:2. It was launched to cover the gap left by the US aid delay of early 2024."
+
+- id: kyivindependent-2025-taradiuk-kab-october
+  title: "'Air terror' - Russia drops record number of aerial guided bombs on Ukraine in October, Defense Ministry says"
+  url: https://kyivindependent.com/air-terror-russia-dropps-record-number-of-aerial-guided-bombs-on-ukraine-in-october-defense-ministry-says/
+  publisher: The Kyiv Independent
+  authors: [Yuliia Taradiuk]
+  published: "2025-11-04"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [glide-bombs]
+  notes: "Ukrainian MoD: over 5,328 KABs in October 2025, the 2025 monthly high. About 40,000 in Jan-Oct 2025, roughly equal to all of 2024. Main targets were Donetsk, Dnipropetrovsk and Zaporizhzhia oblasts and the city of Dnipro."
+
+- id: euromaidanpress-2025-mukhina-84000-kabs
+  title: "130 bombs per day: Russia drops 84,000 KABs on Ukraine in two years"
+  url: https://euromaidanpress.com/2025/12/02/russia-drops-84000-guided-bombs-on-ukraine-in-two-years/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2025-12-02"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [glide-bombs, air-defence]
+  notes: "Compiles MoD and General Staff data: ~40,000 KABs in 2024 (109/day) and ~44,000 in Jan-Nov 2025 (130/day), with ~3,500 in Nov 2025. Air Force SAM units destroyed up to 100 KABs in Sep-Nov 2025. An aggregator, so medium reliability."
+
+- id: pravda-2025-hur-glide-bomb-production
+  title: "Russia to produce 120,000 glide bombs and 70,000 drones this year - Ukraine's Defence Intelligence"
+  url: https://www.pravda.com.ua/eng/news/2025/11/15/8007390/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2025-11-15"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [glide-bombs, drones, production]
+  notes: "HUR deputy Skibitskyi (via Reuters): 120,000 glide bombs planned for 2025, 200-250 launched per day, ~500 extended-range (~200 km) bombs, and work towards 400 km. Also 70,000 long-range drones, 30,000 of them Shaheds. The 120,000 figure conflicts with RUSI's 70,000."
+
+- id: kyivpost-2026-korshak-glide-bombs
+  title: "Russian Aerospace Force Loves Its Glide Bombs That It Can Drop Pretty Much With Impunity"
+  url: https://www.kyivpost.com/post/81487
+  publisher: Kyiv Post
+  authors: [Stefan Korshak]
+  published: "2026-07-31"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [glide-bombs, aviation]
+  notes: "Analysis of published Ukrainian Air Force data. KABs rose from 5,171 (Jan 2026) to 8,266 (June 2026), +45%. On 13 June 2026, 391 bombs were dropped in 127 sorties. Projects ~100,000 more by mid-2027. The key 2026 glide-bomb source."
+
+- id: defenseexpress-2024-umpb-d30-production
+  title: "russia Boosts UMPB D-30SN Glide Bomb Production to 600 Units Monthly"
+  url: https://en.defence-ua.com/news/russia_boosts_umpb_d_30sn_glide_bomb_production_to_600_units_monthly-12144.html
+  publisher: Defense Express
+  authors: []
+  published: "2024-10-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [glide-bombs]
+  notes: "UMPB D-30SN (debut March 2024): ~90 km range, ~250 kg, about 30 km more than UMPK. Serial-number analysis shows output rising from 110 (winter) to 161/month (spring) to ~600 (May-June 2024). Carriers are the Su-34, Su-30, Su-35 and S-70. Inferred from wreckage serials, so medium reliability."
+
+- id: defenseexpress-2024-fab3000-first-use
+  title: "russians Used FAB-3000 with UMPK for the First Time in Ukraine, Targeting Hospital (Video)"
+  url: https://en.defence-ua.com/news/russians_used_fab_3000_with_umpk_for_the_first_time_in_ukraine_targeting_hospital_video-10911.html
+  publisher: Defense Express
+  authors: []
+  published: "2024-06-21"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [glide-bombs]
+  notes: "First FAB-3000 M-54 with UMPK (~3,067 kg total, ~1,200 kg explosive), dropped from a Su-34 on Lyptsi north of Kharkiv during the 2024 Kharkiv/Vovchansk offensive."
+
+- id: japcc-2026-zanier-glide-bombs
+  title: "Countering Russia's Glide Bomb Warfare in Ukraine"
+  url: https://www.japcc.org/articles/countering-russias-glide-bomb-warfare-in-ukraine/
+  publisher: Joint Air Power Competence Centre (NATO)
+  authors: [Giovanni Zanier, Kevin Anderson]
+  published: "2026-04"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e8-drone-kill-zone]
+  topics: [glide-bombs, air-defence, electronic-warfare]
+  notes: "NATO air-power centre review: ~3,500 UMPK bombs/month by early 2025; kit ~$20,000; UMPK 60-70 km, D-30SN to 90 km; release 35-50 km from the line; 4 bombs per Su-34 sortie. Credits glide bombs in Zaporizhzhia 2023 and the fall of Avdiivka. Countermeasures: Pokrova jamming, F-16s, strikes on bases."
+
+- id: euromaidanpress-2026-axe-ukrainian-glide-bomb
+  title: "Ukraine's homemade glide bomb may have an edge over the American and French ones"
+  url: https://euromaidanpress.com/2026/05/19/ukrainian-kab/
+  publisher: Euromaidan Press
+  authors: [David Axe]
+  published: "2026-05-19"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [glide-bombs, aviation]
+  notes: "Ukraine's first domestic glide bomb (250 kg, ~40 km, possibly CRPA anti-jam antennas, carried by the Su-24) was cleared for combat in May 2026. Ukraine gets only 'a few dozen' Western glide bombs per month, against Russia's thousands. One analyst mapped 6,600 KAB impacts on 150 km of front over three months."
+
+- id: kyivindependent-2025-post-ballistic-production
+  title: "Exclusive: Russia's ballistic missile production up at least 66% over past year, according to Ukrainian intel figures"
+  url: https://kyivindependent.com/exclusive-russias-ballistic-missile-production-up-at-least-66-over-past-year-according-to-ukrainian-intel-figures/
+  publisher: The Kyiv Independent
+  authors: [Kollen Post]
+  published: "2025-06-03"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [missiles, production, air-defence]
+  notes: "HUR data on monthly production: Iskander-M 60-70 (40 in May 2024), Kinzhal 10-15, Kh-101 60-70, Iskander-K 20-30, Kalibr 25-30, Onyx/Zircon 20-30, Kh-32 up to 10. Stocks: ~600 Iskander-M, >100 Kinzhal, 60 KN-23. PAC-3 MSE output (650/yr by 2027) trails Russian ballistic production."
+
+- id: euromaidanpress-2026-mukhina-ballistic-salvo
+  title: "Russia can launch up to 30 ballistic missiles against Ukraine in single salvo. Here's why that changes everything for 2026"
+  url: https://euromaidanpress.com/2026/02/10/russia-can-launch-up-to-30-ballistic-missiles-in-single-salvo-heres-why-that-changes-everything-for-ukraine-in-2026/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-02-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [missiles, air-defence]
+  notes: "Analyst Kovalenko: 91 ballistic missiles in January 2026 (then a record), salvos of up to 30, and at least 2 Iskander-M built per day. Only Patriot and SAMP/T can intercept them. Russia shifted from cruise to ballistic missiles as its launch platforms took damage. Expert opinion, so medium reliability."
+
+- id: frontliner-2026-zvirynskyi-strike-intensity
+  title: "Over 8,000 drones a month: How strike intensity across Ukraine has changed and what to expect this winter"
+  url: https://frontliner.ua/en/how-strike-intensity-across-ukraine-has-changed/
+  publisher: Frontliner
+  authors: [Nazar Zvirynskyi]
+  published: "2026-07-26"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [missiles, drones, air-defence, shahed]
+  notes: "2026 strike data: ballistic record of 121 in Feb 2026 and ~100/month capacity. Shahed record 8,150 (May 2026), with decoys 35-40% of waves. Plans for ~60,000 attack UAVs plus 50,000 decoys in 2026. PAC-3 output ~52/month. Jet Geran-3/4 (~500 km/h) are beyond current interceptor drones."
+
+- id: csis-2025-atalan-october-air-campaign
+  title: "Russia's Intense Air Campaign in October"
+  url: https://www.csis.org/analysis/russias-intense-air-campaign-october
+  publisher: CSIS
+  authors: [Yasir Atalan, Erik Tiersten-Nyman, Benjamin Jensen]
+  published: "2025-11-14"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [missiles, drones, air-defence, shahed]
+  notes: "October 2025 against October 2024: Shaheds 5,300 vs 1,900, ballistic 148 vs 33, cruise 74 vs 42. Record 26 ballistic missiles on 16 Oct 2025. Shahed hit rate ~20%. Launch rhythm follows industrial output."
+
+- id: csis-2026-jensen-two-strategic-attacks
+  title: "A Tale of Two Strategic Attacks: The Race to End the War in Ukraine"
+  url: https://www.csis.org/analysis/tale-two-strategic-attacks-race-end-war-ukraine
+  publisher: CSIS
+  authors: [Benjamin Jensen, Yasir Atalan]
+  published: "2026-07-15"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [missiles, air-defence, long-range-strike]
+  notes: "Ballistic launches rose >700% from 2023 to 2025. CSIS dataset puts the 2026 ballistic intercept share at only 10.2%, against >85% for Shaheds. Projects up to 840 ballistic missiles in 2026. Counts Ukrainian strikes in Russia: ~580 (2023), 7,244 (2024), 6,176 (H1 2025)."
+
+- id: carnegie-2026-kolomychenko-starlink-telegram
+  title: "How Will the Loss of Starlink and Telegram Impact Russia's Military?"
+  url: https://carnegieendowment.org/russia-eurasia/politika/2026/02/russia-starlink-telegram-shutdown
+  publisher: Carnegie Endowment for International Peace
+  authors: [Maria Kolomychenko]
+  published: "2026-02-23"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [sensor-to-shooter, communications, drones]
+  notes: "Russian units used Starlink to relay drone feeds (including strike drones out to ~80 km) and Telegram groups to pass coordinates and coordinate air defence. Losing both creates inefficiency but not a collapse of C2. Explains why the Feb 2026 whitelisting slowed Russian kill chains."
+
+- id: militarnyi-2026-pryhodko-geran-5
+  title: "Russia Uses New Geran-5 Kamikaze Drone Against Ukraine for the First Time"
+  url: https://militarnyi.com/en/news/russia-uses-new-geran-5-kamikaze-drone-against-ukraine-for-the-first-time/
+  publisher: Militarnyi
+  authors: [Roman Pryhodko]
+  published: "2026-01-11"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [drones, missiles, air-defence]
+  notes: "HUR-confirmed debut of the jet-powered Geran-5: ~6 m long, 90 kg warhead, ~1,000 km range, Chinese Telefly jet, Kometa satnav plus 3G/4G modems. Can be air-launched from the Su-25 and optionally carry R-73 AAMs. HUR sees a likely Iranian Karrar lineage."
+
+- id: kyivindependent-2025-taradiuk-sapsan
+  title: "Tired of military aid delays, Ukraine has designed its own ballistic missile - and it's already in mass-production"
+  url: https://kyivindependent.com/ukraines-new-ballistic-missile-goes-into-mass-production-heres-how-it-could-be-used-against-russia/
+  publisher: The Kyiv Independent
+  authors: [Yuliia Taradiuk]
+  published: "2025-06-17"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [missiles, long-range-strike]
+  notes: "Sapsan (~300 km, >480 kg warhead) completed combat tests in May 2025 and entered serial production in June 2025. Neptune production scaled up with extended-range versions. Palianytsia missile-drone. Experts estimate a need for 80-100 missiles/yr."
+
+- id: wikipedia-fp5-flamingo
+  title: "FP-5 Flamingo"
+  url: https://en.wikipedia.org/wiki/FP-5_Flamingo
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [missiles, long-range-strike]
+  notes: "Navigation page for Fire Point's Flamingo: ~3,000 km range, ~1,150 kg warhead, first combat use 30 Aug 2025. Production claims (30/month Aug 2025, 50/month Sep 2025, 3/day Mar 2026) come from the maker and are unverified. 2026 strikes include the Votkinsk plant (Iskander producer) in Feb 2026."
+
+- id: wikipedia-storm-shadow
+  title: "Storm Shadow"
+  url: https://en.wikipedia.org/wiki/Storm_Shadow
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e7-kursk-pokrovsk]
+  topics: [missiles, long-range-strike, aviation]
+  notes: "Storm Shadow/SCALP in Ukraine: delivered May 2023 and carried by Su-24M. Hit the Chonhar bridges in summer 2023 and the Black Sea Fleet HQ in Sevastopol on 22 Sep 2023. First use inside Russia (Kursk region) on 20 Nov 2024. Range ~250 km."
+
+- id: wikipedia-atacms
+  title: "MGM-140 ATACMS"
+  url: https://en.wikipedia.org/wiki/MGM-140_ATACMS
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk]
+  topics: [missiles, long-range-strike]
+  notes: "ATACMS in Ukraine: first strikes in Oct 2023 destroyed helicopters on occupied airfields. Long-range variants from Feb 2024 (Dzhankoi). Strikes inside Russia from 19 Nov 2024 (a Bryansk arsenal, an S-400 in Kursk region)."
+
+- id: wikipedia-oreshnik
+  title: "Oreshnik (missile)"
+  url: https://en.wikipedia.org/wiki/Oreshnik_(missile)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e9-counteroffensive-26]
+  topics: [missiles]
+  notes: "Oreshnik IRBM uses: Dnipro (Pivdenmash) on 21 Nov 2024 with inert warheads per Ukrainian officials, Lviv on 8 Jan 2026, and two missiles in a combined strike on 24 May 2026. Mach 10+, six MIRV warheads with submunitions. Some entries rely on Russian claims, so treat as navigation."
+
+- id: wikipedia-ukrainian-air-force
+  title: "Ukrainian Air Force"
+  url: https://en.wikipedia.org/wiki/Ukrainian_Air_Force
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [aviation]
+  notes: "Dates for Ukrainian fighters: F-16s from Aug 2024 (first loss 29 Aug 2024), Mirage 2000-5F on 6 Feb 2025 (MICA, SCALP, AASM Hammer), Gripen LOI Oct 2025 and deal May 2026. Soviet jets integrated with JDAM-ER, AASM, HARM and Storm Shadow."
+
+- id: oryx-russian-losses
+  title: "Attack On Europe: Documenting Russian Equipment Losses During The Russian Invasion Of Ukraine"
+  url: https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html
+  publisher: Oryx
+  authors: [Stijn Mitzer, Jakub Janovsky]
+  published: "2022-02-24"
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [losses, artillery, aviation, helicopters, air-defence]
+  notes: "Photo-verified minimum counts as of 2026-09-28: aircraft 196 (Su-34 42, Su-25 41, Su-35S 11), helicopters 183 (Ka-52 69, Mi-28 20, Mi-8 53), SP artillery 1,057 (2S19 274), towed 613 (D-30 225), BM-21 371, SAMs 441 (Pantsir-S1 51). Real losses are higher."
+
+- id: oryx-ukrainian-losses
+  title: "Attack On Europe: Documenting Ukrainian Equipment Losses During The Russian Invasion Of Ukraine"
+  url: https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-ukrainian.html
+  publisher: Oryx
+  authors: [Stijn Mitzer, Jakub Janovsky]
+  published: "2022-02-24"
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [losses, artillery, aviation, air-defence]
+  notes: "Photo-verified minimum counts as of 2026-09-28: aircraft 121 (MiG-29 39, Su-27 20, Su-24M 21, Su-25 22, F-16 5, Mirage 2000-5F 1), helicopters 58, SP artillery 969 (M109 143, Krab 46, Caesar 22, Bohdana 8, PzH 2000 4), towed 297 (M777 103), HIMARS 8, SAMs 179 (2 Patriot, 2 NASAMS, 1 IRIS-T launchers)."

@@ -1,0 +1,662 @@
+# Sources for research/05-isr-c2-logistics.md (ISR, C2, logistics)
+# accessed dates are all 2026-09-28
+
+- id: rusi-2022-zabrodskyi-preliminary-lessons
+  title: "Preliminary Lessons in Conventional Warfighting from Russia's Invasion of Ukraine: February-July 2022"
+  url: https://static.rusi.org/359-SR-Ukraine-Preliminary-Lessons-Feb-July-2022-web-final.pdf
+  publisher: RUSI
+  authors: [Mykhaylo Zabrodskyi, Jack Watling, Oleksandr V. Danylyuk, Nick Reynolds]
+  published: "2022-11-30"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22]
+  topics: [isr, c2, logistics, deception, artillery, rail]
+  notes: "Co-written with Ukrainian General Staff officers. Covers Russian radio/C2 failures, rail-based logistics (228 tank cars to Rovenky), depots pushed to 50 then 100 km, Kropyva gains, kill-chain times (3-5 min to ~48 h) and systematic Ukrainian deception. High reliability, based on General Staff data."
+
+- id: defenseexpress-2022-aerorozvidka-convoy
+  title: "Ukrainian Drone Operators Successfully Halt Infamous Russia's 40 Miles Long Mechanized Convoy Heading Seize Kyiv"
+  url: https://en.defence-ua.com/news/ukrainian_drone_operators_successfully_halt_infamous_russias_40_miles_long_mechanized_convoy_heading_seize_kyiv-2398.html
+  publisher: Defense Express
+  authors: []
+  published: "2022-03-29"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [isr, logistics, night, drones]
+  notes: "Aerorozvidka and special forces on quad bikes with thermal drones ambush the Kyiv column at night, hitting the forward supply depot and lead vehicles. Medium: relies on unit claims relayed by the Guardian, only partly verified."
+
+- id: kyivindependent-2022-ponomarenko-himars
+  title: "Why is Russia so vulnerable to HIMARS in Ukraine?"
+  url: https://kyivindependent.com/why-is-russia-so-vulnerable-to-himars-in-ukraine/
+  publisher: Kyiv Independent
+  authors: [Illia Ponomarenko]
+  published: "2022-07-22"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [logistics, rail, deep-strike]
+  notes: "Explains Russian rail dependence, manual handling and truck shortages (1,254+ lost per Oryx), and the cost of pushing depots beyond HIMARS range. Medium: analytical journalism with some projection."
+
+- id: newamerica-2023-zikusoka-gis-arta
+  title: "How Ukraine's 'Uber for Artillery' is Leading the Software War Against Russia"
+  url: https://www.newamerica.org/insights/how-ukraines-uber-for-artillery-is-leading-the-software-war-against-russia/
+  publisher: New America
+  authors: [David Zikusoka]
+  published: "2023-05-25"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut]
+  topics: [c2, artillery, starlink]
+  notes: "Describes GIS Arta fire-mission allocation over radio, cellular and Starlink, and the claim of 30-45 s from acquisition to fire mission. Medium: the speed claim originates with the developers."
+
+- id: rusi-2023-watling-meatgrinder
+  title: "Meatgrinder: Russian Tactics in the Second Year of Its Invasion of Ukraine"
+  url: https://www.rusi.org/explore-our-research/publications/special-resources/meatgrinder-russian-tactics-second-year-its-invasion-ukraine
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2023-05-19"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22, e4-bakhmut]
+  topics: [isr, c2, ew, artillery]
+  notes: "Russian reconnaissance-fire circuits (3-5 min from drone, 20-30 min from EW detection), Strelets, one EW system per 10 km, ~10,000 Ukrainian UAVs lost per month, HQs pushed beyond 120 km then wired through captured telecoms. PDF: static.rusi.org/403-SR-Russian-Tactics-web-final.pdf."
+
+- id: rusi-2023-watling-stormbreak
+  title: "Stormbreak: Fighting Through Russian Defences in Ukraine's 2023 Offensive"
+  url: https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2023-09-04"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [isr, c2, artillery, logistics]
+  notes: "The 2023 offensive: Russia abandons mass-fire doctrine because its logistics are too exposed, moving to drone-designated Krasnopol, Lancet and FPV. Ukrainian guns displace 2-15 min after firing. Only 3% of fire missions are smoke because HQs depend on drone feeds."
+
+- id: kyivpost-2023-decoys
+  title: "Decoys and Deception - Ukraine's Use of Fake Weapon Systems"
+  url: https://www.kyivpost.com/post/21544
+  publisher: Kyiv Post
+  authors: []
+  published: "2023-09-12"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e5-counteroffensive-23]
+  topics: [deception]
+  notes: "Metinvest wooden decoys (HIMARS, M777 at ~$1,000 against a ~$4M real gun) and later versions with heat sources and radio emitters. Medium: effectiveness claims come from Ukrainian sources."
+
+- id: euromaidanpress-2024-martyniuk-decoy-makers
+  title: "Masters of illusion: Ukraine's decoy makers outwit Russia"
+  url: https://euromaidanpress.com/2024/03/13/masters-of-illusion-ukraines-decoy-makers-outwit-russia/
+  publisher: Euromaidan Press
+  authors: [Yevheniia Martyniuk]
+  published: "2024-03-13"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [deception]
+  notes: "Adapted from Ukrainska Pravda. Covers volunteer and industry decoy makers (Stugna decoys at $30-100, 250+ Metinvest decoys) and the radar, thermal and acoustic signatures decoys must copy; repeats the claim of 10+ Kalibrs spent on fake HIMARS."
+
+- id: militarnyi-2024-avengers-12000
+  title: "AI Helps Ukrainian Defense Forces Track Thousands of Enemy Targets"
+  url: https://militarnyi.com/en/news/ai-helps-ukrainian-defense-forces-track-thousands-of-enemy-targets/
+  publisher: Militarnyi
+  authors: []
+  published: "2024-09-23"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [isr, ai, c2]
+  notes: "MoD press claim that Avengers AI detects ~12,000 pieces of enemy equipment per week in drone and camera feeds. Medium: official self-reported figure."
+
+- id: twz-2024-altman-ammo-depots
+  title: "Satellite Images Show Massive Devastation At Russian Ammo Storage Sites Struck By Ukrainian Drones"
+  url: https://www.twz.com/news-features/satellite-images-show-massive-devastation-at-russian-ammo-storage-sites-struck-by-ukrainian-drones
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2024-09-23"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [deep-strike, logistics, satellite]
+  notes: "Maxar imagery of the Toropets (~30,000 t), Tikhoretsk (2,000+ t, including North Korean missiles) and Oktyabrsky depot strikes in September 2024. High: imagery-based."
+
+- id: csis-2024-bondar-delta-cjadc2
+  title: "Does Ukraine Already Have Functional CJADC2 Technology?"
+  url: https://www.csis.org/analysis/does-ukraine-already-have-functional-cjadc2-technology
+  publisher: CSIS
+  authors: [Kateryna Bondar]
+  published: "2024-12-11"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [c2, isr, ai, starlink]
+  notes: "Best architecture overview of Delta: 2016 origin, MoD 2023, adopted Aug 2024; eight situational awareness centres; cloud plus Starlink; modules Delta Monitor, Mission Control (~106k missions per month), Vezha, Avengers, DroneID, Link 16 and TOPAZ integration."
+
+- id: rusi-2025-watling-tactical-developments
+  title: "Tactical Developments During the Third Year of the Russo-Ukrainian War"
+  url: https://static.rusi.org/tactical-developments-third-year-russo-ukrainian-war-february-2205.pdf
+  publisher: RUSI
+  authors: [Jack Watling, Nick Reynolds]
+  published: "2025-02"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk]
+  topics: [isr, c2, logistics, casevac, deception, ew]
+  notes: "Key source for transparency: full visibility within 3 km, thinning to 15 km, tasking to 40 km; 1,000-1,500 Russian ISR orbits per day; ~50% of Ukrainian casualties taken in the rear; drones cause 60-70% of Russian losses; rotation, caching and UAV resupply practice."
+
+- id: defenseexpress-2025-russian-net-tunnels
+  title: "Radical Solution: russian Forces Deploy Entire Anti-Drone Tunnels in Ukraine"
+  url: https://en.defence-ua.com/weapon_and_tech/radical_solution_russian_forces_deploy_entire_anti_drone_tunnels_in_ukraine-13487.html
+  publisher: Defense Express
+  authors: []
+  published: "2025-02-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [logistics, counter-drone]
+  notes: "Russian 3rd Army Corps nets a 2+ km stretch of road between Bakhmut and Chasiv Yar and adds drone-detector 'traffic lights'. Medium: based on Russian soldier footage."
+
+- id: kyivindependent-2025-zadorozhnyy-maxar
+  title: "Maxar Technologies restricts Ukraine's access to satellite imagery amid US halt to intelligence sharing"
+  url: https://kyivindependent.com/maxar-technologies-reportedly-restricts-ukraines-access-to-satellite-imagery/
+  publisher: Kyiv Independent
+  authors: [Tim Zadorozhnyy]
+  published: "2025-03-07"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [isr, satellite]
+  notes: "The US suspends Ukrainian GEGD accounts for Maxar imagery during the March 2025 intelligence-sharing pause. Confirmed by Maxar and NGA."
+
+- id: frontelligence-2025-motorcycle-assaults
+  title: "21st-Century Dragoons: Dissecting Russia's Motorcycle Assault Tactics"
+  url: https://frontelligence.substack.com/p/21st-century-dragoons-dissecting
+  publisher: Frontelligence Insight
+  authors: [Tatarigami_UA]
+  published: "2025-06-23"
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [logistics, tactics, ew]
+  notes: "Russian motorcycle groups (6-8 bikes, 6-16 troops, 2-3 EW sets) also used for resupply, casevac and rotation; mostly Chinese bikes; low survival. Medium: OSINT/intel-derived and Ukrainian-aligned."
+
+- id: kyivindependent-2025-farrell-kostiantynivka
+  title: "'We spot them, we destroy them' - Ukraine fights for Kostiantynivka as Russia closes in on three sides"
+  url: https://kyivindependent.com/inside-the-battle-of-kostiantynivka-as-ukrainian-forces-brace-for-three-sided-russian-assault/
+  publisher: Kyiv Independent
+  authors: [Francis Farrell]
+  published: "2025-08-02"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [logistics, isr, drones]
+  notes: "Field reporting: Rubikon fibre-optic FPVs force brigades to rebuild supply chains; net tunnels; Kazhan bomber drones resupply around the clock (up to 20 runs per crew per day); Russian infiltration in groups of 1-5."
+
+- id: mod-2025-delta-avengers-ecosystem
+  title: "Ukraine's Defence Tech Ecosystem: Real-Time Coordination and AI Targeting in Action"
+  url: https://digitalstate.gov.ua/news/tech/2-sekundy-i-tsil-vyiavleno-iak-pratsiuye-tsyfrova-ekosystema-zsu
+  publisher: Digital State (gov.ua), citing Ministry of Defence of Ukraine
+  authors: []
+  published: "2025-09-03"
+  accessed: "2026-09-28"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [c2, ai, isr]
+  notes: "Official claims: Avengers classifies 70% of enemy vehicles in as little as 2.2 s, day or night; Delta enables up to 2,000 enemy assets neutralised per day. Medium: self-reported."
+
+- id: rusi-2025-watling-combined-arms
+  title: "Emergent Approaches to Combined Arms Manoeuvre in Ukraine"
+  url: https://www.rusi.org/explore-our-research/publications/insights-papers/emergent-approaches-combined-arms-manoeuvre-ukraine
+  publisher: RUSI
+  authors: [Jack Watling]
+  published: "2025-10-23"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [isr, c2, logistics, casevac, ugv]
+  notes: "FPVs most effective from -3 to +3 km; UGV casevac from 2-5 km at night to medical posts 7+ km back; seven-phase Ukrainian attacks over 5-10 days; Russian drones hunt EW, radar and CPs; Russian infiltration groups of 2-5."
+
+- id: mod-2026-mission-control-launch
+  title: "Ukraine Launches Mission Control - a Unified Digital System for Drone Warfare Management"
+  url: https://digitalstate.gov.ua/news/tech/v-ukrayini-zapuskaiut-mission-control-yedynu-tsyfrovu-systemu-upravlinnia-dronamy
+  publisher: Digital State (gov.ua), citing Ministry of Defence of Ukraine
+  authors: []
+  published: "2026-01-27"
+  accessed: "2026-09-28"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, drones]
+  notes: "National launch of Mission Control inside Delta, developed over about two years in Brave1. Crews log drone type, launch point, route and task; an artillery equivalent is planned. Medium: official announcement."
+
+- id: osw-2026-wilk-starlink-cutoff
+  title: "Russians cut off from the Starlink system. Day 1448 of the war"
+  url: https://www.osw.waw.pl/en/publikacje/analyses/2026-02-10/russians-cut-starlink-system-day-1448-war
+  publisher: OSW Centre for Eastern Studies
+  authors: [Andrzej Wilk, Piotr Żochowski]
+  published: "2026-02-10"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, starlink, russia]
+  notes: "Whitelist from 5 Feb 2026 disables unregistered terminals. Russian forces fall back on traditional comms for days, then push Yamal/Express satellite terminals and mesh networks; Ukrainian pre-registered terminals are largely unaffected."
+
+- id: ukrinform-2026-starlink-c2
+  title: "Russia Scrambles to Restore Connectivity as Starlink Restrictions Disrupt Battlefield C2"
+  url: https://www.ukrinform.net/rubric-ato/4090806-russia-scrambles-to-restore-connectivity-as-starlink-restrictions-disrupt-battlefield-c2.html
+  publisher: Ukrinform
+  authors: []
+  published: "2026-02-13"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, starlink, russia]
+  notes: "Ukrainian officials and analysts (Beskrestnov, Kovalenko, Popovych) on the collapse of Russian C2. Russian fallbacks: radio, Wi-Fi bridges, cellular. Earlier 75-90 km/h speed caps hurt Russian drones. Claim of 50,000+ smuggled terminals. Medium: state news agency; the figures are claims."
+
+- id: euromaidanpress-2026-zoria-isw-rubikon-starlink
+  title: "SpaceX's Starlink block is already disrupting Russia's elite drone unit as predicted, ISW says"
+  url: https://euromaidanpress.com/2026/02/16/spacexs-starlink-block-is-already-disrupting-russias-elite-drone-unit-as-predicted-isw-says/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2026-02-16"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, starlink, drones, russia]
+  notes: "Summarises ISW: the 1 Feb whitelist degrades Rubikon, which had used Starlink on strike drones for range and C2 and then stopped posting location details; a Ukrainian commander estimates about six months for Russia to adapt. Medium: secondary summary of ISW."
+
+- id: futuradoctrina-2026-ryan-starlink-surprise
+  title: "Starlink Surprise"
+  url: https://mickryan.substack.com/p/starlink-surprise
+  publisher: Futura Doctrina (Substack)
+  authors: [Mick Ryan]
+  published: "2026-02-17"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, starlink, logistics, russia]
+  notes: "Retired Australian general's analysis: Russian Starlink use for Shahed range, C2 and UGV logistics. After the cutoff, Russian logistics revert to crewed trucks and motorcycles and advances largely stop after 8 Feb (citing ISW). Medium: personal analysis blog."
+
+- id: united24-2026-litnarovych-starlink-gains
+  title: "Ukraine Makes Fastest Battlefield Gain in 2.5 Years as Starlink Disruption Hits Russia Hard"
+  url: https://united24media.com/latest-news/ukraine-makes-fastest-battlefield-gain-in-25-years-as-starlink-disruption-hits-russia-hard-15971
+  publisher: United24 Media
+  authors: [Vlad Litnarovych]
+  published: "2026-02-17"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, starlink]
+  notes: "201 km2 regained in one week (ISW data via France24), about 80 km east of Zaporizhzhia. Medium: state-backed outlet, and it dates the whitelist to 'early December 2025', which conflicts with other sources."
+
+- id: atlanticcouncil-2026-spencer-russian-comms-crisis
+  title: "Russian army faces comms crisis amid Starlink cut and Kremlin crackdown"
+  url: https://www.atlanticcouncil.org/blogs/ukrainealert/russian-army-faces-comms-crisis-amid-starlink-cut-and-kremlin-crackdown/
+  publisher: Atlantic Council
+  authors: [Katherine Spencer, Marc Goedemans]
+  published: "2026-03-05"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, starlink, russia]
+  notes: "Starlink cut followed by Kremlin throttling of Telegram (used for battlefield coordination) and a push toward the MAX app. Gazprom Space Systems is not a viable substitute; 200+ km2 regained in five days; a friendly-fire incident with 12 killed. Medium: advocacy-leaning blog, though the facts are well sourced."
+
+- id: euromaidanpress-2026-tril-net-tunnel-pace
+  title: "From 5 km to 20 km a day: Ukraine triples anti-drone tunnel construction speed in two months"
+  url: https://euromaidanpress.com/2026/02/26/from-5-km-to-20-km-a-day-ukraine-triples-anti-drone-tunnel-construction-speed-in-two-months/
+  publisher: Euromaidan Press
+  authors: [Maria Tril]
+  published: "2026-02-26"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [logistics, counter-drone]
+  notes: "MoD net-building pace of 5 km/day (Jan) and 12 km/day (Feb) against a 20 km/day target; 1.6bn UAH ($37M) budget; nets in five oblasts as of Oct 2025. Medium: planned rates exceed the later measured 9.2 km/day."
+
+- id: kyivindependent-2026-hodunova-ukrzaliznytsia
+  title: "Russia attacked Ukrainian rail infrastructure more than 1,000 times in 2025, Ukrzaliznytsia says"
+  url: https://kyivindependent.com/russia-attacks-ukrainian-railway-infrastructure-more-than-1-000-times-in-2025-ukrzaliznytsia-says/
+  publisher: Kyiv Independent
+  authors: [Kateryna Hodunova]
+  published: "2026-04-24"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [logistics, rail, russian-strikes]
+  notes: "Ukrzaliznytsia data: ~1,200 attacks in 2025 (more than 2023 and 2024 combined); 209 locomotives, 86 rail bridges and 50 stations damaged in 2025 to Q1 2026; buses replace trains on some frontline routes."
+
+- id: united24-2026-kosoy-ugv-kill-zone
+  title: "Ukraine plans 25,000 ground robotic systems by mid-2026, confirms UGV rise"
+  url: https://united24media.com/war-in-ukraine/how-ukraine-builds-its-ground-robots-for-the-kill-zone-18666
+  publisher: United24 Media
+  authors: [Daniel Kosoy]
+  published: "2026-05-11"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [ugv, logistics, casevac]
+  notes: "Plan to contract 25,000 UGVs in H1 2026 (double 2025); 24,500+ missions in Q1 2026; units using UGVs 67 (Nov 2025) to 167 (Mar 2026); ZMIY platform carries 500 kg. Medium: MoD and manufacturer figures."
+
+- id: pravda-2026-levytska-magyar-kill-zone
+  title: "Kill zone on both sides of front line reaches 25 km, says Ukraine's drone commander"
+  url: https://www.pravda.com.ua/eng/news/2026/05/14/8034645/
+  publisher: Ukrainska Pravda
+  authors: [Iryna Levytska]
+  published: "2026-05-14"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [isr, kill-zone]
+  notes: "USF commander Robert 'Magyar' Brovdi puts the kill zone at 25+ km on both sides, defined by the density and regularity of strikes in the situational awareness system rather than maximum range. Medium: a commander's estimate, but an authoritative one."
+
+- id: kyivindependent-2026-rushton-middle-strike
+  title: "Analysis: How Ukraine's new middle strike drone campaign aims to strangle Russian logistics"
+  url: https://kyivindependent.com/analysis-how-ukraines-new-middle-strike-drone-campaign-aims-to-strangle-russian-logistics/
+  publisher: Kyiv Independent
+  authors: [Jimmy Rushton]
+  published: "2026-05-31"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [deep-strike, logistics, fuel]
+  notes: "Middle strike at 25-200 km: Hornet drones ($5k, 5 kg, 200 km), 412th Nemesis, Azov, HUR. Geolocated strikes 55 (Apr) to 130+ (May); 125 trucks hit; R-280 restrictions; fuel shortages in Crimea; Fedorov's 'Logistical Lockdown'. High: geolocation-based."
+
+- id: kyivindependent-2026-korovayny-road-kill-zone
+  title: "Road to the kill zone: With Ukrainian troops on the lifeline from Kramatorsk to Kostiantynivka"
+  url: https://kyivindependent.com/road-to-the-kill-zone-with-ukrainian-troops-on-the-lifeline-from-kramatorsk-to-kostiantynivka/
+  publisher: Kyiv Independent
+  authors: [Serhii Korovayny, Francis Farrell]
+  published: "2026-06-03"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [logistics, ugv, counter-drone]
+  notes: "Embedded reporting on a netted supply road: vehicles at up to 120 km/h, routine supply on foot, fibre-optic cable strewn on the ground, 10+ wrecked UGVs, too few personnel for rotation."
+
+- id: jamestown-2026-lapaiev-mid-range-drones
+  title: "Ukrainian Mid-Range Drones Target Russian Logistics"
+  url: https://jamestown.org/ukrainian-mid-range-drones-target-russian-logistics/
+  publisher: Jamestown Foundation (Eurasia Daily Monitor)
+  authors: [Yuri Lapaiev]
+  published: "2026-06-09"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [deep-strike, logistics]
+  notes: "Middle-strike drones up to 150 km against the R-280; 'quadrupled' destruction of Russian logistics; driver shortages and rising shipping costs; 3rd Army Corps and Azov. Medium: converts 5bn UAH to '$1.12 million', a clear error."
+
+- id: fpri-2026-lee-putiata-rubicon
+  title: "Inside Rubicon: The Structure of Russia's Elite Drone Center"
+  url: https://www.fpri.org/article/2026/06/inside-rubicon-the-structure-of-russias-elite-drone-center/
+  publisher: Foreign Policy Research Institute
+  authors: [Rob Lee, Dmytro Putiata]
+  published: "2026-06-12"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [isr, drones, russia, logistics]
+  notes: "Document-based structure of Rubikon: ~1,450 personnel (Mar 2025) to ~5,000 (spring 2026); 17 detachments of 474; FPV, fixed-wing FPV, Lancet/Supercam, Orlan and EW teams; mission includes deep interdiction of logistics and UAS teams."
+
+- id: atlanticcouncil-2026-kirichenko-drones-logistics
+  title: "Ukrainian drones are cutting Russian logistics and reshaping the battlefield"
+  url: https://www.atlanticcouncil.org/blogs/ukrainealert/ukrainian-drones-are-cutting-russian-logistics-and-reshaping-the-battlefield/
+  publisher: Atlantic Council
+  authors: [David Kirichenko]
+  published: "2026-06-18"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [deep-strike, logistics, deception]
+  notes: "Ukrainian drone interdiction of routes into Crimea and southern Zaporizhzhia. Russian countermeasures: camouflage, decoys, mobile fire teams, highway netting. Medium: commentary."
+
+- id: carnegie-2026-vakulenko-refineries
+  title: "Russian Oil Sector Battered but Not Broken by Ukrainian Air Attacks"
+  url: https://carnegieendowment.org/russia-eurasia/politika/2026/06/russia-new-refinery-strike
+  publisher: Carnegie Endowment for International Peace
+  authors: [Sergey Vakulenko]
+  published: "2026-06-22"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [deep-strike, fuel]
+  notes: "Refinery campaign: 26 attacks in Apr-May 2026, output down ~700k bbl/d (~13%) and possibly 28% after mid-June Moscow-area strikes; shortages in Crimea and occupied areas; Russian subsidies and fuel-standard waivers."
+
+- id: euromaidanpress-2026-vivdych-kill-zone-corps
+  title: "Ukraine's eastern kill zone is 25 km deep - corps commander expects 30 by year's end"
+  url: https://euromaidanpress.com/2026/07/03/ukraines-eastern-kill-zone-is-25-km-deep-corps-commander-expects-30-by-years-end/
+  publisher: Euromaidan Press
+  authors: [Taisiia Vivdych]
+  published: "2026-07-03"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [isr, kill-zone, tactics]
+  notes: "Brig. Gen. Yevhen Lasiichuk (7th Air Assault Corps, Pokrovsk axis): kill zone 20-25 km, 30 km expected by end-2026; drones cause 70-80% of damage; Russian groups shrank from 20-30 per IFV to 2-3. Medium: a commander's claims, including loss figures."
+
+- id: euromaidanpress-2026-mukhina-net-tunnels-1000km
+  title: "Ukraine has netted over 1,000 kilometers of road. That's how completely drones reshaped front"
+  url: https://euromaidanpress.com/2026/07/19/ukraine-has-netted-over-1000-kilometers-of-road-thats-how-completely-drones-reshaped-front/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-07-19"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [logistics, counter-drone, ugv]
+  notes: "State Special Transport Service built 1,066 km of anti-drone protection Jan-Jul 2026 (325 km in June; 9.2 km/day); target 4,000 km; Russian recon and FPV drones operate 15-30 km deep; 66k+ UGV missions in H1. Medium: MoD figures."
+
+- id: mod-2026-delta-6600-targets
+  title: "The DELTA combat system records more than 6,600 enemy targets hit every day"
+  url: https://www.globalsecurity.org/wmd/library/news/ukraine/2026/07/ukraine-260731-ukraine-mod03.htm
+  publisher: Ministry of Defence of Ukraine (via GlobalSecurity.org mirror)
+  authors: []
+  published: "2026-07-31"
+  accessed: "2026-09-28"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, isr, drones]
+  notes: "MoD statistics: 200,000+ drone strikes logged in June 2026 (6,600+ per day), up from 105,800 in Jan; 75,000+ video streams per day; 8M map objects per month; Mission Control replaced forms 5.31 and 5.32; ePoints bonus. Medium: self-reported, read via a mirror."
+
+- id: pravda-2026-levytska-avengers-labs
+  title: "Ukraine's Defence Ministry grants companies access to Avengers Labs with 5 million images for AI training"
+  url: https://www.pravda.com.ua/eng/news/2026/08/10/8048120/
+  publisher: Ukrainska Pravda
+  authors: [Iryna Levytska]
+  published: "2026-08-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [ai, isr, c2]
+  notes: "Avengers Labs: 5M labelled images, mostly from Delta; auto-detection analyses 100k+ drone streams per month and detects 70% of assets in real time; opens the dataset to vetted industry. Medium: MoD figures, and the stream counts conflict with the daily figure."
+
+- id: rbcukraine-2026-perch-kill-zone-foot
+  title: "Ukraine's frontline 'kill zone' expands to 20 km as troops face longer journeys on foot"
+  url: https://newsukraine.rbc.ua/news/ukraine-s-frontline-kill-zone-expands-to-1786615823.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: "2026-08-13"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [logistics, kill-zone, casevac, ugv]
+  notes: "107th TDF Brigade commander Denys Perch: the distance on foot grew from 2 km to 3, 5, 10 and now 15+ km, and up to 20 km is logistically difficult; trips up to three days; supply and casevac shifting to UGVs. Medium: a single commander's account."
+
+- id: united24-2026-kabachynskyi-ugv-25000
+  title: "Ukraine's Ground Robots Just Passed 25,000 Missions a Month as Front-Line Logistics Go Unmanned"
+  url: https://united24media.com/war-in-ukraine/ukraines-ground-robots-just-passed-25000-missions-a-month-as-front-line-logistics-go-unmanned-22395
+  publisher: United24 Media
+  authors: [Illia Kabachynskyi]
+  published: "2026-09-09"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [ugv, logistics, casevac]
+  notes: "MoD monthly UGV missions for 2026: 7,511 (Jan) rising to 25,143 (Aug), 111,377+ in total; units using UGVs 117 (2025) to 230 (2026); logistics and evacuation, plus mining and armed roles. Medium: official figures, not independently checked."
+
+- id: wikipedia-starlink-russo-ukrainian-war
+  title: "Starlink in the Russo-Ukrainian war"
+  url: https://en.wikipedia.org/wiki/Starlink_in_the_Russo-Ukrainian_war
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e6-avdiivka-attrition, e9-counteroffensive-26]
+  topics: [starlink, c2]
+  notes: "Timeline for navigation: first terminals on 28 Feb 2022; HUR confirms Russian use in Feb 2024; Starlink found in a Geran in Sep 2024; whitelist in Feb 2026; a Russian 'Kupol' jamming claim from Aug 2026 (unverified). Medium: tertiary source."
+
+- id: wikipedia-crimean-bridge
+  title: "Crimean Bridge"
+  url: https://en.wikipedia.org/wiki/Crimean_Bridge
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e5-counteroffensive-23, e8-drone-kill-zone]
+  topics: [deep-strike, logistics, rail]
+  notes: "Attack dates and recovery times: 8 Oct 2022 truck bomb (road reopened Feb 2023, rail May 2023); 17 Jul 2023 naval drones; 3 Jun 2025 SBU underwater charges (reopened the same day). Medium: tertiary, for navigation."
+
+- id: wikipedia-2026-ukrainian-counteroffensive
+  title: "2026 Ukrainian counteroffensive"
+  url: https://en.wikipedia.org/wiki/2026_Ukrainian_counteroffensive
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [c2, starlink, operations]
+  notes: "Navigation: start on 11 Feb 2026 from the Vovcha river; the Starlink cutoff credited with compromising Russian C2; Operation Vivaldi near Lyman (ISW about 240 km2 in phase one); Zelensky's claim of 745 km2 by 12 Aug. Medium: tertiary and fast-changing."
