@@ -105,7 +105,7 @@
   verified: fetched
   eras: [e1-invasion, e3-counteroffensives-22, e4-bakhmut]
   topics: [prior-art, operational-sim]
-  notes: "Real-time operational sim with 20 scenarios from 2022–23 (Kyiv, Kherson, Bakhmut) plus what-ifs ('Polish Intervention'). Maps up to 2000x2000 km; air and airborne ops. The store page says nothing about drones or logistics and there were only 5 user reviews. Developer country is not stated. Low, because it is self-description with almost no reception."
+  notes: "Real-time operational sim with 20 scenarios from 2022–23 (Kyiv, Kherson, Bakhmut) plus what-ifs ('Polish Intervention'). Maps up to 2000x2000 km; air and airborne ops. The store page says nothing about drones or logistics and there were only 5 user reviews. Developer country is not stated on the store page or the studio site (sandtablesoftware.com, which also lists 'Admiral of the Fleet' and 'Battle of Britain'). Low, because it is self-description with almost no reception."
 
 - id: vice-2019-zacny-radio-commander
   title: "'Radio Commander' Is an Intimate Look at War from an Uncomfortable Distance"
@@ -136,6 +136,186 @@
   eras: []
   topics: [prior-art, fog-of-war, c2, review]
   notes: "Radio General (Foolish Mortals, Saskatchewan, Canada, 2020, WWII Canadians): voice commands in NATO phonetic grid, double-blind map, vague status reports ('lost half our fighting strength'). Criticised as a gimmick with weak AI and unreliable voice recognition. Small blog, so low."
+
+- id: steam-2025-broken-arrow-roadmap
+  title: "Broken Arrow: Roadmap Revealed"
+  url: https://store.steampowered.com/news/app/1604270/view/1816849002024197
+  publisher: Steel Balalaika / Slitherine (Steam news)
+  authors: []
+  published: "2025-11-25"
+  accessed: "2026-09-28"
+  type: official
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts, drones, roadmap]
+  notes: "Developer roadmap. The team began in 2018 as volunteers 'from different cities and even different countries' and went full-time in 2021. The 2026 plan lists three specialisation DLCs, server-side economy, replays, savegames, co-op campaign and 'a new gameplay mechanic: loitering ammunition'; early 2027 brings a new faction. First-party, so medium; it confirms loitering munitions were planned, not shipped."
+
+- id: steam-2026-broken-arrow-march-qa
+  title: "Broken Arrow: March Live Event - Recap"
+  url: https://store.steampowered.com/news/app/1604270/view/1827626365754106
+  publisher: Steel Balalaika / Slitherine (Steam news)
+  authors: []
+  published: "2026-03-19"
+  accessed: "2026-09-28"
+  type: official
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts, drones, loitering-munition]
+  notes: "Developer Q&A. Asked whether the teased attack drones would be Shahed-style one-way drones or FPV scout/bomber drones, the developers answered that 'loitering ammunition' means 'missiles with man in the middle control or AI terminal guidance' and that interception rules 'must still be defined and tested'. No FPV or Shahed-type unit is described."
+
+- id: steam-2026-broken-arrow-anniversary-update
+  title: "Broken Arrow: Anniversary Update"
+  url: https://store.steampowered.com/news/app/1604270/view/1836506165568057
+  publisher: Steel Balalaika / Slitherine (Steam news)
+  authors: []
+  published: "2026-07-02"
+  accessed: "2026-09-28"
+  type: official
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts, drones, air-defence, balance]
+  notes: "Patch notes. Low-altitude drones (Korsar, Forpost, RQ-7 Shadow) become helicopter-type targets so SHORAD, machine guns and autocannons counter them; drone HP cut (high 15→12, low 10→9) so a single Tor/Tunguska missile kills one, which the designers say only affects 'drone swarm tactics'. Shows how an RTS treats drones: as aircraft in the air-defence matrix, not as a separate layer."
+
+- id: steam-2023-cmbs-update-2-18
+  title: "Combat Mission Black Sea - Update v02.18.00"
+  url: https://store.steampowered.com/news/app/1502380/view/5070528176566080653
+  publisher: Battlefront / Matrix Games (Steam news)
+  authors: []
+  published: "2023-03-03"
+  accessed: "2026-09-28"
+  type: official
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, tactical-wargame]
+  notes: "The last content-bearing Steam announcement for CM: Black Sea: PBEM++ and tournament support plus three bug fixes. The only later posts are a 2024 Discord activity and Slitherine's August 2024 acquisition of Battlefront. Supports the finding that no official 2022-era or FPV content has shipped (checked via the Steam news API, 2026-09-28)."
+
+- id: steam-2022-regiments
+  title: "Regiments (Steam store page)"
+  url: https://store.steampowered.com/app/1109680/
+  publisher: Valve / Steam
+  authors: []
+  published: "2022-08-16"
+  accessed: "2026-09-28"
+  type: game
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts]
+  notes: "Bird's Eye Games, published by MicroProse; released 2022-08-16 (DLC 'Winds of Change' 2024-08-16). Real-time tactics in an alternate 1989 Germany; Platoon Command system, on-the-fly Task Forces with off-map support, and Operations of several days with resource management between battles. The developer's 2026 'final update' post describes near-solo work since 2016. Developer country not stated."
+
+- id: steam-2023-flashpoint-southern-storm
+  title: "Flashpoint Campaigns: Southern Storm (Steam store page)"
+  url: https://store.steampowered.com/app/2366530/
+  publisher: Valve / Steam
+  authors: []
+  published: "2023-04-20"
+  accessed: "2026-09-28"
+  type: game
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, operational-sim, ew]
+  notes: "On Target Simulations / Matrix Games. Grand-tactical 1989 Cold War wargame: asynchronous WEGO turns, orders plus Standard Operating Procedures, 500 m hexes on 20×15 km+ real-world maps, 4–24 h battles, electronic warfare, air superiority, weather, morale and readiness. Predecessor Red Storm (2014); the page now points buyers to the successor Flashpoint Campaigns: Cold War (Steam, 2025-11-20)."
+
+- id: steam-2019-steel-division-2
+  title: "Steel Division 2 (Steam store page)"
+  url: https://store.steampowered.com/app/919640/
+  publisher: Valve / Steam
+  authors: []
+  published: "2019-06-20"
+  accessed: "2026-09-28"
+  type: game
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts, operational-sim]
+  notes: "Eugen Systems (France). Operation Bagration 1944. Turn-based 1:1-scale Dynamic Strategic Campaigns on maps up to 150×100 km where the player moves battalions and manages supply, then fights each engagement as a real-time battle or auto-resolves it; 600+ units, deck building. The clearest commercial model of an operational layer wrapped around tactical battles."
+
+- id: wikipedia-2024-men-of-war-ii
+  title: "Men of War II"
+  url: https://en.wikipedia.org/wiki/Men_of_War_II
+  publisher: Wikipedia
+  authors: []
+  published: "2024"
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts, ukrainian-studios]
+  notes: "Real-time tactics sequel developed by the Ukrainian studio Best Way (the original Soldiers / Faces of War / Men of War team), published by Fulqrum; released 2024-05-15 after the Russian invasion extended development and delayed release several times. Steam's developer field confirms Best Way. Encyclopedia, so medium."
+
+- id: steam-2021-gates-of-hell-ostfront
+  title: "Call to Arms - Gates of Hell: Ostfront (Steam store page)"
+  url: https://store.steampowered.com/app/400750/
+  publisher: Valve / Steam
+  authors: []
+  published: "2021-06-11"
+  accessed: "2026-09-28"
+  type: game
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts]
+  notes: "WWII RTS/RTT on the Men of War engine lineage. Legal notice: 'Developed by Barbedwire Studios in Sagunt. Published and co-developed by Digitalmindsoft'; the studio site gives a Sagunt, Spain address. So Gates of Hell is Spanish-developed, not Ukrainian."
+
+- id: steam-2026-gostomel-heroes
+  title: "Ukrainian Warfare: Gostomel Heroes (Steam store page)"
+  url: https://store.steampowered.com/app/3902520/
+  publisher: Valve / Steam
+  authors: []
+  published: "2026-03-31"
+  accessed: "2026-09-28"
+  type: game
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [prior-art, rts, propaganda]
+  notes: "Cats Who Play, released 2026-03-31. RTS of the Battle of Kyiv told from 'the brilliant Russian airborne assault' on Hostomel to the March 2022 Istanbul draft: modular damage without health bars, cover, morale and fatigue, resupply and encirclement, persistent squads, captured equipment, recon drones and large UAVs. Very Positive (1,841 of 2,040 reviews, 2026-09-28). A Steam appdetails query by region (2026-09-28) found it offered in the US, UK, Poland and Russia but not in the Ukrainian or German storefronts."
+
+- id: steam-2026-gostomel-heroes-dlc
+  title: "Announcement of the DLC 'Ukrainian Warfare: Gostomel Heroes – Battle Unfinished'"
+  url: https://store.steampowered.com/news/app/3902520/view/1834602721184667
+  publisher: Cats Who Play (Steam news)
+  authors: []
+  published: "2026-06-03"
+  accessed: "2026-09-28"
+  type: official
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [prior-art, propaganda]
+  notes: "Developer post: 'our next game on the topic of the Special Military Operation is just around the corner'. The free DLC adds a skirmish 'Battles' mode with two new maps, Hostomel ('Gostomel') and Bucha, using Russian place-name forms. Confirms the Russian framing that the store title obscures. Accessed via the Steam news API because the store page is region-locked here."
+
+- id: steam-2026-hell-of-war
+  title: "Hell Of War: Combined Arms (Steam store page)"
+  url: https://store.steampowered.com/app/3602640/
+  publisher: Valve / Steam
+  authors: []
+  published: "2026-09-24"
+  accessed: "2026-09-28"
+  type: game
+  origin: other
+  reliability: low
+  verified: fetched
+  eras: []
+  topics: [prior-art, rts, drones, command]
+  notes: "Ravens Row, early access 2026-09-24; English and Ukrainian audio. 'Real-Time Command Action': the player runs the fight from a command drone (reconnaissance, orders, fire support) and can drop into an infantry commander, an armoured vehicle, an FPV drone or a bomb-drop drone without pausing. Fire support (artillery, MLRS, guided and ballistic missiles, attack drones) is a limited resource. Brand-new and unreviewed, so low; developer country not stated."
 
 # ---------------------------------------------------------------- shooters / milsims
 - id: wikipedia-2020-squad
@@ -241,7 +421,7 @@
   verified: fetched
   eras: []
   topics: [prior-art, drones, charity]
-  notes: "Arcade drone game (early access May 2023, 1.0 2024-02-22), explicitly not a sim, with three roles: ground operator, quadcopter bomber and FPV. Missions cover demining, convoys and recovering kit. 30% of net proceeds (70% after break-even) go to Come Back Alive and Army of Drones. A critic line quoted on the page calls its mix of politics and games uncomfortable. Developer country not verified."
+  notes: "Arcade drone game (early access May 2023, 1.0 2024-02-22), explicitly not a sim, with three roles: ground operator, quadcopter bomber and FPV. Missions cover demining, convoys and recovering kit. 30% of net proceeds (70% after break-even) go to Come Back Alive and Army of Drones. A critic line quoted on the page calls its mix of politics and games uncomfortable. Developer Rockodile, publisher Lesser Evil; Germany-based (see steam-2026-death-from-above-germany)."
 
 - id: kyivindependent-2025-hodunova-squad22-zov
   title: "Not content with waging war inside Ukraine, Russia has now taken it into the virtual world"
@@ -257,6 +437,96 @@
   eras: [e1-invasion, e6-avdiivka-attrition]
   topics: [prior-art, propaganda, ethics, ukrainian-perspective]
   notes: "Squad 22: ZOV (SPN Studio, Russia, 2025) is a Russian MoD-backed RTT with 2014 Donbas, Mariupol 2022 and Avdiivka 2024 missions framed as 'liberation'. Blocked in Ukraine on Steam. Ukrainian critics call it genocide-justifying propaganda and urge a Valve appeal. The anti-pattern bavovniatko must not mirror."
+
+- id: steam-2024-gray-zone-warfare
+  title: "Gray Zone Warfare (Steam store page)"
+  url: https://store.steampowered.com/app/2479810/
+  publisher: Valve / Steam
+  authors: []
+  published: "2024-04-30"
+  accessed: "2026-09-28"
+  type: game
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, milsim, shooter]
+  notes: "MADFINGER Games (Brno, Czechia per Wikipedia), early access 2024-04-30. PvE-first open-world tactical shooter on a quarantined fictional Southeast Asian island. Not about this war; listed only to close the pass-1 lead."
+
+- id: wikipedia-2025-escape-from-tarkov
+  title: "Escape from Tarkov"
+  url: https://en.wikipedia.org/wiki/Escape_from_Tarkov
+  publisher: Wikipedia
+  authors: []
+  published: "2025"
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [prior-art, shooter, setting]
+  notes: "Battlestate Games' extraction shooter (1.0 on 2025-11-15). Set in the fictional city of Tarkov in the Norvinsk Special Economic Zone of north-western Russia, 2015–2026, in a war between two PMCs (USEC and BEAR); the 'Russia-2028' universe. A fictional internal-Russian conflict, not the Russo-Ukrainian war."
+
+- id: wikipedia-2025-4a-games
+  title: "4A Games"
+  url: https://en.wikipedia.org/wiki/4A_Games
+  publisher: Wikipedia
+  authors: []
+  published: "2025"
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [ukrainian-studios, wartime-development]
+  notes: "Metro developer, founded in Kyiv in 2006 by ex-GSC staff; moved HQ to Sliema, Malta in May 2014 'amidst the Russo-Ukrainian war', keeping a Kyiv sub-studio (part of which became the independent 'Reburn' in 2025). Before February 2022 Saber offered Kyiv staff relocation; the studio joined Ukrainian fundraising. Encyclopedia, so medium."
+
+- id: wikipedia-2025-frogwares
+  title: "Frogwares"
+  url: https://en.wikipedia.org/wiki/Frogwares
+  publisher: Wikipedia
+  authors: []
+  published: "2025"
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [ukrainian-studios, wartime-development]
+  notes: "Kyiv studio (Dublin subsidiary). From 24 Feb 2022 it documented the war's effect on staff; many joined humanitarian efforts or the volunteer army and the rest worked hybrid. It pulled its games from sale in Russia, relocated staff with an Epic MegaGrant, made the Sherlock Holmes: The Awakened remake its sole focus because of the war (Kickstarter as a 'safety net', release pushed to April 2023, no Russian language), then announced The Sinking City 2 (2024)."
+
+- id: euromaidanpress-2025-stalker2-gsc-undesirable
+  title: "While Ukrainian game S.T.A.L.K.E.R. 2: Heart of Chornobyl becomes global hit, Russia bans studio for 'aggressive Russophobia'"
+  url: https://euromaidanpress.com/2025/11/19/while-ukrainian-game-s-t-a-l-k-e-r-2-heart-of-chornobyl-becomes-global-hit-russia-bans-studio-for-aggressive-russophobia/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2025-11-19"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ukrainian-studios, wartime-development, propaganda]
+  notes: "Russia's Prosecutor General declared GSC Game World (registered in Czechia) 'undesirable', citing about $17m sent in 2022 to a fund that bought strike drones and vehicles for Ukrainian troops, and a 2024 game with 'Russophobic content'. STALKER 2 sold 1m copies in 48 h, ships with full Ukrainian voice acting, and original developer Volodymyr Yezhov was killed near Bakhmut in December 2022. Relays Mediazona, so medium."
+
+- id: wikipedia-2025-gsc-game-world
+  title: "GSC Game World"
+  url: https://en.wikipedia.org/wiki/GSC_Game_World
+  publisher: Wikipedia
+  authors: []
+  published: "2025"
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [ukrainian-studios, wartime-development]
+  notes: "Kyiv studio with a temporary Prague office. It paused STALKER 2 at the invasion, urged donations to the Armed Forces, and resumed by May 2022 after relocating part of the team to Prague; STALKER 2 released 2024-11-20. Declared 'undesirable' in Russia on 2025-11-18. Encyclopedia, so medium."
 
 # ---------------------------------------------------------------- drone games and training simulators
 - id: steam-2025-ufds
@@ -378,6 +648,126 @@
   eras: [e8-drone-kill-zone]
   topics: [gamification, ethics, drones]
   notes: "Critical essay on ADB: DELTA-verified ePoints, capture worth more than a kill, evacuating wounded worth more than strikes. Raises Goodhart's-law risks (chasing point-rich targets, redundant strikes), civilians' eVorog reports blurring into targeting, and leaderboard/e-commerce aesthetics. Essential for the ethics of any in-game score economy."
+
+- id: steam-2026-death-from-above-germany
+  title: "Death From Above is part of Games Composed in Germany!"
+  url: https://store.steampowered.com/news/app/2300160/view/1838407329266088
+  publisher: Lesser Evil (Steam news)
+  authors: []
+  published: "2026-07-20"
+  accessed: "2026-09-28"
+  type: official
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [drone-games, developer-country]
+  notes: "First-party post placing Death From Above in Steam's 'Games Composed in Germany' showcase of the German games industry; an earlier post names Hendrik Lesser as game director. Settles the developer country as Germany. A September 2025 post reports EUR 20,500 donated in total to Army of Drones and Come Back Alive (pledge: 30% of net proceeds until break-even, then 70%); a December 2025 free skin pack was co-designed with Ukraine's Unmanned Systems Forces."
+
+- id: steam-2025-remote-reaper
+  title: "Remote Reaper: FPV Combat Drone Simulator (Steam store page)"
+  url: https://store.steampowered.com/app/3295810/
+  publisher: Valve / Steam
+  authors: ["Vladyslav Fomenko"]
+  published: "2025-04-04"
+  accessed: "2026-09-28"
+  type: game
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drone-games, fpv, ew, trainer]
+  notes: "'Made by an independent Ukrainian developer in constant collaboration with active pilots'. Jamming hits both control and video links, different enemy EW patterns, terrain between ground station and drone weakens the link, battery limits, armour weak spots, warhead choice (shaped charge, HE-frag, EFP) in a drone editor, real RC radios, co-op and mission editor. Very Positive (242 of 260 reviews positive, 2026-09-28). Vendor text, so medium."
+
+- id: euromaidanpress-2026-ufds-interceptors
+  title: "Ukraine is fielding more drone-hunters than ever. Free simulator now lets operators learn each one before it reaches their hands"
+  url: https://euromaidanpress.com/2026/08/22/ukraine-is-fielding-more-drone-hunters-than-ever-free-simulator-now-lets-operators-learn-each-one-before-it-reaches-their-hands/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2026-08-22"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [drone-trainers, interceptors, ufds]
+  notes: "Drone Fight Group integrated the P1-SUN (SkyFall) and Bullet (General Cherry) interceptors into UFDS Military, the first real interceptor drones in the military version; the full version is free to units via a request form, a public version is on Steam, and more real Ukrainian systems are planned. Relays the developer's own report, so medium."
+
+- id: euromaidanpress-2025-seagull-flyswatter
+  title: "Ukrainian troops train to shoot down drones using Seagull and Flyswatter VR simulators"
+  url: https://euromaidanpress.com/2025/11/28/ukrainian-troops-train-to-shoot-down-drones-using-seagull-and-flyswatter-vr-simulators/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2025-11-28"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [training-sims, air-defence, domestic-sims]
+  notes: "Per a 27 Nov 2025 MoD statement, the Chaika (Seagull) and Chaika-M ('Flyswatter') VR air-defence simulators were codified for the Armed Forces. They train against FPVs, Lancets, Shaheds and cruise missiles with virtual Igla and Stinger MANPADS, DShK and M2 machine guns and small arms, including night scenes and a searchlight for mobile fire groups; the MoD claims 'significant skill improvement after just 7–10 sessions'."
+
+- id: kyivpost-2026-korshak-epoints
+  title: "Ukraine Drone Troops Claim Big Russian Kill Scores, Announce Expansion Plans for 2026"
+  url: https://www.kyivpost.com/post/68951
+  publisher: Kyiv Post
+  authors: [Stefan Korshak]
+  published: "2026-01-28"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [e-points, gamification, drones]
+  notes: "Price list as of January 2026: soldier killed 12, wounded 8, drone operator killed or wounded 25, tank 40, MLRS 50, manned helicopter 100, soldier captured alive 120. Traces the scheme to Fedorov's 2023 initiative; does not date individual value changes. Same id as in file 07."
+
+- id: euromaidanpress-2026-epoints-self-destruction
+  title: "Ukraine may award drone-purchase points when Russian soldiers kill themselves under drone pressure"
+  url: https://euromaidanpress.com/2026/03/30/ukraine-may-award-drone-purchase-points-when-russian-soldiers-kill-themselves-under-drone-pressure/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2026-03-30"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [e-points, gamification, ethics]
+  notes: "A confirmed kill is 12 points. After soldier-journalist Pavlo Kazarin's unit spent two FPVs on a soldier who then killed himself and got zero credit, Defence Minister Fedorov (29 Mar 2026) floated 12 points for video-confirmed 'self-destruction' in a unit's zone. Scoring had recently expanded to sniping, mobile fire groups and army aviation, and points can now buy components as well as complete systems. A live example of Goodhart-style edge cases forcing rule changes."
+
+- id: euromaidanpress-2026-delta-recon-ranking
+  title: "Ukraine ranks its drone units on how deep they see. The 413th has been at top for three months"
+  url: https://euromaidanpress.com/2026/06/05/ukraine-ranks-its-drone-units-on-how-deep-they-see-the-413th-has-been-at-top-for-three-months/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2026-06-05"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [e-points, isr, delta, leaderboard]
+  notes: "Delta awards e-points for verified detections of high-value targets (air defence, radars, self-propelled artillery, armour, MLRS) more than 15 km from the line of contact, and ranks units monthly; the USF's 413th 'Reid' Regiment was 1st in March and April and 2nd in May 2026. The 15 km threshold filters out frontline observation. Relays unit and Delta reports, so medium."
+
+- id: euromaidanpress-2026-epoints-400-units
+  title: "Ukraine turned combat into currency: more than 400 units now shop for their own weapons with points earned in battle"
+  url: https://euromaidanpress.com/2026/06/24/ukraine-turned-combat-into-currency-more-than-400-units-now-shop-for-their-own-weapons-with-points-earned-in-battle/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2026-06-24"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [e-points, brave1, procurement, gamification]
+  notes: "Per Fedorov: 400+ units have ordered 500,000+ drones, UGVs and other systems via Brave1 Market with e-points; points now also cover reconnaissance, logistics and evacuation missions. The updated programme launched in August 2025 tied to Brave1 Market; 800+ Ukrainian products listed; DOT-Chain Defence handles payment and delivery; public leaderboard led by Birds of Madyar. Its 'roughly six points' per kill repeats the 2025 figure, not the 12 reported from January 2026."
 
 # ---------------------------------------------------------------- board / hobby wargames
 - id: gmt-2025-defiance
@@ -621,6 +1011,96 @@
   topics: [professional-wargaming, training-sim, ukrainian-military]
   notes: "The National Guard adopted a Ukrainian-localised Steel Beasts Pro (eSim Games) after a two-year effort by Oleksii Lytvynenko with the Boryviter school, despite bureaucratic obstacles. 20+ courses, 20+ units, 600+ trial licences; trains crew up to brigade, covering ballistics, engineering and logistics."
 
+- id: govuk-2024-dstl-slitherine-gaming-tech
+  title: "Gaming tech used to support Defence decision-making"
+  url: https://www.gov.uk/government/case-studies/gaming-tech-used-to-support-defence-decision-making
+  publisher: UK Government (Dstl)
+  authors: []
+  published: "2024-12-18"
+  accessed: "2026-09-28"
+  type: official
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: [professional-wargaming, dstl, commercial-engines, autonomy]
+  notes: "Dstl and Slitherine/Matrix Pro Simulations (partnership since 2019) built professional wargames on commercial game tech for force structure, capability assessment and contingency planning, including wargaming the British Army's structure and 'the potential of remote and autonomous systems'. Claims a 50% cut in analysis time and cost. Official, so high for the facts; the savings figure is self-reported. No public Dstl game on Ukraine drone lessons was found."
+
+- id: guardian-2026-sabbagh-arrcade-strike
+  title: "Mind the drone gap: war games begin inside secret Nato bunker in London tube station"
+  url: https://www.theguardian.com/uk-news/2026/may/22/drone-shortage-london-underground-nato-british-military
+  publisher: The Guardian
+  authors: [Dan Sabbagh]
+  published: "2026-05-22"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [professional-wargaming, nato-russia, drones]
+  notes: "Exercise Arrcade Strike (ARRC, under Charing Cross station): defending Estonia from a Russian invasion in 2030 from a 'Ukraine-style bunker'. The plan uses thousands of drones to lead a counterattack; the British Army is estimated to be 80–90% short of the drones it needs and would run out in under a week at a few hundred a day; AI (project Asgard) is meant to cut targeting from 72 h to 2 h. Also cited £50m a year for one-way attack drone volume and £500m for advanced systems."
+
+- id: paxsims-2026-hybrid-warfare-nato-cohesion
+  title: "Hybrid warfare and NATO cohesion"
+  url: https://paxsims.wordpress.com/2026/02/05/hybrid-warfare-and-nato-cohesion/
+  publisher: PAXsims
+  authors: [Rex Brynen]
+  published: "2026-02-05"
+  accessed: "2026-09-28"
+  type: review
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [professional-wargaming, nato-russia, drones, mining]
+  notes: "Summarises (via the paywalled WSJ) a December 2025 Die Welt / German Wargaming Center (Helmut Schmidt University) game: Russia seizes Marijampolė under a Kaliningrad 'humanitarian' pretext; the US declines Article 5; the German brigade in Lithuania fails to intervene 'in part because Russia used drones to lay mines on roads leading out of its base'; about 15,000 Russian troops suffice. A Baltic ambassador publicly questioned the assumption that Lithuania would not fight."
+
+- id: canadianarmytoday-2026-thatcher-wargaming-modernization
+  title: "Wargaming modernization"
+  url: https://canadianarmytoday.com/wargaming-modernization/
+  publisher: Canadian Army Today
+  authors: [Chris Thatcher]
+  published: "2026-04-01"
+  accessed: "2026-09-28"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [professional-wargaming, force-design, drones, ukraine-lessons]
+  notes: "Canadian Army Modernization Team games 2024–26 (structure, infantry optimisation, mobilisation), with Maj Ed Farren (designer of the Glory to the Heroes board game) as project officer. Key lesson: a platoon with a drone beats one without, 'but that wasn't the problem. The problem was that the adversary's sense and strike complex was pretty much unassailable', and nobody could take it apart by jamming, counter-UAS or counter-battery. Trade magazine, so medium."
+
+- id: mwi-2025-hood-matisek-tingle-learn-or-lose
+  title: "Learn or Lose: Lessons from Ukrainian Training in Germany"
+  url: https://mwi.westpoint.edu/learn-or-lose-lessons-from-ukrainian-training-in-germany/
+  publisher: Modern War Institute at West Point
+  authors: [Joshua Hood, Jahara Matisek, Anthony Tingle]
+  published: "2025-08-05"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [professional-wargaming, training, drones, ukraine-lessons]
+  notes: "Interview-based critique of NATO training for Ukrainians. The German colonel running Ukrainian staff training 'used a wargame scenario straight out of the Cold War, refusing to add drones and other modern weaponry'; JMTG-U cited 'broken simulation platforms' and wargaming support delivered too late. Ukrainians 'threw up' a drone course until it was rebuilt around frontline drone TTPs (June 2025). Commentary, so medium."
+
+- id: wotr-2025-votel-military-gaming
+  title: "Military Gaming to Stay Ahead, But Not the Kind You Think"
+  url: https://warontherocks.com/military-gaming-to-stay-ahead-but-not-the-kind-you-think/
+  publisher: War on the Rocks
+  authors: [Joseph L. Votel]
+  published: "2025-08-29"
+  accessed: "2026-09-28"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [professional-wargaming, commercial-games, drones, russia]
+  notes: "Retired US general (advisor to a games studio, declared) urges the US military to adopt digital games for training in environments of 'electronic jamming, drones, sensors, and missiles'. Notes Russia has codified PC-based simulator training for drone and anti-drone operators and that Squad 22: ZOV's makers claim military recommendation. Advocacy with a declared interest, so medium."
+
 # ---------------------------------------------------------------- critical / academic
 - id: ehgs-2026-kot-ukrainian-games-of-war
   title: "Ukrainian Games of War: Born in the Flames of Invasion"
@@ -651,3 +1131,33 @@
   eras: []
   topics: [ethics, propaganda, children]
   notes: "Covers Roblox war games ('War on Larkiv: Ukraine', 90k plays in two weeks before removal; 'Battle for Ukraine') where children play either side, a Donetsk-like CoD map, and the Ukrainian counter-game fArmy. Argues such games normalise the war for kids. Activist blog, so medium."
+
+- id: tandf-2024-usachova-play-for-ukraine
+  title: "Play for Ukraine: wargaming as a resistance pleasure"
+  url: https://doi.org/10.1080/14735784.2024.2379814
+  publisher: Culture, Theory and Critique (Taylor & Francis)
+  authors: [Olga Usachova]
+  published: "2024-09-19"
+  accessed: "2026-09-28"
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [ethics, ukrainian-perspective, cyber, game-studies]
+  notes: "Vol. 64 (1–2), pp. 179–195 (issue dated 2023, online 19 Sep 2024), open access CC BY; author at NTNU. Studies Play for Ukraine, a game by Ukrainian IT specialists in which players run concealed DDoS attacks on websites said to serve the Russian army, as a 'resistance pleasure' that makes players 'digital soldiers'. Metadata and abstract fetched via Crossref/OpenAlex; the publisher page returns 403."
+
+- id: obraz-2024-zinovieva-deep-media
+  title: "Video Games As Deep Media: Challenges During The Russian-Ukrainian War"
+  url: https://obraz.sumdu.edu.ua/index.php/journal/article/view/25
+  publisher: Obraz (Sumy State University)
+  authors: [Tetiana Zinovieva]
+  published: "2024"
+  accessed: "2026-09-28"
+  type: academic
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [ethics, ukrainian-perspective, propaganda, game-studies]
+  notes: "Ukrainian scholar (Odesa Polytechnic). Vol. 44 (1), pp. 45–57; DOI 10.21272/obraz.2024.1(44)-45-57. Argues war games act as immersive 'deep media' used for information dissemination and counter-propaganda, and that this role calls for ethical and regulatory frameworks for game design. A Ukrainian journal article; the argument is general, so medium."

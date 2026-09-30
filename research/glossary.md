@@ -33,15 +33,19 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **optovolokno / optyka** (оптоволокно) | Fibre-optic FPV drone, steered through an unspooling cable and immune to radio jamming. | 00, 01, 02, 05 |
 | **moped / mopedy** (мопед) | Shahed/Geran drones, named for the moped-like sound of their engines. | 00, 01, 02, 03, 05 |
 | **shakhedy** (шахеди) | Shaheds, used generically for Geran one-way attack drones. | 01, 03 |
-| **Baba Yaga / Babka / Baba Yaha** | The folk witch. Russian soldiers' name for Ukrainian heavy night bomber drones, which Ukrainians adopted. | 01, 05 |
+| **Baba Yaga / Babka / Baba Yaha** | The folk witch. Russian soldiers' name for Ukrainian heavy night bomber drones, which Ukrainians adopted. Russia's own copies carry the same nickname. | 01, 05 |
 | **zhdun** (pl. *zhduny*) | "Waiter": an ambush drone that lands near a road and waits for a target. | 02 |
 | **mangal** | "Barbecue grill": improvised cage armour against drones. | 02, 04 |
 | **cherepakha** (черепаха) | "Turtle": a Russian vehicle fully boxed in against drones. | 02, 04 |
 | **sitka / tunel** | Anti-drone netting, and a net tunnel over a road. | 02 |
-| **okopnyi REB / kupol / ryukzak REB** | Trench jammer, a jammer's protective "dome", and a backpack jammer. | 02 |
+| **okopnyi REB / kupol / ryukzak REB** | Trench jammer, a jammer's protective "dome", and a backpack jammer. *Kupol* is also part of the name of the Russian Starlink jammer Volna Kupol Garant. | 02 |
 | **REBivets** | EW operator. | 02 |
 | **maket** (макет) | Decoy or mock-up, such as a fake HIMARS. | 05 |
 | **SZCh** (СЗЧ) | Leaving a unit without authorisation, i.e. AWOL (Criminal Code Art. 407). Desertion is Art. 408. | 04 |
+| **"Liberated" vs "restored control"** | Ukrainian official wording. "Restored control" covers grey-zone areas cleared of infiltrators rather than taken from full Russian control. | 00 |
+| **Kontrakt 18–24** (контракт 18–24) | Ukraine's one-year voluntary contract for men below mobilisation age. | 04 |
+| **armiiska aviatsiia** (армійська авіація) | Army aviation, the Ukrainian helicopter branch. It is now also an anti-Shahed force. | 03 |
+| **lisnytstvo** (лісництво) | Forestry district: a named, managed forest block, such as the Serebrianske lisnytstvo. | 06 |
 | **TTsK** (ТЦК) / **busyfikatsiia** | The territorial recruitment centre (draft office), and slang for forcible street mobilisation into vans. | 04 |
 
 ## Russian terms (as reported)
@@ -53,10 +57,19 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **Storm-Z / Storm-V** | MoD penal assault units of convicts. Z came with pardons (2023); V has none. | 00, 04 |
 | **obnulit** | To "zero" someone, i.e. execute them. The threat used against Russians who retreat. | 04 |
 | **BTG** | Battalion tactical group, the 2022 unit of action. Largely replaced by regiments and divisions by 2023. | 00, 04 |
-| **Rubikon** | Russia's elite Centre for Advanced Unmanned Technologies (drone interdiction). | 00, 01, 05 |
+| **Rubikon** | Russia's elite Centre for Advanced Unmanned Technologies (about 5,000 personnel), used for deep drone interdiction and for hunting drone crews. | 00, 01, 04, 05 |
 | **Strelets** | Russian reconnaissance, fire-control and communications data system. | 03, 05 |
 | **Reconnaissance-fire/strike complex (RFC/RSC)** | The Soviet and Russian sensor-to-shooter network concept. RUSI calls it the "Reconnaissance Fires Circuit". | 03, 05 |
 | **Surovikin line** | The fortified belt in Zaporizhzhia built in 2022–23. | 04 |
+| **"Beautiful reports"** | Russian milblogger term for inflated reports of advances sent up the chain of command. | 00 |
+| **Izdeliye** (изделие; Ukrainian *vyrib*) | "Product", a Russian industrial designation, as in Izdeliye-53 (a Lancet successor) or Izdeliye 305 (LMUR). | 01, 03 |
+| **Zemledeliye** (Земледелие, "agriculture") | ISDM truck-mounted rocket minelayer that scatters mines 5–15 km away. | 04 |
+| **Rassvet** ("dawn") | Bureau 1440's Russian LEO satellite constellation, the planned Starlink substitute. It gives about 90 minutes of coverage a day as of 2026. | 02, 05 |
+| **Volna Kupol Garant** | Russian dish-array jammer that deafens Starlink satellites over about 20 km². It jams Ukraine's Starlink rather than replacing Russia's. | 02, 05 |
+| **Shtora** ("curtain") | Russian image-spoofing system aimed at drone video feeds. | 02 |
+| **Glaz/Groza, Svod** | Russian volunteer-built drone-to-fires software ("eye/thunderstorm"), and the Russian MoD's tactical situational-awareness complex. | 05 |
+| **ASTRAS** | Russian messenger-style command-post software, reported as a Delta analogue. | 05, 07 |
+| **BAI** | Battlefield air interdiction: ISW's term for Russia's drone campaign against Ukrainian supply routes and vehicles in the near rear. | 05 |
 
 ## Weapons and systems
 
@@ -68,6 +81,13 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **FAB-250/500/1500/3000** | Russian general-purpose high-explosive bombs, numbered by weight in kg. | 03 |
 | **Shahed / Geran-2 / Geran-3/4/5 / Gerbera** | The Iranian-designed one-way attack drone and its Russian-built versions: piston engine, then jet (Geran-3 onward, with the Geran-5 air-launched from Jan 2026). Gerbera is a decoy. | 00, 01, 02, 03 |
 | **Lancet / Molniya** | Russian loitering munition, and a plywood fixed-wing strike drone. | 01 |
+| **LMUR** (Izdeliye 305) | Russian light multipurpose guided missile for Ka-52M and Mi-28NM helicopters, with about 15 km range. | 03 |
+| **PAC-3** | The Patriot interceptor variant Ukraine relies on against ballistic missiles. Supply is squeezed by the 2026 Iran war. | 00, 03 |
+| **APS / Arena-M** | Active protection system: radar-cued launchers that fire at incoming munitions or drones. An Arena-M tank took 15–20 FPVs to kill. | 02, 04 |
+| **Mesh / mesh modem** | A radio network in which every node relays for the others, so the network survives losing nodes. The Chinese XK-F358 modem is used on Gerans, and Russian mesh chains control drones out to 150–175 km. | 02, 05 |
+| **Pokrova** ("protective veil") | Ukraine's nationwide GNSS-spoofing system. Lima is its main component. | 02 |
+| **Analogue vs digital video** | Cheap detectors can intercept and view analogue FPV video. Digital video can only be sensed as a signal, not viewed. | 02 |
+| **Chaika / Chaika-M** | Ukrainian VR air-defence simulators, codified by the MoD in 2025. | 08 |
 | **Vampir (Vampire)** | SkyFall's heavy hexacopter bomber. | 01 |
 | **Kazhan** ("Bat") | Heavy multirotor bomber drone, also used for resupply drops. | 05 |
 | **Liutyi** ("fierce") | Ukrainian long-range strike drone. | 01 |
@@ -94,14 +114,16 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **Delta** | Ukraine's cloud-based situational-awareness and battle-management system. It also verifies e-point claims. | 01, 05, 07, 08 |
 | **Vezha** ("tower") / **Mission Control** | Delta's video-analysis platform, and its module for planning and reporting drone missions. | 05, 07 |
 | **Avengers** | MoD AI platform that detects targets in drone and camera video. | 05, 07 |
+| **Deltamonitor / Target Hub** | Delta modules for the live map and for assigning strike tasks. | 07 |
+| **People's Satellite** | Crowdfunded ICEYE SAR satellite whose imagery goes to HUR. | 05 |
 | **Kropyva** ("nettle") | Ukrainian artillery C2 and mapping app, in use since 2014. | 03, 05, 07 |
 | **GIS Arta** | Ukrainian fire-allocation software, the "Uber for artillery". | 05 |
 | **Ye-baly / e-points / Army of Drones Bonus** (Є-бали) | Points earned for verified strikes and spent on Brave1 Market. The programme gamifies real combat. | 01, 05, 07, 08 |
 | **Brave1 / Brave1 Market** | The government defence-tech cluster, and its marketplace. | 01, 07, 08 |
 | **Liniia droniv** | The Drone Line project, which aims for a 10–15 km drone-dominated zone. | 01 |
-| **Middle strike / Logistical Lockdown** | Ukrainian drone strikes at 25–200 km depth against logistics, air defence and command posts, and Fedorov's 2026 programme to scale them up. | 05 |
-| **Starlink whitelist** | The Feb 2026 registry of approved terminals. Unregistered (mostly Russian) terminals were cut off. | 02, 05 |
-| **GEGD** | US programme that gave Ukraine access to commercial Maxar satellite imagery. Suspended in March 2025. | 05 |
+| **Middle strike / Logistics Lockdown** | Ukrainian drone strikes at about 20–200 km depth against logistics, air defence and command posts. Logistics Lockdown is the MoD programme (27 May 2026) that funds middle-strike units through e-points, launched under Fedorov and continued under Khmara; the Kyiv Independent calls it "Logistical Lockdown". | 05 |
+| **Starlink whitelist** (*bilyi spysok*, білий список) | The registry of verified Starlink terminals, created 2 Feb 2026 and enforced from 5 Feb. Unregistered (mostly Russian) terminals stopped working in Ukraine. | 02, 05 |
+| **GEGD** | US programme that gave Ukraine access to commercial Maxar satellite imagery. Suspended for about a week in March 2025. | 05 |
 | **Emit and die** | Any detectable emission invites direction finding and a strike. | 02 |
 
 ## Organisations and places
@@ -109,6 +131,7 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | term | meaning | topics |
 |---|---|---|
 | **ZSU** (Zbroini Syly Ukrainy) | Armed Forces of Ukraine. | 00 |
+| **DShV** (Desantno-shturmovi viiska) | Air Assault Forces, the core of the 2026 Oleksandrivka offensive. | 00 |
 | **TrO** (Terytorialna oborona) | Territorial Defence Forces. | 00 |
 | **SBS** (Syly bezpilotnykh system) | Unmanned Systems Forces, commanded from June 2025 by Robert "Madyar/Magyar" Brovdi. | 00, 01 |
 | **HUR** | Defence Intelligence of Ukraine. | 00 |
@@ -125,6 +148,9 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **ORDLO / CADR and CALR** | "Certain Areas of Donetsk/Luhansk Regions", occupied since 2014. Drawn separately from the post-2022 occupation. | 07 |
 | **TOT** | Temporarily occupied territories, the official Ukrainian term. | 07 |
 | **Direction of attack** (напрямок удару) | DeepState's arrow icon for Russian offensive axes. | 07 |
+| **Net change** | DeepState's monthly figure: the change in total Russian-occupied area. It hides gross gains and recaptures, which 07 §2.7 separates. | 07 |
+| **OPSEC release** | A delayed batch of Ukrainian gains that DeepState publishes after an operation's security window has passed. | 07 |
+| **Counterattack vs counteroffensive** | ISW's usage: a counterattack is tactical, while a counteroffensive is operational-level, like Kharkiv or Kherson in 2022. Ukrainian officials avoided the word "counteroffensive" in Feb 2026. | 00 |
 | **Assessed vs claimed / infiltration area** | ISW's evidence tiers (backed by open-source evidence vs asserted by a party), and its layer, added in December 2025, for areas where Russian small groups operate without assessed control. | 07 |
 | **ROCA / CoT** | ISW/CTP's daily *Russian Offensive Campaign Assessment*, and its control-of-terrain layer. | 07 |
 | **Flag operation** | Planting a flag in a contested settlement for a photo, to fake a capture. | 07 |
@@ -132,7 +158,7 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **APP-6 / MIL-STD-2525, SIDC** | The NATO and US military symbology standards, and the code string that fully specifies a symbol. | 07 |
 | **Amplifier / modifier, echelon** | Text or graphic fields around an APP-6 frame, and the unit-size marker drawn above it. | 07 |
 | **OSD** | On-screen display, the telemetry overlay on an FPV video feed. | 07 |
-| **White-hot / black-hot** | Monochrome thermal palettes. | 07 |
+| **White-hot / black-hot** | Monochrome thermal palettes, in which hotter objects appear white or black. Colour palettes include iron red (FLIR "ironbow"), arctic and rainbow. | 07 |
 | **Geolocation** | Establishing where footage was shot by matching it to maps or satellite imagery. | 07 |
 
 ## Terrain
@@ -152,6 +178,7 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **kolhosp / radhosp** | Soviet collective and state farms, the origin of the large-field grid. | 06 |
 | **Velykyi Luh** | The "Great Meadow", the Dnipro floodplain once drowned by the Kakhovka reservoir and now regrowing. | 06 |
 | **DSM vs DTM** | A surface model that includes trees and buildings (e.g. Copernicus DEM), versus a bare-earth terrain model. | 06 |
+| **Longitudinal vs perpendicular attack** | Assaulting along a shelterbelt's interior from its flank, versus crossing the open field into it (Parfonov). | 06 |
 
 ## Wargaming and game terms
 
@@ -169,4 +196,9 @@ Terms marked *(unverified)* are common usage that no source in this pack confirm
 | **KShVI** | Russian command-staff military games. | 08 |
 | **Goodhart's law** | When a measure becomes a target, it stops measuring what matters. Relevant to e-points. | 08 |
 | **Lob / pitch-up fire** | A helicopter or jet climbs and releases unguided rockets on a ballistic arc, staying out of MANPADS range. | 03 |
+| **SEAD / DEAD, GLOC** | Suppression or destruction of enemy air defences; ground line of communication (a road or rail supply route). | 03 |
+| **Sense-and-strike complex** | The linked sensors, C2 and fires that find and hit targets within minutes. Canadian games found it the hardest thing to break. | 08 |
+| **Loitering ammunition** (Broken Arrow) | Broken Arrow's term for its planned one-way attack munitions. | 08 |
+| **RTCA** | "Real-time command action": Hell Of War's label for a command-drone view with drop-in direct control. | 08 |
+| **SOP** | Standard operating procedure. In Flashpoint Campaigns, the standing rules units follow between orders. | 08 |
 | **FARP / IADS / CAP / stand-off** | Forward arming and refuelling point; integrated air defence system; combat air patrol; releasing a weapon from outside the enemy's air-defence envelope. | 03 |

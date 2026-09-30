@@ -226,21 +226,6 @@
   topics: [north-korea, adaptation]
   notes: "North Korean units dropped Soviet-style company assaults for small teams and adopted anti-drone drills, their own FPV and reconnaissance drone teams, and mobile ATGM crews."
 
-- id: wikipedia-nk-involvement
-  title: "North Korean involvement in the Russo-Ukrainian war"
-  url: https://en.wikipedia.org/wiki/North_Korean_involvement_in_the_Russo-Ukrainian_war
-  publisher: Wikipedia
-  authors: []
-  published: unknown
-  accessed: "2026-09-28"
-  type: encyclopedia
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [north-korea, manpower]
-  notes: "Navigation only. Initial force of about 12,000 (October 2024). In June 2025, 1,000 deminers and 5,000 military builders were announced for Kursk. Casualty claims are tabulated by claimant."
-
 - id: aljazeera-2025-psaropoulos-pokrovsk
   title: "Russia infiltrates Pokrovsk with new tactics that test Ukraine's drones"
   url: https://www.aljazeera.com/amp/news/2025/11/6/russia-infiltrates-pokrovsk-with-new-tactics-that-test-ukraines-drones
@@ -348,7 +333,7 @@
 
 - id: isw-2026-09-26-assessment
   title: "Russian Offensive Campaign Assessment, September 26, 2026"
-  url: https://www.criticalthreats.org/analysis/russian-offensive-campaign-assessment-september-26-2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/
   publisher: ISW / Critical Threats Project
   authors: []
   published: "2026-09-26"
@@ -356,10 +341,10 @@
   type: think-tank
   origin: western
   reliability: high
-  verified: search-only
+  verified: fetched
   eras: [e9-counteroffensive-26]
-  topics: [counter-infiltration, offensive-operations]
-  notes: "403 when fetched. Search snippets (possibly quoted via NV) say Vivaldi's first phase defeated infiltration groups by hitting the ATV and motorcycle assaults sent to reinforce them, and that the Russian push near Lyman had fully stalled by 22 September."
+  topics: [counter-infiltration, offensive-operations, infiltration]
+  notes: "Live page returns 403 to scripts; read via the Wayback Machine snapshot of 27 Sep 2026. Vivaldi phase 1 targeted the ATV and motorcycle assaults reinforcing stranded infiltrators, then struck GLOCs; Ukraine now applies this 'target the reinforcement' pattern across sectors. Russia has made near-zero net gains since March 2026; infiltration 'chessboard' in northern Kharkiv; glide bombs create ruins for later infiltration; dried Kakhovka reservoir bed used for infiltration."
 
 - id: kyivindependent-2026-farrell-corps
   title: "Analysis: Syrskyi's flawed, unfinished corps system key for Ukraine's front-line stability"
@@ -464,7 +449,7 @@
   verified: fetched
   eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
   topics: [casualties]
-  notes: "Independent Russian outlet (with BBC Russian). Name-verified count of the dead, which is a floor: 7,692 officers, 15 generals, about 20,500 mobilized; volunteers the largest category since 2024. Also covers the probate-registry method."
+  notes: "Independent Russian outlet (with BBC Russian). Name-verified count of the dead, which is a floor: about 259,000 by 21 Sep 2026, 7,692 officers, 15 generals, about 20,500 mobilized; volunteers the largest category since 2024. Also covers the probate-registry method."
 
 - id: kyivindependent-2026-hyatt-mediazona
   title: "Over 248,000 Russian soldiers killed in Ukraine identified by media investigation"
@@ -615,3 +600,500 @@
   eras: [e9-counteroffensive-26]
   topics: [manpower, russian-recruitment]
   notes: "Russian sign-up bonuses in March 2026: federal minimum 400k RUB; regional mean 1.47M, median 1.55M; up to 3.6M (YaNAO, Magadan). Recruitment about 800/day, down about 20% (citing Kluge)."
+
+- id: euromaidan-2026-helme-draft-crisis
+  title: "As Ukraine's draft crisis erupts in Lviv, its own soldiers keep walking out"
+  url: https://euromaidanpress.com/2026/07/10/ukraine-mobilization-crisis-deferred-decision/
+  publisher: Euromaidan Press
+  authors: [Peeter Helme]
+  published: "2026-07-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [manpower, mobilization, awol]
+  notes: "Opinion column. No demobilisation law; service tied to martial law. MP Roman Kostenko (Dec 2025): Ukraine mobilises about 30,000 a month, about half of need. 51,000 AWOL in 2024. The 2026 contract reform is read by soldiers as a clock reset rather than a way home."
+
+- id: euromaidan-2026-helme-syrskyi-silence
+  title: "Ukraine's army chief broke his silence—an apology, a warning on soldiers' pay, and one small number"
+  url: https://euromaidanpress.com/2026/07/21/syrskyi-breaks-silence-fedorov-protests/
+  publisher: Euromaidan Press
+  authors: [Peeter Helme]
+  published: "2026-07-21"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [manpower, contracts, force-structure]
+  notes: "Fixed-term contracts opened 15 June 2026 (10-14 months in infantry-assault roles, 24 months elsewhere, guaranteed deferral afterwards). Syrskyi (Militarnyi column): about 2,000 had signed a month later; pay money diverted to drones. Context: Fedorov dismissed as defence minister, protests, Khmara acting minister."
+
+- id: euromaidan-2026-mukhina-awol-return
+  title: "More than 100,000 Ukrainian soldiers went AWOL. Ukraine's answer isn't punishment but choice of where to serve"
+  url: https://euromaidanpress.com/2026/08/01/more-than-100000-ukrainian-soldiers-went-awol-ukraines-answer-isnt-punishment-but-choice-of-where-to-serve/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-08-01"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [manpower, awol, contracts]
+  notes: "MoD voluntary-return programme for SZCh cases recorded by 12 June 2026, reports until 20 Sep 2026, choice of 70+ units. Cumulative AWOL 'more than 100,000'. New Commander-in-Chief Mykhailo Drapatyi launches a force-wide manning audit."
+
+- id: euromaidan-2026-katola-18-24
+  title: "She made sushi last year—now she flies combat drones for Ukraine's army"
+  url: https://euromaidanpress.com/2026/08/20/she-made-sushi-last-year-now-she-flies-combat-drones-for-ukraines-army/
+  publisher: Euromaidan Press
+  authors: [Zoriana Katola]
+  published: "2026-08-20"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [manpower, contracts, drones]
+  notes: "'18-24' programme launched 11 Feb 2025 (1M UAH bonus, up to 120k UAH a month); drone track added July 2025 (2 years). Only about 500 recruits by December 2025 (citing United24). About a third of Ground Forces recruitment-centre candidates in early 2026 chose drone roles."
+
+- id: euromaidan-2025-murdoch-budanov-403k
+  title: "Budanov: Russia recruited 403,000 soldiers in 2025, will aim higher next year"
+  url: https://euromaidanpress.com/2025/12/26/russia-recruited-403000-soldiers-in-2025/
+  publisher: Euromaidan Press
+  authors: [Benjamin Murdoch]
+  published: "2025-12-26"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [russian-recruitment, manpower]
+  notes: "HUR chief Budanov (Suspilne interview): Russia's 2025 plan of 403,000 contract recruits was met in early December; 2026 plan is 409,000. Earlier 2025 HUR rate about 35,000 a month. Belligerent intelligence claim."
+
+- id: euromaidan-2026-midttun-losses-recruits
+  title: "Russia now loses more soldiers than it recruits. But the war won't end because of that."
+  url: https://euromaidanpress.com/2026/07/06/russia-now-loses-more-soldiers-than-it-recruits-but-the-war-wont-end-because-of-that/
+  publisher: Euromaidan Press
+  authors: [Hans Petter Midttun]
+  published: "2026-07-06"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e1-invasion, e5-counteroffensive-23, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [casualties, russian-recruitment, drones]
+  notes: "Analyst column built on Ukrainian General Staff daily data: Russian KIA:WIA from about 1:3 (2022) to 1:1.3 (2025) to a projected 2:1 (2026). Low: the KIA split is the author's own assessment and conflicts with Syrskyi's 2025 figure (416,550 losses, about 110,000 dead). Also Syrskyi (The Times): H1 2026 losses exceeded recruits."
+
+- id: euromaidan-2026-thomas-mobilization-600k
+  title: "Putin dismisses mobilization reports as Ukraine warns Russia could call up 600,000 to war"
+  url: https://euromaidanpress.com/2026/09/02/putin-denies-new-russian-mobilization-reports/
+  publisher: Euromaidan Press
+  authors: [Daniel Thomas]
+  published: "2026-09-02"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [russian-recruitment, mobilization, casualties]
+  notes: "Ukrainian military and foreign intelligence: Russia lost about 240,000 (at least 140,000 killed or permanently lost) Jan-Jul 2026 while recruiting about 232,000 contract soldiers; a General Staff contingency to mobilise 300,000 a year in 2026-27. Unverified claims."
+
+- id: euromaidan-2026-tril-cost-per-km
+  title: "Russia's advance in Ukraine slows as casualties per square kilometer rise 3.5-fold, Radio Svoboda reports"
+  url: https://euromaidanpress.com/2026/08/10/russias-advance-in-ukraine-slows-as-casualties-per-square-kilometer-rise-3-5-fold-radio-svoboda-reports/
+  publisher: Euromaidan Press (Radio Svoboda report)
+  authors: [Maria Tril]
+  published: "2026-08-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [casualties, advance-rates, infiltration]
+  notes: "DeepState monthly Russian gains: 450-550 km2 at the 2025 peak, 445 (Dec 2025), 160 (Apr 2026), 27 (Jul 2026). Russian losses per km2: 53 (ISW, autumn 2024), 85 (2025), 290 (2026). UK's Keast-Butler: 500,000 Russians killed (May 2026). Infiltration groups of 2-6 walk 15-20 km to positions."
+
+- id: kyivindependent-2026-hyatt-nk-mobilization
+  title: "Russia beginning 'additional mobilization' of troops, North Korean recruitment, Zelensky warns"
+  url: https://kyivindependent.com/russia-beginning-additional-mobilization-of-troops-north-korean-recruitment-zelensky-warns/
+  publisher: Kyiv Independent
+  authors: [Lachlan Hyatt]
+  published: "2026-09-28"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [russian-recruitment, north-korea, mobilization]
+  notes: "Zelensky citing HUR: more than 8,000 North Korean military personnel in Russia and another 10,000 being prepared. A senior official: Russia needs about 400,000 recruits a year just to replenish. Putin decree of 28 Sep 2026 sets 1,550,500 active personnel (fourth increase since 2025)."
+
+- id: euromaidan-2026-murdoch-syrskyi-h1
+  title: "With a 2-to-1 edge, Russia shrank its offensive from 13 fronts to 6, Syrskyi says"
+  url: https://euromaidanpress.com/2026/07/10/russias-2026-offensive-failed-to-achieve-its-objectives-syrskyi/
+  publisher: Euromaidan Press
+  authors: [Benjamin Murdoch]
+  published: "2026-07-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [rotation, force-ratio, casualties]
+  notes: "Syrskyi's H1 2026 review: Russia holds almost 2:1 in personnel and equipment; active axes down from 13 to 6-7; UA:RU assault actions 40:60; Russian losses about 32,000 a month. Rotation at least every 60 days 'whenever operationally possible'. Official claims."
+
+- id: koreatimes-2026-yonhap-nk-kursk
+  title: "N. Korean troops still active in Russia's Kursk region against Ukraine: report"
+  url: https://www.koreatimes.co.kr/foreignaffairs/northkorea/20260205/n-korean-troops-still-active-in-russias-kursk-region-against-ukraine-report
+  publisher: The Korea Times (Yonhap)
+  authors: [Yonhap]
+  published: "2026-02-05"
+  accessed: "2026-09-28"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [north-korea]
+  notes: "South Korean wire relaying HUR: North Korean troops in Kursk (Jan 2026) fire tube artillery and MLRS at Ukrainian border areas and run aerial and artillery reconnaissance; rotated under a bilateral agreement; about 3,000 trained soldiers have returned home. More than 11,000 combat troops sent since October 2024."
+
+- id: euromaidan-2025-zoria-nk-restoration
+  title: "North Korea to send 6,000 more troops to Russia under Kursk \"restoration\" label"
+  url: https://euromaidanpress.com/2025/06/17/north-korea-to-send-6000-more-troops-to-russia-under-kursk-restoration-label/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2025-06-17"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [north-korea, mines]
+  notes: "Quotes Shoigu (via Interfax) after meeting Kim Jong Un on 17 June 2025: 1,000 sappers for demining and 5,000 military builders for Kursk Oblast. UK MoD: over 6,000 of about 11,000 North Korean troops lost in Kursk. The Russian announcement is the primary source for the numbers."
+
+- id: euromaidan-2026-mukhina-zemledeliye
+  title: "Ukraine's 412th Nemesis brigade destroyed rare Russian Zemledeliye system with FPV drones"
+  url: https://euromaidanpress.com/2026/07/16/ukraines-412th-nemesis-brigade-destroyed-rare-russian-zemledeliye-system-with-fpv-drones/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-07-16"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e9-counteroffensive-26]
+  topics: [mines, remote-mining]
+  notes: "ISDM Zemledeliye: KamAZ-mounted rocket minelayer scattering mines 5-15 km away, auto-mapping the fields; used heavily against the 2023 counteroffensive; rare. Remote mining plus drones pushes Ukrainian logistics onto UGVs."
+
+- id: euromaidan-2026-helme-bezkaravainyi-demining
+  title: "Russian mines cost Ukraine $11 billion every year. Clearing them is the work of decades"
+  url: https://euromaidanpress.com/2026/05/20/ukraine-demining-bezkaravainyi-11-billion/
+  publisher: Euromaidan Press
+  authors: [Peeter Helme]
+  published: "2026-05-20"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [mines, demining]
+  notes: "Interview with Deputy Minister Ihor Bezkaravainyi: about 133,300 km2 affected by the war, 57,900 km2 of it farmland; $11bn a year lost; 1,506 ERW casualties (IMSMA); the 20 km zone along the front 'is not described in any international standard'; about 10 years to make a meaningful difference outside it."
+
+- id: euromaidan-2026-mukhina-460k-hectares
+  title: "Ukraine has 460,000 hectares of mined land. Its newest sapper robot switches between demining and logistics on same chassis"
+  url: https://euromaidanpress.com/2026/06/10/ukraine-has-460000-hectares-of-mined-land-its-newest-sapper-robot-switches-between-demining-and-logistics-on-same-chassis/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-06-10"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [mines, demining, ugv]
+  notes: "About 460,000 ha (4,600 km2) identified as requiring clearance, a far smaller figure than the 133,300 km2 'affected'. NEO-1 sapper UGV codified (60 kg, 7 km/h, 500 m to 3 km control range)."
+
+- id: euromaidan-2026-vivdych-robot-demining
+  title: "Ukraine put robots where its soldiers used to die clearing mines—and lost none"
+  url: https://euromaidanpress.com/2026/09/24/ukraine-put-robots-where-its-soldiers-used-to-die-clearing-mines-and-lost-none/
+  publisher: Euromaidan Press
+  authors: [Taisiia Vivdych]
+  published: "2026-09-24"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [mines, ugv, counter-infiltration]
+  notes: "3rd Army Corps claims (via Censor.NET) in Vivaldi: robots cleared 30 km of routes in two nights on the Shandryholove axis; UGVs lift about 60% of AP mines in its zone; one crew remotely mines up to 200 m of Russian routes a day; 125 km2 retaken over two phases."
+
+- id: euromaidan-2026-mukhina-prosthetics
+  title: "Death toll of Russia's war is widely reported. Ukrainians left without limb are less visible — more than 44,000 received prosthetics so far"
+  url: https://euromaidanpress.com/2026/05/28/death-toll-of-russias-war-is-widely-reported-ukrainians-left-without-limb-are-less-visible-more-than-44000-received-prosthetics-so-far/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-05-28"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [medical, amputations]
+  notes: "Social Policy Minister Uliutin: over 44,000 people received prosthetics under the state programme since February 2022 (military and civilian, not all amputees covered). 2023 estimates of limb loss ran 20,000-50,000."
+
+- id: euromaidan-2025-mukhina-trauma
+  title: "Modern battlefield trauma is more severe than ever as Russian weapons evolve, says Ukrainian combat medic"
+  url: https://euromaidanpress.com/2025/10/20/modern-battlefield-trauma-is-more-severe-than-ever-as-russian-weapons-evolve-says-ukrainian-combat-medics/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2025-10-20"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [medical, casualties]
+  notes: "Armed Forces Chief Surgeon Kostiantyn Humeniuk (via ArmyInform): bleeding is the main cause of death; 81.3% of wounds are fragmentation and 18.7% bullets; 80% need urgent haemorrhage control; 70% of vascular injuries are in the lower limbs; drones are the main cause of complex wounds."
+
+- id: euromaidan-2026-murdoch-robotic-medevac
+  title: "Four ground robots for one evacuation: Russia is targeting Ukraine's robotic medevac missions"
+  url: https://euromaidanpress.com/2026/08/28/russia-is-targeting-ukraines-robotic-medevac-missions/
+  publisher: Euromaidan Press
+  authors: [Benjamin Murdoch]
+  published: "2026-08-28"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [casevac, ugv, medical]
+  notes: "1st Medical Battalion company commander Shtrul: one early operation used about four UGVs for a single wounded soldier; one UGV came under about 15 FPVs plus artillery. UGVs cannot cross rivers, stall in mud and craters; each run needs planner, medic, operator and engineers."
+
+- id: euromaidan-2026-mukhina-chornovol-evacuation
+  title: "Evacuation is \"force majeure that no one is ready for\" in most Ukrainian units, and robots are too slow to fix it, commander says"
+  url: https://euromaidanpress.com/2026/08/22/evacuation-is-force-majeure-that-no-one-is-ready-for-in-most-ukrainian-units-and-robots-are-too-slow-to-fix-it-commander-says/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-08-22"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [casevac, mines, medical]
+  notes: "ATGM platoon commander Tetiana Chornovol: most units lack dedicated evacuation groups and light armoured evac vehicles. One evacuation in 2025 cost seven casualties when two vehicles hit drone-dropped AT mines. UGVs too slow and easily targeted."
+
+- id: euromaidan-2026-thomas-zelensky-55k
+  title: "Zelenskyy says 55,000 Ukrainian soldiers killed in interview with French media"
+  url: https://euromaidanpress.com/2026/02/05/zelenskyy-says-55000-ukrainian-soldiers-killed-in-interview-with-french-media/
+  publisher: Euromaidan Press
+  authors: [Daniel Thomas]
+  published: "2026-02-05"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [casualties]
+  notes: "Zelensky (France 2): 55,000 killed plus a 'large number' missing; earlier annual disclosures 31,000 (Feb 2024) and 46,000 (Feb 2025). Outside ranges: US intelligence over 57,500 (Oct 2024), The Economist 60-100k (late 2024), Butusov's claim of 70,000 dead plus 35,000 missing (Dec 2024), CSIS 100-140k."
+
+- id: euromaidan-2024-martyniuk-krynky-missing
+  title: "Media: Nearly 800 Ukrainian marines missing in Krynky, on Russian-occupied Dnipro bank"
+  url: https://euromaidanpress.com/2024/07/17/media-nearly-800-ukrainian-marines-missing-in-krynky-on-russian-occupied-dnipro-bank/
+  publisher: Euromaidan Press
+  authors: [Yevheniia Martyniuk]
+  published: "2024-07-17"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [casualties, river-crossing]
+  notes: "Slidstvo.Info, from National Police data: 788 marines missing and 262 dead recovered and buried at Krynky, Oct 2023-Jun 2024. Not officially confirmed. Ukraine withdrew in about June-July 2024 as the village was destroyed."
+
+- id: euromaidan-2024-rfu-vovchansk-aggregate
+  title: "Frontline report: Aggregate plant becomes focal point of Vovchansk battle"
+  url: https://euromaidanpress.com/2024/07/16/frontline-report-aggregate-plant-becomes-focal-point-of-vovchansk-battle/
+  publisher: Euromaidan Press (Reporting from Ukraine)
+  authors: [Reporting from Ukraine]
+  published: "2024-07-16"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [urban-combat, ground-tactics]
+  notes: "Milblogger-based frontline report. Over 200 Russians besieged in the Vovchansk aggregate plant for over a month, kept alive by drone resupply; Ukraine chose bombardment over assault; Ukrainian drones destroyed dozens of excavators building Russian trenches."
+
+- id: euromaidan-2024-tril-kurakhove
+  title: "Deep State: Kurakhove remains epicenter of fighting, nearly 700 clashes in two weeks"
+  url: https://euromaidanpress.com/2024/11/15/deep-state-kurakhove-remains-epicenter-of-fighting-nearly-700-clashes-in-two-weeks/
+  publisher: Euromaidan Press
+  authors: [Maria Tril]
+  published: "2024-11-15"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [mechanized-assault, ground-tactics]
+  notes: "DeepState: 690 clashes on the Kurakhove axis in two weeks (vs 435 at Pokrovsk). ISW: two Russian mechanized assaults into and south of Kurakhove on 13 Nov 2024; Russia struck the Kurakhove reservoir dam, possibly to flood the flanks. Zelensky: 8:1 local Russian superiority in places."
+
+- id: euromaidan-2025-zoria-huliaipole-nine-brigades
+  title: "ISW: Russia masses nine brigades on a 41-kilometer strip — Huliaipole axis in Zaporizhzhia Oblast faces major pressure"
+  url: https://euromaidanpress.com/2025/11/14/isw-russia-masses-nine-brigades-on-a-41%e2%80%91kilometer-strip-huliaipole-axis-in-zaporizhzhia-oblast-faces-major-pressure/
+  publisher: Euromaidan Press (ISW report)
+  authors: [Yuri Zoria]
+  published: "2025-11-14"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [offensive-operations, infiltration, interdiction]
+  notes: "ISW and Mashovets: up to nine Russian brigades and regiments (one tank brigade) on a 41 km front toward Huliaipole; months of air interdiction of roads and rail plus rain and fog degraded Ukrainian drone reconnaissance; infiltration toward Danylivka."
+
+- id: euromaidan-2025-axe-huliaipole-fell
+  title: "Huliaipole fell. Its defenders had been abandoned long before."
+  url: https://euromaidanpress.com/2025/12/31/huliaipole-territorials/
+  publisher: Euromaidan Press
+  authors: [David Axe]
+  published: "2025-12-31"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [manpower, rotation, force-structure]
+  notes: "The 102nd and 106th Territorial Defence brigades, unrotated for months after heavy losses (CIT), broke when a 57th Motor Rifle Brigade assault group infiltrated central Huliaipole on 17 Dec 2025. Battalions swapped between brigades mid-battle; late-arriving assault units could not stabilise."
+
+- id: euromaidan-2025-mukhina-rubikon-izium
+  title: "Russia's secret weapon: Elite Rubikon unit with unlimited budget cuts key Ukrainian supply route between Kharkiv and Donetsk"
+  url: https://euromaidanpress.com/2025/12/09/russias-secret-weapon-elite-rubikon-unit-with-unlimited-budget-cuts-key-ukrainian-supply-route-between-kharkiv-and-donetsk/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2025-12-09"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [interdiction, drones, logistics]
+  notes: "K-2 brigade commander Kyrylo Veres: Rubikon (about 5,000 personnel) cut the Izium-Sloviansk road; its task is logistics interdiction, hunting drone crews and training other units, without having to support its own infantry."
+
+- id: kyivpost-2026-zavadska-deepstate-july
+  title: "Russia Captured More Territory Than Ukraine Reclaimed in July, DeepState Reports"
+  url: https://www.kyivpost.com/post/81621
+  publisher: Kyiv Post
+  authors: [Yuliia Zavadska]
+  published: "2026-08-03"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "DeepState monthly km2 figures. July 2026: Russia +36 km2 confirmed (possibly 88); Ukraine at least 49 + 83 km2 pending for OPSEC. May 2026: Russia about 130 vs Ukraine about 250 km2, which conflicts with the 14 km2 net that RFE/RL quotes from DeepState for the same month. It also adds 25 and 27 km2 reclaimed in earlier months (late OPSEC releases). Model for a statistics screen."
+
+- id: kyivindependent-2026-york-vivaldi-gains
+  title: "Ukraine reveals new Operation Vivaldi gains in Donetsk Oblast"
+  url: https://kyivindependent.com/ukraine-reveals-new-operation-vivaldi-gains-in-donetsk-oblast/
+  publisher: Kyiv Independent
+  authors: [Chris York]
+  published: "2026-09-20"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [operation-vivaldi, drones]
+  notes: "Season two adds 40 km2 (Shandryholove, Derylove, Drobysheve) to season one's 75 km2 cleared plus 10 km2 liberated; assault groups moved 'through ravines and gullies'; Rubikon pulled from the line after heavy losses (18 Sep)."
+
+- id: saratoga-2026-parfonov-treelines
+  title: "New Report! Fighting Through the Treelines: Russian Tactical Adaptation in Shelterbelt Warfare in Ukraine"
+  url: https://www.saratoga-foundation.org/p/new-report-fighting-through-the-treelines
+  alt_urls: [https://drive.google.com/file/d/1MYVSZopRuMLUsLOFu8vy-FY6GrtkBPWh/view]
+  publisher: The Saratoga Foundation
+  authors: [Hlib Parfonov]
+  published: 2026-04-13
+  accessed: 2026-09-28
+  type: think-tank
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [terrain, shelterbelts, tactics]
+  notes: "10-page report by a Ukrainian analyst and serving soldier, based on his own combat experience, UA officers and NCOs, and captured Russian tactical guidance (full PDF read). Belt grid 300-400 m apart one way and 1,000-2,000 m the other, 3-4 tree rows, 10-30 m machinery gaps, rarely over 20-30 m wide. Longitudinal attack along the belt is the predominant method for both sides; perpendicular attack is rarely viable. Assault group 300-500 m deep (scouts 7-9 m apart, main body 30 m behind, consolidation group 100-150 m, reserve up to 450 m). Approaches are timed to rain, fog, darkness and pre-dawn. Guns 8-12 km and mortars 2-3 km from the target belt. Avoid CPs at belt intersections. One author, so medium."
+
+- id: euromaidan-2026-zoria-kupiansk-pipeline
+  title: "Russia's pipeline into Kupiansk is now its escape route, with kidnapped civilians as human shields, Ukraine says"
+  url: https://euromaidanpress.com/2026/09/28/russias-pipeline-into-kupiansk-is-now-its-escape-route-with-kidnapped-civilians-as-human-shields-ukraine-says/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: 2026-09-28
+  accessed: 2026-09-28
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [terrain, infiltration, infrastructure]
+  notes: "Russian troops entered Kupiansk through the inactive Shebelynka-Ostrohozhsk gas pipeline, about a 10 km walk in darkness that exits in a forest; Ukraine retook about 90% of the city by Dec 2025 after disabling the route; by 27 Sep 2026 it was used to evacuate soldiers and abducted civilians (Khartia corps claim)."
+
+- id: wagner-2025-cropland-abandonment
+  title: "Monitoring cropland cultivation, abandonment, fallowing and recultivation dynamics with regard to conflict intensity in war-affected Ukraine"
+  url: https://doi.org/10.1016/j.srs.2025.100326
+  alt_urls: [https://cnrs.hal.science/hal-05372513]
+  publisher: Science of Remote Sensing (Elsevier)
+  authors: [Josef Wagner, Shabarinath S. Nair, Sergii V. Skakun, Erik C. Duncan, Fangjie Li, Oleksandra Oliinyk, Francoise Nerry, Jean Rehbinder, Inbal Becker-Reshef]
+  published: 2025-11-05
+  accessed: 2026-09-28
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk]
+  topics: [fields, abandonment, remote-sensing]
+  notes: "Peer-reviewed, CC BY (NASA Harvest / UMD). Abstract and metadata read via OpenAlex; the HAL PDF is behind a bot check. Cultivated area fell 2.5 Mha (-8.5%) 2021-2024; by 2024 7% of cropland (2.213 +/- 0.256 Mha) was abandoned, of which 1.12-1.67 Mha may be permanently lost, mainly along front lines; up to 0.47 Mha were recultivated in 2024, far above official demining figures."
+
+- id: militarnyi-2026-pryhodko-aps-80
+  title: "Ukraine Tests Active Protection Systems Intercepting Up to 80% of FPV Drones - Syrskyi"
+  url: https://militarnyi.com/en/news/ukraine-tests-active-protection-systems-intercepting-up-to-80-of-fpv-drones-syrskyi/
+  publisher: Militarnyi
+  authors: [Roman Pryhodko]
+  published: "2026-09-27"
+  accessed: "2026-09-28"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [active-protection, counter-fpv, armour]
+  notes: "Syrskyi (LB.ua): Ukrainian APS intercept 60–80% of FPVs in tests; drones still hold the advantage. Russia's FPV-adapted Arena-M first used on a T-72B3A in Jul 2026: it took 7 drones to exhaust the countermeasures and 15–20 FPVs per vehicle in total. A 'drones per kill' datum for protected armour."

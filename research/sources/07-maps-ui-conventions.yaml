@@ -26,7 +26,7 @@
   verified: fetched
   eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
   topics: [maps, data-access, deepstate, legend, colors]
-  notes: "Undocumented JSON used by the web app. /public lists 1,771 map versions (2022-04-03 to 2026-09-27) with UA/EN changelogs. /last is a GeoJSON FeatureCollection with stated fills (Occupied #a52714, Liberated #0f9d58, recent #0288d1, Unknown #bcaaa4, ORDLO/Crimea #880e4f, foreign #ff5252) and i18n keys. It is primary data, but there is no documented licence or API terms."
+  notes: "Undocumented JSON used by the web app. /api/history/{id}/geojson returns the full GeoJSON of any listed version (checked for the first, 2022-04-03, and the latest), which is what makes a consistent territory time series possible. /public lists 1,771 map versions (2022-04-03 to 2026-09-27) with UA/EN changelogs. /last is a GeoJSON FeatureCollection with stated fills (Occupied #a52714, Liberated #0f9d58, recent #0288d1, Unknown #bcaaa4, ORDLO/Crimea #880e4f, foreign #ff5252) and i18n keys. It is primary data, but there is no documented licence or API terms."
 
 - id: wikipedia-deepstatemap-live
   title: "DeepStateMap.Live"
@@ -101,7 +101,7 @@
   verified: fetched
   eras: [e9-counteroffensive-26]
   topics: [maps, statistics, deepstate, km2]
-  notes: "DeepState monthly km2 figures. July 2026: Russia +36 km2 confirmed (possibly 88); Ukraine at least 49 + 83 km2 pending for OPSEC. May 2026: Russia about 130 vs Ukraine about 250 km2. Model for a statistics screen."
+  notes: "DeepState monthly km2 figures. July 2026: Russia +36 km2 confirmed (possibly 88); Ukraine at least 49 + 83 km2 pending for OPSEC. May 2026: Russia about 130 vs Ukraine about 250 km2, which conflicts with the 14 km2 net that RFE/RL quotes from DeepState for the same month. It also adds 25 and 27 km2 reclaimed in earlier months (late OPSEC releases). Model for a statistics screen."
 
 - id: devua-2024-deepstate-makarivka
   title: "Could the independent analytical project DeepState be closed? What is currently known about the situation and the possible pressure on the team"
@@ -148,20 +148,21 @@
   topics: [maps, isw, legend, data-access, licensing]
   notes: "Fetched through the ArcGIS REST item and data JSON (owner gbarros_understandingwar). Layers: Assessed Russian-Controlled Terrain, Assessed Russian Advances, Assessed Russian Infiltration Areas (service created 2025-12-20), Claimed Russian Territory, Claimed Ukrainian Counteroffensives, pre-2022 occupied, fortifications. Features are stamped pub_date 2026-09-27. Licence: exclusive ISW IP, written consent required. The same org hosts the partisan StoryMap and feature services and the embedding StoryMap (storymaps.arcgis.com/stories/36a7f6a6f5a9448496de641cf64bd375)."
 
-- id: isw-cta-roca-2026-09-26
+- id: isw-2026-09-26-assessment
   title: "Russian Offensive Campaign Assessment, September 26, 2026"
-  url: https://www.criticalthreats.org/analysis/russian-offensive-campaign-assessment-september-26-2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-26-2026/
+  alt_urls: [https://www.criticalthreats.org/analysis/russian-offensive-campaign-assessment-september-26-2026]
   publisher: Institute for the Study of War and AEI Critical Threats Project
   authors: []
   published: "2026-09-26"
-  accessed: "2026-09-28"
+  accessed: "2026-09-30"
   type: think-tank
   origin: western
   reliability: high
-  verified: search-only
+  verified: fetched
   eras: [e9-counteroffensive-26]
   topics: [maps, isw, methodology]
-  notes: "Representative daily ROCA with static control-of-terrain maps. The page returned 403. Search excerpts from ROCAs give the methodology: public info only; the map shows the furthest assessed extent of Russian advances until evidence shows otherwise; this may underestimate Ukrainian advances; the front is porous."
+  notes: "Read through the Wayback Machine (web.archive.org/web/2026id_/...) because both ISW domains return 403 to scripts. Representative daily ROCA: a theatre map plus per-sector zoom maps; text organised by axis with a stated 'Russian objective' and 'assessed objective' per army; control changes backed by 'geolocated footage published on' a date; and the note that ISW uses only publicly available information and no classified material. On 26 Sep 2026 it reports Operation Vivaldi's first phase targeting Russian ATV and motorcycle reinforcement of infiltration groups."
 
 - id: blackbirdgroup-map
   title: "Russo-Ukrainian War Map - Black Bird Group"
@@ -221,7 +222,7 @@
   verified: fetched
   eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
   topics: [maps, osint, geolocation, data-access]
-  notes: "Volunteer geolocation project. Each marker is a verified clip with sources and a public geolocation breakdown. It has a Ukraine map (2013-present), timeline playback, ORBAT trees, 77,859 events worldwide, and advertises a free, documented public API. Medium reliability: volunteer-run but transparent."
+  notes: "Volunteer geolocation project. Each marker is a verified clip with sources and a public geolocation breakdown. It has a Ukraine map (2013-present), timeline playback, ORBAT trees, 77,859 events worldwide, and advertises a free, documented public API. Medium reliability: volunteer-run but transparent. API terms are in the separate geoconfirmed-openapi entry."
 
 - id: wikipedia-liveuamap
   title: "Liveuamap"
@@ -432,3 +433,401 @@
   eras: [e8-drone-kill-zone, e9-counteroffensive-26]
   topics: [maps, grey-zone, frontline]
   notes: "Uses DeepState grey areas to show the contested zone near Kotlyne growing from about 1 km deep (Jan 2025) to 5-8 times wider, and argues a front 'thickened into a depth of 12 kilometers' is no longer the stake. An opinion piece by a French veteran."
+
+- id: euromaidan-2024-mukhina-october-490
+  title: "Russia captures 490 square kilometers of Ukrainian land in October 2024, largest gain since counteroffensive launched in 2023"
+  url: https://euromaidanpress.com/2024/11/07/russia-captures-490-square-kilometers-of-ukrainian-land-in-october-2024-largest-gain-since-counteroffensive-launched-in-2023/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2024-11-07"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "DeepState monthly figure: Russia occupied 490 km2 in October 2024, its largest monthly gain since Russia's own offensive began in October 2023. Used to validate the computed series (computed net 502 km2)."
+
+- id: euromaidan-2025-hrudka-2024-3600
+  title: "Ukraine lost 3,600 km² to Russia in 2024, up to 20 km² daily in November"
+  url: "https://euromaidanpress.com/2025/01/04/ukraine-lost-3600-km%c2%b2-to-russia-in-2024-up-to-20-km%c2%b2-daily-in-november/"
+  publisher: Euromaidan Press
+  authors: [Orysia Hrudka]
+  published: "2025-01-04"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "Mil.in.ua summary of DeepState: Ukraine lost over 3,600 km2 in 2024 (up to 20 km2 a day in November), against about 540 km2 lost and about 430 km2 regained in 2023. Sector breakdown: Velyka Novosilka-Ocheretyne 2,400+ km2, Lyman-Kupiansk 479, northern Kharkiv 211. A second-hand summary, so medium."
+
+- id: euromaidan-2025-shandra-gains-plummet
+  title: "Russian territorial gains in Ukraine plummet in early 2025, UK intel & Deep State say"
+  url: https://euromaidanpress.com/2025/04/05/russian-territorial-gains-in-ukraine-plummet-in-early-2025-uk-intel-deep-state-say/
+  publisher: Euromaidan Press
+  authors: [Alya Shandra]
+  published: "2025-04-05"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "DeepState: 700+ km2 in November 2024 and 133 km2 in March 2025; the UK MoD put March 2025 at 143 km2. DeepState also counted 35.6 assaults per km2 gained in March, against 7.1 in November."
+
+- id: euromaidan-2025-kravchuk-assaults-may
+  title: "Russian offensive attacks surge 19% in May while attempts of peace talks continue"
+  url: https://euromaidanpress.com/2025/06/02/russian-offensive-attacks-surge-19-in-may-while-attempts-of-peace-talks-continue/
+  publisher: Euromaidan Press
+  authors: [Vira Kravchuk, Yana Olynets]
+  published: "2025-06-02"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [maps, statistics, isw, km2]
+  notes: "Quotes ISW estimates of Russian advances: about 627 km2 in November 2024 and about 203 km2 in March 2025, a useful contrast with DeepState's 700+ and 133 for the same months. DeepState counted 183.6 assaults a day in May 2025 against 154.8 in April."
+
+- id: euromaidan-2025-mukhina-september-259
+  title: "Russian advance stalls — September sees lowest territorial gains since May, but it's not time to relax"
+  url: https://euromaidanpress.com/2025/10/01/russian-advance-stalls-september-sees-lowest-territorial-gains-since-may/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2025-10-01"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "DeepState: Russia advanced 259 km2 in September 2025, 44% less than in August and the lowest since May; 19.04% of Ukraine occupied. Computed net for the same month: 258 km2."
+
+- id: euromaidan-2026-tril-2025-4336
+  title: "Russia occupied 0.72% of Ukraine's territory in 2025, DeepState reports"
+  url: "https://euromaidanpress.com/2026/01/02/russia-seized-4336-km%c2%b2-of-ukraine-in-2025-nearly-double-2023-2024-combined-losses/"
+  publisher: Euromaidan Press
+  authors: [Maria Tril]
+  published: "2026-01-02"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "DeepState year total: Russia occupied 4,336 km2 in 2025 (0.72% of Ukraine), about 4,140 km2 in 2023-24 combined, 7,463 km2 from 1 Jan 2023 to 1 Jan 2026; total occupied 116,165 km2 (19.25%). Oblast shares: Donetsk 78.1%, Zaporizhzhia 74.8%, Kherson 72%, Luhansk 99.6%. The computed 2025 net change matches to the km2."
+
+- id: euromaidan-2026-zoria-february-126
+  title: "126 km² in February, 245 in January, some 630 last November — Russia's gains drop while its attacks hold steady, Deep State says"
+  url: "https://euromaidanpress.com/2026/03/02/126-km%c2%b2-in-february-245-in-january-some-630-last-november-russias-gains-drop-while-its-attacks-hold-steady-deep-state-says/"
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2026-03-02"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "DeepState monthly figures: February 2026 126 km2, January 2026 245 km2, November 2025 'some 630'. The first two match the computed net exactly; the November figure does not (computed 503)."
+
+- id: euromaidan-2026-zoria-may-14
+  title: "Russia's monthly land grab in Ukraine has collapsed from hundreds of km² to 14, OSINT data show"
+  url: "https://euromaidanpress.com/2026/06/01/russias-monthly-land-grab-in-ukraine-has-collapsed-from-hundreds-of-km%c2%b2-to-14-osint-data-show/"
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2026-06-01"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [maps, statistics, deepstate, isw, km2, grey-zone]
+  notes: "DeepState via RFE/RL's Radio Svoboda: Russia gained just 14 km2 in May 2026 (computed net: 14). ISW for Jan-May 2026: +104 km2 of assessed Russian control and 628 km2 of infiltration zone, against 1,619 km2 in Jan-May 2025. Notes that counts 'shift with the methodology' in a wide grey zone."
+
+- id: euromaidan-2026-tril-cost-per-km
+  title: "Russia's advance in Ukraine slows as casualties per square kilometer rise 3.5-fold, Radio Svoboda reports"
+  url: https://euromaidanpress.com/2026/08/10/russias-advance-in-ukraine-slows-as-casualties-per-square-kilometer-rise-3-5-fold-radio-svoboda-reports/
+  publisher: Euromaidan Press (Radio Svoboda report)
+  authors: [Maria Tril]
+  published: "2026-08-10"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, statistics, deepstate, km2]
+  notes: "Radio Svoboda's reading of DeepState: 450-550 km2 a month at the 2025 peak, 445 in December 2025, 160 in April 2026, 27 in July 2026. The Russian project Slivochny Kapriz, which credits any area where Russian troops were seen, gives 550-600 a month in 2025 and 112 in June 2026. Casualties per km2: 85 (2025) to 290 (2026)."
+
+- id: geoboundaries-ukr-adm0
+  title: "geoBoundaries gbOpen UKR ADM0 (Ukraine national boundary)"
+  url: https://www.geoboundaries.org/api/current/gbOpen/UKR/ADM0/
+  publisher: geoBoundaries (William & Mary geoLab)
+  authors: []
+  published: "2023-01-19"
+  accessed: "2026-09-28"
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: [geodata, boundaries, method]
+  notes: "Ukraine's internationally recognised border (includes Crimea), sourced from OpenStreetMap (Wambacher); ODbL 1.0. It includes territorial waters, so it was intersected with Natural Earth land for the km2 computation."
+
+- id: naturalearth-10m-land
+  title: "Natural Earth 1:10m Physical Vectors: Land"
+  url: https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_land.geojson
+  publisher: Natural Earth
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: [geodata, method]
+  notes: "Public-domain land polygons, used to clip the geoBoundaries border to land (about 600,256 km2 for Ukraine, against the official 603,628). Coastline generalisation makes computed totals about 0.7% lower than DeepState's own."
+
+- id: amk-mapping-control-map
+  title: "Russian invasion of Ukraine Control Map (AMK Mapping, Google My Maps)"
+  url: https://www.google.com/maps/d/viewer?mid=1thW9kqnDOaS2lAepLhLdzSX8Ur9Sc4k
+  alt_urls: [https://amkmapping.com/, https://t.me/s/AMK_Mapping, https://linktr.ee/AMK_Mapping]
+  publisher: AMK Mapping
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: map
+  origin: other
+  reliability: low
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, legend, grey-zone, data-access]
+  notes: "Pseudonymous mapper. amkmapping.com redirects to a Google My Maps last updated 2026-09-28, with a public KML export. Layers: Confirmed Russian controlled territory (#A52714 at about 40% opacity), Confirmed Ukrainian control (#1A237E), Infiltration zone (black at about 30%), Confirmed Russian advances (#FFD600), Confirmed Ukrainian advances (#0288D1), Direction definitions, Points of interest, 'Never forget', Cities. The Telegram channel (59.9k subscribers) covers Ukraine and the Middle East; a 27-28 Sep 2026 post calls a DeepState update near Lyman 'Deepstate Lyman OPSEC release part 3. These advances shown primarily occurred during May and June.' Low: single anonymous analyst, no stated method."
+
+- id: suriyak-telegram
+  title: "Suriyakmaps (Telegram channel)"
+  url: https://t.me/s/Suriyak_maps
+  alt_urls: [https://bio.link/suriyakm, https://twitter.com/Suriyakmaps]
+  publisher: Suriyakmaps
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: map
+  origin: other
+  reliability: low
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, osint]
+  notes: "Channel description: 'Syria-Irak-Yemen-Libya-Sahel-Gaza-Ukraine maps'; 47.1k Telegram subscribers, 7.21k photos (static map images), and a post announcing 110,000 followers on X. Posts partly in Spanish; the PayPal link uses a Spanish locale (an inference about location). Low: anonymous, no published method."
+
+- id: wikipedia-rsn-2024-suriyakmaps
+  title: "Wikipedia:Reliable sources/Noticeboard/Archive 433 — SuriyakMaps on Twitter"
+  url: https://en.wikipedia.org/wiki/Wikipedia:Reliable_sources/Noticeboard/Archive_433
+  alt_urls: [https://en.wikipedia.org/wiki/Wikipedia:Reliable_sources/Noticeboard/Archive_348]
+  publisher: Wikipedia
+  authors: []
+  published: "2024-04-02"
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: low
+  verified: fetched
+  eras: []
+  topics: [maps, reputation]
+  notes: "Editors' reliability discussion: SuriyakMaps is an X account created in March 2017 mapping Syria, Ukraine and other wars. A July 2021 discussion (Archive 348) called it unreliable for anonymity and unclear method; the April 2024 thread split between 'absolutely unreliable... partisan' and 'shown to be a neutral source'. Community opinion, not analysis."
+
+- id: perpetua-ukrdailyupdate-map
+  title: "UA map (Andrew Perpetua / Gaspo map)"
+  url: https://map.ukrdailyupdate.com/
+  alt_urls: [https://t.me/s/andrewperpetua]
+  publisher: ukrdailyupdate.com
+  authors: [Andrew Perpetua]
+  published: unknown
+  accessed: "2026-09-28"
+  type: map
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [maps, osint, geolocation, icons]
+  notes: "Leaflet map run by @AndrewPerpetua and @Gaspo_sk with a daily date slider (latest_date 20722 = 2026-09-26), measuring tools and point markers keyed by event type (drone, shahed, lancet, heli, tos, trap, flag, death, explosion, abandoned, etc.) in round badges coloured dark blue #1a237e, dark red #880e4f, gold or purple. Asks users to post screenshots rather than embed; carries a fundraiser for Ukraine's Khartiia corps. Medium: geolocation-based but single-team."
+
+- id: wikipedia-talk-2024-territorial-control-mappers
+  title: "Talk:Territorial control during the Russo-Ukrainian war/Archive 1"
+  url: https://en.wikipedia.org/wiki/Talk:Territorial_control_during_the_Russo-Ukrainian_war/Archive_1
+  publisher: Wikipedia
+  authors: []
+  published: "2024-05"
+  accessed: "2026-09-28"
+  type: encyclopedia
+  origin: international
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [maps, reputation]
+  notes: "May 2024 editor thread comparing war maps. One ranking: ISW, then DeepState and Andrew Perpetua tied ('mostly based on geolocated footage... a bit cautious in reporting Russian gains'), ThetiMapping, SuriyakMaps and MilitaryLand, Rybar, Liveuamap. Another editor called Suriyak 'very neutral' and among the more conservative; others saw a 'Russian tilt'. Opinion only."
+
+- id: liveuamap-about-terms
+  title: "Liveuamap — About, Terms and Contacts (Wayback snapshot 2023-01-01)"
+  url: https://web.archive.org/web/20230101202030/https://liveuamap.com/about
+  alt_urls: [https://liveuamap.com/about]
+  publisher: Liveuamap LLC
+  authors: []
+  published: "2023-01-01"
+  accessed: "2026-09-28"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [maps, liveuamap, licensing, methodology]
+  notes: "Live site returns 403, so read via Wayback. Founded 2014 for the Ukrainian conflict, now 30+ regions; AI web crawlers pass stories to analysts for fact-checking and editors decide what is mapped; Liveuamap LLC, McLean, Virginia, with EU-based infrastructure. Terms: 'You may use our data and maps, including map tiles and areas polygons partially, or in the whole in your work, with reference to liveuamap.com'; third-party images and text stay under their original platforms' terms."
+
+- id: liveuamap-promo-api
+  title: "Liveuamap API service (pricing page, Wayback snapshot 2026-08-21)"
+  url: https://web.archive.org/web/20260821142237/https://liveuamap.com/promo/api
+  alt_urls: [https://liveuamap.com/promo/api]
+  publisher: Liveuamap LLC
+  authors: []
+  published: "2026-08-21"
+  accessed: "2026-09-28"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [maps, liveuamap, data-access]
+  notes: "Paid API: Pro $150/month (200 requests/day, all regions, GeoJSON); Enterprise from $1,000/month (1,500 requests/day, areas of interest, local languages)."
+
+- id: liveuamap-home-2026-09
+  title: "Liveuamap home page and event feed (Wayback snapshot 2026-09-17)"
+  url: https://web.archive.org/web/20260917121854/https://liveuamap.com/
+  alt_urls: [https://liveuamap.com/]
+  publisher: Liveuamap LLC
+  authors: []
+  published: "2026-09-17"
+  accessed: "2026-09-28"
+  type: map
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [maps, liveuamap, icons]
+  notes: "The feed's events carry icon codes of the form pictogram-colour index (shahed-1, bomb-1, destroy-1, drone-2, explode-2, aa-2, medicine-2, dead-2, speech-2, speech-10), and the page loads red, blue, green, white and black icon sets. The side reading (-1 red = Russian action, -2 blue = Ukrainian action, -10 third party) is inferred from 19 events and is not documented by the site."
+
+- id: geoconfirmed-openapi
+  title: "Geoconfirmed API (OpenAPI v1 specification, API v2)"
+  url: https://geoconfirmed.org/openapi/v1.json
+  alt_urls: [https://geoconfirmed.org/scalar/v1]
+  publisher: GeoConfirmed
+  authors: []
+  published: unknown
+  accessed: "2026-09-28"
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [osint, data-access, licensing, icons]
+  notes: "Primary API docs: read endpoints need no authentication; KMZ/CSV/GeoJSON exports per conflict; ORBAT and gear catalogues. The data is 'freely available for research, journalism, and analytical use'; there is no licence field and no commercial-use clause. Asks for a descriptive User-Agent and fair use. The Ukraine conflict has 12 factions with colours (Ukraine #0051CA, Russia #E00000, civilians lighter tints, North Korea #6A1D00, Belarus #400080) and 116 icons that combine object type with state (active / recently destroyed / older destroyed)."
+
+- id: euromaidan-2025-zoria-delta-scales
+  title: "Ukraine's AI war room just got real — DELTA now scales across the entire military"
+  url: https://euromaidanpress.com/2025/08/07/ukraines-delta-battlefield-management-system/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2025-08-07"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [military-ui, delta, drones]
+  notes: "Delta modules as described by the MoD: Deltamonitor (live digital map of friendly and enemy positions), Target Hub (create and assign strike tasks on the map), Vezha (drone video to command centres), Mission Control (UAV responsibility zones and flight paths), secure chat. Screenshots show a control centre wall of live streams. Claims targeting support for 2,000+ enemy assets a day."
+
+- id: euromaidan-2024-looijen-delta-cwix
+  title: "NATO officials praise innovative Ukrainian DELTA combat system"
+  url: https://euromaidanpress.com/2024/07/14/nato-officials-praise-innovative-ukrainian-delta-combat-system/
+  publisher: Euromaidan Press
+  authors: [Benjamin Looijen]
+  published: "2024-07-14"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [military-ui, delta, nato, interoperability]
+  notes: "CWIX 2024: Delta integrated with Poland's TOPAZ artillery fire-control system and shared air, sea, land, cyber, medical and logistics data in NATO protocols (Deputy Minister Chernohorenko). Lt Col Yelyzaveta Boyko: 'Google for the military, because after one login you get access to different tools'."
+
+- id: militarnyi-2024-delta-repmus
+  title: "Ukraine's DELTA situational awareness system coordinated more than 50 drones at NATO exercises"
+  url: https://militarnyi.com/en/news/ukraine-s-delta-situational-awareness-system-coordinated-more-than-50-drones-at-nato-exercises/
+  publisher: Militarnyi
+  authors: []
+  published: "2024-10-21"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [military-ui, delta, nato, drones]
+  notes: "REPMUS 24 (Portugal, 9-27 Sep 2024): Delta coordinated 50+ underwater, surface, land and air uncrewed vehicles, took location data from Rheinmetall's Robotics-L robot dog, and was integrated with other systems for 'separation of own and enemy forces'."
+
+- id: militarnyi-2023-delta-link16
+  title: "Delta system has proven its compatibility with Link 16"
+  url: https://militarnyi.com/en/news/delta-system-has-proven-its-compatibility-with-link-16/
+  publisher: Militarnyi
+  authors: []
+  published: "2023-07-11"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [military-ui, delta, nato, interoperability]
+  notes: "CWIX 2023: Delta exchanged data over the Link 16 tactical data link and integrated with 15 systems of 10 countries (3 NATO-developed), succeeding in 12 of 19 possible interoperability directions; tested at NATO exercises since 2018."
+
+- id: militarnyi-2025-astras
+  title: "Delta Analogue: ASTRAS System Spotted in Russian Headquarters"
+  url: https://militarnyi.com/en/news/delta-analogue-astras-system-spotted-in-russian-headquarters/
+  publisher: Militarnyi
+  authors: []
+  published: "2025-11-13"
+  accessed: "2026-09-30"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [military-ui, russia, c2]
+  notes: "Photos from Russian command posts show ASTRAS, apparently a domestic replacement for Discord after Russia blocked it, with an interface 'similar to civilian instant messengers' (text chat, voice, possibly files). Developer unknown. Medium: photo-based inference."
+
+- id: dji-mavic3-enterprise-specs
+  title: "DJI Mavic 3 Enterprise Series — Specs"
+  url: https://enterprise.dji.com/mavic-3-enterprise/specs
+  publisher: DJI
+  authors: []
+  published: unknown
+  accessed: "2026-09-30"
+  type: official
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [ui, thermal, drones]
+  notes: "Manufacturer specs (served in German from Europe). The Mavic 3T thermal camera is 640x512 at 30 fps with palettes White Hot, Black Hot, Tint, Iron Red, Hot Iron, Arctic, Medical, Fulgurite, Rainbow 1 and Rainbow 2 (translated from 'Weiß heiß/Schwarz heiß/Tönung/Eisenrot/...'). A primary source for thermal palette names on a drone family widely used for reconnaissance."
