@@ -1,0 +1,40 @@
+{"pair": "c9d33bc350ed", "relation": "none", "rationale": "Russian missile substitution in spring 2022 and the Crimean Bridge's air-defence cover are unrelated assertions."}
+{"pair": "ca139dc6ccab", "relation": "duplicates", "from": "claim:cc04_0009_98", "to": "claim:cc04_0023_04", "strength": 0.85, "rationale": "Both report the 28th Mechanised Brigade taking Kyselivka on 10 November 2022; B has more sources."}
+{"pair": "cace3b9cac78", "relation": "refines", "from": "claim:cc13_0023_09", "to": "claim:cc13_0009_08", "strength": 0.5, "rationale": "B attributes the Novorossiysk hit on the Olenegorsky Gornyak to the SBU's Mamai drone, per HUR."}
+{"pair": "cadf65e06552", "relation": "duplicates", "from": "claim:cc13_0013_33", "to": "claim:c03_0016_13", "strength": 0.85, "rationale": "Same Storm Shadow strike on the Black Sea Fleet HQ on 22 September 2023, from the same Wikipedia source."}
+{"pair": "caf5db120b1c", "relation": "duplicates", "from": "claim:cc02_0028_11", "to": "claim:cc02_0026_20", "strength": 0.7, "rationale": "Both describe the 7 May 2022 Su-27 toss-bombing raid coming in low past the lighthouse; same TWZ source."}
+{"pair": "cb3314843d8f", "relation": "supports", "from": "claim:cc03_0029_08", "to": "claim:cc03_0020_05", "strength": 0.6, "independent": false, "rationale": "B's breakout account (Baraniuk captured, Volynskyi to Azovstal) corroborates A's command succession; shared sources."}
+{"pair": "cb359cf6b7ad", "relation": "none", "rationale": "Ferry strikes in September and a ferry sighting in October are different events."}
+{"pair": "cb4e346d78f5", "relation": "supports", "from": "claim:cc13_0032_02", "to": "claim:cc13_0013_44", "strength": 0.6, "independent": false, "rationale": "The video of drones weaving through AK-630M fire corroborates Budanov's account of the Ivanovets sinking; shared TWZ source."}
+{"pair": "cb58ea19d5b3", "relation": "none", "rationale": "Pontoon logistics and firing range are different details."}
+{"pair": "cb7546d9c36c", "relation": "supports", "from": "claim:cc04_0030_03", "to": "claim:cc04_0015_05", "strength": 0.5, "independent": false, "rationale": "The 6 km push from the Inhulets bridgehead on 29 August is consistent with A's springboard role; both ISW-based."}
+{"pair": "cb7e80953c52", "relation": "none", "rationale": "B is an assessment of the choice of method, not evidence for A's specific charge claim."}
+{"pair": "cbb2b1b2d47b", "relation": "none", "rationale": "The crew bailing out and the opening of the duel are different details."}
+{"pair": "cbceb602effe", "relation": "none", "rationale": "A loss count and a weapons limitation are unrelated."}
+{"pair": "cc97f0b4dae0", "relation": "refines", "from": "claim:cc10_0015_035", "to": "claim:cc10_0052_08", "strength": 0.6, "rationale": "A gives the 17 November announcement and casualty claims within B's November sequence of announcements."}
+{"pair": "cca86b1a3dc8", "relation": "none", "rationale": "The late-October attack and the capture of most of Pavlivka by mid-November are successive events."}
+{"pair": "ccafba1d6917", "relation": "refines", "from": "claim:cc10_0015_013", "to": "claim:cc10_0005_04", "strength": 0.75, "rationale": "B gives the boat numbers and depth of the 8 August 2023 Kozachi Laheri raid that A reports; same ISW report."}
+{"pair": "cdc9e66832e9", "relation": "none", "rationale": "The firing period and the shoot-and-hide rotation are different details."}
+{"pair": "cf12aea65a8f", "relation": "refines", "from": "claim:cc04_0009_70", "to": "claim:cc04_0004_13", "strength": 0.7, "rationale": "B dates the fall of Davydiv Brid and half of Dudchany to 4 October within A's 1–4 October breakthrough."}
+{"pair": "cfa430269bb7", "relation": "duplicates", "from": "claim:cc10_0046_09", "to": "claim:cc10_0037_11", "strength": 0.7, "rationale": "Both state that Ukraine resupplied Krynky by cargo drone, from the same source."}
+{"pair": "cfac0f4c5665", "relation": "duplicates", "from": "claim:cc13_0009_08", "to": "claim:cc13_0035_06", "strength": 0.85, "rationale": "Same sea-drone hit on the Olenegorsky Gornyak at Novorossiysk on 3–4 August 2023; B has more detail and sources."}
+{"pair": "cfac4cf8f4d1", "relation": "refines", "from": "claim:cc13_0035_10", "to": "claim:cc13_0006_03", "strength": 0.7, "rationale": "B details the 14 February 2024 swarm attack that sank the Tsezar Kunikov off Alupka."}
+{"pair": "d0367a1ae009", "relation": "supports", "from": "claim:cc12_0025_02", "to": "claim:cc12_0010_37", "strength": 0.7, "independent": false, "rationale": "B repeats the Il-22 being hit at about 21:00 and turning for Anapa; shared Euromaidan Press source."}
+{"pair": "d06a67e6c477", "relation": "none", "rationale": "A named-dead count and an account of equipment losses are different quantities."}
+{"pair": "d0710934c617", "relation": "none", "rationale": "The fleet's relocation and Budanov's targeting choice are different assertions."}
+{"pair": "d10a8251d9b3", "relation": "supports", "from": "claim:cc04_0015_09", "to": "claim:cc04_0026_05", "strength": 0.6, "independent": false, "rationale": "Wounded soldiers' accounts of tanks firing from concrete shelters support B's description of the Russian defence; same source."}
+{"pair": "d11278f1f179", "relation": "none", "rationale": "Saldo's denial, which ISW dismissed, does not materially bear on the raid's occurrence."}
+{"pair": "d157b21e83f3", "relation": "supports", "from": "claim:cv01_0007_15", "to": "claim:cv01_0003_04", "strength": 0.5, "independent": false, "rationale": "HUR's crediting of Azov and the 72nd Brigade corroborates A's units at the ambush; shared Interfax source."}
+{"pair": "d16ce5f8f9f4", "relation": "refines", "from": "claim:cc05_0030_06", "to": "claim:cc05_0004_06", "strength": 0.7, "rationale": "B dates and measures the barge line of 22–29 August 2023, one element of A's bridge defences."}
+{"pair": "d1765fe2a011", "relation": "none", "rationale": "A fire-control statement and the pipeline's OSM route; context only."}
+{"pair": "d1bd813c3a3c", "relation": "none", "rationale": "The TB2's delivery and its later roles are different assertions."}
+{"pair": "d1cc3c9bff92", "relation": "none", "rationale": "A sortie recall and an earlier loss event are different assertions."}
+{"pair": "d2a0e002ea63", "relation": "none", "rationale": "The ambush's outcome and the preparation of positions are successive assertions."}
+{"pair": "d2dcce2d32fe", "relation": "none", "rationale": "Shooting out the optics and Forbes' crew-casualty suggestion are different assertions."}
+{"pair": "d43004d42c29", "relation": "supports", "from": "claim:cc13_0013_81", "to": "claim:cc13_0008_06", "strength": 0.4, "independent": false, "rationale": "Reporting confirms one Su-30SM downed by Magura V7s on 2 May 2025, partly corroborating HUR's claim of two."}
+{"pair": "d430c6fd8427", "relation": "none", "rationale": "The gunner's choice and an expert's general remark on the 25 mm are different assertions."}
+{"pair": "d443bb18471c", "relation": "none", "rationale": "Satellite-observed fleet relocation and Budanov's targeting judgement are different assertions."}
+{"pair": "d48bd5419bce", "relation": "none", "rationale": "The clearing operation and Syrskyi's authorisation are different assertions."}
+{"pair": "d4ef7c7d6634", "relation": "duplicates", "from": "claim:cc08_0029_05", "to": "claim:cc08_0010_084", "strength": 0.8, "rationale": "Both report the 35th Marine Brigade taking Verkhni Dachi by April 2023, from the same Zaluzhnyi statement."}
+{"pair": "d50276b7b8ee", "relation": "supports", "from": "claim:cc06_0034_13", "to": "claim:cc06_0029_10", "strength": 0.6, "independent": false, "rationale": "B's border run through Velykyi Burluk to Vovchansk corroborates A's area of operations for the 113th; same source."}
+{"pair": "d5b808d41adb", "relation": "duplicates", "from": "claim:cc12_0025_12", "to": "claim:cc12_0010_23", "strength": 0.85, "rationale": "Same BYPOL drone attack on the A-50 at Machulishchy on 26 February 2023, from the same sources."}

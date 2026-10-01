@@ -1,0 +1,262 @@
+# Sources cited in research/chapters/v01-brovary-ambush.md, generated from the knowledge base by db/tools/render.py.
+- id: dronedj-2022-crumley-brovary
+  title: Drone video captures Ukraine ambush of Russian convoy nearing Kyiv
+  url: https://dronedj.com/2022/03/11/drone-video-captures-ukraine-ambush-of-russian-convoy-nearing-kyiv/
+  publisher: DroneDJ
+  authors:
+  - Bruce Crumley
+  published: '2022-03-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - media
+  - drones
+  - chapter
+  notes: Counts 'over 20' tanks and APCs in the clip. Attributes the footage to a TB2 and the ambush to Azov, which other
+    sources do not support. Kept to document the misattribution.
+- id: interestingengineering-2022-brovary-convoy
+  title: Drone footage shows how a Russian convoy is ambushed by Ukrainian forces
+  url: https://interestingengineering.com/drone-russian-ambushed-ukrainie-forces
+  publisher: Interesting Engineering
+  authors: []
+  published: '2022-03-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - media
+  - chapter
+  notes: Embeds HUR's tweet of 10 Mar 2022 with the 45 s clip and quotes its Russian radio voice-over ('Sixth regiment lost…
+    They waited for us… Regiment commander killed in action'). Popular-tech outlet; the quote is a translation.
+- id: interfax-2022-hur-brovary-zakharov
+  title: Ukrainian military defeat tank regiment of Russian troops, eliminate commander Zakharov in Brovarsky district - Defense
+    Intelligence
+  url: https://en.interfax.com.ua/news/general/810680.html
+  publisher: Interfax-Ukraine
+  authors: []
+  published: '2022-03-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  notes: 'HUR statement: the BTG of the 6th Tank Regiment (Chebarkul), with the 239th Tank Regiment of the 90th Tank Division,
+    suffered significant losses, and Col. A. Zakharov was killed. Credits Azov, the 72nd Brigade and National Corps. An official
+    claim.'
+- id: isw-2022-03-10-roca
+  title: Russian Offensive Campaign Assessment, March 10
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-10
+  alt_urls:
+  - https://web.archive.org/web/20220315004605id_/https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-10
+  publisher: Institute for the Study of War
+  authors:
+  - Mason Clark
+  - George Barros
+  - Kateryna Stepanenko
+  published: '2022-03-10'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  notes: The Russian armoured column in the Brovary area 'badly damaged'. The General Staff reported the 2nd and 41st CAAs
+    and the 90th Tank Division renewing the offensive on 9 Mar. HUR's Zakharov claim and CNN-verified videos of losses on
+    9–10 Mar. Read via the Wayback Machine (the live URL now redirects).
+- id: lb-2022-kyiv-region-defense-forces
+  title: In the Kyiv region the defense forces shot at a column of Russian armored vehicles
+  url: https://en.lb.ua/news/2022/03/12/10857_kyiv_region_defense_forces.html
+  publisher: LB.ua
+  authors: []
+  published: '2022-03-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  notes: 'SSO video: the 8th Company of the 128th TDF Battalion, the 72nd Brigade and SSO stop a column of about three dozen
+    tanks and IFVs in Brovary district at 50–100 m (1 tank destroyed, 1 IFV damaged). Recalls the 10 Mar Azov/72nd strike.'
+- id: mwi-2025-collins-spencer-battle-of-kyiv
+  title: 'Urban Warfare Project Case Study #12: Battle of Kyiv'
+  url: https://mwi.westpoint.edu/urban-warfare-project-case-study-12-battle-of-kyiv/
+  publisher: Modern War Institute at West Point
+  authors:
+  - Liam Collins
+  - John Spencer
+  published: '2025-02-21'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - fires
+  - chapter
+  notes: 'Skybyn ambush on the evening of 9 Mar: ATGMs on the lead vehicle and the trail (a volunteer), escape along the four-lane
+    highway, regimental commander reportedly killed. The 72nd''s artillery group; civilian drone operators tied to Delta.'
+- id: nyt-2022-kramer-brovary-tanks
+  title: How a Line of Russian Tanks Became an Inviting Target for Ukrainians
+  url: https://www.nytimes.com/2022/03/11/world/europe/ukraine-kyiv-russia-fighting.html
+  alt_urls:
+  - https://web.archive.org/web/2022id_/https://www.nytimes.com/2022/03/11/world/europe/ukraine-kyiv-russia-fighting.html
+  publisher: The New York Times
+  authors:
+  - Andrew E. Kramer
+  published: '2022-03-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  notes: 'Reporting from Brovary: the skirmish on the M01 on Wednesday (9 Mar), first and last tanks targeted, a partial success,
+    artillery forward with a TOS-1, drone video released by the Ukrainian army, captured tank driven off (Reuters video).
+    Read via the Wayback Machine.'
+- id: open-meteo-2026-era5-brovary-mar-2022
+  title: 'Open-Meteo Historical Weather API (ERA5): Skybyn, 8–12 March 2022 (query)'
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=50.587&longitude=30.838&start_date=2022-03-08&end_date=2022-03-12&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,sunrise,sunset,cloud_cover_mean,snow_depth_max
+  publisher: Open-Meteo (ECMWF ERA5 reanalysis)
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - weather
+  - chapter
+  notes: 'Reanalysis, not observations (CC BY 4.0). 9 Mar: −3.9 to +0.7 °C, 0.5 mm, mostly overcast, a snow shower near dusk.
+    10 Mar: −6.9 to −1.8 °C, clear by midday. Snow depth about 3 cm. Sunrise about 06:23 and sunset about 17:50 EET; the API''s
+    local labels were +1 h, so times were corrected to UTC+2.'
+- id: osm-nominatim-c13
+  aliases:
+  - osm-2026-brovary-geodata
+  - osm-2026-kupiansk-pipeline-geodata
+  - osm-2026-stepove-geodata
+  title: OpenStreetMap Nominatim geocoding (Black Sea and Crimea places)
+  url: https://nominatim.openstreetmap.org/
+  publisher: OpenStreetMap Foundation
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e6-avdiivka-attrition
+  - e8-drone-kill-zone
+  topics:
+  - geodata
+  - chapter
+  notes: Coordinates of Sevastopol Bay, Pivdenna Bay, Lake Donuzlav, Alupka, Cape Tarkhankut, Chornomorske, Cape Takil, Kerch
+    Strait, Tsemes Bay, Kacha airfield and Odesa-region ports from OSM objects (ODbL). Distances in the dossier are great-circle
+    values computed from these.
+- id: rferl-2022-brovary-tank-convoy
+  title: Ukrainian Forces Destroy Russian Tank Convoy Near Kyiv
+  url: https://www.rferl.org/a/ukrainian-forces-destroy-russian-tank-convoy-near-kyiv/31746980.html
+  publisher: RFE/RL
+  authors: []
+  published: '2022-03-10'
+  accessed: '2026-10-01'
+  type: video
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - media
+  - chapter
+  notes: 'Current Time video report: column ambushed near Brovary on 10 Mar and forced to retreat, and working tanks left
+    behind were taken by the Ukrainian military.'
+- id: wikipedia-2026-90th-guards-tank-division
+  title: 90th Guards Tank Division (2016–present)
+  url: https://en.wikipedia.org/wiki/90th_Guards_Tank_Division_(2016%E2%80%93present)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - orbat
+  - chapter
+  notes: 'Unit background: the 6th Tank Regiment became the 6th Guards ''Lvov'' Tank Regiment in 2018. Two of the division''s
+    BTGs fought near Brovary.'
+- id: wikipedia-2026-battle-of-brovary
+  title: Battle of Brovary
+  url: https://en.wikipedia.org/wiki/Battle_of_Brovary
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  notes: Battle article (read as raw wikitext). Relays Darmohrai's Tyzhden interview (2026-04-01; the 72nd's 1st and 3rd Battalions,
+    3rd Battalion equipment, 19 knocked out and 49 withdrew, 3 IFVs, 1 BTR-82A, up to 55 killed; UA 1 KIA and 5 WIA), plus
+    WaPo and NYT reporting. Loss figures are the Ukrainian commander's claims.
+- id: wikipedia-2026-tetiana-chornovol
+  title: Tetiana Chornovol
+  url: https://en.wikipedia.org/wiki/Tetiana_Chornovol
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - people
+  - chapter
+  notes: Former MP serving with the 72nd Brigade as a Stuhna ATGM operator from 24 Feb 2022. Took part in the defeat of the
+    Russian 6th Tank Regiment in Brovary district.

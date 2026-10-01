@@ -1,0 +1,1082 @@
+# New sources cited by research/chapters/c05-kerch-bridge.md (chapter dossier, pass 2026-10-01).
+# Sources already in the knowledge base (wikipedia-crimean-bridge, rusi-2026-ferris-logistics-targeting,
+# euromaidanpress-2026-crimea-island) are cited by id and not repeated here.
+
+# --- Encyclopedic orientation ---
+- id: wikipedia-2022-crimean-bridge-explosion
+  title: "2022 Crimean Bridge explosion"
+  url: https://en.wikipedia.org/wiki/2022_Crimean_Bridge_explosion
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e4-bakhmut]
+  topics: [deep-strike, sabotage, logistics, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Tertiary, for navigation. 06:07 explosion on the Crimea-bound road lanes midway between the arch and Tuzla; 7 burning tank cars of a 59-wagon train; 5 dead; one-lane reopening the same day; 64 m replacement span; UK MoD repair estimate; FSB pallet route; 8 life sentences on 27 Nov 2025."
+
+- id: wikipedia-2023-crimean-bridge-explosion
+  title: "2023 Crimean Bridge explosion"
+  url: https://en.wikipedia.org/wiki/2023_Crimean_Bridge_explosion
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [naval-drones, deep-strike, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Tertiary. Explosions at about 03:04 and 03:20 on 17 Jul 2023; pillar 145; two civilians killed; one lane reopened the next day; full reopening 14 Oct; Malyuk's March 2024 train figures (42-46 a day down to 4-5); UK MoD calls the bridge a 'security burden'."
+
+- id: wikipedia-2025-crimean-bridge-attack
+  title: "2025 Crimean Bridge explosion"
+  url: https://en.wikipedia.org/wiki/2025_Crimean_Bridge_attack
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, underwater, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Tertiary. 04:44 underwater explosion at a support on 3 Jun 2025; SBU claims 1,100 kg TNT equivalent laid over months; Reuters geolocated the SBU video; Russian outlets say closed until 07:00 and no significant damage."
+
+# --- Act 1: 8 Oct 2022 truck bomb ---
+- id: twz-2022-helfrich-kerch-missile-prep
+  title: "Russia Seems To Be Preparing The Vital Kerch Bridge For Missile Attacks"
+  url: https://www.twz.com/russia-seems-to-be-preparing-the-vital-kerch-bridge-for-missile-attacks
+  publisher: The War Zone
+  authors: [Emma Helfrich, Tyler Rogoway]
+  published: "2022-07-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [air-defence, deception, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Pre-attack defences: two target barges with radar reflectors on the bridge's east side, a 1 Jul 2022 smokescreen test, S-300/S-400 in Crimea; Sutton calls the measures improvised. Marchenko's 'number one target'. Medium: OSINT-based specialist outlet."
+
+- id: ukranews-2022-how-bridge-guarded
+  title: "Fighters, Boats, Divers And Dolphins. Russian Media Tell How Crimean Bridge Is Guarded"
+  url: https://ukranews.com/en/news/886973-fighters-boats-divers-and-dolphins-russian-media-tell-how-crimean-bridge-is-guarded
+  publisher: Ukrainian News Agency
+  authors: []
+  published: "2022-10-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [defences, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Summarises Meduza's account of the claimed pre-Oct 2022 guard: Rosgvardia checkpoints with vehicle scanners, Grachonok and Mangust boats, cylindrical concrete ram fenders in front of piers, divers, Plavnik and Amulet-P underwater systems, 'dolphins', S-400 and Pantsir-S1. Low: second-hand Russian claims, fetched via Wayback."
+
+- id: pravda-2022-sbu-behind-bridge
+  title: "Security Service of Ukraine behind explosion on Crimean bridge"
+  url: https://www.pravda.com.ua/eng/news/2022/10/8/7370891/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2022-10-08"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [sabotage, attribution, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "10:55 on the day: an unnamed law-enforcement source says the explosion was an SBU special operation; the SBU did not comment. Medium: single anonymous source, later confirmed by the SBU."
+
+- id: pravda-2022-maxar-planet-images
+  title: "Satellite images of damaged Crimean Bridge released"
+  url: https://www.pravda.com.ua/eng/news/2022/10/8/7370943/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2022-10-08"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [satellite-imagery, media, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "PlanetScope before/after pair (7 and 8 Oct 2022) posted by Planet, and Maxar images posted by Christopher Miller."
+
+- id: pravda-2022-maxar-repairs
+  title: "Maxar shows new photos of damaged Crimean Bridge"
+  url: https://www.pravda.com.ua/eng/news/2022/10/13/7371719/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2022-10-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [satellite-imagery, repair, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Maxar imagery shows repairs under way on the rail line and road spans, vehicles moving, and a ferry carrying trucks across the strait."
+
+- id: meduza-2022-what-we-know-bridge
+  title: "What we know about the bridge. The facts, and the theories, about the explosion on the Crimean Bridge"
+  url: https://meduza.io/en/feature/2022/10/10/what-we-know-about-the-bridge
+  publisher: Meduza
+  authors: []
+  published: "2022-10-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [sabotage, media, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Exiled independent Russian outlet (not state media). Truck crossing from Taman passed inspection without an X-ray; driver Makhir Yusubov, owner Samir Yusubov; >1 km of track damaged by fire; rail reopened the same evening; 5 dead; the Baza CCTV; Bellingcat's Nick Waters doubts an under-bridge blast."
+
+- id: isw-2022-10-08-roca
+  title: "Russian Offensive Campaign Assessment, October 8"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-8
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-10-08"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [deep-strike, logistics, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Maxar shows one road lane collapsed and rail track damaged; rail not significantly damaged structurally; one lane open to cars and buses, trucks by ferry; Putin decree puts FSB over bridge security; Surovikin named overall commander the same day."
+
+- id: isw-2022-10-09-roca
+  title: "Russian Offensive Campaign Assessment, October 9"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-9
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-10-09"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [russian-politics, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Special edition on Russian domestic reaction: milbloggers demand retaliation and a resumed missile campaign, criticise Medvedev's silence after his 'red line' statements."
+
+- id: isw-2022-10-10-roca
+  title: "Russian Offensive Campaign Assessment, October 10"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-10
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-10-10"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [missile-strikes, logistics, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Ukrainian General Staff: over 84 cruise missiles and 24 drones (13 Shahed-136), 43 missiles and 10 Shaheds downed; Putin calls it retaliation; GUR says it was planned beforehand; Melitopol mayor reports more equipment moving via the Mariupol-Berdiansk-Melitopol land route."
+
+- id: ukrinform-2022-19-killed
+  title: "Yesterday's missile attacks kill 19 people across Ukraine – State Emergency Service"
+  url: https://ukrinform.net/rubric-ato/3590612-yesterdays-missile-attacks-kill-19-people-across-ukraine-state-emergency-service.html
+  publisher: Ukrinform
+  authors: []
+  published: "2022-10-11"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [missile-strikes, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "As of 07:00 on 11 Oct: 19 killed, 105 injured; infrastructure hit in 12 regions and Kyiv; 301 settlements still without power."
+
+- id: pravda-2022-fsb-detains-eight
+  title: "Explosion on the Crimean Bridge: FSB detain 8 people and accuse Ukrainian intelligence and its head of orchestrating it"
+  url: https://www.pravda.com.ua/eng/news/2022/10/12/7371564/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2022-10-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [sabotage, russian-claims, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Reports the FSB version: 8 detained, HUR and Budanov blamed, charge hidden in film rolls on 22 pallets (>22 t) shipped Odesa - Ruse - Poti - Armenia. Medium: relays Russian claims that the SBU later contradicted."
+
+- id: ssu-2022-maliuk-far-from-reality
+  title: "Vasyl Maliuk: russians are far from reality in their investigation into explosion on Crimean bridge"
+  url: https://ssu.gov.ua/en/novyny/u-svoiemu-rozsliduvanni-shchodo-vybukhu-na-krymskomu-mostu-rosiiany-daleki-vid-realnosti-vasyl-maliuk
+  publisher: Security Service of Ukraine
+  authors: []
+  published: "2022-10-27"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [attribution, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Acting SBU head (Interfax-Ukraine interview) says the HUR/Budanov attribution is untrue and jokes about 'cotton' (bavovna) and a truck 'refuelled with the wrong fuel'. Official, deliberately coy. Fetched via Wayback (site returns 403)."
+
+- id: euromaidan-2023-shandra-sbu-confirms
+  title: "Ukraine's Security Service confirms it blew up Crimea Bridge in 2022"
+  url: https://euromaidanpress.com/2023/07/27/ukraines-security-service-confirms-it-blew-up-crimea-bridge-in-2022/
+  publisher: Euromaidan Press
+  authors: [Alya Shandra]
+  published: "2023-07-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [attribution, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Malyuk at a stamp ceremony: 'The destruction of the Crimean Bridge is one of our accomplishments.' First official SBU confirmation of the Oct 2022 attack."
+
+- id: militarnyi-2023-kushnikov-malyuk-details
+  title: "SSU Head shares details of the Kerch Bridge bombing in October 2022"
+  url: https://militarnyi.com/en/news/ssu-head-shares-details-of-the-kerch-bridge-bombing-in-october-2022/
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2023-08-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e5-counteroffensive-23]
+  topics: [sabotage, planning, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Malyuk's NV interview: planning from spring 2022; rail option dropped because Russia restricted non-military rail cargo; RDX cylinders (21 t TNT equivalent) wrapped in packing film sized to defeat scanners; GPS jammers on the bridge bypassed; detonation mid-bridge; 22 unwitting people jailed in Russia."
+
+- id: pravda-2024-kommersant-rocket-fuel
+  title: "Crimean bridge blown up by solid rocket fuel in 2022"
+  url: https://www.pravda.com.ua/eng/news/2024/05/3/7454057/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2024-05-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [sabotage, russian-claims, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Relays Kommersant on Russian case files: ~10 t TNT-equivalent solid-rocket-fuel charge in film reels; 22.7 t on 22 pallets; Verkhny Lars 4 Oct, Armavir 6 Oct, International ProStar driven by Makhir Yusubov; GPS trigger at km 156 of the Novorossiysk-Kerch road; spans between supports 235 and 236 fell; 17 tank wagons damaged."
+
+- id: kyivpost-2025-life-sentences
+  title: "Russia Jails 8 for Life Over Crimean Bridge Explosion After Secretive Trial"
+  url: https://www.kyivpost.com/post/65115
+  publisher: Kyiv Post
+  authors: []
+  published: "2025-11-27"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [russian-claims, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Southern Military Court in Rostov-on-Don gives eight Russian, Ukrainian and Armenian defendants life terms after a closed trial; none pleaded guilty; prosecutors' version (via Mediazona) of how the import route was set up."
+
+# --- Act 2: 17 Jul 2023 Sea Baby, and the barricades ---
+- id: twz-2023-altman-kerch-closed
+  title: "Russia's Kerch Strait Bridge Closed After 'Major Incident'"
+  url: https://www.twz.com/russias-kerch-strait-bridge-closed-after-major-incident
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2023-07-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [naval-drones, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Same-day report: strikes at 03:04 and 03:20 (Grey Zone); Aksyonov names the 145th support from the Krasnodar side; one span collapsed, another displaced; two killed, a child injured; ferry also suspended."
+
+- id: isw-2023-07-17-roca
+  title: "Russian Offensive Campaign Assessment, July 17, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-17-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-07-17"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [logistics, naval-drones, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "One road span collapsed, another damaged but in place; rail resumed hours later; the bridge is one of two southern GLOCs; tourist traffic rerouted via occupied Kherson/Zaporizhzhia; temporary road bridge and Armiansk road plans; milbloggers (Girkin) say maritime security was neglected; grain deal expires."
+
+- id: pravda-2023-peskov-odesa-revenge
+  title: "Putin's spokesman says attack on Odesa is revenge for Crimean Bridge"
+  url: https://www.pravda.com.ua/eng/news/2023/07/18/7411834/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-07-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [missile-strikes, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Peskov confirms the night strike on Odesa was retaliation for the bridge; 6 Kalibr and 36 Shaheds launched, all missiles and 31 drones downed; Russian MoD claims it hit a USV workshop at an Odesa ship-repair plant."
+
+- id: cnn-2023-walsh-sea-baby
+  title: "Crimean Bridge attack: The moment Ukraine used an experimental drone to strike Russia's Kerch Bridge"
+  url: https://edition.cnn.com/2023/08/15/europe/ukraine-crimea-bridge-drone-strike-video-intl/index.html
+  publisher: CNN
+  authors: [Nick Paton Walsh, Victoria Butenko, Florence Davey-Attlee]
+  published: "2023-08-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [naval-drones, media, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "SBU exclusive: Sea Baby pilot-screen video, up to 850 kg warhead, two CCTV clips (road-section impact, then a rail-section blast ~5 min later from the opposite direction); joint SBU-Navy operation led by Malyuk and Neizhpapa; drones built in an underground facility, no Western involvement."
+
+- id: ukrinform-2023-new-footage
+  title: "New footage of July attack on Crimean bridge released"
+  url: https://www.ukrinform.net/rubric-ato/3748905-new-footage-of-july-attack-on-crimean-bridge-released.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-08-16"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [naval-drones, media, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Ukrainian relay of the CNN/SBU footage: Sea Baby up to 850 kg; SBU also credits it with the Olenegorsky Gornyak and the SIG tanker."
+
+- id: navalnews-2023-ozberk-sea-baby-video
+  title: "New video confirms Ukraine's latest Bridge Attack was Done with Kamikaze USV"
+  url: https://www.navalnews.com/naval-news/2023/08/new-video-confirms-ukraines-latest-bridge-attack-was-done-with-kamikaze-usv/
+  publisher: Naval News
+  authors: [Tayfun Ozberk]
+  published: "2023-08-16"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [naval-drones, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Reads the CNN video: FLIR camera view at speed toward a pillar at night; Sea Baby with electro-optics and a SATCOM dome, 850 kg."
+
+- id: euromaidan-2023-shandra-bridge-smoke
+  title: "Crimea bridge in smoke after double attack, Russia reports two missiles downed"
+  url: https://euromaidanpress.com/2023/08/12/crimea-bridge-in-smoke-after-double-attack-russia-reports-two-missiles-downed/
+  publisher: Euromaidan Press
+  authors: [Alya Shandra]
+  published: "2023-08-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [missile-strikes, smoke, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "12 Aug 2023: attacks around 13:00 and 15:00, at least eight explosions, three missiles claimed downed (Aksyonov two, MoD S-200); Kryuchkov calls the smoke a deliberate screen; Katkov reads the strikes as reconnaissance of air defence."
+
+- id: pravda-2023-bridge-smoke-air-defence
+  title: "Russians explain Crimean Bridge being covered in smoke as caused by air defence"
+  url: https://www.pravda.com.ua/eng/news/2023/08/12/7415305/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-08-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [missile-strikes, smoke, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Russian MoD claims S-200 missiles downed and calls the smoke a Russian smoke screen; damage unknown."
+
+- id: kyivindependent-2023-court-hur-ferries
+  title: "Military intelligence: Russia sinking ferries in attempt to protect Crimean Bridge"
+  url: https://kyivindependent.com/military-intelligence-russia-sinking-ferries-in-attempt-to-protect-crimean-bridge/
+  publisher: Kyiv Independent
+  authors: [Elsa Court]
+  published: "2023-08-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [defences, barriers, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "HUR: Russia believes sunken ferries will make a protective lane in front of the bridge; one sunk, at least six planned. Khusnullin said on 17 Jul the road section might not be fully repaired before November."
+
+- id: twz-2023-altman-sinks-ships
+  title: "Russia Sinks Line Of Ships To Protect Kerch Bridge"
+  url: https://www.twz.com/russia-sinks-line-of-its-own-ships-to-protect-kerch-bridge
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2023-08-29"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [defences, barriers, satellite-imagery, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Planet Labs image of 29 Aug 2023: seven partially submerged vessels just over a tenth of a mile apart just south of the bridge, about 15 miles north of the strait's mouth; Sutton: 'moderately effective' against surface and underwater drones; booms with chains, nets or fences expected between them."
+
+- id: ukrinform-2023-block-ships-images
+  title: "New satellite images of Kerch Bridge with block ships appear"
+  url: https://www.ukrinform.net/rubric-ato/3755004-new-satellite-images-of-kerch-bridge-with-block-ships-appear.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-08-31"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [barriers, satellite-imagery, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Relays H I Sutton's imagery post: block ships across the 'western approaches' to the bridge, reportedly sunken ferries."
+
+- id: pravda-2023-uk-intel-bridge-protection
+  title: "UK Intelligence explains how Russia tries to protect Crimean bridge from attacks"
+  url: https://www.pravda.com.ua/eng/news/2023/09/1/7417978/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-09-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22, e5-counteroffensive-23]
+  topics: [defences, barriers, smoke, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "UK Defence Intelligence: sunken ships and booms confirmed 29 Aug, vessels 160 m apart at the southern section where Sea Baby struck; smoke generators tested 24 May 2023 and used 12 Aug; radar-decoy barges tested Sep 2022; air defence."
+
+- id: pravda-2023-bridge-attack-sep-claim
+  title: "Russians claim Ukraine tried to attack Crimean Bridge again"
+  url: https://www.pravda.com.ua/eng/news/2023/09/2/7418120/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-09-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [naval-drones, russian-claims, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Russian MoD: a semi-submersible USV destroyed in the Black Sea at about 23:15 on 1 Sep; road traffic halted from 00:00; barges already installed south of the bridge."
+
+- id: aljazeera-2023-sea-drones-bridge
+  title: "Russia says Ukraine sea drones destroyed in failed attack on Crimea bridge"
+  url: https://www.aljazeera.com/news/2023/9/2/russia-says-ukraine-sea-drones-destroyed-in-failed-attack-on-crimea-bridge
+  publisher: Al Jazeera
+  authors: []
+  published: "2023-09-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [naval-drones, russian-claims, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Russian MoD claims three naval drones destroyed (one late 1 Sep, two early 2 Sep, the third at about 02:20). Unverified claims."
+
+- id: meduza-2023-bridge-repaired
+  title: "Crimean Bridge repaired and back in service after latest attack"
+  url: https://meduza.io/en/news/2023/10/15/crimean-bridge-repaired-and-back-in-service-after-latest-attack
+  publisher: Meduza
+  authors: []
+  published: "2023-10-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [repair, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Khusnullin: all four lanes open again, ahead of schedule. Exiled independent Russian outlet."
+
+- id: ssu-2023-bridge-doomed
+  title: "Crimean bridge is doomed - SSU Head Vasyl Maliuk"
+  url: https://ssu.gov.ua/en/novyny/krymskyi-mist-pryrechenyi-holova-sbu-vasyl-maliuk
+  publisher: Security Service of Ukraine
+  authors: []
+  published: "2023-11-25"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [attribution, logistics, media, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Launch of the documentary series 'SSU. Special Operations of Victory'; claims the corridor is not fully functional (reverse-flow road traffic, weight limits, wagon limits) and that ammunition mainly moves by ferry. Official claim. Fetched via Wayback."
+
+- id: espreso-2023-storm-barrier
+  title: "Barrier against naval drones washed away near Crimea bridge"
+  url: https://global.espreso.tv/barrier-against-marine-drones-washed-away-near-crimean-bridge-after-storm
+  publisher: Espreso Global
+  authors: []
+  published: "2023-12-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [barriers, weather, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Relays Defense Express and MT Anderson imagery of 28 Nov 2023: after the 26-27 Nov storm three boom barges fully flooded, one partly, two washed away, one adrift."
+
+# --- Between acts: logistics and the 2024 barrier build-up ---
+- id: euromaidan-2024-rail-uk-mod
+  title: "British Defense Ministry: New Russian railway to occupied Ukraine aims to support Russian activity in Mariupol"
+  url: https://euromaidanpress.com/2024/03/24/british-defense-ministry-new-russian-railway-to-occupied-ukraine-to-support-russian-activity-in-mariupol/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2024-03-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [logistics, rail, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Putin (18 Mar 2024) announces a Rostov-occupied territories-Sevastopol line to give 'redundancy for the Kerch bridge'; UK MoD: the ~60 km Kolosky-Kamianka stretch took eight months."
+
+- id: molfar-2024-bridge-satellite
+  title: "Zero Traffic and Detours: Why Attacking the Crimean Bridge Isn't Needed Anymore — Molfar Analyzes Satellite Imagery"
+  url: https://molfar.com/en/blog/chomu-bilshe-nemae-potreby-atakuvaty-krymskyi-mist
+  publisher: Molfar
+  authors: []
+  published: "2024-05-06"
+  accessed: "2026-10-01"
+  type: osint-dataset
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [logistics, rail, satellite-imagery, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Maxar-based rail count May-Sep 2023 and Feb-Apr 2024: no military trains seen after Jul 2023; 1,097 freight cars at Taman vs 203 crossing; one ~55-car fuel train in Feb 2024; 3.5 t road limit after the 2023 repair; coordinates of trains on the bridge; quotes Malyuk's 42-46 to 4-5 trains a day. Argues further strikes are unnecessary."
+
+- id: militarnyi-2024-kushnikov-barges
+  title: "Russians are trying to protect the Kerch bridge with barges"
+  url: https://militarnyi.com/en/news/russians-are-trying-to-protect-the-kerch-bridge-with-barges/
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2024-05-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [barriers, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Crimean Wind imagery: seven barge sections installed, each 90-100 m long; earlier barrel-and-cable booms torn up by storms and washed up on the Kerch embankment."
+
+- id: navalnews-2024-sutton-kerch-defenses
+  title: "Russia Rushes To Complete Huge New Defenses Of Kerch Bridge"
+  url: https://www.navalnews.com/naval-news/2024/06/russia-rushes-to-complete-huge-new-defenses-of-kerch-bridge/
+  publisher: Naval News
+  authors: [H I Sutton]
+  published: "2024-06-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [barriers, defences, naval-drones, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Layered defence: outer line of barges end-to-end on the southern approaches, inner nets and floating booms; some barges can be towed to close the channel under the arch; new piers either side of the smaller bridge south of the main span; Sergey Kotov sunk while guarding the southern approaches (Mar 2024); dangerous cargo shifted to ships and ferries."
+
+- id: militarnyi-2024-kushnikov-strengthening
+  title: "Russians Strengthening Kerch Bridge Defense"
+  url: https://militarnyi.com/en/news/russians-strengthening-kerch-bridge-defense/
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2024-06-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [barriers, defences, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Summarises Sutton: barges first reported Aug 2023 about 200 m apart, now much closer; part of the barrier sank or was beached in a Dec 2023 storm; a Project 436BIS(R) target ship placed near the bridge against radar-homing missiles; fuel and ammunition had been barred from the bridge until the rail ferries were hit."
+
+- id: ukrinform-2024-30-barges
+  title: "Russians increase number of protective barges near the Kerch Bridge to 30"
+  url: https://ukrinform.net/rubric-ato/3888184-russians-increase-number-of-protective-barges-near-the-kerch-bridge-to-30.html
+  publisher: Ukrinform
+  authors: []
+  published: "2024-07-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [barriers, satellite-imagery, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Krym.Realii and Brady Africk (AEI) imagery: more than 30 barges; work began 7 May 2024; an echeloned boom system; two Russian boats on constant guard."
+
+- id: defenceexpress-2024-kerch-fortifications
+  title: "russians Build Fortifications to Defend Kerch Bridge from Ukrainian Naval Drones"
+  url: https://en.defence-ua.com/news/russians_build_fortifications_to_defend_kerch_bridge_from_ukrainian_naval_drones-11290.html
+  publisher: Defense Express
+  authors: []
+  published: "2024-07-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [barriers, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Floating crane in the strait; surface protection under construction since 7 May; a second barrier line of 21 barges by end of June; piers under construction near the bridge foundations."
+
+- id: rferl-2024-kerch-atacms-claim
+  title: "Kerch Bridge Traffic Halted Overnight As Blasts Reported Over Russian-Occupied Crimea"
+  url: https://www.rferl.org/a/russia-ukraine-war-crimea-drones-kerch-bridge/33080939.html
+  publisher: RFE/RL
+  authors: []
+  published: "2024-08-16"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [missile-strikes, naval-drones, russian-claims, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Russian MoD claims 12 ATACMS aimed at the bridge destroyed on 15 Aug 2024, and Mi-8 and Ka-29 helicopters destroying five USVs; bridge shut for 4+ hours, ~2,000 vehicles queued. Unverified claims."
+
+- id: kyivpost-2024-brown-pantsir
+  title: "Russia Builds Anti-Drone Structures, Deploys Unusual Air Defense System to Protect Crimea Bridge"
+  url: https://www.kyivpost.com/post/38390
+  publisher: Kyiv Post
+  authors: [Steve Brown]
+  published: "2024-09-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [defences, air-defence, barriers, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Catalogue of measures (UK intel): floating and sunken barges, anti-USV nets, naval mines, barrels linked with cables, smoke generators; a permanent structure alongside the bridge by mid-Aug 2024; metal anti-USV 'ruffs' sunk nearby; a Pantsir-S1M deployed on the bridge itself."
+
+- id: euromaidan-2024-zoria-barriers-floating
+  title: "Russian naval security barriers for Kerch Bridge found floating near Kerch coast"
+  url: https://euromaidanpress.com/2024/10/13/russian-naval-security-barriers-for-kerch-bridge-found-floating-near-kerch-coast/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2024-10-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [barriers, weather, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Crimea.Realii: boom fragments drifting off the Kerch embankment; barges on the southern side from summer 2024, then booms parallel to the bridge; 4 Oct 2024 Ukrainian arbitration request to order the bridge dismantled."
+
+- id: pravda-2024-barrier-washed-ashore
+  title: "Kerch bridge barrier installed against drones washed ashore – photos"
+  url: https://www.pravda.com.ua/eng/news/2024/11/5/7483092/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2024-11-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [barriers, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Boom remnants (empty tanks in reinforced frames) piled on the Kerch promenade; second line of 21 barges (Jun 2024); metal fences around the pillars from Sep 2024."
+
+- id: usm-2024-bridge-security
+  title: "The invaders have strengthened the security of the Crimean Bridge"
+  url: https://en.usm.media/the-invaders-have-strengthened-the-security-of-the-crimean-bridge/
+  publisher: Ukrainian Shipping Magazine
+  authors: []
+  published: "2024-12-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [defences, barriers, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "5-6 Rosgvardia, FSB and Border Guard vessels with AA guns, heavy machine guns, anti-sabotage grenade launchers and Vikhr missiles; Black Sea side fully blocked by booms, retractable at the shipping span with a duty tug; parallel structure on the Azov side with air-defence platforms. Low: unattributed trade-press summary."
+
+- id: ukrinform-2025-hedgehog-barriers
+  title: "Russians sinking 'hedgehog'-type barriers in Kerch Strait – reports"
+  url: https://www.ukrinform.net/rubric-ato/3946199-russians-sinking-hedgehogtype-barriers-in-kerch-strait-reports.html
+  publisher: Ukrinform
+  authors: []
+  published: "2025-01-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [barriers, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Crimean Wind: 'hedgehog' obstacles made at the Zaliv shipyard, carried by barge and lowered by floating crane, sometimes in two layers, since Aug 2024; the number of boom barges had halved within a month."
+
+- id: unn-2025-bridge-protection-restored
+  title: "Russia restores protection of the Kerch bridge after devastating storms: what is known"
+  url: https://unn.ua/en/news/russia-restores-protection-of-the-kerch-bridge-after-devastating-storms-what-is-known
+  publisher: UNN
+  authors: []
+  published: "2025-01-27"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [barriers, weather, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Crimean Wind: 36 boom barges in Oct 2024, most destroyed by storms; 17 back in place by late Jan 2025, tugs bringing more since late December."
+
+# --- Act 3: 3 Jun 2025 underwater charges ---
+- id: pravda-2025-prots-third-strike
+  title: "Ukraine's Security Service strikes Crimean Bridge for third time – this time underwater"
+  url: https://www.pravda.com.ua/eng/news/2025/06/3/7515392/
+  publisher: Ukrainska Pravda
+  authors: [Anastasia Prots]
+  published: "2025-06-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, underwater, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "SBU statement: months-long operation, charges under the supports activated at 04:44, 1,100 kg TNT equivalent, 'significant structural damage at the seabed level', bridge 'in an emergency condition', no civilian casualties; Malyuk quote; Neizhpapa's April remark on information silence."
+
+- id: kyivindependent-2025-fornusek-underwater
+  title: "Russia's Crimean Bridge rocked by explosions, Ukraine's SBU claims responsibility"
+  url: https://kyivindependent.com/breaking-ukraines-sbu-strikes-crimean-bridge-in-underwater-attack/
+  publisher: Kyiv Independent
+  authors: [Martin Fornusek]
+  published: "2025-06-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, underwater, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "SBU claim and video; Navy spokesman Pletenchuk: the 'key and most complex' part was damaged; FSB claims an agent detained; local channels say the bridge was shut 06:00-09:00 and again in the afternoon; a helicopter patrolled the strait."
+
+- id: kyivindependent-2025-fornusek-kremlin-no-damage
+  title: "Kremlin confirms explosion at Russia's Crimean Bridge after Ukraine's sabotage, claims 'no damage'"
+  url: https://kyivindependent.com/kremlin-confirms-explosion-at-crimean-bridge-after-sbu-bombing-claims-no-damage/
+  publisher: Kyiv Independent
+  authors: [Martin Fornusek]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [russian-claims, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Peskov: 'There indeed was an explosion. There was no damage, the bridge continues to function.'"
+
+- id: euromaidan-2025-third-strike
+  title: "SBU hits Crimean bridge underwater in third major strike, video shows massive blast (updated)"
+  url: https://euromaidanpress.com/2025/06/03/explosion-reported-at-russias-kerch-bridge-updates/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2025-06-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, underwater, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "SBU claim at 04:44, 1,100 kg; first known underwater attack; notes the underwater damage was not independently verified."
+
+- id: reuters-2025-polityuk-underwater
+  title: "Ukraine Hits Crimea Bridge With Underwater Explosives"
+  url: https://www.marinelink.com/news/ukraine-hits-crimea-bridge-underwater-526439
+  publisher: Reuters (via MarineLink)
+  authors: [Pavel Polityuk, Olena Harmash]
+  published: "2025-06-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [verification, underwater, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Reuters copy: Russian bridge channel says traffic suspended about 04:00-07:00 then normal; Reuters confirmed the video's location from the structure and bearing elements against satellite and file imagery but not when it was filmed; milbloggers call the attack a failed sea-drone strike."
+
+- id: liga-2025-malyuk-two-tons
+  title: "The SSU struck the Crimean Bridge supports underwater with more than two tons of explosives – Malyuk"
+  url: https://news.liga.net/en/amp/politics/news/the-ssu-struck-the-crimean-bridge-supports-underwater-with-more-than-two-tons-of-explosives-malyuk
+  publisher: LIGA.net
+  authors: []
+  published: "2025-06-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, underwater, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Malyuk to journalists: two charges of 1,100 kg each on 'key supports'; done with the SBU's 13th Main Directorate of Military Counterintelligence; restates 21 t (2022) and two Sea Babies (2023). Machine-translated."
+
+- id: ssu-2025-maliuk-hallmark
+  title: "The Crimean bridge is in poor condition, and strikes against it became the Service's hallmark – Vasyl Maliuk (video)"
+  url: https://ssu.gov.ua/en/novyny/krymskyi-mist-avariina-konstruktsiia-udary-po-nomu-staly-vizytivkoiu-sbu-vasyl-maliuk-video
+  publisher: Security Service of Ukraine
+  authors: []
+  published: "2025-08-13"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [logistics, attribution, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Malyuk: 'from land, from the water, from underneath the water'; two 1.1 t charges; only trucks up to 5 t allowed; no military logistics on the bridge; 'in disrepair'. Official claim, fetched via Wayback."
+
+# --- Coda: 2026 ---
+- id: ukrinform-2026-kerch-guard-boats
+  title: "Kerch Bridge guarded by three boats and an FSB ship — social media"
+  url: https://www.ukrinform.net/rubric-ato/4077260-kerch-bridge-guarded-by-three-boats-and-an-fsb-ship-social-media.html
+  publisher: Ukrinform
+  authors: []
+  published: "2026-01-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [defences, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Crimean Wind: on the Black Sea side near Kerch, a Project 22460 Okhotnik FSB patrol ship, two Project 21980 Grachonok anti-sabotage boats and a Project 1204 Shmel artillery boat; Azov-side patrol composition unknown."
+
+- id: maritimeexecutive-2026-rail-ferries
+  title: "With Ferry Strikes, Ukraine Narrows Russia's Options at Kerch Strait"
+  url: https://maritime-executive.com/article/with-ferry-strikes-ukraine-narrows-russia-s-options-at-kerch-strait
+  publisher: The Maritime Executive
+  authors: []
+  published: "2026-03-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [logistics, ferries, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "13-14 Mar 2026: rail ferry Slavyanin (150 m) disabled and Avangard (125 m) damaged, leaving Russia no Black Sea rail ferries; Kavkaz port also hit; the crossing is a nine-nm voyage north of the bridge; dangerous rail cargo had been ferried, so it may now have to use the bridge."
+
+- id: pravda-2026-slavyanin-disabled
+  title: "Defence Intelligence of Ukraine disables Russian ferry Slavyanin with drone strikes in Crimea"
+  url: https://www.pravda.com.ua/eng/news/2026/04/08/8029253/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2026-04-08"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [ferries, logistics, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "HUR Active Operations Department drones hit Slavyanin on 5-6 Apr 2026, 'the last railway ferry of the occupation army still afloat in the Kerch Strait'."
+
+- id: lb-2026-navy-strikes-guard-boats
+  title: "Navy strikes Russian boats guarding the Kerch Bridge"
+  url: https://en.lb.ua/news/2026/04/30/37909_navy_strikes_russian_boats.html
+  publisher: LB.ua
+  authors: []
+  published: "2026-04-30"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [defences, naval, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Night of 30 Apr 2026: Ukrainian Navy hits an FSB Sobol patrol boat and a Grachonok anti-sabotage boat used to guard the bridge."
+
+- id: pravda-2026-bridge-11-hour-closure
+  title: "Traffic on Crimean Bridge resumes after 11-hour shutdown"
+  url: https://www.pravda.com.ua/eng/news/2026/05/16/8034963/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2026-05-16"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [logistics, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Road traffic suspended from about 02:30 on 16 May 2026 for almost 11 hours; 12 passenger trains delayed by up to 7-8 hours."
+
+- id: kyivindependent-2026-moroziuk-crimea-rail-bridge
+  title: "Ukraine destroys key logistics bridge in Crimea, hits over 60 Russian military targets overnight"
+  url: https://kyivindependent.com/ukraine-destroys-key-logistics-bridge-in-crimea-hits-over-60-russian-military-targets-overnight/
+  publisher: Kyiv Independent
+  authors: [Polina Moroziuk]
+  published: "2026-06-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [logistics, rail, deep-strike, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "SSO destroy the North Crimean Canal rail bridge at Razdolne (22-23 Jun 2026), then hit the repair train; fires at Port Kavkaz oil terminal and Kerch Yuzhna station; Kerch Bridge shut ~23:30-05:10."
+
+- id: pravda-2026-kerch-2500-vehicles
+  title: "Kerch Bridge closed overnight: 2,500 vehicles waiting to cross"
+  url: https://www.pravda.com.ua/eng/news/2026/06/26/8041203/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2026-06-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [logistics, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Closed 23:51 25 Jun - 06:14 26 Jun 2026; 750 vehicles queued on the Taman side, 1,750 on the Kerch side for manual inspection; 200-litre liquids rule; queues over 10 km on 24 Jun imagery."
+
+- id: kyivindependent-2026-pakhnyuk-ferry-75
+  title: "Ukraine's drone commander says Kerch Strait ferry capacity reduced by 75%"
+  url: https://kyivindependent.com/kerch-strait-ferry-capacity-reduced-by-75/
+  publisher: Kyiv Independent
+  authors: [Lucy Pakhnyuk]
+  published: "2026-07-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [ferries, logistics, satellite-imagery, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Brovdi: operation MoLoCHKa (from 6 Jul 2026) cut Kavkaz-Crimea ferry capacity 75%; Eisk, Maria and SKS One lost, Lavrentiy and Panagia towed as barges; the four ferries had carried 180-250 vehicles a day, ~80% military. Vantor image of 22 Jun 2026 shows smoke-generator vehicles on the bridge. Medium: commander's claim."
+
+# --- Computed data ---
+- id: osm-overpass-2026-kerch-bridge
+  title: "OpenStreetMap Overpass query: bridge ways (rail, trunk) in 45.20-45.40 N, 36.40-36.70 E"
+  url: https://overpass.kumi.systems/api/interpreter
+  publisher: OpenStreetMap contributors (Overpass API mirror)
+  authors: []
+  published: "2026-06-01"
+  accessed: "2026-10-01"
+  type: map
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [geodata, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Computed 2026-10-01 from OSM data timestamped 2026-06-01. Navigation span ways tagged truss, length 227, seamark clearance height 35 m and width 185 m, centre about 45.3086 N 36.5060 E; summed carriageway lengths about 16.8 km road per direction and 18.1 km rail; landfalls listed in the dossier. ODbL; place points via Nominatim. Medium: crowd-sourced and computed."
+
+- id: openmeteo-era5-kerch-attack-days
+  title: "Open-Meteo Historical Weather API (ERA5 reanalysis): 45.30 N 36.51 E on 8 Oct 2022, 17 Jul 2023, 3 Jun 2025"
+  url: https://archive-api.open-meteo.com/v1/archive
+  publisher: Open-Meteo
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e5-counteroffensive-23, e8-drone-kill-zone]
+  topics: [weather, chapter]
+  found_in: [c05-kerch-bridge]
+  notes: "Computed 2026-10-01: hourly temperature, 10 m wind, cloud cover, sunrise in Europe/Moscow time. Reanalysis grid, not station observations; good for light and broad wind, not for local gusts or sea state."

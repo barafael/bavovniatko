@@ -1,0 +1,40 @@
+{"pair": "f32042072121", "relation": "none", "rationale": "The raid narrative and the claimed daily kill count are different assertions."}
+{"pair": "f36fb302d168", "relation": "supports", "from": "claim:cc02_0026_23", "to": "claim:cc02_0021_16", "strength": 0.5, "independent": false, "rationale": "Bohdana and CAESAR firing from beach positions about 40 km out corroborates A's battery composition; same source."}
+{"pair": "f382e563be3e", "relation": "none", "rationale": "A prisoner claim and generic brigade structure are different subjects."}
+{"pair": "f38a6ef31ca8", "relation": "none", "rationale": "The supply crossings and their later destruction are different facts."}
+{"pair": "f38b860e21b3", "relation": "none", "rationale": "The attack near Stepove and the village setting are compatible details."}
+{"pair": "f3b0d8c4c62b", "relation": "duplicates", "from": "claim:cc06_0030_17", "to": "claim:cc06_0012_85", "strength": 0.85, "rationale": "The same ISW report of the partly mobilised 503rd MRR sent to Torske on 30 September 2022."}
+{"pair": "f3bc28247955", "relation": "none", "rationale": "The start date of the effort and the rival account of who launched it are different assertions."}
+{"pair": "f433f01973c2", "relation": "none", "rationale": "Kill claims and the dispute over the operation's origin are different subjects."}
+{"pair": "f455bf71770d", "relation": "none", "rationale": "The prisoner count and the radio recording are different facts."}
+{"pair": "f4d4cc5fa8a5", "relation": "none", "rationale": "The gunner's aim at the optics and an expert's view of crew panic are different assertions."}
+{"pair": "f4f0708f37cf", "relation": "refines", "from": "claim:cc02_0023_09", "to": "claim:cc02_0009_21", "strength": 0.6, "rationale": "B specifies that Russian Su-30s shot down the Mi-14 that A says was lost on 7 May 2022."}
+{"pair": "f50b40fb9243", "relation": "duplicates", "from": "claim:cv02_0003_09", "to": "claim:cv02_0018_04", "strength": 0.85, "rationale": "The same T-90M spin-out (smoke, turret spinning, hitting a tree), from the same source."}
+{"pair": "f5110f413139", "relation": "none", "rationale": "The crew fleeing and an expert's attribution of panic are different assertions."}
+{"pair": "f54c8f906016", "relation": "none", "rationale": "National Western deliveries and the Azovstal resupply flights are different subjects."}
+{"pair": "f58ce1360743", "relation": "none", "rationale": "The AP rounds into the rear and the switch to the optics are successive actions."}
+{"pair": "f5a504706b2b", "relation": "none", "rationale": "The paired manoeuvre and an expert's view of crew panic are different assertions."}
+{"pair": "f6005be47b2f", "relation": "supports", "from": "claim:cc02_0023_09", "to": "claim:cc02_0021_13", "strength": 0.7, "independent": false, "rationale": "The Su-30 shootdown of Bedzai's Mi-14 corroborates his death on 7 May 2022; same source."}
+{"pair": "f60091c4d345", "relation": "none", "rationale": "A coordinate fact for the Kerch Strait does not bear on the strike account."}
+{"pair": "f65cf2e018e0", "relation": "supports", "from": "claim:cc12_0025_14", "to": "claim:cc12_0019_15", "strength": 0.5, "independent": true, "rationale": "RUSI independently describes Ukrainian MiG-29s and Su-27s fighting over Kyiv in 2022, as Kyiv Post states."}
+{"pair": "f6684d2b61c9", "relation": "none", "rationale": "Enemy losses claimed in November and the training of marines in August are different figures."}
+{"pair": "f68b914fb4c3", "relation": "none", "rationale": "Two geographic descriptions of different features."}
+{"pair": "f69010531e69", "relation": "none", "rationale": "The duel's outcome and an expert's view of crew panic are different assertions."}
+{"pair": "f690787999a2", "relation": "supports", "from": "claim:cv02_0006_23", "to": "claim:cv02_0013_08", "strength": 0.6, "independent": false, "rationale": "The Bradley supporting the 109th TDF Brigade near Stepove on about 21 January places that brigade there; same source."}
+{"pair": "f6d35f323afb", "relation": "none", "rationale": "The fleet's relocation and Budanov's targeting preference are different subjects."}
+{"pair": "f6eeb53e5161", "relation": "none", "rationale": "The supply-post request and the casualties from the strikes are different facts."}
+{"pair": "f6f43b7b1256", "relation": "none", "rationale": "The crew's identities and the choice of ammunition are different facts."}
+{"pair": "f6f8b58008a5", "relation": "none", "rationale": "Glide-bomb carriers and MANPADS losses in 2022 are different subjects."}
+{"pair": "f701d8fb5658", "relation": "supports", "from": "claim:cc12_0010_19", "to": "claim:cc12_0028_20", "strength": 0.6, "independent": false, "rationale": "The Air Force's \"superhero-legend\" reply is the debunking that B dates to 30 April 2022; they share Kyiv Post."}
+{"pair": "f70a9de723e8", "relation": "duplicates", "from": "claim:cc02_0018_10", "to": "claim:cc02_0021_09", "strength": 0.75, "rationale": "A's IR cameras on the Navy TB2s are contained in B's fuller specification, from the same source."}
+{"pair": "f72ac12d9091", "relation": "none", "rationale": "The tank's specifications and the gunner's tactic are different facts."}
+{"pair": "f740cca982ab", "relation": "supports", "from": "claim:cc04_0031_02", "to": "claim:cc04_0023_10", "strength": 0.7, "independent": false, "rationale": "The 35th Brigade crossing the Inhulets and taking Davydiv Brid in early October corroborates A; they share ISW."}
+{"pair": "f74dbf575e00", "relation": "duplicates", "from": "claim:cc13_0009_06", "to": "claim:cc13_0004_04", "strength": 0.9, "rationale": "The same 29 Oct 2022 sea-drone damage to the Admiral Makarov and the Ivan Golubets at Sevastopol."}
+{"pair": "f78e624e268b", "relation": "refines", "from": "claim:cc04_0004_18", "to": "claim:cc04_0026_13", "strength": 0.6, "rationale": "A names the four crossings that Russia blew on 11 November 2022: the Antonivskyi road and rail bridges, the Kakhovka dam road and the Darivka bridge."}
+{"pair": "f79f45f7b44f", "relation": "duplicates", "from": "claim:cc12_0033_12", "to": "claim:cc12_0019_12", "strength": 0.75, "rationale": "The same Moscow court case naming Col. Dzyaman's S-200 unit for the 23 February 2024 A-50 kill."}
+{"pair": "f7dd3c0d7471", "relation": "none", "rationale": "The column's advance and a point distance are different subjects."}
+{"pair": "f838bcac9f34", "relation": "supports", "from": "claim:cc17_0018_03", "to": "claim:cc17_0007_49", "strength": 0.6, "independent": false, "rationale": "B's account of the 4th Battalion joining the Kupiansk group corroborates its joining the clearance; same source."}
+{"pair": "f86f5a2b58a0", "relation": "none", "rationale": "Bridge coordinates and a brigade's area of operations are different subjects."}
+{"pair": "f87fa9212d7c", "relation": "supports", "from": "claim:cc17_0007_18", "to": "claim:cc17_0003_05", "strength": 0.8, "independent": true, "rationale": "Ukrainian sources in September 2025 and the later Ukrainska Pravda account both put the pipeline entrance near Lyman Pershyi and the exit near Radkivka."}
+{"pair": "f88c961933af", "relation": "supports", "from": "claim:cc03_0022_08", "to": "claim:cc03_0004_06", "strength": 0.5, "independent": true, "rationale": "The Illich marines and the port's border guards and police joining Azovstal corroborate A's garrison composition."}
+{"pair": "f8c5fc559f2f", "relation": "refines", "from": "claim:cc13_0016_16", "to": "claim:cc13_0008_05", "strength": 0.6, "rationale": "B places the 2 May 2025 Su-30SM shootdown about 50 km west of Novorossiysk."}

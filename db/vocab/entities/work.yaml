@@ -834,3 +834,51 @@
   en: "GPT-assisted negotiation game"
   aliases: ["GPT-assisted negotiation game"]
   note: "Sep 2026; designer not named in the claims. Negotiation wargame drafted with GPT in about two hours."
+
+# --- Chapter dossiers (c02–c17) ----------------------------------------------------------------
+- id: work:russian_warship_stamp
+  type: work
+  kind: publication
+  en: "'Russian warship' stamp"
+  uk: "марка «Русскій воєнний корабль, іді…!»"
+  aliases: ["'Russian warship' stamp", "Russian warship stamp"]
+  note: "Ukrposhta, Ukraine; Apr 2022. Postage stamp of the Zmiinyi Island radio reply, design by Borys Groh chosen by public vote 12 Mar 2022."
+- id: work:russian_warship_done_stamp
+  type: work
+  kind: publication
+  en: "'Russian warship… IS DONE!' stamp"
+  uk: "марка «Русскій воєнний корабль… ВСЬО!»"
+  aliases: ["'Russian warship… IS DONE!' stamp", "Russian warship is done stamp"]
+  parent: work:russian_warship_stamp
+  note: "Ukrposhta, Ukraine; 23 May 2022. Follow-up stamp (5 million) marking the Moskva's sinking."
+- id: work:era5
+  type: work
+  kind: dataset_product
+  en: "ERA5"
+  aliases: ["ERA5", "ERA5 reanalysis"]
+  note: "ECMWF / Copernicus Climate Change Service, EU. Global hourly atmospheric reanalysis (about 31 km); used via Open-Meteo for chapter weather."
+- id: work:nominatim
+  type: work
+  kind: software_product
+  en: "Nominatim"
+  aliases: ["Nominatim", "OSM Nominatim", "OpenStreetMap Nominatim"]
+  parent: work:openstreetmap
+  note: "OpenStreetMap Foundation, international. Geocoder over OpenStreetMap data; used for dossier coordinates."
+- id: work:open_topo_data
+  type: work
+  kind: software_product
+  en: "Open Topo Data"
+  aliases: ["Open Topo Data", "OpenTopoData"]
+  note: "Open-source elevation API (opentopodata.org); served SRTM 30 m elevations for the Vuhledar dossier."
+- id: work:dcs_world
+  type: work
+  kind: video_game
+  en: "DCS World"
+  aliases: ["DCS World", "Digital Combat Simulator"]
+  note: "Eagle Dynamics, Russia/Switzerland. Combat flight simulator; its footage was passed off as the 'Ghost of Kyiv' (Feb 2022)."
+- id: work:allied_wargames_2022_offensive
+  type: work
+  kind: wargame
+  en: "allied wargames (2022 offensive planning)"
+  aliases: ["allied wargames (2022 offensive planning)", "allied wargames of summer 2022"]
+  note: "Western and Ukrainian planners; summer 2022. Reportedly showed Ukraine lacked the means for a Zaporizhzhia–Melitopol offensive."

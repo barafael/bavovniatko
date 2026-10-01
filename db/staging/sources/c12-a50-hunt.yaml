@@ -1,0 +1,751 @@
+# New sources cited by research/chapters/c12-a50-hunt.md (sources already in the knowledge base are cited by id only).
+- id: pravda-2024-balachuk-a50-azov
+  title: "Russian A-50 aircraft probably downed and another damaged over Sea of Azov"
+  url: https://www.pravda.com.ua/eng/news/2024/01/15/7437241/
+  publisher: Ukrainska Pravda
+  authors: [Iryna Balachuk]
+  published: "2024-01-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "First-morning report of 14 Jan 2024: attack at about 21:00 on an A-50 and an Il-22M over the Sea of Azov (MP Mysiahin), Oleshchuk's 'revenge for Dnipro' post; gives 9 A-50s in VKS service and a 19-person crew (5 pilots, 11 radio engineers, 3 technicians). Early, partly unofficial."
+- id: pravda-2024-romanenko-second-a50
+  title: "Defence Forces destroy another A-50 Russian aircraft – video, map"
+  url: https://www.pravda.com.ua/eng/news/2024/02/23/7443425/
+  publisher: Ukrainska Pravda
+  authors: [Valentyna Romanenko]
+  published: "2024-02-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter, media]
+  found_in: [c12-a50-hunt]
+  notes: "Oleshchuk's 23 Feb 2024 post ('A-50 with the alias Bayan has done its time'), HUR spokesman Yusov's confirmation; crash at Trudovaya Armeniya, Kanevskoy district, Krasnodar Krai; embeds crash video and a map."
+- id: pravda-2024-kravets-a50-s200
+  title: "Russian A-50 was downed with S-200 anti-aircraft system"
+  url: https://www.pravda.com.ua/eng/news/2024/02/23/7443442/
+  publisher: Ukrainska Pravda
+  authors: [Roman Kravets, Alona Mazurenko]
+  published: "2024-02-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "UP sources in HUR: the 23 Feb 2024 A-50 was downed with a Soviet S-200; background on Ukraine's modernised S-200 (5V28 missiles also used against ground targets since mid-2023). Anonymous-source attribution."
+- id: pravda-2024-petrenko-a50-five-aircraft
+  title: "5 more Russian aircraft were ordered to terminate their mission – Ukraine's intelligence on downing of A-50 aircraft"
+  url: https://www.pravda.com.ua/eng/news/2024/02/24/7443471/
+  publisher: Ukrainska Pravda
+  authors: [Roman Petrenko]
+  published: "2024-02-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "HUR timeline of the second A-50: take-off from Akhtubinsk 15:50 on 23 Feb, intended area near Primorsko-Akhtarsk and Zernograd, radar ceased 18:45; 2 Su-35 and 3 Su-34 near Millerovo (some planning Avdiivka strikes) ordered to abort. HUR claim."
+- id: pravda-2024-ukdi-a50-significance
+  title: "UK intelligence assesses significance of losing A-50 aircraft to Russia"
+  url: https://www.pravda.com.ua/eng/news/2024/01/17/7437622/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2024-01-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Relays UK Defence Intelligence of 17 Jan 2024: A-50 'critical to the Russian air surveillance picture'; Russia has only eight operational A-50s; Russia likely forced to limit operating areas."
+- id: pravda-2024-ukdi-a50-redeploy
+  title: "Russia deploys new A-50 plane after losing previous one, but treads carefully – UK Defence Intelligence"
+  url: https://www.pravda.com.ua/eng/news/2024/01/19/7437992/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2024-01-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "UK DI: from 17 Jan 2024 another A-50 operated over land in Russia near Krasnodar, farther east from Ukraine; 'tacit Russian acknowledgement' of the loss; protecting the fleet at the expense of efficacy."
+- id: pravda-2024-romanenko-no-a50
+  title: "There are still no signs of Russian A-50 aircraft in Sea of Azov and other fronts – Air Force Commander"
+  url: https://www.pravda.com.ua/eng/news/2024/03/08/7445557/
+  publisher: Ukrainska Pravda
+  authors: [Valentyna Romanenko]
+  published: "2024-03-08"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, glide-bombs, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Oleshchuk, 8 Mar 2024: no A-50 near the border for over a week; KAB carriers 'no longer dare to fly too close'; SAM units fired at aircraft over 150 km away the previous day."
+- id: pravda-2024-february-13-aircraft
+  title: "Best result since October 2022: Ukraine's Air Force downs 13 Russian aircraft in February"
+  url: https://www.pravda.com.ua/eng/news/2024/03/01/7444532/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2024-03-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Ukrainian MoD tally for February 2024: 10 Su-34, 2 Su-35, 1 A-50 (two Su-34 on 27 Feb, one on 29 Feb). Ukrainian official claim, not independently verified."
+- id: pravda-2024-romanenko-su34-beacon
+  title: "Ukraine's Air Force Commander reveals area where Russian Su-34 was destroyed – video"
+  url: https://www.pravda.com.ua/eng/news/2024/02/19/7442542/
+  publisher: Ukrainska Pravda
+  authors: [Valentyna Romanenko]
+  published: "2024-02-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter, media]
+  found_in: [c12-a50-hunt]
+  notes: "Oleshchuk posts Cospas-Sarsat beacon locations of downed Su-34/Su-35 crews in the Sea of Azov (19 Feb 2024); Andriushchenko video of the Russian search-and-rescue."
+- id: pravda-2024-ivashkiv-taganrog
+  title: "Russia's cities of Taganrog and Kursk attacked by drones overnight: aircraft company repairing A-50 aircraft targeted – video"
+  url: https://www.pravda.com.ua/eng/news/2024/03/09/7445675/
+  publisher: Ukrainska Pravda
+  authors: [Olena Ivashkiv]
+  published: "2024-03-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [deep-strike, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Night 8–9 Mar 2024 drone raid on the Beriev plant in Taganrog, where an A-50 was under repair; Russian MoD claimed 47 drones, 41 over Rostov Oblast."
+- id: euromaidanpress-2024-zoria-a50-azov
+  title: "Russia reportedly loses valuable AWACS A-50 aircraft over Azov Sea (updates)"
+  url: https://euromaidanpress.com/2024/01/15/russia-reportedly-loses-valuable-awacs-a-50-aircraft-over-azov-sea-updates/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2024-01-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Rolling report: Il-22M11 hit about 21:00 in the Strilkove area, A-50 21:10–21:15 near Kyrylivka, wreck reported near Obytichna Spit; Budanov to the FT: 'just eight A-50s in good condition'. Gives a board number (RF-50601) that conflicts with other sources."
+- id: euromaidanpress-2024-martyniuk-second-a50
+  title: "Ukraine downs another Russian A-50 radar plane"
+  url: https://euromaidanpress.com/2024/02/23/ukraine-downs-another-russian-a-50-radar-plane/
+  publisher: Euromaidan Press
+  authors: [Yevheniia Martyniuk]
+  published: "2024-02-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Second A-50 crashed at Trudovaya Armeniya between Yeysk and Krasnodar; joint Air Force–HUR operation; claims Russia had 6 A-50s pre-war and about 4 left."
+- id: euromaidanpress-2024-zoria-ihnat-a50-crew
+  title: "Ukraine Air Force: Russian colonel, junior officers were on board of destroyed A-50 AWACS plane"
+  url: https://euromaidanpress.com/2024/01/22/ukraine-air-force-russian-colonel-junior-officers-were-on-board-of-destroyed-a-50-awacs-plane/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2024-01-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Ihnat on the 14 Jan crew (a colonel and junior lieutenants) and on why the A-50 flew close: 'the closer it flies to our coast, the further it can conduct radar reconnaissance'."
+- id: euromaidanpress-2024-zoria-us-patriot-a50
+  title: "US confirms Ukraine used Patriot to down Russia's valuable A-50 radar plane in January"
+  url: https://euromaidanpress.com/2024/06/10/us-confirms-ukraine-used-patriot-to-down-russias-valuable-a-50-radar-plane-in-january/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2024-06-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "US Col. Rosanna Clemente (10th AAMDC) at the 2024 Fires Symposium: German truck-mounted Patriots used in a 'SAMbush' to engage the first A-50 in January."
+- id: euromaidanpress-2023-shandra-machulishchy
+  title: "Drone-wielding partisans took down unique Russian jet at Belarus' Machulishchy airfield: activists"
+  url: https://euromaidanpress.com/2023/02/27/drone-wielding-partisans-took-down-unique-russian-jet-at-belarus-machulishchy-airfield-activists/
+  publisher: Euromaidan Press
+  authors: [Alya Shandra]
+  published: "2023-02-27"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [aviation, sabotage, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "BYPOL's 'Peramoha' drone attack on A-50U RF-50608 at Machulishchy on 26 Feb 2023 (3–4 months' preparation); Hajun: 12 sorties in 54 days since 3 Jan 2023. Partisan claims."
+- id: euromaidanpress-2025-mukhina-taganrog-a50
+  title: "Drones destroy what Russia can't rebuild: Sole plant repairing A-50 early-warning planes"
+  url: https://euromaidanpress.com/?p=376478
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2025-11-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [deep-strike, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Fourth strike on the Taganrog Beriev complex (25 Nov 2025; A-60 hit), the only facility servicing A-50s; earlier strikes Mar 2024, Dec 2024, Jul 2025; says 3 A-50s remain of an original 6."
+- id: twz-2024-altman-rogoway-a50-claims
+  title: "Claims Swirl Around Possible Shoot Down Of Russian A-50 Radar Jet"
+  url: https://www.twz.com/claims-swirl-around-possible-shoot-down-of-russian-a-50-radar-jet
+  publisher: The War Zone
+  authors: [Howard Altman, Tyler Rogoway]
+  published: "2024-01-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter, media]
+  found_in: [c12-a50-hunt]
+  notes: "Early Western analysis of 14 Jan: A-50 downed entering the Kyrylivka patrol zone at 21:10–21:15, stopped answering tactical aviation, Su-30 pilot saw a fire; Il-22M hit near Strilkove, emergency landing at Anapa; Zaluzhnyi's flight-track video; Robotyne about 55 miles from the Azov coast; ~10 A-50s, ~5 operational."
+- id: twz-2024-newdick-second-a50
+  title: "Another One Of Russia's Prized A-50 Radar Planes Shot Down, Ukraine Claims"
+  url: https://www.twz.com/air/another-one-of-russias-prized-a-50-radar-planes-shot-down-ukraine-claims
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2024-02-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter, media]
+  found_in: [c12-a50-hunt]
+  notes: "23 Feb 2024 A-50 down at Trudovaya Armeniya about 220 km from the nearest Ukrainian positions, probably beyond Patriot range; S-200 claim; Russian bloggers' friendly-fire claim; videos of flares and wreckage; 10 dead (5 majors) per UP sources."
+- id: twz-2024-newdick-patriot-a50-confirmed
+  title: "U.S. Army Officer Confirms Russian A-50 Radar Jet Was Shot Down With Patriot Missile"
+  url: https://www.twz.com/land/u-s-army-officer-confirms-russian-a-50-radar-jet-was-shot-down-with-patriot-missile
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2024-06-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Clemente quotes in full: about a battalion of Patriots in Ukraine, some moved around, 'stretching the very, very edges of the kinematic capabilities' to engage the first A-50; German–Ukrainian night mobility drills in Poland (Apr 2023)."
+- id: theaviationist-2024-cenciotti-a50-il22
+  title: "Ukraine Shot Down A Russian A-50 Radar Aircraft And Damaged An Il-22 Airborne Command Post"
+  url: https://theaviationist.com/2024/01/15/ukraine-shot-down-a-russian-a-50-radar-aircraft-and-an-il-22-airborne-command-post/
+  publisher: The Aviationist
+  authors: [David Cenciotti]
+  published: "2024-01-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter, media]
+  found_in: [c12-a50-hunt]
+  notes: "Times and places of the 14 Jan engagement; FighterBomber photo of the damaged Il-22; quotes UK MoD (Nov 2023) that Russia might accept more risk by flying the Mainstay closer to the front; fewer than a dozen Il-22M11 in service."
+- id: theaviationist-2022-cenciotti-ghost-of-kyiv
+  title: "'Stop Spreading Fake News: The Ghost Of Kyiv Is A Legend', Ukrainian Military Says"
+  url: https://theaviationist.com/2022/04/30/ghost-of-kyiv-eventually-debunked/
+  publisher: The Aviationist
+  authors: [David Cenciotti]
+  published: "2022-04-30"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [aviation, information-war, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Ukrainian Air Force statement of 30 Apr 2022 that the Ghost of Kyiv is a 'superhero-legend' and that Maj. Stepan Tarabalka (killed 13 Mar 2022) was not him and did not down 40 planes."
+- id: theaviationist-2026-satam-new-a50u
+  title: "Image Shows Russia Fielded a New A-50U Airborne Early Warning Aircraft"
+  url: https://theaviationist.com/2026/06/01/russia-fielded-a-new-a-50u/
+  publisher: The Aviationist
+  authors: [Parth Satam]
+  published: "2026-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "FighterBomber (31 May 2026): another modernised A-50U handed over; estimates 5–7 A-50U in service; A-100 still not in production. Misattributes the Feb 2024 kill to Patriot (contradicts HUR/S-200 reporting)."
+- id: kyivpost-2024-tuzov-s200
+  title: "Ukraine Upgrades Outdated S-200 Air Defense System, Shoots Down Russian Strategic Aircraft"
+  url: https://www.kyivpost.com/analysis/31842
+  publisher: Kyiv Post
+  authors: [Bohdan Tuzov]
+  published: "2024-04-29"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "S-200 engagement ranges as reported: Tu-22M3 at 308 km, first A-50 at 170 km, second A-50 over 200 km; Budanov: air defence 'waited at the frontline for a week'; speculative notes on how the S-200 was modified."
+- id: kyivpost-2024-dzyaman-court
+  title: "Moscow Court Convicts in Absentia Ukrainian Colonel Who Shot Down Russia's A-50U Spy Plane"
+  url: https://www.kyivpost.com/post/34482
+  publisher: Kyiv Post
+  authors: []
+  published: "2024-06-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Russian court case as reported: Col. Mykola Dzyaman, 138th Anti-Aircraft Missile Brigade, accused of downing the 23 Feb 2024 A-50U with an S-200 at about 300 km from Ukraine while it patrolled over Krasnodar Krai. Russian prosecutorial claims relayed by a Ukrainian outlet."
+- id: kyivpost-2024-korshak-taganrog-a50
+  title: "Has Ukrainian Drone Attack Damaged Another Russian A-50U AEW&C Aircraft?"
+  url: https://www.kyivpost.com/post/29332
+  publisher: Kyiv Post
+  authors: [Stefan Korshak]
+  published: "2024-03-11"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [deep-strike, aviation, chapter, media]
+  found_in: [c12-a50-hunt]
+  notes: "Taganrog strike of 9 Mar 2024: Prytula says one or two A-50Us in Hangar 66 'with a high probability' critically damaged; Frontelligence Insight satellite analysis (roof holes; an A-50 seen on 29 Feb gone 48 h later)."
+- id: kyivpost-2024-zakharchenko-hur-taganrog
+  title: "HUR Confirms Massive Drone Attack Damaged A-50U Aircraft at Taganrog Aviation Plant"
+  url: https://www.kyivpost.com/post/29449
+  publisher: Kyiv Post
+  authors: [Kateryna Zakharchenko]
+  published: "2024-03-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [deep-strike, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "HUR confirmation that the 9 Mar 2024 raid damaged at least one A-50U at the Beriev plant in Taganrog."
+- id: kyivpost-2025-spiderweb-a50-ivanovo
+  title: "Spiderweb Update – Chinese Satellite Images Show Destroyed Russian A-50 AEW&C"
+  url: https://www.kyivpost.com/post/53895
+  publisher: Kyiv Post
+  authors: []
+  published: "2025-06-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [deep-strike, aviation, chapter, media]
+  found_in: [c12-a50-hunt]
+  notes: "Mizarvision commercial imagery of Ivanovo-Severny after Spiderweb (1 Jun 2025) shows a possibly damaged, blackened A-50; Zelensky and Malyuk listed 'an A-50' among the aircraft hit."
+- id: kyivpost-2023-struck-feshchenko-three-su34
+  title: "Ukrainian Air Force Takes Down Three Russian Su-34s, Patriot Potentially Engaged"
+  url: https://www.kyivpost.com/post/25833
+  publisher: Kyiv Post
+  authors: [Julia Struck-Feshchenko]
+  published: "2023-12-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Oleshchuk: three Su-34 downed at noon on 22 Dec 2023 in the southern sector; Patriot use speculated, not confirmed."
+- id: kyivpost-2024-orlova-six-aircraft-72h
+  title: "Ukrainian Air Force Downs Two More Russian Fighter-Bombers, Bringing Total to 6 in 72 Hours"
+  url: https://www.kyivpost.com/post/28270
+  publisher: Kyiv Post
+  authors: [Alisa Orlova, Kateryna Zakharchenko]
+  published: "2024-02-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Claimed kills 17–19 Feb 2024: 2 Su-34 + 1 Su-35 (17 Feb, Donetsk Oblast), 1 Su-34 (18 Feb), 1 Su-34 + 1 Su-35S (19 Feb, near the Azov coast); aircraft were on glide-bomb runs. Ukrainian claims."
+- id: kyivpost-2024-su34-two-majors
+  title: "Russians Lose Another Su-34 Fighter Bomber – Was a Ukrainian F-16 Responsible?"
+  url: https://www.kyivpost.com/post/41513
+  publisher: Kyiv Post
+  authors: []
+  published: "2024-11-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Su-34 lost on 1 Nov 2024; the Russian milblogger 'Two Majors' blamed a Ukrainian Patriot operating in Belgorod region the previous night, or F-16s. Speculative; low reliability."
+- id: kyivpost-2022-neplii-ghost-of-kyiv
+  title: "Ghost of Kyiv – myth or reality?"
+  url: https://www.kyivpost.com/russias-war/ghost-of-kyiv-myth-or-reality.html
+  publisher: Kyiv Post
+  authors: [Anna Neplii]
+  published: "2022-08-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [aviation, information-war, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "History of the Ghost of Kyiv myth: DCS World video (25 Feb), Poroshenko's 2019 photo (26 Feb), SBU '10 planes' (27 Feb), The Times naming Tarabalka (29 Apr), Air Force denial (30 Apr) quoted in full; Ihnat: 'We even played along a little bit'. Gives 23 Mar for Tarabalka's death (others: 13 Mar)."
+- id: babel-2024-perepechko-times-a50
+  title: "The Times: Ukraine shot down Russian A-50 aircraft with Patriot and Soviet S-200 systems"
+  url: https://babel.ua/en/news/111134-the-times-ukraine-shot-down-russian-a-50-aircraft-with-patriot-and-soviet-s-200-systems
+  publisher: Babel
+  authors: [Iryna Perepechko]
+  published: "2024-09-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Summary of a paywalled The Times report: S-200 restoration from May 2022, failed autumn-2023 two-missile S-200 shot (the A-50 turned away; launchers hidden fast), second A-50 at about 170 km from the front, S-300 radar used as bait to draw Russian aircraft into Patriot range."
+- id: espreso-2024-defenseexpress-wandering-patriot
+  title: "How Ukraine's Patriots took down Russian aircraft"
+  url: https://global.espreso.tv/russia-ukraine-war-how-ukraines-patriots-took-down-russian-aircraft
+  publisher: Espreso Global
+  authors: []
+  published: "2024-01-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Relays Defense Express: a 'wandering Patriot' 15–25 km from the front, GEM-T range 160 km, as the likely shooter of 14 Jan. Analysis, not an official attribution; byline unclear on the page."
+- id: liga-2023-dzheripa-bryansk-patriot
+  title: "Ukrainian Patriot downed 5 Russian aircraft in 5 minutes in May 2023, Air Force confirms"
+  url: https://news.liga.net/en/politics/news/ukrainian-patriot-downed-5-russian-aircraft-in-5-minutes-in-may-2023-air-force-confirms
+  publisher: LIGA.net
+  authors: [Artem Dzheripa]
+  published: "2023-11-27"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut, e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Ihnat (to Novynarnia) confirms that on 13 May 2023 Patriot units destroyed five aircraft on the Bryansk axis in five minutes (Su-34, Su-35, two Mi-8MTPR-1 EW helicopters, one Mi-8), plus a Su-35 over the Black Sea later."
+- id: militarnyi-2023-kushnikov-three-su34
+  title: "Ukrainian Air Force shot down 3 Su-34 fighter-bombers"
+  url: https://militarnyi.com/en/news/ukrainian-air-force-shot-down-3-su-34-fighter-bombers/
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2023-12-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "22 Dec 2023 three Su-34 in the south; FighterBomber blamed a Patriot; came after Germany's second Patriot system deployed."
+- id: militarnyi-2024-a50-lost-eyes
+  title: "A-50 and A-50U: The Russian Aerospace Forces' Lost 'Eyes'"
+  url: https://militarnyi.com/en/articles/a-50-and-a-50u-the-russian-aerospace-forces-lost-eyes/
+  publisher: Militarnyi
+  authors: [Volodymyr B.]
+  published: "2024-01-16"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "A-50 fleet explainer: ~31 built; Russian inventory 10 (3 A-50, 7 A-50U) with known A-50U board numbers; 610th Centre at Ivanovo; lost aircraft RF-93966 'Sergey Atayants'; Shmel radar ranges; 15–16 crew; round-the-clock border duty and tandem work with MiG-31K Kinzhal carriers; A-100 delayed."
+- id: militarnyi-2024-kushnikov-second-a50
+  title: "Russians Lose Second A-50 Airborne Early Warning and Control Aircraft over the Sea of Azov"
+  url: https://militarnyi.com/en/news/russians-lose-second-a-50-airborne-early-warning-and-control-aircraft-over-the-sea-of-azov/
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2024-02-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Same-evening report of the second A-50 (Trudovaya Armeniya); Russian sources blamed their own air defence firing from the Mariupol area; eyewitness video shows chaff/flares and hits."
+- id: ukrinform-2024-ihnat-a50-sixth-day
+  title: "Russian A-50s not flying over Sea of Azov for sixth day – Ukrainian Air Force"
+  url: https://ukrinform.net/rubric-ato/3834855-russian-a50s-not-flying-over-sea-of-azov-for-sixth-day-ukrainian-air-force.html
+  publisher: Ukrinform
+  authors: []
+  published: "2024-03-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, glide-bombs, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Ihnat, 2 Mar 2024: no A-50 over the Sea of Azov for six days; Su-34/Su-35 'can no longer feel free' because a KAB's limited range forces them closer."
+- id: ukrinform-2023-machulishchy-satellite
+  title: "Satellite imagery shows aircraft at Machulishchy air base after likely drone attack"
+  url: https://www.ukrinform.net/rubric-ato/3676525-satellite-imagery-shows-aircraft-at-machulishchy-air-base-after-likely-drone-attack.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-02-28"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [aviation, media, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Planet Labs 0.5 m images of 19 and 28 Feb 2023 show an A-50 at Machulishchy with differently coloured wings; Bellingcat could not confirm damage (snow possible)."
+- id: isw-2024-01-15-assessment
+  title: "Russian Offensive Campaign Assessment, January 15, 2024"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-15-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2024-01-15"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Zaluzhnyi's flight-track footage; Ihnat: two targets hit while targeting the A-50, Il-22 likely irreparable; Humenyuk: the A-50 directed strikes on Ukrainian air defence and aviation; Mashovets: constant A-50 sorties since early Jan over the Crimea threat; Southern Command: 3 of 6 A-50s in service; Russian friendly-fire narrative."
+- id: isw-2024-02-23-assessment
+  title: "Russian Offensive Campaign Assessment, February 23, 2024"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-23-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2024-02-23"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Second A-50 near Yeysk; the January loss caused a temporary reduction in Russian tactical aviation over the Sea of Azov; milbloggers again claimed friendly fire and also blamed recent Su-34/Su-35 losses on their own air defence."
+- id: mwi-2024-mitchell-awacs-azov
+  title: "AWACS over the Azov: Takeaways from Ukrainian Air Defenses' Latest Score"
+  url: https://mwi.westpoint.edu/awacs-over-the-azov-takeaways-from-ukrainian-air-defenses-latest-score/
+  publisher: Modern War Institute at West Point
+  authors: [Peter Mitchell]
+  published: "2024-01-24"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Air-defence officer's analysis of 14 Jan: A-50 160+ km and Il-22 270+ km from the front; Patriot launchers can be fired remotely, far forward of radar; possible passive cueing on the aircraft's emissions; Russia had 8 (now 7) A-50s; orbits will shift east."
+- id: armada-2025-oliver-berievs
+  title: "Russia's Berievs Targeted by Ukraine"
+  url: https://www.armadainternational.com/2025/09/russias-berievs-targeted-by-ukraine-foc/
+  publisher: Armada International
+  authors: [David Oliver]
+  published: "2025-09-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, deep-strike, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Overview of Ukrainian attacks on Beriev types: Machulishchy (2023), the two 2024 shoot-downs, an A-50 hit at Ivanovo-Severny in Spiderweb; TANTK in Taganrog 150–160 km from the front, struck Mar 2024 and 11 Dec 2024."
+- id: united24-2026-khomenko-a50u-patrols
+  title: "Russia puts its limited A-50U fleet on daily patrols as Ukrainian missiles strike deeper"
+  url: https://united24media.com/war-in-ukraine/russia-puts-its-limited-a-50u-fleet-on-daily-patrols-as-ukrainian-missiles-strike-deeper-21272
+  publisher: United24 Media
+  authors: [Ivan Khomenko]
+  published: "2026-08-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [aviation, air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "CyberBoroshno OSINT count: from 23 Jun 2026 daily, mostly night A-50U patrols over Ulyanovsk and Samara regions; four A-50U up at once on 7 Jul ('nearly the entire combat-capable fleet'); about 4–5 flyable."
+- id: nexta-2024-cooper-a50-trap
+  title: "Russian A-50 radar plane shot down thanks to sophisticated missile trap – military analyst Tom Cooper"
+  url: https://en.nexta.tv/eastern-europe/russian-a-50-radar-plane-shot-down-thanks-to-sophisticated-missile-trap-military-analyst-tom-cooper/
+  publisher: NEXTA
+  authors: []
+  published: "2024-01-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Tom Cooper's reconstruction of 14 Jan: Su-24 strikes blinded Crimean radars, the A-50 and Il-22M were pushed north near Berdiansk, and a Patriot/S-300 trap with briefly-activated radar caught them. An analyst's hypothesis, not confirmed."
+- id: wikipedia-2024-a50-il22-shootdowns
+  title: "2024 Russia Beriev A-50 and Ilyushin Il-22 shootdowns"
+  url: https://en.wikipedia.org/wiki/2024_Russia_Beriev_A-50_and_Ilyushin_Il-22_shootdowns
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Aggregator for 14 Jan: A-50U RF-93966 and Il-22M11 RF-95678 (commander killed, landed at Anapa); Military Balance 2022 inventory (3 A-50 + 6 A-50U); Russian milblogger friendly-fire (S-400) and crew claims (11–12 dead per FighterBomber); Ihnat: the Il-22M 'got caught in crossfire'. Relies partly on Russian-language media."
+- id: wikipedia-machulishchy-attack
+  title: "Machulishchy air base attack"
+  url: https://en.wikipedia.org/wiki/Machulishchy_air_base_attack
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [aviation, sabotage, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "26 Feb 2023 BYPOL drone attack on A-50U RF-50608; Lukashenko first denied, then called the damage minor, then said it went to Russia for repair; later trials (sentences up to 25 years, Oct 2024); base coordinates 53°46′48″N 27°34′41″E, 12 km from Minsk."
+- id: open-meteo-historical-weather
+  title: "Open-Meteo Historical Weather API"
+  url: https://open-meteo.com/en/docs/historical-weather-api
+  publisher: Open-Meteo
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e4-bakhmut, e6-avdiivka-attrition]
+  topics: [weather, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "ERA5-based reanalysis (CC BY 4.0) queried 2026-10-01 at archive-api.open-meteo.com for hourly cloud, temperature, wind and daily sunrise/sunset at Kyrylivka (14 Jan 2024), Primorsko-Akhtarsk (23 Feb 2024) and Machulishchy (26 Feb 2023). Model reanalysis, not observations."
+- id: asn-2024-a50u-rf93966
+  title: "Beriev A-50U RF-93966, 14 January 2024 (ASN Wikibase 349902)"
+  url: https://asn.flightsafety.org/wikibase/349902
+  publisher: Aviation Safety Network
+  authors: []
+  published: "2024-01"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: search-only
+  eras: [e6-avdiivka-attrition]
+  topics: [aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Loss record as shown in search results: A-50U RF-93966, 610th Centre, 21:12 on 14 Jan 2024 near Kyrylivka, 11 fatalities. Page blocks fetching (403)."
+- id: asn-2024-a50u-rf50610
+  title: "Accident Beriev A-50U RF-50610 42 R, Friday 23 February 2024 (ASN Wikibase 351939)"
+  url: https://www.aviation-safety.net/wikibase/351939
+  publisher: Aviation Safety Network
+  authors: []
+  published: "2024-02"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: search-only
+  eras: [e6-avdiivka-attrition]
+  topics: [aviation, chapter]
+  found_in: [c12-a50-hunt]
+  notes: "Loss record title in search results identifies the 23 Feb 2024 aircraft as A-50U RF-50610 ('42 Red'). Page blocks fetching (403); identity not confirmed by a fetched source."

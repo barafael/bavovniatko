@@ -40,6 +40,8 @@ def render_documents(conn, header: bool) -> dict[Path, str]:
     for tid, t in sorted(topics(conn).items()):
         rows = kb.one(conn, "SELECT order, markdown, ext.tight AS tight FROM passage WHERE topic = $t ORDER BY order",
                       {"t": kb.rid("topic", tid)})
+        if not rows:
+            continue                                   # a topic whose document has not been imported yet
         parts = []
         for i, r in enumerate(rows):
             parts.append(r["markdown"])
@@ -162,8 +164,11 @@ def render_sources(conn) -> dict[Path, str]:
     for tid, t in sorted(topics(conn).items()):
         st = Path(t["file"]).stem
         mine = [{k: v for k, v in e.items() if k != "found_in"} for e in entries if st in e["found_in"]]
-        out[kb.RESEARCH / "sources" / f"{st}.yaml"] = (
-            f"# Sources cited in research/{st}.md, generated from the knowledge base by db/tools/render.py.\n" + dump(mine))
+        if not mine:
+            continue
+        sub = "chapters/" if t["file"].startswith("research/chapters/") else ""
+        out[kb.RESEARCH / "sources" / f"{sub}{st}.yaml"] = (
+            f"# Sources cited in {t['file']}, generated from the knowledge base by db/tools/render.py.\n" + dump(mine))
     return out
 
 
@@ -209,6 +214,7 @@ def main():
              kb.RESEARCH / "contradictions.md": render_contradictions(conn)}
     for path, text in files.items():
         if not path.exists() or path.read_text() != text:
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
             print("wrote", path.relative_to(kb.REPO))
 

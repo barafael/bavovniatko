@@ -20,11 +20,11 @@
         },
         "local_id": {
           "type": "string",
-          "pattern": "^\\d\\d-\\d{4}-\\d{2,3}$"
+          "pattern": "^(?:\\d\\d|[cv]\\d\\d)-\\d{4}-\\d{2,3}$"
         },
         "passage": {
           "type": "string",
-          "pattern": "^\\d\\d/\\d{4}$"
+          "pattern": "^(?:\\d\\d|[cv]\\d\\d)/\\d{4}$"
         },
         "text": {
           "type": "string",
@@ -342,7 +342,23 @@
                   "uah_bn",
                   "km_per_day",
                   "people_per_day",
-                  "m_per_s"
+                  "m_per_s",
+                  "km2_per_week",
+                  "m2",
+                  "celsius",
+                  "litre",
+                  "mhz",
+                  "ghz",
+                  "cny_per_km",
+                  "rub",
+                  "fps",
+                  "per_km",
+                  "km_per_year",
+                  "mm",
+                  "cm",
+                  "knot",
+                  "nmi",
+                  "hour_of_day"
                 ]
               },
               "time": {
@@ -421,7 +437,7 @@
         },
         "local_id": {
           "type": "string",
-          "pattern": "^\\d\\d-x\\d{2,3}$"
+          "pattern": "^(?:\\d\\d|[cv]\\d\\d)-x\\d{2,3}$"
         },
         "counter": {
           "type": "string"
@@ -458,7 +474,9 @@
             "small_arms",
             "technique",
             "programme",
-            "training_sim"
+            "training_sim",
+            "ship",
+            "satellite"
           ]
         },
         "measure": {
@@ -496,7 +514,9 @@
             "small_arms",
             "technique",
             "programme",
-            "training_sim"
+            "training_sim",
+            "ship",
+            "satellite"
           ]
         },
         "first_observed": {
@@ -540,7 +560,7 @@
           "minItems": 1,
           "items": {
             "type": "string",
-            "pattern": "^\\d\\d-\\d{4}-\\d{2,3}$"
+            "pattern": "^(?:\\d\\d|[cv]\\d\\d)-\\d{4}-\\d{2,3}$"
           }
         }
       }

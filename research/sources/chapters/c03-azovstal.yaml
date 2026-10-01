@@ -1,0 +1,1757 @@
+# Sources cited in research/chapters/c03-azovstal.md, generated from the knowledge base by db/tools/render.py.
+- id: abc-2022-ap-mariupol-rescue-missions
+  title: Soldiers describe Ukraine's 'impossible' secret rescue missions in the besieged city of Mariupol
+  url: https://www.abc.net.au/news/2022-06-22/ukraine-secret-deadly-rescue-missions-in-besieged-mariupol/101173414
+  publisher: ABC News (Australia), from Associated Press
+  authors: []
+  published: '2022-06-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - helicopters
+  - air-bridge
+  - chapter
+  notes: 'AP interviews: pilot Oleksandr (3 m AGL, 220 km/h, fire from a vessel), wounded evacuees Zahorodnii (31 Mar, engine
+    hit) and ''Buffalo''; one shot down, two missing.'
+- id: abc-2022-ozdemir-inside-azovstal
+  title: Inside the Azovstal steelworks exists Mariupol's last pocket of resistance against Russia
+  url: https://www.abc.net.au/news/2022-04-23/inside-azovstal-steelworks-last-stand-mariupol-ukraine-russia/101006624
+  publisher: ABC News (Australia)
+  authors:
+  - Benay Ozdemir
+  published: '2022-04-23'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - geography
+  - mariupol
+  - chapter
+  notes: 'Plant about 11 km², 24 km of tunnels; Metinvest: shelters for 4,000 with food, ventilation, water and heat-resistant
+    doors; about 2,000 fighters and up to 1,000 civilians (Zelensky).'
+- id: aerotime-2022-petrauskaite-fab-3000
+  title: Reports show Russia preparing 3-ton bomb to drop on Mariupol
+  url: https://www.aerotime.aero/articles/30700-russia-feared-to-use-soviet-3-ton-bomb-in-mariupol
+  publisher: AeroTime
+  authors:
+  - Gabriele Petrauskaite
+  published: '2022-04-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - fires
+  - air
+  - chapter
+  notes: 'Unconfirmed Telegram photos (6 Apr) of a FAB-3000 beside a Tu-22M, allegedly for Azovstal; FAB-3000 specs (1,400
+    kg HE). Low: unverified social-media imagery.'
+- id: amnesty-2022-mariupol-theatre
+  title: 'Ukraine: Deadly Mariupol theatre strike ''a clear war crime'' by Russian forces – new investigation'
+  url: https://www.amnesty.org/en/latest/news/2022/06/ukraine-deadly-mariupol-theatre-strike-a-clear-war-crime-by-russian-forces-new-investigation/
+  publisher: Amnesty International
+  authors: []
+  published: '2022-06-30'
+  accessed: '2026-10-01'
+  type: official
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - civilians
+  - mariupol
+  - chapter
+  notes: 16 Mar strike shortly after 10:00 by two 500 kg bombs (NEW 400–800 kg) from Russian aircraft; at least a dozen killed,
+    likely many more.
+- id: babel-2022-azov-evacuation-video
+  title: The Azov Regiment broadcast a video of civilians being evacuated from the destroyed Azovstal plant
+  url: https://babel.ua/en/news/78230-the-azov-regiment-broadcast-a-video-of-civilians-being-evacuated-from-the-destroyed-azovstal-plant
+  publisher: Babel
+  authors: []
+  published: '2022-05-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - media
+  - evacuation
+  - chapter
+  notes: Azov video, released by David Arakhamia, of civilians leaving the heavily damaged plant during the UN/ICRC operation.
+- id: commons-battle-of-azovstal
+  title: Category:Battle of Azovstal
+  url: https://commons.wikimedia.org/wiki/Category:Battle_of_Azovstal
+  publisher: Wikimedia Commons
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - media
+  - licensing
+  - chapter
+  notes: 'Freely licensed media: armyinform photo (CC BY 4.0, 26 Apr 2022), Kozatskyi upload, subcategories for the surrender,
+    POWs and the 21 Sep 2022 return. Check each file''s licence.'
+- id: commons-nava-azovstal
+  title: File:Nava Azovstal.jpg
+  url: https://commons.wikimedia.org/wiki/File:Nava_Azovstal.jpg
+  publisher: Wikimedia Commons
+  authors:
+  - Dmytro Kozatskyi
+  published: '2022-03-19'
+  accessed: '2026-10-01'
+  type: dataset
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - media
+  - licensing
+  - chapter
+  notes: Kozatskyi photo of Azov soldier Valeriia Subotina ('Nava') in Azovstal, uploaded under CC BY-SA 4.0 (EXIF date 19
+    Mar 2022).
+- id: defenceua-2022-mariupol-garrison-mission
+  title: Mariupol garrison has fulfilled its combat mission – General Staff
+  url: https://en.defence-ua.com/events/mariupol_garrison_has_fulfilled_its_combat_mission_general_staff-2957.html
+  publisher: Defense Express
+  authors: []
+  published: '2022-05-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - surrender
+  - chapter
+  notes: 'General Staff claims the garrison pinned up to 17 BTGs (about 20,000) and thwarted a quick advance on Zaporizhzhia;
+    Zelensky ''Ukraine needs Ukrainian heroes alive''; Maliar: unblocking impossible.'
+- id: espreso-2022-prokopenko-stop-defending
+  title: Ukraine's military leadership issues orders to save Azovstal fighters' lives, stop defending Mariupol
+  url: https://global.espreso.tv/ukraines-military-leadership-issues-orders-to-save-azovstal-fighters-lives-stop-defending-mariupol
+  publisher: Espreso Global
+  authors: []
+  published: '2022-05-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - surrender
+  - chapter
+  notes: 'Prokopenko''s 20 May video: senior leadership ordered the garrison''s lives preserved and the defence ceased; civilians
+    and wounded evacuated; fallen to be returned.'
+- id: euronews-2022-kozatskyi-photos
+  title: Azov photographer publishes his work just before being taken prisoner
+  url: https://www.euronews.com/2022/05/20/azov-photographer-publishes-his-work-just-before-being-taken-prisoner
+  publisher: Euronews
+  authors: []
+  published: '2022-05-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - media
+  - chapter
+  notes: Kozatskyi ('Orest') posts photos on 20 May before captivity and asks for them to be shared and entered in competitions.
+- id: hrw-2024-beneath-the-rubble
+  title: 'Beneath the Rubble: Documenting Devastation and Loss in Mariupol'
+  url: https://www.hrw.org/feature/russia-ukraine-war-mariupol
+  publisher: Human Rights Watch, SITU Research, Truth Hounds
+  authors: []
+  published: '2024-02-08'
+  accessed: '2026-10-01'
+  type: official
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - civilians
+  - mariupol
+  - chapter
+  notes: At least 10,284 buried in mass sites (Mar 2022–Feb 2023); 93% of high-rises damaged; theatre (two 500 kg bombs, at
+    least 15 dead) and hospital No. 3 cases; control timeline.
+- id: hrw-2024-mariupol-whos-responsible
+  title: 'Beneath the Rubble: Who''s Responsible'
+  url: https://www.hrw.org/feature/russia-ukraine-war-mariupol/whos-responsible
+  publisher: Human Rights Watch, SITU Research, Truth Hounds
+  authors: []
+  published: '2024-02-08'
+  accessed: '2026-10-01'
+  type: official
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - forces
+  - mariupol
+  - chapter
+  notes: 17 Russian, Chechen and DNR units identified in Mariupol in Mar–Apr 2022 (8th CAA, 150th MRD, 810th Naval Infantry,
+    spetsnaz, Rosgvardia, DNR 1st AC) and named commanders incl. Mordvichev.
+- id: infobae-2022-fab-3000-mariupol
+  title: Ukraine fears Putin will launch FAB-3000 megabomb on Mariupol
+  url: https://www.infobae.com/en/2022/04/16/ukraine-fears-putin-will-launch-fab-3000-megabomb-on-mariupol
+  publisher: Infobae
+  authors: []
+  published: '2022-04-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: other
+  reliability: low
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - fires
+  - air
+  - chapter
+  notes: Andriushchenko (mayor's adviser) warns Tu bombers signal an assault on Azovstal and the port 'after unloading high-powered
+    bombs such as the FAB-3000'. A warning, not confirmation of use.
+- id: isw-2022-03-01-roca
+  title: Russian Offensive Campaign Assessment, March 1, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-1
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-01'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 'Russia claims land/sea encirclement on 1 Mar; GS: 8th CAA and DNR failed to take the city; ISW low-confidence encirclement.
+    (Old backgrounder URL redirects to the 2022 report; title checked.)'
+- id: isw-2022-03-02-roca
+  title: Russian Offensive Campaign Assessment, March 2, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-2
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Mariupol fully encircled as of 2 Mar; deliberate campaign against civilian infrastructure to force surrender. (Old
+    backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-03-04-roca
+  title: Russian Offensive Campaign Assessment, March 4, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-4
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-04'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 8th CAA (likely 150th MRD) with DNR/LNR proxies concentrating around Mariupol. (Old backgrounder URL redirects to
+    the 2022 report; title checked.)
+- id: isw-2022-03-09-roca
+  title: Russian Offensive Campaign Assessment, March 9, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-9
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-09'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 'Maternity hospital destroyed; UA GS: up to 17 BTGs assembled from Kherson to Rozivka, about 47 km NW of Mariupol.
+    (Old backgrounder URL redirects to the 2022 report; title checked.)'
+- id: isw-2022-03-15-roca
+  title: Russian Offensive Campaign Assessment, March 15, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-15
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-15'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Encirclement deep enough to prevent breakout or relief; daily assaults on east and west outskirts. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-03-20-roca
+  title: Russian Offensive Campaign Assessment, March 20, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-20
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-20'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Slow Russian advance; Russia confirms Black Sea Fleet deputy commander Andrei Paly killed in Mariupol. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-03-24-roca
+  title: Russian Offensive Campaign Assessment, March 24, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-24
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-24'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russian forces enter central Mariupol; Ukrainian strike on landing ships at Berdiansk. (Old backgrounder URL redirects
+    to the 2022 report; title checked.)
+- id: isw-2022-03-30-roca
+  title: Russian Offensive Campaign Assessment, March 30, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-30
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-30'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russian thermobaric munitions in use; 150th MRD likely taking high casualties. (Old backgrounder URL redirects to
+    the 2022 report; title checked.)
+- id: isw-2022-04-02-roca
+  title: Russian Offensive Campaign Assessment, April 2, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-2
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: SBU HQ taken; defenders likely bisected or trisected. (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-04-roca
+  title: Russian Offensive Campaign Assessment, April 4, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-4
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-04'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Mariupol defenders outperform ISW estimates; Russian forces taking heavy casualties. (Old backgrounder URL redirects
+    to the 2022 report; title checked.)
+- id: isw-2022-04-08-roca
+  title: Russian Offensive Campaign Assessment, April 8, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-8
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-08'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Ukrainians hold the port (SW) and Azovstal (E); pro-Russian sources claim 3,000 Ukrainians in the plant. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-10-roca
+  title: Russian Offensive Campaign Assessment, April 10, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-10
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-10'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russia bisects the city from the centre to the coast; fishing port taken; two pockets (port, Azovstal). (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-12-roca
+  title: Russian Offensive Campaign Assessment, April 12, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-12
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Unverified Ukrainian chemical-weapon allegation (11 Apr); dwindling resources and some surrenders. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-13-roca
+  title: Russian Offensive Campaign Assessment, April 13, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-13
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Illich plant falls on 13 Apr; Russian claim of 1,026 marines surrendered likely false; part of 36th Bde links up
+    with Azovstal. (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-14-assessment
+  aliases:
+  - isw-2022-04-14-roca
+  title: Russian Offensive Campaign Assessment, April 14, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-14
+  publisher: Institute for the Study of War
+  authors:
+  - Mason Clark
+  - Kateryna Stepanenko
+  - George Barros
+  published: '2022-04-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - naval
+  - chapter
+  - russian-claims
+  notes: ISW couldn't confirm the cause and called it a major propaganda victory either way. It expected Russia to add air
+    and point defence or pull ships back from the coast, and reports the Kremlin's accidental fire and storm-while-towing
+    account.
+- id: isw-2022-04-16-roca
+  title: Russian Offensive Campaign Assessment, April 16, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-16
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-16'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: DNR reaches the beach; 12th NGU brigade base entered; Tu-22M Backfire use against Azovstal. (Old backgrounder URL
+    redirects to the 2022 report; title checked.)
+- id: isw-2022-04-17-roca
+  title: Russian Offensive Campaign Assessment, April 17, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-17
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-17'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Port likely captured 16 Apr; organised resistance reduced to Azovstal; Tu-22M3 strikes. (Old backgrounder URL redirects
+    to the 2022 report; title checked.)
+- id: isw-2022-04-19-roca
+  title: Russian Offensive Campaign Assessment, April 19, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-19
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-19'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: DNR announces assault on Azovstal; another Russian surrender demand refused. (Old backgrounder URL redirects to the
+    2022 report; title checked.)
+- id: isw-2022-04-21-roca
+  title: Russian Offensive Campaign Assessment, April 21, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-21
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-21'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 'Putin and Shoigu declare victory; Putin orders a halt to assaults on Azovstal; US: a dozen BTGs still in Mariupol.
+    (Old backgrounder URL redirects to the 2022 report; title checked.)'
+- id: isw-2022-04-22-roca
+  title: Russian Offensive Campaign Assessment, April 22, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-22
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-22'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russia seeks to starve out Azovstal; MoD says humanitarian pause only after 'white flags', claims supplies last two
+    weeks. (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-23-roca
+  title: Russian Offensive Campaign Assessment, April 23, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-23
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-23'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Some Russian forces redeploy from Mariupol towards Donetsk City without refit. (Old backgrounder URL redirects to
+    the 2022 report; title checked.)
+- id: isw-2022-04-25-roca
+  title: Russian Offensive Campaign Assessment, April 25, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-25
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-25'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russian ground assaults on Azovstal resume. (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-27-roca
+  title: Russian Offensive Campaign Assessment, April 27, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-27
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-27'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Tu-22M3 strikes continue; defenders low on food, water and ammunition. (Old backgrounder URL redirects to the 2022
+    report; title checked.)
+- id: isw-2022-04-28-roca
+  title: Russian Offensive Campaign Assessment, April 28, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-28
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-28'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Field hospital in Azovstal reportedly hit by multi-ton 'bunker-buster' bombs from seven Tu-22s (City Council, GS).
+    (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-04-30-roca
+  title: Russian Offensive Campaign Assessment, April 30, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-30
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-30'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 810th Naval Infantry Brigade elements still blockading Azovstal; occupation consolidation. (Old backgrounder URL
+    redirects to the 2022 report; title checked.)
+- id: isw-2022-05-02-roca
+  title: Russian Offensive Campaign Assessment, May 2, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-2
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Over 100 civilians evacuated to Zaporizhzhia; Russian MoD claims 80 'hostages' saved; naval artillery and air strikes.
+    (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-03-roca
+  title: Russian Offensive Campaign Assessment, May 3, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-3
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-03'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russian air, artillery and ground attacks resume after the evacuation pause; Palamar reports two civilians killed.
+    (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-04-roca
+  title: Russian Offensive Campaign Assessment, May 4, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-4
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-04'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russian forces enter the plant itself for the first time; communications with defenders lost. (Old backgrounder URL
+    redirects to the 2022 report; title checked.)
+- id: isw-2022-05-06-roca
+  title: Russian Offensive Campaign Assessment, May 6, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-6
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-06'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Assaults on Azovstal continue; unconfirmed pro-Russian claim of 100 Ukrainians captured trying to escape. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-07-roca
+  title: Russian Offensive Campaign Assessment, May 7, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-7
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-07'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Ukraine confirms the last civilians evacuated from Azovstal on 7 May. (Old backgrounder URL redirects to the 2022
+    report; title checked.)
+- id: isw-2022-05-08-roca
+  title: Russian Offensive Campaign Assessment, May 8, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-8
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-08'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 'Prokopenko: civilians out, fighting inside parts of the plant. (Old backgrounder URL redirects to the 2022 report;
+    title checked.)'
+- id: isw-2022-05-09-roca
+  title: Russian Offensive Campaign Assessment, May 9, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-9
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-09'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 'US official: 2 BTGs remain at Mariupol, over a dozen moved elsewhere in Donbas. (Old backgrounder URL redirects
+    to the 2022 report; title checked.)'
+- id: isw-2022-05-10-roca
+  title: Russian Offensive Campaign Assessment, May 10, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-10
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-10'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 'US official: Russia relying on ''dumb bombs'' at Mariupol as PGMs run short. (Old backgrounder URL redirects to
+    the 2022 report; title checked.)'
+- id: isw-2022-05-11-roca
+  title: Russian Offensive Campaign Assessment, May 11, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-11
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-11'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: 'Azov: 38 air strikes and 4 strategic-bomber flights on Azovstal in 24 h. (Old backgrounder URL redirects to the
+    2022 report; title checked.)'
+- id: isw-2022-05-12-roca
+  title: Russian Offensive Campaign Assessment, May 12, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-12
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: No ground assault; Russia focuses on blocking defenders from using tunnels to leave the plant. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-13-roca
+  title: Russian Offensive Campaign Assessment, May 13, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-13
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russians likely secure the M14 highway at the western entrance of Azovstal. (Old backgrounder URL redirects to the
+    2022 report; title checked.)
+- id: isw-2022-05-15-roca
+  title: Russian Offensive Campaign Assessment, May 15, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-15
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-15'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Artillery, air and naval strikes; thermite incendiaries reported 14 May; defenders barely leave shelter. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-16-roca
+  title: Russian Offensive Campaign Assessment, May 16, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-16
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-16'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Negotiated evacuation of 264 wounded defenders to occupied Donetsk Oblast. (Old backgrounder URL redirects to the
+    2022 report; title checked.)
+- id: isw-2022-05-17-roca
+  title: Russian Offensive Campaign Assessment, May 17, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-17
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-17'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Defenders likely surrendered under a negotiated deal; Volodin demands war-crimes trials; pro-Russian outrage at the
+    deal. (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-18-roca
+  title: Russian Offensive Campaign Assessment, May 18, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-18
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-18'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Pushilin plans to level Azovstal and make Mariupol a 'resort city'; plant's pre-war economic role. (Old backgrounder
+    URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-19-roca
+  title: Russian Offensive Campaign Assessment, May 19, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-19
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-19'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Proxy administration struggles; pro-Russian complaints that Russian wounded were moved out of DNR hospitals for Azovstal
+    wounded. (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-20-roca
+  title: Russian Offensive Campaign Assessment, May 20, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-20
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-20'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Shoigu claims nearly 2,000 left Azovstal while ICRC reports registering 'hundreds'; Prokopenko orders end of defence.
+    (Old backgrounder URL redirects to the 2022 report; title checked.)
+- id: isw-2022-05-21-roca
+  title: Russian Offensive Campaign Assessment, May 21, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-21
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-05-21'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Russian MoD claims full control of Mariupol as the last group leaves Azovstal. (Old backgrounder URL redirects to
+    the 2022 report; title checked.)
+- id: kyivindependent-2024-hromotska-azovstal-photos
+  title: 12 never-before-seen photos from Azovstal defense (Photos)
+  url: https://kyivindependent.com/12-never-before-seen-photos-from-azovstal-defense
+  publisher: Kyiv Independent
+  authors:
+  - Irynka Hromotska
+  published: '2024-05-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - media
+  - chapter
+  notes: Unpublished Kozatskyi photos (26 Apr, 7 May 2022) of bunkers and the plant, published with the author's permission.
+- id: kyivindependent-2024-shulzhenko-kozatskyi
+  title: Author of famous Azovstal photos on documenting Ukraine's iron resistance in Mariupol
+  url: https://kyivindependent.com/author-of-famous-azovstal-photos-on-documenting-ukraines-iron-resistance-in-mariupol/
+  publisher: Kyiv Independent
+  authors:
+  - Daria Shulzhenko
+  published: '2024-05-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - media
+  - pow
+  - chapter
+  notes: 'Kozatskyi interview: photos released 10 May 2022; captivity in Olenivka and Donetsk; present at the Olenivka blast
+    (57 POWs killed per KI); freed 21 Sep 2022.'
+- id: kyivpost-2023-afp-olenivka-not-himars
+  title: 'Ukrainian Rockets Not Behind Deadly Olenivka Prison Strike: UN'
+  url: https://www.kyivpost.com/post/22335
+  publisher: Kyiv Post (AFP)
+  authors: []
+  published: '2023-10-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - pow
+  - olenivka
+  - chapter
+  notes: 'UN monitoring mission report: damage not characteristic of HIMARS; east–west trajectory; at least 51 POWs killed;
+    50+ witnesses interviewed.'
+- id: kyivpost-2025-pehlman-azovstal-half-home
+  title: Over Half of Azovstal Defenders Home in Ukraine
+  url: https://www.kyivpost.com/post/53619
+  publisher: Kyiv Post
+  authors:
+  - Nick Pehlman
+  published: '2025-05-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - pow
+  - exchange
+  - chapter
+  notes: 'Yusov: of about 2,500 captured, 1,279 returned, 455 of them Azov; Prokopenko calls the absence of Azov in a 1,000-person
+    swap a disgrace.'
+- id: lb-2022-erdogan-azovstal-offer
+  title: Erdoğan offers to evacuate Azovstal defenders via Berdyansk port - Dzhemilev
+  url: https://en.lb.ua/news/2022/05/12/14711_erdoan_offers_evacuate_azovstal.html
+  publisher: LB.ua
+  authors: []
+  published: '2022-05-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - surrender
+  - decision
+  - chapter
+  notes: 'Dzhemilev on the Turkish plan: a ship with Turkish observers at Berdiansk (Mariupol port mined), fighters to stay
+    in Turkey until war''s end; Russia: only civilians released, military must surrender.'
+- id: militarnyi-2022-kushnikov-unblocking-mariupol
+  title: The General Staff explained whether unblocking Mariupol is possible
+  url: https://militarnyi.com/en/news/the-general-staff-explained-whether-unblocking-mariupol-is-possible/
+  publisher: Militarnyi
+  authors:
+  - Vadim Kushnikov
+  published: '2022-05-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - decision
+  - chapter
+  notes: 'Hromov: Ukrainian units 150–200 km from Mariupol; deep Russian engineering barriers would mean heavy losses; resupply
+    became impossible once publicised.'
+- id: militarnyi-2022-sapwood-helicopters-seven-times
+  title: Ukrainian helicopters managed to break into besieged Mariupol seven times
+  url: https://militarnyi.com/en/news/ukrainian-helicopters-managed-to-break-into-besieged-mariupol-seven-times/
+  publisher: Militarnyi
+  authors:
+  - Olivia Sapwood
+  published: '2022-05-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - helicopters
+  - air-bridge
+  - chapter
+  notes: 'Ukrainian report of the HUR video: 7 flights, 16 Mi-8s, 72 Azov soldiers, two shot down and a rescue helicopter
+    lost; flights over 100 km into occupied territory.'
+- id: npr-2022-sullivan-kakissis-azovstal
+  title: How a massive steel plant became the center of Ukraine's resistance in Mariupol
+  url: https://www.npr.org/2022/05/05/1096880452/mariupol-steel-plant-ukraine-resistance
+  publisher: NPR
+  authors:
+  - Becky Sullivan
+  - Joanna Kakissis
+  published: '2022-05-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - geography
+  - civilians
+  - chapter
+  notes: Plant sits on 4 square miles along the coast, across the river from downtown; 10,000+ pre-war staff; Soviet-era bunkers
+    'like a big city'; evacuee accounts.
+- id: openmeteo-2026-archive-mariupol-2022
+  title: 'Open-Meteo Historical Weather API: Mariupol (47.10 N, 37.60 E), 24 Feb – 21 May 2022'
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=47.10&longitude=37.60&start_date=2022-02-24&end_date=2022-05-21&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,wind_speed_10m_max,sunrise,sunset,weather_code&timezone=Europe%2FKyiv
+  publisher: Open-Meteo
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - weather
+  - chapter
+  notes: Reanalysis (model) daily temperatures, precipitation, wind, sunrise and sunset in Kyiv local time. Not station observations.
+- id: osm-azovstal-works-way
+  title: 'OpenStreetMap way 279817867: Азовсталь (man_made=works)'
+  url: https://www.openstreetmap.org/way/279817867
+  publisher: OpenStreetMap
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - geography
+  - chapter
+  notes: 'Plant outline via Nominatim: point 47.1062 N, 37.5991 E; bbox 47.0787–47.1335 N, 37.5712–37.6348 E; polygon area
+    about 10.3 km² (our calculation). Present-day mapping (ODbL).'
+- id: osm-illich-works-way
+  title: 'OpenStreetMap way 300089020: Металургійний комбінат імені Ілліча (man_made=works)'
+  url: https://www.openstreetmap.org/way/300089020
+  publisher: OpenStreetMap
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - geography
+  - chapter
+  notes: 'Illich steel works outline via Nominatim: point 47.1789 N, 37.5535 E; polygon area about 11.7 km² (our calculation);
+    about 8.8 km NNW of Azovstal.'
+- id: osm-nominatim-c03-places
+  title: Nominatim (OpenStreetMap geocoder) lookups for Mariupol-area places
+  url: https://nominatim.openstreetmap.org/ui/search.html
+  publisher: OpenStreetMap Foundation
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - geography
+  - chapter
+  notes: Coordinates for Mariupol port, drama theatre, Olenivka, Novoazovsk, Bezimenne, Manhush, Berdiansk, Zaporizhzhia,
+    Dnipro airport and others; straight-line distances computed by us.
+- id: pbs-2023-frontline-20-days-in-mariupol
+  title: 20 Days in Mariupol
+  url: https://www.pbs.org/wgbh/frontline/documentary/20-days-in-mariupol/
+  publisher: PBS FRONTLINE and Associated Press
+  authors:
+  - Mstyslav Chernov
+  published: '2023-11-21'
+  accessed: '2026-10-01'
+  type: video
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - media
+  - civilians
+  - chapter
+  notes: Oscar- and BAFTA-winning AP documentary by Ukrainian journalist Chernov on the first weeks of the siege, incl. the
+    maternity hospital strike.
+- id: pravda-2022-karlovskyi-173-civilians
+  title: 173 civilians evacuated from Azovstal arrive in Zaporizhzhia
+  url: https://www.pravda.com.ua/eng/news/2022/05/08/7344952/
+  publisher: Ukrainska Pravda
+  authors:
+  - Denys Karlovskyi
+  published: '2022-05-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - evacuation
+  - civilians
+  - chapter
+  notes: 'Second operation: 173 civilians in 10 buses on 8 May; 3 soldiers killed and 6 wounded during the rescue (Azov).'
+- id: pravda-2022-kizilova-36th-breakthrough
+  title: 'Mariupol: Presidential Office confirms 36th Brigade Marines have broken through cordon'
+  url: https://www.pravda.com.ua/eng/news/2022/04/13/7339257/
+  publisher: Ukrainska Pravda
+  authors:
+  - Svitlana Kizilova
+  published: '2022-04-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - mariupol
+  - forces
+  - chapter
+  notes: 'Arestovych confirms the 36th Brigade broke through to Azov: ''difficult and very risky''; some marines captured.'
+- id: pravda-2022-mazurenko-2439-shoigu
+  title: 'Russians claim all Ukrainian fighters withdrawn from Azovstal: Shoigu has already reported to Putin'
+  url: https://www.pravda.com.ua/eng/news/2022/05/20/7347537/
+  publisher: Ukrainska Pravda
+  authors:
+  - Alona Mazurenko
+  published: '2022-05-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - surrender
+  - pow
+  - chapter
+  notes: Russian MoD claim of 2,439 defenders out between 16 and 20 May; seriously wounded to hospitals in occupied Donetsk
+    and Luhansk oblasts.
+- id: pravda-2022-mazurenko-azovstal-weapons-delivery
+  title: '“Unique operation”: scouts showed how weapons were delivered to Azovstal'
+  url: https://www.pravda.com.ua/eng/news/2022/05/31/7349700/
+  publisher: Ukrainska Pravda
+  authors:
+  - Alona Mazurenko
+  published: '2022-05-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - helicopters
+  - air-bridge
+  - media
+  - chapter
+  notes: 'HUR video release: 16 Mi-8s, 72 Azov soldiers once, five doctors from Dnipro flown in; Zelensky''s ''90% of pilots
+    did not return'' quote; last two missions unsuccessful.'
+- id: pravda-2022-ru-mod-959-left-azovstal
+  title: Russian Defence Ministry claims that 959 people have left Azovstal
+  url: https://www.pravda.com.ua/eng/news/2022/05/18/7346914/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2022-05-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - surrender
+  - pow
+  - chapter
+  notes: 'Reports the Russian MoD (Konashenkov) claim: 959 out since 16 May incl. 80 wounded (51 to Novoazovsk), 694 overnight;
+    256 incl. 51 wounded taken to Olenivka on 17 May; about 600 wounded earlier.'
+- id: pravda-2022-swap-215-medvedchuk
+  title: '215 defenders of Ukraine released from captivity: 200 of them exchanged for Medvedchuk'
+  url: https://www.pravda.com.ua/eng/news/2022/09/22/7368539/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2022-09-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - pow
+  - exchange
+  - chapter
+  notes: '21 Sep 2022 swap: 215 freed incl. 124 officers and 108 Azov; Prokopenko, Volynskyi, Palamar, Shleha, Khomenko to
+    Turkey under Erdoğan''s guarantees; Medvedchuk plus 55 Russians returned.'
+- id: pravda-2022-tyshchenko-general-staff-garrison-mission
+  title: “Mariupol” Garrison completed its task, orders are to stay alive – General Staff
+  url: https://www.pravda.com.ua/eng/news/2022/05/17/7346650/
+  publisher: Ukrainska Pravda
+  authors:
+  - Kateryna Tyshchenko
+  published: '2022-05-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - surrender
+  - pow
+  - chapter
+  notes: 'General Staff, 16 May: 53 severely wounded to Novoazovsk, 211 via a corridor to Olenivka, to be returned by exchange.'
+- id: pravda-2025-palamar-mariupol-interview
+  title: Deputy commander of Azov Corps reveals new details of battle for Mariupol
+  url: https://www.pravda.com.ua/eng/news/2025/09/02/7528994/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2025-09-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - commanders
+  - chapter
+  notes: 'Palamar (''Kalyna''): Mariupol held Russian forces off Zaporizhzhia; A4 news leaflets; NLAWs learned online; medicine
+    ''saved hundreds of lives''; all kit destroyed before captivity.'
+- id: rbc-2026-honcharova-serbov-interview
+  title: Azovstal defender Ruslan David Serbov opens up about breakout, his book, and relentless training in interview with
+    RBC-Ukraine
+  url: https://newsukraine.rbc.ua/interview/no-one-knows-why-mariupol-was-surrounded-1784280961.html
+  publisher: RBC-Ukraine
+  authors:
+  - Kateryna Honcharova
+  - Kateryna Danishevska
+  published: '2026-07-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - helicopters
+  - air-bridge
+  - chapter
+  notes: Serbov flew in on 5 Apr on 'the last helicopter'; it was shot down returning and the Dnipro rescue helicopter was
+    downed by MANPADS (mission 7); Biletskyi's '100 km' quote; freed 29 Jun 2022.
+- id: rferl-2025-peretiatko-azovstal-captivity
+  title: Inside The Struggle To Free Ukraine's Azovstal Defenders From Russian Captivity
+  url: https://www.rferl.org/a/33427578.html
+  publisher: RFE/RL
+  authors:
+  - Mykyta Peretiatko
+  published: '2025-06-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - pow
+  - exchange
+  - chapter
+  notes: 'About 2,500 left the plant; Yusov: 1,279 Azovstal defenders returned incl. 455 Azov; about 850 Azov still held (Kozhekin);
+    54 killed at Olenivka; 12 Azov sentenced to 13–23 years in Russia (Mar 2025).'
+- id: time-2024-spencer-collins-mariupol-helicopters
+  title: The Untold Story of the Ukrainian Helicopter Missions During the Mariupol Siege
+  url: https://time.com/6694858/ukrainian-helicopter-missions-mariupol-siege/
+  publisher: TIME
+  authors:
+  - John Spencer
+  - Liam Collins
+  published: '2024-02-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - helicopters
+  - air-bridge
+  - chapter
+  notes: 'Pilot ''Vitaliy'' (mission 3) and Ruslan Serbov accounts: 80-min flights, 42 min over enemy ground, 10–15 m AGL,
+    10-min ground time, FARP, Pantsir threat; totals 16 helicopters, 30+ t cargo, 72 troops in, 64 wounded out, 3 lost. Medium:
+    states Dnipro airfield is ''82 km'' from Mariupol, which is wrong (about 233 km).'
+- id: twz-2022-altman-flint-helicopter-rescue
+  title: 'Low, Fast And Dangerous: A Firsthand Account Of Ukraine''s Secret Helicopter Rescue Missions'
+  url: https://www.twz.com/low-fast-and-dangerous-a-firsthand-account-of-ukraines-secret-helicopter-rescue-missions
+  publisher: The War Zone
+  authors:
+  - Howard Altman
+  published: '2022-06-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - helicopters
+  - air-bridge
+  - chapter
+  notes: 'GUR soldier ''Flint'' on mission 1 (21 Mar): 03:30 lift-off from Dnipro, refuel at the line, 60 mi over Russian
+    territory at about 15 ft and 150 mph; Stingers, NLAWs, Starlink in; about 16 wounded out; four-ship flight with Mi-24
+    escort; one destroyed, two missing.'
+- id: twz-2022-altman-mariupol-helicopter-missions
+  title: Inside Ukraine's Daring Helicopter Missions Into Russian-Occupied Mariupol
+  url: https://www.twz.com/exclusive-details-of-ukraines-daring-helicopter-missions-into-russian-occupied-mariupol
+  publisher: The War Zone
+  authors:
+  - Howard Altman
+  published: '2022-05-25'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - helicopters
+  - air-bridge
+  - chapter
+  notes: 'Budanov interview: 7 missions, 16 Mi-8s, two shot down (missions 5 and 7) plus a rescue helicopter; 72 Azov fighters
+    flown in; Hromov on why flights stopped; Krotevych interview.'
+- id: ukrinform-2022-azov-atgm-evacuation-vehicle
+  title: Azov Regiment shows effects of Russia's ATGM strike on evacuation vehicle
+  url: https://ukrinform.net/rubric-ato/3476652-azov-regiment-shows-effects-of-russias-atgm-strike-on-evacuation-vehicle.html
+  publisher: Ukrinform
+  authors: []
+  published: '2022-05-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - evacuation
+  - chapter
+  notes: During the ceasefire, an ATGM hit a vehicle moving to evacuate civilians inside Azovstal; one fighter killed, six
+    injured (Azov claim).
+- id: un-news-2023-olenivka-justice
+  title: 'Ukraine: UN rights chief upholds need for justice one year after POW killings'
+  url: https://news.un.org/en/node/1139097
+  publisher: UN News
+  authors: []
+  published: '2023-07-25'
+  accessed: '2026-10-01'
+  type: official
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - pow
+  - olenivka
+  - chapter
+  notes: 'Olenivka blast overnight 28 Jul 2022 killed at least 50 POWs, many from Azovstal; OHCHR: not a HIMARS rocket; Russia
+    gave no access.'
+- id: un-ukraine-2022-05-01-ocha-azovstal
+  title: Note to correspondents on Ukraine attributable to Saviano Abreu, OCHA Spokesperson in Ukraine
+  url: https://ukraine.un.org/en/180214-note-correspondents-ukraine-attributable-saviano-abreu-office-coordination-humanitarian
+  publisher: United Nations Ukraine (OCHA)
+  authors:
+  - Saviano Abreu
+  published: '2022-05-01'
+  accessed: '2026-10-01'
+  type: official
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - evacuation
+  - civilians
+  - chapter
+  notes: UN/ICRC safe-passage operation began 29 Apr; convoy drove about 230 km from Zaporizhzhia and reached the plant on
+    Saturday 30 Apr.
+- id: un-ukraine-2022-05-03-lubrani-azovstal
+  title: Statement attributable to the Humanitarian Coordinator for Ukraine, Osnat Lubrani
+  url: https://ukraine.un.org/en/180301-statement-attributable-humanitarian-coordinator-ukraine-osnat-lubrani
+  publisher: United Nations Ukraine
+  authors:
+  - Osnat Lubrani
+  published: '2022-05-03'
+  accessed: '2026-10-01'
+  type: official
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - evacuation
+  - civilians
+  - chapter
+  notes: 101 civilians out of Azovstal, 58 more joined at Manhush, 127 reached Zaporizhzhia; arranged after Guterres's Moscow
+    and Kyiv visits.
+- id: voa-2022-ap-mariupol-last-defenders
+  title: 'Explainer: Who Were Mariupol''s Last Defenders?'
+  url: https://www.voanews.com/a/explainer-who-were-mariupol-s-last-defenders-/6584122.html
+  publisher: Voice of America, from Associated Press
+  authors: []
+  published: '2022-05-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - forces
+  - chapter
+  notes: 'Garrison: Azov Regiment (NGU), 36th Marine Brigade, 12th NGU brigade, border guards, police, territorial defence;
+    Russian claim of 2,439 surrendered incl. 500+ on the last day.'
+- id: wikipedia-azovstal-iron-steel-works
+  title: Azovstal Iron and Steel Works
+  url: https://en.wikipedia.org/wiki/Azovstal_Iron_and_Steel_Works
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - geography
+  - chapter
+  notes: Plant coordinates (47°05′53″N 37°36′36″E), founding 1930, layout (coke, sinter, six blast furnaces, steelmaking),
+    17 Apr ultimatum, 7 May civilian evacuation, demolition plans.
+- id: wikipedia-denys-prokopenko
+  title: Denys Prokopenko
+  url: https://en.wikipedia.org/wiki/Denys_Prokopenko
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - commanders
+  - chapter
+  notes: Azov commander 'Redis' (b. 1991); Hero of Ukraine 19 Mar 2022; 20 May order statement; freed 21 Sep 2022, held in
+    Turkey, returned 8 Jul 2023; later 1st Azov Corps commander.
+- id: wikipedia-serhii-volynskyi
+  title: Serhii Volynskyi
+  url: https://en.wikipedia.org/wiki/Serhii_Volynskyi
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - commanders
+  - chapter
+  notes: 36th Marine Brigade major; led about 500 men from Illich to Azovstal on 12 Apr; appeals of 18, 20 and 27 Apr (600+
+    wounded, 'Dunkirk'); captured 20 May, freed 21 Sep 2022, returned 8 Jul 2023.
+- id: wikipedia-siege-of-mariupol
+  title: Siege of Mariupol
+  url: https://en.wikipedia.org/wiki/Siege_of_Mariupol
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - mariupol
+  - siege
+  - chapter
+  notes: Dense day-by-day timeline and infobox (3,500 vs 14,000 per The Economist, 21 Mar 2022; Russian claim of 8,000 defenders;
+    casualty claims). Tertiary; used for dates not found elsewhere, with claimants named.

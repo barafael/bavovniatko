@@ -1,0 +1,40 @@
+{"pair": "b970d50a294a", "relation": "none", "rationale": "Clearing operations and a daily kill claim are different assertions."}
+{"pair": "b9de9b199a7b", "relation": "none", "rationale": "The duel event and its village setting are different details."}
+{"pair": "ba0a03a74a50", "relation": "supports", "from": "claim:cc08_0045_02", "to": "claim:cc08_0029_04", "strength": 0.6, "independent": false, "rationale": "The 3 February capture of tank crew by SOF and the 72nd Brigade is an instance of A's SOF–72nd cooperation; same source."}
+{"pair": "ba25f6550bf5", "relation": "supports", "from": "claim:cv02_0016_03", "to": "claim:cv02_0003_08", "strength": 0.5, "independent": false, "rationale": "The experts' reading of fire at the rear then the sights is consistent with Serhiy shooting out the optics; shared TWZ source."}
+{"pair": "ba71d54e8265", "relation": "none", "rationale": "Early Neptune launch altitude and the Moskva hit are different events."}
+{"pair": "ba9d6c615ddd", "relation": "none", "rationale": "Ferry counts and computed distances are different assertions."}
+{"pair": "bbcdfbbb3273", "relation": "none", "rationale": "B locates Kacha airfield; A is the helicopter loss; context only."}
+{"pair": "bbe9d10fe752", "relation": "none", "rationale": "The village setting and the spin-out are different details."}
+{"pair": "bc163fd13bd4", "relation": "none", "rationale": "Syrskyi's authorisation and the rival account of who started the operation do not bear on each other."}
+{"pair": "bc5a81f9188a", "relation": "supports", "from": "claim:cc12_0025_10", "to": "claim:cc12_0010_54", "strength": 0.7, "independent": true, "rationale": "Beacon pings and Russian rescuers' reports of Su-35 and Su-34 crews in the Sea of Azov corroborate the Air Force's claim."}
+{"pair": "bc921f9ba3cc", "relation": "none", "rationale": "The failed first run and the blinding of the optics are different details."}
+{"pair": "bc962f3b3b53", "relation": "none", "rationale": "A glide-bomb loadout fact and early-war sortie rates are different assertions."}
+{"pair": "bcca453f9516", "relation": "supports", "from": "claim:cc08_0048_04", "to": "claim:cc08_0006_04", "strength": 0.6, "independent": false, "rationale": "B's assessment that the command repeated the plan at Vuhledar in January 2023 matches A's 24 January attack; both ISW."}
+{"pair": "bd020bb4aef7", "relation": "none", "rationale": "B geolocates a foothold A already names; context only."}
+{"pair": "bd0da64e97fe", "relation": "none", "rationale": "A map extent and a terrain description; context only."}
+{"pair": "bd2fe81bd9d0", "relation": "none", "rationale": "A claimed movement of border guards and police and the garrison composition are different assertions."}
+{"pair": "bd67078fab8a", "relation": "none", "rationale": "The Storm Shadow strike is context for B's assessment of the fleet's relocation."}
+{"pair": "bda26b038d2e", "relation": "duplicates", "from": "claim:cc13_0035_07", "to": "claim:cc13_0009_09", "strength": 0.85, "rationale": "Same sea-drone hit on the tanker Sig off Kerch on 4 August 2023, from the same source."}
+{"pair": "bdc0badaebfa", "relation": "duplicates", "from": "claim:cc02_0030_08", "to": "claim:cc02_0028_04", "strength": 0.85, "rationale": "Same Neptune launch on an extreme-range radar contact after consultation; A has more detail and sources."}
+{"pair": "be28259c4a90", "relation": "refines", "from": "claim:cc06_0034_06", "to": "claim:cc06_0005_01", "strength": 0.6, "rationale": "B details the N26 dash to Kupiansk (Shevchenkove bypassed, Oskil bridge dropped) that A summarises."}
+{"pair": "be5e3327b9aa", "relation": "none", "rationale": "Early losses of S-300/Buk and their later effectiveness are different assertions about different periods."}
+{"pair": "be7647541694", "relation": "supports", "from": "claim:cc03_0008_90", "to": "claim:cc03_0008_88", "strength": 0.6, "independent": true, "rationale": "The Russian MoD's 256 to Olenivka with 51 wounded broadly matches the General Staff's 211 + 53 a day earlier, from opposing claimants."}
+{"pair": "be9d3b9e1a86", "relation": "none", "rationale": "An assessment of the A-50's loss and February shoot-downs on glide-bomb runs are different assertions."}
+{"pair": "bed7bb9165a2", "relation": "none", "rationale": "The summer reinforcement and a later command-post strike; context only."}
+{"pair": "bef2fdf7ed5f", "relation": "none", "rationale": "The breakout of about 500 men and Shoigu's surrender claim concern different groups."}
+{"pair": "bf21d14180ab", "relation": "none", "rationale": "B restates A's fact as background to a strike event; context only."}
+{"pair": "bfcb18550b45", "relation": "supports", "from": "claim:cc03_0005_03", "to": "claim:cc03_0023_01", "strength": 0.7, "independent": true, "rationale": "The air-bridge deliveries of Stingers, NLAWs and Starlink corroborate B's account of the garrison's air-delivered equipment."}
+{"pair": "bfcca009c8c9", "relation": "none", "rationale": "A straight-line distance and a sailing distance are different measures, not a conflict."}
+{"pair": "bfebb753b821", "relation": "none", "rationale": "The ambush and its aftermath are successive events."}
+{"pair": "bfff6fe5e2e5", "relation": "supports", "from": "claim:cc12_0028_20", "to": "claim:cc12_0010_18", "strength": 0.6, "independent": false, "rationale": "The Air Force's debunking after The Times misidentified the Ghost corroborates The Times naming Tarabalka; shared Kyiv Post source."}
+{"pair": "c00c76b48d03", "relation": "none", "rationale": "A locational fact and a specific boom-jumping event; context only."}
+{"pair": "c05d3e72c00c", "relation": "supports", "from": "claim:cc05_0025_14", "to": "claim:cc05_0010_77", "strength": 0.4, "independent": false, "rationale": "B's guard force including Grachonoks and a Sobol is consistent with A's strike on those boats; shared source."}
+{"pair": "c0699cd44eba", "relation": "supports", "from": "claim:cc05_0010_71", "to": "claim:cc05_0023_07", "strength": 0.7, "independent": false, "rationale": "Malyuk's statement of 2 × 1,100 kg on the supports is the basis of B's charge description; shared Liga source."}
+{"pair": "c06a96ebe754", "relation": "none", "rationale": "A seeker limitation and the engagement event are different assertions."}
+{"pair": "c08480f0f58e", "relation": "none", "rationale": "The bridgehead's single linking bridge and the destruction of a pontoon bridge are different assertions."}
+{"pair": "c093951055b4", "relation": "duplicates", "from": "claim:cc17_0027_09", "to": "claim:cc17_0005_06", "strength": 0.85, "rationale": "Same abandoned push on Dvorichna leaving the Russian boat route open, from the same source."}
+{"pair": "c0d3aebe62e4", "relation": "none", "rationale": "A redeployment and a later tank count are different assertions."}
+{"pair": "c0daecbff466", "relation": "refines", "from": "claim:cc12_0025_05", "to": "claim:cc12_0010_41", "strength": 0.6, "rationale": "B describes the content of the flight-track footage Zaluzhnyi posted, refining A."}
+{"pair": "c0dbd5700240", "relation": "none", "rationale": "A cumulative loss count and a tactic are unrelated."}
+{"pair": "c0f88a65ca6c", "relation": "supports", "from": "claim:cv01_0007_12", "to": "claim:cv01_0003_02", "strength": 0.5, "independent": false, "rationale": "Darmohrai's account of fighting the 6th Tank Regiment at Skybyn corroborates A's column (he dates it 10 March); shared Wikipedia source."}

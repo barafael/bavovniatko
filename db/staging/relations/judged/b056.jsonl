@@ -1,0 +1,40 @@
+{"pair": "fae4a1382870", "relation": "duplicates", "from": "claim:cc06_0012_98", "to": "claim:cc06_0010_10", "strength": 0.95, "rationale": "Same Reintegration Ministry figure of 502 Kharkiv settlements liberated by 13 Oct 2022."}
+{"pair": "fb0a93b4d499", "relation": "supports", "from": "claim:cc05_0023_04", "to": "claim:cc05_0004_05", "strength": 0.7, "rationale": "Both say two Sea Babies, in an SBU–Navy operation, struck the bridge in July 2023; they share the CNN source.", "independent": false}
+{"pair": "fbdfcb86d4fc", "relation": "duplicates", "from": "claim:cc02_0009_22", "to": "claim:cc02_0030_23", "strength": 0.85, "rationale": "Same loss of about 10 men and a boat in the May 2022 Zmiinyi assault, from the same article."}
+{"pair": "fc415450e0d8", "relation": "duplicates", "from": "claim:cc05_0014_04", "to": "claim:cc05_0012_05", "strength": 0.85, "rationale": "Same 227 m navigation span with 35 m clearance; the Wikipedia claim is canonical."}
+{"pair": "fca117d94a98", "relation": "duplicates", "from": "claim:c04_0019_18", "to": "claim:cc10_0012_07", "strength": 0.9, "rationale": "Same National Police figures of 788 missing and 262 dead recovered at Krynky; B has more sources."}
+{"pair": "fda38437aedb", "relation": "supports", "from": "claim:cc13_0009_11", "to": "claim:cc13_0008_03", "strength": 0.7, "rationale": "HUR's first claim of one Mi-8 destroyed supports the report of at least one Mi-8 downed; both rest on HUR.", "independent": false}
+{"pair": "ff390a6d8113", "relation": "supports", "from": "claim:cc17_0012_05", "to": "claim:c06_0017_08", "strength": 0.6, "rationale": "Evacuees walking \"more than 10 km\" in 2026 corroborates the reported ~10 km pipeline walk.", "independent": true}
+{"pair": "005728954446", "relation": "none", "rationale": "A Russian attack on Vuhledar and the OSM course of the Kashlahach river are unrelated assertions."}
+{"pair": "0057c66ad370", "relation": "duplicates", "from": "claim:cc03_0008_43", "to": "claim:cc03_0029_08", "strength": 0.8, "rationale": "The 36th Marine Brigade's 11–12 Apr 2022 Illich breakout is restated in B's fuller account."}
+{"pair": "00770aad4da5", "relation": "supports", "from": "claim:cc13_0008_05", "to": "claim:cc13_0008_02", "strength": 0.6, "rationale": "The 2 May 2025 AIM-9 shoot-down from Magura V7s is a case of Ukraine arming sea drones with missiles.", "independent": false}
+{"pair": "00d511951e17", "relation": "none", "rationale": "An admission that \"some\" marines were captured neither confirms nor refutes Shoigu's specific 1,026."}
+{"pair": "00d8a1e1b1f0", "relation": "supports", "from": "claim:cc08_0016_09", "to": "claim:cc08_0045_01", "strength": 0.5, "rationale": "A November 2022 Russian push across the Kashlahach at Pavlivka is part of B's Pavlivka set piece; both come from ISW.", "independent": false}
+{"pair": "0121b773c190", "relation": "none", "rationale": "The artillery order of battle and the camouflage and decoys are different facts."}
+{"pair": "01584f062d31", "relation": "none", "rationale": "A 30 Aug 2022 strike and the July salvo pattern are different events."}
+{"pair": "01588441127e", "relation": "supports", "from": "claim:cc08_0010_012", "to": "claim:cc08_0010_004", "strength": 0.5, "rationale": "Footage of Russian forces past Yehorivka on Pavlivka's edge on 3 Nov 2022 follows from the 28–29 Oct attack from Yehorivka.", "independent": false}
+{"pair": "0162b15da3bc", "relation": "none", "rationale": "Glide-bomb shoot-downs and the recalled sorties after the A-50 loss are different assertions."}
+{"pair": "018f092cf8a2", "relation": "supports", "from": "claim:cv02_0003_03", "to": "claim:cv02_0006_18", "strength": 0.7, "rationale": "Both describe the T-90M attack near Stepove that the Bradleys fought, sharing a TWZ source.", "independent": false}
+{"pair": "01a382bdb994", "relation": "none", "rationale": "The February aircraft tally and the recalled sorties are different assertions."}
+{"pair": "01a5dfdb58e2", "relation": "supports", "from": "claim:cc06_0012_21", "to": "claim:cc06_0029_02", "strength": 0.7, "rationale": "Both have the 25th Airborne reaching Volokhiv Yar on day 1 of the counteroffensive.", "independent": false}
+{"pair": "01a8b358e9cf", "relation": "none", "rationale": "Russian gains near Vuhledar and the OSM river course are unrelated."}
+{"pair": "026b882992b2", "relation": "none", "rationale": "A generic brigade structure and the Pavlivka battle are not in evidential relation."}
+{"pair": "026d0b60c573", "relation": "weakens", "from": "claim:cc12_0033_06", "to": "claim:cc12_0006_04", "strength": 0.4, "rationale": "Russian milbloggers' friendly-fire explanation for the Su-34/Su-35 losses casts doubt on Ukraine's credit for them."}
+{"pair": "02a1c1f28d4d", "relation": "supports", "from": "claim:cc13_0035_15", "to": "claim:cc13_0008_02", "strength": 0.6, "rationale": "The AIM-9 Su-30SM kill from Magura V7s is a case of Ukraine arming sea drones with missiles.", "independent": false}
+{"pair": "02a46820d524", "relation": "none", "rationale": "Firing ranges and camouflage measures are different facts."}
+{"pair": "02c251dd13ea", "relation": "none", "rationale": "The gunner's account and an expert's view of the crew's panic are different assertions."}
+{"pair": "02d83297abd6", "relation": "none", "rationale": "B is the outlet's interpretation of the decision in A, not independent evidence for it."}
+{"pair": "03cc7f6cfb01", "relation": "none", "rationale": "A specific engagement and a general remark about the 25 mm gun are not in evidential relation."}
+{"pair": "03d2a16cb781", "relation": "duplicates", "from": "claim:cc12_0028_18", "to": "claim:cc12_0025_15", "strength": 0.85, "rationale": "Same RUSI report of Ukraine switching jet–SAM deconfliction from time to area after friendly fire."}
+{"pair": "041c2e4a10f6", "relation": "none", "rationale": "Claimed Russian losses and the authorisation of the two groupings are different facts."}
+{"pair": "041ca48b3450", "relation": "none", "rationale": "Glide-bomb targets and Kupiansk's road links are unrelated."}
+{"pair": "043b97456483", "relation": "none", "rationale": "Russian threats and the garrison's decision to hold are related narrative, not evidence for each other."}
+{"pair": "0474a7d57093", "relation": "supports", "from": "claim:cc06_0012_54", "to": "claim:cc06_0030_02", "strength": 0.7, "rationale": "GUR's statement that Lapin was taking over the western grouping supports the reported takeover; both come from ISW.", "independent": false}
+{"pair": "047f712c758b", "relation": "supports", "from": "claim:cc03_0029_08", "to": "claim:cc03_0004_12", "strength": 0.5, "rationale": "The 11–12 Apr breakout from Illich is consistent with the pocket falling on 13 Apr 2022.", "independent": false}
+{"pair": "050fa8157c43", "relation": "supports", "from": "claim:cc12_0025_14", "to": "claim:cc12_0010_08", "strength": 0.6, "rationale": "The MiG-29s and Su-27s hugging the ground under high Su-35 patrols match the early low skirmishing, both from RUSI.", "independent": false}
+{"pair": "05b1c90d8b69", "relation": "none", "rationale": "A facility fact and a later strike on it are different assertions."}
+{"pair": "05b774a4ae73", "relation": "supports", "from": "claim:cc10_0035_04", "to": "claim:cc10_0021_09", "strength": 0.5, "rationale": "The 36th Marine Brigade fighting on the rail-bridge/Poima axis supports Poima as its objective.", "independent": false}
+{"pair": "05c050d8ea39", "relation": "none", "rationale": "HUR's AIM-9 preference and Group 13's R-73 plan do not bear on each other."}
+{"pair": "05e0e22bb4f8", "relation": "none", "rationale": "The diorama extent and the fighting radius are different measures."}
+{"pair": "05fe73d9b387", "relation": "none", "rationale": "The force composition and its strength state are different facts."}
+{"pair": "060b5d827106", "relation": "none", "rationale": "The A-50 ambush wait and a later Tu-22M3 kill are different events."}

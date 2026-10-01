@@ -11,7 +11,7 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
   Russian capabilities are described only as Ukrainian or Western sources report them. There is no
   Russian state media.
 - **Generated from the knowledge base.** Since 2026-09-30 the SurrealDB claim graph in [`db/`](../db/README.md)
-  is the source of truth: 3,706 atomic claims with their sources, claimants, eras, places and observations, and
+  is the source of truth: 7,100 atomic claims with their sources, claimants, eras, places and observations, and
   typed relations between them. The topic files, the glossary, the source indexes and
   [contradictions.md](contradictions.md) are regenerated from it by `db/tools/render.py`. Edit the data, not
   the files. This README is still written by hand.
@@ -33,13 +33,34 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
 | 07 | [07-maps-ui-conventions.md](07-maps-ui-conventions.md) | DeepStateMap in depth, other front maps compared, APP-6/2525 symbology, glimpses of Ukrainian military UIs, data access |
 | 08 | [08-prior-art-games.md](08-prior-art-games.md) | Commercial, drone and training-sim, board and professional wargames: what they model and miss, plus ethics |
 | — | [glossary.md](glossary.md) | Frontline slang (transliterated Ukrainian), Russian terms as reported, systems, programmes, terrain and wargaming terms |
+| — | [chapters/](chapters/) | **Chapter dossiers** for the game's dioramas (see [design/chapters.md](../design/chapters.md)): the historical outcome to reproduce, a dated timeline, the geography, the forces, set pieces, decision points and media |
 | — | [contradictions.md](contradictions.md) | Every pair of claims that cannot both be true as stated, with claimants, sources and the explanation (generated) |
 | — | [sources.yaml](sources.yaml) | The deduplicated index of every source (generated from the knowledge base) |
-| — | `sources/NN-*.yaml` | The sources cited by each topic file (generated) |
+| — | `sources/NN-*.yaml`, `sources/chapters/*.yaml` | The sources cited by each topic file and chapter dossier (generated) |
 
 Every topic file has the same skeleton: overview → per-era notes → catalogue/figures tables →
 "Russia's side as reported" (00–05) → **Game/sim relevance** → Terms → Open questions/gaps → Sources.
 Claims are cited inline as `[src:<id>]`, and each id resolves in `sources.yaml` (directly or through `aliases`).
+
+## Chapter dossiers
+
+| dossier | chapter | window |
+|---|---|---|
+| [c02](chapters/c02-snake-island-moskva.md) | Snake Island → the sinking of the Moskva | 24 Feb – 7 Jul 2022 |
+| [c03](chapters/c03-azovstal.md) | Mariupol and the Azovstal defence, with the helicopter air bridge | Feb – 20 May 2022 |
+| [c04](chapters/c04-kherson-antonivskyi.md) | Kherson and the HIMARS campaign against the Dnipro crossings | Jul – 11 Nov 2022 |
+| [c05](chapters/c05-kerch-bridge.md) | The Kerch bridge: truck bomb, sea drones, underwater charges | Oct 2022 – 2026 |
+| [c06](chapters/c06-kharkiv-offensive.md) | The Kharkiv counteroffensive | 29 Aug – early Oct 2022 |
+| [c08](chapters/c08-vuhledar.md) | Vuhledar: Russian mechanised assaults into minefields | Nov 2022 – Mar 2023 |
+| [c10](chapters/c10-krynky.md) | The Krynky bridgehead | Oct 2023 – Jul 2024 |
+| [c12](chapters/c12-a50-hunt.md) | Hunting the A-50 | Jan – Feb 2024 |
+| [c13](chapters/c13-black-sea-drone-war.md) | The Black Sea sea-drone war | Oct 2022 – May 2025 |
+| [c17](chapters/c17-kupiansk-pipeline.md) | The Kupiansk gas-pipeline infiltration | 2025 – early 2026 |
+| [v01](chapters/v01-brovary-ambush.md) | Vignette: the Brovary ambush | 9–10 Mar 2022 |
+| [v02](chapters/v02-stepove-bradley.md) | Vignette: Bradley vs T-90M near Stepove | 11–12 Jan 2024 |
+
+Each dossier's claims are in the knowledge base. The outcome claims carry an `OUTCOME` flag, which is the
+chapter's win condition: `SELECT key, text FROM claim WHERE topics CONTAINS topic:c03 AND ext.outcome = true`.
 
 ## Eras
 

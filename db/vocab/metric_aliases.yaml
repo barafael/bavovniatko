@@ -46,3 +46,16 @@ uav_loss_rate: drone_loss_rate
 uav_losses: drone_losses
 verified_strikes: confirmed_strikes
 weapon_speed: cruise_speed
+bridge_length: structure_length
+crew_evacuated: crew_rescued
+deployment_time: setup_time
+displacement: ship_displacement
+drone_hits_on_ship: hits_on_ship
+flight_duration: flight_time
+fleet_share_lost: loss_share
+fleet_size: equipment_holdings
+interceptions_claimed: aerial_targets_destroyed
+island_extent: site_extent
+mission_count: missions_flown
+radar_range: detection_range
+ship_length: vessel_length

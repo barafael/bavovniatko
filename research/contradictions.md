@@ -4,7 +4,7 @@
 
 Pairs of claims that cannot both be true as stated, judged from rule-based candidates (db/tools/relate.py) and stored as `contradicts` edges. *Explained* means the difference has a stated cause (method, scope, date); *open* means it is unresolved. Claim ids resolve in the knowledge base; source ids in [sources.yaml](sources.yaml).
 
-47 distinct contradictions (duplicate claims collapsed): 47 explained, 0 open.
+85 distinct contradictions (duplicate claims collapsed): 85 explained, 0 open.
 
 ## 00 Timeline & eras
 
@@ -137,6 +137,17 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - `07-0028-29` Computed from DeepStateMap versions, in February 2026 (e9) Russia gained 171 km² and Ukraine recaptured 48 km² (gross), a net Russian change of +126 km²; the grey zone was 1,567 km² at the end of the period. Context: after the Ukrainian counteroffensive from 29 January to 9 February. *(claimant: —; `deepstate-api-history`)*
   - *Resolution:* Different mappers; the week straddles late January and early February, and DeepState publishes Ukrainian gains late.
 
+## 06 Terrain & geodata
+
+- **explained** · strength 0.4 · 4 judged pairs — Length of the Kupiansk pipeline route: about 10 km vs 15 km.
+  - `06-0017-08` Russian troops entered Kupiansk through the disused Shebelynka–Ostrohozhsk gas pipeline, "a walk of about 10 km in darkness" that exits in a forest. *(claimant: —; `euromaidan-2026-zoria-kupiansk-pipeline`)*
+  - `c17-0012-06` The Kupiansk pipeline runs 15 km from the Russian rear to Ukrainian lines. *(claimant: —; `kyivindependent-2026-terajima-kupiansk-pipelines`)*
+  - *Resolution:* Possibly different measures: the walk inside the pipe vs the full run from the Russian rear.
+- **explained** · strength 0.4 · 2 judged pairs — 709,900 ha flooded is incompatible with a 2,155 km² reservoir surface.
+  - `06-0017-20` The Kakhovka reservoir was created by flooding 709,900 ha, including the Velykyi Luh ("Great Meadow") of up to 80,000 ha. *(claimant: —; `uncg-2022-shamina-stalin-plan`)*
+  - `c10-0025-02` The Kakhovka reservoir shrank from 2,155 km² to 509 km² by 20 June 2023. *(claimant: —; `wikipedia-kakhovka-dam-destruction`)*
+  - *Resolution:* The 709,900 ha figure likely counts all land taken or affected by the project, not the water surface.
+
 ## 07 Maps & UI conventions
 
 - **explained** · strength 0.8 · 3 judged pairs — The computed DeepState net of +36 km² and Radio Svoboda's 27 km² for July 2026 conflict.
@@ -183,6 +194,10 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - `07-0026-06` The net Russian territorial gain computed from DeepStateMap versions for March 2025 is 134 km². *(claimant: —; `deepstate-api-history`)*
   - `07-0028-42` ISW put Russia's territorial gain in March 2025 at about 203 km². *(claimant: Institute for the Study of War; `euromaidan-2025-kravchuk-assaults-may`)*
   - *Resolution:* Different mappers and methods; ISW's assessed advances are usually larger than DeepState's.
+- **explained** · strength 0.6 · 2 judged pairs — Ukrainian gains in Dec 2025: 21 km² (DeepState) vs 305 km² (ISW).
+  - `07-0028-27` Computed from DeepStateMap versions, in December 2025 (e8) Russia gained 463 km² and Ukraine recaptured 21 km² (gross), a net Russian change of +445 km²; the grey zone was 1,370 km² at the end of the period. *(claimant: —; `deepstate-api-history`)*
+  - `c17-0005-04` ISW counts 305 km² lost to Russian control in late December 2025 as Ukraine liberated much of Kupiansk and its surroundings. *(claimant: Institute for the Study of War; `isw-2026-02-15-roca`)*
+  - *Resolution:* ISW's control-of-terrain assessment vs DeepState map versions; timing and grey-zone treatment differ.
 - **explained** · strength 0.6 — DeepState-derived 4,336 km² for 2025 conflicts with Slivochny Kapriz's 550-600 km² a month (about 6,600-7,200 km² a year).
   - `07-0026-23` The net Russian territorial gain computed from DeepStateMap versions for the year 2025 is 4,336 km². *(claimant: —; `deepstate-api-history`)*
   - `07-0030-13` The Russian project Slivochny Kapriz, which credits any area where Russian troops were seen, gives 550–600 km² a month of Russian gains for 2025. *(claimant: Slivochny Kapriz; `euromaidan-2026-tril-cost-per-km`)*
@@ -211,3 +226,170 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - `07-0028-18` Computed from DeepStateMap versions, in March 2025 (e7/e8) Russia gained 142 km² and Ukraine recaptured 11 km² (gross), a net Russian change of +134 km²; the grey zone was 775 km² at the end of the period. *(claimant: —; `deepstate-api-history`)*
   - `07-0028-41` The UK Ministry of Defence put Russia's territorial gain in March 2025 at 143 km². *(claimant: UK Ministry of Defence; `euromaidan-2025-shandra-gains-plummet`)*
   - *Resolution:* Different assessors with different mapping methods; the gap is small.
+
+## c02 Chapter: Snake Island → the Moskva
+
+- **explained** · strength 0.9 · 2 judged pairs — Moskva crew rescued: 396 vs 58.
+  - `c02-0009-08` The Russian MoD said in April 2022 that the Moskva sinking left 1 dead, 27 missing and 396 rescued. *(claimant: Russian Ministry of Defence; `wikipedia-sinking-of-the-moskva`)*
+  - `c02-0009-13` Danilov (NSDC) claimed only 58 of the Moskva's 510 crew were rescued. *(claimant: Oleksiy Danilov; `ukranews-2022-danilov-58-rescued`)*
+  - *Resolution:* Russian MoD vs Ukrainian NSDC claims; each side has motives.
+- **explained** · strength 0.9 — Moskva crew rescued: 396 vs 58.
+  - `c02-0011-43` On 22 Apr 2022 the Russian MoD gave the Moskva losses as 1 dead, 27 missing and 396 rescued. *(claimant: Russian Ministry of Defence; `wikipedia-sinking-of-the-moskva`)*
+  - `c02-0011-44` On 22 Apr 2022 Danilov said only 58 of the Moskva's 510 crew were rescued. *(claimant: Oleksiy Danilov; `ukranews-2022-danilov-58-rescued`)*
+  - *Resolution:* Russian MoD vs Ukrainian NSDC claims; each side has motives.
+- **explained** · strength 0.8 · 2 judged pairs — Moskva dead: 1 vs about 40.
+  - `c02-0009-08` The Russian MoD said in April 2022 that the Moskva sinking left 1 dead, 27 missing and 396 rescued. *(claimant: Russian Ministry of Defence; `wikipedia-sinking-of-the-moskva`)*
+  - `c02-0009-12` A Moskva conscript's mother told Novaya Gazeta Europe that about 40 of the crew died. *(claimant: Relatives of Russian servicemen (unnamed); `novayagazetaeu-2022-moskva-injured`)*
+  - *Resolution:* The MoD lists many as missing; the higher figure is hearsay from a relative.
+- **explained** · strength 0.8 · 2 judged pairs — Moskva dead: 37 vs 1.
+  - `c02-0009-11` A Meduza source put the Moskva losses at 37 dead and about 100 injured. *(claimant: Russian sources (unnamed); `meduza-2022-moskva-37-dead`)*
+  - `c02-0034-07` On 22 Apr 2022 the Russian MoD gave the Moskva losses as 1 dead, 27 missing and 396 rescued. *(claimant: Russian Ministry of Defence; `wikipedia-sinking-of-the-moskva`)*
+  - *Resolution:* An unnamed Russian source vs the MoD's official figure, which likely understates by listing many as missing.
+- **explained** · strength 0.7 — Ukrainian dead in the May 2022 Zmiinyi assault: about 10 vs more than 50.
+  - `c02-0009-22` Ukraine lost about 10 men and a boat in the May 2022 assault on Zmiinyi Island. *(claimant: —; `pravda-2022-romaniuk-zmiinyi-battle`)*
+  - `c02-0034-12` The Russian MoD claimed it repelled the May 2022 assault on Zmiinyi Island and killed "more than 50" paratroopers. *(claimant: Russian Ministry of Defence; `pravda-2022-romaniuk-zmiinyi-battle`)*
+  - *Resolution:* Ukrainian reporting vs a Russian MoD claim that is likely inflated.
+- **explained** · strength 0.6 — Moskva casualties: 20 dead and 24 injured vs 37 dead and about 100 injured.
+  - `c02-0009-10` A Moscow military court in Jan 2026 found that the Moskva sinking left 20 dead, 24 injured and 8 missing. *(claimant: Moscow military court; `rbcukraine-2026-court-moskva`)*
+  - `c02-0009-11` A Meduza source put the Moskva losses at 37 dead and about 100 injured. *(claimant: Russian sources (unnamed); `meduza-2022-moskva-37-dead`)*
+  - *Resolution:* A Russian court finding vs an unnamed Russian source; the official tally likely understates.
+- **explained** · strength 0.6 — Moskva crew size: 485 vs 510.
+  - `c02-0023-04` Anušauskas put the Moskva's crew at 485, including 66 officers. *(claimant: Arvydas Anušauskas; `wikipedia-sinking-of-the-moskva`)*
+  - `c02-0023-05` The US put the Moskva's crew at 510. *(claimant: US officials (unnamed); `nbc-2022-dilanian-us-intel-moskva`)*
+  - *Resolution:* Different sources (Lithuanian vs US); nominal complement vs crew embarked.
+- **explained** · strength 0.5 — Moskva dead: 17 declared vs 37.
+  - `c02-0009-09` A Sevastopol court in Nov 2022 declared 17 Moskva sailors dead. *(claimant: Sevastopol court; `meduza-2022-moskva-17-declared-dead`)*
+  - `c02-0009-11` A Meduza source put the Moskva losses at 37 dead and about 100 injured. *(claimant: Russian sources (unnamed); `meduza-2022-moskva-37-dead`)*
+  - *Resolution:* The court declared dead only part of the toll; Meduza's source may include the missing.
+- **explained** · strength 0.5 — Moskva dead: 20 (court) vs about 40 (relative).
+  - `c02-0009-10` A Moscow military court in Jan 2026 found that the Moskva sinking left 20 dead, 24 injured and 8 missing. *(claimant: Moscow military court; `rbcukraine-2026-court-moskva`)*
+  - `c02-0009-12` A Moskva conscript's mother told Novaya Gazeta Europe that about 40 of the crew died. *(claimant: Relatives of Russian servicemen (unnamed); `novayagazetaeu-2022-moskva-injured`)*
+  - *Resolution:* An official court finding vs hearsay from a relative.
+- **explained** · strength 0.5 — Moskva dead: 17 declared vs about 40.
+  - `c02-0009-09` A Sevastopol court in Nov 2022 declared 17 Moskva sailors dead. *(claimant: Sevastopol court; `meduza-2022-moskva-17-declared-dead`)*
+  - `c02-0009-12` A Moskva conscript's mother told Novaya Gazeta Europe that about 40 of the crew died. *(claimant: Relatives of Russian servicemen (unnamed); `novayagazetaeu-2022-moskva-injured`)*
+  - *Resolution:* The court declared dead only some of the missing; the higher figure is hearsay from a relative.
+
+## c03 Chapter: Azovstal
+
+- **explained** · strength 0.6 · 2 judged pairs — Mariupol garrison size: up to 4,400 vs more than 8,000.
+  - `c03-0022-02` Wikipedia extrapolates the Mariupol garrison to up to 4,400 in March 2022. *(claimant: Wikipedia editors; `wikipedia-siege-of-mariupol`)*
+  - `c03-0035-03` Shoigu claimed more than 8,000 Ukrainian troops were in Mariupol at the time of encirclement. *(claimant: Sergei Shoigu; `wikipedia-siege-of-mariupol`)*
+  - *Resolution:* Wikipedia's extrapolation vs a Shoigu claim that is likely inflated.
+
+## c04 Chapter: Kherson and the Antonivskyi bridge
+
+- **explained** · strength 0.5 — Kherson civilian movement in 2022: 50,000–60,000 vs at least 70,000.
+  - `c04-0041-11` Occupation officials put the October–November 2022 civilian movement out of Kherson at 50,000–60,000 people. *(claimant: Russian occupation officials; `rferl-2022-krutov-kherson-ferries`)*
+  - `c04-0041-12` Later reports say at least 70,000 civilians were moved from the Kherson right bank in 2022. *(claimant: —; `wikipedia-liberation-of-kherson`)*
+  - *Resolution:* The occupation officials' interim figure vs a later, fuller count; the scope may differ slightly (city vs whole right bank).
+
+## c05 Chapter: The Kerch bridge
+
+- **explained** · strength 0.8 · 4 judged pairs — Rival accounts of the Act 1 charge: 21 t TNT-equivalent RDX vs about 10 t of rocket fuel.
+  - `c05-0023-02` The SBU's Act 1 means were one truck carrying RDX cylinders of 21 t TNT equivalent hidden in film rolls, and a way around the Crimean Bridge's GPS jammers; Malyuk says no foreign partners were involved. *(claimant: Vasyl Malyuk; `militarnyi-2023-kushnikov-malyuk-details`)*
+  - `c05-0041-03` In the Russian version of Act 1, the charge was about 10 t TNT equivalent of solid rocket fuel in 22.7 t of film reels, triggered by GPS at km 156. *(claimant: Russian investigators; `pravda-2024-kommersant-rocket-fuel`)*
+  - *Resolution:* SBU account vs Russian investigators' case file.
+
+## c08 Chapter: Vuhledar
+
+- **explained** · strength 0.6 · 2 judged pairs — Size of the 155th Brigade: about 5,000 vs about 2,000 at full strength.
+  - `c08-0007-19` Ukraine claimed the 155th lost "almost the entire brigade" of about 5,000 men at Vuhledar, at 150–300 marines a day. *(claimant: Ukrainian forces (unnamed); `politico-2023-melkozerova-155th-brigade`)*
+  - `c08-0023-04` Kyiv Post put the 155th Naval Infantry Brigade at about 2,000 at full strength. *(claimant: Kyiv Post; `kyivpost-2023-korshak-vuhledar-marines`)*
+  - *Resolution:* A Ukrainian claim that may count reinforcements over time vs Kyiv Post's full-strength estimate.
+
+## c10 Chapter: Krynky bridgehead
+
+- **explained** · strength 0.4 — Russian assault rate at Krynky in July 2024: 7–8 a day vs 2–4 (sometimes a dozen).
+  - `c10-0045-18` A Ukrainian platoon commander said Russia attacked at Krynky seven to eight times a day, with groups that shrank from 6–7 men to 3–4, including VDV and Spetsnaz. *(claimant: Ukrainian commanders (unnamed); `isw-2024-07-18-roca`)*
+  - `c10-0045-19` Lykhovii said that by late July 2024 Russia made 2–4 assaults a day near Krynky, sometimes a dozen. *(claimant: Dmytro Lykhovii; `pravda-2024-lykhovii-krynky-destroyed`)*
+  - *Resolution:* Different Ukrainian observers, sectors and weeks within July 2024.
+
+## c12 Chapter: Hunting the A-50
+
+- **explained** · strength 0.7 — Dead in the 14 Jan 2024 A-50U: 11 vs about 15.
+  - `c12-0007-02` The Aviation Safety Network (ASN) records 11 dead in the A-50U shot down on 14 January 2024. *(claimant: ASN; `asn-2024-a50u-rf93966`)*
+  - `c12-0007-04` A US officer, as reported, gave about 15 dead in the A-50U shot down on 14 January 2024. *(claimant: US officials (unnamed); `twz-2024-newdick-patriot-a50-confirmed`)*
+  - *Resolution:* ASN record vs an unnamed US officer; the crew size is uncertain.
+- **explained** · strength 0.6 — Operational A-50s in Jan 2024: 3 vs 8.
+  - `c12-0007-11` Ukraine's Southern Command said Russia had 3 A-50s in service out of 6 before the January 2024 strike. *(claimant: Operational Command South; `isw-2024-01-15-assessment`)*
+  - `c12-0007-12` UK Defence Intelligence said Russia had 8 operational A-50s in January 2024. *(claimant: UK Defence Intelligence; `pravda-2024-ukdi-a50-significance`)*
+  - *Resolution:* Ukrainian Southern Command vs UK Defence Intelligence; they may differ on what counts as in service.
+- **explained** · strength 0.6 — Dead in the 14 Jan 2024 A-50U: 11–12 vs about 15.
+  - `c12-0007-03` The Russian blogger FighterBomber gives 11–12 dead in the A-50U shot down on 14 January 2024. *(claimant: FighterBomber; `wikipedia-2024-a50-il22-shootdowns`)*
+  - `c12-0007-04` A US officer, as reported, gave about 15 dead in the A-50U shot down on 14 January 2024. *(claimant: US officials (unnamed); `twz-2024-newdick-patriot-a50-confirmed`)*
+  - *Resolution:* A Russian blogger vs an unnamed US officer; the crew size is uncertain.
+- **explained** · strength 0.5 — Serviceable A-50s in Jan 2024: 3 vs 8.
+  - `c12-0007-11` Ukraine's Southern Command said Russia had 3 A-50s in service out of 6 before the January 2024 strike. *(claimant: Operational Command South; `isw-2024-01-15-assessment`)*
+  - `c12-0007-13` Budanov said Russia had "just eight A-50s in good condition". *(claimant: Kyrylo Budanov; `euromaidanpress-2024-zoria-a50-azov`)*
+  - *Resolution:* Two Ukrainian sources with different definitions (in service vs in good condition).
+- **explained** · strength 0.5 — A-50 crew size: 15–16 vs 19.
+  - `c12-0020-03` Militarnyi gives the A-50's crew as 15–16. *(claimant: Militarnyi; `militarnyi-2024-a50-lost-eyes`)*
+  - `c12-0020-05` Ukrainska Pravda gives the A-50's crew as 19: 5 pilots, 11 radio engineers and 3 technical engineers. *(claimant: —; `pravda-2024-balachuk-a50-azov`)*
+  - *Resolution:* Outlets differ on the nominal crew; mission crews vary with configuration.
+- **explained** · strength 0.5 — Distance of the 23 Feb 2024 A-50 kill: about 220 km vs about 300 km.
+  - `c12-0015-17` The War Zone put the 23 February 2024 A-50 kill about 220 km from the nearest Ukrainian positions. *(claimant: —; `twz-2024-newdick-second-a50`)*
+  - `c12-0015-18` The Russian court, as reported, put the 23 February 2024 A-50 about 300 km from Ukraine. *(claimant: Moscow court; `kyivpost-2024-dzyaman-court`)*
+  - *Resolution:* TWZ measures from the nearest Ukrainian positions; the Russian court may have an interest in exaggerating.
+- **explained** · strength 0.5 — Distance of the 23 Feb 2024 A-50 kill: about 170 km from the front vs about 300 km from Ukraine.
+  - `c12-0015-15` The Times, as summarised, put the 23 February 2024 A-50 kill about 170 km from the front. *(claimant: —; `babel-2024-perepechko-times-a50`)*
+  - `c12-0015-18` The Russian court, as reported, put the 23 February 2024 A-50 about 300 km from Ukraine. *(claimant: Moscow court; `kyivpost-2024-dzyaman-court`)*
+  - *Resolution:* Different reference points (front line vs border) and a Russian court's interest in exaggerating the range.
+- **explained** · strength 0.5 — A-50 fleet and availability: 3 of 6 vs about 5 of 10.
+  - `c12-0007-11` Ukraine's Southern Command said Russia had 3 A-50s in service out of 6 before the January 2024 strike. *(claimant: Operational Command South; `isw-2024-01-15-assessment`)*
+  - `c12-0007-16` The War Zone estimates Russia's A-50 fleet at about 10, with about 5 operational at a time. *(claimant: The War Zone; `twz-2024-altman-rogoway-a50-claims`)*
+  - *Resolution:* Southern Command may count only modernised active airframes; TWZ estimates the whole fleet.
+- **explained** · strength 0.5 — Size of Russia's A-50 fleet: 6 aircraft vs 10.
+  - `c12-0007-11` Ukraine's Southern Command said Russia had 3 A-50s in service out of 6 before the January 2024 strike. *(claimant: Operational Command South; `isw-2024-01-15-assessment`)*
+  - `c12-0007-15` Militarnyi gives Russia's A-50 fleet as 10 aircraft. *(claimant: Militarnyi; `militarnyi-2024-a50-lost-eyes`)*
+  - *Resolution:* Southern Command may count only active modernised airframes; Militarnyi counts all airframes, including stored ones.
+- **explained** · strength 0.5 — Operational A-50s in Jan 2024: 8 vs about 5.
+  - `c12-0007-12` UK Defence Intelligence said Russia had 8 operational A-50s in January 2024. *(claimant: UK Defence Intelligence; `pravda-2024-ukdi-a50-significance`)*
+  - `c12-0007-16` The War Zone estimates Russia's A-50 fleet at about 10, with about 5 operational at a time. *(claimant: The War Zone; `twz-2024-altman-rogoway-a50-claims`)*
+  - *Resolution:* UKDI may count airworthy airframes, while TWZ counts those available at any one time.
+- **explained** · strength 0.4 — Distance of the 23 Feb 2024 A-50 kill from the front: about 200 km or more vs about 170 km.
+  - `c12-0006-02` On 23 February 2024 a second Russian A-50U was brought down over Krasnodar Krai, about 200 km or more from the front. *(claimant: —; `pravda-2024-kravets-a50-s200`, `twz-2024-newdick-second-a50`)*
+  - `c12-0015-15` The Times, as summarised, put the 23 February 2024 A-50 kill about 170 km from the front. *(claimant: —; `babel-2024-perepechko-times-a50`)*
+  - *Resolution:* Rough estimates with different reference points.
+- **explained** · strength 0.4 — Distance of the 23 Feb 2024 A-50 kill: about 170 km from the front vs about 220 km from the nearest Ukrainian positions.
+  - `c12-0015-15` The Times, as summarised, put the 23 February 2024 A-50 kill about 170 km from the front. *(claimant: —; `babel-2024-perepechko-times-a50`)*
+  - `c12-0015-17` The War Zone put the 23 February 2024 A-50 kill about 220 km from the nearest Ukrainian positions. *(claimant: —; `twz-2024-newdick-second-a50`)*
+  - *Resolution:* Rough estimates with slightly different reference points.
+
+## c13 Chapter: The Black Sea drone war
+
+- **explained** · strength 0.5 — 31 Dec 2024 Magura engagement: two Mi-8s destroyed vs one downed and one hit that reached its airfield.
+  - `c13-0009-12` On 2 Jan 2025, HUR revised its 31 Dec 2024 claim to two Mi-8s destroyed and a third helicopter damaged. *(claimant: Defence Intelligence of Ukraine (HUR); `eurosd-2025-magura-mi8-kills`)*
+  - `c13-0013-77` On 31 Dec 2024 off Cape Tarkhankut, Group 13 Maguras armed with R-73 "SeeDragon" missiles downed an Mi-8 under fire from the helicopters; a second Mi-8 was hit and reached its airfield. *(claimant: —; `isw-2024-12-31-roca`, `aviationist-2024-durso-magura-mi8`, `gur-2024-mi8`)*
+  - *Resolution:* HUR's revised claim vs the initial reporting; the second helicopter's fate is uncertain.
+- **explained** · strength 0.5 — Magura hits on the Ivanovets: six vs three.
+  - `c13-0013-44` The Ivanovets took six Magura hits through AK-630M fire, rolled astern and sank. *(claimant: Kyrylo Budanov; `twz-2024-altman-ivanovets`, `euromaidan-2024-zoria-six-maguras`)*
+  - `c13-0044-08` The Russian milblogger VoenkorKotenok confirmed the Ivanovets loss ("three hits from naval drones"). *(claimant: VoenkorKotenok; `twz-2024-altman-ivanovets`)*
+  - *Resolution:* Budanov's claim vs a Russian milblogger who may count only the decisive hits; both agree it sank.
+- **explained** · strength 0.5 · 2 judged pairs — The same 21-target Magura tally broken down as 16 warships, 3 helicopters and 2 jets vs 9 vessels, 2 Su-30s and 2 Mi-8s.
+  - `c13-0010-07` HUR spokesman Yusov said on 15 May 2025 that Maguras had hit 21 targets, including "16 warships at the bottom", 3 helicopters and 2 jets. *(claimant: Andrii Yusov; `ukrinform-2025-magura-v7`)*
+  - `c13-0013-86` On 15 May 2025, HUR unveiled the Magura V7 in Kyiv and gave its tallies: 9 vessels, 2 Su-30s and 2 Mi-8s, or 21 targets. *(claimant: Defence Intelligence of Ukraine (HUR); `defenseexpress-2025-magura-v7`, `ukrinform-2025-magura-v7`)*
+  - *Resolution:* Two HUR breakdowns on the same day; "16 warships" likely counts small craft, or the tallies were mixed up in reporting.
+- **explained** · strength 0.5 — 31 Dec 2024 Magura engagement: two Mi-8s downed vs one downed and one hit that reached its airfield.
+  - `c13-0008-04` HUR later claimed that two Mi-8s were downed by its Magura V5s on 31 Dec 2024. *(claimant: Defence Intelligence of Ukraine (HUR); `eurosd-2025-magura-mi8-kills`)*
+  - `c13-0013-77` On 31 Dec 2024 off Cape Tarkhankut, Group 13 Maguras armed with R-73 "SeeDragon" missiles downed an Mi-8 under fire from the helicopters; a second Mi-8 was hit and reached its airfield. *(claimant: —; `isw-2024-12-31-roca`, `aviationist-2024-durso-magura-mi8`, `gur-2024-mi8`)*
+  - *Resolution:* HUR's later claim vs the initial reporting; the second helicopter's fate is uncertain.
+- **explained** · strength 0.4 — Magura V5 top speed: 42 kn vs a 54 kn burst.
+  - `c13-0030-11` The Magura V5 cruises at 22 kn with a 42 kn maximum. *(claimant: —; `twz-2024-altman-ivanovets`)*
+  - `c13-0030-12` A low-reliability source gives the Magura V5 a "54 kn burst" speed. *(claimant: Georgetown Security Studies Review; `gssr-2026-swarm-at-sea`)*
+  - *Resolution:* The 54 kn figure comes from a low-reliability source; it may describe a burst mode or a variant.
+
+## c17 Chapter: The Kupiansk gas-pipeline infiltration
+
+- **explained** · strength 0.8 — Same Sudzha-pipe force size, about 100 vs over 600.
+  - `c17-0022-10` Ukrainska Pravda, via TWZ, put the Russian force through the Sudzha pipe at about 100. *(claimant: —; `twz-2025-newdick-kursk-pipeline`)*
+  - `c17-0022-11` Gerasimov claimed 'over 600' Russian troops went through the Sudzha pipe. *(claimant: Valery Gerasimov; `twz-2025-newdick-kursk-pipeline`)*
+  - *Resolution:* Ukrainian reporting vs Gerasimov's claim; the Russian figure is likely inflated for propaganda.
+- **explained** · strength 0.6 — Avdiivka infiltration pipe length: nearly 2 km vs 3.7 km.
+  - `c17-0022-02` Pro-Russian claims say the Avdiivka drainage and sewer pipe was 0.8 m wide and nearly 2 km long. *(claimant: Russian sources (unnamed); `kyivpost-2024-korshak-avdiivka-pipe`)*
+  - `c17-0022-03` United24 says the Avdiivka infiltration pipe was 3.7 km long and up to 1.4 m wide. *(claimant: —; `united24-2026-kabachynskyi-pipelines`)*
+  - *Resolution:* Pro-Russian claims vs United24; possibly different end points or sections.
+- **explained** · strength 0.4 — Russians in Kupiansk in Dec 2025: about 500 with 100 trapped vs 300 falling to about 50.
+  - `c17-0005-15` The Achilles regiment said about 500 Russians had been in Kupiansk earlier, with about 100 trapped. *(claimant: Achilles; `defenseexpress-2025-achilles-pipeline-destroyed`)*
+  - `c17-0005-16` A December 2025 frontline report put the Russians in Kupiansk at 300, falling to about 50. *(claimant: —; `euromaidanpress-2025-frontline-kupiansk-pipeline-killzone`)*
+  - *Resolution:* Different units' estimates at different points in December.

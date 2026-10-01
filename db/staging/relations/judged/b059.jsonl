@@ -1,0 +1,40 @@
+{"pair": "16a6e6a82c07", "relation": "duplicates", "from": "claim:cc10_0045_11", "to": "claim:cc10_0049_04", "strength": 0.8, "rationale": "The Iskander strike on troops massed at the rail bridge is restated in B's dated account from the same article."}
+{"pair": "17239b7a41a3", "relation": "none", "rationale": "Computed bridge distances and the HIMARS salvo pattern are not in evidential relation."}
+{"pair": "176e754586fd", "relation": "duplicates", "from": "claim:cc03_0005_07", "to": "claim:cc03_0008_87", "strength": 0.9, "rationale": "Same 16 May 2022 General Staff declaration that the Mariupol garrison's mission was fulfilled; B has more sources."}
+{"pair": "17908745717f", "relation": "none", "rationale": "The assessed bunching error and the column's composition are different assertions."}
+{"pair": "179aac96ab43", "relation": "none", "rationale": "The Bradleys' positioning and the tank's spin-out are different details."}
+{"pair": "17dd2121e11b", "relation": "duplicates", "from": "claim:cc08_0006_07", "to": "claim:cc08_0045_06", "strength": 0.85, "rationale": "Same RAAM tactic at Vuhledar: mines fired back into lanes just cleared by Russian plows."}
+{"pair": "1808039b5386", "relation": "none", "rationale": "The gunner's aim at the optics and the tank's spin-out are different details."}
+{"pair": "184ad5f9d8c6", "relation": "none", "rationale": "Damage to forest belts and LNR unit moves are unrelated."}
+{"pair": "18905f44ba04", "relation": "supports", "from": "claim:cc02_0011_52", "to": "claim:cc02_0021_13", "strength": 0.8, "rationale": "Both report Col. Bedzai killed on 7 May 2022 on Mi-14 search and rescue, from the same source.", "independent": false}
+{"pair": "18970e99367b", "relation": "supports", "from": "claim:cc08_0006_11", "to": "claim:cc08_0022_01", "strength": 0.6, "rationale": "Muradov's reported dismissal on 3 Apr 2023 matches the end of his command period in B.", "independent": false}
+{"pair": "18b1af162262", "relation": "weakens", "from": "claim:cc17_0031_05", "to": "claim:cc17_0007_44", "strength": 0.6, "rationale": "Kuzovlev's later postponement of Kupiansk's \"liberation\" to early 2026 undermines the 20 Nov 2025 report that it had been liberated."}
+{"pair": "18e32fe37b05", "relation": "none", "rationale": "A strike event and a facility fact are different assertions."}
+{"pair": "1973a6932406", "relation": "none", "rationale": "A casualty claim and the sequence of announcements are different assertions."}
+{"pair": "1990e9a2ad17", "relation": "none", "rationale": "The gunner's aim and the decision to commit the second Bradley are different details."}
+{"pair": "19bf82714f93", "relation": "duplicates", "from": "claim:cc06_0012_94", "to": "claim:cc06_0030_03", "strength": 0.85, "rationale": "Same ISW report of Berdnikov replacing Zhuravlyov as Western MD commander on 3 Oct 2022."}
+{"pair": "1a909517c4f2", "relation": "none", "rationale": "TB2 kills and TB2 roles are related context, not evidence for each other."}
+{"pair": "1a97c26e1e79", "relation": "none", "rationale": "The first Bradley's failed run and the tank's smoke discharge are different details."}
+{"pair": "1aad1b8a60ff", "relation": "supports", "from": "claim:cc08_0010_022", "to": "claim:cc08_0006_04", "strength": 0.7, "rationale": "A Ukrainian officer's confirmation of attacks by the 155th and 40th supports the 24 Jan 2023 attack by the same naval infantry; both come from ISW.", "independent": false}
+{"pair": "1ad4880ea515", "relation": "supports", "from": "claim:cc12_0007_01", "to": "claim:cc12_0010_38", "strength": 0.8, "rationale": "Both report the A-50U downed off Kyrylivka on 14 Jan 2024, sharing the ASN source.", "independent": false}
+{"pair": "1b3eb2f68435", "relation": "duplicates", "from": "claim:cc12_0019_12", "to": "claim:cc12_0010_81", "strength": 0.85, "rationale": "Same Moscow court identification of Dzyaman's 138th Brigade S-200 as behind the 23 Feb 2024 A-50 kill."}
+{"pair": "1b5f7b091865", "relation": "none", "rationale": "The initial order and the later abandonment of footholds are different facts."}
+{"pair": "1bb53a779850", "relation": "none", "rationale": "The firing rotation and the guns' wear are different facts."}
+{"pair": "1bd97dee9a96", "relation": "supports", "from": "claim:cc05_0010_44", "to": "claim:cc05_0004_05", "strength": 0.6, "rationale": "CNN's report of a joint SBU–Navy Sea Baby strike corroborates A, which also cites CNN.", "independent": false}
+{"pair": "1be3661b0295", "relation": "supports", "from": "claim:cv02_0016_03", "to": "claim:cv02_0003_07", "strength": 0.6, "rationale": "The experts' reading of fire at the T-90M's rear matches the gunner's account of AP rounds into the rear.", "independent": false}
+{"pair": "1bfa8bd48637", "relation": "none", "rationale": "The tank's type and its spin-out are different details."}
+{"pair": "1c4fb0a9695a", "relation": "supports", "from": "claim:cc08_0010_014", "to": "claim:cc08_0022_02", "strength": 0.6, "rationale": "The soldiers' letter blaming brigade commander Akhmedov supports his being in command in Nov 2022; both come from ISW.", "independent": false}
+{"pair": "1c5a3befa168", "relation": "none", "rationale": "Bridge demolitions and computed bridge distances are not in evidential relation."}
+{"pair": "1c7911718699", "relation": "duplicates", "from": "claim:cc04_0023_01", "to": "claim:cc04_0009_87", "strength": 0.75, "rationale": "Same Wikipedia report of Tarnavskyi taking over from Kovalchuk in October 2022."}
+{"pair": "1c8f63251d48", "relation": "supports", "from": "claim:cv01_0003_02", "to": "claim:cv01_0007_07", "strength": 0.8, "rationale": "Both describe the Russian tank column entering Skybyn down the M01 on the evening of 9 Mar 2022, sharing sources.", "independent": false}
+{"pair": "1c9bb4112543", "relation": "supports", "from": "claim:cc02_0026_20", "to": "claim:cc02_0021_11", "strength": 0.6, "rationale": "B's toss-bombing technique description corroborates A's 7 May 2022 Su-27 raid, from the same TWZ article.", "independent": false}
+{"pair": "1cde7d512f9b", "relation": "duplicates", "from": "claim:cc05_0010_77", "to": "claim:cc05_0030_20", "strength": 0.8, "rationale": "The 2026 hits on a Sobol and a Grachonok are restated in B, which has more sources."}
+{"pair": "1ce20920cb64", "relation": "none", "rationale": "The Russian prisoner claim and ~500 breaking through are compatible but neither confirms the other."}
+{"pair": "1d21855a2a5c", "relation": "none", "rationale": "The initial footholds and their later abandonment are sequential facts, not evidence for each other."}
+{"pair": "1d277333c570", "relation": "none", "rationale": "Ferry counts in September and one ferry video in October are not in evidential relation."}
+{"pair": "1d367f0191c2", "relation": "none", "rationale": "The tank's type and the crew's reaction are different details."}
+{"pair": "1d64009eda62", "relation": "none", "rationale": "Bradleys anchoring the flank and abandoned Leopards are different facts."}
+{"pair": "1d7e2e121893", "relation": "none", "rationale": "The second video's content and the smoke discharge are different details."}
+{"pair": "1d90d7808afd", "relation": "duplicates", "from": "claim:cc04_0009_49", "to": "claim:cc04_0029_03", "strength": 0.8, "rationale": "The 2 Sep 2022 strike on the Lvove and Kozatske ferries is contained in B's account from the same ISW reporting."}
+{"pair": "1dae5026149a", "relation": "none", "rationale": "Claimed Russian losses and Khartiia's initial proposal are different facts."}
+{"pair": "1dfff6acd408", "relation": "none", "rationale": "The pocket's fall and Shoigu's prisoner count are different assertions."}

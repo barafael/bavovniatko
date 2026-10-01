@@ -112,13 +112,24 @@ def pair_id(a: str, b: str) -> str:
     return hashlib.sha1(f"{x}|{y}".encode()).hexdigest()[:12]
 
 
-def cmd_candidates(max_per_claim: int):
+def judged_pairs() -> set[str]:
+    out = set()
+    for f in (REL / "judged").glob("*.jsonl") if (REL / "judged").exists() else []:
+        for line in f.read_text().splitlines():
+            if line.strip():
+                out.add(json.loads(line)["pair"])
+    return out
+
+
+def cmd_candidates(max_per_claim: int, only: list[str] | None = None, skip_judged: bool = False):
     conn = kb.connect()
     C = claims(conn)
     cand: dict[str, dict] = {}
+    done = judged_pairs() if skip_judged else set()
+    in_scope = (lambda cid: C[cid]["key"].split("-")[0] in only) if only else (lambda cid: True)
 
     def add(a, b, rule, hint, score, detail=""):
-        if a == b:
+        if a == b or not (in_scope(a) or in_scope(b)) or pair_id(a, b) in done:
             return
         pid = pair_id(a, b)
         c = cand.setdefault(pid, {"pair": pid, "a": min(a, b), "b": max(a, b), "rules": [], "hints": [], "score": 0.0, "detail": []})
@@ -136,7 +147,7 @@ def cmd_candidates(max_per_claim: int):
     for o in observations(conn):
         groups[(kb.rid_str(o["metric"]), o.get("side"), unit_key(o))].append(o)
     for (metric, side, _), obs in groups.items():
-        if metric in ("metric:count_generic", "metric:share_generic"):
+        if metric.endswith("_generic"):
             continue
         for o1, o2 in itertools.combinations(obs, 2):
             a, b = kb.rid_str(o1["claim"]), kb.rid_str(o2["claim"])
@@ -207,22 +218,23 @@ def cmd_candidates(max_per_claim: int):
             c[side + "_claim"] = {"id": c[side], "text": x["text"], "kind": x["kind"], "epistemic": x["epistemic"],
                                   "claimants": x.get("claimants") or [], "sources": [s.id for s in x.get("sources") or []],
                                   "time": {k: (v.date().isoformat() if isinstance(v, dt.datetime) else v) for k, v in (x.get("time") or {}).items()},
-                                  "eras": [e.id for e in x.get("eras") or []], "topic": x["key"][:2]}
+                                  "eras": [e.id for e in x.get("eras") or []], "topic": x["key"].split("-")[0]}
         out.append(c)
     (REL / "candidates.jsonl").write_text("".join(json.dumps(c, ensure_ascii=False, default=str) + "\n" for c in out))
     print(f"{len(out)} candidate pairs", Counter(r for c in out for r in c["rules"]))
 
 
-def cmd_batches(size: int):
+def cmd_batches(size: int, start: int = 0):
     rows = [json.loads(l) for l in (REL / "candidates.jsonl").read_text().splitlines() if l.strip()]
     bdir = REL / "batches"
     bdir.mkdir(parents=True, exist_ok=True)
     for f in bdir.glob("b*.jsonl"):
-        f.unlink()
+        if int(f.stem[1:]) >= start:
+            f.unlink()
     slim = lambda c: {"pair": c["pair"], "rules": c["rules"], "hints": c["hints"], "detail": c["detail"][:3],
                       "a": c["a_claim"], "b": c["b_claim"]}
     for i in range(0, len(rows), size):
-        (bdir / f"b{i // size:03d}.jsonl").write_text("".join(json.dumps(slim(c), ensure_ascii=False) + "\n" for c in rows[i:i + size]))
+        (bdir / f"b{start + i // size:03d}.jsonl").write_text("".join(json.dumps(slim(c), ensure_ascii=False) + "\n" for c in rows[i:i + size]))
     print(f"{math.ceil(len(rows) / size)} batches of <= {size} in {bdir}")
 
 
@@ -280,6 +292,10 @@ def cmd_load():
     now = dt.datetime.now(UTC)
     stats, problems = Counter(), []
     valid = {kb.rid_str(r) for r in kb.one(conn, "SELECT VALUE id FROM claim")}
+    existing = {}
+    for rel in RELATIONS:
+        for r in kb.one(conn, f"SELECT in, out, strength, rationale FROM {rel}"):
+            existing[(rel, kb.rid_str(r["in"]), kb.rid_str(r["out"]))] = r
     for f in sorted((REL / "judged").glob("b*.jsonl")):
         for line in f.read_text().splitlines():
             if not line.strip():
@@ -304,6 +320,10 @@ def cmd_load():
             # contradicts is symmetric: store once (lower id -> higher id)
             if rel == "contradicts" and j["from"] > j["to"]:
                 a, b = b, a
+            prev = existing.get((rel, kb.rid_str(a), kb.rid_str(b)))
+            if prev and prev.get("rationale") == d["rationale"] and abs(prev.get("strength", -1) - d["strength"]) < 1e-9:
+                stats[f"{rel}:unchanged"] += 1
+                continue
             q = f"DELETE {rel} WHERE in = $a AND out = $b; RELATE $a->{rel}->$b CONTENT $d;"
             try:
                 kb.run(conn, q, {"a": a, "b": b, "d": d})
@@ -319,15 +339,18 @@ def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("candidates"); c.add_argument("--max-per-claim", type=int, default=6)
+    c.add_argument("--only", help="comma-separated document codes: keep pairs with at least one claim from these")
+    c.add_argument("--skip-judged", action="store_true", help="drop pairs already judged in staging/relations/judged/")
     b = sub.add_parser("batches"); b.add_argument("--size", type=int, default=40)
+    b.add_argument("--start", type=int, default=0, help="first batch number; existing batch files from earlier rounds are kept")
     sub.add_parser("load")
     sub.add_parser("status")
     v = sub.add_parser("validate"); v.add_argument("batches", nargs="+")
     a = ap.parse_args()
     if a.cmd == "candidates":
-        cmd_candidates(a.max_per_claim)
+        cmd_candidates(a.max_per_claim, a.only.split(",") if a.only else None, a.skip_judged)
     elif a.cmd == "batches":
-        cmd_batches(a.size)
+        cmd_batches(a.size, a.start)
     elif a.cmd == "load":
         cmd_load()
     elif a.cmd == "validate":

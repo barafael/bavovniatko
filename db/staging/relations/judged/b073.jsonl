@@ -1,0 +1,40 @@
+{"pair": "7efd71aa5df9", "relation": "none", "rationale": "Crossings in use vs their destruction in November: different states and times."}
+{"pair": "7f1e88fdae42", "relation": "none", "rationale": "A metric scope note vs a pipeline infiltration event: unrelated."}
+{"pair": "7f661d545e1b", "relation": "none", "rationale": "The late-October attack vs a mid-November prisoner claim: different assertions."}
+{"pair": "8013c644cb76", "relation": "supports", "from": "claim:cc17_0007_11", "to": "claim:cc17_0007_10", "strength": 0.6, "rationale": "Code 9.2 and a Khartiia company clearing Moskovka in August supports their being sent north of Kupiansk then; same source.", "independent": false}
+{"pair": "8019404b297d", "relation": "none", "rationale": "Brigade structure vs a 'largely destroyed' assessment: unrelated."}
+{"pair": "80ab445058a1", "relation": "none", "rationale": "A range computation and the salvo record are only loosely related."}
+{"pair": "80de34cf4318", "relation": "none", "rationale": "The seeker limitation is a consequence, not evidence, of the missile fit."}
+{"pair": "80fe1a641dd1", "relation": "none", "rationale": "One air-bridge delivery is too specific to bear on the general invasion-phase supply picture."}
+{"pair": "81338ef93be4", "relation": "none", "rationale": "Reactions to the Kherson withdrawal vs attacks on Lapin after Lyman: different events."}
+{"pair": "8156a46503ae", "relation": "supports", "from": "claim:cc12_0010_08", "to": "claim:cc12_0023_31", "strength": 0.6, "rationale": "Both RUSI-based: Ukrainian fighters flying low against high Russian patrols in the first days.", "independent": false}
+{"pair": "81c15599adb4", "relation": "none", "rationale": "A computed distance does not bear on the flight report."}
+{"pair": "81dcebc549e6", "relation": "none", "rationale": "Missile delivery vs launch altitude: different facts."}
+{"pair": "81deaa0c18df", "relation": "supports", "from": "claim:cc03_0031_09", "to": "claim:cc03_0022_08", "strength": 0.6, "rationale": "ISW and officials confirming a partial link-up with Azov supports about 500 Illich marines reaching Azovstal.", "independent": true}
+{"pair": "82166298b140", "relation": "supports", "from": "claim:cc13_0013_08", "to": "claim:cc13_0009_06", "strength": 0.6, "rationale": "GeoConfirmed's count of at least three ships hit, including the Admiral Makarov, supports A; same source.", "independent": false}
+{"pair": "821a059a35cc", "relation": "none", "rationale": "A map measurement does not bear on whether the reported entrance and exit are correct."}
+{"pair": "822f25708024", "relation": "none", "rationale": "Firing range vs equipment faults: different facts."}
+{"pair": "82408523e6a4", "relation": "none", "rationale": "An August deployment vs the later grouping's composition: different facts."}
+{"pair": "8257aa92f3a6", "relation": "none", "rationale": "Territorial gain vs losses suffered: different quantities."}
+{"pair": "82aa19d75ebd", "relation": "supports", "from": "claim:cv01_0015_06", "to": "claim:c07_0042_01", "strength": 0.6, "rationale": "Both say Delta originated with Aerorozvidka.", "independent": false}
+{"pair": "82c6b2f9d777", "relation": "none", "rationale": "Video of the crew fleeing and an expert's 'panic' attribution are only loosely related."}
+{"pair": "82eb950541be", "relation": "refines", "from": "claim:cc12_0010_24", "to": "claim:cc12_0010_23", "strength": 0.6, "rationale": "B gives BYPOL's claimed damage from the 26 February 2023 attack A reports."}
+{"pair": "8318557e1993", "relation": "none", "rationale": "Beacon evidence on 19 February vs a sortie recall on 23–24 February: different events."}
+{"pair": "835f5dbba4cd", "relation": "duplicates", "from": "claim:cc13_0033_06", "to": "claim:cc13_0013_67", "strength": 0.9, "rationale": "Same May 2024 Ka-29 kill of an R-73-armed USV, from the shared TWZ source."}
+{"pair": "83886077f263", "relation": "none", "rationale": "A 2024 milblogger claim vs the extent of the map box: context only."}
+{"pair": "838b54e4a7bb", "relation": "none", "rationale": "The commander and HQ location vs the strike on it: different facts."}
+{"pair": "839b41fd7b74", "relation": "none", "rationale": "Different moments of the Stepove duel."}
+{"pair": "83cfe858f245", "relation": "duplicates", "from": "claim:cc12_0028_18", "to": "claim:cc12_0010_10", "strength": 0.95, "rationale": "Same switch from time to area jet–SAM deconfliction after friendly fire, same RUSI source."}
+{"pair": "8413a3761aed", "relation": "refines", "from": "claim:cc02_0028_10", "to": "claim:cc02_0009_17", "strength": 0.6, "rationale": "B details the 7 May 2022 Serna loss A lists; same source."}
+{"pair": "843369e4fa73", "relation": "none", "rationale": "The first pass vs an expert's view on the crew: different assertions."}
+{"pair": "843828fa6199", "relation": "supports", "from": "claim:cc04_0009_106", "to": "claim:cc04_0005_02", "strength": 0.7, "rationale": "DeepStateMap marking the whole right bank liberated on 11 November 2022 corroborates Ukraine holding it.", "independent": true}
+{"pair": "84d1c5d6aa27", "relation": "duplicates", "from": "claim:cc08_0017_03", "to": "claim:cc08_0010_037", "strength": 0.8, "rationale": "Same 4 February 2023 Russian armour move from Mykilske towards the T-0524, same ISW report."}
+{"pair": "850b640fd918", "relation": "supports", "from": "claim:cc05_0010_40", "to": "claim:cc05_0042_03", "strength": 0.8, "rationale": "Peskov's statement on the 18 July 2023 Odesa strike is one of the two retaliation framings in B; shared source.", "independent": false}
+{"pair": "851471f4aa56", "relation": "none", "rationale": "A strike on the ferries vs the site's coordinates: context only."}
+{"pair": "8546b27fc1a0", "relation": "none", "rationale": "TB2 kills vs TB2 equipment: different facts."}
+{"pair": "8547abf42438", "relation": "none", "rationale": "Different moments of the Stepove duel."}
+{"pair": "858eb5bc41ac", "relation": "duplicates", "from": "claim:cc05_0010_12", "to": "claim:cc05_0034_01", "strength": 0.9, "rationale": "Same 06:00 Taman inspection on 8 October 2022 without X-ray, same Meduza source; B more detailed."}
+{"pair": "859a0c6445c3", "relation": "supersedes", "from": "claim:cc17_0007_52", "to": "claim:cc17_0003_02", "strength": 0.5, "rationale": "Khartiia's 12 December claim that Kindrashivka and Radkivka were liberated is a later control status than their Russian capture by mid-August."}
+{"pair": "85e17b9dded9", "relation": "none", "rationale": "Cumulative losses vs fleet composition: different facts."}
+{"pair": "86053aa46bff", "relation": "none", "rationale": "Night moves vs camouflage and decoys: complementary, not evidential."}
+{"pair": "86077e7fae36", "relation": "supports", "from": "claim:cc06_0012_84", "to": "claim:cc06_0034_17", "strength": 0.7, "rationale": "Both describe the Lyman pocket left with one egress road under artillery on 29–30 September; shared ISW source.", "independent": false}

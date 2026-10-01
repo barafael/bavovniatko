@@ -53,3 +53,8 @@
 - {id: fps,             symbol: "fps",          dimension: frequency}
 - {id: per_km,          symbol: "per km",       dimension: density}
 - {id: km_per_year,     symbol: "km/year",      dimension: length/time}
+- {id: mm,              symbol: "mm",           dimension: length, base: km, to_base: 1.0e-6}
+- {id: cm,              symbol: "cm",           dimension: length, base: km, to_base: 1.0e-5}
+- {id: knot,            symbol: "kn",           dimension: speed, base: km_per_h, to_base: 1.852}
+- {id: nmi,             symbol: "nmi",          dimension: length, base: km, to_base: 1.852}
+- {id: hour_of_day,     symbol: "h (clock)",    dimension: clock_time}

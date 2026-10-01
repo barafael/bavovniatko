@@ -11,14 +11,14 @@ Status: **built** on 2026-09-30. Where the build departed from this plan:
   small (14 MB).
 - **Counts:**
 
-  | records | count |
-  |---|---|
-  | claims | 3,706 |
-  | observations | 3,143 |
-  | claim relations | 1,233 |
-  | measure/countermeasure links | 221 |
-  | entities | 1,366 |
-  | archived sources | 568 of 583 |
+  | records | count at the first build | after the chapter dossiers (2026-10-01) |
+  |---|---|---|
+  | claims | 3,706 | 7,100 |
+  | observations | 3,143 | 4,890 |
+  | claim relations | 1,233 | 2,220 |
+  | measure/countermeasure links | 221 | 308 |
+  | entities | 1,366 | about 3,070 |
+  | sources | 583 (568 archived) | 1,173 |
 
 ## Goal
 

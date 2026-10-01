@@ -1,0 +1,288 @@
+- id: twz-2024-altman-bradley-t90m-experts
+  title: Armor Experts Breakdown Video Of Ukrainian M2 Bradley Mauling Russian T-90M Tank
+  url: https://www.twz.com/armor-experts-breakdown-video-of-ukrainian-m2-bradley-mauling-russian-t-90m-tank
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2024-01-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Two anonymous US armour experts on the 47th Brigade's videos near Stepove: 25 mm aimed at the rear and the sights, smoke and reversing, the turret spinning into a tree, crew fleeing, FPV finish, the TOW question. Brigade caption 'American equipment won'. Oryx at 65+ Bradleys lost. Read via the site's WordPress API."
+- id: twz-2024-altman-bradley-gunner
+  title: Video Games Helped Ukrainian Bradley Gunner Win Duel With Russian T-90M Tank
+  url: https://www.twz.com/video-games-helped-ukrainian-bradley-gunner-win-duel-with-russian-t-90m-tank
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2024-01-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, people, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Summarises TSN's interview with the 47th Brigade's gunner-commander 'Serhiy' and driver 'Oleksandr': back from training in Germany in December, second mission, the first crew 'didn't work out', AP problem, switch to blinding the optics."
+- id: forbes-2024-axe-bradleys-t90
+  title: "A Pair Of Ukrainian M-2 Fighting Vehicles Tag-Teamed A Russian T-90 Tank. 'This Tank Got F'ing Ganked.'"
+  url: https://www.forbes.com/sites/davidaxe/2024/01/12/a-pair-of-ukrainian-m-2-fighting-vehicles-tag-teamed-a-russian-t-90-tank-this-tank-got-fing-ganked/
+  alt_urls: [https://web.archive.org/web/2024id_/https://www.forbes.com/sites/davidaxe/2024/01/12/a-pair-of-ukrainian-m-2-fighting-vehicles-tag-teamed-a-russian-t-90-tank-this-tank-got-fing-ganked/]
+  publisher: Forbes
+  authors: [David Axe]
+  published: "2024-01-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "The video circulated on Friday 12 Jan 2024. The sequence: the T-90 misses, then the two M2s alternate. The 47th is the sole user of about 200 M2s and has lost at least 31. 40,000 attackers against a garrison of 10,000. Opinionated columnist. Read via the Wayback Machine (live page 403)."
+- id: newsweek-2024-cole-bradley-t90
+  title: Avdiivka Drone Video Shows Ukraine's M2 Bradleys Take Out Russian T-90 Tank
+  url: https://www.newsweek.com/russia-ukraine-tanks-drone-bradley-avdiivka-1860446
+  publisher: Newsweek
+  authors: [Brendan Cole]
+  published: "2024-01-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "47th Brigade against a T-90M near Stepove, the tank in the middle of a village. The War Archive Telegram channel says the incident happened 'on Thursday' (11 Jan 2024), which is unverified."
+- id: forbes-2023-axe-bradley-three-mtlb
+  title: A Ukrainian M-2 Fighting Vehicle Hit Three Russian Vehicles In Just 30 Seconds Outside Stepove
+  url: https://www.forbes.com/sites/davidaxe/2023/12/13/a-ukrainian-m-2-fighting-vehicle-blew-up-three-russian-vehicles-in-just-30-seconds-outside-stepove/
+  alt_urls: [https://web.archive.org/web/20231214id_/https://www.forbes.com/sites/davidaxe/2023/12/13/a-ukrainian-m-2-fighting-vehicle-blew-up-three-russian-vehicles-in-just-30-seconds-outside-stepove/]
+  publisher: Forbes
+  authors: [David Axe]
+  published: "2023-12-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "A night drone video of one M2 hitting three MT-LBs outside Stepove. The 47th's M2s have defended north of Avdiivka for more than a month, it received 190 and lost about 30, and one M2 was captured outside Stepove. Read via the Wayback Machine."
+- id: forbes-2023-axe-21-tanks-stepove
+  title: In One Brutal Tank Battle Outside Avdiivka, The Russians Lost As Many As 21 Tanks. The Ukrainians Lost Two.
+  url: https://www.forbes.com/sites/davidaxe/2023/12/28/in-one-massive-tank-battle-outside-avdiivka-the-russians-lost-as-many-as-21-tanks-the-ukrainians-lost-two/
+  alt_urls: [https://web.archive.org/web/20240104220842id_/https://www.forbes.com/sites/davidaxe/2023/12/28/in-one-massive-tank-battle-outside-avdiivka-the-russians-lost-as-many-as-21-tanks-the-ukrainians-lost-two/]
+  publisher: Forbes
+  authors: [David Axe]
+  published: "2023-12-28"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Late-December Stepove counterattack: a Russian reinforced battalion loses 21 tanks and 14 IFVs/APCs in a day (Perpetua's tally) to night-laid mines, drones and Bradleys. The 47th abandons two Leopard 2A6s and has about a dozen left."
+- id: twz-2023-situation-report-2023-12-13
+  title: "Ukraine Situation Report: Ballistic Missiles Target Kyiv After Biden Meeting"
+  url: https://www.twz.com/ukraine-situation-report-ballistic-missiles-target-kyiv-after-biden-meeting
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2023-12-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Night footage of an M2 knocking out three MT-LBs with infantry during an attack on Stepove. One account credits TOW and 25 mm. The author is inferred from WordPress author id 101 and Wikipedia's citation."
+- id: twz-2023-situation-report-2023-11-22
+  title: "Ukraine Situation Report: New Ground-Based Air Defense Coalition Announced"
+  url: https://www.twz.com/ukraine-situation-report-new-ground-based-air-defense-coalition-announced
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2023-11-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Embeds OSINTtechnical video (22 Nov 2023) of an M2A2 walking 25 mm fire along a Russian-held treeline in Stepove."
+- id: twz-2024-situation-report-2024-01-22
+  title: "Ukraine Situation Report: Russia May Have To Move Air Defenses To Cover Cities"
+  url: https://www.twz.com/ukraine-situation-report-russia-may-have-to-move-air-defenses-to-cover-cities
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2024-01-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "A video from about 21 Jan 2024 near Stepove: an M2 destroys a Russian BMP at point-blank range while the 109th Territorial Defence Brigade holds a position."
+- id: twz-2024-newdick-first-abrams-video
+  title: This May Be The First Video Of A Ukrainian M1 Abrams In Combat
+  url: https://www.twz.com/land/this-may-be-the-first-video-of-a-ukrainian-m1-abrams-in-combat
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2024-02-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "47th Brigade video said to show an M1 engaging Russian positions in Stepove, unconfirmed and undated. The author is inferred from WordPress author id 101."
+- id: twz-2023-altman-captured-bradley
+  title: Captured Ukrainian M2 Bradley Shown Off On Russian TV
+  url: https://www.twz.com/captured-ukrainian-m2-bradley-shown-off-on-russian-tv
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2023-12-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, information, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Russian Channel 1 tours a recovered M2A2 ODS, with BRAT tiles, ammunition and a working engine. Russian TV is reported only through TWZ."
+- id: euromaidanpress-2023-frontline-avdiivka-2023-11-22
+  title: "Frontline report: Ukrainians launch successful counterattack as Russians regroup near Avdiivka"
+  url: https://euromaidanpress.com/2023/11/22/frontline-report-ukrainians-launch-successful-counterattack-as-russians-regroup-near-avdiivka/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2023-11-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Based on Reporting from Ukraine video commentary: after artillery and drone preparation, a Bradley suppresses fire and lands infantry, who take the rail line. Low reliability: secondary video analysis."
+- id: euromaidanpress-2023-frontline-avdiivka-2023-11-26
+  title: "Frontline report: Russian forces face setbacks in Avdiivka offensive"
+  url: https://euromaidanpress.com/2023/11/26/frontline-report-russian-forces-face-setbacks-in-avdiivka-offensive/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2023-11-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Video-based report: the 47th Brigade's Bradleys fire into the treelines Russia uses for reinforcement north of the coke plant, and Russia opens a new vector toward Stepove."
+- id: euromaidanpress-2023-frontline-avdiivka-2023-12-05
+  title: "Frontline report: Fresh details emerge on Ukrainian counterattack near Avdiivka chemical plant"
+  url: https://euromaidanpress.com/2023/12/05/frontline-report-fresh-details-emerge-on-ukrainian-counterattack-near-avdiivka-chemical-plant/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2023-12-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Video-based report: the 67th Mechanised Brigade assaults treeline strongpoints near the coke plant with Bradleys landing infantry."
+- id: euromaidanpress-2023-frontline-avdiivka-2023-12-07
+  title: "Frontline report: Russian military shift tactics with armor assault near Avdiivka"
+  url: https://euromaidanpress.com/2023/12/07/frontline-report-russian-military-shift-tactics-with-armor-assault-near-avdiivka/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2023-12-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Video-based report: after a failed Russian armoured assault, an infantry-only wave is met by a Bradley's machine gun."
+- id: euromaidanpress-2024-frontline-avdiivka-2024-02-15
+  title: "Frontline report: Ukrainian defenses hold as Avdiivka faces up to 60 Russian airstrikes in one day"
+  url: https://euromaidanpress.com/2024/02/15/frontline-report-ukrainian-defenses-hold-as-avdiivka-faces-up-to-60-russian-airstrikes-in-one-day/
+  publisher: Euromaidan Press
+  authors: []
+  published: "2024-02-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Video-based report: the 3rd Assault Brigade's Bradleys push Russians more than 150 m from Avdiivka's main supply road in the final days."
+- id: wikipedia-2026-47th-mechanized-brigade
+  title: 47th Mechanized Brigade
+  url: https://en.wikipedia.org/wiki/47th_Mechanized_Brigade
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
+  topics: [orbat, armour, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Brigade history. By April 2024 (Forbes) it had lost at least 40 of about 200 M2s and 5 of 31 M1A1s. Also the 28 Dec Stepove battle and the 12 Jan 2024 T-90M footage, via Forbes."
+- id: osm-2026-stepove-geodata
+  title: "OpenStreetMap Nominatim queries: Stepove, Berdychi, the Avdiivka coke plant and neighbours (computed)"
+  url: https://nominatim.openstreetmap.org/
+  publisher: OpenStreetMap contributors
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [terrain, geodata, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Computed 2026-10-01 (ODbL). Stepove 48.1959, 37.6790; Berdychi 48.1956, 37.6463; coke plant 48.1725, 37.6996; Avdiivka 48.1339, 37.7467; Novobakhmutivka 48.2492, 37.7892; Novokalynove 48.2470, 37.6976. Distances computed."
+- id: open-meteo-2026-era5-stepove-jan-2024
+  title: "Open-Meteo Historical Weather API (ERA5): Stepove, 9–13 January 2024 (query)"
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=48.18&longitude=37.69&start_date=2024-01-09&end_date=2024-01-13&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,snow_depth_max,cloud_cover_mean,sunrise,sunset&timezone=GMT
+  publisher: Open-Meteo (ECMWF ERA5 reanalysis)
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [weather, chapter]
+  found_in: [v02-stepove-bradley]
+  notes: "Reanalysis, not observations (CC BY 4.0). 11 Jan 2024: −3.6 to −2.1 °C, 2.3 mm (1.4 cm snow), 100% cloud, snow depth 0.12 m. 12 Jan: −15.6 to −2.2 °C. Sunrise 05:17 UTC and sunset 13:56 UTC (07:17 and 15:56 local)."

@@ -1,0 +1,1248 @@
+# Sources cited in research/chapters/c13-black-sea-drone-war.md, generated from the knowledge base by db/tools/render.py.
+- id: aviationist-2024-durso-magura-mi8
+  title: Ukrainian Surface Drone Equipped with R-73 Air-to-Air Missiles Shot Down Russian Mi-8 Helicopter
+  url: https://theaviationist.com/2024/12/31/ukrainian-magura-usv-r-73-vs-mi-8-helicopter/
+  publisher: The Aviationist
+  authors:
+  - Andrea Daolio
+  - Stefano D'Urso
+  published: '2024-12-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - air-defence
+  - helicopters
+  - chapter
+  notes: Reads the 31 Dec 2024 video (helicopter gunfire splashes, flares, hit and splash); R-73 range about 30 km and 8 kg
+    warhead when air-launched; twin tilted rails seen since May 2024; two of the three dishes reported as Starlink terminals.
+- id: defenseexpress-2025-magura-v7
+  title: Ukrainian Intelligence Unveils Magura V7 Sea Drone with Air Defense Capabilities
+  url: https://en.defence-ua.com/news/ukrainian_intelligence_unveils_magura_v7_sea_drone_with_air_defense_capabilities-14522.html
+  publisher: Defense Express
+  authors: []
+  published: '2025-05-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - specifications
+  - air-defence
+  - chapter
+  notes: Magura V7 specs (7.2 m, 1,300/3,400 kg, 870 km, 48 h or 7 days, 650 kg payload, sea state 3, 270 hp diesel, 39+ kn);
+    AIM-9 aimed by turning the hull; HUR tally of 9 vessels, 2 Su-30s and 2 Mi-8s and over $500m.
+- id: euromaidan-2023-havrylets-novorossiysk
+  title: Ukrainian maritime drone damages Russian warship in Novorossiysk (VIDEO)
+  url: https://euromaidanpress.com/2023/08/04/ukrainian-maritime-drone-damages-russian-warship-in-novorossiysk-video/
+  publisher: Euromaidan Press
+  authors:
+  - Serge Havrylets
+  published: '2023-08-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'Olenegorsky Gornyak strike: listing to port and under tow after dawn; Northern Fleet 121st Landing Ship Brigade;
+    Russian MoD claimed the attack repelled and imposed a temporary traffic ban on the port.'
+- id: euromaidan-2024-mukhina-sea-baby-machine-guns
+  title: Ukraine's "Sea Baby" marine drones, armed with heavy-caliber machine guns, damage Russian helicopters near Crimea
+  url: https://euromaidanpress.com/2024/12/09/ukraines-sea-baby-marine-drones-armed-with-heavy-caliber-machine-guns-damage-russian-helicopters-and-barge-for-military-equipment-near-crimea/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2024-12-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - air-defence
+  - helicopters
+  - chapter
+  notes: 'SBU, night of 5-6 Dec 2024 in Kerch Bay: machine-gun Sea Babies vs helicopters, a Su-30 and Raptor boats; helicopters
+    damaged per intercepts; a barge carrying bridge-repair equipment hit. SBU claims.'
+- id: euromaidan-2024-zoria-ivanovets-sunk
+  title: Ukraine's surface drones sink Russian Black Sea Fleet's Ivanovets missile boat (video)
+  url: https://euromaidanpress.com/2024/02/01/ukraines-surface-drones-sink-russian-black-sea-fleets-ivanovets-missile-boat/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2024-02-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'HUR statement: Group 13 sank the Ivanovets (Project 1241 Molniya) near Lake Donuzlav overnight 31 Jan-1 Feb 2024;
+    cost $60-70m; failed Russian search and rescue; ''at least the 17th'' Russian ship hit.'
+- id: euromaidan-2024-zoria-kotov-sunk
+  title: Ukraine intel destroys another Russian navy ship "Sergei Kotov" (updated)
+  url: https://euromaidanpress.com/2024/03/05/ukraine-intel-says-it-destroyed-another-russian-navy-ship-sergei-kotov/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2024-03-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'HUR: five Magura V5 hits on the Sergey Kotov near the Kerch Strait, about 800 km by sea from Odesa Oblast, $65m;
+    Project 22160 specs; milblogger Kots confirms; earlier attacks Jul-Sep 2023; Novocherkassk (26 Dec 2023) counted as the
+    16th ship.'
+- id: euromaidan-2024-zoria-six-maguras
+  title: 'Intel chief: Ukraine used six Magura V5 surface drones to sink Russia''s Ivanovets missile corvette'
+  url: https://euromaidanpress.com/2024/02/02/intel-chief-ukraine-used-six-magura-v5-surface-drones-to-sink-russias-ivanovets-missile-corvette/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2024-02-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'Budanov to The War Zone: six direct Magura V5 hits on the Ivanovets ''on the raid of Lake Donuzlav''; the ship rolled
+    astern and sank; UK claim of 20% of the BSF destroyed in four months (Dec 2023).'
+- id: euromaidan-2025-zoria-magura-v7
+  title: Ukraine unveils Magura v7 naval drone, which downed two Russian Su-30 fighter jets in early May
+  url: https://euromaidanpress.com/2025/05/15/ukraine-unveils-new-magura-v7-naval-drone-used-to-shoot-down-two-russian-su-30-jets/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-05-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - specifications
+  - air-defence
+  - chapter
+  notes: 'Magura V7 by Uforce: sea state 3 vs 2 for the V5, AIM-9M on fixed pylons, horizontal aim by turning the drone and
+    a 60-67° seeker field vertically; future R-73 fit; multichannel satcom.'
+- id: eurosd-2025-magura-mi8-kills
+  title: Ukraine's GUR claims Russian Mi-8 kills using missiles fired from MAGURA V5 USVs
+  url: https://euro-sd.com/2025/01/major-news/41911/magura-v5-mi-8-kills/
+  publisher: European Security & Defence
+  authors: []
+  published: '2025-01-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - air-defence
+  - chapter
+  notes: HUR's 2 Jan 2025 revision to two Mi-8s destroyed and a third helicopter damaged; two R-73s per USV; footage shows
+    machine-gun fire, several helicopters and one fixed-wing aircraft; possible lure via a feint at Sevastopol (ESD's speculation).
+- id: gssr-2026-swarm-at-sea
+  title: 'Swarm at Sea: Autonomous Naval Drones and the Erosion of Maritime Deterrence'
+  url: https://gssr.georgetown.edu/?p=2214
+  publisher: Georgetown Security Studies Review
+  authors: []
+  published: '2026-04-16'
+  accessed: '2026-10-01'
+  type: academic
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - naval
+  - strategy
+  - chapter
+  notes: 'Student-journal essay: BSF lost about 40% of effective capability, operates from Novorossiysk and avoids the western
+    Black Sea; ''chasing splashes'' manoeuvre; Magura cost $250-300k; 50 units a month. Low reliability: contains date and
+    ship-type errors; used only for attributed estimates.'
+- id: gur-2024-kunikov
+  title: '"Magura" znyshchyla "tsezaria" ― rozvidnyky potopyly velykyi desantnyi korabel chf rf'
+  url: https://gur.gov.ua/content/magura-znyshchyla-tsezaria-rozvidnyky-potopyly-velykyi-desantnyi-korabel-chf-rf.html
+  publisher: Main Directorate of Intelligence of Ukraine (HUR)
+  authors: []
+  published: '2024-02-14'
+  accessed: '2026-10-01'
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - official
+  - chapter
+  notes: 'Official HUR statement (Ukrainian; fetched via the Wayback Machine because the site returns 403): Group 13, Magura
+    V5, near Alupka, critical breaches to port; embeds the strike video (YouTube QmQCQXfN_SU). Official claim.'
+- id: gur-2024-mi8
+  title: Istorychnyi udar ― voiny HUR vpershe u sviti znyshchyly povitrianu tsil za dopomohoiu morskoho drona Magura V5
+  url: https://gur.gov.ua/content/istorychnyi-udar-voiny-hur-vpershe-u-sviti-znyshchyly-povitrianu-tsil-za-dopomohoiu-morskoho-drona-magura-v5.html
+  publisher: Main Directorate of Intelligence of Ukraine (HUR)
+  authors: []
+  published: '2024-12-31'
+  accessed: '2026-10-01'
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - air-defence
+  - official
+  - chapter
+  notes: 'Official HUR statement (Ukrainian; fetched via the Wayback Machine): one Mi-8 destroyed with R-73 ''SeeDragon''
+    near Cape Tarkhankut, a second hit and reached its airfield; embeds video (YouTube FsVGYeCfwSY). Official claim.'
+- id: hromadske-2024-ryzhenko-bsf
+  title: Two-thirds of their remaining ships are currently stationed in bases and not carrying out missions — a serviceman
+    about the Russian Black Sea Fleet
+  url: https://hromadske.radio/en/news/2024/03/19/two-thirds-of-their-remaining-ships-are-currently-stationed-in-bases-and-not-carrying-out-missions-a-serviceman-about-the-russian-black-sea-fleet
+  publisher: Hromadske Radio
+  authors: []
+  published: '2024-03-19'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - command
+  - chapter
+  notes: 'Capt. 1st rank (res.) Andriy Ryzhenko: Sokolov replaced by Pinchuk, Navy chief Yevmenov by Moiseyev; about 30 modern
+    ships at Novorossiysk; no Russian ships at sea for two weeks; Ochamchire can take no more than 5%. Analyst opinion.'
+- id: isw-2024-02-01-roca
+  title: Russian Offensive Campaign Assessment, February 1, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-1-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-02-01'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - chapter
+  notes: 'Ivanovets (41st Missile Boat Brigade) sunk near Lake Donuzlav; Navy: only three Project 1241.1 ships in the BSF,
+    usual crew 40; ISW: strikes have limited the BSF in the western Black Sea.'
+- id: isw-2024-02-14-roca
+  title: Russian Offensive Campaign Assessment, February 14, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-14-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-02-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - chapter
+  notes: 'Kunikov sunk off Alupka on the night of 13-14 Feb; at least five BSF landing ships destroyed or damaged; Pletenchuk:
+    4 under repair, 4 destroyed, 5 in service of 13; the 2023 strike campaign sequestered the BSF to the eastern Black Sea.'
+- id: isw-2024-03-05-roca
+  title: Russian Offensive Campaign Assessment, March 5, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-5-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-03-05'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - chapter
+  notes: 'Sergei Kotov: HUR says 7 killed, 6 wounded, 52 evacuated; a Ka-27/29 aboard; a Russian insider says a tow failed
+    and the ship sank 5 km off Cape Takil; StratCom: about 33% of BSF warships disabled by early Feb 2024; milblogger criticism;
+    ICC warrant for Adm. Sokolov.'
+- id: isw-2024-12-31-roca
+  title: Russian Offensive Campaign Assessment, December 31, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-december-31-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-12-31'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - air-defence
+  - chapter
+  notes: 'Mi-8 downed near Cape Tarkhankut by R-73 from a Magura V5; Razvozhayev claimed 4 aerial and 2 naval drones repelled;
+    milbloggers: Russia relies on helicopters and Su-30SMs to hunt USVs far offshore; Pinchuk named as BSF commander.'
+- id: isw-2025-05-03-roca
+  title: Russian Offensive Campaign Assessment, May 3, 2025
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-3-2025
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-05-03'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - air-defence
+  - chapter
+  notes: First fixed-wing kill by a naval-drone SAM, dated 3 May by ISW, during a combined aerial, naval drone and missile
+    strike on Novorossiysk; milbloggers call for FPV and recon-drone coastal defence.
+- id: liga-2024-pletenchuk-third
+  title: What part of the Russian fleet is disabled – spokesman Pletenchuk's answer
+  url: https://news.liga.net/en/politics/news/third-of-russias-black-sea-fleet-disabled-navy-spokesman-pletenchuk
+  publisher: LIGA.net
+  authors:
+  - Uliana Krychkovska
+  published: '2024-06-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - losses
+  - chapter
+  notes: 'Pletenchuk (to RBC-Ukraine): officially 28 ships and launchers hit plus 10 under repair; both Grigorovich frigates
+    damaged; KS-701 Tunets boats hit on 30 May 2024. Machine translation.'
+- id: maritimeexec-2023-joseph-schulte
+  title: Containership Departs Odesa Testing Ukraine's Humanitarian Corridor
+  url: https://www.maritime-executive.com/article/containership-departs-odesa-testing-ukraine-s-humanitarian-corridor
+  publisher: The Maritime Executive
+  authors: []
+  published: '2023-08-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - shipping
+  - grain-corridor
+  - chapter
+  notes: 'The corridor test: Russia had said merchant ships would be treated as hostile and boarded a Turkish-owned ship;
+    the route hugs the coast toward Romania; about 60 ships trapped since Feb 2022.'
+- id: maritimeexec-2024-bsf-new-measures
+  title: Russia's Black Sea Fleet Takes New Measures to Fend Off Ukraine's Drones
+  url: https://maritime-executive.com/article/russia-s-black-sea-fleet-takes-new-measures-to-fend-off-ukraine-s-drones
+  publisher: The Maritime Executive
+  authors: []
+  published: '2024-03-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - counter-usv
+  - tactics
+  - chapter
+  notes: 'Shoigu at the BSF command post on 17 Mar 2024 ordering daily anti-USV drills and extra weapons; USV tactics (night,
+    stern first, then amidships, drones steered into blast holes at the waterline); UK DI: the Navy is limiting operations
+    to the eastern Black Sea; black-painted bows and sterns, painted decoys.'
+- id: maritimeexec-2025-drone-boat-fighter
+  title: For First Time in History, Drone Boat Shoots Down Fighter Jet
+  url: https://www.maritime-executive.com/article/for-first-time-in-history-drone-boat-shoots-down-fighter-jet
+  publisher: The Maritime Executive
+  authors: []
+  published: '2025-05-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - air-defence
+  - chapter
+  notes: Rybar confirmed the Su-30 loss but called the missile an R-73; Russian MoD claimed 170 drones, 11 missiles and 14
+    sea drones destroyed in the Novorossiysk-area attack; Russian helicopter and jet patrols, and aerial suicide drones as
+    the next counter.
+- id: militarnyi-2025-mi24-raised
+  title: Russia Raises Mi-24 From Seabed in Black Sea
+  url: https://militarnyi.com/en/news/russia-raises-mi-24-from-seabed-in-black-sea/
+  publisher: Militarnyi
+  authors: []
+  published: '2025'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - counter-usv
+  - helicopters
+  - chapter
+  notes: Mi-24VP '39 red' lost near Sevastopol on 10 Apr 2024 while hunting USVs (4 crew killed, likely malfunction per Russian
+    aviation channels); crew from the Baltic Fleet's 396th Mixed Regiment, based at Kacha. Exact publication date not captured.
+- id: navalnews-2023-ozberk-magura-dsei
+  title: Ukraine's Magura V5 USV on the stage at DSEI 2023
+  url: https://www.navalnews.com/event-news/dsei-2023/2023/09/ukraines-magura-v5-usv-on-the-stage-at-dsei-2023/
+  publisher: Naval News
+  authors:
+  - Tayfun Ozberk
+  published: '2023-09-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - naval-drones
+  - specifications
+  - chapter
+  notes: 'Maker interview (SpetsTechnoExport): Magura V5 5.5 m long, 320 kg payload, 450 nmi radius, low freeboard, swarm
+    use. Manufacturer claims.'
+- id: navalnews-2023-sutton-385th-brigade
+  title: World's First Specialized Explosive Naval Drone Unit Formed In Ukraine
+  url: https://www.navalnews.com/naval-news/2023/08/worlds-first-specialized-explosive-naval-drone-unit-formed-in-ukraine/
+  publisher: Naval News
+  authors:
+  - H I Sutton
+  published: '2023-08-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - naval-drones
+  - order-of-battle
+  - chapter
+  notes: 385th Separate Brigade recognised on 24 Aug 2023; the first USVs reported Sep 2022 and the 29 Oct 2022 raid; Sea
+    Baby with a reported 860 kg warhead; several separate drone families.
+- id: navalnews-2023-sutton-russia-adapts
+  title: Russia Forced to Adapt to Ukraine's Maritime Drone Warfare in Black Sea
+  url: https://www.navalnews.com/?p=52569
+  publisher: Naval News
+  authors:
+  - H I Sutton
+  published: '2023-12-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - counter-usv
+  - chapter
+  notes: 'Russia''s layered counter-USV defence: nets, booms and barges at Sevastopol and the Kerch Bridge, Be-12 spotters,
+    dedicated Mi-8/Ka-27 units, Flanker strafing, EW jamming, escorted convoys with AIS off, FPVs from patrol boats; at least
+    16 Maguras seen at one base.'
+- id: open-meteo-historical-archive
+  aliases:
+  - open-meteo-historical-weather
+  - openmeteo-era5-archive
+  title: Open-Meteo Historical Weather API (ERA5 reanalysis)
+  url: https://open-meteo.com/en/docs/historical-weather-api
+  publisher: Open-Meteo
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - chapter
+  - weather
+  notes: Daily temperature, precipitation, snowfall, cloud and sunrise/sunset for 47.78 N 37.25 E, queried for 28 Oct–20 Nov
+    2022 and 22 Jan–15 Mar 2023. Reanalysis on a ~10–25 km grid, not station observations. Data CC BY 4.0.
+- id: osm-nominatim-c13
+  aliases:
+  - osm-2026-brovary-geodata
+  - osm-2026-kupiansk-pipeline-geodata
+  - osm-2026-stepove-geodata
+  title: OpenStreetMap Nominatim geocoding (Black Sea and Crimea places)
+  url: https://nominatim.openstreetmap.org/
+  publisher: OpenStreetMap Foundation
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e6-avdiivka-attrition
+  - e8-drone-kill-zone
+  topics:
+  - geodata
+  - chapter
+  notes: Coordinates of Sevastopol Bay, Pivdenna Bay, Lake Donuzlav, Alupka, Cape Tarkhankut, Chornomorske, Cape Takil, Kerch
+    Strait, Tsemes Bay, Kacha airfield and Odesa-region ports from OSM objects (ODbL). Distances in the dossier are great-circle
+    values computed from these.
+- id: osw-2024-record-exports
+  title: A record month for Ukrainian exports
+  url: https://www.osw.waw.pl/en/publikacje/analyses/2024-05-14/a-record-month-ukrainian-exports
+  publisher: OSW Centre for Eastern Studies
+  authors: []
+  published: '2024-05-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - shipping
+  - grain-corridor
+  - economy
+  - chapter
+  notes: April 2024 exports of 13.2 Mt, the best since Feb 2022, mainly thanks to the Black Sea corridor; iron ore up from
+    about 1.5 to 3.5 Mt a month; value still 36% below Feb 2022.
+- id: pravda-2022-geoconfirmed-admiral-makarov
+  title: 'Sevastopol: Unmanned surface vehicles hit Admiral Makarov, flagship of Russian Black Sea Fleet'
+  url: https://www.pravda.com.ua/eng/news/2022/10/30/7374125/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2022-10-30'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - naval
+  - naval-drones
+  - osint
+  - chapter
+  notes: 'Relays GeoConfirmed''s analysis of the 29 Oct 2022 USV footage: 6-8 USVs, at least 3 ships hit including the Admiral
+    Makarov; Russian MoD admits minor damage to the Ivan Golubets; Russia suspends the grain deal.'
+- id: pravda-2023-first-ship-corridor
+  title: First civilian ship goes through Ukraine's new humanitarian corridor – Zelenskyy
+  url: https://www.pravda.com.ua/eng/news/2023/08/16/7415881/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-08-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - shipping
+  - grain-corridor
+  - chapter
+  notes: Joseph Schulte (Hong Kong flag, in Odesa since 23 Feb 2022, 2,114 containers, 30,000+ t) leaves via the corridor
+    on 16 Aug 2023; Russia quit the grain deal on 17 Jul.
+- id: pravda-2023-ivan-khurs-russian-mod
+  title: Russia's Defence Ministry claims its reconnaissance vessel attacked by naval drones
+  url: https://www.pravda.com.ua/eng/news/2023/05/24/7403692/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-05-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'Russian MoD claim (as reported): Ivan Khurs attacked at 05:30 on 24 May 2023 by three USVs, all destroyed, 140 km
+    north-east of the Bosphorus, while guarding the TurkStream and Blue Stream pipelines.'
+- id: pravda-2023-mt-anderson-bsf-novorossiysk
+  title: Russia moves 14 Black Sea Fleet ships to Novorossiysk – OSINT expert
+  url: https://www.pravda.com.ua/eng/news/2023/10/5/7422697/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-10-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - naval
+  - satellite-imagery
+  - osint
+  - chapter
+  notes: 'MT Anderson''s satellite images of 1-4 Oct 2023: 14 BSF ships (two frigates, three submarines, five large landing
+    ships, small missile ships) moved from Sevastopol to Novorossiysk; what stayed in Sevastopol and Feodosia.'
+- id: pravda-2023-novorossiysk-olenegorsky-gornyak
+  title: 'Special operation in Novorossiysk: Ukrainian drone damages Russian landing ship'
+  url: https://www.pravda.com.ua/eng/news/2023/08/4/7414154/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-08-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'SBU sources: an SBU USV with 450 kg of TNT holed the Olenegorsky Gornyak (about 100 crew) in Novorossiysk Bay on
+    the night of 3-4 Aug 2023, jointly with the Navy; Russian MoD reported two USVs. Includes the SBU video.'
+- id: pravda-2024-corridor-45mt
+  title: Ukraine exports 45 million tonnes of cargo from Black Sea ports
+  url: https://www.pravda.com.ua/eng/news/2024/05/10/7455136/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-05-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - shipping
+  - grain-corridor
+  - chapter
+  notes: 'Ministry: almost 1,600 vessels, 45 Mt from Greater Odesa (Odesa, Chornomorsk, Pivdennyi) in almost 9 months of the
+    corridor; 30 Mt of farm goods to 38 countries.'
+- id: pravda-2024-hur-ivan-khurs-details
+  title: Ukraine's Defence Intelligence recollects details about operation to damage Ivan Khurs ship
+  url: https://www.pravda.com.ua/eng/news/2024/03/4/7444924/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-03-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'HUR''s ''Borets'': the Ivan Khurs strike was Magura''s first success, after a 500+ km transit, a weather delay,
+    lost links and a chase from about 01:30 to 07:00. Summary of the Romaniuk feature.'
+- id: pravda-2024-hur-ivanovets
+  title: Defence Intelligence unit sinks Russian corvette Ivanovets in Crimea – video
+  url: https://www.pravda.com.ua/eng/news/2024/02/01/7439888/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-02-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'HUR statement relayed: Group 13 sank the Ivanovets overnight 31 Jan-1 Feb 2024 with support of the Ministry of Digital
+    Transformation and United24.'
+- id: pravda-2024-hur-kunikov-video
+  title: Intelligence officers demonstrate use of Magura drones in sinking of Tsezar Kunikov – video
+  url: https://www.pravda.com.ua/eng/news/2024/02/14/7441794/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-02-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - media
+  - chapter
+  notes: 'HUR statement: Group 13 Maguras blew large holes in the Kunikov''s port side near Alupka; 87 crew; failed Russian
+    SAR; HUR video embedded.'
+- id: pravda-2024-hur-mi8
+  title: 'Ukraine''s Defence Intelligence reports historic strike: naval drone destroys Russian Mi-8 helicopter in Crimea
+    – video'
+  url: https://www.pravda.com.ua/eng/news/2024/12/31/7491463/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-12-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - air-defence
+  - chapter
+  notes: 'HUR: Group 13 Magura V5 with R-73 ''SeeDragon'' downed an Mi-8 near Cape Tarkhankut on 31 Dec 2024; the damaged
+    second helicopter''s radio intercept; explosions in Sevastopol on 30-31 Dec.'
+- id: pravda-2024-kunikov-five-of-13
+  title: Sinking of Tsezar Kunikov leaves Russian Black Sea Fleet with only 5 serviceable ships, down from 13
+  url: https://www.pravda.com.ua/eng/news/2024/02/14/7441804/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-02-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - chapter
+  notes: 'Navy spokesman Pletenchuk: 5 of the 13 (landing) ships remain in service; explosions heard in Yalta, Miskhor, Alupka
+    and Simeiz; the General Staff places the ship in Ukrainian territorial waters near Alupka.'
+- id: pravda-2024-kunikov-sunk
+  title: Russian landing ship Tsezar Kunikov hit in Black Sea, it has sunk – intelligence sources, photo, video
+  url: https://www.pravda.com.ua/eng/news/2024/02/14/7441777/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-02-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'First reports of the Kunikov strike: fire at sea off Alupka-Katsiveli, Mi-8s and a Ka-27 searching low over the
+    water near Foros; ship data from the BSF website; Russian MoD claimed six drones downed.'
+- id: pravda-2024-pletenchuk-third-of-fleet
+  title: Third of Russia's Black Sea Fleet destroyed – Ukraine's Navy
+  url: https://www.pravda.com.ua/eng/news/2024/03/06/7445266/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-03-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - losses
+  - chapter
+  notes: 'Pletenchuk, 6 Mar 2024: 27 units affected of about 80, 14 destroyed and 15 damaged; remaining strength of 10 missile
+    carriers, 3 submarines, 2 missile boats and 5 large landing ships (4 under repair). Official claim.'
+- id: pravda-2024-romaniuk-magura-target-eliminate
+  title: 'Target and eliminate: How Ukraine''s Magura drones devastate Russian ships'
+  url: https://www.pravda.com.ua/eng/articles/2024/03/04/7444793/
+  publisher: Ukrainska Pravda
+  authors:
+  - Roman Romaniuk
+  published: '2024-03-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'Long feature with HUR''s Budanov and ''Borets'' and Magura developers: SBU/HUR split, failed Sevastopol mission
+    of 16-17 Sep 2022 (Starlink), Ivan Khurs chase, Mamai at Novorossiysk, swarm tactics (engines first, then into holes),
+    Kunikov as a retarget. Insider claims, not independently verified.'
+- id: pravda-2024-sea-baby-avdiivka
+  title: Ukraine's Security Service shows testing of new surface drone called Avdiivka – video, photo
+  url: https://www.pravda.com.ua/eng/news/2024/03/6/7445248/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2024-03-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval-drones
+  - specifications
+  - chapter
+  notes: 'Sea Baby 2024 (''Avdiivka''), first of the crowdfunded batch: almost a tonne of explosives over 1,000+ km (SBU''s
+    ''Hunter'').'
+- id: pravda-2024-sea-baby-fundraiser
+  title: Ukrainians donate nearly US$7.71 million in record two days for Sea Baby drones
+  url: https://www.pravda.com.ua/eng/news/2024/02/23/7443439/
+  publisher: Ukrainska Pravda
+  authors:
+  - Alona Mazurenko
+  published: '2024-02-23'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval-drones
+  - specifications
+  - funding
+  - chapter
+  notes: 'UAH 297.5m raised in two days for 35 Sea Babies; SBU spec: 850 kg, 90 km/h, 1,000 km; SBU list of 2022-23 hits (Makarov,
+    Essen, Ivan Golubets, Ladny, Samum, a Buyan, Derzhavin, Muru, Kozitsky).'
+- id: pravda-2024-shapps-kotov
+  title: UK Defence Secretary reacts to destruction of Russian Sergei Kotov ship
+  url: https://www.pravda.com.ua/eng/news/2024/03/5/7445102/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-03-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - chapter
+  notes: 'Shapps: ''The Black Sea is not safe for Putin''s Navy''; the Crimean Bridge was blocked for more than eight hours
+    on the night of 4-5 Mar 2024.'
+- id: pravda-2024-ukdi-sokolov
+  title: UK Defence Intelligence comments on resignation of Russian Black Sea Fleet commander Sokolov
+  url: https://www.pravda.com.ua/eng/news/2024/02/18/7442413/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-02-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - command
+  - chapter
+  notes: 'UK DI, 18 Feb 2024: Adm. Sokolov''s dismissal is linked to the losses, latest the Kunikov; Vice Adm. Sergei Pinchuk
+    likely acting commander; his predecessor Osipov went after the Moskva.'
+- id: pravda-2024-yusov-kunikov-crew
+  title: Most crew members of Russian Tsezar Kunikov ship did not survive – Defence Intelligence
+  url: https://www.pravda.com.ua/eng/news/2024/02/14/7441864/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-02-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - casualties
+  - chapter
+  notes: 'HUR''s Yusov: most of the crew did not survive; ammunition and cargo aboard; destroyed about 4 km off Alupka. Contradicted
+    by a former sailor quoted by the BBC (see wikipedia-tsezar-kunikov).'
+- id: rferl-2024-kotov
+  title: Russian Patrol Vessel 'Sunk' Off The Coast Of Occupied Crimea, Ukraine Military Claims
+  url: https://www.rferl.org/a/ukraine-russian-ship-kotov-destroyed-crimea-drones-magura-v5/32848407.html
+  publisher: RFE/RL
+  authors: []
+  published: '2024-03-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'Yusov: dead and wounded, some evacuated; explosions in Kerch and the bridge closed overnight, reopening about 07:00;
+    rumours placed the strike at Feodosia.'
+- id: shipandbunker-2023-sig-tanker
+  title: Ukrainian Sea Drone Attacks Russian Tanker Near Kerch Strait
+  url: https://shipandbunker.com/news/emea/339878-ukrainian-sea-drone-attacks-russian-tanker-near-kerch-strait
+  publisher: Ship & Bunker
+  authors: []
+  published: '2023-08-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - naval
+  - naval-drones
+  - shipping
+  - chapter
+  notes: Tanker SIG hit near the Kerch Strait by a drone with 450 kg of explosives (Interfax-Ukraine, citing military sources);
+    engine room flooded but afloat; SBU and Navy operation; US-sanctioned tanker.
+- id: twz-2024-altman-fpv-helicopters
+  title: Russia Training To Launch FPV Drones From Helicopters To Counter Sea Drones
+  url: https://www.twz.com/air/russia-training-to-launch-fpv-drones-from-helicopters-to-counter-sea-drones
+  publisher: The War Zone
+  authors:
+  - Howard Altman
+  - Tyler Rogoway
+  published: '2024-09-30'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - counter-usv
+  - helicopters
+  - chapter
+  notes: BSF special forces launching FPVs from a helicopter (Sep 2024); Ka-29 vs R-73-armed USV (May 2024); helicopters as
+    the main hunters at ports; booms at Sevastopol on 22 Mar 2023.
+- id: twz-2024-altman-ivanovets
+  title: Ukraine Sinks Russian Navy Missile Corvette In Drone Boat Attack
+  url: https://www.twz.com/news-features/ukraine-sinks-russian-navy-missile-corvette-in-drone-boat-attack
+  publisher: The War Zone
+  authors:
+  - Howard Altman
+  published: '2024-02-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - tactics
+  - chapter
+  notes: Frame-by-frame reading of HUR's 128-second Ivanovets video (zig-zag runs past AK-630M fire, hits astern and amidships);
+    Magura V5 specs (450 nmi, 22/42 kn, mesh radio with air repeater and/or SATCOM); Russian milblogger confirmation.
+- id: twz-2025-altman-su30-aim9
+  title: 'Two Russian Su-30 Flankers Downed By AIM-9s Fired From Drone Boats: Ukrainian Intel Boss'
+  url: https://www.twz.com/news-features/two-russian-su-30-flankers-downed-by-aim-9s-fired-from-drone-boats-ukrainian-intel-boss
+  publisher: The War Zone
+  authors:
+  - Howard Altman
+  published: '2025-05-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - air-defence
+  - chapter
+  notes: 'Budanov: three Magura-7s, two fired AIM-9s, two Su-30s downed (video of the first only); AIM-9 fitted since Jan
+    2025; first crew rescued by a civilian ship, second killed; AIM-9M lacks HOBS; Russian milbloggers (Kotenok, Shurygin,
+    Two Majors) on the loss, ~50 km west of Novorossiysk.'
+- id: ukrinform-2023-ivan-khurs
+  title: Russian recon ship reportedly attacked by drones
+  url: https://www.ukrinform.net/rubric-ato/3713455-russian-recon-ship-allegedly-attacked-by-drones.html
+  publisher: Ukrinform
+  authors: []
+  published: '2023-05-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: Ivan Khurs (Project 18280, crew 120, 14.5 mm KPVT mounts and MANPADS) attacked by at least three drones over 400
+    km from Ukrainian-held waters.
+- id: ukrinform-2024-kotov
+  title: Ukrainian intelligence confirms destruction of Russian ship Sergei Kotov
+  url: https://www.ukrinform.net/rubric-ato/3835716-ukrainian-intelligence-confirms-destruction-of-russian-ship-sergei-kotov.html
+  publisher: Ukrinform
+  authors: []
+  published: '2024-03-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'HUR: Group 13 attacked the Sergei Kotov on the night of 4-5 Mar 2024 with the Navy and the Ministry of Digital Transformation;
+    damage to the stern, port and starboard.'
+- id: ukrinform-2025-magura-v7
+  title: HUR unveils Magura V7 naval drone in Kyiv
+  url: https://www.ukrinform.net/rubric-defense/3993194-hur-unveils-magura-v7-naval-drone-in-kyiv.html
+  publisher: Ukrinform
+  authors: []
+  published: '2025-05-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - specifications
+  - chapter
+  notes: 'Yusov''s tally: 21 targets, including 16 warships ''at the bottom'', three helicopters and two jets; V7 range up
+    to 800 nmi, satellite control; Group 13 commander''s call sign ''Thirteenth''.'
+- id: usno-rstt-oneday
+  title: 'USNO Astronomical Applications API: Complete Sun and Moon Data for One Day'
+  url: https://aa.usno.navy.mil/data/RS_OneDay
+  publisher: US Naval Observatory
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - weather
+  - light
+  - chapter
+  notes: Moon phase, illumination and moonrise/set for central Crimea (44.9N 34.1E, UTC+3) on the key dates, queried via aa.usno.navy.mil/api/rstt/oneday.
+- id: wikipedia-2022-sevastopol-drone-attack
+  title: 2022 drone attack on the Sevastopol Naval Base
+  url: https://en.wikipedia.org/wiki/2022_drone_attack_on_the_Sevastopol_Naval_Base
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - naval
+  - naval-drones
+  - chapter
+  notes: 'Overview of the 29 Oct 2022 raid: Razvozhaev''s claim of 9 UAVs and 7 USVs, Russian MoD''s admitted damage (Ivan
+    Golubets, a boom in Pivdenna Bay), Starlink-equipped drones. Parts rest on Russian state media, so used only for attributed
+    Russian claims.'
+- id: wikipedia-385th-usv-brigade
+  title: 385th Unmanned Surface Vehicles Brigade (Ukraine)
+  url: https://en.wikipedia.org/wiki/385th_Unmanned_Surface_Vehicles_Brigade_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - order-of-battle
+  - chapter
+  notes: Brigade formed Aug 2023 in the Navy, staffed mostly by HUR and SBU operators, later under the Unmanned Systems Forces;
+    list of 2023-24 USV strikes (14 Sep 2023 patrol ships and Samum, Kerch barricade, SBU mines claim of 24 Jun 2024).
+- id: wikipedia-magura-v5
+  title: MAGURA V5
+  url: https://en.wikipedia.org/wiki/MAGURA_V5
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - specifications
+  - chapter
+  notes: V5/V7 comparison table, variants (V6P, V7, V11), operational list (Chornomorske Nov 2023, the 2024 sinkings, KS-701
+    boats, Mi-8 and Su-30 kills); unit cost $273,000. Used for dates, cross-checked against primary reports.
+- id: wikipedia-sea-baby
+  title: Sea Baby
+  url: https://en.wikipedia.org/wiki/Sea_Baby
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  topics:
+  - naval-drones
+  - specifications
+  - chapter
+  notes: 'SBU Sea Baby: designed from Jul 2022; 850 kg warhead vs 108 kg on early models; redundant comms adopted after the
+    Starlink failure; Samum, Pavel Derzhavin, Kozitsky strikes; Ka-29 vs R-73-armed USV in May 2024; mines (WSJ, Jun 2024);
+    Malyuk''s claim of the Olenegorsky Gornyak and Sig.'
+- id: wikipedia-tsezar-kunikov
+  title: Russian ship Tsezar Kunikov
+  url: https://en.wikipedia.org/wiki/Russian_ship_Tsezar_Kunikov
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval
+  - chapter
+  notes: Ropucha-I (Project 775) specs (112.5 m, 4,012 t full load, 17.6 kn, complement 98); sinking of 14 Feb 2024; Ambrey
+    counted three USVs in the video; a former sailor told the BBC the crew of 89 evacuated; Russian MoD said six USVs were
+    destroyed.

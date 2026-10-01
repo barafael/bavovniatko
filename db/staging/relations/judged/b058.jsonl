@@ -1,0 +1,40 @@
+{"pair": "0d27d80683fe", "relation": "none", "rationale": "Brigade footholds and the embankment's length are different facts."}
+{"pair": "0d3e8eb0afe1", "relation": "supports", "from": "claim:cc03_0008_47", "to": "claim:cc03_0031_07", "strength": 0.7, "rationale": "Arestovych's confirmation that the 36th linked up with Azov supports the account of one group going to join Azov.", "independent": true}
+{"pair": "0d40e1771226", "relation": "none", "rationale": "The river's OSM course and its width as an obstacle are different facts."}
+{"pair": "0d8af16c6579", "relation": "supports", "from": "claim:cv02_0018_04", "to": "claim:cv02_0024_02", "strength": 0.4, "rationale": "The crew running from the spun-out T-90M is consistent with the expert's view that it panicked; both come from TWZ.", "independent": false}
+{"pair": "0db2acec306c", "relation": "none", "rationale": "The convoy's journey and the diplomacy that preceded it are different facts."}
+{"pair": "0db68c2e612d", "relation": "supports", "from": "claim:cc08_0035_03", "to": "claim:cc08_0031_01", "strength": 0.7, "rationale": "Bayak's account of Javelin and Stugna-P teams firing supports the claim that these ATGMs were used at Vuhledar; both cite the NYT.", "independent": false}
+{"pair": "0dd6acc667a8", "relation": "none", "rationale": "The Bradleys anchoring the flank and a captured Bradley are different facts."}
+{"pair": "0e38821e665e", "relation": "none", "rationale": "Terrain elevations and a November 2022 attack are not in evidential relation."}
+{"pair": "0e7257f420a9", "relation": "none", "rationale": "The command structure and the plan's timetable are different facts."}
+{"pair": "0ed59d0501a4", "relation": "duplicates", "from": "claim:cc12_0010_79", "to": "claim:cc12_0019_11", "strength": 0.8, "rationale": "Budanov's Tu-22M3 kill at 308 km is restated within B from the same source."}
+{"pair": "0ee306481cd9", "relation": "supports", "from": "claim:c06_0003_04", "to": "claim:cc06_0015_02", "strength": 0.7, "rationale": "Both describe pine forest on the Donets' sandy left-bank terraces at Lyman and Kreminna, from the same sources.", "independent": false}
+{"pair": "0f260806bcd2", "relation": "supports", "from": "claim:cv01_0007_13", "to": "claim:cv01_0012_02", "strength": 0.6, "rationale": "HUR's statement that the 239th Tank Regiment suffered losses at Brovary supports its presence there; both cite Interfax.", "independent": false}
+{"pair": "0f7863dcbd9e", "relation": "refines", "from": "claim:cc06_0012_36", "to": "claim:cc06_0012_101", "strength": 0.7, "rationale": "B gives the figure (over 1,000 km² on 1–8 Sep) for the same 8 Sep 2022 announcement in A."}
+{"pair": "0f7e1a9b910b", "relation": "none", "rationale": "A January 2023 attack and the brigades' peak strength are not in evidential relation."}
+{"pair": "0fd10f8bbe1c", "relation": "none", "rationale": "A specific strike and a general assessment of SHORAD vulnerability are not in evidential relation."}
+{"pair": "102092159615", "relation": "supports", "from": "claim:cc10_0006_04", "to": "claim:cc10_0021_09", "strength": 0.6, "rationale": "The 36th holding the rail-bridge/Poima foothold supports Poima as its objective.", "independent": false}
+{"pair": "10331855a023", "relation": "none", "rationale": "The column's makeup and the assessed error of artillery leading are different assertions."}
+{"pair": "104cd2a3eeb1", "relation": "none", "rationale": "An admission that some marines were captured and ~500 breaking through are compatible but not evidence for each other."}
+{"pair": "105d515738f5", "relation": "supports", "from": "claim:cc02_0021_07", "to": "claim:cc02_0028_04", "strength": 0.5, "rationale": "The battery's basic ~18 km radar makes sense of B's report that it should not have seen a contact 120 km out.", "independent": false}
+{"pair": "110b4d43bca7", "relation": "none", "rationale": "A later award and the capture claim are related context, not evidence."}
+{"pair": "119efa0d732a", "relation": "none", "rationale": "The crew's mission history and a quote from the run are different facts."}
+{"pair": "11e02a1b37d5", "relation": "none", "rationale": "Russian encirclement attacks and the map box are not in evidential relation."}
+{"pair": "11ea771556f1", "relation": "duplicates", "from": "claim:cc13_0016_16", "to": "claim:cc13_0013_81", "strength": 0.85, "rationale": "The Su-30SM kill location of about 50 km west of Novorossiysk is restated within A."}
+{"pair": "11ed46c72c77", "relation": "none", "rationale": "A shoot-down claim and an assessment of Russian freedom of action are different assertions."}
+{"pair": "120e07017f46", "relation": "duplicates", "from": "claim:cc06_0012_32", "to": "claim:cc06_0029_04", "strength": 0.85, "rationale": "Same report of the 80th Air Assault reaching the Oskil at Senkove on 8 Sep 2022; B has more sources."}
+{"pair": "128835f45230", "relation": "supports", "from": "claim:cc06_0040_09", "to": "claim:cc06_0003_04", "strength": 0.6, "rationale": "Novaya Gazeta's description of defenders as mainly National Guard plus LNR/DNR men and volunteers matches A's mix.", "independent": true}
+{"pair": "12bbe07d5520", "relation": "none", "rationale": "The front line at Pavlivka and the river's OSM course are not in evidential relation."}
+{"pair": "12bc49869757", "relation": "none", "rationale": "The early-morning intercept and the recording of the reply are different events."}
+{"pair": "13196fb4be15", "relation": "none", "rationale": "The breakout account and Russia's prisoner claim are different assertions."}
+{"pair": "1375d02604f4", "relation": "supports", "from": "claim:cv02_0003_10", "to": "claim:cv02_0024_02", "strength": 0.4, "rationale": "The crew bailing out is consistent with the expert's view that it panicked; both come from TWZ.", "independent": false}
+{"pair": "1390a22c67c0", "relation": "none", "rationale": "A strike event and a broad assessment of its influence are not in evidential relation."}
+{"pair": "13d7f5f9ac63", "relation": "supports", "from": "claim:cc06_0030_14", "to": "claim:cc06_0003_04", "strength": 0.6, "rationale": "ISW's account of SOBR and Rosgvardia losing Balakliia supports their presence among the sector's defenders.", "independent": false}
+{"pair": "13ee960a798a", "relation": "none", "rationale": "Russian sortie rates and the radar/missile overmatch are different assertions."}
+{"pair": "14b8bd0dbc84", "relation": "supports", "from": "claim:cc02_0026_20", "to": "claim:cc02_0011_51", "strength": 0.6, "rationale": "B's description of the toss-bombing technique corroborates A's 7 May 2022 Su-27 attack, from the same TWZ article.", "independent": false}
+{"pair": "14d3bb0a8145", "relation": "supports", "from": "claim:cc08_0007_05", "to": "claim:cc08_0007_02", "strength": 0.6, "rationale": "ISW's finding that Russia failed to advance 4 km from Mykilske and Pavlivka supports \"a few kilometres at most\".", "independent": false}
+{"pair": "14ef0ebdeefd", "relation": "duplicates", "from": "claim:cc02_0018_09", "to": "claim:cc02_0011_47", "strength": 0.9, "rationale": "Same Janes timing of the 2 May 2022 Raptor kills at 04:38 and 04:51."}
+{"pair": "151db2051c10", "relation": "none", "rationale": "Night moves and firing ranges are different facts."}
+{"pair": "154e41f41208", "relation": "none", "rationale": "The ambush outcome and the map box are not in evidential relation."}
+{"pair": "1555c7ed0350", "relation": "supports", "from": "claim:cc08_0010_091", "to": "claim:cc08_0010_088", "strength": 0.4, "rationale": "Russian attacks from Prechystivka by 30 Sep 2024 are consistent with the earlier claimed push towards it; both come from ISW.", "independent": false}
+{"pair": "15f2c2a61659", "relation": "duplicates", "from": "claim:cc02_0018_11", "to": "claim:cc02_0011_67", "strength": 0.75, "rationale": "The guns moving by night is the same Militarnyi detail as A's nightly pontoon ferrying."}

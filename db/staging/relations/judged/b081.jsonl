@@ -1,0 +1,40 @@
+{"pair": "c12eda0acde7", "relation": "none", "rationale": "A claim about Mariupol's pinning effect and the summer counteroffensive choice are different assertions."}
+{"pair": "c15e82b682df", "relation": "supports", "from": "claim:cv02_0016_08", "to": "claim:cv02_0006_16", "strength": 0.5, "independent": false, "rationale": "B's mines-drones-Bradleys pattern matches the causes of the 27 December Russian losses in A; same Forbes source."}
+{"pair": "c1c9416b452c", "relation": "none", "rationale": "Firing from the shore and the delta's landing conditions are different details."}
+{"pair": "c21793bcd211", "relation": "weakens", "from": "claim:cc17_0025_07", "to": "claim:cc17_0007_44", "strength": 0.7, "rationale": "B reports that Gerasimov's claim of Kupiansk's liberation was refuted by Zelensky's video in the town on 12 December 2025."}
+{"pair": "c24dc1827d4c", "relation": "none", "rationale": "A specific flank attack and the general depth of fighting; context only."}
+{"pair": "c29ae2937d24", "relation": "none", "rationale": "The opening shot and the spin-out are different phases of the duel."}
+{"pair": "c2f51b2edef2", "relation": "supports", "from": "claim:cc03_0008_23", "to": "claim:cc03_0023_01", "strength": 0.6, "independent": false, "rationale": "Mission 1's delivery of Stingers, NLAWs and Starlink corroborates B's air-delivered equipment; shared TWZ source."}
+{"pair": "c33392fe5ab6", "relation": "none", "rationale": "The chapter's map extent and the river's course are different facts."}
+{"pair": "c34f7d08d2ec", "relation": "none", "rationale": "Ihnat's assessment and the February shoot-downs on glide-bomb runs are different assertions."}
+{"pair": "c35f3acc31d9", "relation": "duplicates", "from": "claim:cc13_0044_16", "to": "claim:cc13_0027_03", "strength": 0.85, "rationale": "Both report Russia bringing Baltic Fleet helicopter crews/Mi-24VPs to hunt sea drones, from the same source."}
+{"pair": "c3b07fd4e0b8", "relation": "none", "rationale": "Starting footholds and Iskander strikes are different assertions."}
+{"pair": "c3e5877771fe", "relation": "none", "rationale": "Garrison composition and Arestovych's link-up confirmation are different assertions."}
+{"pair": "c42249099fa6", "relation": "refines", "from": "claim:cc17_0007_28", "to": "claim:cc17_0018_02", "strength": 0.5, "rationale": "A dates the creation of the search-and-destroy group under Sidorin that B describes; same source."}
+{"pair": "c488528fada3", "relation": "none", "rationale": "The crew fleeing and the opening of the duel are different details."}
+{"pair": "c4f8c3853824", "relation": "none", "rationale": "Basing fact and a sortie recall event; context only."}
+{"pair": "c50127b1fa21", "relation": "none", "rationale": "A pontoon strike in September and a ferry video in October are different events."}
+{"pair": "c504bd68abd6", "relation": "supports", "from": "claim:cc13_0035_08", "to": "claim:cc13_0013_43", "strength": 0.7, "independent": false, "rationale": "The video-based account of the drone attack at Donuzlav corroborates the sinking of the Ivanovets by Maguras."}
+{"pair": "c506121896b0", "relation": "supports", "from": "claim:cc10_0037_10", "to": "claim:cc10_0046_09", "strength": 0.5, "independent": false, "rationale": "The purchase of hexacopters and Mamonts underlies B's drone resupply of Krynky; same source."}
+{"pair": "c52f7eaa0f7c", "relation": "weakens", "from": "claim:cv02_0020_02", "to": "claim:cv02_0004_09", "strength": 0.4, "rationale": "The gunner says he chose a mission kill rather than penetration, which casts doubt on Forbes' suggestion that the 25 mm killed the crew."}
+{"pair": "c53b214feb13", "relation": "none", "rationale": "Preparing positions and the battalions engaged are different assertions."}
+{"pair": "c54fe95b00d0", "relation": "none", "rationale": "Basing fact and a milblogger friendly-fire claim are different assertions."}
+{"pair": "c564c692b2ed", "relation": "none", "rationale": "The crew bailing out and the gunner's change of rounds are different details."}
+{"pair": "c5aa3ed522ab", "relation": "none", "rationale": "Russia's counter-measures and its choice of resupply by small craft are related but distinct assertions."}
+{"pair": "c5ba1877190c", "relation": "duplicates", "from": "claim:cc12_0019_13", "to": "claim:c03_0008_05", "strength": 0.9, "rationale": "Same RUSI inventory of 35 S-300PS/PT, 3 S-300V, 9 S-125 and 15 Buk-M1 divisions."}
+{"pair": "c5cd46169947", "relation": "none", "rationale": "Crew identities and their mission count are different facts."}
+{"pair": "c646843984a2", "relation": "duplicates", "from": "claim:cc04_0009_103", "to": "claim:cc04_0033_02", "strength": 0.85, "rationale": "Same destruction of the four crossings on 11 November 2022; B has more sources."}
+{"pair": "c66338b21c94", "relation": "none", "rationale": "A role fact and a statement by the spokesman; context only."}
+{"pair": "c6c24bbf49a3", "relation": "refines", "from": "claim:cc10_0015_029", "to": "claim:cc10_0052_12", "strength": 0.7, "rationale": "A gives the 29 October milblogger report of Teplinsky replacing Makarevich that B summarises."}
+{"pair": "c6cb17c0fcf5", "relation": "none", "rationale": "A TB2 strike on a Tor and Russia's counter-measures are different assertions."}
+{"pair": "c70f11c57e0d", "relation": "supports", "from": "claim:cc17_0018_08", "to": "claim:cc17_0025_02", "strength": 0.6, "independent": false, "rationale": "The 77th Brigade's bomber-drone strikes on emergence points are an instance of B's kill-chain; same source."}
+{"pair": "c76efbf804eb", "relation": "supports", "from": "claim:cc06_0030_15", "to": "claim:cc06_0030_14", "strength": 0.6, "independent": true, "rationale": "Bielieskov's thin SOBR-held line north of Balakliia corroborates ISW's account of SOBR and Rosgvardia losing it."}
+{"pair": "c790d49517ef", "relation": "supports", "from": "claim:cc13_0013_66", "to": "claim:cc13_0027_03", "strength": 0.6, "independent": false, "rationale": "The loss of a 396th Regiment Mi-24VP hunting USVs off Sevastopol corroborates B's deployment; same source."}
+{"pair": "c804b0167d5e", "relation": "supports", "from": "claim:cc02_0018_01", "to": "claim:cc02_0011_07", "strength": 0.6, "independent": false, "rationale": "Both place the Vasily Bykov's appearance around 09:00 on 24 February; same source."}
+{"pair": "c82e66faaac3", "relation": "refines", "from": "claim:cc13_0013_33", "to": "claim:c03_0027_014", "strength": 0.6, "rationale": "B dates to 22 September 2023 the Storm Shadow strike on the Black Sea Fleet HQ listed in A."}
+{"pair": "c8778e8b5573", "relation": "none", "rationale": "Camouflage/decoys and the firing rotation are different details."}
+{"pair": "c8844209dadf", "relation": "none", "rationale": "The breakout and the surrender of others at Illich concern different groups."}
+{"pair": "c8ab92a7d886", "relation": "duplicates", "from": "claim:cv01_0004_02", "to": "claim:cv01_0007_14", "strength": 0.9, "rationale": "Same HUR claim of 10 March 2022 that Col. Zakharov was killed, from the same source."}
+{"pair": "c94b5a5a97ad", "relation": "refines", "from": "claim:cc05_0030_14", "to": "claim:cc05_0034_12", "strength": 0.6, "rationale": "A dates and specifies the inner net-and-boom layer that B lists among the 2024 bridge defences."}
+{"pair": "c96393100779", "relation": "duplicates", "from": "claim:cc13_0008_05", "to": "claim:cc13_0035_15", "strength": 0.85, "rationale": "Same 2 May 2025 downing of a Su-30SM by Magura V7-launched AIM-9s; B has more sources."}
+{"pair": "c9870e8075af", "relation": "none", "rationale": "Khartiia's request and Syrskyi's authorisation are successive events."}

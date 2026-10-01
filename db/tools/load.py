@@ -66,6 +66,23 @@ def rec_id(s: str):
     return kb.rid(table, key)
 
 
+_GEO = re.compile(r"geo:\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)")
+
+
+def notes_point(notes: str) -> dict | None:
+    """'geo: lon,lat' in claim notes -> GeoJSON point. Written lon,lat; swapped if it is clearly lat,lon
+    (first value a plausible latitude 43–70, second a plausible longitude 20–42, as for every place in this war)."""
+    m = _GEO.search(notes or "")
+    if not m:
+        return None
+    a, b = float(m[1]), float(m[2])
+    if 43 <= a <= 70 and 20 <= b <= 42:
+        a, b = b, a
+    if not (-180 <= a <= 180 and -90 <= b <= 90):
+        return None
+    return {"type": "Point", "coordinates": [a, b]}
+
+
 def claim_rid(local_id: str):
     return kb.rid("claim", "c" + local_id.replace("-", "_"))
 
@@ -169,6 +186,7 @@ def load_entities(conn) -> Counter:
             data["side"] = e["side"]
         if table == "system" and e.get("sides"):
             data["sides"] = e["sides"]
+        gc = None
         if table == "place":
             g = e.get("geometry") or (bbox_polygon(e["bbox"]) if e.get("bbox") else None)
             src = e.get("geometry_source") or ("stated in research/06-terrain-geodata.md" if e.get("bbox") else None)
@@ -189,15 +207,79 @@ def load_entities(conn) -> Counter:
                     w_, s_, e_, n_ = e["bbox"]
                     data["centroid"] = kb.geom({"type": "Point", "coordinates": [(w_ + e_) / 2, (s_ + n_) / 2]})
                 data["geometry_source"], data["geometry_licence"] = src, lic
-        hh = h({k: v for k, v in data.items() if k != "prov"} | {"g": repr(data.get("geometry"))})
+        unset_geo = table == "place" and "geometry" not in data and gc is not None and not gc.get("found") \
+            if table == "place" else False
+        hh = h({k: v for k, v in data.items() if k != "prov"} | {"g": repr(data.get("geometry")), "u": unset_geo})
         if have.get(e["id"]) == hh:
             stats[f"{table}:unchanged"] += 1
             continue
         data["ext"] = {"_hash": hh}
         # MERGE keeps fields set elsewhere (e.g. publisher actors from import_base)
         kb.run(conn, "UPSERT $id MERGE $d", {"id": rid, "d": data})
+        if unset_geo:      # a geocode overridden as wrong: remove the stale geometry rather than keep a bad location
+            kb.run(conn, "UPDATE $id UNSET geometry, centroid, geometry_source, geometry_licence, external_ids.osm", {"id": rid})
         stats[f"{table}:{'updated' if e['id'] in have else 'created'}"] += 1
     return stats
+
+
+def _norm_url(u: str) -> str:
+    u = (u or "").strip().lower()
+    u = re.sub(r"^https?://(www\.)?", "", u)
+    return u.split("#")[0].rstrip("/")
+
+
+def merge_staged_sources(conn, files) -> tuple[list[dict], Counter]:
+    """Merge staged source entries: one entry per URL, reusing the id of a source already in the database.
+    Other ids for the same URL become aliases (legacy_ids), so every [src:id] in the dossiers still resolves."""
+    existing = {}
+    for r in kb.one(conn, "SELECT id, url, alt_urls, legacy_ids, eras, found_in FROM source"):
+        for u in [r["url"], *(r.get("alt_urls") or [])]:
+            existing[_norm_url(u)] = r
+    by_url: dict[str, dict] = {}
+    updates: dict[str, dict] = {}
+    report = Counter()
+    for f in files:
+        for e in yaml.safe_load(f.read_text()) or []:
+            e = dict(e)
+            e.setdefault("found_in", [f.stem])
+            key = _norm_url(e["url"])
+            if key in by_url:
+                m = by_url[key]
+                if e["id"] != m["id"] and e["id"] not in m.setdefault("aliases", []):
+                    m["aliases"].append(e["id"])
+                m["eras"] = sorted(set(m.get("eras") or []) | set(e.get("eras") or []))
+                m["found_in"] = sorted(set(m.get("found_in") or []) | set(e.get("found_in") or []))
+                report["sources:merged_duplicate_url"] += 1
+                continue
+            if key in existing:
+                # already in the knowledge base: only record the alias, the new topic and any new eras
+                x = existing[key]
+                upd = updates.setdefault(kb.rid_str(x["id"]), {"rid": x["id"], "aliases": set(), "found_in": set(), "eras": set(), "x": x})
+                if e["id"] != x["id"].id:
+                    upd["aliases"].add(e["id"])
+                upd["found_in"] |= set(e.get("found_in") or [])
+                upd["eras"] |= set(e.get("eras") or [])
+                report["sources:matched_existing"] += 1
+                continue
+            by_url[key] = e
+    import import_base
+    for u in updates.values():
+        x = u["x"]
+        have_f = {kb.rid_str(z) for z in x.get("found_in") or []}
+        have_e = {kb.rid_str(z) for z in x.get("eras") or []}
+        want_f = {kb.rid_str(t_) for t_ in (import_base.topic_rid(y) for y in u["found_in"]) if t_}
+        want_e = {kb.rid_str(import_base.era_rid(y)) for y in u["eras"]}
+        if u["aliases"] <= set(x.get("legacy_ids") or []) and want_f <= have_f and want_e <= have_e:
+            continue                                   # nothing new: avoid a no-op write (and audit entry)
+        report["sources:updated_existing"] += 1
+        f_ids = {kb.rid_str(z): z for z in x.get("found_in") or []}
+        f_ids.update({kb.rid_str(t_): t_ for t_ in (import_base.topic_rid(y) for y in u["found_in"]) if t_})
+        e_ids = {kb.rid_str(z): z for z in x.get("eras") or []}
+        e_ids.update({kb.rid_str(import_base.era_rid(y)): import_base.era_rid(y) for y in u["eras"]})
+        kb.run(conn, "UPDATE $r SET legacy_ids = $a, found_in = $f, eras = $e",
+               {"r": u["rid"], "a": sorted(set(x.get("legacy_ids") or []) | u["aliases"]),
+                "f": [f_ids[k] for k in sorted(f_ids)], "e": [e_ids[k] for k in sorted(e_ids)]})
+    return list(by_url.values()), report
 
 
 def metric_aliases() -> dict[str, str]:
@@ -227,7 +309,7 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
     legacy = {lid: r["id"] for r in kb.one(conn, "SELECT id, legacy_ids FROM source") for lid in r["legacy_ids"]}
     passages = {r["key"]: r["id"] for r in kb.one(conn, "SELECT id, key FROM passage")}
     sections = {r["key"]: r["section"] for r in kb.one(conn, "SELECT key, section FROM passage")}
-    files = {r["id"].id[1:]: r["file"] for r in kb.one(conn, "SELECT id, file FROM topic")}
+    files = {r["code"]: r["file"] for r in kb.one(conn, "SELECT code, file FROM topic")}
     have = {r["key"]: r.get("h") for r in kb.one(conn, "SELECT key, ext._hash AS h FROM claim")}
     stats, problems = Counter(), []
     counters = []
@@ -254,14 +336,20 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
             "key": lid, "text": r["text"], "kind": r["kind"], "epistemic": r["epistemic"],
             "status": r.get("status", "active"),
             "eras": [kb.rid("era", e) for e in r.get("eras", [])],
-            "topics": [kb.rid("topic", f"t{nn}")], "sides": r.get("sides", []),
+            "topics": [kb.rid("topic", kb.topic_key(nn))], "sides": r.get("sides", []),
             "anchor": {"file": files[nn], "section": sections.get(r["passage"], ""), "order": seq, "local_id": lid},
             "prov": prov("agent", f"db/staging/claims/{nn}.jsonl", by="extraction"),
         }
         if r.get("time"):
             data["time"] = ptime(r["time"])
+        extra = {}
         if r.get("notes"):
             data["confidence_note"] = r["notes"]
+            if re.search(r"\bOUTCOME\b", r["notes"]):
+                extra["outcome"] = True                    # the chapter's historical outcome (win condition)
+            g = notes_point(r["notes"])
+            if g:
+                data["geo"] = kb.geom(g)
         edges = []
         for c in r["cites"]:
             sid = legacy.get(c["source"])
@@ -314,7 +402,7 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
         if have.get(lid) == hh:
             stats["claim:unchanged"] += 1
             continue
-        data["ext"] = {"_hash": hh}
+        data["ext"] = {"_hash": hh, **extra}
         q = ["UPSERT $cid CONTENT $data;",
              "DELETE $cid->cites, $cid->asserted_by, $cid->about, $cid<-includes;",
              "DELETE observation WHERE claim = $cid;",
@@ -386,9 +474,16 @@ def main():
         import import_base
         files = sorted((kb.DB_DIR / "staging" / "sources").glob("*.yaml"))
         if files:
-            w = import_base.Writer(conn)
-            import_base.load_sources(w, files)
-            stats.update(w.stats)
+            merged, report = merge_staged_sources(conn, files)
+            tmp = kb.DB_DIR / "staging" / "sources" / ".merged.yaml.tmp"
+            tmp.write_text(yaml.safe_dump(merged, sort_keys=False, allow_unicode=True))
+            try:
+                w = import_base.Writer(conn)
+                import_base.load_sources(w, [tmp])
+                stats.update(w.stats)
+            finally:
+                tmp.unlink()
+            stats.update(report)
     if args.what in ("metrics", "all"):
         stats += load_metrics(conn)
     if args.what in ("entities", "all"):

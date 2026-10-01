@@ -1,0 +1,1099 @@
+# Sources cited in research/chapters/c04-kherson-antonivskyi.md, generated from the knowledge base by db/tools/render.py.
+- id: babel-2022-yarmolenko-midterms-kherson
+  title: The war in Ukraine — the Russians delayed the retreat from Kherson in order not to give Biden political success before
+    the elections
+  url: https://babel.ua/en/news/87062-the-u-s-intelligence-russia-delayed-the-retreat-from-kherson-until-the-midterm-elections-to-congress-for-not-to-add-political-success-to-biden
+  publisher: Babel
+  authors:
+  - Oleksiy Yarmolenko
+  published: '2022-11-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - withdrawal
+  - decision
+  - chapter
+  notes: 'Reports CNN: US intelligence that senior Russian officials discussed the US midterms when timing the Kherson withdrawal
+    announcement; not the only factor.'
+- id: defenseone-2022-tucker-milley-himars
+  title: Ukraine's Western Arms Have Inflicted 'Significant Damage' On Russian Supply, Communications Lines, Top US Officer
+    Says
+  url: https://defenseone.com/threats/2022/09/ukraines-western-arms-have-inflicted-significant-damage-russian-supply-communications-lines-top-us-officer-says/376908/
+  publisher: Defense One
+  authors:
+  - Patrick Tucker
+  published: '2022-09-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - himars
+  - aid
+  - chapter
+  notes: 'Milley at Ramstein, 8 Sep 2022: US has sent 16 HIMARS and thousands of GMLRS; Ukraine has struck more than 400 targets
+    with HIMARS.'
+- id: euromaidanpress-2022-petryk-withdrawal-announced
+  title: Russia announces troop withdrawal from western-bank Kherson Oblast
+  url: https://euromaidanpress.com/2022/11/09/russia-announced-withdrawing-its-troops-from-kherson-oblast/
+  publisher: Euromaidan Press
+  authors:
+  - Victoria Petryk
+  published: '2022-11-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - withdrawal
+  - chapter
+  notes: Quotes Surovikin's announcement (defend along the Dnipro barrier line, preserve soldiers' lives) and the Kherson
+    city military administration's scepticism; bridges blown the same day.
+- id: forbes-2022-axe-attacking-everywhere
+  title: Ukraine Is Attacking Everywhere
+  url: https://www.forbes.com/sites/davidaxe/2022/09/07/ukraine-is-attacking-everywhere/
+  publisher: Forbes
+  authors:
+  - David Axe
+  published: '2022-09-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: 'Southern command with about three dozen battalions and perhaps 20,000 combat troops; 35th and 36th Naval Infantry
+    push from the Inhulets toward Beryslav; Russia moved about a dozen battalions from Donbas to Kherson. Medium: columnist
+    estimates. Fetched via the Wayback Machine.'
+- id: isw-2022-07-12-roca
+  title: Russian Offensive Campaign Assessment, July 12
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-12
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-07-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Ukrainian strike on a Kherson city base on 10 Jul killed the 20th Guards MRD commander Col. Gorobets and two deputies
+    (Russian and Ukrainian sources); Ukraine also claimed the 22nd AC chief of staff. Vereshchuk evacuation calls. Fetched
+    via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-07-19-roca
+  title: Russian Offensive Campaign Assessment, July 19
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-19
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-07-19'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: First reported HIMARS strike on the Antonivskyi road bridge (19 Jul), little visible damage; partisan channel calls
+    it the main supply route of the right-bank grouping. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-07-20-roca
+  title: Russian Offensive Campaign Assessment, July 20
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-20
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-07-20'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Second consecutive strike on the Antonivskyi bridge; Saldo closes it to freight but not to passenger cars; Khlan
+    says heavy equipment can no longer cross. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-07-27-roca
+  title: Russian Offensive Campaign Assessment, July 27
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-27
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-07-27'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: 'Third strike in ten days (night 26-27 Jul): 8 projectiles at the road bridge, 2 at the rail bridge 6 km upstream;
+    Stremousov closes the road bridge to all traffic; Russian MoD intercept claims contradicted by footage. Fetched via the
+    Wayback Machine (live site blocks scripted access).'
+- id: isw-2022-07-31-roca
+  title: Russian Offensive Campaign Assessment, July 31
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-31
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-07-31'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: 'Russians dig trenches by the bridge, set radar reflectors on both Antonivskyi bridges and attempt repairs; HIMARS
+    strike on a 40-car train at Brylivka (Ukrainian claim: 80 killed, 200 wounded); Inhulets bridgehead held. Fetched via
+    the Wayback Machine (live site blocks scripted access).'
+- id: isw-2022-08-13-roca
+  title: Russian Offensive Campaign Assessment, August 13
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-13
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-08-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: 'Kakhovka HPP dam bridge struck again on 13 Aug after being declared unfit on 10 Aug; UK MoD: no usable bridge for
+    heavy equipment, reliance on a pontoon ferry by the Antonivskyi bridge; ISW indicators of supply degradation. Fetched
+    via the Wayback Machine (live site blocks scripted access).'
+- id: isw-2022-08-17-roca
+  title: Russian Offensive Campaign Assessment, August 17
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-17
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-08-17'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Satellite imagery of barge movement near Kherson city; Russians reportedly repairing barges at a Kherson shipyard;
+    attacks on the Inhulets bridgehead. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-08-21-roca
+  title: Russian Offensive Campaign Assessment, August 21
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-21
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-08-21'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Geolocated imagery confirms Russia using repaired barges to move material across the Dnipro near Kherson city after
+    both road bridges were rendered unusable. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-08-25-roca
+  title: Russian Offensive Campaign Assessment, August 25
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-25
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-08-25'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Ukraine re-strikes the Antonivskyi bridge to stop Russian repair crews; damage near the Kakhovka bridge; command
+    post of a 33rd MRR BTG hit. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-08-29-roca
+  title: Russian Offensive Campaign Assessment, August 29
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-29
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-08-29'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Ukraine announces the Kherson counteroffensive; DNR 109th Regiment abandons positions; Arkhanhelske and Sukhyi Stavok
+    reports; pontoon crossing near Antonivskyi bridge half-built (27 Aug); about 100 vehicles moved by ferry by 25 Aug. Fetched
+    via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-08-30-roca
+  title: Russian Offensive Campaign Assessment, August 30
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-30
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-08-30'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Ukraine begins striking pontoon ferries (Lvove, barge crossing by the road bridge) on 29 Aug; strikes on Antonivskyi
+    road and rail bridges and Darivka; Russian MoD claims 44 HIMARS rockets intercepted and 1,200 Ukrainians killed. Fetched
+    via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-09-01-roca
+  title: Russian Offensive Campaign Assessment, September 1
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-september-1
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-09-01'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Darivka pontoon bridge over the Inhulets destroyed; command posts of the 331st (98th VDV) and 56th (7th VDV) regiments
+    reported hit; Russian claim of HARMs shot down over the Antonivskyi bridge. Fetched via the Wayback Machine (live site
+    blocks scripted access).
+- id: isw-2022-09-02-roca
+  title: Russian Offensive Campaign Assessment, September 2
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-september-2
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-09-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Ferry crossings at Lvove and Kozatske struck; fire at Kozatske grain terminal; Russian reinforcements moving west
+    through Mariupol and from the Kerch bridge. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-09-24-roca
+  title: Russian Offensive Campaign Assessment, September 24
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-september-24
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-09-24'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Russian units in Kherson rotate and build defensive lines further back under the Ukrainian interdiction campaign;
+    footage of damage to the Antonivskyi bridge. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-10-13-roca
+  title: Russian Offensive Campaign Assessment, October 13
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-13
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-10-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Saldo calls for mass evacuation; Ukraine targets pontoon and barge crossings on the Dnipro and Inhulets; Russia repairs
+    up to 30 armoured vehicles a day at Kalanchak; Kerch ferry queues. Fetched via the Wayback Machine (live site blocks scripted
+    access).
+- id: isw-2022-10-18-roca
+  title: Russian Offensive Campaign Assessment, October 18
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-18
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-10-18'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Surovikin claims Ukraine plans to breach the Nova Kakhovka dam; Saldo announces displacement of civilians from four
+    right-bank towns; Ukrainian strikes on depots near Beryslav. Fetched via the Wayback Machine (live site blocks scripted
+    access).
+- id: isw-2022-10-19-roca
+  title: Russian Offensive Campaign Assessment, October 19
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-19
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-10-19'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Surovikin speaks of 'difficult decisions' on Kherson; ISW assesses information preparation for a retreat and a possible
+    false-flag attack on the Kakhovka dam; Kozatske ferry likely hit. Fetched via the Wayback Machine (live site blocks scripted
+    access).
+- id: isw-2022-10-22-roca
+  title: Russian Offensive Campaign Assessment, October 22
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-22
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-10-22'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: 'Russian forces withdraw from northwestern Kherson; officers moved across while mobilised men remain; UK MoD: barge
+    bridge completed alongside the Antonivskyi bridge; occupation orders civilians to leave Kherson immediately; reservoir
+    being lowered. Fetched via the Wayback Machine (live site blocks scripted access).'
+- id: isw-2022-11-08-roca
+  title: Russian Offensive Campaign Assessment, November 8
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-8
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-11-08'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Pillboxes at Hola Prystan on the left bank; Kherson city internet cut; 76th Guards Airborne Division still in the
+    Kherson line. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-11-09-roca
+  title: Russian Offensive Campaign Assessment, November 9
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-9
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-11-09'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Shoigu and Surovikin order the withdrawal to the left bank on 9 Nov; ISW judges the Ukrainian interdiction campaign
+    has succeeded and that the withdrawal is not a trap; units named (76th, 106th VDV, 22nd AC); Stremousov dies; Kerch bridge
+    damage noted. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-11-10-roca
+  title: Russian Offensive Campaign Assessment, November 10
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-10
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-11-10'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: 'Ukraine advances up to 7 km and retakes 12 settlements (over 260 km2) in a day; Zaluzhnyi: 41 settlements since
+    1 Oct; Snihurivka and Kyselivka liberated; Russian withdrawal in relatively good order. Fetched via the Wayback Machine
+    (live site blocks scripted access).'
+- id: isw-2022-11-11-roca
+  title: Russian Offensive Campaign Assessment, November 11
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-11
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-11-11'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Russian MoD claims withdrawal complete at 05:00 on 11 Nov; Russian sources claim 20,000 personnel and 3,500 pieces
+    of equipment over three days; Maxar imagery shows Antonivskyi road and rail bridges, Nova Kakhovka dam road and Darivka
+    bridge destroyed; Ukrainian troops enter Kherson. Fetched via the Wayback Machine (live site blocks scripted access).
+- id: isw-2022-11-12-roca
+  title: Russian Offensive Campaign Assessment, November 12
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-12
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-11-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - chapter
+  notes: Ukraine clears the right bank (60+ settlements per Zelensky); abandoned Russian helicopters and armoured vehicles
+    despite MoD claims of 5,000 pieces moved; Henichesk named temporary capital; Dugin and nationalist backlash. Fetched via
+    the Wayback Machine (live site blocks scripted access).
+- id: kyivpost-2022-60-settlements
+  title: Ukrainian Forces Regain Control of More Than 60 Settlements in Kherson Region
+  url: https://www.kyivpost.com/post/228
+  publisher: Kyiv Post
+  authors: []
+  published: '2022-11-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Zelensky thanks the 28th and 63rd Mechanized and 59th Motorized Brigades, intelligence, SOF and National Guard for
+    Kherson. Read via WebFetch.
+- id: militarnyi-2023-kozatskyi-himars-year
+  title: 'American HIMARS in the Ukrainian Armed Forces: a year of combat use against Russian invaders'
+  url: https://militarnyi.com/en/articles/american-himars-in-the-ukrainian-armed-forces-a-year-of-combat-use-against-russian-invaders/
+  publisher: Militarnyi
+  authors:
+  - Sania Kozatskyi
+  published: '2023-07-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - himars
+  - chapter
+  notes: 'Year review: delivery timeline from June 2022, 20 M142 in service by mid-2023, GMLRS range 15-84 km and CEP under
+    a metre, Antonivskyi bridge strikes. Read via WebFetch summary (page is script-rendered).'
+- id: openmeteo-era5-kherson-2022
+  title: Open-Meteo Historical Weather API (ERA5 reanalysis), Kherson 46.64N 32.61E, 15 Jul-15 Nov 2022
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=46.64&longitude=32.61&start_date=2022-07-15&end_date=2022-11-15&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,cloud_cover_mean,sunrise,sunset&timezone=Europe%2FKyiv
+  publisher: Open-Meteo
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - weather
+  - chapter
+  notes: Daily max/min temperature, precipitation, wind, cloud cover, sunrise and sunset for Kherson; reanalysis (gridded),
+    not station observations. Shows no sub-zero daily minimum through 15 Nov 2022.
+- id: osm-nominatim-2026-kherson-places
+  title: OpenStreetMap Nominatim geocoding of Kherson-front places
+  url: https://nominatim.openstreetmap.org/search?q=Davydiv+Brid&format=json&countrycodes=ua
+  publisher: OpenStreetMap
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - geodata
+  - chapter
+  notes: Point coordinates (settlement centres) queried on 2026-10-01 for Kherson, Antonivka, Nova Kakhovka, Kozatske, Lvove,
+    Beryslav, Dudchany, Davydiv Brid, Darivka, Snihurivka, Kyselivka, Oleshky, Hola Prystan, Arkhanhelske, Posad-Pokrovske,
+    Mykolaiv, Kalanchak, Radensk, Brylivka and others; ODbL data.
+- id: pravda-2022-kryvyi-rih-dam
+  title: 'Kryvyi Rih missile strike: Over 100 houses and yards flooded'
+  url: https://www.pravda.com.ua/eng/news/2022/09/15/7367572/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2022-09-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - water
+  - strikes
+  - chapter
+  notes: Russian missiles on the Karachunivske reservoir dam (evening 14 Sep 2022) raised the Inhulets by 1-2 m downstream;
+    112 houses flooded.
+- id: pravda-2022-reznikov-four-himars
+  title: Ukraine receives additional American HIMARS – Minister of Defence
+  url: https://www.pravda.com.ua/eng/news/2022/08/01/7361345/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2022-08-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - himars
+  - aid
+  - chapter
+  notes: 'Reznikov: four more HIMARS arrived on 1 Aug 2022; German MARS II also arrived that day.'
+- id: president-2022-11-12-60-settlements
+  title: Defense forces win back control in more than 60 settlements of Kherson region – address of President of Ukraine
+  url: https://www.president.gov.ua/en/news/sili-oboroni-vstanovili-kontrol-u-ponad-60-naselenih-punktah-79105
+  publisher: Office of the President of Ukraine
+  authors: []
+  published: '2022-11-12'
+  accessed: '2026-10-01'
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - chapter
+  notes: 'Evening address: more than 60 settlements retaken; occupiers destroyed communications, water, heat and electricity
+    before fleeing; ten demining groups in Kherson. Fetched via the Wayback Machine.'
+- id: rferl-2022-krutov-kherson-ferries
+  title: As Ukrainian Troops Advance In Kherson, A Glimpse Of The Russian Withdrawal
+  url: https://www.rferl.org/a/ukraine-kherson-ferries-russian-retreat/32093482.html
+  publisher: RFE/RL
+  authors:
+  - Mike Eckel
+  - Mark Krutov
+  - Kyrylo Ovsyaniy
+  published: '2022-10-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - osint
+  - chapter
+  notes: Geolocates a Russian ferry with equipment at Kozatske (to the Nova Kakhovka canal mouth) using social media and Planet
+    imagery; ferries beside the damaged Antonivskyi bridge; Surovikin's 18 Oct remarks; Saldo's 50,000-60,000 civilian relocation.
+- id: stripes-2022-hudson-kherson-toll
+  title: Wounded Ukrainian soldiers reveal steep toll of Kherson offensive
+  url: https://www.stripes.com/theaters/europe/2022-09-07/wounded-ukrainian-soldiers-reveal-toll-kherson-offensive-7244535.html
+  publisher: Stars and Stripes (Washington Post syndication)
+  authors:
+  - John Hudson
+  published: '2022-09-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - casualties
+  - tactics
+  - chapter
+  notes: 'Washington Post interviews with nine wounded soldiers from seven units: Russian Orlan spotting, counter-battery
+    radar, tanks in concrete shelters, EW hijacking drones, unit-level losses; ''We lost five people for every one they did''.'
+- id: twz-2022-newdick-antonivskyi-bridge
+  title: Ukraine Liberates Kherson, Antonivskyi Bridge Knocked Down In Russian Retreat (Updated)
+  url: https://www.twz.com/ukraine-liberates-kherson-antonivskyi-bridge-knocked-down-in-russian-retreat
+  publisher: The War Zone (TWZ)
+  authors:
+  - Thomas Newdick
+  published: '2022-11-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - withdrawal
+  - dnipro-crossings
+  - chapter
+  notes: 'Liberation day: flag raised overnight, special forces lead; Reznikov''s 40,000; spans of the Antonivskyi bridge,
+    the pontoon beside it and the rail bridge destroyed, probably by Russian sappers; Ukraine had hit only a small segment
+    to allow later repair; Maxar imagery.'
+- id: ukrinform-2022-zaluzhnyi-kherson
+  title: Commander-in-Chief Zaluzhnyi thanks Defense Forces for extraordinary efforts to liberate Kherson
+  url: https://ukrinform.net/rubric-ato/3614076-commanderinchief-zaluzhnyi-thanks-defense-forces-for-extraordinary-efforts-to-liberate-kherson.html
+  publisher: Ukrinform
+  authors: []
+  published: '2022-11-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - chapter
+  notes: 'Zaluzhnyi: the operation lasted since early September and ''has its price''.'
+- id: unian-2022-urbanska-kherson-escape
+  title: 'Не з "доброї волі": як довго в Росії готували втечу з Херсона (Not out of ''goodwill'': how long Russia prepared
+    its escape from Kherson)'
+  url: https://www.unian.ua/war/ne-z-dobroji-voli-yak-dovgo-v-rosiji-gotuvali-vtechu-z-hersona-12047718.html
+  publisher: UNIAN
+  authors:
+  - Tetiana Urbanska
+  published: '2022-11-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - withdrawal
+  - chapter
+  notes: Ukrainian-language. Reports Tsaplienko's captured Russian schedule of a phased withdrawal 21 Oct-7 Nov and a crossing
+    schedule for 6,000+ pieces of equipment; UK intelligence view that the pull-out began about 22 Oct under cover of civilian
+    evacuation.
+- id: wavellroom-2022-miller-river-too-far
+  title: 'A River Too Far: Control of Bridges in Kherson Oblast'
+  url: https://wavellroom.com/2022/10/12/a-river-too-far-control-of-bridges-in-kherson-oblast/
+  publisher: Wavell Room
+  authors:
+  - Sergio Miller
+  published: '2022-10-12'
+  accessed: '2026-10-01'
+  type: review
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - himars
+  - orbat
+  - chapter
+  notes: 'Retired British Army intelligence officer''s account of the three Dnipro crossings and Darivka (lengths, spans),
+    HIMARS strike sequence and salvo sizes, Russian pontoon ferry sites, and the Russian right-bank ORBAT. Medium: secondary
+    synthesis of OSINT and Ukrainian reports; some dates differ from ISW. Cited by RUSI.'
+- id: wavellroom-2023-miller-kherson-withdrawal
+  title: Russia's Withdrawal from Kherson
+  url: https://wavellroom.com/2023/01/06/russias-withdrawal-from-kherson/
+  publisher: Wavell Room
+  authors:
+  - Sergio Miller
+  published: '2023-01-06'
+  accessed: '2026-10-01'
+  type: review
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - withdrawal
+  - orbat
+  - chapter
+  notes: 'Uses Russian withdrawal schedules obtained by Andriy Tsaplienko: 42,370 troops, 253 tanks, almost 400 APCs and several
+    thousand wheeled vehicles withdrawn from 21 Oct; five pontoon ferries, commandeered civilian ferries and barges, pipeline
+    on the rail bridge; argues Ukraine missed a chance to inflict a bigger defeat; Kovalchuk''s ''50-60% successful''. Cited
+    by RUSI.'
+- id: wikipedia-128th-mountain-assault-brigade
+  title: 128th Mountain Assault Brigade
+  url: https://en.wikipedia.org/wiki/128th_Mountain_Assault_Brigade
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Day of mourning in Zakarpattia on 2 Sep 2022; Myroliubivka retaken on 3 Oct, then villages along the Dnipro.
+- id: wikipedia-2022-kherson-counteroffensive
+  title: 2022 Kherson counteroffensive
+  url: https://en.wikipedia.org/wiki/2022_Kherson_counteroffensive
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - decision
+  - orbat
+  - chapter
+  notes: 'Overview with planning (WaPo 29 Dec 2022 and NYT ''The Partnership'' 2025 summaries: Melitopol option, Kovalchuk
+    plan to trap about 25,000, dam as last resort, Zelensky moving the start to 29 Aug, Kovalchuk replaced by Tarnavskyi),
+    claimed unit losses, force estimates and the culmination at the river.'
+- id: wikipedia-28th-mechanized-brigade
+  title: 28th Mechanized Brigade
+  url: https://en.wikipedia.org/wiki/28th_Mechanized_Brigade_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Held the Oleksandrivka and Posad-Pokrovske sector through 2022; Kyselivka on 10 Nov and Kherson on 11-12 Nov (partly
+    unsourced).
+- id: wikipedia-35th-marine-brigade
+  title: 35th Marine Brigade
+  url: https://en.wikipedia.org/wiki/35th_Marine_Brigade_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Crossed the Inhulets on 2 Oct 2022 and took Davydiv Brid on 4 Oct.
+- id: wikipedia-49th-combined-arms-army
+  title: 49th Combined Arms Army
+  url: https://en.wikipedia.org/wiki/49th_Combined_Arms_Army
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Main Russian force in Kherson as of July 2022, up to about 10,000 troops (per Forbes).
+- id: wikipedia-57th-motorized-brigade
+  title: 57th Motorized Brigade
+  url: https://en.wikipedia.org/wiki/57th_Motorized_Brigade_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Redeployed from Luhansk to Kherson; took Velyke Artakove, Bila Krynytsia, Andriivka and Sukhyi Stavok in the counteroffensive.
+- id: wikipedia-60th-mechanized-brigade
+  title: 60th Mechanized Brigade
+  url: https://en.wikipedia.org/wiki/60th_Mechanized_Brigade
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Ivanivka on 11 Jul 2022; with a 128th Brigade battalion, the October drive on Zolota Balka, Dudchany and Mylove;
+    no rest since the start of the war.
+- id: wikipedia-63rd-mechanized-brigade
+  title: 63rd Mechanized Brigade
+  url: https://en.wikipedia.org/wiki/63rd_Mechanized_Brigade_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Fought on the Kherson-Mykolaiv axis from April 2022 and took part in the liberation of Kherson; moved to Bakhmut
+    on 15 Dec 2022.
+- id: wikipedia-810th-naval-infantry-brigade
+  title: 810th Guards Naval Infantry Brigade
+  url: https://en.wikipedia.org/wiki/810th_Guards_Naval_Infantry_Brigade
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - orbat
+  - chapter
+  notes: Ukrainian General Staff claim (12 Sep 2022) that the brigade lost over 85% of its personnel in Kherson; later rebuilt.
+- id: wikipedia-antonivka-railway-bridge
+  title: Antonivka Railway Bridge
+  url: https://en.wikipedia.org/wiki/Antonivka_Railway_Bridge
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - chapter
+  notes: Single-track rail bridge (opened 1954, nearly 1 km, river km 43.5, 6 km east of Antonivka), coordinates; made impassable
+    in summer 2022, destroyed in the November withdrawal.
+- id: wikipedia-antonivka-road-bridge
+  title: Antonivka Road Bridge
+  url: https://en.wikipedia.org/wiki/Antonivka_Road_Bridge
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - chapter
+  notes: Structure (1,366 m, 31 piers, opened 1985, M14), coordinates, strike chronology (19, 20 and 26 Jul at about 22:55),
+    repairs and holes in August, destruction on 11 Nov attributed by Rybar to Russian forces.
+- id: wikipedia-kakhovka-dam
+  title: Kakhovka Dam
+  url: https://en.wikipedia.org/wiki/Kakhovka_Dam
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - dnipro-crossings
+  - water
+  - chapter
+  notes: Dam 3,273 m long and 30 m high carrying the R47 and a railway; coordinates; road and rail sections blown on 11 Nov
+    2022 by retreating Russian forces; sluices opened and the reservoir drawn down.
+- id: wikipedia-liberation-of-kherson
+  title: Liberation of Kherson
+  url: https://en.wikipedia.org/wiki/Liberation_of_Kherson
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - kherson
+  - withdrawal
+  - chapter
+  notes: '9-11 Nov 2022: MoD claim of 30,000 withdrawn and no equipment left; Reznikov''s 40,000; pontoon crossing on the
+    morning of 11 Nov; Freedom Square; Maxar: at least seven bridges destroyed, four over the Dnipro; about 40% of the oblast
+    ceded.'

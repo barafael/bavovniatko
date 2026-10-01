@@ -1,0 +1,40 @@
+{"pair": "26a592748e1d", "relation": "refines", "from": "claim:cc04_0009_42", "to": "claim:cc04_0029_03", "strength": 0.6, "rationale": "A is the specific 29 August Lvove ferry strike that opens B's campaign against the Lvove and Kozatske ferries."}
+{"pair": "26c82fffbee0", "relation": "none", "rationale": "The ship's departure and its coastal route are different facts."}
+{"pair": "26da9b2b5174", "relation": "none", "rationale": "Arming sea drones with missiles and the AIM-9M's seeker limit are different assertions."}
+{"pair": "26fb50783c66", "relation": "supports", "from": "claim:cv01_0007_22", "to": "claim:cv01_0013_07", "strength": 0.5, "rationale": "A's video of the 128th TDF Battalion and SSO hitting a column near Brovary backs B's credit to those units, from the same LB article.", "independent": false}
+{"pair": "2727eacddc6d", "relation": "none", "rationale": "A monthly shoot-down tally and a comment on Russian aircraft after the A-50 loss are different assertions."}
+{"pair": "279a9fbf4031", "relation": "supports", "from": "claim:cv02_0003_09", "to": "claim:cv02_0016_11", "strength": 0.6, "rationale": "A's account includes the smoke discharge B states, from the same TWZ article.", "independent": false}
+{"pair": "27af9545da1f", "relation": "none", "rationale": "A names-only loss floor and a report of assault group size are different quantities."}
+{"pair": "27cc7d6f9222", "relation": "none", "rationale": "An attack axis and the map box bounds share only place names."}
+{"pair": "27de9d86ccff", "relation": "none", "rationale": "Khartiia's July–August proposal and the later clearing operation are different events."}
+{"pair": "27ed04c410f5", "relation": "none", "rationale": "Strikes on the brigade and its supply-post request are different events."}
+{"pair": "27edf27e726e", "relation": "none", "rationale": "The fleet's composition and an assessment of tug value are different assertions."}
+{"pair": "283b23ccaa55", "relation": "refines", "from": "claim:cv01_0007_19", "to": "claim:cv01_0005_11", "strength": 0.5, "rationale": "B states what ISW's coverage of Brovary over 9–10 March actually said."}
+{"pair": "28427132ddec", "relation": "none", "rationale": "A date bound and the decision to commit the second Bradley are different assertions."}
+{"pair": "2851d4666c02", "relation": "none", "rationale": "The column's composition and the road geography are different facts."}
+{"pair": "28546d1ed14f", "relation": "supersedes", "from": "claim:cc10_0052_07", "to": "claim:cc10_0006_04", "strength": 0.6, "rationale": "B is the later state of the footholds: two of A's three were given up by early November 2023."}
+{"pair": "28c43443a3a4", "relation": "none", "rationale": "The fall of Pavlivka and the brigades' peak strength are different facts."}
+{"pair": "29277b4d483d", "relation": "supports", "from": "claim:cc17_0025_04", "to": "claim:cc17_0007_11", "strength": 0.4, "rationale": "Both Pravda accounts place Code 9.2 fighting Russians in the Kindrashivka woods in August 2025.", "independent": false}
+{"pair": "297ccf08703f", "relation": "none", "rationale": "A counterattack on the rail line and the field's description as a kill zone are different assertions."}
+{"pair": "29e7c3abfe98", "relation": "none", "rationale": "Bradleys anchoring the flank and a later Abrams video are different facts."}
+{"pair": "29eaa11fb0f0", "relation": "none", "rationale": "Map box size and road type are different facts."}
+{"pair": "29eaf08ad34f", "relation": "none", "rationale": "The bay's location and the mine-laying are different facts."}
+{"pair": "29fcb2869a57", "relation": "none", "rationale": "Woodland concealment and a Code 9.2 strike are different assertions."}
+{"pair": "2a1c6e9c236c", "relation": "none", "rationale": "The group's composition and a dispute over who started the operation are different assertions."}
+{"pair": "2a438c868b23", "relation": "supersedes", "from": "claim:cc17_0007_52", "to": "claim:cc17_0007_09", "strength": 0.6, "rationale": "Khartiia's 12 December claim that Kindrashivka and Radkivka were liberated replaces A's mid-August status of Russian control."}
+{"pair": "2a4635357745", "relation": "supports", "from": "claim:cv02_0020_02", "to": "claim:cv02_0004_01", "strength": 0.6, "rationale": "The gunner's own account of choosing a mission kill backs the experts' description of a mission kill by 25 mm fire.", "independent": true}
+{"pair": "2a98a6d65cc8", "relation": "none", "rationale": "An infiltration on 26 October and the December liberation claim are different events."}
+{"pair": "2acd92782d31", "relation": "supports", "from": "claim:cc02_0026_18", "to": "claim:cc02_0016_08", "strength": 0.4, "rationale": "Russian deployment of Tor and Pantsirs on the island is consistent with the later wreckage including them.", "independent": true}
+{"pair": "2addfa759a42", "relation": "none", "rationale": "Firing AP rounds into the rear and a suggestion that the crew was killed are different assertions."}
+{"pair": "2b044176f4ae", "relation": "none", "rationale": "A single pontoon strike and a ferry count are different assertions."}
+{"pair": "2b1a19e6d38a", "relation": "none", "rationale": "A monthly tally and recalled sorties after the A-50 loss are different assertions."}
+{"pair": "2b43eb6738f2", "relation": "none", "rationale": "Day-long surrender demands and the morning weather are different facts."}
+{"pair": "2b5dfa078701", "relation": "none", "rationale": "The bridgehead's crossings in July and the November demolitions are different assertions."}
+{"pair": "2ba490bfa7fa", "relation": "duplicates", "from": "claim:cc12_0023_12", "to": "claim:cc12_0010_72", "strength": 0.95, "rationale": "Same Ihnat quote of 2 March 2024 from the same Ukrinform source."}
+{"pair": "2be2eef29534", "relation": "supports", "from": "claim:cc08_0010_039", "to": "claim:cc08_0025_02", "strength": 0.6, "rationale": "A's BMP-1/2s in the 6 February assault back B's listing of BMP-1/2s at Vuhledar, with a shared Forbes source.", "independent": false}
+{"pair": "2bf7a23cc585", "relation": "supports", "from": "claim:cc08_0023_11", "to": "claim:cc08_0026_05", "strength": 0.5, "rationale": "A's naming of the 136th Brigade and BARS at Vuhledar in February is consistent with B's report of them fed in in March, both from ISW.", "independent": false}
+{"pair": "2c286abba080", "relation": "refines", "from": "claim:cc12_0025_10", "to": "claim:cc12_0010_55", "strength": 0.7, "rationale": "B adds the rescuers' report to the same 19 February beacon posts."}
+{"pair": "2c4c335daeb3", "relation": "none", "rationale": "The battalion's presence and its commander's tactical choice are different assertions."}
+{"pair": "2c65cb75241b", "relation": "none", "rationale": "Combined strength and brigade organisation are different facts."}
+{"pair": "2c776e1af99b", "relation": "none", "rationale": "Vehicles bunching and road type are different facts."}
+{"pair": "2c862cb157d5", "relation": "refines", "from": "claim:cc03_0020_06", "to": "claim:cc03_0008_43", "strength": 0.7, "rationale": "B adds the strength of about 500 marines to the same 11–12 April breakout from Illich."}

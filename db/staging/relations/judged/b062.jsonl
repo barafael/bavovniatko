@@ -1,0 +1,40 @@
+{"pair": "2cbb9f15664d", "relation": "duplicates", "from": "claim:cc05_0031_03", "to": "claim:cc05_0023_08", "strength": 0.95, "rationale": "Same Euromaidan inference that underwater drones placed the June 2025 charges."}
+{"pair": "2cca8527084f", "relation": "none", "rationale": "The brigade's losses and a later prisoner claim are different assertions."}
+{"pair": "2cd70f304ecd", "relation": "refines", "from": "claim:cc08_0022_01", "to": "claim:cc08_0010_003", "strength": 0.6, "rationale": "B adds that Muradov, appointed on 5 October 2022 as in A, commanded the Eastern Grouping at Vuhledar."}
+{"pair": "2d32c76a4474", "relation": "supports", "from": "claim:cv02_0016_07", "to": "claim:cv02_0018_04", "strength": 0.6, "rationale": "Both TWZ accounts have an FPV drone finishing off the abandoned T-90M.", "independent": false}
+{"pair": "2d3366ba07ac", "relation": "supports", "from": "claim:cc06_0029_06", "to": "claim:cc06_0034_13", "strength": 0.7, "rationale": "A's arrival of the 14th Brigade at Ternova on 12 September matches B's border run, from the same source.", "independent": false}
+{"pair": "2d394285fb8d", "relation": "duplicates", "from": "claim:cc10_0052_15", "to": "claim:cc10_0009_01", "strength": 0.95, "rationale": "Same staged withdrawal from Krynky (36th first in winter, 35th last in July 2024), from the same source."}
+{"pair": "2db6a7eafb06", "relation": "none", "rationale": "The 11–12 April breakout and the fall of the works on 13 April are compatible, distinct events."}
+{"pair": "2dfe9d70bf8f", "relation": "none", "rationale": "A general response and the V7's armament are different assertions."}
+{"pair": "2e1aa64fb823", "relation": "supports", "from": "claim:cc04_0009_61", "to": "claim:cc04_0026_09", "strength": 0.6, "rationale": "A's 1–2 m rise of the Inhulets is the result of the dam strike B describes, from the same source.", "independent": false}
+{"pair": "2e447091e3c3", "relation": "supports", "from": "claim:cv01_0019_03", "to": "claim:cv01_0015_07", "strength": 0.7, "rationale": "Berezenko's account of self-propelled artillery up front backs A's assessment that artillery led the column, from the same NYT article.", "independent": false}
+{"pair": "2e97ce3e0f01", "relation": "none", "rationale": "The decision to go and the volume of fire are different claims."}
+{"pair": "2ed2c57fd734", "relation": "supports", "from": "claim:cv01_0007_23", "to": "claim:cv01_0013_07", "strength": 0.4, "rationale": "A's 12 March SSO and TDF attack is consistent with B's credit to those units, from the same LB article.", "independent": false}
+{"pair": "2edc9380a151", "relation": "duplicates", "from": "claim:cc02_0028_13", "to": "claim:cc02_0009_21", "strength": 0.85, "rationale": "Both state that Col. Bedzai's helicopter was shot down on 7 May 2022 at Zmiinyi Island, from the same source."}
+{"pair": "2f2f8f075dfb", "relation": "none", "rationale": "Peak strength and a later \"largely destroyed\" assessment are different assertions."}
+{"pair": "2f3f6de81f24", "relation": "duplicates", "from": "claim:cc12_0033_13", "to": "claim:cc12_0010_26", "strength": 0.9, "rationale": "Same sequence of Lukashenko's denial, minimising and admission over the Machulishchy A-50."}
+{"pair": "2f877fb0316f", "relation": "none", "rationale": "The duel's setting and the crew's panic are different assertions."}
+{"pair": "2fce78c03efa", "relation": "none", "rationale": "An attack on Vuhledar and the map box share only place names."}
+{"pair": "3029d9757031", "relation": "none", "rationale": "Volume of fire and the change of aim point are different claims."}
+{"pair": "30690cb65f3c", "relation": "none", "rationale": "Weapons carried and the fighter types over Kyiv are different facts."}
+{"pair": "307df1a27eb4", "relation": "none", "rationale": "A Bradley killing MT-LBs and the doctrine for engaging tanks are different assertions."}
+{"pair": "30db7b2b6d7a", "relation": "none", "rationale": "Russian forces on the Kherson right bank and at Izium–Balakliia are different scopes."}
+{"pair": "30e4f87694f2", "relation": "duplicates", "from": "claim:cc12_0023_28", "to": "claim:cc12_0010_55", "strength": 0.85, "rationale": "Same 19 February 2024 Oleshchuk posting of Cospas-Sarsat beacon positions in the Sea of Azov."}
+{"pair": "312ad48b2ffc", "relation": "none", "rationale": "A village setting and nearby trees are compatible, distinct details."}
+{"pair": "31a8d7323c36", "relation": "none", "rationale": "The Lyman garrison and the Kharkiv front defenders are different scopes."}
+{"pair": "31b6126faeea", "relation": "supports", "from": "claim:cc02_0011_49", "to": "claim:cc02_0030_17", "strength": 0.5, "rationale": "A's TB2 kill of a Tor is an instance of B's TB2s hunting the SHORAD fed to the island, from the same Naval News source.", "independent": false}
+{"pair": "3234c28fd404", "relation": "refines", "from": "claim:cc02_0026_03", "to": "claim:cc02_0011_18", "strength": 0.6, "rationale": "B restates A's 120 m launch altitude over Odesa and adds that it may explain the failures."}
+{"pair": "325974d8db29", "relation": "none", "rationale": "The duel's setting and the gunner's change of aim point are different assertions."}
+{"pair": "328bdb0cf45e", "relation": "none", "rationale": "Road type and the column's movement are different facts."}
+{"pair": "3349d8d133e7", "relation": "none", "rationale": "The TB2's purchase as a spotter and a milblogger account of the Moskva strike are different assertions."}
+{"pair": "336348ade9ed", "relation": "refines", "from": "claim:cc06_0040_03", "to": "claim:cc06_0005_04", "strength": 0.7, "rationale": "B gives the fuller wording of the same 10 September MoD regrouping announcement."}
+{"pair": "3371a0a72c0f", "relation": "none", "rationale": "The group's operations and its composition are different facts."}
+{"pair": "33732cf46b82", "relation": "supports", "from": "claim:cc13_0030_29", "to": "claim:cc13_0023_16", "strength": 0.5, "rationale": "The V7's two AIM-9Ms are consistent with A's AIM-9M fits from January 2025.", "independent": false}
+{"pair": "337dd69ae71b", "relation": "none", "rationale": "The bridge's role and its location are different facts."}
+{"pair": "33e474bf0f05", "relation": "none", "rationale": "A surrender claim and the brigade split give no conflicting figures."}
+{"pair": "33fcdcec06f3", "relation": "none", "rationale": "Volume of fire and the aim at the optics are different claims."}
+{"pair": "34d480ef7052", "relation": "none", "rationale": "Casualties and garrison size are different facts."}
+{"pair": "34e84d90f189", "relation": "supports", "from": "claim:cc04_0009_16", "to": "claim:cc04_0015_05", "strength": 0.5, "rationale": "A's recapture of Lozove and Andriivka in July matches B's east-bank foothold containing them in August.", "independent": false}
+{"pair": "35126440422a", "relation": "weakens", "from": "claim:cc17_0025_07", "to": "claim:cc17_0031_01", "strength": 0.7, "rationale": "A says Gerasimov's claim that Kupiansk was taken was undercut by Zelensky's video in the town on 12 December."}
+{"pair": "354aaa1e4b1c", "relation": "none", "rationale": "Elevations and the river's course are different facts."}
+{"pair": "35f0d3595c67", "relation": "supports", "from": "claim:cc13_0013_07", "to": "claim:cc13_0004_04", "strength": 0.6, "rationale": "Both date the first sea-drone swarm raid on Sevastopol to 29 October 2022, with a shared Pravda source.", "independent": false}

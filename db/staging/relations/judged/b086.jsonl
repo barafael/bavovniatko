@@ -1,0 +1,40 @@
+{"pair": "eb02e55fc95a", "relation": "duplicates", "from": "claim:cc04_0034_01", "to": "claim:cc04_0009_104", "strength": 0.95, "rationale": "The same entry into Kherson along the M14 and T1501 on 11 November 2022, extracted twice."}
+{"pair": "ec26f1944959", "relation": "none", "rationale": "Taking Pavlivka and a battle-long casualty floor are different subjects."}
+{"pair": "ec625711b700", "relation": "supports", "from": "claim:cv02_0018_04", "to": "claim:cv02_0016_11", "strength": 0.6, "independent": false, "rationale": "B's spin-out account includes the T-90M laying smoke, as A states; same source."}
+{"pair": "ec6c6b660af3", "relation": "duplicates", "from": "claim:cc04_0033_02", "to": "claim:cc04_0005_14", "strength": 0.9, "rationale": "The same destruction on 11 November 2022 of the Antonivskyi road and rail bridges, the Kakhovka dam road and the Darivka bridge."}
+{"pair": "ec7c1cdbd11e", "relation": "none", "rationale": "The attack's description and its tally of results are different details."}
+{"pair": "ecdb1ab260de", "relation": "supports", "from": "claim:cc06_0025_04", "to": "claim:cc06_0036_19", "strength": 0.6, "independent": false, "rationale": "Both name the Ukrainian Oskil bridgeheads at Borova, Dvorichna and Kupiansk in September 2022; same ISW reports."}
+{"pair": "ece231b8db6b", "relation": "none", "rationale": "The 1 November front line and terrain elevation are different subjects."}
+{"pair": "ed1000da9129", "relation": "none", "rationale": "The Bradleys' manoeuvre and an expert's view of crew panic are different assertions."}
+{"pair": "ed6a32bf2e93", "relation": "none", "rationale": "The size of the map box and a point distance are different computations."}
+{"pair": "ed714d2be2f5", "relation": "none", "rationale": "A computed distance and a brigade's area of operations are different subjects."}
+{"pair": "ed8bd878c66b", "relation": "duplicates", "from": "claim:cc05_0030_05", "to": "claim:cc05_0010_81", "strength": 0.9, "rationale": "The same Vantor imagery of smoke-generator vehicles on the Crimean Bridge in June 2026."}
+{"pair": "edd086175edc", "relation": "none", "rationale": "The raid's details and Saldo's denial are different assertions."}
+{"pair": "ee076e60e6c2", "relation": "none", "rationale": "The bank's relief and the river's course are different facts."}
+{"pair": "ee0ddf0d4d21", "relation": "none", "rationale": "A coordinate fact for the Kerch Strait does not bear on the sinking claim."}
+{"pair": "ee846e934d55", "relation": "none", "rationale": "The river's course and the battle narrative are different subjects."}
+{"pair": "eeb7497653f6", "relation": "duplicates", "from": "claim:cc13_0006_04", "to": "claim:cc13_0013_55", "strength": 0.9, "rationale": "The same Magura sinking of the Sergey Kotov near the Kerch Strait on 4–5 Mar 2024."}
+{"pair": "eef92e77f56c", "relation": "none", "rationale": "A sortie recall and the glide-bomb context of the shootdowns are different subjects."}
+{"pair": "eef95af78e2f", "relation": "supports", "from": "claim:cc10_0024_02", "to": "claim:cc10_0019_02", "strength": 0.5, "independent": false, "rationale": "The marines' route across islands and the Konka and Krynka channels corroborates A's belt of islands and channels."}
+{"pair": "eefd507181f8", "relation": "supports", "from": "claim:cc02_0011_49", "to": "claim:cc02_0026_16", "strength": 0.6, "independent": false, "rationale": "The TB2 kill of a Tor on 6 May 2022 is an instance of B's assessment that TB2s killed the Tor; they share the Naval News source."}
+{"pair": "ef14be7ef454", "relation": "duplicates", "from": "claim:cc13_0006_02", "to": "claim:cc13_0013_43", "strength": 0.9, "rationale": "The same Magura sinking of the Ivanovets at Donuzlav on 31 Jan – 1 Feb 2024."}
+{"pair": "efdb5c767a74", "relation": "refines", "from": "claim:cc05_0010_57", "to": "claim:cc05_0004_06", "strength": 0.6, "rationale": "Sutton's June 2024 description of the barge line, booms, nets and towable barges details A's list of barrier layers."}
+{"pair": "f00d0bf4283c", "relation": "none", "rationale": "HIMARS strikes and computed bridge distances are different subjects."}
+{"pair": "f035dc7b49c5", "relation": "duplicates", "from": "claim:cc02_0030_26", "to": "claim:cc02_0034_16", "strength": 0.9, "rationale": "The same MoD framing of the 30 Jun 2022 Zmiinyi withdrawal as a goodwill gesture toward the UN grain corridor."}
+{"pair": "f042bfe8083c", "relation": "duplicates", "from": "claim:cc02_0021_11", "to": "claim:cc02_0011_51", "strength": 0.95, "rationale": "The same Su-27 pair toss-bombing Zmiinyi Island on 7 May 2022."}
+{"pair": "f0de93332b8d", "relation": "supports", "from": "claim:cc12_0010_12", "to": "claim:cc12_0020_15", "strength": 0.5, "independent": false, "rationale": "A's S-400s in Belarus and Crimea forcing Ukrainian jets low confirms B's listing of S-400s there; same RUSI source."}
+{"pair": "f108157797a5", "relation": "supports", "from": "claim:cc12_0025_14", "to": "claim:cc12_0023_29", "strength": 0.4, "independent": false, "rationale": "Ukrainian jets hugging the ground under Su-35 patrols fits RUSI's assessment that Russian radars and R-77-1s outclassed them; same source."}
+{"pair": "f10c66929ac6", "relation": "none", "rationale": "The 7 September attack and the later border run are different events."}
+{"pair": "f10c8b92729d", "relation": "none", "rationale": "Russian countermeasures and a specific TB2 strike are different subjects."}
+{"pair": "f15cfbc27fcc", "relation": "none", "rationale": "The May 2022 strikes and the 2021 TB2 delivery are different events."}
+{"pair": "f17067e1692e", "relation": "supports", "from": "claim:cv02_0020_02", "to": "claim:cv02_0016_03", "strength": 0.7, "independent": true, "rationale": "The gunner's own account of choosing a mission kill corroborates the experts' reading of the video."}
+{"pair": "f17d47e07cc5", "relation": "none", "rationale": "A tactical aim at Zmiinyi Island and a broad assessment of the Black Sea war are related context only."}
+{"pair": "f198dfdd827c", "relation": "none", "rationale": "An attack report and a peak strength estimate are different subjects."}
+{"pair": "f19b9d6734b7", "relation": "duplicates", "from": "claim:cc12_0010_05", "to": "claim:cc12_0025_17", "strength": 0.85, "rationale": "The same debunking of the viral \"Ghost of Kyiv\" clip as DCS World footage."}
+{"pair": "f1c0c88ba678", "relation": "none", "rationale": "Radar limits and the missile fault fix are different facts."}
+{"pair": "f1d607a55552", "relation": "supports", "from": "claim:cc02_0007_02", "to": "claim:cc02_0026_17", "strength": 0.6, "independent": false, "rationale": "A's TB2 strikes on the Serna and the Raptors through May 2022 substantiate B's account of TB2s hitting the resupply boats; same source."}
+{"pair": "f204edbd8a8c", "relation": "duplicates", "from": "claim:cc02_0023_09", "to": "claim:cc02_0011_52", "strength": 0.8, "rationale": "The same Russian fighter shootdown of Bedzai's Mi-14 on 7 May 2022; A is the more precise version."}
+{"pair": "f221985fa996", "relation": "supports", "from": "claim:cc10_0052_08", "to": "claim:cc10_0007_02", "strength": 0.7, "independent": false, "rationale": "Euromaidan also reports the Marine Corps and General Staff declaring left-bank bridgeheads in mid-November 2023."}
+{"pair": "f27aae4ec0f6", "relation": "supports", "from": "claim:cc02_0028_09", "to": "claim:cc02_0026_17", "strength": 0.4, "independent": true, "rationale": "The 2 May TB2 strike on two Raptors is an instance of the TB2s hitting boats at Zmiinyi Island."}
+{"pair": "f27cc0b6fe93", "relation": "none", "rationale": "The shelter arrangement and the casualty report are different facts."}
+{"pair": "f319a73a4f7d", "relation": "supports", "from": "claim:cc08_0048_04", "to": "claim:cc08_0010_020", "strength": 0.5, "independent": false, "rationale": "ISW's view that the command repeated the Pavlivka plan at Vuhledar in January 2023 fits the announced 155th Brigade offensive."}

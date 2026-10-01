@@ -1,0 +1,40 @@
+{"pair": "72f5e22e964f", "relation": "none", "rationale": "A later TV interview and the crew's identity are different facts."}
+{"pair": "731e74606805", "relation": "supports", "from": "claim:cc02_0007_02", "to": "claim:cc02_0030_17", "strength": 0.7, "rationale": "TB2s picking off the Serna and Mi-8 bringing replacements is the small-craft resupply B says they hunted; shared Naval News source.", "independent": false}
+{"pair": "734c9a4e536c", "relation": "duplicates", "from": "claim:cc13_0044_02", "to": "claim:cc13_0013_11", "strength": 0.95, "rationale": "Same 29 October 2022 Russian suspension of the grain deal and blame on British specialists, same sources."}
+{"pair": "73aa38fa4407", "relation": "supports", "from": "claim:cc12_0010_54", "to": "claim:cc12_0023_14", "strength": 0.4, "rationale": "The 19 February Su-34/Su-35S claim is part of the February 2024 shoot-down spree; both rest on Ukrainian claims.", "independent": false}
+{"pair": "73b6b3c16994", "relation": "refines", "from": "claim:cv02_0018_03", "to": "claim:cv02_0003_07", "strength": 0.5, "rationale": "B qualifies A's account of the AP rounds into the T-90M: they gave trouble and Serhiy switched to the optics."}
+{"pair": "73b6f87ddc9a", "relation": "none", "rationale": "Different moments of the Stepove duel."}
+{"pair": "73cd583aa29e", "relation": "none", "rationale": "Tank specifications vs smoke discharge: different facts."}
+{"pair": "73fd8b5b037c", "relation": "supports", "from": "claim:cc13_0035_15", "to": "claim:cc13_0030_29", "strength": 0.5, "rationale": "The 2 May 2025 AIM-9 kill from Magura V7s corroborates the V7's AIM-9M armament.", "independent": true}
+{"pair": "7484e2737520", "relation": "supports", "from": "claim:cc10_0015_021", "to": "claim:cc10_0006_04", "strength": 0.6, "rationale": "The 36th taking Poima over the rail embankment supports its foothold at the rail bridge and Poima; same source.", "independent": false}
+{"pair": "748fc7fb23c1", "relation": "supports", "from": "claim:cc06_0025_05", "to": "claim:cc06_0029_13", "strength": 0.6, "rationale": "The 103rd's crossing at Kryva Luka on 3 September supports its working the Donets flank from that date.", "independent": false}
+{"pair": "74c5e92d3a3f", "relation": "none", "rationale": "Russian capture of the villages and the later Ukrainian clearing are sequential events."}
+{"pair": "74c6e02b7263", "relation": "duplicates", "from": "claim:cc12_0007_05", "to": "claim:cc12_0004_05", "strength": 0.9, "rationale": "Same Il-22M11 damaged on 14 January 2024 and landing at Anapa with its commander dead; A has more sources."}
+{"pair": "7514b31fe639", "relation": "refines", "from": "claim:cc13_0035_12", "to": "claim:cc13_0006_04", "strength": 0.7, "rationale": "B adds the five hits, failed tow and bridge closure to the 5 March 2024 Sergey Kotov sinking."}
+{"pair": "757c69192d1d", "relation": "supports", "from": "claim:cv01_0012_04", "to": "claim:cv01_0019_03", "strength": 0.6, "rationale": "The column's makeup (SP artillery mixed with tanks, no infantry) supports the defenders' account of a baffling Russian choice; shared NYT source.", "independent": false}
+{"pair": "758e636f4732", "relation": "refines", "from": "claim:cv02_0020_02", "to": "claim:cv02_0003_07", "strength": 0.5, "rationale": "B qualifies A: the AP ammunition had a problem, and Serhiy changed rounds and aim point."}
+{"pair": "759b6cd9152c", "relation": "supports", "from": "claim:cc13_0013_66", "to": "claim:cc13_0044_16", "strength": 0.7, "rationale": "The loss of a Baltic Fleet Mi-24VP hunting USVs off Sevastopol is an instance of B; same source.", "independent": false}
+{"pair": "75e8d1b3af56", "relation": "duplicates", "from": "claim:cc13_0013_62", "to": "claim:cc13_0025_03", "strength": 0.9, "rationale": "Same replacement of Yevmenov by Moiseyev in March 2024, same source."}
+{"pair": "764f498cf414", "relation": "none", "rationale": "Firing positions vs equipment faults: different facts."}
+{"pair": "7680b000484e", "relation": "none", "rationale": "The Raptors were patrol boats, not the resupply craft B describes."}
+{"pair": "76c80fe89d5f", "relation": "none", "rationale": "Prokopenko's later judgement does not bear on the breakout account."}
+{"pair": "76dfb28dbfa1", "relation": "none", "rationale": "Drone observation vs an expert's view of the crew's panic: different assertions."}
+{"pair": "76eca3c364d1", "relation": "none", "rationale": "A prisoner claim vs brigade strength at peak: unrelated."}
+{"pair": "7739ec2ccd3f", "relation": "supports", "from": "claim:cc17_0007_30", "to": "claim:cc17_0004_03", "strength": 0.4, "rationale": "The Kupiansk Tactical Group's sector clearance supports A's account of building-by-building hunting; same source.", "independent": false}
+{"pair": "77c15266638c", "relation": "none", "rationale": "Ukrainian kill claims vs Russian friendly-fire claims address different questions."}
+{"pair": "78026f14ccfb", "relation": "none", "rationale": "Location of the works vs Russia's prisoner claim: unrelated."}
+{"pair": "784ef32e91e0", "relation": "none", "rationale": "Katran's commander and its composition are complementary facts."}
+{"pair": "785a396c7aa7", "relation": "none", "rationale": "Different moments of the Stepove duel."}
+{"pair": "785cb0a2f3c5", "relation": "none", "rationale": "Different moments of the Stepove duel."}
+{"pair": "786960e1cf58", "relation": "none", "rationale": "Camouflage and decoys vs equipment faults: different facts."}
+{"pair": "78a897f1ae92", "relation": "duplicates", "from": "claim:cc10_0046_07", "to": "claim:cc10_0015_033", "strength": 0.9, "rationale": "Same HIMARS strike on the 35th Motor Rifle Brigade column at Hladkivka, same source."}
+{"pair": "78d29abeacea", "relation": "supports", "from": "claim:cc17_0010_05", "to": "claim:cc17_0007_11", "strength": 0.7, "rationale": "Both say Kindrashivka was cleared with the 92nd Brigade; same source.", "independent": false}
+{"pair": "78d6a9048104", "relation": "none", "rationale": "Different Neptune launches (Moskva in April vs landing ships in February)."}
+{"pair": "78d94803d637", "relation": "refines", "from": "claim:cc03_0006_09", "to": "claim:cc03_0005_05", "strength": 0.6, "rationale": "B gives the size of the first UN/ICRC Azovstal evacuation within the convoy period A states."}
+{"pair": "795333d0fd67", "relation": "none", "rationale": "The brigade's route and an ambush episode on it are different facts."}
+{"pair": "79690aba170e", "relation": "none", "rationale": "A distance computation does not bear on the ambush outcome."}
+{"pair": "798267163c93", "relation": "none", "rationale": "Basing and roles vs the recall of sorties: different assertions."}
+{"pair": "798d172f8ef1", "relation": "supports", "from": "claim:cc02_0011_09", "to": "claim:cc02_0005_04", "strength": 0.6, "rationale": "B's afternoon of Su-27/Su-34 strikes and Moskva gunfire supports A's day of naval gunfire and air strikes; same source.", "independent": false}
+{"pair": "7992b4dda442", "relation": "none", "rationale": "Computed distances vs the bridge demolitions: unrelated."}
+{"pair": "79cc9e0b3e5a", "relation": "supports", "from": "claim:cc02_0023_08", "to": "claim:cc02_0005_04", "strength": 0.6, "rationale": "B's identification of the aircraft as Su-27 and Su-34 matches A; same source.", "independent": false}
+{"pair": "7a0948b23592", "relation": "duplicates", "from": "claim:cc04_0004_18", "to": "claim:cc04_0033_02", "strength": 0.9, "rationale": "Same 11 November 2022 demolition of the Antonivskyi bridges, dam road and Darivka bridge; B has more sources."}

@@ -1,0 +1,40 @@
+{"pair": "3e8c8bd3573b", "relation": "none", "rationale": "A shoot-down event and a seeker limitation are different assertions."}
+{"pair": "3f5cbdeb8297", "relation": "none", "rationale": "Units' presence and a Ukrainian claim of their losses are different assertions."}
+{"pair": "4001ef218b71", "relation": "none", "rationale": "The commander's identity and the brigade's blame are different facts."}
+{"pair": "400be5b1ab13", "relation": "supports", "from": "claim:cc08_0010_014", "to": "claim:cc08_0045_01", "strength": 0.6, "rationale": "The men's letter in A (half the equipment lost in four days) matches B's set-piece summary, citing the same ISW report.", "independent": false}
+{"pair": "40311d486c70", "relation": "none", "rationale": "The tank's specifications and the first Bradley's failed pass are different facts."}
+{"pair": "407465b657b3", "relation": "none", "rationale": "The crew's mission count and the change of aim are different claims."}
+{"pair": "40776a80901f", "relation": "none", "rationale": "A shoot-down time and the sea's geography share only place names."}
+{"pair": "40976d591450", "relation": "none", "rationale": "A date bound and the crew's mission count are different assertions."}
+{"pair": "40d1df75235b", "relation": "none", "rationale": "The tank's manoeuvre and an expert's view of crew panic are different assertions."}
+{"pair": "4100817fa359", "relation": "none", "rationale": "The sinking and the location of a different strike share only a place name."}
+{"pair": "416cff2b4735", "relation": "none", "rationale": "A specific recall order and the general basing of Su-34s and Su-35s are different assertions."}
+{"pair": "4177e0090aff", "relation": "supports", "from": "claim:cc13_0035_08", "to": "claim:cc13_0013_44", "strength": 0.6, "rationale": "B's observed sequence of hits under CIWS fire backs A's account of the Ivanovets sinking under AK-630M fire, from a shared TWZ source.", "independent": false}
+{"pair": "419e5d484b96", "relation": "supports", "from": "claim:cc12_0010_88", "to": "claim:cc12_0028_17", "strength": 0.7, "rationale": "Imagery of a blackened A-50 at Ivanovo-Severny backs B's statement that Spiderweb reached the A-50 base, from a shared Kyiv Post source.", "independent": false}
+{"pair": "41f95f2a757c", "relation": "none", "rationale": "The river's course and a November attack share only place names."}
+{"pair": "41fcb503af2a", "relation": "supports", "from": "claim:cc02_0026_16", "to": "claim:cc02_0023_14", "strength": 0.6, "rationale": "B's TB2 kills of the Strela-10 and ZU-23-2 confirm A's presence of those systems on the island, from a shared TWZ source.", "independent": false}
+{"pair": "424e6888e485", "relation": "supports", "from": "claim:cc06_0004_04", "to": "claim:cc06_0029_05", "strength": 0.6, "rationale": "A's 3rd Tank Brigade at Balakliia matches B's battle list for the brigade, from a shared Wikipedia source.", "independent": false}
+{"pair": "427b29c4e7f5", "relation": "none", "rationale": "The 18:00 recording and the 22:00 capture announcement are different events."}
+{"pair": "42a7a3c22172", "relation": "none", "rationale": "A strike on a ferry and the location of the ferries are different assertions."}
+{"pair": "42ebd78836da", "relation": "refines", "from": "claim:cc12_0019_13", "to": "claim:c03_0027_032", "strength": 0.7, "rationale": "B gives the battery counts behind A's statement that S-300, Buk-M1 and S-125 were the backbone, from the same RUSI report."}
+{"pair": "4325311f4a10", "relation": "none", "rationale": "The pocket's fall and the parade of prisoners are different events."}
+{"pair": "434c45df7a7f", "relation": "supports", "from": "claim:cc02_0011_17", "to": "claim:cc02_0026_03", "strength": 0.5, "rationale": "A's first launches with no hits match B's statement that the February Neptunes failed, from the same Pravda source.", "independent": false}
+{"pair": "438ec743d022", "relation": "none", "rationale": "A date bound and the volume of fire are different assertions."}
+{"pair": "439dc29ab06a", "relation": "none", "rationale": "General basing of Su-34s and Su-35s and a shoot-down spree are different assertions."}
+{"pair": "43a86c6fe08a", "relation": "supports", "from": "claim:cc13_0032_09", "to": "claim:cc13_0032_10", "strength": 0.7, "rationale": "A's hull turning to aim the AIM-9M matches B's point that the V7 must point at its target.", "independent": false}
+{"pair": "43b292529126", "relation": "none", "rationale": "The Marine Corps running the operation and the Katran group's growth are compatible, distinct assertions."}
+{"pair": "43f018ec4989", "relation": "none", "rationale": "A claimed shoot-down and a later recall of sorties are different events."}
+{"pair": "4404e8da9343", "relation": "refines", "from": "claim:cc03_0020_06", "to": "claim:cc03_0031_07", "strength": 0.6, "rationale": "A puts about 500 men on the group that B says went to link up with Azov."}
+{"pair": "4426a92086c3", "relation": "duplicates", "from": "claim:cc08_0048_03", "to": "claim:cc08_0010_014", "strength": 0.8, "rationale": "B repeats the blame of Muradov, Akhmedov and Gerasimov from A's letter, from the same ISW source."}
+{"pair": "4457dc764358", "relation": "duplicates", "from": "claim:cc13_0013_04", "to": "claim:c02_0017_03", "strength": 0.95, "rationale": "Same September 2022 refusal by Musk of Starlink coverage around Crimea, same source."}
+{"pair": "447ea761397a", "relation": "none", "rationale": "The column's movement and road type are different facts."}
+{"pair": "451b45b65f65", "relation": "weakens", "from": "claim:cc17_0025_07", "to": "claim:cc17_0004_01", "strength": 0.7, "rationale": "B says Gerasimov's claim that Kupiansk was taken was undercut by Zelensky's video in the town on 12 December."}
+{"pair": "453624179fa9", "relation": "none", "rationale": "The villages' capture and a kill claim are different assertions."}
+{"pair": "45927d3ff478", "relation": "none", "rationale": "A names-only loss floor and a prisoner claim are different assertions."}
+{"pair": "459e1f94030e", "relation": "supports", "from": "claim:cc13_0013_65", "to": "claim:cc13_0007_02", "strength": 0.8, "rationale": "UK Defence Intelligence's assessment is the basis for A's statement that the Navy limited itself to the eastern Black Sea, with a shared source.", "independent": false}
+{"pair": "45ad83ee9630", "relation": "none", "rationale": "Ihnat's comment and a milblogger friendly-fire claim are different assertions."}
+{"pair": "45d274425053", "relation": "supports", "from": "claim:cc12_0004_05", "to": "claim:cc12_0025_02", "strength": 0.7, "rationale": "Both have the Il-22 hit at about 21:00 on 14 January 2024 and turning for Anapa, from shared sources.", "independent": false}
+{"pair": "460bf28c29b9", "relation": "supports", "from": "claim:cc17_0007_01", "to": "claim:cc17_0010_08", "strength": 0.6, "rationale": "A's boat crossing at Novomlynsk near Dvorichna is the route B describes, from the same source.", "independent": false}
+{"pair": "464ca9cc69bc", "relation": "refines", "from": "claim:cc06_0017_28", "to": "claim:cc06_0009_11", "strength": 0.5, "rationale": "B places A's new Svatove–Kreminna line on the R66 with coordinates."}
+{"pair": "46a87968f4e0", "relation": "none", "rationale": "Ihnat's comment and the recall of sorties are different assertions."}
+{"pair": "46aa2ddc465c", "relation": "none", "rationale": "A claimed surrender count and a volunteer's explanation of the surrender are different assertions."}

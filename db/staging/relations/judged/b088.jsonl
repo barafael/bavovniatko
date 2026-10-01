@@ -1,0 +1,29 @@
+{"pair": "f9145bbc1ad4", "relation": "supports", "from": "claim:cc08_0017_02", "to": "claim:cc08_0015_13", "strength": 0.6, "independent": false, "rationale": "Both have the T-0509 running west to Velyka Novosilka; they share the RFE/RL source."}
+{"pair": "f951f1a8bb4b", "relation": "supersedes", "from": "claim:cc08_0010_010", "to": "claim:cc08_0010_007", "strength": 0.6, "rationale": "ISW's 1 November status (Ukraine holding the Kashlahach left bank at Pavlivka) updates its 30–31 October status of the same line."}
+{"pair": "f96c738dce97", "relation": "duplicates", "from": "claim:cv01_0015_02", "to": "claim:cv01_0019_01", "strength": 0.7, "rationale": "The same Darmohrai description of layered ambushes in depth at Brovary, from the same source."}
+{"pair": "f9ad8e300d07", "relation": "supports", "from": "claim:cc02_0009_21", "to": "claim:cc02_0021_13", "strength": 0.6, "independent": false, "rationale": "The loss of Bedzai's Mi-14 on 7 May 2022 corroborates his death that day; same source."}
+{"pair": "fa0f800a43ff", "relation": "none", "rationale": "B gives the Olenivka location; A gives the death toll."}
+{"pair": "fa1e449f7717", "relation": "none", "rationale": "Taking Pavlivka and generic brigade structure are different subjects."}
+{"pair": "fab58c88f529", "relation": "duplicates", "from": "claim:cc06_0032_20", "to": "claim:c02_0017_01", "strength": 0.85, "rationale": "The same Militarnyi report of a Russian Zhitel EW system destroyed in Kharkiv Oblast in September 2022; topic 02 holds the canonical copy."}
+{"pair": "fafa15eaac0f", "relation": "none", "rationale": "The monthly air-defence tally and the sortie recall are different subjects."}
+{"pair": "fb53bd6664da", "relation": "none", "rationale": "The evacuation count and the diplomatic background are different facts."}
+{"pair": "fb71f58adb8b", "relation": "supports", "from": "claim:cc02_0028_14", "to": "claim:cc02_0021_10", "strength": 0.7, "independent": false, "rationale": "The 17 Jun TB2 video of the Vasily Bekh strike is the filming that A attributes to the Navy TB2s; they share the Naval News source."}
+{"pair": "fbaafb332bf8", "relation": "none", "rationale": "Fire control over the pipe and its measured length are different facts."}
+{"pair": "fbb08b649480", "relation": "supports", "from": "claim:cc06_0029_02", "to": "claim:cc06_0004_03", "strength": 0.6, "independent": false, "rationale": "B's 25th Airborne Brigade taking Volokhiv Yar on day 1 corroborates A's 6 September advance to the junction."}
+{"pair": "fbf926ca27c8", "relation": "none", "rationale": "The capture of the villages and the woodland cover are different facts."}
+{"pair": "fcd5857edf30", "relation": "none", "rationale": "The group's composition and the origin of the plan are different facts."}
+{"pair": "fcf73ce43db7", "relation": "none", "rationale": "A geographic fact and a Russian claim about a planted story are unrelated."}
+{"pair": "fdd68f69ebe5", "relation": "none", "rationale": "A geographic description of the Sea of Azov does not bear on the shootdown."}
+{"pair": "fdd6c4dff7fa", "relation": "supports", "from": "claim:cc13_0009_02", "to": "claim:cc13_0013_43", "strength": 0.6, "independent": false, "rationale": "Oryx's listing of the Ivanovets sinking near Donuzlav on 31 Jan – 1 Feb 2024 corroborates the reported Magura sinking."}
+{"pair": "fdeedc330137", "relation": "none", "rationale": "B gives Feodosia's location; A gives the strike."}
+{"pair": "fdf4c0fd6c16", "relation": "none", "rationale": "The breakout and Shoigu's surrender claim cover different groups of marines and do not directly bear on each other."}
+{"pair": "fe0ccd6a9fe8", "relation": "none", "rationale": "The attack axes and the river's course are different subjects."}
+{"pair": "fe11d41e7f2a", "relation": "none", "rationale": "Pletenchuk's damage statement and a general statement that the bridge remained a target are related context only."}
+{"pair": "fe17e7797462", "relation": "duplicates", "from": "claim:cc10_0039_02", "to": "claim:cc10_0015_029", "strength": 0.85, "rationale": "The same ISW-relayed replacement of Makarevich by Teplinsky at the Dnepr grouping in late October 2023."}
+{"pair": "fe1c6724859a", "relation": "duplicates", "from": "claim:cc17_0003_01", "to": "claim:cc17_0007_01", "strength": 0.85, "rationale": "The same late-2024 Russian boat crossings of the Oskil at Novomlynsk near Dvorichna, from the same source."}
+{"pair": "fe3e1e4271ea", "relation": "none", "rationale": "A 2026 operational assessment and Kupiansk's road links are different subjects."}
+{"pair": "fea8938cdbdc", "relation": "none", "rationale": "The capture of Poima and the 19 October casualties are different events."}
+{"pair": "fec2701b5cd2", "relation": "none", "rationale": "National pre-war deliveries and one battalion's weapons are different scopes."}
+{"pair": "fed0c98250ab", "relation": "none", "rationale": "The date bound and the crew's identities are different facts."}
+{"pair": "ff037debe400", "relation": "none", "rationale": "A specific raid and the bay's location are different subjects."}
+{"pair": "ff5fbf907595", "relation": "supports", "from": "claim:cc06_0034_17", "to": "claim:cc06_0017_24", "strength": 0.5, "independent": false, "rationale": "The Lyman jaws closing from Drobysheve and Stavky corroborate the diorama's choice of those villages as the north-west jaw."}

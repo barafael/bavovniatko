@@ -7,3 +7,16 @@
 - {id: t06, code: "06", file: research/06-terrain-geodata.md,       en: "Terrain & geodata"}
 - {id: t07, code: "07", file: research/07-maps-ui-conventions.md,   en: "Maps & UI conventions"}
 - {id: t08, code: "08", file: research/08-prior-art-games.md,       en: "Prior-art games & wargames"}
+# chapter dossiers (research/chapters/), see design/chapters.md
+- {id: c02, code: c02, file: research/chapters/c02-snake-island-moskva.md,   en: "Chapter: Snake Island → the Moskva"}
+- {id: c03, code: c03, file: research/chapters/c03-azovstal.md,               en: "Chapter: Azovstal"}
+- {id: c04, code: c04, file: research/chapters/c04-kherson-antonivskyi.md,    en: "Chapter: Kherson and the Antonivskyi bridge"}
+- {id: c05, code: c05, file: research/chapters/c05-kerch-bridge.md,           en: "Chapter: The Kerch bridge"}
+- {id: c06, code: c06, file: research/chapters/c06-kharkiv-offensive.md,      en: "Chapter: Kharkiv lightning offensive"}
+- {id: c08, code: c08, file: research/chapters/c08-vuhledar.md,               en: "Chapter: Vuhledar"}
+- {id: c10, code: c10, file: research/chapters/c10-krynky.md,                 en: "Chapter: Krynky bridgehead"}
+- {id: c12, code: c12, file: research/chapters/c12-a50-hunt.md,               en: "Chapter: Hunting the A-50"}
+- {id: c13, code: c13, file: research/chapters/c13-black-sea-drone-war.md,    en: "Chapter: The Black Sea drone war"}
+- {id: c17, code: c17, file: research/chapters/c17-kupiansk-pipeline.md,      en: "Chapter: The Kupiansk gas-pipeline infiltration"}
+- {id: v01, code: v01, file: research/chapters/v01-brovary-ambush.md,         en: "Vignette: The Brovary ambush"}
+- {id: v02, code: v02, file: research/chapters/v02-stepove-bradley.md,        en: "Vignette: Bradley vs T-90M near Stepove"}

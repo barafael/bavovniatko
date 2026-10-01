@@ -1,0 +1,890 @@
+# Sources cited in research/chapters/c10-krynky.md, generated from the knowledge base by db/tools/render.py.
+- id: commons-2026-krynky-situation-map
+  title: File:Battle of Krynky Situation 20231017.png
+  url: https://commons.wikimedia.org/wiki/File:Battle_of_Krynky_Situation_20231017.png
+  publisher: Wikimedia Commons
+  authors:
+  - Nametaker
+  published: '2026-03-11'
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: low
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - media
+  - maps
+  notes: User-made situation map of the crossings as of 17 Oct 2023, released CC0. Low reliability as a source; useful as
+    a layout reference.
+- id: euromaidan-2023-zoria-marines-bridgeheads
+  title: 'Marines: Ukraine forces secured several bridgeheads in Kherson Oblast'
+  url: https://euromaidanpress.com/2023/11/17/marines-ukraine-forces-secured-several-bridgeheads-in-kherson-oblast/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2023-11-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - announcement
+  notes: The Marine Corps' official announcement of several footholds and its claimed Russian losses (1,216 KIA, 2,217 WIA,
+    24 tanks, 14 watercraft); Yermak's Hudson Institute line; Humeniuk's call for informational silence.
+- id: euromaidan-2023-zoria-uk-intel-krynky
+  title: 'UK intel: Krynky battles undermine Russian hopes for quiet Dnipro sector'
+  url: https://euromaidanpress.com/2023/11/22/uk-intel-krynky-battles-undermine-russian-hopes-for-quiet-dnipro-sector/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2023-11-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - assessment
+  notes: 'Quotes the UK MoD update of 22 Nov 2023: dismounted infantry combat in wooded terrain, effective Ukrainian small
+    attack UAVs, Russian stand-off air munitions.'
+- id: euromaidan-2023-zoria-zavadsky-krynky
+  title: Russia officially recognizes death of its Major General Zavadsky at Kherson's Krynky
+  url: https://euromaidanpress.com/2023/12/04/russia-officially-recognizes-death-of-its-major-general-zavadsky-at-khersons-krynky/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2023-12-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - russia
+  - commanders
+  notes: Maj Gen Vladimir Zavadsky, deputy commander of the 14th Army Corps, reportedly killed by a mine near Krynky on 28
+    Nov 2023; confirmed by the Voronezh governor.
+- id: euromaidan-2024-tril-krynky-withdraw
+  title: Ukrainian Forces allegedly withdraw from Krynky in Kherson Oblast
+  url: https://euromaidanpress.com/2024/07/17/ukrainian-forces-allegedly-withdraw-from-krynky-in-kherson-oblast/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2024-07-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  notes: 'Suspilne source: withdrawal ''several weeks ago''; Liga.net General Staff sources: Krynky and Urozhaine left to
+    save soldiers'' lives.'
+- id: isw-2023-06-27-roca
+  title: Russian Offensive Campaign Assessment, June 27, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-june-27-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-06-27'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - prelude
+  - antonivskyi-bridge
+  notes: Assesses Ukrainian forces hold positions of some sort near the Antonivskyi bridge on the east bank; 7th VDV elements
+    and a TOS-1 used against them on 26 Jun; Russian milblogger credits the dam's destruction with Ukrainian freedom of movement.
+- id: isw-2023-08-08-roca
+  title: Russian Offensive Campaign Assessment, August 8, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-8-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-08-08'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - prelude
+  - raid
+  notes: 'The Kozachi Laheri raid as Russian milbloggers reported it: up to seven boats of six or seven men, up to 800 m deep;
+    ISW assesses a limited raid; VDV recently pulled from the area to Zaporizhzhia.'
+- id: isw-2023-10-18-roca
+  title: Russian Offensive Campaign Assessment, October 18, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-18-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-10-18'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - opening
+  notes: Company-sized elements of two naval infantry brigades across on 17–18 Oct; geolocated advances north of Pishchanivka
+    and into Poyma; Russian Kherson grouping thinned for Zaporizhzhia.
+- id: isw-2023-10-20-roca
+  title: Russian Offensive Campaign Assessment, October 20, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-20-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-10-20'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - opening
+  - orbat
+  notes: Footage of 19 Oct confirms Ukrainians in northeastern Krynky (27 km from Kherson City, 2 km from the river); Dnepr
+    grouping built on the 49th CAA and new 18th CAA; 26th MRR of the 70th MRD.
+- id: isw-2023-10-21-roca
+  title: Russian Offensive Campaign Assessment, October 21, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-21-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-10-21'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - logistics
+  notes: Russia struggling to interdict Ukrainian resupply to the east bank; fire on both Antonivskyi bridges; Russia relying
+    mainly on aviation and artillery.
+- id: isw-2023-10-29-roca
+  title: Russian Offensive Campaign Assessment, October 29, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-29-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-10-29'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - russia
+  - commanders
+  notes: Milbloggers report Teplinsky replacing Makarevich at the Dnepr grouping, the Krynky foothold blamed; Ukrainians said
+    to cross in groups of 50–70 in three directions.
+- id: isw-2023-11-09-roca
+  title: Russian Offensive Campaign Assessment, November 9, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-9-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-11-09'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - orbat
+  notes: 'Main Russian responders: 22nd AC and 70th MRD of the 18th CAA, 177th Naval Infantry Regiment, elements of the 7th
+    VDV; Mashovets claims continuous Ukrainian control from the rail bridge to the road bridge.'
+- id: isw-2023-11-14-roca
+  title: Russian Offensive Campaign Assessment, November 14, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-14-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-11-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - announcement
+  notes: Yermak's 13 Nov Hudson Institute statement; Krynky about 3.6 km north of the E-58; Ukraine able to maintain and supply
+    its east-bank positions.
+- id: isw-2023-11-17-roca
+  title: Russian Offensive Campaign Assessment, November 17, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-17-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-11-17'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - announcement
+  - objectives
+  notes: Official Ukrainian bridgehead announcement; stated aim to push Russian artillery out of range of the west bank (152
+    mm about 25 km); WSJ on heavy mining around Krynky; milblogger claim of 10 km² held.
+- id: isw-2023-12-16-roca
+  title: Russian Offensive Campaign Assessment, December 16, 2023
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-december-16-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2023-12-16'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - assessment
+  notes: Calls Krynky an economy-of-force operation; drone suppression of Russian long-range artillery; possible VDV transfer
+    from Zaporizhzhia; Putin frames the defence as luring Ukrainians in.
+- id: isw-2024-02-20-roca
+  title: Russian Offensive Campaign Assessment, February 20, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-20-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-02-20'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - information-war
+  notes: Shoigu claims Krynky cleared and 3,500 Ukrainians killed on the east bank; Putin cites Teplinsky that some remain;
+    ISW sees no evidence and links the claim to the March election; 81st Volunteer Spetsnaz Brigade near Krynky.
+- id: isw-2024-02-21-roca
+  title: Russian Offensive Campaign Assessment, February 21, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-21-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-02-21'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  notes: First confirmed Russian advance in Krynky (footage of 20 Feb); milbloggers deny full Russian control and criticise
+    Shoigu.
+- id: isw-2024-07-17-roca
+  title: Russian Offensive Campaign Assessment, July 17, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-17-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-07-17'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  notes: Russian sources claim the Ukrainian withdrawal; General Staff still reports fighting near Kozachi Laheri; island
+    fighting in the delta; 80th Arctic Brigade reported in the Kherson direction.
+- id: isw-2024-07-18-roca
+  title: Russian Offensive Campaign Assessment, July 18, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-18-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-07-18'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  - tactics
+  notes: Ukrainian officials indirectly acknowledge leaving Krynky; a platoon commander describes 7–8 Russian assaults a day,
+    groups shrinking from 6–7 to 3–4 men, VDV and Spetsnaz in the assault groups.
+- id: kyivindependent-2023-fornusek-104th-vdv-krynky
+  title: 'UK Defense Ministry: Russia''s new airborne division suffers heavy losses in Kherson Oblast'
+  url: https://kyivindependent.com/uk-defense-ministry-russias-new-airborne-division-suffers-heavy-losses-in-kherson-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - Martin Fornusek
+  published: '2023-12-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - russia
+  - orbat
+  notes: 'Reports the UK MoD update: the new 104th Guards Airborne Division''s combat debut at Krynky in early December 2023
+    with ''exceptionally heavy losses''; Teplinsky commands the Dnepr grouping; raids since Feb 2023.'
+- id: kyivindependent-2023-terajima-dnipro-hopeless
+  title: '''You get to the other side, and then what?'' Ukrainian soldiers crossing Dnipro fear their mission is hopeless'
+  url: https://kyivindependent.com/you-get-to-the-other-side-and-then-what-ukrainian-soldiers-crossing-dnipro-fear-their-mission-is-hopeless/
+  publisher: Kyiv Independent
+  authors:
+  - Asami Terajima
+  published: '2023-12-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - river-crossing
+  - terrain
+  - politics
+  notes: 'Field report from the west bank: river about 1 km wide, bridgehead 2.5 km to 300–500 m deep, water at half a metre,
+    mortars within minutes of landing, a 30-man recon platoon lost in a month; Kofman, Hodges, Melnyk, Hrabskyi views; Feb
+    2023 island raids and post-dam landings near the Antonivskyi bridge.'
+- id: kyivindependent-2024-hodunova-krynky-new-positions
+  title: Russian troops intensify activity near Krynky, Ukrainian forces withdraw to new positions, military says
+  url: https://kyivindependent.com/russian-troops-intensify-activity-near-krynky-ukrainian-forces-withdraw-to-new-positions-military-says/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Hodunova
+  published: '2024-08-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - chapter
+  - krynky
+  - coda
+  notes: 'Coda: Lykhovii (15 Aug 2024) says units north of Krynky moved to new positions; incendiary drone drops start fires
+    in hot weather.'
+- id: kyivindependent-2024-krynky-human-waves
+  title: 'Ukraine war latest: Russia attempts to push Ukrainian troops out of Krynky using ''human waves'''
+  url: https://kyivindependent.com/ukraine-war-latest-russia-attempts-to-progress-using-human-wave-attacks-in-kherson-oblast-western-allies-pledge-new-military-aid/
+  publisher: Kyiv Independent
+  authors:
+  - The Kyiv Independent news desk
+  published: '2024-02-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - russia
+  - tactics
+  notes: 'Humeniuk (28 Feb 2024): Russian dismounted ''human wave'' assaults on Krynky; Southern Command denial of Shoigu''s
+    claim on 21 Feb.'
+- id: kyivindependent-2024-ostiller-krynky-lost
+  title: With Krynky lost, what did the perilous operation accomplish?
+  url: https://kyivindependent.com/with-krynky-lost-what-did-the-perilous-operation-accomplish/
+  publisher: Kyiv Independent
+  authors:
+  - Nate Ostiller
+  - Martin Fornusek
+  published: '2024-07-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - casualties
+  - assessment
+  notes: 'Retrospective: Lykhovii''s 17 Jul statement, the Marine Corps'' Nov 2023 Russian-loss claims, the Russian grouping
+    growing from about 64,000 to 100,000–120,000 (Kevliuk), Kofman and Kovalenko assessments.'
+- id: kyivindependent-2024-york-krynky-ongoing
+  title: Fighting in Krynky ongoing but positions 'completely destroyed,' military says
+  url: https://kyivindependent.com/fighting-in-krynky-ongoing/
+  publisher: Kyiv Independent
+  authors:
+  - Chris York
+  published: '2024-07-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  notes: The Defence Forces of the South statement of 17 Jul 2024; peak advance about 2.5 km in December; UK Defence Intelligence
+    (12 Jan 2024) on Russian equipment losses.
+- id: kyivpost-2023-korshak-glide-bombs-krynky
+  title: Russian Air Force Bombs Ukrainian Marine Bridgehead, Kyiv Forces Retaliate With Grenade-Toting Drones
+  url: https://www.kyivpost.com/post/24825
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2023-11-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - glide-bombs
+  - drones
+  - russia
+  notes: Su-34 glide bombs on Krynky, no UA air defence able to reach launchers about 50 km away; 17 air strikes in 24 h (General
+    Staff); 810th Naval Infantry refusal and minefield losses; 300–500 UA troops on the left bank.
+- id: kyivpost-2023-korshak-marines-dug-in
+  title: Ukraine Marines Dug in on Dnipro Left Bank Slugging It Out Against Russian Artillery, Air Strikes
+  url: https://www.kyivpost.com/post/24399
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2023-11-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - drones
+  - artillery
+  notes: Crossings from 14 Oct; 200–300 men per bridgehead (open-source estimate); about 20 Russian air strikes in a weekend;
+    TOS-1A; 501st Battalion drone strikes on the Oleshky–Nova Kakhovka road; HIMARS strike at Hladkivka 10 Nov. Mixes official,
+    OSINT and milblogger claims.
+- id: kyivpost-2024-korshak-krynky-drones
+  title: Embattled Marines on Dnipro Bridgehead Gain New Foothold Despite Swarms of Russian Drones
+  url: https://www.kyivpost.com/post/29829
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2024-03-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - drones
+  - ew
+  - casevac
+  notes: '60–100 marines in cellars; 2–3 km no man''s land to the river walked at night; Brovdi: up to 80 Russian FPVs a day,
+    77% defeated, winged FPVs; evacuation waits of days to weeks; reported new foothold at the Antonivskyi road bridge (Mar
+    2024).'
+- id: kyivpost-2024-korshak-krynky-retreat
+  title: 'Reports: Ukrainian Marines Retreat From Dnipro Bridgehead, Long-Held Defensive Bastion Lost'
+  url: https://www.kyivpost.com/post/35948
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2024-07-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  - glide-bombs
+  notes: Withdrawal by small boat; last reported ground combat in Krynky 11 Jul 2024; fewer than 200 defenders in recent months;
+    village of about 200 homes flattened; no bridging attempted.
+- id: kyivpost-2024-shoigu-krynky-denial
+  title: Ukrainian Army Denies Dnipro River Bridgehead Lost Despite Russian Claims
+  url: https://www.kyivpost.com/post/28390
+  publisher: Kyiv Post
+  authors:
+  - Kyiv Post
+  published: '2024-02-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - information-war
+  notes: Southern Command's 21 Feb 2024 denial of Shoigu's claim; a Russian flag-raising clip followed by a hasty retreat.
+- id: nyt-2023-gall-marines-suicide-mission
+  title: Ukrainian marines on 'suicide mission' in crossing the Dnieper River
+  url: https://www.bostonglobe.com/2023/12/16/world/ukrainian-marines-suicide-mission-crossing-dnieper-river/
+  publisher: The New York Times (syndicated by The Boston Globe)
+  authors:
+  - Carlotta Gall
+  - Oleksandr Chubko
+  - Olha Konovalova
+  published: '2023-12-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - krynky
+  - casualties
+  - controversy
+  notes: NYT report (original at nytimes.com/2023/12/16/world/europe/ukraine-kherson-river-russia.html, paywalled; read via
+    the Boston Globe syndicated copy). Soldiers call the crossings futile; bodies left for two months; drone livestream confirms
+    the destruction; Karas (14th Regiment) on suppressing Russian artillery.
+- id: nyt-2024-meheut-krynky-lost
+  title: Ukraine loses hard-won position near Dnieper River in the south
+  url: https://www.bostonglobe.com/2024/07/18/world/ukraine-loses-hard-won-position-near-dnieper-river-south/
+  publisher: The New York Times (syndicated by The Boston Globe)
+  authors:
+  - Constant Méheut
+  published: '2024-07-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  - assessment
+  notes: 'NYT report via the Boston Globe copy: Kastehelmi (Black Bird Group) calls the operation hard to justify militarily
+    and ''more politically motivated'' by winter; Kovalenko''s 30,000–40,000 pinned Russian troops.'
+- id: openmeteo-2026-krynky-weather
+  title: 'Open-Meteo Historical Weather API: daily series for 46.7465 N, 33.119 E, 1 Oct 2023 – 31 Jul 2024'
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=46.7465&longitude=33.119&start_date=2023-10-01&end_date=2024-07-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,wind_speed_10m_max,wind_gusts_10m_max,sunrise,sunset&timezone=Europe%2FKyiv
+  publisher: Open-Meteo
+  authors: []
+  published: '2026-10-01'
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - weather
+  - light
+  notes: Reanalysis-based (ERA5 / ECMWF IFS) modelled weather, not station observations. Used for temperatures, precipitation,
+    wind gusts and sunrise/sunset on key days. Licence terms not confirmed in this pass.
+- id: osm-2026-krynky-geodata
+  title: OpenStreetMap data for the lower Dnipro around Krynky (Nominatim lookups and API 0.6 map extract)
+  url: https://api.openstreetmap.org/api/0.6/map?bbox=33.06,46.735,33.16,46.775
+  publisher: OpenStreetMap contributors
+  authors: []
+  published: '2026-10-01'
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - geodata
+  - terrain
+  - coordinates
+  notes: 'Queried 2026-10-01: Nominatim place nodes (Krynky, Korsunka, Kozachi Laheri, Poima/Zaplava, Pishchanivka, Pidstepne,
+    Oleshky, Tiahynka, Lvove, Kakhovka HPP) plus an API 0.6 extract and an Overpass query (bridges, Dnipro and Kozachelaherska
+    Konka ways). Distances computed with the haversine formula. ODbL.'
+- id: pravda-2024-kyrylenko-krynky-untold
+  title: What really happened in Krynky. The untold story of the marines' landing on the left bank of the Dnipro River
+  url: https://www.pravda.com.ua/eng/articles/2024/11/18/7484985/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Kyrylenko
+  published: '2024-11-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - river-crossing
+  - logistics
+  - casualties
+  - command
+  notes: 'The fullest account of the operation, from about 20 interviews: the UK role and Katran group, objectives (Perekop
+    maximum, M-14 minimum), the three footholds, brigade routes, the Iskander strike on the 36th, boat shortages, crossing
+    times, cargo drones, the staged withdrawal. Anonymous sources; the General Staff called the data a state secret.'
+- id: pravda-2024-lykhovii-krynky-destroyed
+  title: Krynky almost completely destroyed, but Ukrainian defenders continue combat missions nearby
+  url: https://www.pravda.com.ua/eng/news/2024/07/26/7467547/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-07-26'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  - official
+  notes: 'Lykhovii on 26 Jul 2024: no possibility to hold the defence in Krynky, troops on other footholds and the islands;
+    Russian assaults on the Prydniprovske front about 2–4 a day, sometimes a dozen.'
+- id: pravda-2024-lykhovii-krynky-not-critical
+  title: 'Situation near Krynky: Ukraine''s defence forces continue operations on Dnipro River''s left bank'
+  url: https://www.pravda.com.ua/eng/news/2024/07/18/7466261/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2024-07-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - withdrawal
+  - official
+  notes: 'Lykhovii (Tavriia OSG) on 18 Jul 2024: ''not quite as critical''; positions destroyed, village ''a pile of rubble'';
+    other footholds remain. UP marine sources reported the withdrawal on 16 Jul.'
+- id: rferl-2024-krynky-missing-marines
+  title: Hundreds Of Ukrainian Marines Missing After 'Hell On Earth' Battle For Krynky
+  url: https://www.rferl.org/a/33250555.html
+  publisher: Radio Free Europe/Radio Liberty
+  authors: []
+  published: '2024-12-30'
+  accessed: '2026-10-01'
+  type: video
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - missing
+  - media
+  notes: Video report on families of missing marines stonewalled by their units; more than 250 dead and nearly 800 unaccounted
+    for.
+- id: slidstvo-2024-stanko-krynky-hell
+  title: '''I Have Seen Hell, and the Name of It is "Krynky"'' — Fighters Who Held the Village on the Left Bank and Disappeared
+    There'
+  url: https://www.slidstvo.info/en/articles/i-have-seen-hell-and-the-name-of-it-is-krynky-fighters-who-held-the-village-on-the-left-bank-and-disappeared-there/
+  publisher: Slidstvo.Info
+  authors:
+  - Nastia Stanko
+  published: '2024-07-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - casualties
+  - missing
+  - casevac
+  notes: 'English version of the investigation (Ukrainian original 17 Jul 2024). Police data: 788 missing and 262 dead recovered,
+    Oct 2023 – end Jun 2024; Naalsio OSINT equipment count 58 UA vs 271 RU to 14 Jun 2024; first-hand casevac accounts; gas
+    use reported by a marine.'
+- id: telegraph-2024-barnes-krynky-1000
+  title: Ukraine loses more than 1,000 men in battle for single village
+  url: https://www.yahoo.com/news/ukraine-loses-more-1-000-105033392.html
+  publisher: The Telegraph (syndicated by Yahoo News)
+  authors:
+  - Joe Barnes
+  published: '2024-07-19'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - casualties
+  - controversy
+  notes: Telegraph original (telegraph.co.uk/world-news/2024/07/19/ukraine-loses-thousand-men-battle-for-single-village/)
+    blocks fetching; read via Yahoo copy. More than 1,000 feared killed; 30–60 minute boat journey; Sodol 'later sacked'.
+    Prints 778 missing, a typo for Slidstvo's 788.
+- id: unn-2024-bobrovska-krynky-committee
+  title: The Verkhovna Rada Committee may consider the operation in Krynky in Kherson region
+  url: https://unn.ua/en/amp/the-verkhovna-rada-committee-may-consider-the-operation-in-krynky-in-kherson-region
+  publisher: UNN (Ukrainian National News)
+  authors: []
+  published: '2024-07-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - parliament
+  - controversy
+  notes: 'MP Solomiia Bobrovska (Holos; Security, Defence and Intelligence Committee) on Radio Svoboda: she will raise Krynky
+    in committee; personnel went ''without a proper task'' and ''without the appropriate support''.'
+- id: wikipedia-battle-of-krynky
+  title: Battle of Krynky
+  url: https://en.wikipedia.org/wiki/Battle_of_Krynky
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - chapter
+  - krynky
+  - orbat
+  - casualties
+  notes: Dates the battle 20 Oct 2023 – 17 Jul 2024; order of battle (incl. 810th NIB, 70th MRD, 104th VDV; 34th/39th coastal
+    defence brigades, 73rd naval SOF centre); UALosses counts as of 21 Jun 2026. Infobox and text disagree on captured (54
+    vs 64).
+- id: wikipedia-kakhovka-dam-destruction
+  title: Destruction of the Kakhovka Dam
+  url: https://en.wikipedia.org/wiki/Destruction_of_the_Kakhovka_Dam
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - chapter
+  - terrain
+  - flooding
+  - kakhovka
+  notes: 6 Jun 2023, between 02:00 and 02:54 local; about 600 km² of Kherson Oblast flooded, 68% on the Russian-held side
+    (Prokudin); reservoir 2,155 km² shrank to 509 km² by 20 Jun.

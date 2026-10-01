@@ -1,0 +1,40 @@
+{"pair": "95a093ce793d", "relation": "none", "rationale": "A gives Poima's location; B is a supply request event mentioning Poima as the objective; context only."}
+{"pair": "95d4ec8442e4", "relation": "refines", "from": "claim:cc10_0015_007", "to": "claim:c00_0036_04", "strength": 0.8, "rationale": "B dates the Kakhovka dam destruction precisely to 6 June 2023, refining A's \"first week of the counteroffensive\"."}
+{"pair": "9631502c64f5", "relation": "none", "rationale": "A describes the column's entry into Skybyn; B is HUR's loss claim for the regiment; related events, different assertions."}
+{"pair": "968cde62de33", "relation": "none", "rationale": "Expert caveat on crew casualties versus the opening of the duel; different assertions."}
+{"pair": "968d7bca2400", "relation": "none", "rationale": "Prokopenko's characterisation of the breakout is context to A's account, not evidence for or against it."}
+{"pair": "96c46647b5a9", "relation": "none", "rationale": "A casualty count and a description of brigade structure are unrelated assertions."}
+{"pair": "96cbf9e5344f", "relation": "refines", "from": "claim:cc02_0011_47", "to": "claim:cc02_0007_02", "strength": 0.7, "rationale": "B gives the specific 2 May strike on two Raptor boats within A's May-long TB2 campaign."}
+{"pair": "973b451b70ae", "relation": "none", "rationale": "The Moskva strike and the 2021 TB2 delivery are different events."}
+{"pair": "973d8a506ba8", "relation": "none", "rationale": "A concentration report and an order-of-battle fact; context only."}
+{"pair": "977ef654b4db", "relation": "none", "rationale": "Shoigu's surrender claim and the ~500-man breakout concern different groups; not directly comparable."}
+{"pair": "97b1246e19b2", "relation": "supports", "from": "claim:cc08_0016_09", "to": "claim:cc08_0010_007", "strength": 0.4, "independent": false, "rationale": "B's November attempt to dislodge Ukrainians from behind the Kashlahach is consistent with A's report that they still held there at end-October; both ISW."}
+{"pair": "97b21d7f0e86", "relation": "none", "rationale": "An expert's assessment of crew panic is distinct from the account of the first shot."}
+{"pair": "97bbd749acfb", "relation": "none", "rationale": "A reports that The Times named Tarabalka; B is the Air Force denial of that identification; B does not bear on whether The Times named him."}
+{"pair": "97d2d684552c", "relation": "none", "rationale": "Missile delivery to Odesa and the low-altitude flight issue are different assertions."}
+{"pair": "98603cac76cb", "relation": "refines", "from": "claim:cc02_0009_17", "to": "claim:cc02_0007_02", "strength": 0.6, "rationale": "B dates the Serna loss and confirms Tor losses listed in A's TB2 campaign, from the same Naval News reporting."}
+{"pair": "987990f3b5c5", "relation": "duplicates", "from": "claim:cc10_0015_031", "to": "claim:cc10_0006_05", "strength": 0.8, "rationale": "Both state, from the same Pravda source, that the western footholds were abandoned and the effort concentrated on Krynky."}
+{"pair": "9888b99d71a4", "relation": "none", "rationale": "Two different details of the duel; neither bears on the other."}
+{"pair": "98d1472580c6", "relation": "supports", "from": "claim:cc12_0025_10", "to": "claim:cc12_0010_69", "strength": 0.4, "independent": true, "rationale": "The 19 February Su-34/Su-35 loss evidence is consistent with the MoD's February tally including Su-34s and Su-35s."}
+{"pair": "98d156dc6dc4", "relation": "duplicates", "from": "claim:cc02_0023_10", "to": "claim:cc02_0011_73", "strength": 0.9, "rationale": "B repeats A's Su-30 phosphorus strike on Zmiinyi on 1 July 2022 from the same source."}
+{"pair": "98eeae9ac5f6", "relation": "none", "rationale": "A locational fact and the sinking event; context only."}
+{"pair": "99017169a1e6", "relation": "refines", "from": "claim:cc03_0008_23", "to": "claim:cc03_0005_03", "strength": 0.6, "rationale": "B details mission 1 of the seven-mission air bridge summarised in A."}
+{"pair": "990cb06ba3dd", "relation": "none", "rationale": "A is the event of taking Poima; B its geolocation; context only."}
+{"pair": "997ac9876bb1", "relation": "none", "rationale": "Crew-casualty caveat and smoke discharge are separate details."}
+{"pair": "99ae574e3ddd", "relation": "none", "rationale": "Sortie recall after the A-50 loss and milblogger friendly-fire claims are different assertions."}
+{"pair": "99c420f4abe1", "relation": "supports", "from": "claim:cc13_0009_01", "to": "claim:c01_0018_13", "strength": 0.6, "independent": true, "rationale": "Oryx's independent count confirms the three sinkings that HUR attributes to Magura strikes, though not the attribution."}
+{"pair": "9a502bc1cf8b", "relation": "supports", "from": "claim:cv02_0016_13", "to": "claim:cv02_0006_11", "strength": 0.7, "independent": false, "rationale": "B's recovery of an abandoned Bradley near Stepove underlies A's Channel 1 showcase of a captured one; shared TWZ source."}
+{"pair": "9a7896f2566d", "relation": "none", "rationale": "Russian control of villages and a Ukrainian counter-attack there are different events in sequence."}
+{"pair": "9a84ef01a230", "relation": "duplicates", "from": "claim:cc02_0023_08", "to": "claim:cc02_0011_09", "strength": 0.8, "rationale": "B restates A's Su-27/Su-34 strike composition on 24 Feb from the same source."}
+{"pair": "9b26eea1904e", "relation": "duplicates", "from": "claim:cc17_0004_01", "to": "claim:cc17_0031_01", "strength": 0.85, "rationale": "Both report Gerasimov's 20 November 2025 claim that Kupiansk was taken, from the same ISW report."}
+{"pair": "9b432447297f", "relation": "none", "rationale": "Smoke discharge and the gunner's change of ammunition are separate details."}
+{"pair": "9bcc82016656", "relation": "supports", "from": "claim:cc02_0028_14", "to": "claim:cc02_0007_05", "strength": 0.7, "independent": false, "rationale": "The TB2 video of the second Harpoon hit corroborates the sinking of the Vasily Bekh; same source."}
+{"pair": "9bdbf294a8f5", "relation": "supports", "from": "claim:cc02_0028_12", "to": "claim:cc02_0021_14", "strength": 0.5, "independent": false, "rationale": "B's eight helicopters and armoured boats in the assault match A's planned force of 4 Mi-24 + 4 Mi-8 and Hiurza-M boats; shared Pravda source."}
+{"pair": "9be79ddfd6e5", "relation": "duplicates", "from": "claim:cc04_0004_16", "to": "claim:cc04_0009_93", "strength": 0.9, "rationale": "Same televised Shoigu–Surovikin announcement of the Kherson withdrawal on 9 November 2022."}
+{"pair": "9be81db008b8", "relation": "refines", "from": "claim:cc04_0009_07", "to": "claim:cc04_0023_07", "strength": 0.7, "rationale": "A gives the exact 11 July date for the capture of Ivanivka that B places in July 2022."}
+{"pair": "9bf621480e27", "relation": "supports", "from": "claim:cc08_0048_04", "to": "claim:cc08_0045_01", "strength": 0.6, "independent": false, "rationale": "B's later ISW assessment that Pavlivka was taken and the 155th gutted corroborates A's account of the costly capture."}
+{"pair": "9cc5784b932f", "relation": "none", "rationale": "Both describe Ukrainian fighter use early in the war, but in different respects; context only."}
+{"pair": "9d727ee41aed", "relation": "none", "rationale": "A failed attack on 1 March and a concentration on 4 March are different events."}
+{"pair": "9d80702acb09", "relation": "supports", "from": "claim:cc05_0036_09", "to": "claim:cc05_0010_40", "strength": 0.6, "independent": false, "rationale": "B restates the 18 July Odesa strikes as retaliation, consistent with A; same source."}
+{"pair": "9de1a771e99a", "relation": "supports", "from": "claim:cc10_0037_10", "to": "claim:cc10_0037_11", "strength": 0.4, "independent": false, "rationale": "The purchase of 20 kg-payload hexacopters is consistent with cargo drones supplying Krynky; same source."}
+{"pair": "9e29060da269", "relation": "none", "rationale": "Garrison composition and the success of the link-up are different assertions."}

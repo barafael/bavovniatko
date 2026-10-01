@@ -1,0 +1,40 @@
+{"pair": "d5e8c08d40f3", "relation": "none", "rationale": "Being their second mission together and committing the second Bradley are different details."}
+{"pair": "d639739040cd", "relation": "none", "rationale": "A recall of jets after the A-50 loss and a milblogger friendly-fire claim about earlier losses are different assertions."}
+{"pair": "d65af557aa2e", "relation": "none", "rationale": "A day's attack and a battle-long casualty floor are different subjects."}
+{"pair": "d69cb4a531e5", "relation": "refines", "from": "claim:cc13_0016_13", "to": "claim:cc13_0006_04", "strength": 0.5, "rationale": "B locates the Sergey Kotov wreck precisely (off Cape Takil, 21 km from the strait), qualifying A's \"off the Kerch Strait\"."}
+{"pair": "d6dd4d01aa8c", "relation": "none", "rationale": "The battery composition and the guns' mechanical failures are different facts."}
+{"pair": "d705e50fc0f7", "relation": "none", "rationale": "An attack launched from Pavlivka and Mykilske and the extent of Russian gains are related context, not a claim about the same thing."}
+{"pair": "d7215fc8ac5b", "relation": "duplicates", "from": "claim:cc13_0009_10", "to": "claim:cc13_0013_37", "strength": 0.85, "rationale": "Both report the Magura hits on the Serna and Akula off Chornomorske on 9–10 Nov 2023, from the same HUR claim."}
+{"pair": "d7b2b7949517", "relation": "supports", "from": "claim:cc17_0031_05", "to": "claim:cc17_0025_07", "strength": 0.6, "independent": false, "rationale": "Kuzovlev pushing the Kupiansk 'liberation' back to early 2026 corroborates A's account of the Russian claim cracking; same source."}
+{"pair": "d8960e205824", "relation": "none", "rationale": "B gives the Olenivka location; A gives the death toll of the blast."}
+{"pair": "d8c72f95aa12", "relation": "none", "rationale": "Taking Poima in early October and the 19 October request for supply posts are different episodes."}
+{"pair": "d8cdade78c5a", "relation": "none", "rationale": "A village capture and an OSM pipeline route are different subjects."}
+{"pair": "d8d7d547b4b5", "relation": "duplicates", "from": "claim:cv01_0017_01", "to": "claim:cv01_0007_07", "strength": 0.9, "rationale": "The same account of the 9 March 2022 column with TOS-1s and no infantry moving down the M01 into Skybyn, extracted twice."}
+{"pair": "d9216e3347b1", "relation": "none", "rationale": "The trench holding and the T-90M's mission kill are different details of the duel."}
+{"pair": "d951d6ae714c", "relation": "none", "rationale": "The October redeployment and the December Leopard losses are different events."}
+{"pair": "d97ef1c75496", "relation": "none", "rationale": "The October 2022 front line at Pavlivka and terrain elevation are different subjects."}
+{"pair": "d9b0f99f617a", "relation": "none", "rationale": "The battalion's move into Kupiansk and its joining the search group are different facts."}
+{"pair": "d9b3003546fd", "relation": "none", "rationale": "DeepState marker keys and 2022 Kherson order of battle are unrelated."}
+{"pair": "da5c96c02285", "relation": "none", "rationale": "Landing logistics on the delta and gun failures are different facts."}
+{"pair": "da730ca65c5a", "relation": "duplicates", "from": "claim:cc13_0035_14", "to": "claim:cc13_0013_74", "strength": 0.8, "rationale": "B restates A's SBU machine-gun Sea Baby fight in Kerch Bay on 5–6 Dec 2024 with less detail."}
+{"pair": "da91209d3eb8", "relation": "supports", "from": "claim:cv02_0016_03", "to": "claim:cv02_0004_01", "strength": 0.5, "independent": false, "rationale": "The experts' reading that the crew aimed for a mission kill is consistent with A's mission kill by 25 mm fire; same TWZ article."}
+{"pair": "da9e13cea99e", "relation": "supports", "from": "claim:cc08_0037_01", "to": "claim:cc08_0006_07", "strength": 0.7, "independent": false, "rationale": "B includes A's RAAM shells fired onto freshly ploughed corridors and adds the TM-62 belts; both rest on Forbes."}
+{"pair": "daae24b8017c", "relation": "none", "rationale": "The October footholds and the brigade's later fighting and withdrawal are different facts."}
+{"pair": "dac00ba74d96", "relation": "supports", "from": "claim:cc13_0013_23", "to": "claim:cc13_0004_05", "strength": 0.5, "independent": false, "rationale": "B's SBU USV holing the Olenegorsky Gornyak at Novorossiysk is the instance that A cites as a Sea Baby target."}
+{"pair": "daca85672843", "relation": "supports", "from": "claim:cc17_0010_08", "to": "claim:cc17_0005_06", "strength": 0.5, "independent": false, "rationale": "Both identify the Dvorichna boat crossings as the second Russian route into Kupiansk; same source."}
+{"pair": "db6fb81045df", "relation": "none", "rationale": "The reason for the surrender and the brigade's split are different assertions."}
+{"pair": "db7d21ce93bd", "relation": "none", "rationale": "The crew bailing out and the smoke discharge are different details."}
+{"pair": "dc1a91491f5d", "relation": "supports", "from": "claim:cc08_0010_020", "to": "claim:cc08_0006_04", "strength": 0.6, "independent": false, "rationale": "Russian sources announcing an offensive by the 155th Brigade north of Pavlivka and west of Mykilske on 24–25 Jan corroborate A's attack from there; same ISW reports."}
+{"pair": "dc35188d625c", "relation": "duplicates", "from": "claim:cc13_0009_08", "to": "claim:cc13_0013_23", "strength": 0.85, "rationale": "The same sea-drone hit on the Olenegorsky Gornyak at Novorossiysk on 3–4 Aug 2023, from the same source."}
+{"pair": "dc63c9d5526f", "relation": "none", "rationale": "The brigade's split and Shoigu's prisoner claim are different assertions."}
+{"pair": "dd0050d84468", "relation": "none", "rationale": "The fall date and the prisoner parade are different facts."}
+{"pair": "dd158c03ace0", "relation": "duplicates", "from": "claim:cc06_0005_04", "to": "claim:cc06_0012_46", "strength": 0.95, "rationale": "The same Russian MoD \"regrouping\" announcement of 10 September 2022, extracted twice."}
+{"pair": "dd2c4a4d9fc5", "relation": "none", "rationale": "Forbes's crew-kill suggestion and the gunner's aim at the optics are different assertions."}
+{"pair": "dd9737542de5", "relation": "none", "rationale": "A coordinate fact for the Kerch Strait does not bear on the sinking claim."}
+{"pair": "ddd9dea73057", "relation": "duplicates", "from": "claim:cc17_0007_25", "to": "claim:cc17_0017_02", "strength": 0.75, "rationale": "The same Butusov listing of the 121st and 122nd regiments, the 27th Brigade and the 1855th Battalion as the assault groups inside Kupiansk."}
+{"pair": "dded9fb65a12", "relation": "none", "rationale": "The TSN interview and their mission count are different facts."}
+{"pair": "de3638fd5202", "relation": "none", "rationale": "The 31 October line and the later November capture of Pavlivka are different times, consistent with each other."}
+{"pair": "de4c53b9d888", "relation": "none", "rationale": "The first Bradley's failed pass and the tank's spin-out are different phases."}
+{"pair": "de672b8b1930", "relation": "supports", "from": "claim:cc13_0023_10", "to": "claim:cc02_0021_05", "strength": 0.8, "independent": true, "rationale": "Two different outlets both identify Dmytro Pletenchuk as Ukrainian Navy spokesman."}
+{"pair": "dea19d24285f", "relation": "duplicates", "from": "claim:cc10_0039_04", "to": "claim:cc10_0015_040", "strength": 0.9, "rationale": "The same report of Maj Gen Zavadsky killed near Krynky on 28 November 2023, from the same source."}
+{"pair": "df35fa418c8a", "relation": "none", "rationale": "A specific attack and a generic brigade structure are different subjects."}

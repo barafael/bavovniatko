@@ -380,6 +380,7 @@
   kind: oblast
   en: Krasnodar Krai
   uk: Краснодарський край
+  aliases: [Kuban]
   parent: place:russia
   note: Russian federal subject (krai).
   geocode_query: Krasnodar Krai, Russia
@@ -841,7 +842,7 @@
   kind: forest
   en: Sviati Hory National Nature Park
   uk: Національний природний парк «Святі Гори»
-  aliases: [Sviati Hory national park, Holy Mountains National Park]
+  aliases: [Sviati Hory national park, Holy Mountains National Park, Sviati Hory]
   parent: place:donetsk_oblast
   geocode_query: Sviati Hory National Nature Park, Donetsk Oblast, Ukraine
 
@@ -1117,7 +1118,7 @@
   kind: region
   en: Kherson right bank
   uk: Правобережна Херсонщина
-  aliases: [right-bank Kherson]
+  aliases: [right-bank Kherson, Dnipro right bank]
   parent: place:kherson_oblast
   note: Part of Kherson Oblast west/north of the Dnipro, liberated Nov 2022; a notion.
   no_geocode: true
@@ -1352,7 +1353,7 @@
   kind: forest
   en: shelterbelt
   uk: лісосмуга / посадка
-  aliases: [lisosmuha, posadka, posadky, treeline, forest belt]
+  aliases: [lisosmuha, posadka, posadky, treeline, forest belt, shelterbelts]
   parent: place:ukraine
   note: 'generic: field shelterbelt / treeline (lisosmuha, colloquially posadka).'
   no_geocode: true
@@ -1558,7 +1559,7 @@
   kind: road
   en: M-14
   uk: М-14
-  aliases: [M14, M-14 highway]
+  aliases: [M14, M-14 highway, M14 highway]
   parent: place:ukraine
   note: Odesa–Mykolaiv–Kherson–Melitopol–Mariupol–Novoazovsk highway; its occupied section is signed R-280 by Russia.
   geocode_query: M14, Ukraine
@@ -1983,3 +1984,3000 @@
   parent: place:dnipropetrovsk_oblast
   geocode_query: "Dnipro, Dnipropetrovsk Oblast, Ukraine"
   note: "The city; bare 'Dnipro' in staged claims resolves to the river (place:dnipro_river), city claims are re-pointed by db/fixes/0001."
+
+
+# --- Chapter dossiers (c02–c17, v01–v02) ------------------------------------------------------
+
+- id: place:romania
+  type: place
+  kind: country
+  en: "Romania"
+  uk: "Румунія"
+  geocode_query: "Romania"
+  countrycodes: "ro"
+
+- id: place:bulgaria
+  type: place
+  kind: country
+  en: "Bulgaria"
+  uk: "Болгарія"
+  geocode_query: "Bulgaria"
+  countrycodes: "bg"
+
+- id: place:armenia
+  type: place
+  kind: country
+  en: "Armenia"
+  uk: "Вірменія"
+  geocode_query: "Armenia"
+  countrycodes: "am"
+
+- id: place:odesa_oblast
+  type: place
+  kind: oblast
+  en: "Odesa Oblast"
+  uk: "Одеська область"
+  parent: place:ukraine
+  geocode_query: "Odesa Oblast, Ukraine"
+
+- id: place:mykolaiv_oblast
+  type: place
+  kind: oblast
+  en: "Mykolaiv Oblast"
+  uk: "Миколаївська область"
+  parent: place:ukraine
+  geocode_query: "Mykolaiv Oblast, Ukraine"
+
+- id: place:zakarpattia_oblast
+  type: place
+  kind: oblast
+  en: "Zakarpattia Oblast"
+  uk: "Закарпатська область"
+  aliases: ["Zakarpattia"]
+  parent: place:ukraine
+  geocode_query: "Zakarpattia Oblast, Ukraine"
+
+- id: place:rostov_oblast
+  type: place
+  kind: oblast
+  en: "Rostov Oblast"
+  uk: "Ростовська область"
+  parent: place:russia
+  note: "Russian federal subject."
+  geocode_query: "Rostov Oblast, Russia"
+
+- id: place:belgorod_oblast
+  type: place
+  kind: oblast
+  en: "Belgorod Oblast"
+  uk: "Бєлгородська область"
+  parent: place:russia
+  note: "Russian federal subject."
+  geocode_query: "Belgorod Oblast, Russia"
+
+- id: place:ulyanovsk_oblast
+  type: place
+  kind: oblast
+  en: "Ulyanovsk Oblast"
+  uk: "Ульяновська область"
+  parent: place:russia
+  note: "Russian federal subject; A-50 patrol area in 2026."
+  geocode_query: "Ulyanovsk Oblast, Russia"
+
+- id: place:primorsky_krai
+  type: place
+  kind: oblast
+  en: "Primorsky Krai"
+  uk: "Приморський край"
+  parent: place:russia
+  note: "Russian federal subject; home of the 155th Naval Infantry Brigade."
+  geocode_query: "Primorsky Krai, Russia"
+
+- id: place:kamchatka_krai
+  type: place
+  kind: oblast
+  en: "Kamchatka Krai"
+  uk: "Камчатський край"
+  aliases: ["Kamchatka"]
+  parent: place:russia
+  note: "Russian federal subject; home of the 40th Naval Infantry Brigade."
+  geocode_query: "Kamchatka Krai, Russia"
+
+- id: place:chuhuiv_raion
+  type: place
+  kind: raion
+  en: "Chuhuiv Raion"
+  uk: "Чугуївський район"
+  parent: place:kharkiv_oblast
+  geocode_query: "Chuhuiv Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:kupiansk_raion
+  type: place
+  kind: raion
+  en: "Kupiansk Raion"
+  uk: "Купʼянський район"
+  parent: place:kharkiv_oblast
+  geocode_query: "Kupiansk Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:izium_raion
+  type: place
+  kind: raion
+  en: "Izium Raion"
+  uk: "Ізюмський район"
+  parent: place:kharkiv_oblast
+  geocode_query: "Izium Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:brovary_raion
+  type: place
+  kind: raion
+  en: "Brovary Raion"
+  uk: "Броварський район"
+  parent: place:kyiv_oblast
+  geocode_query: "Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:kanevskoy_district
+  type: place
+  kind: raion
+  en: "Kanevskoy district"
+  uk: "Канівський район (Краснодарський край)"
+  parent: place:krasnodar_krai
+  geocode_query: "Kanevskoy District, Krasnodar Krai, Russia"
+  countrycodes: "ru"
+
+- id: place:black_sea
+  type: place
+  kind: sea
+  en: "Black Sea"
+  uk: "Чорне море"
+  note: "Sea; Nominatim's country filter excludes open water, so no geocode."
+  no_geocode: true
+
+- id: place:western_black_sea
+  type: place
+  kind: sea
+  en: "western Black Sea"
+  parent: place:black_sea
+  note: "Notional: the Ukrainian/Romanian/Bulgarian/Turkish side; out of bounds for the Black Sea Fleet since late 2023."
+  no_geocode: true
+
+- id: place:eastern_black_sea
+  type: place
+  kind: sea
+  en: "eastern Black Sea"
+  parent: place:black_sea
+  note: "Notional: the Novorossiysk side, where the Russian Navy has operated since spring 2024."
+  no_geocode: true
+
+- id: place:sea_of_azov
+  type: place
+  kind: sea
+  en: "Sea of Azov"
+  uk: "Азовське море"
+  aliases: ["Azov Sea"]
+  note: "Sea; no precise point."
+  no_geocode: true
+
+- id: place:kerch_strait
+  type: place
+  kind: sea
+  en: "Kerch Strait"
+  uk: "Керченська протока"
+  note: "Only passage between the Black Sea and the Sea of Azov; point is the c13 marker near the bridge."
+  geometry: {type: Point, coordinates: [36.549, 45.281]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:kerch_yenikale_canal
+  type: place
+  kind: sea
+  en: "Kerch–Yenikale Canal"
+  aliases: ["Kerch–Yenikale shipping canal"]
+  parent: place:kerch_strait
+  note: "Shipping channel through the strait, under the Crimean Bridge arch."
+  no_geocode: true
+
+- id: place:kerch_bay
+  type: place
+  kind: sea
+  en: "Kerch Bay"
+  uk: "Керченська бухта"
+  parent: place:crimea
+  note: "Bay off Kerch on the strait; Sea Baby fight of 5–6 Dec 2024; no point given."
+  no_geocode: true
+
+- id: place:bosphorus
+  type: place
+  kind: sea
+  en: "Bosphorus"
+  uk: "Босфор"
+  parent: place:turkey
+  note: "Strait; Ivan Khurs attacked 120–140 km NE of it (24 May 2023); water, no geocode."
+  no_geocode: true
+
+- id: place:sevastopol_bay
+  type: place
+  kind: sea
+  en: "Sevastopol Bay"
+  uk: "Севастопольська бухта"
+  parent: place:sevastopol
+  note: "Black Sea Fleet main base, protected by booms."
+  geometry: {type: Point, coordinates: [33.579, 44.613]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:pivdenna_bay
+  type: place
+  kind: sea
+  en: "Pivdenna Bay"
+  uk: "Південна бухта"
+  aliases: ["Yuzhnaya Bay", "Pivdenna (Yuzhnaya) Bay"]
+  parent: place:sevastopol_bay
+  note: "Inlet of Sevastopol Bay; boom damaged 29 Oct 2022."
+  geometry: {type: Point, coordinates: [33.529, 44.615]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:tsemes_bay
+  type: place
+  kind: sea
+  en: "Tsemes Bay"
+  uk: "Цемеська бухта"
+  parent: place:novorossiysk
+  note: "Novorossiysk's bay; Black Sea Fleet refuge since Oct 2023."
+  geometry: {type: Point, coordinates: [37.841, 44.684]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:zmiinyi_island
+  type: place
+  kind: landform
+  en: "Zmiinyi Island"
+  uk: "острів Зміїний"
+  aliases: ["Snake Island", "Zmiinyi"]
+  parent: place:odesa_oblast
+  note: "Ukrainian island off the Danube delta, about 0.20 km² (590 × 570 m); Russian-held 24 Feb – 30 Jun 2022."
+  geometry: {type: Point, coordinates: [30.2033, 45.2548]}
+  geometry_source: "stated in research/chapters/c02-snake-island-moskva.md"
+
+- id: place:bile
+  type: place
+  kind: settlement
+  en: "Bile"
+  uk: "Біле"
+  parent: place:zmiinyi_island
+  note: "Only settlement on Zmiinyi Island."
+  geometry: {type: Point, coordinates: [30.2064, 45.2565]}
+  geometry_source: "stated in research/chapters/c02-snake-island-moskva.md"
+
+- id: place:moskva_wreck
+  type: place
+  kind: facility
+  en: "Moskva wreck site"
+  aliases: ["Moskva wreck", "Moskva wreck position"]
+  parent: place:black_sea
+  note: "Satellite-radar position of the burning cruiser Moskva at 18:52 on 13 Apr 2022, about 80 nmi S of Odesa; the wreck lies here in 45–50 m of water."
+  geometry: {type: Point, coordinates: [30.9251, 45.1787]}
+  geometry_source: "stated in research/chapters/c02-snake-island-moskva.md"
+
+- id: place:boiko_towers
+  type: place
+  kind: facility
+  en: "Boiko towers"
+  uk: "вишки Бойка"
+  aliases: ["Boiko rigs"]
+  parent: place:black_sea
+  note: "Occupied offshore gas rigs in the NW Black Sea; 3 of 4 hit 20 Jun 2022. Offshore, no point given."
+  no_geocode: true
+
+- id: place:odesa
+  type: place
+  kind: settlement
+  en: "Odesa"
+  uk: "Одеса"
+  aliases: ["Odessa"]
+  parent: place:odesa_oblast
+  geometry: {type: Point, coordinates: [30.7323, 46.4843]}
+  geometry_source: "stated in research/chapters/c02-snake-island-moskva.md"
+
+- id: place:vylkove
+  type: place
+  kind: settlement
+  en: "Vylkove"
+  uk: "Вилкове"
+  parent: place:odesa_oblast
+  note: "Danube-delta town; Ukrainian guns fired on Zmiinyi Island from the shore near it (Jun 2022)."
+  geometry: {type: Point, coordinates: [29.5831, 45.4031]}
+  geometry_source: "stated in research/chapters/c02-snake-island-moskva.md"
+
+- id: place:greater_odesa
+  type: place
+  kind: region
+  en: "Greater Odesa"
+  uk: "Велика Одеса"
+  aliases: ["Greater Odesa ports"]
+  parent: place:odesa_oblast
+  note: "Port cluster of Odesa, Chornomorsk and Pivdenne; a notion."
+  no_geocode: true
+
+- id: place:chornomorsk
+  type: place
+  kind: settlement
+  en: "Chornomorsk"
+  uk: "Чорноморськ"
+  parent: place:odesa_oblast
+  geometry: {type: Point, coordinates: [30.655, 46.301]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:pivdenne
+  type: place
+  kind: settlement
+  en: "Pivdenne"
+  uk: "Південне"
+  aliases: ["Yuzhne"]
+  parent: place:odesa_oblast
+  note: "Port town (formerly Yuzhne), part of Greater Odesa."
+  geometry: {type: Point, coordinates: [31.099, 46.623]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:ochakiv
+  type: place
+  kind: settlement
+  en: "Ochakiv"
+  uk: "Очаків"
+  parent: place:mykolaiv_oblast
+  geometry: {type: Point, coordinates: [31.545, 46.615]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:mykolaiv
+  type: place
+  kind: settlement
+  en: "Mykolaiv"
+  uk: "Миколаїв"
+  parent: place:mykolaiv_oblast
+  geocode_query: "Mykolaiv, Mykolaiv Oblast, Ukraine"
+
+- id: place:cherkasy
+  type: place
+  kind: settlement
+  en: "Cherkasy"
+  uk: "Черкаси"
+  parent: place:ukraine
+  geocode_query: "Cherkasy, Ukraine"
+
+- id: place:sulina
+  type: place
+  kind: settlement
+  en: "Sulina"
+  parent: place:romania
+  note: "Nearest Romanian port to Zmiinyi Island."
+  geometry: {type: Point, coordinates: [29.655, 45.1558]}
+  geometry_source: "stated in research/chapters/c02-snake-island-moskva.md"
+  countrycodes: "ro"
+
+- id: place:danube
+  type: place
+  kind: river
+  en: "Danube"
+  uk: "Дунай"
+  aliases: ["Danube River"]
+  geocode_query: "Danube"
+  countrycodes: "ua,ro"
+
+- id: place:danube_delta
+  type: place
+  kind: region
+  en: "Danube delta"
+  uk: "дельта Дунаю"
+  aliases: ["Danube Delta"]
+  geocode_query: "Danube Delta"
+  countrycodes: "ro,ua"
+
+- id: place:bessarabia
+  type: place
+  kind: region
+  en: "Bessarabia"
+  uk: "Бессарабія"
+  note: "Historical region between the Dniester and the Prut; no modern polygon."
+  no_geocode: true
+
+- id: place:azovstal
+  type: place
+  kind: facility
+  en: "Azovstal"
+  uk: "Азовсталь"
+  aliases: ["Azovstal works", "Azovstal plant", "Azovstal steelworks", "Azovstal Iron and Steel Works"]
+  parent: place:mariupol
+  note: "Steelworks on the Left-Bank side of Mariupol; last stronghold of the defence until 20 May 2022. OSM centre (Wikipedia gives 47.0981 N, 37.6100 E, about 1 km off)."
+  geometry: {type: Point, coordinates: [37.5991, 47.1062]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:illich_steel_works
+  type: place
+  kind: facility
+  en: "Illich Iron and Steel Works"
+  uk: "ММК імені Ілліча"
+  aliases: ["Illich steel works", "Illich works", "Illich plant"]
+  parent: place:mariupol
+  note: "36th Marine Brigade's pocket until 13 Apr 2022."
+  geometry: {type: Point, coordinates: [37.5535, 47.1789]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:mariupol_sea_port
+  type: place
+  kind: facility
+  en: "Mariupol Sea Trade Port"
+  uk: "Маріупольський морський торговельний порт"
+  aliases: ["Mariupol port", "port of Mariupol", "Mariupol sea port"]
+  parent: place:mariupol
+  note: "Ukrainian pocket until about 16 Apr 2022."
+  geometry: {type: Point, coordinates: [37.5042, 47.0554]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:mariupol_drama_theatre
+  type: place
+  kind: facility
+  en: "Mariupol Drama Theatre"
+  uk: "Донецький академічний обласний драматичний театр"
+  aliases: ["Mariupol theatre"]
+  parent: place:mariupol
+  note: "Bombed 16 Mar 2022."
+  geometry: {type: Point, coordinates: [37.5486, 47.096]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:mariupol_maternity_hospital_3
+  type: place
+  kind: facility
+  en: "Mariupol Maternity Hospital No. 3"
+  aliases: ["Mariupol Maternity and Children's Hospital No. 3", "Mariupol maternity hospital"]
+  parent: place:mariupol
+  note: "Bombed 9 Mar 2022."
+  geocode_query: "Maternity Hospital No. 3, Mariupol, Donetsk Oblast, Ukraine"
+
+- id: place:mariupol_sbu_hq
+  type: place
+  kind: facility
+  en: "SBU headquarters (Mariupol)"
+  parent: place:mariupol
+  note: "Captured 2 Apr 2022; position not given in the dossier."
+  no_geocode: true
+
+- id: place:mariupol_fishing_port
+  type: place
+  kind: facility
+  en: "Mariupol fishing port"
+  parent: place:mariupol
+  note: "West of Azovstal; taken 10 Apr 2022; position not given in the dossier."
+  no_geocode: true
+
+- id: place:kalmiuskyi_district
+  type: place
+  kind: city_district
+  en: "Kalmiuskyi district"
+  uk: "Кальміуський район"
+  parent: place:mariupol
+  geocode_query: "Kalmiuskyi District, Mariupol, Donetsk Oblast, Ukraine"
+
+- id: place:livoberezhnyi_district
+  type: place
+  kind: city_district
+  en: "Livoberezhnyi district"
+  uk: "Лівобережний район"
+  aliases: ["Left-Bank district"]
+  parent: place:mariupol
+  note: "District east of the Kalmius, holding Azovstal."
+  geocode_query: "Livoberezhnyi District, Mariupol, Donetsk Oblast, Ukraine"
+
+- id: place:manhush
+  type: place
+  kind: settlement
+  en: "Manhush"
+  uk: "Мангуш"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.3078, 47.0568]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:bezimenne
+  type: place
+  kind: settlement
+  en: "Bezimenne"
+  uk: "Безіменне"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.9355, 47.1082]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:novoazovsk
+  type: place
+  kind: settlement
+  en: "Novoazovsk"
+  uk: "Новоазовськ"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [38.0831, 47.1139]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:olenivka
+  type: place
+  kind: settlement
+  en: "Olenivka"
+  uk: "Оленівка"
+  parent: place:donetsk_oblast
+  note: "Site of the Russian POW camp hit by the 28–29 Jul 2022 blast."
+  geometry: {type: Point, coordinates: [37.6487, 47.8294]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:pavlopil
+  type: place
+  kind: settlement
+  en: "Pavlopil"
+  uk: "Павлопіль"
+  parent: place:donetsk_oblast
+  geocode_query: "Pavlopil, Donetsk Oblast, Ukraine"
+
+- id: place:rozivka
+  type: place
+  kind: settlement
+  en: "Rozivka"
+  uk: "Розівка"
+  parent: place:zaporizhzhia_oblast
+  geocode_query: "Rozivka, Zaporizhzhia Oblast, Ukraine"
+
+- id: place:berdiansk
+  type: place
+  kind: settlement
+  en: "Berdiansk"
+  uk: "Бердянськ"
+  parent: place:zaporizhzhia_oblast
+  geometry: {type: Point, coordinates: [36.7888, 46.7557]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:dnipro_airport
+  type: place
+  kind: airfield
+  en: "Dnipro airport"
+  uk: "Міжнародний аеропорт «Дніпро»"
+  aliases: ["Dnipro International Airport"]
+  parent: place:dnipro_city
+  note: "Base of the Mariupol helicopter air bridge (2022)."
+  geometry: {type: Point, coordinates: [35.0966, 48.3612]}
+  geometry_source: "stated in research/chapters/c03-azovstal.md"
+
+- id: place:antonivskyi_road_bridge
+  type: place
+  kind: bridge
+  en: "Antonivskyi road bridge"
+  uk: "Антонівський автомобільний міст"
+  aliases: ["Antonivskyi Bridge", "Antonivka road bridge", "Antonivsky bridge"]
+  parent: place:kherson_oblast
+  note: "1,366 m M14 bridge over the Dnipro at Kherson; HIMARS-struck from 19 Jul 2022, blown by Russia 11 Nov 2022. c10 gives 46.6745, 32.7198."
+  geometry: {type: Point, coordinates: [32.7203, 46.67]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:antonivskyi_rail_bridge
+  type: place
+  kind: bridge
+  en: "Antonivskyi rail bridge"
+  uk: "Антонівський залізничний міст"
+  aliases: ["Antonivka railway bridge", "Antonivskyi railway bridge", "Antonivka rail bridge"]
+  parent: place:kherson_oblast
+  note: "Rail bridge 6 km upstream of the road bridge; c10 gives 46.6700, 32.8001 for its centre."
+  geometry: {type: Point, coordinates: [32.797, 46.6754]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:kakhovka_dam_road
+  type: place
+  kind: road
+  en: "Kakhovka dam road"
+  aliases: ["Kakhovka dam road and rail crossing", "Kakhovka dam crossing"]
+  parent: place:kakhovka_dam
+  note: "Road (R47) and rail crossing on the Kakhovka dam; road section blown by Russia 11 Nov 2022, dam destroyed 6 Jun 2023."
+  geometry: {type: Point, coordinates: [33.3717, 46.7761]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:r_47
+  type: place
+  kind: road
+  en: "R-47"
+  uk: "Р-47"
+  aliases: ["R47", "P47"]
+  parent: place:kherson_oblast
+  note: "Kherson–Nova Kakhovka–Henichesk road; crossed the Dnipro on the Kakhovka dam."
+  geocode_query: "P47, Kherson Oblast, Ukraine"
+
+- id: place:e_58
+  type: place
+  kind: road
+  en: "E58"
+  aliases: ["E-58"]
+  parent: place:ukraine
+  note: "European route; here the Kherson–Nova Kakhovka road over the Darivka bridge."
+  geocode_query: "E58, Kherson Oblast, Ukraine"
+
+- id: place:t_0403
+  type: place
+  kind: road
+  en: "T0403"
+  aliases: ["T-04-03", "T-0403"]
+  parent: place:ukraine
+  note: "Road along the Kakhovka reservoir shore (northern Kherson front)."
+  geocode_query: "T0403, Ukraine"
+
+- id: place:t_1501
+  type: place
+  kind: road
+  en: "T1501"
+  aliases: ["T-15-01", "T-1501"]
+  parent: place:ukraine
+  note: "Road into Kherson from the north-west, used 11 Nov 2022."
+  geocode_query: "T1501, Ukraine"
+
+- id: place:darivka
+  type: place
+  kind: settlement
+  en: "Darivka"
+  uk: "Дар'ївка"
+  parent: place:kherson_oblast
+  note: "Village on the Inhulets; Russian ferry site in 2022."
+  geometry: {type: Point, coordinates: [32.793, 46.7483]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:darivka_bridge
+  type: place
+  kind: bridge
+  en: "Darivka bridge"
+  uk: "Дар'ївський міст"
+  parent: place:darivka
+  note: "E58 bridge over the Inhulets about 18 km from Kherson; blown by Russia Nov 2022. Not geolocated in the dossier (the village point is)."
+  no_geocode: true
+
+- id: place:inhulets
+  type: place
+  kind: river
+  en: "Inhulets"
+  uk: "Інгулець"
+  aliases: ["Inhulets River"]
+  parent: place:ukraine
+  geocode_query: "Inhulets River, Ukraine"
+
+- id: place:inhulets_bridgehead
+  type: place
+  kind: front_sector
+  en: "Inhulets bridgehead"
+  parent: place:kherson_oblast
+  note: "Ukraine's 2022 foothold on the east bank of the Inhulets (Lozove, Andriivka, Bilohirka, Sukhyi Stavok); a notion."
+  no_geocode: true
+
+- id: place:mykolaiv_line
+  type: place
+  kind: front_sector
+  en: "Mykolaiv line"
+  parent: place:mykolaiv_oblast
+  note: "Ukrainian front line west of Kherson in 2022 (Posad-Pokrovske, Snihurivka); a notion."
+  no_geocode: true
+
+- id: place:dnipro_left_bank
+  type: place
+  kind: region
+  en: "Dnipro left bank"
+  uk: "лівобережжя Дніпра"
+  aliases: ["left bank of the Dnipro", "Dnipro left bank (Kherson Oblast)"]
+  parent: place:kherson_oblast
+  note: "Russian-held Kherson Oblast south/east of the Dnipro since Nov 2022; a notion."
+  no_geocode: true
+
+- id: place:kherson_window
+  type: place
+  kind: sample_box
+  en: "Kherson window 31.5–34.3°E, 46.25–47.75°N"
+  aliases: ["Kherson computation window"]
+  parent: place:kherson_oblast
+  note: "DeepStateMap area-computation window of the Kherson chapter (c04)."
+  no_geocode: true
+  bbox: [31.5, 46.25, 34.3, 47.75]
+
+- id: place:nova_kakhovka
+  type: place
+  kind: settlement
+  en: "Nova Kakhovka"
+  uk: "Нова Каховка"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.3567, 46.7583]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:dudchany
+  type: place
+  kind: settlement
+  en: "Dudchany"
+  uk: "Дудчани"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.7803, 47.1914]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:davydiv_brid
+  type: place
+  kind: settlement
+  en: "Davydiv Brid"
+  uk: "Давидів Брід"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.1935, 47.2409]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:arkhanhelske
+  type: place
+  kind: settlement
+  en: "Arkhanhelske"
+  uk: "Архангельське"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.4054, 47.4318]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:snihurivka
+  type: place
+  kind: settlement
+  en: "Snihurivka"
+  uk: "Снігурівка"
+  parent: place:mykolaiv_oblast
+  geometry: {type: Point, coordinates: [32.7925, 47.0707]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:posad_pokrovske
+  type: place
+  kind: settlement
+  en: "Posad-Pokrovske"
+  uk: "Посад-Покровське"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [32.2681, 46.8021]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:oleshky
+  type: place
+  kind: settlement
+  en: "Oleshky"
+  uk: "Олешки"
+  parent: place:kherson_oblast
+  note: "Town south of the Antonivskyi road bridge (the hromada/district is place:oleshky_district)."
+  geometry: {type: Point, coordinates: [32.722, 46.6261]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:hola_prystan
+  type: place
+  kind: settlement
+  en: "Hola Prystan"
+  uk: "Гола Пристань"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [32.5345, 46.532]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:radensk
+  type: place
+  kind: settlement
+  en: "Radensk"
+  uk: "Раденськ"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [32.9256, 46.5511]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:brylivka
+  type: place
+  kind: settlement
+  en: "Brylivka"
+  uk: "Брилівка"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.1411, 46.4202]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:kalanchak
+  type: place
+  kind: settlement
+  en: "Kalanchak"
+  uk: "Каланчак"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.2844, 46.2572]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:lvove
+  type: place
+  kind: settlement
+  en: "Lvove"
+  uk: "Львове"
+  parent: place:kherson_oblast
+  note: "Right-bank village facing Krynky; Russian ferry site in 2022."
+  geometry: {type: Point, coordinates: [33.1492, 46.7911]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:kozatske
+  type: place
+  kind: settlement
+  en: "Kozatske"
+  uk: "Козацьке"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.3503, 46.7855]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:beryslav
+  type: place
+  kind: settlement
+  en: "Beryslav"
+  uk: "Берислав"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.4167, 46.8358]}
+  geometry_source: "stated in research/chapters/c04-kherson-antonivskyi.md"
+
+- id: place:tiahynka
+  type: place
+  kind: settlement
+  en: "Tiahynka"
+  uk: "Тягинка"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.0592, 46.7763]}
+  geometry_source: "stated in research/chapters/c10-krynky.md"
+
+- id: place:zolota_balka
+  type: place
+  kind: settlement
+  en: "Zolota Balka"
+  uk: "Золота Балка"
+  parent: place:kherson_oblast
+  geocode_query: "Zolota Balka, Kherson Oblast, Ukraine"
+
+- id: place:khreshchenivka
+  type: place
+  kind: settlement
+  en: "Khreshchenivka"
+  uk: "Хрещенівка"
+  parent: place:kherson_oblast
+  geocode_query: "Khreshchenivka, Kherson Oblast, Ukraine"
+
+- id: place:mykhailivka_kherson
+  type: place
+  kind: settlement
+  en: "Mykhailivka"
+  uk: "Михайлівка"
+  parent: place:kherson_oblast
+  note: "Village in northern Kherson Oblast (Beryslav Raion); common name."
+  geocode_query: "Mykhailivka, Beryslav Raion, Kherson Oblast, Ukraine"
+
+- id: place:ivanivka_kherson
+  type: place
+  kind: settlement
+  en: "Ivanivka"
+  uk: "Іванівка"
+  parent: place:kherson_oblast
+  note: "Village in northern Kherson Oblast taken by the 60th Brigade Jul 2022; common name."
+  geocode_query: "Ivanivka, Beryslav Raion, Kherson Oblast, Ukraine"
+
+- id: place:lozove
+  type: place
+  kind: settlement
+  en: "Lozove"
+  uk: "Лозове"
+  parent: place:kherson_oblast
+  geocode_query: "Lozove, Beryslav Raion, Kherson Oblast, Ukraine"
+
+- id: place:andriivka
+  type: place
+  kind: settlement
+  en: "Andriivka"
+  uk: "Андріївка"
+  parent: place:kharkiv_oblast
+  note: "Kharkiv Oblast village (Balakliia area), start point of the 92nd Brigade. Common name: the c04 mentions mean another Andriivka, on the Inhulets in Kherson Oblast (place:andriivka_kherson), and are mislinked here."
+  geometry: {type: Point, coordinates: [36.6116, 49.5456]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:andriivka_kherson
+  type: place
+  kind: settlement
+  en: "Andriivka (Kherson Oblast)"
+  uk: "Андріївка"
+  parent: place:kherson_oblast
+  note: "Village on the east bank of the Inhulets (2022 bridgehead); bare \"Andriivka\" resolves to the Kharkiv one."
+  geocode_query: "Andriivka, Beryslav Raion, Kherson Oblast, Ukraine"
+
+- id: place:bilohirka
+  type: place
+  kind: settlement
+  en: "Bilohirka"
+  uk: "Білогірка"
+  parent: place:kherson_oblast
+  geocode_query: "Bilohirka, Beryslav Raion, Kherson Oblast, Ukraine"
+
+- id: place:sukhyi_stavok
+  type: place
+  kind: settlement
+  en: "Sukhyi Stavok"
+  uk: "Сухий Ставок"
+  parent: place:kherson_oblast
+  geocode_query: "Sukhyi Stavok, Kherson Oblast, Ukraine"
+
+- id: place:velyke_artakove
+  type: place
+  kind: settlement
+  en: "Velyke Artakove"
+  uk: "Велике Артакове"
+  parent: place:kherson_oblast
+  geocode_query: "Velyke Artakove, Kherson Oblast, Ukraine"
+
+- id: place:bila_krynytsia
+  type: place
+  kind: settlement
+  en: "Bila Krynytsia"
+  uk: "Біла Криниця"
+  parent: place:kherson_oblast
+  geocode_query: "Bila Krynytsia, Beryslav Raion, Kherson Oblast, Ukraine"
+
+- id: place:mylove
+  type: place
+  kind: settlement
+  en: "Mylove"
+  uk: "Милове"
+  parent: place:kherson_oblast
+  geocode_query: "Mylove, Beryslav Raion, Kherson Oblast, Ukraine"
+
+- id: place:bruskynske
+  type: place
+  kind: settlement
+  en: "Bruskynske"
+  uk: "Брускинське"
+  parent: place:kherson_oblast
+  geocode_query: "Bruskynske, Kherson Oblast, Ukraine"
+
+- id: place:ishchenka
+  type: place
+  kind: settlement
+  en: "Ishchenka"
+  uk: "Іщенка"
+  parent: place:kherson_oblast
+  geocode_query: "Ishchenka, Kherson Oblast, Ukraine"
+
+- id: place:novovoskresenske
+  type: place
+  kind: settlement
+  en: "Novovoskresenske"
+  uk: "Нововоскресенське"
+  parent: place:kherson_oblast
+  geocode_query: "Novovoskresenske, Kherson Oblast, Ukraine"
+
+- id: place:blahodatne_mykolaiv
+  type: place
+  kind: settlement
+  en: "Blahodatne"
+  uk: "Благодатне"
+  parent: place:mykolaiv_oblast
+  note: "Village east of Mykolaiv near the Kherson border, taken by Russia 20–23 Aug 2022; common name, oblast assumed from context."
+  geocode_query: "Blahodatne, Mykolaiv Raion, Mykolaiv Oblast, Ukraine"
+
+- id: place:chornobaivka
+  type: place
+  kind: settlement
+  en: "Chornobaivka"
+  uk: "Чорнобаївка"
+  parent: place:kherson_oblast
+  geocode_query: "Chornobaivka, Kherson Oblast, Ukraine"
+
+- id: place:vysokopillia
+  type: place
+  kind: settlement
+  en: "Vysokopillia"
+  uk: "Високопілля"
+  parent: place:kherson_oblast
+  geocode_query: "Vysokopillia, Kherson Oblast, Ukraine"
+
+- id: place:myroliubivka
+  type: place
+  kind: settlement
+  en: "Myroliubivka"
+  uk: "Миролюбівка"
+  parent: place:kherson_oblast
+  geocode_query: "Myroliubivka, Kherson Oblast, Ukraine"
+
+- id: place:kyselivka
+  type: place
+  kind: settlement
+  en: "Kyselivka"
+  uk: "Киселівка"
+  parent: place:kherson_oblast
+  geocode_query: "Kyselivka, Kherson Oblast, Ukraine"
+
+- id: place:henichesk
+  type: place
+  kind: settlement
+  en: "Henichesk"
+  uk: "Генічеськ"
+  parent: place:kherson_oblast
+  geocode_query: "Henichesk, Kherson Oblast, Ukraine"
+
+- id: place:skadovsk
+  type: place
+  kind: settlement
+  en: "Skadovsk"
+  uk: "Скадовськ"
+  parent: place:kherson_oblast
+  geocode_query: "Skadovsk, Kherson Oblast, Ukraine"
+
+- id: place:antonivka_kherson
+  type: place
+  kind: settlement
+  en: "Antonivka"
+  uk: "Антонівка"
+  parent: place:kherson
+  note: "Settlement in Kherson city council at the north end of the Antonivskyi road bridge."
+  geocode_query: "Antonivka, Kherson, Kherson Oblast, Ukraine"
+
+- id: place:dachi
+  type: place
+  kind: settlement
+  en: "Dachi"
+  uk: "Дачі"
+  parent: place:kherson_oblast
+  note: "Village at the south end of the Antonivskyi road bridge, by Oleshky."
+  geocode_query: "Dachi, Kherson Oblast, Ukraine"
+
+- id: place:kherson_airport
+  type: place
+  kind: airfield
+  en: "Kherson airport"
+  uk: "Міжнародний аеропорт «Херсон»"
+  aliases: ["Kherson International Airport", "Chornobaivka airfield"]
+  parent: place:kherson
+  geocode_query: "Kherson International Airport, Kherson Oblast, Ukraine"
+
+- id: place:kherson_port
+  type: place
+  kind: facility
+  en: "Kherson port"
+  uk: "Херсонський морський порт"
+  aliases: ["Kherson seaport"]
+  parent: place:kherson
+  geocode_query: "Kherson Sea Port, Kherson, Ukraine"
+
+- id: place:freedom_square_kherson
+  type: place
+  kind: city_district
+  en: "Freedom Square (Kherson)"
+  uk: "площа Свободи"
+  parent: place:kherson
+  geocode_query: "Freedom Square, Kherson, Kherson Oblast, Ukraine"
+
+- id: place:karachunivske_reservoir
+  type: place
+  kind: reservoir
+  en: "Karachunivske reservoir"
+  uk: "Карачунівське водосховище"
+  aliases: ["Karachunivske dam"]
+  parent: place:dnipropetrovsk_oblast
+  note: "Inhulets reservoir at Kryvyi Rih; dam breached by Russian missiles 14 Sep 2022."
+  geocode_query: "Karachunivske Reservoir, Dnipropetrovsk Oblast, Ukraine"
+
+- id: place:crimean_bridge_arch
+  type: place
+  kind: bridge
+  en: "Crimean Bridge arch"
+  aliases: ["Crimean Bridge navigation span", "Crimean Bridge arches"]
+  parent: place:crimean_bridge
+  note: "Steel arches over the Kerch–Yenikale canal: 227 m span, 35 m clearance; about 2.3 km from the Crimean landfall."
+  geometry: {type: Point, coordinates: [36.506, 45.3086]}
+  geometry_source: "stated in research/chapters/c05-kerch-bridge.md"
+
+- id: place:crimean_bridge_road
+  type: place
+  kind: bridge
+  en: "Crimean Bridge road bridge"
+  aliases: ["Crimean Bridge road span", "Crimean Bridge road spans", "Crimean Bridge road lanes"]
+  parent: place:crimean_bridge
+  note: "Four-lane road bridge; road spans dropped 8 Oct 2022 and 17 Jul 2023. Linear: Crimean landfall at Ak-Burun 45.324 N 36.487 E, Taman landfall 45.208 N 36.612 E (c05); geometry from the parent."
+  no_geocode: true
+
+- id: place:crimean_bridge_rail
+  type: place
+  kind: bridge
+  en: "Crimean Bridge rail bridge"
+  aliases: ["Crimean Bridge rail span", "Crimean Bridge railway", "Crimean Bridge rail line"]
+  parent: place:crimean_bridge
+  note: "Double-track rail bridge parallel to the road bridge; Crimean rail landfall 45.328 N 36.472 E (c05); geometry from the parent."
+  no_geocode: true
+
+- id: place:kerch
+  type: place
+  kind: settlement
+  en: "Kerch"
+  uk: "Керч"
+  parent: place:crimea
+  geometry: {type: Point, coordinates: [36.467, 45.356]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:ak_burun
+  type: place
+  kind: settlement
+  en: "Ak-Burun"
+  uk: "Ак-Бурун"
+  parent: place:kerch
+  note: "Locality in Kerch at the Crimean road landfall of the bridge."
+  geometry: {type: Point, coordinates: [36.493, 45.317]}
+  geometry_source: "stated in research/chapters/c05-kerch-bridge.md"
+
+- id: place:taman_peninsula
+  type: place
+  kind: landform
+  en: "Taman Peninsula"
+  uk: "Таманський півострів"
+  aliases: ["Taman"]
+  parent: place:krasnodar_krai
+  geocode_query: "Taman Peninsula, Krasnodar Krai, Russia"
+  countrycodes: "ru"
+
+- id: place:port_kavkaz
+  type: place
+  kind: facility
+  en: "Port Kavkaz"
+  uk: "порт Кавказ"
+  aliases: ["Port Kavkaz ferry terminal", "Kavkaz port"]
+  parent: place:taman_peninsula
+  note: "Russian ferry terminus of the Kerch crossing."
+  geometry: {type: Point, coordinates: [36.674, 45.341]}
+  geometry_source: "stated in research/chapters/c05-kerch-bridge.md"
+
+- id: place:port_krym
+  type: place
+  kind: facility
+  en: "Port Krym"
+  uk: "порт Крим"
+  aliases: ["Port Crimea", "Kerch ferry harbour", "Kerch ferry port"]
+  parent: place:kerch
+  note: "Crimean ferry harbour of the Kerch crossing."
+  geometry: {type: Point, coordinates: [36.624, 45.364]}
+  geometry_source: "stated in research/chapters/c05-kerch-bridge.md"
+
+- id: place:taman_station
+  type: place
+  kind: facility
+  en: "Taman station"
+  aliases: ["Taman station freight yard", "Taman-Pass"]
+  parent: place:taman_peninsula
+  note: "Freight yard where cars for the bridge accumulate (Molfar)."
+  geometry: {type: Point, coordinates: [36.6768, 45.179]}
+  geometry_source: "stated in research/chapters/c05-kerch-bridge.md"
+
+- id: place:taman_checkpoint
+  type: place
+  kind: facility
+  en: "Taman checkpoint"
+  parent: place:taman_peninsula
+  note: "Inspection point on the Taman approach to the Crimean Bridge (truck passed 06:00 on 8 Oct 2022); not located."
+  no_geocode: true
+
+- id: place:rostov_sevastopol_railway
+  type: place
+  kind: railway
+  en: "Rostov–Sevastopol railway"
+  aliases: ["Rostov–Sevastopol rail line"]
+  parent: place:ukraine
+  note: "Russian rail line through the occupied coast, announced 18 Mar 2024 as redundancy for the Crimean Bridge; linear."
+  no_geocode: true
+
+- id: place:north_crimean_canal_rail_bridge
+  type: place
+  kind: bridge
+  en: "North Crimean Canal rail bridge"
+  parent: place:ukraine
+  note: "Rail bridge over the North Crimean Canal on the land corridor; destroyed by the SSO 22–23 Jun 2026; location not stated."
+  no_geocode: true
+
+- id: place:simferopol
+  type: place
+  kind: settlement
+  en: "Simferopol"
+  uk: "Сімферополь"
+  parent: place:crimea
+  geocode_query: "Simferopol, Crimea"
+
+- id: place:dzhankoi
+  type: place
+  kind: settlement
+  en: "Dzhankoi"
+  uk: "Джанкой"
+  parent: place:crimea
+  note: "Town (the air base is place:dzhankoi_air_base)."
+  geocode_query: "Dzhankoi, Crimea"
+
+- id: place:armiansk
+  type: place
+  kind: settlement
+  en: "Armiansk"
+  uk: "Армянськ"
+  parent: place:crimea
+  geocode_query: "Armiansk, Crimea"
+
+- id: place:perekop
+  type: place
+  kind: settlement
+  en: "Perekop"
+  uk: "Перекоп"
+  parent: place:crimea
+  note: "Isthmus village; maximum objective of the Krynky operation."
+  geocode_query: "Perekop, Crimea"
+
+- id: place:rostov_on_don
+  type: place
+  kind: settlement
+  en: "Rostov-on-Don"
+  uk: "Ростов-на-Дону"
+  aliases: ["Rostov"]
+  parent: place:rostov_oblast
+  note: "Southern Military District HQ."
+  geocode_query: "Rostov-on-Don, Rostov Oblast, Russia"
+  countrycodes: "ru"
+
+- id: place:armavir
+  type: place
+  kind: settlement
+  en: "Armavir"
+  uk: "Армавір"
+  parent: place:krasnodar_krai
+  note: "Russian town in Krasnodar Krai (not Armenia's Armavir); bomb cargo reloaded here 6 Oct 2022."
+  geocode_query: "Armavir, Krasnodar Krai, Russia"
+  countrycodes: "ru"
+
+- id: place:verkhny_lars
+  type: place
+  kind: border_crossing
+  en: "Verkhny Lars"
+  uk: "Верхній Ларс"
+  parent: place:russia
+  note: "Georgia–Russia border crossing."
+  geocode_query: "Verkhny Lars, North Ossetia–Alania, Russia"
+  countrycodes: "ru"
+
+- id: place:ruse
+  type: place
+  kind: settlement
+  en: "Ruse"
+  uk: "Русе"
+  parent: place:bulgaria
+  geocode_query: "Ruse, Bulgaria"
+  countrycodes: "bg"
+
+- id: place:poti
+  type: place
+  kind: settlement
+  en: "Poti"
+  uk: "Поті"
+  parent: place:georgia
+  geocode_query: "Poti, Georgia"
+  countrycodes: "ge"
+
+- id: place:yerevan
+  type: place
+  kind: settlement
+  en: "Yerevan"
+  uk: "Єреван"
+  parent: place:armenia
+  geocode_query: "Yerevan, Armenia"
+  countrycodes: "am"
+
+- id: place:kharkiv_counteroffensive_box
+  type: place
+  kind: sample_box
+  en: "Kharkiv counteroffensive box"
+  aliases: ["Kharkiv counteroffensive playable area"]
+  parent: place:kharkiv_oblast
+  note: "Playable area of the Kharkiv counteroffensive chapter (c06): about 48.9–50.3 N, 36.6–38.2 E."
+  no_geocode: true
+  bbox: [36.6, 48.9, 38.2, 50.3]
+
+- id: place:izium_balakliia_sector
+  type: place
+  kind: front_sector
+  en: "Izium–Balakliia sector"
+  parent: place:kharkiv_oblast
+  note: "Russian economy-of-force front before 6 Sep 2022; a notion."
+  no_geocode: true
+
+- id: place:balakliia_kupiansk_izium_area
+  type: place
+  kind: region
+  en: "Balakliia–Kupiansk–Izium area"
+  parent: place:kharkiv_oblast
+  note: "Notional area of the Sep 2022 Ukrainian concentration."
+  no_geocode: true
+
+- id: place:east_of_kupiansk
+  type: place
+  kind: region
+  en: "east of Kupiansk"
+  parent: place:kharkiv_oblast
+  note: "Notional: east (left) bank of the Oskil around Kupiansk."
+  no_geocode: true
+
+- id: place:russia_ukraine_border
+  type: place
+  kind: region
+  en: "Russia–Ukraine border"
+  uk: "українсько-російський кордон"
+  aliases: ["Russian state border", "Ukraine–Russia border"]
+  parent: place:ukraine
+  note: "Linear notion; no geocode."
+  no_geocode: true
+
+- id: place:chuhuiv
+  type: place
+  kind: settlement
+  en: "Chuhuiv"
+  uk: "Чугуїв"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [36.6899, 49.8366]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:pryshyb
+  type: place
+  kind: settlement
+  en: "Pryshyb"
+  uk: "Пришиб"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [36.7536, 49.5119]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:verbivka
+  type: place
+  kind: settlement
+  en: "Verbivka"
+  uk: "Вербівка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [36.8373, 49.4869]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:bairak
+  type: place
+  kind: settlement
+  en: "Bairak"
+  uk: "Байрак"
+  parent: place:kharkiv_oblast
+  note: "Siverskyi Donets bridge south of Balakliia, blown by Russia by 30 Aug 2022."
+  geometry: {type: Point, coordinates: [36.8411, 49.4214]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:nova_husarivka
+  type: place
+  kind: settlement
+  en: "Nova Husarivka"
+  uk: "Нова Гусарівка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [36.8755, 49.3904]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:volokhiv_yar
+  type: place
+  kind: settlement
+  en: "Volokhiv Yar"
+  uk: "Волохів Яр"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [36.9841, 49.5968]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:savyntsi
+  type: place
+  kind: settlement
+  en: "Savyntsi"
+  uk: "Савинці"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.0502, 49.396]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:shevchenkove
+  type: place
+  kind: settlement
+  en: "Shevchenkove"
+  uk: "Шевченкове"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.1753, 49.695]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:hrushivka
+  type: place
+  kind: settlement
+  en: "Hrushivka"
+  uk: "Грушівка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.4808, 49.6738]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:kupiansk_vuzlovyi
+  type: place
+  kind: settlement
+  en: "Kupiansk-Vuzlovyi"
+  uk: "Купʼянськ-Вузловий"
+  aliases: ["Kupyansk-Vuzlovyi", "Kupiansk-Vuzlovyi rail junction"]
+  parent: place:kharkiv_oblast
+  note: "Rail-junction town on the east bank of the Oskil; retaken 26 Sep 2022."
+  geometry: {type: Point, coordinates: [37.6439, 49.6599]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:kivsharivka
+  type: place
+  kind: settlement
+  en: "Kivsharivka"
+  uk: "Ківшарівка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.6829, 49.6295]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:dvorichna
+  type: place
+  kind: settlement
+  en: "Dvorichna"
+  uk: "Дворічна"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.6826, 49.8509]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:velykyi_burluk
+  type: place
+  kind: settlement
+  en: "Velykyi Burluk"
+  uk: "Великий Бурлук"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.3855, 50.0597]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:kunie
+  type: place
+  kind: settlement
+  en: "Kunie"
+  uk: "Куньє"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.2467, 49.3925]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:oskil_village
+  type: place
+  kind: settlement
+  en: "Oskil (village)"
+  uk: "Оскіл"
+  aliases: ["Oskil village"]
+  parent: place:kharkiv_oblast
+  note: "Village east of Izium (not the river, place:oskil)."
+  geometry: {type: Point, coordinates: [37.4273, 49.1738]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:horokhovatka
+  type: place
+  kind: settlement
+  en: "Horokhovatka"
+  uk: "Гороховатка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.5248, 49.3442]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:korovii_yar
+  type: place
+  kind: settlement
+  en: "Korovii Yar"
+  uk: "Коровій Яр"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.6234, 49.1615]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:stavky
+  type: place
+  kind: settlement
+  en: "Stavky"
+  uk: "Ставки"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.8349, 49.0485]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:yampil
+  type: place
+  kind: settlement
+  en: "Yampil"
+  uk: "Ямпіль"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.9601, 48.9401]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:torske
+  type: place
+  kind: settlement
+  en: "Torske"
+  uk: "Торське"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.9561, 49.0235]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:svatove
+  type: place
+  kind: settlement
+  en: "Svatove"
+  uk: "Сватове"
+  parent: place:luhansk_oblast
+  geometry: {type: Point, coordinates: [38.1457, 49.4177]}
+  geometry_source: "stated in research/chapters/c06-kharkiv-offensive.md"
+
+- id: place:hrakove
+  type: place
+  kind: settlement
+  en: "Hrakove"
+  uk: "Гракове"
+  parent: place:kharkiv_oblast
+  geocode_query: "Hrakove, Chuhuiv Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:ternova
+  type: place
+  kind: settlement
+  en: "Ternova"
+  uk: "Тернова"
+  parent: place:kharkiv_oblast
+  geocode_query: "Ternova, Kharkiv Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:bohorodychne
+  type: place
+  kind: settlement
+  en: "Bohorodychne"
+  uk: "Богородичне"
+  parent: place:donetsk_oblast
+  geocode_query: "Bohorodychne, Donetsk Oblast, Ukraine"
+
+- id: place:yatskivka
+  type: place
+  kind: settlement
+  en: "Yatskivka"
+  uk: "Яцьківка"
+  parent: place:donetsk_oblast
+  note: "Oskil-reservoir village east of Izium; oblast (Donetsk) assumed."
+  geocode_query: "Yatskivka, Donetsk Oblast, Ukraine"
+
+- id: place:petropavlivka
+  type: place
+  kind: settlement
+  en: "Petropavlivka"
+  uk: "Петропавлівка"
+  parent: place:kharkiv_oblast
+  note: "Left-bank village about 7 km east of Kupiansk."
+  geometry: {type: Point, coordinates: [37.719, 49.717]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:pisky_radkivski
+  type: place
+  kind: settlement
+  en: "Pisky-Radkivski"
+  uk: "Піски-Радьківські"
+  parent: place:kharkiv_oblast
+  geocode_query: "Pisky-Radkivski, Kharkiv Oblast, Ukraine"
+
+- id: place:senkove
+  type: place
+  kind: settlement
+  en: "Senkove"
+  uk: "Сенькове"
+  parent: place:kharkiv_oblast
+  geocode_query: "Senkove, Kupiansk Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:kryva_luka
+  type: place
+  kind: settlement
+  en: "Kryva Luka"
+  uk: "Крива Лука"
+  parent: place:donetsk_oblast
+  geocode_query: "Kryva Luka, Donetsk Oblast, Ukraine"
+
+- id: place:ozerne
+  type: place
+  kind: settlement
+  en: "Ozerne"
+  uk: "Озерне"
+  parent: place:donetsk_oblast
+  geocode_query: "Ozerne, Kramatorsk Raion, Donetsk Oblast, Ukraine"
+
+- id: place:staryi_karavan
+  type: place
+  kind: settlement
+  en: "Staryi Karavan"
+  uk: "Старий Караван"
+  parent: place:donetsk_oblast
+  geocode_query: "Staryi Karavan, Donetsk Oblast, Ukraine"
+
+- id: place:mykolaiivka_chuhuiv
+  type: place
+  kind: settlement
+  en: "Mykolaiivka"
+  uk: "Миколаївка"
+  parent: place:chuhuiv_raion
+  note: "Village in Chuhuiv Raion (not place:mykolaivka near Sloviansk)."
+  geocode_query: "Mykolaivka, Chuhuiv Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:vasylenkove
+  type: place
+  kind: settlement
+  en: "Vasylenkove"
+  uk: "Василенкове"
+  parent: place:chuhuiv_raion
+  geocode_query: "Vasylenkove, Kharkiv Oblast, Ukraine"
+
+- id: place:raihorodka
+  type: place
+  kind: settlement
+  en: "Raihorodka"
+  uk: "Райгородка"
+  parent: place:luhansk_oblast
+  note: "Village near Svatove (Luhansk Oblast) assumed; the Russian MoD showed reinforcement convoys there 9 Sep 2022."
+  geocode_query: "Raihorodka, Luhansk Oblast, Ukraine"
+
+- id: place:shchurove
+  type: place
+  kind: settlement
+  en: "Shchurove"
+  uk: "Щурове"
+  parent: place:donetsk_oblast
+  geocode_query: "Shchurove, Donetsk Oblast, Ukraine"
+
+- id: place:bilohorivka
+  type: place
+  kind: settlement
+  en: "Bilohorivka"
+  uk: "Білогорівка"
+  parent: place:luhansk_oblast
+  geocode_query: "Bilohorivka, Sievierodonetsk Raion, Luhansk Oblast, Ukraine"
+
+- id: place:horobivka
+  type: place
+  kind: settlement
+  en: "Horobivka"
+  uk: "Горобівка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Horobivka, Kharkiv Oblast, Ukraine"
+
+- id: place:kucherivka
+  type: place
+  kind: settlement
+  en: "Kucherivka"
+  uk: "Кучерівка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Kucherivka, Kharkiv Oblast, Ukraine"
+
+- id: place:podoly
+  type: place
+  kind: settlement
+  en: "Podoly"
+  uk: "Подоли"
+  parent: place:kharkiv_oblast
+  geocode_query: "Podoly, Kupiansk Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:zelena_dolyna
+  type: place
+  kind: settlement
+  en: "Zelena Dolyna"
+  uk: "Зелена Долина"
+  parent: place:donetsk_oblast
+  note: "Village north of Lyman; oblast assumed from context."
+  geocode_query: "Zelena Dolyna, Kramatorsk Raion, Donetsk Oblast, Ukraine"
+
+- id: place:kolodiazi
+  type: place
+  kind: settlement
+  en: "Kolodiazi"
+  uk: "Колодязі"
+  parent: place:donetsk_oblast
+  geocode_query: "Kolodiazi, Donetsk Oblast, Ukraine"
+
+- id: place:synkivka
+  type: place
+  kind: settlement
+  en: "Synkivka"
+  uk: "Синьківка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Synkivka, Kharkiv Oblast, Ukraine"
+
+- id: place:yampolivka
+  type: place
+  kind: settlement
+  en: "Yampolivka"
+  uk: "Ямполівка"
+  parent: place:donetsk_oblast
+  geocode_query: "Yampolivka, Donetsk Oblast, Ukraine"
+
+- id: place:shyikivka
+  type: place
+  kind: settlement
+  en: "Shyikivka"
+  uk: "Шийківка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Shyikivka, Kharkiv Oblast, Ukraine"
+
+- id: place:terny
+  type: place
+  kind: settlement
+  en: "Terny"
+  uk: "Терни"
+  parent: place:donetsk_oblast
+  geocode_query: "Terny, Kramatorsk Raion, Donetsk Oblast, Ukraine"
+
+- id: place:bohuslavka
+  type: place
+  kind: settlement
+  en: "Bohuslavka"
+  uk: "Богуславка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Bohuslavka, Kharkiv Oblast, Ukraine"
+
+- id: place:borivska_andriivka
+  type: place
+  kind: settlement
+  en: "Borivska Andriivka"
+  uk: "Борівська Андріївка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Borivska Andriivka, Kharkiv Oblast, Ukraine"
+
+- id: place:shchurivka
+  type: place
+  kind: settlement
+  en: "Shchurivka"
+  uk: "Щурівка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Shchurivka, Kharkiv Oblast, Ukraine"
+
+- id: place:velyka_komyshuvakha
+  type: place
+  kind: settlement
+  en: "Velyka Komyshuvakha"
+  uk: "Велика Комишуваха"
+  parent: place:kharkiv_oblast
+  geocode_query: "Velyka Komyshuvakha, Kharkiv Oblast, Ukraine"
+
+- id: place:stary_oskol
+  type: place
+  kind: settlement
+  en: "Stary Oskol"
+  uk: "Старий Оскол"
+  parent: place:belgorod_oblast
+  geocode_query: "Stary Oskol, Belgorod Oblast, Russia"
+  countrycodes: "ru"
+
+- id: place:belgorod
+  type: place
+  kind: settlement
+  en: "Belgorod"
+  uk: "Бєлгород"
+  parent: place:belgorod_oblast
+  geocode_query: "Belgorod, Belgorod Oblast, Russia"
+  countrycodes: "ru"
+
+- id: place:moscow
+  type: place
+  kind: settlement
+  en: "Moscow"
+  uk: "Москва"
+  parent: place:russia
+  geocode_query: "Moscow, Russia"
+  countrycodes: "ru"
+
+- id: place:pishanske_cemetery
+  type: place
+  kind: facility
+  en: "Pishanske cemetery"
+  uk: "Піщанське кладовище"
+  aliases: ["Izium mass-grave site"]
+  parent: place:izium
+  note: "Izium mass-grave site; exhumations from 15 Sep 2022."
+  geocode_query: "Pishanske cemetery, Izium, Kharkiv Oblast, Ukraine"
+
+- id: place:kharkiv_tec_5
+  type: place
+  kind: facility
+  en: "Kharkiv TEC-5"
+  uk: "Харківська ТЕЦ-5"
+  aliases: ["Kharkiv TPP-5", "Kharkiv CHP-5"]
+  parent: place:kharkiv_oblast
+  geocode_query: "Kharkiv TEC-5, Kharkiv Oblast, Ukraine"
+
+- id: place:serednia_balakliika
+  type: place
+  kind: river
+  en: "Serednia Balakliika"
+  uk: "Середня Балаклійка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Serednia Balakliika, Kharkiv Oblast, Ukraine"
+
+- id: place:oskil_reservoir
+  type: place
+  kind: reservoir
+  en: "Oskil Reservoir"
+  uk: "Червонооскільське водосховище"
+  aliases: ["Krasnooskil Reservoir", "Chervonooskilske Reservoir"]
+  parent: place:kharkiv_oblast
+  geocode_query: "Oskil Reservoir, Kharkiv Oblast, Ukraine"
+
+- id: place:kupiansk_oskil_bridge
+  type: place
+  kind: bridge
+  en: "Kupiansk Oskil bridge"
+  aliases: ["Kupiansk road bridge"]
+  parent: place:kupiansk
+  note: "Road bridge over the Oskil in Kupiansk, unusable by 9 Sep 2022; position not given, geometry from the parent."
+  no_geocode: true
+
+- id: place:valuyki_rail_line
+  type: place
+  kind: railway
+  en: "Valuyki rail line"
+  aliases: ["Kupiansk–Valuyki railway"]
+  parent: place:kharkiv_oblast
+  note: "Kupiansk–Valuyki (Russia) railway; linear."
+  no_geocode: true
+
+- id: place:belgorod_vovchansk_kupiansk_railway
+  type: place
+  kind: railway
+  en: "Belgorod–Vovchansk–Kupiansk railway"
+  parent: place:kharkiv_oblast
+  note: "Rail line of 1901 from Belgorod via Vovchansk to Kupiansk; linear."
+  no_geocode: true
+
+- id: place:m_03
+  type: place
+  kind: road
+  en: "M-03"
+  uk: "М-03"
+  aliases: ["M03", "M-03 highway", "E40", "E40/M03"]
+  parent: place:ukraine
+  note: "Kyiv–Poltava–Kharkiv–Izium–Sloviansk highway, part of European route E40 (the E40 west of Kyiv is not meant)."
+  geocode_query: "M03, Ukraine"
+
+- id: place:h_26
+  type: place
+  kind: road
+  en: "H-26"
+  uk: "Н-26"
+  aliases: ["N26", "H26", "N-26", "H-26 Kupiansk–Kharkiv highway"]
+  parent: place:kharkiv_oblast
+  note: "Chuhuiv–Shevchenkove–Kupiansk–Milove highway."
+  geocode_query: "H26, Kharkiv Oblast, Ukraine"
+
+- id: place:t_2110
+  type: place
+  kind: road
+  en: "T2110/T2210"
+  aliases: ["T2110", "T2210", "T-21-10"]
+  parent: place:kharkiv_oblast
+  note: "Balakliia–Volokhiv Yar–Shevchenkove road; ISW uses both numbers."
+  geocode_query: "T2110, Kharkiv Oblast, Ukraine"
+
+- id: place:r_78
+  type: place
+  kind: road
+  en: "R-78"
+  uk: "Р-78"
+  aliases: ["R78", "P78"]
+  parent: place:kharkiv_oblast
+  note: "Zmiiv–Savyntsi–Zalyman–Kunie road (ISW naming)."
+  geocode_query: "P78, Kharkiv Oblast, Ukraine"
+
+- id: place:r_79
+  type: place
+  kind: road
+  en: "R-79"
+  uk: "Р-79"
+  aliases: ["R79", "P79"]
+  parent: place:kharkiv_oblast
+  note: "Kupiansk–Izium road along the Oskil (ISW naming)."
+  geocode_query: "P79, Kharkiv Oblast, Ukraine"
+
+- id: place:r_66
+  type: place
+  kind: road
+  en: "R-66"
+  uk: "Р-66"
+  aliases: ["R66", "P66"]
+  parent: place:luhansk_oblast
+  note: "Svatove–Kreminna road; the post-Oct 2022 Russian line."
+  geocode_query: "P66, Luhansk Oblast, Ukraine"
+
+- id: place:t_2104
+  type: place
+  kind: road
+  en: "T2104"
+  aliases: ["T-21-04"]
+  parent: place:kharkiv_oblast
+  note: "Road through Vovchansk (ISW naming)."
+  geocode_query: "T2104, Kharkiv Oblast, Ukraine"
+
+- id: place:svatove_lyman_road
+  type: place
+  kind: road
+  en: "Svatove–Lyman road"
+  parent: place:ukraine
+  note: "Russian lateral road behind the Oskil–Lyman front in Sep 2022; linear, unnumbered in the dossier."
+  no_geocode: true
+
+- id: place:drobysheve_torske_road
+  type: place
+  kind: road
+  en: "Drobysheve–Torske road"
+  parent: place:donetsk_oblast
+  note: "Last Russian egress road from Lyman, cut 29–30 Sep 2022; linear."
+  no_geocode: true
+
+- id: place:pavlivka
+  type: place
+  kind: settlement
+  en: "Pavlivka"
+  uk: "Павлівка"
+  parent: place:donetsk_oblast
+  note: "Village 3.4 km SSW of Vuhledar; Russian start line from Nov 2022. Common name: this is the Vuhledar one."
+  geometry: {type: Point, coordinates: [37.2214, 47.7555]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:mykilske
+  type: place
+  kind: settlement
+  en: "Mykilske"
+  uk: "Микільське"
+  aliases: ["Nikolske", "Nikolskoye"]
+  parent: place:donetsk_oblast
+  note: "Village 5.4 km SE of Vuhledar; taken by Russia about 27 Jan 2023."
+  geometry: {type: Point, coordinates: [37.3026, 47.7503]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:kashlahach
+  type: place
+  kind: river
+  en: "Kashlahach"
+  uk: "Кашлагач"
+  aliases: ["Kashlahach river", "Kashlahach valley"]
+  parent: place:donetsk_oblast
+  note: "Small river south of Vuhledar along Pavlivka–Mykilske; c08 gives the valley at Pavlivka as 47.7591 N, 37.2325 E."
+  geocode_query: "Kashlahach, Donetsk Oblast, Ukraine"
+
+- id: place:yehorivka
+  type: place
+  kind: settlement
+  en: "Yehorivka"
+  uk: "Єгорівка"
+  parent: place:donetsk_oblast
+  note: "Village 8.4 km S of Vuhledar; common name."
+  geometry: {type: Point, coordinates: [37.2249, 47.7069]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:prechystivka
+  type: place
+  kind: settlement
+  en: "Prechystivka"
+  uk: "Пречистівка"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.0733, 47.7776]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:vodiane
+  type: place
+  kind: settlement
+  en: "Vodiane"
+  uk: "Водяне"
+  parent: place:donetsk_oblast
+  note: "Village 7.1 km NE of Vuhledar (the Vuhledar one; common name)."
+  geometry: {type: Point, coordinates: [37.3128, 47.826]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:bohoiavlenka
+  type: place
+  kind: settlement
+  en: "Bohoiavlenka"
+  uk: "Богоявленка"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.214, 47.8601]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:novomykhailivka
+  type: place
+  kind: settlement
+  en: "Novomykhailivka"
+  uk: "Новомихайлівка"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.487, 47.8539]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:volnovakha
+  type: place
+  kind: settlement
+  en: "Volnovakha"
+  uk: "Волноваха"
+  parent: place:donetsk_oblast
+  geocode_query: "Volnovakha, Donetsk Oblast, Ukraine"
+
+- id: place:shevchenko_volnovakha
+  type: place
+  kind: settlement
+  en: "Shevchenko"
+  uk: "Шевченко"
+  parent: place:donetsk_oblast
+  note: "Village on the Kashlahach near Mykilske."
+  geocode_query: "Shevchenko, Volnovakha Raion, Donetsk Oblast, Ukraine"
+
+- id: place:novotroitske
+  type: place
+  kind: settlement
+  en: "Novotroitske"
+  uk: "Новотроїцьке"
+  parent: place:donetsk_oblast
+  geocode_query: "Novotroitske, Volnovakha Raion, Donetsk Oblast, Ukraine"
+
+- id: place:pivdennodonbaska_1_mine
+  type: place
+  kind: facility
+  en: "Pivdennodonbaska No. 1 mine"
+  uk: "шахта «Південнодонбаська № 1»"
+  aliases: ["Vuhledar mine area", "Pivdennodonbaska-1"]
+  parent: place:vuhledar
+  note: "Mine 3.3 km ENE of Vuhledar with a ~215 m spoil heap; fought over from Mar 2023."
+  geometry: {type: Point, coordinates: [37.2879, 47.7913]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:surhai_mine
+  type: place
+  kind: facility
+  en: "Shakhta im. M. S. Surhaia"
+  uk: "шахта імені М. С. Сургая"
+  aliases: ["Surhai mine"]
+  parent: place:vodiane
+  note: "OSM-labelled mine 5.7 km NNE of Vuhledar in western Vodiane."
+  geometry: {type: Point, coordinates: [37.2866, 47.8245]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:pivdennodonbaska_3_mine
+  type: place
+  kind: facility
+  en: "Pivdennodonbaska No. 3 mine"
+  uk: "шахта «Південнодонбаська № 3»"
+  aliases: ["Pivdennodonbaska-3"]
+  parent: place:vodiane
+  note: "ISW (Sep 2024) places it at place:surhai_mine; identity not confirmed, so kept separate."
+  no_geocode: true
+
+- id: place:vuhledar_town_council
+  type: place
+  kind: facility
+  en: "Vuhledar town council"
+  uk: "Вугледарська міська рада"
+  parent: place:vuhledar
+  note: "On the town's eastern edge, facing about 500 m of open ground."
+  geometry: {type: Point, coordinates: [37.2618, 47.7718]}
+  geometry_source: "stated in research/chapters/c08-vuhledar.md"
+
+- id: place:vuhledar_dacha_areas
+  type: place
+  kind: region
+  en: "Vuhledar dacha areas"
+  aliases: ["Vuhledar dachas"]
+  parent: place:vuhledar
+  note: "Garden-plot areas south and south-east of Vuhledar; not located as a whole."
+  no_geocode: true
+
+- id: place:mykilske_dacha_area
+  type: place
+  kind: region
+  en: "Mykilske dacha area"
+  aliases: ["Mykilske dachas"]
+  parent: place:vuhledar_dacha_areas
+  note: "Garden plots SE of Vuhledar toward Mykilske; not located."
+  no_geocode: true
+
+- id: place:verkhni_dachi
+  type: place
+  kind: settlement
+  en: "Verkhni Dachi"
+  uk: "Верхні Дачі"
+  parent: place:vuhledar_dacha_areas
+  note: "Garden-plot settlement south of Vuhledar, taken by the 35th Marine Brigade (Apr 2023); not located."
+  no_geocode: true
+
+- id: place:t_0509
+  type: place
+  kind: road
+  en: "T-0509"
+  uk: "Т-05-09"
+  aliases: ["T-05-09", "T0509"]
+  parent: place:donetsk_oblast
+  note: "Velyka Novosilka–Vuhledar (south)–Novotroitske road (distinct from H-20)."
+  geocode_query: "T0509, Donetsk Oblast, Ukraine"
+
+- id: place:t_0524
+  type: place
+  kind: road
+  en: "T-0524"
+  uk: "Т-05-24"
+  aliases: ["T-05-24", "T0524"]
+  parent: place:donetsk_oblast
+  note: "Road entering Vuhledar from the north-east."
+  geocode_query: "T0524, Donetsk Oblast, Ukraine"
+
+- id: place:o_0532
+  type: place
+  kind: road
+  en: "O-0532"
+  uk: "О-05-32"
+  aliases: ["O-05-32", "O0532"]
+  parent: place:donetsk_oblast
+  note: "Road west from Vuhledar toward Vodiane and Kostiantynivka."
+  geocode_query: "O0532, Donetsk Oblast, Ukraine"
+
+- id: place:h_15
+  type: place
+  kind: road
+  en: "H-15"
+  uk: "Н-15"
+  aliases: ["N15", "H15", "N-15"]
+  parent: place:ukraine
+  note: "Zaporizhzhia–Kurakhove–Donetsk highway."
+  geocode_query: "H15, Ukraine"
+
+- id: place:pavlivka_mykilske_road
+  type: place
+  kind: road
+  en: "Pavlivka–Mykilske road"
+  parent: place:donetsk_oblast
+  note: "Russian lateral along the Kashlahach, claimed 17 Nov 2022; linear."
+  no_geocode: true
+
+- id: place:donetsk_volnovakha_railway
+  type: place
+  kind: railway
+  en: "Donetsk–Volnovakha railway"
+  parent: place:donetsk_oblast
+  note: "Russia's rail link between Donbas and the south, within Vuhledar's observation; linear."
+  no_geocode: true
+
+- id: place:donetsk_city_axis
+  type: place
+  kind: axis
+  en: "Donetsk City axis"
+  parent: place:donetsk_oblast
+  note: "Notion (ISW)."
+  no_geocode: true
+
+- id: place:vladivostok
+  type: place
+  kind: settlement
+  en: "Vladivostok"
+  uk: "Владивосток"
+  parent: place:primorsky_krai
+  geocode_query: "Vladivostok, Primorsky Krai, Russia"
+  countrycodes: "ru"
+
+- id: place:korsunka
+  type: place
+  kind: settlement
+  en: "Korsunka"
+  uk: "Корсунка"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [33.1969, 46.7602]}
+  geometry_source: "stated in research/chapters/c10-krynky.md"
+
+- id: place:kozachi_laheri
+  type: place
+  kind: settlement
+  en: "Kozachi Laheri"
+  uk: "Козачі Лагері"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [32.9906, 46.7108]}
+  geometry_source: "stated in research/chapters/c10-krynky.md"
+
+- id: place:pidstepne
+  type: place
+  kind: settlement
+  en: "Pidstepne"
+  uk: "Підстепне"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [32.892, 46.6617]}
+  geometry_source: "stated in research/chapters/c10-krynky.md"
+
+- id: place:pishchanivka
+  type: place
+  kind: settlement
+  en: "Pishchanivka"
+  uk: "Піщанівка"
+  parent: place:kherson_oblast
+  geometry: {type: Point, coordinates: [32.8402, 46.6494]}
+  geometry_source: "stated in research/chapters/c10-krynky.md"
+
+- id: place:poima
+  type: place
+  kind: settlement
+  en: "Poima"
+  uk: "Пойма"
+  aliases: ["Poyma", "Zaplava"]
+  parent: place:kherson_oblast
+  note: "Left-bank village at the end of the rail embankment (OSM name now Zaplava)."
+  geometry: {type: Point, coordinates: [32.8332, 46.6308]}
+  geometry_source: "stated in research/chapters/c10-krynky.md"
+
+- id: place:hladkivka
+  type: place
+  kind: settlement
+  en: "Hladkivka"
+  uk: "Гладківка"
+  parent: place:kherson_oblast
+  geocode_query: "Hladkivka, Kherson Oblast, Ukraine"
+
+- id: place:kliushka_solar_farm
+  type: place
+  kind: facility
+  en: "Kliushka solar farm"
+  aliases: ["Pishchanivka–Pidstepne solar farm", "Kliushka"]
+  parent: place:kherson_oblast
+  note: "38th Marine Brigade foothold between Pishchanivka and Pidstepne (Oct 2023); not located."
+  no_geocode: true
+
+- id: place:dnipro_islands
+  type: place
+  kind: region
+  en: "Dnipro islands"
+  uk: "острови Дніпра"
+  aliases: ["Dnipro delta islands", "islands of the lower Dnipro"]
+  parent: place:kherson_oblast
+  note: "Belt of islands and channels of the lower Dnipro around Kherson and Krynky; a notion."
+  no_geocode: true
+
+- id: place:krynka_channel
+  type: place
+  kind: river
+  en: "Krynka"
+  uk: "Кринка"
+  parent: place:kherson_oblast
+  note: "Lower-Dnipro channel near Krynky (not the Donetsk river Krynka)."
+  geocode_query: "Krynka, Kherson Oblast, Ukraine"
+
+- id: place:kozachelaherska_konka
+  type: place
+  kind: river
+  en: "Kozachelaherska Konka"
+  uk: "Козачелагерська Конка"
+  parent: place:kherson_oblast
+  note: "Channel about 1 km from Krynky."
+  geocode_query: "Kozachelaherska Konka, Kherson Oblast, Ukraine"
+
+- id: place:kozachi_laheri_krynky_korsunka_road
+  type: place
+  kind: road
+  en: "Kozachi Laheri–Krynky–Korsunka road"
+  parent: place:kherson_oblast
+  note: "Left-bank road through Krynky; linear."
+  no_geocode: true
+
+- id: place:oleshky_nova_kakhovka_road
+  type: place
+  kind: road
+  en: "Oleshky–Nova Kakhovka road"
+  parent: place:kherson_oblast
+  note: "Left-bank road; drone hunting ground of the 501st Battalion; linear."
+  no_geocode: true
+
+- id: place:e_97
+  type: place
+  kind: road
+  en: "E97"
+  aliases: ["E-97"]
+  parent: place:ukraine
+  note: "European route Kherson–Armiansk (Crimea)."
+  geocode_query: "E97, Kherson Oblast, Ukraine"
+
+- id: place:r_57
+  type: place
+  kind: road
+  en: "R-57"
+  uk: "Р-57"
+  aliases: ["P57", "R57"]
+  parent: place:kherson_oblast
+  note: "Hola Prystan–Skadovsk road."
+  geocode_query: "P57, Kherson Oblast, Ukraine"
+
+- id: place:washington
+  type: place
+  kind: settlement
+  en: "Washington"
+  uk: "Вашингтон"
+  aliases: ["Washington, D.C."]
+  parent: place:united_states
+  geocode_query: "Washington, District of Columbia, United States"
+  countrycodes: "us"
+
+- id: place:kyrylivka
+  type: place
+  kind: settlement
+  en: "Kyrylivka"
+  uk: "Кирилівка"
+  parent: place:zaporizhzhia_oblast
+  note: "Occupied resort; 14 Jan 2024 A-50 patrol zone lay off it."
+  geometry: {type: Point, coordinates: [35.37, 46.372]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:fedotova_spit
+  type: place
+  kind: landform
+  en: "Fedotova Spit"
+  uk: "Федотова коса"
+  parent: place:zaporizhzhia_oblast
+  geometry: {type: Point, coordinates: [35.302, 46.297]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:obytichna_spit
+  type: place
+  kind: landform
+  en: "Obytichna Spit"
+  uk: "Обитічна коса"
+  parent: place:zaporizhzhia_oblast
+  note: "Reported wreck area of the 14 Jan 2024 A-50."
+  geometry: {type: Point, coordinates: [36.212, 46.54]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:prymorsk
+  type: place
+  kind: settlement
+  en: "Prymorsk"
+  uk: "Приморськ"
+  parent: place:zaporizhzhia_oblast
+  geometry: {type: Point, coordinates: [36.347, 46.734]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:strilkove
+  type: place
+  kind: settlement
+  en: "Strilkove"
+  uk: "Стрілкове"
+  parent: place:kherson_oblast
+  note: "Arabat Spit village; 14 Jan 2024 Il-22M patrol area."
+  geometry: {type: Point, coordinates: [34.875, 45.904]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:arabat_spit
+  type: place
+  kind: landform
+  en: "Arabat Spit"
+  uk: "Арабатська стрілка"
+  parent: place:ukraine
+  note: "Spit between the Sea of Azov and the Syvash, split between Kherson Oblast and Crimea."
+  geocode_query: "Arabat Spit, Ukraine"
+
+- id: place:anapa
+  type: place
+  kind: settlement
+  en: "Anapa"
+  uk: "Анапа"
+  parent: place:krasnodar_krai
+  geocode_query: "Anapa, Krasnodar Krai, Russia"
+  countrycodes: "ru"
+
+- id: place:anapa_airport
+  type: place
+  kind: airfield
+  en: "Anapa airport"
+  aliases: ["Anapa (Vityazevo) airport", "Vityazevo airport"]
+  parent: place:anapa
+  note: "Il-22M emergency landing site, 14 Jan 2024."
+  geometry: {type: Point, coordinates: [37.345, 45.003]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:primorsko_akhtarsk
+  type: place
+  kind: settlement
+  en: "Primorsko-Akhtarsk"
+  uk: "Приморсько-Ахтарськ"
+  parent: place:krasnodar_krai
+  note: "Town and air base; intended A-50 orbit area 23 Feb 2024."
+  geometry: {type: Point, coordinates: [38.171, 46.049]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:trudovaya_armeniya
+  type: place
+  kind: settlement
+  en: "Trudovaya Armeniya"
+  parent: place:kanevskoy_district
+  note: "Krasnodar Krai hamlet; crash site of the 23 Feb 2024 A-50."
+  geometry: {type: Point, coordinates: [38.838, 46.177]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:kanevskaya
+  type: place
+  kind: settlement
+  en: "Kanevskaya"
+  uk: "Канівська"
+  parent: place:kanevskoy_district
+  geocode_query: "Kanevskaya, Krasnodar Krai, Russia"
+  countrycodes: "ru"
+
+- id: place:yeysk
+  type: place
+  kind: settlement
+  en: "Yeysk"
+  uk: "Єйськ"
+  parent: place:krasnodar_krai
+  geometry: {type: Point, coordinates: [38.275, 46.711]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:yeysk_airfield
+  type: place
+  kind: airfield
+  en: "Yeysk airfield"
+  aliases: ["Yeysk air base"]
+  parent: place:yeysk
+  geometry: {type: Point, coordinates: [38.237, 46.687]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:krasnodar
+  type: place
+  kind: settlement
+  en: "Krasnodar"
+  uk: "Краснодар"
+  parent: place:krasnodar_krai
+  geocode_query: "Krasnodar, Krasnodar Krai, Russia"
+  countrycodes: "ru"
+
+- id: place:zernograd
+  type: place
+  kind: settlement
+  en: "Zernograd"
+  uk: "Зерноград"
+  parent: place:rostov_oblast
+  geometry: {type: Point, coordinates: [40.316, 46.851]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:millerovo
+  type: place
+  kind: settlement
+  en: "Millerovo"
+  uk: "Міллерово"
+  aliases: ["Millerovo air base"]
+  parent: place:rostov_oblast
+  note: "Town and Su-34/Su-35 air base; the point is the town."
+  geometry: {type: Point, coordinates: [40.392, 48.92]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:taganrog
+  type: place
+  kind: settlement
+  en: "Taganrog"
+  uk: "Таганрог"
+  parent: place:rostov_oblast
+  geocode_query: "Taganrog, Rostov Oblast, Russia"
+  countrycodes: "ru"
+
+- id: place:taganrog_yuzhny
+  type: place
+  kind: airfield
+  en: "Taganrog-Yuzhny"
+  aliases: ["Taganrog-Yuzhny airfield", "Taganrog Yuzhny"]
+  parent: place:taganrog
+  note: "Airfield of the Beriev plant, A-50 repair."
+  geometry: {type: Point, coordinates: [38.86, 47.197]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:beriev_tantk
+  type: place
+  kind: facility
+  en: "Beriev TANTK"
+  aliases: ["Beriev plant", "TANTK", "TANTK plant", "Beriev Aircraft Company"]
+  parent: place:taganrog
+  note: "Beriev aircraft plant at Taganrog (A-50 maintenance); raided 9 Mar and 11 Dec 2024."
+  geocode_query: "Beriev Aircraft Company, Taganrog, Rostov Oblast, Russia"
+  countrycodes: "ru"
+
+- id: place:akhtubinsk_airfield
+  type: place
+  kind: airfield
+  en: "Akhtubinsk airfield"
+  aliases: ["Akhtubinsk"]
+  parent: place:russia
+  note: "Astrakhan Oblast; departure airfield of the 23 Feb 2024 A-50."
+  geometry: {type: Point, coordinates: [46.248, 48.309]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:ivanovo_severny
+  type: place
+  kind: airfield
+  en: "Ivanovo-Severny airfield"
+  aliases: ["Ivanovo-Severny", "Ivanovo Severny"]
+  parent: place:russia
+  note: "Ivanovo Oblast; A-50 home base (610th Centre)."
+  geometry: {type: Point, coordinates: [40.984, 57.053]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:machulishchy
+  type: place
+  kind: settlement
+  en: "Machulishchy"
+  uk: "Мачулищі"
+  parent: place:belarus
+  note: "Settlement 12 km from Minsk with the air base."
+  geocode_query: "Machulishchy, Minsk Region, Belarus"
+  countrycodes: "by"
+
+- id: place:machulishchy_air_base
+  type: place
+  kind: airfield
+  en: "Machulishchy air base"
+  aliases: ["Machulishchy airbase", "Machulishchy airfield"]
+  parent: place:machulishchy
+  note: "A-50 base 2022–23; BYPOL drone attack 26 Feb 2023."
+  geometry: {type: Point, coordinates: [27.58, 53.774]}
+  geometry_source: "stated in research/chapters/c12-a50-hunt.md"
+
+- id: place:minsk
+  type: place
+  kind: settlement
+  en: "Minsk"
+  uk: "Мінськ"
+  parent: place:belarus
+  geocode_query: "Minsk, Belarus"
+  countrycodes: "by"
+
+- id: place:kyiv_axis
+  type: place
+  kind: axis
+  en: "Kyiv axis"
+  parent: place:kyiv_oblast
+  note: "Notion."
+  no_geocode: true
+
+- id: place:luhansk_direction
+  type: place
+  kind: axis
+  en: "Luhansk direction"
+  parent: place:luhansk_oblast
+  note: "Notion."
+  no_geocode: true
+
+- id: place:kacha_airfield
+  type: place
+  kind: airfield
+  en: "Kacha airfield"
+  aliases: ["Kacha", "Kacha air base"]
+  parent: place:crimea
+  note: "Russian naval helicopter base."
+  geometry: {type: Point, coordinates: [33.565, 44.781]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:lake_donuzlav
+  type: place
+  kind: landform
+  en: "Lake Donuzlav"
+  uk: "озеро Донузлав"
+  aliases: ["Donuzlav"]
+  parent: place:crimea
+  note: "Liman on the west coast of Crimea; Russian naval anchorage; Ivanovets sunk off it 1 Feb 2024."
+  geocode_query: "Donuzlav, Crimea"
+
+- id: place:novoozerne
+  type: place
+  kind: settlement
+  en: "Novoozerne"
+  uk: "Новоозерне"
+  parent: place:crimea
+  geometry: {type: Point, coordinates: [33.117, 45.384]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:chornomorske
+  type: place
+  kind: settlement
+  en: "Chornomorske"
+  uk: "Чорноморське"
+  parent: place:crimea
+  geometry: {type: Point, coordinates: [32.683, 45.506]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:cape_tarkhankut
+  type: place
+  kind: landform
+  en: "Cape Tarkhankut"
+  uk: "мис Тарханкут"
+  parent: place:crimea
+  note: "Mi-8 shot down off it by a Magura with R-73s, 31 Dec 2024."
+  geometry: {type: Point, coordinates: [32.494, 45.347]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:katsiveli
+  type: place
+  kind: settlement
+  en: "Katsiveli"
+  uk: "Кацивелі"
+  parent: place:crimea
+  geometry: {type: Point, coordinates: [33.972, 44.397]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:alupka
+  type: place
+  kind: settlement
+  en: "Alupka"
+  uk: "Алупка"
+  parent: place:crimea
+  note: "Tsezar Kunikov sunk about 4 km off it, 14 Feb 2024."
+  geometry: {type: Point, coordinates: [34.048, 44.42]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:foros
+  type: place
+  kind: settlement
+  en: "Foros"
+  uk: "Форос"
+  parent: place:crimea
+  geocode_query: "Foros, Crimea"
+
+- id: place:feodosia
+  type: place
+  kind: settlement
+  en: "Feodosia"
+  uk: "Феодосія"
+  parent: place:crimea
+  geometry: {type: Point, coordinates: [35.375, 45.034]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:cape_takil
+  type: place
+  kind: landform
+  en: "Cape Takil"
+  uk: "мис Такиль"
+  parent: place:crimea
+  note: "Reported wreck of the Sergey Kotov lies about 5 km off it (5 Mar 2024)."
+  geometry: {type: Point, coordinates: [36.453, 45.103]}
+  geometry_source: "stated in research/chapters/c13-black-sea-drone-war.md"
+
+- id: place:ochamchire
+  type: place
+  kind: settlement
+  en: "Ochamchire"
+  uk: "Очамчира"
+  parent: place:abkhazia
+  note: "Port in occupied Abkhazia; proposed alternative Black Sea Fleet base."
+  geocode_query: "Ochamchire, Abkhazia"
+  countrycodes: "ge"
+
+- id: place:lyman_pershyi
+  type: place
+  kind: settlement
+  en: "Lyman Pershyi"
+  uk: "Лиман Перший"
+  parent: place:kharkiv_oblast
+  note: "Left-bank entrance of the Kupiansk gas-pipeline route (2025)."
+  geometry: {type: Point, coordinates: [37.706, 49.791]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:radkivka
+  type: place
+  kind: settlement
+  en: "Radkivka"
+  uk: "Радьківка"
+  parent: place:kharkiv_oblast
+  note: "Right-bank exit area of the pipeline route, north of Kupiansk."
+  geometry: {type: Point, coordinates: [37.59, 49.75]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:holubivka
+  type: place
+  kind: settlement
+  en: "Holubivka"
+  uk: "Голубівка"
+  parent: place:kharkiv_oblast
+  note: "Village by the pipeline crossing of the Oskil (about 49.760, 37.643)."
+  geometry: {type: Point, coordinates: [37.634, 49.75]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:kindrashivka
+  type: place
+  kind: settlement
+  en: "Kindrashivka"
+  uk: "Кіндрашівка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.587, 49.77]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:tyshchenkivka
+  type: place
+  kind: settlement
+  en: "Tyshchenkivka"
+  uk: "Тищенківка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.551, 49.767]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:myrove
+  type: place
+  kind: settlement
+  en: "Myrove"
+  uk: "Мирове"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.566, 49.729]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:sobolivka
+  type: place
+  kind: settlement
+  en: "Sobolivka"
+  uk: "Соболівка"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.564, 49.705]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:novomlynsk
+  type: place
+  kind: settlement
+  en: "Novomlynsk"
+  uk: "Новомлинськ"
+  parent: place:kharkiv_oblast
+  geometry: {type: Point, coordinates: [37.735, 49.882]}
+  geometry_source: "stated in research/chapters/c17-kupiansk-pipeline.md"
+
+- id: place:moskovka
+  type: place
+  kind: settlement
+  en: "Moskovka"
+  uk: "Московка"
+  parent: place:kharkiv_oblast
+  geocode_query: "Moskovka, Kupiansk Raion, Kharkiv Oblast, Ukraine"
+
+- id: place:kupiansk_city_council
+  type: place
+  kind: facility
+  en: "Kupiansk City Council"
+  uk: "Купʼянська міська рада"
+  parent: place:kupiansk
+  note: "Ukrainian flag raised over it 12 Jan 2026."
+  geocode_query: "Kupiansk City Council, Kupiansk, Kharkiv Oblast, Ukraine"
+
+- id: place:kupiansk_industrial_zone
+  type: place
+  kind: city_district
+  en: "Kupiansk industrial zone"
+  parent: place:kupiansk
+  note: "Not located in the dossier."
+  no_geocode: true
+
+- id: place:kupiansk_gas_compressor_station
+  type: place
+  kind: facility
+  en: "Kupiansk gas compressor station"
+  parent: place:kupiansk
+  note: "Compressor station on the Shebelynka–Ostrohozhsk gas main; not located."
+  no_geocode: true
+
+- id: place:yuvileinyi_kupiansk
+  type: place
+  kind: city_district
+  en: "Yuvileinyi microdistrict"
+  uk: "мікрорайон Ювілейний"
+  parent: place:kupiansk
+  note: "South-western Kupiansk; retaken by 13 Dec 2025."
+  geocode_query: "Yuvileinyi, Kupiansk, Kharkiv Oblast, Ukraine"
+
+- id: place:svativska_street
+  type: place
+  kind: road
+  en: "Svativska Street"
+  uk: "вулиця Сватівська"
+  parent: place:kupiansk
+  geocode_query: "Svativska Street, Kupiansk, Kharkiv Oblast, Ukraine"
+
+- id: place:kupiansk_and_surroundings
+  type: place
+  kind: region
+  en: "Kupiansk and surroundings"
+  parent: place:kharkiv_oblast
+  note: "Notional (ISW area count, Dec 2025)."
+  no_geocode: true
+
+- id: place:tsarska_okhota
+  type: place
+  kind: city_district
+  en: "Tsarska Okhota"
+  uk: "Царська охота"
+  parent: place:avdiivka
+  note: "Southern Avdiivka area; Russian pipe infiltration Jan–Feb 2024."
+  geocode_query: "Tsarska Okhota, Avdiivka, Donetsk Oblast, Ukraine"
+
+- id: place:vinogradniki_2
+  type: place
+  kind: city_district
+  en: "Vinogradniki-2"
+  parent: place:avdiivka
+  note: "Russian-language name of an area of southern Avdiivka reached through the pipe (Feb 2024); not located."
+  no_geocode: true
+
+- id: place:urengoy_pomary_uzhhorod_pipeline
+  type: place
+  kind: facility
+  en: "Urengoy–Pomary–Uzhhorod pipeline"
+  uk: "газопровід Уренгой — Помари — Ужгород"
+  aliases: ["Urengoy–Pomary–Uzhhorod gas pipeline"]
+  parent: place:ukraine
+  note: "Transit gas main; idle since 1 Jan 2025; its Sudzha branch was used for the Mar 2025 infiltration. Linear."
+  no_geocode: true
+
+- id: place:brovary
+  type: place
+  kind: settlement
+  en: "Brovary"
+  uk: "Бровари"
+  parent: place:brovary_raion
+  geocode_query: "Brovary, Kyiv Oblast, Ukraine"
+
+- id: place:brovary_barracks
+  type: place
+  kind: facility
+  en: "Brovary barracks"
+  parent: place:brovary
+  note: "Struck by missiles 24 Feb 2022; not located."
+  no_geocode: true
+
+- id: place:skybyn
+  type: place
+  kind: settlement
+  en: "Skybyn"
+  uk: "Скибин"
+  parent: place:brovary_raion
+  note: "Village on the M01 where the Russian column was stopped, 9–10 Mar 2022."
+  geometry: {type: Point, coordinates: [30.832, 50.581]}
+  geometry_source: "stated in research/chapters/v01-brovary-ambush.md"
+
+- id: place:kalynivka_brovary
+  type: place
+  kind: settlement
+  en: "Kalynivka"
+  uk: "Калинівка"
+  parent: place:brovary_raion
+  note: "Brovary Raion village at the south end of the ambush map box; common name."
+  geometry: {type: Point, coordinates: [30.823, 50.564]}
+  geometry_source: "stated in research/chapters/v01-brovary-ambush.md"
+
+- id: place:velyka_dymerka
+  type: place
+  kind: settlement
+  en: "Velyka Dymerka"
+  uk: "Велика Димерка"
+  parent: place:brovary_raion
+  geocode_query: "Velyka Dymerka, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:bohdanivka_brovary
+  type: place
+  kind: settlement
+  en: "Bohdanivka"
+  uk: "Богданівка"
+  parent: place:brovary_raion
+  geocode_query: "Bohdanivka, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:zalissia_brovary
+  type: place
+  kind: settlement
+  en: "Zalissia"
+  uk: "Залісся"
+  parent: place:brovary_raion
+  geocode_query: "Zalissia, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:mokrets
+  type: place
+  kind: settlement
+  en: "Mokrets"
+  uk: "Мокрець"
+  parent: place:brovary_raion
+  geocode_query: "Mokrets, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:bervytsia
+  type: place
+  kind: settlement
+  en: "Bervytsia"
+  uk: "Бервиця"
+  parent: place:brovary_raion
+  geocode_query: "Bervytsia, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:zavorychi
+  type: place
+  kind: settlement
+  en: "Zavorychi"
+  uk: "Заворичі"
+  parent: place:brovary_raion
+  geocode_query: "Zavorychi, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:pukhivka
+  type: place
+  kind: settlement
+  en: "Pukhivka"
+  uk: "Пухівка"
+  parent: place:brovary_raion
+  geocode_query: "Pukhivka, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:rozhivka
+  type: place
+  kind: settlement
+  en: "Rozhivka"
+  uk: "Рожівка"
+  parent: place:brovary_raion
+  geocode_query: "Rozhivka, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:kvitneve
+  type: place
+  kind: settlement
+  en: "Kvitneve"
+  uk: "Квітневе"
+  parent: place:brovary_raion
+  geocode_query: "Kvitneve, Brovary Raion, Kyiv Oblast, Ukraine"
+
+- id: place:m_01
+  type: place
+  kind: road
+  en: "M-01"
+  uk: "М-01"
+  aliases: ["M01", "M01 highway", "M-01 highway", "Kyiv–Chernihiv highway"]
+  parent: place:ukraine
+  note: "Kyiv–Chernihiv highway (E95), axis of the Brovary ambush."
+  geocode_query: "M01, Ukraine"
+
+- id: place:kyiv_sumy_highway
+  type: place
+  kind: road
+  en: "Kyiv–Sumy highway"
+  aliases: ["H-07", "N07"]
+  parent: place:ukraine
+  note: "Kyiv–Sumy highway (H-07)."
+  geocode_query: "H07, Kyiv Oblast, Ukraine"
+
+- id: place:r_69
+  type: place
+  kind: road
+  en: "R-69"
+  uk: "Р-69"
+  aliases: ["P69", "R69"]
+  parent: place:kyiv_oblast
+  note: "Eastern approach road into Kyiv (alongside the M01 and M03)."
+  geocode_query: "P69, Kyiv Oblast, Ukraine"
+
+- id: place:chebarkul
+  type: place
+  kind: settlement
+  en: "Chebarkul"
+  uk: "Чебаркуль"
+  parent: place:russia
+  note: "Chelyabinsk Oblast; garrison of the 6th Guards Tank Regiment."
+  geocode_query: "Chebarkul, Chelyabinsk Oblast, Russia"
+  countrycodes: "ru"
+
+- id: place:stepove
+  type: place
+  kind: settlement
+  en: "Stepove"
+  uk: "Степове"
+  parent: place:donetsk_oblast
+  note: "Village on the northern flank of Avdiivka (Pokrovsk Raion); Bradley–T-90M duel ~11 Jan 2024. Common name."
+  geometry: {type: Point, coordinates: [37.679, 48.196]}
+  geometry_source: "stated in research/chapters/v02-stepove-bradley.md"
+
+- id: place:berdychi
+  type: place
+  kind: settlement
+  en: "Berdychi"
+  uk: "Бердичі"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.646, 48.196]}
+  geometry_source: "stated in research/chapters/v02-stepove-bradley.md"
+
+- id: place:novobakhmutivka
+  type: place
+  kind: settlement
+  en: "Novobakhmutivka"
+  uk: "Новобахмутівка"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.789, 48.249]}
+  geometry_source: "stated in research/chapters/v02-stepove-bradley.md"
+
+- id: place:novokalynove
+  type: place
+  kind: settlement
+  en: "Novokalynove"
+  uk: "Новокалинове"
+  parent: place:donetsk_oblast
+  geometry: {type: Point, coordinates: [37.698, 48.247]}
+  geometry_source: "stated in research/chapters/v02-stepove-bradley.md"
+
+- id: place:stepove_railway
+  type: place
+  kind: railway
+  en: "Stepove railway"
+  aliases: ["Stepove rail line"]
+  parent: place:stepove
+  note: "Rail line by Stepove; positions retaken 22 Nov 2023; linear, not located."
+  no_geocode: true
+
+- id: place:southern_ukraine
+  type: place
+  kind: region
+  en: "southern Ukraine"
+  aliases: ["the south of Ukraine"]
+  parent: place:ukraine
+  note: "generic: the south as a whole (Kherson, Zaporizhzhia, Mykolaiv, Odesa); a notion, not place:southern_front."
+  no_geocode: true

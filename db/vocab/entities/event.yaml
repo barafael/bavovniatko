@@ -124,7 +124,7 @@
   type: event
   kind: policy
   en: "Russian partial mobilization"
-  aliases: ["Russian partial mobilization", "Russian 2022 mobilization"]
+  aliases: ["Russian partial mobilization", "Russian 2022 mobilization", "Russian partial mobilisation"]
   note: "21 Sep 2022. Russian 'partial' mobilization of about 300,000 men."
 - id: event:annexation_of_four_oblasts
   type: event
@@ -735,3 +735,348 @@
   en: "Great Stalin Plan for the Transformation of Nature"
   aliases: ["Great Stalin Plan for the Transformation of Nature", "Great Stalin Plan"]
   note: "1948. Soviet shelterbelt-planting programme behind Ukraine's lesopolosa grid."
+
+# --- Chapter dossiers (c02–c17, v01–v02) --------------------------------------------------------
+# Zmiinyi Island and the Moskva (c02)
+- id: event:snake_island_campaign
+  type: event
+  kind: operation
+  en: "Snake Island campaign"
+  uk: "Бої за острів Зміїний"
+  aliases: ["Snake Island campaign", "Zmiinyi Island campaign", "Zmiinyi Island fighting"]
+  note: "24 Feb – 7 Jul 2022. Russian capture of Zmiinyi Island, Ukrainian strikes and starvation of the garrison, Russian withdrawal and the return of the flag."
+- id: event:battle_of_zmiinyi_island
+  type: event
+  kind: battle
+  en: "Battle of Zmiinyi Island"
+  uk: "Оборона острова Зміїний"
+  aliases: ["Battle of Zmiinyi Island", "Battle of Snake Island", "Snake Island battle"]
+  parent: event:snake_island_campaign
+  note: "24–25 Feb 2022. The Moskva and Vasily Bykov took the island; 'Russian warship, go f— yourself'; the garrison of about 80 was captured."
+- id: event:hur_assault_zmiinyi_island
+  type: event
+  kind: operation
+  en: "HUR assault on Zmiinyi Island"
+  aliases: ["HUR assault on Zmiinyi Island", "May 2022 assault on Zmiinyi Island"]
+  parent: event:snake_island_campaign
+  note: "7–9 May 2022 (date contested). HUR-led helicopter and boat landing, withdrawn under fire."
+- id: event:russian_withdrawal_zmiinyi_island
+  type: event
+  kind: milestone
+  en: "Russian withdrawal from Zmiinyi Island"
+  aliases: ["Russian withdrawal from Zmiinyi Island", "Russian withdrawal from Snake Island"]
+  parent: event:snake_island_campaign
+  note: "30 Jun 2022. Last Russian troops left by speedboat; Moscow called it a 'goodwill gesture'."
+- id: event:zmiinyi_flag_raising
+  type: event
+  kind: milestone
+  en: "Zmiinyi flag raising"
+  aliases: ["Zmiinyi flag raising", "Snake Island flag raising"]
+  parent: event:snake_island_campaign
+  note: "7 Jul 2022 (return announced 4 Jul). Ukrainian troops planted the flag on Zmiinyi Island."
+- id: event:zmiinyi_prisoner_exchanges
+  type: event
+  kind: milestone
+  en: "Zmiinyi prisoner exchanges"
+  aliases: ["Zmiinyi prisoner exchanges", "Snake Island prisoner exchanges"]
+  parent: event:snake_island_campaign
+  note: "24 Mar 2022 – 23 Jul 2025. Swaps that brought the captured Zmiinyi garrison home."
+- id: event:first_neptune_launches
+  type: event
+  kind: strike
+  en: "February 2022 Neptune launches"
+  aliases: ["February 2022 Neptune launches", "first Neptune launches"]
+  note: "By 26 Feb 2022. First R-360 Neptune launches from southern Odesa Oblast at Russian landing ships; no hits, the ships turned back."
+- id: event:sinking_of_the_moskva
+  type: event
+  kind: strike
+  en: "Sinking of the Moskva"
+  uk: "Потоплення крейсера «Москва»"
+  aliases: ["Sinking of the Moskva", "Moskva sinking", "Moskva strike"]
+  note: "13–14 Apr 2022. Two R-360 Neptunes hit the cruiser Moskva about 120 km off Odesa Oblast; it sank on 14 Apr."
+# Mariupol and Azovstal (c03)
+- id: event:azovstal_defence
+  type: event
+  kind: battle
+  en: "Azovstal defence"
+  uk: "Оборона Азовсталі"
+  aliases: ["Azovstal defence", "Defence of Azovstal", "Siege of Azovstal"]
+  parent: event:siege_of_mariupol
+  note: "Mid-Apr – 20 May 2022. Last stand of the Mariupol garrison in the Azovstal works; Putin ordered it blockaded on 21 Apr."
+- id: event:mariupol_air_bridge
+  type: event
+  kind: operation
+  en: "Mariupol air bridge"
+  uk: "Повітряний міст на Маріуполь"
+  aliases: ["Mariupol air bridge", "Mariupol helicopter air bridge", "Azovstal air bridge"]
+  parent: event:siege_of_mariupol
+  note: "21 Mar – early Apr 2022. Seven Mi-8 missions (16 helicopters) from Dnipro flew in 72 troops and supplies and out 64 wounded; 3 helicopters lost."
+- id: event:azovstal_civilian_evacuation
+  type: event
+  kind: operation
+  en: "Azovstal civilian evacuation"
+  aliases: ["Azovstal civilian evacuation", "UN/ICRC Azovstal evacuation"]
+  parent: event:azovstal_defence
+  note: "29 Apr – 8 May 2022. UN/ICRC convoys took civilians out of Azovstal to Zaporizhzhia."
+- id: event:azovstal_walk_out
+  type: event
+  kind: operation
+  en: "Azovstal walk-out"
+  aliases: ["Azovstal walk-out", "Azovstal surrender", "Azovstal evacuation of defenders"]
+  parent: event:azovstal_defence
+  note: "16–20 May 2022. Ordered 'evacuation' of the garrison into Russian captivity (Russia claimed 2,439)."
+- id: event:olenivka_barracks_explosion
+  type: event
+  kind: incident
+  en: "Olenivka barracks explosion"
+  uk: "Теракт в Оленівці"
+  aliases: ["Olenivka barracks explosion", "Olenivka massacre", "Olenivka prison explosion"]
+  note: "28–29 Jul 2022. Blast in the Russian-run POW camp killed at least 50 prisoners, many from Azovstal."
+# Kherson (c04)
+- id: event:kherson_base_strike
+  type: event
+  kind: strike
+  en: "Strike on Russian base in Kherson (10 July 2022)"
+  aliases: ["Strike on Russian base in Kherson (10 July 2022)"]
+  parent: event:kherson_counteroffensive
+  note: "10 Jul 2022. Ukrainian strike on a Russian base in Kherson city, part of the HIMARS interdiction that preceded the offensive."
+- id: event:russian_withdrawal_from_kherson
+  type: event
+  kind: operation
+  en: "Russian withdrawal from Kherson"
+  aliases: ["Russian withdrawal from Kherson", "Kherson withdrawal"]
+  parent: event:kherson_counteroffensive
+  note: "About 21 Oct – 11 Nov 2022; announced 9 Nov. Russian retreat across the Dnipro, blowing the Antonivskyi and Darivka bridges."
+- id: event:liberation_of_kherson
+  type: event
+  kind: milestone
+  en: "Liberation of Kherson"
+  uk: "Звільнення Херсона"
+  aliases: ["Liberation of Kherson"]
+  parent: event:kherson_counteroffensive
+  note: "11 Nov 2022. Ukrainian troops entered Kherson city."
+- id: event:us_midterm_elections_2022
+  type: event
+  kind: milestone
+  en: "2022 US midterm elections"
+  aliases: ["2022 US midterm elections"]
+  note: "8 Nov 2022. US elections; Russia reportedly timed the Kherson withdrawal announcement after them."
+# Crimean Bridge (c05)
+- id: event:crimean_bridge_attacks
+  type: event
+  kind: strike
+  en: "Crimean Bridge attacks"
+  uk: "Атаки на Кримський міст"
+  aliases: ["Crimean Bridge attacks", "Kerch bridge attacks", "Kerch Bridge attacks"]
+  note: "Oct 2022 – Jun 2025. Three Ukrainian attacks on the Crimean Bridge: by land (2022), by water (2023), from under the water (2025)."
+- id: event:crimean_bridge_truck_bomb
+  type: event
+  kind: strike
+  en: "2022 Crimean Bridge explosion"
+  aliases: ["2022 Crimean Bridge explosion", "Crimean Bridge truck bomb"]
+  parent: event:crimean_bridge_attacks
+  note: "8 Oct 2022, 06:07. SBU truck bomb on the Crimea-bound road lanes; road spans fell and a fuel train burned."
+- id: event:crimean_bridge_sea_drone_strike
+  type: event
+  kind: strike
+  en: "2023 Crimean Bridge explosion"
+  aliases: ["2023 Crimean Bridge explosion", "Crimean Bridge Sea Baby strike"]
+  parent: event:crimean_bridge_attacks
+  note: "17 Jul 2023. Two SBU Sea Baby drones with the Navy dropped one road span and displaced another."
+- id: event:crimean_bridge_underwater_attack
+  type: event
+  kind: strike
+  en: "2025 Crimean Bridge attack"
+  aliases: ["2025 Crimean Bridge attack", "Crimean Bridge underwater attack"]
+  parent: event:crimean_bridge_attacks
+  note: "3 Jun 2025. SBU charges placed over months at the underwater supports were detonated."
+- id: event:bridge_retaliation_strikes
+  type: event
+  kind: strike
+  en: "10 October 2022 missile strikes"
+  aliases: ["10 October 2022 missile strikes", "10 Oct 2022 missile strikes"]
+  note: "10 Oct 2022. Over 84 cruise missiles and 24 drones at Ukrainian energy and cities, called retaliation for the Crimean Bridge explosion."
+- id: event:operation_molochka
+  type: event
+  kind: operation
+  en: "Operation MoLoCHKa"
+  aliases: ["Operation MoLoCHKa"]
+  note: "6–19 Jul 2026. Ukrainian campaign against the Kerch ferries; cut ferry capacity by 75%."
+# Kharkiv counteroffensive (c06)
+- id: event:annexation_referendums
+  type: event
+  kind: policy
+  en: "annexation referendums"
+  aliases: ["annexation referendums", "2022 annexation referendums", "sham referendums"]
+  parent: event:annexation_of_four_oblasts
+  note: "23–27 Sep 2022 (postponed on 5 Sep). Sham votes in the four occupied oblasts before the 30 Sep annexation."
+# Vuhledar (c08)
+- id: event:vuhledar_pavlivka_assault
+  type: event
+  kind: battle
+  en: "Pavlivka assault"
+  aliases: ["Pavlivka assault", "Russian autumn 2022 assault on Vuhledar", "Battle of Pavlivka"]
+  parent: event:battle_of_vuhledar
+  note: "28 Oct – late Nov 2022. Pacific Fleet naval infantry took Pavlivka (claimed 14 Nov, contested to 23 Nov) south of Vuhledar."
+- id: event:vuhledar_winter_assault
+  type: event
+  kind: battle
+  en: "Vuhledar winter assault"
+  aliases: ["Vuhledar winter assault", "January–February 2023 Vuhledar offensive", "Vuhledar tank assaults"]
+  parent: event:battle_of_vuhledar
+  note: "24 Jan – Mar 2023. Russian armoured assaults from Pavlivka and Mykilske broke on mines and artillery (worst day 6 Feb 2023); culminated mid-Feb."
+- id: event:fall_of_vuhledar
+  type: event
+  kind: battle
+  en: "Fall of Vuhledar"
+  aliases: ["fall of Vuhledar", "Russian capture of Vuhledar"]
+  parent: event:battle_of_vuhledar
+  note: "Sep – 1–2 Oct 2024. Flank attacks (Prechystivka 2 Sep, Vodiane) forced the Ukrainian withdrawal."
+# Krynky (c10)
+- id: event:kozachi_laheri_raid
+  type: event
+  kind: operation
+  en: "Kozachi Laheri raid"
+  aliases: ["Kozachi Laheri raid"]
+  parent: event:ukrainian_counteroffensive_2023
+  note: "8 Aug 2023. Ukrainian boat raid (up to 7 boats) on Kozachi Laheri on the Dnipro left bank, a precursor of Krynky."
+- id: event:us_aid_delay_2024
+  type: event
+  kind: aid_decision
+  en: "US aid delay of 2024"
+  aliases: ["US aid delay of 2024", "2024 US aid delay"]
+  note: "Oct 2023 – 24 Apr 2024. Congressional hold-up of US aid, ended by event:us_supplemental_2024."
+# A-50 hunt (c12)
+- id: event:a50_shootdown_kyrylivka
+  type: event
+  kind: strike
+  en: "A-50 shoot-down over the Sea of Azov"
+  aliases: ["A-50 shoot-down over the Sea of Azov", "first A-50 shoot-down", "14 January 2024 A-50 shoot-down", "A-50U RF-93966 shoot-down"]
+  note: "14 Jan 2024, about 21:10. A-50U RF-93966 shot down off Kyrylivka with its crew; an Il-22M11 was hit and landed at Anapa."
+- id: event:a50_shootdown_kanevskoy
+  type: event
+  kind: strike
+  en: "A-50 shoot-down over Krasnodar Krai"
+  aliases: ["A-50 shoot-down over Krasnodar Krai", "second A-50 shoot-down", "23 February 2024 A-50 shoot-down"]
+  note: "23 Feb 2024. A-50U from Akhtubinsk brought down near Trudovaya Armeniya, Kanevskoy district, on Russia's Defender of the Fatherland Day."
+- id: event:bryansk_massacre
+  type: event
+  kind: strike
+  en: "Bryansk massacre"
+  aliases: ["Bryansk massacre"]
+  note: "13 May 2023. Ukrainian Patriot downed a Su-34, a Su-35 and three Mi-8s over Bryansk Oblast in five minutes."
+- id: event:ghost_of_kyiv
+  type: event
+  kind: incident
+  en: "Ghost of Kyiv"
+  uk: "Привид Києва"
+  aliases: ["Ghost of Kyiv"]
+  note: "25–27 Feb 2022. Wartime legend of a MiG-29 ace; the viral clip was DCS World footage."
+- id: event:defender_of_the_fatherland_day
+  type: event
+  kind: milestone
+  en: "Defender of the Fatherland Day"
+  aliases: ["Defender of the Fatherland Day"]
+  note: "23 Feb, yearly. Russian military holiday (date of the second A-50 kill, 2024)."
+- id: event:victory_day
+  type: event
+  kind: milestone
+  en: "Victory Day"
+  aliases: ["Victory Day", "9 May Victory Day"]
+  note: "9 May, yearly. Russian WWII victory holiday; 2022 deadline for claiming Mariupol."
+# Black Sea (c13)
+- id: event:black_sea_drone_war
+  type: event
+  kind: operation
+  en: "Black Sea drone war"
+  uk: "Війна дронів на Чорному морі"
+  aliases: ["Black Sea drone war", "Black Sea sinkings", "Ukrainian sea-drone campaign"]
+  note: "Sep 2022 – 2025. Ukrainian sea-drone (Magura, Sea Baby) and missile campaign that drove the Black Sea Fleet to Novorossiysk."
+- id: event:sevastopol_drone_raid
+  type: event
+  kind: strike
+  en: "Sevastopol drone attack (29 Oct 2022)"
+  aliases: ["Sevastopol drone attack (29 Oct 2022)", "Sevastopol sea-drone raid"]
+  parent: event:black_sea_drone_war
+  note: "29 Oct 2022, about 04:00. First sea-drone swarm raid on Sevastopol Bay; hit the Admiral Makarov and Ivan Golubets, sank nothing."
+- id: event:novocherkassk_strike
+  type: event
+  kind: strike
+  en: "Destruction of the Novocherkassk"
+  aliases: ["Destruction of the Novocherkassk", "Novocherkassk strike"]
+  parent: event:black_sea_drone_war
+  note: "26 Dec 2023. Ukrainian Air Force missiles destroyed the landing ship Novocherkassk at Feodosia."
+- id: event:sinking_of_ivanovets
+  type: event
+  kind: strike
+  en: "Sinking of the Ivanovets"
+  aliases: ["Sinking of the Ivanovets"]
+  parent: event:black_sea_drone_war
+  note: "31 Jan – 1 Feb 2024. HUR Magura V5 swarm sank the corvette Ivanovets off Lake Donuzlav."
+- id: event:sinking_of_tsezar_kunikov
+  type: event
+  kind: strike
+  en: "Sinking of the Tsezar Kunikov"
+  aliases: ["Sinking of the Tsezar Kunikov"]
+  parent: event:black_sea_drone_war
+  note: "14 Feb 2024. HUR Magura V5 swarm sank the landing ship Tsezar Kunikov about 4 km off Alupka."
+- id: event:sinking_of_sergey_kotov
+  type: event
+  kind: strike
+  en: "Sinking of the Sergey Kotov"
+  aliases: ["Sinking of the Sergey Kotov"]
+  parent: event:black_sea_drone_war
+  note: "5 Mar 2024. Maguras sank the patrol ship Sergey Kotov about 5 km off Cape Takil near the Kerch Strait."
+- id: event:black_sea_grain_initiative
+  type: event
+  kind: negotiation
+  en: "Black Sea Grain Initiative"
+  aliases: ["Black Sea Grain Initiative", "Black Sea grain deal", "UN grain corridor"]
+  note: "22 Jul 2022 – 17 Jul 2023. UN/Turkey-brokered deal for Ukrainian grain exports (pre-deal talks in Jun 2022 count here); Russia 'suspended' it 29 Oct 2022 and quit 17 Jul 2023."
+- id: event:ukrainian_grain_corridor
+  type: event
+  kind: policy
+  en: "Ukrainian grain corridor"
+  aliases: ["Ukrainian grain corridor", "Ukrainian Black Sea corridor"]
+  note: "From 16 Aug 2023. Ukraine's own export corridor along the western Black Sea coast from Greater Odesa."
+- id: event:idef_istanbul
+  type: event
+  kind: milestone
+  en: "IDEF Istanbul"
+  aliases: ["IDEF Istanbul", "IDEF 2023"]
+  note: "25–28 Jul 2023. Istanbul defence fair where the Magura V5 was shown."
+# Kupiansk pipeline (c17)
+- id: event:kupiansk_pipeline_infiltration
+  type: event
+  kind: operation
+  en: "Kupiansk pipeline infiltration"
+  aliases: ["Kupiansk pipeline infiltration", "Kupiansk gas pipeline infiltration"]
+  note: "Late summer 2025 (revealed 12 Sep 2025). Russian troops crossed under the Oskil through the Shebelynka–Ostrohozhsk pipeline from Lyman Pershyi to Radkivka; pipe blown Dec 2025."
+- id: event:russian_kupiansk_capture_claim
+  type: event
+  kind: incident
+  en: "Russian capture claim of Kupiansk"
+  aliases: ["Russian capture claim of Kupiansk"]
+  note: "20 Nov 2025. Gerasimov reported Kupiansk 'liberated' to Putin; the claim was false."
+- id: event:gas_dispute_2009
+  type: event
+  kind: incident
+  en: "2009 Russia–Ukraine gas dispute"
+  aliases: ["2009 Russia–Ukraine gas dispute", "2009 gas war"]
+  note: "Jan 2009. Russian gas cut-off to and through Ukraine."
+# Brovary and Stepove vignettes (v01, v02)
+- id: event:brovary_ambush
+  type: event
+  kind: battle
+  en: "Brovary ambush"
+  uk: "Бій під Броварами"
+  aliases: ["Brovary ambush", "Battle of Brovary", "Skybyn ambush"]
+  parent: event:battle_of_kyiv
+  note: "9–10 Mar 2022. The 72nd Mechanised Brigade ambushed a 6th Guards Tank Regiment column on the M01 at Skybyn and Kalynivka."
+- id: event:stepove_bradley_duel
+  type: event
+  kind: battle
+  en: "Stepove Bradley–T-90M duel"
+  aliases: ["Stepove Bradley–T-90M duel", "Stepove duel", "Bradley vs T-90M at Stepove"]
+  parent: event:battle_of_avdiivka
+  note: "About 11 Jan 2024 (video 12 Jan). Two 47th Brigade Bradleys mission-killed a T-90M near Stepove; an FPV drone finished it."

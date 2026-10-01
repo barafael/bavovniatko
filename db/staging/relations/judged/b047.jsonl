@@ -1,0 +1,40 @@
+{"pair": "7ec32a985e8a", "relation": "contradicts", "from": "claim:cc13_0010_07", "to": "claim:cc13_0013_86", "strength": 0.5, "rationale": "The same 21-target Magura tally broken down as 16 warships, 3 helicopters and 2 jets vs 9 vessels, 2 Su-30s and 2 Mi-8s.", "resolution": "Two HUR breakdowns on the same day; \"16 warships\" likely counts small craft, or the tallies were mixed up in reporting."}
+{"pair": "7ec6a6abf91e", "relation": "duplicates", "from": "claim:cc06_0030_12", "to": "claim:cc06_0012_16", "strength": 0.95, "rationale": "The same Balakliia strength figures (71%, 49 of 240, 23%) from the same Reuters source."}
+{"pair": "7f78c5898e2e", "relation": "contradicts", "from": "claim:cc02_0009_10", "to": "claim:cc02_0009_11", "strength": 0.6, "rationale": "Moskva casualties: 20 dead and 24 injured vs 37 dead and about 100 injured.", "resolution": "A Russian court finding vs an unnamed Russian source; the official tally likely understates."}
+{"pair": "802ceb1f4367", "relation": "none", "rationale": "War-wide dead vs A-50 crew losses; different scope."}
+{"pair": "815c9cf311b8", "relation": "none", "rationale": "One engagement vs the war-wide Oryx Su-34 total."}
+{"pair": "81bb353f08fc", "relation": "none", "rationale": "Filmed losses in one engagement vs abandoned vehicles in an incident that may differ; different measures."}
+{"pair": "81f732a590dd", "relation": "duplicates", "from": "claim:cc08_0007_16", "to": "claim:cc08_0010_046", "strength": 0.9, "rationale": "The same Oryx 8–10 Feb 2023 count (103 Russian vs 20 Ukrainian vehicles) extracted twice."}
+{"pair": "822be917910f", "relation": "none", "rationale": "War-wide dead vs Chechen losses in Kherson; different scope."}
+{"pair": "83e11fa038d4", "relation": "none", "rationale": "War-wide Raptor tally vs two boats hit on 8 May; different scope."}
+{"pair": "84e138fb67f7", "relation": "supports", "from": "claim:cc05_0012_05", "to": "claim:cc05_0012_06", "strength": 0.7, "rationale": "Wikipedia and OSM both give the navigation span as 227 m.", "independent": true}
+{"pair": "858b99692fba", "relation": "none", "rationale": "One month's claims vs the war-wide Oryx Su-34 total."}
+{"pair": "8695e27dbc42", "relation": "duplicates", "from": "claim:cc08_0045_05", "to": "claim:cc08_0007_08", "strength": 0.95, "rationale": "The same ISW count of 13 tanks and 12 BMPs in the filmed Vuhledar engagement."}
+{"pair": "8b3abb5756bc", "relation": "none", "rationale": "War-wide dead vs A-50 crew losses; different scope."}
+{"pair": "8d7e3ec88744", "relation": "none", "rationale": "A role as observation bastion vs a terrain elevation figure; complementary, no direct bearing."}
+{"pair": "8e9e1b047e34", "relation": "none", "rationale": "War-wide CSIS estimate vs a Vuhledar names floor; different scope."}
+{"pair": "9042058cb760", "relation": "none", "rationale": "War-wide dead vs Moskva court figure; different scope."}
+{"pair": "92f733406c74", "relation": "contradicts", "from": "claim:cc12_0007_11", "to": "claim:cc12_0007_16", "strength": 0.5, "rationale": "A-50 fleet and availability: 3 of 6 vs about 5 of 10.", "resolution": "Southern Command may count only modernised active airframes; TWZ estimates the whole fleet."}
+{"pair": "941e52551719", "relation": "none", "rationale": "A single claim vs the war-wide Oryx Su-34 total."}
+{"pair": "95b02d478326", "relation": "contradicts", "from": "claim:cc02_0009_08", "to": "claim:cc02_0009_13", "strength": 0.9, "rationale": "Moskva crew rescued: 396 vs 58.", "resolution": "Russian MoD vs Ukrainian NSDC claims; each side has motives."}
+{"pair": "969dbbf2be91", "relation": "none", "rationale": "Chechen losses in Kherson vs a Lyman claim; different places."}
+{"pair": "976c90e81542", "relation": "duplicates", "from": "claim:cc06_0010_08", "to": "claim:c00_0074_06", "strength": 0.8, "rationale": "Ukraine's claim of 12,000 km² for the Kharkiv operation, from the same Wikipedia source, repeats the key figure of topic 00."}
+{"pair": "97ca7011d3cd", "relation": "none", "rationale": "Summed OSM carriageway length vs sea-section lengths; different measures."}
+{"pair": "9c9b95a736b3", "relation": "supports", "from": "claim:cc13_0030_16", "to": "claim:cc13_0013_12", "strength": 0.6, "rationale": "The other sources' 800–833 km range is consistent with the announced range of up to 800 km; they share a Wikipedia source.", "independent": false}
+{"pair": "9cb370088ad2", "relation": "contradicts", "from": "claim:cc12_0006_02", "to": "claim:cc12_0015_15", "strength": 0.4, "rationale": "Distance of the 23 Feb 2024 A-50 kill from the front: about 200 km or more vs about 170 km.", "resolution": "Rough estimates with different reference points."}
+{"pair": "9cc04baae39e", "relation": "supports", "from": "claim:cc05_0012_04", "to": "claim:cc05_0003_01", "strength": 0.8, "rationale": "The sea sections (7 + 6.5 + 5.5 km) sum to the 19 km total; both come from the same Wikipedia source.", "independent": false}
+{"pair": "9e8bc048a27d", "relation": "refines", "from": "claim:cc05_0006_02", "to": "claim:cc05_0006_01", "strength": 0.6, "rationale": "B locates the two fallen spans in A between supports 235 and 236."}
+{"pair": "a0b0ce3da522", "relation": "none", "rationale": "War-wide dead vs A-50 crew losses; different scope."}
+{"pair": "a0ea7108a937", "relation": "contradicts", "from": "claim:cc13_0008_04", "to": "claim:cc13_0013_77", "strength": 0.5, "rationale": "31 Dec 2024 Magura engagement: two Mi-8s downed vs one downed and one hit that reached its airfield.", "resolution": "HUR's later claim vs the initial reporting; the second helicopter's fate is uncertain."}
+{"pair": "a11800aa4fa9", "relation": "none", "rationale": "War-wide dead vs Moskva figure; different scope."}
+{"pair": "a28ed0b22a90", "relation": "none", "rationale": "War-wide dead vs Sergey Kotov crew losses; different scope."}
+{"pair": "a2990ac58a24", "relation": "contradicts", "from": "claim:cc12_0007_11", "to": "claim:cc12_0007_13", "strength": 0.5, "rationale": "Serviceable A-50s in Jan 2024: 3 vs 8.", "resolution": "Two Ukrainian sources with different definitions (in service vs in good condition)."}
+{"pair": "a3fdec4abc5c", "relation": "contradicts", "from": "claim:cc13_0030_11", "to": "claim:cc13_0030_12", "strength": 0.4, "rationale": "Magura V5 top speed: 42 kn vs a 54 kn burst.", "resolution": "The 54 kn figure comes from a low-reliability source; it may describe a burst mode or a variant."}
+{"pair": "a695c55b731f", "relation": "none", "rationale": "One engagement vs the war-wide Oryx Su-34 total."}
+{"pair": "a76da49c88f6", "relation": "supports", "from": "claim:cc05_0010_66", "to": "claim:cc05_0006_17", "strength": 0.8, "rationale": "Both give a first 1,100 kg TNT-equivalent underwater charge on 3 Jun 2025; they share a source.", "independent": false}
+{"pair": "a86a89e075bc", "relation": "supports", "from": "claim:cc05_0012_04", "to": "claim:cc05_0012_02", "strength": 0.8, "rationale": "The sea sections sum to the 19 km total; both come from the same Wikipedia source.", "independent": false}
+{"pair": "a86a8af9b664", "relation": "none", "rationale": "Raptor tally vs Vuhledar vehicle losses; different subjects."}
+{"pair": "a91b21837863", "relation": "none", "rationale": "A single claim vs the war-wide Oryx Su-34 total."}
+{"pair": "ac7ab1e76850", "relation": "supports", "from": "claim:cc05_0010_15", "to": "claim:cc05_0006_01", "strength": 0.8, "rationale": "Both say two spans fell on 8 Oct 2022; they share a Wikipedia source.", "independent": false}
+{"pair": "ae45bfdf742e", "relation": "none", "rationale": "Era-wide recapture vs the Kherson subset; different scope."}
+{"pair": "b0a39b4b288a", "relation": "supports", "from": "claim:cc05_0034_06", "to": "claim:cc05_0010_23", "strength": 0.8, "rationale": "Both give 84 cruise missiles and 24 drones on 10 Oct 2022; they share an ISW source.", "independent": false}

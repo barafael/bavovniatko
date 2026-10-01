@@ -1,0 +1,40 @@
+{"pair": "56167101ba5b", "relation": "none", "rationale": "The Iskander strike and the supply-post request are different events."}
+{"pair": "5619c7763f2f", "relation": "refines", "from": "claim:cc03_0031_07", "to": "claim:cc03_0008_43", "strength": 0.6, "rationale": "B details A's 11–12 April breakout as a split into a northern group and a group heading for Azov, from a shared source."}
+{"pair": "56ac584a897d", "relation": "none", "rationale": "A liberation claim and a daily kill claim are different assertions."}
+{"pair": "56f56431a64a", "relation": "supports", "from": "claim:cc02_0011_50", "to": "claim:cc02_0009_17", "strength": 0.7, "rationale": "B's TB2 hit on a Serna on 7 May 2022 matches A's one Serna lost that day, both from H I Sutton's Naval News reporting.", "independent": false}
+{"pair": "572243cb77f3", "relation": "weakens", "from": "claim:cc17_0027_02", "to": "claim:cc17_0027_01", "strength": 0.4, "rationale": "B's rival account, in which Drapatyi's team also sought to start the operation, casts doubt on A's credit to Khartiia."}
+{"pair": "574389d5e295", "relation": "duplicates", "from": "claim:cc08_0037_01", "to": "claim:cc08_0031_05", "strength": 0.75, "rationale": "Both state that the Vuhledar mines were TM-62 belts plus RAAM artillery-delivered mines, with a shared Forbes source; A has more sources."}
+{"pair": "57551c9dd204", "relation": "none", "rationale": "The ferries' location and the strikes on them are different assertions."}
+{"pair": "57bdc8a50100", "relation": "none", "rationale": "Road type and the strike location are different facts."}
+{"pair": "5800ef0c2f86", "relation": "none", "rationale": "The breakout on 12 April and the fall of the works on 13 April are compatible, distinct events."}
+{"pair": "580e3fcc5f18", "relation": "supports", "from": "claim:cc13_0017_01", "to": "claim:cc13_0032_06", "strength": 0.5, "rationale": "A's booms and nets layering Sevastopol harbour back B's statement that booms blocked Sevastopol Bay.", "independent": true}
+{"pair": "58200e6592cb", "relation": "supports", "from": "claim:cc02_0030_17", "to": "claim:cc02_0026_16", "strength": 0.6, "rationale": "B's Russian choice to feed SHORAD by small craft that TB2s hunted backs A's account of TB2s killing the island's SHORAD, with a shared Naval News source.", "independent": false}
+{"pair": "5820b94d3166", "relation": "supports", "from": "claim:cc10_0015_022", "to": "claim:cc10_0006_04", "strength": 0.6, "rationale": "B's 38th Brigade taking part of the Kliushka solar farm matches A's 38th foothold at the solar farm, from the same Pravda source.", "independent": false}
+{"pair": "5880dcc83ad5", "relation": "none", "rationale": "The Sea Baby's design role and HUR's attribution of the Novorossiysk hits to the Mamai do not directly conflict."}
+{"pair": "588d8d6216c3", "relation": "none", "rationale": "A single-day claim and Ihnat's later comment are different assertions."}
+{"pair": "58cda7bcbadd", "relation": "duplicates", "from": "claim:cc04_0031_02", "to": "claim:cc04_0009_70", "strength": 0.8, "rationale": "Same capture of Davydiv Brid by the 35th Marine Brigade in early October 2022, with a shared ISW source."}
+{"pair": "59518a31e52f", "relation": "none", "rationale": "Forest around Krynky and the road through it are different facts."}
+{"pair": "596753006ef9", "relation": "none", "rationale": "A monthly tally and Ihnat's comment are different assertions."}
+{"pair": "5983e9d0255c", "relation": "supports", "from": "claim:cv01_0013_02", "to": "claim:c00_0017_01", "strength": 0.4, "rationale": "NLAW and Javelin with the 72nd Brigade at Brovary are an instance of A's rapid Western anti-armour deliveries.", "independent": true}
+{"pair": "598e8449225f", "relation": "none", "rationale": "The 03:00 intercept and the 22:00 capture announcement are different events."}
+{"pair": "59c7ff81a441", "relation": "none", "rationale": "The first Bradley's failed pass and the gunner's aim at the optics are different assertions."}
+{"pair": "5a131d8834c9", "relation": "supports", "from": "claim:cc13_0013_81", "to": "claim:cc13_0008_02", "strength": 0.5, "rationale": "The 2 May 2025 Su-30SM shoot-down by AIM-9-armed V7s is an instance of A's arming of sea drones with missiles, with a shared TWZ source.", "independent": false}
+{"pair": "5a14e4948bda", "relation": "none", "rationale": "The villages' capture and a Code 9.2 strike in the woods are different assertions."}
+{"pair": "5a1f220920b1", "relation": "none", "rationale": "A names-only loss floor and a \"largely destroyed\" assessment are different assertions."}
+{"pair": "5a8646871dea", "relation": "refines", "from": "claim:cc04_0031_01", "to": "claim:cc04_0023_07", "strength": 0.7, "rationale": "B dates A's October drive by battalions of the 60th and 128th Brigades on Zolota Balka to 1–4 October, from a shared source."}
+{"pair": "5a8c747332f5", "relation": "none", "rationale": "The convoy's departure on 29 April and the evacuation window of 30 April – 7 May are compatible, distinct facts."}
+{"pair": "5ad709ee8a12", "relation": "none", "rationale": "Group 13's R-73 plans and Rybar's account of the Su-30 loss are different assertions."}
+{"pair": "5b16bbd70c27", "relation": "supports", "from": "claim:cc04_0015_10", "to": "claim:cc04_0026_09", "strength": 0.6, "rationale": "A's 1–2 m rise of the Inhulets is the result of the dam strike B describes, from the same source.", "independent": false}
+{"pair": "5b2aed0c4335", "relation": "none", "rationale": "An announced offensive and the river's course share only place names."}
+{"pair": "5b73707d0140", "relation": "none", "rationale": "The tank's attack and an expert's view of crew panic are different assertions."}
+{"pair": "5b8b01f4b441", "relation": "none", "rationale": "The Act 2 force and CNN's reading of Malyuk's claim are different assertions."}
+{"pair": "5b98ba9856b6", "relation": "supports", "from": "claim:cc03_0023_01", "to": "claim:c00_0017_01", "strength": 0.4, "rationale": "Air-delivered NLAWs and Stingers at Azovstal are an instance of A's rapid Western light anti-armour and MANPADS deliveries.", "independent": true}
+{"pair": "5ba878a48cf9", "relation": "supports", "from": "claim:cc04_0009_67", "to": "claim:cc04_0023_10", "strength": 0.5, "rationale": "A's 2 October crossing of the Inhulets by the 35th Marine Brigade fits B's push from the Inhulets that took Davydiv Brid on 4 October.", "independent": false}
+{"pair": "5ba965a351ef", "relation": "none", "rationale": "Ihnat's comment and the beacon posts are different assertions."}
+{"pair": "5c1a0dc08639", "relation": "supports", "from": "claim:cc04_0009_45", "to": "claim:cc04_0013_16", "strength": 0.7, "rationale": "A's destruction of the Darivka pontoon on 1 September matches B, citing the same ISW report.", "independent": false}
+{"pair": "5c2ac7473807", "relation": "supports", "from": "claim:cc13_0023_09", "to": "claim:cc13_0013_23", "strength": 0.5, "rationale": "HUR's attribution of the Novorossiysk hits to an SBU sea drone is consistent with A's SBU USV holing the Olenegorsky Gornyak.", "independent": true}
+{"pair": "5c38b69d1c50", "relation": "duplicates", "from": "claim:cc13_0013_58", "to": "claim:cc13_0009_05", "strength": 0.85, "rationale": "Same Russian insider's placement of the Sergey Kotov wreck 5 km off Cape Takil, same ISW source."}
+{"pair": "5c452e865af7", "relation": "none", "rationale": "The Bradleys trapping the tank and its smoke discharge are different facts."}
+{"pair": "5c5f316ffe57", "relation": "duplicates", "from": "claim:cv01_0013_01", "to": "claim:cv01_0003_04", "strength": 0.9, "rationale": "Same 72nd Brigade 1st and 3rd Battalions at Brovary; A has more sources."}
+{"pair": "5c61bcb2ed5a", "relation": "none", "rationale": "The 9 March raid and the plant's role are different facts."}
+{"pair": "5c8d6cffb7ab", "relation": "none", "rationale": "The shoot-down event and the seeker limitation are different assertions."}

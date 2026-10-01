@@ -1,0 +1,40 @@
+{"pair": "472385f5392d", "relation": "none", "rationale": "A monthly tally and the targets' glide-bomb missions are different assertions."}
+{"pair": "4784f3542eeb", "relation": "none", "rationale": "The invasion's axes and where Ukrainian SAMs were hit are different assertions."}
+{"pair": "478f149c11a6", "relation": "supports", "from": "claim:cv02_0020_02", "to": "claim:cv02_0003_08", "strength": 0.7, "rationale": "The gunner's account of changing rounds and aim after the AP trouble matches A's switch of ammunition to shoot out the optics, from a shared TWZ source.", "independent": false}
+{"pair": "4825e3f0f3e9", "relation": "none", "rationale": "The battery's radar and the launch decision are different facts."}
+{"pair": "48298a69050f", "relation": "supports", "from": "claim:cc12_0025_07", "to": "claim:cc12_0010_57", "strength": 0.8, "rationale": "Both have the A-50 taking off from Akhtubinsk at 15:50 on 23 February 2024 for the Primorsko-Akhtarsk area, from the same source.", "independent": false}
+{"pair": "4888c200a8b7", "relation": "supports", "from": "claim:cc04_0009_82", "to": "claim:cc04_0029_03", "strength": 0.5, "rationale": "RFE/RL's geolocated ferry at Kozatske in October backs B's statement that Russia rebuilt the ferries after the strikes.", "independent": true}
+{"pair": "48e3dad8211f", "relation": "supports", "from": "claim:cc02_0007_07", "to": "claim:cc02_0030_24", "strength": 0.6, "rationale": "A's guns firing from the Danube-delta shore in late June carry out the plan B describes, using Western 155 mm guns from the delta coast.", "independent": true}
+{"pair": "490764ead62e", "relation": "none", "rationale": "The men's letter and a later prisoner claim are different assertions."}
+{"pair": "4929d49ee482", "relation": "none", "rationale": "The map box and the river's course share only place names."}
+{"pair": "499ee5a1ba6c", "relation": "refines", "from": "claim:cc13_0016_06", "to": "claim:cc13_0013_09", "strength": 0.6, "rationale": "B locates the damaged boom in Pivdenna Bay that A's MoD admission mentions."}
+{"pair": "49dfffc073db", "relation": "none", "rationale": "A renewed attack and a later \"largely destroyed\" assessment are different assertions."}
+{"pair": "4a5389431f95", "relation": "duplicates", "from": "claim:cc10_0015_035", "to": "claim:cc10_0012_11", "strength": 0.9, "rationale": "Same Marine Corps and General Staff claim of 1,216 killed and 2,217 wounded, from the same sources."}
+{"pair": "4a79e2af8594", "relation": "supports", "from": "claim:cc06_0012_81", "to": "claim:cc06_0030_18", "strength": 0.7, "rationale": "Both report 144th Division elements reinforcing Svatove in late September 2022, from the same ISW report.", "independent": false}
+{"pair": "4a95e9cc8e18", "relation": "none", "rationale": "Evacuee counts on 3 May and 8 May are different quantities."}
+{"pair": "4aa4b68c6848", "relation": "none", "rationale": "The award and Kuzovlev's later shift of the timeline are different assertions."}
+{"pair": "4ab9b672e985", "relation": "duplicates", "from": "claim:cv02_0004_03", "to": "claim:cv02_0003_03", "strength": 0.85, "rationale": "Both state that the Ukrainian trench held under the T-90M's fire at Stepove, from the same TWZ source."}
+{"pair": "4aecadfabc1f", "relation": "none", "rationale": "The garrison's composition and a later move of border guards and police are different assertions."}
+{"pair": "4aed0c512703", "relation": "none", "rationale": "A November Bradley video and a February Abrams video are different events."}
+{"pair": "4b0d14e9b544", "relation": "supports", "from": "claim:cc13_0035_10", "to": "claim:cc13_0009_03", "strength": 0.7, "rationale": "B's account of the swarm attack off Alupka backs A's sinking of the Tsezar Kunikov there on 14 February 2024.", "independent": false}
+{"pair": "4b4e208f9b70", "relation": "supports", "from": "claim:cc13_0035_13", "to": "claim:cc13_0008_03", "strength": 0.8, "rationale": "B's observed sequence of an R-73 downing one Mi-8 off Tarkhankut backs A, from a shared GUR source.", "independent": false}
+{"pair": "4b4ea3a952ed", "relation": "none", "rationale": "A monthly tally and the beacon posts of one day's losses are different assertions."}
+{"pair": "4b4f003de9c0", "relation": "supports", "from": "claim:cc04_0026_13", "to": "claim:cc04_0005_14", "strength": 0.7, "rationale": "B's four main bridges blown on 11 November 2022 match A's destroyed spans, from the same sources.", "independent": false}
+{"pair": "4ba78c30e0f8", "relation": "duplicates", "from": "claim:cc13_0037_01", "to": "claim:cc13_0013_04", "strength": 0.8, "rationale": "B repeats A's September 2022 refusal by Musk of Starlink coverage around Crimea, from the same Wikipedia source."}
+{"pair": "4badff637bd5", "relation": "none", "rationale": "The crew's identity and the volume of fire are different facts."}
+{"pair": "4bdcf45646ed", "relation": "none", "rationale": "A date bound and the aim at the optics are different assertions."}
+{"pair": "4bf65b547134", "relation": "supports", "from": "claim:cc05_0042_03", "to": "claim:cc05_0036_09", "strength": 0.6, "rationale": "Russia's framing of the 18 July Odesa strike as retaliation in B backs A's retaliation pattern, from the same Pravda source.", "independent": false}
+{"pair": "4bf93a515e8b", "relation": "refines", "from": "claim:cc05_0030_06", "to": "claim:cc05_0034_10", "strength": 0.7, "rationale": "A gives the dates and spacing of the seven sunk hulls with booms that B describes south of the bridge."}
+{"pair": "4c3680a08e4a", "relation": "none", "rationale": "The bridge demolitions and a distance calculation are different facts."}
+{"pair": "4c5291926a95", "relation": "supports", "from": "claim:cc12_0010_51", "to": "claim:cc12_0023_14", "strength": 0.6, "rationale": "A's two Su-34s and a Su-35 downed on glide-bomb runs on 17 February are an instance of B, from the same Kyiv Post article.", "independent": false}
+{"pair": "4ca771fffbb2", "relation": "none", "rationale": "A Tor destroyed on 6 May and a strike on a landing craft on 7 May are different events."}
+{"pair": "4cc0e7ccb011", "relation": "supports", "from": "claim:cv02_0018_04", "to": "claim:cv02_0006_18", "strength": 0.6, "rationale": "Both TWZ accounts have the T-90M finished by an FPV drone after the Bradleys disabled it.", "independent": false}
+{"pair": "4cc5cb077617", "relation": "weakens", "from": "claim:cc03_0004_13", "to": "claim:cc03_0035_04", "strength": 0.4, "rationale": "A's breakout of part of the brigade to Azovstal casts doubt on Shoigu's claim of 1,026 surrendered."}
+{"pair": "4d10a2799b58", "relation": "none", "rationale": "A ferry strike and the ferries' location are different assertions."}
+{"pair": "4d5f5f112c03", "relation": "refines", "from": "claim:cc10_0015_023", "to": "claim:cc10_0045_11", "strength": 0.7, "rationale": "A gives the date, follow-on strikes and 90 casualties of the same Iskander strike at the Antonivka rail bridge."}
+{"pair": "4d9adf63302c", "relation": "supports", "from": "claim:cc13_0013_33", "to": "claim:cc13_0037_09", "strength": 0.6, "rationale": "A's 22 September Storm Shadow strike on the BSF HQ is the event B cites as preceding the fleet's move, from a shared source.", "independent": false}
+{"pair": "4db627daf3b3", "relation": "none", "rationale": "The noon salvo and the morning weather are different facts."}
+{"pair": "4db6fc395b53", "relation": "none", "rationale": "An expert's view of crew deaths and the gunner's aim at the optics are different assertions."}
+{"pair": "4ddf0d2fc07c", "relation": "none", "rationale": "The column's composition and its bunching are different assertions."}
+{"pair": "4e07814e4e17", "relation": "none", "rationale": "The FPV finish and the gunner's aim at the optics are different assertions."}
+{"pair": "4e5ef299f592", "relation": "none", "rationale": "Two different Bradley engagements on different dates."}

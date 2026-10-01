@@ -1,0 +1,40 @@
+{"pair": "b0d31715e71a", "relation": "contradicts", "from": "claim:cc17_0022_02", "to": "claim:cc17_0022_03", "strength": 0.6, "rationale": "Avdiivka infiltration pipe length: nearly 2 km vs 3.7 km.", "resolution": "Pro-Russian claims vs United24; possibly different end points or sections."}
+{"pair": "b12d2eba3e54", "relation": "contradicts", "from": "claim:cc13_0010_06", "to": "claim:cc13_0010_07", "strength": 0.5, "rationale": "The same HUR Magura tally to 15 May 2025: 9 vessels vs \"16 warships\", 2 helicopters vs 3.", "resolution": "Two reportings of the HUR figures on the same day; the 16 likely counts small craft or mixes damaged and destroyed."}
+{"pair": "b208852202cc", "relation": "refines", "from": "claim:cc02_0021_03", "to": "claim:cc02_0009_03", "strength": 0.7, "rationale": "B specifies that 28 of the about 80 people captured on Zmiinyi were border guards."}
+{"pair": "b444c9fcbbfd", "relation": "supersedes", "from": "claim:cc02_0009_10", "to": "claim:cc02_0034_07", "strength": 0.6, "rationale": "The Jan 2026 court finding of 20 dead and 8 missing updates the MoD's April 2022 figure of 1 dead and 27 missing."}
+{"pair": "b4918dea7a3c", "relation": "none", "rationale": "Kupiansk pipeline vs Avdiivka pipe; different routes."}
+{"pair": "b60d1ceaa687", "relation": "supports", "from": "claim:cc08_0007_08", "to": "claim:cc08_0007_15", "strength": 0.4, "rationale": "25 vehicles in one filmed engagement falls within the 20–40 range for Russian losses at Vuhledar.", "independent": true}
+{"pair": "b669c2895382", "relation": "none", "rationale": "Monthly USF claim vs a single local engagement."}
+{"pair": "b7229fe316a7", "relation": "contradicts", "from": "claim:cc02_0009_08", "to": "claim:cc02_0009_12", "strength": 0.8, "rationale": "Moskva dead: 1 vs about 40.", "resolution": "The MoD lists many as missing; the higher figure is hearsay from a relative."}
+{"pair": "b74eccef900b", "relation": "none", "rationale": "Kupiansk pipeline vs Avdiivka pipe; different routes."}
+{"pair": "b9a7f0a7d933", "relation": "none", "rationale": "Raptor tally vs a tug loss; different vessels."}
+{"pair": "bb29d8a9d9ae", "relation": "supports", "from": "claim:cc08_0007_08", "to": "claim:cc08_0055_11", "strength": 0.4, "rationale": "A visually documented 25 tanks and BMPs in one engagement roughly corroborates the claim of 31 armoured vehicles destroyed in one assault.", "independent": true}
+{"pair": "bb7977a65e87", "relation": "none", "rationale": "Kharkiv liberated area vs Kherson area; different operations."}
+{"pair": "bc2d642ead8c", "relation": "none", "rationale": "Kupiansk pipeline vs Sudzha pipe; different routes."}
+{"pair": "bd7f63d1bd13", "relation": "none", "rationale": "A single duel without loss vs the brigade's cumulative Bradley losses; compatible."}
+{"pair": "be9ed4e91196", "relation": "contradicts", "from": "claim:cc17_0003_07", "to": "claim:cc17_0012_06", "strength": 0.4, "rationale": "Length of the Kupiansk pipeline route: about 10 km vs 15 km.", "resolution": "Possibly different measures: the walk inside the pipe vs the full run from the Russian rear."}
+{"pair": "beb99ee7b336", "relation": "duplicates", "from": "claim:cc12_0025_11", "to": "claim:cc12_0010_29", "strength": 0.9, "rationale": "The same 13 May 2023 Bryansk Patriot engagement (Su-34, Su-35 and three Mi-8 variants) from the same source."}
+{"pair": "bee4d2292e9c", "relation": "none", "rationale": "War-wide dead vs one helicopter crew; different scope."}
+{"pair": "c2230d243ded", "relation": "none", "rationale": "7 tank cars burning vs 17 wagons damaged; different measures, compatible."}
+{"pair": "c31a836ba5f7", "relation": "refines", "from": "claim:cc02_0026_03", "to": "claim:cc02_0026_02", "strength": 0.5, "rationale": "B qualifies the sea-skimming profile in A: the early launches over Odesa had to fly at about 120 m."}
+{"pair": "c3621b5934ff", "relation": "supersedes", "from": "claim:cc13_0009_12", "to": "claim:cc13_0009_11", "strength": 0.8, "rationale": "HUR's 2 Jan 2025 revision (two Mi-8s destroyed) replaces its first claim of 31 Dec (one destroyed)."}
+{"pair": "c56dfb6fe80f", "relation": "duplicates", "from": "claim:cc06_0010_08", "to": "claim:c00_0026_03", "strength": 0.8, "rationale": "Ukraine's claim of 12,000 km² and 500+ settlements for Kharkiv, from the same Wikipedia source."}
+{"pair": "c664e722091a", "relation": "none", "rationale": "A single-day claim vs the war-wide Oryx total."}
+{"pair": "c6e1a65b0195", "relation": "none", "rationale": "War-wide dead vs a unit's daily claim; different scope."}
+{"pair": "c8673cf830db", "relation": "none", "rationale": "Kupiansk pipeline vs Sudzha pipe; different routes."}
+{"pair": "c929da74097a", "relation": "supports", "from": "claim:c04_0019_18", "to": "claim:cc10_0012_08", "strength": 0.5, "rationale": "262 dead recovered plus 788 missing is consistent with more than 1,000 feared killed at Krynky.", "independent": true}
+{"pair": "ca15635d0ab0", "relation": "none", "rationale": "Warhead mass of different Sea Baby variants vs one 450 kg strike; different variant."}
+{"pair": "ce0e5dc00ba1", "relation": "none", "rationale": "Complementary loss figures from the same commander; no conflict."}
+{"pair": "ce2b246f7c45", "relation": "duplicates", "from": "claim:cc08_0007_11", "to": "claim:cc08_0010_046", "strength": 0.9, "rationale": "The same Oryx count of 103 Russian vehicles and 36 tanks on 8–10 Feb 2023."}
+{"pair": "d05fed637b38", "relation": "supports", "from": "claim:cc08_0007_10", "to": "claim:cc08_0045_05", "strength": 0.4, "rationale": "Girkin's more than 30 armoured vehicles in one engagement is roughly consistent with ISW's filmed count of 25.", "independent": true}
+{"pair": "d0fb6a9a5146", "relation": "none", "rationale": "War-wide dead vs A-50 crew losses; different scope."}
+{"pair": "d11ba8df89a1", "relation": "contradicts", "from": "claim:cc17_0005_15", "to": "claim:cc17_0005_16", "strength": 0.4, "rationale": "Russians in Kupiansk in Dec 2025: about 500 with 100 trapped vs 300 falling to about 50.", "resolution": "Different units' estimates at different points in December."}
+{"pair": "d1db01ffc97f", "relation": "duplicates", "from": "claim:cc03_0006_06", "to": "claim:cc03_0008_76", "strength": 0.8, "rationale": "The same US statement that two BTGs remained at Mariupol on 9 May 2022, from the same ISW report."}
+{"pair": "d2465a7c8cd5", "relation": "supports", "from": "claim:cc02_0015_13", "to": "claim:cc02_0023_01", "strength": 0.8, "rationale": "Moskva hull length: 186 m vs 186.4 m.", "independent": true}
+{"pair": "d58e6c8b4ed4", "relation": "none", "rationale": "A two-day Ukrainian claim vs the war-wide Oryx tally; different scope."}
+{"pair": "d6b87cb8c751", "relation": "refines", "from": "claim:cc02_0011_18", "to": "claim:cc02_0026_02", "strength": 0.5, "rationale": "A qualifies the sea-skimming profile in B: the first launches flew at about 120 m to clear Odesa."}
+{"pair": "d6d168e5f713", "relation": "supersedes", "from": "claim:cc02_0009_09", "to": "claim:cc02_0034_07", "strength": 0.6, "rationale": "The Nov 2022 court declaration of 17 dead updates the MoD's April 2022 figure of 1 dead."}
+{"pair": "d768bd74ac0b", "relation": "none", "rationale": "War-wide dead vs a Kupiansk operation claim; different scope."}
+{"pair": "d77796a093be", "relation": "none", "rationale": "A single loss vs the war-wide Oryx total."}
+{"pair": "dbec2b40131d", "relation": "none", "rationale": "War-wide Oryx total vs one engagement."}
+{"pair": "dd15a387f174", "relation": "none", "rationale": "Kherson ground gains vs the Kharkiv operation; different operations."}

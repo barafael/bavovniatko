@@ -1,0 +1,40 @@
+{"pair": "06306b458bee", "relation": "none", "rationale": "The battalion's equipment and its commander's choice of tactics are different facts."}
+{"pair": "0633f487c3db", "relation": "duplicates", "from": "claim:cc10_0007_02", "to": "claim:cc10_0015_035", "strength": 0.85, "rationale": "Same 17 Nov 2023 announcement of several left-bank bridgeheads; B adds casualty claims and has more sources."}
+{"pair": "06433cbf56ea", "relation": "none", "rationale": "Garrison composition and Azov's commander are different facts."}
+{"pair": "068ac5b34fd8", "relation": "none", "rationale": "The breakout itself and Russia's prisoner claim are different assertions."}
+{"pair": "069ea71d7232", "relation": "none", "rationale": "A general note on Su-30 patrols over Azov does not bear on the 14 Jan 2024 shoot-down narrative."}
+{"pair": "06c991dcf376", "relation": "none", "rationale": "The Bradleys' positioning and the gunner's ammunition choice are different details."}
+{"pair": "07a56ce94ee4", "relation": "supports", "from": "claim:cc03_0031_07", "to": "claim:cc03_0022_08", "strength": 0.5, "rationale": "The marine group's move to link up with Azov supports the ~500 marines from Illich joining Azovstal; both draw on Wikipedia.", "independent": false}
+{"pair": "07b1add357d1", "relation": "duplicates", "from": "claim:cc12_0028_14", "to": "claim:cc12_0010_76", "strength": 0.8, "rationale": "Same March 2024 Ukrainian strike on the Beriev plant at Taganrog."}
+{"pair": "07f1e1f09db9", "relation": "none", "rationale": "Mine-laying after booms went up and one boom-jumping attack are different assertions."}
+{"pair": "080afd091529", "relation": "supports", "from": "claim:cv01_0003_02", "to": "claim:cv01_0017_01", "strength": 0.8, "rationale": "Both describe the Russian tank column driving down the M01 into Skybyn on the evening of 9 Mar 2022, sharing a source.", "independent": false}
+{"pair": "081f3865168d", "relation": "supports", "from": "claim:cv02_0018_04", "to": "claim:cv02_0004_10", "strength": 0.5, "rationale": "B's account of the crew running from the T-90M corroborates A's note that the crew fled, from the same TWZ article.", "independent": false}
+{"pair": "08355055f2ff", "relation": "none", "rationale": "The location of the Kotov wreck and the tanker Sig's strike point are different facts."}
+{"pair": "08b064a4b527", "relation": "none", "rationale": "A dating constraint and the gunner's ammunition choice are not in evidential relation."}
+{"pair": "08c01c86968a", "relation": "none", "rationale": "An OSM distance and the border-run narrative are not in evidential relation."}
+{"pair": "08e2ee9c1bee", "relation": "none", "rationale": "The date the works fell and a volunteer's explanation of the surrender are different assertions."}
+{"pair": "0938b90c3f93", "relation": "supports", "from": "claim:cc12_0028_10", "to": "claim:cc12_0006_03", "strength": 0.7, "rationale": "Budanov's account of a joint HUR–Air Force S-200 ambush supports Ukraine's attribution of the kill to an S-200; both are Ukrainian claims.", "independent": false}
+{"pair": "094ff92245d5", "relation": "supports", "from": "claim:cc02_0011_49", "to": "claim:cc02_0007_02", "strength": 0.7, "rationale": "The 6 May 2022 TB2 strike on a Tor is one instance of the TB2s destroying Zmiinyi's Tors in May; they share a Naval News source.", "independent": false}
+{"pair": "0965ed7e3059", "relation": "none", "rationale": "The Navy's role in the bridge strike and its non-involvement at Krynky are unrelated."}
+{"pair": "0995be1d3b1b", "relation": "duplicates", "from": "claim:cv02_0020_03", "to": "claim:cv02_0016_04", "strength": 0.75, "rationale": "The same TWZ expert view that the TOW was the expected weapon against the T-90M."}
+{"pair": "09d0159533f5", "relation": "none", "rationale": "The SBGS capture announcement and the recording of the radio reply are different facts."}
+{"pair": "09dba8354c73", "relation": "none", "rationale": "Strikes on a Tor and on a landing craft a day apart are different events."}
+{"pair": "09dc9e1f6f86", "relation": "none", "rationale": "Terrain elevations and the Pavlivka battle are not in evidential relation."}
+{"pair": "0a1358e1967a", "relation": "duplicates", "from": "claim:cc06_0032_20", "to": "claim:c02_0017_02", "strength": 0.8, "rationale": "Same Militarnyi report of a Borisoglebsk-2 captured in Kharkiv oblast in Sep 2022; topic 02 is canonical."}
+{"pair": "0a2baa1d34ad", "relation": "supports", "from": "claim:cc02_0011_62", "to": "claim:cc02_0021_17", "strength": 0.5, "rationale": "The 17 Jun 2022 Harpoon strike on the Vasily Bekh corroborates B's first combat use that day, sharing TWZ.", "independent": false}
+{"pair": "0a4c2c1d1c92", "relation": "supports", "from": "claim:cc03_0008_88", "to": "claim:cc03_0029_18", "strength": 0.6, "rationale": "The figures for wounded taken to Novoazovsk and others to Olenivka match B's walk-out account from the same source.", "independent": false}
+{"pair": "0a7f95f35eee", "relation": "none", "rationale": "Gun-transport logistics and the decision to shell the island are different facts."}
+{"pair": "0a8c001a1db8", "relation": "none", "rationale": "The force composition and the plan's aims are different facts."}
+{"pair": "0a8f69232f0d", "relation": "none", "rationale": "Gun transport and the firing rotation are different facts."}
+{"pair": "0a9f5a0597e6", "relation": "none", "rationale": "A general NLAW/Javelin issue policy and one battalion's holdings are not in evidential relation."}
+{"pair": "0b3837b531f4", "relation": "none", "rationale": "An expert's view on crew kills and the gunner's ammunition choice are different assertions."}
+{"pair": "0b81761b4d87", "relation": "supports", "from": "claim:cv02_0020_02", "to": "claim:cv02_0006_18", "strength": 0.6, "rationale": "The gunner's account of going for a mission kill supports the report that the T-90M was mission-killed.", "independent": false}
+{"pair": "0ba69fe19a42", "relation": "none", "rationale": "An OSM distance and the ambush-site description are not in evidential relation."}
+{"pair": "0bb629385690", "relation": "duplicates", "from": "claim:cc04_0036_12", "to": "claim:cc04_0009_87", "strength": 0.9, "rationale": "Same report of Tarnavskyi quietly replacing Kovalchuk in Oct 2022."}
+{"pair": "0c2b02f19639", "relation": "duplicates", "from": "claim:cc04_0009_109", "to": "claim:cc04_0005_13", "strength": 0.9, "rationale": "Same report of abandoned Russian helicopters and armour on the Kherson right bank."}
+{"pair": "0c2bc074b149", "relation": "duplicates", "from": "claim:cc12_0025_18", "to": "claim:cc12_0010_19", "strength": 0.9, "rationale": "Same Air Force statement that the Ghost of Kyiv is a collective legend of 40th Brigade pilots."}
+{"pair": "0c4a4d51be30", "relation": "supports", "from": "claim:cc04_0014_04", "to": "claim:cc04_0004_02", "strength": 0.7, "rationale": "A computed 5.9 km between the two Antonivskyi bridges corroborates the reported 6 km.", "independent": true}
+{"pair": "0c5af74d216e", "relation": "none", "rationale": "The first TB2 delivery and the 2022 fleet's equipment are different facts."}
+{"pair": "0c638aca5d93", "relation": "supports", "from": "claim:cc03_0004_13", "to": "claim:cc03_0008_44", "strength": 0.8, "rationale": "Both say part of the 36th reached Azovstal and Baraniuk was captured; they share a Wikipedia source.", "independent": false}
+{"pair": "0c7501b47d3c", "relation": "none", "rationale": "The decision to commit the second Bradley and the ammunition choice are different details."}
+{"pair": "0cd8248a6e92", "relation": "none", "rationale": "The February tally and the recall of five jets are different assertions."}

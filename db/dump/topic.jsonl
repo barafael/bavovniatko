@@ -7,3 +7,15 @@
 {"code":"06","ext":{"_hash":"bf04e892184d1840"},"file":"research/06-terrain-geodata.md","id":{"$rid":["topic","t06"]},"labels":{"en":"Terrain & geodata"}}
 {"code":"07","ext":{"_hash":"5db7187338af66d2"},"file":"research/07-maps-ui-conventions.md","id":{"$rid":["topic","t07"]},"labels":{"en":"Maps & UI conventions"}}
 {"code":"08","ext":{"_hash":"b1909c92591c63cb"},"file":"research/08-prior-art-games.md","id":{"$rid":["topic","t08"]},"labels":{"en":"Prior-art games & wargames"}}
+{"code":"c02","ext":{"_hash":"f61201e6a68e2d2d"},"file":"research/chapters/c02-snake-island-moskva.md","id":{"$rid":["topic","c02"]},"labels":{"en":"Chapter: Snake Island → the Moskva"}}
+{"code":"c03","ext":{"_hash":"edc3ea712170bb52"},"file":"research/chapters/c03-azovstal.md","id":{"$rid":["topic","c03"]},"labels":{"en":"Chapter: Azovstal"}}
+{"code":"c04","ext":{"_hash":"b6b6c6568a0b7e5b"},"file":"research/chapters/c04-kherson-antonivskyi.md","id":{"$rid":["topic","c04"]},"labels":{"en":"Chapter: Kherson and the Antonivskyi bridge"}}
+{"code":"c05","ext":{"_hash":"7d88f6d14b07fdf0"},"file":"research/chapters/c05-kerch-bridge.md","id":{"$rid":["topic","c05"]},"labels":{"en":"Chapter: The Kerch bridge"}}
+{"code":"c06","ext":{"_hash":"c04ee146c5a73a73"},"file":"research/chapters/c06-kharkiv-offensive.md","id":{"$rid":["topic","c06"]},"labels":{"en":"Chapter: Kharkiv lightning offensive"}}
+{"code":"c08","ext":{"_hash":"d5d71a16ae1e5c50"},"file":"research/chapters/c08-vuhledar.md","id":{"$rid":["topic","c08"]},"labels":{"en":"Chapter: Vuhledar"}}
+{"code":"c10","ext":{"_hash":"ea8b583921d857da"},"file":"research/chapters/c10-krynky.md","id":{"$rid":["topic","c10"]},"labels":{"en":"Chapter: Krynky bridgehead"}}
+{"code":"c12","ext":{"_hash":"dce09830a7b7eef0"},"file":"research/chapters/c12-a50-hunt.md","id":{"$rid":["topic","c12"]},"labels":{"en":"Chapter: Hunting the A-50"}}
+{"code":"c13","ext":{"_hash":"6edba9aff441e380"},"file":"research/chapters/c13-black-sea-drone-war.md","id":{"$rid":["topic","c13"]},"labels":{"en":"Chapter: The Black Sea drone war"}}
+{"code":"c17","ext":{"_hash":"caa40a55fe96eaf0"},"file":"research/chapters/c17-kupiansk-pipeline.md","id":{"$rid":["topic","c17"]},"labels":{"en":"Chapter: The Kupiansk gas-pipeline infiltration"}}
+{"code":"v01","ext":{"_hash":"566a1cde95d612db"},"file":"research/chapters/v01-brovary-ambush.md","id":{"$rid":["topic","v01"]},"labels":{"en":"Vignette: The Brovary ambush"}}
+{"code":"v02","ext":{"_hash":"3dd0056998c0eea3"},"file":"research/chapters/v02-stepove-bradley.md","id":{"$rid":["topic","v02"]},"labels":{"en":"Vignette: Bradley vs T-90M near Stepove"}}

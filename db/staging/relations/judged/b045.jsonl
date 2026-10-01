@@ -1,0 +1,40 @@
+{"pair": "2dc0c3cd5a4d", "relation": "contradicts", "from": "claim:cc10_0045_18", "to": "claim:cc10_0045_19", "strength": 0.4, "rationale": "Russian assault rate at Krynky in July 2024: 7–8 a day vs 2–4 (sometimes a dozen).", "resolution": "Different Ukrainian observers, sectors and weeks within July 2024."}
+{"pair": "3091af39c029", "relation": "none", "rationale": "Late-2023 standard warhead vs the charge of one specific Aug 2023 drone; different variant and time."}
+{"pair": "30a0e0659e2a", "relation": "none", "rationale": "Kharkiv liberated area vs Kherson area; different operations."}
+{"pair": "311a3cd1702f", "relation": "refines", "from": "claim:cc04_0028_01", "to": "claim:cc04_0025_03", "strength": 0.6, "rationale": "B is the detailed account of the 26 July 8+2 salvo that A lists in its July series."}
+{"pair": "31ff4295bebc", "relation": "supports", "from": "claim:cc10_0012_07", "to": "claim:cc10_0012_08", "strength": 0.5, "rationale": "262 dead recovered plus 788 missing is consistent with more than 1,000 feared killed at Krynky.", "independent": true}
+{"pair": "32c0ea9d5a1a", "relation": "none", "rationale": "War-wide dead vs Moskva losses; different scope."}
+{"pair": "341dbd27f8ca", "relation": "contradicts", "from": "claim:c07_0028_27", "to": "claim:cc17_0007_56", "strength": 0.6, "rationale": "Ukrainian gains in Dec 2025: 21 km² (DeepState) vs 305 km² liberated around Kupiansk (ISW).", "resolution": "ISW's control-of-terrain assessment vs DeepState's map versions; DeepState may log the Kupiansk changes later or as grey zone."}
+{"pair": "3545af76d7a3", "relation": "none", "rationale": "War-wide dead vs a Mariupol claim; different scope."}
+{"pair": "35f658e43313", "relation": "none", "rationale": "War-wide UALosses total vs the Krynky subset; different scope."}
+{"pair": "36a7231c3f97", "relation": "supports", "from": "claim:cc12_0007_15", "to": "claim:cc12_0007_16", "strength": 0.7, "rationale": "Both put the A-50 fleet at about 10 aircraft.", "independent": false}
+{"pair": "38e81c727342", "relation": "contradicts", "from": "claim:cc05_0023_02", "to": "claim:cc05_0027_04", "strength": 0.8, "rationale": "Rival accounts of the Act 1 charge: 21 t TNT-equivalent RDX vs about 10 t of rocket fuel.", "resolution": "SBU account vs Russian investigators' case file; each side has motives for its version."}
+{"pair": "39689d746e6f", "relation": "supports", "from": "claim:cc10_0049_01", "to": "claim:cc10_0037_08", "strength": 0.6, "rationale": "Both describe the shift to three-person boats for the Krynky crossings; they share a source.", "independent": false}
+{"pair": "3a33880a1d0f", "relation": "none", "rationale": "Ground-offensive gains to 7 Nov vs the total including the Russian withdrawal to 11 Nov; different scope."}
+{"pair": "3aa09556de0e", "relation": "none", "rationale": "War-wide dead vs a small Hrakove engagement; different scope."}
+{"pair": "3be45590d955", "relation": "contradicts", "from": "claim:cc13_0009_12", "to": "claim:cc13_0013_77", "strength": 0.5, "rationale": "31 Dec 2024 Magura engagement: two Mi-8s destroyed vs one downed and one hit that reached its airfield.", "resolution": "HUR's revised claim vs the initial reporting; the second helicopter's fate is uncertain."}
+{"pair": "3bed02ade97e", "relation": "none", "rationale": "Kupiansk pipeline vs Avdiivka pipe; different routes."}
+{"pair": "3d26bd29ff63", "relation": "none", "rationale": "War-wide dead vs Moskva anecdote; different scope."}
+{"pair": "3d29245d59ba", "relation": "none", "rationale": "War-wide dead vs a Kherson-front monthly claim; different scope."}
+{"pair": "3dde8c6d7d23", "relation": "refines", "from": "claim:cc04_0009_13", "to": "claim:cc04_0025_03", "strength": 0.6, "rationale": "A is the detailed account of the 26 July 8+2 salvo that B lists in its July series."}
+{"pair": "3e46fb3ff689", "relation": "contradicts", "from": "claim:cc05_0023_02", "to": "claim:cc05_0041_03", "strength": 0.8, "rationale": "Rival accounts of the Act 1 charge: 21 t TNT-equivalent RDX vs about 10 t of rocket fuel.", "resolution": "SBU account vs Russian investigators' case file."}
+{"pair": "3e5c5308a7a0", "relation": "none", "rationale": "War-wide dead vs a Krynky bridgehead claim; different scope."}
+{"pair": "40129877b068", "relation": "contradicts", "from": "claim:cc02_0023_04", "to": "claim:cc02_0023_05", "strength": 0.6, "rationale": "Moskva crew size: 485 vs 510.", "resolution": "Different sources (Lithuanian vs US); nominal complement vs crew embarked."}
+{"pair": "42185ffff57a", "relation": "contradicts", "from": "claim:c06_0038_46", "to": "claim:cc17_0012_06", "strength": 0.4, "rationale": "Length of the Kupiansk pipeline route: about 10 km vs 15 km.", "resolution": "Possibly different measures: the walk inside the pipe vs the full run from the Russian rear."}
+{"pair": "42b4790996b1", "relation": "none", "rationale": "War-wide CSIS estimate vs a Vuhledar names floor; different scope."}
+{"pair": "438a3864ec0a", "relation": "none", "rationale": "Kupiansk pipeline vs Avdiivka pipe; different routes."}
+{"pair": "44743d7f7d0a", "relation": "none", "rationale": "War-wide CSIS estimate vs a Vuhledar names floor; different scope."}
+{"pair": "45200a515de8", "relation": "none", "rationale": "A single-day claim vs the war-wide Oryx total."}
+{"pair": "4522fe267770", "relation": "none", "rationale": "War-wide dead vs Moskva court figure; different scope."}
+{"pair": "452c191ebb19", "relation": "none", "rationale": "Kupiansk pipeline vs Avdiivka pipe; different routes."}
+{"pair": "45d046dea9bf", "relation": "contradicts", "from": "claim:cc12_0007_12", "to": "claim:cc12_0007_16", "strength": 0.5, "rationale": "Operational A-50s in Jan 2024: 8 vs about 5.", "resolution": "UKDI may count airworthy airframes, while TWZ counts those available at any one time."}
+{"pair": "460cb6580f18", "relation": "contradicts", "from": "claim:cc02_0011_43", "to": "claim:cc02_0011_44", "strength": 0.9, "rationale": "Moskva crew rescued: 396 vs 58.", "resolution": "Russian MoD vs Ukrainian NSDC claims; each side has motives."}
+{"pair": "476f60bdc778", "relation": "refines", "from": "claim:cc05_0023_07", "to": "claim:cc05_0006_17", "strength": 0.7, "rationale": "B specifies the 1,100 kg figure in A as two charges of 1,100 kg each, laid by SBU agents."}
+{"pair": "47d3105f6c53", "relation": "none", "rationale": "War-wide dead vs a single train-strike claim; different scope."}
+{"pair": "48c74c96502e", "relation": "refines", "from": "claim:cc03_0035_03", "to": "claim:cc03_0004_04", "strength": 0.6, "rationale": "B isolates and attributes to Shoigu the Russian claim of more than 8,000 that A cites."}
+{"pair": "48ff2452d10b", "relation": "contradicts", "from": "claim:cc02_0009_13", "to": "claim:cc02_0034_07", "strength": 0.9, "rationale": "Moskva crew rescued: 58 vs 396.", "resolution": "Ukrainian NSDC vs Russian MoD claims; each side has motives."}
+{"pair": "4a353d52404d", "relation": "none", "rationale": "Kharkiv liberated area vs Kherson area; different operations."}
+{"pair": "4b322bb4b9cf", "relation": "contradicts", "from": "claim:cc12_0015_17", "to": "claim:cc12_0015_18", "strength": 0.5, "rationale": "Distance of the 23 Feb 2024 A-50 kill: about 220 km vs about 300 km.", "resolution": "TWZ measures from the nearest Ukrainian positions; the Russian court may have an interest in exaggerating."}
+{"pair": "4bc0ab76d925", "relation": "supports", "from": "claim:cc06_0010_09", "to": "claim:c00_0074_06", "strength": 0.7, "rationale": "Zaluzhnyi's more than 10,000 km² is consistent with Ukraine's claim of 12,000 km² for the Kharkiv operation.", "independent": false}
+{"pair": "4be0fea49c92", "relation": "none", "rationale": "War-wide dead vs a single Vuhledar claim; different scope."}
+{"pair": "4daf4fd44bdb", "relation": "refines", "from": "claim:cc03_0022_03", "to": "claim:cc03_0004_04", "strength": 0.6, "rationale": "B isolates the Russian claim of 8,000 or more that A cites alongside the Ukrainian estimate."}

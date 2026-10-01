@@ -1,0 +1,40 @@
+{"pair": "b07eeb6d67ab", "relation": "supports", "from": "claim:cc13_0016_09", "to": "claim:cc13_0013_37", "strength": 0.5, "independent": false, "rationale": "B's description of Chornomorske as where Maguras hit the Serna and Akula in November 2023 echoes A's HUR account."}
+{"pair": "b0c8c21508d8", "relation": "supports", "from": "claim:cc10_0015_016", "to": "claim:cc10_0033_01", "strength": 0.6, "independent": false, "rationale": "The Katran group's formation under Sodol in September 2023 corroborates its command of the Krynky operation; shared Pravda source."}
+{"pair": "b13e203bb86c", "relation": "duplicates", "from": "claim:cc08_0048_01", "to": "claim:cc08_0010_008", "strength": 0.85, "rationale": "Same Khodakovsky remark that the Pavlivka offensive was \"premature\", from the same ISW report."}
+{"pair": "b1543fdee3ff", "relation": "duplicates", "from": "claim:cv02_0003_10", "to": "claim:cv02_0018_04", "strength": 0.8, "rationale": "Both report the crew bailing out and an FPV drone finishing the T-90M; B adds detail; same source."}
+{"pair": "b19a1996e86d", "relation": "refines", "from": "claim:cc08_0045_01", "to": "claim:cc08_0006_01", "strength": 0.7, "rationale": "B gives the fuller account of the late-October Pavlivka attack by the two naval infantry brigades that A reports."}
+{"pair": "b20d9eb84615", "relation": "supports", "from": "claim:cc17_0013_01", "to": "claim:cc17_0003_05", "strength": 0.6, "independent": true, "rationale": "The OSM-mapped gas line passing near Lyman Pershyi and Radkivka corroborates A's account of the pipeline infiltration route."}
+{"pair": "b259b67a3604", "relation": "duplicates", "from": "claim:cc02_0007_05", "to": "claim:cc02_0011_62", "strength": 0.85, "rationale": "Same Harpoon sinking of the Vasily Bekh on 17 June 2022; B adds the Tor cargo and has more sources."}
+{"pair": "b2d4fbbbb8ee", "relation": "refines", "from": "claim:cc13_0016_13", "to": "claim:cc13_0009_04", "strength": 0.6, "rationale": "B locates the reported Sergey Kotov wreck off Cape Takil, 21 km from the Kerch Strait, refining A's \"near the Kerch Strait\"."}
+{"pair": "b2f322c60b08", "relation": "none", "rationale": "Starting positions and a casualty event are different assertions."}
+{"pair": "b32bc0433496", "relation": "duplicates", "from": "claim:cv02_0004_02", "to": "claim:cv02_0018_04", "strength": 0.8, "rationale": "Both report the T-90M crew fleeing; B is the fuller account from the same source."}
+{"pair": "b33f9362693b", "relation": "duplicates", "from": "claim:cv01_0012_04", "to": "claim:cv01_0007_07", "strength": 0.85, "rationale": "Same description of the column of tanks, self-propelled artillery and TOS-1 without infantry; A has more sources."}
+{"pair": "b39a351c2e01", "relation": "none", "rationale": "A ferry sighting and the site's coordinates; context only."}
+{"pair": "b3e92d8dccfe", "relation": "refines", "from": "claim:cc03_0029_13", "to": "claim:cc03_0005_05", "strength": 0.6, "rationale": "B details the first UN/ICRC convoy of 29 April – 3 May within A's 30 April – 7 May evacuation window."}
+{"pair": "b3f202cf85ef", "relation": "none", "rationale": "A milblogger advance claim and a river's course are unrelated assertions."}
+{"pair": "b40174a79624", "relation": "supports", "from": "claim:cv02_0006_21", "to": "claim:cv02_0020_02", "strength": 0.4, "independent": true, "rationale": "The video of the T-90M spinning and fleeing is consistent with the gunner's choice of a mission kill."}
+{"pair": "b438f30b2222", "relation": "none", "rationale": "Who carried the air defence and how low pilots flew are different assertions."}
+{"pair": "b45041bfd695", "relation": "supports", "from": "claim:cc13_0013_14", "to": "claim:cc13_0017_01", "strength": 0.5, "independent": true, "rationale": "A USV being stopped by the Sevastopol boom on 22 March 2023 is an instance of the harbour defences B describes."}
+{"pair": "b46e96b8dc49", "relation": "supports", "from": "claim:cv01_0012_01", "to": "claim:cv01_0003_02", "strength": 0.6, "independent": false, "rationale": "B places the 6th Guards Tank Regiment of the 90th Division at Brovary, consistent with A's column; shared Wikipedia source."}
+{"pair": "b48ec762aebf", "relation": "none", "rationale": "The gunner's account and an expert's remark on TOW doctrine are different assertions."}
+{"pair": "b4eae37691a6", "relation": "none", "rationale": "Clearing operations and a loss claim are different assertions."}
+{"pair": "b500e0d8997b", "relation": "none", "rationale": "The gunner's account and an expert's general remark on the 25 mm are different assertions."}
+{"pair": "b58d1740d355", "relation": "none", "rationale": "Taking Poima and Iskander strikes at the rail bridge are different events."}
+{"pair": "b5995ffab1cf", "relation": "supports", "from": "claim:cc06_0012_01", "to": "claim:cc06_0004_02", "strength": 0.5, "independent": false, "rationale": "Syrskyi's spring 2022 idea of a blow north of Balakliia and Izium is consistent with the concept in A; same WaPo source."}
+{"pair": "b5df43258cad", "relation": "none", "rationale": "A video appeal and a command fact are different assertions."}
+{"pair": "b62b97cd43a7", "relation": "none", "rationale": "Neptune problems in February and the April hit on the Moskva are different events."}
+{"pair": "b686d6c5cee5", "relation": "supports", "from": "claim:cv02_0003_07", "to": "claim:cv02_0004_01", "strength": 0.5, "independent": false, "rationale": "Serhiy's 25 mm fire into the T-90M's rear is part of the 25 mm mission kill in B; shared TWZ source."}
+{"pair": "b72edf9aa88a", "relation": "none", "rationale": "A strike on ferries and the site's coordinates; context only."}
+{"pair": "b76a1d6f09d9", "relation": "supports", "from": "claim:cc02_0030_01", "to": "claim:cc02_0005_01", "strength": 0.5, "independent": false, "rationale": "The garrison ignoring a day of offers and threats matches A's day-long surrender demands; same source."}
+{"pair": "b7a5e07d0c54", "relation": "duplicates", "from": "claim:cc13_0008_05", "to": "claim:cc13_0013_81", "strength": 0.85, "rationale": "Same 2 May 2025 downing of a Su-30SM by Magura V7-launched AIM-9s; B has more sources."}
+{"pair": "b7ae532c542f", "relation": "none", "rationale": "A cumulative loss count and early-war skirmishes are different quantities."}
+{"pair": "b7ccc1e107f8", "relation": "none", "rationale": "Starting footholds and the staged withdrawal are different assertions."}
+{"pair": "b7de8dd1ef27", "relation": "none", "rationale": "Ship specifications and the attack event; context only."}
+{"pair": "b8736ebd82be", "relation": "none", "rationale": "A basing/role fact and a specific loss event are different assertions."}
+{"pair": "b89a6e151f92", "relation": "none", "rationale": "Ukraine's fighter types and early skirmishes; context only."}
+{"pair": "b8d0cbe0ce04", "relation": "refines", "from": "claim:cc13_0035_12", "to": "claim:cc13_0009_04", "strength": 0.6, "rationale": "B details the 5 March 2024 Kotov attack (five hits, failed tow) that A records as a sinking."}
+{"pair": "b8e74fca0b7d", "relation": "supports", "from": "claim:cv02_0006_18", "to": "claim:cv02_0003_05", "strength": 0.6, "independent": false, "rationale": "B's account of a T-90M fighting two Bradleys at Stepove corroborates A's; overlapping TWZ reporting."}
+{"pair": "b8eda0a8b789", "relation": "supports", "from": "claim:cv01_0007_12", "to": "claim:cv01_0003_04", "strength": 0.6, "independent": false, "rationale": "Darmohrai's account of the 1st and 3rd Battalions fighting at Skybyn corroborates A; shared Wikipedia source."}
+{"pair": "b93b5e631eb6", "relation": "none", "rationale": "A locational fact and a volunteer's explanation for the surrender; context only."}
+{"pair": "b96675c07bc2", "relation": "refines", "from": "claim:cc13_0016_13", "to": "claim:cc13_0009_05", "strength": 0.7, "rationale": "B geolocates the insider-reported Sergey Kotov wreck off Cape Takil."}
+{"pair": "b96b1c8797ba", "relation": "none", "rationale": "A loss claim and the start date of the operation are different assertions."}

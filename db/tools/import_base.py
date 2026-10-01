@@ -123,7 +123,9 @@ class Writer:
         if ex.get(key) == h:
             self.stats[f"{table}:unchanged"] += 1
             return
-        kb.run(self.conn, "UPSERT $id CONTENT $data", {"id": rid, "data": data})
+        # MERGE, not CONTENT: records such as actors are shared with the curated entity registry (load.py),
+        # so an import must never wipe fields it does not own
+        kb.run(self.conn, "UPSERT $id MERGE $data", {"id": rid, "data": data})
         self.stats[f"{table}:{'updated' if key in ex else 'created'}"] += 1
         ex[key] = h
 
@@ -158,8 +160,9 @@ def era_rid(code: str):
 
 
 def topic_rid(code: str):
-    m = re.match(r"(\d\d)", str(code))
-    return kb.rid("topic", f"t{m[1]}") if m else None
+    """'03', '03-fires-air', 'c02-snake-island-moskva' -> topic record id."""
+    m = re.match(r"((?:\d\d|[cv]\d\d))(?:-|$)", str(code))
+    return kb.rid("topic", kb.topic_key(m[1])) if m else None
 
 
 # --- sources & actors -------------------------------------------------------------------------------
@@ -189,7 +192,10 @@ def load_sources(w: Writer, paths: list[Path] | None = None) -> dict[str, str]:
         s.setdefault("_input", "research/sources.yaml")
         for a in s.get("authors") or []:
             people[kb.slug(a)] = a
+    known = {kb.rid_str(r) for r in kb.one(w.conn, "SELECT VALUE id FROM actor")}
     for name, info in pubs.items():
+        if kb.rid_str(kb.rid("actor", kb.slug(name))) in known and paths:
+            continue                                   # existing actors belong to the curated registry; don't re-guess them
         kind = ACTOR_KIND_FOR_SOURCE.get(pub_types[name].most_common(1)[0][0], "organisation")
         side = SIDE_FOR_ORIGIN[pub_origin[name].most_common(1)[0][0]]
         w.put(kb.rid("actor", kb.slug(name)), {
@@ -198,6 +204,8 @@ def load_sources(w: Writer, paths: list[Path] | None = None) -> dict[str, str]:
     for sl, name in people.items():
         if kb.slug(name) in {kb.slug(p) for p in pubs}:
             continue                                            # an "author" that is really the organisation
+        if kb.rid_str(kb.rid("actor", sl)) in known and paths:
+            continue
         w.put(kb.rid("actor", sl), {"labels": labels(name), "kind": kb.rid("kind", ["actor", "person"]),
                                     "prov": prov("research/sources.yaml")})
 
@@ -257,26 +265,61 @@ def load_terms(w: Writer):
 
 # --- passages, questions, design notes ------------------------------------------------------------
 
+MEDIA_KIND = [("satellite", "satellite_image"), ("video", "video"), ("footage", "video"), ("clip", "video"),
+              ("photo", "image"), ("image", "image"), ("map", "map"), ("dataset", "dataset"), ("audio", "audio"),
+              ("radio", "audio"), ("recording", "audio"), ("document", "document"), ("report", "document")]
+
+
+_MEDIA_SEEN: set[str] = set()
+
+
+def load_media_table(w: Writer, b, rel: str, legacy: dict[str, str]):
+    """Rows of a dossier's Media table -> media records (links + metadata only)."""
+    header, rows = mdparse.table_rows(b)
+    cols = [h.lower() for h in header]
+    for cells in rows:
+        row = dict(zip(cols, cells))
+        url = next((re.search(r"https?://[^\s)>|]+", c)[0] for c in cells if re.search(r"https?://", c)), None)
+        if not url:
+            continue
+        kind_txt = (row.get("kind") or "").lower()
+        kind = next((k for word, k in MEDIA_KIND if word in kind_txt), "web_page")
+        rec = {"url": url, "kind": kb.rid("kind", ["media", kind]), "title": row.get("what") or None,
+               "description": " · ".join(x for x in (row.get("what"), row.get("kind"), row.get("publisher"), row.get("date")) if x),
+               "licence": row.get("licence or terms if known") or row.get("licence") or None,
+               "prov": prov(rel), "ext": {"document": rel, "date_raw": row.get("date"), "publisher_raw": row.get("publisher")}}
+        sids = mdparse.src_ids(" ".join(cells))
+        if sids and sids[0] in legacy:
+            rec["found_via"] = kb.rid("source", legacy[sids[0]])
+        mid = kb.rid("media", hashlib.sha1(url.encode()).hexdigest()[:16])
+        if kb.rid_str(mid) in _MEDIA_SEEN:
+            continue                                   # the same link listed by several dossiers: first one wins
+        _MEDIA_SEEN.add(kb.rid_str(mid))
+        w.put(mid, {k: v for k, v in rec.items() if v is not None})
+
+
 def load_documents(w: Writer, legacy: dict[str, str]):
     unknown = Counter()
-    for f in sorted(kb.RESEARCH.glob("0[0-9]-*.md")):
-        code = f.name[:2]
-        topic = kb.rid("topic", f"t{code}")
-        rel = f"research/{f.name}"
+    for f in kb.documents():
+        code = kb.doc_code(f)
+        topic = kb.rid("topic", kb.topic_key(code))
+        rel = str(f.relative_to(kb.REPO))
         for b in mdparse.blocks(f):
             for sid in mdparse.src_ids(b.text):
                 if sid not in legacy:
                     unknown[sid] += 1
-            w.put(kb.rid("passage", f"t{code}_{b.order:04d}"), {
+            w.put(kb.rid("passage", f"{kb.topic_key(code)}_{b.order:04d}"), {
                 "key": f"{code}/{b.order:04d}", "topic": topic, "section": b.section or "(preamble)",
                 "level": b.level, "order": b.order, "role": b.role, "markdown": b.text,
                 "prov": prov(rel), "ext": {"tight": b.tight}})
             table = mdparse.meta_section(b.top)
+            if b.role == "table" and table == "media":
+                load_media_table(w, b, rel, legacy)
             if b.role == "list" and table in ("question", "design_note"):
                 for i, item in enumerate(mdparse.list_items(b)):
                     key = f"{code}/{b.order:04d}/{i:02d}"
                     anchor = {"file": rel, "section": b.section, "order": b.order, "local_id": key}
-                    w.put(kb.rid(table, f"t{code}_{b.order:04d}_{i:02d}"), {
+                    w.put(kb.rid(table, f"{kb.topic_key(code)}_{b.order:04d}_{i:02d}"), {
                         "key": key, "text": mdparse.strip_bullet(item), "topics": [topic],
                         "eras": [era_rid(e) for e in sorted(set(re.findall(r"\be[1-9][ab]?\b", item)))],
                         "anchor": anchor, "prov": prov(rel)})

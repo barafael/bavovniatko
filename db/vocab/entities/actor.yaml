@@ -453,6 +453,7 @@
   en: Government of Ukraine
   aliases:
   - Ukrainian government
+  - Ukraine
   side: ua
   note: The Ukrainian state/executive in general; the formal cabinet is actor:cabinet_of_ministers_of_ukraine.
 - id: actor:ministry_of_digital_transformation_of_ukraine
@@ -534,6 +535,10 @@
   type: actor
   kind: intelligence_agency
   en: Ukrainian intelligence
+  aliases:
+  - Ukrainian intelligence sources
+  - source close to Ukrainian intelligence
+  - Ukrainska Pravda sources in HUR
   side: ua
   note: generic
 - id: actor:armed_forces_of_ukraine
@@ -592,6 +597,10 @@
   en: Special Operations Forces of Ukraine (SSO)
   aliases:
   - SSO
+  - Special Operations Forces (Ukraine)
+  - Ukrainian Special Operations Forces
+  - Special Operations Forces
+  - Ukrainian SOF
   parent: actor:armed_forces_of_ukraine
   side: ua
   note: Ukrainian SSO (in Operation Vivaldi context).
@@ -669,6 +678,7 @@
   - 414th Brigade "Birds of Madyar"
   - Madyar's Birds
   - 414th brigade
+  - 414th strike UAV unit
   parent: actor:unmanned_systems_forces
   side: ua
   note: Drone unit founded by Robert 'Magyar' Brovdi.
@@ -725,6 +735,9 @@
   - Tavriisk grouping
   - Tavria group
   - OSG Tavria
+  - Tavriia OSG
+  - Tavriia operational direction
+  - Tavriia operational-strategic group
   side: ua
 - id: actor:ua_47th_mechanised_brigade
   type: actor
@@ -749,6 +762,8 @@
   type: actor
   kind: military_unit
   en: 81st Brigade
+  aliases:
+  - 81st Airmobile Brigade
   side: ua
 - id: actor:ua_37th_marine_brigade
   type: actor
@@ -759,6 +774,9 @@
   type: actor
   kind: military_unit
   en: 425th Assault Regiment
+  aliases:
+  - 425th Assault Regiment 'Skelia'
+  - Skelia
   side: ua
 - id: actor:ua_102nd_territorial_defence_brigade
   type: actor
@@ -857,6 +875,7 @@
   - Biletsky
   - Biletskyi
   - Andrii Biletskyi
+  - Andriy Biletskyi
   side: ua
   note: Commander of the 3rd Army Corps (earlier 3rd Assault Brigade).
 - id: actor:lasiichuk
@@ -888,6 +907,7 @@
   en: Andrii Yusov
   aliases:
   - Yusov
+  - Andriy Yusov
   side: ua
   note: HUR spokesman.
 - id: actor:yurii_ihnat
@@ -914,7 +934,6 @@
   kind: person
   en: Kostiantyn Humeniuk
   aliases:
-  - Humeniuk
   - chief surgeon of the Medical Forces
   side: ua
   note: Chief surgeon of the Medical Forces of the Armed Forces of Ukraine (2025).
@@ -933,6 +952,9 @@
   aliases:
   - Tavria group commander
   - Tavria commander
+  - Oleksandr Tarnavsky
+  - Tarnavskyi
+  - Tarnavsky
   side: ua
   note: Commander of the Tavria operational-strategic group during the Avdiivka battle (2023–24).
 - id: actor:valeriy_shershen
@@ -1176,6 +1198,7 @@
   - Russia
   - Russian government
   - Kremlin
+  - Russian authorities
   side: ru
 - id: actor:russian_ministry_of_defence
   type: actor
@@ -1288,6 +1311,10 @@
   type: actor
   kind: military_unit
   en: Akhmat
+  aliases:
+  - Chechen units
+  - Chechen fighters
+  - Chechen forces
   side: ru
   note: Chechen Akhmat formations.
 - id: actor:ru_western_group_of_forces
@@ -1429,6 +1456,7 @@
   en: UK Government
   aliases:
   - British government
+  - United Kingdom
   side: western
 - id: actor:uk_ministry_of_defence
   type: actor
@@ -1632,7 +1660,11 @@
   type: actor
   kind: company
   en: Maxar
+  aliases:
+  - Maxar Technologies
+  - Vantor
   side: western
+  note: Maxar Technologies; its intelligence business was renamed Vantor in 2025.
 - id: actor:lockheed_martin
   type: actor
   kind: company
@@ -2014,6 +2046,8 @@
   - Ukrainian officials
   - senior Ukrainian official
   - a Ukrainian official
+  - General Staff sources
+  - Rada defence committee sources
   side: ua
   note: generic
 - id: actor:ukrainian_commanders_unnamed
@@ -2030,6 +2064,18 @@
   - Ukrainian USF brigade commander
   - Ukrainian battalion commander
   - a Ukrainian commander
+  - Ukrainian officer
+  - Ukrainian reserve officer
+  - Ukrainian marine officer
+  - Ukrainian brigade commander
+  - Ukrainian commander (Kherson operation)
+  - Ukrainian drone-regiment commander
+  - Ukrainian regiment commander
+  - Ukrainian regimental commander
+  - Ukrainian platoon commander
+  - 35th Marine Brigade company commander
+  - 72nd Mechanised Brigade commander (2024)
+  - Khartiia officers
   side: ua
   note: generic
 - id: actor:ukrainian_soldier_unnamed
@@ -2040,6 +2086,11 @@
   - a Ukrainian soldier
   - Ukrainian soldiers
   - ground sources
+  - Ukrainian soldier
+  - Wounded Ukrainian soldier
+  - Wounded Ukrainian soldiers
+  - Ukrainian reconnaissance soldier
+  - 72nd Mechanised Brigade soldier
   side: ua
   note: generic
 - id: actor:ukrainian_forces_unnamed
@@ -2054,6 +2105,7 @@
   - Ukrainian brigade
   - Ukrainian forces
   - Skynex battery crew
+  - Ukrainian marines
   side: ua
   note: generic
 - id: actor:ukrainian_experts_unnamed
@@ -2085,6 +2137,16 @@
   aliases:
   - Russian sources
   - Russian authors
+  - Russian MoD sources
+  - Russian source
+  - Russian insider
+  - self-described Russian security insider
+  - unofficial Russian sources
+  - pro-Kremlin sources
+  - pro-Russian sources
+  - Russian commentators
+  - Russian analyst
+  - Meduza's Black Sea Fleet source
   side: ru
   note: generic
 - id: actor:russian_industry_unnamed
@@ -2104,6 +2166,16 @@
   aliases:
   - Russian Telegram channels
   - Russian milblogger
+  - Russian blogger
+  - Russian naval blogger
+  - pro-Russian blogger
+  - Kremlin-affiliated milblogger
+  - Kremlin-affiliated milbloggers
+  - Russian tank milblogger
+  - pro-Kremlin Telegram channel
+  - pro-Russian Telegram channels
+  - Wagner-linked Telegram channel
+  - Lost Armour moderator
   side: ru
   note: generic
 - id: actor:russian_pows_unnamed
@@ -2113,6 +2185,7 @@
   aliases:
   - Russian prisoners of war
   - Russian POWs
+  - captured Russian marine
   side: ru
   note: generic
 - id: actor:us_officials_unnamed
@@ -2121,6 +2194,7 @@
   en: US officials (unnamed)
   aliases:
   - US officials
+  - US officer
   side: western
   note: generic
 - id: actor:western_officials_unnamed
@@ -2145,6 +2219,11 @@
   - analysts and mappers
   - OSINT tally
   - analyst (Ukrinform)
+  - Ukrainian OSINT
+  - Western analysts
+  - outside expert
+  - unnamed observers (RFE/RL)
+  - US aviation veteran
   side: other
   note: generic
 - id: actor:wikipedia_editors
@@ -2153,6 +2232,7 @@
   en: Wikipedia editors
   aliases:
   - Wikipedia editor
+  - Wikipedia
   side: international
   note: generic
 - id: actor:game_critic_unnamed
@@ -2161,4 +2241,3234 @@
   en: Game critic (unnamed)
   aliases:
   - critic quoted on the Death From Above store page
+  note: generic
+- id: actor:ua_ground_forces
+  type: actor
+  kind: armed_force
+  en: Ukrainian Ground Forces
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+- id: actor:ua_army_aviation
+  type: actor
+  kind: armed_force
+  en: Ukrainian Army Aviation
+  parent: actor:ua_ground_forces
+  side: ua
+  note: Army Aviation of the Ukrainian Ground Forces (Mi-8/Mi-24 crews).
+- id: actor:ua_marine_corps
+  type: actor
+  kind: armed_force
+  en: Ukrainian Marine Corps
+  parent: actor:ukrainian_navy
+  side: ua
+  note: Created 2023 within the Navy; commanded by Lt Gen Yurii Sodol during the Krynky operation.
+- id: actor:ua_territorial_defence_forces
+  type: actor
+  kind: armed_force
+  en: Territorial Defence Forces
+  aliases:
+  - TDF
+  - Ukrainian Territorial Defence Forces
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+- id: actor:ua_state_border_guard_service
+  type: actor
+  kind: armed_force
+  en: State Border Guard Service of Ukraine
+  aliases:
+  - SBGS
+  - State Border Guard
+  - Ukrainian border guards
+  parent: actor:defence_forces_of_ukraine
+  side: ua
+- id: actor:ua_izmail_border_detachment
+  type: actor
+  kind: military_unit
+  en: Izmail Border Detachment
+  parent: actor:ua_state_border_guard_service
+  side: ua
+  note: Its post held Zmiinyi Island on 24 Feb 2022.
+- id: actor:ua_military_law_enforcement_service
+  type: actor
+  kind: armed_force
+  en: Military Law Enforcement Service
+  aliases:
+  - Military Law Enforcement
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+  note: Ukrainian military police.
+- id: actor:ua_supreme_military_command
+  type: actor
+  kind: government_body
+  en: Supreme Military Command of Ukraine
+  side: ua
+  note: Ukrainian high command that ordered the Mariupol commanders to save their men (16 May 2022).
+- id: actor:ua_operational_command_south
+  type: actor
+  kind: military_unit
+  en: Operational Command South
+  aliases:
+  - OC South
+  - Southern Command
+  - Ukraine's Southern Command
+  - Operational Command "South"
+  parent: actor:ua_ground_forces
+  side: ua
+  note: Ukrainian Ground Forces operational command for the south; spokesperson Natalia Humeniuk.
+- id: actor:ua_defence_forces_of_the_south
+  type: actor
+  kind: armed_force
+  en: Defence Forces of the South
+  aliases:
+  - Southern Defence Forces
+  - Southern Defense Forces
+  side: ua
+  note: Ukrainian joint grouping in the south (led by the OC South commander); spokespeople Humeniuk, then Pletenchuk.
+- id: actor:ua_osg_dnipro
+  type: actor
+  kind: military_unit
+  en: Dnipro Operational-Strategic Group
+  aliases:
+  - Dnipro group
+  - OSG Dnipro
+  side: ua
+- id: actor:ua_kakhovka_operational_group
+  type: actor
+  kind: military_unit
+  en: Kakhovka operational group
+  side: ua
+  note: Ukrainian grouping in the northern sector of the Kherson front (2022).
+- id: actor:ua_joint_forces_kharkiv
+  type: actor
+  kind: military_unit
+  en: Joint Forces in Kharkiv Oblast
+  side: ua
+  note: Ukrainian joint command in Kharkiv Oblast; taken over by Mykhailo Drapatyi in Oct 2025.
+- id: actor:ua_kupiansk_tactical_group
+  type: actor
+  kind: military_unit
+  en: Kupiansk Tactical Group
+  parent: actor:ua_joint_forces_kharkiv
+  side: ua
+  note: Under Brig. Gen. Viktor Solimchuk (from Sep 2025), under Drapatyi.
+- id: actor:ua_katran_group
+  type: actor
+  kind: military_unit
+  en: Katran operational-tactical group
+  aliases:
+  - Katran group
+  - Katran
+  parent: actor:ua_marine_corps
+  side: ua
+  note: Temporary Marine Corps group that ran the Krynky operation (formed Sep 2023 under Yurii Sodol).
+- id: actor:ua_10th_army_corps
+  type: actor
+  kind: military_unit
+  en: 10th Army Corps
+  aliases:
+  - Ukrainian 10th Army Corps
+  side: ua
+  note: Ukrainian corps defending Kupiansk (Brig. Gen. Serhii Perets).
+- id: actor:ua_35th_marine_brigade
+  type: actor
+  kind: military_unit
+  en: 35th Marine Brigade
+  aliases:
+  - 35th Brigade (marines)
+  parent: actor:ua_marine_corps
+  side: ua
+- id: actor:ua_36th_marine_brigade
+  type: actor
+  kind: military_unit
+  en: 36th Marine Brigade
+  parent: actor:ua_marine_corps
+  side: ua
+  note: Navy marine brigade; at Mariupol 2022 under Col Volodymyr Baraniuk, then Maj Serhii Volynskyi; later at Krynky.
+- id: actor:ua_38th_marine_brigade
+  type: actor
+  kind: military_unit
+  en: 38th Marine Brigade
+  parent: actor:ua_marine_corps
+  side: ua
+  note: Formed 2023, UK-trained, led by Yevhen Bova.
+- id: actor:ua_501st_marine_battalion
+  type: actor
+  kind: military_unit
+  en: 501st Marine Battalion
+  parent: actor:ua_36th_marine_brigade
+  side: ua
+- id: actor:ua_503rd_marine_battalion
+  type: actor
+  kind: military_unit
+  en: 503rd Marine Battalion
+  parent: actor:ua_36th_marine_brigade
+  side: ua
+- id: actor:ua_grifon501
+  type: actor
+  kind: military_unit
+  en: Grifon501
+  parent: actor:ua_501st_marine_battalion
+  side: ua
+  note: Drone unit of the 501st Marine Battalion.
+- id: actor:ua_137th_marine_battalion
+  type: actor
+  kind: military_unit
+  en: 137th Marine Battalion
+  parent: actor:ua_35th_marine_brigade
+  side: ua
+- id: actor:ua_88th_marine_battalion
+  type: actor
+  kind: military_unit
+  en: 88th Marine Battalion
+  parent: actor:ua_35th_marine_brigade
+  side: ua
+- id: actor:ua_18th_marine_battalion
+  type: actor
+  kind: military_unit
+  en: 18th Marine Battalion
+  parent: actor:ua_35th_marine_brigade
+  side: ua
+- id: actor:ua_505th_marine_battalion
+  type: actor
+  kind: military_unit
+  en: 505th Marine Battalion
+  parent: actor:ua_37th_marine_brigade
+  side: ua
+- id: actor:ua_37th_marine_brigade_2nd_battalion
+  type: actor
+  kind: military_unit
+  en: 2nd Battalion, 37th Marine Brigade
+  parent: actor:ua_37th_marine_brigade
+  side: ua
+- id: actor:ua_385th_naval_unmanned_systems_brigade
+  type: actor
+  kind: military_unit
+  en: 385th Separate Brigade of Special-Purpose Naval Unmanned Systems
+  aliases:
+  - 385th Separate Brigade
+  parent: actor:ukrainian_navy
+  side: ua
+  note: First USV unit (Aug 2023), staffed mostly by HUR and SBU operators; later under the Unmanned Systems Forces.
+- id: actor:ua_73rd_naval_special_operations_centre
+  type: actor
+  kind: military_unit
+  en: 73rd Naval Special Operations Centre
+  aliases:
+  - 73rd Naval SOF Centre
+  - 73rd Naval Centre
+  parent: actor:ua_special_operations_forces
+  side: ua
+- id: actor:ua_406th_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 406th Artillery Brigade
+  side: ua
+  note: Ukrainian artillery brigade blamed by a Russian court for the Moskva sinking (commander Andrii Shubin).
+- id: actor:ua_72nd_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 72nd Mechanised Brigade
+  aliases:
+  - 72nd Mechanized Brigade
+  - 72nd Separate Mechanised Brigade
+  - Black Zaporozhians
+  side: ua
+  note: '"Black Zaporozhians"; Brovary 2022, Vuhledar 2022–24 (Col. Ivan Vinnyk from summer 2022).'
+- id: actor:ua_72nd_brigade_1st_mechanised_battalion
+  type: actor
+  kind: military_unit
+  en: 1st Mechanised Battalion, 72nd Mechanised Brigade
+  aliases:
+  - 1st Mechanised Battalion (72nd Brigade)
+  parent: actor:ua_72nd_mechanised_brigade
+  side: ua
+- id: actor:ua_72nd_brigade_3rd_mechanised_battalion
+  type: actor
+  kind: military_unit
+  en: 3rd Mechanised Battalion, 72nd Mechanised Brigade
+  aliases:
+  - 3rd Mechanised Battalion (72nd Brigade)
+  parent: actor:ua_72nd_mechanised_brigade
+  side: ua
+  note: Commanded by Maj. Roman Darmohrai at Brovary (Mar 2022).
+- id: actor:ua_92nd_brigade
+  type: actor
+  kind: military_unit
+  en: 92nd Mechanised Brigade
+  aliases:
+  - 92nd Brigade
+  - 92nd Assault Brigade
+  side: ua
+  note: Ukrainian brigade (mechanised in 2022, later an assault brigade); Kupiansk 2022 and 2025.
+- id: actor:ua_14th_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 14th Mechanised Brigade
+  side: ua
+- id: actor:ua_28th_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 28th Mechanised Brigade
+  side: ua
+- id: actor:ua_53rd_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 53rd Mechanised Brigade
+  side: ua
+- id: actor:ua_54th_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 54th Mechanised Brigade
+  side: ua
+- id: actor:ua_63rd_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 63rd Mechanised Brigade
+  side: ua
+- id: actor:ua_67th_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 67th Mechanised Brigade
+  side: ua
+- id: actor:ua_144th_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 144th Mechanised Brigade
+  side: ua
+- id: actor:ua_56th_brigade
+  type: actor
+  kind: military_unit
+  en: 56th Brigade
+  aliases:
+  - 56th Motorised Brigade
+  side: ua
+  note: Ukrainian brigade on the Vuhledar approaches (2023).
+- id: actor:ua_57th_motorised_brigade
+  type: actor
+  kind: military_unit
+  en: 57th Motorised Brigade
+  aliases:
+  - 57th Brigade
+  side: ua
+  note: Kherson 2022; listed as '57th Brigade' in the Avdiivka garrison (2023), taken as the same unit.
+- id: actor:ua_59th_motorised_brigade
+  type: actor
+  kind: military_unit
+  en: 59th Motorised Brigade
+  side: ua
+- id: actor:ua_110th_brigade
+  type: actor
+  kind: military_unit
+  en: 110th Brigade
+  aliases:
+  - 110th Mechanised Brigade
+  side: ua
+  note: In the Avdiivka garrison (late 2023).
+- id: actor:ua_128th_mountain_assault_brigade
+  type: actor
+  kind: military_unit
+  en: 128th Mountain Assault Brigade
+  side: ua
+- id: actor:ua_3rd_tank_brigade
+  type: actor
+  kind: military_unit
+  en: 3rd Tank Brigade
+  side: ua
+- id: actor:ua_4th_tank_brigade
+  type: actor
+  kind: military_unit
+  en: 4th Tank Brigade
+  side: ua
+- id: actor:ua_17th_tank_brigade
+  type: actor
+  kind: military_unit
+  en: 17th Tank Brigade
+  side: ua
+- id: actor:ua_68th_jaeger_brigade
+  type: actor
+  kind: military_unit
+  en: 68th Jaeger Brigade
+  side: ua
+- id: actor:ua_25th_airborne_brigade
+  type: actor
+  kind: military_unit
+  en: 25th Airborne Brigade
+  aliases:
+  - 25th Air Assault Brigade
+  parent: actor:ua_air_assault_forces
+  side: ua
+- id: actor:ua_46th_airmobile_brigade
+  type: actor
+  kind: military_unit
+  en: 46th Airmobile Brigade
+  parent: actor:ua_air_assault_forces
+  side: ua
+- id: actor:ua_77th_airmobile_brigade
+  type: actor
+  kind: military_unit
+  en: 77th Airmobile Brigade
+  parent: actor:ua_air_assault_forces
+  side: ua
+- id: actor:ua_101st_brigade
+  type: actor
+  kind: military_unit
+  en: 101st Brigade
+  parent: actor:ua_kupiansk_tactical_group
+  side: ua
+  note: In the Kupiansk Tactical Group (2025–26).
+- id: actor:ua_104th_brigade
+  type: actor
+  kind: military_unit
+  en: 104th Brigade
+  parent: actor:ua_kupiansk_tactical_group
+  side: ua
+  note: In the Kupiansk Tactical Group (2025).
+- id: actor:ua_116th_brigade
+  type: actor
+  kind: military_unit
+  en: 116th Brigade
+  parent: actor:ua_kupiansk_tactical_group
+  side: ua
+  note: In the Kupiansk Tactical Group (2025).
+- id: actor:ua_125th_brigade
+  type: actor
+  kind: military_unit
+  en: 125th Brigade
+  parent: actor:ua_kupiansk_tactical_group
+  side: ua
+  note: In the Kupiansk Tactical Group (2025); possibly actor:ua_125th_heavy_mechanised_brigade, not confirmed by the text.
+- id: actor:ua_127th_heavy_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 127th Heavy Mechanised Brigade
+  side: ua
+  note: Assaulted Kupiansk from the south (Oct 2025); in the Kupiansk Tactical Group.
+- id: actor:ua_131st_reconnaissance_battalion
+  type: actor
+  kind: military_unit
+  en: 131st Reconnaissance Battalion
+  side: ua
+- id: actor:ua_151st_reconnaissance_battalion
+  type: actor
+  kind: military_unit
+  en: 151st Reconnaissance Battalion
+  parent: actor:ua_kupiansk_tactical_group
+  side: ua
+- id: actor:ua_14th_separate_regiment
+  type: actor
+  kind: military_unit
+  en: 14th Separate Regiment
+  side: ua
+  note: Ukrainian drone regiment near Krynky, under Yevhen Karas.
+- id: actor:ua_49th_infantry_battalion
+  type: actor
+  kind: military_unit
+  en: 49th Infantry Battalion
+  side: ua
+  note: Credited with the fighting at Brovary (Mar 2022).
+- id: actor:ua_26th_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 26th Artillery Brigade
+  side: ua
+- id: actor:ua_40th_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 40th Artillery Brigade
+  side: ua
+- id: actor:ua_43rd_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 43rd Artillery Brigade
+  side: ua
+- id: actor:ua_44th_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 44th Artillery Brigade
+  side: ua
+- id: actor:ua_55th_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 55th Artillery Brigade
+  side: ua
+- id: actor:ua_15th_artillery_reconnaissance_brigade
+  type: actor
+  kind: military_unit
+  en: 15th Artillery Reconnaissance Brigade
+  side: ua
+- id: actor:ua_107th_rocket_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 107th Rocket Artillery Brigade
+  side: ua
+- id: actor:ua_40th_tactical_aviation_brigade
+  type: actor
+  kind: military_unit
+  en: 40th Tactical Aviation Brigade
+  aliases:
+  - 40th Brigade (aviation)
+  parent: actor:ukrainian_air_force
+  side: ua
+- id: actor:ua_138th_anti_aircraft_missile_brigade
+  type: actor
+  kind: military_unit
+  en: 138th Anti-Aircraft Missile Brigade
+  parent: actor:ukrainian_air_force
+  side: ua
+  note: Ukrainian S-200 unit named by a Russian court for the 23 Feb 2024 A-50 kill (Col. Mykola Dzyaman).
+- id: actor:ua_103rd_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 103rd Territorial Defence Brigade
+  aliases:
+  - 103rd TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_109th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 109th Territorial Defence Brigade
+  aliases:
+  - 109th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_111th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 111th Territorial Defence Brigade
+  aliases:
+  - 111th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_112th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 112th Territorial Defence Brigade
+  aliases:
+  - 112th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_113th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 113th Territorial Defence Brigade
+  aliases:
+  - 113th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_123rd_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 123rd Territorial Defence Brigade
+  aliases:
+  - 123rd TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_124th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 124th Territorial Defence Brigade
+  aliases:
+  - 124th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_126th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 126th Territorial Defence Brigade
+  aliases:
+  - 126th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_127th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 127th Territorial Defence Brigade
+  aliases:
+  - 127th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+  note: Kharkiv 2022; the later 127th Heavy Mechanised Brigade (actor:ua_127th_heavy_mechanised_brigade) is kept separate.
+- id: actor:ua_128th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 128th Territorial Defence Brigade
+  aliases:
+  - 128th TDF Brigade
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+- id: actor:ua_128th_tdf_battalion
+  type: actor
+  kind: military_unit
+  en: 128th TDF Battalion
+  parent: actor:ua_territorial_defence_forces
+  side: ua
+  note: Territorial Defence battalion at Brovary (Mar 2022).
+- id: actor:ua_128th_tdf_battalion_8th_company
+  type: actor
+  kind: military_unit
+  en: 8th Company, 128th TDF Battalion
+  parent: actor:ua_128th_tdf_battalion
+  side: ua
+- id: actor:azov
+  type: actor
+  kind: organisation
+  en: Azov
+  side: ua
+  note: Azov-branded Ukrainian units in general (bare 'Azov'); at Brovary in 2022 HUR's 'Azov' was the SSO unit Azov-Kyiv.
+- id: actor:ua_azov_regiment
+  type: actor
+  kind: military_unit
+  en: Azov Regiment
+  aliases:
+  - Azov regiment
+  - Azov Brigade
+  parent: actor:national_guard_of_ukraine
+  side: ua
+  note: National Guard regiment; Mariupol/Azovstal 2022 under Lt Col Denys Prokopenko.
+- id: actor:ua_azov_kharkiv_detachment
+  type: actor
+  kind: military_unit
+  en: Azov Regiment Kharkiv special-forces detachment
+  parent: actor:ua_azov_regiment
+  side: ua
+- id: actor:ua_azov_kyiv
+  type: actor
+  kind: military_unit
+  en: Azov-Kyiv
+  parent: actor:ua_special_operations_forces
+  side: ua
+  note: SSO unit credited at Brovary (Mar 2022).
+- id: actor:ua_12th_operational_brigade_ngu
+  type: actor
+  kind: military_unit
+  en: 12th Operational Brigade (NGU)
+  aliases:
+  - 12th National Guard Brigade
+  parent: actor:national_guard_of_ukraine
+  side: ua
+- id: actor:ua_15th_operational_brigade_ngu
+  type: actor
+  kind: military_unit
+  en: 15th Operational Brigade (NGU)
+  parent: actor:national_guard_of_ukraine
+  side: ua
+- id: actor:ua_23rd_public_order_brigade_ngu
+  type: actor
+  kind: military_unit
+  en: 23rd Public Order Protection Brigade (NGU)
+  parent: actor:national_guard_of_ukraine
+  side: ua
+- id: actor:ua_15th_national_guard_regiment
+  type: actor
+  kind: military_unit
+  en: 15th National Guard Regiment
+  parent: actor:national_guard_of_ukraine
+  side: ua
+- id: actor:ua_code_9_2
+  type: actor
+  kind: military_unit
+  en: Code 9.2
+  aliases:
+  - 475th Assault Regiment 'Code 9.2'
+  - 475th Assault Regiment
+  parent: actor:khartiia
+  side: ua
+  note: Khartiia drone-assault regiment under Oleksandr 'Flint' Nastenko.
+- id: actor:ua_khartiia_1st_battalion
+  type: actor
+  kind: military_unit
+  en: Khartiia 1st Battalion
+  parent: actor:khartiia
+  side: ua
+- id: actor:ua_khartiia_4th_battalion
+  type: actor
+  kind: military_unit
+  en: Khartiia 4th Battalion
+  parent: actor:khartiia
+  side: ua
+  note: Foreign-volunteer battalion, mostly Colombians.
+- id: actor:ua_slobidska_sich
+  type: actor
+  kind: military_unit
+  en: Slobidska Sich
+  side: ua
+  note: Volunteer battalion in the Kharkiv counteroffensive.
+- id: actor:ua_bohun
+  type: actor
+  kind: military_unit
+  en: Bohun
+  side: ua
+  note: Ukrainian special-forces unit in the Kharkiv counteroffensive (press officer Taras Berezovets).
+- id: actor:kalinouski_regiment
+  type: actor
+  kind: military_unit
+  en: Kalinouski Regiment
+  side: ua
+  note: Belarusian volunteer unit fighting for Ukraine.
+- id: actor:national_corps
+  type: actor
+  kind: political_party
+  en: National Corps
+  side: ua
+  note: Ukrainian political party linked to the Azov movement.
+- id: actor:ukrainian_partisans
+  type: actor
+  kind: organisation
+  en: Ukrainian partisans
+  side: ua
+  note: generic
+- id: actor:hur_group_13
+  type: actor
+  kind: military_unit
+  en: Group 13
+  parent: actor:hur
+  side: ua
+  note: HUR special unit behind the Magura sinkings and air kills; commander call sign 'Thirteenth'.
+- id: actor:hur_active_operations_department
+  type: actor
+  kind: military_unit
+  en: HUR Active Operations Department
+  parent: actor:hur
+  side: ua
+- id: actor:hur_kraken
+  type: actor
+  kind: military_unit
+  en: Kraken
+  parent: actor:hur
+  side: ua
+  note: HUR unit reported key at Izium (Sep 2022).
+- id: actor:sbu_13th_main_directorate
+  type: actor
+  kind: military_unit
+  en: SBU 13th Main Directorate of Military Counterintelligence
+  parent: actor:sbu
+  side: ua
+- id: actor:verkhovna_rada
+  type: actor
+  kind: government_body
+  en: Verkhovna Rada
+  aliases:
+  - Rada
+  - Ukrainian parliament
+  side: ua
+- id: actor:rada_national_security_committee
+  type: actor
+  kind: government_body
+  en: Verkhovna Rada Committee on National Security, Defence and Intelligence
+  aliases:
+  - Verkhovna Rada defence committee
+  - Rada defence committee
+  - Security, Defence and Intelligence Committee
+  parent: actor:verkhovna_rada
+  side: ua
+- id: actor:ua_reintegration_ministry
+  type: actor
+  kind: government_body
+  en: Reintegration Ministry
+  aliases:
+  - Ministry for Reintegration of the Temporarily Occupied Territories
+  parent: actor:cabinet_of_ministers_of_ukraine
+  side: ua
+- id: actor:ua_stratcom
+  type: actor
+  kind: government_body
+  en: Ukrainian StratCom
+  aliases:
+  - Centre for Strategic Communications
+  - StratCom
+  side: ua
+  note: Ukrainian government Centre for Strategic Communications.
+- id: actor:mariupol_mayors_office
+  type: actor
+  kind: government_body
+  en: Mariupol mayor's office
+  aliases:
+  - Mariupol city council
+  side: ua
+- id: actor:ukrainian_investigators
+  type: actor
+  kind: government_body
+  en: Ukrainian investigators
+  side: ua
+  note: generic
+- id: actor:ukrposhta
+  type: actor
+  kind: company
+  en: Ukrposhta
+  side: ua
+  note: Ukrainian state postal service.
+- id: actor:luch_design_bureau
+  type: actor
+  kind: company
+  en: Luch Design Bureau
+  aliases:
+  - Luch
+  side: ua
+  note: Kyiv design bureau of the Neptune missile.
+- id: actor:magura_developers
+  type: actor
+  kind: company
+  en: Magura developers
+  side: ua
+  note: Developers of the Magura sea drone (company not named in text).
+- id: actor:donetsk_railway
+  type: actor
+  kind: company
+  en: Donetsk Railway
+  parent: actor:ukrzaliznytsia
+  side: ua
+- id: actor:prytula_foundation
+  type: actor
+  kind: ngo
+  en: Serhiy Prytula Foundation
+  aliases:
+  - Prytula Foundation
+  side: ua
+- id: actor:molfar
+  type: actor
+  kind: organisation
+  en: Molfar
+  side: ua
+  note: Ukrainian OSINT agency.
+- id: actor:ukrainska_pravda
+  type: actor
+  kind: outlet
+  en: Ukrainska Pravda
+  aliases:
+  - Pravda (Ukrainska)
+  side: ua
+- id: actor:euromaidan_press
+  type: actor
+  kind: outlet
+  en: Euromaidan Press
+  aliases:
+  - Euromaidan
+  side: ua
+- id: actor:militarnyi
+  type: actor
+  kind: outlet
+  en: Militarnyi
+  side: ua
+- id: actor:suspilne
+  type: actor
+  kind: outlet
+  en: Suspilne
+  side: ua
+  note: Ukrainian public broadcaster.
+- id: actor:liga_net
+  type: actor
+  kind: outlet
+  en: Liga
+  aliases:
+  - LIGA.net
+  side: ua
+- id: actor:tsn
+  type: actor
+  kind: outlet
+  en: TSN
+  side: ua
+  note: Ukrainian TV news (1+1).
+- id: actor:war_archive
+  type: actor
+  kind: outlet
+  en: War Archive
+  side: ua
+  note: Ukrainian Telegram channel.
+- id: actor:vasyl_malyuk
+  type: actor
+  kind: person
+  en: Vasyl Malyuk
+  aliases:
+  - Malyuk
+  - Maliuk
+  - Vasyl Maliuk
+  - SBU head
+  side: ua
+  note: Head of the SBU (2022–2025).
+- id: actor:natalia_humeniuk
+  type: actor
+  kind: person
+  en: Natalia Humeniuk
+  aliases:
+  - Humeniuk
+  - Humenyuk
+  - Natalia Humenyuk
+  side: ua
+  note: Spokesperson of Operational Command South / Defence Forces of the South (2022 – early 2024).
+- id: actor:dmytro_pletenchuk
+  type: actor
+  kind: person
+  en: Dmytro Pletenchuk
+  aliases:
+  - Pletenchuk
+  side: ua
+  note: Ukrainian Navy spokesman; also spoke for the Defence Forces of the South (2024).
+- id: actor:mykola_oleshchuk
+  type: actor
+  kind: person
+  en: Mykola Oleshchuk
+  aliases:
+  - Oleshchuk
+  side: ua
+  note: Commander of the Ukrainian Air Force (2021 – Aug 2024).
+- id: actor:oleksiy_neizhpapa
+  type: actor
+  kind: person
+  en: Oleksiy Neizhpapa
+  aliases:
+  - Oleksii Neizhpapa
+  - Neizhpapa
+  side: ua
+  note: Commander of the Ukrainian Navy (Vice Adm.).
+- id: actor:serhiy_bradley_gunner
+  type: actor
+  kind: person
+  en: Serhiy (Bradley gunner)
+  aliases:
+  - Serhiy
+  side: ua
+  note: Gunner-commander of the second 47th Brigade Bradley in the Stepove duel with a T-90M (Jan 2024).
+- id: actor:oleksandr_bradley_driver
+  type: actor
+  kind: person
+  en: Oleksandr (Bradley driver)
+  side: ua
+  note: Driver of the second Bradley in the Stepove duel (Jan 2024).
+- id: actor:roman_darmohrai
+  type: actor
+  kind: person
+  en: Roman Darmohrai
+  aliases:
+  - Darmohrai
+  side: ua
+  note: Maj., commander of the 3rd Mechanised Battalion, 72nd Brigade, at Brovary (Mar 2022).
+- id: actor:denys_prokopenko
+  type: actor
+  kind: person
+  en: Denys Prokopenko
+  aliases:
+  - Prokopenko
+  - Redis
+  side: ua
+  note: Commander of the Azov Regiment at Mariupol (2022).
+- id: actor:sviatoslav_palamar
+  type: actor
+  kind: person
+  en: Sviatoslav Palamar
+  aliases:
+  - Palamar
+  - Kalyna
+  side: ua
+  note: Capt., deputy commander of the Azov Regiment at Mariupol (call sign 'Kalyna').
+- id: actor:bohdan_krotevych
+  type: actor
+  kind: person
+  en: Bohdan Krotevych
+  aliases:
+  - Krotevych
+  side: ua
+  note: Maj., chief of staff of the Azov Regiment at Mariupol.
+- id: actor:serhii_volynskyi
+  type: actor
+  kind: person
+  en: Serhii Volynskyi
+  aliases:
+  - Volynskyi
+  - Volyna
+  side: ua
+  note: Maj., commander of the 36th Marine Brigade at Azovstal after Baraniuk's capture (call sign 'Volyna').
+- id: actor:volodymyr_baraniuk
+  type: actor
+  kind: person
+  en: Volodymyr Baraniuk
+  aliases:
+  - Baraniuk
+  side: ua
+  note: Col., commander of the 36th Marine Brigade at Mariupol; captured in the Illich breakout (Apr 2022).
+- id: actor:denys_shleha
+  type: actor
+  kind: person
+  en: Denys Shleha
+  side: ua
+  note: One of the five Azovstal unit leaders freed on 21 Sep 2022.
+- id: actor:oleh_khomenko
+  type: actor
+  kind: person
+  en: Oleh Khomenko
+  side: ua
+  note: One of the five Azovstal unit leaders freed on 21 Sep 2022.
+- id: actor:dmytro_kozatskyi
+  type: actor
+  kind: person
+  en: Dmytro Kozatskyi
+  side: ua
+  note: Azov fighter and photographer at Azovstal (2022).
+- id: actor:serbov
+  type: actor
+  kind: person
+  en: Serbov
+  side: ua
+  note: Azovstal defender; wounded 15 May 2022, exchanged 29 Jun 2022.
+- id: actor:oleksii_hromov
+  type: actor
+  kind: person
+  en: Oleksii Hromov
+  aliases:
+  - Oleksiy Hromov
+  - Hromov
+  side: ua
+  note: Brig. Gen., deputy chief of the Main Operational Department of the General Staff (2022).
+- id: actor:andrii_kovalchuk
+  type: actor
+  kind: person
+  en: Andrii Kovalchuk
+  side: ua
+  note: Maj. Gen., commander of the Kherson operation until replaced by Tarnavskyi (Oct 2022).
+- id: actor:viktor_trehubov
+  type: actor
+  kind: person
+  en: Viktor Trehubov
+  aliases:
+  - Trehubov
+  side: ua
+  note: Ukrainian military spokesman (Khortytsia / Dnipro group, 2025–26).
+- id: actor:vladislav_bayak
+  type: actor
+  kind: person
+  en: Vladislav Bayak
+  aliases:
+  - Bayak
+  side: ua
+  note: Lt., deputy commander of the 1st Mechanised Battalion, 72nd Brigade, at Vuhledar.
+- id: actor:ivan_vinnyk
+  type: actor
+  kind: person
+  en: Ivan Vinnyk
+  aliases:
+  - Vinnyk
+  side: ua
+  note: Col., commander of the 72nd Mechanised Brigade from summer 2022 to Sep 2024.
+- id: actor:yurii_sodol
+  type: actor
+  kind: person
+  en: Yurii Sodol
+  aliases:
+  - Sodol
+  side: ua
+  note: Lt Gen, commander of the Ukrainian Marine Corps (Krynky operation).
+- id: actor:dmytro_palas
+  type: actor
+  kind: person
+  en: Dmytro Palas
+  side: ua
+  note: Col., said to have influenced Sodol's Krynky decisions.
+- id: actor:yevhen_bova
+  type: actor
+  kind: person
+  en: Yevhen Bova
+  side: ua
+  note: Commander of the 38th Marine Brigade (2023).
+- id: actor:yevhen_karas
+  type: actor
+  kind: person
+  en: Yevhen Karas
+  side: ua
+  note: Commander of the 14th Separate Regiment (drones) near Krynky.
+- id: actor:dmytro_lykhovii
+  type: actor
+  kind: person
+  en: Dmytro Lykhovii
+  aliases:
+  - Lykhovii
+  - Lykhovyi
+  - Dmytro Lykhovyi
+  side: ua
+  note: Spokesman of the Tavriia OSG (2024).
+- id: actor:oleksiy_dmytrashkivskyi
+  type: actor
+  kind: person
+  en: Oleksiy Dmytrashkivskyi
+  aliases:
+  - Dmytrashkivskyi
+  side: ua
+  note: Col., spokesman of the Tavriia operational direction (2023).
+- id: actor:bohdan_hotskyi
+  type: actor
+  kind: person
+  en: Bohdan Hotskyi
+  aliases:
+  - Hotskyi
+  side: ua
+  note: Commander of the Zmiinyi Island border post (Feb 2022).
+- id: actor:serhii_deineko
+  type: actor
+  kind: person
+  en: Serhii Deineko
+  aliases:
+  - Deineko
+  side: ua
+  note: Head of the State Border Guard Service of Ukraine.
+- id: actor:roman_hrybov
+  type: actor
+  kind: person
+  en: Roman Hrybov
+  side: ua
+  note: Zmiinyi Island border guard of the 'Russian warship' reply; freed in Mar 2022 swap.
+- id: actor:vitalii_hyrenko
+  type: actor
+  kind: person
+  en: Vitalii Hyrenko
+  side: ua
+  note: Zmiinyi Island border guard, the last of its prisoners freed (23 Jul 2025).
+- id: actor:ihor_bedzai
+  type: actor
+  kind: person
+  en: Ihor Bedzai
+  side: ua
+  note: Col., naval aviation; killed when his Mi-14 was shot down on 7 May 2022.
+- id: actor:yevhen_grushovets
+  type: actor
+  kind: person
+  en: Yevhen Grushovets
+  side: ua
+  note: Gunner of the Bohdana SPG prototype against Zmiinyi Island (Jun 2022).
+- id: actor:andrii_shubin
+  type: actor
+  kind: person
+  en: Andrii Shubin
+  side: ua
+  note: Commander of the 406th Artillery Brigade, blamed by a Moscow court for the Moskva sinking.
+- id: actor:mykola_dzyaman
+  type: actor
+  kind: person
+  en: Mykola Dzyaman
+  side: ua
+  note: Col., commander of the 138th Anti-Aircraft Missile Brigade; charged in absentia by a Moscow court (Jun 2024).
+- id: actor:stepan_tarabalka
+  type: actor
+  kind: person
+  en: Stepan Tarabalka
+  aliases:
+  - Tarabalka
+  side: ua
+  note: Maj., 40th Tactical Aviation Brigade pilot killed Mar 2022; named by The Times as the 'Ghost of Kyiv'.
+- id: actor:dmytro_marchenko
+  type: actor
+  kind: person
+  en: Dmytro Marchenko
+  side: ua
+  note: Maj Gen; called the Crimean Bridge 'target number one' (Jun 2022).
+- id: actor:maksym_marchenko
+  type: actor
+  kind: person
+  en: Maksym Marchenko
+  side: ua
+  note: Governor of Odesa Oblast (2022).
+- id: actor:serhiy_bratchuk
+  type: actor
+  kind: person
+  en: Serhiy Bratchuk
+  aliases:
+  - Bratchuk
+  side: ua
+  note: Spokesman of the Odesa regional military administration.
+- id: actor:oleh_syniehubov
+  type: actor
+  kind: person
+  en: Oleh Syniehubov
+  aliases:
+  - Syniehubov
+  side: ua
+  note: Governor of Kharkiv Oblast.
+- id: actor:ihor_sapozhko
+  type: actor
+  kind: person
+  en: Ihor Sapozhko
+  aliases:
+  - Sapozhko
+  side: ua
+  note: Mayor of Brovary.
+- id: actor:melitopol_mayor
+  type: actor
+  kind: person
+  en: Melitopol mayor
+  side: ua
+  note: Ukrainian mayor of occupied Melitopol (Oct 2022); not named in the text.
+- id: actor:vuhledar_deputy_mayor
+  type: actor
+  kind: person
+  en: Vuhledar deputy mayor
+  side: ua
+  note: Not named in the text.
+- id: actor:petro_andriushchenko
+  type: actor
+  kind: person
+  en: Petro Andriushchenko
+  aliases:
+  - Andriushchenko
+  side: ua
+  note: Adviser to the Mariupol mayor.
+- id: actor:andriy_yermak
+  type: actor
+  kind: person
+  en: Andriy Yermak
+  aliases:
+  - Yermak
+  - Andrii Yermak
+  side: ua
+  note: Head of the Office of the President of Ukraine.
+- id: actor:oleksii_reznikov
+  type: actor
+  kind: person
+  en: Oleksii Reznikov
+  aliases:
+  - Reznikov
+  side: ua
+  note: Minister of Defence of Ukraine (Nov 2021 – Sep 2023).
+- id: actor:oleksiy_danilov
+  type: actor
+  kind: person
+  en: Oleksiy Danilov
+  aliases:
+  - Danilov
+  side: ua
+  note: Secretary of the National Security and Defence Council (NSDC) of Ukraine.
+- id: actor:hanna_maliar
+  type: actor
+  kind: person
+  en: Hanna Maliar
+  aliases:
+  - Maliar
+  side: ua
+  note: Deputy Minister of Defence of Ukraine (2021–2023).
+- id: actor:iryna_vereshchuk
+  type: actor
+  kind: person
+  en: Iryna Vereshchuk
+  aliases:
+  - Vereshchuk
+  side: ua
+  note: Deputy Prime Minister for Reintegration of the Temporarily Occupied Territories.
+- id: actor:oleksii_arestovych
+  type: actor
+  kind: person
+  en: Oleksii Arestovych
+  aliases:
+  - Arestovych
+  side: ua
+  note: Adviser to the Office of the President (2022).
+- id: actor:anton_herashchenko
+  type: actor
+  kind: person
+  en: Anton Herashchenko
+  aliases:
+  - Herashchenko
+  side: ua
+  note: Adviser to the Ukrainian interior minister (2022).
+- id: actor:petro_poroshenko
+  type: actor
+  kind: person
+  en: Petro Poroshenko
+  aliases:
+  - Poroshenko
+  side: ua
+  note: Former President of Ukraine (2014–2019).
+- id: actor:tetiana_chornovol
+  type: actor
+  kind: person
+  en: Tetiana Chornovol
+  side: ua
+  note: Former MP; Stuhna ATGM operator in the 72nd Mechanised Brigade at Brovary.
+- id: actor:solomiia_bobrovska
+  type: actor
+  kind: person
+  en: Solomiia Bobrovska
+  aliases:
+  - Bobrovska
+  side: ua
+  note: MP, member of the Rada national-security committee.
+- id: actor:andriy_tsaplienko
+  type: actor
+  kind: person
+  en: Andriy Tsaplienko
+  aliases:
+  - Tsaplienko
+  side: ua
+  note: Ukrainian war journalist.
+- id: actor:taras_berezovets
+  type: actor
+  kind: person
+  en: Taras Berezovets
+  aliases:
+  - Berezovets
+  side: ua
+  note: Press officer of the 'Bohun' special-forces unit; political analyst.
+- id: actor:mykola_bielieskov
+  type: actor
+  kind: person
+  en: Mykola Bielieskov
+  aliases:
+  - Bielieskov
+  side: ua
+  note: Ukrainian military analyst.
+- id: actor:viktor_kevliuk
+  type: actor
+  kind: person
+  en: Viktor Kevliuk
+  aliases:
+  - Kevliuk
+  side: ua
+  note: Ukrainian military analyst (retired colonel).
+- id: actor:oleksandr_kovalenko
+  type: actor
+  kind: person
+  en: Oleksandr Kovalenko
+  side: ua
+  note: Ukrainian military analyst.
+- id: actor:andriy_ryzhenko
+  type: actor
+  kind: person
+  en: Andriy Ryzhenko
+  aliases:
+  - Ryzhenko
+  side: ua
+  note: Ukrainian naval analyst, retired Navy captain.
+- id: actor:kuzan
+  type: actor
+  kind: person
+  en: Kuzan
+  side: ua
+  note: Ukrainian military analyst (probably Serhii Kuzan).
+- id: actor:belskyi
+  type: actor
+  kind: person
+  en: Belskyi
+  side: ua
+  note: Spokesman of the Dnipro operational-strategic group (2025).
+- id: actor:barabash
+  type: actor
+  kind: person
+  en: Barabash
+  side: ua
+  note: Ukrainian serviceman quoted on the Sudzha pipe (Tsarska Okhota).
+- id: actor:berezenko
+  type: actor
+  kind: person
+  en: Berezenko
+  side: ua
+  note: Private among the Brovary defenders (Mar 2022).
+- id: actor:ihor_obolienskyi
+  type: actor
+  kind: person
+  en: Ihor Obolienskyi
+  aliases:
+  - Obolienskyi
+  side: ua
+  note: Col., commander of the 2nd Khartiia Corps (2025).
+- id: actor:serhii_sidorin
+  type: actor
+  kind: person
+  en: Serhii Sidorin
+  aliases:
+  - Sidorin
+  side: ua
+  note: Col., led Khartiia's search-and-destroy group at Kupiansk (2025).
+- id: actor:viktor_solimchuk
+  type: actor
+  kind: person
+  en: Viktor Solimchuk
+  aliases:
+  - Solimchuk
+  side: ua
+  note: Brig. Gen., commander of the Kupiansk Tactical Group (2025).
+- id: actor:serhii_perets
+  type: actor
+  kind: person
+  en: Serhii Perets
+  aliases:
+  - Perets
+  side: ua
+  note: Brig. Gen., commander of the 10th Army Corps at Kupiansk.
+- id: actor:oleksandr_nastenko
+  type: actor
+  kind: person
+  en: Oleksandr Nastenko
+  aliases:
+  - Flint
+  - Oleksandr 'Flint' Nastenko
+  side: ua
+  note: Commander of the Code 9.2 regiment (call sign 'Flint').
+- id: actor:yuriy_fedorenko
+  type: actor
+  kind: person
+  en: Yuriy Fedorenko
+  aliases:
+  - Yurii Fedorenko
+  side: ua
+  note: Commander of the 429th 'Achilles' drone regiment.
+- id: actor:hunter_sbu
+  type: actor
+  kind: person
+  en: Hunter
+  side: ua
+  note: Call sign of the SBU brigadier general leading the Sea Baby programme; identity not established (not merged with Ivan Lukashevych).
+- id: actor:ivan_lukashevych
+  type: actor
+  kind: person
+  en: Ivan Lukashevych
+  side: ua
+  note: Brig. Gen.; named by Wikipedia as proposer of SBU USVs; that he is 'Hunter' is not established.
+- id: actor:borets
+  type: actor
+  kind: person
+  en: Borets
+  side: ua
+  note: Call sign of the general heading HUR's unmanned-systems department.
+- id: actor:thirteenth
+  type: actor
+  kind: person
+  en: Thirteenth
+  side: ua
+  note: Call sign of the commander of HUR's Group 13.
+- id: actor:borys_groh
+  type: actor
+  kind: person
+  en: Borys Groh
+  side: ua
+  note: Artist of the 'Russian warship' postage stamp (2022).
+- id: actor:russian_armed_forces
+  type: actor
+  kind: armed_force
+  en: Russian Armed Forces
+  aliases:
+  - Russian military
+  side: ru
+- id: actor:russian_navy
+  type: actor
+  kind: armed_force
+  en: Russian Navy
+  parent: actor:russian_armed_forces
+  side: ru
+- id: actor:black_sea_fleet
+  type: actor
+  kind: armed_force
+  en: Black Sea Fleet
+  aliases:
+  - BSF
+  - Russian Black Sea Fleet
+  parent: actor:russian_navy
+  side: ru
+- id: actor:black_sea_fleet_naval_aviation
+  type: actor
+  kind: military_unit
+  en: Black Sea Fleet naval aviation
+  parent: actor:black_sea_fleet
+  side: ru
+- id: actor:pacific_fleet
+  type: actor
+  kind: armed_force
+  en: Pacific Fleet
+  parent: actor:russian_navy
+  side: ru
+- id: actor:northern_fleet
+  type: actor
+  kind: armed_force
+  en: Northern Fleet
+  parent: actor:russian_navy
+  side: ru
+- id: actor:baltic_fleet
+  type: actor
+  kind: armed_force
+  en: Baltic Fleet
+  parent: actor:russian_navy
+  side: ru
+- id: actor:caspian_flotilla
+  type: actor
+  kind: armed_force
+  en: Caspian Flotilla
+  parent: actor:russian_navy
+  side: ru
+- id: actor:rosgvardia
+  type: actor
+  kind: armed_force
+  en: Rosgvardia
+  aliases:
+  - Russian National Guard
+  - National Guard of Russia
+  side: ru
+- id: actor:sobr
+  type: actor
+  kind: military_unit
+  en: SOBR
+  parent: actor:rosgvardia
+  side: ru
+  note: Rosgvardia special rapid-response police units.
+- id: actor:fsb_border_service
+  type: actor
+  kind: military_unit
+  en: FSB Border Service
+  parent: actor:fsb
+  side: ru
+- id: actor:ru_spetsnaz
+  type: actor
+  kind: armed_force
+  en: Spetsnaz
+  aliases:
+  - GRU Spetsnaz
+  parent: actor:russian_armed_forces
+  side: ru
+  note: Russian special-purpose forces in general.
+- id: actor:ru_eastern_military_district
+  type: actor
+  kind: armed_force
+  en: Eastern Military District
+  aliases:
+  - EMD
+  parent: actor:russian_armed_forces
+  side: ru
+- id: actor:ru_western_military_district
+  type: actor
+  kind: armed_force
+  en: Western Military District
+  parent: actor:russian_armed_forces
+  side: ru
+- id: actor:ru_southern_military_district
+  type: actor
+  kind: armed_force
+  en: Southern Military District
+  parent: actor:russian_armed_forces
+  side: ru
+- id: actor:ru_central_military_district
+  type: actor
+  kind: armed_force
+  en: Central Military District
+  parent: actor:russian_armed_forces
+  side: ru
+- id: actor:ru_leningrad_military_district
+  type: actor
+  kind: armed_force
+  en: Leningrad Military District
+  parent: actor:russian_armed_forces
+  side: ru
+- id: actor:ru_eastern_grouping_of_forces
+  type: actor
+  kind: armed_force
+  en: Eastern Grouping of Forces
+  side: ru
+  note: Under Col. Gen. Rustam Muradov from 5 Oct 2022 (Vuhledar).
+- id: actor:ru_dnepr_grouping
+  type: actor
+  kind: military_unit
+  en: Dnepr Grouping of Forces
+  aliases:
+  - Dnepr grouping
+  side: ru
+  note: Russian grouping on the Dnipro left bank (Kherson).
+- id: actor:ru_balakliia_force
+  type: actor
+  kind: military_unit
+  en: Balakliia force
+  side: ru
+  note: Russian force at Balakliia (2022) under Col Ivan Popov of the 11th Army Corps.
+- id: actor:ru_izium_grouping
+  type: actor
+  kind: military_unit
+  en: Izium grouping
+  side: ru
+  note: Russian forces around Izium (2022).
+- id: actor:ru_lyman_garrison
+  type: actor
+  kind: military_unit
+  en: Lyman garrison
+  side: ru
+  note: Russian force encircled at Lyman (late Sep 2022).
+- id: actor:ru_battalion_tactical_groups
+  type: actor
+  kind: military_unit
+  en: battalion tactical group
+  aliases:
+  - BTG
+  - BTGs
+  - battalion tactical groups
+  side: ru
+  note: generic
+- id: actor:ru_1st_guards_tank_army
+  type: actor
+  kind: military_unit
+  en: 1st Guards Tank Army
+  side: ru
+- id: actor:ru_4th_guards_tank_division
+  type: actor
+  kind: military_unit
+  en: 4th Guards Tank Division
+  parent: actor:ru_1st_guards_tank_army
+  side: ru
+- id: actor:ru_2nd_guards_motor_rifle_division
+  type: actor
+  kind: military_unit
+  en: 2nd Guards Motor Rifle Division
+  parent: actor:ru_1st_guards_tank_army
+  side: ru
+- id: actor:ru_147th_artillery_regiment
+  type: actor
+  kind: military_unit
+  en: 147th Artillery Regiment
+  parent: actor:ru_2nd_guards_motor_rifle_division
+  side: ru
+- id: actor:ru_1st_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 1st Motor Rifle Regiment
+  parent: actor:ru_2nd_guards_motor_rifle_division
+  side: ru
+- id: actor:ru_47th_tank_division
+  type: actor
+  kind: military_unit
+  en: 47th Tank Division
+  parent: actor:ru_1st_guards_tank_army
+  side: ru
+- id: actor:ru_153rd_tank_regiment
+  type: actor
+  kind: military_unit
+  en: 153rd Tank Regiment
+  parent: actor:ru_47th_tank_division
+  side: ru
+- id: actor:ru_272nd_regiment
+  type: actor
+  kind: military_unit
+  en: 272nd Regiment
+  parent: actor:ru_47th_tank_division
+  side: ru
+- id: actor:ru_6th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 6th Combined Arms Army
+  parent: actor:ru_leningrad_military_district
+  side: ru
+- id: actor:ru_68th_motor_rifle_division
+  type: actor
+  kind: military_unit
+  en: 68th Motor Rifle Division
+  parent: actor:ru_6th_combined_arms_army
+  side: ru
+- id: actor:ru_121st_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 121st Motor Rifle Regiment
+  parent: actor:ru_68th_motor_rifle_division
+  side: ru
+- id: actor:ru_122nd_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 122nd Motor Rifle Regiment
+  parent: actor:ru_68th_motor_rifle_division
+  side: ru
+- id: actor:ru_8th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 8th Combined Arms Army
+  side: ru
+  note: Commanded at Mariupol by Lt Gen Andrei Mordvichev.
+- id: actor:ru_150th_motor_rifle_division
+  type: actor
+  kind: military_unit
+  en: 150th Motor Rifle Division
+  parent: actor:ru_8th_combined_arms_army
+  side: ru
+- id: actor:ru_68th_tank_regiment
+  type: actor
+  kind: military_unit
+  en: 68th Tank Regiment
+  parent: actor:ru_150th_motor_rifle_division
+  side: ru
+- id: actor:ru_102nd_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 102nd Motor Rifle Regiment
+  parent: actor:ru_150th_motor_rifle_division
+  side: ru
+- id: actor:ru_20th_guards_motor_rifle_division
+  type: actor
+  kind: military_unit
+  en: 20th Guards Motor Rifle Division
+  parent: actor:ru_8th_combined_arms_army
+  side: ru
+- id: actor:ru_49th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 49th Combined Arms Army
+  parent: actor:ru_southern_military_district
+  side: ru
+- id: actor:ru_205th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 205th Motor Rifle Brigade
+  parent: actor:ru_49th_combined_arms_army
+  side: ru
+- id: actor:ru_205th_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 205th Motor Rifle Regiment
+  parent: actor:ru_49th_combined_arms_army
+  side: ru
+  note: Named so in the Krynky dossier; possibly the 205th Motor Rifle Brigade (actor:ru_205th_motor_rifle_brigade).
+- id: actor:ru_34th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 34th Motor Rifle Brigade
+  parent: actor:ru_49th_combined_arms_army
+  side: ru
+- id: actor:ru_35th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 35th Combined Arms Army
+  parent: actor:ru_eastern_military_district
+  side: ru
+- id: actor:ru_165th_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 165th Artillery Brigade
+  parent: actor:ru_35th_combined_arms_army
+  side: ru
+- id: actor:ru_5th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 5th Combined Arms Army
+  parent: actor:ru_eastern_military_district
+  side: ru
+- id: actor:ru_36th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 36th Combined Arms Army
+  parent: actor:ru_eastern_military_district
+  side: ru
+- id: actor:ru_37th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 37th Motor Rifle Brigade
+  parent: actor:ru_36th_combined_arms_army
+  side: ru
+- id: actor:ru_5th_guards_tank_brigade
+  type: actor
+  kind: military_unit
+  en: 5th Guards Tank Brigade
+  parent: actor:ru_36th_combined_arms_army
+  side: ru
+- id: actor:ru_29th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 29th Combined Arms Army
+  parent: actor:ru_eastern_military_district
+  side: ru
+- id: actor:ru_36th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 36th Motor Rifle Brigade
+  parent: actor:ru_29th_combined_arms_army
+  side: ru
+- id: actor:ru_2nd_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 2nd Combined Arms Army
+  side: ru
+- id: actor:ru_41st_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 41st Combined Arms Army
+  side: ru
+- id: actor:ru_18th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 18th Combined Arms Army
+  side: ru
+  note: New army (2023); main responder at Krynky.
+- id: actor:ru_22nd_army_corps
+  type: actor
+  kind: military_unit
+  en: 22nd Army Corps
+  parent: actor:ru_18th_combined_arms_army
+  side: ru
+  note: Crimea-based corps; held the southern Kherson right bank in 2022.
+- id: actor:ru_70th_motor_rifle_division
+  type: actor
+  kind: military_unit
+  en: 70th Motor Rifle Division
+  parent: actor:ru_18th_combined_arms_army
+  side: ru
+- id: actor:ru_26th_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 26th Motor Rifle Regiment
+  parent: actor:ru_70th_motor_rifle_division
+  side: ru
+- id: actor:ru_14th_army_corps
+  type: actor
+  kind: military_unit
+  en: 14th Army Corps
+  side: ru
+- id: actor:ru_80th_arctic_brigade
+  type: actor
+  kind: military_unit
+  en: 80th Arctic Brigade
+  parent: actor:ru_14th_army_corps
+  side: ru
+- id: actor:ru_11th_army_corps
+  type: actor
+  kind: military_unit
+  en: 11th Army Corps
+  parent: actor:baltic_fleet
+  side: ru
+- id: actor:ru_11th_army_corps_7th_regiment
+  type: actor
+  kind: military_unit
+  en: 7th Regiment (11th Army Corps)
+  parent: actor:ru_11th_army_corps
+  side: ru
+- id: actor:ru_3rd_army_corps
+  type: actor
+  kind: military_unit
+  en: Russian 3rd Army Corps
+  aliases:
+  - 3rd Army Corps (Russia)
+  side: ru
+  note: Russian volunteer corps formed 2022 (Vuhledar). The bare name '3rd Army Corps' resolves to the Ukrainian corps.
+- id: actor:ru_72nd_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 72nd Motor Rifle Brigade
+  parent: actor:ru_3rd_army_corps
+  side: ru
+- id: actor:ru_alga_battalion
+  type: actor
+  kind: military_unit
+  en: Alga battalion
+  parent: actor:ru_72nd_motor_rifle_brigade
+  side: ru
+  note: Tatar volunteer battalion.
+- id: actor:ru_atal_battalion
+  type: actor
+  kind: military_unit
+  en: Atal battalion
+  parent: actor:ru_72nd_motor_rifle_brigade
+  side: ru
+  note: Chuvash volunteer battalion.
+- id: actor:ru_90th_guards_tank_division
+  type: actor
+  kind: military_unit
+  en: 90th Guards Tank Division
+  aliases:
+  - 90th Tank Division
+  side: ru
+- id: actor:ru_6th_guards_tank_regiment
+  type: actor
+  kind: military_unit
+  en: 6th Guards Tank Regiment
+  aliases:
+  - 6th Tank Regiment
+  parent: actor:ru_90th_guards_tank_division
+  side: ru
+  note: Chebarkul; commander Col. Andrei Zakharov reported killed at Brovary (Mar 2022).
+- id: actor:ru_239th_tank_regiment
+  type: actor
+  kind: military_unit
+  en: 239th Tank Regiment
+  parent: actor:ru_90th_guards_tank_division
+  side: ru
+- id: actor:ru_104th_guards_air_assault_division
+  type: actor
+  kind: military_unit
+  en: 104th Guards Air Assault Division
+  aliases:
+  - 104th VDV Division
+  - 104th Guards Airborne Division
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_98th_guards_airborne_division
+  type: actor
+  kind: military_unit
+  en: 98th Guards Airborne Division
+  aliases:
+  - 98th VDV Division
+  - 98th Airborne Division
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_331st_guards_airborne_regiment
+  type: actor
+  kind: military_unit
+  en: 331st Guards Airborne Regiment
+  parent: actor:ru_98th_guards_airborne_division
+  side: ru
+- id: actor:ru_76th_guards_air_assault_division
+  type: actor
+  kind: military_unit
+  en: 76th Guards Air Assault Division
+  aliases:
+  - 76th Air Assault Division
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_106th_guards_airborne_division
+  type: actor
+  kind: military_unit
+  en: 106th Guards Airborne Division
+  aliases:
+  - 106th Airborne Division
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_247th_guards_air_assault_regiment
+  type: actor
+  kind: military_unit
+  en: 247th Guards Air Assault Regiment
+  aliases:
+  - 247th Air Assault Regiment
+  parent: actor:ru_7th_vdv_division
+  side: ru
+- id: actor:ru_108th_guards_air_assault_regiment
+  type: actor
+  kind: military_unit
+  en: 108th Guards Air Assault Regiment
+  parent: actor:ru_7th_vdv_division
+  side: ru
+- id: actor:ru_56th_guards_air_assault_regiment
+  type: actor
+  kind: military_unit
+  en: 56th Guards Air Assault Regiment
+  parent: actor:ru_7th_vdv_division
+  side: ru
+- id: actor:ru_97th_air_assault_regiment
+  type: actor
+  kind: military_unit
+  en: 97th Air Assault Regiment
+  parent: actor:ru_7th_vdv_division
+  side: ru
+- id: actor:ru_171st_air_assault_battalion
+  type: actor
+  kind: military_unit
+  en: 171st Air Assault Battalion
+  parent: actor:ru_97th_air_assault_regiment
+  side: ru
+- id: actor:ru_11th_air_assault_brigade
+  type: actor
+  kind: military_unit
+  en: 11th Air Assault Brigade
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_31st_air_assault_brigade
+  type: actor
+  kind: military_unit
+  en: 31st Air Assault Brigade
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_155th_naval_infantry_brigade
+  type: actor
+  kind: military_unit
+  en: 155th Guards Naval Infantry Brigade
+  aliases:
+  - 155th Naval Infantry Brigade
+  - 155th Marine Brigade
+  parent: actor:pacific_fleet
+  side: ru
+  note: Vladivostok; commanded by Col. Zurab Akhmedov in Nov 2022 (Pavlivka, Vuhledar).
+- id: actor:ru_40th_naval_infantry_brigade
+  type: actor
+  kind: military_unit
+  en: 40th Naval Infantry Brigade
+  parent: actor:pacific_fleet
+  side: ru
+- id: actor:ru_810th_naval_infantry_brigade
+  type: actor
+  kind: military_unit
+  en: 810th Naval Infantry Brigade
+  aliases:
+  - 810th Brigade
+  - 810th Naval Infantry
+  parent: actor:black_sea_fleet
+  side: ru
+- id: actor:ru_382nd_marine_battalion
+  type: actor
+  kind: military_unit
+  en: 382nd Marine Battalion
+  parent: actor:black_sea_fleet
+  side: ru
+- id: actor:ru_336th_marine_brigade
+  type: actor
+  kind: military_unit
+  en: 336th Marine Brigade
+  aliases:
+  - 336th Naval Infantry Brigade
+  side: ru
+- id: actor:ru_177th_naval_infantry_regiment
+  type: actor
+  kind: military_unit
+  en: 177th Naval Infantry Regiment
+  aliases:
+  - 177th Naval Infantry
+  parent: actor:caspian_flotilla
+  side: ru
+- id: actor:ru_126th_coastal_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 126th Coastal Defence Brigade
+  side: ru
+- id: actor:ru_34th_coastal_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 34th Coastal Defence Brigade
+  side: ru
+- id: actor:ru_39th_coastal_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 39th Coastal Defence Brigade
+  side: ru
+- id: actor:ru_41st_missile_boat_brigade
+  type: actor
+  kind: military_unit
+  en: 41st Missile Boat Brigade
+  side: ru
+- id: actor:ru_197th_landing_ship_brigade
+  type: actor
+  kind: military_unit
+  en: 197th Landing Ship Brigade
+  side: ru
+- id: actor:ru_121st_landing_ship_brigade
+  type: actor
+  kind: military_unit
+  en: 121st Landing Ship Brigade
+  parent: actor:northern_fleet
+  side: ru
+- id: actor:ru_396th_helicopter_regiment
+  type: actor
+  kind: military_unit
+  en: 396th Helicopter Regiment
+  parent: actor:baltic_fleet
+  side: ru
+- id: actor:ru_610th_combat_use_centre
+  type: actor
+  kind: military_unit
+  en: 610th Centre for Combat Use and Retraining
+  parent: actor:vks
+  side: ru
+  note: At Ivanovo-Severny, the A-50 home base.
+- id: actor:ru_136th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 136th Motor Rifle Brigade
+  parent: actor:ru_southern_military_district
+  side: ru
+- id: actor:ru_144th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 144th Motor Rifle Brigade
+  side: ru
+- id: actor:ru_27th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 27th Motor Rifle Brigade
+  side: ru
+- id: actor:ru_35th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 35th Separate Motor Rifle Brigade
+  aliases:
+  - 35th Motor Rifle Brigade
+  side: ru
+- id: actor:ru_64th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 64th Motor Rifle Brigade
+  side: ru
+- id: actor:ru_60th_veterans_brigade
+  type: actor
+  kind: military_unit
+  en: 60th Motor Rifle Brigade 'Veterans'
+  aliases:
+  - 60th 'Veterans' brigade
+  side: ru
+- id: actor:ru_veterans_pipe_specialists
+  type: actor
+  kind: military_unit
+  en: '''Veterans'' pipe specialists'
+  side: ru
+  note: Russian troops called 'Veterans' (mining background) running the Kupiansk pipeline operations; possibly linked to actor:ru_60th_veterans_brigade,
+    not established.
+- id: actor:ru_9th_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 9th Motor Rifle Regiment
+  parent: actor:ru_balakliia_force
+  side: ru
+- id: actor:ru_28th_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 28th Motor Rifle Regiment
+  side: ru
+- id: actor:ru_503rd_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 503rd Motor Rifle Regiment
+  aliases:
+  - 503rd MRR
+  parent: actor:ru_58th_combined_arms_army
+  side: ru
+- id: actor:ru_752nd_motor_rifle_regiment
+  type: actor
+  kind: military_unit
+  en: 752nd Motor Rifle Regiment
+  side: ru
+- id: actor:ru_90th_tank_regiment
+  type: actor
+  kind: military_unit
+  en: 90th Tank Regiment
+  side: ru
+- id: actor:ru_1427th_regiment
+  type: actor
+  kind: military_unit
+  en: 1427th Regiment
+  side: ru
+- id: actor:ru_1486th_regiment
+  type: actor
+  kind: military_unit
+  en: 1486th Regiment
+  side: ru
+- id: actor:ru_1855th_battalion
+  type: actor
+  kind: military_unit
+  en: 1855th Battalion
+  side: ru
+- id: actor:ru_22nd_spetsnaz_brigade
+  type: actor
+  kind: military_unit
+  en: 22nd Spetsnaz Brigade
+  parent: actor:ru_spetsnaz
+  side: ru
+- id: actor:ru_346th_spetsnaz_brigade
+  type: actor
+  kind: military_unit
+  en: 346th Spetsnaz Brigade
+  parent: actor:ru_spetsnaz
+  side: ru
+- id: actor:ru_14th_spetsnaz_brigade
+  type: actor
+  kind: military_unit
+  en: 14th Spetsnaz Brigade
+  parent: actor:ru_spetsnaz
+  side: ru
+- id: actor:ru_16th_spetsnaz_brigade
+  type: actor
+  kind: military_unit
+  en: 16th Spetsnaz Brigade
+  parent: actor:ru_spetsnaz
+  side: ru
+  note: GRU brigade; drone operators at Kupiansk.
+- id: actor:ru_3rd_guards_spetsnaz_brigade
+  type: actor
+  kind: military_unit
+  en: 3rd Guards Spetsnaz Brigade
+  parent: actor:ru_spetsnaz
+  side: ru
+- id: actor:ru_81st_volunteer_spetsnaz_brigade
+  type: actor
+  kind: military_unit
+  en: 81st Volunteer Spetsnaz Brigade
+  side: ru
+- id: actor:ru_141st_special_motorized_regiment
+  type: actor
+  kind: military_unit
+  en: 141st Special Motorized Regiment
+  side: ru
+  note: Chechen (Kadyrov) unit at Mariupol.
+- id: actor:akhmat_north
+  type: actor
+  kind: military_unit
+  en: Akhmat-North
+  parent: actor:akhmat
+  side: ru
+- id: actor:bars_9th
+  type: actor
+  kind: military_unit
+  en: 9th BARS
+  parent: actor:bars
+  side: ru
+- id: actor:bars_13
+  type: actor
+  kind: military_unit
+  en: BARS-13
+  parent: actor:bars
+  side: ru
+- id: actor:bars_16
+  type: actor
+  kind: military_unit
+  en: BARS-16
+  aliases:
+  - BARS-16 Kuban
+  parent: actor:bars
+  side: ru
+  note: '"Kuban".'
+- id: actor:patriot_pmc
+  type: actor
+  kind: military_unit
+  en: Patriot PMC
+  aliases:
+  - Patriot private military company
+  side: ru
+- id: actor:sudniy_den
+  type: actor
+  kind: military_unit
+  en: Sudniy Den
+  side: ru
+  note: Russian drone project at Kupiansk.
+- id: actor:dnr_forces
+  type: actor
+  kind: armed_force
+  en: DNR forces
+  aliases:
+  - DNR militia
+  - DPR forces
+  parent: actor:dpr
+  side: ru
+- id: actor:dnr_1st_army_corps
+  type: actor
+  kind: military_unit
+  en: DNR 1st Army Corps
+  aliases:
+  - 1st Army Corps (DNR)
+  parent: actor:dnr_forces
+  side: ru
+- id: actor:dnr_5th_brigade
+  type: actor
+  kind: military_unit
+  en: 5th Brigade (1st Army Corps)
+  parent: actor:dnr_1st_army_corps
+  side: ru
+- id: actor:vostok_battalion
+  type: actor
+  kind: military_unit
+  en: Vostok battalion
+  parent: actor:dnr_1st_army_corps
+  side: ru
+  note: Commanded by Alexander Khodakovsky.
+- id: actor:somalia_battalion
+  type: actor
+  kind: military_unit
+  en: Somalia Battalion
+  parent: actor:dnr_1st_army_corps
+  side: ru
+  note: DNR tank battalion.
+- id: actor:dnr_9th_marine_regiment
+  type: actor
+  kind: military_unit
+  en: 9th Marine Regiment (DNR)
+  parent: actor:dnr_1st_army_corps
+  side: ru
+- id: actor:slovyansk_brigade
+  type: actor
+  kind: military_unit
+  en: Slovyansk Brigade
+  parent: actor:dnr_1st_army_corps
+  side: ru
+- id: actor:dnr_107th_regiment
+  type: actor
+  kind: military_unit
+  en: 107th Regiment (DNR)
+  parent: actor:dnr_1st_army_corps
+  side: ru
+- id: actor:kaskad
+  type: actor
+  kind: military_unit
+  en: Kaskad
+  parent: actor:dnr_1st_army_corps
+  side: ru
+- id: actor:dnr_109th_regiment
+  type: actor
+  kind: military_unit
+  en: DNR 109th Regiment
+  parent: actor:dnr_forces
+  side: ru
+- id: actor:dnr_113th_regiment
+  type: actor
+  kind: military_unit
+  en: DNR 113th Regiment
+  parent: actor:dnr_forces
+  side: ru
+- id: actor:dnr_125th_regiment
+  type: actor
+  kind: military_unit
+  en: DNR 125th Regiment
+  parent: actor:dnr_forces
+  side: ru
+- id: actor:dnr_127th_regiment
+  type: actor
+  kind: military_unit
+  en: DNR 127th Regiment
+  parent: actor:dnr_forces
+  side: ru
+- id: actor:dnr_1st_slavic_brigade
+  type: actor
+  kind: military_unit
+  en: 1st 'Slavic' Brigade
+  side: ru
+- id: actor:lnr_forces
+  type: actor
+  kind: armed_force
+  en: LNR forces
+  aliases:
+  - LNR units
+  - LPR forces
+  parent: actor:lpr
+  side: ru
+- id: actor:lnr_206th_regiment
+  type: actor
+  kind: military_unit
+  en: 206th Regiment (LNR)
+  parent: actor:lnr_forces
+  side: ru
+- id: actor:state_duma
+  type: actor
+  kind: government_body
+  en: State Duma
+  aliases:
+  - Duma
+  side: ru
+- id: actor:security_council_of_russia
+  type: actor
+  kind: government_body
+  en: Security Council of Russia
+  aliases:
+  - Russian Security Council
+  side: ru
+- id: actor:russian_ministry_of_transport
+  type: actor
+  kind: government_body
+  en: Russian Ministry of Transport
+  parent: actor:government_of_russia
+  side: ru
+- id: actor:russian_national_anti_terrorism_committee
+  type: actor
+  kind: government_body
+  en: Russian National Anti-Terrorism Committee
+  aliases:
+  - National Anti-Terrorism Committee
+  side: ru
+- id: actor:moscow_military_court
+  type: actor
+  kind: government_body
+  en: Moscow military court
+  side: ru
+- id: actor:moscow_court
+  type: actor
+  kind: government_body
+  en: Moscow court
+  side: ru
+  note: Court in the A-50 case (2024); possibly the same Moscow military court (actor:moscow_military_court), not stated.
+- id: actor:sevastopol_court
+  type: actor
+  kind: government_body
+  en: Sevastopol court
+  side: ru
+- id: actor:russian_investigators
+  type: actor
+  kind: government_body
+  en: Russian investigators
+  aliases:
+  - Russian case file
+  - Russian Investigative Committee
+  side: ru
+  note: generic
+- id: actor:russian_occupation_officials
+  type: actor
+  kind: government_body
+  en: Russian occupation officials
+  aliases:
+  - occupation officials
+  side: ru
+  note: generic
+- id: actor:crimea_railway
+  type: actor
+  kind: company
+  en: Crimea Railway
+  side: ru
+- id: actor:nizhneangarsktransstroy
+  type: actor
+  kind: company
+  en: Nizhneangarsktransstroy
+  side: ru
+  note: Contractor for the 2022–23 Crimean Bridge repair.
+- id: actor:russian_media
+  type: actor
+  kind: outlet
+  en: Russian media
+  aliases:
+  - Russian state media
+  - pro-Kremlin outlet
+  - Kremlin-aligned outlets
+  side: ru
+  note: generic
+- id: actor:channel_one_russia
+  type: actor
+  kind: outlet
+  en: Channel One (Russia)
+  aliases:
+  - Channel 1
+  - Channel One
+  side: ru
+- id: actor:rybar
+  type: actor
+  kind: outlet
+  en: Rybar
+  side: ru
+  note: Russian milblogger channel.
+- id: actor:colonelcassad
+  type: actor
+  kind: outlet
+  en: Colonelcassad
+  side: ru
+  note: Russian milblogger channel.
+- id: actor:voenkor_kotenok
+  type: actor
+  kind: outlet
+  en: VoenkorKotenok
+  aliases:
+  - Kotenok
+  - Voenkor Kotenok
+  side: ru
+  note: Russian milblogger channel.
+- id: actor:military_informant
+  type: actor
+  kind: outlet
+  en: Military Informant
+  side: ru
+  note: Russian milblogger channel.
+- id: actor:two_majors
+  type: actor
+  kind: outlet
+  en: Two Majors
+  side: ru
+  note: Russian milblogger channel.
+- id: actor:grey_zone
+  type: actor
+  kind: platform
+  en: Grey Zone
+  parent: actor:wagner_group
+  side: ru
+  note: Wagner-linked Telegram channel.
+- id: actor:moscow_calling
+  type: actor
+  kind: platform
+  en: Moscow Calling
+  side: ru
+  note: Russian milblogger channel.
+- id: actor:crimean_bridge_telegram_channel
+  type: actor
+  kind: platform
+  en: Crimean Bridge Telegram channel
+  aliases:
+  - Russian bridge channel
+  side: ru
+  note: Russian official channel on Crimean Bridge traffic.
+- id: actor:lost_armour
+  type: actor
+  kind: platform
+  en: Lost Armour
+  side: ru
+  note: Pro-Russian forum tracking armour losses.
+- id: actor:novaya_gazeta_europe
+  type: actor
+  kind: outlet
+  en: Novaya Gazeta Europe
+  side: other
+  note: Independent Russian outlet in exile.
+- id: actor:the_insider
+  type: actor
+  kind: outlet
+  en: The Insider
+  side: other
+  note: Independent Russian investigative outlet in exile.
+- id: actor:meduza
+  type: actor
+  kind: outlet
+  en: Meduza
+  side: other
+  note: Independent Russian outlet in exile.
+- id: actor:the_moscow_times
+  type: actor
+  kind: outlet
+  en: The Moscow Times
+  side: other
+  note: Independent outlet in exile.
+- id: actor:astra
+  type: actor
+  kind: outlet
+  en: Astra
+  side: other
+  note: Independent Russian Telegram outlet.
+- id: actor:sergei_surovikin
+  type: actor
+  kind: person
+  en: Sergei Surovikin
+  aliases:
+  - Surovikin
+  side: ru
+  note: Army General; Russian theatre commander Oct 2022 – Jan 2023.
+- id: actor:valery_gerasimov
+  type: actor
+  kind: person
+  en: Valery Gerasimov
+  aliases:
+  - Gerasimov
+  side: ru
+  note: Chief of the Russian General Staff; theatre commander from Jan 2023.
+- id: actor:rustam_muradov
+  type: actor
+  kind: person
+  en: Rustam Muradov
+  aliases:
+  - Muradov
+  side: ru
+  note: Col. Gen., Eastern Military District commander (Oct 2022 – Apr 2023).
+- id: actor:zurab_akhmedov
+  type: actor
+  kind: person
+  en: Zurab Akhmedov
+  aliases:
+  - Akhmedov
+  side: ru
+  note: Col., commander of the 155th Naval Infantry Brigade (Nov 2022).
+- id: actor:sergei_kuzovlev
+  type: actor
+  kind: person
+  en: Sergei Kuzovlev
+  aliases:
+  - Kuzovlev
+  side: ru
+  note: Commander of the Russian Western Group of Forces (Kupiansk, 2025).
+- id: actor:nikolai_yevmenov
+  type: actor
+  kind: person
+  en: Nikolai Yevmenov
+  aliases:
+  - Yevmenov
+  side: ru
+  note: Adm., Russian Navy commander-in-chief until Mar 2024.
+- id: actor:aleksandr_moiseyev
+  type: actor
+  kind: person
+  en: Aleksandr Moiseyev
+  aliases:
+  - Moiseyev
+  side: ru
+  note: Adm., Russian Navy commander-in-chief from Mar 2024.
+- id: actor:viktor_sokolov
+  type: actor
+  kind: person
+  en: Viktor Sokolov
+  side: ru
+  note: Adm., Black Sea Fleet commander, removed Feb 2024.
+- id: actor:sergei_pinchuk
+  type: actor
+  kind: person
+  en: Sergei Pinchuk
+  side: ru
+  note: Vice Adm., acting Black Sea Fleet commander from Feb 2024; named commander Dec 2024.
+- id: actor:andrei_paly
+  type: actor
+  kind: person
+  en: Andrei Paly
+  side: ru
+  note: Black Sea Fleet deputy commander, killed at Mariupol (Mar 2022).
+- id: actor:anton_kuprin
+  type: actor
+  kind: person
+  en: Anton Kuprin
+  side: ru
+  note: Capt. 1st rank, commanding officer of the Moskva; fate contested.
+- id: actor:andrei_zakharov
+  type: actor
+  kind: person
+  en: Andrei Zakharov
+  aliases:
+  - A. Zakharov
+  side: ru
+  note: Col., commander of the 6th Tank Regiment; reported killed at Brovary (Mar 2022).
+- id: actor:alexander_lapin
+  type: actor
+  kind: person
+  en: Alexander Lapin
+  aliases:
+  - Lapin
+  side: ru
+  note: Col Gen, Central Military District commander; took over the western grouping Sep 2022.
+- id: actor:roman_berdnikov
+  type: actor
+  kind: person
+  en: Roman Berdnikov
+  aliases:
+  - Berdnikov
+  side: ru
+  note: Lt Gen; western-grouping commander from Aug 2022, Western Military District commander from Oct 2022.
+- id: actor:andrei_sychevoy
+  type: actor
+  kind: person
+  en: Andrei Sychevoy
+  aliases:
+  - Sychevoy
+  side: ru
+  note: Lt Gen; western-grouping commander until 26 Aug 2022.
+- id: actor:alexander_zhuravlyov
+  type: actor
+  kind: person
+  en: Alexander Zhuravlyov
+  aliases:
+  - Zhuravlyov
+  side: ru
+  note: Western Military District commander, replaced by Berdnikov (Oct 2022).
+- id: actor:ivan_popov
+  type: actor
+  kind: person
+  en: Ivan Popov
+  side: ru
+  note: Col, 11th Army Corps; commanded the Balakliia force (2022). Not merged with Maj. Gen. Ivan Popov of the 58th Army.
+- id: actor:mikhail_teplinsky
+  type: actor
+  kind: person
+  en: Mikhail Teplinsky
+  aliases:
+  - Teplinsky
+  side: ru
+  note: VDV commander; took over the Dnepr grouping (Oct 2023).
+- id: actor:oleg_makarevich
+  type: actor
+  kind: person
+  en: Oleg Makarevich
+  aliases:
+  - Makarevich
+  side: ru
+  note: Commander of the Dnepr grouping until Oct 2023.
+- id: actor:vladimir_zavadsky
+  type: actor
+  kind: person
+  en: Vladimir Zavadsky
+  aliases:
+  - Zavadsky
+  side: ru
+  note: Maj Gen, deputy commander of the 14th Army Corps; killed near Krynky 28 Nov 2023.
+- id: actor:andrei_mordvichev
+  type: actor
+  kind: person
+  en: Andrei Mordvichev
+  aliases:
+  - Mordvichev
+  side: ru
+  note: Lt Gen, commander of the 8th Combined Arms Army at Mariupol.
+- id: actor:mikhail_mizintsev
+  type: actor
+  kind: person
+  en: Mikhail Mizintsev
+  aliases:
+  - Mizintsev
+  side: ru
+  note: Named by Wikipedia as overall commander of the siege of Mariupol.
+- id: actor:mityaev
+  type: actor
+  kind: person
+  en: Mityaev
+  side: ru
+  note: Maj Gen, 150th Motor Rifle Division commander; claimed killed at Mariupol by Ukraine.
+- id: actor:gorobets
+  type: actor
+  kind: person
+  en: Gorobets
+  side: ru
+  note: Col., commander of the 20th Guards Motor Rifle Division; reported killed 10 Jul 2022.
+- id: actor:sergey_polyakov
+  type: actor
+  kind: person
+  en: Sergey Polyakov
+  side: ru
+  note: Special-forces colonel reported killed at Vuhledar.
+- id: actor:andrei_sirotyuk
+  type: actor
+  kind: person
+  en: Andrei Sirotyuk
+  side: ru
+  note: Russian regimental commander accused of ordering civilians shot at Kupiansk (Oct 2025).
+- id: actor:igor_konashenkov
+  type: actor
+  kind: person
+  en: Igor Konashenkov
+  aliases:
+  - Konashenkov
+  parent: actor:russian_ministry_of_defence
+  side: ru
+  note: Russian MoD spokesman.
+- id: actor:denis_pushilin
+  type: actor
+  kind: person
+  en: Denis Pushilin
+  aliases:
+  - Pushilin
+  side: ru
+  note: Head of the Russian-installed DNR.
+- id: actor:daniil_bezsonov
+  type: actor
+  kind: person
+  en: Daniil Bezsonov
+  aliases:
+  - Bezsonov
+  side: ru
+  note: DNR information official.
+- id: actor:alexander_khodakovsky
+  type: actor
+  kind: person
+  en: Alexander Khodakovsky
+  aliases:
+  - Khodakovsky
+  side: ru
+  note: Commander of the DNR Vostok battalion; milblogger.
+- id: actor:vitaly_ganchev
+  type: actor
+  kind: person
+  en: Vitaly Ganchev
+  aliases:
+  - Ganchev
+  side: ru
+  note: Head of the Russian occupation administration in Kharkiv Oblast (2022).
+- id: actor:vladimir_saldo
+  type: actor
+  kind: person
+  en: Vladimir Saldo
+  aliases:
+  - Volodymyr Saldo
+  - Saldo
+  side: ru
+  note: Head of the Russian occupation administration in Kherson Oblast.
+- id: actor:kirill_stremousov
+  type: actor
+  kind: person
+  en: Kirill Stremousov
+  aliases:
+  - Stremousov
+  side: ru
+  note: Deputy head of the Kherson occupation administration; died 9 Nov 2022.
+- id: actor:sergei_aksyonov
+  type: actor
+  kind: person
+  en: Sergei Aksyonov
+  aliases:
+  - Aksyonov
+  - Aksenov
+  side: ru
+  note: Head of the Russian-installed Crimean administration.
+- id: actor:mikhail_razvozhayev
+  type: actor
+  kind: person
+  en: Mikhail Razvozhayev
+  aliases:
+  - Razvozhayev
+  - Razvozhaev
+  - Mikhail Razvozhaev
+  side: ru
+  note: Russian-installed governor of Sevastopol.
+- id: actor:marat_khusnullin
+  type: actor
+  kind: person
+  en: Marat Khusnullin
+  aliases:
+  - Khusnullin
+  side: ru
+  note: Russian Deputy Prime Minister (construction).
+- id: actor:vyacheslav_volodin
+  type: actor
+  kind: person
+  en: Vyacheslav Volodin
+  aliases:
+  - Volodin
+  side: ru
+  note: Chairman of the State Duma.
+- id: actor:dmitry_medvedev
+  type: actor
+  kind: person
+  en: Dmitry Medvedev
+  aliases:
+  - Medvedev
+  side: ru
+  note: Deputy chairman of the Russian Security Council.
+- id: actor:ramzan_kadyrov
+  type: actor
+  kind: person
+  en: Ramzan Kadyrov
+  aliases:
+  - Kadyrov
+  side: ru
+  note: Head of the Chechen Republic.
+- id: actor:yevgeny_prigozhin
+  type: actor
+  kind: person
+  en: Yevgeny Prigozhin
+  aliases:
+  - Prigozhin
+  side: ru
+  note: Head of the Wagner Group (died Aug 2023).
+- id: actor:igor_girkin
+  type: actor
+  kind: person
+  en: Igor Girkin
+  aliases:
+  - Girkin
+  - Strelkov
+  - Igor Strelkov
+  side: ru
+  note: Russian nationalist milblogger, former DNR commander.
+- id: actor:aleksandr_kots
+  type: actor
+  kind: person
+  en: Aleksandr Kots
+  aliases:
+  - Kots
+  - Alexander Kots
+  side: ru
+  note: Russian war correspondent (Komsomolskaya Pravda) and milblogger.
+- id: actor:aleksandr_dugin
+  type: actor
+  kind: person
+  en: Aleksandr Dugin
+  aliases:
+  - Dugin
+  side: ru
+  note: Russian nationalist ideologue.
+- id: actor:gennady_zyuganov
+  type: actor
+  kind: person
+  en: Gennady Zyuganov
+  aliases:
+  - Zyuganov
+  side: ru
+  note: Leader of the Communist Party of the Russian Federation.
+- id: actor:fighterbomber
+  type: actor
+  kind: person
+  en: FighterBomber
+  side: ru
+  note: Russian aviation milblogger.
+- id: actor:makhir_yusubov
+  type: actor
+  kind: person
+  en: Makhir Yusubov
+  side: ru
+  note: Truck driver who unknowingly carried the Oct 2022 Crimean Bridge bomb (per the Russian case file).
+- id: actor:viktor_medvedchuk
+  type: actor
+  kind: person
+  en: Viktor Medvedchuk
+  aliases:
+  - Medvedchuk
+  side: ru
+  note: Pro-Russian Ukrainian politician; exchanged to Russia Sep 2022.
+- id: actor:uk_defence_intelligence
+  type: actor
+  kind: intelligence_agency
+  en: UK Defence Intelligence
+  aliases:
+  - UK DI
+  - British Defence Intelligence
+  parent: actor:uk_ministry_of_defence
+  side: western
+- id: actor:us_army
+  type: actor
+  kind: armed_force
+  en: US Army
+  parent: actor:us_department_of_defense
+  side: western
+- id: actor:us_10th_aamdc
+  type: actor
+  kind: military_unit
+  en: 10th AAMDC
+  aliases:
+  - 10th Army Air and Missile Defense Command
+  parent: actor:us_army
+  side: western
+- id: actor:un
+  type: actor
+  kind: international_org
+  en: UN
+  aliases:
+  - United Nations
+  side: international
+- id: actor:icrc
+  type: actor
+  kind: international_org
+  en: ICRC
+  aliases:
+  - International Committee of the Red Cross
+  - Red Cross
+  side: international
+- id: actor:hrw
+  type: actor
+  kind: ngo
+  en: HRW
+  aliases:
+  - Human Rights Watch
+  side: international
+- id: actor:amnesty_international
+  type: actor
+  kind: ngo
+  en: Amnesty International
+  aliases:
+  - Amnesty
+  side: international
+- id: actor:bellingcat
+  type: actor
+  kind: organisation
+  en: Bellingcat
+  side: western
+- id: actor:aviation_safety_network
+  type: actor
+  kind: organisation
+  en: ASN
+  aliases:
+  - Aviation Safety Network
+  side: other
+- id: actor:open_meteo
+  type: actor
+  kind: platform
+  en: Open-Meteo
+  side: other
+  note: Weather-reanalysis API.
+- id: actor:openstreetmap
+  type: actor
+  kind: platform
+  en: OpenStreetMap
+  aliases:
+  - OSM
+  side: other
+- id: actor:planet_labs
+  type: actor
+  kind: company
+  en: Planet
+  aliases:
+  - Planet Labs
+  side: western
+  note: Satellite-imagery company.
+- id: actor:hudson_institute
+  type: actor
+  kind: think_tank
+  en: Hudson Institute
+  side: western
+- id: actor:iiss
+  type: actor
+  kind: think_tank
+  en: IISS
+  aliases:
+  - The Military Balance
+  - International Institute for Strategic Studies
+  side: western
+  note: IISS annual reference of armed forces.
+- id: actor:georgetown_security_studies_review
+  type: actor
+  kind: outlet
+  en: Georgetown Security Studies Review
+  side: western
+  note: Georgetown University student journal.
+- id: actor:the_times
+  type: actor
+  kind: outlet
+  en: The Times
+  side: western
+- id: actor:the_telegraph
+  type: actor
+  kind: outlet
+  en: The Telegraph
+  side: western
+- id: actor:sky_news
+  type: actor
+  kind: outlet
+  en: Sky News
+  side: western
+- id: actor:cnn
+  type: actor
+  kind: outlet
+  en: CNN
+  side: western
+- id: actor:ap
+  type: actor
+  kind: outlet
+  en: AP
+  aliases:
+  - Associated Press
+  side: western
+- id: actor:wall_street_journal
+  type: actor
+  kind: outlet
+  en: Wall Street Journal
+  aliases:
+  - WSJ
+  - The Wall Street Journal
+  side: western
+- id: actor:forbes
+  type: actor
+  kind: outlet
+  en: Forbes
+  side: western
+- id: actor:the_war_zone
+  type: actor
+  kind: outlet
+  en: The War Zone
+  aliases:
+  - TWZ
+  side: western
+- id: actor:naval_news
+  type: actor
+  kind: outlet
+  en: Naval News
+  side: western
+- id: actor:european_security_defence
+  type: actor
+  kind: outlet
+  en: European Security & Defence
+  side: western
+- id: actor:current_time
+  type: actor
+  kind: outlet
+  en: Current Time
+  parent: actor:radio_free_europe_radio_liberty
+  side: western
+  note: RFE/RL's Russian-language TV network.
+- id: actor:h_i_sutton
+  type: actor
+  kind: person
+  en: H I Sutton
+  aliases:
+  - H. I. Sutton
+  side: western
+  note: Naval analyst (Covert Shores, Naval News).
+- id: actor:tom_cooper
+  type: actor
+  kind: person
+  en: Tom Cooper
+  side: western
+  note: Austrian military-aviation historian and analyst.
+- id: actor:michael_kofman
+  type: actor
+  kind: person
+  en: Michael Kofman
+  aliases:
+  - Kofman
+  side: western
+  note: Military analyst (Carnegie).
+- id: actor:miller_wavell_room
+  type: actor
+  kind: person
+  en: Miller (Wavell Room)
+  side: western
+  note: Analyst writing for the Wavell Room.
+- id: actor:emil_kastehelmi
+  type: actor
+  kind: person
+  en: Emil Kastehelmi
+  aliases:
+  - Kastehelmi
+  side: western
+  note: Finnish analyst (Black Bird Group).
+- id: actor:jakub_janovsky
+  type: actor
+  kind: person
+  en: Jakub Janovsky
+  aliases:
+  - Janovsky
+  side: western
+  note: Oryx contributor.
+- id: actor:naalsio
+  type: actor
+  kind: person
+  en: Naalsio
+  side: other
+  note: OSINT researcher counting equipment losses.
+- id: actor:parry
+  type: actor
+  kind: person
+  en: Parry
+  side: western
+  note: Outside analyst on the Moskva damage.
+- id: actor:barry_posen
+  type: actor
+  kind: person
+  en: Barry Posen
+  aliases:
+  - Posen
+  side: western
+  note: MIT political scientist.
+- id: actor:phillips_obrien
+  type: actor
+  kind: person
+  en: Phillips O'Brien
+  side: western
+  note: Strategic-studies professor (St Andrews).
+- id: actor:david_axe
+  type: actor
+  kind: person
+  en: David Axe
+  side: western
+  note: Defence journalist (Forbes).
+- id: actor:brady_africk
+  type: actor
+  kind: person
+  en: Brady Africk
+  side: western
+  note: OSINT imagery analyst (AEI).
+- id: actor:clemente
+  type: actor
+  kind: person
+  en: Clemente
+  aliases:
+  - US Army air-defence officer
+  parent: actor:us_10th_aamdc
+  side: western
+  note: Col., US 10th AAMDC; described the Patriot 'SAMbush' on the first A-50 (May 2024). The TWZ 'US Army air-defence officer' is taken to be
+    him.
+- id: actor:mark_milley
+  type: actor
+  kind: person
+  en: Mark Milley
+  aliases:
+  - Milley
+  side: western
+  note: Chairman of the US Joint Chiefs of Staff (2019–2023).
+- id: actor:ben_wallace
+  type: actor
+  kind: person
+  en: Ben Wallace
+  side: western
+  note: UK Defence Secretary (2019 – Aug 2023).
+- id: actor:grant_shapps
+  type: actor
+  kind: person
+  en: Grant Shapps
+  aliases:
+  - Shapps
+  side: western
+  note: UK Defence Secretary (Aug 2023 – Jul 2024).
+- id: actor:rishi_sunak
+  type: actor
+  kind: person
+  en: Rishi Sunak
+  aliases:
+  - Sunak
+  side: western
+  note: UK Prime Minister (2022–2024).
+- id: actor:arvydas_anusauskas
+  type: actor
+  kind: person
+  en: Arvydas Anušauskas
+  aliases:
+  - Anušauskas
+  - Anusauskas
+  side: western
+  note: Lithuanian Minister of National Defence (2020–2024).
+- id: actor:antonio_guterres
+  type: actor
+  kind: person
+  en: António Guterres
+  aliases:
+  - Guterres
+  parent: actor:un
+  side: international
+  note: UN Secretary-General.
+- id: actor:recep_tayyip_erdogan
+  type: actor
+  kind: person
+  en: Recep Tayyip Erdoğan
+  aliases:
+  - Erdoğan
+  - Erdogan
+  side: other
+  note: President of Turkey.
+- id: actor:pope_francis
+  type: actor
+  kind: person
+  en: Pope Francis
+  side: international
+- id: actor:bypol
+  type: actor
+  kind: organisation
+  en: BYPOL
+  side: other
+  note: Belarusian opposition group of former security officers; drone attack on an A-50 at Machulishchy (Feb 2023).
+- id: actor:eduard_lobau
+  type: actor
+  kind: person
+  en: Eduard Lobau
+  parent: actor:kalinouski_regiment
+  side: ua
+  note: Belarusian activist of the Kalinouski Regiment, killed near Vuhledar 26 Jan 2023.
+- id: actor:ukrainian_sources_unnamed
+  type: actor
+  kind: organisation
+  en: Ukrainian sources (unnamed)
+  aliases:
+  - Ukrainian sources
+  - Ukrainian military sources
+  - Ukrainska Pravda sources
+  - Ukrainska Pravda's sources
+  - Ukrainska Pravda source
+  - Kyiv Post sources
+  - 36th Marine Brigade sources
+  - 36th Marine Brigade source
+  side: ua
+  note: generic
+- id: actor:russian_soldiers_unnamed
+  type: actor
+  kind: person
+  en: Russian soldiers (unnamed)
+  aliases:
+  - Russian soldier
+  - Intercepted Russian officer
+  - Russian officer (radio voice-over)
+  - 155th Brigade survivor
+  - former Kunikov sailor
+  - 155th Guards Naval Infantry Brigade servicemen
+  - 126th Coastal Defence Brigade soldiers
+  - 5th Brigade (1st Army Corps) servicemen
+  side: ru
+  note: generic
+- id: actor:russian_relatives_unnamed
+  type: actor
+  kind: organisation
+  en: Relatives of Russian servicemen (unnamed)
+  aliases:
+  - mother of a Moskva conscript
+  - relatives of Alga battalion soldiers
+  side: ru
+  note: generic
+- id: actor:ukrainian_relatives_unnamed
+  type: actor
+  kind: organisation
+  en: Relatives of Ukrainian servicemen (unnamed)
+  aliases:
+  - families of missing marines
+  side: ua
+  note: generic
+- id: actor:ukrainian_civilians_unnamed
+  type: actor
+  kind: person
+  en: Ukrainian civilians (unnamed)
+  aliases:
+  - Ukrainian eyewitness
+  side: ua
+  note: generic
+- id: actor:foreign_volunteers_unnamed
+  type: actor
+  kind: person
+  en: Foreign volunteers for Ukraine (unnamed)
+  aliases:
+  - British volunteer
+  side: ua
+  note: generic
+- id: actor:twz_armour_experts
+  type: actor
+  kind: person
+  en: Armour experts interviewed by TWZ (unnamed)
+  aliases:
+  - armour experts interviewed by TWZ
+  - armour expert interviewed by TWZ
+  - master gunner interviewed by TWZ
+  side: western
   note: generic

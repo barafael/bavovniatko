@@ -4,13 +4,17 @@
 {"base":{"$rid":["unit","count_per_month"]},"dimension":"count/time","ext":{"_hash":"92f8a122ef040f72"},"id":{"$rid":["unit","count_per_week"]},"labels":{"en":"count/week"},"symbol":"count/week","to_base":4.348214}
 {"base":{"$rid":["unit","eur"]},"dimension":"currency","ext":{"_hash":"79b494e42b98331a"},"id":{"$rid":["unit","eur_bn"]},"labels":{"en":"EUR bn"},"symbol":"EUR bn","to_base":1000000000.0}
 {"base":{"$rid":["unit","kg"]},"dimension":"mass","ext":{"_hash":"5fcb41a5a33589d8"},"id":{"$rid":["unit","t"]},"labels":{"en":"t"},"symbol":"t","to_base":1000.0}
+{"base":{"$rid":["unit","km"]},"dimension":"length","ext":{"_hash":"3d0848fa427b2846"},"id":{"$rid":["unit","nmi"]},"labels":{"en":"nmi"},"symbol":"nmi","to_base":1.852}
 {"base":{"$rid":["unit","km"]},"dimension":"length","ext":{"_hash":"92c7e4cd977cec9e"},"id":{"$rid":["unit","m"]},"labels":{"en":"m"},"symbol":"m","to_base":0.001}
+{"base":{"$rid":["unit","km"]},"dimension":"length","ext":{"_hash":"af86dbc2e2a35562"},"id":{"$rid":["unit","mm"]},"labels":{"en":"mm"},"symbol":"mm","to_base":1e-06}
+{"base":{"$rid":["unit","km"]},"dimension":"length","ext":{"_hash":"b9ec29009751630b"},"id":{"$rid":["unit","cm"]},"labels":{"en":"cm"},"symbol":"cm","to_base":1e-05}
 {"base":{"$rid":["unit","km2"]},"dimension":"area","ext":{"_hash":"c8fb2d0fe38c5989"},"id":{"$rid":["unit","m2"]},"labels":{"en":"m²"},"symbol":"m²","to_base":1e-06}
 {"base":{"$rid":["unit","km2"]},"dimension":"area","ext":{"_hash":"e24b0687ece185bf"},"id":{"$rid":["unit","ha"]},"labels":{"en":"ha"},"symbol":"ha","to_base":0.01}
 {"base":{"$rid":["unit","km2_per_month"]},"dimension":"area/time","ext":{"_hash":"7d81ab5b09c32c3f"},"id":{"$rid":["unit","km2_per_day"]},"labels":{"en":"km²/day"},"symbol":"km²/day","to_base":30.4375}
 {"base":{"$rid":["unit","km2_per_month"]},"dimension":"area/time","ext":{"_hash":"8c4d82f813aa4721"},"id":{"$rid":["unit","km2_per_week"]},"labels":{"en":"km²/week"},"symbol":"km²/week","to_base":4.348214}
 {"base":{"$rid":["unit","km2_per_month"]},"dimension":"area/time","ext":{"_hash":"d846b6c0d2535372"},"id":{"$rid":["unit","km2_per_year"]},"labels":{"en":"km²/year"},"symbol":"km²/year","to_base":0.0833333333}
 {"base":{"$rid":["unit","km_per_h"]},"dimension":"speed","ext":{"_hash":"715cfda973c6d152"},"id":{"$rid":["unit","m_per_s"]},"labels":{"en":"m/s"},"symbol":"m/s","to_base":3.6}
+{"base":{"$rid":["unit","km_per_h"]},"dimension":"speed","ext":{"_hash":"f081ca893db832bc"},"id":{"$rid":["unit","knot"]},"labels":{"en":"kn"},"symbol":"kn","to_base":1.852}
 {"base":{"$rid":["unit","mhz"]},"dimension":"frequency","ext":{"_hash":"1ff1021e8d2ac6b9"},"id":{"$rid":["unit","ghz"]},"labels":{"en":"GHz"},"symbol":"GHz","to_base":1000.0}
 {"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"14e662df146040c7"},"id":{"$rid":["unit","month"]},"labels":{"en":"month"},"symbol":"month","to_base":43830.0}
 {"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"3927a171106be05e"},"id":{"$rid":["unit","h"]},"labels":{"en":"h"},"symbol":"h","to_base":60.0}
@@ -24,6 +28,7 @@
 {"dimension":"angle","ext":{"_hash":"c36b9a09fd3b89bf"},"id":{"$rid":["unit","degree"]},"labels":{"en":"°"},"symbol":"°"}
 {"dimension":"area","ext":{"_hash":"24ebdd675ede2b67"},"id":{"$rid":["unit","km2"]},"labels":{"en":"km²"},"symbol":"km²"}
 {"dimension":"area/time","ext":{"_hash":"17a640c97276a3b3"},"id":{"$rid":["unit","km2_per_month"]},"labels":{"en":"km²/month"},"symbol":"km²/month"}
+{"dimension":"clock_time","ext":{"_hash":"e9288b263a5f72d2"},"id":{"$rid":["unit","hour_of_day"]},"labels":{"en":"h (clock)"},"symbol":"h (clock)"}
 {"dimension":"count","ext":{"_hash":"205a1af46419056d"},"id":{"$rid":["unit","people"]},"labels":{"en":"people"},"symbol":"people"}
 {"dimension":"count","ext":{"_hash":"a84d2efb68420add"},"id":{"$rid":["unit","count"]},"labels":{"en":"count"},"symbol":"count"}
 {"dimension":"count/area","ext":{"_hash":"5115837ed4e8e40a"},"id":{"$rid":["unit","casualties_per_km2"]},"labels":{"en":"casualties/km²"},"symbol":"casualties/km²"}

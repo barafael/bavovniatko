@@ -1,0 +1,40 @@
+{"pair": "df431b211e8c", "relation": "supports", "from": "claim:cc02_0028_14", "to": "claim:cc02_0021_17", "strength": 0.6, "independent": false, "rationale": "The TB2 video of Harpoons hitting the Vasily Bekh on 17 Jun 2022 corroborates A's first combat use on that date."}
+{"pair": "df57d4a2a0af", "relation": "none", "rationale": "The embankment's length and the brigade's fighting and Iskander strike are different facts."}
+{"pair": "df692672e75f", "relation": "none", "rationale": "The ship's specifications and the video's description are different facts."}
+{"pair": "df7b07ca3d2f", "relation": "none", "rationale": "Forbes's crew-kill suggestion and the experts' reading of the aim points are different assertions."}
+{"pair": "dfbc6600c849", "relation": "weakens", "from": "claim:cv02_0020_04", "to": "claim:cv02_0020_03", "strength": 0.4, "rationale": "A master gunner's view that the 25 mm can match the TOW in some situations qualifies the expert view that the TOW is the trained answer."}
+{"pair": "dfcab665289e", "relation": "supports", "from": "claim:cc03_0031_07", "to": "claim:cc03_0004_13", "strength": 0.6, "independent": false, "rationale": "The 36th Brigade splitting at Illich, with one group heading for Azov, corroborates A's partial breakthrough to Azovstal."}
+{"pair": "dfd485790297", "relation": "supports", "from": "claim:cc03_0022_08", "to": "claim:cc03_0008_47", "strength": 0.6, "independent": false, "rationale": "About 500 marines from Illich joining the Azovstal garrison corroborates Arestovych's confirmation that the 36th had linked up with Azov."}
+{"pair": "e005e9564c6a", "relation": "none", "rationale": "The crew's identities and the gunner's aim at the optics are different facts."}
+{"pair": "e023d1295998", "relation": "none", "rationale": "A geographic description of the Sea of Azov does not bear on the shootdown."}
+{"pair": "e03593922e3b", "relation": "none", "rationale": "B gives Donuzlav's location; A gives the sinking."}
+{"pair": "e0ac5a97f59d", "relation": "none", "rationale": "Bridge destruction and computed distances are different subjects."}
+{"pair": "e0b234a25da9", "relation": "supports", "from": "claim:cc13_0035_08", "to": "claim:cc13_0009_02", "strength": 0.6, "independent": false, "rationale": "The TWZ video account of the drones hitting the Ivanovets at Donuzlav on 1 Feb 2024 corroborates the Oryx-listed sinking."}
+{"pair": "e0c4c768980c", "relation": "duplicates", "from": "claim:cc02_0028_13", "to": "claim:cc02_0023_09", "strength": 0.8, "rationale": "The same shootdown of Col. Bedzai's Mi-14 during the May 2022 Zmiinyi Island fighting, from the same source."}
+{"pair": "e0d5ed6179c0", "relation": "none", "rationale": "The works' location and the breakout account are different facts."}
+{"pair": "e0f6262753a1", "relation": "duplicates", "from": "claim:cc06_0012_69", "to": "claim:cc06_0030_24", "strength": 0.9, "rationale": "The same ISW report of LNR units from Kharkiv Oblast sent to Donetsk Oblast on 14 September 2022."}
+{"pair": "e0fc35e15924", "relation": "duplicates", "from": "claim:cv02_0018_03", "to": "claim:cv02_0003_08", "strength": 0.9, "rationale": "The same account of Serhiy switching to the T-90M's optics after AP-round trouble, extracted twice."}
+{"pair": "e0fed9d93ebd", "relation": "none", "rationale": "Prokopenko's verdict on the breakout and the pocket's fall are different assertions."}
+{"pair": "e101f9fa2f5b", "relation": "none", "rationale": "The trench holding and the village setting are different details."}
+{"pair": "e102f9696d6b", "relation": "supports", "from": "claim:cc05_0023_04", "to": "claim:cc05_0010_44", "strength": 0.7, "independent": false, "rationale": "Both describe the Sea Baby strike as a joint SBU–Navy operation using drones carrying up to 850 kg; they share the CNN source."}
+{"pair": "e112a9e8f2de", "relation": "none", "rationale": "Claimed shootdowns on 17 February and the jets recalled after the A-50 loss are different events."}
+{"pair": "e12939084307", "relation": "none", "rationale": "The Russian pipeline exit at Sudzha and the Ukrainian withdrawal are different events."}
+{"pair": "e139bb3a4d83", "relation": "supports", "from": "claim:cc02_0026_25", "to": "claim:cc02_0021_16", "strength": 0.5, "independent": false, "rationale": "The shoot-and-hide rotation of CAESAR, Uragan and Bohdana corroborates A's battery composition; same source."}
+{"pair": "e1f76d5dbc60", "relation": "none", "rationale": "Boats unable to cross in spring 2024 and a general list of danger points are related context only."}
+{"pair": "e2020e690ec4", "relation": "none", "rationale": "The video's contents and an expert's attribution of panic are different assertions."}
+{"pair": "e21ea08c974a", "relation": "none", "rationale": "The crew fleeing and the gunner's choice of rounds are different details."}
+{"pair": "e2508b5032f3", "relation": "none", "rationale": "B gives the site coordinates; A gives the strikes."}
+{"pair": "e275f114e4de", "relation": "supports", "from": "claim:cc02_0028_10", "to": "claim:cc02_0026_17", "strength": 0.6, "independent": false, "rationale": "The TB2 strike on a Serna unloading at Zmiinyi Island on 7 May is an instance of A's TB2s hitting the resupply boats; same source."}
+{"pair": "e285171786a0", "relation": "none", "rationale": "Computed distances and the bridge demolitions are different subjects."}
+{"pair": "e2bdd8f79447", "relation": "supports", "from": "claim:cc02_0028_10", "to": "claim:cc02_0007_02", "strength": 0.7, "independent": false, "rationale": "The 7 May TB2 strike on a Serna is an instance of A's May 2022 TB2 campaign against the Tors and the landing craft; they share a Naval News source."}
+{"pair": "e2da763a6698", "relation": "refines", "from": "claim:cc12_0025_02", "to": "claim:cc12_0004_04", "strength": 0.6, "rationale": "B gives a more precise timeline of the 14 January 2024 A-50U and Il-22M11 engagement described in A."}
+{"pair": "e2e7b5fdfd5f", "relation": "refines", "from": "claim:cc13_0016_11", "to": "claim:cc13_0006_03", "strength": 0.6, "rationale": "B places the Tsezar Kunikov sinking precisely, about 4 km off Alupka."}
+{"pair": "e2ed051808a1", "relation": "supports", "from": "claim:cc13_0016_09", "to": "claim:cc13_0013_72", "strength": 0.5, "independent": false, "rationale": "B restates the Magura kill of a KS-701 at Chornomorske in Aug 2024; it shares the Wikipedia source."}
+{"pair": "e32a2329ae62", "relation": "none", "rationale": "The 19 February shootdown claims and the 23–24 February sortie recall are different events."}
+{"pair": "e36c9b2b77b3", "relation": "supports", "from": "claim:cv01_0013_02", "to": "claim:cv01_0003_04", "strength": 0.5, "independent": false, "rationale": "B's equipment list for Darmohrai's 3rd Battalion at Brovary corroborates its presence; they share the Wikipedia source."}
+{"pair": "e38edc0fcde0", "relation": "refines", "from": "claim:cc13_0016_16", "to": "claim:cc13_0035_15", "strength": 0.6, "rationale": "A places the 2 May 2025 Su-30SM shootdown more precisely, about 50 km west of Novorossiysk."}
+{"pair": "e390dbf95126", "relation": "none", "rationale": "The ship's route and the corridor's opening are different facts."}
+{"pair": "e3e21da3d9db", "relation": "supports", "from": "claim:cc17_0013_01", "to": "claim:cc17_0007_18", "strength": 0.6, "independent": true, "rationale": "OSM's mapped gas line passing near Lyman Pershyi and Radkivka corroborates the claimed pipeline entrance and exit."}
+{"pair": "e3e32ef5f70e", "relation": "none", "rationale": "The 17 February shootdown claims and the sortie recall are different events."}
+{"pair": "e3e762c92a06", "relation": "supports", "from": "claim:cc08_0010_036", "to": "claim:cc08_0029_04", "strength": 0.6, "independent": false, "rationale": "The 3 February ambush is an instance of the SOF–72nd Brigade teamwork at Vuhledar; same source."}
+{"pair": "e3ec0c29bb7a", "relation": "none", "rationale": "A general assessment of Ukraine's air force and the specific missile gap against the A-50 are related context only."}

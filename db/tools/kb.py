@@ -128,6 +128,23 @@ def geom(g: dict | None):
     raise ValueError(f"unsupported geometry type {t}")
 
 
+CODE = r"(?:\d\d|[cv]\d\d)"          # document codes: 00–08 (topic files), cNN (chapters), vNN (vignettes)
+
+
+def topic_key(code: str) -> str:
+    """Document code -> topic record key: "03" -> "t03", "c02" -> "c02"."""
+    return f"t{code}" if code.isdigit() else code
+
+
+def documents() -> list[Path]:
+    """All knowledge-base documents: research/NN-*.md and research/chapters/[cv]NN-*.md."""
+    return sorted(RESEARCH.glob("0[0-9]-*.md")) + sorted((RESEARCH / "chapters").glob("[cv][0-9][0-9]-*.md"))
+
+
+def doc_code(path: Path) -> str:
+    return path.name.split("-", 1)[0]
+
+
 def slug(text: str, maxlen: int = 60) -> str:
     s = re.sub(r"[^a-z0-9]+", "_", text.lower()).strip("_")
     return s[:maxlen].rstrip("_") or "x"

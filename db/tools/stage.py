@@ -47,8 +47,8 @@ def schema() -> dict:
         "required": ["type", "local_id", "passage", "text", "kind", "epistemic", "cites"],
         "properties": {
             "type": {"const": "claim"},
-            "local_id": {"type": "string", "pattern": r"^\d\d-\d{4}-\d{2,3}$"},
-            "passage": {"type": "string", "pattern": r"^\d\d/\d{4}$"},
+            "local_id": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)-\d{4}-\d{2,3}$"},
+            "passage": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)/\d{4}$"},
             "text": {"type": "string", "minLength": 8, "maxLength": 800},
             "kind": {"enum": ["fact", "figure", "event", "assessment", "forecast", "definition"]},
             "epistemic": {"enum": ["observed", "reported", "claimed", "estimated", "derived", "computed"]},
@@ -95,12 +95,12 @@ def schema() -> dict:
         "required": ["type", "local_id", "counter", "measure", "rationale", "evidence"],
         "properties": {
             "type": {"const": "counter"},
-            "local_id": {"type": "string", "pattern": r"^\d\d-x\d{2,3}$"},
+            "local_id": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)-x\d{2,3}$"},
             "counter": {"type": "string"}, "counter_kind": {"enum": KINDS["system"]},
             "measure": {"type": "string"}, "measure_kind": {"enum": KINDS["system"]},
             "first_observed": TIME, "lag_days": {"type": "integer", "minimum": 0},
             "effect": {"type": "string"}, "rationale": {"type": "string"},
-            "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": r"^\d\d-\d{4}-\d{2,3}$"}},
+            "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)-\d{4}-\d{2,3}$"}},
         },
     }
     return {"$schema": "https://json-schema.org/draft/2020-12/schema", "title": "bavovniatko staging record",
@@ -120,20 +120,27 @@ def validator():
 
 
 def topic_file(nn: str) -> Path:
-    return next(kb.RESEARCH.glob(f"{nn}-*.md"))
+    return next(p for p in kb.documents() if kb.doc_code(p) == nn)
 
 
 def source_ids() -> dict[str, str]:
-    ids = {}
-    for f in sorted((kb.RESEARCH / "sources").glob("*.yaml")):
-        for e in yaml.safe_load(f.read_text()):
-            ids[e["id"]] = e["id"]
-            for a in e.get("aliases") or []:
-                ids[a] = e["id"]
-    merged = yaml.safe_load((kb.RESEARCH / "sources.yaml").read_text())
-    for e in merged:
-        for a in [e["id"], *(e.get("aliases") or [])]:
-            ids[a] = e["id"]
+    """Every citable source id (and alias) -> canonical id: the knowledge base first (it is canonical),
+    then db/staging/sources/*.yaml for sources not loaded yet, then research/ YAML as a fallback when the
+    database is not running."""
+    ids: dict[str, str] = {}
+    try:
+        for r in kb.one(kb.connect(), "SELECT id, legacy_ids FROM source"):
+            for a in [r["id"].id, *(r.get("legacy_ids") or [])]:
+                ids[a] = r["id"].id
+    except Exception:
+        for f in [kb.RESEARCH / "sources.yaml", *sorted((kb.RESEARCH / "sources").rglob("*.yaml"))]:
+            for e in yaml.safe_load(f.read_text()) or []:
+                for a in [e["id"], *(e.get("aliases") or [])]:
+                    ids.setdefault(a, e["id"])
+    for f in sorted((STAGING / "sources").glob("*.yaml")):
+        for e in yaml.safe_load(f.read_text()) or []:
+            for a in [e["id"], *(e.get("aliases") or [])]:
+                ids.setdefault(a, e["id"])
     return ids
 
 
@@ -149,7 +156,7 @@ def errors_for(rec: dict, nn: str, passages: set[str], srcs: dict[str, str]) -> 
     if t == "claim":
         if rec["passage"] not in passages:
             errs.append(f"unknown passage {rec['passage']}")
-        elif rec["local_id"][:7] != rec["passage"].replace("/", "-"):
+        elif rec["local_id"].rsplit("-", 1)[0] != rec["passage"].replace("/", "-"):
             errs.append("local_id must be <passage NN-OOOO>-<seq>")
         for c in rec["cites"]:
             if c["source"] not in srcs:
@@ -303,7 +310,7 @@ def main():
     elif args.cmd == "append":
         sys.exit(cmd_append(args.nn, args.file))
     elif args.cmd == "check":
-        nns = [f"{i:02d}" for i in range(9)] if args.nn == "all" else [args.nn]
+        nns = [kb.doc_code(p) for p in kb.documents() if (CLAIMS / f"{kb.doc_code(p)}.jsonl").exists()] if args.nn == "all" else [args.nn]
         sys.exit(max(cmd_check(n) for n in nns))
     elif args.cmd == "metrics":
         cmd_metrics()

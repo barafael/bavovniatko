@@ -1,0 +1,40 @@
+{"pair": "e3f174e7bb5b", "relation": "supports", "from": "claim:cc12_0025_09", "to": "claim:cc12_0023_12", "strength": 0.4, "independent": false, "rationale": "Jets recalled after the A-50 kill fit Ihnat's assessment that Russian Su-34s and Su-35s can no longer fly freely."}
+{"pair": "e43502d2cf8f", "relation": "duplicates", "from": "claim:cc17_0007_44", "to": "claim:cc17_0031_01", "strength": 0.8, "rationale": "The same Gerasimov–Kuzovlev report of 20 November 2025 that Kupiansk had been taken, from the same ISW report."}
+{"pair": "e4a3b0b348fb", "relation": "duplicates", "from": "claim:cc02_0034_09", "to": "claim:cc02_0011_84", "strength": 0.85, "rationale": "The same Moscow military court finding (Shubin named; 20 dead, 24 injured, 8 missing), extracted twice."}
+{"pair": "e5be5537851b", "relation": "none", "rationale": "The 12 April breakout and the pocket's fall on 13 April are different facts and consistent with each other."}
+{"pair": "e5c50c129b12", "relation": "none", "rationale": "The supply crossings and their later destruction are different facts."}
+{"pair": "e5e68a79aec0", "relation": "none", "rationale": "A milblogger friendly-fire narrative stated generally does not bear on this specific claim."}
+{"pair": "e6790aae0a71", "relation": "supports", "from": "claim:cc10_0035_04", "to": "claim:cc10_0015_023", "strength": 0.7, "independent": false, "rationale": "B confirms A's Iskander strike on the 36th Brigade on the rail-bridge axis about 19 October 2023; they share the Pravda source."}
+{"pair": "e67fc5bf6bf5", "relation": "duplicates", "from": "claim:cc13_0037_07", "to": "claim:cc13_0017_02", "strength": 0.9, "rationale": "The same Budanov preference for catching ships at sea over forcing the Sevastopol and Novorossiysk defences."}
+{"pair": "e6a911b971e3", "relation": "none", "rationale": "A mission kill and Forbes's crew-kill suggestion are different assertions."}
+{"pair": "e6ae4a1033b3", "relation": "supports", "from": "claim:cc02_0028_13", "to": "claim:cc02_0021_13", "strength": 0.7, "independent": false, "rationale": "The shootdown of Bedzai's rescue helicopter corroborates his death on 7 May 2022; same source."}
+{"pair": "e6aeaf018154", "relation": "supports", "from": "claim:cc10_0015_065", "to": "claim:cc10_0035_01", "strength": 0.5, "independent": false, "rationale": "The April 2024 dispatch of the 88th and 18th battalions to Krynky is an instance of the 35th Brigade fighting on that axis."}
+{"pair": "e6eacae2f20e", "relation": "weakens", "from": "claim:cc17_0031_05", "to": "claim:cc17_0031_01", "strength": 0.7, "rationale": "Kuzovlev's own postponement of the 'liberation' to early 2026 undercuts the 20 November claim that all of Kupiansk had been seized."}
+{"pair": "e72cf3facf40", "relation": "none", "rationale": "The capture of Poima and the embankment's length are different facts."}
+{"pair": "e73eec669e7e", "relation": "supports", "from": "claim:cc05_0031_01", "to": "claim:cc05_0036_20", "strength": 0.5, "independent": false, "rationale": "A's charges placed over months and fired on 3 Jun 2025 underlie B's account of the under-barrier approach; same source."}
+{"pair": "e7466b039ca7", "relation": "duplicates", "from": "claim:cc05_0034_14", "to": "claim:cc05_0010_66", "strength": 0.75, "rationale": "B restates A's timing of the 3 Jun 2025 bridge strike, two days after Spiderweb, from the same source."}
+{"pair": "e748378ec69c", "relation": "none", "rationale": "The launch outcome and the launch altitude are different details."}
+{"pair": "e7c829f6142f", "relation": "none", "rationale": "The crew fleeing and the smoke discharge are different details."}
+{"pair": "e7e32cd5d659", "relation": "none", "rationale": "The capture of Poima and the brigade's composition and Iskander strike are different facts."}
+{"pair": "e80d40c192b0", "relation": "none", "rationale": "The sinkings being uncontested and their location outside the harbours are different assertions."}
+{"pair": "e80d6f5707f8", "relation": "none", "rationale": "Who fired first and the village setting are different details."}
+{"pair": "e81060ea80fb", "relation": "none", "rationale": "The MoD's monthly tally and the milblogger friendly-fire narrative do not bear on each other directly."}
+{"pair": "e83c0e147cc2", "relation": "none", "rationale": "Firing range and firing rotation are different details."}
+{"pair": "e85e3ec2b141", "relation": "none", "rationale": "Fighter types and low-altitude tactics are different facts."}
+{"pair": "e88ebf472b1f", "relation": "none", "rationale": "The Iskander strike and the supply-post request are different facts."}
+{"pair": "e8c6b31b71cd", "relation": "none", "rationale": "The column's advance and its bunching and retreat are successive phases."}
+{"pair": "e8cb71de58e5", "relation": "none", "rationale": "The loss of the Kursk pocket and the Russian pipeline exit are related events, not claims about the same thing."}
+{"pair": "e9132f6201a4", "relation": "none", "rationale": "The plan in summer 2025 and the start of the counterattack in November are different events."}
+{"pair": "e931baf7c596", "relation": "duplicates", "from": "claim:cc13_0044_14", "to": "claim:cc13_0037_16", "strength": 0.85, "rationale": "The same sacking of Sokolov and Yevmenov after the 2024 sinkings, from the same two sources."}
+{"pair": "e96dde8d52a4", "relation": "none", "rationale": "The site's coordinates and the ferry operations are different facts."}
+{"pair": "e99a8eda4359", "relation": "none", "rationale": "The paired manoeuvre and the gunner's ammunition choice are different details."}
+{"pair": "e9d04adab765", "relation": "none", "rationale": "The opening sortie pattern and the 9 March shift to night are different times."}
+{"pair": "e9ef96ed5e88", "relation": "supports", "from": "claim:cc02_0011_67", "to": "claim:cc02_0021_16", "strength": 0.7, "independent": false, "rationale": "Both place Bohdana, CAESAR and Uragan firing on Zmiinyi Island on 21–30 Jun 2022; they share the Militarnyi source."}
+{"pair": "ea163c750f5f", "relation": "none", "rationale": "SBU running the Sea Baby strikes and the Navy co-planning are compatible and different assertions."}
+{"pair": "ea212a7b1e55", "relation": "supports", "from": "claim:cc03_0008_44", "to": "claim:cc03_0020_05", "strength": 0.7, "independent": false, "rationale": "Both say Baraniuk was captured in the Illich breakout and Volynskyi took over; they share the Wikipedia sources."}
+{"pair": "ea3d6b0c8491", "relation": "supports", "from": "claim:cc05_0023_07", "to": "claim:cc05_0031_04", "strength": 0.6, "independent": false, "rationale": "The agent-laid underwater charges of June 2025 are the evidence for B's judgment that the barrier did not stop them."}
+{"pair": "ea4d8f6356d8", "relation": "supports", "from": "claim:cc13_0013_33", "to": "claim:cc13_0023_17", "strength": 0.5, "independent": false, "rationale": "The Storm Shadow strike on the BSF headquarters is an instance of the missile strikes B cites."}
+{"pair": "ea6edafc01ba", "relation": "duplicates", "from": "claim:cc17_0025_10", "to": "claim:cc17_0007_66", "strength": 0.8, "rationale": "The same 27 September 2026 Russian retreat into the Kupiansk pipe among civilians, from the same source."}
+{"pair": "ea7aad11b1a0", "relation": "none", "rationale": "Who fired first and the trench holding are different details."}
+{"pair": "ead4814d2421", "relation": "supports", "from": "claim:cc08_0023_01", "to": "claim:cc08_0006_01", "strength": 0.5, "independent": true, "rationale": "DFRLab independently places the 155th Naval Infantry Brigade in the Pacific Fleet, as A states."}
+{"pair": "eb00e7c6e9fb", "relation": "supports", "from": "claim:cc08_0023_15", "to": "claim:cc08_0010_038", "strength": 0.5, "independent": false, "rationale": "T-80 and T-90 tanks reported at Vuhledar corroborate the tank support for the February 2023 assaults; same source."}

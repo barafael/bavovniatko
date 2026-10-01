@@ -1,0 +1,40 @@
+{"pair": "4e8c3ffc6a3a", "relation": "contradicts", "from": "claim:cc12_0020_03", "to": "claim:cc12_0020_05", "strength": 0.5, "rationale": "A-50 crew size: 15–16 vs 19.", "resolution": "Outlets differ on the nominal crew; mission crews vary with configuration."}
+{"pair": "4e9cda0b1b99", "relation": "none", "rationale": "Pre-war population vs one remaining child in 2023; different quantities."}
+{"pair": "505336344acb", "relation": "none", "rationale": "War-wide Raptor tally vs one strike on two boats; different scope."}
+{"pair": "51468d751ee2", "relation": "contradicts", "from": "claim:cc02_0009_09", "to": "claim:cc02_0009_12", "strength": 0.5, "rationale": "Moskva dead: 17 declared vs about 40.", "resolution": "The court declared dead only some of the missing; the higher figure is hearsay from a relative."}
+{"pair": "52c77cc46b10", "relation": "contradicts", "from": "claim:cc05_0027_01", "to": "claim:cc05_0027_04", "strength": 0.8, "rationale": "Rival accounts of the Act 1 charge: 21 t TNT-equivalent RDX vs about 10 t of rocket fuel.", "resolution": "SBU account vs Russian case file."}
+{"pair": "530be4e72786", "relation": "none", "rationale": "Antonivskyi bridge length vs Kakhovka dam dimensions; different structures."}
+{"pair": "5459f63a7b57", "relation": "none", "rationale": "Raptor boat tally vs Kharkiv vehicle losses; different subjects."}
+{"pair": "565a5942f219", "relation": "contradicts", "from": "claim:c07_0028_27", "to": "claim:cc17_0005_04", "strength": 0.6, "rationale": "Ukrainian gains in Dec 2025: 21 km² (DeepState) vs 305 km² (ISW).", "resolution": "ISW's control-of-terrain assessment vs DeepState map versions; timing and grey-zone treatment differ."}
+{"pair": "5718febb939b", "relation": "supports", "from": "claim:cc05_0012_06", "to": "claim:cc05_0014_04", "strength": 0.7, "rationale": "Same OSM navigation span, 227 m, at the same location; one gives the 185 m clearance width, the other the 35 m vertical clearance.", "independent": false}
+{"pair": "5979b4df6421", "relation": "supports", "from": "claim:cc05_0034_03", "to": "claim:cc05_0006_01", "strength": 0.8, "rationale": "Both say two spans fell in the 8 Oct 2022 blast; they share a Wikipedia source.", "independent": false}
+{"pair": "59ab30372a87", "relation": "none", "rationale": "Kupiansk pipeline vs Avdiivka pipe; different routes."}
+{"pair": "5a0eb1e6deee", "relation": "weakens", "from": "claim:cc13_0009_14", "to": "claim:c01_0020_19", "strength": 0.5, "rationale": "Oryx visually confirms only one Mi-8 destroyed on 31 Dec 2024, against HUR's claim of two."}
+{"pair": "5a1eab10eca5", "relation": "none", "rationale": "Raptor sub-tally vs all naval losses; different categories."}
+{"pair": "5ad1c1d6fe78", "relation": "contradicts", "from": "claim:cc08_0023_03", "to": "claim:cc08_0023_04", "strength": 0.6, "rationale": "Size of the 155th Naval Infantry Brigade: about 5,000 vs about 2,000.", "resolution": "A Ukrainian claim that may count reinforcements over time vs Kyiv Post's full-strength estimate."}
+{"pair": "5af290b6553f", "relation": "supports", "from": "claim:cc06_0010_09", "to": "claim:c00_0026_03", "strength": 0.7, "rationale": "Zaluzhnyi's more than 10,000 km² and about 500 settlements match Ukraine's claim of 12,000 km² and 500+ settlements.", "independent": false}
+{"pair": "5b069b574888", "relation": "contradicts", "from": "claim:cc02_0009_10", "to": "claim:cc02_0009_12", "strength": 0.5, "rationale": "Moskva dead: 20 (court) vs about 40 (relative).", "resolution": "An official court finding vs hearsay from a relative."}
+{"pair": "5b2fd682e6b2", "relation": "none", "rationale": "Monthly Ukrainian claim vs the war-wide Oryx total; different scope."}
+{"pair": "5bc62a83b0c4", "relation": "contradicts", "from": "claim:cc13_0013_44", "to": "claim:cc13_0044_08", "strength": 0.5, "rationale": "Magura hits on the Ivanovets: six vs three.", "resolution": "Budanov's claim vs a Russian milblogger who may count only the decisive hits; both agree it sank."}
+{"pair": "5f3e760b4021", "relation": "none", "rationale": "War-wide dead vs Moskva court figure; different scope."}
+{"pair": "5f60e177d4d6", "relation": "none", "rationale": "War-wide dead vs A-50 crew losses; different scope."}
+{"pair": "5fac7880c074", "relation": "none", "rationale": "Operational A-50s vs total fleet; different measures, compatible."}
+{"pair": "6379344bcf55", "relation": "none", "rationale": "Kharkiv liberated area vs Kherson area; different operations."}
+{"pair": "63c09cb429ef", "relation": "none", "rationale": "Kherson area vs Kharkiv area; different operations."}
+{"pair": "68b9f8f166af", "relation": "none", "rationale": "War-wide dead vs an anecdotal Vuhledar figure; different scope."}
+{"pair": "697ae968a0ee", "relation": "contradicts", "from": "claim:cc08_0007_19", "to": "claim:cc08_0023_04", "strength": 0.6, "rationale": "Size of the 155th Brigade: about 5,000 vs about 2,000 at full strength.", "resolution": "A Ukrainian claim that may count reinforcements over time vs Kyiv Post's full-strength estimate."}
+{"pair": "6a496fe6eb63", "relation": "supports", "from": "claim:c04_0033_17", "to": "claim:cc10_0012_08", "strength": 0.5, "rationale": "262 dead recovered plus 788 missing is consistent with more than 1,000 feared killed at Krynky.", "independent": true}
+{"pair": "6a8c82235bf6", "relation": "none", "rationale": "Strength of one battalion vs the whole Russian force at Vuhledar; different scope."}
+{"pair": "6bf5589ad5cb", "relation": "none", "rationale": "Mi-8 loss vs Raptor boats hit on the same day; different equipment."}
+{"pair": "6e2e2143a474", "relation": "none", "rationale": "Kupiansk pipeline vs Avdiivka pipe; different routes."}
+{"pair": "6e4c6057a7d6", "relation": "weakens", "from": "claim:cc17_0013_02", "to": "claim:cc17_0012_06", "strength": 0.4, "rationale": "The OSM-measured stretch between the relevant settlements is 10.5 km, which suggests the 15 km figure includes approach legs or overstates."}
+{"pair": "7135780fc489", "relation": "none", "rationale": "Chechen losses in Kherson vs a Lyman claim; different places."}
+{"pair": "72862e05b4f9", "relation": "none", "rationale": "War-wide dead vs one HIMARS strike; different scope."}
+{"pair": "72b81d536062", "relation": "none", "rationale": "War-wide dead vs Moskva figure; different scope."}
+{"pair": "730329a04a75", "relation": "contradicts", "from": "claim:cc02_0009_11", "to": "claim:cc02_0034_07", "strength": 0.8, "rationale": "Moskva dead: 37 vs 1.", "resolution": "An unnamed Russian source vs the MoD's official figure, which likely understates by listing many as missing."}
+{"pair": "7394e331f949", "relation": "contradicts", "from": "claim:cc02_0009_09", "to": "claim:cc02_0009_11", "strength": 0.5, "rationale": "Moskva dead: 17 declared vs 37.", "resolution": "The court declared dead only part of the toll; Meduza's source may include the missing."}
+{"pair": "73f2b922d897", "relation": "none", "rationale": "Kherson area vs Kharkiv area; different operations."}
+{"pair": "74af685843c6", "relation": "duplicates", "from": "claim:cc02_0028_12", "to": "claim:cc02_0011_53", "strength": 0.8, "rationale": "The same HUR helicopter-and-boat assault on Zmiinyi, repulsed by a deck-mounted Tor, from the same source."}
+{"pair": "7570c7c16031", "relation": "contradicts", "from": "claim:cc02_0009_12", "to": "claim:cc02_0034_07", "strength": 0.8, "rationale": "Moskva dead: about 40 vs 1.", "resolution": "A relative's hearsay vs the MoD's official figure, which lists many as missing."}
+{"pair": "7cbaba5acc82", "relation": "supports", "from": "claim:cc03_0025_10", "to": "claim:cc03_0008_76", "strength": 0.8, "rationale": "Both give two BTGs remaining in Mariupol on 9 May after about a dozen had left; they share an ISW source.", "independent": false}
+{"pair": "7dd64481f6eb", "relation": "none", "rationale": "Raptor tally vs equipment seized in Kharkiv; different subjects."}

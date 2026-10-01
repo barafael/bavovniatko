@@ -129,16 +129,19 @@ def table_rows(block: Block) -> tuple[list[str], list[list[str]]]:
 _DESIGN = re.compile(r"^\d+\.\s*game\W+(and\W+)?sim\w*\s+relevance", re.I)
 _QUESTION = re.compile(r"^\d+\.\s*open questions", re.I)
 _SKIP = re.compile(r"^\d+\.\s*(sources|terms)\b", re.I)
+_MEDIA = re.compile(r"^\d+\.\s*media\b", re.I)
 
 
 def meta_section(top: str) -> str | None:
-    """Classify a top-level (##) section: "design_note", "question", "skip" (not extracted) or None (claims)."""
+    """Classify a top-level (##) section: "design_note", "question", "media", "skip" (not extracted) or None (claims)."""
     if _DESIGN.match(top or ""):
         return "design_note"
     if _QUESTION.match(top or ""):
         return "question"
     if _SKIP.match(top or ""):
         return "skip"
+    if _MEDIA.match(top or ""):
+        return "media"
     return None
 
 

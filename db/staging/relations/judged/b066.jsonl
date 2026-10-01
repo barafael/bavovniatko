@@ -1,0 +1,40 @@
+{"pair": "4e6841cf94e4", "relation": "supports", "from": "claim:cc04_0009_46", "to": "claim:cc04_0020_05", "strength": 0.5, "rationale": "A strike on the 331st Regiment's command post on 1 September supports B's statement that the regiment reinforced the right bank, with a shared ISW source.", "independent": false}
+{"pair": "4ed0bb0de10c", "relation": "none", "rationale": "The crossings and the start of the HIMARS strikes on them are different assertions."}
+{"pair": "4edccd725252", "relation": "duplicates", "from": "claim:cv02_0024_01", "to": "claim:cv02_0006_11", "strength": 0.9, "rationale": "Same Channel 1 display of a captured Bradley on 6 December 2023; A has more sources."}
+{"pair": "4eee0ba2cfcc", "relation": "duplicates", "from": "claim:cc04_0025_18", "to": "claim:cc04_0013_09", "strength": 0.95, "rationale": "Identical statement about the fuel pipeline on the Antonivskyi rail bridge, same source."}
+{"pair": "4f3d52ba4d58", "relation": "none", "rationale": "The invasion's axes and S-400 coverage in early March are different assertions."}
+{"pair": "4f9459fac83a", "relation": "none", "rationale": "A claimed prisoner count and the brigade split are different assertions."}
+{"pair": "4fc848ebaf66", "relation": "none", "rationale": "Which guns fired and their night movement are different facts."}
+{"pair": "4fedf668f382", "relation": "duplicates", "from": "claim:cc04_0025_14", "to": "claim:cc04_0009_22", "strength": 0.85, "rationale": "Same radar reflectors on the Antonivskyi bridges by 31 July 2022, same ISW source."}
+{"pair": "50132b6f0768", "relation": "none", "rationale": "The group's start of work and its composition are different facts."}
+{"pair": "504dafe5f5d4", "relation": "none", "rationale": "The duel's outcome and the presence of trees are different facts."}
+{"pair": "504f769fe305", "relation": "none", "rationale": "The convoy's departure and how passage was agreed are different facts."}
+{"pair": "50d9dffff1b2", "relation": "supports", "from": "claim:cc13_0035_08", "to": "claim:cc13_0006_02", "strength": 0.6, "rationale": "B's observed drone hits on the Ivanovets off Donuzlav on 1 February 2024 back A's sinking, probably from the same released video.", "independent": false}
+{"pair": "50dfad43adcd", "relation": "none", "rationale": "The crew's identity and the decision to go are different facts."}
+{"pair": "5124d34041ce", "relation": "none", "rationale": "Anger at the deal and complaints about hospital space are different assertions."}
+{"pair": "51251a6055c2", "relation": "none", "rationale": "The tank's specifications and the gunner's change of aim are different assertions."}
+{"pair": "516c8cddd248", "relation": "supports", "from": "claim:cc03_0029_13", "to": "claim:cc03_0006_09", "strength": 0.5, "rationale": "B's civilians emerging during the 29 April – 3 May convoy back A's count of about 101 civilians, from the same UN source.", "independent": false}
+{"pair": "517bd4ba0b55", "relation": "duplicates", "from": "claim:cc10_0052_12", "to": "claim:cc10_0039_02", "strength": 0.8, "rationale": "B repeats A's reported replacement of Makarevich by Teplinsky in late 2023, with a shared ISW source."}
+{"pair": "51df2a8fbacb", "relation": "none", "rationale": "The T-90M firing first and trees at the site are different facts."}
+{"pair": "51e435b523e5", "relation": "duplicates", "from": "claim:cc04_0030_04", "to": "claim:cc04_0009_47", "strength": 0.85, "rationale": "Same Zakarpattia day of mourning for the 128th Brigade's dead in early September 2022, same source."}
+{"pair": "524d9cf68d1f", "relation": "none", "rationale": "The vehicles bunching and the map box size are different facts."}
+{"pair": "52502db02dab", "relation": "duplicates", "from": "claim:cc02_0030_06", "to": "claim:cc02_0011_21", "strength": 0.9, "rationale": "Same March 2022 discovery and fix by Luch of a common Neptune fault, same source."}
+{"pair": "526e514db0ba", "relation": "duplicates", "from": "claim:cc04_0023_12", "to": "claim:cc04_0009_97", "strength": 0.95, "rationale": "Same capture of Snihurivka by the 131st Reconnaissance Battalion, same source."}
+{"pair": "52a036a1c276", "relation": "none", "rationale": "The civilians being filmed and Khartiia's decision not to fire are different assertions."}
+{"pair": "5337d01df51c", "relation": "none", "rationale": "A loss claim and the group's composition are different assertions."}
+{"pair": "5350f2687d1d", "relation": "none", "rationale": "The paired manoeuvre and the aim at the optics are different assertions."}
+{"pair": "5364ff77617d", "relation": "none", "rationale": "Fighters carrying air defence early on and the fighter types are different assertions."}
+{"pair": "53bf919f5b38", "relation": "supports", "from": "claim:cc05_0034_10", "to": "claim:cc05_0004_06", "strength": 0.6, "rationale": "B's seven sunken ferries with booms are one element of A's barrier system, with a shared TWZ source.", "independent": false}
+{"pair": "53d3d6badab3", "relation": "none", "rationale": "The missiles' delivery to Odesa and the Moskva strike are different events."}
+{"pair": "54260b9c39e4", "relation": "supports", "from": "claim:cc02_0011_50", "to": "claim:cc02_0007_02", "strength": 0.6, "rationale": "B's 7 May TB2 strike on a Serna unloading a Tor is an instance of A's May campaign, from a shared Naval News source.", "independent": false}
+{"pair": "543e11de81a6", "relation": "none", "rationale": "The sea's geography and aircraft orbits share only place names."}
+{"pair": "54a1c567c83c", "relation": "supports", "from": "claim:cc13_0008_05", "to": "claim:cc13_0030_29", "strength": 0.5, "rationale": "AIM-9Ms fired from V7s on 2 May 2025 back B's AIM-9M fit on the V7.", "independent": false}
+{"pair": "54a99959cae4", "relation": "none", "rationale": "The column's movement and its bunching are different assertions."}
+{"pair": "54bd29648d6f", "relation": "supports", "from": "claim:cc04_0033_02", "to": "claim:cc04_0026_13", "strength": 0.7, "rationale": "B's destruction of the Antonivskyi, rail, dam-road and Darivka crossings on 11 November matches A's four bridges, with a shared ISW source.", "independent": false}
+{"pair": "54c66c6b5512", "relation": "supports", "from": "claim:cc13_0013_09", "to": "claim:cc13_0035_02", "strength": 0.6, "rationale": "The MoD's admitted damage to the Ivan Golubets and a Pivdenna Bay boom matches B, from a shared source.", "independent": false}
+{"pair": "54de49949c6d", "relation": "none", "rationale": "The summer move to Velyka Novosilka and the September move away are successive facts."}
+{"pair": "54efcc0feeec", "relation": "none", "rationale": "The assault force's composition and criticism of the assault are different assertions."}
+{"pair": "551224c339ad", "relation": "supports", "from": "claim:cc08_0010_010", "to": "claim:cc08_0016_09", "strength": 0.5, "rationale": "Ukraine holding the Kashlahach's left bank at Pavlivka on 1 November fits B's Russian attempt to dislodge them from behind the river, both from ISW.", "independent": false}
+{"pair": "55360bb5ed3e", "relation": "none", "rationale": "A prisoner claim and the set-piece summary are different assertions."}
+{"pair": "556a83242377", "relation": "none", "rationale": "The assault plan and criticism of it are different assertions."}
+{"pair": "55d3c9757c54", "relation": "none", "rationale": "The column entering Skybyn at dusk on 9 March and Darmohrai dating the fight to 10 March are compatible."}

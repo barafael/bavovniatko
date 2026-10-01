@@ -1,0 +1,918 @@
+# New sources cited by research/chapters/c02-snake-island-moskva.md (chapter research pass, 2026-10-01).
+# Sources already in the knowledge base (e.g. oryx-russian-equipment-losses) are cited by id and not repeated here.
+
+# --- Ukrainian ---------------------------------------------------------------
+
+- id: pravda-2022-romaniuk-zmiinyi-battle
+  title: "Battle for Zmiinyi (Snake) Island. Reconstructing the heroic tale of Ukraine losing and reclaiming the critical island"
+  url: https://www.pravda.com.ua/eng/articles/2022/11/07/7375232/
+  publisher: Ukrainska Pravda
+  authors: [Roman Romaniuk]
+  published: "2022-11-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [naval, chapter, snake-island, prisoners, special-operations]
+  found_in: [c02-snake-island-moskva]
+  notes: "The fullest Ukrainian reconstruction of Act 1 and the coda. Interviews with border-post commander Bohdan Hotskyi give the 24 Feb timeline (03:00 radio intercept, 06:00 first surrender call, 09:00 threats, noon Moskva arrives, about 18:00 the reply) and the garrison (80: about 30 border guards, 40+ marines of the 35th Brigade). It also covers the Sapfir capture, the HUR-led 8-9 May helicopter assault, the 20 Jun Boiko-tower strikes, the 30 Jun barrage and the flag's return. Anonymous intelligence sources; some claims (TB2 distraction, P-8 coordinates) conflict with the same author's Dec 2022 piece."
+
+- id: pravda-2022-romaniuk-moskva-neptune
+  title: "Sinking the Moskva: previously undisclosed details. How the Ukrainian Neptune destroyed the flagship of the Russian fleet"
+  url: https://www.pravda.com.ua/eng/articles/2022/12/13/7380452/
+  publisher: Ukrainska Pravda
+  authors: [Roman Romaniuk]
+  published: "2022-12-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, neptune, anti-ship-missiles, weather]
+  found_in: [c02-snake-island-moskva]
+  notes: "Reconstruction from dozens of military interviews: first Neptune missiles left Kyiv only after 20 Feb 2022; first (failed) launches against landing ships no later than 26 Feb; faulty element found and fixed by Luch in March; on 13 Apr a basic 18 km radar saw the Moskva about 120 km out by ducting under low cloud; two missiles at about 16:00, about 6 min flight; TB2 operators refused to fly under the cloud. Anonymous sources; launch time conflicts with Butusov's 14:10."
+
+- id: pravda-2022-romanenko-zmiinyi-audio
+  title: "\"Русский корабль, иди на х.й!\": захисники Зміїного відповіли ворогові"
+  url: https://www.pravda.com.ua/news/2022/02/25/7325592/
+  publisher: Ukrainska Pravda
+  authors: [Valentyna Romanenko]
+  published: "2022-02-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [chapter, snake-island, media]
+  found_in: [c02-snake-island-moskva]
+  notes: "Ukrainian-language. The 00:48, 25 Feb 2022 post that published the 'Russian warship, go f--- yourself' audio and made it famous. Cited as the primary media item for the radio exchange."
+
+- id: pravda-2022-kalatur-bayraktar-serna-raptor
+  title: "Zmiinyi (\"Snake\") Island: Bayraktar UCAVs destroy three Russian Serna and Raptor boats"
+  url: https://www.pravda.com.ua/eng/news/2022/05/8/7344781/
+  publisher: Ukrainska Pravda
+  authors: [Anastasiia Kalatur]
+  published: "2022-05-08"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [naval, chapter, tb2, snake-island]
+  found_in: [c02-snake-island-moskva]
+  notes: "Reports the Ukrainian claim of one Serna landing craft carrying Tor systems and two Raptors destroyed, one more Raptor damaged, and 46 Russians killed (claim)."
+
+- id: pravda-2022-mazurenko-hur-liaison-officers
+  title: "Ukrainian Intelligence: bodies of Russians being taken to occupied Sevastopol from Zmiinyi (Snake) Island"
+  url: https://www.pravda.com.ua/eng/news/2022/05/14/7346185/
+  publisher: Ukrainska Pravda
+  authors: [Alona Mazurenko]
+  published: "2022-05-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, casualties]
+  found_in: [c02-snake-island-moskva]
+  notes: "HUR claim that only 8 of 40 Russian 'liaison officers' sent to the island returned alive, and that 10 bodies of a Sevastopol-based special unit were evacuated. Low: single-party intelligence claim, unverified."
+
+- id: pravda-2022-balachuk-zaluzhnyi-bohdana
+  title: "Zaluzhnyi has showed how Ukrainian Armed Forces drove the occupiers out of Zmiinyi (Snake) Island: Bohdana howitzers helped"
+  url: https://www.pravda.com.ua/eng/news/2022/06/30/7355572/
+  publisher: Ukrainska Pravda
+  authors: [Iryna Balachuk]
+  published: "2022-06-30"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, artillery, official-statement]
+  found_in: [c02-snake-island-moskva]
+  notes: "Quotes Zaluzhnyi's 30 Jun statement (occupiers abandoned the island under artillery, missile and air strikes; Bohdana 'played an essential role') and the Russian 'goodwill gesture' line."
+
+- id: pravda-2022-hlushchenko-danilov-sigint
+  title: "Russians had powerful radio reconnaissance positions on Zmiinyi Island – Danilov"
+  url: https://www.pravda.com.ua/eng/news/2022/07/1/7355706/
+  publisher: Ukrainska Pravda
+  authors: [Olha Hlushchenko]
+  published: "2022-07-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, sigint]
+  found_in: [c02-snake-island-moskva]
+  notes: "NSDC secretary Danilov: heavy artillery drove Russia off; the island was used for radio reconnaissance over Odesa Oblast, Bessarabia and Transnistria."
+
+- id: pravda-2023-deineko-16-border-guards
+  title: "16 border guards from Zmiinyi Island garrison still in Russian captivity"
+  url: https://www.pravda.com.ua/eng/news/2023/02/24/7390839/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-02-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [chapter, snake-island, prisoners, media]
+  found_in: [c02-snake-island-moskva]
+  notes: "SBGS head Serhii Deineko: 80 defenders and civilians captured on 24 Feb 2022, 28 of them border guards; 12 released, 16 still held. Carries the SBGS photo of the Moskva off the island at 14:55, 24 Feb."
+
+- id: pravda-2023-pohorilov-neptune-launch-video
+  title: "How Moskva cruiser was destroyed: video of launch of Neptune missiles posted"
+  url: https://www.pravda.com.ua/eng/news/2023/04/13/7397795/
+  publisher: Ukrainska Pravda
+  authors: [Stanislav Pohorilov]
+  published: "2023-04-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [chapter, neptune, media]
+  found_in: [c02-snake-island-moskva]
+  notes: "Journalist Yurii Butusov's video of the two RK-360 Neptune launches, from sources close to Luch; Butusov gives the launch time as 14:10 on 13 Apr 2022 (UP's own reconstruction says about 16:00)."
+
+- id: pravda-2025-tyshchenko-last-zmiinyi-defender
+  title: "Last defender of Zmiinyi (Snake) Island returns to Ukraine: details of prisoner exchange"
+  url: https://www.pravda.com.ua/eng/news/2025/07/24/7523159/
+  publisher: Ukrainska Pravda
+  authors: [Kateryna Tyshchenko]
+  published: "2025-07-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [chapter, snake-island, prisoners]
+  found_in: [c02-snake-island-moskva]
+  notes: "Border guard Vitalii Hyrenko, the last Zmiinyi defender held by Russia, returned in the 23 Jul 2025 exchange."
+
+- id: ppu-2024-bedzai
+  title: "On May 7, 2022, the Hero of Ukraine, Ukrainian Navy officer, Deputy Commander of the Naval Aviation, Colonel Ihor Volodymyrovych Bedzai died"
+  url: https://ppu.gov.ua/en/press-center/7-travnia-2022-roku-zahynuv-heroy-ukrainy-polkovnyk-aviatsii-viyskovo-morskykh-syl-bedzay-ihor-volodymyrovych/
+  publisher: Mission of the President of Ukraine in the Autonomous Republic of Crimea
+  authors: []
+  published: "2024-05-10"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, naval-aviation, losses]
+  found_in: [c02-snake-island-moskva]
+  notes: "Col. Ihor Bedzai's Mi-14 was shot down by a Russian fighter's missile on 7 May 2022 during search and rescue at the Danube mouth. UP (Nov 2022) places this helicopter as the safety net of the May assault on the island."
+
+- id: ukrinform-2022-zmiinyi-defenders-alive
+  title: "Defenders of Zmiinyi Island alive, in Russian captivity – Navy"
+  url: https://www.ukrinform.net/rubric-ato/3415898-defenders-of-zmiinyi-island-alive-in-russian-captivity-navy.html
+  publisher: Ukrinform
+  authors: []
+  published: "2022-02-28"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [chapter, snake-island, prisoners, official-statement]
+  found_in: [c02-snake-island-moskva]
+  notes: "Ukrainian Navy statement: the marines and border guards are alive and captive; they repulsed two attacks but ran out of ammunition after the lighthouse, towers and antennas were destroyed."
+
+- id: ukrinform-2022-moskva-capsized-oc-south
+  title: "Russian cruiser Moskva capsized and began to sink – Operational Command South"
+  url: https://www.ukrinform.net/rubric-ato/3457420-russian-cruiser-moskva-capsized-and-began-to-sink-operational-command-south.html
+  publisher: Ukrinform
+  authors: []
+  published: "2022-04-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, official-statement]
+  found_in: [c02-snake-island-moskva]
+  notes: "OC South's 14 Apr statement: the Moskva was hit by Neptune and caught fire; other ships tried to help, but a storm and an ammunition explosion capsized it."
+
+- id: ukrinform-2022-pantsir-tor-zmiinyi
+  title: "Enemies deploy Pantsir, Tor-M2 missile systems on Zmiinyi Island – intel report"
+  url: https://www.ukrinform.net/rubric-ato/3482518-enemies-deploy-pantsir-torm2-missile-systems-on-zmiinyi-island-intel-report.html
+  publisher: Ukrinform
+  authors: []
+  published: "2022-05-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, air-defence]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. HUR's Vadym Skibitskyi: Pantsir and two Tor-M2 launchers on the island for short-range air defence; possible later S-300 or strike systems; the Transnistria angle."
+
+- id: ukrinform-2022-invaders-escape-snake-island
+  title: "Russian invaders escape from Snake Island"
+  url: https://www.ukrinform.net/rubric-ato/3518616-russian-invaders-escape-from-snake-island.html
+  publisher: Ukrinform
+  authors: []
+  published: "2022-06-30"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, official-statement]
+  found_in: [c02-snake-island-moskva]
+  notes: "OC South: after rocket and artillery strikes overnight, the enemy hastily evacuated the garrison's remnants in two high-speed boats; radar and several Pantsir-S1 destroyed during the operation."
+
+- id: ukrinform-2022-zmiinyi-border-guards-freed
+  title: "Borders guards meet defenders of Zmiinyi Island after their release from captivity"
+  url: https://ukrinform.net/rubric-ato/3641030-borders-guards-meet-defenders-of-zmiinyi-island-after-their-release-from-captivity.html
+  publisher: Ukrinform
+  authors: []
+  published: "2022-12-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [chapter, snake-island, prisoners]
+  found_in: [c02-snake-island-moskva]
+  notes: "Three Izmail-detachment border guards from Zmiinyi freed on 24 Nov 2022 after nine months in captivity."
+
+- id: nv-2022-didenko-flag-zmiinyi
+  title: "Ukrainian flag raised over Zmiinyi Island in Black Sea"
+  url: https://english.nv.ua/nation/ukrainian-flag-raised-over-zmiinyi-island-in-black-sea-50254196.html
+  publisher: The New Voice of Ukraine
+  authors: [Mark Didenko]
+  published: "2022-07-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island]
+  found_in: [c02-snake-island-moskva]
+  notes: "Southern Defence Forces spokesperson Natalia Humeniuk on 4 Jul: the operation is complete and the flag raised; recaps the two-speedboat evacuation and the UK and Pentagon rejection of the 'goodwill' framing."
+
+- id: militarnyi-2023-bohdana-snake-island
+  title: "Snake Island liberation. Journalists published details of Bohdana self-propelled howitzer's first combat mission"
+  url: https://militarnyi.com/en/news/snake-island-liberation-journalists-published-details-of-bohdana-self-propelled-howitzer-s-first-combat-mission/
+  publisher: Militarnyi
+  authors: []
+  published: "2023-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, artillery, isr]
+  found_in: [c02-snake-island-moskva]
+  notes: "Summarises Ukrainska Pravda's 13 Feb 2023 report. Bohdana and CAESAR fired from the shore near Vylkove, 40 km from the island, ferried nightly on Danube pontoons (3-4 h each way). Metal decoys were hung against radar, Mavic/Matrix spotting gave about 20 m adjustment, and TB2 could not close inside 28-30 km. Fire ran 21-30 Jun, and Bohdana fired 46 shots on 30 Jun (90 s time of flight)."
+
+- id: ukranews-2022-danilov-58-rescued
+  title: "Only 58 Crew Members From Moskva Cruiser Saved - Danilov"
+  url: https://ukranews.com/en/news/851886-only-58-crew-members-from-moskva-cruiser-saved-danilov
+  publisher: Ukrainian News
+  authors: []
+  published: "2022-04-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, casualties]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. Danilov (to Ukrainska Pravda) claims Russia saved only 58 of the 510 aboard. This is the upper end of the casualty claims. Low: preliminary, and Danilov himself says it can't be stated as fact."
+
+- id: ukranews-2023-lubinets-40-released
+  title: "40 Zmiinyi Island Defenders Released From Russian Captivity - Lubinets"
+  url: https://ukranews.com/en/news/925129-40-zmiinyi-island-defenders-released-from-russian-captivity-lubinets
+  publisher: Ukrainian News
+  authors: []
+  published: "2023-04-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, snake-island, prisoners]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. Ombudsman Lubinets: 40 Zmiinyi defenders released so far. A recap line says 16 border guards were still held 'as of February 24, 2024', apparently a typo for 2023."
+
+- id: ukranews-2025-herasimova-navy-moskva-rescue
+  title: "Navy tells how russia tried to save Moskva cruiser after Ukrainian strike"
+  url: https://ukranews.com/en/news/1073858-navy-tells-how-russia-tried-to-save-moskva-cruiser-after-ukrainian-strike
+  publisher: Ukrainian News
+  authors: [Tetiana Herasimova]
+  published: "2025-04-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. Neizhpapa (to Krym.Realii): Russian frigates, missile boats and a reconnaissance ship set off about half an hour after the strike, a rescue vessel stood by, and a tug then towed the cruiser toward Sevastopol; there was time 'from lunch to morning' to take people off. Also notes the NYT (30 Mar 2025) report and Navy spokesman Pletenchuk's denial of US help with the coordinates."
+
+- id: intentpress-2025-neizhpapa-moskva-details
+  title: "Ukraine's Navy reveals details of Moskva sinking: tactical victory"
+  url: https://intent.press/en/news/war/2025/ukraine-s-navy-reveals-details-of-moskva-sinking-tactical-victory/
+  publisher: Intent
+  authors: []
+  published: "2025-04-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, neptune]
+  found_in: [c02-snake-island-moskva]
+  notes: "Neizhpapa: first missile hit the galley above the engine room, second the stern; AK-630 ammunition detonated; a 'three-point storm' hampered damage control."
+
+- id: rbcukraine-2026-court-moskva
+  title: "Russian court acknowledges for the first time that Ukraine destroyed cruiser Moskva – Media"
+  url: https://newsukraine.rbc.ua/news/russian-court-acknowledges-for-the-first-1769115185.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: "2026-01-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e9-counteroffensive-26]
+  topics: [naval, chapter, casualties, russian-claims]
+  found_in: [c02-snake-island-moskva]
+  notes: "Via Mediazona: Moscow's Second Western District Military Court blamed Andrii Shubin, commander of the Ukrainian Navy's 406th Artillery Brigade, for the Moskva (and the Admiral Essen on 2 Apr 2022). It found 20 dead, 24 injured and 8 missing 'including during the six-hour-long efforts to save the ship'. This is the first Russian official acknowledgement of a Ukrainian strike."
+
+- id: mezha-2022-moskva-underwater-heritage
+  title: "Moskva cruiser has become an object of underwater cultural heritage of Ukraine"
+  url: https://mezha.ua/en/2022/04/22/moskva-cruiser-has-become-an-object-of-underwater-cultural-heritage-of-ukraine/
+  publisher: Mezha
+  authors: []
+  published: "2022-04-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, wreck]
+  found_in: [c02-snake-island-moskva]
+  notes: "The wreck was entered as No. 2064 in Ukraine's register of underwater cultural heritage; per British intelligence it lies about 80 nmi from Odesa at 45-50 m depth; 186 m long."
+
+- id: ukrposhta-2022-warship-stamp
+  title: "Ukrposhta issued one million postage stamps \"Russian warship, f***k you…!\""
+  url: https://www.ukrposhta.ua/en/news/57619-ukrposhta-issued-one-million-postage-stamps-russian-warship-fk-you
+  publisher: Ukrposhta
+  authors: []
+  published: "2022-04"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [chapter, media, stamp]
+  found_in: [c02-snake-island-moskva]
+  notes: "On 12 Apr 2022 Ukrposhta put one million stamps into circulation, with a First Day cancellation in Kyiv attended by 'Marine Roman Grybov'. The design is by the Crimean artist Borys Groh (about 8,000 votes)."
+
+- id: ukrposhta-2022-warship-done-stamp
+  title: "Ukrposhta has issued the final postage stamps of the \"Russian warship...\" series"
+  url: https://www.ukrposhta.ua/en/news/57660-ukrposhta-vipustila-finalni-poshtovi-marki-serii-russkij-vonnij-korabl-
+  publisher: Ukrposhta
+  authors: []
+  published: "2022-05"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, media, stamp]
+  found_in: [c02-snake-island-moskva]
+  notes: "On 23 May 2022 (Marine Corps Day) the 'Russian warship... IS DONE!' issue came out: the empty sea, the date 14.04.2022 in a mourning frame, and 5 million copies. Zelensky and Neizhpapa did the cancellation."
+
+- id: zavhorodnii-2025-battles-snake-island
+  title: "Military operations to prevent the naval blockade of Ukraine. Battles for Snake Island"
+  url: https://www.forsvaret.no/forskning/arrangementer/sjomaktkonferansen-2025/Military%20operations%20to%20prevent%20the%20naval%20blockade%20of%20Ukraine.%20Battles%20for%20Snake%20Island.pdf
+  publisher: Norwegian Armed Forces (Sjømaktkonferansen 2025)
+  authors: [Denys Zavhorodnii]
+  published: "2025"
+  accessed: "2026-10-01"
+  type: academic
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [naval, chapter, snake-island, a2ad, artillery]
+  found_in: [c02-snake-island-moskva]
+  notes: "Three-page paper by the Black Sea Battle Lab, Odesa Maritime Academy. The island is 34 km from the Danube mouth; two 'Neptune 360 MC' missiles were fired at a target 120 km out. It covers the 26 and 30 Apr strikes (command post, Strela-10, Repellent-1 EW), the 8 May airborne assault with eight Mi-8s (one Mi-14 and a boat lost), and Bohdana and Caesar moved by Danube pontoon. Special forces landed on 7 Jul. The framing is A2/AD: cut the supply, don't storm."
+
+- id: kyivpost-2023-tuzov-neptune-moskva
+  title: "How Neptune Hit the Moskva"
+  url: https://www.kyivpost.com/post/16061
+  publisher: Kyiv Post
+  authors: [Bohdan Tuzov]
+  published: "2023-04-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, neptune]
+  found_in: [c02-snake-island-moskva]
+  notes: "Neptune system profile: flies at 3-10 m; up to 24 missiles at 3-5 s intervals; 300 km max range; 15 min to deploy; 150 kg warhead aimed just above the waterline. Neizhpapa says he had not expected the cruiser to sink and thought at least six missiles would be needed."
+
+# --- Western / international -------------------------------------------------
+
+- id: navalnews-2022-sutton-moskva-sar
+  title: "Satellite Image Pinpoints Russian Cruiser Moskva As She Burned"
+  url: https://www.navalnews.com/naval-news/2022/04/satellite-image-pinpoints-russian-cruiser-moskva-as-she-burned/
+  publisher: Naval News
+  authors: [H I Sutton]
+  published: "2022-04-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, satellite-imagery]
+  found_in: [c02-snake-island-moskva]
+  notes: "A SAR image from 18:52 local, 13 Apr shows a Moskva-sized ship with attendants at 45°10'43.39\"N 30°55'30.54\"E: about 80 nmi south of Odesa, 50 nmi from the coast, east of Snake Island. The canonical position of the stricken ship."
+
+- id: navalnews-2022-ozberk-moskva-negligence
+  title: "Analysis: Chain Of Negligence Caused The Loss Of The Moskva Cruiser"
+  url: https://www.navalnews.com/naval-news/2022/04/analysis-chain-of-negligence-caused-the-loss-of-the-moskva-cruiser/
+  publisher: Naval News
+  authors: [Tayfun Ozberk]
+  published: "2022-04-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, air-defence, weather]
+  found_in: [c02-snake-island-moskva]
+  notes: "Ex-Turkish Navy officer's analysis. Six AK-630s and four Rum Tub ESM gave about 2 min warning, yet there is no record of chaff, jamming or manoeuvre; he calls the TB2-distraction theory 'unrealistic'. Waves were about 1 m and wind about 14 kt. He reads the Russian MoD video as showing about 240 survivors."
+
+- id: navalnews-2022-sutton-curse-snake-island
+  title: "How The Russian Navy Is Losing Dominance: The Curse Of Snake Island"
+  url: https://www.navalnews.com/naval-news/2022/05/how-the-russian-navy-is-losing-dominance-the-curse-of-snake-island/
+  publisher: Naval News
+  authors: [H I Sutton]
+  published: "2022-05-11"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [naval, chapter, snake-island, tb2, amphibious]
+  found_in: [c02-snake-island-moskva]
+  notes: "Moskva was 'a floating double-battery of S300'; after its loss TB2s killed the island's Tor, two Raptors (2 May), the Serna unloading a replacement Tor (7 May, wreck blocked the landing), and two more Raptors and a helicopter (8 May). Ropucha landing ships stopped coming near the island after late April."
+
+- id: navalnews-2022-sutton-tb2-ghost-snake-island
+  title: "Surprising Success Of Ukraine's Bayraktar TB2: The Ghost Of Snake Island"
+  url: https://www.navalnews.com/naval-news/2022/05/surprising-success-of-ukraines-bayraktar-tb2-the-ghost-of-snake-island/
+  publisher: Naval News
+  authors: [H I Sutton]
+  published: "2022-05-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [naval, chapter, tb2]
+  found_in: [c02-snake-island-moskva]
+  notes: "The Navy TB2s near the island (first delivered Jul 2021) had a three-blade propeller, IR camera and anti-jam antenna, and carried MAM-C/MAM-L. The strike sequence was 2 May Raptors, 6 May Tor, 7 May Serna with Tor, and 8 May a Mi-8 unloading troops. Tugs got Pantsirs added to their sterns, and a floating crane cleared the Serna wreck."
+
+- id: navalnews-2022-ozberk-vasily-bekh
+  title: "Ukraine strikes Russia's Vasily Bekh Rescue Tug with antiship missiles"
+  url: https://www.navalnews.com/naval-news/2022/06/ukraine-strikes-russias-vasily-bekh-rescue-tug/
+  publisher: Naval News
+  authors: [Tayfun Ozberk]
+  published: "2022-06-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [naval, chapter, anti-ship-missiles, logistics]
+  found_in: [c02-snake-island-moskva]
+  notes: "The Project 22870 tug SB-739 Vasily Bekh was hit by two anti-ship missiles en route to the island on 17 Jun, filmed by a TB2. Russian media reported 23 injured and 10 missing. Sutton calls resupply tugs higher-value targets than warships."
+
+- id: twz-2022-payne-su27-snake-island
+  title: "Ukraine Strikes Back: Su-27s Bomb Occupied Snake Island In Daring Raid"
+  url: https://www.twz.com/ukraine-strikes-back-su-27s-bomb-occupied-snake-island-in-daring-raid
+  publisher: The War Zone
+  authors: [Stetson Payne]
+  published: "2022-05-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, air-strike]
+  found_in: [c02-snake-island-moskva]
+  notes: "TB2 footage of two Su-27s coming in from the south below lighthouse height with flares, toss-bombing the main complex, pier buildings and east point; secondary explosions. It frames the TB2 kills of ZU-23-2, Tor and Strela-10 as SEAD for the jets."
+
+- id: twz-2022-newdick-harpoon-bekh
+  title: "Ukraine Claims Harpoon Missile Attack On Russian Navy Ship"
+  url: https://www.twz.com/ukraine-claims-harpoon-missile-attack-on-russian-navy-ship
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2022-06-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, anti-ship-missiles, harpoon]
+  found_in: [c02-snake-island-moskva]
+  notes: "Odesa governor Marchenko said Harpoon; this is the first claimed Ukrainian combat use. Reports said a Tor-M2KM was aboard. Russian sources gave 10 of 33 missing and 23 injured. Ground Harpoon launchers came from Denmark, confirmed in late May 2022."
+
+- id: twz-2022-trevithick-snake-island-satellite
+  title: "Ukrainian Strikes On Russian-Occupied Snake Island Confirmed In Satellite Imagery"
+  url: https://www.twz.com/ukrainian-strikes-on-russian-occupied-snake-island-confirmed-in-satellite-imagery
+  publisher: The War Zone
+  authors: [Joseph Trevithick]
+  published: "2022-06-21"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, satellite-imagery]
+  found_in: [c02-snake-island-moskva]
+  notes: "Planet Labs imagery of 21 Jun shows three new scorch marks that are absent on 20 Jun (and in Copernicus imagery on 19 Jun); they align with the emplaced air-defence positions."
+
+- id: twz-2022-altman-flag-snake-island
+  title: "Ukraine Plants Flag On Snake Island, Russians Claim Deadly Response"
+  url: https://www.twz.com/ukraine-plants-flag-on-snake-island-russians-claim-deadly-response
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2022-07-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, media]
+  found_in: [c02-snake-island-moskva]
+  notes: "On 7 Jul the MoD and HUR published photos of the flag ('Russian warship, remember forever – Snake Island is Ukraine!!!'). Russia's MoD claimed a missile strike at about 05:00 killed some of the troops; Ryzhenko says they had left and two missiles hit the pier. Days earlier Humeniuk had said no one had landed."
+
+- id: janes-2022-raptor-uav-strike
+  title: "Ukraine conflict: Ukraine reports sinking two Russian patrol ships during UAV strike"
+  url: https://www.janes.com/defence-intelligence-insights/defence-news/sea/ukraine-conflict-ukraine-reports-sinking-two-russian-patrol-ships-during-uav-strike
+  publisher: Janes
+  authors: []
+  published: "2022-05-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [naval, chapter, tb2]
+  found_in: [c02-snake-island-moskva]
+  notes: "The 2 May footage shows TB2 hits on two Project 03160 Raptors at 04:38 and 04:51 local. Zaluzhnyi: 'destroyed at dawn'. The island is about 70 nmi south of Odesa. Raptor specs: 23 t, 48 kt, crew three, 14.5 mm RWS. The Black Sea Fleet had seven."
+
+- id: isw-2022-04-14-assessment
+  title: "Russian Offensive Campaign Assessment, April 14, 2022"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-14
+  publisher: Institute for the Study of War
+  authors: [Mason Clark, Kateryna Stepanenko, George Barros]
+  published: "2022-04-14"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, russian-claims]
+  found_in: [c02-snake-island-moskva]
+  notes: "ISW couldn't confirm the cause and called it a major propaganda victory either way. It expected Russia to add air and point defence or pull ships back from the coast, and reports the Kremlin's accidental fire and storm-while-towing account."
+
+- id: isw-2022-06-30-assessment
+  title: "Russian Offensive Campaign Assessment, June 30"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-june-30
+  publisher: Institute for the Study of War
+  authors: [Karolina Hird, Kateryna Stepanenko, Frederick W. Kagan, Grace Mappes]
+  published: "2022-06-30"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, russian-claims]
+  found_in: [c02-snake-island-moskva]
+  notes: "Russia left on 30 Jun after a missile and artillery campaign that OC South had announced on 21 Jun; the MoD called it a 'step of goodwill'. The withdrawal eases pressure on the coast but doesn't end the blockade, since Crimean and Kherson anti-ship systems remain. It also covers the milblogger reactions."
+
+- id: dod-2022-04-18-background-briefing
+  title: "Senior Defense Official Holds a Background Briefing, April 18, 2022"
+  url: https://www.defense.gov/News/Transcripts/Transcript/Article/3002867/senior-defense-official-holds-a-background-briefing-april-18-2022/
+  publisher: U.S. Department of Defense
+  authors: []
+  published: "2022-04-18"
+  accessed: "2026-10-01"
+  type: official
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, official-statement]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. The photos 'comport with what we had assessed to be the damage'; lifeboats with sailors were seen but not counted; no nuclear weapons aboard; no Russian salvage attempt seen; Russia kept a standoff distance from Odesa. Refers to the earlier confirmation of two Neptunes."
+
+- id: dod-2022-vergun-snake-island-retreat
+  title: "Russians Retreat From Snake Island, Says DOD Official"
+  url: https://www.defense.gov/News/News-Stories/Article/Article/3082115/russians-retreat-from-snake-island-says-dod-official/
+  publisher: U.S. Department of Defense
+  authors: [David Vergun]
+  published: "2022-07"
+  accessed: "2026-10-01"
+  type: official
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, official-statement]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. A senior DOD official saw no credence in the 'goodwill' claim: Ukraine applied pressure 'including by using Harpoon missiles ... to attack a resupply ship', and the barren island depends on resupply. Exact day not shown on the page (same day as the $820M package announcement)."
+
+- id: nbc-2022-dilanian-us-intel-moskva
+  title: "U.S. intel helped Ukraine sink Russian flagship Moskva, officials say"
+  url: https://www.nbcnews.com/politics/national-security/us-intel-helped-ukraine-sink-russian-flagship-moskva-officials-say-rcna27559
+  publisher: NBC News
+  authors: [Ken Dilanian]
+  published: "2022-05-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, intelligence-sharing]
+  found_in: [c02-snake-island-moskva]
+  notes: "US officials: Ukraine asked about a ship south of Odesa, and the US identified it as the Moskva and helped confirm its location. The US didn't know in advance of the strike and wasn't involved in the decision. Crew of 510, with 'significant' casualties."
+
+- id: guardian-2022-sauer-hrybov-medal
+  title: "Ukraine gives medal to soldier who told Russian officer to 'go fuck yourself'"
+  url: https://www.theguardian.com/world/2022/mar/29/ukrainian-soldier-russian-warship-medal-snake-island
+  publisher: The Guardian
+  authors: [Pjotr Sauer]
+  published: "2022-03-29"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [chapter, snake-island, prisoners]
+  found_in: [c02-snake-island-moskva]
+  notes: "Border guard Roman Hrybov was released in a swap and given a medal in Cherkasy (MoD, 29 Mar). The Verkhovna Rada said 19 servicemen were freed in the first major swap. The article frames the 13-dead myth as a case of unverified information."
+
+- id: guardian-2022-michael-warship-stamp
+  title: "Ukraine reveals 'Russian warship, go fuck yourself!' postage stamp"
+  url: https://www.theguardian.com/world/2022/mar/12/ukraine-reveals-russian-warship-go-fuck-yourself-postage-stamp
+  publisher: The Guardian
+  authors: [Chris Michael]
+  published: "2022-03-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [chapter, media, stamp]
+  found_in: [c02-snake-island-moskva]
+  notes: "Emine Dzheppar announces Borys Groh's winning design. The island is described as 'roughly 16-hectare', about 300 km west of Crimea."
+
+- id: guardian-2022-roth-moskva-photos
+  title: "Film and photos show Russian cruiser Moskva probably hit by missiles"
+  url: https://www.theguardian.com/world/2022/apr/18/film-and-photos-appear-to-show-russian-cruiser-moskva-shortly-before-it-sank
+  publisher: The Guardian
+  authors: [Andrew Roth]
+  published: "2022-04-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, media]
+  found_in: [c02-snake-island-moskva]
+  notes: "Photos and a 3 s video: the Moskva lists to port with black smoke and the aft life rafts gone; a Project 22870 tug approaches. Yörük Işık calls them genuine. Parry says one or two missiles hit below the aft Vulkan tubes; Sutton sees possible hull punctures."
+
+- id: reuters-2022-moskva-sunk
+  title: "Russia says flagship missile cruiser Moskva has sunk after fire"
+  url: https://www.reuters.com/world/europe/russia-says-flagship-missile-cruise-ship-has-sunk-after-fire-2022-04-14/
+  publisher: Reuters
+  authors: [Lidia Kelly]
+  published: "2022-04-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, russian-claims]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. The Russian MoD, via Russian agencies: while under tow the ship 'lost stability due to the damage to the hull received during the fire from the detonation of ammunition'; 'in the stormy sea conditions, the ship has sunk'; crew evacuated."
+
+- id: forbes-2022-hambling-bayraktar-moskva
+  title: "Ukraine's Bayraktar Drones Helped Destroy Russian Flagship"
+  url: https://www.forbes.com/sites/davidhambling/2022/04/14/ukraines-bayraktar-drones-helped-destroy-russian-flagship/
+  publisher: Forbes
+  authors: [David Hambling]
+  published: "2022-04-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, tb2]
+  found_in: [c02-snake-island-moskva]
+  notes: "Fetched via the Wayback Machine. Ukrainian officials say a TB2 distracted the Moskva's air defences, which Hambling thinks possible but unlikely (S-300F against the drone, AK-630 against missiles). The Navy's TB2 was bought as a Neptune spotter. A Russian video from Tuesday 12 Apr shows the frigate Admiral Essen firing at a claimed Bayraktar; Ukraine had claimed a Neptune hit on the same frigate on 4 Apr."
+
+- id: spacecom-2022-wall-maxar-snake-island
+  title: "Satellite spies sunken Russian ship off Ukraine's wartorn Snake Island (photos)"
+  url: https://www.space.com/sunk-russian-ship-snake-island-ukraine-satellite-photos
+  publisher: Space.com
+  authors: [Mike Wall]
+  published: "2022-05-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island, satellite-imagery]
+  found_in: [c02-snake-island-moskva]
+  notes: "Maxar GeoEye-1, 12 May: a Serna landing craft manoeuvring under missile contrails, and a crane barge beside the sunken Serna on the north side."
+
+- id: aljazeera-2022-phosphorus-snake-island
+  title: "Ukraine says Russia dropped phosphorus bombs on Snake Island"
+  url: https://www.aljazeera.com/news/2022/7/1/ukraine-says-russia-dropped-phosphorus-bombs-on-snake-island
+  publisher: Al Jazeera
+  authors: []
+  published: "2022-07-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, snake-island]
+  found_in: [c02-snake-island-moskva]
+  notes: "Zaluzhnyi: two Su-30 sorties from Crimea with phosphorus bombs at about 18:00 on 1 Jul. The island is about 35 km off the Danube delta and was a restricted border outpost before the war."
+
+- id: meduza-2022-moskva-37-dead
+  title: "At least thirty-seven dead. Parents of Russian sailors aboard the Moskva leak information about their sons killed in Ukraine's missile strike"
+  url: https://meduza.io/en/feature/2022/04/18/at-least-thirty-seven-dead
+  publisher: Meduza
+  authors: []
+  published: "2022-04-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, casualties]
+  found_in: [c02-snake-island-moskva]
+  notes: "Russian independent outlet (in exile). A source close to the BSF command gives 37 dead, about 100 injured, more missing and about 500 aboard, and confirms the Ukrainian attack. The Insider counts about 100 sailors in the MoD's crew video."
+
+- id: meduza-2022-moskva-17-declared-dead
+  title: "17 sailors from Russian missile cruiser Moskva declared dead by Sevastopol court"
+  url: https://meduza.io/en/news/2022/11/03/17-sailors-from-russian-missile-cruiser-moskva-declared-dead-by-sevastopol-court
+  publisher: Meduza
+  authors: []
+  published: "2022-11-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, casualties]
+  found_in: [c02-snake-island-moskva]
+  notes: "A Sevastopol court declared 17 missing sailors dead, in 16 cases over the summer and one in September. Most of the crew were conscripts. The MoD had acknowledged one dead and 27 missing."
+
+- id: novayagazetaeu-2022-moskva-injured
+  title: "\"A lot of people were injured. Many lost their limbs\""
+  url: https://novayagazeta.eu/articles/2022/04/20/a-lot-of-people-were-injured-many-lost-their-limbs
+  publisher: Novaya Gazeta Europe
+  authors: []
+  published: "2022-04-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: low
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, casualties]
+  found_in: [c02-snake-island-moskva]
+  notes: "A conscript's mother, anonymous: 'about forty people were killed', many injured, and 'three Neptune missiles' hit. Low: single second-hand testimony. It also has the RFE/RL Schemes finds (Vakhrushev killed; 27 missing)."
+
+- id: wikipedia-sinking-of-the-moskva
+  title: "Sinking of the Moskva"
+  url: https://en.wikipedia.org/wiki/Sinking_of_the_Moskva
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter]
+  found_in: [c02-snake-island-moskva]
+  notes: "Used for items whose primary sources were not fetched: the 20:42 first report, the Wagner 'Reverse Side of the Medal' TB2 claim (02:59 14 Apr), Anušauskas's SOS 01:05 / roll 01:14 / sunk about 03:00, the Russian MoD 22 Apr figure (1 dead, 27 missing, 396 rescued), the 16 Apr crew video, the Kommuna salvage, and the 5 May P-8 detail."
+
+- id: wikipedia-snake-island-campaign
+  title: "Snake Island campaign"
+  url: https://en.wikipedia.org/wiki/Snake_Island_campaign
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [chapter, snake-island]
+  found_in: [c02-snake-island-moskva]
+  notes: "Used for minor claims not fetched at their primary source: the SBGS 22:00 capture announcement, the Russian claim of 82 POWs, the 26 Feb Sapfir capture, the 12 May Vsevolod Bobrov claim, the 26 Jun Su-24MR loss, the 29 Jun helicopter claim, the ZDF May 2023 figure of 36 still held, and the Stanislav loss."
+
+- id: wikipedia-russian-cruiser-moskva
+  title: "Russian cruiser Moskva"
+  url: https://en.wikipedia.org/wiki/Russian_cruiser_Moskva
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e1-invasion]
+  topics: [naval, chapter, ship-specs]
+  found_in: [c02-snake-island-moskva]
+  notes: "Ship data: Project 1164 Slava class, built in Mykolaiv (launched 1979, commissioned 1983), 186.4 m, 11,490 t full load, 32 kt. Armament: 16 P-1000 Vulkan, 64 S-300F Fort in 8x8, 40 Osa-M, 1 twin AK-130, 6 AK-630. Flagship of the Black Sea Fleet from 2000."
+
+- id: osm-zmiinyi-island
+  title: "острів Зміїний (Zmiinyi Island), OpenStreetMap relation 7850011"
+  url: https://www.openstreetmap.org/relation/7850011
+  publisher: OpenStreetMap
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: map
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: [e1-invasion, e2-donbas-artillery]
+  topics: [chapter, geodata]
+  found_in: [c02-snake-island-moskva]
+  notes: "Queried via Nominatim on 2026-10-01: the island centroid is 45.2548 N, 30.2033 E, and its polygon is about 0.20 km², about 590 x 570 m. Same query: Bile 45.2565, 30.2064; Vylkove (rel. 7850753) 45.4031, 29.5831; Odesa (rel. 1413934) 46.4843, 30.7323; Sulina, Romania 45.1558, 29.6550. ODbL."

@@ -1,0 +1,40 @@
+{"pair": "1e2f36be8329", "relation": "none", "rationale": "Road layout and distance from the village centre are different facts."}
+{"pair": "1e4e948608f5", "relation": "none", "rationale": "Night moves and barrel or hydraulic failures are different facts about the guns."}
+{"pair": "1e9f9a737c3b", "relation": "duplicates", "from": "claim:cv02_0018_04", "to": "claim:cv02_0006_21", "strength": 0.8, "rationale": "Both describe the same second video of the Stepove spin-out (smoke, turret spinning, tree, crew fleeing, FPV) from the same TWZ source."}
+{"pair": "1f053f113579", "relation": "none", "rationale": "A completed R-73 shoot-down and a later plan to keep fitting R-73s are different assertions."}
+{"pair": "1fce1580ef2a", "relation": "none", "rationale": "The end of a training course and a later bridgehead announcement are unrelated claims."}
+{"pair": "203ca3824a16", "relation": "none", "rationale": "A prisoner claim and the brigade's later fate at Pavlivka are different assertions."}
+{"pair": "20af1e7acd65", "relation": "none", "rationale": "A training course ending in August and a November bridgehead announcement are different events."}
+{"pair": "2129d6560f5c", "relation": "none", "rationale": "The breakout of some marines and the surrender of others are different parts of the Illich events."}
+{"pair": "2155b86f40e5", "relation": "none", "rationale": "Equipment fit and missions of the Navy TB2s are different facts."}
+{"pair": "21792954ad46", "relation": "weakens", "from": "claim:cc03_0029_18", "to": "claim:cc03_0008_90", "strength": 0.4, "rationale": "B places the wounded at Novoazovsk, which casts doubt on A's wording that the 51 wounded went to Olenivka."}
+{"pair": "21cf98b9086f", "relation": "duplicates", "from": "claim:cc04_0004_18", "to": "claim:cc04_0005_14", "strength": 0.9, "rationale": "Same list of bridges destroyed on 11 November 2022; B has more sources."}
+{"pair": "21e02a33bfc4", "relation": "none", "rationale": "Woodland concealment and a unit's kill claim are different assertions."}
+{"pair": "21ec16eb2432", "relation": "refines", "from": "claim:cc03_0031_17", "to": "claim:cc03_0008_82", "strength": 0.6, "rationale": "B adds the internment terms and Russia's civilians-only stance to the same Turkish offer."}
+{"pair": "2282e6e265d4", "relation": "refines", "from": "claim:cc06_0040_03", "to": "claim:cc06_0012_46", "strength": 0.7, "rationale": "B gives the fuller wording of the same 10 September MoD regrouping announcement."}
+{"pair": "22cf6d6ec91b", "relation": "none", "rationale": "Loss totals and low-altitude tactics are different subjects."}
+{"pair": "230aab69f733", "relation": "refines", "from": "claim:cc02_0028_11", "to": "claim:cc02_0011_51", "strength": 0.7, "rationale": "B gives the approach route and target of the same 7 May Su-27 toss-bombing."}
+{"pair": "2336d1c95065", "relation": "refines", "from": "claim:cc10_0046_07", "to": "claim:cc10_0041_09", "strength": 0.7, "rationale": "B names HIMARS as the weapon in the same Hladkivka column strike."}
+{"pair": "23415617b125", "relation": "none", "rationale": "Weapons carried by the jets and early-war air skirmishes are different subjects."}
+{"pair": "23933a6fe166", "relation": "duplicates", "from": "claim:cc17_0017_03", "to": "claim:cc17_0007_45", "strength": 0.95, "rationale": "Same MoD credit of the 27th Brigade and 1486th Regiment for Kupiansk, same ISW source."}
+{"pair": "23cbcea326cb", "relation": "none", "rationale": "The battery's composition and its night movement are different facts."}
+{"pair": "23e064808821", "relation": "none", "rationale": "The fall date of Illich and the brigade's split the day before are compatible but distinct facts."}
+{"pair": "241f4f684c79", "relation": "none", "rationale": "A fix to the missiles and the battery's radar are different facts."}
+{"pair": "244fa8e0a922", "relation": "none", "rationale": "The video going viral and its caption are different facts."}
+{"pair": "246120c0bf8f", "relation": "none", "rationale": "The brigade's route and a casualty incident at Korovii Yar are different assertions."}
+{"pair": "248101ab5472", "relation": "none", "rationale": "Initial foothold layout and a later supply-post request are different facts."}
+{"pair": "249406053c13", "relation": "none", "rationale": "Ukraine's admission of captures and the brigade split are different assertions."}
+{"pair": "24aedfb94f6f", "relation": "none", "rationale": "A kill zone by 10 November and a counterattack on 22 November are different events."}
+{"pair": "24bbe27f7fd4", "relation": "none", "rationale": "The pipeline exit and the withdrawal from Sudzha are different events."}
+{"pair": "24fd48c9d4ea", "relation": "none", "rationale": "Unit participation and an assessment of one battalion's quality are different assertions."}
+{"pair": "253ee9362f86", "relation": "none", "rationale": "A plantation damage study and an LNR redeployment share only oblast names."}
+{"pair": "2540dd49cac8", "relation": "supports", "from": "claim:cc04_0009_70", "to": "claim:cc04_0023_10", "strength": 0.7, "rationale": "A's 4 October capture of Davydiv Brid by the 35th Marine Brigade matches B, citing the same ISW report.", "independent": false}
+{"pair": "25a9dbf3789b", "relation": "supports", "from": "claim:cv01_0009_10", "to": "claim:cv01_0007_10", "strength": 0.5, "rationale": "Both NYT accounts locate the strike where the M01 enters the built-up stretch at Skybyn.", "independent": false}
+{"pair": "25c207b05eef", "relation": "none", "rationale": "A game's scope and a General Staff report are unrelated."}
+{"pair": "2604e61f6636", "relation": "none", "rationale": "The column's movement and the road geography are different facts."}
+{"pair": "263669041fa3", "relation": "supports", "from": "claim:cc10_0037_09", "to": "claim:cc10_0046_10", "strength": 0.7, "rationale": "A's \"hardly any\" EW on the boats backs B's listing of missing boat EW, from the same Pravda source.", "independent": false}
+{"pair": "263f414e003a", "relation": "refines", "from": "claim:cc04_0032_01", "to": "claim:cc04_0009_93", "strength": 0.7, "rationale": "B gives Surovikin's recommendation and Shoigu's assent at the same 9 November meeting."}
+{"pair": "264b95908a6c", "relation": "supports", "from": "claim:cc08_0035_02", "to": "claim:cc08_0006_06", "strength": 0.8, "rationale": "Bayak's account of the clear road and mined fields matches A's kill-zone description, from the same NYT article.", "independent": false}
+{"pair": "2657f885ff12", "relation": "supports", "from": "claim:cv02_0018_03", "to": "claim:cv02_0016_03", "strength": 0.6, "rationale": "The gunner's own account of aiming at the optics backs the experts' reading of the video.", "independent": true}
+{"pair": "265a9b6e57d0", "relation": "none", "rationale": "Location and holding period of the pocket and the brigade split are different facts."}
+{"pair": "26a58447e7e0", "relation": "none", "rationale": "Road geography and the column's movement are different facts."}

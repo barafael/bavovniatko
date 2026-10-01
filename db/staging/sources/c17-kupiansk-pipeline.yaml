@@ -1,0 +1,361 @@
+- id: ukrpravda-2026-kyrylenko-kupiansk-is-yours
+  title: "\"Kupiansk is yours.\" How Ukraine retook a strategic city in Kharkiv Oblast – and the secret behind the operation"
+  url: https://www.pravda.com.ua/eng/articles/2026/02/25/8022623/
+  publisher: Ukrainska Pravda
+  authors: [Olha Kyrylenko]
+  published: "2026-02-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [ground, infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Long-read built on Khartiia and Kupiansk Tactical Group sources: the pipeline (entry Lyman Pershyi, exit Radkivka, 1.2 m), 100–250 infiltrators, both Ukrainian groupings with units and commanders, dates, about 2,000 Russian losses (UA claim), 99% control by late Feb 2026. Fetched via curl (WebFetch got 403)."
+- id: isw-2025-09-14-roca
+  title: Russian Offensive Campaign Assessment, September 14, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-14-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-09-14"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ground, infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "10th Army Corps: fire control over the pipeline exit, and three of four pipelines damaged or flooded. Entrance near Lyman Pershyi, exit near Radkivka."
+- id: isw-2025-09-15-roca
+  title: Russian Offensive Campaign Assessment, September 15, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-15-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-09-15"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ground, infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Belskyi: sabotage groups in civilian clothes and with false documents, fire control over the Lyman Pershyi–Radkivka pipe. 16th Spetsnaz Brigade and 27th Brigade drone operators near Kupiansk."
+- id: isw-2025-09-18-roca
+  title: Russian Offensive Campaign Assessment, September 18, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-september-18-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-09-18"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ground, infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "A Ukrainian drone-regiment commander: pipes damaged again to stop infiltration, with many sabotage groups on the west bank."
+- id: isw-2025-11-21-roca
+  title: Russian Offensive Campaign Assessment, November 21, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-november-21-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-11-21"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ground, information, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Gerasimov's and Kuzovlev's claim that Kupiansk was captured, units credited, Putin's 'inevitably repeat', milblogger dissent, flag-raising infiltration clips, Russian use of fog and rain."
+- id: isw-2025-12-12-roca
+  title: Russian Offensive Campaign Assessment, December 12, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-12-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-12-12"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ground, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Khartiia: Kindrashivka and Radkivka liberated, breakthrough to the Oskil, about 200 Russians encircled. Zelensky photographed at the outskirts. 47th Tank Division units south-east of Kupiansk."
+- id: isw-2025-12-13-roca
+  title: Russian Offensive Campaign Assessment, December 13, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-13-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-12-13"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [ground, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Butusov's dated timeline: Russian units inside Kupiansk, a key height lost in mid-Sep, then Tyshchenkivka (24 Sep), Kindrashivka (9 Oct) and Radkivka (11 Oct) retaken and the Oskil reached (21 Oct); Yuvileinyi retaken; drone units forming the kill zone."
+- id: wikipedia-2026-kupiansk-offensive
+  title: Kupiansk offensive
+  url: https://en.wikipedia.org/wiki/Kupiansk_offensive
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [ground, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Dated chronology of 2024–25, mostly sourced to ISW. Used for summer 2025 village dates, the UK MoD high-rise claim, the 9 Nov H-26 building and the UA count of about 40 Russians inside on 21 Nov. Read as raw wikitext."
+- id: meduza-2025-crawl-of-duty
+  title: "Crawl of duty: Russian soldiers once again move through gas pipeline to launch offensive, Ukrainian OSINT project reports"
+  url: https://meduza.io/en/feature/2025/09/15/crawl-of-duty
+  publisher: Meduza
+  authors: []
+  published: "2025-09-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Exiled independent Russian outlet (not state media) relaying DeepState's 12 Sep 2025 report: entrances near Lyman Pershyi, wheeled platforms and scooters, about four days in transit with rest areas. Russians in western Kupiansk by 3 Sep."
+- id: kyivindependent-2025-zadorozhnyy-pipeline-tunnels
+  title: "'Suicides and suffocation' — Russia sends troops into gas pipelines to bypass Ukrainian defenses"
+  url: https://kyivindependent.com/deadly-but-effective-why-russia-sends-soldiers-to-gas-pipeline-tunnels-in-ukraine/
+  publisher: Kyiv Independent
+  authors: [Tim Zadorozhnyy]
+  published: "2025-09-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Overview of pipe infiltrations: Avdiivka (over 2 km, entry spotted and shelled), Sudzha (12–15 km, Gerasimov's 'over 600', lung damage) and Kupiansk (DeepState on 12 Sep, General Staff on 13 Sep that the exit is controlled, flooding)."
+- id: kyivindependent-2026-terajima-kupiansk-pipelines
+  title: How Ukraine defends Kupiansk from Russian troops crawling through pipes
+  url: https://kyivindependent.com/battle-for-pipelines-in-kupiansk-average-lifespan-of-enemy-is-up-to-an-hour/
+  publisher: Kyiv Independent
+  authors: [Asami Terajima]
+  published: "2026-05-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Reporting with Khartiia: four pipes merging into two under the Oskil, 1–1.2 m, 15 km from the Russian rear, 'Veterans' pipe specialists, 95% of crossers hit, survival 'usually 10 minutes', countermeasures and their limits."
+- id: kyivindependent-2025-denisova-achilles-pipeline
+  title: Ukraine says it destroyed pipeline Russia used to infiltrate Kupiansk, releases video
+  url: https://kyivindependent.com/ukraines-drone-regiment-releases-video-of-pipeline-destruction-russia-used-to-infiltrate-kupiansk/
+  publisher: Kyiv Independent
+  authors: [Kateryna Denisova]
+  published: "2025-12-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [infiltration, drones, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "The 429th Achilles regiment's video of the pipeline's destruction (13 Dec 2025). The regiment arrived in April and claims 998 Russians killed and 879 wounded."
+- id: defenseexpress-2025-achilles-pipeline-destroyed
+  title: Ukrainian Forces Destroy Pipeline Used by russian Troops to Enter Kupiansk (Video)
+  url: https://en.defence-ua.com/news/ukrainian_forces_destroy_pipe_used_by_russian_troops_to_enter_kupiansk_video-16811.html
+  publisher: Defense Express
+  authors: []
+  published: "2025-12-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Demolition with about 3 t of explosives. Achilles commander Yuriy Fedorenko. About 100 Russians cut off, after about 500 earlier."
+- id: euromaidanpress-2025-frontline-kupiansk-pipeline-killzone
+  title: "Frontline report: Ukraine turns Russian pipeline into kill zone as Kupiansk counteroffensive advances"
+  url: https://euromaidanpress.com/2025/12/31/frontline-report-2025-12-30/
+  publisher: Euromaidan Press
+  authors: [Reporting from Ukraine]
+  published: "2025-12-31"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Video-analysis frontline report (Reporting from Ukraine channel): two pipeline assaults destroyed (50–60 men, then about 40 hit by 77th Airmobile drones), and about 50 of 300 Russians left in town. Low reliability: secondary video commentary."
+- id: euromaidanpress-2026-mukhina-kupiansk-pipes-again
+  title: After days of crawling through Sumy pipes, Russia is now trying same tactic in Kupiansk
+  url: https://euromaidanpress.com/2026/04/25/after-days-of-crawling-through-sumy-pipes-russia-is-now-trying-same-tactic-in-kupiansk/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-04-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Trehubov (Joint Forces Group) to Suspilne: Russians have resumed attempts to enter through Holubivka and the pipes."
+- id: kyivpost-2026-khartiia-pipeline-civilians
+  title: "WATCH: Ukraine Says Russian Troops Led Children Into Gas Pipeline to Cover Retreat"
+  url: https://www.kyivpost.com/post/85561
+  publisher: Kyiv Post
+  authors: []
+  published: "2026-09-28"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [infiltration, civilians, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Khartiia drone footage of 27 Sep 2026: nine civilians led via Holubivka into the Shebelinka–Ostrogozhsk pipe, more than 10 km, emerging in a forest."
+- id: gwara-2026-diachenko-pipeline-damaged
+  title: Gas pipeline Russians used to get locals out of Kupiansk is severely damaged
+  url: https://gwaramedia.com/en/gas-pipeline-used-by-russians-to-get-civilians-out-of-kupiansk-is-damaged-in-some-sections-ukrainian-military-says/
+  publisher: Gwara Media
+  authors: [Elza Diachenko]
+  published: "2026-09-30"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Trehubov: the pipe is damaged in sections but not destroyed, because Ukraine does not control the whole territory, and infiltration is not control."
+- id: united24-2026-kabachynskyi-pipelines
+  title: Russian Troops Used Pipelines for Surprise Attacks. Now It's a Disaster
+  url: https://united24media.com/war-in-ukraine/russian-troops-used-pipelines-for-surprise-attacks-now-its-a-disaster-16065
+  publisher: UNITED24 Media
+  authors: [Illia Kabachynskyi]
+  published: "2026-02-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e8-drone-kill-zone]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Explainer: Avdiivka sewer pipe of 3.7 km and up to 1.4 m (reported Feb 2024), Chasiv Yar canal pipes, Kupiansk ('the pipeline became a grave'). Its Avdiivka figures conflict with the Kyiv Post's."
+- id: lwj-2024-hardie-avdiivka-analysis
+  title: "Battle of Avdiivka: A Preliminary Analysis"
+  url: https://www.longwarjournal.org/archives/2024/03/battle-of-avdiivka-a-preliminary-analysis.php
+  publisher: FDD's Long War Journal
+  authors: [John Hardie]
+  published: "2024-03-22"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [infiltration, ground, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "150 troops of the 60th 'Veterans' brigade through a pipe to Tsarska Okhota in January 2024, contained. The same pipe used by the 1st 'Slavic' Brigade to reach Vinogradniki-2 on 15 Feb."
+- id: kyivpost-2024-korshak-avdiivka-pipe
+  title: Russian Infantry Scores Gains in Battleground Avdiivka, Both Sides Predict More Big Attacks
+  url: https://www.kyivpost.com/post/27219
+  publisher: Kyiv Post
+  authors: [Stefan Korshak]
+  published: "2024-01-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Pro-Kremlin claims of about 150 troops through a 0.8 m pipe of nearly 2 km into south Avdiivka and Tsarska Okhota; torch-cutting video of 25 Jan; Barabash: 'through drainage tunnels you will not organize any serious advance'."
+- id: euromaidanpress-2024-hrudka-avdiivka-barabash
+  title: Intense pressure on Avdiivka but Russian forces never entered the city, says Avdiivka Military Administration Head
+  url: https://euromaidanpress.com/2024/01/23/intense-pressure-on-avdiivka-but-russian-forces-never-entered-the-city-says-avdiivka-military-administration-head/
+  publisher: Euromaidan Press
+  authors: [Orysia Hrudka]
+  published: "2024-01-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [ground, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Barabash: Tsarska Okhota was 'breached by Russian groups, but they were driven out'."
+- id: twz-2025-newdick-kursk-pipeline
+  title: Russian Raiders Crawled For Miles Through Gas Pipeline To Attack Ukrainians In Kursk
+  url: https://www.twz.com/land/russian-raiders-crawled-for-miles-through-gas-pipeline-to-attack-ukrainians-in-kursk
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2025-03-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Sudzha raid of 8 Mar 2025 through a branch of Urengoy–Pomary–Uzhhorod (about 9 mi, about 4.5 ft), about 100 men per Ukrainska Pravda, four days in the pipe, Ukrainian footage of the engagement."
+- id: militarnyi-2025-kushnikov-sudzha-pipeline
+  title: Russian Saboteurs Used Gas Pipeline to Reach Sudzha, Now Being Eliminated
+  url: https://militarnyi.com/en/news/russian-saboteurs-used-gas-pipeline-to-reach-sudzha-now-being-eliminated/
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2025-03-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [infiltration, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Air Assault Forces filmed saboteurs exiting the pipe, then artillery and HIMARS. Units named include the 177th and 810th Naval Infantry, VDV, Akhmat and the 1427th Regiment."
+- id: osm-2026-kupiansk-pipeline-geodata
+  title: "OpenStreetMap Nominatim and Overpass queries: Kupiansk-area places and the gas pipeline under the Oskil (computed)"
+  url: https://nominatim.openstreetmap.org/
+  alt_urls: [https://overpass.kumi.systems/api/interpreter]
+  publisher: OpenStreetMap contributors
+  authors: []
+  published: "2026-05-31"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [terrain, geodata, chapter]
+  found_in: [c17-kupiansk-pipeline]
+  notes: "Computed 2026-10-01 (OSM base 2026-05-31; ODbL). Village coordinates come from Nominatim. Overpass gas pipeline ways 310352107 and 310350544 cross the Oskil at about 49.760, 37.643, and measure 10.5 km between the points nearest Lyman Pershyi and Radkivka. The eastern way is tagged 'Trans-Balkan', probably wrongly."
