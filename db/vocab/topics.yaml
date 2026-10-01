@@ -1,0 +1,9 @@
+- {id: t00, code: "00", file: research/00-timeline-eras.md,         en: "Timeline & eras"}
+- {id: t01, code: "01", file: research/01-drones-uncrewed.md,       en: "Drones & uncrewed systems"}
+- {id: t02, code: "02", file: research/02-ew-countermeasures.md,    en: "EW & countermeasures"}
+- {id: t03, code: "03", file: research/03-fires-air.md,             en: "Fires & air"}
+- {id: t04, code: "04", file: research/04-ground-tactics-manpower.md, en: "Ground tactics & manpower"}
+- {id: t05, code: "05", file: research/05-isr-c2-logistics.md,      en: "ISR, C2 & logistics"}
+- {id: t06, code: "06", file: research/06-terrain-geodata.md,       en: "Terrain & geodata"}
+- {id: t07, code: "07", file: research/07-maps-ui-conventions.md,   en: "Maps & UI conventions"}
+- {id: t08, code: "08", file: research/08-prior-art-games.md,       en: "Prior-art games & wargames"}

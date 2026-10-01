@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 00: Timeline & eras of the Russo-Ukrainian war (2014 prelude, Feb 2022 to Sep 2026)
 
 Research note for *bavovniatko*. The player is always the Ukrainian side. Accessed 2026-09-28 to 2026-09-30. Citations are inline src-id tags in square brackets, resolved in `sources/00-timeline-eras.yaml`. Claims attributed to one side are marked as such, and contested numbers are given as ranges with who claims what.

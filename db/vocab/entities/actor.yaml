@@ -1,0 +1,2164 @@
+# Curated actor registry: every staged actor name resolves through `en` or `aliases`.
+- id: actor:rusi
+  type: actor
+  kind: think_tank
+  en: RUSI
+  side: western
+  note: Royal United Services Institute, London defence think tank.
+- id: actor:institute_for_the_study_of_war
+  type: actor
+  kind: think_tank
+  en: Institute for the Study of War
+  aliases:
+  - ISW
+  side: western
+  note: Washington think tank; daily Russian Offensive Campaign Assessments and control-of-terrain maps.
+- id: actor:american_enterprise_institute
+  type: actor
+  kind: think_tank
+  en: American Enterprise Institute
+  aliases:
+  - AEI
+  side: western
+- id: actor:critical_threats_project
+  type: actor
+  kind: think_tank
+  en: Critical Threats Project
+  aliases:
+  - CTP
+  parent: actor:american_enterprise_institute
+  side: western
+  note: AEI project; co-produces the ISW/CTP war map.
+- id: actor:csis
+  type: actor
+  kind: think_tank
+  en: CSIS
+  side: western
+  note: Center for Strategic and International Studies, Washington.
+- id: actor:atlantic_council
+  type: actor
+  kind: think_tank
+  en: Atlantic Council
+  side: western
+- id: actor:cnas
+  type: actor
+  kind: think_tank
+  en: CNAS
+  side: western
+  note: Center for a New American Security.
+- id: actor:carnegie_endowment_for_international_peace
+  type: actor
+  kind: think_tank
+  en: Carnegie Endowment for International Peace
+  aliases:
+  - Carnegie
+  side: western
+- id: actor:institute_for_science_and_international_security
+  type: actor
+  kind: think_tank
+  en: Institute for Science and International Security
+  aliases:
+  - ISIS
+  side: western
+  note: Washington institute (David Albright); tracks Shahed-type launches and production.
+- id: actor:kiel_institute_for_the_world_economy
+  type: actor
+  kind: think_tank
+  en: Kiel Institute for the World Economy
+  aliases:
+  - Kiel Institute
+  side: western
+  note: Publishes the Ukraine Support Tracker.
+- id: actor:osw_centre_for_eastern_studies
+  type: actor
+  kind: think_tank
+  en: OSW Centre for Eastern Studies
+  aliases:
+  - OSW
+  side: western
+  note: Polish state-funded think tank, Warsaw.
+- id: actor:center_for_european_policy_analysis
+  type: actor
+  kind: think_tank
+  en: Center for European Policy Analysis
+  aliases:
+  - CEPA
+  side: western
+- id: actor:foreign_policy_research_institute
+  type: actor
+  kind: think_tank
+  en: Foreign Policy Research Institute
+  aliases:
+  - FPRI
+  side: western
+- id: actor:rand_corporation
+  type: actor
+  kind: think_tank
+  en: RAND Corporation
+  aliases:
+  - RAND
+  side: western
+- id: actor:joint_air_power_competence_centre
+  type: actor
+  kind: international_org
+  en: Joint Air Power Competence Centre
+  aliases:
+  - JAPCC
+  side: western
+  note: NATO-accredited centre of excellence for air and space power, Kalkar.
+- id: actor:modern_war_institute_at_west_point
+  type: actor
+  kind: academic_institution
+  en: Modern War Institute at West Point
+  aliases:
+  - West Point's Modern War Institute
+  - Modern War Institute
+  - MWI
+  side: western
+- id: actor:marine_corps_university
+  type: actor
+  kind: academic_institution
+  en: Marine Corps University
+  side: western
+- id: actor:kse_institute
+  type: actor
+  kind: think_tank
+  en: KSE Institute
+  aliases:
+  - KSE
+  side: ua
+  note: Analytical centre of the Kyiv School of Economics.
+- id: actor:open_source_centre
+  type: actor
+  kind: think_tank
+  en: Open Source Centre
+  aliases:
+  - OSC
+  side: western
+  note: UK non-profit open-source research group; counted North Korean shell shipments.
+- id: actor:german_wargaming_center
+  type: actor
+  kind: academic_institution
+  en: German Wargaming Center
+  parent: actor:helmut_schmidt_university
+  side: western
+  note: Wargaming centre at the Bundeswehr university in Hamburg.
+- id: actor:helmut_schmidt_university
+  type: actor
+  kind: academic_institution
+  en: Helmut Schmidt University
+  side: western
+  note: University of the Federal Armed Forces, Hamburg.
+- id: actor:deepstate
+  type: actor
+  kind: ngo
+  en: DeepState
+  uk: ДіпСтейт
+  aliases:
+  - DeepState UA
+  side: ua
+  note: Ukrainian NGO/OSINT team that runs DeepStateMap; co-founded by Roman Pohorilyi and Ruslan Mykula.
+- id: actor:deepstatemap
+  type: actor
+  kind: platform
+  en: DeepStateMap
+  aliases:
+  - DeepStateMap.Live
+  parent: actor:deepstate
+  side: ua
+  note: DeepState's online front-line map.
+- id: actor:acled
+  type: actor
+  kind: ngo
+  en: ACLED
+  side: international
+  note: Armed Conflict Location & Event Data project.
+- id: actor:black_bird_group
+  type: actor
+  kind: ngo
+  en: Black Bird Group
+  side: western
+  note: Finnish volunteer OSINT group mapping the war.
+- id: actor:frontelligence_insight
+  type: actor
+  kind: organisation
+  en: Frontelligence Insight
+  side: ua
+  note: Ukrainian OSINT and analysis team.
+- id: actor:geoconfirmed
+  type: actor
+  kind: organisation
+  en: GeoConfirmed
+  side: international
+  note: Volunteer geolocation collective.
+- id: actor:oryx
+  type: actor
+  kind: outlet
+  en: Oryx
+  side: international
+  note: OSINT blog counting visually confirmed equipment losses.
+- id: actor:ualosses
+  type: actor
+  kind: platform
+  en: UALosses
+  side: other
+  note: Project counting named Ukrainian military deaths from open sources.
+- id: actor:suriyakmaps
+  type: actor
+  kind: organisation
+  en: Suriyakmaps
+  aliases:
+  - Suriyak
+  - Suriyak Maps
+  side: other
+  note: Anonymous, apparently Spanish-speaking X/Telegram mapping account (since 2017).
+- id: actor:amk_mapping
+  type: actor
+  kind: person
+  en: AMK Mapping
+  side: other
+  note: OSINT mapping account (control map of Ukraine).
+- id: actor:ukrainian_nature_conservation_group
+  type: actor
+  kind: ngo
+  en: Ukrainian Nature Conservation Group
+  aliases:
+  - UNCG
+  side: ua
+- id: actor:army_sos
+  type: actor
+  kind: ngo
+  en: Army SOS
+  side: ua
+  note: Ukrainian volunteer organisation (since 2014); makes the Kropyva mapping app.
+- id: actor:come_back_alive
+  type: actor
+  kind: ngo
+  en: Come Back Alive
+  uk: Повернись живим
+  side: ua
+  note: Ukrainian military-aid foundation.
+- id: actor:aerorozvidka
+  type: actor
+  kind: ngo
+  en: Aerorozvidka
+  uk: Аеророзвідка
+  side: ua
+  note: Ukrainian volunteer drone/IT NGO that fielded a drone unit in 2022; co-developed Delta.
+- id: actor:it_army_of_ukraine
+  type: actor
+  kind: organisation
+  en: IT Army of Ukraine
+  side: ua
+  note: Volunteer cyber force.
+- id: actor:wetruegun
+  type: actor
+  kind: organisation
+  en: WeTrueGun
+  side: ua
+  note: Ukrainian school running a GTA V/FiveM Shahed-interception server.
+- id: actor:slivochny_kapriz
+  type: actor
+  kind: organisation
+  en: Slivochny Kapriz
+  side: ru
+  note: Russian mapping project that credits any area where Russian troops were seen.
+- id: actor:yunarmy
+  type: actor
+  kind: organisation
+  en: Yunarmy
+  side: ru
+  note: Russian youth military-patriotic movement.
+- id: actor:ushkuinik
+  type: actor
+  kind: organisation
+  en: Ushkuinik
+  side: ru
+  note: Russian drone research-and-production centre / accelerator (KVN fibre-optic FPV).
+- id: actor:mediazona
+  type: actor
+  kind: outlet
+  en: Mediazona
+  side: other
+  note: Independent Russian outlet; counts named Russian dead with BBC Russian.
+- id: actor:radio_free_europe_radio_liberty
+  type: actor
+  kind: outlet
+  en: Radio Free Europe/Radio Liberty
+  aliases:
+  - RFE/RL
+  side: western
+- id: actor:radio_svoboda
+  type: actor
+  kind: outlet
+  en: Radio Svoboda
+  uk: Радіо Свобода
+  parent: actor:radio_free_europe_radio_liberty
+  side: western
+  note: RFE/RL's Ukrainian (and Russian) service.
+- id: actor:bbc_news
+  type: actor
+  kind: outlet
+  en: BBC News
+  aliases:
+  - BBC
+  side: western
+- id: actor:bbc_russian_service
+  type: actor
+  kind: outlet
+  en: BBC Russian Service
+  aliases:
+  - BBC Russian
+  parent: actor:bbc_news
+  side: western
+- id: actor:bbc_visual_journalism
+  type: actor
+  kind: outlet
+  en: BBC Visual Journalism
+  parent: actor:bbc_news
+  side: western
+- id: actor:kyiv_independent
+  type: actor
+  kind: outlet
+  en: Kyiv Independent
+  aliases:
+  - The Kyiv Independent
+  side: ua
+- id: actor:kyiv_post
+  type: actor
+  kind: outlet
+  en: Kyiv Post
+  side: ua
+- id: actor:defense_express
+  type: actor
+  kind: outlet
+  en: Defense Express
+  side: ua
+- id: actor:ngl_media
+  type: actor
+  kind: outlet
+  en: NGL.media
+  side: ua
+- id: actor:slidstvo_info
+  type: actor
+  kind: outlet
+  en: Slidstvo.Info
+  side: ua
+- id: actor:reuters
+  type: actor
+  kind: outlet
+  en: Reuters
+  side: western
+- id: actor:financial_times
+  type: actor
+  kind: outlet
+  en: Financial Times
+  side: western
+- id: actor:the_new_york_times
+  type: actor
+  kind: outlet
+  en: The New York Times
+  aliases:
+  - New York Times
+  side: western
+- id: actor:washington_post
+  type: actor
+  kind: outlet
+  en: Washington Post
+  aliases:
+  - The Washington Post
+  side: western
+- id: actor:the_economist
+  type: actor
+  kind: outlet
+  en: The Economist
+  side: western
+- id: actor:die_welt
+  type: actor
+  kind: outlet
+  en: Die Welt
+  side: western
+- id: actor:yonhap
+  type: actor
+  kind: outlet
+  en: Yonhap
+  side: other
+  note: South Korean news agency.
+- id: actor:war_on_the_rocks
+  type: actor
+  kind: outlet
+  en: War on the Rocks
+  side: western
+- id: actor:paxsims
+  type: actor
+  kind: platform
+  en: PAXsims
+  side: international
+  note: Blog on conflict simulation and wargaming.
+- id: actor:boardgamegeek
+  type: actor
+  kind: platform
+  en: BoardGameGeek
+  side: international
+- id: actor:united24
+  type: actor
+  kind: platform
+  en: UNITED24
+  side: ua
+  note: Ukrainian presidential fundraising platform (not UNITED24 Media).
+- id: actor:brave1_market
+  type: actor
+  kind: platform
+  en: Brave1 Market
+  parent: actor:brave1
+  side: ua
+  note: Marketplace where units spend e-points on drones and kit.
+- id: actor:telegram
+  type: actor
+  kind: platform
+  en: Telegram
+  side: other
+- id: actor:roblox
+  type: actor
+  kind: platform
+  en: Roblox
+  side: western
+- id: actor:ministry_of_defence_of_ukraine
+  type: actor
+  kind: government_body
+  en: Ministry of Defence of Ukraine
+  uk: Міністерство оборони України
+  aliases:
+  - Ukrainian Ministry of Defence
+  - Ukrainian MoD
+  - MoD of Ukraine
+  side: ua
+- id: actor:general_staff_of_ukraine
+  type: actor
+  kind: government_body
+  en: General Staff of the Armed Forces of Ukraine
+  uk: Генеральний штаб Збройних сил України
+  aliases:
+  - Ukrainian General Staff
+  side: ua
+- id: actor:cabinet_of_ministers_of_ukraine
+  type: actor
+  kind: government_body
+  en: Cabinet of Ministers of Ukraine
+  uk: Кабінет Міністрів України
+  side: ua
+- id: actor:government_of_ukraine
+  type: actor
+  kind: government_body
+  en: Government of Ukraine
+  aliases:
+  - Ukrainian government
+  side: ua
+  note: The Ukrainian state/executive in general; the formal cabinet is actor:cabinet_of_ministers_of_ukraine.
+- id: actor:ministry_of_digital_transformation_of_ukraine
+  type: actor
+  kind: government_body
+  en: Ministry of Digital Transformation of Ukraine
+  aliases:
+  - Ministry of Digital Transformation
+  side: ua
+- id: actor:brave1
+  type: actor
+  kind: government_body
+  en: Brave1
+  side: ua
+  note: State defence-tech cluster (Ministry of Digital Transformation / MoD).
+- id: actor:centre_for_innovation_and_development_of_defence_technologies
+  type: actor
+  kind: government_body
+  en: Centre for Innovation and Development of Defence Technologies
+  parent: actor:ministry_of_defence_of_ukraine
+  side: ua
+  note: MoD centre that develops the Delta system.
+- id: actor:delta_developers
+  type: actor
+  kind: organisation
+  en: Delta developers
+  parent: actor:centre_for_innovation_and_development_of_defence_technologies
+  side: ua
+  note: Team behind the Delta situational-awareness system (MoD centre with Aerorozvidka).
+- id: actor:national_police_of_ukraine
+  type: actor
+  kind: government_body
+  en: National Police of Ukraine
+  side: ua
+- id: actor:ukrainian_ombudsperson
+  type: actor
+  kind: government_body
+  en: Ukrainian Parliament Commissioner for Human Rights
+  aliases:
+  - Ukrainian ombudsperson
+  - Ukrainian ombudsman
+  side: ua
+- id: actor:hur
+  type: actor
+  kind: intelligence_agency
+  en: Defence Intelligence of Ukraine (HUR)
+  uk: Головне управління розвідки МО України
+  aliases:
+  - HUR
+  - GUR
+  - Ukrainian military intelligence
+  - Ukrainian military intelligence (HUR)
+  - Defence Intelligence of Ukraine
+  - Defense Intelligence of Ukraine
+  - Main Directorate of Intelligence
+  - HUR MO
+  - DIU
+  parent: actor:ministry_of_defence_of_ukraine
+  side: ua
+- id: actor:sbu
+  type: actor
+  kind: intelligence_agency
+  en: Security Service of Ukraine (SBU)
+  uk: Служба безпеки України
+  aliases:
+  - SBU
+  - Security Service of Ukraine
+  side: ua
+- id: actor:szru
+  type: actor
+  kind: intelligence_agency
+  en: Foreign Intelligence Service of Ukraine (SZRU)
+  uk: Служба зовнішньої розвідки України
+  aliases:
+  - SZRU
+  - Foreign Intelligence Service of Ukraine
+  side: ua
+- id: actor:ukrainian_intelligence_unnamed
+  type: actor
+  kind: intelligence_agency
+  en: Ukrainian intelligence
+  side: ua
+  note: generic
+- id: actor:armed_forces_of_ukraine
+  type: actor
+  kind: armed_force
+  en: Armed Forces of Ukraine
+  uk: Збройні сили України
+  aliases:
+  - AFU
+  - ZSU
+  - Armed Forces of Ukraine leadership
+  side: ua
+- id: actor:defence_forces_of_ukraine
+  type: actor
+  kind: armed_force
+  en: Defence Forces of Ukraine
+  side: ua
+  note: All Ukrainian forces under the C-in-C (AFU plus National Guard, Border Guard, intelligence units).
+- id: actor:ukrainian_air_force
+  type: actor
+  kind: armed_force
+  en: Ukrainian Air Force
+  uk: Повітряні сили ЗСУ
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+- id: actor:ukrainian_navy
+  type: actor
+  kind: armed_force
+  en: Ukrainian Navy
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+- id: actor:unmanned_systems_forces
+  type: actor
+  kind: armed_force
+  en: Unmanned Systems Forces
+  uk: Сили безпілотних систем
+  aliases:
+  - USF
+  - Ukrainian Unmanned Systems Forces
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+- id: actor:ua_air_assault_forces
+  type: actor
+  kind: armed_force
+  en: Air Assault Forces (DShV)
+  uk: Десантно-штурмові війська
+  aliases:
+  - Air Assault Forces
+  - DShV
+  - Ukrainian Air Assault Forces
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+- id: actor:ua_special_operations_forces
+  type: actor
+  kind: armed_force
+  en: Special Operations Forces of Ukraine (SSO)
+  aliases:
+  - SSO
+  parent: actor:armed_forces_of_ukraine
+  side: ua
+  note: Ukrainian SSO (in Operation Vivaldi context).
+- id: actor:national_guard_of_ukraine
+  type: actor
+  kind: armed_force
+  en: National Guard of Ukraine
+  uk: Національна гвардія України
+  side: ua
+- id: actor:ua_3rd_army_corps
+  type: actor
+  kind: military_unit
+  en: 3rd Army Corps
+  aliases:
+  - 3rd Corps
+  - Ukrainian 3rd Army Corps
+  side: ua
+  note: Ukrainian corps under Andriy Biletsky, formed from the 3rd Assault Brigade; ran Operation Vivaldi near Lyman (2026).
+- id: actor:ua_3rd_assault_brigade
+  type: actor
+  kind: military_unit
+  en: 3rd Assault Brigade
+  parent: actor:ua_3rd_army_corps
+  side: ua
+- id: actor:ua_60th_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 60th Mechanised Brigade
+  aliases:
+  - 60th Mechanized Brigade
+  parent: actor:ua_3rd_army_corps
+  side: ua
+- id: actor:ua_125th_heavy_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 125th Heavy Mechanised Brigade
+  parent: actor:ua_3rd_army_corps
+  side: ua
+- id: actor:ua_7th_air_assault_corps
+  type: actor
+  kind: military_unit
+  en: 7th Air Assault Corps
+  parent: actor:ua_air_assault_forces
+  side: ua
+  note: Commanded by Brig. Gen. Lasiichuk (Pokrovsk axis, 2026).
+- id: actor:ua_9th_army_corps
+  type: actor
+  kind: military_unit
+  en: 9th Army Corps
+  aliases:
+  - 9th Corps
+  side: ua
+  note: Opened the 2023 counteroffensive.
+- id: actor:khartiia
+  type: actor
+  kind: military_unit
+  en: Khartiia
+  uk: Хартія
+  aliases:
+  - Khartia
+  - Khartia corps
+  - Khartiia corps
+  parent: actor:national_guard_of_ukraine
+  side: ua
+  note: National Guard formation (2nd Corps of the NGU from 2025).
+- id: actor:birds_of_magyar
+  type: actor
+  kind: military_unit
+  en: 414th Brigade "Birds of Magyar"
+  uk: Птахи Мадяра
+  aliases:
+  - Magyar's Birds
+  - Birds of Magyar
+  - Birds of Madyar
+  - 414th Brigade "Birds of Madyar"
+  - Madyar's Birds
+  - 414th brigade
+  parent: actor:unmanned_systems_forces
+  side: ua
+  note: Drone unit founded by Robert 'Magyar' Brovdi.
+- id: actor:k_2
+  type: actor
+  kind: military_unit
+  en: K-2
+  side: ua
+  note: Ukrainian drone regiment in the Drone Line.
+- id: actor:achilles
+  type: actor
+  kind: military_unit
+  en: Achilles
+  uk: Ахіллес
+  side: ua
+  note: Ukrainian drone regiment in the Drone Line.
+- id: actor:rarog
+  type: actor
+  kind: military_unit
+  en: Rarog
+  side: ua
+  note: Ukrainian drone regiment in the Drone Line.
+- id: actor:phoenix
+  type: actor
+  kind: military_unit
+  en: Phoenix
+  side: ua
+  note: Border Guard drone unit in the Drone Line.
+- id: actor:night_watch
+  type: actor
+  kind: military_unit
+  en: Night Watch
+  side: ua
+  note: Ukrainian unit fielding the Pokrova/Lima GNSS-spoofing system.
+- id: actor:peaky_blinders
+  type: actor
+  kind: military_unit
+  en: Peaky Blinders
+  side: ua
+  note: Ukrainian unit (Pokrovsk axis, 2025).
+- id: actor:ua_osg_khortytsia
+  type: actor
+  kind: military_unit
+  en: Khortytsia operational-strategic group
+  aliases:
+  - Khortytsia group
+  - OSG Khortytsia
+  side: ua
+- id: actor:ua_osg_tavria
+  type: actor
+  kind: military_unit
+  en: Tavria operational-strategic group
+  aliases:
+  - Tavriisk grouping
+  - Tavria group
+  - OSG Tavria
+  side: ua
+- id: actor:ua_47th_mechanised_brigade
+  type: actor
+  kind: military_unit
+  en: 47th Mechanised Brigade
+  aliases:
+  - 47th Mechanized Brigade
+  side: ua
+- id: actor:ua_80th_air_assault_brigade
+  type: actor
+  kind: military_unit
+  en: 80th Air Assault Brigade
+  parent: actor:ua_air_assault_forces
+  side: ua
+- id: actor:ua_82nd_air_assault_brigade
+  type: actor
+  kind: military_unit
+  en: 82nd Air Assault Brigade
+  parent: actor:ua_air_assault_forces
+  side: ua
+- id: actor:ua_81st_brigade
+  type: actor
+  kind: military_unit
+  en: 81st Brigade
+  side: ua
+- id: actor:ua_37th_marine_brigade
+  type: actor
+  kind: military_unit
+  en: 37th Marine Brigade
+  side: ua
+- id: actor:ua_425th_assault_regiment
+  type: actor
+  kind: military_unit
+  en: 425th Assault Regiment
+  side: ua
+- id: actor:ua_102nd_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 102nd Territorial Defence Brigade
+  side: ua
+- id: actor:ua_106th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 106th Territorial Defence Brigade
+  side: ua
+- id: actor:ua_107th_territorial_defence_brigade
+  type: actor
+  kind: military_unit
+  en: 107th Territorial Defence Brigade
+  aliases:
+  - 107th TDF Brigade
+  side: ua
+- id: actor:volodymyr_zelensky
+  type: actor
+  kind: person
+  en: Volodymyr Zelensky
+  uk: Володимир Зеленський
+  aliases:
+  - Zelensky
+  - Volodymyr Zelenskyy
+  - Zelenskyy
+  side: ua
+  note: President of Ukraine since 20 May 2019.
+- id: actor:oleksandr_syrskyi
+  type: actor
+  kind: person
+  en: Oleksandr Syrskyi
+  uk: Олександр Сирський
+  aliases:
+  - Syrskyi
+  - Syrsky
+  side: ua
+  note: Commander-in-Chief of the Armed Forces of Ukraine Feb 2024 – 21 Jul 2026.
+- id: actor:mykhailo_drapatyi
+  type: actor
+  kind: person
+  en: Mykhailo Drapatyi
+  uk: Михайло Драпатий
+  aliases:
+  - Drapatyi
+  side: ua
+  note: Commander-in-Chief of the Armed Forces of Ukraine from 21 Jul 2026.
+- id: actor:valerii_zaluzhnyi
+  type: actor
+  kind: person
+  en: Valerii Zaluzhnyi
+  uk: Валерій Залужний
+  aliases:
+  - Zaluzhnyi
+  side: ua
+  note: Commander-in-Chief of the Armed Forces of Ukraine Jul 2021 – Feb 2024.
+- id: actor:mykhailo_fedorov
+  type: actor
+  kind: person
+  en: Mykhailo Fedorov
+  uk: Михайло Федоров
+  aliases:
+  - Fedorov
+  side: ua
+  note: Minister of Digital Transformation from 2019; Minister of Defence of Ukraine Jan 2026 – 14 Jul 2026.
+- id: actor:yevhen_khmara
+  type: actor
+  kind: person
+  en: Yevhen Khmara
+  uk: Євген Хмара
+  aliases:
+  - Khmara
+  side: ua
+  note: Special-operations commander; acting Minister of Defence of Ukraine from 16 Jul 2026, appointed 19 Aug 2026.
+- id: actor:robert_brovdi
+  type: actor
+  kind: person
+  en: Robert Brovdi
+  uk: Роберт Бровді
+  aliases:
+  - Brovdi (Magyar)
+  - Magyar
+  - Madyar
+  - Robert 'Magyar' Brovdi
+  - Robert "Magyar" Brovdi
+  - Brovdi
+  side: ua
+  note: Call sign 'Magyar'/'Madyar'; founder of Birds of Magyar; commander of the Unmanned Systems Forces from 3 Jun 2025.
+- id: actor:andriy_biletsky
+  type: actor
+  kind: person
+  en: Andriy Biletsky
+  uk: Андрій Білецький
+  aliases:
+  - Biletsky
+  - Biletskyi
+  - Andrii Biletskyi
+  side: ua
+  note: Commander of the 3rd Army Corps (earlier 3rd Assault Brigade).
+- id: actor:lasiichuk
+  type: actor
+  kind: person
+  en: Lasiichuk
+  side: ua
+  note: Brig. Gen., commander of the 7th Air Assault Corps (Pokrovsk axis, 2026).
+- id: actor:kyrylo_budanov
+  type: actor
+  kind: person
+  en: Kyrylo Budanov
+  uk: Кирило Буданов
+  aliases:
+  - Budanov
+  side: ua
+  note: Head of HUR (Defence Intelligence of Ukraine) from Aug 2020; head of the Office of the President from Jan 2026.
+- id: actor:vadym_skibitskyi
+  type: actor
+  kind: person
+  en: Vadym Skibitskyi
+  aliases:
+  - Skibitskyi
+  side: ua
+  note: Deputy head of HUR.
+- id: actor:andrii_yusov
+  type: actor
+  kind: person
+  en: Andrii Yusov
+  aliases:
+  - Yusov
+  side: ua
+  note: HUR spokesman.
+- id: actor:yurii_ihnat
+  type: actor
+  kind: person
+  en: Yurii Ihnat
+  uk: Юрій Ігнат
+  aliases:
+  - Ihnat
+  side: ua
+  note: Spokesman of the Ukrainian Air Force.
+- id: actor:serhii_beskrestnov
+  type: actor
+  kind: person
+  en: Serhii Beskrestnov
+  uk: Сергій Бескрестнов
+  aliases:
+  - Beskrestnov
+  - Flash
+  side: ua
+  note: Ukrainian radio-communications and EW specialist (call sign 'Flash').
+- id: actor:kostiantyn_humeniuk
+  type: actor
+  kind: person
+  en: Kostiantyn Humeniuk
+  aliases:
+  - Humeniuk
+  - chief surgeon of the Medical Forces
+  side: ua
+  note: Chief surgeon of the Medical Forces of the Armed Forces of Ukraine (2025).
+- id: actor:ihor_bezkaravainyi
+  type: actor
+  kind: person
+  en: Ihor Bezkaravainyi
+  aliases:
+  - Bezkaravainyi
+  side: ua
+  note: Ukrainian deputy minister responsible for humanitarian demining (2026).
+- id: actor:oleksandr_tarnavskyi
+  type: actor
+  kind: person
+  en: Oleksandr Tarnavskyi
+  aliases:
+  - Tavria group commander
+  - Tavria commander
+  side: ua
+  note: Commander of the Tavria operational-strategic group during the Avdiivka battle (2023–24).
+- id: actor:valeriy_shershen
+  type: actor
+  kind: person
+  en: Valeriy Shershen
+  side: ua
+  note: Ukrainian military spokesman (Tavria direction, 2023).
+- id: actor:kostenko
+  type: actor
+  kind: person
+  en: Kostenko
+  side: ua
+  note: Ukrainian official quoted on mobilisation (Dec 2025); probably MP Roman Kostenko (Rada national-security committee).
+- id: actor:mariana_bezuhla
+  type: actor
+  kind: person
+  en: Mariana Bezuhla
+  side: ua
+  note: Member of the Verkhovna Rada.
+- id: actor:yurii_butusov
+  type: actor
+  kind: person
+  en: Yurii Butusov
+  aliases:
+  - Butusov
+  side: ua
+  note: Ukrainian military journalist (Censor.net).
+- id: actor:kostiantyn_mashovets
+  type: actor
+  kind: person
+  en: Kostiantyn Mashovets
+  aliases:
+  - Mashovets
+  side: ua
+  note: Ukrainian military analyst.
+- id: actor:hlib_parfonov
+  type: actor
+  kind: person
+  en: Hlib Parfonov
+  side: ua
+  note: Ukrainian military analyst (Saratoga Foundation).
+- id: actor:tatarigami_ua
+  type: actor
+  kind: person
+  en: Tatarigami_UA
+  aliases:
+  - Tatarigami
+  side: ua
+  note: Founder of Frontelligence Insight; former Ukrainian officer.
+- id: actor:roman_pohorilyi
+  type: actor
+  kind: person
+  en: Roman Pohorilyi
+  aliases:
+  - Pohorilyi
+  side: ua
+  note: Co-founder of DeepState.
+- id: actor:ruslan_mykula
+  type: actor
+  kind: person
+  en: Ruslan Mykula
+  side: ua
+  note: Co-founder of DeepState.
+- id: actor:viktor_yanukovych
+  type: actor
+  kind: person
+  en: Viktor Yanukovych
+  side: ru
+  note: President of Ukraine 2010 – Feb 2014; fled to Russia.
+- id: actor:vladyslav_fomenko
+  type: actor
+  kind: person
+  en: Vladyslav Fomenko
+  side: ua
+  note: Ukrainian developer of the drone game Remote Reaper.
+- id: actor:volodymyr_yezhov
+  type: actor
+  kind: person
+  en: Volodymyr Yezhov
+  side: ua
+  note: Original GSC Game World developer; killed near Bakhmut Dec 2022.
+- id: actor:tetiana_zinovieva
+  type: actor
+  kind: person
+  en: Tetiana Zinovieva
+  aliases:
+  - Ukrainian scholar
+  side: ua
+  note: Ukrainian scholar of video games as 'deep media' (Obraz, 2024).
+- id: actor:vasyl_lomykovsky
+  type: actor
+  kind: person
+  en: Vasyl Lomykovsky
+  note: Poltava landowner and agronomist who planted field shelterbelts from 1809 (historical).
+- id: actor:dokuchaev
+  type: actor
+  kind: person
+  en: Vasily Dokuchaev
+  aliases:
+  - Dokuchaev
+  note: Soil scientist who studied steppe shelterbelts in the 1890s (historical).
+- id: actor:vysotsky
+  type: actor
+  kind: person
+  en: Georgy Vysotsky
+  aliases:
+  - Vysotsky
+  note: Forester who studied steppe shelterbelts in the 1890s (historical).
+- id: actor:spacex
+  type: actor
+  kind: company
+  en: SpaceX
+  side: western
+  note: Operator of Starlink.
+- id: actor:kvertus
+  type: actor
+  kind: company
+  en: Kvertus
+  side: ua
+  note: Ukrainian EW maker.
+- id: actor:cascade_systems
+  type: actor
+  kind: company
+  en: Cascade Systems
+  side: ua
+  note: Ukrainian maker of the Lima component of Pokrova.
+- id: actor:lima_quant_developers
+  type: actor
+  kind: company
+  en: Lima-Quant developers
+  side: ua
+  note: Developers of the Lima-Quant anti-KAB EW system (company not named in text).
+- id: actor:skyfall
+  type: actor
+  kind: company
+  en: SkyFall
+  side: ua
+  note: Ukrainian drone maker (Vampire bomber, P1-SUN interceptor).
+- id: actor:deviro
+  type: actor
+  kind: company
+  en: Deviro
+  side: ua
+  note: Ukrainian drone maker (Leleka).
+- id: actor:athlon_avia
+  type: actor
+  kind: company
+  en: Athlon Avia
+  side: ua
+  note: Ukrainian drone maker (Furia).
+- id: actor:wild_hornets
+  type: actor
+  kind: company
+  en: Wild Hornets
+  aliases:
+  - Sting maker
+  side: ua
+  note: Ukrainian drone maker (Sting interceptor).
+- id: actor:fire_point
+  type: actor
+  kind: company
+  en: Fire Point
+  aliases:
+  - Flamingo maker
+  side: ua
+  note: Ukrainian maker of the Flamingo cruise missile and FP-1 drone.
+- id: actor:the_fourth_law
+  type: actor
+  kind: company
+  en: The Fourth Law
+  aliases:
+  - TFL-1 maker
+  side: ua
+  note: Ukrainian maker of the TFL-1 terminal-guidance module.
+- id: actor:vyriy
+  type: actor
+  kind: company
+  en: Vyriy
+  side: ua
+  note: Ukrainian FPV drone maker.
+- id: actor:swarmer
+  type: actor
+  kind: company
+  en: Swarmer
+  side: ua
+  note: Ukrainian drone-swarm software company.
+- id: actor:ukrspecsystems
+  type: actor
+  kind: company
+  en: Ukrspecsystems
+  side: ua
+- id: actor:general_cherry
+  type: actor
+  kind: company
+  en: General Cherry
+  side: ua
+  note: Ukrainian drone maker (Bullet interceptor).
+- id: actor:bazu
+  type: actor
+  kind: company
+  en: BAZU
+  side: ua
+  note: Ukrainian maker of the FPV Battleground simulator.
+- id: actor:metinvest
+  type: actor
+  kind: company
+  en: Metinvest
+  side: ua
+- id: actor:ukrzaliznytsia
+  type: actor
+  kind: company
+  en: Ukrzaliznytsia
+  uk: Укрзалізниця
+  aliases:
+  - Ukrainian Railways
+  side: ua
+- id: actor:gis_arta_developers
+  type: actor
+  kind: organisation
+  en: GIS Arta developers
+  side: ua
+  note: Ukrainian team behind GIS Arta artillery C2 software.
+- id: actor:ufds_developers
+  type: actor
+  kind: game_studio
+  en: UFDS developers
+  side: ua
+  note: Makers of the UFDS drone simulator (Simtech Solutions with Drone Fight Club Academy).
+- id: actor:ufds_ceo
+  type: actor
+  kind: person
+  en: UFDS CEO
+  side: ua
+  note: CEO of the UFDS drone-simulator developer (unnamed in text).
+- id: actor:government_of_russia
+  type: actor
+  kind: government_body
+  en: Government of Russia
+  aliases:
+  - Russia
+  - Russian government
+  - Kremlin
+  side: ru
+- id: actor:russian_ministry_of_defence
+  type: actor
+  kind: government_body
+  en: Russian Ministry of Defence
+  aliases:
+  - Russian MoD
+  - Russian Ministry of Defense
+  side: ru
+- id: actor:roskomnadzor
+  type: actor
+  kind: government_body
+  en: Roskomnadzor
+  side: ru
+  note: Russian communications regulator.
+- id: actor:russian_occupation_officials_crimea
+  type: actor
+  kind: government_body
+  en: Russian-installed officials in Crimea
+  side: ru
+- id: actor:dpr
+  type: actor
+  kind: government_body
+  en: DPR
+  aliases:
+  - Donetsk People's Republic
+  - DNR
+  side: ru
+  note: Russian-backed proxy entity proclaimed in Donetsk Oblast (2014).
+- id: actor:lpr
+  type: actor
+  kind: government_body
+  en: LPR
+  aliases:
+  - Luhansk People's Republic
+  - LNR
+  side: ru
+  note: Russian-backed proxy entity proclaimed in Luhansk Oblast (2014).
+- id: actor:fsb
+  type: actor
+  kind: intelligence_agency
+  en: FSB
+  side: ru
+  note: Federal Security Service of Russia.
+- id: actor:vks
+  type: actor
+  kind: armed_force
+  en: Russian Aerospace Forces (VKS)
+  aliases:
+  - VKS
+  - Russian Aerospace Forces
+  side: ru
+- id: actor:vdv
+  type: actor
+  kind: armed_force
+  en: Russian Airborne Forces (VDV)
+  aliases:
+  - VDV
+  - Russian Airborne Forces
+  side: ru
+- id: actor:ru_railway_troops
+  type: actor
+  kind: armed_force
+  en: Railway Troops
+  aliases:
+  - Russian Railway Troops
+  side: ru
+- id: actor:rubikon
+  type: actor
+  kind: military_unit
+  en: Rubikon
+  aliases:
+  - Rubicon
+  side: ru
+  note: Russian Centre for Advanced Unmanned Technologies, elite drone formation.
+- id: actor:ru_50th_varyag_brigade
+  type: actor
+  kind: military_unit
+  en: 50th Varyag brigade
+  side: ru
+  note: Russian unit competing with Rubikon for skilled recruits (per FPRI).
+- id: actor:wagner_group
+  type: actor
+  kind: military_unit
+  en: Wagner Group
+  aliases:
+  - Wagner
+  - PMC Wagner
+  side: ru
+  note: Russian private military company.
+- id: actor:storm_z
+  type: actor
+  kind: military_unit
+  en: Storm-Z
+  side: ru
+  note: Russian penal assault units of convicts, until Aug 2023.
+- id: actor:storm_v
+  type: actor
+  kind: military_unit
+  en: Storm-V
+  side: ru
+  note: 'Successor of Storm-Z from late 2023: no pardon, contract until war''s end.'
+- id: actor:bars
+  type: actor
+  kind: military_unit
+  en: BARS
+  side: ru
+  note: Combat Army Reserve (BARS) volunteer detachments.
+- id: actor:akhmat
+  type: actor
+  kind: military_unit
+  en: Akhmat
+  side: ru
+  note: Chechen Akhmat formations.
+- id: actor:ru_western_group_of_forces
+  type: actor
+  kind: military_unit
+  en: Western Group of Forces
+  side: ru
+- id: actor:ru_20th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 20th Combined Arms Army
+  aliases:
+  - 20th Army
+  - Russian 20th Army
+  side: ru
+- id: actor:ru_25th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 25th Combined Arms Army
+  aliases:
+  - 25th Army
+  - Russian 25th Army
+  side: ru
+- id: actor:ru_58th_combined_arms_army
+  type: actor
+  kind: military_unit
+  en: 58th Combined Arms Army
+  side: ru
+- id: actor:ru_144th_motor_rifle_division
+  type: actor
+  kind: military_unit
+  en: 144th Motor Rifle Division
+  aliases:
+  - 144th Division
+  parent: actor:ru_20th_combined_arms_army
+  side: ru
+- id: actor:ru_42nd_motor_rifle_division
+  type: actor
+  kind: military_unit
+  en: 42nd Motor Rifle Division
+  parent: actor:ru_58th_combined_arms_army
+  side: ru
+- id: actor:ru_7th_vdv_division
+  type: actor
+  kind: military_unit
+  en: 7th VDV Division
+  aliases:
+  - 7th Guards Air Assault Division
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_83rd_air_assault_brigade
+  type: actor
+  kind: military_unit
+  en: 83rd Air Assault Brigade
+  parent: actor:vdv
+  side: ru
+- id: actor:ru_57th_motor_rifle_brigade
+  type: actor
+  kind: military_unit
+  en: 57th Motor Rifle Brigade
+  side: ru
+- id: actor:ru_288th_artillery_brigade
+  type: actor
+  kind: military_unit
+  en: 288th Artillery Brigade
+  side: ru
+- id: actor:vladimir_putin
+  type: actor
+  kind: person
+  en: Vladimir Putin
+  aliases:
+  - Putin
+  side: ru
+  note: President of Russia.
+- id: actor:sergei_shoigu
+  type: actor
+  kind: person
+  en: Sergei Shoigu
+  aliases:
+  - Shoigu
+  side: ru
+  note: Russian Defence Minister 2012 – May 2024; then Security Council secretary.
+- id: actor:andrei_belousov
+  type: actor
+  kind: person
+  en: Andrei Belousov
+  aliases:
+  - Belousov
+  side: ru
+  note: Russian Defence Minister from May 2024.
+- id: actor:dmitry_peskov
+  type: actor
+  kind: person
+  en: Dmitry Peskov
+  aliases:
+  - Peskov
+  side: ru
+  note: Kremlin spokesman.
+- id: actor:zala
+  type: actor
+  kind: company
+  en: ZALA
+  aliases:
+  - ZALA Aero
+  side: ru
+  note: Russian drone maker (Lancet), Kalashnikov group.
+- id: actor:gazprom_space_systems
+  type: actor
+  kind: company
+  en: Gazprom Space Systems
+  side: ru
+- id: actor:bureau_1440
+  type: actor
+  kind: company
+  en: Bureau 1440
+  side: ru
+  note: Russian developer of the Rassvet LEO constellation.
+- id: actor:nato
+  type: actor
+  kind: international_org
+  en: NATO
+  side: western
+- id: actor:eu
+  type: actor
+  kind: international_org
+  en: EU
+  aliases:
+  - European Union
+  side: western
+- id: actor:itu
+  type: actor
+  kind: international_org
+  en: ITU
+  side: international
+  note: International Telecommunication Union.
+- id: actor:uk_government
+  type: actor
+  kind: government_body
+  en: UK Government
+  aliases:
+  - British government
+  side: western
+- id: actor:uk_ministry_of_defence
+  type: actor
+  kind: government_body
+  en: UK Ministry of Defence
+  aliases:
+  - UK MoD
+  side: western
+- id: actor:dstl
+  type: actor
+  kind: government_body
+  en: Dstl
+  parent: actor:uk_ministry_of_defence
+  side: western
+  note: UK Defence Science and Technology Laboratory.
+- id: actor:british_intelligence
+  type: actor
+  kind: intelligence_agency
+  en: British intelligence
+  side: western
+  note: UK intelligence (agency unspecified).
+- id: actor:british_army
+  type: actor
+  kind: armed_force
+  en: British Army
+  side: western
+- id: actor:us_department_of_state
+  type: actor
+  kind: government_body
+  en: US State Department
+  aliases:
+  - US Department of State
+  side: western
+- id: actor:us_department_of_defense
+  type: actor
+  kind: government_body
+  en: US Department of Defense
+  aliases:
+  - Pentagon
+  side: western
+- id: actor:us_intelligence
+  type: actor
+  kind: intelligence_agency
+  en: US intelligence
+  side: western
+  note: US intelligence community (agency unspecified).
+- id: actor:centcom
+  type: actor
+  kind: armed_force
+  en: CENTCOM
+  side: western
+  note: US Central Command.
+- id: actor:us_training_group
+  type: actor
+  kind: military_unit
+  en: US training group for Ukrainian forces
+  aliases:
+  - US training group
+  side: western
+- id: actor:government_of_canada
+  type: actor
+  kind: government_body
+  en: Government of Canada
+  side: western
+- id: actor:canadian_army
+  type: actor
+  kind: armed_force
+  en: Canadian Army
+  side: western
+- id: actor:polish_government
+  type: actor
+  kind: government_body
+  en: Polish government
+  side: western
+- id: actor:latvian_intelligence
+  type: actor
+  kind: intelligence_agency
+  en: Latvian intelligence
+  side: western
+- id: actor:allied_rapid_reaction_corps
+  type: actor
+  kind: military_unit
+  en: Allied Rapid Reaction Corps
+  side: western
+- id: actor:german_brigade_in_lithuania
+  type: actor
+  kind: military_unit
+  en: German brigade in Lithuania
+  aliases:
+  - Panzerbrigade 45
+  side: western
+  note: Bundeswehr Panzerbrigade 45, permanently based in Lithuania.
+- id: actor:government_of_south_korea
+  type: actor
+  kind: government_body
+  en: South Korea
+  aliases:
+  - South Korean government
+  side: other
+- id: actor:nis
+  type: actor
+  kind: intelligence_agency
+  en: National Intelligence Service (South Korea)
+  aliases:
+  - NIS
+  side: other
+- id: actor:korean_peoples_army
+  type: actor
+  kind: armed_force
+  en: Korean People's Army
+  side: ru
+  note: North Korean army; fought for Russia in Kursk Oblast 2024–25.
+- id: actor:kim_jong_un
+  type: actor
+  kind: person
+  en: Kim Jong Un
+  side: ru
+  note: Leader of North Korea, Russia's ally.
+- id: actor:alexander_lukashenko
+  type: actor
+  kind: person
+  en: Alexander Lukashenko
+  side: ru
+  note: President of Belarus, Russia's ally.
+- id: actor:donald_trump
+  type: actor
+  kind: person
+  en: Donald Trump
+  aliases:
+  - Trump
+  side: western
+  note: President of the United States (second term from 20 Jan 2025).
+- id: actor:steve_witkoff
+  type: actor
+  kind: person
+  en: Steve Witkoff
+  side: western
+  note: US special envoy (Trump administration).
+- id: actor:jared_kushner
+  type: actor
+  kind: person
+  en: Jared Kushner
+  side: western
+  note: Trump associate involved in 2025–26 peace talks.
+- id: actor:tulsi_gabbard
+  type: actor
+  kind: person
+  en: Tulsi Gabbard
+  aliases:
+  - Gabbard
+  side: western
+  note: US Director of National Intelligence from Feb 2025.
+- id: actor:emmanuel_macron
+  type: actor
+  kind: person
+  en: Emmanuel Macron
+  aliases:
+  - Macron
+  side: western
+  note: President of France.
+- id: actor:petr_pavel
+  type: actor
+  kind: person
+  en: Petr Pavel
+  aliases:
+  - Pavel
+  side: western
+  note: President of the Czech Republic from Mar 2023; champion of the Czech ammunition initiative.
+- id: actor:andrius_kubilius
+  type: actor
+  kind: person
+  en: Andrius Kubilius
+  aliases:
+  - Kubilius
+  side: western
+  note: EU Commissioner for Defence and Space from Dec 2024.
+- id: actor:elon_musk
+  type: actor
+  kind: person
+  en: Elon Musk
+  aliases:
+  - Musk
+  side: western
+  note: SpaceX/Starlink owner.
+- id: actor:joseph_l_votel
+  type: actor
+  kind: person
+  en: Joseph L. Votel
+  aliases:
+  - retired US general
+  - Votel
+  side: western
+  note: Retired US Army general, former CENTCOM commander.
+- id: actor:iceye
+  type: actor
+  kind: company
+  en: ICEYE
+  side: western
+  note: Finnish SAR-satellite company.
+- id: actor:maxar
+  type: actor
+  kind: company
+  en: Maxar
+  side: western
+- id: actor:lockheed_martin
+  type: actor
+  kind: company
+  en: Lockheed Martin
+  side: western
+- id: actor:rheinmetall
+  type: actor
+  kind: company
+  en: Rheinmetall
+  side: western
+- id: actor:flir
+  type: actor
+  kind: company
+  en: FLIR
+  side: western
+- id: actor:google
+  type: actor
+  kind: company
+  en: Google
+  side: western
+- id: actor:apple
+  type: actor
+  kind: company
+  en: Apple
+  side: western
+- id: actor:polymarket
+  type: actor
+  kind: company
+  en: Polymarket
+  side: western
+- id: actor:baykar
+  type: actor
+  kind: company
+  en: Baykar
+  side: other
+  note: Turkish drone maker (Bayraktar TB2).
+- id: actor:liveuamap_llc
+  type: actor
+  kind: company
+  en: Liveuamap LLC
+  side: ua
+- id: actor:spatial_illusions
+  type: actor
+  kind: organisation
+  en: Spatial Illusions
+  side: western
+  note: Måns Beckman's military-symbology software project.
+- id: actor:slitherine
+  type: actor
+  kind: game_studio
+  en: Slitherine
+  side: western
+  note: UK wargame publisher.
+- id: actor:matrix_games
+  type: actor
+  kind: game_studio
+  en: Matrix Games
+  parent: actor:slitherine
+  side: western
+- id: actor:matrix_pro_simulations
+  type: actor
+  kind: game_studio
+  en: Matrix Pro Simulations
+  parent: actor:slitherine
+  side: western
+- id: actor:battlefront_com
+  type: actor
+  kind: game_studio
+  en: Battlefront.com
+  parent: actor:slitherine
+  side: western
+  note: Combat Mission developer; bought by Slitherine in 2024.
+- id: actor:gsc_game_world
+  type: actor
+  kind: game_studio
+  en: GSC Game World
+  side: ua
+- id: actor:deaf_tone_games
+  type: actor
+  kind: game_studio
+  en: Deaf Tone Games
+  side: ua
+- id: actor:starni_games
+  type: actor
+  kind: game_studio
+  en: Starni Games
+  side: ua
+- id: actor:simtech_solutions
+  type: actor
+  kind: game_studio
+  en: Simtech Solutions
+  side: ua
+- id: actor:drone_fight_club_academy
+  type: actor
+  kind: game_studio
+  en: Drone Fight Club Academy
+  side: ua
+- id: actor:twist_robotics
+  type: actor
+  kind: game_studio
+  en: Twist Robotics
+  side: ua
+- id: actor:best_way
+  type: actor
+  kind: game_studio
+  en: Best Way
+  side: ua
+- id: actor:frogwares
+  type: actor
+  kind: game_studio
+  en: Frogwares
+  side: ua
+- id: actor:4a_games
+  type: actor
+  kind: game_studio
+  en: 4A Games
+  side: ua
+- id: actor:bohemia_interactive
+  type: actor
+  kind: game_studio
+  en: Bohemia Interactive
+  side: western
+- id: actor:bohemia_interactive_simulations
+  type: actor
+  kind: company
+  en: Bohemia Interactive Simulations
+  aliases:
+  - BISim
+  side: western
+- id: actor:madfinger_games
+  type: actor
+  kind: game_studio
+  en: MADFINGER Games
+  side: western
+- id: actor:eugen_systems
+  type: actor
+  kind: game_studio
+  en: Eugen Systems
+  side: western
+- id: actor:offworld_industries
+  type: actor
+  kind: game_studio
+  en: Offworld Industries
+  side: western
+- id: actor:foolish_mortals
+  type: actor
+  kind: game_studio
+  en: Foolish Mortals
+  side: western
+- id: actor:barbedwire_studios
+  type: actor
+  kind: game_studio
+  en: Barbedwire Studios
+  side: western
+- id: actor:digitalmindsoft
+  type: actor
+  kind: game_studio
+  en: Digitalmindsoft
+  side: western
+- id: actor:microprose
+  type: actor
+  kind: game_studio
+  en: MicroProse
+  side: western
+- id: actor:on_target_simulations
+  type: actor
+  kind: game_studio
+  en: On Target Simulations
+  side: western
+- id: actor:esim_games
+  type: actor
+  kind: game_studio
+  en: eSim Games
+  side: western
+- id: actor:rockodile
+  type: actor
+  kind: game_studio
+  en: Rockodile
+  side: western
+- id: actor:lesser_evil
+  type: actor
+  kind: game_studio
+  en: Lesser Evil
+  side: western
+- id: actor:gmt_games
+  type: actor
+  kind: game_studio
+  en: GMT Games
+  side: western
+- id: actor:hollandspiele
+  type: actor
+  kind: game_studio
+  en: Hollandspiele
+  side: western
+- id: actor:steel_balalaika
+  type: actor
+  kind: game_studio
+  en: Steel Balalaika
+  side: ru
+  note: Russia-based studio (Broken Arrow).
+- id: actor:spn_studio
+  type: actor
+  kind: game_studio
+  en: SPN Studio
+  side: ru
+- id: actor:battlestate_games
+  type: actor
+  kind: game_studio
+  en: Battlestate Games
+  side: ru
+  note: Escape from Tarkov developer (St Petersburg).
+- id: actor:cats_who_play
+  type: actor
+  kind: game_studio
+  en: Cats Who Play
+  side: other
+  note: Country not stated; Gostomel Heroes has a Russian framing.
+- id: actor:sand_table_software
+  type: actor
+  kind: game_studio
+  en: Sand Table Software
+  side: other
+- id: actor:birds_eye_games
+  type: actor
+  kind: game_studio
+  en: Bird's Eye Games
+  note: Regiments developer; country not stated.
+- id: actor:ravens_row
+  type: actor
+  kind: game_studio
+  en: Ravens Row
+  note: Hell of War developer; country not stated.
+- id: actor:fulqrum
+  type: actor
+  kind: game_studio
+  en: Fulqrum
+  aliases:
+  - Fulqrum Publishing
+  note: Publisher of Men of War II.
+- id: actor:serious_sim
+  type: actor
+  kind: game_studio
+  en: Serious Sim
+  note: Radio Commander developer.
+- id: actor:rex_brynen
+  type: actor
+  kind: person
+  en: Rex Brynen
+  side: western
+  note: Editor of PAXsims; McGill University political scientist.
+- id: actor:d_b_dockter
+  type: actor
+  kind: person
+  en: D. B. Dockter
+  side: western
+  note: Board wargame designer.
+- id: actor:mark_herman
+  type: actor
+  kind: person
+  en: Mark Herman
+  side: western
+  note: Board wargame designer (GMT Games).
+- id: actor:maj_ed_farren
+  type: actor
+  kind: person
+  en: Maj Ed Farren
+  aliases:
+  - Ed Farren
+  - Farren
+  side: western
+  note: British Army major; designer of Glory to the Heroes.
+- id: actor:philip_sabin
+  type: actor
+  kind: person
+  en: Philip Sabin
+  side: western
+  note: King's College London wargame designer.
+- id: actor:brian_train
+  type: actor
+  kind: person
+  en: Brian Train
+  side: western
+  note: Wargame designer.
+- id: actor:ben_taylor
+  type: actor
+  kind: person
+  en: Ben Taylor
+  aliases:
+  - designer of the GPT-assisted negotiation game
+  side: western
+  note: Designer of a GPT-assisted Russia–Ukraine negotiation game (PAXsims, 2026).
+- id: actor:spzabt653
+  type: actor
+  kind: person
+  en: sPzAbt653
+  note: TOAW IV community scenario author.
+- id: actor:josant
+  type: actor
+  kind: person
+  en: Josant
+  note: TOAW IV community scenario author.
+- id: actor:salamiboidev
+  type: actor
+  kind: person
+  en: SalamiBoiDev
+  note: Arma Reforger modder.
+- id: actor:janis_kluge
+  type: actor
+  kind: person
+  en: Janis Kluge
+  side: western
+  note: SWP researcher on the Russian economy.
+- id: actor:clement_molin
+  type: actor
+  kind: person
+  en: Clément Molin
+  aliases:
+  - Molin
+  side: other
+  note: OSINT analyst.
+- id: actor:douard_r_maurin
+  type: actor
+  kind: person
+  en: Édouard R. Maurin
+  aliases:
+  - Maurin
+  side: western
+  note: Analyst writing on front-line depth (War on the Rocks, 2026).
+- id: actor:olga_usachova
+  type: actor
+  kind: person
+  en: Olga Usachova
+  aliases:
+  - Usachova
+  side: ua
+  note: Scholar of wargaming as resistance ('Play for Ukraine').
+- id: actor:hans_petter_midttun
+  type: actor
+  kind: person
+  en: Hans Petter Midttun
+  aliases:
+  - Euromaidan Press columnist
+  - Midttun
+  side: western
+  note: Euromaidan Press columnist; retired Norwegian naval officer.
+- id: actor:andrew_perpetua
+  type: actor
+  kind: person
+  en: Andrew Perpetua
+  side: western
+  note: OSINT mapper (ukrdailyupdate.com).
+- id: actor:gaspo_sk
+  type: actor
+  kind: person
+  en: Gaspo_sk
+  note: Collaborator on Andrew Perpetua's UA map.
+- id: actor:m_ns_beckman
+  type: actor
+  kind: person
+  en: Måns Beckman
+  side: western
+  note: Author of milsymbol (Spatial Illusions).
+- id: actor:david_hambling
+  type: actor
+  kind: person
+  en: David Hambling
+  side: western
+  note: Technology journalist (Forbes).
+- id: actor:ua_control_map_operator
+  type: actor
+  kind: person
+  en: UA Control Map operator
+  note: Pseudonymous operator of UA Control Map (unverified).
+- id: actor:ukrainian_officials_unnamed
+  type: actor
+  kind: government_body
+  en: Ukrainian officials (unnamed)
+  aliases:
+  - Ukrainian officials
+  - senior Ukrainian official
+  - a Ukrainian official
+  side: ua
+  note: generic
+- id: actor:ukrainian_commanders_unnamed
+  type: actor
+  kind: person
+  en: Ukrainian commanders (unnamed)
+  aliases:
+  - Ukrainian commanders
+  - Ukrainian officers
+  - senior Ukrainian officer
+  - Ukrainian EW company commander
+  - Khartia UGV commander
+  - 107th TDF Brigade commander
+  - Ukrainian USF brigade commander
+  - Ukrainian battalion commander
+  - a Ukrainian commander
+  side: ua
+  note: generic
+- id: actor:ukrainian_soldier_unnamed
+  type: actor
+  kind: person
+  en: Ukrainian soldier (unnamed)
+  aliases:
+  - a Ukrainian soldier
+  - Ukrainian soldiers
+  - ground sources
+  side: ua
+  note: generic
+- id: actor:ukrainian_forces_unnamed
+  type: actor
+  kind: armed_force
+  en: Ukrainian forces (unnamed)
+  aliases:
+  - Ukrainian troops
+  - Ukrainian military
+  - Ukrainian brigades
+  - a Ukrainian brigade
+  - Ukrainian brigade
+  - Ukrainian forces
+  - Skynex battery crew
+  side: ua
+  note: generic
+- id: actor:ukrainian_experts_unnamed
+  type: actor
+  kind: person
+  en: Ukrainian experts (unnamed)
+  aliases:
+  - Ukrainian experts
+  - Ukrainian analysts
+  - Ukrainian engineer
+  - Ukrainian satcom engineer
+  - satcom engineer
+  side: ua
+  note: generic
+- id: actor:ukrainian_industry_unnamed
+  type: actor
+  kind: company
+  en: Ukrainian defence industry (unnamed)
+  aliases:
+  - Ukrainian drone makers
+  - Ukrainian drone-detector makers
+  - Ukrainian EW industry sources
+  side: ua
+  note: generic
+- id: actor:russian_sources_unnamed
+  type: actor
+  kind: organisation
+  en: Russian sources (unnamed)
+  aliases:
+  - Russian sources
+  - Russian authors
+  side: ru
+  note: generic
+- id: actor:russian_industry_unnamed
+  type: actor
+  kind: company
+  en: Russian defence industry (unnamed)
+  aliases:
+  - Russian industry
+  - Russian industry sources
+  - Russian industry source
+  side: ru
+  note: generic
+- id: actor:russian_milbloggers
+  type: actor
+  kind: outlet
+  en: Russian milbloggers
+  aliases:
+  - Russian Telegram channels
+  - Russian milblogger
+  side: ru
+  note: generic
+- id: actor:russian_pows_unnamed
+  type: actor
+  kind: person
+  en: Russian prisoners of war (unnamed)
+  aliases:
+  - Russian prisoners of war
+  - Russian POWs
+  side: ru
+  note: generic
+- id: actor:us_officials_unnamed
+  type: actor
+  kind: government_body
+  en: US officials (unnamed)
+  aliases:
+  - US officials
+  side: western
+  note: generic
+- id: actor:western_officials_unnamed
+  type: actor
+  kind: person
+  en: Western officials (unnamed)
+  aliases:
+  - senior NATO official
+  - NATO and European officials
+  - Baltic ambassador
+  - UK intelligence chief
+  side: western
+  note: generic
+- id: actor:analysts_unnamed
+  type: actor
+  kind: organisation
+  en: Analysts (unnamed)
+  aliases:
+  - analysts
+  - OSINT analysts
+  - outside mappers
+  - analysts and mappers
+  - OSINT tally
+  - analyst (Ukrinform)
+  side: other
+  note: generic
+- id: actor:wikipedia_editors
+  type: actor
+  kind: organisation
+  en: Wikipedia editors
+  aliases:
+  - Wikipedia editor
+  side: international
+  note: generic
+- id: actor:game_critic_unnamed
+  type: actor
+  kind: person
+  en: Game critic (unnamed)
+  aliases:
+  - critic quoted on the Death From Above store page
+  note: generic

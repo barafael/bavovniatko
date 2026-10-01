@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 07 — Map and UI conventions of the Russo-Ukrainian war
 
 Research date: 2026-09-28. Scope: how war maps of the 2022– full-scale invasion present information (DeepStateMap first), the military symbology standards behind "real" tactical displays, what Ukrainian military software is publicly known to look like, the visual language of drone/OSINT footage, and whether any of this data can legally be used by the game.

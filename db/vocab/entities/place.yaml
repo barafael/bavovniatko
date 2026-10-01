@@ -1,0 +1,1985 @@
+# Curated place registry (entity curation, see db/staging/ENTITIES.md).
+# Ukrainian spellings; occupied Crimea and Donetsk/Luhansk stay under Ukraine.
+
+- id: place:ukraine
+  type: place
+  kind: country
+  en: Ukraine
+  uk: Україна
+  geocode_query: Ukraine
+  countrycodes: ua
+
+- id: place:russia
+  type: place
+  kind: country
+  en: Russia
+  uk: Росія
+  geocode_query: Russia
+  countrycodes: ru
+
+- id: place:belarus
+  type: place
+  kind: country
+  en: Belarus
+  uk: Білорусь
+  geocode_query: Belarus
+  countrycodes: by
+
+- id: place:north_korea
+  type: place
+  kind: country
+  en: North Korea
+  uk: Північна Корея
+  aliases: [DPRK]
+  geocode_query: North Korea
+  countrycodes: kp
+
+- id: place:germany
+  type: place
+  kind: country
+  en: Germany
+  uk: Німеччина
+  geocode_query: Germany
+  countrycodes: de
+
+- id: place:turkey
+  type: place
+  kind: country
+  en: Turkey
+  uk: Туреччина
+  aliases: [Türkiye]
+  geocode_query: Turkey
+  countrycodes: tr
+
+- id: place:poland
+  type: place
+  kind: country
+  en: Poland
+  uk: Польща
+  geocode_query: Poland
+  countrycodes: pl
+
+- id: place:france
+  type: place
+  kind: country
+  en: France
+  uk: Франція
+  geocode_query: France
+  countrycodes: fr
+
+- id: place:canada
+  type: place
+  kind: country
+  en: Canada
+  uk: Канада
+  geocode_query: Canada
+  countrycodes: ca
+
+- id: place:czechia
+  type: place
+  kind: country
+  en: Czechia
+  uk: Чехія
+  aliases: [Czech Republic]
+  geocode_query: Czechia
+  countrycodes: cz
+
+- id: place:lithuania
+  type: place
+  kind: country
+  en: Lithuania
+  uk: Литва
+  geocode_query: Lithuania
+  countrycodes: lt
+
+- id: place:estonia
+  type: place
+  kind: country
+  en: Estonia
+  uk: Естонія
+  geocode_query: Estonia
+  countrycodes: ee
+
+- id: place:iran
+  type: place
+  kind: country
+  en: Iran
+  uk: Іран
+  geocode_query: Iran
+  countrycodes: ir
+
+- id: place:china
+  type: place
+  kind: country
+  en: China
+  uk: Китай
+  geocode_query: China
+  countrycodes: cn
+
+- id: place:japan
+  type: place
+  kind: country
+  en: Japan
+  uk: Японія
+  geocode_query: Japan
+  countrycodes: jp
+
+- id: place:portugal
+  type: place
+  kind: country
+  en: Portugal
+  uk: Португалія
+  geocode_query: Portugal
+  countrycodes: pt
+
+- id: place:spain
+  type: place
+  kind: country
+  en: Spain
+  uk: Іспанія
+  geocode_query: Spain
+  countrycodes: es
+
+- id: place:vietnam
+  type: place
+  kind: country
+  en: Vietnam
+  uk: В'єтнам
+  geocode_query: Vietnam
+  countrycodes: vn
+
+- id: place:malta
+  type: place
+  kind: country
+  en: Malta
+  uk: Мальта
+  geocode_query: Malta
+  countrycodes: mt
+
+- id: place:finland
+  type: place
+  kind: country
+  en: Finland
+  uk: Фінляндія
+  geocode_query: Finland
+  countrycodes: fi
+
+- id: place:united_kingdom
+  type: place
+  kind: country
+  en: United Kingdom
+  uk: Велика Британія
+  aliases: [UK]
+  geocode_query: United Kingdom
+  countrycodes: gb
+
+- id: place:united_states
+  type: place
+  kind: country
+  en: United States
+  uk: США
+  aliases: [USA, US]
+  geocode_query: United States
+  countrycodes: us
+
+- id: place:saudi_arabia
+  type: place
+  kind: country
+  en: Saudi Arabia
+  uk: Саудівська Аравія
+  geocode_query: Saudi Arabia
+  countrycodes: sa
+
+- id: place:united_arab_emirates
+  type: place
+  kind: country
+  en: United Arab Emirates
+  uk: ОАЕ
+  aliases: [UAE]
+  geocode_query: United Arab Emirates
+  countrycodes: ae
+
+- id: place:moldova
+  type: place
+  kind: country
+  en: Moldova
+  uk: Молдова
+  geocode_query: Moldova
+  countrycodes: md
+
+- id: place:georgia
+  type: place
+  kind: country
+  en: Georgia
+  uk: Грузія
+  geocode_query: Georgia
+  countrycodes: ge
+
+- id: place:donetsk_oblast
+  type: place
+  kind: oblast
+  en: Donetsk Oblast
+  uk: Донецька область
+  parent: place:ukraine
+  geocode_query: Donetsk Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:luhansk_oblast
+  type: place
+  kind: oblast
+  en: Luhansk Oblast
+  uk: Луганська область
+  parent: place:ukraine
+  geocode_query: Luhansk Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:kharkiv_oblast
+  type: place
+  kind: oblast
+  en: Kharkiv Oblast
+  uk: Харківська область
+  parent: place:ukraine
+  geocode_query: Kharkiv Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:zaporizhzhia_oblast
+  type: place
+  kind: oblast
+  en: Zaporizhzhia Oblast
+  uk: Запорізька область
+  aliases: [Zaporizhzhia]
+  parent: place:ukraine
+  note: 'Bare ''Zaporizhzhia'' is resolved here: most staged uses mean the oblast/front (fortifications, railways, an incident); one (Orikhiv–Zaporizhzhia) means the city, place:zaporizhzhia_city.'
+  geocode_query: "Zaporizhia Oblast, Ukraine"
+  countrycodes: ua
+
+- id: place:kherson_oblast
+  type: place
+  kind: oblast
+  en: Kherson Oblast
+  uk: Херсонська область
+  parent: place:ukraine
+  geocode_query: Kherson Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:dnipropetrovsk_oblast
+  type: place
+  kind: oblast
+  en: Dnipropetrovsk Oblast
+  uk: Дніпропетровська область
+  parent: place:ukraine
+  geocode_query: Dnipropetrovsk Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:kyiv_oblast
+  type: place
+  kind: oblast
+  en: Kyiv Oblast
+  uk: Київська область
+  aliases: [Kyiv region]
+  parent: place:ukraine
+  note: '''Kyiv region'' in the staged text (Shahed kills) is taken as Kyiv Oblast.'
+  geocode_query: Kyiv Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:chernihiv_oblast
+  type: place
+  kind: oblast
+  en: Chernihiv Oblast
+  uk: Чернігівська область
+  parent: place:ukraine
+  geocode_query: Chernihiv Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:sumy_oblast
+  type: place
+  kind: oblast
+  en: Sumy Oblast
+  uk: Сумська область
+  parent: place:ukraine
+  geocode_query: Sumy Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:lviv_oblast
+  type: place
+  kind: oblast
+  en: Lviv Oblast
+  uk: Львівська область
+  parent: place:ukraine
+  geocode_query: Lviv Oblast, Ukraine
+  countrycodes: ua
+
+- id: place:crimea
+  type: place
+  kind: region
+  en: Crimea
+  uk: Крим
+  aliases: [Occupied Crimea, Autonomous Republic of Crimea]
+  parent: place:ukraine
+  note: Crimean peninsula / Autonomous Republic of Crimea; occupied by Russia since 2014, part of Ukraine. Sevastopol (city with special status) is listed under it geographically.
+  geocode_query: Autonomous Republic of Crimea
+
+- id: place:kursk_oblast
+  type: place
+  kind: oblast
+  en: Kursk Oblast
+  uk: Курська область
+  aliases: [Kursk, Kursk region]
+  parent: place:russia
+  note: '''Kursk'' alone in the staged text (troop counts) means the oblast.'
+  geocode_query: Kursk Oblast, Russia
+  countrycodes: ru
+
+- id: place:voronezh_oblast
+  type: place
+  kind: oblast
+  en: Voronezh Oblast
+  uk: Воронезька область
+  parent: place:russia
+  geocode_query: Voronezh Oblast, Russia
+  countrycodes: ru
+
+- id: place:bryansk_oblast
+  type: place
+  kind: oblast
+  en: Bryansk Oblast
+  uk: Брянська область
+  parent: place:russia
+  geocode_query: Bryansk Oblast, Russia
+  countrycodes: ru
+
+- id: place:tver_oblast
+  type: place
+  kind: oblast
+  en: Tver Oblast
+  uk: Тверська область
+  parent: place:russia
+  geocode_query: Tver Oblast, Russia
+  countrycodes: ru
+
+- id: place:samara_oblast
+  type: place
+  kind: oblast
+  en: Samara Oblast
+  uk: Самарська область
+  parent: place:russia
+  geocode_query: Samara Oblast, Russia
+  countrycodes: ru
+
+- id: place:volgograd_oblast
+  type: place
+  kind: oblast
+  en: Volgograd Oblast
+  uk: Волгоградська область
+  parent: place:russia
+  geocode_query: Volgograd Oblast, Russia
+  countrycodes: ru
+
+- id: place:krasnodar_krai
+  type: place
+  kind: oblast
+  en: Krasnodar Krai
+  uk: Краснодарський край
+  parent: place:russia
+  note: Russian federal subject (krai).
+  geocode_query: Krasnodar Krai, Russia
+  countrycodes: ru
+
+- id: place:mordovia
+  type: place
+  kind: oblast
+  en: Republic of Mordovia
+  uk: Мордовія
+  parent: place:russia
+  note: Russian federal subject (republic).
+  geocode_query: Republic of Mordovia, Russia
+  countrycodes: ru
+
+- id: place:chuvashia
+  type: place
+  kind: oblast
+  en: Chuvash Republic
+  uk: Чувашія
+  parent: place:russia
+  note: Russian federal subject (republic).
+  geocode_query: Chuvash Republic, Russia
+  countrycodes: ru
+
+- id: place:udmurtia
+  type: place
+  kind: oblast
+  en: Udmurt Republic
+  uk: Удмуртія
+  parent: place:russia
+  note: Russian federal subject (republic).
+  geocode_query: Udmurt Republic, Russia
+  countrycodes: ru
+
+- id: place:avdiivka
+  type: place
+  kind: settlement
+  en: Avdiivka
+  uk: Авдіївка
+  parent: place:donetsk_oblast
+  geocode_query: Avdiivka, Donetsk Oblast, Ukraine
+
+- id: place:pokrovsk
+  type: place
+  kind: settlement
+  en: Pokrovsk
+  uk: Покровськ
+  parent: place:donetsk_oblast
+  geocode_query: Pokrovsk, Donetsk Oblast, Ukraine
+
+- id: place:bakhmut
+  type: place
+  kind: settlement
+  en: Bakhmut
+  uk: Бахмут
+  parent: place:donetsk_oblast
+  note: Russian name Artemovsk (1924–2016).
+  geocode_query: Bakhmut, Donetsk Oblast, Ukraine
+
+- id: place:lyman
+  type: place
+  kind: settlement
+  en: Lyman
+  uk: Лиман
+  parent: place:donetsk_oblast
+  geocode_query: Lyman, Donetsk Oblast, Ukraine
+
+- id: place:kostiantynivka
+  type: place
+  kind: settlement
+  en: Kostiantynivka
+  uk: Костянтинівка
+  aliases: [Kostyantynivka]
+  parent: place:donetsk_oblast
+  geocode_query: Kostiantynivka, Donetsk Oblast, Ukraine
+
+- id: place:toretsk
+  type: place
+  kind: settlement
+  en: Toretsk
+  uk: Торецьк
+  parent: place:donetsk_oblast
+  geocode_query: Toretsk, Donetsk Oblast, Ukraine
+
+- id: place:dobropillia
+  type: place
+  kind: settlement
+  en: Dobropillia
+  uk: Добропілля
+  parent: place:donetsk_oblast
+  geocode_query: Dobropillia, Donetsk Oblast, Ukraine
+
+- id: place:marinka
+  type: place
+  kind: settlement
+  en: Marinka
+  uk: Мар'їнка
+  parent: place:donetsk_oblast
+  geocode_query: Marinka, Donetsk Oblast, Ukraine
+
+- id: place:vuhledar
+  type: place
+  kind: settlement
+  en: Vuhledar
+  uk: Вугледар
+  parent: place:donetsk_oblast
+  geocode_query: Vuhledar, Donetsk Oblast, Ukraine
+
+- id: place:mariupol
+  type: place
+  kind: settlement
+  en: Mariupol
+  uk: Маріуполь
+  parent: place:donetsk_oblast
+  geocode_query: Mariupol, Donetsk Oblast, Ukraine
+
+- id: place:kurakhove
+  type: place
+  kind: settlement
+  en: Kurakhove
+  uk: Курахове
+  parent: place:donetsk_oblast
+  geocode_query: Kurakhove, Donetsk Oblast, Ukraine
+
+- id: place:donetsk
+  type: place
+  kind: settlement
+  en: Donetsk
+  uk: Донецьк
+  parent: place:donetsk_oblast
+  note: The city; occupied since 2014.
+  geocode_query: Donetsk, Donetsk Oblast, Ukraine
+
+- id: place:chasiv_yar
+  type: place
+  kind: settlement
+  en: Chasiv Yar
+  uk: Часів Яр
+  parent: place:donetsk_oblast
+  geocode_query: Chasiv Yar, Donetsk Oblast, Ukraine
+
+- id: place:kramatorsk
+  type: place
+  kind: settlement
+  en: Kramatorsk
+  uk: Краматорськ
+  parent: place:donetsk_oblast
+  geocode_query: Kramatorsk, Donetsk Oblast, Ukraine
+
+- id: place:myrnohrad
+  type: place
+  kind: settlement
+  en: Myrnohrad
+  uk: Мирноград
+  parent: place:donetsk_oblast
+  geocode_query: Myrnohrad, Donetsk Oblast, Ukraine
+
+- id: place:sloviansk
+  type: place
+  kind: settlement
+  en: Sloviansk
+  uk: Слов'янськ
+  aliases: [Slovyansk, Slavyansk]
+  parent: place:donetsk_oblast
+  geocode_query: Sloviansk, Donetsk Oblast, Ukraine
+
+- id: place:selydove
+  type: place
+  kind: settlement
+  en: Selydove
+  uk: Селидове
+  parent: place:donetsk_oblast
+  geocode_query: Selydove, Donetsk Oblast, Ukraine
+
+- id: place:velyka_novosilka
+  type: place
+  kind: settlement
+  en: Velyka Novosilka
+  uk: Велика Новосілка
+  parent: place:donetsk_oblast
+  geocode_query: Velyka Novosilka, Donetsk Oblast, Ukraine
+
+- id: place:ilovaisk
+  type: place
+  kind: settlement
+  en: Ilovaisk
+  uk: Іловайськ
+  parent: place:donetsk_oblast
+  geocode_query: Ilovaisk, Donetsk Oblast, Ukraine
+
+- id: place:klishchiivka
+  type: place
+  kind: settlement
+  en: Klishchiivka
+  uk: Кліщіївка
+  parent: place:donetsk_oblast
+  geocode_query: Klishchiivka, Bakhmut Raion, Donetsk Oblast, Ukraine
+
+- id: place:sviatohirsk
+  type: place
+  kind: settlement
+  en: Sviatohirsk
+  uk: Святогірськ
+  parent: place:donetsk_oblast
+  geocode_query: Sviatohirsk, Donetsk Oblast, Ukraine
+
+- id: place:siversk
+  type: place
+  kind: settlement
+  en: Siversk
+  uk: Сіверськ
+  parent: place:donetsk_oblast
+  geocode_query: Siversk, Donetsk Oblast, Ukraine
+
+- id: place:makarivka
+  type: place
+  kind: settlement
+  en: Makarivka
+  uk: Макарівка
+  parent: place:donetsk_oblast
+  note: Village near Velyka Novosilka (near-encirclement warning Dec 2024).
+  geocode_query: Makarivka, Volnovakha Raion, Donetsk Oblast, Ukraine
+
+- id: place:rivnopil
+  type: place
+  kind: settlement
+  en: Rivnopil
+  uk: Рівнопіль
+  parent: place:donetsk_oblast
+  geocode_query: Rivnopil, Volnovakha Raion, Donetsk Oblast, Ukraine
+
+- id: place:urozhaine
+  type: place
+  kind: settlement
+  en: Urozhaine
+  uk: Урожайне
+  parent: place:donetsk_oblast
+  geocode_query: Urozhaine, Volnovakha Raion, Donetsk Oblast, Ukraine
+
+- id: place:krasnohorivka
+  type: place
+  kind: settlement
+  en: Krasnohorivka
+  uk: Красногорівка
+  parent: place:donetsk_oblast
+  note: Town next to Marinka.
+  geocode_query: Krasnohorivka, Pokrovsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:novopavlivka
+  type: place
+  kind: settlement
+  en: Novopavlivka
+  uk: Новопавлівка
+  parent: place:donetsk_oblast
+  note: Assumed the Pokrovsk Raion village on the 2025 Novopavlivka direction.
+  geocode_query: Novopavlivka, Pokrovsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:kotlyne
+  type: place
+  kind: settlement
+  en: Kotlyne
+  uk: Котлине
+  parent: place:donetsk_oblast
+  note: Village west of Pokrovsk.
+  geocode_query: Kotlyne, Pokrovsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:artemivske
+  type: place
+  kind: settlement
+  en: Artemivske
+  uk: Артемівське
+  parent: place:donetsk_oblast
+  note: Dec 2022 fighting near Bakhmut; several villages share the name.
+  geocode_query: Artemivske, Bakhmut Raion, Donetsk Oblast, Ukraine
+
+- id: place:novoselivka
+  type: place
+  kind: settlement
+  en: Novoselivka
+  uk: Новоселівка
+  parent: place:donetsk_oblast
+  note: 'Operation Vivaldi area near Lyman (3rd Army Corps, 2026). Common name: the May 2026 ''46 km² near Novoselivka'' mention is assumed to be the same village.'
+  geocode_query: Novoselivka, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:oleksandrivka
+  type: place
+  kind: settlement
+  en: Oleksandrivka
+  uk: Олександрівка
+  parent: place:donetsk_oblast
+  note: 'Operation Vivaldi area near Lyman (3rd Army Corps, 2026). Common name: one staged use (armour 19 km past lines, March 2026) likely means the Oleksandrivka on the Dnipropetrovsk-border Oleksandrivka
+    axis instead (place:oleksandrivka_axis).'
+  geocode_query: Oleksandrivka, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:yarova
+  type: place
+  kind: settlement
+  en: Yarova
+  uk: Ярова
+  parent: place:donetsk_oblast
+  note: Operation Vivaldi area near Lyman (3rd Army Corps, 2026).
+  geocode_query: Yarova, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:serednie
+  type: place
+  kind: settlement
+  en: Serednie
+  uk: Середнє
+  parent: place:donetsk_oblast
+  note: Operation Vivaldi area near Lyman (3rd Army Corps, 2026).
+  geocode_query: Serednie, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:shandryholove
+  type: place
+  kind: settlement
+  en: Shandryholove
+  uk: Шандриголове
+  parent: place:donetsk_oblast
+  note: Operation Vivaldi area near Lyman (3rd Army Corps, 2026).
+  geocode_query: Shandryholove, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:derylove
+  type: place
+  kind: settlement
+  en: Derylove
+  uk: Дерилове
+  parent: place:donetsk_oblast
+  note: Operation Vivaldi area near Lyman (3rd Army Corps, 2026).
+  geocode_query: Derylove, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:drobysheve
+  type: place
+  kind: settlement
+  en: Drobysheve
+  uk: Дробишеве
+  parent: place:donetsk_oblast
+  note: Operation Vivaldi area near Lyman (3rd Army Corps, 2026).
+  geocode_query: Drobysheve, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:mykolaivka
+  type: place
+  kind: settlement
+  en: Mykolaivka
+  uk: Миколаївка
+  parent: place:donetsk_oblast
+  note: Town between Sloviansk and Kostiantynivka.
+  geocode_query: Mykolaivka, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:serebrianka
+  type: place
+  kind: settlement
+  en: Serebrianka
+  uk: Серебрянка
+  parent: place:donetsk_oblast
+  note: Village on the Siverskyi Donets near Siversk.
+  geocode_query: Serebrianka, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:ridkodub
+  type: place
+  kind: settlement
+  en: Ridkodub
+  uk: Рідкодуб
+  parent: place:donetsk_oblast
+  note: Named in a DeepStateMap liberation changelog of 27 Sep 2026; assumed to be the Lyman-area village (name is common).
+  geocode_query: Ridkodub, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:nove
+  type: place
+  kind: settlement
+  en: Nove
+  uk: Нове
+  parent: place:donetsk_oblast
+  note: Named in a DeepStateMap liberation changelog of 27 Sep 2026; assumed to be the Lyman-area village (name is common).
+  geocode_query: Nove, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:katerynivka
+  type: place
+  kind: settlement
+  en: Katerynivka
+  uk: Катеринівка
+  parent: place:donetsk_oblast
+  note: Named in a DeepStateMap liberation changelog of 27 Sep 2026; assumed to be the Lyman-area village (name is common).
+  geocode_query: Katerynivka, Kramatorsk Raion, Donetsk Oblast, Ukraine
+
+- id: place:bakhmut_hromada
+  type: place
+  kind: hromada
+  en: Bakhmut hromada
+  uk: Бахмутська громада
+  aliases: [Bakhmutska hromada]
+  parent: place:donetsk_oblast
+  geocode_query: Bakhmut urban hromada, Donetsk Oblast, Ukraine
+
+- id: place:zabalka
+  type: place
+  kind: city_district
+  en: Zabalka
+  uk: Забалка
+  parent: place:toretsk
+  note: Private-housing district of Toretsk below the waste heaps.
+  geocode_query: Zabalka, Toretsk, Donetsk Oblast, Ukraine
+
+- id: place:avdiivka_terrikon
+  type: place
+  kind: landform
+  en: Avdiivka terrikon
+  uk: Авдіївський терикон
+  parent: place:avdiivka
+  note: Spoil heap (about 40 m) at Avdiivka; may not be a named OSM object.
+  geocode_query: Avdiivka terrikon, Donetsk Oblast, Ukraine
+
+- id: place:avdiivka_coke_plant
+  type: place
+  kind: facility
+  en: Avdiivka Coke Plant
+  uk: Авдіївський коксохімічний завод
+  aliases: [Avdiivka coke plant, AKKhZ]
+  parent: place:avdiivka
+  geocode_query: Avdiivka Coke Plant, Avdiivka, Donetsk Oblast, Ukraine
+
+- id: place:avdiivka_industrial_zone
+  type: place
+  kind: facility
+  en: Avdiivka industrial zone
+  uk: Авдіївська промзона
+  aliases: [promzona, promka]
+  parent: place:avdiivka
+  note: Fortified industrial zone (promzona) near Yasynuvata-2 station; no single OSM object.
+  no_geocode: true
+
+- id: place:yasynuvata_2_station
+  type: place
+  kind: facility
+  en: Yasynuvata-2 station
+  uk: Ясинувата-2
+  parent: place:donetsk_oblast
+  note: Railway station at the Avdiivka industrial zone.
+  geocode_query: Yasynuvata-2, Donetsk Oblast, Ukraine
+
+- id: place:chai_treeline
+  type: place
+  kind: forest
+  en: CHAI treeline
+  parent: place:donetsk_oblast
+  note: Named 1 km treeline near Pokrovsk in a source; not an OSM feature.
+  no_geocode: true
+
+- id: place:kurakhove_reservoir
+  type: place
+  kind: reservoir
+  en: Kurakhove Reservoir
+  uk: Курахівське водосховище
+  parent: place:donetsk_oblast
+  geocode_query: Kurakhove Reservoir, Donetsk Oblast, Ukraine
+
+- id: place:sviati_hory_national_park
+  type: place
+  kind: forest
+  en: Sviati Hory National Nature Park
+  uk: Національний природний парк «Святі Гори»
+  aliases: [Sviati Hory national park, Holy Mountains National Park]
+  parent: place:donetsk_oblast
+  geocode_query: Sviati Hory National Nature Park, Donetsk Oblast, Ukraine
+
+- id: place:fortress_belt
+  type: place
+  kind: region
+  en: Donetsk fortress belt
+  uk: пояс фортець
+  aliases: [fortress belt, Donbas fortress belt]
+  parent: place:donetsk_oblast
+  note: Sloviansk–Kramatorsk–Druzhkivka–Kostiantynivka urban defence belt; a notion, no polygon.
+  no_geocode: true
+
+- id: place:sievierodonetsk
+  type: place
+  kind: settlement
+  en: Sievierodonetsk
+  uk: Сєвєродонецьк
+  aliases: [Severodonetsk]
+  parent: place:luhansk_oblast
+  geocode_query: Sievierodonetsk, Luhansk Oblast, Ukraine
+
+- id: place:lysychansk
+  type: place
+  kind: settlement
+  en: Lysychansk
+  uk: Лисичанськ
+  parent: place:luhansk_oblast
+  geocode_query: Lysychansk, Luhansk Oblast, Ukraine
+
+- id: place:kreminna
+  type: place
+  kind: settlement
+  en: Kreminna
+  uk: Кремінна
+  parent: place:luhansk_oblast
+  geocode_query: Kreminna, Luhansk Oblast, Ukraine
+
+- id: place:popasna
+  type: place
+  kind: settlement
+  en: Popasna
+  uk: Попасна
+  parent: place:luhansk_oblast
+  geocode_query: Popasna, Luhansk Oblast, Ukraine
+
+- id: place:rovenky
+  type: place
+  kind: settlement
+  en: Rovenky
+  uk: Ровеньки
+  parent: place:luhansk_oblast
+  note: Rail fuel terminal (Rovenky station) in occupied Luhansk Oblast.
+  geocode_query: Rovenky, Luhansk Oblast, Ukraine
+
+- id: place:luhansk_airfield
+  type: place
+  kind: airfield
+  en: Luhansk airfield
+  uk: Луганський аеропорт
+  aliases: [Luhansk airport]
+  parent: place:luhansk_oblast
+  geocode_query: Luhansk International Airport, Luhansk Oblast, Ukraine
+
+- id: place:serebrianskyi_forest
+  type: place
+  kind: forest
+  en: Serebrianskyi Forest
+  uk: Серебрянське лісництво
+  aliases: [Serebriansky forest, Serebryansky forest, Serebrianka forest]
+  parent: place:luhansk_oblast
+  note: Pine forest SW of Kreminna with a 107.1 ha protected reserve.
+  geocode_query: Serebrianskyi Forest, Luhansk Oblast, Ukraine
+
+- id: place:kharkiv
+  type: place
+  kind: settlement
+  en: Kharkiv
+  uk: Харків
+  parent: place:kharkiv_oblast
+  geocode_query: Kharkiv, Kharkiv Oblast, Ukraine
+
+- id: place:kupiansk
+  type: place
+  kind: settlement
+  en: Kupiansk
+  uk: Куп'янськ
+  aliases: [Kupyansk]
+  parent: place:kharkiv_oblast
+  geocode_query: Kupiansk, Kharkiv Oblast, Ukraine
+
+- id: place:vovchansk
+  type: place
+  kind: settlement
+  en: Vovchansk
+  uk: Вовчанськ
+  parent: place:kharkiv_oblast
+  geocode_query: Vovchansk, Kharkiv Oblast, Ukraine
+
+- id: place:izium
+  type: place
+  kind: settlement
+  en: Izium
+  uk: Ізюм
+  aliases: [Izyum]
+  parent: place:kharkiv_oblast
+  geocode_query: Izium, Kharkiv Oblast, Ukraine
+
+- id: place:balakliia
+  type: place
+  kind: settlement
+  en: Balakliia
+  uk: Балаклія
+  aliases: [Balakliya]
+  parent: place:kharkiv_oblast
+  geocode_query: Balakliia, Kharkiv Oblast, Ukraine
+
+- id: place:lyptsi
+  type: place
+  kind: settlement
+  en: Lyptsi
+  uk: Липці
+  parent: place:kharkiv_oblast
+  geocode_query: Lyptsi, Kharkiv Oblast, Ukraine
+
+- id: place:borova
+  type: place
+  kind: settlement
+  en: Borova
+  uk: Борова
+  parent: place:kharkiv_oblast
+  geocode_query: Borova, Kharkiv Oblast, Ukraine
+
+- id: place:vovchansk_aggregate_plant
+  type: place
+  kind: facility
+  en: Vovchansk aggregate plant
+  uk: Вовчанський агрегатний завод
+  parent: place:vovchansk
+  geocode_query: Vovchansk Aggregate Plant, Vovchansk, Kharkiv Oblast, Ukraine
+
+- id: place:zaporizhzhia_city
+  type: place
+  kind: settlement
+  en: Zaporizhzhia city
+  uk: Запоріжжя
+  aliases: [Zaporizhzhia (city)]
+  parent: place:zaporizhzhia_oblast
+  note: The city. Bare 'Zaporizhzhia' resolves to the oblast (place:zaporizhzhia_oblast).
+  geocode_query: Zaporizhzhia, Zaporizhzhia Oblast, Ukraine
+
+- id: place:huliaipole
+  type: place
+  kind: settlement
+  en: Huliaipole
+  uk: Гуляйполе
+  aliases: [Hulyaipole, Gulyaipole]
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Huliaipole, Zaporizhzhia Oblast, Ukraine
+
+- id: place:robotyne
+  type: place
+  kind: settlement
+  en: Robotyne
+  uk: Роботине
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Robotyne, Zaporizhzhia Oblast, Ukraine
+
+- id: place:orikhiv
+  type: place
+  kind: settlement
+  en: Orikhiv
+  uk: Оріхів
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Orikhiv, Zaporizhzhia Oblast, Ukraine
+
+- id: place:tokmak
+  type: place
+  kind: settlement
+  en: Tokmak
+  uk: Токмак
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Tokmak, Zaporizhzhia Oblast, Ukraine
+
+- id: place:melitopol
+  type: place
+  kind: settlement
+  en: Melitopol
+  uk: Мелітополь
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Melitopol, Zaporizhzhia Oblast, Ukraine
+
+- id: place:novodarivka
+  type: place
+  kind: settlement
+  en: Novodarivka
+  uk: Новодарівка
+  parent: place:zaporizhzhia_oblast
+  note: Village on the Mokri Yaly at the Donetsk Oblast border.
+  geocode_query: Novodarivka, Polohy Raion, Zaporizhzhia Oblast, Ukraine
+
+- id: place:mala_tokmachka
+  type: place
+  kind: settlement
+  en: Mala Tokmachka
+  uk: Мала Токмачка
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Mala Tokmachka, Polohy Raion, Zaporizhzhia Oblast, Ukraine
+
+- id: place:berdiansk_airfield
+  type: place
+  kind: airfield
+  en: Berdiansk airfield
+  uk: Бердянський аеропорт
+  aliases: [Berdiansk airport]
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Berdiansk Airport, Zaporizhzhia Oblast, Ukraine
+
+- id: place:velykyi_luh
+  type: place
+  kind: landform
+  en: Velykyi Luh
+  uk: Великий Луг
+  parent: place:zaporizhzhia_oblast
+  note: Historic 'Great Meadow' floodplain drowned by the Kakhovka Reservoir; query targets the national park of that name.
+  geocode_query: Velykyi Luh National Nature Park, Zaporizhzhia Oblast, Ukraine
+
+- id: place:kherson
+  type: place
+  kind: settlement
+  en: Kherson
+  uk: Херсон
+  parent: place:kherson_oblast
+  geocode_query: Kherson, Kherson Oblast, Ukraine
+
+- id: place:krynky
+  type: place
+  kind: settlement
+  en: Krynky
+  uk: Кринки
+  parent: place:kherson_oblast
+  note: Left-bank village; Ukrainian marine lodgement Oct 2023 – mid-2024.
+  geocode_query: Krynky, Kherson Oblast, Ukraine
+
+- id: place:kamianska_sich
+  type: place
+  kind: settlement
+  en: Kamianska Sich
+  uk: Кам'янська Січ
+  parent: place:kherson_oblast
+  note: Historic Sich site on the right bank of the former reservoir.
+  geocode_query: Kamianska Sich, Beryslav Raion, Kherson Oblast, Ukraine
+
+- id: place:novovorontsovka
+  type: place
+  kind: settlement
+  en: Novovorontsovka
+  uk: Нововоронцовка
+  parent: place:kherson_oblast
+  geocode_query: Novovorontsovka, Beryslav Raion, Kherson Oblast, Ukraine
+
+- id: place:oleshky_district
+  type: place
+  kind: raion
+  en: Oleshky district
+  uk: Олешківський район
+  parent: place:kherson_oblast
+  note: Former Oleshky Raion (merged into Kherson Raion in 2020); query targets the Oleshky hromada.
+  geocode_query: Oleshky urban hromada, Kherson Oblast, Ukraine
+
+- id: place:kherson_right_bank
+  type: place
+  kind: region
+  en: Kherson right bank
+  uk: Правобережна Херсонщина
+  aliases: [right-bank Kherson]
+  parent: place:kherson_oblast
+  note: Part of Kherson Oblast west/north of the Dnipro, liberated Nov 2022; a notion.
+  no_geocode: true
+
+- id: place:kakhovka_dam
+  type: place
+  kind: facility
+  en: Kakhovka dam
+  uk: Каховська ГЕС
+  aliases: [Kakhovka HPP, Kakhovka hydroelectric dam]
+  parent: place:kherson_oblast
+  note: Destroyed 6 June 2023.
+  geocode_query: Kakhovka Hydroelectric Power Plant, Nova Kakhovka, Kherson Oblast, Ukraine
+
+- id: place:chonhar_bridges
+  type: place
+  kind: bridge
+  en: Chonhar bridges
+  uk: Чонгарський міст
+  aliases: [Chonhar, Chonhar bridge]
+  parent: place:kherson_oblast
+  note: Road and rail bridges from the Chonhar peninsula (Kherson Oblast) into Crimea; query hits the Chonhar village next to them.
+  geocode_query: Chonhar, Kherson Oblast, Ukraine
+
+- id: place:kryvyi_rih
+  type: place
+  kind: settlement
+  en: Kryvyi Rih
+  uk: Кривий Ріг
+  parent: place:dnipropetrovsk_oblast
+  geocode_query: Kryvyi Rih, Dnipropetrovsk Oblast, Ukraine
+
+- id: place:dovhyntseve_airbase
+  type: place
+  kind: airfield
+  en: Dovhyntseve airbase
+  uk: аеродром Довгинцеве
+  aliases: [Dovhyntseve air base, Kryvyi Rih airbase]
+  parent: place:kryvyi_rih
+  geocode_query: Dovhyntseve, Kryvyi Rih, Dnipropetrovsk Oblast, Ukraine
+
+- id: place:kyiv
+  type: place
+  kind: settlement
+  en: Kyiv
+  uk: Київ
+  aliases: [Kiev]
+  parent: place:ukraine
+  note: Capital; city with special status (not part of Kyiv Oblast).
+  geocode_query: Kyiv, Ukraine
+
+- id: place:hostomel
+  type: place
+  kind: settlement
+  en: Hostomel
+  uk: Гостомель
+  parent: place:kyiv_oblast
+  geocode_query: Hostomel, Kyiv Oblast, Ukraine
+
+- id: place:hostomel_airport
+  type: place
+  kind: airfield
+  en: Hostomel Airport
+  uk: аеропорт «Гостомель»
+  aliases: [Antonov Airport, Hostomel airfield]
+  parent: place:hostomel
+  geocode_query: Antonov Airport, Hostomel, Kyiv Oblast, Ukraine
+
+- id: place:bucha
+  type: place
+  kind: settlement
+  en: Bucha
+  uk: Буча
+  parent: place:kyiv_oblast
+  geocode_query: Bucha, Kyiv Oblast, Ukraine
+
+- id: place:irpin
+  type: place
+  kind: settlement
+  en: Irpin
+  uk: Ірпінь
+  parent: place:kyiv_oblast
+  geocode_query: Irpin, Kyiv Oblast, Ukraine
+
+- id: place:makariv
+  type: place
+  kind: settlement
+  en: Makariv
+  uk: Макарів
+  parent: place:kyiv_oblast
+  geocode_query: Makariv, Kyiv Oblast, Ukraine
+
+- id: place:chornobyl_exclusion_zone
+  type: place
+  kind: region
+  en: Chornobyl Exclusion Zone
+  uk: Чорнобильська зона відчуження
+  aliases: [Chornobyl Zone, Chernobyl Exclusion Zone]
+  parent: place:kyiv_oblast
+  geocode_query: Chornobyl Exclusion Zone, Kyiv Oblast, Ukraine
+
+- id: place:chernihiv
+  type: place
+  kind: settlement
+  en: Chernihiv
+  uk: Чернігів
+  parent: place:chernihiv_oblast
+  geocode_query: Chernihiv, Chernihiv Oblast, Ukraine
+
+- id: place:kyinka_hromada
+  type: place
+  kind: hromada
+  en: Kyinka hromada
+  uk: Киїнська громада
+  aliases: [Kyinska hromada]
+  parent: place:chernihiv_oblast
+  geocode_query: Kyinka rural hromada, Chernihiv Oblast, Ukraine
+
+- id: place:sumy
+  type: place
+  kind: settlement
+  en: Sumy
+  uk: Суми
+  parent: place:sumy_oblast
+  geocode_query: Sumy, Sumy Oblast, Ukraine
+
+- id: place:lviv
+  type: place
+  kind: settlement
+  en: Lviv
+  uk: Львів
+  parent: place:lviv_oblast
+  geocode_query: Lviv, Lviv Oblast, Ukraine
+
+- id: place:sevastopol
+  type: place
+  kind: settlement
+  en: Sevastopol
+  uk: Севастополь
+  parent: place:crimea
+  note: City with special status; occupied since 2014.
+  geocode_query: "Sevastopol"
+
+- id: place:black_sea_fleet_hq
+  type: place
+  kind: facility
+  en: Black Sea Fleet HQ
+  uk: штаб Чорноморського флоту
+  aliases: [Black Sea Fleet headquarters]
+  parent: place:sevastopol
+  note: Russian Black Sea Fleet headquarters; hit by Storm Shadow 22 Sep 2023.
+  geocode_query: Black Sea Fleet Headquarters, Sevastopol
+
+- id: place:dzhankoi_air_base
+  type: place
+  kind: airfield
+  en: Dzhankoi air base
+  uk: аеродром Джанкой
+  aliases: [Dzhankoi airbase, Dzhankoi airfield]
+  parent: place:crimea
+  geocode_query: Dzhankoi air base, Crimea
+
+- id: place:crimean_bridge
+  type: place
+  kind: bridge
+  en: Crimean Bridge
+  uk: Кримський міст
+  aliases: [Kerch Bridge, Kerch Strait Bridge]
+  parent: place:crimea
+  note: Road and rail bridge across the Kerch Strait to Russia's Taman peninsula.
+  geocode_query: Crimean Bridge
+
+- id: place:tuzla
+  type: place
+  kind: landform
+  en: Tuzla Island
+  uk: острів Тузла
+  aliases: [Tuzla, Tuzla Spit]
+  parent: place:crimea
+  note: Island in the Kerch Strait; DeepStateMap keeps it in its pre-2022 occupied mask.
+  geocode_query: Tuzla Island, Kerch Strait
+
+- id: place:donbas
+  type: place
+  kind: region
+  en: Donbas
+  uk: Донбас
+  aliases: [Donbass]
+  parent: place:ukraine
+  note: Donetsk + Luhansk oblasts as a war/front notion; no single OSM polygon (use the two oblasts).
+  no_geocode: true
+
+- id: place:donetsk_luhansk
+  type: place
+  kind: region
+  en: Donetsk/Luhansk
+  parent: place:ukraine
+  note: Troop-count grouping for the Donetsk and Luhansk oblasts front; notion.
+  no_geocode: true
+
+- id: place:ordlo
+  type: place
+  kind: region
+  en: ORDLO
+  uk: ОРДЛО
+  aliases: [CADR and CALR, certain areas of Donetsk and Luhansk oblasts]
+  parent: place:ukraine
+  note: Areas of Donetsk and Luhansk oblasts occupied before 24 Feb 2022 (DeepStateMap pre-2022 mask).
+  no_geocode: true
+
+- id: place:poltava_gubernia
+  type: place
+  kind: region
+  en: Poltava gubernia
+  uk: Полтавська губернія
+  aliases: [Poltava governorate]
+  parent: place:ukraine
+  note: Historical Russian Empire governorate (1802–1925); no modern polygon.
+  no_geocode: true
+
+- id: place:grey_zone
+  type: place
+  kind: region
+  en: grey zone
+  uk: сіра зона
+  parent: place:ukraine
+  note: 'generic: contested strip between the lines.'
+  no_geocode: true
+
+- id: place:shelterbelt
+  type: place
+  kind: forest
+  en: shelterbelt
+  uk: лісосмуга / посадка
+  aliases: [lisosmuha, posadka, posadky, treeline, forest belt]
+  parent: place:ukraine
+  note: 'generic: field shelterbelt / treeline (lisosmuha, colloquially posadka).'
+  no_geocode: true
+
+- id: place:southern_front
+  type: place
+  kind: front_sector
+  en: southern front
+  aliases: [south, the south]
+  parent: place:ukraine
+  note: 'generic: Zaporizhzhia–Kherson front as a notion.'
+  no_geocode: true
+
+- id: place:north_of_kyiv
+  type: place
+  kind: front_sector
+  en: north of Kyiv
+  parent: place:kyiv_oblast
+  note: Northern invasion front towards Kyiv, Feb–Mar 2022; notion.
+  no_geocode: true
+
+- id: place:zaporizhzhia_front
+  type: place
+  kind: front_sector
+  en: Zaporizhzhia front
+  aliases: [Zaporizhzhia direction]
+  parent: place:zaporizhzhia_oblast
+  no_geocode: true
+
+- id: place:kursk_salient
+  type: place
+  kind: front_sector
+  en: Kursk salient
+  aliases: [Kursk pocket]
+  parent: place:kursk_oblast
+  note: Ukrainian-held ground in Kursk Oblast, Aug 2024 – Mar 2025.
+  no_geocode: true
+
+- id: place:pokrovsk_axis
+  type: place
+  kind: axis
+  en: Pokrovsk axis
+  aliases: [Pokrovsk direction]
+  parent: place:donetsk_oblast
+  no_geocode: true
+
+- id: place:kurakhove_axis
+  type: place
+  kind: axis
+  en: Kurakhove axis
+  aliases: [Kurakhove direction]
+  parent: place:donetsk_oblast
+  no_geocode: true
+
+- id: place:orikhiv_tokmak_axis
+  type: place
+  kind: axis
+  en: Orikhiv–Tokmak axis
+  aliases: [Orikhiv direction]
+  parent: place:zaporizhzhia_oblast
+  no_geocode: true
+
+- id: place:oleksandrivka_axis
+  type: place
+  kind: axis
+  en: Oleksandrivka axis
+  aliases: [Oleksandrivka direction]
+  parent: place:ukraine
+  note: DeepState/General Staff direction on the Donetsk–Dnipropetrovsk–Zaporizhzhia oblast junction; 2026 Ukrainian counteroffensive.
+  no_geocode: true
+
+- id: place:kharkiv_axis
+  type: place
+  kind: axis
+  en: Kharkiv axis
+  aliases: [Kharkiv direction]
+  parent: place:kharkiv_oblast
+  no_geocode: true
+
+- id: place:surovikin_line
+  type: place
+  kind: facility
+  en: Surovikin line
+  uk: лінія Суровікіна
+  parent: place:ukraine
+  note: Russian 2022–23 defence lines (minefields, trenches) mainly in Zaporizhzhia Oblast; linear, no OSM object.
+  no_geocode: true
+
+- id: place:dnipro_river
+  type: place
+  kind: river
+  en: Dnipro
+  uk: Дніпро
+  aliases: [Dnipro River, Dnieper]
+  parent: place:ukraine
+  note: The river. Bare 'Dnipro' resolves here (the staged majority); the few uses meaning the city (Oreshnik strike Nov 2024, Liveuamap founders, an SBU case) are mislinked.
+  geocode_query: Dnipro River, Ukraine
+
+- id: place:siverskyi_donets
+  type: place
+  kind: river
+  en: Siverskyi Donets
+  uk: Сіверський Донець
+  aliases: [Seversky Donets, Donets]
+  parent: place:ukraine
+  geocode_query: Siverskyi Donets River, Ukraine
+
+- id: place:oskil
+  type: place
+  kind: river
+  en: Oskil
+  uk: Оскіл
+  aliases: [Oskil River, Oskol]
+  parent: place:kharkiv_oblast
+  geocode_query: Oskil River, Kharkiv Oblast, Ukraine
+
+- id: place:mokri_yaly
+  type: place
+  kind: river
+  en: Mokri Yaly
+  uk: Мокрі Яли
+  aliases: [Mokri Yaly river]
+  parent: place:ukraine
+  geocode_query: Mokri Yaly River, Donetsk Oblast, Ukraine
+
+- id: place:vovcha
+  type: place
+  kind: river
+  en: Vovcha
+  uk: Вовча
+  aliases: [Vovcha river]
+  parent: place:ukraine
+  note: Left tributary of the Samara (Dnipro basin) through Donetsk and Dnipropetrovsk oblasts; not the Vovcha at Vovchansk.
+  geocode_query: Vovcha River, Dnipropetrovsk Oblast, Ukraine
+
+- id: place:kinska
+  type: place
+  kind: river
+  en: Kinska
+  uk: Кінська
+  aliases: [Kinska River, Konka]
+  parent: place:zaporizhzhia_oblast
+  geocode_query: Kinska River, Zaporizhzhia Oblast, Ukraine
+
+- id: place:yanchul
+  type: place
+  kind: river
+  en: Yanchul
+  uk: Янчул
+  aliases: [Yanchur]
+  parent: place:ukraine
+  note: Tributary of the Vovcha on the Zaporizhzhia–Dnipropetrovsk–Donetsk junction; staged spelling 'Yanchur'.
+  geocode_query: Yanchul River, Ukraine
+
+- id: place:haichur
+  type: place
+  kind: river
+  en: Haichur
+  uk: Гайчур
+  aliases: [Gaichur]
+  parent: place:ukraine
+  geocode_query: Haichur River, Ukraine
+
+- id: place:zherebets
+  type: place
+  kind: river
+  en: Zherebets
+  uk: Жеребець
+  aliases: [Zherebets River]
+  parent: place:ukraine
+  note: Left tributary of the Siverskyi Donets east of Lyman (Donetsk/Luhansk oblasts).
+  geocode_query: Zherebets River, Ukraine
+
+- id: place:kazennyi_torets
+  type: place
+  kind: river
+  en: Kazennyi Torets
+  uk: Казенний Торець
+  aliases: [Kazennyi Torets River]
+  parent: place:donetsk_oblast
+  geocode_query: Kazennyi Torets River, Donetsk Oblast, Ukraine
+
+- id: place:kakhovka_reservoir
+  type: place
+  kind: reservoir
+  en: Kakhovka Reservoir
+  uk: Каховське водосховище
+  parent: place:ukraine
+  note: Drained after the dam's destruction on 6 June 2023.
+  geocode_query: Kakhovka Reservoir, Ukraine
+
+- id: place:azov_upland
+  type: place
+  kind: landform
+  en: Azov Upland
+  uk: Приазовська височина
+  aliases: [Azov Uplands]
+  parent: place:ukraine
+  geocode_query: Azov Upland, Ukraine
+
+- id: place:m_14
+  type: place
+  kind: road
+  en: M-14
+  uk: М-14
+  aliases: [M14, M-14 highway]
+  parent: place:ukraine
+  note: Odesa–Mykolaiv–Kherson–Melitopol–Mariupol–Novoazovsk highway; its occupied section is signed R-280 by Russia.
+  geocode_query: M14, Ukraine
+
+- id: place:m_18
+  type: place
+  kind: road
+  en: M-18
+  uk: М-18
+  aliases: [M18]
+  parent: place:ukraine
+  note: Kharkiv–Zaporizhzhia–Simferopol–Yalta highway.
+  geocode_query: M18, Ukraine
+
+- id: place:h_20
+  type: place
+  kind: road
+  en: H-20
+  uk: Н-20
+  aliases: [H20, N-20, T-0509 (H-20)]
+  parent: place:donetsk_oblast
+  note: Sloviansk–Kostiantynivka–Donetsk–Mariupol highway. 'T-0509 (H-20)' in one staged claim is read as this road.
+  geocode_query: H20, Donetsk Oblast, Ukraine
+
+- id: place:e_50
+  type: place
+  kind: road
+  en: E-50
+  aliases: [E50]
+  parent: place:ukraine
+  note: European route through Dnipro–Pokrovsk–Donetsk.
+  geocode_query: E50, Donetsk Oblast, Ukraine
+
+- id: place:r_280
+  type: place
+  kind: road
+  en: R-280 Novorossiya
+  uk: Р-280 «Новоросія»
+  aliases: [R-280, M-14/R-280, Novorossiya highway]
+  parent: place:ukraine
+  note: Russian federal highway Rostov-on-Don–Mariupol–Melitopol–Crimea, overlapping the occupied M-14; 'M-14/R-280' names that shared corridor.
+  geocode_query: R-280, Russia
+  countrycodes: ru,ua
+
+- id: place:izium_sloviansk_road
+  type: place
+  kind: road
+  en: Izium–Sloviansk road
+  aliases: [Izium-Sloviansk road]
+  parent: place:ukraine
+  note: Section of the M-03 highway between Izium and Sloviansk; no separate OSM object.
+  no_geocode: true
+
+- id: place:kramatorsk_kostiantynivka_road
+  type: place
+  kind: road
+  en: Kramatorsk–Kostiantynivka road
+  parent: place:h_20
+  note: Section of the H-20 between Kramatorsk and Kostiantynivka.
+  no_geocode: true
+
+- id: place:bakhmut_chasiv_yar_road
+  type: place
+  kind: road
+  en: Bakhmut–Chasiv Yar
+  aliases: [Bakhmut–Chasiv Yar road]
+  parent: place:donetsk_oblast
+  note: Supply road between Bakhmut and Chasiv Yar (net tunnels); notion.
+  no_geocode: true
+
+- id: place:shebelynka_ostrohozhsk_pipeline
+  type: place
+  kind: facility
+  en: Shebelynka–Ostrohozhsk gas pipeline
+  aliases: [Kupiansk gas pipeline, Shebelynka–Ostrohozhsk pipeline]
+  parent: place:kharkiv_oblast
+  note: Disused gas pipeline used as a ~10 km infiltration route into Kupiansk; linear, not searchable in Nominatim.
+  no_geocode: true
+
+- id: place:voronezh_luhansk_pipeline
+  type: place
+  kind: facility
+  en: Voronezh–Luhansk diesel pipeline
+  parent: place:luhansk_oblast
+  note: Russian field diesel pipeline from Voronezh Oblast into occupied Luhansk Oblast feeding the Lyman axis; destroyed 2026.
+  no_geocode: true
+
+- id: place:sudzha
+  type: place
+  kind: settlement
+  en: Sudzha
+  uk: Суджа
+  parent: place:kursk_oblast
+  geocode_query: Sudzha, Kursk Oblast, Russia
+  countrycodes: ru
+
+- id: place:toropets
+  type: place
+  kind: settlement
+  en: Toropets
+  uk: Торопець
+  parent: place:tver_oblast
+  geocode_query: Toropets, Tver Oblast, Russia
+  countrycodes: ru
+
+- id: place:toropets_arsenal
+  type: place
+  kind: facility
+  en: Toropets arsenal
+  parent: place:toropets
+  note: GRAU 107th arsenal near Toropets; hit Sep 2024. Locate via parent.
+  no_geocode: true
+
+- id: place:tikhoretsk
+  type: place
+  kind: settlement
+  en: Tikhoretsk
+  uk: Тихорецьк
+  parent: place:krasnodar_krai
+  geocode_query: Tikhoretsk, Krasnodar Krai, Russia
+  countrycodes: ru
+
+- id: place:tikhoretsk_arsenal
+  type: place
+  kind: facility
+  en: Tikhoretsk arsenal
+  parent: place:tikhoretsk
+  note: GRAU arsenal near Tikhoretsk; hit Sep 2024. Locate via parent.
+  no_geocode: true
+
+- id: place:novorossiysk
+  type: place
+  kind: settlement
+  en: Novorossiysk
+  uk: Новоросійськ
+  parent: place:krasnodar_krai
+  geocode_query: Novorossiysk, Krasnodar Krai, Russia
+  countrycodes: ru
+
+- id: place:gelendzhik
+  type: place
+  kind: settlement
+  en: Gelendzhik
+  uk: Геленджик
+  parent: place:krasnodar_krai
+  geocode_query: Gelendzhik, Krasnodar Krai, Russia
+  countrycodes: ru
+
+- id: place:samara
+  type: place
+  kind: settlement
+  en: Samara
+  uk: Самара
+  parent: place:samara_oblast
+  geocode_query: Samara, Samara Oblast, Russia
+  countrycodes: ru
+
+- id: place:saransk
+  type: place
+  kind: settlement
+  en: Saransk
+  uk: Саранськ
+  parent: place:mordovia
+  geocode_query: Saransk, Republic of Mordovia, Russia
+  countrycodes: ru
+
+- id: place:saransk_fibre_plant
+  type: place
+  kind: facility
+  en: Saransk fibre plant
+  parent: place:saransk
+  note: Optical-fibre plant in Saransk (Optikovolokonnye Sistemy); locate via parent.
+  no_geocode: true
+
+- id: place:cheboksary
+  type: place
+  kind: settlement
+  en: Cheboksary
+  uk: Чебоксари
+  parent: place:chuvashia
+  geocode_query: Cheboksary, Chuvash Republic, Russia
+  countrycodes: ru
+
+- id: place:votkinsk_missile_plant
+  type: place
+  kind: facility
+  en: Votkinsk missile plant
+  uk: Воткінський завод
+  aliases: [Votkinsk Plant]
+  parent: place:udmurtia
+  note: Votkinsk Machine Building Plant (Iskander, Oreshnik).
+  geocode_query: Votkinsk Plant, Votkinsk, Udmurt Republic, Russia
+  countrycodes: ru
+
+- id: place:kotluban_arsenal
+  type: place
+  kind: facility
+  en: Kotluban GRAU arsenal
+  aliases: [Kotluban arsenal]
+  parent: place:volgograd_oblast
+  note: GRAU arsenal at Kotluban; query hits the adjacent settlement.
+  geocode_query: Kotluban, Volgograd Oblast, Russia
+  countrycodes: ru
+
+- id: place:russian_refineries
+  type: place
+  kind: facility
+  en: Russian refineries
+  aliases: [Russian oil refineries]
+  parent: place:russia
+  note: 'generic: Russian oil refineries as strike targets.'
+  no_geocode: true
+
+- id: place:prague
+  type: place
+  kind: settlement
+  en: Prague
+  uk: Прага
+  parent: place:czechia
+  geocode_query: Prague, Czechia
+  countrycodes: cz
+
+- id: place:sagunt
+  type: place
+  kind: settlement
+  en: Sagunt
+  uk: Сагунто
+  aliases: [Sagunto]
+  parent: place:spain
+  geocode_query: Sagunto, Valencia, Spain
+  countrycodes: es
+
+- id: place:marijampole
+  type: place
+  kind: settlement
+  en: Marijampolė
+  uk: Маріямполе
+  parent: place:lithuania
+  geocode_query: Marijampolė, Lithuania
+  countrycodes: lt
+
+- id: place:helsinki
+  type: place
+  kind: settlement
+  en: Helsinki
+  uk: Гельсінкі
+  parent: place:finland
+  geocode_query: Helsinki, Finland
+  countrycodes: fi
+
+- id: place:london
+  type: place
+  kind: settlement
+  en: London
+  uk: Лондон
+  parent: place:united_kingdom
+  geocode_query: London, United Kingdom
+  countrycodes: gb
+
+- id: place:charing_cross_station
+  type: place
+  kind: facility
+  en: Charing Cross station
+  parent: place:london
+  note: Site of the ARRC exercise Arrcade Strike bunker (May 2026).
+  geocode_query: Charing Cross station, London, United Kingdom
+  countrycodes: gb
+
+- id: place:virginia_beach
+  type: place
+  kind: settlement
+  en: Virginia Beach
+  parent: place:united_states
+  geocode_query: Virginia Beach, Virginia, United States
+  countrycodes: us
+
+- id: place:jeddah
+  type: place
+  kind: settlement
+  en: Jeddah
+  uk: Джидда
+  parent: place:saudi_arabia
+  geocode_query: Jeddah, Saudi Arabia
+  countrycodes: sa
+
+- id: place:dubai
+  type: place
+  kind: settlement
+  en: Dubai
+  uk: Дубай
+  parent: place:united_arab_emirates
+  geocode_query: Dubai, United Arab Emirates
+  countrycodes: ae
+
+- id: place:persian_gulf
+  type: place
+  kind: sea
+  en: Persian Gulf
+  uk: Перська затока
+  note: Sea; Nominatim's country filter excludes open water, so no geocode.
+  no_geocode: true
+
+- id: place:transnistria
+  type: place
+  kind: region
+  en: Transnistria
+  uk: Придністров'я
+  parent: place:moldova
+  note: Russian-occupied region of Moldova.
+  geocode_query: Transnistria, Moldova
+  countrycodes: md
+
+- id: place:abkhazia
+  type: place
+  kind: region
+  en: Abkhazia
+  uk: Абхазія
+  parent: place:georgia
+  note: Russian-occupied region of Georgia.
+  geocode_query: Abkhazia, Georgia
+  countrycodes: ge
+
+- id: place:tskhinvali_region
+  type: place
+  kind: region
+  en: Tskhinvali
+  uk: Цхінвалі
+  aliases: [Tskhinvali Region, South Ossetia]
+  parent: place:georgia
+  note: Tskhinvali region (South Ossetia), Russian-occupied region of Georgia.
+  geocode_query: South Ossetia, Georgia
+  countrycodes: ge
+
+- id: place:baltics
+  type: place
+  kind: region
+  en: Baltics
+  uk: Балтія
+  aliases: [Baltic states]
+  note: Estonia, Latvia, Lithuania as a notion.
+  no_geocode: true
+
+- id: place:karelia
+  type: place
+  kind: region
+  en: Karelia
+  uk: Карелія
+  parent: place:russia
+  note: DeepStateMap trolling entry ('temporarily occupied' Karelia, i.e. Finnish-ceded Karelia); notion.
+  no_geocode: true
+
+- id: place:east_prussia
+  type: place
+  kind: region
+  en: East Prussia
+  uk: Східна Пруссія
+  parent: place:russia
+  note: DeepStateMap trolling entry for Kaliningrad Oblast; historical, no polygon.
+  no_geocode: true
+
+- id: place:southern_kurils
+  type: place
+  kind: region
+  en: Southern Kurils
+  uk: Південні Курили
+  aliases: [South Kuril Islands]
+  parent: place:russia
+  note: DeepStateMap trolling entry; Russian-held, claimed by Japan; notion.
+  no_geocode: true
+
+- id: place:pokrovsk_w_box
+  type: place
+  kind: sample_box
+  en: Pokrovsk W sample box
+  parent: place:donetsk_oblast
+  note: OSM landscape-statistics sample box; bbox from claim 06-0024-01.
+  no_geocode: true
+  bbox: [36.8325, 48.22, 36.9675, 48.31]
+
+- id: place:robotyne_box
+  type: place
+  kind: sample_box
+  en: Robotyne sample box
+  parent: place:zaporizhzhia_oblast
+  note: OSM landscape-statistics sample box; bbox from claim 06-0024-02.
+  no_geocode: true
+  bbox: [35.7485, 47.43, 35.8815, 47.52]
+
+- id: place:kupiansk_e_box
+  type: place
+  kind: sample_box
+  en: Kupiansk E sample box
+  parent: place:kharkiv_oblast
+  note: OSM landscape-statistics sample box; bbox from claim 06-0024-03.
+  no_geocode: true
+  bbox: [37.7005, 49.7, 37.8395, 49.79]
+
+- id: place:huliaipole_e_box
+  type: place
+  kind: sample_box
+  en: Huliaipole E sample box
+  parent: place:zaporizhzhia_oblast
+  note: OSM landscape-statistics sample box; bbox from claim 06-0024-04.
+  no_geocode: true
+  bbox: [36.2783, 47.64, 36.4117, 47.73]
+
+- id: place:chasiv_yar_s_box
+  type: place
+  kind: sample_box
+  en: Chasiv Yar S sample box
+  parent: place:donetsk_oblast
+  note: OSM landscape-statistics sample box; bbox from claim 06-0024-05.
+  no_geocode: true
+  bbox: [37.7822, 48.47, 37.9178, 48.56]
+
+- id: place:dnipro_city
+  type: place
+  kind: settlement
+  en: "Dnipro (city)"
+  uk: "Дніпро"
+  aliases: ["Dnipro city"]
+  parent: place:dnipropetrovsk_oblast
+  geocode_query: "Dnipro, Dnipropetrovsk Oblast, Ukraine"
+  note: "The city; bare 'Dnipro' in staged claims resolves to the river (place:dnipro_river), city claims are re-pointed by db/fixes/0001."

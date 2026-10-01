@@ -1,0 +1,1389 @@
+# Simulation parameters derived from cited claims (phase 8 game feed).
+# Conventions:
+#   - Only claimed numbers are used. Where claims give ranges or disagree, a uniform or triangular distribution
+#     spans them and `method` names who says what. "Derived" values are simple arithmetic on claimed numbers
+#     (e.g. a monthly count divided by days in the month) and are labelled as such.
+#   - Eras without evidence are skipped, not guessed.
+#   - side = the side the parameter describes (ua: Ukrainian forces or Ukrainian air defence; ru: Russian forces).
+#   - interception rates are Ukrainian air defence against Russian weapons (side ua).
+params:
+
+# ---------------------------------------------------------------- kill zone / observation
+- key: kill_zone_depth
+  era: e1
+  dist: {type: point, value: 0}
+  unit: km
+  description: No continuous drone kill zone in the invasion era; fighting was road ambushes against BTG columns.
+  derived_from: [05-0028-01]
+  method: "RUSI (via 05's era table): 'no continuous kill zone', ambushes along roads; encoded as 0 km so the game disables the band."
+
+- key: kill_zone_depth
+  era: e2
+  dist: {type: uniform, min: 20, max: 40}
+  unit: km
+  description: Fires kill zone in the Donbas artillery era, set by drone-cued artillery range rather than by drones striking directly.
+  derived_from: [05-0028-03]
+  method: "RUSI: artillery range, about 20-40 km; HIMARS reaches 80-85 km (deep-strike layer, not part of this band)."
+
+- key: kill_zone_depth
+  era: e3
+  dist: {type: uniform, min: 20, max: 40}
+  unit: km
+  description: Fires kill zone in the 2022 counteroffensives, unchanged from e2 (artillery range), plus HQ displacement.
+  derived_from: [05-0028-05]
+  method: "Same 20-40 km artillery-range band as e2 per 05's era table; no drone-lethal depth claimed for e3."
+
+- key: kill_zone_depth
+  era: e6
+  dist: {type: point, value: 3}
+  unit: km
+  description: Drone-lethal band in the Avdiivka attrition era, roughly the zone of full visibility, with a growing FPV threat.
+  derived_from: [05-0028-10, 01-0018-15, 02-0025-05]
+  method: "RUSI 2024 fieldwork: full visibility within about 3 km; Russian FPV reach was about 3 km before growing to 10 km by spring 2025."
+
+- key: kill_zone_depth
+  era: e7
+  dist: {type: triangular, min: 3, mode: 10, max: 15}
+  unit: km
+  description: Drone-lethal band in the Kursk-Pokrovsk era, growing from the 3 km full-visibility zone toward 10-15 km.
+  derived_from: [05-0028-12, 05-0021-01, 00-0058-01, 02-0025-05, 01-0022-03, 08-0014-13]
+  method: "RUSI: full visibility 3 km, thinning to 15 km; RUSI: FPV reach grew from 3 to 10 km by spring 2025; the Drone Line aimed for 10-15 km (Feb 2025); soft vehicles cannot operate within about 10 km (2025). min 3, mode 10, max 15."
+
+- key: kill_zone_depth
+  era: e8
+  dist: {type: triangular, min: 10, mode: 15, max: 20}
+  unit: km
+  description: Drone-lethal band in the drone kill-zone era (both sides).
+  derived_from: [05-0028-14, 01-0004-12, 01-0029-28, 01-0022-03]
+  method: "Kyiv Independent/RUSI via 05's era table: about 10-20 km; 01: a 10-15 km kill zone formed on both sides in 2025; the Drone Line's 10-15 km target. Mode at 15 km where both overlap."
+
+- key: road_interdiction_depth
+  era: e8
+  side: ru
+  dist: {type: uniform, min: 15, max: 30}
+  unit: km
+  description: Depth to which Russian (Rubikon-style) fibre-optic FPVs interdict Ukrainian supply roads, beyond the main kill band.
+  derived_from: [05-0037-03, 02-0010-90, 02-0031-33, 05-0028-14]
+  method: "05: Rubikon-style FPV road interdiction reaches 15-30 km; 02: Russian fibre FPVs struck roads 25-30 km deep in September 2025."
+
+- key: kill_zone_depth
+  era: e9
+  dist: {type: triangular, min: 15, mode: 25, max: 30}
+  unit: km
+  description: Zone of regular drone strikes in the 2026 counteroffensive era, on both sides of the line, measured by strike density.
+  derived_from: [05-0028-16, 05-0025-50, 05-0031-23, 05-0005-05, 05-0025-51, 05-0031-24, 01-0024-27, 01-0029-29, 01-0004-20, 04-0005-15, 04-0027-39, 04-0033-67, 05-0005-06, 01-0024-28]
+  method: "Brovdi (Magyar, May 2026): 25+ km each side, by strike density; Lasiichuk (7th Air Assault Corps, July 2026): 20-25 km, 30 km expected by end-2026; 04: 15-30 km in 2026. Mode 25, min 15, max 30."
+
+- key: kill_zone_depth
+  era: e9
+  side: ru
+  dist: {type: uniform, min: 15, max: 30}
+  unit: km
+  description: Reach of Russian reconnaissance and FPV drones into the Ukrainian side in e9.
+  derived_from: [05-0028-17, 05-0025-77]
+  method: "05 era table and Euromaidan Press: Russian recon and FPV drones work 15-30 km deep."
+
+- key: strike_band_depth
+  era: e9
+  side: ua
+  dist:
+    type: table
+    table:
+      - {band: fpv, depth_km: 20}
+      - {band: ai_middle_strike, depth_km: 150}
+      - {band: fp1_fp2_deep_strike_drones, depth_km: 200}
+  unit: km
+  description: Ukrainian drone strike bands by weapon class in e9.
+  derived_from: [05-0028-17]
+  method: "05 era table: Ukrainian FPVs to about 20 km, AI middle-strike drones to 150 km, FP-1/FP-2 to 200 km."
+
+- key: strike_band_depth
+  era: e9
+  side: ru
+  dist:
+    type: table
+    table:
+      - {band: recon_and_fpv, min_km: 15, max_km: 30}
+      - {band: fibre_fpv_long, min_km: 50, max_km: 60}
+      - {band: molniya_mothership, min_km: 40, max_km: 50}
+  unit: km
+  description: Russian drone strike bands by weapon class in e9.
+  derived_from: [05-0028-17, 05-0025-77, 01-0027-23, 01-0024-15, 05-0034-16]
+  method: "05: recon/FPV 15-30 km and Molniya motherships 40-50 km; 01: Russian fibre FPV range 50-60 km in 2026 and a 'colossal' lead in fibre drones reaching 50+ km after the Starlink cut-off."
+
+- key: observation_depth
+  era: e6
+  dist:
+    type: table
+    table: {full_visibility_km: 3, thinning_to_km: 15, taskable_km: 40}
+  unit: km
+  description: ISR gradient from the line of contact in 2024; detection near-certain inside full_visibility, falling off to thinning_to, reconnaissance only on tasking out to taskable.
+  derived_from: [01-0018-15, 01-0029-23, 05-0028-10]
+  method: "RUSI 2024 fieldwork: dense to 3 km, thinning to 15 km, taskable to 40 km."
+
+- key: observation_depth
+  era: e7
+  dist:
+    type: table
+    table: {full_visibility_km: 3, thinning_to_km: 15, taskable_km: 40}
+  unit: km
+  description: ISR gradient from the line of contact in 2024-25; beyond taskable_km satellites cue drones.
+  derived_from: [05-0021-01, 05-0028-12, 05-0005-04, 00-0058-01]
+  method: "RUSI (early 2025): fully visible within 3 km, thinning to about 15 km, reconnaissance taskable to about 40 km."
+
+- key: observation_depth
+  era: e8
+  dist:
+    type: table
+    table: {middle_zone_km: 30}
+  unit: km
+  description: RUSI's 2025 three-zone battlefield; only the middle-zone depth is quantified.
+  derived_from: [08-0014-09]
+  method: "RUSI (2025): a contested zone, a middle zone of about 30 km and a deep zone. No full-visibility figure claimed for e8."
+
+- key: ru_isr_orbits_per_day
+  era: e7
+  side: ru
+  dist: {type: uniform, min: 1000, max: 1500}
+  unit: count_per_day
+  description: Russian Orlan-10/Zala reconnaissance-drone orbits flown per day over Ukraine.
+  derived_from: [01-0020-12, 01-0029-24, 05-0021-02, 05-0031-12]
+  method: "RUSI: 1,000-1,500 orbits a day in August 2024."
+
+- key: ru_isr_orbits_per_axis
+  era: e6
+  side: ru
+  dist: {type: point, value: 5}
+  unit: count
+  description: Drone orbits Russian combat groups try to keep over each axis of advance.
+  derived_from: [05-0019-02, 05-0035-01]
+  method: "RUSI 2024 fieldwork: five orbits per axis."
+
+- key: grey_zone_depth
+  era: e7
+  dist: {type: point, value: 1}
+  unit: km
+  description: Depth of the contested (grey) zone near Pokrovsk in January 2025.
+  derived_from: [06-0032-03, 07-0019-07]
+  method: "WOTR (Maurin): about 1 km deep on 1 January 2025."
+
+- key: grey_zone_depth
+  era: e9
+  dist: {type: uniform, min: 5, max: 8}
+  unit: km
+  description: Depth of the contested (grey) zone in 2026.
+  derived_from: [06-0032-03, 06-0038-26, 07-0019-08]
+  method: "WOTR (Maurin): 5-8 times wider than the ~1 km of January 2025 (06 reads this as 5-8 km). The same analyst describes a front 'thickened into a depth of 12 kilometers', not used as the grey-zone bound."
+
+# ---------------------------------------------------------------- kill chain latency
+- key: detection_to_strike_latency_organic
+  era: e2
+  side: ru
+  dist: {type: uniform, min: 3, max: 5}
+  unit: min
+  description: Russian detection-to-fires time when the firing unit uses its own drone.
+  derived_from: [05-0011-11, 05-0031-02, 01-0010-02, 01-0029-04, 03-0010-08, 03-0029-032, 05-0005-03]
+  method: "RUSI (Zabrodskyi, 2022): 3-5 minutes with an organic UAV."
+
+- key: detection_to_strike_latency_hq
+  era: e2
+  side: ru
+  dist: {type: uniform, min: 20, max: 30}
+  unit: min
+  description: Russian detection-to-fires time when the request is routed through a fire-control headquarters (tactical level).
+  derived_from: [05-0011-11, 05-0031-02, 01-0010-02, 03-0010-08, 03-0029-032]
+  method: "RUSI (Zabrodskyi, 2022): 20-30 minutes via a fire-control HQ."
+
+- key: detection_to_strike_latency_operational
+  era: e2
+  side: ru
+  dist: {type: point, value: 48}
+  unit: h
+  description: Russian detection-to-strike time at operational level (deep targets).
+  derived_from: [05-0011-11, 05-0031-02, 03-0010-08, 03-0029-032]
+  method: "RUSI (Zabrodskyi, 2022): about 48 hours at operational level."
+
+- key: detection_to_strike_latency_organic
+  era: e4
+  side: ru
+  dist: {type: uniform, min: 3, max: 5}
+  unit: min
+  description: Russian reconnaissance-strike complex, drone detection to fires, Bakhmut period and 2023.
+  derived_from: [05-0015-01, 05-0028-07, 03-0014-05, 03-0029-033]
+  method: "RUSI (Meatgrinder): 3-5 minutes from drone detection."
+
+- key: detection_to_strike_latency_ew_cue
+  era: e4
+  side: ru
+  dist: {type: uniform, min: 20, max: 30}
+  unit: min
+  description: Russian detection-to-fires time when the target is found by electronic-warfare direction finding rather than a drone (goes through the fires chain).
+  derived_from: [05-0015-01, 03-0014-05, 03-0029-033]
+  method: "RUSI (Meatgrinder): 20-30 minutes from an EW detection. Stands in for the 'through an HQ' path in e4."
+
+- key: detection_to_strike_latency_digital
+  side: ua
+  dist: {type: uniform, min: 30, max: 45}
+  unit: s
+  description: Ukrainian target acquisition to fire mission with GIS Arta digital fire control (radio, cellular and Starlink links); applies from e2 where the unit has GIS Arta.
+  derived_from: [05-0011-10, 05-0031-04]
+  method: "New America (Zikusoka) reporting the GIS Arta developers' claim of 30-45 s; a vendor claim, not a field measurement. 05 lists it under e2."
+
+- key: gun_displacement_time
+  era: e2
+  side: ua
+  dist: {type: uniform, min: 2, max: 15}
+  unit: min
+  description: Time after opening fire within which a Ukrainian M777 battery must displace to survive counter-battery.
+  derived_from: [03-0027-002]
+  method: "03 systems table: the M777A2 displaces 2-15 min after firing (2022-23)."
+
+- key: gun_displacement_time
+  era: e5
+  side: ua
+  dist: {type: uniform, min: 2, max: 15}
+  unit: min
+  description: Time after opening fire within which Ukrainian guns had to displace in the 2023 counteroffensive.
+  derived_from: [03-0016-01, 03-0029-034, 05-0017-03, 05-0028-09, 05-0031-10]
+  method: "RUSI (Stormbreak): 2-15 minutes."
+
+# ---------------------------------------------------------------- air defence
+- key: interception_rate_shahed
+  era: e3
+  side: ua
+  dist: {type: point, value: 95}
+  unit: percent
+  description: Share of Shahed-type one-way attack drones shot down, autumn 2022.
+  derived_from: [01-0012-07]
+  method: "01: about 95% of Shaheds launched September-December 2022 reported shot down."
+
+- key: interception_rate_shahed
+  era: e4
+  side: ua
+  dist: {type: triangular, min: 82, mode: 90, max: 95}
+  unit: percent
+  description: Share of Shahed-type drones shot down, winter 2022-23 to spring 2023.
+  derived_from: [01-0012-07, 01-0016-16, 01-0018-10, 01-0029-13, 01-0027-41]
+  method: "Ukrainian Air Force: ~95% (Sep-Dec 2022) and 82-87% (mid-2023); CSIS from Air Force data: ~90% average Sep 2022-2024."
+
+- key: interception_rate_shahed
+  era: e5
+  side: ua
+  dist: {type: triangular, min: 82, mode: 85, max: 90}
+  unit: percent
+  description: Share of Shahed-type drones shot down in mid/late 2023.
+  derived_from: [01-0016-16, 01-0018-10, 01-0029-13, 01-0027-41]
+  method: "Ukrainian Air Force: 82-87% in mid-2023; CSIS: ~90% average 2022-24."
+
+- key: interception_rate_shahed
+  era: e6
+  side: ua
+  dist: {type: triangular, min: 77, mode: 90, max: 97}
+  unit: percent
+  description: Share of Shahed-type drones shot down, Oct 2023 - Jul 2024.
+  derived_from: [00-0044-02, 00-0074-22, 01-0018-10]
+  method: "77% in February 2024 and 97% in May 2024 (Ukrainian air defence figures); CSIS ~90% average as mode."
+
+- key: interception_rate_shahed
+  era: e7
+  side: ua
+  dist: {type: uniform, min: 85, max: 90}
+  unit: percent
+  description: Share of Shahed-type drones neutralised (shot down or lost to EW), Aug 2024 - Mar 2025.
+  derived_from: [03-0027-068, 01-0018-10, 01-0029-13]
+  method: "03: more than 85% intercepted from October 2024; CSIS: ~90% through end-2024. Kinetic-only share is a separate key."
+
+- key: interception_rate_shahed_kinetic
+  era: e7
+  side: ua
+  dist: {type: uniform, min: 55, max: 58}
+  unit: percent
+  description: Share of Shahed-type drones physically shot down (excluding those lost to EW), Q4 2024 - Q1 2025.
+  derived_from: [01-0020-17]
+  method: "01: the reported shot-down share fell to 55-58% because the Air Force began counting EW-'lost' drones separately."
+
+- key: interception_rate_shahed
+  era: e8
+  side: ua
+  dist: {type: triangular, min: 80, mode: 85, max: 90}
+  unit: percent
+  description: Share of Shahed-type drones neutralised, Mar 2025 - Jan 2026.
+  derived_from: [03-0029-074, 03-0027-068, 03-0022-44, 01-0018-10]
+  method: "CSIS: >85% intercepted in October 2025, with ~20% hitting (so at most ~80% neutralised by that count, taken as min); 03: >85% Oct 2024-May 2026; ~90% earlier as max."
+
+- key: interception_rate_shahed
+  era: e9
+  side: ua
+  dist: {type: triangular, min: 86, mode: 91.7, max: 96}
+  unit: percent
+  description: Share of piston Shahed-type drones neutralised in 2026.
+  derived_from: [02-0029-40, 02-0031-58, 03-0024-64, 02-0029-43, 02-0031-60, 03-0024-63, 01-0024-53]
+  method: "MoD: 7,476 of 8,150 intercepted in May 2026 (91.7%, mode); Beskrestnov: 92-96% of piston Shaheds on deep-rear raids (max); ISIS reconstructs a 10-14% hit share in Jul-Aug 2026 (min 100-14 = 86)."
+
+- key: shahed_hit_rate
+  era: e7
+  side: ru
+  dist: {type: uniform, min: 2, max: 3}
+  unit: percent
+  description: Share of launched Shahed-type drones that hit their target, early 2025.
+  derived_from: [01-0022-26, 01-0029-33]
+  method: "01: 2-3% early in 2025."
+
+- key: shahed_hit_rate
+  era: e8
+  side: ru
+  dist: {type: triangular, min: 2, mode: 17, max: 20}
+  unit: percent
+  description: Share of launched Shahed-type drones that hit their target, Mar 2025 - Jan 2026.
+  derived_from: [01-0022-26, 01-0029-33, 01-0024-50, 03-0022-44, 03-0029-074]
+  method: "01: 2-3% early 2025 rising to ~17% in December 2025; ~16.5% in August 2025; CSIS: ~20% in October 2025."
+
+- key: shahed_hit_rate
+  era: e9
+  side: ru
+  dist: {type: triangular, min: 6.7, mode: 13.9, max: 14}
+  unit: percent
+  description: Share of launched Shahed-type drones that hit their target in 2026.
+  derived_from: [01-0024-50, 01-0029-33, 02-0029-42, 02-0031-59, 03-0024-63, 03-0029-075, 01-0024-53]
+  method: "6.7% in May 2026; ISIS reconstruction 10-14% in Jul-Aug 2026 and 13.9% in August."
+
+- key: interception_rate_jet_geran
+  era: e9
+  side: ua
+  dist: {type: triangular, min: 55, mode: 57, max: 60}
+  unit: percent
+  description: Share of jet-powered Geran drones intercepted in 2026.
+  derived_from: [02-0010-125, 02-0029-47, 02-0031-60, 01-0024-56, 01-0027-44, 01-0029-59, 01-0024-57, 00-0065-12, 00-0074-57]
+  method: "Air Force (Ihnat): ~60% (August 2026), 55% (September 2026); Zelensky: 57% on 28 September 2026; 02: fell from 90%+ to ~60% against jet Gerans."
+
+- key: interception_rate_all_strike_drones
+  era: e9
+  side: ua
+  dist: {type: uniform, min: 59, max: 70}
+  unit: percent
+  description: Share of all Russian strike drones (piston and jet mixed) downed, mid/late 2026.
+  derived_from: [03-0024-62, 03-0029-075, 00-0065-12]
+  method: "MoD: 5,142 of 8,653 downed in July 2026 (59%); Zelensky: 70% overall on 28 September 2026."
+
+- key: interception_rate_ballistic
+  era: e9
+  side: ua
+  dist: {type: triangular, min: 0, mode: 15, max: 50}
+  unit: percent
+  description: Share of Russian ballistic missiles intercepted in 2026, under the Patriot interceptor shortage.
+  derived_from: [03-0004-19, 03-0024-39, 03-0029-067, 03-0024-40, 03-0029-068, 03-0029-070, 03-0024-41, 03-0024-42, 03-0029-069, 03-0024-43, 03-0024-44]
+  method: "CSIS: 10.2% in 2026 to mid-July; 03: collapse to 10-15%; MoD: ~40% in June, 15% in July (29 of 195); per salvo 0-50% (0 of 29 on 6 July, ~half on 15 June). Mode at the MoD July figure."
+
+- key: interceptors_per_ballistic_missile
+  side: ua
+  dist: {type: uniform, min: 2, max: 3}
+  unit: count
+  description: Patriot interceptors typically fired per Russian ballistic missile (Patriot/SAMP-T in service e5-e9).
+  derived_from: [03-0024-46, 03-0027-033]
+  method: "03: each ballistic missile typically takes 2-3 Patriot interceptors."
+
+- key: ew_share_of_neutralisations
+  era: e9
+  side: ua
+  dist: {type: point, value: 50}
+  unit: percent
+  description: Share of 'intercepted' Shaheds and missiles that were actually defeated by EW rather than shot down.
+  derived_from: [02-0029-33]
+  method: "Night Watch unit claim: about half."
+
+- key: interceptor_drone_kill_share
+  era: e9
+  side: ua
+  dist:
+    type: table
+    table:
+      - {period: "2025-12..2026-02 (winter, national)", value: 10}
+      - {period: "2026-02 (Kyiv region)", value: 70}
+      - {period: "2026-05-24 (national)", min: 40}
+      - {period: "2026-05 (national)", value: 50}
+  unit: percent
+  description: Share of Shahed-type kills made by interceptor drones, rising through 2026.
+  derived_from: [01-0024-46, 01-0029-35, 01-0024-44, 01-0029-55, 02-0029-38, 02-0010-123, 02-0029-41]
+  method: "Beskrestnov: ~10% in winter, ~50% in May 2026; >70% around Kyiv in February 2026; >40% on 24 May 2026."
+
+- key: jet_geran_share
+  era: e9
+  side: ru
+  dist:
+    type: table
+    table:
+      - {period: "2026-04", min: 15, max: 20}
+      - {period: "2026-08", min: 57, max: 62}
+  unit: percent
+  description: Jet-powered share of Russian Geran launches, rising through 2026 (Russian aim 50%).
+  derived_from: [00-0066-02, 01-0024-54, 03-0024-58, 03-0029-078, 01-0024-47]
+  method: "15-20% in April 2026; ISIS reconstruction 57-62% of genuine Shahed/Geran use in August 2026; Syrskyi: Russia aims for 50%."
+
+- key: decoy_share
+  era: e9
+  side: ru
+  dist: {type: uniform, min: 35, max: 40}
+  unit: percent
+  description: Share of decoys in Russian Geran waves in 2026.
+  derived_from: [03-0024-60, 03-0029-081]
+  method: "03: 35-40% of the record 8,150 drones in May 2026 were decoys."
+
+- key: aps_interception_rate_fpv
+  era: e9
+  side: ua
+  dist: {type: uniform, min: 60, max: 80}
+  unit: percent
+  description: Share of FPVs stopped by Ukrainian vehicle active protection systems, in tests.
+  derived_from: [02-0010-136, 02-0029-58, 02-0031-66]
+  method: "02: 60-80% in tests (not combat data)."
+
+# ---------------------------------------------------------------- artillery and bombs
+- key: fire_ratio_ua_ru
+  era: e1
+  dist: {type: point, value: 1.0}
+  unit: ratio
+  description: Ukrainian:Russian artillery fire ratio, first weeks of the invasion (parity until Ukrainian ammunition ran short).
+  derived_from: [00-0017-03]
+  method: "00: artillery parity for about the first six weeks."
+
+- key: fire_ratio_ua_ru
+  era: e2
+  dist: {type: uniform, min: 0.083, max: 0.1}
+  unit: ratio
+  description: Ukrainian:Russian artillery fire ratio in the Donbas artillery era.
+  derived_from: [03-0010-02, 03-0029-003, 04-0005-04, 04-0013-02, 04-0033-04, 00-0023-01, 00-0074-05, 03-0004-03, 00-0077-03]
+  method: "RUSI: 12:1 in May-June 2022, 10:1 by June. (Round counts, ~20,000 RU vs at most 6,000 UA, allow up to ~0.3 but are an upper bound on UA fire.)"
+
+- key: fire_ratio_ua_ru
+  era: e4
+  dist: {type: point, value: 0.2}
+  unit: ratio
+  description: Ukrainian:Russian artillery fire ratio at Bakhmut.
+  derived_from: [00-0033-03, 00-0074-11, 04-0017-14]
+  method: "RUSI (Meatgrinder): 5:1 Russian advantage at Bakhmut."
+
+- key: fire_ratio_ua_ru
+  era: e6
+  dist: {type: triangular, min: 0.1, mode: 0.2, max: 0.2}
+  unit: ratio
+  description: Ukrainian:Russian artillery fire ratio during the 2023-24 shell famine.
+  derived_from: [00-0077-15, 00-0044-01, 00-0074-21, 03-0004-10, 03-0018-01, 03-0029-007]
+  method: "Ukrainian troops: 5:1 in early February 2024, 8-9:1 at worst; 03: 1:10 in February 2024 while US aid stalled."
+
+- key: fire_ratio_ua_ru
+  era: e7
+  dist: {type: triangular, min: 0.333, mode: 0.5, max: 0.667}
+  unit: ratio
+  description: Ukrainian:Russian artillery fire ratio, Aug 2024 - Mar 2025, recovering with the Czech ammunition initiative.
+  derived_from: [03-0020-01, 03-0029-008, 03-0020-03, 03-0029-009, 03-0022-07]
+  method: "Syrskyi: 1:3 in August 2024, 1:1.5 in December 2024; Pavel: the Czech initiative moved it to 1:2."
+
+- key: fire_ratio_ua_ru
+  era: e8
+  dist: {type: triangular, min: 0.13, mode: 0.556, max: 0.7}
+  unit: ratio
+  description: Ukrainian:Russian artillery fire ratio in 2025.
+  derived_from: [03-0004-14, 03-0022-01, 03-0029-010, 03-0022-07, 03-0022-02, 03-0022-04, 03-0029-014, 03-0029-015]
+  method: "Ukrainian official: 1:1.8 by July 2025 (mode); Pavel: 1:2; West Point MWI open-source estimates (UA 2,000-7,000 vs RU 10,000-15,000 rounds/day) give 0.13-0.7 (min/max)."
+
+- key: artillery_rounds_per_day
+  era: e2
+  side: ru
+  dist: {type: triangular, min: 20000, mode: 20000, max: 60000}
+  unit: rounds_per_day
+  description: Russian artillery rounds fired per day in the Donbas artillery era.
+  derived_from: [03-0004-01, 03-0010-01, 03-0029-001, 04-0013-01, 04-0033-03, 03-0010-05, 03-0029-004, 03-0004-06]
+  method: "RUSI: ~20,000 a day typical with peaks above 32,000; RUSI Meatgrinder: 20,000-60,000 a day and ~12M for 2022. The triangle's mean (~33,000) matches 12M/365."
+
+- key: artillery_rounds_per_day
+  era: e2
+  side: ua
+  dist: {type: triangular, min: 1667, mode: 2000, max: 6000}
+  unit: rounds_per_day
+  description: Ukrainian artillery rounds fired per day in the Donbas artillery era.
+  derived_from: [03-0010-04, 04-0013-01, 04-0033-03, 03-0004-02, 03-0029-002, 03-0010-02, 03-0029-003]
+  method: "RUSI: Ukraine rarely exceeded 6,000 a day (max); derived: 20,000 RU rounds at the claimed 10-12:1 ratio gives 1,667-2,000 (min, mode)."
+
+- key: artillery_rounds_per_day
+  era: e4
+  side: ru
+  dist: {type: triangular, min: 12000, mode: 19000, max: 38000}
+  unit: rounds_per_day
+  description: Russian artillery rounds per day, winter-spring 2023.
+  derived_from: [03-0014-01, 03-0029-005, 03-0014-03, 03-0029-006, 03-0004-06]
+  method: "RUSI: 12,000-38,000 a day in Q1 2023, days above 24,000 rare; 2023 trend ~7M a year (~19,000 a day, mode)."
+
+- key: artillery_rounds_per_day
+  era: e5
+  side: ru
+  dist: {type: point, value: 19000}
+  unit: rounds_per_day
+  description: Russian artillery rounds per day in the 2023 counteroffensive era (annual trend only).
+  derived_from: [03-0014-03, 03-0029-006, 03-0004-06]
+  method: "Derived: the ~7M rounds/year 2023 trend divided by 365."
+
+- key: artillery_rounds_per_day
+  era: e6
+  side: ru
+  dist: {type: uniform, min: 23000, max: 40000}
+  unit: rounds_per_day
+  description: Russian artillery rounds per day in 2024 before and after Ukrainian depot strikes.
+  derived_from: [03-0020-02, 03-0029-012]
+  method: "Syrskyi: ~40,000 a day cut to ~23,000 by strikes on depots."
+
+- key: artillery_rounds_per_day
+  era: e6
+  side: ua
+  dist: {type: uniform, min: 2300, max: 8000}
+  unit: rounds_per_day
+  description: Ukrainian artillery rounds per day during the shell famine (derived).
+  derived_from: [03-0020-02, 03-0029-012, 00-0044-01, 03-0004-10]
+  method: "Derived: Russian 23,000-40,000 a day times the claimed 1:10 to 1:5 ratio."
+
+- key: artillery_rounds_per_day
+  era: e7
+  side: ru
+  dist: {type: uniform, min: 10000, max: 44000}
+  unit: rounds_per_day
+  description: Russian artillery rounds per day, Aug 2024 - Mar 2025; Ukrainian official and Western open-source figures disagree sharply.
+  derived_from: [03-0020-01, 03-0029-011, 03-0022-02, 03-0029-014]
+  method: "Syrskyi: more than 44,000 a day in August 2024 (max); West Point MWI open-source estimate: 10,000-15,000 in 2025 (min)."
+
+- key: artillery_rounds_per_day
+  era: e8
+  side: ru
+  dist: {type: uniform, min: 10000, max: 28000}
+  unit: rounds_per_day
+  description: Russian artillery rounds per day in 2025.
+  derived_from: [03-0029-013, 03-0022-01, 03-0022-02, 03-0029-014]
+  method: "Ukrainian official: 27,000-28,000 a day in April-July 2025 (max); MWI open-source: 10,000-15,000 (min)."
+
+- key: artillery_rounds_per_day
+  era: e8
+  side: ua
+  dist: {type: uniform, min: 2000, max: 15000}
+  unit: rounds_per_day
+  description: Ukrainian artillery rounds per day in 2025.
+  derived_from: [03-0022-04, 03-0029-015, 03-0022-01, 03-0029-010]
+  method: "MWI open-source: 2,000-7,000 a day; derived from Ukrainian official figures (27,000 RU at 1:1.8): ~15,000 (max)."
+
+- key: kab_per_day
+  era: e6
+  side: ru
+  dist: {type: triangular, min: 97, mode: 103, max: 109}
+  unit: count_per_day
+  description: Russian guided glide bombs (KAB) dropped per day, front-wide, in the first half of 2024.
+  derived_from: [03-0018-09, 03-0029-042, 03-0018-04, 03-0029-054, 03-0029-040]
+  method: "Derived from Ukrainian Air Force/MoD: 'more than 3,000' a month (97/day), 3,200 in May 2024 (103/day, mode), ~40,000 in 2024 (109/day)."
+
+- key: kab_per_day_axis
+  era: e6
+  side: ru
+  dist: {type: triangular, min: 30, mode: 40, max: 60}
+  unit: count_per_day
+  description: KABs per day on a single main axis (Avdiivka, February 2024).
+  derived_from: [00-0045-01, 00-0074-19, 03-0018-07, 03-0029-041]
+  method: "UK MoD: 30-50 guided munitions a day at Avdiivka; a Ukrainian brigade counted 60 on 17 February 2024 (max)."
+
+- key: kab_per_day
+  era: e7
+  side: ru
+  dist: {type: triangular, min: 100, mode: 109, max: 115}
+  unit: count_per_day
+  description: Russian KABs per day front-wide, Aug 2024 - Mar 2025.
+  derived_from: [03-0018-04, 03-0029-040, 03-0029-054, 03-0018-09, 03-0022-19, 03-0029-043]
+  method: "~40,000 in 2024 (109/day); Zelensky 'up to 100' a day; ~3,500 a month in early 2025 (~115/day, derived)."
+
+- key: kab_per_day
+  era: e8
+  side: ru
+  dist: {type: triangular, min: 115, mode: 130, max: 184}
+  unit: count_per_day
+  description: Russian KABs per day front-wide, Mar 2025 - Jan 2026.
+  derived_from: [03-0022-21, 03-0029-054, 03-0022-20, 03-0029-044, 03-0029-045, 03-0024-12, 03-0024-13, 03-0029-046, 03-0022-22]
+  method: "~44,000 Jan-Nov 2025 (130/day, mode); 5,328 in October 2025 (172/day); ~3,500 in November (~117/day); 5,171-5,700 in January 2026 (167-184/day). HUR's 200-250/day is a plan figure and is not used."
+
+- key: kab_per_day
+  era: e9
+  side: ru
+  dist: {type: triangular, min: 229, mode: 258, max: 283}
+  unit: count_per_day
+  description: Russian KABs per day front-wide, Feb - Aug 2026 (monthly averages; peak day 391).
+  derived_from: [03-0024-15, 03-0029-047, 03-0024-14, 03-0029-048, 03-0024-16, 03-0029-049, 03-0024-17, 03-0029-050, 03-0024-18, 03-0029-051, 03-0024-20, 03-0029-052, 03-0024-21, 03-0029-054, 03-0024-19, 03-0029-055]
+  method: "Derived from Ukrainian Air Force/MoD monthly counts: 6,400 (Feb, 229/day) ... 7,987 (Mar, 258/day, median month) ... 8,766 (Aug, 283/day). Record day: 391 bombs in 127 sorties on 13 June 2026."
+
+# ---------------------------------------------------------------- drones
+- key: fpv_success_rate
+  era: e6
+  side: ua
+  dist: {type: uniform, min: 20, max: 40}
+  unit: percent
+  description: Share of Ukrainian FPVs that reach their target, 2023-24.
+  derived_from: [05-0019-07, 00-0044-03]
+  method: "RUSI: 60-80% of FPVs failed to reach the target, i.e. 20-40% succeed."
+
+- key: fpv_success_rate
+  era: e7
+  side: ua
+  dist: {type: uniform, min: 20, max: 40}
+  unit: percent
+  description: Share of Ukrainian FPVs that reach their target, 2024 - Feb 2025 (mixed EW conditions, no terminal guidance).
+  derived_from: [01-0004-10, 01-0029-17, 04-0033-27, 05-0031-14, 03-0020-07, 02-0025-06, 02-0031-24]
+  method: "RUSI fieldwork (2024, Feb 2025): 60-80% fail to reach the target."
+
+- key: fpv_success_rate_jammed_no_terminal_guidance
+  era: e7
+  dist: {type: uniform, min: 10, max: 15}
+  unit: percent
+  description: FPV mission success under jamming without autonomous terminal guidance.
+  derived_from: [01-0020-07, 01-0029-18, 01-0027-17]
+  method: "CSIS (early 2025): 10-15% under jamming."
+
+- key: fpv_success_rate_jammed_terminal_guidance
+  era: e7
+  dist: {type: uniform, min: 70, max: 80}
+  unit: percent
+  description: FPV mission success under jamming with autonomous (AI) terminal guidance.
+  derived_from: [01-0020-08, 01-0029-18, 01-0027-21]
+  method: "CSIS (early 2025): 70-80% with autonomous terminal navigation (maker-type claims relayed by CSIS)."
+
+- key: fpvs_per_target
+  era: e7
+  dist:
+    type: table
+    table:
+      - {guidance: none, min: 8, max: 9}
+      - {guidance: autonomous_terminal, min: 1, max: 2}
+  unit: count
+  description: FPVs needed per target under jamming, with and without terminal guidance.
+  derived_from: [01-0020-09, 01-0029-19]
+  method: "CSIS: one or two terminally guided FPVs do the work of eight or nine."
+
+- key: fpvs_per_aps_tank_kill
+  era: e9
+  side: ua
+  dist:
+    type: table
+    table: {to_exhaust_aps: 7, to_kill_min: 15, to_kill_max: 20}
+  unit: count
+  description: FPVs needed against an Arena-M-protected Russian tank (July 2026).
+  derived_from: [02-0010-135, 02-0029-57, 02-0031-65, 04-0027-36, 04-0030-26]
+  method: "02/04: 7 drones empty the APS, 15-20 FPVs in all to kill."
+
+- key: fibre_fpv_share
+  era: e9
+  side: ru
+  dist: {type: point, value: 60}
+  unit: percent
+  description: Fibre-optic share of Russian FPVs in key sectors, 2026.
+  derived_from: [01-0024-19, 01-0029-27, 05-0034-20]
+  method: "Frontelligence Insight (Tatarigami): about 60%."
+
+- key: fibre_fpv_share
+  era: e9
+  side: ua
+  dist:
+    type: table
+    table:
+      - {period: "early 2026", value: 20}
+      - {period: "2026-09", value: 70}
+  unit: percent
+  description: Fibre-optic share of Ukrainian National Guard drones during 2026.
+  derived_from: [01-0024-21, 02-0010-119, 02-0029-55, 02-0031-32]
+  method: "National Guard raised its fibre share from about 20% to 70% by September 2026."
+
+- key: drone_share_of_casualties
+  era: e8
+  dist: {type: uniform, min: 70, max: 80}
+  unit: percent
+  description: Share of killed and wounded caused by drones in 2025.
+  derived_from: [01-0005-01, 01-0029-21, 03-0029-020]
+  method: "Ukrainian officials: 70-80% of Russian casualties; 03: 70-80% on both sides."
+
+- key: drone_share_of_casualties
+  era: e9
+  dist: {type: uniform, min: 70, max: 80}
+  unit: percent
+  description: Share of killed, wounded and damage caused by drones in 2026.
+  derived_from: [03-0004-12, 01-0024-29, 01-0029-22, 05-0025-52]
+  method: "Latvian intelligence: 70-80% of all killed and wounded on both sides by early 2026; Lasiichuk (7th Air Assault Corps, July 2026): 70-80% of damage."
+
+- key: drone_share_of_equipment_losses
+  era: e6
+  side: ru
+  dist: {type: uniform, min: 60, max: 70}
+  unit: percent
+  description: Share of damaged or destroyed Russian systems hit by Ukrainian tactical UAVs, 2023-24.
+  derived_from: [05-0019-06, 00-0044-03, 00-0074-29, 01-0004-09, 01-0029-16, 03-0004-11, 04-0033-26]
+  method: "RUSI fieldwork: 60-70%."
+
+- key: drone_share_of_equipment_losses
+  era: e7
+  side: ru
+  dist: {type: uniform, min: 60, max: 70}
+  unit: percent
+  description: Share of damaged or destroyed Russian systems hit by Ukrainian tactical UAVs, Aug 2024 - Mar 2025.
+  derived_from: [03-0020-07, 03-0029-036, 04-0005-11, 02-0031-25]
+  method: "RUSI (Feb 2025): 60-70%."
+
+- key: drone_share_of_equipment_losses
+  era: e8
+  side: ru
+  dist: {type: uniform, min: 60, max: 80}
+  unit: percent
+  description: Share of Russian targets destroyed that were hit by Ukrainian drones in 2025.
+  derived_from: [03-0022-17, 03-0029-021, 02-0031-25]
+  method: "RUSI: 60-70% (to Feb 2025, min); Ukrainian MoD: more than 80% of enemy targets destroyed in 2025 (819,737 video-confirmed hits), taken as max."
+
+- key: drone_loss_rate
+  era: e1
+  side: ua
+  dist: {type: point, value: 90}
+  unit: percent
+  description: Share of Ukrainian UAVs employed that were lost in the invasion phase (dense Russian EW).
+  derived_from: [01-0008-07, 02-0013-01, 01-0029-01, 00-0019-02, 02-0003-02]
+  method: "RUSI: about 90% lost in 2022."
+
+- key: uav_life_expectancy
+  era: e1
+  side: ua
+  dist:
+    type: table
+    table: {quadcopter_flights: 3, fixed_wing_flights: 6}
+  unit: count
+  description: Flights a Ukrainian UAV survived in early 2022.
+  derived_from: [01-0008-08, 01-0029-02, 03-0010-10]
+  method: "RUSI: a quadcopter lasted about 3 flights and a fixed-wing about 6."
+
+- key: uav_life_expectancy
+  era: e9
+  dist:
+    type: table
+    table: {heavy_bomber_sorties: 12}
+  unit: count
+  description: Sorties a heavy bomber multicopter (Vampire class) flies before loss, 2026.
+  derived_from: [01-0024-67, 01-0029-41, 01-0027-25]
+  method: "01: about a dozen sorties, 3-4 grenades each."
+
+- key: ru_ew_density
+  era: e2
+  side: ru
+  dist: {type: point, value: 0.5}
+  unit: per_km
+  description: Russian EW complexes per km of front in 2022 (upper figure).
+  derived_from: [03-0010-07]
+  method: "RUSI: up to 10 EW complexes per 20 km of front."
+
+- key: ru_ew_density
+  era: e4
+  side: ru
+  dist: {type: point, value: 0.1}
+  unit: per_km
+  description: Major Russian EW systems per km of front, Bakhmut period and 2023, sited about 7 km behind the line.
+  derived_from: [01-0014-01, 01-0029-10, 05-0015-03, 05-0031-09, 02-0019-01, 02-0005-02]
+  method: "RUSI: at least one major EW system per 10 km of front, about 7 km back."
+
+# ---------------------------------------------------------------- ground combat
+- key: assault_group_size
+  era: e4
+  side: ru
+  dist: {type: uniform, min: 2, max: 5}
+  unit: people
+  description: Russian disposable assault fire team at Bakhmut (up to 5 teams on one axis; organised in companies of ~60, later platoons of ~15).
+  derived_from: [04-0017-04, 04-0017-03, 04-0030-07, 04-0033-10]
+  method: "04: fire teams of 2-5 convicts or mobilised men sent in succession."
+
+- key: assault_group_size
+  era: e6
+  side: ru
+  dist: {type: uniform, min: 2, max: 5}
+  unit: people
+  description: Russian assault element in the Avdiivka era; disposable fire teams, shifting to 2-4 person infiltration from mid-2024.
+  derived_from: [04-0030-07, 04-0033-10, 04-0005-12]
+  method: "04: disposable fire teams of 2-5 (tactic listed for e4, e6); infiltration groups of 2-4 from mid-2024."
+
+- key: assault_group_size
+  era: e7
+  side: ru
+  dist: {type: triangular, min: 2, mode: 8, max: 30}
+  unit: people
+  description: Russian assault group, Aug 2024 - Mar 2025; section probes, sometimes with 1-2 IFVs, alongside 2-4 person infiltration.
+  derived_from: [04-0023-15, 04-0030-29, 04-0005-12]
+  method: "04: recon-by-fire section probes of about 8, up to 30 with 1-2 IFVs; 2-4 soldier infiltration groups."
+
+- key: assault_group_size
+  era: e8
+  side: ru
+  dist: {type: triangular, min: 1, mode: 3, max: 5}
+  unit: people
+  description: Russian infiltration assault group creeping along treelines, 2025.
+  derived_from: [05-0023-05, 05-0005-07, 05-0028-15, 04-0025-01, 04-0033-36, 04-0030-33]
+  method: "Kyiv Independent: 1-5 people; Peaky Blinders unit: groups of three at Pokrovsk, 'expecting two will be destroyed'; 04: 2-4."
+
+- key: assault_group_size
+  era: e9
+  side: ru
+  dist: {type: uniform, min: 2, max: 6}
+  unit: people
+  description: Russian infiltration group in 2026, walking 15-20 km to reach positions.
+  derived_from: [04-0027-31, 04-0030-33]
+  method: "04: groups of two to six (2026); small-group infiltration of 2-4 (e8, e9)."
+
+- key: motorcycle_assault_group_size
+  era: e7
+  side: ru
+  dist: {type: uniform, min: 12, max: 100}
+  unit: people
+  description: Russian motorcycle/buggy/ATV rush group, formally adopted by mid-2024.
+  derived_from: [04-0023-24, 04-0030-27]
+  method: "04: 'a dozen to a hundred riders'."
+
+- key: motorcycle_assault_group_size
+  era: e8
+  side: ru
+  dist: {type: uniform, min: 6, max: 16}
+  unit: people
+  description: Russian motorcycle assault group in 2025 (6-8 bikes with 2-3 EW sets; also used for resupply and casevac).
+  derived_from: [05-0023-06]
+  method: "Frontelligence: 6-8 bikes, 6-16 troops."
+
+- key: assault_group_size
+  era: e7
+  side: ua
+  dist: {type: uniform, min: 2, max: 20}
+  unit: people
+  description: Ukrainian assault detachment size, 2024-25.
+  derived_from: [05-0021-07, 05-0005-07, 04-0023-25]
+  method: "RUSI: detachments 'rarely operate in groups above 20 personnel' (max); min is the 2-3 person fire team of the same period."
+
+- key: position_team_size
+  era: e7
+  side: ua
+  dist: {type: uniform, min: 2, max: 3}
+  unit: people
+  description: Ukrainian drone-first sparse defence, soldiers per position (positions about 50 m apart, a section covering 70-200 m of front).
+  derived_from: [04-0023-25, 04-0033-25, 04-0005-13, 04-0030-39]
+  method: "04: fire teams of 2-3 per position about 50 m apart."
+
+- key: position_team_size
+  era: e8
+  side: ua
+  dist: {type: uniform, min: 2, max: 3}
+  unit: people
+  description: Ukrainian soldiers per forward position in 2025.
+  derived_from: [04-0005-13, 04-0030-39]
+  method: "04: drone-first posture with 2-3 person teams (e7-e9)."
+
+- key: position_team_size
+  era: e9
+  side: ua
+  dist: {type: uniform, min: 2, max: 3}
+  unit: people
+  description: Ukrainian soldiers per forward position in 2026.
+  derived_from: [04-0005-13, 04-0030-39]
+  method: "04: drone-first posture with 2-3 person teams (e7-e9)."
+
+- key: section_frontage
+  era: e7
+  side: ua
+  dist: {type: uniform, min: 70, max: 200}
+  unit: m
+  description: Front held by one Ukrainian infantry section.
+  derived_from: [04-0023-25, 04-0033-25]
+  method: "04: a section covers 70-200 m of front."
+
+- key: unit_rotation_loss_threshold
+  era: e7
+  side: ru
+  dist: {type: point, value: 30}
+  unit: percent
+  description: Losses at which a Russian assault unit is rotated out (e7-e8 section-probe practice).
+  derived_from: [04-0023-17, 04-0030-29]
+  method: "04: units rotate out at about 30% losses."
+
+- key: assault_casualty_share
+  era: e8
+  side: ua
+  dist:
+    type: table
+    table:
+      - {attack: coordinated_seven_phase, min: 5, max: 10}
+      - {attack: uncoordinated, value: 50}
+  unit: percent
+  description: Casualties taken by Ukrainian attacking units; good units attack in seven phases over 5-10 days.
+  derived_from: [05-0023-10]
+  method: "RUSI (combined arms, 2025): 5-10% for well-built attacks vs about 50% for uncoordinated ones."
+
+- key: rear_casualty_share
+  era: e7
+  side: ua
+  dist: {type: point, value: 50}
+  unit: percent
+  description: Share of Ukrainian brigade casualties taken in the rear, during rotation and resupply.
+  derived_from: [05-0021-03, 05-0028-13, 05-0031-13, 01-0018-20]
+  method: "RUSI: about 50%."
+
+- key: advance_rate
+  era: e2
+  side: ru
+  dist: {type: uniform, min: 15.9, max: 75.6}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day, Donbas artillery era.
+  derived_from: [07-0028-01, 07-0028-02]
+  method: "Derived from DeepStateMap-version differencing: 4,614 km2 in May-June 2022 (75.6/day) and 1,461 km2 in July-September (15.9/day)."
+
+- key: advance_rate
+  era: e3
+  side: ru
+  dist: {type: uniform, min: 7.0, max: 15.9}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day during the 2022 Ukrainian counteroffensives.
+  derived_from: [07-0028-02, 07-0028-03]
+  method: "Derived from DeepStateMap differencing: 1,461 km2 in Jul-Sep 2022 (15.9/day), 643 km2 in Oct-Dec (7.0/day)."
+
+- key: advance_rate
+  era: e4
+  side: ru
+  dist: {type: triangular, min: 0.85, mode: 5.87, max: 6.99}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day, Bakhmut era.
+  derived_from: [07-0028-03, 07-0028-04, 07-0028-05]
+  method: "Derived from DeepStateMap quarterly gross gains: Q4 2022 7.0/day, Q1 2023 5.87/day (mode), Q2 2023 0.85/day."
+
+- key: advance_rate
+  era: e5
+  side: ru
+  dist: {type: triangular, min: 0.85, mode: 1.5, max: 1.7}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day, 2023 counteroffensive era.
+  derived_from: [07-0028-05, 07-0028-06, 07-0028-07]
+  method: "Derived from DeepStateMap quarterly gross gains: Q2 0.85, Q3 1.50 (mode), Q4 1.70 km2/day."
+
+- key: advance_rate
+  era: e6
+  side: ru
+  dist: {type: triangular, min: 1.7, mode: 5.81, max: 9.81}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day, Avdiivka attrition era.
+  derived_from: [07-0028-07, 07-0028-08, 07-0028-09, 07-0028-39, 07-0028-10]
+  method: "Derived from DeepStateMap: Q4 2023 1.70, Q1 2024 2.32, Q2 2024 5.96, July 2024 5.81 (median, mode), May 2024 Vovchansk push 9.81 km2/day (max)."
+
+- key: advance_rate
+  era: e7
+  side: ru
+  dist: {type: triangular, min: 4.58, mode: 12.27, max: 24.27}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day, Kursk-Pokrovsk era.
+  derived_from: [07-0028-11, 07-0028-12, 07-0028-13, 07-0028-14, 07-0028-15, 07-0028-16, 07-0028-17, 07-0028-18, 00-0048-04, 03-0024-09]
+  method: "Derived from DeepStateMap monthly gross gains Aug 2024 - Mar 2025: min March 2025 (4.58/day), median 12.27, max November 2024 (24.27/day; DeepState's own 'up to 20 km2 a day')."
+
+- key: advance_rate
+  era: e8
+  side: ru
+  dist: {type: triangular, min: 4.58, mode: 14.23, max: 18.33}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day, drone kill-zone era.
+  derived_from: [07-0028-18, 07-0028-19, 07-0028-20, 07-0028-21, 07-0028-22, 07-0028-23, 07-0028-24, 07-0028-25, 07-0028-26, 07-0028-27, 07-0028-28, 00-0055-02, 00-0058-03, 03-0024-09]
+  method: "Derived from DeepStateMap monthly gross gains Mar 2025 - Jan 2026: min March (4.58), median 14.23, max June 2025 (18.33 km2/day). Annual 2025: 4,336 (DeepState) - 4,831 (CSIS) km2 = 11.9-13.2/day."
+
+- key: advance_rate
+  era: e9
+  side: ru
+  dist: {type: triangular, min: 2.52, mode: 4.65, max: 6.48}
+  unit: km2_per_day
+  description: Russian gross territorial gain per day, 2026 counteroffensive era (Russian net gains near zero).
+  derived_from: [07-0028-29, 07-0028-30, 07-0028-31, 07-0028-32, 07-0028-33, 07-0028-34, 07-0028-35, 07-0028-36, 03-0024-09, 00-0063-03]
+  method: "Derived from DeepStateMap monthly gross gains Feb - 27 Sep 2026: min May (2.52), median 4.65, max March (6.48 km2/day). 03: 2.9/day Jan-Apr 2026 excluding infiltrated areas."
+
+- key: advance_rate
+  era: e3
+  side: ua
+  dist: {type: uniform, min: 80.0, max: 122.9}
+  unit: km2_per_day
+  description: Ukrainian gross recapture per day during the 2022 counteroffensives (Kharkiv, Kherson).
+  derived_from: [07-0028-02, 07-0028-03]
+  method: "Derived from DeepStateMap differencing: 11,304 km2 recaptured Jul-Sep 2022 (122.9/day), 7,361 km2 Oct-Dec (80.0/day)."
+
+- key: advance_rate
+  era: e5
+  side: ua
+  dist: {type: uniform, min: 3.2, max: 3.85}
+  unit: km2_per_day
+  description: Ukrainian gross recapture per day during the 2023 counteroffensive.
+  derived_from: [07-0028-05, 07-0028-06]
+  method: "Derived from DeepStateMap: 350 km2 in Q2 2023, 294 km2 in Q3."
+
+- key: advance_rate
+  era: e9
+  side: ua
+  dist: {type: triangular, min: 0.07, mode: 1.7, max: 4.1}
+  unit: km2_per_day
+  description: Ukrainian gross recapture per day in 2026 (monthly averages; short spikes far higher).
+  derived_from: [07-0028-29, 07-0028-30, 07-0028-31, 07-0028-32, 07-0028-33, 07-0028-34, 07-0028-35, 07-0028-36, 05-0025-21, 05-0025-22]
+  method: "Derived from DeepStateMap monthly recaptures Feb - Sep 2026: min June (0.07), median 1.7, max August (4.1 km2/day). Atlantic Council/ISW: 200-201 km2 in the first 5-7 days after the Starlink cut-off (a spike DeepState's February total of 48 km2 does not show; unresolved)."
+
+- key: advance_rate_linear
+  era: e8
+  side: ru
+  dist: {type: uniform, min: 0.07, max: 0.297}
+  unit: km_per_day
+  description: Russian linear rate of advance on main axes in 2025.
+  derived_from: [04-0025-07, 04-0033-37, 00-0043-03]
+  method: "CSIS: about 70 m/day at Pokrovsk to about 297 m/day at Huliaipole."
+
+- key: casualties_per_km2
+  era: e7
+  side: ru
+  dist: {type: point, value: 53}
+  unit: casualties_per_km2
+  description: Russian casualties per km2 gained, autumn 2024.
+  derived_from: [00-0009-05, 00-0050-03, 00-0074-28, 04-0027-76, 04-0033-58]
+  method: "ISW: 53 for September-November 2024."
+
+- key: casualties_per_km2
+  era: e8
+  side: ru
+  dist: {type: point, value: 85}
+  unit: casualties_per_km2
+  description: Russian casualties per km2 gained in 2025.
+  derived_from: [00-0009-05, 00-0058-04, 00-0074-28, 04-0027-75, 04-0033-58]
+  method: "Radio Svoboda from General Staff and DeepState data: 85 in 2025."
+
+- key: casualties_per_km2
+  era: e9
+  side: ru
+  dist: {type: point, value: 290}
+  unit: casualties_per_km2
+  description: Russian casualties per km2 gained in 2026.
+  derived_from: [00-0066-06, 00-0077-27, 00-0009-05, 04-0027-75, 04-0033-58]
+  method: "Radio Svoboda / General Staff: about 290 per km2 (February-June 2026)."
+
+- key: casualties_per_month
+  era: e7
+  side: ru
+  dist: {type: uniform, min: 36500, max: 45000}
+  unit: count_per_month
+  description: Russian casualties (killed and wounded) per month, late 2024.
+  derived_from: [00-0050-02, 04-0033-22, 00-0074-27, 04-0023-23]
+  method: "1,200+ casualties a day in late 2024 (~36,500/month, derived); Ukrainian General Staff: over 45,000 in November 2024."
+
+- key: casualties_per_month
+  era: e8
+  side: ru
+  dist: {type: point, value: 35000}
+  unit: count_per_month
+  description: Russian casualties per month in 2025.
+  derived_from: [04-0025-36, 04-0033-40]
+  method: "CSIS: about 415,000 in 2025, ~35,000 a month."
+
+- key: casualties_per_month
+  era: e9
+  side: ru
+  dist: {type: uniform, min: 32000, max: 32800}
+  unit: count_per_month
+  description: Russian casualties per month in H1 2026.
+  derived_from: [04-0027-74, 00-0066-06, 00-0074-55, 00-0077-27]
+  method: "Syrskyi: ~32,000; General Staff: ~32,800 (February-June 2026)."
+
+- key: kia_wia_ratio
+  era: e2
+  side: ru
+  dist: {type: point, value: 0.333}
+  unit: ratio
+  description: Russian killed-to-wounded ratio in 2022.
+  derived_from: [04-0033-84]
+  method: "Analyst estimate from General Staff data: about 1:3 in 2022."
+
+- key: kia_wia_ratio
+  era: e8
+  side: ru
+  dist: {type: point, value: 0.77}
+  unit: ratio
+  description: Russian killed-to-wounded ratio in 2025 (drones and casevac collapse raise lethality).
+  derived_from: [04-0033-84]
+  method: "Analyst estimate from General Staff data: about 1:1.3 in 2025."
+
+- key: kia_wia_ratio
+  era: e9
+  side: ru
+  dist: {type: point, value: 2.0}
+  unit: ratio
+  description: Russian killed-to-wounded ratio projected for 2026.
+  derived_from: [04-0033-84]
+  method: "Analyst projection from General Staff data: 2:1 in 2026 (a projection, not a count)."
+
+# ---------------------------------------------------------------- sustainment
+- key: position_rotation_days
+  era: e6
+  side: ua
+  dist: {type: point, value: 30}
+  unit: day
+  description: Minimum interval between Ukrainian rotations in e6 (rotations at night and in bad weather, more than a month apart).
+  derived_from: [05-0028-11]
+  method: "RUSI: rotations more than a month apart; 30 days is the claimed floor, no upper figure given."
+
+- key: position_rotation_days
+  era: e7
+  side: ua
+  dist: {type: point, value: 30}
+  unit: day
+  description: Minimum interval between Ukrainian rotations in 2024-25; resupply timed to conditions rather than consumption.
+  derived_from: [05-0021-04, 04-0023-32]
+  method: "RUSI: units rotated less than once a month; 30 days is the claimed floor."
+
+- key: position_rotation_days
+  era: e8
+  side: ua
+  dist: {type: triangular, min: 30, mode: 30, max: 502}
+  unit: day
+  description: Time Ukrainian soldiers are held on position before rotation, 2025 - Jan 2026; the upper tail is the extreme reported case.
+  derived_from: [04-0030-51, 04-0027-49, 04-0033-64, 04-0023-32]
+  method: "04: held on position for more than a month (min, mode), sometimes over 500 days; the ombudsperson's longest case is 502 days (max)."
+
+- key: position_rotation_days
+  era: e9
+  side: ua
+  dist: {type: uniform, min: 30, max: 60}
+  unit: day
+  description: Time on position after Syrskyi's rotation cap (April 2026), applied 'whenever operationally possible'.
+  derived_from: [04-0027-50, 04-0033-65, 04-0027-51, 04-0033-66, 04-0030-51]
+  method: "Syrskyi: cap of 2 months (April 2026), restated in July as rotation at least every 60 days; rotations stay more than a month apart."
+
+- key: casevac_time
+  era: e8
+  side: ua
+  dist:
+    type: table
+    table:
+      - {leg: ugv_rendezvous_to_medical_post, min_h: 2, max_h: 3}
+      - {leg: wounding_to_evacuation, text: "hours to days"}
+  unit: h
+  description: Ukrainian casualty evacuation times in 2025; armoured casevac is 'practically impossible', so the golden hour is gone.
+  derived_from: [05-0025-74, 04-0033-77, 04-0025-20]
+  method: "RUSI: 2-3 hours at night from UGV rendezvous to medical post; 04: wounding to evacuation took hours to days. No numeric bound for 'days'."
+
+- key: casevac_time
+  era: e9
+  side: ua
+  dist:
+    type: table
+    table:
+      - {leg: wounding_to_evacuation, text: "hours to weeks, sometimes months"}
+  unit: h
+  description: Ukrainian casualty evacuation times in 2026.
+  derived_from: [04-0005-14, 04-0027-52, 04-0033-78]
+  method: "04: evacuation takes hours to weeks; wounded can wait 'days, weeks, and sometimes months'. No numeric distribution is claimed."
+
+- key: casevac_distance
+  era: e8
+  side: ua
+  dist: {type: uniform, min: 1, max: 5}
+  unit: km
+  description: Length of a Ukrainian UGV casevac leg (at night, to medical posts 7+ km back).
+  derived_from: [04-0025-19, 04-0033-70, 05-0023-09, 05-0028-15, 04-0030-49]
+  method: "04: UGVs evacuate wounded over 1-3 km; RUSI: from 2-5 km out."
+
+- key: foot_approach_distance
+  era: e8
+  side: ua
+  dist: {type: uniform, min: 5, max: 10}
+  unit: km
+  description: Distance Ukrainian troops walk to reach forward positions in 2025.
+  derived_from: [05-0028-15]
+  method: "05 era table: foot movement over 5-10+ km."
+
+- key: foot_approach_distance
+  era: e9
+  side: ua
+  dist: {type: triangular, min: 10, mode: 15, max: 20}
+  unit: km
+  description: Distance Ukrainian troops walk to reach forward positions in 2026 (trips up to 3 days).
+  derived_from: [05-0025-53, 05-0028-18, 05-0031-25, 05-0005-08]
+  method: "107th TDF Brigade commander: from 2 km to 3, 5, 10 and now 15+ km, up to 20 km 'logistically difficult'; 05: the last 10-15+ km on foot."
+
+- key: foot_approach_distance
+  era: e9
+  side: ru
+  dist: {type: uniform, min: 15, max: 20}
+  unit: km
+  description: Distance Russian infiltration groups walk to reach positions in 2026.
+  derived_from: [04-0027-31]
+  method: "04: groups of two to six walk 15-20 km."
+
+- key: ugv_missions_per_month
+  era: e8
+  side: ua
+  dist: {type: point, value: 2900}
+  unit: count_per_month
+  description: Ukrainian UGV missions per month, November 2025 (67 units using UGVs; a floor).
+  derived_from: [05-0023-17, 05-0025-64]
+  method: "Delta data: 2,900+ missions in November 2025."
+
+- key: ugv_missions_per_month
+  era: e9
+  side: ua
+  dist:
+    type: table
+    table:
+      - {month: "2026-01", value: 7511}
+      - {month: "2026-02", value: 7960}
+      - {month: "2026-03", value: 9072}
+      - {month: "2026-04", value: 11028}
+      - {month: "2026-05", value: 14059}
+      - {month: "2026-06", value: 16664}
+      - {month: "2026-07", value: 19940}
+      - {month: "2026-08", value: 25143}
+  unit: count_per_month
+  description: Ukrainian UGV missions per month in 2026, mostly logistics and casevac; interpolate by month.
+  derived_from: [05-0025-64, 01-0024-63, 01-0029-60, 05-0005-19, 05-0031-28, 05-0028-19, 05-0025-65, 05-0031-29]
+  method: "Delta data via 05: monthly counts January-August 2026 (about 112,000 in all; August 3.3x January)."
+
+- key: ugv_lifespan
+  era: e9
+  side: ua
+  dist:
+    type: table
+    table:
+      - {stage: earlier, min: 12, max: 15}
+      - {stage: intermediate, min: 8, max: 9}
+      - {stage: "mid-2026, worst sectors (Kupiansk)", min: 3, max: 4}
+  unit: count
+  description: Missions a Ukrainian UGV survives, falling as Russia hunts them with mines, FPVs and fibre drones.
+  derived_from: [05-0025-71, 05-0031-46, 05-0028-19]
+  method: "Khartia UGV commander: 12-15, then 8-9, now 3-4 missions near Kupiansk."
+
+- key: ugv_casualty_reduction
+  era: e9
+  side: ua
+  dist: {type: uniform, min: 0, max: 30}
+  unit: percent
+  description: Reduction in Ukrainian personnel casualties credited to UGVs.
+  derived_from: [05-0025-69]
+  method: "General Staff: 'up to 30%' fewer casualties; 0 as the lower end since only an upper bound is claimed."
+
+- key: net_build_rate
+  era: e9
+  side: ua
+  dist: {type: point, value: 9.2}
+  unit: km_per_day
+  description: Anti-drone road netting built per day by Ukraine (June 2026); 1,066 km built Jan-Jul 2026, target 4,000 km by end-2026.
+  derived_from: [05-0025-76, 05-0031-31, 04-0027-37, 04-0033-68, 04-0027-38]
+  method: "05: 9.2 km/day in June 2026."
+
+# ---------------------------------------------------------------- manpower
+- key: recruitment_per_month
+  era: e6
+  side: ru
+  dist: {type: uniform, min: 24500, max: 33300}
+  unit: count_per_month
+  description: Russian contract recruits per month in 2024.
+  derived_from: [04-0033-50, 00-0045-03, 04-0007-02, 04-0033-21, 04-0037-05]
+  method: "Derived: 73,366 in Q1 2024 (24,500/month) and 400,000+ in 2024 (33,300/month)."
+
+- key: recruitment_per_month
+  era: e7
+  side: ru
+  dist: {type: uniform, min: 29900, max: 33300}
+  unit: count_per_month
+  description: Russian contract recruits per month, Aug 2024 - Mar 2025.
+  derived_from: [00-0045-03, 04-0007-02, 00-0077-17, 04-0025-33, 04-0033-50]
+  method: "Derived: 400,000+ in 2024 (33,300/month); 89,601 in Q1 2025 (29,900/month, ~975/day)."
+
+- key: recruitment_per_month
+  era: e8
+  side: ru
+  dist: {type: uniform, min: 29900, max: 33600}
+  unit: count_per_month
+  description: Russian contract recruits per month in 2025.
+  derived_from: [00-0057-04, 04-0007-03, 04-0025-34, 04-0033-39, 04-0037-06, 04-0025-33]
+  method: "Derived: HUR 403,000 in 2025 (33,600/month); Q1 2025 89,601 (29,900/month)."
+
+- key: recruitment_per_month
+  era: e9
+  side: ru
+  dist: {type: triangular, min: 23700, mode: 30000, max: 34100}
+  unit: count_per_month
+  description: Russian contract recruits per month in 2026.
+  derived_from: [04-0027-86, 04-0007-04, 04-0033-50, 04-0037-07, 04-0027-87, 04-0007-05, 04-0027-91, 04-0033-52, 00-0057-04, 00-0066-08]
+  method: "Derived: Q1 2026 71,216 (~800/day, 23,700/month, a three-year low); ~1,000/day in April 2026 (30,000/month, mode); HUR's 2026 plan 409,000 (34,100/month); Ukrainian intelligence: ~232,000 Jan-Jul 2026 (33,100-38,700/month depending on 6 or 7 months) against ~240,000 losses."
+
+- key: mobilisation_wave
+  era: e3
+  side: ru
+  dist: {type: point, value: 300000}
+  unit: people
+  description: Russian partial mobilisation of 21 September 2022 (one-off event).
+  derived_from: [00-0028-01, 00-0074-07, 00-0077-05]
+  method: "Target of 300,000."
+
+- key: mobilisation_contingency
+  era: e9
+  side: ru
+  dist:
+    type: table
+    table:
+      - {source: "Ukrainian intelligence, General Staff contingency", per_year: 300000}
+      - {source: "Zelensky warning after Sept 2026 Duma elections", min: 300000, max: 500000}
+  unit: people
+  description: Possible Russian mobilisation event in 2026-27 (Kremlin denies).
+  derived_from: [04-0027-92, 04-0033-53, 04-0037-10, 00-0066-09]
+  method: "Ukrainian intelligence: 300,000 a year in 2026-27; Zelensky: 300,000-500,000."
+
+- key: mobilisation_per_month
+  era: e8
+  side: ua
+  dist: {type: point, value: 30000}
+  unit: count_per_month
+  description: Ukrainian mobilisation per month, about half of what the army says it needs (implying a need of ~60,000).
+  derived_from: [04-0007-07, 04-0033-45]
+  method: "Kostenko (December 2025): about 30,000 a month."
+
+- key: fixed_term_contract_signups_first_month
+  era: e9
+  side: ua
+  dist: {type: point, value: 2000}
+  unit: people
+  description: Ukrainian soldiers signing the June 2026 fixed-term contracts in the first month.
+  derived_from: [04-0007-10, 04-0027-61, 04-0033-46]
+  method: "Syrskyi: about 2,000."
+
+# ---------------------------------------------------------------- Starlink cut-off event (e9)
+- key: starlink_cutoff_effect
+  era: e9
+  side: ru
+  dist: {type: uniform, min: 20, max: 40}
+  unit: percent
+  description: Drop in Russian drone-campaign effectiveness in the two weeks after the February 2026 Starlink whitelist (phased 29 Jan - 5 Feb, then Telegram throttling from 9 Feb). Hits deep (20-200 km) satellite-linked strikes and C2, not fibre or line-of-sight FPVs.
+  derived_from: [01-0024-08, 01-0029-56, 02-0005-18, 02-0010-99, 02-0029-07, 02-0031-48, 05-0025-18, 05-0031-40, 02-0032-06, 01-0024-16, 01-0024-05, 01-0024-07]
+  method: "Biletsky (3rd Army Corps): roughly 20-40% in two weeks, the only measured effect (02). Only a single-digit percentage of Russian drones used Starlink (one engineer's estimate)."
+
+- key: starlink_cutoff_recovery
+  era: e9
+  side: ru
+  dist:
+    type: table
+    table:
+      - {stage: partial_recovery_via_other_links, min_months: 1, max_months: 2}
+      - {stage: c2_recovery, months: 6}
+      - {stage: starlink_level_efficiency, min_months: 36, max_months: 60}
+  unit: month
+  description: Russian recovery time after losing Starlink, by stage.
+  derived_from: [02-0029-08, 05-0025-19, 01-0024-09, 05-0034-12, 02-0010-106]
+  method: "Biletsky: partial recovery within 1-2 months, Starlink-level efficiency not for 3-5 years; a USF brigade commander: about six months for C2."
+
+- key: starlink_cutoff_ua_gain_first_week
+  era: e9
+  side: ua
+  dist: {type: uniform, min: 200, max: 201}
+  unit: km2
+  description: Territory Ukraine regained in the first 5-7 days after the Starlink cut-off (contested figure).
+  derived_from: [05-0025-21, 05-0025-22, 05-0031-22, 02-0029-10, 02-0029-11, 02-0032-05]
+  method: "Atlantic Council: >200 km2 in 5 days; ISW data: 201 km2 in a week; Wikipedia gives only 10-12 km of depth on the southern front (different unit)."
+
+- key: starlink_jamming_packet_loss
+  side: ua
+  dist: {type: uniform, min: 0, max: 35}
+  unit: percent
+  description: Packet loss on Ukrainian Starlink inside a Russian jammer cell (~17 km across); breaks unhardened drone video but is not a blackout.
+  derived_from: [02-0029-27, 02-0031-55, 02-0032-07]
+  method: "Ukrainian satcom engineer: 0-35%; the Russian maker's claim of Starlink 'shut down everywhere' is not used."

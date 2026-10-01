@@ -1,0 +1,40 @@
+{"pair": "c1671ad37f83", "relation": "none", "rationale": "Frame openness by domain vs echelon coding; different facts."}
+{"pair": "c17275c77ec1", "relation": "none", "rationale": "Monochrome legibility vs SIDC encoding; different facts."}
+{"pair": "c1856c548012", "relation": "supports", "from": "claim:c00_0066_04", "to": "claim:c00_0077_30", "strength": 0.6, "rationale": "The Geran-3's retirement in favour of the Geran-4/5 supports the e9 move of the strike arsenal to Geran-4/5; shared CSIS source.", "independent": false}
+{"pair": "c26ee262e6e1", "relation": "supports", "from": "claim:c01_0016_09", "to": "claim:c01_0027_34", "strength": 0.6, "rationale": "The pre-detonating Lancet model underlies B's assessment that nets and cages worked only until then; shared source.", "independent": false}
+{"pair": "c2d76b314898", "relation": "supports", "from": "claim:c03_0027_011", "to": "claim:c03_0004_05", "strength": 0.7, "rationale": "B restates RUSI's judgment that HIMARS/GMLRS ended the 2022 Donbas offensive, adding later EW degradation; same RUSI source.", "independent": false}
+{"pair": "c31bf6c2f321", "relation": "none", "rationale": "Monochrome legibility vs echelon coding; different facts."}
+{"pair": "c341ff9797c2", "relation": "supports", "from": "claim:c01_0022_35", "to": "claim:c01_0027_25", "strength": 0.6, "rationale": "The 2025 appearance of Russian Vampire copies corroborates B's listing of Russian Vampire copies; shared source.", "independent": false}
+{"pair": "c36972fc7e79", "relation": "none", "rationale": "Licence terms vs infiltration layer creation date; different facts."}
+{"pair": "c467f5219b4d", "relation": "none", "rationale": "Wagner's role in taking Bakhmut vs the winter offensive's main axis; related context only."}
+{"pair": "c4de588b3403", "relation": "none", "rationale": "Legend icons vs API/licence; different facts."}
+{"pair": "c5b9493953f4", "relation": "none", "rationale": "2026 shift to jet Gerans vs their speed/range specifications; different assertions."}
+{"pair": "c5d67df638e9", "relation": "duplicates", "from": "claim:c02_0029_17", "to": "claim:c01_0024_17", "strength": 0.85, "rationale": "Same ISW-reported event (Russian fibre FPV at Kharkiv's outskirts on 25 Feb 2026) extracted in topics 01 and 02."}
+{"pair": "c5eb64968405", "relation": "supports", "from": "claim:c03_0004_08", "to": "claim:c03_0005_04", "strength": 0.7, "rationale": "UMPK stand-off strikes from 30-90 km outside SAM coverage are the mechanism of RUSI's \"teeth without air superiority\" judgment; same report.", "independent": false}
+{"pair": "c611d3c3132b", "relation": "none", "rationale": "Developer vs misuse of footage; different facts."}
+{"pair": "c65766b8ce3d", "relation": "duplicates", "from": "claim:c03_0024_55", "to": "claim:c02_0029_49", "strength": 0.9, "rationale": "Same Ihnat statement on jet Gerans and interceptors from the same source, extracted in topics 02 and 03."}
+{"pair": "c65925c5d963", "relation": "none", "rationale": "Service history vs EW vulnerability; different assertions."}
+{"pair": "c69c8f9cf3b4", "relation": "none", "rationale": "Posting channels vs legend description; different facts."}
+{"pair": "c7445a8ddeec", "relation": "none", "rationale": "Developer fact vs a naming note about an unrelated board game."}
+{"pair": "c76ef08cae04", "relation": "none", "rationale": "Daily orbit count vs interceptor attrition; different assertions."}
+{"pair": "c790a21ac423", "relation": "supports", "from": "claim:c00_0043_04", "to": "claim:c00_0042_03", "strength": 0.6, "rationale": "The offensive stalling at about 10 km depth corroborates that the 2024 Kharkiv/Vovchansk push was contained.", "independent": true}
+{"pair": "c7b198b3662a", "relation": "duplicates", "from": "claim:c02_0010_63", "to": "claim:c01_0020_12", "strength": 0.95, "rationale": "Same RUSI figure (1,000-1,500 Orlan/Zala orbits a day, August 2024) extracted in topics 01 and 02."}
+{"pair": "c8ae33cceb6b", "relation": "duplicates", "from": "claim:c03_0020_16", "to": "claim:c01_0020_13", "strength": 0.85, "rationale": "Same RUSI assessment (interceptor UAVs wearing down Orlan/Zala) extracted in topics 01 and 03."}
+{"pair": "c9178759d97a", "relation": "refines", "from": "claim:c02_0027_01", "to": "claim:c02_0036_02", "strength": 0.7, "rationale": "A gives the element counts and date (12 on UMPK in April 2025, 16 on Shahed/Iskander-K) behind B's general statement."}
+{"pair": "c94a245d0881", "relation": "supports", "from": "claim:c01_0022_27", "to": "claim:c01_0027_43", "strength": 0.6, "rationale": "A's 2025 introduction of Geran-3 and late-2025 Geran-4/5 agrees with B's introduction window of Mar 2025-Jan 2026; shared source.", "independent": false}
+{"pair": "c99b1a508d86", "relation": "supports", "from": "claim:c03_0014_04", "to": "claim:c03_0031_02", "strength": 0.5, "rationale": "Orlan-10 orbits per axis plus the artillery UAV complex describe the reconnaissance-fire complex B says Russia moved to; shared RUSI source.", "independent": false}
+{"pair": "ca456142b3bf", "relation": "supports", "from": "claim:c03_0024_48", "to": "claim:c00_0065_04", "strength": 0.5, "rationale": "Heavy Gulf Patriot consumption in the Iran war corroborates the Iran-war squeeze on Patriot supply A describes.", "independent": true}
+{"pair": "ca9970c6525c", "relation": "none", "rationale": "Map description vs reuse terms; different facts."}
+{"pair": "cb447624abed", "relation": "refines", "from": "claim:c03_0010_12", "to": "claim:c03_0004_05", "strength": 0.6, "rationale": "B is a fuller version of RUSI's judgment, adding systematic strikes on rail-mapped depots from late June 2022."}
+{"pair": "cb52935935d5", "relation": "none", "rationale": "Force concentration vs preceding interdiction and weather; different facts about Huliaipole."}
+{"pair": "cc57f09b1e2b", "relation": "none", "rationale": "Unknown frame rule vs symbol anatomy; different facts."}
+{"pair": "cc8f1ca65d9c", "relation": "supports", "from": "claim:c01_0022_40", "to": "claim:c08_0008_31", "strength": 0.9, "rationale": "Both describe the Army of Drones Bonus: units upload verified hits to DELTA and spend e-points on Brave1 Market; United24 is a state outlet relaying the ministry.", "independent": false}
+{"pair": "cd68474b02c1", "relation": "none", "rationale": "System description vs operational effect assessment."}
+{"pair": "cdc20ba318d1", "relation": "supports", "from": "claim:c07_0042_10", "to": "claim:c05_0021_13", "strength": 0.7, "rationale": "B's report of Delta linking to TOPAZ at CWIX 2024 corroborates A's statement that Delta is being linked to TOPAZ.", "independent": true}
+{"pair": "ce368d70e1a6", "relation": "none", "rationale": "Interceptor attrition vs ISR organization; different assertions."}
+{"pair": "ce6f921f1bd6", "relation": "refines", "from": "claim:c02_0029_14", "to": "claim:c02_0036_04", "strength": 0.6, "rationale": "A names the specific XK-F358 modem, its cost and the Geran-5/Gerbera platforms behind B's general mesh-control claim."}
+{"pair": "ceba402dc072", "relation": "none", "rationale": "Symbol anatomy vs echelon coding; different facts."}
+{"pair": "cf4ad184b23f", "relation": "none", "rationale": "Era summary vs CSIS advance-rate figures; neither implies the other."}
+{"pair": "cf755530d59d", "relation": "supports", "from": "claim:c07_0039_04", "to": "claim:c07_0039_10", "strength": 0.6, "rationale": "Double encoding of affiliation by frame and colour is the premise of B's monochrome-legibility point; same source.", "independent": false}
+{"pair": "d08a8f2bcda2", "relation": "none", "rationale": "US share of its own stock vs Gulf rounds and global share; different scopes."}
+{"pair": "d13095e9fb3c", "relation": "refines", "from": "claim:c04_0027_04", "to": "claim:c04_0006_02", "strength": 0.6, "rationale": "B specifies the units leading the 2026 southern counteroffensive A describes; same source."}

@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 03 — Fires and air: artillery, glide bombs, helicopters, aviation, missiles, air defence
 
 Accessed 2026-09-28. Sources are in `sources/03-fires-air.yaml`, cited inline as `[src:<id>]`. The player side is Ukraine. Russian capabilities are described as reported by Ukrainian and Western sources.

@@ -1,0 +1,4700 @@
+# Curated system registry: weapons, platforms, EW, software, comms, fortifications, techniques, programmes.
+# Families and variants are linked by `parent`; vague mentions resolve to entities with note "generic";
+# multi-system counter descriptions are kept as their own entities (note "composite") under their lead system.
+
+- id: system:uav_generic
+  type: system
+  kind: recon_drone
+  en: "drones (generic)"
+  aliases: ["drones", "Ukrainian UAVs", "mass Ukrainian UAV use", "Russian drone dominance near Lyman"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:artillery_generic
+  type: system
+  kind: tube_artillery
+  en: "artillery (generic)"
+  aliases: ["artillery"]
+  sides: ["ua", "ru"]
+  note: "generic: tube and rocket artillery"
+
+- id: system:ew_generic
+  type: system
+  kind: ew_system
+  en: "electronic warfare (generic)"
+  uk: "РЕБ"
+  aliases: ["EW", "electronic warfare", "Russian EW", "Russian jamming", "Ukrainian jamming", "dense Russian EW", "Russian 'hard counters' (EW)", "EW-based protection against drones", "Russian EW (at least one major system per 10 km of front)", "Ukrainian EW emitters", "Ukrainian EW zones", "Russian EW making Ukrainian bomber-drone use 'binary'"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:air_defence_generic
+  type: system
+  kind: air_defence
+  en: "air defence (generic)"
+  uk: "ППО"
+  aliases: ["Ukrainian air defence", "Russian air defence", "Ukrainian ground-based air defence", "Russian air-defence network", "Ukrainian air-defence interceptor stocks"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:missile_generic
+  type: system
+  kind: missile
+  en: "missiles (generic)"
+  aliases: ["Russian precision missile strikes"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:glide_bomb_generic
+  type: system
+  kind: glide_bomb
+  en: "glide bombs (generic)"
+  aliases: ["glide bombs"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:mine_generic
+  type: system
+  kind: mine
+  en: "mines (generic)"
+  aliases: ["mine", "mines", "minefield", "mines on approaches"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:armour_generic
+  type: system
+  kind: armour
+  en: "armour (generic)"
+  aliases: ["armour"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:sam_generic
+  type: system
+  kind: air_defence
+  en: "surface-to-air missile systems (generic)"
+  aliases: ["surface-to-air missile", "surface-to-air missiles", "Ukrainian SAMs"]
+  parent: system:air_defence_generic
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:atgm_generic
+  type: system
+  kind: missile
+  en: "anti-tank guided missiles (generic)"
+  aliases: []
+  sides: ["ua", "ru"]
+  note: "generic; parent for ATGM types"
+
+- id: system:natural_conditions
+  type: system
+  kind: passive_defence
+  en: "terrain and weather (natural conditions)"
+  aliases: []
+  sides: ["ua", "ru"]
+  note: "generic: natural conditions that act as counters in the counter graph; not a man-made system"
+
+- id: system:terrain_mud
+  type: system
+  kind: passive_defence
+  en: "difficult terrain (mud, craters, rivers)"
+  aliases: ["mud", "mud, craters and rivers"]
+  parent: system:natural_conditions
+  sides: ["ua", "ru"]
+  note: "natural condition; immobilises UGVs"
+
+- id: system:weather_rain_fog
+  type: system
+  kind: passive_defence
+  en: "rain and fog"
+  aliases: ["rain and fog"]
+  parent: system:natural_conditions
+  sides: ["ua", "ru"]
+  note: "natural condition; blinds drones and covers infiltration"
+
+- id: system:shahed_geran_family
+  type: system
+  kind: long_range_drone
+  en: "Shahed / Geran family"
+  uk: "Шахед / Герань"
+  aliases: ["Shahed", "Geran", "Shahed drones", "Shahed-type one-way attack drones", "Shahed/Geran waves", "Shahed campaign"]
+  sides: ["ru", "other"]
+  note: "Iranian-designed one-way attack drone family; Russian production as Geran at Alabuga"
+
+- id: system:geran_1
+  type: system
+  kind: long_range_drone
+  en: "Shahed-131 / Geran-1"
+  aliases: ["Shahed-131"]
+  parent: system:shahed_geran_family
+  sides: ["ru", "other"]
+
+- id: system:geran_2
+  type: system
+  kind: long_range_drone
+  en: "Shahed-136 / Geran-2"
+  uk: "Шахед-136 / Герань-2"
+  aliases: ["Shahed-136", "Geran-2", "massed piston Shaheds"]
+  parent: system:shahed_geran_family
+  sides: ["ru", "other"]
+  note: "piston-engined one-way attack drone; Russian licence production at Alabuga"
+
+- id: system:geran_2_r60
+  type: system
+  kind: long_range_drone
+  en: "R-60-armed Shahed"
+  aliases: ["R-60-armed Shahed"]
+  parent: system:geran_2
+  sides: ["ru"]
+  note: "Geran-2 carrying an R-60 air-to-air missile against helicopters and aircraft"
+
+- id: system:jet_geran
+  type: system
+  kind: long_range_drone
+  en: "jet Gerans (Geran-3/-4/-5)"
+  aliases: ["jet Geran", "jet Gerans", "Jet Gerans (Geran-3/-4/-5)", "Jet Gerans (Geran-3/4/5)", "jet-powered Geran-3/4/5", "jet Gerans on deep-rear raids"]
+  parent: system:shahed_geran_family
+  sides: ["ru"]
+  note: "jet-powered Geran family"
+
+- id: system:geran_3
+  type: system
+  kind: long_range_drone
+  en: "Geran-3"
+  uk: "Герань-3"
+  aliases: ["Geran-3", "Geran-3 jet drone"]
+  parent: system:jet_geran
+  sides: ["ru"]
+  note: "jet Shahed-238 derivative; retired by Aug 2026 in favour of Geran-4/5"
+
+- id: system:geran_4
+  type: system
+  kind: long_range_drone
+  en: "Geran-4"
+  uk: "Герань-4"
+  aliases: ["Geran-4"]
+  parent: system:jet_geran
+  sides: ["ru"]
+
+- id: system:geran_5
+  type: system
+  kind: long_range_drone
+  en: "Geran-5"
+  uk: "Герань-5"
+  aliases: ["Geran-5"]
+  parent: system:jet_geran
+  sides: ["ru"]
+
+- id: system:geran_5_optical_terrain_matching
+  type: system
+  kind: drone_component
+  en: "optical terrain matching (Geran-5 'K5')"
+  aliases: ["optical terrain matching (Geran-5 'K5')"]
+  parent: system:geran_5
+  sides: ["ru"]
+
+- id: system:geran_high_altitude_profile
+  type: system
+  kind: technique
+  en: "high-flying Gerans"
+  aliases: ["High-flying Gerans"]
+  parent: system:shahed_geran_family
+  sides: ["ru"]
+  note: "Gerans flown at higher altitude, out of reach of mobile fire groups"
+
+- id: system:shahed_decoy
+  type: system
+  kind: long_range_drone
+  en: "Shahed-type decoy drones"
+  aliases: []
+  sides: ["ru"]
+  note: "decoys mimicking Shahed/Geran signatures"
+
+- id: system:gerbera
+  type: system
+  kind: long_range_drone
+  en: "Gerbera"
+  uk: "Гербера"
+  aliases: ["Gerbera"]
+  parent: system:shahed_decoy
+  sides: ["ru"]
+
+- id: system:parody
+  type: system
+  kind: long_range_drone
+  en: "Parodiya"
+  uk: "Пародія"
+  aliases: ["Parody"]
+  parent: system:shahed_decoy
+  sides: ["ru"]
+
+- id: system:drone_waves_with_decoys
+  type: system
+  kind: technique
+  en: "massed drone waves with decoys"
+  aliases: ["Drone waves and decoys"]
+  sides: ["ru"]
+  note: "waves of 35-40% decoys that map air defence and drain interceptors"
+
+- id: system:shahed_navigation_hardening
+  type: system
+  kind: technique
+  en: "Shahed navigation hardening and EW-avoiding routing"
+  aliases: ["Shahed navigation hardening and waves routed to avoid EW"]
+  parent: system:shahed_geran_family
+  sides: ["ru"]
+
+- id: system:gnss_guided_ru_strike_weapons
+  type: system
+  kind: long_range_drone
+  en: "GNSS-guided Shaheds, missiles and KABs"
+  aliases: ["GNSS-guided Shaheds, missiles and KABs"]
+  sides: ["ru"]
+  note: "composite: Russian GNSS-guided strike weapons as a target class for Pokrova"
+
+- id: system:starlink_ru_strike_drones
+  type: system
+  kind: long_range_drone
+  en: "Starlink-equipped Russian strike drones"
+  aliases: ["Russian Starlink-linked strike drones", "Starlink-equipped Russian strike drones (Shahed, Molniya, BM-35)"]
+  sides: ["ru"]
+  note: "Shahed, Molniya and BM-35 drones fitted with smuggled Starlink (to Feb 2026)"
+
+- id: system:molniya
+  type: system
+  kind: long_range_drone
+  en: "Molniya"
+  uk: "Молнія"
+  aliases: ["Molniya"]
+  sides: ["ru"]
+  note: "plywood fixed-wing strike drone; variants carry an FPV, run on fibre, or carry Starlink; one source calls a powered glide bomb 'Molniya type'"
+
+- id: system:molniya_2
+  type: system
+  kind: long_range_drone
+  en: "Molniya-2"
+  aliases: ["Molniya-2"]
+  parent: system:molniya
+  sides: ["ru"]
+
+- id: system:bm_35
+  type: system
+  kind: long_range_drone
+  en: "BM-35"
+  aliases: ["BM-35"]
+  sides: ["ru"]
+
+- id: system:v2u
+  type: system
+  kind: long_range_drone
+  en: "V2U"
+  aliases: ["V2U"]
+  sides: ["ru"]
+  note: "Russian AI strike drone flying in groups, 4G modem"
+
+- id: system:klin
+  type: system
+  kind: long_range_drone
+  en: "Klin"
+  aliases: ["Klin"]
+  sides: ["ru"]
+
+- id: system:banderol
+  type: system
+  kind: long_range_drone
+  en: "S8000 Banderol"
+  aliases: ["S8000 Banderol"]
+  sides: ["ru"]
+
+- id: system:liutyi
+  type: system
+  kind: long_range_drone
+  en: "Liutyi"
+  uk: "Лютий"
+  aliases: ["Liutyi"]
+  sides: ["ua"]
+
+- id: system:fp_1
+  type: system
+  kind: long_range_drone
+  en: "FP-1"
+  aliases: ["FP-1"]
+  sides: ["ua"]
+  note: "Fire Point long-range strike drone"
+
+- id: system:fp_2
+  type: system
+  kind: long_range_drone
+  en: "FP-2"
+  aliases: ["FP-2"]
+  sides: ["ua"]
+  note: "Fire Point strike drone"
+
+- id: system:drone_strikes_rail_logistics
+  type: system
+  kind: technique
+  en: "drone strikes on rail logistics"
+  aliases: ["Ukrainian drone strikes on Russian rail logistics"]
+  sides: ["ua"]
+
+- id: system:loitering_munition_generic
+  type: system
+  kind: loitering_munition
+  en: "loitering munitions (generic)"
+  aliases: ["loitering munition"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:lancet
+  type: system
+  kind: loitering_munition
+  en: "Lancet"
+  uk: "Ланцет"
+  aliases: ["Lancet", "Lancet loitering munition"]
+  parent: system:loitering_munition_generic
+  sides: ["ru"]
+  note: "ZALA loitering munition family (Izdeliye-51/52)"
+
+- id: system:lancet_3
+  type: system
+  kind: loitering_munition
+  en: "Lancet-3"
+  aliases: ["Lancet-3"]
+  parent: system:lancet
+  sides: ["ru"]
+
+- id: system:lancet_3m
+  type: system
+  kind: loitering_munition
+  en: "Lancet-3M"
+  aliases: ["Lancet-3M"]
+  parent: system:lancet_3
+  sides: ["ru"]
+
+- id: system:lancet_predetonating
+  type: system
+  kind: loitering_munition
+  en: "Lancet with pre-detonating shaped charge"
+  aliases: ["Lancet with pre-detonating shaped charge"]
+  parent: system:lancet
+  sides: ["ru"]
+  note: "counter to cages and nets"
+
+- id: system:izdeliye_53
+  type: system
+  kind: loitering_munition
+  en: "Izdeliye-53"
+  aliases: ["Izdeliye-53"]
+  parent: system:lancet
+  sides: ["ru"]
+  note: "claimed ZALA successor with autonomous and swarm modes"
+
+- id: system:kub
+  type: system
+  kind: loitering_munition
+  en: "KUB-BLA"
+  aliases: ["Kub"]
+  parent: system:loitering_munition_generic
+  sides: ["ru"]
+
+- id: system:hornet
+  type: system
+  kind: loitering_munition
+  en: "Hornet"
+  aliases: ["Hornet", "AI-terminal drones such as the Hornet"]
+  parent: system:loitering_munition_generic
+  sides: ["ua"]
+  note: "AI terminal-guidance strike drone, middle-strike depth to about 150 km"
+
+- id: system:fpv_drone
+  type: system
+  kind: fpv_drone
+  en: "FPV drone"
+  uk: "FPV-дрон"
+  aliases: ["FPV drone", "FPV drones", "FPV", "Russian FPV drone", "Ukrainian FPVs against armour", "Ukrainian FPVs against vehicles", "Ukrainian FPVs against tanks"]
+  parent: system:uav_generic
+  sides: ["ua", "ru"]
+
+- id: system:rf_fpv
+  type: system
+  kind: fpv_drone
+  en: "radio-controlled FPV"
+  aliases: ["RF FPV", "RF FPV drones", "Russian FPVs on 850–930 MHz"]
+  parent: system:fpv_drone
+  sides: ["ua", "ru"]
+  note: "FPV on an RF control and video link, as opposed to fibre"
+
+- id: system:fibre_optic_fpv
+  type: system
+  kind: fpv_drone
+  en: "fibre-optic FPV"
+  uk: "оптоволоконний FPV"
+  aliases: ["fibre-optic FPV", "fibre-optic FPVs", "fiber-optic FPV", "fibre-optic FPVs (National Guard 70%)", "fibre-optic FPV (KVN)", "Russian fibre-optic FPV (KVN)", "Russian fibre-optic FPV supply", "Russian fibre FPVs striking roads 25–30 km deep", "fiber-optic FPV through gaps"]
+  parent: system:fpv_drone
+  sides: ["ua", "ru"]
+  note: "immune to RF jamming ('optovolokno')"
+
+- id: system:longer_range_drones_fibre_fpv
+  type: system
+  kind: fpv_drone
+  en: "longer-range drones and fibre-optic FPVs"
+  aliases: ["longer-range drones and fibre-optic FPVs"]
+  parent: system:fibre_optic_fpv
+  sides: ["ru"]
+  note: "composite: Russian response to big Ukrainian vehicle EW"
+
+- id: system:kvn
+  type: system
+  kind: fpv_drone
+  en: "KVN"
+  aliases: ["KVN"]
+  parent: system:fibre_optic_fpv
+  sides: ["ru"]
+  note: "Russian fibre-optic FPV"
+
+- id: system:kvs
+  type: system
+  kind: fpv_drone
+  en: "KVS"
+  aliases: ["KVS"]
+  parent: system:kvn
+  sides: ["ru"]
+  note: "ring-wing KVN variant, 3 kg to 50 km"
+
+- id: system:silkworm
+  type: system
+  kind: drone_component
+  en: "Silkworm fibre spool"
+  aliases: ["Silkworm"]
+  parent: system:fibre_optic_fpv
+  sides: ["ua"]
+
+- id: system:zhdun
+  type: system
+  kind: fpv_drone
+  en: "waiting ambush drone (zhdun)"
+  uk: "ждун"
+  aliases: ["zhdun", "waiting ambush drones (zhduny) hiding under nets"]
+  parent: system:fpv_drone
+  sides: ["ua", "ru"]
+  note: "drone landed in ambush waiting for a target"
+
+- id: system:ai_terminal_guidance_fpv
+  type: system
+  kind: fpv_drone
+  en: "AI terminal-guidance FPV"
+  aliases: ["AI terminal-guidance FPV"]
+  parent: system:fpv_drone
+  sides: ["ua", "ru"]
+
+- id: system:ew_hunting_fpv
+  type: system
+  kind: fpv_drone
+  en: "EW-hunting FPV"
+  aliases: ["EW-hunting FPV", "EW-hunting FPV with 12-band emitter detector"]
+  parent: system:fpv_drone
+  sides: ["ua"]
+
+- id: system:fpv_saturation
+  type: system
+  kind: technique
+  en: "FPV saturation attacks"
+  aliases: ["FPV saturation", "FPV saturation attacks", "repeated FPV hits"]
+  parent: system:fpv_drone
+  sides: ["ua", "ru"]
+  note: "many FPVs on one target to empty active protection or break cages"
+
+- id: system:fpv_loitering_over_hides
+  type: system
+  kind: technique
+  en: "FPVs loitering over hides"
+  aliases: ["FPVs loitering over hides"]
+  parent: system:fpv_drone
+  sides: ["ru"]
+
+- id: system:drone_hunting_zemledeliye
+  type: system
+  kind: technique
+  en: "FPV and mid-range drone hunting of Zemledeliye launchers"
+  aliases: ["FPV and mid-range drone hunting of Zemledeliye launchers"]
+  sides: ["ua"]
+
+- id: system:ugv_hunting
+  type: system
+  kind: technique
+  en: "drone attacks on UGVs"
+  aliases: ["drones attacking UGVs", "FPV swarms on UGVs"]
+  sides: ["ua", "ru"]
+  note: "drones and FPV swarms hunting ground robots"
+
+- id: system:ugv_hunting_combined
+  type: system
+  kind: technique
+  en: "mines, FPV and fibre drones and UGV-hunting crews"
+  aliases: ["Mines, FPV and fibre-optic drones and dedicated Russian UGV-hunting crews"]
+  parent: system:ugv_hunting
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:drone_interdiction_supply_roads
+  type: system
+  kind: technique
+  en: "drone interdiction of supply roads"
+  aliases: ["FPV strikes on supply roads", "drone strikes on supply roads", "Ukrainian drone strikes on Russian supply routes", "Ukrainian FPVs and bomber drones on Russian supply roads", "Russian FPV interdiction of Ukrainian supply roads (Rubikon)", "Russian drone interdiction of Ukrainian supply roads (Rubikon)"]
+  sides: ["ua", "ru"]
+  note: "FPV and bomber strikes on logistics roads"
+
+- id: system:drone_kill_zone
+  type: system
+  kind: technique
+  en: "drone kill zone"
+  aliases: ["drone kill zone", "Drone kill zone over supply routes"]
+  sides: ["ua", "ru"]
+  note: "15-30 km deep belt in which drones strike anything that moves (2026)"
+
+- id: system:ai_terminal_guidance_module
+  type: system
+  kind: drone_component
+  en: "AI terminal-guidance module"
+  aliases: ["AI terminal guidance for FPVs", "AI targeting kit"]
+  sides: ["ua", "ru"]
+  note: "machine-vision lock-on for the final approach through jamming"
+
+- id: system:zir
+  type: system
+  kind: drone_component
+  en: "ZIR"
+  aliases: ["ZIR"]
+  parent: system:ai_terminal_guidance_module
+  sides: ["ua"]
+  note: "lock-on to 3 km"
+
+- id: system:skynode
+  type: system
+  kind: drone_component
+  en: "Skynode"
+  aliases: ["Skynode"]
+  parent: system:ai_terminal_guidance_module
+  sides: ["ua", "western"]
+  note: "Auterion"
+
+- id: system:tfl_1
+  type: system
+  kind: drone_component
+  en: "TFL-1"
+  aliases: ["TFL-1", "TFL-1 machine-vision terminal guidance"]
+  parent: system:ai_terminal_guidance_module
+  sides: ["ua"]
+
+- id: system:nvidia_jetson
+  type: system
+  kind: drone_component
+  en: "Nvidia Jetson"
+  aliases: ["Nvidia Jetson"]
+  sides: ["ua", "ru"]
+
+- id: system:nvidia_jetson_orin
+  type: system
+  kind: drone_component
+  en: "Nvidia Jetson Orin"
+  aliases: ["Nvidia Jetson Orin"]
+  parent: system:nvidia_jetson
+  sides: ["ua", "ru"]
+
+- id: system:sfp_module
+  type: system
+  kind: drone_component
+  en: "SFP module (fibre-optic FPV)"
+  aliases: ["SFP module"]
+  parent: system:fibre_optic_fpv
+  sides: ["ua", "ru"]
+  note: "rated 0-70 °C; loses 20-50% in icing"
+
+- id: system:max7456
+  type: system
+  kind: drone_component
+  en: "MAX7456 OSD chip"
+  aliases: ["MAX7456"]
+  sides: ["ua", "ru"]
+  note: "analogue OSD chip used by Betaflight"
+
+- id: system:ai_25
+  type: system
+  kind: drone_component
+  en: "AI-25 engine"
+  aliases: ["AI-25"]
+  sides: ["ua"]
+  note: "turbofan; supply bottleneck for Flamingo"
+
+- id: system:angel_arrow
+  type: system
+  kind: fpv_drone
+  en: "Angel Arrow"
+  aliases: ["Angel Arrow"]
+  parent: system:fpv_drone
+  sides: ["ua"]
+  note: "real drone modelled in the UFDS simulator (08-0008-04)"
+
+- id: system:luckystrike
+  type: system
+  kind: fpv_drone
+  en: "LuckyStrike"
+  aliases: ["LuckyStrike"]
+  parent: system:fpv_drone
+  sides: ["ua"]
+  note: "real drone modelled in the UFDS simulator (08-0008-04)"
+
+- id: system:mimic_3t
+  type: system
+  kind: fpv_drone
+  en: "Mimic 3T"
+  aliases: ["Mimic 3T"]
+  parent: system:fpv_drone
+  sides: ["ua"]
+  note: "real drone modelled in the UFDS simulator (08-0008-04)"
+
+- id: system:phantom_fpv
+  type: system
+  kind: fpv_drone
+  en: "Phantom"
+  aliases: ["Phantom"]
+  parent: system:fpv_drone
+  sides: ["ua"]
+  note: "real drone modelled in the UFDS simulator (08-0008-04)"
+
+- id: system:dzhmil
+  type: system
+  kind: fpv_drone
+  en: "Dzhmil"
+  aliases: ["Dzhmil"]
+  parent: system:fpv_drone
+  sides: ["ua"]
+  note: "real drone modelled in the UFDS simulator (08-0008-04)"
+
+- id: system:interceptor_drone
+  type: system
+  kind: interceptor_drone
+  en: "interceptor drone"
+  uk: "дрон-перехоплювач"
+  aliases: ["interceptor drone", "interceptor drones", "Interceptor UAVs", "FPV interceptor drones", "FPV-type interceptor drones", "interceptor drones (Sting and others)", "Russian interceptor drone", "Russian interceptor drones", "Ukrainian interceptor video links"]
+  parent: system:uav_generic
+  sides: ["ua", "ru"]
+
+- id: system:radar_cued_interceptor
+  type: system
+  kind: interceptor_drone
+  en: "radar-cued interceptor UAVs"
+  aliases: ["radar-cued interceptor UAVs"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+
+- id: system:propeller_interceptor
+  type: system
+  kind: interceptor_drone
+  en: "propeller interceptor drone (anti-Shahed)"
+  aliases: ["propeller-driven interceptor drones", "propeller interceptor drone"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+
+- id: system:propeller_interceptors_mfg
+  type: system
+  kind: interceptor_drone
+  en: "propeller interceptors and mobile fire groups"
+  aliases: ["Ukrainian propeller interceptors and mobile fire groups"]
+  parent: system:propeller_interceptor
+  sides: ["ua"]
+  note: "composite:"
+
+- id: system:jet_killer_interceptor
+  type: system
+  kind: interceptor_drone
+  en: "jet-killer interceptors"
+  aliases: ["jet-killer interceptors (Sting 2.0, LITAVR+)"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+  note: "faster interceptors against jet Gerans"
+
+- id: system:sting
+  type: system
+  kind: interceptor_drone
+  en: "Sting"
+  aliases: ["Sting", "Sting interceptor drone"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+  note: "Wild Hornets interceptor; at scale from Apr 2025; first Geran-3 kill Dec 2025"
+
+- id: system:sting_2
+  type: system
+  kind: interceptor_drone
+  en: "Sting 2.0"
+  aliases: ["Sting 2.0"]
+  parent: system:sting
+  sides: ["ua"]
+
+- id: system:litavr_plus
+  type: system
+  kind: interceptor_drone
+  en: "LITAVR+"
+  aliases: ["LITAVR+"]
+  parent: system:jet_killer_interceptor
+  sides: ["ua"]
+
+- id: system:zirka
+  type: system
+  kind: interceptor_drone
+  en: "ZIRKA"
+  aliases: ["ZIRKA"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+  note: "340+ km/h AI interceptor (Jun 2026)"
+
+- id: system:p1_sun
+  type: system
+  kind: interceptor_drone
+  en: "P1-SUN"
+  aliases: ["P1-SUN"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+  note: "SkyFall interceptor"
+
+- id: system:bullet
+  type: system
+  kind: interceptor_drone
+  en: "Bullet"
+  aliases: ["Bullet"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+  note: "General Cherry interceptor"
+
+- id: system:last_shadow_t200
+  type: system
+  kind: interceptor_drone
+  en: "Last Shadow T200"
+  aliases: ["Last Shadow T200", "channel- and band-hopping interceptors (Last Shadow T200)"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+  note: "channel- and band-hopping video link against Shtora"
+
+- id: system:gnss_jamming_and_interceptors
+  type: system
+  kind: gnss_countermeasure
+  en: "GNSS jamming and interceptors against Gerans"
+  aliases: ["Ukrainian GNSS jamming and interceptors against Gerans"]
+  parent: system:gnss_jamming
+  sides: ["ua"]
+  note: "composite:"
+
+- id: system:bomber_drone
+  type: system
+  kind: bomber_drone
+  en: "bomber drone"
+  aliases: ["bomber drone"]
+  parent: system:uav_generic
+  sides: ["ua", "ru"]
+  note: "generic drop-munition drone"
+
+- id: system:heavy_bomber_drone
+  type: system
+  kind: bomber_drone
+  en: "heavy bomber drone ('Baba Yaga')"
+  uk: "Баба-Яга"
+  aliases: ["heavy bomber drone", "Baba Yaga"]
+  parent: system:bomber_drone
+  sides: ["ua", "ru"]
+  note: "heavy multicopter bomber; 'Baba Yaga' is the Russian nickname for the Ukrainian type"
+
+- id: system:agricultural_bomber_drone
+  type: system
+  kind: bomber_drone
+  en: "converted agricultural bomber drone"
+  aliases: ["converted agricultural bomber drone", "Ukrainian converted agricultural bomber drones"]
+  parent: system:heavy_bomber_drone
+  sides: ["ua"]
+
+- id: system:vampire
+  type: system
+  kind: bomber_drone
+  en: "Vampire"
+  uk: "Вампір"
+  aliases: ["Vampire"]
+  parent: system:heavy_bomber_drone
+  sides: ["ua"]
+  note: "SkyFall heavy hexacopter bomber"
+
+- id: system:vampire_ru_copy
+  type: system
+  kind: bomber_drone
+  en: "Russian Vampire copy"
+  aliases: ["Russian Vampire copy"]
+  parent: system:vampire
+  sides: ["ru"]
+
+- id: system:berdysh
+  type: system
+  kind: bomber_drone
+  en: "Berdysh"
+  aliases: ["Berdysh"]
+  parent: system:heavy_bomber_drone
+  sides: ["ru"]
+  note: "Russian Baba Yaga equivalent"
+
+- id: system:kazhan
+  type: system
+  kind: bomber_drone
+  en: "Kazhan"
+  aliases: ["Kazhan"]
+  parent: system:heavy_bomber_drone
+  sides: ["ua"]
+
+- id: system:heavy_bomber_resupply
+  type: system
+  kind: technique
+  en: "heavy bomber-drone resupply"
+  aliases: ["Heavy bomber-drone resupply (Kazhan)"]
+  parent: system:heavy_bomber_drone
+  sides: ["ua"]
+
+- id: system:recon_drone_generic
+  type: system
+  kind: recon_drone
+  en: "reconnaissance drones (generic)"
+  aliases: ["Ukrainian reconnaissance UAVs", "Ukrainian drone surveillance", "Persistent Russian drone surveillance of the rear", "Russian drone ISR over the Lyman axis"]
+  parent: system:uav_generic
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:thermal_camera_drone
+  type: system
+  kind: recon_drone
+  en: "thermal-camera drone"
+  aliases: ["thermal-camera drone", "Ukrainian thermal-camera drones at night"]
+  parent: system:recon_drone_generic
+  sides: ["ua", "ru"]
+
+- id: system:relay_drone
+  type: system
+  kind: recon_drone
+  en: "relay drone"
+  aliases: ["relay drone"]
+  parent: system:uav_generic
+  sides: ["ua", "ru"]
+  note: "airborne radio relay"
+
+- id: system:commercial_quadcopter
+  type: system
+  kind: recon_drone
+  en: "commercial quadcopter"
+  aliases: ["commercial quadcopter", "recon quadcopter", "recon quadcopters"]
+  parent: system:recon_drone_generic
+  sides: ["ua", "ru"]
+
+- id: system:ua_quadcopters_and_tb2
+  type: system
+  kind: recon_drone
+  en: "Ukrainian commercial quadcopters and TB2 for reconnaissance and fires"
+  aliases: ["Ukrainian commercial quadcopters and TB2 for reconnaissance and fires"]
+  parent: system:commercial_quadcopter
+  sides: ["ua"]
+  note: "composite:"
+
+- id: system:dji_mavic
+  type: system
+  kind: recon_drone
+  en: "DJI Mavic"
+  aliases: ["DJI Mavic", "Mavic", "Ukrainian Mavic reconnaissance"]
+  parent: system:commercial_quadcopter
+  sides: ["ua", "ru"]
+
+- id: system:dji_mavic_3t
+  type: system
+  kind: recon_drone
+  en: "DJI Mavic 3T"
+  aliases: ["DJI Mavic 3T"]
+  parent: system:dji_mavic
+  sides: ["ua", "ru"]
+
+- id: system:dji_matrice
+  type: system
+  kind: recon_drone
+  en: "DJI Matrice"
+  aliases: ["DJI Matrice"]
+  parent: system:commercial_quadcopter
+  sides: ["ua", "ru"]
+
+- id: system:autel
+  type: system
+  kind: recon_drone
+  en: "Autel"
+  aliases: ["Autel"]
+  parent: system:commercial_quadcopter
+  sides: ["ua", "ru"]
+
+- id: system:fixed_wing_isr_drone
+  type: system
+  kind: recon_drone
+  en: "fixed-wing ISR drone"
+  aliases: ["fixed-wing ISR drone"]
+  parent: system:recon_drone_generic
+  sides: ["ua", "ru"]
+
+- id: system:ru_fixed_wing_isr
+  type: system
+  kind: recon_drone
+  en: "Russian fixed-wing ISR drones (Orlan, Zala, Supercam)"
+  aliases: ["Russian Orlan-10/Zala reconnaissance drones", "Russian Orlan/Zala/Supercam reconnaissance drones", "Russian Orlan/Zala reconnaissance orbits", "Orlan-10 / Zala reconnaissance drones"]
+  parent: system:fixed_wing_isr_drone
+  sides: ["ru"]
+
+- id: system:orlan_10
+  type: system
+  kind: recon_drone
+  en: "Orlan-10"
+  uk: "Орлан-10"
+  aliases: ["Orlan-10", "Russian Orlan-10 reconnaissance drones"]
+  parent: system:ru_fixed_wing_isr
+  sides: ["ru"]
+
+- id: system:orlan_30
+  type: system
+  kind: recon_drone
+  en: "Orlan-30"
+  aliases: ["Orlan-30"]
+  parent: system:ru_fixed_wing_isr
+  sides: ["ru"]
+
+- id: system:zala
+  type: system
+  kind: recon_drone
+  en: "Zala"
+  aliases: ["Zala"]
+  parent: system:ru_fixed_wing_isr
+  sides: ["ru"]
+
+- id: system:supercam
+  type: system
+  kind: recon_drone
+  en: "Supercam"
+  aliases: ["Supercam"]
+  parent: system:ru_fixed_wing_isr
+  sides: ["ru"]
+
+- id: system:eleron
+  type: system
+  kind: recon_drone
+  en: "Eleron"
+  aliases: ["Eleron"]
+  parent: system:ru_fixed_wing_isr
+  sides: ["ru"]
+
+- id: system:forpost
+  type: system
+  kind: recon_drone
+  en: "Forpost"
+  aliases: ["Forpost"]
+  sides: ["ru"]
+
+- id: system:korsar
+  type: system
+  kind: recon_drone
+  en: "Korsar"
+  aliases: ["Korsar"]
+  sides: ["ru"]
+
+- id: system:rq_7
+  type: system
+  kind: recon_drone
+  en: "RQ-7 Shadow"
+  aliases: ["RQ-7"]
+  parent: system:fixed_wing_isr_drone
+  sides: ["western"]
+
+- id: system:leleka_100
+  type: system
+  kind: recon_drone
+  en: "Leleka-100"
+  uk: "Лелека-100"
+  aliases: ["Leleka-100", "Leleka"]
+  parent: system:fixed_wing_isr_drone
+  sides: ["ua"]
+
+- id: system:furia
+  type: system
+  kind: recon_drone
+  en: "A1-CM Furia"
+  uk: "Фурія"
+  aliases: ["A1-CM Furia", "Furia"]
+  parent: system:fixed_wing_isr_drone
+  sides: ["ua"]
+
+- id: system:shark
+  type: system
+  kind: recon_drone
+  en: "Shark"
+  aliases: ["Shark"]
+  parent: system:fixed_wing_isr_drone
+  sides: ["ua"]
+
+- id: system:shark_m
+  type: system
+  kind: recon_drone
+  en: "Shark-M"
+  aliases: ["Shark-M"]
+  parent: system:shark
+  sides: ["ua"]
+
+- id: system:skif
+  type: system
+  kind: recon_drone
+  en: "SKIF"
+  aliases: ["SKIF"]
+  parent: system:fixed_wing_isr_drone
+  sides: ["ua"]
+
+- id: system:pd_1
+  type: system
+  kind: recon_drone
+  en: "PD-1"
+  aliases: ["PD-1"]
+  parent: system:fixed_wing_isr_drone
+  sides: ["ua"]
+
+- id: system:male_ucav
+  type: system
+  kind: aircraft
+  en: "MALE UCAVs"
+  aliases: ["MALE UCAVs (Bayraktar TB2, Orion)"]
+  parent: system:uav_generic
+  sides: ["ua", "ru"]
+  note: "medium-altitude long-endurance drones"
+
+- id: system:bayraktar_tb2
+  type: system
+  kind: aircraft
+  en: "Bayraktar TB2"
+  aliases: ["Bayraktar TB2"]
+  parent: system:male_ucav
+  sides: ["ua"]
+
+- id: system:orion
+  type: system
+  kind: aircraft
+  en: "Orion"
+  aliases: ["Orion"]
+  parent: system:male_ucav
+  sides: ["ru"]
+
+- id: system:predator
+  type: system
+  kind: aircraft
+  en: "MQ-1 Predator"
+  aliases: ["Predator"]
+  parent: system:male_ucav
+  sides: ["western"]
+
+- id: system:ugv
+  type: system
+  kind: ugv
+  en: "UGV"
+  uk: "НРК"
+  aliases: ["UGV"]
+  sides: ["ua", "ru"]
+  note: "uncrewed ground vehicle (NRK)"
+
+- id: system:logistics_ugv
+  type: system
+  kind: ugv
+  en: "logistics UGV"
+  aliases: ["Ukrainian logistics UGVs", "UGV logistics", "UGV last-mile logistics"]
+  parent: system:ugv
+  sides: ["ua", "ru"]
+
+- id: system:kamikaze_ugv
+  type: system
+  kind: ugv
+  en: "kamikaze UGV"
+  aliases: ["kamikaze UGV"]
+  parent: system:ugv
+  sides: ["ua", "ru"]
+
+- id: system:tw_12_7_droid
+  type: system
+  kind: ugv
+  en: "TW-12.7 Droid"
+  aliases: ["TW-12.7 Droid"]
+  parent: system:ugv
+  sides: ["ua"]
+
+- id: system:ugv_casevac_resupply
+  type: system
+  kind: technique
+  en: "UGV casevac and resupply"
+  aliases: ["UGV casevac and resupply"]
+  parent: system:ugv
+  sides: ["ua"]
+
+- id: system:vivaldi_ugv_air_drop_strikes
+  type: system
+  kind: technique
+  en: "air-dropped kamikaze UGVs and strike drones on mapped command nodes"
+  aliases: ["Air-dropped kamikaze UGVs and strike drones on mapped command nodes (Operation Vivaldi)"]
+  parent: system:kamikaze_ugv
+  sides: ["ua"]
+  note: "Operation Vivaldi, 2026"
+
+- id: system:naval_drone
+  type: system
+  kind: naval_drone
+  en: "naval drone"
+  aliases: ["naval drone"]
+  sides: ["ua"]
+
+- id: system:magura_v5
+  type: system
+  kind: naval_drone
+  en: "Magura V5"
+  aliases: ["Magura V5"]
+  parent: system:naval_drone
+  sides: ["ua"]
+
+- id: system:magura_v7
+  type: system
+  kind: naval_drone
+  en: "Magura V7"
+  aliases: ["Magura V7"]
+  parent: system:naval_drone
+  sides: ["ua"]
+
+- id: system:sea_baby
+  type: system
+  kind: naval_drone
+  en: "Sea Baby"
+  aliases: ["Sea Baby"]
+  parent: system:naval_drone
+  sides: ["ua"]
+
+- id: system:sea_baby_underwater
+  type: system
+  kind: naval_drone
+  en: "underwater Sea Baby"
+  aliases: ["underwater Sea Baby"]
+  parent: system:sea_baby
+  sides: ["ua"]
+
+- id: system:iskander
+  type: system
+  kind: missile
+  en: "Iskander"
+  uk: "Іскандер"
+  aliases: ["Iskander"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:iskander_m
+  type: system
+  kind: missile
+  en: "Iskander-M (9M723)"
+  aliases: ["Iskander-M", "9M723 Iskander", "Iskander-M ballistic missiles"]
+  parent: system:iskander
+  sides: ["ru"]
+
+- id: system:iskander_k
+  type: system
+  kind: missile
+  en: "Iskander-K"
+  aliases: ["Iskander-K"]
+  parent: system:iskander
+  sides: ["ru"]
+
+- id: system:missile_decoys_multi_axis
+  type: system
+  kind: technique
+  en: "missile decoys and multi-axis routing"
+  aliases: ["Iskander decoys and multi-axis routing"]
+  parent: system:iskander
+  sides: ["ru"]
+
+- id: system:hwasong_11
+  type: system
+  kind: missile
+  en: "Hwasong-11 family (KN-23/KN-24)"
+  aliases: []
+  parent: system:missile_generic
+  sides: ["ru", "other"]
+  note: "North Korean SRBM family supplied to Russia"
+
+- id: system:kn_23
+  type: system
+  kind: missile
+  en: "KN-23"
+  aliases: ["KN-23"]
+  parent: system:hwasong_11
+  sides: ["ru", "other"]
+
+- id: system:kn_24
+  type: system
+  kind: missile
+  en: "KN-24"
+  aliases: ["KN-24"]
+  parent: system:hwasong_11
+  sides: ["ru", "other"]
+
+- id: system:hwasong_11c
+  type: system
+  kind: missile
+  en: "Hwasong-11C"
+  aliases: ["Hwasong-11C"]
+  parent: system:hwasong_11
+  sides: ["ru", "other"]
+
+- id: system:kh_101
+  type: system
+  kind: missile
+  en: "Kh-101"
+  uk: "Х-101"
+  aliases: ["Kh-101"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:kh_101_flares
+  type: system
+  kind: passive_defence
+  en: "Kh-101 flares"
+  aliases: ["Kh-101 flares"]
+  parent: system:kh_101
+  sides: ["ru"]
+  note: "flares against MANPADS seekers"
+
+- id: system:kh_101_terrain_tracking
+  type: system
+  kind: drone_component
+  en: "Kh-101 visual terrain tracking"
+  aliases: ["Kh-101 visual terrain tracking"]
+  parent: system:kh_101
+  sides: ["ru"]
+
+- id: system:kh_55
+  type: system
+  kind: missile
+  en: "Kh-55/555"
+  aliases: ["Kh-55/555"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:kh_22
+  type: system
+  kind: missile
+  en: "Kh-22/32"
+  aliases: ["Kh-22/32"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:kh_38
+  type: system
+  kind: missile
+  en: "Kh-38"
+  aliases: ["Kh-38"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:kalibr
+  type: system
+  kind: missile
+  en: "Kalibr"
+  aliases: ["Kalibr"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:kinzhal
+  type: system
+  kind: missile
+  en: "Kinzhal"
+  aliases: ["Kinzhal", "Kinzhal missiles"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:onyx_zircon
+  type: system
+  kind: missile
+  en: "Onyx / Zircon"
+  aliases: ["Onyx/Zircon"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:bal
+  type: system
+  kind: missile
+  en: "Bal"
+  aliases: ["Bal"]
+  parent: system:missile_generic
+  sides: ["ru"]
+  note: "coastal anti-ship missile system"
+
+- id: system:bastion
+  type: system
+  kind: missile
+  en: "Bastion"
+  aliases: ["Bastion"]
+  parent: system:missile_generic
+  sides: ["ru"]
+  note: "coastal anti-ship missile system"
+
+- id: system:tochka_u
+  type: system
+  kind: missile
+  en: "Tochka-U"
+  aliases: ["Tochka-U"]
+  parent: system:missile_generic
+  sides: ["ua", "ru"]
+
+- id: system:oreshnik
+  type: system
+  kind: missile
+  en: "Oreshnik"
+  aliases: ["Oreshnik"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:r_73
+  type: system
+  kind: missile
+  en: "R-73"
+  aliases: ["R-73"]
+  parent: system:missile_generic
+  sides: ["ua", "ru"]
+
+- id: system:r_60
+  type: system
+  kind: missile
+  en: "R-60"
+  aliases: ["R-60"]
+  parent: system:missile_generic
+  sides: ["ua", "ru"]
+
+- id: system:vikhr
+  type: system
+  kind: missile
+  en: "Vikhr"
+  aliases: ["Vikhr"]
+  parent: system:atgm_generic
+  sides: ["ru"]
+
+- id: system:ataka
+  type: system
+  kind: missile
+  en: "Ataka"
+  aliases: ["Ataka"]
+  parent: system:atgm_generic
+  sides: ["ru"]
+
+- id: system:lmur
+  type: system
+  kind: missile
+  en: "LMUR (Izdeliye 305)"
+  aliases: ["LMUR", "LMUR (Izdeliye 305)"]
+  parent: system:missile_generic
+  sides: ["ru"]
+
+- id: system:neptune
+  type: system
+  kind: missile
+  en: "Neptune (R-360)"
+  uk: "Нептун"
+  aliases: ["Neptune"]
+  parent: system:missile_generic
+  sides: ["ua"]
+
+- id: system:neptune_r360m
+  type: system
+  kind: missile
+  en: "Neptune R-360M"
+  aliases: ["Neptune R-360M"]
+  parent: system:neptune
+  sides: ["ua"]
+
+- id: system:long_neptune
+  type: system
+  kind: missile
+  en: "Long Neptune R-360L"
+  aliases: ["Long Neptune R-360L"]
+  parent: system:neptune
+  sides: ["ua"]
+
+- id: system:flamingo
+  type: system
+  kind: missile
+  en: "FP-5 Flamingo"
+  uk: "Фламінго"
+  aliases: ["FP-5 Flamingo", "Flamingo"]
+  parent: system:missile_generic
+  sides: ["ua"]
+
+- id: system:sapsan
+  type: system
+  kind: missile
+  en: "Sapsan"
+  uk: "Сапсан"
+  aliases: ["Sapsan"]
+  parent: system:missile_generic
+  sides: ["ua"]
+
+- id: system:palianytsia
+  type: system
+  kind: missile
+  en: "Palianytsia"
+  uk: "Паляниця"
+  aliases: ["Palianytsia"]
+  parent: system:missile_generic
+  sides: ["ua"]
+  note: "missile-drone"
+
+- id: system:atacms
+  type: system
+  kind: missile
+  en: "ATACMS"
+  aliases: ["ATACMS"]
+  parent: system:himars
+  sides: ["ua", "western"]
+
+- id: system:prsm
+  type: system
+  kind: missile
+  en: "PrSM"
+  aliases: ["PrSM"]
+  parent: system:himars
+  sides: ["western"]
+
+- id: system:storm_shadow
+  type: system
+  kind: missile
+  en: "Storm Shadow / SCALP-EG"
+  aliases: ["Storm Shadow", "SCALP"]
+  parent: system:missile_generic
+  sides: ["ua", "western"]
+
+- id: system:harm
+  type: system
+  kind: missile
+  en: "AGM-88 HARM"
+  aliases: ["HARM"]
+  parent: system:missile_generic
+  sides: ["ua", "western"]
+
+- id: system:meteor
+  type: system
+  kind: missile
+  en: "Meteor"
+  aliases: ["Meteor"]
+  parent: system:missile_generic
+  sides: ["western"]
+
+- id: system:javelin
+  type: system
+  kind: missile
+  en: "Javelin"
+  aliases: ["Javelin"]
+  parent: system:atgm_generic
+  sides: ["ua", "western"]
+
+- id: system:nlaw
+  type: system
+  kind: missile
+  en: "NLAW"
+  aliases: ["NLAW"]
+  parent: system:atgm_generic
+  sides: ["ua", "western"]
+
+- id: system:tow
+  type: system
+  kind: missile
+  en: "TOW"
+  aliases: ["TOW"]
+  parent: system:atgm_generic
+  sides: ["ua", "western"]
+
+- id: system:stugna
+  type: system
+  kind: missile
+  en: "Stugna"
+  uk: "Стугна"
+  aliases: ["Stugna"]
+  parent: system:atgm_generic
+  sides: ["ua"]
+
+- id: system:nlaw_javelin_ambush
+  type: system
+  kind: technique
+  en: "NLAW/Javelin ambush"
+  aliases: ["NLAW/Javelin ambush"]
+  parent: system:atgm_generic
+  sides: ["ua"]
+
+- id: system:atgm_on_demining_vehicles
+  type: system
+  kind: technique
+  en: "ATGMs on high ground targeting demining vehicles"
+  aliases: ["ATGMs on high ground targeting demining vehicles"]
+  parent: system:atgm_generic
+  sides: ["ru"]
+
+- id: system:soyuz_2_1b
+  type: system
+  kind: vehicle
+  en: "Soyuz-2.1b"
+  aliases: ["Soyuz-2.1b"]
+  sides: ["ru"]
+  note: "space launch vehicle; caps Rassvet deployment rate"
+
+- id: system:opening_strike_campaign_ad
+  type: system
+  kind: technique
+  en: "Russian opening strike campaign against air defence"
+  aliases: ["Russian opening strike campaign against air defence"]
+  parent: system:missile_generic
+  sides: ["ru"]
+  note: "Feb 2022"
+
+- id: system:kab
+  type: system
+  kind: glide_bomb
+  en: "KAB (Russian guided glide bombs)"
+  uk: "КАБ"
+  aliases: ["KAB", "KAB glide bombs"]
+  parent: system:glide_bomb_generic
+  sides: ["ru"]
+
+- id: system:umpk
+  type: system
+  kind: glide_bomb
+  en: "UMPK glide kit"
+  uk: "УМПК"
+  aliases: ["UMPK", "UMPK glide bombs (stand-off release)"]
+  parent: system:kab
+  sides: ["ru"]
+  note: "wing-and-guidance kit for FAB bombs, 30-90 km"
+
+- id: system:umpk_pd
+  type: system
+  kind: glide_bomb
+  en: "UMPK-PD"
+  aliases: ["UMPK-PD"]
+  parent: system:umpk
+  sides: ["ru"]
+  note: "powered extended-range UMPK"
+
+- id: system:kab_extended_range
+  type: system
+  kind: glide_bomb
+  en: "extended-range glide bomb"
+  aliases: ["extended-range glide bomb"]
+  parent: system:kab
+  sides: ["ru"]
+  note: "about 200 km; 400 km in work"
+
+- id: system:fab_250_umpk
+  type: system
+  kind: glide_bomb
+  en: "FAB-250 (with UMPK)"
+  aliases: ["FAB-250"]
+  parent: system:umpk
+  sides: ["ru"]
+
+- id: system:fab_500_umpk
+  type: system
+  kind: glide_bomb
+  en: "FAB-500 (with UMPK)"
+  aliases: ["FAB-500"]
+  parent: system:umpk
+  sides: ["ru"]
+
+- id: system:fab_1500_umpk
+  type: system
+  kind: glide_bomb
+  en: "FAB-1500 (with UMPK)"
+  aliases: ["FAB-1500"]
+  parent: system:umpk
+  sides: ["ru"]
+
+- id: system:fab_3000_umpk
+  type: system
+  kind: glide_bomb
+  en: "FAB-3000 (with UMPK)"
+  aliases: ["FAB-3000"]
+  parent: system:umpk
+  sides: ["ru"]
+
+- id: system:umpb_d30sn
+  type: system
+  kind: glide_bomb
+  en: "UMPB D-30SN"
+  aliases: ["UMPB D-30SN"]
+  parent: system:glide_bomb_generic
+  sides: ["ru"]
+
+- id: system:glide_bombs_counter_battery
+  type: system
+  kind: glide_bomb
+  en: "glide bombs and counter-battery fire"
+  aliases: ["Glide bombs and counter-battery fire"]
+  parent: system:kab
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:jdam
+  type: system
+  kind: glide_bomb
+  en: "JDAM"
+  aliases: ["JDAM", "JDAM glide bombs"]
+  parent: system:glide_bomb_generic
+  sides: ["ua", "western"]
+
+- id: system:jdam_er
+  type: system
+  kind: glide_bomb
+  en: "JDAM-ER"
+  aliases: ["JDAM-ER", "JDAM-ER glide bombs"]
+  parent: system:jdam
+  sides: ["ua", "western"]
+
+- id: system:jdam_upgrades
+  type: system
+  kind: gnss_countermeasure
+  en: "upgraded JDAM kits (add-on seekers, home-on-jam)"
+  aliases: ["Upgraded JDAM kits, add-on seekers and home-on-jam"]
+  parent: system:jdam
+  sides: ["ua", "western"]
+
+- id: system:gbu_39
+  type: system
+  kind: glide_bomb
+  en: "GBU-39 SDB"
+  aliases: ["GBU-39 SDB"]
+  parent: system:glide_bomb_generic
+  sides: ["ua", "western"]
+
+- id: system:aasm_hammer
+  type: system
+  kind: glide_bomb
+  en: "AASM Hammer"
+  aliases: ["AASM Hammer"]
+  parent: system:glide_bomb_generic
+  sides: ["ua", "western"]
+
+- id: system:ua_glide_bomb_250
+  type: system
+  kind: glide_bomb
+  en: "Ukrainian domestic glide bomb (250 kg)"
+  aliases: ["Ukrainian domestic glide bomb (250 kg)"]
+  parent: system:glide_bomb_generic
+  sides: ["ua"]
+  note: "about 40 km, Su-24, cleared May 2026"
+
+- id: system:distributed_air_defence
+  type: system
+  kind: air_defence
+  en: "distributed air defence"
+  aliases: ["distributed air defence (helicopters, mobile fire groups, Gepard and Skynex guns, MANPADS)"]
+  parent: system:air_defence_generic
+  sides: ["ua"]
+
+- id: system:ua_ew_and_distributed_ad
+  type: system
+  kind: air_defence
+  en: "Ukrainian EW and distributed air defence"
+  aliases: ["Ukrainian EW and distributed air defence"]
+  parent: system:distributed_air_defence
+  sides: ["ua"]
+  note: "composite:"
+
+- id: system:ua_deep_rear_ad_vs_piston_shahed
+  type: system
+  kind: air_defence
+  en: "Ukrainian defences against piston Shaheds on deep-rear raids"
+  aliases: ["Ukrainian defences stopping 92–96% of piston Shaheds on deep-rear raids"]
+  parent: system:air_defence_generic
+  sides: ["ua"]
+
+- id: system:mobile_fire_group
+  type: system
+  kind: air_defence
+  en: "mobile fire group"
+  uk: "мобільна вогнева група"
+  aliases: ["mobile fire groups", "mobile fire group"]
+  parent: system:distributed_air_defence
+  sides: ["ua"]
+  note: "truck-mounted guns and MANPADS against drones"
+
+- id: system:mfg_aa_guns_manpads
+  type: system
+  kind: air_defence
+  en: "mobile fire groups, AA guns and MANPADS"
+  aliases: ["Mobile fire groups, AA guns and MANPADS"]
+  parent: system:mobile_fire_group
+  sides: ["ua"]
+  note: "composite:"
+
+- id: system:forward_deployed_sams
+  type: system
+  kind: air_defence
+  en: "forward-deployed Ukrainian SAMs"
+  aliases: ["Forward-deployed Ukrainian SAMs"]
+  parent: system:sam_generic
+  sides: ["ua"]
+
+- id: system:patriot
+  type: system
+  kind: air_defence
+  en: "Patriot"
+  aliases: ["Patriot"]
+  parent: system:sam_generic
+  sides: ["ua", "western"]
+
+- id: system:pac_3
+  type: system
+  kind: air_defence
+  en: "PAC-3"
+  aliases: ["PAC-3"]
+  parent: system:patriot
+  sides: ["ua", "western"]
+
+- id: system:pac_3_mse
+  type: system
+  kind: air_defence
+  en: "PAC-3 MSE"
+  aliases: ["PAC-3 MSE"]
+  parent: system:pac_3
+  sides: ["ua", "western"]
+
+- id: system:patriot_samp_t
+  type: system
+  kind: air_defence
+  en: "Patriot / SAMP/T"
+  aliases: ["Patriot / SAMP/T"]
+  parent: system:sam_generic
+  sides: ["ua", "western"]
+  note: "composite: Western long-range SAMs"
+
+- id: system:samp_t
+  type: system
+  kind: air_defence
+  en: "SAMP/T"
+  aliases: ["SAMP/T"]
+  parent: system:sam_generic
+  sides: ["ua", "western"]
+
+- id: system:iris_t_slm
+  type: system
+  kind: air_defence
+  en: "IRIS-T SLM"
+  aliases: ["IRIS-T SLM"]
+  parent: system:sam_generic
+  sides: ["ua", "western"]
+
+- id: system:nasams
+  type: system
+  kind: air_defence
+  en: "NASAMS"
+  aliases: ["NASAMS"]
+  parent: system:sam_generic
+  sides: ["ua", "western"]
+
+- id: system:thaad
+  type: system
+  kind: air_defence
+  en: "THAAD"
+  aliases: ["THAAD"]
+  parent: system:sam_generic
+  sides: ["western"]
+
+- id: system:s_300
+  type: system
+  kind: air_defence
+  en: "S-300"
+  aliases: ["S-300"]
+  parent: system:sam_generic
+  sides: ["ua", "ru"]
+
+- id: system:s_300ps
+  type: system
+  kind: air_defence
+  en: "S-300PS/PT"
+  aliases: ["S-300PS/PT"]
+  parent: system:s_300
+  sides: ["ua", "ru"]
+
+- id: system:s_300v
+  type: system
+  kind: air_defence
+  en: "S-300V"
+  aliases: ["S-300V"]
+  parent: system:s_300
+  sides: ["ua", "ru"]
+
+- id: system:s_400
+  type: system
+  kind: air_defence
+  en: "S-400"
+  aliases: ["S-400"]
+  parent: system:sam_generic
+  sides: ["ru"]
+
+- id: system:s_125
+  type: system
+  kind: air_defence
+  en: "S-125"
+  aliases: ["S-125"]
+  parent: system:sam_generic
+  sides: ["ua"]
+
+- id: system:buk
+  type: system
+  kind: air_defence
+  en: "Buk"
+  aliases: ["Buk"]
+  parent: system:sam_generic
+  sides: ["ua", "ru"]
+
+- id: system:buk_m1
+  type: system
+  kind: air_defence
+  en: "Buk-M1"
+  aliases: ["Buk-M1"]
+  parent: system:buk
+  sides: ["ua", "ru"]
+
+- id: system:tor
+  type: system
+  kind: air_defence
+  en: "Tor"
+  aliases: ["Tor"]
+  parent: system:sam_generic
+  sides: ["ua", "ru"]
+
+- id: system:pantsir
+  type: system
+  kind: air_defence
+  en: "Pantsir"
+  aliases: ["Pantsir"]
+  parent: system:sam_generic
+  sides: ["ru"]
+
+- id: system:manpads
+  type: system
+  kind: air_defence
+  en: "MANPADS"
+  aliases: ["MANPADS", "MANPADS (Stinger)"]
+  parent: system:air_defence_generic
+  sides: ["ua", "ru"]
+
+- id: system:stinger
+  type: system
+  kind: air_defence
+  en: "Stinger"
+  aliases: ["Stinger"]
+  parent: system:manpads
+  sides: ["ua", "western"]
+
+- id: system:igla
+  type: system
+  kind: air_defence
+  en: "Igla"
+  aliases: ["Igla"]
+  parent: system:manpads
+  sides: ["ua", "ru"]
+
+- id: system:igla_1
+  type: system
+  kind: air_defence
+  en: "Igla-1"
+  aliases: ["Igla-1"]
+  parent: system:igla
+  sides: ["ua", "ru"]
+
+- id: system:aa_guns
+  type: system
+  kind: air_defence
+  en: "anti-aircraft guns"
+  aliases: ["AA guns"]
+  parent: system:air_defence_generic
+  sides: ["ua", "ru"]
+
+- id: system:radar_aa_guns
+  type: system
+  kind: air_defence
+  en: "radar-guided AA guns"
+  aliases: ["radar-guided AA guns"]
+  parent: system:aa_guns
+  sides: ["ua", "ru"]
+
+- id: system:gepard
+  type: system
+  kind: air_defence
+  en: "Gepard"
+  aliases: ["Gepard"]
+  parent: system:aa_guns
+  sides: ["ua", "western"]
+
+- id: system:skynex
+  type: system
+  kind: air_defence
+  en: "Skynex"
+  aliases: ["Skynex", "Skynex gun batteries with AHEAD airburst"]
+  parent: system:aa_guns
+  sides: ["ua", "western"]
+
+- id: system:active_protection_system
+  type: system
+  kind: passive_defence
+  en: "active protection system (generic)"
+  aliases: []
+  sides: ["ua", "ru"]
+  note: "generic; hard-kill vehicle protection"
+
+- id: system:arena_m
+  type: system
+  kind: passive_defence
+  en: "Arena-M"
+  aliases: ["Arena-M", "Arena-M active protection", "Arena-M active protection system", "Arena-M active protection adapted to FPVs"]
+  parent: system:active_protection_system
+  sides: ["ru"]
+  note: "adapted against FPVs on T-72B3A (Jul-Aug 2026)"
+
+- id: system:arena_m_tank_tactic
+  type: system
+  kind: technique
+  en: "active-protection tank (Arena-M)"
+  aliases: ["Active-protection tank (Arena-M)"]
+  parent: system:arena_m
+  sides: ["ru"]
+
+- id: system:ua_aps
+  type: system
+  kind: passive_defence
+  en: "Ukrainian active protection systems"
+  aliases: ["Ukrainian APS"]
+  parent: system:active_protection_system
+  sides: ["ua"]
+  note: "stop 60-80% of FPVs in tests"
+
+- id: system:f_16
+  type: system
+  kind: aircraft
+  en: "F-16"
+  aliases: ["F-16"]
+  sides: ["ua", "western"]
+
+- id: system:mirage_2000
+  type: system
+  kind: aircraft
+  en: "Mirage 2000"
+  aliases: ["Mirage 2000"]
+  sides: ["ua", "western"]
+
+- id: system:mirage_2000_5
+  type: system
+  kind: aircraft
+  en: "Mirage 2000-5"
+  aliases: ["Mirage 2000-5"]
+  parent: system:mirage_2000
+  sides: ["ua", "western"]
+
+- id: system:mirage_2000_5f
+  type: system
+  kind: aircraft
+  en: "Mirage 2000-5F"
+  aliases: ["Mirage 2000-5F"]
+  parent: system:mirage_2000_5
+  sides: ["ua", "western"]
+
+- id: system:gripen
+  type: system
+  kind: aircraft
+  en: "Gripen"
+  aliases: ["Gripen"]
+  sides: ["ua", "western"]
+
+- id: system:gripen_cd
+  type: system
+  kind: aircraft
+  en: "Gripen C/D"
+  aliases: ["Gripen C/D"]
+  parent: system:gripen
+  sides: ["ua", "western"]
+
+- id: system:gripen_ef
+  type: system
+  kind: aircraft
+  en: "Gripen E/F"
+  aliases: ["Gripen E/F"]
+  parent: system:gripen
+  sides: ["ua", "western"]
+
+- id: system:mig_29
+  type: system
+  kind: aircraft
+  en: "MiG-29"
+  aliases: ["MiG-29"]
+  sides: ["ua"]
+
+- id: system:su_25
+  type: system
+  kind: aircraft
+  en: "Su-25"
+  aliases: ["Su-25"]
+  sides: ["ua", "ru"]
+
+- id: system:su_27
+  type: system
+  kind: aircraft
+  en: "Su-27"
+  aliases: ["Su-27"]
+  sides: ["ua"]
+
+- id: system:su_24
+  type: system
+  kind: aircraft
+  en: "Su-24"
+  aliases: ["Su-24"]
+  sides: ["ua", "ru"]
+
+- id: system:su_24m
+  type: system
+  kind: aircraft
+  en: "Su-24M"
+  aliases: ["Su-24M"]
+  parent: system:su_24
+  sides: ["ua", "ru"]
+
+- id: system:su_30
+  type: system
+  kind: aircraft
+  en: "Su-30"
+  aliases: ["Su-30"]
+  sides: ["ru"]
+
+- id: system:su_34
+  type: system
+  kind: aircraft
+  en: "Su-34"
+  aliases: ["Su-34"]
+  sides: ["ru"]
+
+- id: system:su_35s
+  type: system
+  kind: aircraft
+  en: "Su-35S"
+  aliases: ["Su-35S"]
+  sides: ["ru"]
+
+- id: system:tu_95
+  type: system
+  kind: aircraft
+  en: "Tu-95"
+  aliases: ["Tu-95"]
+  sides: ["ru"]
+
+- id: system:tu_160
+  type: system
+  kind: aircraft
+  en: "Tu-160"
+  aliases: ["Tu-160"]
+  sides: ["ru"]
+
+- id: system:helicopters_and_fighter_caps
+  type: system
+  kind: aircraft
+  en: "helicopters and fighter CAPs"
+  aliases: ["Helicopters and fighter CAPs"]
+  sides: ["ua"]
+  note: "composite: most efficient killers of high-flying Gerans"
+
+- id: system:attack_helicopter_generic
+  type: system
+  kind: helicopter
+  en: "attack helicopters (generic)"
+  aliases: ["Russian attack and assault helicopters", "Russian attack helicopters"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:ka_52
+  type: system
+  kind: helicopter
+  en: "Ka-52"
+  aliases: ["Ka-52"]
+  parent: system:attack_helicopter_generic
+  sides: ["ru"]
+
+- id: system:ka_52m
+  type: system
+  kind: helicopter
+  en: "Ka-52M"
+  aliases: ["Ka-52M"]
+  parent: system:ka_52
+  sides: ["ru"]
+
+- id: system:mi_28
+  type: system
+  kind: helicopter
+  en: "Mi-28"
+  aliases: ["Mi-28"]
+  parent: system:attack_helicopter_generic
+  sides: ["ru"]
+
+- id: system:mi_28n
+  type: system
+  kind: helicopter
+  en: "Mi-28N"
+  aliases: ["Mi-28N"]
+  parent: system:mi_28
+  sides: ["ru"]
+
+- id: system:mi_24
+  type: system
+  kind: helicopter
+  en: "Mi-24"
+  aliases: ["Mi-24"]
+  parent: system:attack_helicopter_generic
+  sides: ["ua", "ru"]
+
+- id: system:mi_35m
+  type: system
+  kind: helicopter
+  en: "Mi-35M"
+  aliases: ["Mi-35M"]
+  parent: system:mi_24
+  sides: ["ru"]
+
+- id: system:mi_8
+  type: system
+  kind: helicopter
+  en: "Mi-8"
+  aliases: ["Mi-8"]
+  sides: ["ua", "ru"]
+
+- id: system:helicopter_shahed_hunting
+  type: system
+  kind: technique
+  en: "helicopter gunships hunting Shaheds"
+  aliases: ["Helicopter gunships (Mi-8/Mi-24 with machine guns)", "Helicopter gunships hunting Shaheds"]
+  sides: ["ua"]
+  note: "Mi-8/Mi-24 crews downed 3,200+ Shahed-type drones Aug 2024-Aug 2025"
+
+- id: system:lob_fire
+  type: system
+  kind: technique
+  en: "helicopter lob (pitch-up) fire"
+  aliases: ["lob fire", "Helicopter lob (pitch-up) fire"]
+  sides: ["ua", "ru"]
+  note: "pitch-up rocket lofting for 6-7 km extra range"
+
+- id: system:tube_artillery_generic
+  type: system
+  kind: tube_artillery
+  en: "tube artillery (generic)"
+  aliases: ["barrel artillery", "tube artillery"]
+  parent: system:artillery_generic
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:howitzer_155
+  type: system
+  kind: tube_artillery
+  en: "155 mm howitzers"
+  aliases: ["155 mm howitzers"]
+  parent: system:tube_artillery_generic
+  sides: ["ua", "western"]
+
+- id: system:gun_152
+  type: system
+  kind: tube_artillery
+  en: "152 mm guns"
+  aliases: ["152 mm guns"]
+  parent: system:tube_artillery_generic
+  sides: ["ua", "ru"]
+
+- id: system:mortar_120
+  type: system
+  kind: tube_artillery
+  en: "120 mm mortars"
+  aliases: ["120 mm mortars"]
+  parent: system:tube_artillery_generic
+  sides: ["ua", "ru"]
+
+- id: system:m777
+  type: system
+  kind: tube_artillery
+  en: "M777"
+  aliases: ["M777"]
+  parent: system:howitzer_155
+  sides: ["ua", "western"]
+
+- id: system:m777a2
+  type: system
+  kind: tube_artillery
+  en: "M777A2"
+  aliases: ["M777A2"]
+  parent: system:m777
+  sides: ["ua", "western"]
+
+- id: system:caesar
+  type: system
+  kind: tube_artillery
+  en: "CAESAR"
+  aliases: ["CAESAR"]
+  parent: system:howitzer_155
+  sides: ["ua", "western"]
+
+- id: system:krab
+  type: system
+  kind: tube_artillery
+  en: "Krab"
+  aliases: ["Krab"]
+  parent: system:howitzer_155
+  sides: ["ua", "western"]
+
+- id: system:m109
+  type: system
+  kind: tube_artillery
+  en: "M109"
+  aliases: ["M109"]
+  parent: system:howitzer_155
+  sides: ["ua", "western"]
+
+- id: system:pzh_2000
+  type: system
+  kind: tube_artillery
+  en: "PzH 2000"
+  aliases: ["PzH 2000"]
+  parent: system:howitzer_155
+  sides: ["ua", "western"]
+
+- id: system:zuzana_2
+  type: system
+  kind: tube_artillery
+  en: "Zuzana 2"
+  aliases: ["Zuzana 2"]
+  parent: system:howitzer_155
+  sides: ["ua", "western"]
+
+- id: system:archer
+  type: system
+  kind: tube_artillery
+  en: "Archer"
+  aliases: ["Archer"]
+  parent: system:howitzer_155
+  sides: ["ua", "western"]
+
+- id: system:bohdana
+  type: system
+  kind: tube_artillery
+  en: "2S22 Bohdana"
+  uk: "Богдана"
+  aliases: ["2S22 Bohdana"]
+  parent: system:howitzer_155
+  sides: ["ua"]
+
+- id: system:msta_s
+  type: system
+  kind: tube_artillery
+  en: "2S19 Msta-S"
+  aliases: ["2S19 Msta-S"]
+  parent: system:gun_152
+  sides: ["ua", "ru"]
+
+- id: system:d_30
+  type: system
+  kind: tube_artillery
+  en: "D-30"
+  aliases: ["D-30"]
+  parent: system:tube_artillery_generic
+  sides: ["ua", "ru"]
+
+- id: system:2s7
+  type: system
+  kind: tube_artillery
+  en: "2S7 Pion"
+  aliases: ["2S7"]
+  parent: system:tube_artillery_generic
+  sides: ["ua", "ru"]
+
+- id: system:mlrs_generic
+  type: system
+  kind: rocket_artillery
+  en: "multiple rocket launchers (generic)"
+  aliases: ["MLRS"]
+  parent: system:artillery_generic
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:himars
+  type: system
+  kind: rocket_artillery
+  en: "HIMARS"
+  aliases: ["HIMARS"]
+  parent: system:mlrs_generic
+  sides: ["ua", "western"]
+
+- id: system:m270
+  type: system
+  kind: rocket_artillery
+  en: "M270"
+  aliases: ["M270"]
+  parent: system:mlrs_generic
+  sides: ["ua", "western"]
+
+- id: system:gmlrs
+  type: system
+  kind: munition
+  en: "GMLRS"
+  aliases: ["GMLRS"]
+  parent: system:himars
+  sides: ["ua", "western"]
+  note: "guided rocket for HIMARS and M270"
+
+- id: system:gmlrs_software_mod
+  type: system
+  kind: c2_software
+  en: "US GMLRS software modification"
+  aliases: ["US GMLRS software modification"]
+  parent: system:gmlrs
+  sides: ["ua", "western"]
+  note: "anti-jam fix after Russian GNSS jamming"
+
+- id: system:himars_strikes_logistics_c2
+  type: system
+  kind: technique
+  en: "HIMARS/GMLRS precision strikes on depots, C2 and logistics"
+  aliases: ["HIMARS/GMLRS depot strikes", "HIMARS/GMLRS strikes", "HIMARS/GMLRS strikes on depots", "GMLRS/HIMARS strikes on C2 and logistics", "HIMARS precision fires on logistics", "precision long-range fires on depots and railheads", "Ukrainian MLRS strikes on headquarters"]
+  parent: system:himars
+  sides: ["ua"]
+
+- id: system:smerch
+  type: system
+  kind: rocket_artillery
+  en: "BM-30 Smerch"
+  aliases: ["Smerch"]
+  parent: system:mlrs_generic
+  sides: ["ua", "ru"]
+
+- id: system:tornado_s
+  type: system
+  kind: rocket_artillery
+  en: "Tornado-S"
+  aliases: ["Tornado-S"]
+  parent: system:smerch
+  sides: ["ru"]
+
+- id: system:uragan
+  type: system
+  kind: rocket_artillery
+  en: "BM-27 Uragan"
+  aliases: ["Uragan"]
+  parent: system:mlrs_generic
+  sides: ["ua", "ru"]
+
+- id: system:grad
+  type: system
+  kind: rocket_artillery
+  en: "BM-21 Grad"
+  aliases: ["BM-21 Grad"]
+  parent: system:mlrs_generic
+  sides: ["ua", "ru"]
+
+- id: system:isdm_zemledeliye
+  type: system
+  kind: rocket_artillery
+  en: "ISDM Zemledeliye"
+  uk: "Земледелие"
+  aliases: ["ISDM Zemledeliye", "ISDM Zemledeliye launcher"]
+  parent: system:mlrs_generic
+  sides: ["ru"]
+  note: "remote mine-laying rocket system"
+
+- id: system:rocket_scattered_minefield
+  type: system
+  kind: technique
+  en: "rocket-scattered minefield"
+  aliases: ["rocket-scattered minefield", "Rocket-scattered minefield (ISDM Zemledeliye)"]
+  parent: system:isdm_zemledeliye
+  sides: ["ru"]
+
+- id: system:excalibur
+  type: system
+  kind: munition
+  en: "M982 Excalibur"
+  aliases: ["Excalibur", "Excalibur GPS-guided 155 mm shells", "Excalibur GPS-guided shells"]
+  parent: system:guided_artillery_round
+  sides: ["ua", "western"]
+
+- id: system:excalibur_and_gmlrs
+  type: system
+  kind: munition
+  en: "Excalibur and GMLRS"
+  aliases: ["Excalibur and GMLRS"]
+  parent: system:excalibur
+  sides: ["ua", "western"]
+  note: "composite: US GNSS-guided precision munitions"
+
+- id: system:guided_artillery_round
+  type: system
+  kind: munition
+  en: "guided artillery rounds (generic)"
+  aliases: ["laser-guided artillery rounds"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:krasnopol
+  type: system
+  kind: munition
+  en: "Krasnopol"
+  aliases: ["Krasnopol"]
+  parent: system:guided_artillery_round
+  sides: ["ru"]
+  note: "laser-guided 152 mm round"
+
+- id: system:bonus
+  type: system
+  kind: munition
+  en: "BONUS"
+  aliases: ["BONUS"]
+  sides: ["ua", "western"]
+  note: "sensor-fuzed 155 mm anti-armour round"
+
+- id: system:dpicm
+  type: system
+  kind: munition
+  en: "DPICM"
+  aliases: ["DPICM"]
+  sides: ["ua", "western"]
+
+- id: system:s_8
+  type: system
+  kind: munition
+  en: "S-8 rocket"
+  aliases: ["S-8"]
+  sides: ["ua", "ru"]
+
+- id: system:s_13
+  type: system
+  kind: munition
+  en: "S-13 rocket"
+  aliases: ["S-13"]
+  sides: ["ua", "ru"]
+
+- id: system:miclic
+  type: system
+  kind: munition
+  en: "MICLIC"
+  aliases: ["MICLIC"]
+  sides: ["ua", "western"]
+  note: "mine-clearing line charge"
+
+- id: system:meteorit
+  type: system
+  kind: munition
+  en: "Meteorit line charge"
+  aliases: ["Meteorit line charge"]
+  sides: ["ua"]
+
+- id: system:drone_cued_counter_fire
+  type: system
+  kind: technique
+  en: "drone-cued precision counter-fire"
+  aliases: ["Russian drone-cued precision counter-fire"]
+  sides: ["ru"]
+
+- id: system:abrams
+  type: system
+  kind: armour
+  en: "M1 Abrams"
+  aliases: ["Abrams", "M1 Abrams"]
+  parent: system:armour_generic
+  sides: ["ua", "western"]
+
+- id: system:m1a1_abrams
+  type: system
+  kind: armour
+  en: "M1A1 Abrams"
+  aliases: ["M1A1 Abrams"]
+  parent: system:abrams
+  sides: ["ua", "western"]
+
+- id: system:leopard_2
+  type: system
+  kind: armour
+  en: "Leopard 2"
+  aliases: ["Leopard 2"]
+  parent: system:armour_generic
+  sides: ["ua", "western"]
+
+- id: system:leopard_2a4
+  type: system
+  kind: armour
+  en: "Leopard 2A4"
+  aliases: ["Leopard 2A4"]
+  parent: system:leopard_2
+  sides: ["ua", "western"]
+
+- id: system:leopard_2a6
+  type: system
+  kind: armour
+  en: "Leopard 2A6"
+  aliases: ["Leopard 2A6"]
+  parent: system:leopard_2
+  sides: ["ua", "western"]
+
+- id: system:challenger_2
+  type: system
+  kind: armour
+  en: "Challenger 2"
+  aliases: ["Challenger 2"]
+  parent: system:armour_generic
+  sides: ["ua", "western"]
+
+- id: system:bradley
+  type: system
+  kind: armour
+  en: "M2 Bradley"
+  aliases: ["Bradley"]
+  parent: system:armour_generic
+  sides: ["ua", "western"]
+
+- id: system:m113
+  type: system
+  kind: armour
+  en: "M113"
+  aliases: ["M113"]
+  parent: system:armour_generic
+  sides: ["ua", "western"]
+
+- id: system:t_72b3a
+  type: system
+  kind: armour
+  en: "T-72B3A"
+  aliases: ["T-72B3A"]
+  parent: system:armour_generic
+  sides: ["ru"]
+
+- id: system:turtle_tank
+  type: system
+  kind: armour
+  en: "turtle (shed) tank"
+  uk: "черепаха"
+  aliases: ["turtle tank", "\"Turtle\" / shed tank", "turtle (shed) tank armour"]
+  parent: system:armour_generic
+  sides: ["ru"]
+  note: "tank under a welded shed, often with onboard jammers (from Apr 2024)"
+
+- id: system:super_turtle_t80
+  type: system
+  kind: armour
+  en: "super turtle T-80"
+  aliases: ["super turtle T-80", "turtle boxes with onboard jammers ('super turtle' T-80)"]
+  parent: system:turtle_tank
+  sides: ["ru"]
+
+- id: system:cope_cage
+  type: system
+  kind: passive_defence
+  en: "cope cage"
+  uk: "мангал"
+  aliases: ["cope cage", "cope cages (mangaly), then factory cages"]
+  sides: ["ua", "ru"]
+
+- id: system:armour_sally_from_hides
+  type: system
+  kind: technique
+  en: "armour sally from hides"
+  aliases: ["armour sally from hides"]
+  sides: ["ua"]
+
+- id: system:motorcycle
+  type: system
+  kind: vehicle
+  en: "motorcycle"
+  aliases: ["motorcycle"]
+  sides: ["ua", "ru"]
+
+- id: system:atv
+  type: system
+  kind: vehicle
+  en: "ATV"
+  aliases: ["ATV"]
+  sides: ["ua", "ru"]
+
+- id: system:kamaz_6350
+  type: system
+  kind: vehicle
+  en: "KamAZ-6350"
+  aliases: ["KamAZ-6350"]
+  sides: ["ru"]
+
+- id: system:ural_truck
+  type: system
+  kind: vehicle
+  en: "Ural truck"
+  aliases: ["Ural truck"]
+  sides: ["ru"]
+
+- id: system:hmmwv
+  type: system
+  kind: vehicle
+  en: "HMMWV"
+  aliases: ["HMMWV"]
+  sides: ["ua", "western"]
+
+- id: system:ur_77
+  type: system
+  kind: vehicle
+  en: "UR-77"
+  aliases: ["UR-77"]
+  sides: ["ru"]
+  note: "mine-clearing line-charge vehicle"
+
+- id: system:m117_demining
+  type: system
+  kind: vehicle
+  en: "M117 demining vehicle"
+  aliases: ["M117 demining vehicle"]
+  sides: ["ua"]
+
+- id: system:armoured_train
+  type: system
+  kind: vehicle
+  en: "armoured train"
+  aliases: ["armoured train"]
+  sides: ["ru"]
+
+- id: system:armoured_trains_bars_railway_guard
+  type: system
+  kind: vehicle
+  en: "armoured trains and BARS mobile fire teams guarding railways"
+  aliases: ["Armoured trains and BARS mobile fire teams guarding railways"]
+  parent: system:armoured_train
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:ru_road_logistics_crimea
+  type: system
+  kind: technique
+  en: "Russian road logistics on the R-280/M-14 into Crimea"
+  aliases: ["Russian road logistics on the R-280/M-14 into Crimea"]
+  sides: ["ru"]
+
+- id: system:kerch_ferries
+  type: system
+  kind: ship
+  en: "Kerch Strait ferries"
+  aliases: ["Kerch Strait ferries"]
+  sides: ["ru"]
+
+- id: system:moskva
+  type: system
+  kind: ship
+  en: "cruiser Moskva"
+  uk: "Москва"
+  aliases: ["Moskva"]
+  sides: ["ru"]
+
+- id: system:ivanovets
+  type: system
+  kind: ship
+  en: "Ivanovets"
+  aliases: ["Ivanovets"]
+  sides: ["ru"]
+  note: "Russian missile corvette sunk by naval drones"
+
+- id: system:tsezar_kunikov
+  type: system
+  kind: ship
+  en: "Tsezar Kunikov"
+  aliases: ["Tsezar Kunikov"]
+  sides: ["ru"]
+  note: "Russian landing ship sunk by naval drones"
+
+- id: system:sergey_kotov
+  type: system
+  kind: ship
+  en: "Sergey Kotov"
+  aliases: ["Sergey Kotov"]
+  sides: ["ru"]
+  note: "Russian patrol ship sunk by naval drones"
+
+- id: system:ivan_khurs
+  type: system
+  kind: ship
+  en: "Ivan Khurs"
+  aliases: ["Ivan Khurs"]
+  sides: ["ru"]
+  note: "Russian intelligence ship"
+
+- id: system:anti_tank_mine
+  type: system
+  kind: mine
+  en: "anti-tank mine"
+  aliases: ["anti-tank mine"]
+  parent: system:mine_generic
+  sides: ["ua", "ru"]
+
+- id: system:anti_personnel_mine
+  type: system
+  kind: mine
+  en: "anti-personnel mine"
+  aliases: ["anti-personnel mine"]
+  parent: system:mine_generic
+  sides: ["ua", "ru"]
+
+- id: system:scatterable_mines
+  type: system
+  kind: mine
+  en: "scatterable mines"
+  aliases: ["scatterable mines"]
+  parent: system:mine_generic
+  sides: ["ua", "ru"]
+
+- id: system:artillery_scatterable_mines
+  type: system
+  kind: mine
+  en: "artillery-delivered scatterable mines"
+  aliases: ["artillery-delivered scatterable mines"]
+  parent: system:scatterable_mines
+  sides: ["ua", "ru"]
+
+- id: system:mines_behind_roller
+  type: system
+  kind: mine
+  en: "mines behind the roller"
+  aliases: ["mines behind the roller"]
+  parent: system:mine_generic
+  sides: ["ua"]
+
+- id: system:daily_ap_at_mine_laying
+  type: system
+  kind: mine
+  en: "daily AP and AT mine laying"
+  aliases: ["daily AP and AT mine laying"]
+  parent: system:mine_generic
+  sides: ["ua"]
+
+- id: system:remote_mining_by_drone
+  type: system
+  kind: technique
+  en: "remote mining by drone"
+  aliases: ["Remote mining by drone", "drone-dropped mines on approaches", "remote mining of supply routes"]
+  parent: system:mine_generic
+  sides: ["ua", "ru"]
+  note: "drones and UGVs drop mines on predicted approach and supply routes"
+
+- id: system:deep_stacked_minefields
+  type: system
+  kind: technique
+  en: "deep, stacked minefields"
+  aliases: ["Deep, stacked minefields"]
+  parent: system:mine_generic
+  sides: ["ru"]
+
+- id: system:surovikin_line
+  type: system
+  kind: fortification
+  en: "Surovikin line"
+  aliases: ["Surovikin line"]
+  sides: ["ru"]
+
+- id: system:anti_tank_ditch
+  type: system
+  kind: fortification
+  en: "anti-tank ditch"
+  aliases: ["anti-tank ditch"]
+  sides: ["ua", "ru"]
+
+- id: system:dragons_teeth
+  type: system
+  kind: fortification
+  en: "dragon's teeth"
+  aliases: ["dragon's teeth"]
+  sides: ["ua", "ru"]
+
+- id: system:rf_jamming_drone_links
+  type: system
+  kind: ew_system
+  en: "RF jamming of drone control links"
+  aliases: ["RF jamming of drone control links", "RF jamming", "RF jamming (EW)", "RF jamming in the last mile", "Russian jamming of RF FPVs"]
+  parent: system:ew_generic
+  sides: ["ua", "ru"]
+  note: "counter: fibre-optic FPV, AI terminal guidance, frequency hopping"
+
+- id: system:signal_loss
+  type: system
+  kind: ew_system
+  en: "signal loss (control-link dropout)"
+  aliases: ["signal loss"]
+  parent: system:ew_generic
+  sides: ["ua", "ru"]
+  note: "loss of the UGV/drone control link from jamming, range or terrain"
+
+- id: system:ew_and_strikes_vs_c2
+  type: system
+  kind: ew_system
+  en: "Russian EW and strikes against Ukrainian C2"
+  aliases: ["Russian EW and strikes against Ukrainian C2"]
+  parent: system:ew_generic
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:tactical_jammer
+  type: system
+  kind: ew_system
+  en: "tactical jammers (backpack, vehicle, trench)"
+  aliases: ["Russian tactical EW", "Ukrainian backpack, vehicle and trench jammers", "Ukrainian backpack, vehicle and trench jammers (Kvertus, Obrii)", "standalone Ukrainian jammers"]
+  parent: system:ew_generic
+  sides: ["ua", "ru"]
+  note: "short-range counter-drone jammers"
+
+- id: system:layered_ru_tactical_ew
+  type: system
+  kind: ew_system
+  en: "layered Russian tactical EW"
+  aliases: ["layered Russian tactical EW (Shipovnik-Aero, platoon jammers, hijacking arrays)"]
+  parent: system:tactical_jammer
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:backpack_jammer
+  type: system
+  kind: ew_system
+  en: "backpack jammer"
+  aliases: ["backpack jammer"]
+  parent: system:tactical_jammer
+  sides: ["ua", "ru"]
+
+- id: system:vehicle_jammer
+  type: system
+  kind: ew_system
+  en: "vehicle jammer"
+  aliases: ["vehicle jammer"]
+  parent: system:tactical_jammer
+  sides: ["ua", "ru"]
+
+- id: system:trench_ew
+  type: system
+  kind: ew_system
+  en: "trench EW"
+  uk: "окопний РЕБ"
+  aliases: ["trench EW", "Russian trench EW domes"]
+  parent: system:tactical_jammer
+  sides: ["ua", "ru"]
+
+- id: system:dome_jammer
+  type: system
+  kind: ew_system
+  en: "dome jammer"
+  aliases: ["dome jammer", "EW dome"]
+  parent: system:tactical_jammer
+  sides: ["ua", "ru"]
+  note: "omnidirectional dome-antenna jammer"
+
+- id: system:platoon_jammer
+  type: system
+  kind: ew_system
+  en: "platoon-level jammer"
+  aliases: ["platoon-level jammer"]
+  parent: system:tactical_jammer
+  sides: ["ru"]
+
+- id: system:directional_jammer
+  type: system
+  kind: ew_system
+  en: "directional jammer"
+  aliases: ["directional jammer"]
+  parent: system:tactical_jammer
+  sides: ["ua", "ru"]
+
+- id: system:kvertus_jammers
+  type: system
+  kind: ew_system
+  en: "Kvertus jammers"
+  aliases: ["Kvertus"]
+  parent: system:tactical_jammer
+  sides: ["ua"]
+
+- id: system:kvertus_backpack
+  type: system
+  kind: ew_system
+  en: "Kvertus backpack jammer"
+  aliases: ["Kvertus backpack jammer"]
+  parent: system:kvertus_jammers
+  sides: ["ua"]
+
+- id: system:obrii
+  type: system
+  kind: ew_system
+  en: "Obrii"
+  uk: "Обрій"
+  aliases: ["Obrii"]
+  parent: system:tactical_jammer
+  sides: ["ua"]
+
+- id: system:volnorez
+  type: system
+  kind: ew_system
+  en: "Volnorez"
+  uk: "Волнорез"
+  aliases: ["Volnorez", "Volnorez vehicle dome jammer"]
+  parent: system:vehicle_jammer
+  sides: ["ru"]
+
+- id: system:uav_hijacking_array
+  type: system
+  kind: ew_system
+  en: "UAV-hijacking array"
+  aliases: ["UAV-hijacking array"]
+  parent: system:ew_generic
+  sides: ["ru"]
+
+- id: system:networked_ew
+  type: system
+  kind: ew_system
+  en: "networked EW"
+  aliases: ["networked EW (Kvertus Atlas, Mirage nodes)"]
+  parent: system:ew_generic
+  sides: ["ua"]
+
+- id: system:kvertus_atlas
+  type: system
+  kind: ew_system
+  en: "Kvertus Atlas"
+  aliases: ["Kvertus Atlas"]
+  parent: system:networked_ew
+  sides: ["ua"]
+  note: "fielded Jul 2025"
+
+- id: system:mirage_ew
+  type: system
+  kind: ew_system
+  en: "Mirage EW node"
+  aliases: ["Mirage"]
+  parent: system:kvertus_atlas
+  sides: ["ua"]
+  note: "Kvertus Atlas jamming node; not the Mirage 2000 aircraft"
+
+- id: system:azimuth
+  type: system
+  kind: sensor
+  en: "Azimuth receiver"
+  aliases: ["Azimuth"]
+  parent: system:kvertus_atlas
+  sides: ["ua"]
+
+- id: system:ua_big_vehicle_ew
+  type: system
+  kind: ew_system
+  en: "big Ukrainian vehicle EW"
+  aliases: ["big Ukrainian vehicle EW (Bukovel-AD, Nota, Ai-Petri, Damba, Beton)"]
+  parent: system:ew_generic
+  sides: ["ua"]
+
+- id: system:bukovel_ad
+  type: system
+  kind: ew_system
+  en: "Bukovel-AD"
+  uk: "Буковель-АД"
+  aliases: ["Bukovel-AD"]
+  parent: system:ua_big_vehicle_ew
+  sides: ["ua"]
+  note: "in service since 2016"
+
+- id: system:nota
+  type: system
+  kind: ew_system
+  en: "Nota"
+  aliases: ["Nota"]
+  parent: system:ua_big_vehicle_ew
+  sides: ["ua"]
+
+- id: system:ai_petri
+  type: system
+  kind: ew_system
+  en: "Ai-Petri"
+  aliases: ["Ai-Petri"]
+  parent: system:ua_big_vehicle_ew
+  sides: ["ua"]
+
+- id: system:damba
+  type: system
+  kind: ew_system
+  en: "Damba"
+  aliases: ["Damba"]
+  parent: system:ua_big_vehicle_ew
+  sides: ["ua"]
+
+- id: system:beton
+  type: system
+  kind: ew_system
+  en: "Beton"
+  aliases: ["Beton"]
+  parent: system:ua_big_vehicle_ew
+  sides: ["ua"]
+
+- id: system:ua_terminal_ew_vs_cruise
+  type: system
+  kind: ew_system
+  en: "Ukrainian terminal-phase EW against cruise missiles"
+  aliases: ["Ukrainian terminal-phase EW against cruise missiles"]
+  parent: system:ew_generic
+  sides: ["ua"]
+
+- id: system:zhitel
+  type: system
+  kind: ew_system
+  en: "R-330Zh Zhitel"
+  uk: "Житель"
+  aliases: ["R-330Zh Zhitel", "Russian Zhitel EW platforms", "Big Russian EW platforms (Zhitel) jamming GPS, satcom and GSM"]
+  parent: system:ew_generic
+  sides: ["ru"]
+
+- id: system:krasukha_4
+  type: system
+  kind: ew_system
+  en: "Krasukha-4"
+  aliases: ["Krasukha-4"]
+  parent: system:ew_generic
+  sides: ["ru"]
+
+- id: system:leer_3
+  type: system
+  kind: ew_system
+  en: "Leer-3"
+  aliases: ["Leer-3"]
+  parent: system:ew_generic
+  sides: ["ru"]
+  note: "Orlan-10-borne EW payload"
+
+- id: system:borisoglebsk_2
+  type: system
+  kind: ew_system
+  en: "Borisoglebsk-2"
+  aliases: ["Borisoglebsk-2"]
+  parent: system:ew_generic
+  sides: ["ru"]
+
+- id: system:r_934bmv
+  type: system
+  kind: ew_system
+  en: "R-934BMV"
+  aliases: ["R-934BMV"]
+  parent: system:ew_generic
+  sides: ["ru"]
+
+- id: system:shipovnik_aero
+  type: system
+  kind: ew_system
+  en: "Shipovnik-Aero"
+  aliases: ["Shipovnik-Aero"]
+  parent: system:ew_generic
+  sides: ["ru"]
+
+- id: system:tirada_2
+  type: system
+  kind: ew_system
+  en: "Tirada-2"
+  aliases: ["Tirada-2"]
+  parent: system:ew_generic
+  sides: ["ru"]
+  note: "satellite-link jammer"
+
+- id: system:shtora_image_spoofing
+  type: system
+  kind: ew_system
+  en: "Shtora image-spoofing system"
+  aliases: ["Shtora", "Shtora image-spoofing system", "Shtora image spoofing"]
+  parent: system:ew_generic
+  sides: ["ru"]
+  note: "spoofs drone video feeds (Aug 2026); not the T-90 Shtora IR jammer"
+
+- id: system:comms_interception
+  type: system
+  kind: ew_system
+  en: "communications interception"
+  aliases: ["Russian EW decryption of radio traffic", "Ukrainian interception of Russian tactical radio"]
+  parent: system:ew_generic
+  sides: ["ua", "ru"]
+  note: "radio intercept and decryption (SIGINT)"
+
+- id: system:torn_mdm
+  type: system
+  kind: ew_system
+  en: "Torn-MDM"
+  aliases: ["Torn-MDM", "Torn-MDM communications interception"]
+  parent: system:comms_interception
+  sides: ["ru"]
+
+- id: system:starlink_jamming
+  type: system
+  kind: ew_system
+  en: "jamming of Starlink uplinks"
+  aliases: ["Russian jamming of Starlink terminal uplinks"]
+  parent: system:ew_generic
+  sides: ["ru"]
+
+- id: system:volna_kupol_garant
+  type: system
+  kind: ew_system
+  en: "Volna Kupol Garant"
+  aliases: ["Volna Kupol Garant", "Volna Kupol Garant Starlink jammer", "Volna Kupol Garant satellite-uplink jammer", "Volna Kupol Garant jammer", "Volna Kupol Garant Starlink uplink jammer", "Russian Starlink uplink jamming (Volna Kupol Garant)", "Volna Kupol Garant Starlink jamming"]
+  parent: system:starlink_jamming
+  sides: ["ru"]
+
+- id: system:peresvet_jammer
+  type: system
+  kind: ew_system
+  en: "Peresvet anti-Starlink jammer"
+  aliases: ["Peresvet", "purpose-built Russian anti-Starlink jammers (Peresvet prototypes)"]
+  parent: system:starlink_jamming
+  sides: ["ru"]
+
+- id: system:tobol
+  type: system
+  kind: ew_system
+  en: "Tobol"
+  aliases: ["Tobol"]
+  parent: system:starlink_jamming
+  sides: ["ru"]
+  note: "satellite-signal jammer"
+
+- id: system:vivaldi_ew_dome
+  type: system
+  kind: technique
+  en: "Operation Vivaldi EW and air-defence dome"
+  aliases: ["Operation Vivaldi EW campaign", "Air-defence and EW 'dome' over the assault area (Operation Vivaldi)"]
+  parent: system:ew_generic
+  sides: ["ua"]
+  note: "blinded Russian drones near Lyman, May-Sep 2026"
+
+- id: system:gnss_jamming
+  type: system
+  kind: gnss_countermeasure
+  en: "GNSS jamming and spoofing"
+  aliases: ["GNSS jamming", "Russian GNSS jamming", "Russian GNSS jamming and spoofing", "Russian EW (GPS jamming)", "Ukrainian GNSS jamming", "Russian GNSS jamming of JDAM-ER", "Ukrainian GNSS jamming of Gerans", "Ukrainian EW jamming of KAB guidance", "Russian jamming of GMLRS"]
+  parent: system:ew_generic
+  sides: ["ua", "ru"]
+
+- id: system:pokrova
+  type: system
+  kind: gnss_countermeasure
+  en: "Pokrova"
+  uk: "Покрова"
+  aliases: ["Pokrova", "Pokrova jamming", "Pokrova national GNSS-spoofing system (Lima)"]
+  parent: system:gnss_jamming
+  sides: ["ua"]
+  note: "Ukraine's national GNSS jamming and spoofing system, early 2024"
+
+- id: system:lima
+  type: system
+  kind: gnss_countermeasure
+  en: "Lima"
+  uk: "Ліма"
+  aliases: ["Lima"]
+  parent: system:pokrova
+  sides: ["ua"]
+  note: "Cascade Systems; >90% of Pokrova by 2026"
+
+- id: system:lima_quant
+  type: system
+  kind: gnss_countermeasure
+  en: "Lima-Quant"
+  aliases: ["Lima-Quant", "Lima-Quant GNSS countermeasure"]
+  parent: system:lima
+  sides: ["ua"]
+
+- id: system:pole_21
+  type: system
+  kind: gnss_countermeasure
+  en: "Pole-21"
+  aliases: ["Pole-21"]
+  parent: system:gnss_jamming
+  sides: ["ru"]
+
+- id: system:crpa
+  type: system
+  kind: gnss_countermeasure
+  en: "CRPA anti-jam antenna"
+  aliases: ["CRPA", "CRPA antenna", "CRPA anti-jam antennas"]
+  sides: ["ua", "ru"]
+  note: "controlled reception pattern antenna; counter to GNSS jamming"
+
+- id: system:crpa_large_arrays
+  type: system
+  kind: gnss_countermeasure
+  en: "larger CRPA arrays (20-, 24-, 32-element)"
+  aliases: ["larger CRPA arrays (20-, 24-, 32-element)"]
+  parent: system:crpa
+  sides: ["ru"]
+
+- id: system:kometa_crpa
+  type: system
+  kind: gnss_countermeasure
+  en: "Kometa CRPA antennas"
+  uk: "Комета"
+  aliases: ["Kometa-4 → Kometa-8 CRPA antennas on KABs"]
+  parent: system:crpa
+  sides: ["ru"]
+
+- id: system:kometa_m
+  type: system
+  kind: gnss_countermeasure
+  en: "Kometa-M"
+  aliases: ["Kometa-M", "Kometa-M multi-element CRPA antennas"]
+  parent: system:kometa_crpa
+  sides: ["ru"]
+
+- id: system:kometa_4
+  type: system
+  kind: gnss_countermeasure
+  en: "Kometa-4"
+  aliases: ["Kometa-4"]
+  parent: system:kometa_crpa
+  sides: ["ru"]
+
+- id: system:kometa_8
+  type: system
+  kind: gnss_countermeasure
+  en: "Kometa-8"
+  aliases: ["Kometa-8"]
+  parent: system:kometa_crpa
+  sides: ["ru"]
+
+- id: system:kometa_new_series
+  type: system
+  kind: gnss_countermeasure
+  en: "new-series Kometa CRPA"
+  aliases: ["new-series Kometa CRPA on KABs and Shaheds"]
+  parent: system:kometa_crpa
+  sides: ["ru"]
+
+- id: system:frequency_hopping_diversity
+  type: system
+  kind: technique
+  en: "frequency diversity and hopping"
+  aliases: ["frequency diversity and hopping", "Russian frequency diversity overwhelming standalone jammers"]
+  sides: ["ua", "ru"]
+
+- id: system:molniya_nonstandard_bands
+  type: system
+  kind: technique
+  en: "non-standard bands and frequency hopping (Molniya)"
+  aliases: ["non-standard bands and frequency hopping (Molniya)", "frequency hopping (Molniya)", "Molniya video at 4.1–4.5 GHz"]
+  parent: system:frequency_hopping_diversity
+  sides: ["ru"]
+
+- id: system:fpv_band_shift
+  type: system
+  kind: technique
+  en: "Russian FPV band shift to 720–1020 MHz and mixed bands"
+  aliases: ["Russian FPV band shift to 720–1020 MHz and mixed bands"]
+  parent: system:frequency_hopping_diversity
+  sides: ["ru"]
+
+- id: system:digital_video_link
+  type: system
+  kind: technique
+  en: "digital video links"
+  aliases: ["digital video (Molniya)"]
+  sides: ["ru"]
+  note: "digital drone video defeats analogue-video detectors"
+
+- id: system:anti_emitter_strike
+  type: system
+  kind: technique
+  en: "anti-emitter strikes"
+  aliases: ["anti-emitter strike", "Ukrainian emitter hunting (strikes on EW platforms)", "Ukrainian counter-battery and anti-emitter strikes on big EW platforms", "Ukrainian targeting of big EW emitters", "deep drone strikes on emitters", "Ukrainian strikes on exposed Russian substitute emitters"]
+  sides: ["ua", "ru"]
+  note: "strikes on jammers and other emitters located by ELINT"
+
+- id: system:strikes_on_kupol
+  type: system
+  kind: technique
+  en: "strikes on Volna Kupol Garant jammers"
+  aliases: ["Ukrainian strikes on Volna Kupol Garant units", "Ukrainian strikes on Kupol jammers"]
+  parent: system:anti_emitter_strike
+  sides: ["ua"]
+
+- id: system:ew_dispersal_concealment
+  type: system
+  kind: technique
+  en: "EW dispersal and concealment"
+  aliases: ["Russian EW dispersal and concealment (subtle Zhitel use, antennas on light platforms, disposable Pole-21, nets in forest belts)", "dispersed, disposable EW antennas"]
+  sides: ["ru"]
+
+- id: system:krasukha_camouflage
+  type: system
+  kind: passive_defence
+  en: "Krasukha-4 camouflage under nets in forest belts"
+  aliases: ["Krasukha-4 camouflage under nets in forest belts"]
+  parent: system:krasukha_4
+  sides: ["ru"]
+
+- id: system:ew_pause
+  type: system
+  kind: technique
+  en: "EW pause"
+  aliases: ["EW pause"]
+  sides: ["ua", "ru"]
+  note: "planned pause in own jamming to let own drones fly"
+
+- id: system:artillery_sead
+  type: system
+  kind: technique
+  en: "artillery SEAD"
+  aliases: ["artillery SEAD"]
+  sides: ["ua", "ru"]
+
+- id: system:artillery_sead_ew_pauses
+  type: system
+  kind: technique
+  en: "artillery SEAD and planned pauses in own jamming"
+  aliases: ["artillery SEAD and planned pauses in own jamming"]
+  parent: system:artillery_sead
+  sides: ["ua", "ru"]
+  note: "composite:"
+
+- id: system:elint_mapped_routing
+  type: system
+  kind: technique
+  en: "ELINT-mapped strike routing around EW-saturated zones"
+  aliases: ["ELINT-mapped strike routing around EW-saturated zones"]
+  sides: ["ru"]
+
+- id: system:spacex_detection_elint_strikes
+  type: system
+  kind: technique
+  en: "SpaceX interference detection, partner ELINT and Ukrainian strikes"
+  aliases: ["SpaceX interference detection, partner ELINT and Ukrainian strikes"]
+  sides: ["ua", "western"]
+  note: "composite:"
+
+- id: system:it_army_firmware_attack
+  type: system
+  kind: technique
+  en: "IT Army cyber attack on firmware servers"
+  aliases: ["IT Army cyber attack on firmware servers"]
+  sides: ["ua"]
+
+- id: system:dji_firmware_reflashing
+  type: system
+  kind: c2_software
+  en: "Russian central DJI firmware reflashing"
+  aliases: ["Russian central DJI firmware reflashing"]
+  sides: ["ru"]
+
+- id: system:firmware_1001
+  type: system
+  kind: c2_software
+  en: "Firmware 1001"
+  aliases: ["Firmware 1001"]
+  sides: ["ua"]
+  note: "DJI war firmware, 40+ versions in 2 years"
+
+- id: system:drone_tracking_software
+  type: system
+  kind: sensor
+  en: "drone-tracking software"
+  aliases: ["drone-tracking software", "drone-tracking software to locate operators"]
+  sides: ["ua", "ru"]
+  note: "locates drone operators"
+
+- id: system:drone_operators
+  type: system
+  kind: technique
+  en: "drone operators (as targets)"
+  aliases: ["drone operators"]
+  sides: ["ua", "ru"]
+  note: "drone crews as a target class"
+
+- id: system:ukrainian_drone_search_strike
+  type: system
+  kind: technique
+  en: "Ukrainian drone search and strike"
+  aliases: ["Ukrainian drone search and strike"]
+  sides: ["ua"]
+
+- id: system:delta
+  type: system
+  kind: c2_software
+  en: "Delta"
+  uk: "Дельта"
+  aliases: ["Delta", "DELTA"]
+  sides: ["ua"]
+  note: "Ukrainian situational-awareness and C2 system"
+
+- id: system:delta_monitor
+  type: system
+  kind: c2_software
+  en: "Delta Monitor"
+  aliases: ["Delta Monitor", "Deltamonitor"]
+  parent: system:delta
+  sides: ["ua"]
+  note: "Delta situational map"
+
+- id: system:vezha
+  type: system
+  kind: c2_software
+  en: "Vezha"
+  uk: "Вежа"
+  aliases: ["Vezha"]
+  parent: system:delta
+  sides: ["ua"]
+  note: "Delta drone-stream wall"
+
+- id: system:avengers
+  type: system
+  kind: c2_software
+  en: "Avengers AI"
+  aliases: ["Avengers"]
+  parent: system:delta
+  sides: ["ua"]
+  note: "Delta AI video analytics"
+
+- id: system:mission_control
+  type: system
+  kind: c2_software
+  en: "Mission Control"
+  aliases: ["Mission Control"]
+  parent: system:delta
+  sides: ["ua"]
+  note: "Delta drone airspace deconfliction"
+
+- id: system:delta_tube
+  type: system
+  kind: c2_software
+  en: "Delta Tube"
+  aliases: ["Delta Tube"]
+  parent: system:delta
+  sides: ["ua"]
+
+- id: system:target_hub
+  type: system
+  kind: c2_software
+  en: "Target Hub"
+  aliases: ["Target Hub"]
+  parent: system:delta
+  sides: ["ua"]
+  note: "Delta target list and tasking"
+
+- id: system:kropyva
+  type: system
+  kind: c2_software
+  en: "Kropyva"
+  uk: "Кропива"
+  aliases: ["Kropyva"]
+  sides: ["ua"]
+  note: "artillery and map C2 app"
+
+- id: system:gis_arta
+  type: system
+  kind: c2_software
+  en: "GIS Arta"
+  uk: "ГІС Арта"
+  aliases: ["GIS Arta"]
+  sides: ["ua"]
+
+- id: system:topaz
+  type: system
+  kind: c2_software
+  en: "TOPAZ"
+  aliases: ["TOPAZ"]
+  sides: ["western"]
+  note: "Polish artillery fire-control system linked to Delta"
+
+- id: system:swarmer
+  type: system
+  kind: c2_software
+  en: "Swarmer"
+  aliases: ["Swarmer"]
+  sides: ["ua"]
+  note: "drone swarm software"
+
+- id: system:dot_chain
+  type: system
+  kind: c2_software
+  en: "DOT-Chain / Brave1 Market"
+  aliases: ["DOT-Chain"]
+  sides: ["ua"]
+  note: "procurement marketplace where e-points are spent"
+
+- id: system:diia
+  type: system
+  kind: c2_software
+  en: "Diia"
+  uk: "Дія"
+  aliases: ["Diia"]
+  sides: ["ua"]
+  note: "state services app; civil Starlink registration"
+
+- id: system:evorog
+  type: system
+  kind: c2_software
+  en: "eVorog"
+  uk: "єВорог"
+  aliases: ["eVorog"]
+  sides: ["ua"]
+  note: "civilian enemy-sighting reporting bot"
+
+- id: system:stop_russian_war
+  type: system
+  kind: c2_software
+  en: "STOP Russian War"
+  aliases: ["STOP Russian War"]
+  sides: ["ua"]
+  note: "civilian reporting bot"
+
+- id: system:alpinequest
+  type: system
+  kind: c2_software
+  en: "AlpineQuest"
+  aliases: ["AlpineQuest"]
+  sides: ["ua", "ru"]
+  note: "offline map app"
+
+- id: system:strelets
+  type: system
+  kind: c2_software
+  en: "Strelets"
+  uk: "Стрелец"
+  aliases: ["Strelets"]
+  sides: ["ru"]
+  note: "Russian sensor-to-fire-control system"
+
+- id: system:glaz_groza
+  type: system
+  kind: c2_software
+  en: "Glaz/Groza"
+  aliases: ["Glaz/Groza"]
+  sides: ["ru"]
+  note: "drone-to-fires complex"
+
+- id: system:svod
+  type: system
+  kind: c2_software
+  en: "Svod"
+  aliases: ["Svod"]
+  sides: ["ru"]
+  note: "tactical situational-awareness complex (Aug 2025)"
+
+- id: system:sozvezdie_m2
+  type: system
+  kind: c2_software
+  en: "Sozvezdie-M2"
+  aliases: ["Sozvezdie-M2"]
+  sides: ["ru"]
+  note: "UTLCS lineage automated C2"
+
+- id: system:zov_maps
+  type: system
+  kind: c2_software
+  en: "ZOV Maps"
+  aliases: ["ZOV Maps"]
+  sides: ["ru"]
+
+- id: system:astras
+  type: system
+  kind: c2_software
+  en: "ASTRAS"
+  aliases: ["ASTRAS"]
+  sides: ["ru"]
+  note: "messenger-style chat tool replacing Discord"
+
+- id: system:starlink
+  type: system
+  kind: communications
+  en: "Starlink"
+  aliases: ["Starlink", "Ukrainian Starlink", "Starlink terminals (UA/SpaceX)", "Ukrainian Starlink for drones and C2", "Ukrainian drones on Starlink", "Ukrainian Starlink-linked drones and communications"]
+  sides: ["ua", "ru", "western"]
+  note: "SpaceX LEO satellite internet; Ukrainian C2 backbone"
+
+- id: system:starlink_mini
+  type: system
+  kind: communications
+  en: "Starlink Mini"
+  aliases: ["Starlink Mini"]
+  parent: system:starlink
+  sides: ["ua", "ru"]
+
+- id: system:smuggled_starlink_ru
+  type: system
+  kind: communications
+  en: "smuggled Starlink (Russian use)"
+  aliases: ["Russian use of smuggled Starlink", "Russian drones and C2 on smuggled Starlink", "Russian use of smuggled Starlink terminals for front-line C2 and drones", "Russian drone and C2 use of Starlink"]
+  parent: system:starlink
+  sides: ["ru"]
+  note: "until the Feb 2026 whitelist"
+
+- id: system:ru_drone_feed_starlink_telegram
+  type: system
+  kind: communications
+  en: "Russian drone-feed relay over Starlink and Telegram"
+  aliases: ["Russian drone-feed relay over Starlink and Telegram"]
+  parent: system:smuggled_starlink_ru
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:starlink_whitelist
+  type: system
+  kind: programme
+  en: "Starlink whitelist"
+  aliases: ["Starlink whitelist", "Starlink whitelist cutoff", "SpaceX Starlink whitelist", "Starlink whitelist of registered terminals", "Starlink whitelisting of terminals", "Starlink whitelist (loss of Starlink)", "Starlink cut-off"]
+  parent: system:starlink
+  sides: ["ua", "western"]
+  note: "registration whitelist from 2 Feb 2026 that cut off Russian terminals"
+
+- id: system:starlink_speed_cap
+  type: system
+  kind: programme
+  en: "Starlink speed-based cutoff"
+  aliases: ["Starlink speed-based cutoff", "Starlink whitelist plus 75–90 km/h speed cap"]
+  parent: system:starlink_whitelist
+  sides: ["ua", "western"]
+  note: "75-90 km/h speed cap against drone-mounted terminals"
+
+- id: system:gur_spacex_deactivations
+  type: system
+  kind: programme
+  en: "GUR exposure and SpaceX deactivations"
+  aliases: ["GUR exposure and SpaceX deactivations"]
+  parent: system:starlink
+  sides: ["ua", "western"]
+
+- id: system:proxy_starlink_registration
+  type: system
+  kind: technique
+  en: "proxy re-registration of Starlink terminals"
+  aliases: ["proxy re-registration of Starlink terminals", "Laundered whitelist registrations through paid Ukrainians"]
+  sides: ["ru"]
+
+- id: system:restoring_comms_proxy_registration
+  type: system
+  kind: technique
+  en: "restoring communications and proxy-registering terminals"
+  aliases: ["restoring communications and proxy-registering terminals"]
+  parent: system:proxy_starlink_registration
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:ru_starlink_workarounds
+  type: system
+  kind: communications
+  en: "Russian Starlink workarounds"
+  aliases: ["Russian workarounds: bribed registrations, legacy radio, Ubiquiti links, mesh relays, fibre, Rassvet satellites"]
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:molniya_mothership_links
+  type: system
+  kind: communications
+  en: "radio relays, fibre internet and Kometa satellites for Molniya motherships"
+  aliases: ["Radio relays, fibre-optic internet links and Kometa satellites for Molniya motherships"]
+  parent: system:ru_starlink_workarounds
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:high_rise_repeaters
+  type: system
+  kind: communications
+  en: "large antennas and repeaters on high-rises"
+  aliases: ["Large antennas and repeaters on high-rises as Starlink substitutes"]
+  parent: system:ru_starlink_workarounds
+  sides: ["ru"]
+
+- id: system:rassvet
+  type: system
+  kind: communications
+  en: "Rassvet"
+  uk: "Рассвет"
+  aliases: ["Rassvet", "Rassvet LEO constellation"]
+  sides: ["ru"]
+  note: "Russian LEO constellation; 32 satellites by Jul 2026"
+
+- id: system:yamal_express
+  type: system
+  kind: communications
+  en: "Yamal/Express satellite terminals"
+  aliases: ["Yamal/Express satellite terminals"]
+  sides: ["ru"]
+
+- id: system:yamal_express_mix
+  type: system
+  kind: communications
+  en: "Yamal/Express and Gazprom Space Systems terminals, radios, cable and Wi-Fi bridges"
+  aliases: ["Yamal/Express and Gazprom Space Systems satellite terminals, radios, cable and Wi-Fi bridges"]
+  parent: system:yamal_express
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:kometa_satcom
+  type: system
+  kind: communications
+  en: "Kometa satellite link"
+  aliases: ["Kometa"]
+  sides: ["ru"]
+  note: "satellite link used by Molniya motherships (Mar 2026); distinct from the Kometa CRPA antennas"
+
+- id: system:mesh_radio
+  type: system
+  kind: communications
+  en: "mesh radio"
+  aliases: ["mesh radio", "mesh radio control", "mesh modem", "mesh radio control (XK-F358 COFDM modems and relay towers)", "Russian mesh-radio relays (XK-F358 modems, Ubiquiti links)"]
+  sides: ["ua", "ru"]
+  note: "self-healing radio networks for drone control and C2"
+
+- id: system:xk_f358
+  type: system
+  kind: communications
+  en: "XK-F358"
+  aliases: ["XK-F358"]
+  parent: system:mesh_radio
+  sides: ["ru"]
+  note: "Chinese COFDM mesh modem"
+
+- id: system:himera
+  type: system
+  kind: communications
+  en: "Himera"
+  aliases: ["Himera"]
+  parent: system:mesh_radio
+  sides: ["ua"]
+  note: "Ukrainian mesh handheld radio"
+
+- id: system:ubiquiti
+  type: system
+  kind: communications
+  en: "Ubiquiti radio"
+  aliases: ["Ubiquiti radio", "Ubiquiti"]
+  sides: ["ua", "ru"]
+  note: "commercial point-to-point Wi-Fi links"
+
+- id: system:motorola_radio
+  type: system
+  kind: communications
+  en: "Motorola radio"
+  aliases: ["Motorola radio", "Ukrainian Motorola 256-bit radio traffic", "Ukrainian Motorola radio communications"]
+  sides: ["ua"]
+
+- id: system:ru_tactical_radio
+  type: system
+  kind: communications
+  en: "Russian tactical radio"
+  aliases: ["Russian tactical radio"]
+  sides: ["ru"]
+
+- id: system:ru_unencrypted_radio_phones
+  type: system
+  kind: communications
+  en: "Russian unencrypted analogue radios and civilian phones"
+  aliases: ["Russian unencrypted analogue radios and civilian phones"]
+  parent: system:ru_tactical_radio
+  sides: ["ru"]
+
+- id: system:link_16
+  type: system
+  kind: communications
+  en: "Link 16"
+  aliases: ["Link 16"]
+  sides: ["western"]
+
+- id: system:telegram
+  type: system
+  kind: communications
+  en: "Telegram"
+  aliases: ["Telegram"]
+  sides: ["ua", "ru"]
+
+- id: system:discord
+  type: system
+  kind: communications
+  en: "Discord"
+  aliases: ["Discord"]
+  sides: ["ru"]
+
+- id: system:drone_detector
+  type: system
+  kind: sensor
+  en: "drone detector"
+  aliases: ["drone detector"]
+  sides: ["ua", "ru"]
+
+- id: system:drone_detector_traffic_lights
+  type: system
+  kind: sensor
+  en: "drone-detector traffic lights"
+  aliases: ["drone-detector traffic lights"]
+  parent: system:drone_detector
+  sides: ["ru"]
+
+- id: system:analogue_video_detector
+  type: system
+  kind: sensor
+  en: "analogue-video detectors"
+  aliases: ["Ukrainian analogue-video detectors"]
+  parent: system:drone_detector
+  sides: ["ua"]
+  note: "read enemy drones' analogue video"
+
+- id: system:chuika
+  type: system
+  kind: sensor
+  en: "Chuika"
+  uk: "Чуйка"
+  aliases: ["Chuika"]
+  parent: system:analogue_video_detector
+  sides: ["ua"]
+
+- id: system:chuika_4
+  type: system
+  kind: sensor
+  en: "Chuika 4.0"
+  aliases: ["Chuika 4.0", "Chuika 4.0 widened to 4.5 GHz"]
+  parent: system:chuika
+  sides: ["ua"]
+
+- id: system:thermal_radar_isr
+  type: system
+  kind: sensor
+  en: "thermal and radar ISR"
+  aliases: ["thermal and radar ISR"]
+  sides: ["ua", "ru"]
+
+- id: system:thermal_imaging
+  type: system
+  kind: sensor
+  en: "thermal imaging (drone and handheld)"
+  aliases: ["thermal imaging (drone and handheld)"]
+  sides: ["ua", "ru"]
+
+- id: system:visual_detection_snow
+  type: system
+  kind: sensor
+  en: "visual detection of troops on snow"
+  aliases: ["visual detection of troops on snow"]
+  sides: ["ua", "ru"]
+
+- id: system:elint_satellite
+  type: system
+  kind: satellite
+  en: "ELINT satellite"
+  aliases: ["ELINT satellite", "Russian ELINT satellite mapping"]
+  sides: ["ua", "ru"]
+
+- id: system:peoples_satellite
+  type: system
+  kind: satellite
+  en: "People's Satellite (ICEYE)"
+  aliases: ["People's Satellite"]
+  sides: ["ua"]
+  note: "crowdfunded ICEYE SAR satellite, Aug 2022"
+
+- id: system:cso_3
+  type: system
+  kind: satellite
+  en: "CSO-3"
+  aliases: ["CSO-3"]
+  sides: ["ua", "western"]
+  note: "French optical reconnaissance satellite"
+
+- id: system:ua_foreign_satellite_isr
+  type: system
+  kind: satellite
+  en: "European and Japanese satellite ISR"
+  aliases: ["European and Japanese satellite ISR (CSO-3, ICEYE, Japanese SAR, APSS)"]
+  sides: ["ua", "western"]
+  note: "composite:"
+
+- id: system:anti_drone_net
+  type: system
+  kind: passive_defence
+  en: "anti-drone net"
+  aliases: ["anti-drone net", "anti-drone nets"]
+  sides: ["ua", "ru"]
+
+- id: system:anti_drone_net_tunnel
+  type: system
+  kind: passive_defence
+  en: "anti-drone net tunnel"
+  aliases: ["anti-drone net tunnel", "anti-drone net corridors", "Anti-drone net tunnels over supply roads", "Russian anti-drone net tunnels", "Ukrainian road net tunnels (Zaporizhzhia)", "anti-drone road netting"]
+  parent: system:anti_drone_net
+  sides: ["ua", "ru"]
+  note: "netted corridors over supply roads"
+
+- id: system:net_tunnels_and_detectors
+  type: system
+  kind: passive_defence
+  en: "anti-drone net tunnels and drone-detector traffic lights"
+  aliases: ["Russian anti-drone net tunnels and drone-detector 'traffic lights'"]
+  parent: system:anti_drone_net_tunnel
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:nets_and_cages
+  type: system
+  kind: passive_defence
+  en: "anti-drone nets and cages"
+  aliases: ["anti-drone nets and cages"]
+  parent: system:anti_drone_net
+  sides: ["ua", "ru"]
+  note: "composite:"
+
+- id: system:ua_fibre_counter_package
+  type: system
+  kind: technique
+  en: "Ukrainian counter-fibre-FPV package"
+  aliases: ["Ukrainian fibre spool (Silkworm) plus shotguns, nets, heated tungsten wire, net guns, daytime and foot logistics"]
+  sides: ["ua"]
+  note: "composite:"
+
+- id: system:hot_wire
+  type: system
+  kind: passive_defence
+  en: "heated tungsten wire"
+  aliases: ["hot wire"]
+  sides: ["ua", "ru"]
+  note: "cuts fibre-optic drone cables"
+
+- id: system:hot_wire_shotguns_net_guns
+  type: system
+  kind: passive_defence
+  en: "tungsten hot wire, shotgun teams and net guns"
+  aliases: ["tungsten hot wire, shotgun teams and net guns"]
+  parent: system:hot_wire
+  sides: ["ua", "ru"]
+  note: "composite:"
+
+- id: system:shotgun
+  type: system
+  kind: small_arms
+  en: "shotgun"
+  aliases: ["shotgun"]
+  sides: ["ua", "ru"]
+
+- id: system:net_gun
+  type: system
+  kind: small_arms
+  en: "net gun"
+  aliases: ["net gun"]
+  sides: ["ua", "ru"]
+
+- id: system:shooting_down_uavs
+  type: system
+  kind: technique
+  en: "shooting down UAVs"
+  aliases: ["shooting down UAVs"]
+  sides: ["ua", "ru"]
+  note: "small-arms fire against drones"
+
+- id: system:dshk
+  type: system
+  kind: small_arms
+  en: "DShK"
+  aliases: ["DShK"]
+  sides: ["ua", "ru"]
+
+- id: system:m2_browning
+  type: system
+  kind: small_arms
+  en: "M2 Browning"
+  aliases: ["M2"]
+  sides: ["ua", "western"]
+
+- id: system:anti_thermal_poncho
+  type: system
+  kind: passive_defence
+  en: "anti-thermal poncho"
+  aliases: ["anti-thermal poncho", "anti-thermal ponchos", "thermal ponchos"]
+  sides: ["ua", "ru"]
+
+- id: system:white_poncho
+  type: system
+  kind: passive_defence
+  en: "white ponchos"
+  aliases: ["white ponchos"]
+  sides: ["ua", "ru"]
+  note: "snow camouflage"
+
+- id: system:decoy
+  type: system
+  kind: passive_defence
+  en: "decoys"
+  aliases: ["decoy", "Decoys (dummy HIMARS, M777, air-defence sites)"]
+  sides: ["ua", "ru"]
+  note: "dummy weapons and sites"
+
+- id: system:decoy_sam_sites
+  type: system
+  kind: passive_defence
+  en: "decoy SAM sites"
+  aliases: ["decoy SAM sites"]
+  parent: system:decoy
+  sides: ["ua"]
+
+- id: system:sam_dispersal_deception
+  type: system
+  kind: passive_defence
+  en: "SAM dispersal, dummy sites and deception"
+  aliases: ["SAM dispersal, dummy sites and deception"]
+  parent: system:decoy_sam_sites
+  sides: ["ua"]
+  note: "composite:"
+
+- id: system:gun_dispersal
+  type: system
+  kind: passive_defence
+  en: "gun dispersal"
+  aliases: ["gun dispersal"]
+  sides: ["ua", "ru"]
+
+- id: system:gun_dispersal_dig_in_decoys
+  type: system
+  kind: passive_defence
+  en: "gun dispersal, dig-in and decoy hides"
+  aliases: ["Gun dispersal, dig-in and decoy hides"]
+  parent: system:gun_dispersal
+  sides: ["ua", "ru"]
+  note: "composite:"
+
+- id: system:gun_displacement
+  type: system
+  kind: technique
+  en: "gun displacement after firing (shoot and scoot)"
+  aliases: ["Gun displacement within 2–15 minutes of firing"]
+  sides: ["ua", "ru"]
+
+- id: system:ru_camouflage_logistics
+  type: system
+  kind: passive_defence
+  en: "Russian logistics camouflage and protection"
+  aliases: ["Russian camouflage, decoys, mobile fire teams, road netting and disguised fuel transport"]
+  sides: ["ru"]
+  note: "composite:"
+
+- id: system:small_group_infiltration
+  type: system
+  kind: technique
+  en: "small-group infiltration"
+  aliases: ["small-group infiltration", "infiltration"]
+  sides: ["ru"]
+  note: "section-size infantry infiltration, the norm from 2024-25"
+
+- id: system:shifting_axis
+  type: system
+  kind: technique
+  en: "shifting infiltration to another axis"
+  aliases: ["shifting to another axis", "shifting infiltration to another axis"]
+  parent: system:small_group_infiltration
+  sides: ["ru"]
+
+- id: system:gas_pipeline_infiltration
+  type: system
+  kind: technique
+  en: "gas pipeline infiltration"
+  aliases: ["gas pipeline infiltration"]
+  parent: system:small_group_infiltration
+  sides: ["ru"]
+
+- id: system:interdiction_weather_infiltration
+  type: system
+  kind: technique
+  en: "interdiction-plus-weather infiltration"
+  aliases: ["Interdiction-plus-weather infiltration"]
+  parent: system:small_group_infiltration
+  sides: ["ru"]
+
+- id: system:kill_reinforcement
+  type: system
+  kind: technique
+  en: "kill the reinforcement, not the infiltrator"
+  aliases: ["kill the reinforcement, not the infiltrator", "interdiction of reinforcement", "interdiction of reinforcement and supply", "counter-infiltration"]
+  sides: ["ua"]
+  note: "Operation Vivaldi logic: cut the reinforcement and supply of infiltration groups, then clear them"
+
+- id: system:strike_search
+  type: system
+  kind: technique
+  en: "counter-infiltration strike-search"
+  aliases: ["counter-infiltration strike-search", "counter-infiltration strike-search teams"]
+  sides: ["ua"]
+
+- id: system:drone_hunting
+  type: system
+  kind: technique
+  en: "drone hunting of infiltrators"
+  aliases: ["drone hunting"]
+  sides: ["ua"]
+
+- id: system:vivaldi_strikes_on_drone_units
+  type: system
+  kind: technique
+  en: "strikes on drone operators, launch sites and logistics (Operation Vivaldi)"
+  aliases: ["Ukrainian strikes on drone operators, launch sites and logistics (Operation Vivaldi)"]
+  sides: ["ua"]
+
+- id: system:middle_strike
+  type: system
+  kind: technique
+  en: "middle strike"
+  aliases: ["middle-strike", "Ukrainian middle strike", "Ukrainian middle strike / Logistics Lockdown"]
+  sides: ["ua"]
+  note: "strikes on logistics at 20-200 km depth"
+
+- id: system:rubikon_deep_interdiction
+  type: system
+  kind: technique
+  en: "dedicated deep drone-interdiction unit (Rubikon)"
+  aliases: ["Dedicated deep drone-interdiction unit (Rubikon)", "dedicated deep drone-interdiction unit", "Rubikon drone units"]
+  sides: ["ru"]
+  note: "elite Russian drone centre that cuts supply roads and hunts drone crews"
+
+- id: system:strikes_on_drone_bases
+  type: system
+  kind: technique
+  en: "strikes on drone bases and workshops"
+  aliases: ["strikes on drone bases and workshops"]
+  sides: ["ua"]
+
+- id: system:route_diversity
+  type: system
+  kind: technique
+  en: "route diversity"
+  aliases: ["route diversity"]
+  sides: ["ua", "ru"]
+
+- id: system:route_anticipation
+  type: system
+  kind: technique
+  en: "route anticipation"
+  aliases: ["route anticipation"]
+  sides: ["ua", "ru"]
+
+- id: system:battalion_tactical_group
+  type: system
+  kind: technique
+  en: "battalion tactical group"
+  aliases: ["battalion tactical group"]
+  sides: ["ru"]
+  note: "BTG organisation"
+
+- id: system:btg_road_column_thrust
+  type: system
+  kind: technique
+  en: "BTG road-column thrust"
+  aliases: ["BTG road-column thrust"]
+  parent: system:battalion_tactical_group
+  sides: ["ru"]
+
+- id: system:flank_screening
+  type: system
+  kind: technique
+  en: "flank screening"
+  aliases: ["flank screening"]
+  sides: ["ua"]
+
+- id: system:massed_artillery_on_columns
+  type: system
+  kind: technique
+  en: "massed artillery on columns"
+  aliases: ["massed artillery on columns"]
+  parent: system:artillery_generic
+  sides: ["ua"]
+
+- id: system:artillery_saturation
+  type: system
+  kind: technique
+  en: "artillery saturation"
+  aliases: ["artillery saturation", "Russian artillery saturation"]
+  parent: system:artillery_generic
+  sides: ["ru"]
+
+- id: system:artillery_saturation_conscript_skirmish
+  type: system
+  kind: technique
+  en: "artillery saturation plus conscript skirmish"
+  aliases: ["Artillery saturation plus conscript skirmish"]
+  parent: system:artillery_saturation
+  sides: ["ru"]
+
+- id: system:massed_fires
+  type: system
+  kind: technique
+  en: "massed fires"
+  aliases: ["massed fires"]
+  parent: system:artillery_generic
+  sides: ["ua", "ru"]
+
+- id: system:pre_planned_fires
+  type: system
+  kind: technique
+  en: "pre-planned fires"
+  aliases: ["pre-planned fires", "pre-registered fires"]
+  parent: system:artillery_generic
+  sides: ["ua", "ru"]
+
+- id: system:pre_planned_fires_low_ground
+  type: system
+  kind: technique
+  en: "pre-planned fires on low ground"
+  aliases: ["pre-planned fires on low ground"]
+  parent: system:pre_planned_fires
+  sides: ["ua"]
+
+- id: system:conserving_ammunition
+  type: system
+  kind: technique
+  en: "conserving ammunition"
+  aliases: ["conserving ammunition"]
+  sides: ["ua", "ru"]
+
+- id: system:recon_fire_complex
+  type: system
+  kind: technique
+  en: "reconnaissance-fire complex"
+  aliases: ["reconnaissance-fire complex", "reconnaissance-fire circuit", "sense-and-strike complex"]
+  sides: ["ua", "ru"]
+  note: "linked sensor-to-shooter kill chain (Russian ROK / reconnaissance-strike circuit)"
+
+- id: system:trading_space
+  type: system
+  kind: technique
+  en: "trading space"
+  aliases: ["trading space"]
+  sides: ["ua"]
+
+- id: system:defensive_depth_reserves
+  type: system
+  kind: technique
+  en: "defensive depth and reserves (mobilization)"
+  aliases: ["defensive depth and reserves (mobilization)"]
+  sides: ["ua"]
+
+- id: system:deception
+  type: system
+  kind: technique
+  en: "deception"
+  aliases: ["deception"]
+  sides: ["ua", "ru"]
+
+- id: system:deception_mobile_breakthrough
+  type: system
+  kind: technique
+  en: "deception plus mobile breakthrough"
+  aliases: ["Deception plus mobile breakthrough"]
+  parent: system:deception
+  sides: ["ua"]
+
+- id: system:disposable_fire_teams
+  type: system
+  kind: technique
+  en: "disposable fire teams ('meat assaults')"
+  aliases: ["disposable fire teams", "Disposable fire teams (\"meat assaults\")"]
+  sides: ["ru"]
+
+- id: system:battalion_mechanized_waves
+  type: system
+  kind: technique
+  en: "battalion mechanized waves"
+  aliases: ["Battalion mechanized waves"]
+  sides: ["ru"]
+
+- id: system:motorcycle_atv_rush
+  type: system
+  kind: technique
+  en: "motorcycle, buggy and ATV rush"
+  aliases: ["Motorcycle, buggy and ATV rush", "swerving motorcycle and ATV rush", "motorcycle assault group"]
+  sides: ["ru"]
+  note: "riders swerve across open fields to beat FPV latency"
+
+- id: system:motorcycle_speed
+  type: system
+  kind: technique
+  en: "motorcycle speed"
+  aliases: ["motorcycle speed"]
+  parent: system:motorcycle_atv_rush
+  sides: ["ru"]
+
+- id: system:drone_first_sparse_defence
+  type: system
+  kind: technique
+  en: "drone-first sparse defence"
+  aliases: ["Drone-first sparse defence"]
+  sides: ["ua"]
+
+- id: system:drone_overwatched_assault_group
+  type: system
+  kind: technique
+  en: "drone-overwatched assault group"
+  aliases: ["Drone-overwatched assault group"]
+  sides: ["ru"]
+
+- id: system:drone_resupplied_strongpoint
+  type: system
+  kind: technique
+  en: "drone-resupplied besieged strongpoint"
+  aliases: ["Drone-resupplied besieged strongpoint"]
+  sides: ["ua"]
+
+- id: system:north_korean_waves
+  type: system
+  kind: technique
+  en: "North Korean waves, then small teams"
+  aliases: ["North Korean waves, then small teams"]
+  sides: ["ru", "other"]
+
+- id: system:recon_by_fire_probes
+  type: system
+  kind: technique
+  en: "recon-by-fire section probes"
+  aliases: ["Recon-by-fire section probes"]
+  sides: ["ru"]
+
+- id: system:long_rotations
+  type: system
+  kind: technique
+  en: "long rotations"
+  aliases: ["long rotations", "Night and bad-weather rotations spaced more than a month apart"]
+  sides: ["ua", "ru"]
+
+- id: system:timely_unit_rotation
+  type: system
+  kind: technique
+  en: "timely unit rotation"
+  aliases: ["timely unit rotation"]
+  sides: ["ua"]
+
+- id: system:attacks_timed_to_rotations
+  type: system
+  kind: technique
+  en: "attacks timed to rotations"
+  aliases: ["attacks timed to rotations"]
+  sides: ["ru"]
+
+- id: system:coercion
+  type: system
+  kind: technique
+  en: "coercion ('zeroing', punishment pits)"
+  aliases: ["coercion (\"zeroing\", punishment pits)"]
+  sides: ["ru"]
+
+- id: system:robotic_breach_route_mining
+  type: system
+  kind: technique
+  en: "robotic breach and route mining"
+  aliases: ["Robotic breach and route mining"]
+  parent: system:ugv
+  sides: ["ua"]
+
+- id: system:mechanized_breach
+  type: system
+  kind: technique
+  en: "mechanized breach (MICLIC, UR-77)"
+  aliases: ["Mechanized breach (MICLIC, UR-77)"]
+  sides: ["ua", "ru"]
+
+- id: system:mine_clearing
+  type: system
+  kind: technique
+  en: "mine clearing"
+  aliases: ["mine clearing"]
+  sides: ["ua", "ru"]
+
+- id: system:hand_clearing
+  type: system
+  kind: technique
+  en: "hand clearing"
+  aliases: ["hand clearing"]
+  parent: system:mine_clearing
+  sides: ["ua", "ru"]
+
+- id: system:mine_reconnaissance
+  type: system
+  kind: technique
+  en: "mine reconnaissance"
+  aliases: ["mine reconnaissance"]
+  sides: ["ua", "ru"]
+
+- id: system:dismounted_assault
+  type: system
+  kind: technique
+  en: "dismounted assault"
+  aliases: ["dismounted assault"]
+  sides: ["ua", "ru"]
+
+- id: system:bypassing
+  type: system
+  kind: technique
+  en: "bypassing"
+  aliases: ["bypassing"]
+  sides: ["ua", "ru"]
+
+- id: system:treeline_infiltration
+  type: system
+  kind: technique
+  en: "dismounted infiltration along treelines (lisosmuha)"
+  uk: "лісосмуга"
+  aliases: ["Dismounted infiltration along treelines (lisosmuha)", "dismounted infiltration along treelines"]
+  sides: ["ua"]
+
+- id: system:treeline_assault_group
+  type: system
+  kind: technique
+  en: "assault group along treelines"
+  aliases: ["assault group along treelines"]
+  sides: ["ru"]
+
+- id: system:longitudinal_attack
+  type: system
+  kind: technique
+  en: "longitudinal attack"
+  aliases: ["longitudinal attack"]
+  sides: ["ua", "ru"]
+  note: "entering a treeline from its flank and fighting along it"
+
+- id: system:perpendicular_attack
+  type: system
+  kind: technique
+  en: "perpendicular attack"
+  aliases: ["perpendicular attack"]
+  sides: ["ua", "ru"]
+  note: "attack across the open field into a treeline"
+
+- id: system:bombardment_not_storming
+  type: system
+  kind: technique
+  en: "bombardment rather than storming"
+  aliases: ["bombardment rather than storming", "bombardment rather than assault"]
+  sides: ["ru"]
+
+- id: system:cutting_relief_route
+  type: system
+  kind: technique
+  en: "cutting the relief route"
+  aliases: ["cutting the relief route"]
+  sides: ["ru"]
+
+- id: system:beyond_los_engagement
+  type: system
+  kind: technique
+  en: "beyond-line-of-sight engagement"
+  aliases: ["beyond-line-of-sight engagement"]
+  sides: ["ua"]
+
+- id: system:casualty_evacuation
+  type: system
+  kind: technique
+  en: "casualty evacuation"
+  aliases: ["casualty evacuation"]
+  sides: ["ua", "ru"]
+
+- id: system:counteroffensive_c2_loss
+  type: system
+  kind: technique
+  en: "counteroffensive exploiting enemy C2 loss"
+  aliases: ["Counteroffensive exploiting enemy C2 loss"]
+  sides: ["ua"]
+
+- id: system:surrender_appeals
+  type: system
+  kind: technique
+  en: "surrender appeals"
+  aliases: ["surrender appeals"]
+  sides: ["ua"]
+
+- id: system:drone_baiting
+  type: system
+  kind: technique
+  en: "drone baiting"
+  aliases: ["drone baiting"]
+  sides: ["ua", "ru"]
+
+- id: system:flag_operation
+  type: system
+  kind: technique
+  en: "flag operation"
+  aliases: ["flag operation"]
+  sides: ["ua", "ru"]
+  note: "flag-planting photo-ops as information warfare"
+
+- id: system:ua_sead_dead
+  type: system
+  kind: technique
+  en: "Ukrainian SEAD/DEAD campaign"
+  aliases: ["Ukrainian SEAD/DEAD campaign"]
+  sides: ["ua"]
+
+- id: system:saransk_fibre_plant_strike
+  type: system
+  kind: technique
+  en: "strike on the Saransk fibre plant"
+  aliases: ["Ukrainian strike on the Saransk fibre plant"]
+  sides: ["ua"]
+
+- id: system:rail_fed_forward_depots
+  type: system
+  kind: technique
+  en: "Russian rail-fed forward ammunition depots"
+  aliases: ["Russian rail-fed forward ammunition depots", "Russian rail-fed depots within 30–50 km of the front"]
+  sides: ["ru"]
+
+- id: system:depots_beyond_himars_range
+  type: system
+  kind: technique
+  en: "moving depots beyond HIMARS range"
+  aliases: ["Moving Russian depots beyond HIMARS range (100+ km)"]
+  sides: ["ru"]
+
+- id: system:hq_pullback_hardening
+  type: system
+  kind: technique
+  en: "Russian HQ pull-back and hardening"
+  aliases: ["Russian HQ pull-back and hardening, SHORAD linked to long-range radar, and EW"]
+  sides: ["ru"]
+
+- id: system:hq_displacement_120km
+  type: system
+  kind: technique
+  en: "Russian HQ displacement beyond 120 km"
+  aliases: ["Russian HQ displacement beyond 120 km"]
+  parent: system:hq_pullback_hardening
+  sides: ["ru"]
+
+- id: system:ru_command_posts_lyman
+  type: system
+  kind: technique
+  en: "Russian command posts and C2 nodes on the Lyman axis"
+  aliases: ["Russian command posts and C2 nodes on the Lyman axis"]
+  sides: ["ru"]
+  note: "target set in Operation Vivaldi"
+
+- id: system:ru_pipeline_fuel_lyman
+  type: system
+  kind: technique
+  en: "Russian pipeline fuel supply to the Lyman axis"
+  aliases: ["Russian pipeline fuel supply to the Lyman axis"]
+  sides: ["ru"]
+
+- id: system:pipeline_end_strikes
+  type: system
+  kind: technique
+  en: "strikes on both ends of the Voronezh–Luhansk diesel pipeline"
+  aliases: ["Strikes on both ends of the Voronezh–Luhansk diesel pipeline"]
+  sides: ["ua"]
+
+- id: system:kursk_single_road_supply
+  type: system
+  kind: technique
+  en: "single-road ground supply of the Kursk salient"
+  aliases: ["single-road ground supply of the Kursk salient"]
+  sides: ["ua"]
+
+- id: system:night_resupply_breach_lanes
+  type: system
+  kind: technique
+  en: "night resupply through breach lanes"
+  aliases: ["night resupply through breach lanes"]
+  sides: ["ua", "ru"]
+
+- id: system:army_of_drones
+  type: system
+  kind: programme
+  en: "Army of Drones"
+  uk: "Армія дронів"
+  aliases: ["Army of Drones"]
+  sides: ["ua"]
+  note: "launched Jul 2022 by UNITED24, General Staff and MinDigital"
+
+- id: system:army_of_drones_bonus
+  type: system
+  kind: programme
+  en: "Army of Drones Bonus"
+  aliases: ["Army of Drones Bonus"]
+  sides: ["ua"]
+  note: "points for confirmed hits, spent on Brave1 Market"
+
+- id: system:e_points
+  type: system
+  kind: programme
+  en: "e-points (ye-baly)"
+  uk: "е-бали"
+  aliases: ["e-points", "ePoints"]
+  sides: ["ua"]
+  note: "points currency of the Army of Drones Bonus"
+
+- id: system:drone_line
+  type: system
+  kind: programme
+  en: "Drone Line"
+  uk: "Лінія дронів"
+  aliases: ["Drone Line"]
+  sides: ["ua"]
+
+- id: system:logistics_lockdown
+  type: system
+  kind: programme
+  en: "Logistics Lockdown"
+  aliases: ["Logistics Lockdown"]
+  sides: ["ua"]
+  note: "MoD programme from 27 May 2026 paying middle-strike units via ePoints"
+
+- id: system:czech_ammunition_initiative
+  type: system
+  kind: programme
+  en: "Czech ammunition initiative"
+  aliases: ["Czech ammunition initiative"]
+  sides: ["ua", "western"]
+
+- id: system:purl
+  type: system
+  kind: programme
+  en: "PURL"
+  aliases: ["PURL"]
+  sides: ["ua", "western"]
+  note: "Prioritised Ukraine Requirements List: European purchases of US weapons, from Jul 2025"
+
+- id: system:kontrakt_18_24
+  type: system
+  kind: programme
+  en: "Kontrakt 18–24"
+  aliases: ["Kontrakt 18–24"]
+  sides: ["ua"]
+  note: "1M UAH contracts for 18-24-year-olds, from 11 Feb 2025"
+
+- id: system:fixed_term_contracts_2026
+  type: system
+  kind: programme
+  en: "June 2026 fixed-term contracts"
+  aliases: ["June 2026 fixed-term contracts"]
+  sides: ["ua"]
+
+- id: system:awol_return_scheme
+  type: system
+  kind: programme
+  en: "AWOL return scheme"
+  aliases: ["AWOL return scheme"]
+  sides: ["ua"]
+
+- id: system:gegd
+  type: system
+  kind: programme
+  en: "GEGD"
+  aliases: ["GEGD"]
+  sides: ["ua", "western"]
+  note: "US Global Enhanced GEOINT Delivery (Maxar imagery)"
+
+- id: system:gegd_suspension
+  type: system
+  kind: programme
+  en: "US suspension of GEGD Maxar imagery"
+  aliases: ["US suspension of GEGD Maxar imagery"]
+  parent: system:gegd
+  sides: ["western"]
+  note: "7 Mar 2025"
+
+- id: system:apss
+  type: system
+  kind: programme
+  en: "APSS (Aquila)"
+  aliases: ["APSS"]
+  sides: ["western"]
+  note: "NATO pooled satellite surveillance"

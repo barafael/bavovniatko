@@ -1,0 +1,40 @@
+{"pair": "5a9622d489f3", "relation": "refines", "from": "claim:c00_0037_07", "to": "claim:c00_0073_30", "strength": 0.9, "rationale": "A gives the same 23 September 2023 first Abrams arrival with confirmation, total and timing context."}
+{"pair": "5c519c4889c8", "relation": "supports", "from": "claim:c00_0062_01", "to": "claim:c04_0027_07", "strength": 0.6, "rationale": "Both say the 3rd Army Corps ran Operation Vivaldi near Lyman; shared Kyiv Independent source.", "independent": false}
+{"pair": "5c6deb95bc79", "relation": "none", "rationale": "Interceptor use vs daily orbit count; different claims."}
+{"pair": "5ce889ae12a4", "relation": "none", "rationale": "Collective and marker design vs update volume; different facts."}
+{"pair": "5da744202c6e", "relation": "none", "rationale": "Starlink as C2 backbone vs Vezha's function; different claims."}
+{"pair": "5e0b61baf8f9", "relation": "refines", "from": "claim:c00_0036_05", "to": "claim:c00_0077_12", "strength": 0.9, "rationale": "A places the same Wagner mutiny more precisely in late June 2023; same source."}
+{"pair": "5e51ef8e6990", "relation": "supports", "from": "claim:c08_0006_44", "to": "claim:c08_0004_14", "strength": 0.8, "rationale": "B's description of the game following the VDV at Hostomel from the Russian side backs A's assessment; same Steam outlet.", "independent": false}
+{"pair": "5f9fcc28a06d", "relation": "supports", "from": "claim:c02_0010_50", "to": "claim:c03_0020_14", "strength": 0.7, "rationale": "Both RUSI assessments describe layered anti-Shahed defence by helicopters, mobile fire groups and MANPADS.", "independent": false}
+{"pair": "5fb485a20343", "relation": "supports", "from": "claim:c00_0005_05", "to": "claim:c00_0031_03", "strength": 0.6, "rationale": "Wagner and convict assaults taking Bakhmut in the 2023 attritional phase fits Bakhmut falling in May 2023.", "independent": true}
+{"pair": "5fdefec7059f", "relation": "supports", "from": "claim:c00_0017_05", "to": "claim:c00_0073_07", "strength": 0.9, "rationale": "Both report Canada's 23 April 2022 announcement of the first M777 deliveries; same source.", "independent": false}
+{"pair": "6039a12d5889", "relation": "supports", "from": "claim:c04_0027_36", "to": "claim:c02_0034_16", "strength": 0.7, "rationale": "B's July 2026 T-72B3A with FPV-adapted Arena-M corroborates the first use in A; same source.", "independent": false}
+{"pair": "60db4f1b3868", "relation": "none", "rationale": "Starlink as C2 backbone vs Mission Control's data recording; different claims."}
+{"pair": "60f1c3eebc1d", "relation": "supports", "from": "claim:c02_0034_16", "to": "claim:c04_0030_25", "strength": 0.7, "rationale": "The July 2026 first use of FPV-adapted Arena-M on a T-72B3A underpins the e9 tactic entry; same source.", "independent": false}
+{"pair": "61f9d0d61dc4", "relation": "none", "rationale": "Infantry layering vs DeepStateMap marker keys; different subjects."}
+{"pair": "622a62700af2", "relation": "none", "rationale": "Aircraft weapons vs Oryx loss counts; different facts."}
+{"pair": "63637b7d2221", "relation": "none", "rationale": "Operator and formats vs method caveats; different facts."}
+{"pair": "6375b0e4fc66", "relation": "none", "rationale": "Developer credit vs delay; different facts."}
+{"pair": "640480495f18", "relation": "none", "rationale": "Library standard support vs symbol anatomy; different facts."}
+{"pair": "6467e657e9ef", "relation": "none", "rationale": "Siege onset vs siege duration; different facts, compatible."}
+{"pair": "650f2c138e33", "relation": "none", "rationale": "Legend vs update cadence; different facts."}
+{"pair": "669e4e3ed25c", "relation": "supports", "from": "claim:c04_0033_07", "to": "claim:c04_0005_07", "strength": 0.6, "rationale": "RUSI's count of Wagner dead at Bakhmut, 88% convicts, backs the expendable-infantry attrition assessment; same RUSI author.", "independent": false}
+{"pair": "6702f9c69995", "relation": "weakens", "from": "claim:c08_0008_14", "to": "claim:c08_0008_12", "strength": 0.6, "rationale": "B notes the vendor's simulator list is promotional and unverified by any first-party military source, casting doubt on A's popularity claim."}
+{"pair": "68aef6873e7c", "relation": "none", "rationale": "Platform and licence vs update cadence; different facts."}
+{"pair": "68b7da196ff6", "relation": "none", "rationale": "Grid orientation vs belt spacing; different measures."}
+{"pair": "68ca46957e6f", "relation": "supports", "from": "claim:c02_0010_73", "to": "claim:c02_0036_02", "strength": 0.6, "rationale": "12-element Kometa-M on UMPK kits in April 2025 is part of B's Russian lead on multi-element CRPA; shared Defense Express source.", "independent": false}
+{"pair": "69088dd61f5f", "relation": "none", "rationale": "Update cadence vs reuse terms; different facts."}
+{"pair": "69599419c2bb", "relation": "none", "rationale": "Period chronology vs urban morphology; different subjects."}
+{"pair": "69a0ad93ed2b", "relation": "supports", "from": "claim:c04_0025_14", "to": "claim:c04_0030_37", "strength": 0.8, "rationale": "Both say Rubikon interdicts logistics and hunts drone crews with no duty to support infantry; same source.", "independent": false}
+{"pair": "69c87a5a6d28", "relation": "supports", "from": "claim:c07_0039_25", "to": "claim:c07_0035_09", "strength": 0.8, "rationale": "Both say Black Bird Group uses NATO red for Russia and blue for Ukraine; same source.", "independent": false}
+{"pair": "6a28aef5fe55", "relation": "none", "rationale": "Infiltration layer vs licence terms; different facts."}
+{"pair": "6b94c1b330c3", "relation": "none", "rationale": "Frame line style vs echelon coding; different definitions."}
+{"pair": "6bdd11da86bd", "relation": "none", "rationale": "Analyst profile vs map platform; different facts."}
+{"pair": "6c5ef42fead1", "relation": "none", "rationale": "Content pipeline vs update cadence; different facts."}
+{"pair": "6c6439a8663f", "relation": "supports", "from": "claim:c01_0032_01", "to": "claim:c03_0031_02", "strength": 0.7, "rationale": "Orlan-10 cueing massed fire and later Krasnopol corroborates the shift to the Orlan-Krasnopol recon-fire complex; shared RUSI source.", "independent": false}
+{"pair": "6d68e434ab4b", "relation": "refines", "from": "claim:c04_0027_07", "to": "claim:c04_0006_03", "strength": 0.9, "rationale": "B dates the 3rd Army Corps' Operation Vivaldi start to late May or early June 2026; same source."}
+{"pair": "6d8de2d1fb8f", "relation": "none", "rationale": "Invasion-phase arms mix vs allocation of NLAW/Javelin to units; different facts."}
+{"pair": "6dbc4e237fe6", "relation": "none", "rationale": "Unknown frame vs frame line style; different definitions."}
+{"pair": "6e18c317b2b3", "relation": "supports", "from": "claim:c00_0077_05", "to": "claim:c04_0015_06", "strength": 0.8, "rationale": "Both say Russia used the Dnipro as a barrier and began the Zaporizhzhia lines in late 2022; shared RUSI source.", "independent": false}
+{"pair": "6eaaa16d7bef", "relation": "refines", "from": "claim:c05_0025_31", "to": "claim:c04_0006_03", "strength": 0.8, "rationale": "B gives the start date, target salient and 15 September confirmation for the 3rd Corps' Vivaldi operation near Lyman."}
+{"pair": "704091e1d7f7", "relation": "none", "rationale": "Update cadence vs reuse terms and API; different facts."}

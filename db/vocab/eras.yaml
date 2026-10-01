@@ -1,0 +1,32 @@
+# Canonical eras (research/README.md) and the prose sub-phases from research/00-timeline-eras.md §3.
+# id -> era:<id>. Boundaries are working boundaries; precision says how exact they are.
+- {id: e1, code: e1-invasion, en: "Invasion", from: 2022-02-24, to: 2022-04-30, precision: month, order: 1,
+   summary: "Kyiv, Chernihiv, Sumy, Kharkiv, Mariupol; Russian BTG columns; Javelin/NLAW/TB2"}
+- {id: e2, code: e2-donbas-artillery, en: "Donbas artillery war", from: 2022-05-01, to: 2022-08-31, precision: month, order: 2,
+   summary: "Sievierodonetsk/Lysychansk; Russian artillery superiority (about 10:1); HIMARS arrives"}
+- {id: e3, code: e3-counteroffensives-22, en: "2022 counteroffensives", from: 2022-09-01, to: 2022-11-30, precision: month, order: 3,
+   summary: "Kharkiv and Kherson counteroffensives; Russian mobilisation; the Shahed campaign begins"}
+- {id: e4, code: e4-bakhmut, en: "Bakhmut", from: 2022-12-01, to: 2023-05-31, precision: month, order: 4,
+   summary: "Wagner and convict meat assaults; Vuhledar armour losses; Lancet"}
+- {id: e5, code: e5-counteroffensive-23, en: "2023 counteroffensive", from: 2023-06-01, to: 2023-11-30, precision: month, order: 5,
+   summary: "Zaporizhzhia push into minefields and the Surovikin line; Western armour; Kakhovka dam; Krynky"}
+- {id: e6, code: e6-avdiivka-attrition, en: "Avdiivka and attrition", from: 2023-10-01, to: 2024-07-31, precision: month, order: 6,
+   summary: "Avdiivka; shell famine while US aid stalled; mass KAB glide bombs; FPV boom; Vovchansk"}
+- {id: e6a, code: e6a, parent: e6, en: "Aid drought", from: 2023-10-01, to: 2024-04-30, precision: month, order: 61,
+   summary: "Avdiivka and the aid drought; the shell famine at its worst"}
+- {id: e6b, code: e6b, parent: e6, en: "Post-supplemental", from: 2024-05-01, to: 2024-07-31, precision: month, order: 62,
+   summary: "Kharkiv/Vovchansk push contained; Patriot numbers grow; the Pokrovsk drive begins"}
+- {id: e7, code: e7-kursk-pokrovsk, en: "Kursk and Pokrovsk", from: 2024-08-01, to: 2025-03-31, precision: month, order: 7,
+   summary: "Kursk incursion; North Korean troops; Pokrovsk/Kurakhove; fibre-optic FPV appears"}
+- {id: e8, code: e8-drone-kill-zone, en: "Drone kill zone", from: 2025-03-01, to: 2026-01-28, precision: month, order: 8,
+   summary: "Kill zone deepens to 10–15+ km; infiltration by 2–4-man groups; Rubikon; Spiderweb; interceptors against Shahed"}
+- {id: e8a, code: e8a, parent: e8, en: "Peak Russian summer gains", from: 2025-03-01, to: 2025-08-31, precision: month, order: 81,
+   summary: "The Kursk pocket is lost, peak Russian summer gains, Spiderweb, Anchorage"}
+- {id: e8b, code: e8b, parent: e8, en: "Pokrovsk–Myrnohrad", from: 2025-09-01, to: 2026-01-28, precision: month, order: 82,
+   summary: "Urban fight for Pokrovsk and Myrnohrad, fall of Huliaipole, Kupiansk counterattack, 28-point plan"}
+- {id: e9, code: e9-counteroffensive-26, en: "2026 counteroffensive", from: 2026-01-29, precision: day, order: 9,
+   summary: "Starlink whitelist cuts off Russia (29 Jan–5 Feb); southern counteroffensive; near-zero Russian net gains; Operation Vivaldi"}
+- {id: e9a, code: e9a, parent: e9, en: "Southern counterattacks", from: 2026-01-29, to: 2026-05-31, precision: month, order: 91,
+   summary: "Russia loses Starlink; Oleksandrivka axis; Russian net gains near zero; two holiday truces"}
+- {id: e9b, code: e9b, parent: e9, en: "Strike war and new command", from: 2026-06-01, precision: month, order: 92,
+   summary: "Jet-Geran surge, Patriot shortage from the Iran war, new defence minister and commander-in-chief"}

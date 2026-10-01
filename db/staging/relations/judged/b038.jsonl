@@ -1,0 +1,40 @@
+{"pair": "a69bf6f42548", "relation": "none", "rationale": "Different facts about the ACLED monitor (legend vs update cadence)."}
+{"pair": "a6bc2e4afc5f", "relation": "supports", "from": "claim:c05_0011_06", "to": "claim:c05_0011_05", "strength": 0.5, "rationale": "Kyiv Independent's report that a few HIMARS wrecked most Russian depots within weeks corroborates RUSI's view that HIMARS ended the Donbas offensive.", "independent": true}
+{"pair": "a6ed55758192", "relation": "duplicates", "from": "claim:c02_0025_01", "to": "claim:c02_0010_67", "strength": 0.9, "rationale": "Same event (KVN fibre FPV in Kursk, August 2024) from the same source, extracted twice."}
+{"pair": "a74f137b887d", "relation": "none", "rationale": "Different symbology rules (solid/dashed frame vs frame openness)."}
+{"pair": "a8d79bd23094", "relation": "none", "rationale": "Unrelated subjects (2022 advance vs plantation damage) that only share place names."}
+{"pair": "a99aed381698", "relation": "duplicates", "from": "claim:c08_0008_19", "to": "claim:c08_0006_162", "strength": 0.7, "rationale": "Same fact (WeTrueGun GTA V/FiveM server for Shahed interception) from the same source, extracted twice."}
+{"pair": "a99b0b577286", "relation": "supports", "from": "claim:c02_0010_10", "to": "claim:c03_0004_04", "strength": 0.6, "rationale": "Two RUSI assessments agree that summer-2022 GMLRS/HIMARS strikes broke Russian logistics and C2.", "independent": false}
+{"pair": "aa3ac2d673f2", "relation": "none", "rationale": "Daily orbit count vs interceptor attrition; different assertions."}
+{"pair": "aab2247e9df8", "relation": "none", "rationale": "Different symbology facts (affiliation states vs symbol anatomy)."}
+{"pair": "ab1c29ce9bb0", "relation": "duplicates", "from": "claim:c00_0073_34", "to": "claim:c00_0049_07", "strength": 0.9, "rationale": "Same event (first ATACMS strikes inside Russia 19 Nov 2024) from the same source, extracted twice."}
+{"pair": "ab3e698cbc22", "relation": "duplicates", "from": "claim:c00_0073_23", "to": "claim:c00_0032_06", "strength": 0.95, "rationale": "Same event (first Patriot batteries from US and Germany, April 2023) from the same source, extracted twice."}
+{"pair": "ab889587a0b2", "relation": "supports", "from": "claim:c04_0021_01", "to": "claim:c04_0005_10", "strength": 0.7, "rationale": "The October 2023 Avdiivka battalion-level waves are an instance of A's general pattern; same Frontelligence source.", "independent": false}
+{"pair": "ab9dd440b6d9", "relation": "none", "rationale": "Legend categories vs ROCA methodological caveat; different facts."}
+{"pair": "abc1704ebccc", "relation": "none", "rationale": "Standards alignment vs frame-shape rule; different facts."}
+{"pair": "abf7fa5bcedd", "relation": "none", "rationale": "Different facts about the Black Bird Group map."}
+{"pair": "ac14c58991ad", "relation": "supports", "from": "claim:c03_0024_72", "to": "claim:c03_0031_26", "strength": 0.7, "rationale": "The observed Flamingo hit at Votkinsk at about 1,400 km demonstrates that such plants are within its reach; same source.", "independent": false}
+{"pair": "ac755359c9e2", "relation": "duplicates", "from": "claim:c04_0033_07", "to": "claim:c00_0033_02", "strength": 0.9, "rationale": "Same RUSI figure (19,547 Wagner killed at Bakhmut, 88% convicts) extracted in topics 00 and 04."}
+{"pair": "ad0ef7bfb67b", "relation": "none", "rationale": "Authorship/publisher fact vs quality judgment."}
+{"pair": "ad232ca3cbc3", "relation": "none", "rationale": "Different measures (share of US Patriot stock used by August vs rounds used in 39 days); neither implies the other."}
+{"pair": "ad6403a8a10b", "relation": "supports", "from": "claim:c05_0025_44", "to": "claim:c03_0024_80", "strength": 0.7, "rationale": "Both report, from the 3rd Army Corps via Euromaidan Press, that the 20th Army repair base moved to Voronezh Oblast; B adds route length.", "independent": false}
+{"pair": "ae72d9e1a40d", "relation": "none", "rationale": "UK MoD's view of Ka-52 influence vs one claimed shoot-down; no direct bearing."}
+{"pair": "ae98ab963159", "relation": "supports", "from": "claim:c05_0011_06", "to": "claim:c03_0010_12", "strength": 0.6, "rationale": "Kyiv Independent's report of HIMARS wrecking most depots within weeks corroborates RUSI's account of systematic depot strikes from late June 2022.", "independent": true}
+{"pair": "af19c22f4f20", "relation": "none", "rationale": "Monochrome legibility vs solid/dashed frame meaning; different facts."}
+{"pair": "af5592e131ec", "relation": "duplicates", "from": "claim:c05_0011_05", "to": "claim:c03_0004_05", "strength": 0.95, "rationale": "Same RUSI quote extracted in topics 03 and 05."}
+{"pair": "afa8232a9ea9", "relation": "duplicates", "from": "claim:c02_0034_10", "to": "claim:c02_0029_28", "strength": 0.9, "rationale": "Same concession about Tobol/Tirada-2 against Starlink from the same source, extracted twice."}
+{"pair": "aff221873f46", "relation": "supports", "from": "claim:c02_0029_46", "to": "claim:c00_0077_30", "strength": 0.4, "rationale": "HUR's reported production of about 3,000 Geran-4/5 a month supports the e9 shift of the strike arsenal to jet Gerans.", "independent": true}
+{"pair": "aff8dd286894", "relation": "none", "rationale": "Double encoding of affiliation vs solid/dashed frame meaning; different facts."}
+{"pair": "b048981444e2", "relation": "none", "rationale": "Early-2022 convoy strikes and the general IADS constraint cover different phases; no clear bearing."}
+{"pair": "b09868580e41", "relation": "none", "rationale": "Daily orbit total vs orbits per axis are different measures from the same report."}
+{"pair": "b0f4e26ce749", "relation": "none", "rationale": "Terrikons shaping fire control vs mining-town urban form; related context only."}
+{"pair": "b12ff40a8060", "relation": "supports", "from": "claim:c01_0008_03", "to": "claim:c01_0008_01", "strength": 0.4, "rationale": "Units receiving Furia and Leleka since 2015 corroborates their use in early 2022; same RUSI source.", "independent": false}
+{"pair": "b18f68022218", "relation": "none", "rationale": "Study description vs its results; no evidential relation."}
+{"pair": "b1a497f6ff32", "relation": "supports", "from": "claim:c04_0005_05", "to": "claim:c00_0005_03", "strength": 0.7, "rationale": "Independent sources both describe the autumn-2022 Kharkiv breakthrough against a thin, overstretched Russian line.", "independent": true}
+{"pair": "b1e690e4aa15", "relation": "supports", "from": "claim:c01_0032_08", "to": "claim:c05_0035_03", "strength": 0.6, "rationale": "Both give Rubikon detachments of about 474 people with mixed FPV, fixed-wing, Lancet/Supercam and C-UAS elements; same FPRI source.", "independent": false}
+{"pair": "b2316361cb08", "relation": "none", "rationale": "Licence terms vs map methodology; different facts."}
+{"pair": "b249758f3685", "relation": "refines", "from": "claim:c07_0042_25", "to": "claim:c07_0004_14", "strength": 0.7, "rationale": "B gives a fuller description of the Kropyva app that A states briefly; same source."}
+{"pair": "b2dabca8a5ca", "relation": "none", "rationale": "Neutral frame rule vs monochrome legibility; different facts."}
+{"pair": "b33fd575397b", "relation": "supports", "from": "claim:c08_0008_09", "to": "claim:c08_0006_158", "strength": 0.6, "rationale": "The March 2026 anti-Shahed version supports the assessment that Obriy models anti-Shahed interceptors; same source.", "independent": false}
+{"pair": "b3900791743c", "relation": "none", "rationale": "Russian vs Ukrainian helicopter lob fire; different actors."}
+{"pair": "b3bc42eeb626", "relation": "none", "rationale": "Russian counters to GMLRS/Excalibur fit the arrive-dominate-countered pattern; no clear evidential edge."}

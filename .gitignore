@@ -1,0 +1,12 @@
+# local SurrealDB data and credentials
+db/data/
+db/.env
+db/.venv/
+__pycache__/
+# user-local resume note
+claude-resume
+# derived staging artefacts (regenerate with the tools)
+db/staging/relations/batches/
+db/staging/relations/candidates.jsonl
+db/staging/entities/proposed.yaml
+db/staging/metrics_proposed.yaml

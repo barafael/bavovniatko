@@ -1,0 +1,4863 @@
+loadouts:
+- era: e1
+  side: ua
+  system: system:javelin
+  availability: common
+  first_available: '2018'
+  quantity_note: ~150 launchers and 1,000–1,200 missiles pre-war; 10,000+ US total over the war
+  derived_from:
+  - claim:c04_0011_07
+  - claim:c00_0073_02
+  - claim:c00_0017_01
+  - claim:c00_0073_01
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ua
+  system: system:javelin
+  availability: common
+  quantity_note: 10,000+ US total 2018–2025
+  derived_from:
+  - claim:c00_0017_02
+  - claim:c00_0073_03
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ua
+  system: system:javelin
+  availability: common
+  quantity_note: 10,000+ US total 2018–2025
+  derived_from:
+  - claim:c00_0017_02
+  - claim:c00_0073_03
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ua
+  system: system:javelin
+  availability: common
+  quantity_note: 10,000+ US total 2018–2025
+  derived_from:
+  - claim:c00_0017_02
+  - claim:c00_0073_03
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ua
+  system: system:javelin
+  availability: common
+  quantity_note: 10,000+ US total 2018–2025
+  derived_from:
+  - claim:c00_0017_02
+  - claim:c00_0073_03
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ua
+  system: system:javelin
+  availability: common
+  quantity_note: 10,000+ US total 2018–2025
+  derived_from:
+  - claim:c00_0017_02
+  - claim:c00_0073_03
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:javelin
+  availability: common
+  quantity_note: 10,000+ US total 2018–2025
+  derived_from:
+  - claim:c00_0017_02
+  - claim:c00_0073_03
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e1
+  side: ua
+  system: system:nlaw
+  availability: common
+  quantity_note: ~2,000 pre-war; issued to ground-holding units
+  derived_from:
+  - claim:c04_0011_07
+  - claim:c04_0011_08
+  - claim:c00_0073_04
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:stugna
+  availability: limited
+  derived_from:
+  - claim:c05_0019_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Only evidence is the use of decoy Stugna launchers, which implies real ones in service.
+- era: e1
+  side: ua
+  system: system:manpads
+  availability: common
+  quantity_note: Igla-1 spread through units pre-war plus rapid Stinger deliveries (3,000+ US total)
+  derived_from:
+  - claim:c03_0008_05
+  - claim:c00_0073_05
+  - claim:c03_0008_11
+  - claim:c00_0017_01
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c00_0073_06
+  - claim:c03_0027_036
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  - claim:c03_0012_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c03_0016_09
+  - claim:c02_0010_50
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c03_0020_14
+  - claim:c02_0010_50
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  - claim:c03_0027_036
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:manpads
+  availability: common
+  derived_from:
+  - claim:c03_0027_036
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e1
+  side: ua
+  system: system:tube_artillery_generic
+  availability: common
+  quantity_note: 1,176 barrel systems at start; parity with Russia for ~6 weeks until shells ran short
+  derived_from:
+  - claim:c00_0018_02
+  - claim:c00_0017_03
+  - claim:c04_0011_05
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ua
+  system: system:tube_artillery_generic
+  availability: limited
+  quantity_note: ≤6,000 rounds/day against ~20,000 Russian; 10–12:1 against
+  derived_from:
+  - claim:c03_0010_04
+  - claim:c00_0023_01
+  - claim:c03_0029_003
+  method: Judged from reported volumes or rates for this era.
+- era: e3
+  side: ua
+  system: system:tube_artillery_generic
+  availability: limited
+  derived_from:
+  - claim:c05_0005_02
+  - claim:c00_0026_05
+  - claim:c03_0004_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 2022 claims cap Ukrainian fire at ~6,000 rounds/day; e3 has no separate figure.
+- era: e4
+  side: ua
+  system: system:tube_artillery_generic
+  availability: limited
+  quantity_note: 5:1 against at Bakhmut
+  derived_from:
+  - claim:c00_0033_03
+  - claim:c04_0017_14
+  method: Judged from reported volumes or rates for this era.
+- era: e5
+  side: ua
+  system: system:tube_artillery_generic
+  availability: limited
+  quantity_note: ≤55 guns of 155 mm on the main axis at 10–70 rounds/gun/day; ~1.6M 155 mm shells received in 2023
+  derived_from:
+  - claim:c00_0037_03
+  - claim:c03_0016_02
+  - claim:c03_0020_05
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:tube_artillery_generic
+  availability: scarce
+  quantity_note: shell ratio 1:10 in Feb 2024 (5:1 to 8–9:1 reported by troops)
+  derived_from:
+  - claim:c03_0004_10
+  - claim:c00_0044_01
+  - claim:c00_0042_02
+  method: Judged from reported volumes or rates for this era.
+  notes: Guns present; ammunition is the constraint.
+- era: e7
+  side: ua
+  system: system:tube_artillery_generic
+  availability: limited
+  quantity_note: ratio 1:3 (Aug 2024) improving to 1:1.5 (Dec 2024); Czech initiative 1.5M rounds in 2024
+  derived_from:
+  - claim:c03_0029_008
+  - claim:c03_0029_009
+  - claim:c03_0018_02
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ua
+  system: system:tube_artillery_generic
+  availability: limited
+  quantity_note: 2,000–7,000 rounds/day (OSINT); ratio 1:1.8 by Jul 2025
+  derived_from:
+  - claim:c03_0022_04
+  - claim:c03_0022_01
+  - claim:c03_0022_05
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:tube_artillery_generic
+  availability: limited
+  quantity_note: 2,000–7,000 rounds/day; ~1M Czech-initiative rounds contracted for 2026
+  derived_from:
+  - claim:c03_0029_015
+  - claim:c03_0029_026
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ua
+  system: system:m777
+  availability: scarce
+  first_available: '2022-04-23'
+  quantity_note: first Western 155 mm guns, Canada announced delivery 23 Apr 2022
+  derived_from:
+  - claim:c00_0017_05
+  - claim:c00_0073_07
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e2
+  side: ua
+  system: system:m777
+  availability: common
+  quantity_note: 187+ from the US from Apr 2022; the workhorse of 2022–23
+  derived_from:
+  - claim:c03_0027_002
+  - claim:c00_0022_02
+  method: Judged from reported volumes or rates for this era.
+- era: e3
+  side: ua
+  system: system:m777
+  availability: common
+  derived_from:
+  - claim:c03_0027_002
+  method: Judged from reported volumes or rates for this era.
+- era: e4
+  side: ua
+  system: system:m777
+  availability: common
+  derived_from:
+  - claim:c03_0027_002
+  method: Judged from reported volumes or rates for this era.
+- era: e5
+  side: ua
+  system: system:m777
+  availability: common
+  derived_from:
+  - claim:c03_0027_002
+  - claim:c03_0016_01
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:m777
+  availability: limited
+  derived_from:
+  - claim:c03_0027_003
+  - claim:c03_0004_10
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Rated down for the e6 shell famine.'
+- era: e7
+  side: ua
+  system: system:m777
+  availability: limited
+  quantity_note: 103 lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_003
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ua
+  system: system:m777
+  availability: limited
+  quantity_note: 103 lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_003
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:m777
+  availability: limited
+  quantity_note: 103 lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_003
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e2
+  side: ua
+  system: system:howitzer_155
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_004
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: Self-propelled 155 mm family (CAESAR, Krab, PzH 2000, Zuzana 2, Archer, M109), introduced e2–e5; M777 is listed separately.
+- era: e3
+  side: ua
+  system: system:howitzer_155
+  availability: limited
+  derived_from:
+  - claim:c03_0027_004
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: SP 155 mm family; types arrived across e2–e5 without per-type dates.
+- era: e4
+  side: ua
+  system: system:howitzer_155
+  availability: limited
+  derived_from:
+  - claim:c03_0027_004
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: SP 155 mm family; types arrived across e2–e5 without per-type dates.
+- era: e5
+  side: ua
+  system: system:howitzer_155
+  availability: limited
+  derived_from:
+  - claim:c03_0027_004
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: SP 155 mm family; types arrived across e2–e5 without per-type dates.
+- era: e6
+  side: ua
+  system: system:howitzer_155
+  availability: limited
+  quantity_note: 'Oryx losses to Sep 2026: 143 M109, 46 Krab, 22 CAESAR'
+  derived_from:
+  - claim:c03_0027_005
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:howitzer_155
+  availability: limited
+  quantity_note: 'Oryx losses to Sep 2026: 143 M109, 46 Krab, 22 CAESAR'
+  derived_from:
+  - claim:c03_0027_005
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ua
+  system: system:howitzer_155
+  availability: limited
+  quantity_note: 'Oryx losses to Sep 2026: 143 M109, 46 Krab, 22 CAESAR'
+  derived_from:
+  - claim:c03_0027_005
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:howitzer_155
+  availability: limited
+  quantity_note: 'Oryx losses to Sep 2026: 143 M109, 46 Krab, 22 CAESAR'
+  derived_from:
+  - claim:c03_0027_005
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e2
+  side: ua
+  system: system:bohdana
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_006
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: Domestic wheeled 155 mm SPG, in service from e2.
+- era: e2
+  side: ua
+  system: system:excalibur
+  availability: limited
+  quantity_note: delivered with the M777s
+  derived_from:
+  - claim:c00_0022_02
+  - claim:c03_0027_008
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e3
+  side: ua
+  system: system:excalibur
+  availability: limited
+  derived_from:
+  - claim:c03_0027_008
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ua
+  system: system:excalibur
+  availability: limited
+  derived_from:
+  - claim:c02_0010_15
+  - claim:c02_0019_10
+  - claim:c02_0010_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Accuracy collapsing under Russian jamming during this era.
+- era: e5
+  side: ua
+  system: system:excalibur
+  availability: limited
+  quantity_note: hit rate fell from ~55% (Jan 2023) to 6% (Aug 2023)
+  derived_from:
+  - claim:c02_0010_16
+  - claim:c02_0021_01
+  - claim:c02_0010_17
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Present but largely neutralised by GNSS jamming.
+- era: e6
+  side: ua
+  system: system:bonus
+  availability: scarce
+  quantity_note: '''almost never available'''
+  derived_from:
+  - claim:c03_0027_009
+  method: Claims describe only a handful of units or rare use.
+- era: e7
+  side: ua
+  system: system:bonus
+  availability: scarce
+  quantity_note: brigades could rarely get DPICM or BONUS
+  derived_from:
+  - claim:c03_0020_06
+  - claim:c03_0020_08
+  method: Claims describe only a handful of units or rare use.
+- era: e1
+  side: ua
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: 1,680 MLRS at the start of the invasion
+  derived_from:
+  - claim:c00_0018_03
+  method: Judged from reported volumes or rates for this era.
+  notes: Soviet-era Grad, Uragan, Smerch.
+- era: e2
+  side: ua
+  system: system:smerch
+  availability: limited
+  derived_from:
+  - claim:c05_0011_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Ukrainian Smerch strikes forced Russian depots back to 50 km.
+- era: e2
+  side: ua
+  system: system:tochka_u
+  availability: scarce
+  derived_from:
+  - claim:c05_0011_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Ukrainian Tochka-U strikes on Russian depots.
+- era: e2
+  side: ua
+  system: system:himars
+  availability: scarce
+  first_available: '2022-06-24'
+  quantity_note: first 4 by 24 Jun 2022, 4 more by mid-Jul; 8–12 launchers wrecked most depots
+  derived_from:
+  - claim:c00_0022_04
+  - claim:c00_0073_09
+  - claim:c05_0011_06
+  - claim:c03_0004_04
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e3
+  side: ua
+  system: system:himars
+  availability: limited
+  quantity_note: 40+ from the US by mid-2024
+  derived_from:
+  - claim:c00_0073_11
+  - claim:c05_0005_14
+  - claim:c03_0012_01
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+- era: e4
+  side: ua
+  system: system:himars
+  availability: limited
+  derived_from:
+  - claim:c03_0014_08
+  - claim:c02_0010_12
+  - claim:c00_0073_11
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Russian air defence intercepting a share of GMLRS by spring 2023.
+- era: e5
+  side: ua
+  system: system:himars
+  availability: limited
+  quantity_note: ~7 GMLRS a day for the whole theatre
+  derived_from:
+  - claim:c00_0037_04
+  - claim:c00_0073_11
+  method: Judged from reported volumes or rates for this era.
+  notes: Launchers limited; munitions scarce.
+- era: e6
+  side: ua
+  system: system:himars
+  availability: limited
+  quantity_note: +3 from Germany (Jun 2024)
+  derived_from:
+  - claim:c00_0073_11
+  - claim:c03_0027_013
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+- era: e7
+  side: ua
+  system: system:himars
+  availability: limited
+  derived_from:
+  - claim:c03_0027_013
+  - claim:c03_0027_012
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. ATACMS fired from HIMARS/M270
+    in e7.'
+- era: e8
+  side: ua
+  system: system:himars
+  availability: limited
+  quantity_note: 8 lost over the war (Oryx, to Sep 2026)
+  derived_from:
+  - claim:c03_0027_012
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:himars
+  availability: limited
+  quantity_note: 8 lost over the war (Oryx, to Sep 2026)
+  derived_from:
+  - claim:c03_0027_012
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e2
+  side: ua
+  system: system:m270
+  availability: scarce
+  first_available: 2022-07
+  quantity_note: 14 from the UK
+  derived_from:
+  - claim:c00_0022_05
+  - claim:c00_0073_12
+  - claim:c00_0073_13
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e5
+  side: ua
+  system: system:atacms
+  availability: scarce
+  first_available: '2023-10-17'
+  quantity_note: 165 km cluster variant delivered secretly days before first use
+  derived_from:
+  - claim:c00_0037_06
+  - claim:c00_0073_32
+  - claim:c03_0016_14
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e6
+  side: ua
+  system: system:atacms
+  availability: limited
+  derived_from:
+  - claim:c03_0018_15
+  - claim:c03_0027_013
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Long-range variant used from Feb 2024 (Dzhankoi).
+- era: e7
+  side: ua
+  system: system:atacms
+  availability: limited
+  derived_from:
+  - claim:c00_0049_07
+  - claim:c03_0020_21
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Used inside Russia from 19 Nov 2024.
+- era: e9
+  side: ua
+  system: system:atacms
+  availability: scarce
+  quantity_note: stock 'severely depleted'; 70 bought from Turkey in Aug 2026
+  derived_from:
+  - claim:c03_0024_10
+  - claim:c03_0024_51
+  - claim:c00_0067_02
+  method: Judged from reported volumes or rates for this era.
+- era: e4
+  side: ua
+  system: system:storm_shadow
+  availability: scarce
+  first_available: 2023-05
+  derived_from:
+  - claim:c00_0032_08
+  - claim:c00_0073_28
+  - claim:c03_0016_13
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e5
+  side: ua
+  system: system:storm_shadow
+  availability: limited
+  quantity_note: 300+ Storm Shadow/SCALP delivered during the offensive; SCALP from Jul 2023
+  derived_from:
+  - claim:c00_0037_05
+  - claim:c00_0073_27
+  - claim:c03_0016_13
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:storm_shadow
+  availability: limited
+  derived_from:
+  - claim:c03_0027_014
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:storm_shadow
+  availability: limited
+  derived_from:
+  - claim:c03_0020_22
+  - claim:c03_0020_20
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: First use inside Russia 20 Nov 2024; SCALP arrived with the Mirages.
+- era: e1
+  side: ua
+  system: system:neptune
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_020
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: Entered service in e1.
+- era: e5
+  side: ua
+  system: system:neptune
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_020
+  - claim:c03_0022_49
+  method: Claims describe only a handful of units or rare use.
+  notes: Land-attack use from e5; 31+ confirmed hits Aug 2023–Jul 2026.
+- era: e6
+  side: ua
+  system: system:neptune
+  availability: scarce
+  derived_from:
+  - claim:c03_0022_49
+  method: Claims describe only a handful of units or rare use.
+  notes: 2024 was the busiest Neptune year.
+- era: e7
+  side: ua
+  system: system:neptune
+  availability: scarce
+  quantity_note: '''a small number'''
+  derived_from:
+  - claim:c03_0004_20
+  - claim:c03_0022_49
+  method: Claims describe only a handful of units or rare use.
+- era: e8
+  side: ua
+  system: system:neptune
+  availability: scarce
+  derived_from:
+  - claim:c03_0022_47
+  - claim:c03_0004_20
+  method: Claims describe only a handful of units or rare use.
+  notes: Production said to be scaled up in 2025.
+- era: e9
+  side: ua
+  system: system:neptune
+  availability: scarce
+  derived_from:
+  - claim:c03_0004_20
+  - claim:c03_0022_49
+  method: Claims describe only a handful of units or rare use.
+- era: e7
+  side: ua
+  system: system:palianytsia
+  availability: prototype
+  derived_from:
+  - claim:c03_0027_020
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: Missile-drone from e7; no volumes.
+- era: e8
+  side: ua
+  system: system:flamingo
+  availability: scarce
+  first_available: '2025-08-30'
+  derived_from:
+  - claim:c03_0022_51
+  - claim:c03_0022_52
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e9
+  side: ua
+  system: system:flamingo
+  availability: scarce
+  quantity_note: ~10 documented strikes to Sep 2026, salvos of 3–6 every 3–8 weeks; maker claims 30/month
+  derived_from:
+  - claim:c03_0024_75
+  - claim:c03_0024_74
+  - claim:c03_0024_71
+  method: Claims describe only a handful of units or rare use.
+- era: e8
+  side: ua
+  system: system:sapsan
+  availability: prototype
+  first_available: '2025-12-09'
+  derived_from:
+  - claim:c03_0022_48
+  - claim:c03_0027_023
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: No evidence of volume production.
+- era: e4
+  side: ua
+  system: system:jdam_er
+  availability: limited
+  first_available: 2023-02
+  derived_from:
+  - claim:c02_0010_19
+  - claim:c03_0014_10
+  - claim:c03_0027_015
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Accuracy degraded by jamming within weeks; patched May 2023.
+- era: e5
+  side: ua
+  system: system:jdam_er
+  availability: limited
+  derived_from:
+  - claim:c02_0031_14
+  - claim:c03_0014_10
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ua
+  system: system:gbu_39
+  availability: scarce
+  first_available: 2023-11
+  quantity_note: ~90% hit rate
+  derived_from:
+  - claim:c03_0016_15
+  - claim:c03_0027_016
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e6
+  side: ua
+  system: system:gbu_39
+  availability: limited
+  derived_from:
+  - claim:c03_0029_038
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ua
+  system: system:aasm_hammer
+  availability: limited
+  derived_from:
+  - claim:c03_0027_017
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: Carried by MiG-29, later standard on the Mirage.
+- era: e7
+  side: ua
+  system: system:aasm_hammer
+  availability: limited
+  derived_from:
+  - claim:c03_0027_017
+  - claim:c03_0020_20
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:ua_glide_bomb_250
+  availability: prototype
+  first_available: 2026-05
+  derived_from:
+  - claim:c03_0024_30
+  - claim:c03_0027_018
+  - claim:c03_0024_32
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Western glide bombs arrive at only 'a few dozen' a month (c03_0024_31).
+- era: e5
+  side: ua
+  system: system:armour_generic
+  availability: limited
+  derived_from:
+  - claim:c00_0037_01
+  - claim:c04_0019_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Planned 12 armoured/mechanised brigades, only a couple properly equipped. Soviet-type tanks and IFVs.
+- era: e7
+  side: ua
+  system: system:armour_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0030_41
+  - claim:c04_0023_30
+  - claim:c01_0018_16
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Tanks and IFVs kept dug in within ~3 km and sallied out.
+- era: e8
+  side: ua
+  system: system:armour_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0030_41
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:armour_generic
+  availability: limited
+  derived_from:
+  - claim:c03_0024_06
+  - claim:c04_0030_55
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ua
+  system: system:leopard_2
+  availability: scarce
+  first_available: 2023-02
+  quantity_note: dozens of 2A4 and 2A6 in total
+  derived_from:
+  - claim:c00_0032_02
+  - claim:c00_0073_14
+  - claim:c00_0073_16
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Arriving Feb–Mar 2023; first combat Jun 2023.
+- era: e5
+  side: ua
+  system: system:leopard_2
+  availability: limited
+  quantity_note: dozens (2A4/2A6)
+  derived_from:
+  - claim:c00_0073_15
+  - claim:c00_0073_16
+  method: Judged from reported volumes or rates for this era.
+- era: e4
+  side: ua
+  system: system:challenger_2
+  availability: scarce
+  first_available: 2023-03
+  quantity_note: 14 in total
+  derived_from:
+  - claim:c00_0032_03
+  - claim:c00_0073_17
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e5
+  side: ua
+  system: system:challenger_2
+  availability: scarce
+  quantity_note: '14'
+  derived_from:
+  - claim:c00_0073_18
+  - claim:c00_0073_19
+  method: Judged from reported volumes or rates for this era.
+- era: e4
+  side: ua
+  system: system:bradley
+  availability: limited
+  first_available: 2023-04
+  quantity_note: US total passed 300
+  derived_from:
+  - claim:c00_0032_04
+  - claim:c00_0073_20
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e5
+  side: ua
+  system: system:bradley
+  availability: limited
+  quantity_note: 300+ in total
+  derived_from:
+  - claim:c00_0073_21
+  - claim:c00_0073_22
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:bradley
+  availability: limited
+  quantity_note: 300+ delivered 2023–2025
+  derived_from:
+  - claim:c00_0073_22
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:bradley
+  availability: limited
+  quantity_note: 300+ delivered 2023–2025
+  derived_from:
+  - claim:c00_0073_22
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ua
+  system: system:abrams
+  availability: scarce
+  first_available: '2023-09-23'
+  quantity_note: 31 from the US
+  derived_from:
+  - claim:c00_0037_07
+  - claim:c00_0073_30
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e6
+  side: ua
+  system: system:abrams
+  availability: scarce
+  derived_from:
+  - claim:c00_0073_31
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:abrams
+  availability: scarce
+  quantity_note: 31 US; 49 Australian M1A1 pledged Oct 2024
+  derived_from:
+  - claim:c00_0073_31
+  - claim:c00_0049_08
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+- era: e8
+  side: ua
+  system: system:abrams
+  availability: limited
+  quantity_note: 31 US + 49 AU (all delivered by Dec 2025)
+  derived_from:
+  - claim:c00_0073_31
+  - claim:c00_0049_08
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:abrams
+  availability: limited
+  derived_from:
+  - claim:c04_0027_04
+  - claim:c01_0024_12
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 425th Assault Regiment led the 2026 southern counteroffensive with Abrams.
+- era: e6
+  side: ua
+  system: system:m113
+  availability: limited
+  derived_from:
+  - claim:c05_0028_11
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: HMMWV/M113 ammunition dashes.
+- era: e5
+  side: ua
+  system: system:m117_demining
+  availability: scarce
+  first_available: 2023-10
+  derived_from:
+  - claim:c00_0037_08
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Usable only from Oct 2023.
+- era: e5
+  side: ua
+  system: system:miclic
+  availability: limited
+  derived_from:
+  - claim:c04_0019_09
+  - claim:c04_0030_15
+  - claim:c00_0036_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Line charges (MICLIC, Meteorit) for company breaches.
+- era: e1
+  side: ua
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c01_0004_01
+  - claim:c01_0008_01
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Mavic/Matrice/Autel for spotting and grenade drops; ~3 flights per quadcopter in 2022.
+- era: e2
+  side: ua
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c01_0004_01
+  - claim:c02_0010_04
+  - claim:c01_0029_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ua
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c01_0004_01
+  - claim:c02_0019_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ua
+  system: system:commercial_quadcopter
+  availability: abundant
+  quantity_note: ~10,000 UAVs a month lost to Russian EW in early 2023
+  derived_from:
+  - claim:c01_0004_07
+  - claim:c04_0017_19
+  - claim:c02_0010_22
+  method: Judged from reported volumes or rates for this era.
+- era: e5
+  side: ua
+  system: system:commercial_quadcopter
+  availability: abundant
+  quantity_note: ~10,000 UAVs a month lost to EW (2023)
+  derived_from:
+  - claim:c01_0004_07
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:commercial_quadcopter
+  availability: abundant
+  quantity_note: ~2–2.2M UAVs of all types produced in 2024
+  derived_from:
+  - claim:c01_0029_15
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ua
+  system: system:commercial_quadcopter
+  availability: abundant
+  derived_from:
+  - claim:c01_0029_15
+  - claim:c06_0029_22
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ua
+  system: system:commercial_quadcopter
+  availability: abundant
+  derived_from:
+  - claim:c02_0010_82
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:commercial_quadcopter
+  availability: abundant
+  derived_from:
+  - claim:c02_0010_109
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e1
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  first_available: '2015'
+  derived_from:
+  - claim:c01_0008_01
+  - claim:c01_0008_03
+  - claim:c01_0008_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Leleka-100, A1-CM Furia, PD-1, SKIF; in battalions since 2015.
+- era: e2
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0004_01
+  - claim:c01_0029_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: ~6 flights per fixed-wing in 2022.
+- era: e3
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0012_09
+  - claim:c01_0027_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Shark unveiled Oct 2022 for HIMARS spotting under EW.
+- era: e4
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0027_03
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0027_03
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0027_03
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0027_03
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0027_03
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:fixed_wing_isr_drone
+  availability: common
+  derived_from:
+  - claim:c01_0012_11
+  - claim:c01_0027_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Shark-M successor (180 km link, 7 h).
+- era: e1
+  side: ua
+  system: system:bayraktar_tb2
+  availability: scarce
+  quantity_note: '''a few''; committed only under favourable conditions'
+  derived_from:
+  - claim:c01_0004_01
+  - claim:c01_0008_02
+  - claim:c02_0010_04
+  method: Claims describe only a handful of units or rare use.
+- era: e2
+  side: ua
+  system: system:bayraktar_tb2
+  availability: scarce
+  quantity_note: '''a few''; committed only under favourable conditions'
+  derived_from:
+  - claim:c01_0004_01
+  - claim:c01_0008_02
+  - claim:c02_0010_04
+  method: Claims describe only a handful of units or rare use.
+- era: e3
+  side: ua
+  system: system:bayraktar_tb2
+  availability: scarce
+  quantity_note: '''a few''; committed only under favourable conditions'
+  derived_from:
+  - claim:c01_0004_01
+  - claim:c01_0008_02
+  - claim:c02_0010_04
+  method: Claims describe only a handful of units or rare use.
+- era: e1
+  side: ua
+  system: system:fpv_drone
+  availability: prototype
+  quantity_note: 3,000–5,000 FPVs in all of 2022
+  derived_from:
+  - claim:c01_0008_10
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ua
+  system: system:fpv_drone
+  availability: scarce
+  quantity_note: 3,000–5,000 FPVs in all of 2022
+  derived_from:
+  - claim:c01_0008_10
+  method: Judged from reported volumes or rates for this era.
+- era: e3
+  side: ua
+  system: system:fpv_drone
+  availability: scarce
+  quantity_note: 3,000–5,000 FPVs in all of 2022
+  derived_from:
+  - claim:c01_0008_10
+  method: Judged from reported volumes or rates for this era.
+- era: e4
+  side: ua
+  system: system:fpv_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0027_16
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: RF FPVs introduced during the Bakhmut period.
+- era: e5
+  side: ua
+  system: system:fpv_drone
+  availability: limited
+  derived_from:
+  - claim:c02_0010_35
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Killing Russian armour from mid-2023.
+- era: e6
+  side: ua
+  system: system:fpv_drone
+  availability: common
+  derived_from:
+  - claim:c01_0018_01
+  - claim:c01_0027_16
+  - claim:c05_0019_07
+  method: Judged from reported volumes or rates for this era.
+  notes: FPV boom Oct 2023–Jul 2024; 60–80% failed to reach the target.
+- era: e7
+  side: ua
+  system: system:fpv_drone
+  availability: abundant
+  quantity_note: ~1.2M FPVs received in 2024; tactical UAVs 60–70% of Russian systems destroyed
+  derived_from:
+  - claim:c01_0018_04
+  - claim:c00_0044_03
+  - claim:c03_0020_07
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ua
+  system: system:fpv_drone
+  availability: abundant
+  quantity_note: 3M FPVs obtained in 2025
+  derived_from:
+  - claim:c01_0022_46
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:fpv_drone
+  availability: abundant
+  quantity_note: Delta logged 105,800 (Jan) to 200,200 (Jun 2026) confirmed drone strikes a month
+  derived_from:
+  - claim:c05_0025_62
+  - claim:c05_0025_79
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ua
+  system: system:fibre_optic_fpv
+  availability: prototype
+  first_available: 2025-02
+  derived_from:
+  - claim:c02_0010_68
+  - claim:c01_0020_05
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Silkworm spool Feb 2025; 'not yet widely' used.
+- era: e8
+  side: ua
+  system: system:fibre_optic_fpv
+  availability: limited
+  quantity_note: ~1 in 10 drone teams by May 2025; range 20 → 40+ km by Jul 2025
+  derived_from:
+  - claim:c02_0010_69
+  - claim:c01_0022_08
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:fibre_optic_fpv
+  availability: common
+  quantity_note: National Guard 70% of drones on fibre by Sep 2026 (from ~20%)
+  derived_from:
+  - claim:c02_0010_119
+  - claim:c01_0024_21
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:ai_terminal_guidance_fpv
+  availability: limited
+  quantity_note: 10,000 AI-enhanced drones bought in 2024
+  derived_from:
+  - claim:c01_0027_18
+  - claim:c01_0018_05
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ua
+  system: system:ai_terminal_guidance_fpv
+  availability: limited
+  quantity_note: 70–80% success under jamming (CSIS)
+  derived_from:
+  - claim:c01_0020_06
+  - claim:c01_0020_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ua
+  system: system:heavy_bomber_drone
+  availability: prototype
+  derived_from:
+  - claim:c01_0016_01
+  - claim:c01_0016_02
+  - claim:c01_0027_29
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Converted agricultural drones dropping RPGs at night; forerunners of 'Baba Yaga'.
+- era: e6
+  side: ua
+  system: system:heavy_bomber_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0018_19
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: '2024 fieldwork: bombers did more damage than FPVs, mostly at night.'
+- era: e7
+  side: ua
+  system: system:heavy_bomber_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0018_19
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:heavy_bomber_drone
+  availability: common
+  quantity_note: up to 20 resupply runs per crew per day (Kostiantynivka)
+  derived_from:
+  - claim:c05_0023_02
+  - claim:c05_0028_15
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:heavy_bomber_drone
+  availability: abundant
+  quantity_note: SkyFall claims 100,000 Vampires a year
+  derived_from:
+  - claim:c01_0024_65
+  - claim:c01_0029_41
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ua
+  system: system:liutyi
+  availability: limited
+  derived_from:
+  - claim:c01_0027_45
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Stands for Ukrainian long-range strike drones generally; introduced Oct 2023–Jul 2024.
+- era: e7
+  side: ua
+  system: system:liutyi
+  availability: limited
+  derived_from:
+  - claim:c05_0005_15
+  - claim:c00_0049_10
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Deep-strike campaign on arsenals and refineries expanding.
+- era: e8
+  side: ua
+  system: system:liutyi
+  availability: common
+  derived_from:
+  - claim:c01_0027_45
+  - claim:c01_0022_17
+  - claim:c05_0023_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Scaled in 2025; refinery strikes peaked Aug–Oct 2025; <30% reach target.
+- era: e9
+  side: ua
+  system: system:liutyi
+  availability: common
+  derived_from:
+  - claim:c03_0004_20
+  - claim:c05_0025_89
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: '''Mass mid-range and long-range drones''.'
+- era: e9
+  side: ua
+  system: system:fp_1
+  availability: limited
+  derived_from:
+  - claim:c05_0025_79
+  - claim:c05_0028_17
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Middle strike to ~200 km.
+- era: e9
+  side: ua
+  system: system:fp_2
+  availability: limited
+  first_available: 2026-05
+  derived_from:
+  - claim:c03_0024_07
+  - claim:c05_0025_79
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Firing S-8 rockets at operational depth from May 2026.
+- era: e9
+  side: ua
+  system: system:hornet
+  availability: limited
+  derived_from:
+  - claim:c05_0025_79
+  - claim:c05_0034_36
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: AI middle-strike drone to ~150 km.
+- era: e7
+  side: ua
+  system: system:interceptor_drone
+  availability: limited
+  first_available: '2024'
+  quantity_note: several hundred kills a month (Oct 2024); Sting from autumn 2024
+  derived_from:
+  - claim:c02_0010_64
+  - claim:c01_0020_18
+  - claim:c01_0020_13
+  method: Judged from reported volumes or rates for this era.
+  notes: First against recon UAVs, first Shahed kills early 2025.
+- era: e8
+  side: ua
+  system: system:interceptor_drone
+  availability: common
+  quantity_note: Sting at scale from Apr 2025; 1,000+ kills/month by summer 2025; ~950/day output Dec 2025
+  derived_from:
+  - claim:c00_0056_05
+  - claim:c02_0010_65
+  - claim:c01_0004_17
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:interceptor_drone
+  availability: abundant
+  quantity_note: Sting 10,000+/month (Mar 2026); ~50% of Shahed kills by May 2026
+  derived_from:
+  - claim:c00_0065_11
+  - claim:c01_0024_43
+  - claim:c02_0010_121
+  method: Judged from reported volumes or rates for this era.
+  notes: Cannot catch most jet Gerans.
+- era: e9
+  side: ua
+  system: system:jet_killer_interceptor
+  availability: prototype
+  first_available: 2026-07
+  derived_from:
+  - claim:c02_0010_132
+  - claim:c00_0065_12
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Sting 2.0, LITAVR+; in combat testing.
+- era: e7
+  side: ua
+  system: system:ugv
+  availability: prototype
+  derived_from:
+  - claim:c01_0027_56
+  - claim:c04_0025_25
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Introduced Aug 2024–Mar 2025; early casevac too unreliable.
+- era: e8
+  side: ua
+  system: system:ugv
+  availability: limited
+  quantity_note: ~15,000 obtained in 2025; 2,900+ missions in Nov 2025
+  derived_from:
+  - claim:c01_0022_47
+  - claim:c05_0023_17
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:ugv
+  availability: common
+  quantity_note: missions/month 7,511 (Jan) → 25,143 (Aug 2026); 50,000+ planned for 2026
+  derived_from:
+  - claim:c05_0025_64
+  - claim:c01_0024_64
+  - claim:c04_0027_40
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:kamikaze_ugv
+  availability: limited
+  derived_from:
+  - claim:c01_0024_68
+  - claim:c03_0024_78
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Air-dropped by heavy bombers >10 km deep in Operation Vivaldi.
+- era: e4
+  side: ua
+  system: system:naval_drone
+  availability: prototype
+  derived_from:
+  - claim:c01_0027_58
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Introduced between Dec 2022 and Jul 2024.
+- era: e5
+  side: ua
+  system: system:naval_drone
+  availability: limited
+  derived_from:
+  - claim:c05_0017_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Crimean Bridge strike 17 Jul 2023.
+- era: e6
+  side: ua
+  system: system:naval_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0018_13
+  - claim:c01_0018_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:naval_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0020_19
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:naval_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0022_37
+  - claim:c01_0022_38
+  - claim:c01_0022_39
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ua
+  system: system:tactical_jammer
+  availability: common
+  quantity_note: mass trench and backpack jammers (Kvertus, Obrii)
+  derived_from:
+  - claim:c02_0023_01
+  - claim:c02_0010_43
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ua
+  system: system:tactical_jammer
+  availability: common
+  quantity_note: most vehicles carry jammers (Feb 2025)
+  derived_from:
+  - claim:c02_0025_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:tactical_jammer
+  availability: common
+  derived_from:
+  - claim:c02_0027_07
+  - claim:c02_0027_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Dome 200–300 m, directional several km; overwhelmed by frequency diversity.
+- era: e9
+  side: ua
+  system: system:tactical_jammer
+  availability: common
+  derived_from:
+  - claim:c05_0025_38
+  - claim:c02_0010_140
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Vivaldi EW 'dome' after nine months of preparation.
+- era: e6
+  side: ua
+  system: system:vehicle_jammer
+  availability: common
+  quantity_note: 1 module (spring 2024) to 4–5 (summer)
+  derived_from:
+  - claim:c02_0006_02
+  - claim:c02_0023_05
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:vehicle_jammer
+  availability: common
+  quantity_note: 7 modules by autumn 2024
+  derived_from:
+  - claim:c02_0006_02
+  - claim:c02_0025_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ua
+  system: system:ua_big_vehicle_ew
+  availability: limited
+  derived_from:
+  - claim:c02_0013_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Bukovel-AD in service since 2016.
+- era: e8
+  side: ua
+  system: system:ua_big_vehicle_ew
+  availability: limited
+  derived_from:
+  - claim:c02_0027_12
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Forced back from the front by longer-range drones and fibre.
+- era: e8
+  side: ua
+  system: system:kvertus_atlas
+  availability: limited
+  first_available: 2025-07
+  derived_from:
+  - claim:c02_0010_86
+  - claim:c02_0027_10
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Only ~10% of the planned 6,000-node front coverage funded.
+- era: e6
+  side: ua
+  system: system:pokrova
+  availability: limited
+  first_available: 2024-01
+  derived_from:
+  - claim:c02_0010_55
+  - claim:c02_0023_13
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Lima component deployed from Jul 2024.
+- era: e7
+  side: ua
+  system: system:pokrova
+  availability: common
+  derived_from:
+  - claim:c02_0010_56
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:pokrova
+  availability: common
+  derived_from:
+  - claim:c02_0005_13
+  - claim:c02_0010_72
+  - claim:c03_0022_25
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Degrades KAB accuracy.
+- era: e9
+  side: ua
+  system: system:pokrova
+  availability: common
+  quantity_note: 400+ Lima systems in service
+  derived_from:
+  - claim:c02_0010_57
+  - claim:c02_0010_108
+  method: Judged from reported volumes or rates for this era.
+  notes: Maker claims (Lima-Quant 'KABs to zero') are unverified.
+- era: e4
+  side: ua
+  system: system:patriot
+  availability: scarce
+  first_available: 2023-04
+  quantity_note: first US and German batteries; 2nd on duty 27 Apr 2023
+  derived_from:
+  - claim:c00_0032_06
+  - claim:c00_0073_24
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e5
+  side: ua
+  system: system:patriot
+  availability: limited
+  derived_from:
+  - claim:c03_0027_033
+  - claim:c00_0073_25
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e6
+  side: ua
+  system: system:patriot
+  availability: limited
+  quantity_note: third German battery arrived by Jul 2024
+  derived_from:
+  - claim:c00_0042_04
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ua
+  system: system:patriot
+  availability: limited
+  quantity_note: 3 US batteries by early 2025
+  derived_from:
+  - claim:c00_0073_25
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+- era: e8
+  side: ua
+  system: system:patriot
+  availability: limited
+  quantity_note: 8+ batteries by late 2025
+  derived_from:
+  - claim:c00_0073_25
+  - claim:c03_0029_071
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:patriot
+  availability: scarce
+  quantity_note: batteries present but interceptors short; ballistic intercept share ~10–15%
+  derived_from:
+  - claim:c03_0004_19
+  - claim:c00_0065_05
+  - claim:c03_0024_45
+  - claim:c03_0024_39
+  method: Judged from reported volumes or rates for this era.
+  notes: Rated scarce for interceptors, not launchers ('enough systems, but ... missiles').
+- era: e5
+  side: ua
+  system: system:samp_t
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_033
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: In service e5–e9; no quantities.
+- era: e6
+  side: ua
+  system: system:samp_t
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_033
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: In service e5–e9; no quantities.
+- era: e7
+  side: ua
+  system: system:samp_t
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_033
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: In service e5–e9; no quantities.
+- era: e8
+  side: ua
+  system: system:samp_t
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_033
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: In service e5–e9; no quantities.
+- era: e9
+  side: ua
+  system: system:samp_t
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_033
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: In service e5–e9; no quantities.
+- era: e3
+  side: ua
+  system: system:iris_t_slm
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: In service from e3–e5 (Oryx loss entries); exact arrival not sourced.
+- era: e4
+  side: ua
+  system: system:iris_t_slm
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e5
+  side: ua
+  system: system:iris_t_slm
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e6
+  side: ua
+  system: system:iris_t_slm
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:iris_t_slm
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ua
+  system: system:iris_t_slm
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:iris_t_slm
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ua
+  system: system:nasams
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: In service from e3–e5 (Oryx loss entries); exact arrival not sourced.
+- era: e4
+  side: ua
+  system: system:nasams
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e5
+  side: ua
+  system: system:nasams
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e6
+  side: ua
+  system: system:nasams
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:nasams
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ua
+  system: system:nasams
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:nasams
+  availability: limited
+  derived_from:
+  - claim:c03_0027_035
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ua
+  system: system:gepard
+  availability: limited
+  derived_from:
+  - claim:c02_0010_51
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Part of the distributed anti-Shahed defence (2022–2025).
+- era: e4
+  side: ua
+  system: system:gepard
+  availability: limited
+  derived_from:
+  - claim:c02_0010_51
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Part of the distributed anti-Shahed defence (2022–2025).
+- era: e5
+  side: ua
+  system: system:gepard
+  availability: limited
+  derived_from:
+  - claim:c02_0010_51
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Part of the distributed anti-Shahed defence (2022–2025).
+- era: e6
+  side: ua
+  system: system:gepard
+  availability: limited
+  derived_from:
+  - claim:c02_0010_51
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Part of the distributed anti-Shahed defence (2022–2025).
+- era: e7
+  side: ua
+  system: system:gepard
+  availability: limited
+  derived_from:
+  - claim:c02_0010_51
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Part of the distributed anti-Shahed defence (2022–2025).
+- era: e8
+  side: ua
+  system: system:gepard
+  availability: limited
+  derived_from:
+  - claim:c02_0027_24
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: '''One of the key'' AA guns; home repairs from Aug 2025.'
+- era: e8
+  side: ua
+  system: system:skynex
+  availability: scarce
+  derived_from:
+  - claim:c02_0027_23
+  - claim:c02_0010_52
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:skynex
+  availability: scarce
+  quantity_note: two batteries (8 guns) cited; reliability problems
+  derived_from:
+  - claim:c02_0029_44
+  - claim:c03_0024_56
+  method: Claims describe only a handful of units or rare use.
+- era: e3
+  side: ua
+  system: system:mobile_fire_group
+  availability: limited
+  derived_from:
+  - claim:c02_0010_50
+  - claim:c02_0017_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Distributed defence against the new Shahed campaign.
+- era: e4
+  side: ua
+  system: system:mobile_fire_group
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ua
+  system: system:mobile_fire_group
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ua
+  system: system:mobile_fire_group
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:mobile_fire_group
+  availability: common
+  derived_from:
+  - claim:c03_0020_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:mobile_fire_group
+  availability: common
+  derived_from:
+  - claim:c02_0010_50
+  - claim:c03_0027_036
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:mobile_fire_group
+  availability: common
+  derived_from:
+  - claim:c02_0029_49
+  - claim:c03_0024_54
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Can no longer be relied upon against jet Gerans.
+- era: e1
+  side: ua
+  system: system:s_300
+  availability: common
+  quantity_note: 35 S-300PS/PT + 3 S-300V divisions pre-war
+  derived_from:
+  - claim:c03_0008_05
+  - claim:c03_0027_032
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e3
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e4
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e5
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e6
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e7
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e8
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e9
+  side: ua
+  system: system:s_300
+  availability: limited
+  derived_from:
+  - claim:c03_0005_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Generic claim that Ukrainian
+    ground-based air defence has kept Russian aircraft out since Mar 2022.'
+- era: e1
+  side: ua
+  system: system:buk
+  availability: limited
+  quantity_note: 15 Buk-M1 pre-war
+  derived_from:
+  - claim:c03_0008_05
+  - claim:c03_0027_032
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ua
+  system: system:s_125
+  availability: limited
+  quantity_note: 9 S-125 pre-war
+  derived_from:
+  - claim:c03_0008_05
+  - claim:c03_0027_032
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ua
+  system: system:f_16
+  availability: scarce
+  first_available: '2024-08-04'
+  quantity_note: 79+ pledged at first arrival
+  derived_from:
+  - claim:c00_0049_01
+  - claim:c00_0073_36
+  - claim:c03_0020_18
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e8
+  side: ua
+  system: system:f_16
+  availability: limited
+  quantity_note: ~50 delivered (NL, DK, NO)
+  derived_from:
+  - claim:c00_0073_37
+  - claim:c00_0049_02
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:f_16
+  availability: limited
+  quantity_note: ~50 delivered; 5 lost
+  derived_from:
+  - claim:c00_0073_37
+  - claim:c03_0020_19
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ua
+  system: system:mirage_2000_5
+  availability: scarce
+  first_available: '2025-02-06'
+  quantity_note: 4+ delivered
+  derived_from:
+  - claim:c00_0049_04
+  - claim:c00_0073_39
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e8
+  side: ua
+  system: system:mirage_2000_5
+  availability: scarce
+  quantity_note: 4+ delivered
+  derived_from:
+  - claim:c00_0073_40
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:mirage_2000_5
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_027
+  - claim:c03_0005_02
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e1
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0008_17
+  - claim:c03_0027_028
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Defensive counter-air pairs, often outnumbered 6:2.
+- era: e2
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0005_02
+  - claim:c03_0027_029
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Small air force on stand-off
+    strikes and anti-missile/drone patrols.'
+- era: e3
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0005_02
+  - claim:c03_0027_029
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Small air force on stand-off
+    strikes and anti-missile/drone patrols.'
+- era: e4
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0005_02
+  - claim:c03_0027_029
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Small air force on stand-off
+    strikes and anti-missile/drone patrols.'
+- era: e6
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0005_02
+  - claim:c03_0027_029
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Small air force on stand-off
+    strikes and anti-missile/drone patrols.'
+- era: e8
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0005_02
+  - claim:c03_0027_029
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Small air force on stand-off
+    strikes and anti-missile/drone patrols.'
+- era: e5
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0005_02
+  - claim:c01_0016_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0005_02
+  - claim:c03_0027_017
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:mig_29
+  availability: limited
+  derived_from:
+  - claim:c03_0027_029
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e1
+  side: ua
+  system: system:su_24m
+  availability: scarce
+  derived_from:
+  - claim:c03_0008_16
+  - claim:c03_0027_028
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ua
+  system: system:su_24m
+  availability: scarce
+  derived_from:
+  - claim:c03_0016_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Storm Shadow carrier from May 2023.
+- era: e5
+  side: ua
+  system: system:su_24m
+  availability: scarce
+  derived_from:
+  - claim:c03_0016_13
+  - claim:c03_0027_014
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:su_24m
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_014
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:su_24m
+  availability: scarce
+  derived_from:
+  - claim:c03_0024_30
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Carrier of the domestic 250 kg glide bomb.
+- era: e1
+  side: ua
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0008_16
+  - claim:c03_0027_030
+  - claim:c03_0008_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Convoy strikes and lofted S-8/S-13 rockets.
+- era: e2
+  side: ua
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0008_15
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Lob-fire salvos 2022–2026.'
+- era: e3
+  side: ua
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0008_15
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Lob-fire salvos 2022–2026.'
+- era: e4
+  side: ua
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0008_15
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Lob-fire salvos 2022–2026.'
+- era: e5
+  side: ua
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0008_15
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Lob-fire salvos 2022–2026.'
+- era: e6
+  side: ua
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0008_15
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Lob-fire salvos 2022–2026.'
+- era: e7
+  side: ua
+  system: system:mi_8
+  availability: limited
+  quantity_note: Mi-8/Mi-24 crews downed 3,200+ Shaheds Aug 2024–Aug 2025
+  derived_from:
+  - claim:c03_0020_15
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ua
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0020_15
+  - claim:c03_0027_031
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:mi_8
+  availability: limited
+  quantity_note: 440+ drones downed by helicopters in May 2026
+  derived_from:
+  - claim:c03_0027_031
+  - claim:c03_0024_69
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ua
+  system: system:mi_24
+  availability: limited
+  derived_from:
+  - claim:c03_0008_16
+  - claim:c03_0027_030
+  - claim:c03_0008_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Convoy strikes and lofted S-8/S-13 rockets.
+- era: e7
+  side: ua
+  system: system:mi_24
+  availability: limited
+  quantity_note: Mi-8/Mi-24 crews downed 3,200+ Shaheds Aug 2024–Aug 2025
+  derived_from:
+  - claim:c03_0020_15
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ua
+  system: system:mi_24
+  availability: limited
+  derived_from:
+  - claim:c03_0020_15
+  - claim:c03_0027_031
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:mi_24
+  availability: limited
+  quantity_note: 440+ drones downed by helicopters in May 2026
+  derived_from:
+  - claim:c03_0027_031
+  - claim:c03_0024_69
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ua
+  system: system:starlink
+  availability: limited
+  first_available: '2022-02-28'
+  quantity_note: 5,000+ terminals by 6 Apr 2022
+  derived_from:
+  - claim:c02_0010_02
+  - claim:c02_0010_03
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e2
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c02_0010_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Russian uplink jamming had only minor, local effects 2022–23.
+- era: e4
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c02_0010_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Russian uplink jamming had only minor, local effects 2022–23.
+- era: e5
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c02_0010_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Russian uplink jamming had only minor, local effects 2022–23.
+- era: e3
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c02_0010_09
+  - claim:c02_0017_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c02_0010_60
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c02_0010_60
+  - claim:c05_0021_10
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  - claim:c02_0004_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim. Backbone of Ukrainian digital
+    C2.'
+- era: e9
+  side: ua
+  system: system:starlink
+  availability: common
+  derived_from:
+  - claim:c02_0010_111
+  - claim:c00_0061_05
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Whitelist from 2 Feb 2026; Russian Kupol jamming gives 0–35% packet loss.
+- era: e1
+  side: ua
+  system: system:delta
+  availability: limited
+  derived_from:
+  - claim:c05_0021_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Aerorozvidka volunteer project until the MoD took it over in 2023.
+- era: e2
+  side: ua
+  system: system:delta
+  availability: limited
+  derived_from:
+  - claim:c05_0021_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Aerorozvidka volunteer project until the MoD took it over in 2023.
+- era: e3
+  side: ua
+  system: system:delta
+  availability: limited
+  derived_from:
+  - claim:c05_0021_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Aerorozvidka volunteer project until the MoD took it over in 2023.
+- era: e4
+  side: ua
+  system: system:delta
+  availability: limited
+  derived_from:
+  - claim:c05_0021_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Aerorozvidka volunteer project until the MoD took it over in 2023.
+- era: e5
+  side: ua
+  system: system:delta
+  availability: limited
+  derived_from:
+  - claim:c05_0021_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: MoD takeover in 2023.
+- era: e6
+  side: ua
+  system: system:delta
+  availability: limited
+  derived_from:
+  - claim:c05_0021_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:delta
+  availability: common
+  first_available: 2024-08
+  quantity_note: formally adopted Aug 2024; ~106,000 drone missions/month
+  derived_from:
+  - claim:c05_0021_08
+  - claim:c05_0021_12
+  - claim:c05_0021_11
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e8
+  side: ua
+  system: system:delta
+  availability: common
+  derived_from:
+  - claim:c05_0023_13
+  - claim:c01_0022_40
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:delta
+  availability: common
+  quantity_note: 200,000+ drone strikes logged in Jun 2026
+  derived_from:
+  - claim:c05_0025_62
+  - claim:c05_0025_61
+  - claim:c05_0025_60
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c03_0008_20
+  - claim:c01_0008_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Pre-war digital fire control.
+- era: e2
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0031_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ua
+  system: system:kropyva
+  availability: common
+  derived_from:
+  - claim:c05_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e2
+  side: ua
+  system: system:gis_arta
+  availability: limited
+  quantity_note: 30–45 s from acquisition to fire mission
+  derived_from:
+  - claim:c05_0031_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:himera
+  availability: limited
+  derived_from:
+  - claim:c02_0027_27
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Mesh handhelds; four gave one brigade 45 km across forest.
+- era: e4
+  side: ua
+  system: system:mine_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0030_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Mines on the approaches against disposable fire teams.
+- era: e6
+  side: ua
+  system: system:mine_generic
+  availability: common
+  derived_from:
+  - claim:c04_0021_08
+  - claim:c04_0030_20
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ua
+  system: system:mine_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0037_17
+  - claim:c04_0030_30
+  - claim:c04_0030_43
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Short of mines, seeds only expected axes; remote mining by drone from e7.
+- era: e8
+  side: ua
+  system: system:mine_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0037_17
+  - claim:c04_0030_30
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:mine_generic
+  availability: limited
+  quantity_note: 678 Russians claimed killed by remote mines in Feb 2026; UGV crews mine up to 200 m of route a day
+  derived_from:
+  - claim:c04_0027_41
+  - claim:c04_0033_79
+  - claim:c04_0027_19
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ua
+  system: system:anti_drone_net
+  availability: limited
+  quantity_note: first Zaporizhzhia tunnel 6.4 km (Sep 2025); routes in five oblasts by Oct 2025
+  derived_from:
+  - claim:c02_0005_16
+  - claim:c02_0010_91
+  - claim:c05_0023_18
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ua
+  system: system:anti_drone_net
+  availability: common
+  quantity_note: 1,066 km of road nets Jan–Jul 2026; 4,000 km target
+  derived_from:
+  - claim:c05_0025_76
+  - claim:c04_0027_37
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ua
+  system: system:ua_aps
+  availability: prototype
+  quantity_note: stops 60–80% of FPVs in tests
+  derived_from:
+  - claim:c02_0010_136
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:atgm_generic
+  availability: common
+  derived_from:
+  - claim:c04_0030_16
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: ATGMs on high ground concentrated on Ukrainian demining vehicles.
+- era: e1
+  side: ru
+  system: system:tube_artillery_generic
+  availability: abundant
+  quantity_note: 2,433 barrel systems at the start
+  derived_from:
+  - claim:c00_0018_02
+  - claim:c04_0011_06
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ru
+  system: system:tube_artillery_generic
+  availability: abundant
+  quantity_note: ~20,000 rounds/day, peaks >32,000; 12:1 then 10:1 advantage
+  derived_from:
+  - claim:c03_0010_01
+  - claim:c03_0029_003
+  - claim:c00_0023_01
+  method: Judged from reported volumes or rates for this era.
+- era: e3
+  side: ru
+  system: system:tube_artillery_generic
+  availability: abundant
+  quantity_note: ~12M rounds in 2022
+  derived_from:
+  - claim:c03_0010_05
+  - claim:c03_0004_06
+  - claim:c03_0012_01
+  method: Judged from reported volumes or rates for this era.
+  notes: After HIMARS, ammunition hauled from depots further back.
+- era: e4
+  side: ru
+  system: system:tube_artillery_generic
+  availability: abundant
+  quantity_note: 12,000–38,000 rounds/day in Q1 2023; 5:1 at Bakhmut
+  derived_from:
+  - claim:c03_0014_01
+  - claim:c00_0033_03
+  method: Judged from reported volumes or rates for this era.
+- era: e5
+  side: ru
+  system: system:tube_artillery_generic
+  availability: common
+  quantity_note: 720+ guns on the Orikhiv–Tokmak axis; ~7M rounds in 2023
+  derived_from:
+  - claim:c03_0004_06
+  - claim:c00_0038_02
+  - claim:c03_0016_11
+  method: Judged from reported volumes or rates for this era.
+  notes: Shift to 'effect over volume'.
+- era: e6
+  side: ru
+  system: system:tube_artillery_generic
+  availability: abundant
+  quantity_note: 5:1 to 10:1 shell advantage; ~4M DPRK shells Sep 2023–Apr 2025
+  derived_from:
+  - claim:c00_0077_15
+  - claim:c03_0004_10
+  - claim:c00_0045_04
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:tube_artillery_generic
+  availability: abundant
+  quantity_note: 44,000+ rounds/day Aug 2024 (Ukrainian figure), falling to ~23,000 after depot strikes
+  derived_from:
+  - claim:c03_0020_01
+  - claim:c03_0029_012
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ru
+  system: system:tube_artillery_generic
+  availability: common
+  quantity_note: 10,000–15,000 rounds/day (OSINT) against 27,000–28,000 (Ukrainian official); 1.8:1
+  derived_from:
+  - claim:c03_0022_02
+  - claim:c03_0022_01
+  - claim:c03_0029_013
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:tube_artillery_generic
+  availability: common
+  quantity_note: 10,000–15,000 rounds/day; DPRK 25–40% of ammunition
+  derived_from:
+  - claim:c03_0029_014
+  - claim:c03_0029_029
+  method: Judged from reported volumes or rates for this era.
+- era: e4
+  side: ru
+  system: system:mortar_120
+  availability: common
+  derived_from:
+  - claim:c03_0014_02
+  - claim:c03_0027_041
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Artillery use shifted from 152 mm guns to 120 mm mortars in early 2023.
+- era: e5
+  side: ru
+  system: system:mortar_120
+  availability: common
+  derived_from:
+  - claim:c03_0027_041
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ru
+  system: system:krasnopol
+  availability: limited
+  derived_from:
+  - claim:c01_0014_05
+  - claim:c03_0027_042
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Orlan-30 laser designation.
+- era: e5
+  side: ru
+  system: system:krasnopol
+  availability: limited
+  derived_from:
+  - claim:c03_0016_11
+  - claim:c05_0017_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Production prioritised in 2023.
+- era: e6
+  side: ru
+  system: system:krasnopol
+  availability: limited
+  derived_from:
+  - claim:c03_0004_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ru
+  system: system:mlrs_generic
+  availability: abundant
+  quantity_note: 3,547 MLRS at the start (Grad, Uragan, Smerch, Tornado-S)
+  derived_from:
+  - claim:c00_0018_03
+  - claim:c03_0027_043
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  derived_from:
+  - claim:c03_0010_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Uragan and Smerch used at 35–70 km, even on point targets.
+- era: e5
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: up to 230 MLRS on the Orikhiv–Tokmak axis
+  derived_from:
+  - claim:c00_0038_02
+  method: Judged from reported volumes or rates for this era.
+- era: e3
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: 371 Grad lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_043
+  - claim:c03_0027_044
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: 371 Grad lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_043
+  - claim:c03_0027_044
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: 371 Grad lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_043
+  - claim:c03_0027_044
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: 371 Grad lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_043
+  - claim:c03_0027_044
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: 371 Grad lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_043
+  - claim:c03_0027_044
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ru
+  system: system:mlrs_generic
+  availability: common
+  quantity_note: 371 Grad lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_043
+  - claim:c03_0027_044
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ru
+  system: system:isdm_zemledeliye
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_046
+  - claim:c04_0019_15
+  method: Claims describe only a handful of units or rare use.
+  notes: Rare; used heavily against the 2023 counteroffensive.
+- era: e6
+  side: ru
+  system: system:isdm_zemledeliye
+  availability: scarce
+  derived_from:
+  - claim:c04_0030_13
+  method: Claims describe only a handful of units or rare use.
+- era: e7
+  side: ru
+  system: system:isdm_zemledeliye
+  availability: scarce
+  derived_from:
+  - claim:c04_0030_13
+  method: Claims describe only a handful of units or rare use.
+- era: e8
+  side: ru
+  system: system:isdm_zemledeliye
+  availability: scarce
+  derived_from:
+  - claim:c04_0030_13
+  method: Claims describe only a handful of units or rare use.
+- era: e9
+  side: ru
+  system: system:isdm_zemledeliye
+  availability: scarce
+  derived_from:
+  - claim:c03_0031_20
+  - claim:c03_0027_047
+  method: Claims describe only a handful of units or rare use.
+- era: e1
+  side: ru
+  system: system:tochka_u
+  availability: limited
+  derived_from:
+  - claim:c03_0008_10
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Fallback when Iskanders ran short in spring 2022.
+- era: e1
+  side: ru
+  system: system:iskander
+  availability: limited
+  quantity_note: 200+ strikes Feb–early May 2022; ~6/month output
+  derived_from:
+  - claim:c03_0008_07
+  - claim:c03_0008_09
+  - claim:c03_0027_060
+  method: Judged from reported volumes or rates for this era.
+- era: e2
+  side: ru
+  system: system:iskander
+  availability: scarce
+  quantity_note: output ~6/month in 2022
+  derived_from:
+  - claim:c03_0008_10
+  - claim:c03_0029_059
+  method: Judged from reported volumes or rates for this era.
+  notes: Russia short of Iskanders in spring 2022.
+- era: e3
+  side: ru
+  system: system:iskander
+  availability: scarce
+  quantity_note: output ~6/month in 2022
+  derived_from:
+  - claim:c03_0012_03
+  - claim:c03_0029_059
+  method: Judged from reported volumes or rates for this era.
+- era: e4
+  side: ru
+  system: system:iskander
+  availability: scarce
+  derived_from:
+  - claim:c03_0029_059
+  - claim:c03_0027_060
+  method: Judged from reported volumes or rates for this era.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ru
+  system: system:iskander
+  availability: scarce
+  derived_from:
+  - claim:c03_0022_45
+  - claim:c03_0029_059
+  method: Judged from reported volumes or rates for this era.
+  notes: Ballistic launches grew >700% from 2023 to 2025.
+- era: e6
+  side: ru
+  system: system:iskander
+  availability: limited
+  quantity_note: Iskander-M output 40/month (May 2024)
+  derived_from:
+  - claim:c03_0029_059
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:iskander
+  availability: limited
+  quantity_note: 33 ballistic launches in Oct 2024
+  derived_from:
+  - claim:c03_0029_060
+  - claim:c03_0020_13
+  method: Judged from reported volumes or rates for this era.
+  notes: Hunts forward-pushed Ukrainian SAMs.
+- era: e8
+  side: ru
+  system: system:iskander
+  availability: common
+  quantity_note: Iskander-M 60–70/month, Iskander-K 20–30/month; 148 ballistic launches in Oct 2025
+  derived_from:
+  - claim:c03_0022_33
+  - claim:c03_0029_062
+  - claim:c03_0022_37
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:iskander
+  availability: common
+  quantity_note: 91–195 ballistic launches a month; ~120 ballistic missiles/month output
+  derived_from:
+  - claim:c03_0024_33
+  - claim:c03_0029_065
+  - claim:c03_0024_37
+  method: Judged from reported volumes or rates for this era.
+  notes: Ballistic counts include KN-23/24.
+- era: e1
+  side: ru
+  system: system:kh_101
+  availability: limited
+  derived_from:
+  - claim:c03_0027_064
+  - claim:c03_0031_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Tu-95/Tu-160 stand-off cruise missiles.
+- era: e2
+  side: ru
+  system: system:kh_101
+  availability: limited
+  derived_from:
+  - claim:c03_0031_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ru
+  system: system:kh_101
+  availability: limited
+  derived_from:
+  - claim:c03_0031_04
+  - claim:c03_0012_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:kh_101
+  availability: limited
+  derived_from:
+  - claim:c03_0031_04
+  - claim:c03_0014_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:kh_101
+  availability: limited
+  derived_from:
+  - claim:c03_0031_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ru
+  system: system:kh_101
+  availability: limited
+  derived_from:
+  - claim:c03_0031_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ru
+  system: system:kh_101
+  availability: limited
+  quantity_note: 42 cruise missiles in Oct 2024 (all types)
+  derived_from:
+  - claim:c03_0020_17
+  - claim:c02_0025_10
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ru
+  system: system:kh_101
+  availability: common
+  quantity_note: 60–70/month (HUR); 560+ planned for 2025
+  derived_from:
+  - claim:c03_0022_35
+  - claim:c03_0022_40
+  - claim:c03_0022_42
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:kh_101
+  availability: common
+  quantity_note: ~2,100 missiles in 2026 to late Sep, >950 of them ballistic
+  derived_from:
+  - claim:c03_0024_36
+  method: Judged from reported volumes or rates for this era.
+  notes: Cruise share inferred from the total; Kh-101 not named for 2026.
+- era: e1
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c03_0027_065
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e2
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c05_0019_12
+  - claim:c05_0013_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Cruise missiles spent on dummy HIMARS.
+- era: e3
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c03_0027_065
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c03_0027_065
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c03_0027_065
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c03_0027_065
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c03_0027_065
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ru
+  system: system:kalibr
+  availability: limited
+  derived_from:
+  - claim:c03_0027_065
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ru
+  system: system:kalibr
+  availability: limited
+  quantity_note: 25–30/month (HUR, Jun 2025)
+  derived_from:
+  - claim:c03_0022_36
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_063
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+- era: e2
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_063
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_063
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_063
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_063
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_063
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  derived_from:
+  - claim:c03_0027_063
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  quantity_note: 10–15/month; 100+ in stock
+  derived_from:
+  - claim:c03_0022_34
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:kinzhal
+  availability: scarce
+  quantity_note: 61 claimed countered by Lima by Jul 2026 (unverified)
+  derived_from:
+  - claim:c02_0031_39
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ru
+  system: system:kh_22
+  availability: limited
+  quantity_note: ~180 Kh-22/32 and Kh-55/555 launches Feb–May 2022
+  derived_from:
+  - claim:c03_0008_07
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ru
+  system: system:kh_55
+  availability: limited
+  quantity_note: ~180 Kh-22/32 and Kh-55/555 launches Feb–May 2022
+  derived_from:
+  - claim:c03_0008_07
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:hwasong_11
+  availability: limited
+  quantity_note: 148 KN-23/24 by early 2025 (UA intelligence)
+  derived_from:
+  - claim:c03_0027_061
+  - claim:c03_0031_10
+  - claim:c00_0057_05
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ru
+  system: system:hwasong_11
+  availability: limited
+  quantity_note: stock of 60 KN-23 in mid-2025
+  derived_from:
+  - claim:c03_0022_39
+  - claim:c03_0027_062
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:hwasong_11
+  availability: limited
+  quantity_note: 100+ delivered, 80+ used by Jul 2026; new Hwasong-11C batch Aug 2026
+  derived_from:
+  - claim:c03_0027_062
+  - claim:c00_0066_10
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:oreshnik
+  availability: prototype
+  first_available: '2024-11-21'
+  derived_from:
+  - claim:c03_0020_23
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Signalling weapon; inert warheads on Dnipro.
+- era: e8
+  side: ru
+  system: system:oreshnik
+  availability: prototype
+  derived_from:
+  - claim:c03_0024_52
+  method: Claims describe only a handful of units or rare use.
+  notes: Lviv, 8 Jan 2026.
+- era: e9
+  side: ru
+  system: system:oreshnik
+  availability: prototype
+  derived_from:
+  - claim:c03_0024_52
+  - claim:c03_0031_23
+  method: Claims describe only a handful of units or rare use.
+  notes: Used twice on 24 May 2026.
+- era: e4
+  side: ru
+  system: system:kab
+  availability: scarce
+  quantity_note: small but steady numbers of FAB-500 with early kits from Su-35S
+  derived_from:
+  - claim:c03_0014_11
+  - claim:c03_0027_049
+  method: Judged from reported volumes or rates for this era.
+- era: e5
+  side: ru
+  system: system:kab
+  availability: common
+  quantity_note: '''dozens of glide bombs per day'''
+  derived_from:
+  - claim:c00_0038_03
+  - claim:c03_0016_12
+  - claim:c03_0004_08
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ru
+  system: system:kab
+  availability: abundant
+  quantity_note: 3,000+/month (3,200 in May 2024); ~40,000 in 2024
+  derived_from:
+  - claim:c03_0018_09
+  - claim:c00_0045_01
+  - claim:c03_0018_04
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:kab
+  availability: abundant
+  quantity_note: ~3,500/month early 2025
+  derived_from:
+  - claim:c03_0022_19
+  - claim:c03_0020_11
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ru
+  system: system:kab
+  availability: abundant
+  quantity_note: 3,500–5,328/month; ~44,000 Jan–Nov 2025
+  derived_from:
+  - claim:c03_0022_20
+  - claim:c03_0022_21
+  - claim:c00_0057_01
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:kab
+  availability: abundant
+  quantity_note: 5,000–8,800/month; 283/day in Aug 2026
+  derived_from:
+  - claim:c03_0024_21
+  - claim:c03_0024_12
+  - claim:c03_0004_16
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ru
+  system: system:fab_3000_umpk
+  availability: scarce
+  first_available: 2024-06
+  derived_from:
+  - claim:c03_0018_14
+  - claim:c03_0027_051
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e9
+  side: ru
+  system: system:fab_3000_umpk
+  availability: scarce
+  derived_from:
+  - claim:c03_0024_24
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Used on H-20 highway bridges, Feb 2026.
+- era: e6
+  side: ru
+  system: system:umpb_d30sn
+  availability: limited
+  first_available: 2024-03
+  quantity_note: ~600/month by May–Jun 2024
+  derived_from:
+  - claim:c03_0018_12
+  - claim:c03_0018_13
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e8
+  side: ru
+  system: system:kab_extended_range
+  availability: scarce
+  quantity_note: ~500 produced in 2025 (HUR)
+  derived_from:
+  - claim:c03_0022_23
+  - claim:c03_0027_053
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ru
+  system: system:armour_generic
+  availability: common
+  derived_from:
+  - claim:c04_0030_01
+  - claim:c00_0019_01
+  - claim:c00_0074_66
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: BTG road columns; 4,448 tanks lost over the war (Oryx).
+- era: e2
+  side: ru
+  system: system:armour_generic
+  availability: common
+  derived_from:
+  - claim:c00_0074_66
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ru
+  system: system:armour_generic
+  availability: common
+  derived_from:
+  - claim:c00_0074_66
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ru
+  system: system:armour_generic
+  availability: common
+  derived_from:
+  - claim:c00_0031_01
+  - claim:c04_0005_10
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Battalion mechanized waves at Vuhledar.
+- era: e5
+  side: ru
+  system: system:armour_generic
+  availability: common
+  quantity_note: ~470 tanks and ≤1,410 AFVs on the Orikhiv–Tokmak axis
+  derived_from:
+  - claim:c00_0038_02
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ru
+  system: system:armour_generic
+  availability: common
+  derived_from:
+  - claim:c04_0021_01
+  - claim:c04_0030_19
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:armour_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0023_19
+  - claim:c00_0077_19
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Storage stocks running down; mechanized pushes before the mud season.
+- era: e8
+  side: ru
+  system: system:armour_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0025_08
+  - claim:c06_0029_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:armour_generic
+  availability: limited
+  derived_from:
+  - claim:c04_0030_25
+  - claim:c04_0027_36
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: T-72B3A with Arena-M.
+- era: e6
+  side: ru
+  system: system:turtle_tank
+  availability: limited
+  first_available: 2024-04
+  derived_from:
+  - claim:c04_0021_06
+  - claim:c02_0010_37
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e7
+  side: ru
+  system: system:turtle_tank
+  availability: limited
+  derived_from:
+  - claim:c02_0010_38
+  - claim:c04_0030_23
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:arena_m
+  availability: prototype
+  first_available: 2026-07
+  derived_from:
+  - claim:c02_0029_56
+  - claim:c04_0027_36
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: 15–20 FPVs to kill a protected tank.
+- era: e5
+  side: ru
+  system: system:cope_cage
+  availability: limited
+  first_available: 2023-06
+  derived_from:
+  - claim:c02_0010_36
+  - claim:c02_0021_10
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e6
+  side: ru
+  system: system:cope_cage
+  availability: common
+  derived_from:
+  - claim:c02_0036_05
+  - claim:c02_0010_39
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:cope_cage
+  availability: common
+  derived_from:
+  - claim:c02_0010_39
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ru
+  system: system:motorcycle
+  availability: limited
+  derived_from:
+  - claim:c04_0023_24
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Motorcycle/ATV groups formally adopted by mid-2024.
+- era: e7
+  side: ru
+  system: system:motorcycle
+  availability: common
+  derived_from:
+  - claim:c04_0005_12
+  - claim:c04_0023_22
+  - claim:c04_0030_27
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:motorcycle
+  availability: common
+  quantity_note: groups of 6–8 bikes with 2–3 EW sets
+  derived_from:
+  - claim:c05_0023_06
+  - claim:c04_0030_27
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:motorcycle
+  availability: common
+  derived_from:
+  - claim:c03_0024_81
+  - claim:c00_0062_10
+  - claim:c05_0036_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ru
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c01_0008_01
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e2
+  side: ru
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c01_0004_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ru
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c01_0004_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c01_0027_01
+  - claim:c02_0006_04
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ru
+  system: system:commercial_quadcopter
+  availability: common
+  derived_from:
+  - claim:c05_0017_02
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ru
+  system: system:commercial_quadcopter
+  availability: abundant
+  quantity_note: thousands of DJI drones reflashed every month
+  derived_from:
+  - claim:c02_0023_14
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:commercial_quadcopter
+  availability: abundant
+  derived_from:
+  - claim:c02_0006_05
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ru
+  system: system:commercial_quadcopter
+  availability: abundant
+  derived_from:
+  - claim:c02_0006_05
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ru
+  system: system:commercial_quadcopter
+  availability: abundant
+  derived_from:
+  - claim:c02_0006_05
+  - claim:c01_0027_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e1
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  derived_from:
+  - claim:c01_0008_01
+  - claim:c01_0027_09
+  - claim:c05_0005_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e2
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  derived_from:
+  - claim:c01_0010_01
+  - claim:c01_0010_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Orlan-10 workhorse, but too few to sustain loss rates.
+- era: e3
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  derived_from:
+  - claim:c05_0005_02
+  - claim:c01_0032_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  derived_from:
+  - claim:c01_0014_04
+  - claim:c03_0014_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Orbits at axis and artillery-brigade level.
+- era: e5
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  derived_from:
+  - claim:c01_0004_05
+  - claim:c01_0016_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  quantity_note: five orbits over each axis
+  derived_from:
+  - claim:c05_0035_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: abundant
+  quantity_note: 1,000–1,500 Orlan/Zala orbits a day (Aug 2024)
+  derived_from:
+  - claim:c01_0020_12
+  - claim:c02_0010_63
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  derived_from:
+  - claim:c01_0027_11
+  - claim:c01_0032_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Being thinned by Ukrainian interceptors.
+- era: e9
+  side: ru
+  system: system:ru_fixed_wing_isr
+  availability: common
+  derived_from:
+  - claim:c05_0035_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ru
+  system: system:orion
+  availability: scarce
+  derived_from:
+  - claim:c01_0008_02
+  - claim:c01_0027_12
+  method: Claims describe only a handful of units or rare use.
+- era: e4
+  side: ru
+  system: system:fpv_drone
+  availability: scarce
+  derived_from:
+  - claim:c01_0027_16
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: RF FPVs introduced by both sides in the Bakhmut period.
+- era: e5
+  side: ru
+  system: system:fpv_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0016_04
+  - claim:c05_0017_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ru
+  system: system:fpv_drone
+  availability: common
+  derived_from:
+  - claim:c01_0004_08
+  - claim:c02_0023_04
+  - claim:c01_0027_16
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:fpv_drone
+  availability: abundant
+  derived_from:
+  - claim:c01_0004_08
+  - claim:c02_0025_05
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Reach grew from ~3 km to 10 km by spring 2025.
+- era: e8
+  side: ru
+  system: system:fpv_drone
+  availability: abundant
+  quantity_note: 2M FPV production target for 2025 (SZRU)
+  derived_from:
+  - claim:c01_0029_37
+  - claim:c01_0032_12
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:fpv_drone
+  availability: abundant
+  quantity_note: ~10,000 a day (OSINT); up to 7.3M planned for 2026
+  derived_from:
+  - claim:c01_0024_20
+  - claim:c01_0032_17
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:fibre_optic_fpv
+  availability: limited
+  first_available: 2024-08
+  derived_from:
+  - claim:c02_0010_67
+  - claim:c02_0005_08
+  - claim:c04_0023_04
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: KVN in Kursk; cut the salient's single road.
+- era: e8
+  side: ru
+  system: system:fibre_optic_fpv
+  availability: common
+  derived_from:
+  - claim:c02_0025_03
+  - claim:c05_0023_01
+  - claim:c02_0010_90
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Russian lead; roads struck 25–30 km deep by Sep 2025.
+- era: e9
+  side: ru
+  system: system:fibre_optic_fpv
+  availability: abundant
+  quantity_note: ~60% of Russian FPVs in key sectors; 50–60 km reach
+  derived_from:
+  - claim:c01_0029_27
+  - claim:c01_0024_15
+  - claim:c01_0022_09
+  method: Judged from reported volumes or rates for this era.
+- era: e3
+  side: ru
+  system: system:lancet
+  availability: scarce
+  first_available: 2022-10
+  derived_from:
+  - claim:c01_0012_01
+  - claim:c01_0027_31
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e4
+  side: ru
+  system: system:lancet
+  availability: limited
+  quantity_note: 113 hits and 41 misses logged by early Mar 2023
+  derived_from:
+  - claim:c01_0014_03
+  - claim:c01_0012_02
+  method: Judged from reported volumes or rates for this era.
+- era: e5
+  side: ru
+  system: system:lancet
+  availability: common
+  derived_from:
+  - claim:c00_0034_03
+  - claim:c01_0004_05
+  - claim:c00_0039_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: '''Scouring'' Ukrainian breaches; Lancet-3M.'
+- era: e6
+  side: ru
+  system: system:lancet
+  availability: common
+  derived_from:
+  - claim:c05_0035_01
+  - claim:c03_0004_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:lancet
+  availability: common
+  derived_from:
+  - claim:c05_0035_01
+  - claim:c01_0032_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:lancet
+  availability: common
+  derived_from:
+  - claim:c01_0024_62
+  - claim:c01_0032_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:lancet
+  availability: common
+  quantity_note: 10,604 destroyed by Ukraine Feb 2022–Aug 2026
+  derived_from:
+  - claim:c05_0035_03
+  - claim:c01_0029_08
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+- era: e3
+  side: ru
+  system: system:kub
+  availability: scarce
+  derived_from:
+  - claim:c01_0027_31
+  - claim:c01_0012_02
+  method: Claims describe only a handful of units or rare use.
+- era: e4
+  side: ru
+  system: system:kub
+  availability: scarce
+  derived_from:
+  - claim:c01_0012_02
+  method: Claims describe only a handful of units or rare use.
+- era: e8
+  side: ru
+  system: system:molniya
+  availability: limited
+  derived_from:
+  - claim:c01_0027_35
+  - claim:c01_0022_10
+  - claim:c05_0023_32
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Plywood fixed-wing, ~UAH 35,000; logistics strikes 50+ km deep.
+- era: e9
+  side: ru
+  system: system:molniya
+  availability: limited
+  derived_from:
+  - claim:c05_0034_16
+  - claim:c05_0025_12
+  - claim:c01_0024_60
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Fewer strikes after the Starlink cut; motherships back 40–50 km deep by mid-March 2026.
+- era: e3
+  side: ru
+  system: system:geran_2
+  availability: limited
+  first_available: '2022-09-13'
+  quantity_note: hundreds against substations in autumn 2022
+  derived_from:
+  - claim:c00_0028_04
+  - claim:c01_0012_03
+  - claim:c03_0012_03
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: First shipment arrived mid-Aug 2022 (e2) but first use is e3.
+- era: e4
+  side: ru
+  system: system:geran_2
+  availability: limited
+  quantity_note: 14,700+ launched Sep 2022–end 2024
+  derived_from:
+  - claim:c01_0018_10
+  - claim:c03_0014_13
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+- era: e5
+  side: ru
+  system: system:geran_2
+  availability: limited
+  derived_from:
+  - claim:c02_0021_06
+  - claim:c01_0018_10
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+- era: e6
+  side: ru
+  system: system:geran_2
+  availability: limited
+  quantity_note: ~75/week before Sep 2024; 77–97% intercepted
+  derived_from:
+  - claim:c00_0077_16
+  - claim:c00_0044_02
+  - claim:c01_0004_11
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:geran_2
+  availability: abundant
+  quantity_note: ~75 → ~900/week from Sep 2024; 1,900/month Oct 2024
+  derived_from:
+  - claim:c00_0050_05
+  - claim:c01_0020_16
+  - claim:c03_0027_068
+  method: Judged from reported volumes or rates for this era.
+- era: e8
+  side: ru
+  system: system:geran_2
+  availability: abundant
+  quantity_note: 54,538 Shahed-type in 2025, ~40% decoys
+  derived_from:
+  - claim:c01_0022_21
+  - claim:c01_0032_25
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:geran_2
+  availability: abundant
+  quantity_note: up to 8,150/month (May 2026)
+  derived_from:
+  - claim:c03_0027_068
+  - claim:c03_0004_18
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:shahed_decoy
+  availability: common
+  derived_from:
+  - claim:c05_0037_01
+  - claim:c01_0027_49
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Gerbera/Parody fly in the Geran waves.
+- era: e8
+  side: ru
+  system: system:shahed_decoy
+  availability: abundant
+  quantity_note: ~40% of 2025 Shahed-type launches
+  derived_from:
+  - claim:c01_0022_22
+  - claim:c01_0032_25
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:shahed_decoy
+  availability: abundant
+  derived_from:
+  - claim:c02_0029_39
+  - claim:c02_0029_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:jet_geran
+  availability: prototype
+  first_available: 2025-01
+  derived_from:
+  - claim:c00_0057_03
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Domestic Geran-3 production began early 2025.
+- era: e8
+  side: ru
+  system: system:jet_geran
+  availability: scarce
+  quantity_note: ~180 launched in 2025; Geran-5 debut 11 Jan 2026
+  derived_from:
+  - claim:c00_0066_01
+  - claim:c01_0022_27
+  - claim:c03_0024_53
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:jet_geran
+  availability: common
+  quantity_note: ~1,400 by early Jun 2026; ~2,800 in Aug 2026; ~3,000/month output (HUR)
+  derived_from:
+  - claim:c00_0066_01
+  - claim:c01_0024_55
+  - claim:c02_0029_46
+  - claim:c00_0066_02
+  method: Judged from reported volumes or rates for this era.
+  notes: Geran-3 retired by Aug 2026 for Geran-4/5.
+- era: e8
+  side: ru
+  system: system:heavy_bomber_drone
+  availability: scarce
+  first_available: '2025'
+  derived_from:
+  - claim:c01_0022_35
+  - claim:c01_0032_31
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Hexacopter Vampire copies.
+- era: e9
+  side: ru
+  system: system:heavy_bomber_drone
+  availability: limited
+  derived_from:
+  - claim:c01_0032_32
+  - claim:c01_0022_36
+  - claim:c01_0024_71
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Berdysh plus copies and captured Vampires.
+- era: e8
+  side: ru
+  system: system:interceptor_drone
+  availability: limited
+  first_available: 2025-06
+  derived_from:
+  - claim:c02_0010_84
+  - claim:c02_0027_22
+  - claim:c02_0037_01
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e9
+  side: ru
+  system: system:ugv
+  availability: limited
+  derived_from:
+  - claim:c01_0027_57
+  - claim:c05_0025_17
+  - claim:c05_0005_18
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Starlink-linked logistics UGVs partly dropped after Feb 2026.
+- era: e4
+  side: ru
+  system: system:tactical_jammer
+  availability: limited
+  derived_from:
+  - claim:c02_0010_26
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Platoon-level jammers and UAV-hijacking arrays.
+- era: e5
+  side: ru
+  system: system:tactical_jammer
+  availability: common
+  derived_from:
+  - claim:c02_0010_33
+  - claim:c01_0016_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ru
+  system: system:tactical_jammer
+  availability: common
+  derived_from:
+  - claim:c02_0010_40
+  - claim:c02_0023_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:tactical_jammer
+  availability: common
+  quantity_note: most vehicles carry jammers (Feb 2025)
+  derived_from:
+  - claim:c02_0025_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:tactical_jammer
+  availability: common
+  derived_from:
+  - claim:c02_0010_80
+  - claim:c05_0023_06
+  - claim:c02_0010_87
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:tactical_jammer
+  availability: common
+  derived_from:
+  - claim:c02_0010_119
+  - claim:c02_0035_05
+  - claim:c05_0025_45
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Ran in reduced mode during Vivaldi supply problems.
+- era: e6
+  side: ru
+  system: system:vehicle_jammer
+  availability: limited
+  first_available: 2023-09
+  derived_from:
+  - claim:c02_0023_08
+  - claim:c02_0010_40
+  method: Dated first-delivery or first-use claim falls in this era.
+  notes: Volnorez cone jammer.
+- era: e7
+  side: ru
+  system: system:vehicle_jammer
+  availability: limited
+  derived_from:
+  - claim:c02_0010_41
+  - claim:c02_0010_40
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:trench_ew
+  availability: limited
+  derived_from:
+  - claim:c02_0010_80
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Trench EW domes, Apr 2025.
+- era: e1
+  side: ru
+  system: system:zhitel
+  availability: limited
+  derived_from:
+  - claim:c02_0010_06
+  - claim:c02_0013_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e2
+  side: ru
+  system: system:zhitel
+  availability: limited
+  derived_from:
+  - claim:c02_0015_05
+  - claim:c02_0010_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ru
+  system: system:zhitel
+  availability: limited
+  derived_from:
+  - claim:c02_0017_01
+  - claim:c02_0010_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:zhitel
+  availability: limited
+  derived_from:
+  - claim:c02_0010_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:zhitel
+  availability: limited
+  derived_from:
+  - claim:c02_0021_04
+  - claim:c02_0010_29
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Used more subtly after being hunted.
+- era: e6
+  side: ru
+  system: system:zhitel
+  availability: limited
+  quantity_note: 24 confirmed destroyed/damaged Feb 2022–May 2026
+  derived_from:
+  - claim:c02_0031_08
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e7
+  side: ru
+  system: system:zhitel
+  availability: limited
+  quantity_note: 24 confirmed destroyed/damaged Feb 2022–May 2026
+  derived_from:
+  - claim:c02_0031_08
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ru
+  system: system:zhitel
+  availability: limited
+  quantity_note: 24 confirmed destroyed/damaged Feb 2022–May 2026
+  derived_from:
+  - claim:c02_0031_08
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ru
+  system: system:zhitel
+  availability: limited
+  derived_from:
+  - claim:c02_0029_60
+  - claim:c02_0034_05
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ru
+  system: system:krasukha_4
+  availability: scarce
+  derived_from:
+  - claim:c02_0013_05
+  method: Claims describe only a handful of units or rare use.
+- era: e5
+  side: ru
+  system: system:krasukha_4
+  availability: scarce
+  derived_from:
+  - claim:c02_0010_31
+  - claim:c02_0034_03
+  method: Claims describe only a handful of units or rare use.
+  notes: Hidden under nets; only two losses by Nov 2023.
+- era: e6
+  side: ru
+  system: system:krasukha_4
+  availability: scarce
+  derived_from:
+  - claim:c02_0021_07
+  method: Claims describe only a handful of units or rare use.
+- era: e3
+  side: ru
+  system: system:borisoglebsk_2
+  availability: limited
+  derived_from:
+  - claim:c02_0017_02
+  - claim:c02_0034_07
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:shipovnik_aero
+  availability: limited
+  derived_from:
+  - claim:c02_0019_03
+  - claim:c02_0010_25
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:torn_mdm
+  availability: limited
+  derived_from:
+  - claim:c02_0019_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Reportedly decrypted Ukrainian Motorola traffic.
+- era: e1
+  side: ru
+  system: system:gnss_jamming
+  availability: limited
+  derived_from:
+  - claim:c02_0010_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: GPS jamming by big platforms such as Zhitel.
+- era: e2
+  side: ru
+  system: system:gnss_jamming
+  availability: limited
+  derived_from:
+  - claim:c02_0010_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: GPS jamming by big platforms such as Zhitel.
+- era: e3
+  side: ru
+  system: system:gnss_jamming
+  availability: limited
+  derived_from:
+  - claim:c02_0010_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: GPS jamming by big platforms such as Zhitel.
+- era: e4
+  side: ru
+  system: system:gnss_jamming
+  availability: common
+  derived_from:
+  - claim:c02_0010_16
+  - claim:c02_0010_20
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Excalibur hit rate collapse; JDAM-ER misses.
+- era: e5
+  side: ru
+  system: system:gnss_jamming
+  availability: common
+  derived_from:
+  - claim:c02_0010_30
+  - claim:c02_0021_05
+  - claim:c02_0031_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Pole-21 treated as expendable wide-area cover.
+- era: e6
+  side: ru
+  system: system:kometa_crpa
+  availability: limited
+  derived_from:
+  - claim:c02_0010_59
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Kometa-4 then -8 on KABs.
+- era: e7
+  side: ru
+  system: system:kometa_crpa
+  availability: common
+  derived_from:
+  - claim:c02_0005_09
+  - claim:c02_0025_12
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:kometa_crpa
+  availability: common
+  derived_from:
+  - claim:c02_0010_74
+  - claim:c02_0010_73
+  - claim:c02_0036_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: 12-element on UMPK, 16-element on Shahed and Iskander-K.
+- era: e9
+  side: ru
+  system: system:kometa_crpa
+  availability: common
+  derived_from:
+  - claim:c02_0010_129
+  - claim:c02_0010_107
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ru
+  system: system:peresvet_jammer
+  availability: prototype
+  derived_from:
+  - claim:c02_0010_61
+  method: Claims describe only a handful of units or rare use.
+- era: e9
+  side: ru
+  system: system:volna_kupol_garant
+  availability: scarce
+  first_available: 2026-06
+  quantity_note: ~10 on the front by Jul 2026
+  derived_from:
+  - claim:c05_0034_34
+  - claim:c05_0031_44
+  - claim:c02_0029_25
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e9
+  side: ru
+  system: system:shtora_image_spoofing
+  availability: prototype
+  first_available: 2026-08
+  derived_from:
+  - claim:c02_0010_137
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e2
+  side: ru
+  system: system:sam_generic
+  availability: limited
+  derived_from:
+  - claim:c02_0015_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Could not intercept GMLRS at first.
+- era: e3
+  side: ru
+  system: system:sam_generic
+  availability: limited
+  derived_from:
+  - claim:c02_0010_11
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:sam_generic
+  availability: limited
+  derived_from:
+  - claim:c03_0014_08
+  - claim:c02_0010_12
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:sam_generic
+  availability: common
+  quantity_note: 77 SAM systems destroyed in 2025 (Oryx)
+  derived_from:
+  - claim:c03_0022_31
+  method: Judged from reported volumes or rates for this era.
+- era: e9
+  side: ru
+  system: system:sam_generic
+  availability: common
+  derived_from:
+  - claim:c03_0022_32
+  - claim:c05_0025_87
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: S-400, Buk and Pantsir protecting routes.
+- era: e7
+  side: ru
+  system: system:s_400
+  availability: limited
+  derived_from:
+  - claim:c03_0020_21
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:s_400
+  availability: limited
+  derived_from:
+  - claim:c05_0025_87
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0027_058
+  - claim:c03_0027_059
+  method: System-card claim says in service from an earlier era; presence carried forward without an era-specific figure.
+  notes: Stands for Russian tactical glide-bomb carriers (Su-34, Su-35S, Su-25, Su-30).
+- era: e2
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0027_059
+  - claim:c03_0031_04
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0027_059
+  - claim:c03_0031_04
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0027_059
+  - claim:c03_0031_04
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0027_059
+  - claim:c03_0004_08
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e6
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0018_14
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0027_059
+  - claim:c03_0029_056
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e8
+  side: ru
+  system: system:su_34
+  availability: common
+  derived_from:
+  - claim:c03_0027_059
+  - claim:c03_0029_056
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e9
+  side: ru
+  system: system:su_34
+  availability: common
+  quantity_note: 127 KAB sorties on 13 Jun 2026 (all carriers)
+  derived_from:
+  - claim:c03_0024_19
+  method: Judged from reported volumes or rates for this era.
+- era: e1
+  side: ru
+  system: system:tu_95
+  availability: limited
+  derived_from:
+  - claim:c03_0031_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e2
+  side: ru
+  system: system:tu_95
+  availability: limited
+  derived_from:
+  - claim:c03_0031_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ru
+  system: system:tu_95
+  availability: limited
+  derived_from:
+  - claim:c03_0031_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:tu_95
+  availability: limited
+  derived_from:
+  - claim:c03_0031_04
+  - claim:c03_0014_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:tu_95
+  availability: limited
+  derived_from:
+  - claim:c00_0055_10
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Strategic bombers hit in Operation Spiderweb.
+- era: e1
+  side: ru
+  system: system:ka_52
+  availability: common
+  derived_from:
+  - claim:c03_0008_12
+  - claim:c03_0008_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e2
+  side: ru
+  system: system:ka_52
+  availability: limited
+  quantity_note: 69 lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_056
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e3
+  side: ru
+  system: system:ka_52
+  availability: limited
+  quantity_note: 69 lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_056
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e4
+  side: ru
+  system: system:ka_52
+  availability: limited
+  quantity_note: 69 lost over the war (Oryx)
+  derived_from:
+  - claim:c03_0027_056
+  method: Whole-period delivery or loss total spans this era; no per-era figure.
+  notes: 'Indirect: no claim dated to this era names the system; carried over from a spanning or timeless claim.'
+- era: e5
+  side: ru
+  system: system:ka_52
+  availability: common
+  quantity_note: ~60 attack helicopters on the axis
+  derived_from:
+  - claim:c03_0016_06
+  - claim:c00_0038_03
+  - claim:c03_0027_055
+  method: Judged from reported volumes or rates for this era.
+- era: e6
+  side: ru
+  system: system:ka_52
+  availability: limited
+  derived_from:
+  - claim:c03_0027_057
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Hit by Ukrainian FPVs (2024, 2026).
+- era: e7
+  side: ru
+  system: system:ka_52
+  availability: limited
+  derived_from:
+  - claim:c03_0027_057
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Hit by Ukrainian FPVs (2024, 2026).
+- era: e8
+  side: ru
+  system: system:ka_52
+  availability: limited
+  derived_from:
+  - claim:c03_0027_057
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Hit by Ukrainian FPVs (2024, 2026).
+- era: e9
+  side: ru
+  system: system:ka_52
+  availability: limited
+  derived_from:
+  - claim:c03_0027_057
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Hit by Ukrainian FPVs (2024, 2026).
+- era: e1
+  side: ru
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c03_0008_12
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:mi_8
+  availability: limited
+  derived_from:
+  - claim:c01_0020_19
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e1
+  side: ru
+  system: system:ru_tactical_radio
+  availability: common
+  derived_from:
+  - claim:c05_0034_01
+  - claim:c05_0009_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Insecure analogue radios and stolen phones.
+- era: e2
+  side: ru
+  system: system:ru_tactical_radio
+  availability: common
+  derived_from:
+  - claim:c05_0034_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ru
+  system: system:ru_tactical_radio
+  availability: common
+  derived_from:
+  - claim:c05_0034_01
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:ru_tactical_radio
+  availability: common
+  derived_from:
+  - claim:c05_0015_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:ru_tactical_radio
+  availability: common
+  derived_from:
+  - claim:c05_0034_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e4
+  side: ru
+  system: system:strelets
+  availability: limited
+  derived_from:
+  - claim:c05_0015_02
+  - claim:c03_0014_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: VDV, Wagner and recon specialists.
+- era: e5
+  side: ru
+  system: system:strelets
+  availability: limited
+  derived_from:
+  - claim:c05_0034_03
+  - claim:c03_0031_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:glaz_groza
+  availability: limited
+  derived_from:
+  - claim:c05_0023_28
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:glaz_groza
+  availability: limited
+  derived_from:
+  - claim:c05_0034_04
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e6
+  side: ru
+  system: system:smuggled_starlink_ru
+  availability: limited
+  first_available: 2024-02
+  derived_from:
+  - claim:c05_0019_01
+  - claim:c02_0023_11
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e7
+  side: ru
+  system: system:smuggled_starlink_ru
+  availability: common
+  quantity_note: one analyst claims 50,000+ terminals
+  derived_from:
+  - claim:c05_0034_08
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e8
+  side: ru
+  system: system:smuggled_starlink_ru
+  availability: common
+  derived_from:
+  - claim:c02_0038_01
+  - claim:c05_0023_32
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Critical to Russian UAV and assault C2 before Feb 2026.
+- era: e9
+  side: ru
+  system: system:smuggled_starlink_ru
+  availability: scarce
+  derived_from:
+  - claim:c01_0024_01
+  - claim:c00_0061_06
+  - claim:c04_0027_03
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Cut off by 5 Feb 2026; only proxy re-registrations afterwards.
+- era: e8
+  side: ru
+  system: system:xk_f358
+  availability: limited
+  first_available: 2025-07
+  derived_from:
+  - claim:c05_0034_19
+  - claim:c02_0027_26
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e9
+  side: ru
+  system: system:xk_f358
+  availability: common
+  derived_from:
+  - claim:c05_0034_17
+  - claim:c02_0010_94
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Mesh relay chains to 150–175 km.
+- era: e9
+  side: ru
+  system: system:yamal_express
+  availability: limited
+  derived_from:
+  - claim:c05_0025_13
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:mine_generic
+  availability: abundant
+  quantity_note: minefields deepened from 120 m to 500 m; AT mines stacked two high
+  derived_from:
+  - claim:c04_0019_07
+  - claim:c04_0005_09
+  - claim:c04_0030_11
+  method: Judged from reported volumes or rates for this era.
+- era: e7
+  side: ru
+  system: system:mine_generic
+  availability: common
+  derived_from:
+  - claim:c04_0037_17
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Mixed AP and AT fields seeded systematically.
+- era: e8
+  side: ru
+  system: system:mine_generic
+  availability: common
+  derived_from:
+  - claim:c04_0037_17
+  - claim:c04_0027_57
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:mine_generic
+  availability: common
+  derived_from:
+  - claim:c04_0027_45
+  - claim:c03_0031_20
+  - claim:c04_0027_43
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Drone-dropped and rocket-scattered.
+- era: e5
+  side: ru
+  system: system:scatterable_mines
+  availability: common
+  derived_from:
+  - claim:c04_0019_16
+  - claim:c04_0030_16
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e3
+  side: ru
+  system: system:surovikin_line
+  availability: limited
+  derived_from:
+  - claim:c00_0029_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+  notes: Construction began late 2022.
+- era: e4
+  side: ru
+  system: system:surovikin_line
+  availability: common
+  derived_from:
+  - claim:c00_0029_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:surovikin_line
+  availability: common
+  quantity_note: three lines ~30 km deep
+  derived_from:
+  - claim:c00_0038_01
+  - claim:c04_0005_09
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:anti_tank_ditch
+  availability: common
+  quantity_note: 4 m deep, 6 m wide
+  derived_from:
+  - claim:c04_0019_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e5
+  side: ru
+  system: system:dragons_teeth
+  availability: common
+  derived_from:
+  - claim:c04_0019_02
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e7
+  side: ru
+  system: system:anti_drone_net
+  availability: limited
+  first_available: 2025-02
+  quantity_note: ~2 km tunnel Bakhmut–Chasiv Yar
+  derived_from:
+  - claim:c02_0010_77
+  - claim:c05_0021_16
+  - claim:c05_0028_13
+  method: Dated first-delivery or first-use claim falls in this era.
+- era: e8
+  side: ru
+  system: system:anti_drone_net
+  availability: common
+  derived_from:
+  - claim:c05_0036_05
+  - claim:c02_0036_06
+  method: Claims place the system in this era but give no numbers; availability set conservatively.
+- era: e9
+  side: ru
+  system: system:anti_drone_net
+  availability: common
+  derived_from:
+  - claim:c05_0005_18
+  - claim:c05_0025_90
+  method: Claims place the system in this era but give no numbers; availability set conservatively.

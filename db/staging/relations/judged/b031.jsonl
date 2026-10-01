@@ -1,0 +1,40 @@
+{"pair": "19a01898b12f", "relation": "supports", "from": "claim:c04_0019_09", "to": "claim:c04_0030_15", "strength": 0.5, "rationale": "The 9th Corps' 2023 MICLIC/UR-77 breaches are an instance of the Ukrainian e5 mechanized-breach tactic; same RUSI source.", "independent": false}
+{"pair": "1a61381e75be", "relation": "none", "rationale": "Map design vs data licence terms; different facts."}
+{"pair": "1ac22cc119e1", "relation": "supports", "from": "claim:c00_0026_01", "to": "claim:c00_0005_03", "strength": 0.5, "rationale": "The 6 September 2022 start of the Kharkiv counteroffensive fits A's autumn 2022 Kharkiv exploitation.", "independent": false}
+{"pair": "1b1b31070665", "relation": "none", "rationale": "Speed vs production rate; different quantities."}
+{"pair": "1b84af25c1ae", "relation": "refines", "from": "claim:c07_0036_06", "to": "claim:c07_0004_07", "strength": 0.8, "rationale": "B dates the infiltration layer's creation to 20 December 2025, narrowing A's \"since December 2025\"."}
+{"pair": "1bd1508421ff", "relation": "none", "rationale": "Ukrainian counter-ISR interceptors vs Russian ISR pattern; different claims."}
+{"pair": "1c4270bf5c78", "relation": "supports", "from": "claim:c04_0027_36", "to": "claim:c04_0030_25", "strength": 0.7, "rationale": "The July 2026 Arena-M T-72B3A case instantiates the Russian e9 active-protection-tank tactic; same source.", "independent": false}
+{"pair": "1d4e585148aa", "relation": "none", "rationale": "Content pipeline vs reuse terms and API; different facts."}
+{"pair": "1d528d6139a9", "relation": "supports", "from": "claim:c04_0011_07", "to": "claim:c00_0017_01", "strength": 0.4, "rationale": "B's count of pre-war Javelin and NLAW stocks loosely backs A's statement that Ukraine fought with pre-war stocks plus Western light anti-armour.", "independent": true}
+{"pair": "1d9ade784c91", "relation": "supports", "from": "claim:c03_0029_072", "to": "claim:c00_0065_04", "strength": 0.5, "rationale": "Heavy Patriot use in the Iran war corroborates A's Patriot supply squeezed by that war.", "independent": true}
+{"pair": "1e12faeb29c5", "relation": "none", "rationale": "Operator and formats vs legend categories; different facts."}
+{"pair": "1f54d62032bc", "relation": "supports", "from": "claim:c05_0017_02", "to": "claim:c03_0031_02", "strength": 0.7, "rationale": "The 2023 Russian shift to drone-designated Krasnopol and Lancet fires corroborates RUSI's recon-fire-complex assessment; overlapping RUSI source.", "independent": false}
+{"pair": "1fb9c1185aea", "relation": "supports", "from": "claim:c08_0004_15", "to": "claim:c08_0004_16", "strength": 0.6, "rationale": "Games covering one drone at a time in first person support the judgement that they never model the formation or operational picture; same sources.", "independent": false}
+{"pair": "20d5d01758d9", "relation": "none", "rationale": "Geran-3 retirement vs jet Geran speed band; different facts."}
+{"pair": "21e63d82a26c", "relation": "supports", "from": "claim:c03_0024_47", "to": "claim:c00_0006_02", "strength": 0.6, "rationale": "The US-Iran war consuming up to 1,430 Patriot rounds corroborates it competing with Ukraine for Patriot stocks.", "independent": true}
+{"pair": "227c67918cd9", "relation": "supports", "from": "claim:c05_0025_73", "to": "claim:c04_0027_26", "strength": 0.7, "rationale": "B, a separate report, says UGVs are the main resupply method on Kostiantynivka routes, corroborating A.", "independent": true}
+{"pair": "2282d8f946a4", "relation": "none", "rationale": "Shelterbelt damage vs territorial change; different quantities."}
+{"pair": "23438a9327f8", "relation": "none", "rationale": "US/Israel vs Gulf-state Patriot consumption; different quantities that are complementary, not the same assertion."}
+{"pair": "235d2e85d98b", "relation": "supports", "from": "claim:c00_0029_02", "to": "claim:c00_0077_05", "strength": 0.8, "rationale": "Both say Russia stabilised after Kharkiv by mobilising, pulling behind the Dnipro and fortifying Zaporizhzhia; shared RUSI source.", "independent": false}
+{"pair": "23bb15effdc1", "relation": "supports", "from": "claim:c03_0016_13", "to": "claim:c03_0027_014", "strength": 0.8, "rationale": "Same Wikipedia source: Storm Shadow from Su-24M hit the Chonhar bridges and BSF HQ in September 2023.", "independent": false}
+{"pair": "242e79085489", "relation": "none", "rationale": "Legend epistemics vs operator and formats; different facts."}
+{"pair": "263d7cfbd48e", "relation": "none", "rationale": "Mechanized assaults vs shelterbelt damage; different subjects."}
+{"pair": "26abd2b7116b", "relation": "none", "rationale": "Russian offensive start lines vs glide-bomb targets; different claims."}
+{"pair": "26f16d7251c6", "relation": "none", "rationale": "Fall date vs character of combat; no evidential bearing."}
+{"pair": "271b7a972ba2", "relation": "supports", "from": "claim:c00_0050_04", "to": "claim:c00_0077_19", "strength": 0.6, "rationale": "North Korean troops fighting for Russia from November 2024 corroborates their appearance in Kursk in e7; shared RUSI source.", "independent": false}
+{"pair": "272d2e1aa702", "relation": "none", "rationale": "Licence terms vs creation date; different facts."}
+{"pair": "279d79b50ae6", "relation": "none", "rationale": "Developer credits for two different games."}
+{"pair": "27d5a647d63c", "relation": "supports", "from": "claim:c04_0005_10", "to": "claim:c04_0030_19", "strength": 0.8, "rationale": "Both describe Russian battalion mechanized waves at Vuhledar, Avdiivka and Kurakhove; shared Frontelligence source.", "independent": false}
+{"pair": "2822116fb7e6", "relation": "supports", "from": "claim:c03_0014_11", "to": "claim:c03_0031_04", "strength": 0.7, "rationale": "Early-2023 VKS stand-off use of glide-kit FABs and lofted S-8 corroborates the post-March 2022 stand-off assessment; same RUSI source.", "independent": false}
+{"pair": "28bd16aa8252", "relation": "none", "rationale": "Friend frame vs SIDC encoding; different facts."}
+{"pair": "28e2ff0a1da4", "relation": "none", "rationale": "Standards alignment vs symbol anatomy; different facts."}
+{"pair": "2958ee2a24a3", "relation": "supports", "from": "claim:c03_0024_48", "to": "claim:c00_0006_02", "strength": 0.6, "rationale": "Gulf states using over 1,100 Patriot rounds and a third of global stocks corroborates the war competing with Ukraine for Patriot stocks.", "independent": true}
+{"pair": "29d574b00355", "relation": "supports", "from": "claim:c02_0010_134", "to": "claim:c04_0030_25", "strength": 0.7, "rationale": "The July-August 2026 Arena-M adaptation on T-72B3A underpins the e9 active-protection-tank tactic; same source.", "independent": false}
+{"pair": "2ae0a74d142c", "relation": "none", "rationale": "Daily orbit count vs orbits per axis; different measures, compatible."}
+{"pair": "2aed7e311b41", "relation": "none", "rationale": "Monochrome legibility vs dimension frames; different facts."}
+{"pair": "2bc7849f60a9", "relation": "none", "rationale": "FAB-3000 first use vs UMPK kit range and cost; different facts."}
+{"pair": "2bfab4e52eef", "relation": "none", "rationale": "ePoints mechanism vs Starlink-dependence of C2; different claims."}
+{"pair": "2c23195348b1", "relation": "supports", "from": "claim:c01_0032_27", "to": "claim:c00_0077_30", "strength": 0.7, "rationale": "United24's report of Russia's 2026 shift to jet Gerans corroborates the e9 assessment from other sources.", "independent": true}
+{"pair": "2cc20fda6913", "relation": "none", "rationale": "Loss of Kursk pocket vs a metric scoping note."}
+{"pair": "2d18f97c5f6d", "relation": "refines", "from": "claim:c00_0061_09", "to": "claim:c00_0077_25", "strength": 0.8, "rationale": "A gives the same ISW judgement that Starlink loss and Telegram throttling degraded Russian C2, dated from 9 February 2026."}

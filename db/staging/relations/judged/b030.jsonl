@@ -1,0 +1,40 @@
+{"pair": "070ee9ce0fb5", "relation": "none", "rationale": "Standards alignment history vs SIDC encoding and a library; different facts."}
+{"pair": "0774713066de", "relation": "supports", "from": "claim:c02_0010_10", "to": "claim:c03_0010_12", "strength": 0.7, "rationale": "Both RUSI assessments say summer 2022 GMLRS strikes wrecked Russian logistics; same institution, not independent.", "independent": false}
+{"pair": "07b1579d06aa", "relation": "refines", "from": "claim:c03_0027_070", "to": "claim:c03_0031_22", "strength": 0.6, "rationale": "A gives the same air-launched Geran-5 with R-73 plus speed, range and era detail, from the same source."}
+{"pair": "07f5666cd3a9", "relation": "supports", "from": "claim:c00_0057_05", "to": "claim:c03_0031_10", "strength": 0.7, "rationale": "Ukrainian intelligence figures on North Korean shells and KN-23 deliveries back the HUR assessment that Russia fills shortfalls with them; same intelligence origin.", "independent": false}
+{"pair": "082eed4c9ef3", "relation": "duplicates", "from": "claim:c05_0025_79", "to": "claim:c05_0028_17", "strength": 0.8, "rationale": "The Ukrainian depth bands (FPV 20 km, AI drones 150 km, FP-1/2 200 km) are the same assertion from the same source, B has more sources."}
+{"pair": "08c6d149ee0b", "relation": "none", "rationale": "Penal-unit history vs DeepStateMap marker keys; different subjects."}
+{"pair": "095b041afc08", "relation": "supports", "from": "claim:c03_0027_070", "to": "claim:c00_0077_30", "strength": 0.4, "rationale": "The existence of jet Geran-4/5 from e9 loosely supports the assessment that Russia's arsenal moved toward jet Gerans in e9.", "independent": true}
+{"pair": "09d85d0d74ee", "relation": "none", "rationale": "Invasion-phase deliveries vs whole-war totals without dates; different quantities."}
+{"pair": "0a2092bd7df2", "relation": "supports", "from": "claim:c03_0008_16", "to": "claim:c03_0027_030", "strength": 0.6, "rationale": "Same RUSI source: Ukrainian Mi-8/Mi-24 struck Russian convoys in 2022.", "independent": false}
+{"pair": "0aa31766ff4a", "relation": "none", "rationale": "Map legend vs update cadence; different facts."}
+{"pair": "0ab3775f17c9", "relation": "supports", "from": "claim:c03_0024_24", "to": "claim:c03_0031_17", "strength": 0.8, "rationale": "Same ISW report: FAB-3000 strikes on H-20 bridges in February 2026 are the example B generalises.", "independent": false}
+{"pair": "0acf259ef293", "relation": "supports", "from": "claim:c04_0019_14", "to": "claim:c04_0037_18", "strength": 0.6, "rationale": "Zemledeliye's 5-15 km scatter range backs the claim that rocket mining closes routes deep behind the line; same source.", "independent": false}
+{"pair": "0b280031577e", "relation": "supports", "from": "claim:c03_0024_47", "to": "claim:c00_0065_04", "strength": 0.5, "rationale": "Heavy Patriot consumption in the US-Iran war corroborates A's squeezed Patriot supply.", "independent": true}
+{"pair": "0b32f9084ae6", "relation": "none", "rationale": "Infiltration layer vs licence text; different facts."}
+{"pair": "0b95bad2d201", "relation": "none", "rationale": "Storm-V replacement vs DeepStateMap marker keys; different subjects."}
+{"pair": "0b998fc8dbb4", "relation": "none", "rationale": "Map platform description vs badge styling; different facts."}
+{"pair": "0bc355630eff", "relation": "none", "rationale": "Founding history vs content pipeline; different facts."}
+{"pair": "0bd5261ebd7f", "relation": "none", "rationale": "Invasion event vs a game's depiction; no evidential bearing."}
+{"pair": "0c72205c0969", "relation": "supports", "from": "claim:c07_0042_20", "to": "claim:c07_0004_15", "strength": 0.6, "rationale": "Both state Avengers AI runs inside Delta's Vezha module; same source.", "independent": false}
+{"pair": "0d6fddf95da7", "relation": "supports", "from": "claim:c05_0034_17", "to": "claim:c02_0036_04", "strength": 0.7, "rationale": "B's XK-F358 mesh modems linking Gerans and Gerberas corroborate Russian mesh-radio control via Chinese modems; same outlet.", "independent": false}
+{"pair": "0f5e4c1d2874", "relation": "supports", "from": "claim:c02_0029_22", "to": "claim:c05_0034_27", "strength": 0.7, "rationale": "ISW and Ukrainian estimates agree Rassvet needs roughly 200-300 satellites and Soyuz-2.1b cadence makes full cover take years.", "independent": true}
+{"pair": "0fe89cff5c41", "relation": "none", "rationale": "Operational effect assessment vs system specs; different facts."}
+{"pair": "10b70cff572a", "relation": "refines", "from": "claim:c05_0021_15", "to": "claim:c05_0005_15", "strength": 0.8, "rationale": "B gives the September 2024 date, tonnages and imagery confirmation for the 2024 Toropets and Tikhoretsk strikes."}
+{"pair": "1192596a773b", "relation": "none", "rationale": "Launch date vs feature description; no evidential bearing on each other."}
+{"pair": "11b3f00f8b82", "relation": "supports", "from": "claim:c03_0008_05", "to": "claim:c03_0027_032", "strength": 0.5, "rationale": "The pre-war SAM inventory backs S-300/Buk-M1/S-125 being the backbone of 2022 air denial; same RUSI source.", "independent": false}
+{"pair": "12ae07e0086e", "relation": "none", "rationale": "Unknown-affiliation frame vs SIDC encoding; different facts."}
+{"pair": "13ae57dea0ce", "relation": "none", "rationale": "Monochrome legibility vs symbol anatomy; different facts."}
+{"pair": "13b86cde9df6", "relation": "supports", "from": "claim:c02_0010_97", "to": "claim:c05_0005_11", "strength": 0.7, "rationale": "Both report the early-February 2026 Starlink whitelist with a speed cap, from different sources.", "independent": true}
+{"pair": "13decf454448", "relation": "refines", "from": "claim:c06_0038_11", "to": "claim:c06_0013_06", "strength": 0.6, "rationale": "B gives per-box cross-belt spacing that pins down the 1.0-1.3 km block long axis in A."}
+{"pair": "1487cc81fda6", "relation": "none", "rationale": "Allocation of NLAW/Javelin vs pre-war delivery counts; different facts."}
+{"pair": "14bfa9cf0781", "relation": "none", "rationale": "Account background vs legend; different facts."}
+{"pair": "1576a8a1f1db", "relation": "none", "rationale": "Legend categories vs ROCA method caveats; related context only."}
+{"pair": "159d5235b13b", "relation": "supports", "from": "claim:c00_0055_06", "to": "claim:c04_0025_11", "strength": 0.9, "rationale": "Both report the 57th Motor Rifle Brigade infiltrating central Huliaipole on 17 December 2025; same author's reporting.", "independent": false}
+{"pair": "159d65bc9c38", "relation": "supports", "from": "claim:c05_0005_17", "to": "claim:c05_0036_07", "strength": 0.7, "rationale": "Both say the 2026 middle-strike campaign caused fuel rationing in Crimea and logistic disruption; shared Kyiv Independent source.", "independent": false}
+{"pair": "170f2bdf81c0", "relation": "supports", "from": "claim:c04_0027_36", "to": "claim:c02_0010_134", "strength": 0.7, "rationale": "B's July 2026 Arena-M-equipped T-72B3A test corroborates the Arena-M adaptation; same source.", "independent": false}
+{"pair": "174c3a41a0a5", "relation": "none", "rationale": "Friend frame vs dimension frames; different definitions."}
+{"pair": "1759441d7043", "relation": "none", "rationale": "Developer credit vs training count; different facts."}
+{"pair": "17e249a76cae", "relation": "none", "rationale": "Map description vs unverified-legend note; different facts."}
+{"pair": "18f5cfcd9889", "relation": "none", "rationale": "Affiliation states vs dimension frames; different definitions."}
+{"pair": "195f5961d699", "relation": "supports", "from": "claim:c00_0062_13", "to": "claim:c04_0027_23", "strength": 0.8, "rationale": "Same source: Russia responded to Vivaldi by shifting south toward Mykolaivka and Sloviansk.", "independent": false}

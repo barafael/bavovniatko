@@ -1,5 +1,5 @@
-# Merged source index for bavovniatko research. Generated from research/sources/*.yaml.
-# Deduplicated by URL; `aliases` lists other ids used for the same source; `found_in` lists topic files.
+# Source index for bavovniatko research, generated from the knowledge base by db/tools/render.py.
+# `aliases` lists other ids used for the same source; `found_in` lists topic files.
 - id: acled-eula
   title: ACLED End User License Agreement
   url: https://acleddata.com/eula
@@ -99,8 +99,8 @@
   url: https://www.google.com/maps/d/viewer?mid=1thW9kqnDOaS2lAepLhLdzSX8Ur9Sc4k
   alt_urls:
   - https://amkmapping.com/
-  - https://t.me/s/AMK_Mapping
   - https://linktr.ee/AMK_Mapping
+  - https://t.me/s/AMK_Mapping
   publisher: AMK Mapping
   authors: []
   published: unknown
@@ -411,8 +411,8 @@
   - Pavlo Ostapenko
   - Volodymyr Shvaiko
   - Andrii S. Bonchkovskyi
-  published: 2023-09-25
-  accessed: 2026-09-28
+  published: '2023-09-25'
+  accessed: '2026-09-28'
   type: academic
   origin: ukrainian
   reliability: medium
@@ -528,8 +528,8 @@
   publisher: Center for European Policy Analysis (CEPA)
   authors:
   - Jan Kallberg
-  published: 2023-10-02
-  accessed: 2026-09-28
+  published: '2023-10-02'
+  accessed: '2026-09-28'
   type: think-tank
   origin: western
   reliability: medium
@@ -600,7 +600,7 @@
   publisher: Copernicus Data Space Ecosystem (ESA / EU)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -620,7 +620,7 @@
   publisher: ESA Copernicus (via Google Earth Engine catalog)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -1030,8 +1030,8 @@
   url: https://en.defence-ua.com/news/satellite_images_show_water_returning_to_kakhovka_reservoir_how_it_can_affect_military_operations-9835.html
   publisher: Defense Express
   authors: []
-  published: 2024-03-14
-  accessed: 2026-09-28
+  published: '2024-03-14'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1440,8 +1440,8 @@
   - Adrien Peytavie
   - Marie-Paule Cani
   - Eric Galin
-  published: 2012
-  accessed: 2026-09-28
+  published: '2012'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -1460,7 +1460,7 @@
   publisher: Internet Encyclopedia of Ukraine (Canadian Institute of Ukrainian Studies)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: ukrainian
   reliability: high
@@ -1482,8 +1482,8 @@
   - https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/{z}/{y}/{x}.jpg
   publisher: EOX IT Services GmbH (contains modified Copernicus Sentinel data 2021)
   authors: []
-  published: 2021
-  accessed: 2026-09-28
+  published: '2021'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -1503,8 +1503,8 @@
   url: https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200
   publisher: ESA / VITO consortium (via Google Earth Engine catalog)
   authors: []
-  published: 2022
-  accessed: 2026-09-28
+  published: '2022'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -1548,7 +1548,7 @@
   publisher: TUM / EuroCrops project (data on Zenodo, record 8229128)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -1607,8 +1607,8 @@
   publisher: Euromaidan Press
   authors:
   - Reporting from Ukraine
-  published: 2023-11-19
-  accessed: 2026-09-28
+  published: '2023-11-19'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1629,8 +1629,8 @@
   publisher: Euromaidan Press
   authors:
   - Reporting from Ukraine
-  published: 2023-10-16
-  accessed: 2026-09-28
+  published: '2023-10-16'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1653,8 +1653,8 @@
   publisher: Euromaidan Press
   authors:
   - Serge Havrylets
-  published: 2023-11-30
-  accessed: 2026-09-28
+  published: '2023-11-30'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1676,8 +1676,8 @@
   url: https://euromaidanpress.com/2023/06/11/russian-forces-blow-up-a-dam-in-zaporizhzhia-oblast-ukraines-military-spox-says/
   publisher: Euromaidan Press
   authors: []
-  published: 2023-06-11
-  accessed: 2026-09-28
+  published: '2023-06-11'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1698,8 +1698,8 @@
   publisher: Euromaidan Press
   authors:
   - Reporting from Ukraine
-  published: 2023-06-27
-  accessed: 2026-09-28
+  published: '2023-06-27'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1878,8 +1878,8 @@
   publisher: Euromaidan Press
   authors:
   - Olena Mukhina
-  published: 2024-12-26
-  accessed: 2026-09-28
+  published: '2024-12-26'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1924,8 +1924,8 @@
   url: https://euromaidanpress.com/2024/04/09/russia-destroys-over-60000-hectares-of-ukrainian-forests-worth-over-360-mn-investigation/
   publisher: Euromaidan Press (relaying NGL.media)
   authors: []
-  published: 2024-04-09
-  accessed: 2026-09-28
+  published: '2024-04-09'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -1973,8 +1973,8 @@
   publisher: Euromaidan Press
   authors:
   - Reporting from Ukraine
-  published: 2024-10-20
-  accessed: 2026-09-28
+  published: '2024-10-20'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -2018,8 +2018,8 @@
   publisher: Euromaidan Press
   authors:
   - David Axe
-  published: 2025-11-12
-  accessed: 2026-09-28
+  published: '2025-11-12'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -2207,8 +2207,8 @@
   publisher: Euromaidan Press
   authors:
   - Olena Mukhina
-  published: 2025-02-06
-  accessed: 2026-09-28
+  published: '2025-02-06'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -2485,8 +2485,8 @@
   publisher: Euromaidan Press
   authors:
   - David Axe
-  published: 2026-08-20
-  accessed: 2026-09-28
+  published: '2026-08-20'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -3718,8 +3718,8 @@
   publisher: Euromaidan Press
   authors:
   - Yuri Zoria
-  published: 2026-09-28
-  accessed: 2026-09-28
+  published: '2026-09-28'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -4724,7 +4724,7 @@
   publisher: Forestry and Forest Melioration (URIFFM, Kharkiv)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: academic
   origin: ukrainian
   reliability: medium
@@ -4917,7 +4917,7 @@
   publisher: arXiv / Taylor Geospatial Engine (fieldsofthe.world)
   authors: []
   published: 2024-09
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -4964,8 +4964,8 @@
   - Adrien Peytavie
   - Nicolas Maréchal
   - Eric Guérin
-  published: 2010
-  accessed: 2026-09-28
+  published: '2010'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -5145,8 +5145,8 @@
   url: https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1
   publisher: Google / World Resources Institute / National Geographic Society
   authors: []
-  published: 2022
-  accessed: 2026-09-28
+  published: '2022'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -6030,8 +6030,8 @@
   - Devis Peressutti
   - Matej Batič
   - François Waldner
-  published: 2023
-  accessed: 2026-09-28
+  published: '2023'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -6299,8 +6299,8 @@
   authors:
   - Illia Ponomarenko
   - Kostyantyn Chernichkin
-  published: 2022-05-28
-  accessed: 2026-09-28
+  published: '2022-05-28'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: high
@@ -7745,8 +7745,8 @@
   - Juan Carlos Laso Bayas
   - Linda See
   - Martina Duerauer
-  published: 2019
-  accessed: 2026-09-28
+  published: '2019'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -7887,8 +7887,8 @@
   - Volodymyr Maliuha
   - Oleksandr Sovakov
   - Sergii Dudarets
-  published: 2023
-  accessed: 2026-09-28
+  published: '2023'
+  accessed: '2026-09-28'
   type: academic
   origin: ukrainian
   reliability: high
@@ -7962,8 +7962,8 @@
   - Serhii H. Sydorenko
   - Sergiy Zibtsev
   - Brian Milakovsky
-  published: 2024-02-19
-  accessed: 2026-09-28
+  published: '2024-02-19'
+  accessed: '2026-09-28'
   type: academic
   origin: ukrainian
   reliability: high
@@ -7993,8 +7993,8 @@
   - Andrii Odruzhenko
   - Serhii H. Sydorenko
   - Svitlana Sydorenko
-  published: 2024-12-09
-  accessed: 2026-09-28
+  published: '2024-12-09'
+  accessed: '2026-09-28'
   type: academic
   origin: ukrainian
   reliability: high
@@ -8147,7 +8147,7 @@
   publisher: Microsoft (Bing Maps)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -9734,7 +9734,7 @@
   publisher: OpenStreetMap Foundation
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -9755,8 +9755,8 @@
   - https://www.openstreetmap.org/copyright
   publisher: OpenStreetMap contributors (ODbL 1.0), served by Overpass API
   authors: []
-  published: 2026-09-28
-  accessed: 2026-09-28
+  published: '2026-09-28'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: medium
@@ -9780,7 +9780,7 @@
   publisher: OpenStreetMap Wiki
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -9872,7 +9872,7 @@
   publisher: Overture Maps Foundation
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -9893,8 +9893,8 @@
   authors:
   - Yoav I. H. Parish
   - Pascal Müller
-  published: 2001
-  accessed: 2026-09-28
+  published: '2001'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -9914,8 +9914,8 @@
   publisher: Red Blob Games (Amit Patel blog)
   authors:
   - Amit Patel
-  published: 2010-09-04
-  accessed: 2026-09-28
+  published: '2010-09-04'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: medium
@@ -10640,8 +10640,8 @@
   authors:
   - Yehor Lohinov
   - Mike Eckel
-  published: 2026-05-20
-  accessed: 2026-09-28
+  published: '2026-05-20'
+  accessed: '2026-09-28'
   type: news
   origin: western
   reliability: high
@@ -11002,8 +11002,8 @@
   publisher: Scientific Data (Nature); data on NASA Harvest portal (https://data.harvestportal.org/)
   authors:
   - Sadeh et al.
-  published: 2025
-  accessed: 2026-09-28
+  published: '2025'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -11031,8 +11031,8 @@
   publisher: The Saratoga Foundation
   authors:
   - Hlib Parfonov
-  published: 2026-04-13
-  accessed: 2026-09-28
+  published: '2026-04-13'
+  accessed: '2026-09-28'
   type: think-tank
   origin: ukrainian
   reliability: medium
@@ -11085,8 +11085,8 @@
   - Tim Tutenel
   - Rafael Bidarra
   - Bedrich Benes
-  published: 2014
-  accessed: 2026-09-28
+  published: '2014'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -11127,8 +11127,8 @@
   authors:
   - Travis Turgeon
   - Meghan Mussoline
-  published: 2025-10-08
-  accessed: 2026-09-28
+  published: '2025-10-08'
+  accessed: '2026-09-28'
   type: news
   origin: western
   reliability: medium
@@ -11655,8 +11655,8 @@
   - Barbara Sudnik-Wojcikowska
   - Ivan I. Moysiyenko
   - Pieter A. Slim
-  published: 2006-06-30
-  accessed: 2026-09-28
+  published: '2006-06-30'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: medium
@@ -11734,7 +11734,7 @@
   authors:
   - V. I. Tarasov
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: academic
   origin: ukrainian
   reliability: medium
@@ -11875,7 +11875,7 @@
   publisher: UAnimals
   authors: []
   published: 2026-06
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -12120,8 +12120,8 @@
   - Sergii Skakun
   - Ankit Kariryaa
   - Alexander Prishchepov
-  published: 2023-06-21
-  accessed: 2026-09-28
+  published: '2023-06-21'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -12140,8 +12140,8 @@
   url: https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2024_v1_12
   publisher: University of Maryland GLAD (via Google Earth Engine catalog)
   authors: []
-  published: 2025
-  accessed: 2026-09-28
+  published: '2025'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -12163,8 +12163,8 @@
   publisher: Ukrainian Nature Conservation Group (UNCG)
   authors:
   - Tetiana Shamina
-  published: 2022-10-28
-  accessed: 2026-09-28
+  published: '2022-10-28'
+  accessed: '2026-09-28'
   type: think-tank
   origin: ukrainian
   reliability: medium
@@ -12187,7 +12187,7 @@
   publisher: UNFCCC TT:CLEAR (Ukraine Technology Needs Assessment)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: official
   origin: ukrainian
   reliability: high
@@ -12303,8 +12303,8 @@
   publisher: United24 Media
   authors:
   - Lucile Brizard
-  published: 2026-02-13
-  accessed: 2026-09-28
+  published: '2026-02-13'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
@@ -12639,8 +12639,8 @@
   url: https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003
   publisher: NASA / USGS (via Google Earth Engine catalog)
   authors: []
-  published: 2000
-  accessed: 2026-09-28
+  published: '2000'
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
@@ -12665,8 +12665,8 @@
   - Jan Halatsch
   - Daniel G. Aliaga
   - Pascal Müller
-  published: 2012
-  accessed: 2026-09-28
+  published: '2012'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -12742,8 +12742,8 @@
   - Francoise Nerry
   - Jean Rehbinder
   - Inbal Becker-Reshef
-  published: 2025-11-05
-  accessed: 2026-09-28
+  published: '2025-11-05'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
@@ -13104,7 +13104,7 @@
   publisher: Wikipedia
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: international
   reliability: medium
@@ -13129,7 +13129,7 @@
   publisher: Wikipedia
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: international
   reliability: medium
@@ -13271,7 +13271,7 @@
   publisher: Wikipedia
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: international
   reliability: medium
@@ -13313,7 +13313,7 @@
   publisher: Wikipedia
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: international
   reliability: medium
@@ -13493,7 +13493,7 @@
   publisher: Wikipedia
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: international
   reliability: medium
@@ -13520,7 +13520,7 @@
   publisher: Wikipedia
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: international
   reliability: medium
@@ -13779,8 +13779,8 @@
   publisher: War on the Rocks
   authors:
   - Édouard R. Maurin
-  published: 2026-09-09
-  accessed: 2026-09-28
+  published: '2026-09-09'
+  accessed: '2026-09-28'
   type: think-tank
   origin: western
   reliability: medium

@@ -1,0 +1,40 @@
+{"pair": "706def3b8775", "relation": "supports", "from": "claim:c00_0026_01", "to": "claim:c04_0005_05", "strength": 0.4, "rationale": "The 6 September 2022 start of the Kharkiv counteroffensive fits B's September 2022 breakthrough and rapid advance.", "independent": true}
+{"pair": "70a074fafb17", "relation": "duplicates", "from": "claim:c04_0027_44", "to": "claim:c03_0027_047", "strength": 0.95, "rationale": "The same July 2026 FPV kill of a Zemledeliye on the Zaporizhzhia front, from the same source, extracted in topics 03 and 04."}
+{"pair": "70c5d736365f", "relation": "none", "rationale": "Liberation dates vs DeepStateMap traffic; different subjects."}
+{"pair": "71a0800c4d58", "relation": "supports", "from": "claim:c01_0022_27", "to": "claim:c03_0027_070", "strength": 0.5, "rationale": "Geran-3 appearing in 2025 matches \"Geran-3 from e8\"; the Geran-5 dating (late 2025 vs e9) differs slightly at the era boundary.", "independent": true}
+{"pair": "71d1af23ec49", "relation": "supports", "from": "claim:c08_0006_169", "to": "claim:c08_0014_35", "strength": 0.6, "rationale": "SB Pro getting drones only via VBS3 fits the volunteers' integration of VBS3 drones with SBPro; same LLNL source.", "independent": false}
+{"pair": "721f33827ae1", "relation": "none", "rationale": "Infantry layering vs Storm-V replacement; different facts."}
+{"pair": "72270aece8e4", "relation": "refines", "from": "claim:c03_0008_14", "to": "claim:c03_0027_030", "strength": 0.8, "rationale": "A gives the lob-firing profile (15-30 deg pitch-up, ripple S-8/S-13, flares) that B mentions as pitch-up rocket lobbing."}
+{"pair": "7288b0f98c06", "relation": "none", "rationale": "Standards alignment vs frame line style; different facts."}
+{"pair": "74859106c09b", "relation": "none", "rationale": "Dimension frames vs SIDC encoding; different facts."}
+{"pair": "7495d85f99ec", "relation": "none", "rationale": "Infiltration layer vs update cadence; different facts."}
+{"pair": "75151631a8eb", "relation": "none", "rationale": "Legend vs update cadence; different facts."}
+{"pair": "754bd85659e9", "relation": "none", "rationale": "Friend frame vs echelon coding; different definitions."}
+{"pair": "762a0c472ffd", "relation": "none", "rationale": "Start of decoy production vs later decoy features; different facts."}
+{"pair": "764c785732e0", "relation": "supports", "from": "claim:c03_0004_07", "to": "claim:c03_0031_02", "strength": 0.7, "rationale": "Both RUSI assessments say Russia shifted in 2023 to Krasnopol and Lancet precision fires; same author.", "independent": false}
+{"pair": "76c95d2e3bb6", "relation": "none", "rationale": "Operator and formats vs infiltration service date; different facts."}
+{"pair": "7762b4ae2213", "relation": "none", "rationale": "Map design vs update cadence; different facts."}
+{"pair": "77f872c96fdd", "relation": "supports", "from": "claim:c00_0043_04", "to": "claim:c04_0021_11", "strength": 0.6, "rationale": "The May 2024 northern Kharkiv offensive stalling shallow fits it bogging down in an urban fight for Vovchansk.", "independent": true}
+{"pair": "7834ef201390", "relation": "supports", "from": "claim:c04_0027_07", "to": "claim:c05_0025_31", "strength": 0.8, "rationale": "Kyiv Independent and Hromadske both date the 3rd Corps' Vivaldi attack near Lyman to about late May 2026 under information silence.", "independent": true}
+{"pair": "78aaa461e868", "relation": "duplicates", "from": "claim:c02_0025_13", "to": "claim:c02_0010_41", "strength": 0.95, "rationale": "The same August 2024 capture of a Volnorez jammer with documents in Kursk, from the same source, extracted twice."}
+{"pair": "799ea91337cf", "relation": "none", "rationale": "Obriy's crew and mission-planning training neither confirms nor clearly undercuts the no-formation-picture judgement."}
+{"pair": "7a0502629881", "relation": "none", "rationale": "Unknown frame vs monochrome legibility; related context only."}
+{"pair": "7af2a3280e82", "relation": "none", "rationale": "Liberation dates vs shelterbelt damage; different subjects."}
+{"pair": "7bf703808a42", "relation": "none", "rationale": "Affiliation states vs frame line style; different definitions."}
+{"pair": "7c9d82fa6cd1", "relation": "supports", "from": "claim:c00_0057_05", "to": "claim:c03_0031_11", "strength": 0.5, "rationale": "148 KN-23/24 by early 2025 is compatible with HUR's 100+ KN-23/24 since June 2023; both Ukrainian intelligence.", "independent": false}
+{"pair": "7dbd0f84ec91", "relation": "none", "rationale": "Analyst profile vs update cadence; different facts."}
+{"pair": "7dec3ad2cf9d", "relation": "supports", "from": "claim:c07_0036_06", "to": "claim:c07_0004_10", "strength": 0.6, "rationale": "ISW creating its infiltration feature service on 20 December 2025 corroborates ISW redefining its map categories in December 2025.", "independent": true}
+{"pair": "7e1ffa8f99e5", "relation": "refines", "from": "claim:c08_0006_76", "to": "claim:c08_0018_16", "strength": 0.8, "rationale": "A says how TOAW IV faked Javelins, filing them under \"rockets & missiles\"; same source."}
+{"pair": "7ec7846aed90", "relation": "none", "rationale": "Russia's shift to jet Gerans vs their speed outrunning interceptors; different claims."}
+{"pair": "7effe3d291ba", "relation": "none", "rationale": "Collective and marker design vs legend icons; different facts."}
+{"pair": "7f816c479f7e", "relation": "supports", "from": "claim:c00_0048_01", "to": "claim:c04_0023_01", "strength": 0.8, "rationale": "Wikipedia and the Kyiv Independent both date the Kursk incursion to 6 August 2024.", "independent": true}
+{"pair": "7f938023ad15", "relation": "none", "rationale": "Training count vs editions and pricing; different facts."}
+{"pair": "7f945741c12c", "relation": "none", "rationale": "Content pipeline vs legend; different facts."}
+{"pair": "7f94bfa5e322", "relation": "supports", "from": "claim:c00_0005_05", "to": "claim:c04_0005_07", "strength": 0.8, "rationale": "Both RUSI works describe Wagner and convict assaults taking Bakhmut in attritional fighting; same author.", "independent": false}
+{"pair": "802d48f102bb", "relation": "supports", "from": "claim:c01_0024_58", "to": "claim:c00_0066_04", "strength": 0.4, "rationale": "HUR's large Geran-4/5 output loosely backs CSIS's view that the Geran-3 was retired in favour of the Geran-4/5.", "independent": true}
+{"pair": "805a17b189a9", "relation": "none", "rationale": "Starlink as C2 backbone vs Avengers' detection function; different claims."}
+{"pair": "81ca4cd6a550", "relation": "none", "rationale": "A Lancet strike on an airbase vs an IADS assessment; different claims."}
+{"pair": "824241921539", "relation": "supports", "from": "claim:c04_0023_19", "to": "claim:c00_0048_03", "strength": 0.6, "rationale": "Autumn 2024 mechanized pushes at Kurakhove and Pokrovsk are part of the continuing Pokrovsk/Kurakhove drive; same RUSI source.", "independent": false}
+{"pair": "825e993815d8", "relation": "supports", "from": "claim:c08_0006_44", "to": "claim:c08_0016_21", "strength": 0.7, "rationale": "The Russian-side VDV-at-Hostomel narrative backs the reading of the game as propaganda opening with the Hostomel assault; same source.", "independent": false}
+{"pair": "8277bea4f6ea", "relation": "none", "rationale": "Real anti-Shahed defence vs simulator scenarios; different subjects."}
+{"pair": "82b409e88a79", "relation": "supports", "from": "claim:c06_0017_09", "to": "claim:c06_0017_08", "strength": 0.5, "rationale": "Ukraine disabling the gas-pipeline infiltration route presupposes and backs Russian entry into Kupiansk through it; same source.", "independent": false}

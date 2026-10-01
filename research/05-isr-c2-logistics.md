@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 05 — ISR, C2 and Logistics
 
 Research notes for *bavovniatko*. Scope: intelligence, surveillance and reconnaissance (ISR); command and control (C2); and logistics in the Russo-Ukrainian war, 2022 to September 2026. We look at it from the Ukrainian side. Russian capabilities are described as Ukrainian and Western sources report them. Inline source tags point to `sources/05-isr-c2-logistics.yaml`.

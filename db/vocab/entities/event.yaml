@@ -1,0 +1,737 @@
+# Curated event registry: battles, operations, truces, negotiations, policies, appointments, technical events.
+# note = date or date range + one-line description.
+
+# --- 2013–2021: before the full-scale invasion --------------------------------------------------
+- id: event:revolution_of_dignity
+  type: event
+  kind: milestone
+  en: "Revolution of Dignity"
+  uk: "Революція гідності"
+  aliases: ["Revolution of Dignity", "Euromaidan"]
+  note: "Nov 2013 – Feb 2014. Euromaidan protests that ended with Yanukovych fleeing Ukraine."
+- id: event:annexation_of_crimea
+  type: event
+  kind: operation
+  en: "Russian annexation of Crimea"
+  aliases: ["Russian annexation of Crimea"]
+  note: "Feb–Mar 2014. Occupation of Crimea by Russian troops without insignia and annexation after a sham referendum."
+- id: event:mh17_shootdown
+  type: event
+  kind: incident
+  en: "MH17 shootdown"
+  aliases: ["MH17 shootdown"]
+  note: "17 Jul 2014. Malaysia Airlines flight MH17 shot down over Donbas by a Russian Buk."
+- id: event:battle_of_ilovaisk
+  type: event
+  kind: battle
+  en: "Battle of Ilovaisk"
+  uk: "Іловайська битва"
+  aliases: ["Battle of Ilovaisk"]
+  note: "Aug–Sep 2014. Regular Russian troops intervened directly and defeated Ukrainian forces."
+- id: event:battle_of_debaltseve
+  type: event
+  kind: battle
+  en: "Battle of Debaltseve"
+  aliases: ["Battle of Debaltseve"]
+  note: "Jan–Feb 2015. Ukrainian withdrawal from the Debaltseve salient."
+- id: event:minsk_ii
+  type: event
+  kind: negotiation
+  en: "Minsk II"
+  aliases: ["Minsk II"]
+  note: "12 Feb 2015. Second Minsk ceasefire agreement."
+- id: event:taliban_offensive_2021
+  type: event
+  kind: offensive
+  en: "2021 Taliban offensive"
+  aliases: ["2021 Taliban offensive"]
+  note: "May–Aug 2021. Taliban takeover of Afghanistan; DeepState team first experimented with a live conflict map."
+
+# --- 2022: invasion ---------------------------------------------------------------------------
+- id: event:russian_full_scale_invasion
+  type: event
+  kind: offensive
+  en: "Russian full-scale invasion of Ukraine"
+  uk: "Повномасштабне вторгнення Росії в Україну"
+  aliases: ["Russian full-scale invasion of Ukraine", "Russian invasion of Ukraine"]
+  note: "From 24 Feb 2022. Multi-axis Russian invasion from Belarus, Russia and Crimea."
+- id: event:battle_of_kyiv
+  type: event
+  kind: battle
+  en: "Battle of Kyiv"
+  aliases: ["Battle of Kyiv"]
+  parent: event:russian_full_scale_invasion
+  note: "24 Feb – early Apr 2022. Failed Russian attempt to take or encircle Kyiv."
+- id: event:battle_of_hostomel
+  type: event
+  kind: battle
+  en: "Battle of Hostomel"
+  aliases: ["Battle of Hostomel"]
+  parent: event:battle_of_kyiv
+  note: "24–25 Feb 2022. Russian VDV helicopter assault on Hostomel (Antonov) airport."
+- id: event:siege_of_mariupol
+  type: event
+  kind: battle
+  en: "Siege of Mariupol"
+  aliases: ["Siege of Mariupol"]
+  parent: event:russian_full_scale_invasion
+  note: "Feb–May 2022. Siege and fall of Mariupol, ending with the Azovstal surrender."
+- id: event:bucha_massacre
+  type: event
+  kind: incident
+  en: "Bucha massacre"
+  aliases: ["Bucha massacre"]
+  note: "Mar 2022 (revealed early Apr 2022). Killing of civilians by Russian forces in occupied Bucha."
+- id: event:peace_talks_2022
+  type: event
+  kind: negotiation
+  en: "2022 Belarus and Istanbul peace talks"
+  aliases: ["2022 Belarus and Istanbul peace talks"]
+  note: "28 Feb – Apr 2022. Russia–Ukraine talks in Belarus, Antalya and Istanbul; halted over disagreements and Bucha."
+- id: event:istanbul_talks_2022
+  type: event
+  kind: negotiation
+  en: "Istanbul talks (2022)"
+  aliases: ["Istanbul talks"]
+  parent: event:peace_talks_2022
+  note: "29 Mar 2022 round in Istanbul that produced the Istanbul draft (the only Istanbul round in the staged claims; not the 2025 talks)."
+- id: event:russian_donbas_offensive_2022
+  type: event
+  kind: offensive
+  en: "Russian Donbas offensive 2022"
+  aliases: ["Russian Donbas offensive 2022"]
+  note: "Apr–Jul 2022. Russian artillery-heavy offensive in Donbas after the withdrawal from the north."
+- id: event:battle_of_sievierodonetsk
+  type: event
+  kind: battle
+  en: "Battle of Sievierodonetsk"
+  aliases: ["Battle of Sievierodonetsk"]
+  parent: event:russian_donbas_offensive_2022
+  note: "May–Jun 2022. Russian capture of Sievierodonetsk."
+- id: event:kherson_counteroffensive
+  type: event
+  kind: offensive
+  en: "2022 Kherson counteroffensive"
+  aliases: ["Kherson counteroffensive", "2022 Kherson counteroffensive"]
+  note: "29 Aug – 11 Nov 2022. Ukrainian operation that forced Russia out of right-bank Kherson."
+- id: event:kharkiv_counteroffensive
+  type: event
+  kind: offensive
+  en: "2022 Kharkiv counteroffensive"
+  aliases: ["Kharkiv counteroffensive", "2022 Kharkiv counteroffensive"]
+  note: "6 Sep – early Oct 2022. Ukrainian breakthrough in Kharkiv Oblast (Balakliia, Izium, Kupiansk, Lyman)."
+- id: event:russian_mobilization_2022
+  type: event
+  kind: policy
+  en: "Russian partial mobilization"
+  aliases: ["Russian partial mobilization", "Russian 2022 mobilization"]
+  note: "21 Sep 2022. Russian 'partial' mobilization of about 300,000 men."
+- id: event:annexation_of_four_oblasts
+  type: event
+  kind: policy
+  en: "Russian annexation of four oblasts"
+  aliases: ["Russian annexation of four oblasts"]
+  note: "30 Sep 2022. Russian claimed annexation of Donetsk, Luhansk, Zaporizhzhia and Kherson oblasts."
+- id: event:ramstein_pledging
+  type: event
+  kind: aid_decision
+  en: "Ramstein (UDCG) pledging"
+  aliases: ["Ramstein (UDCG) pledging"]
+  note: "From Apr 2022. Ukraine Defense Contact Group pledging process at Ramstein and later meetings."
+- id: event:ramstein_meeting_2026_09
+  type: event
+  kind: aid_decision
+  en: "Ramstein meeting 8 Sep 2026"
+  aliases: ["Ramstein meeting 8 Sep 2026"]
+  parent: event:ramstein_pledging
+  note: "8 Sep 2026. UDCG meeting where Ukraine asked allies to release Patriot stocks; only Germany did."
+
+# --- 2023 ----------------------------------------------------------------------------------------
+- id: event:western_armour_pledge
+  type: event
+  kind: aid_decision
+  en: "Western armour pledge"
+  aliases: ["Western armour pledge"]
+  note: "Jan 2023. Pledges of Western tanks and IFVs (Leopard 2, Challenger 2, Abrams, Bradley)."
+- id: event:battle_of_bakhmut
+  type: event
+  kind: battle
+  en: "Battle of Bakhmut"
+  uk: "Битва за Бахмут"
+  aliases: ["Battle of Bakhmut"]
+  note: "Aug 2022 – May 2023. Main weight of the Russian winter offensive; Bakhmut fell in May 2023."
+- id: event:battle_of_vuhledar
+  type: event
+  kind: battle
+  en: "Battle of Vuhledar"
+  aliases: ["Battle of Vuhledar"]
+  note: "2022 – Oct 2024; costly Russian assaults of Jan–Feb 2023 opened the Russian winter offensive."
+- id: event:battle_of_marinka
+  type: event
+  kind: battle
+  en: "Battle of Marinka"
+  aliases: ["Battle of Marinka"]
+  note: "Spring 2022 – Dec 2023 (about 20 months). Russian capture of Marinka."
+- id: event:wagner_mutiny
+  type: event
+  kind: incident
+  en: "Wagner mutiny"
+  aliases: ["Wagner mutiny"]
+  note: "23–24 Jun 2023. Prigozhin's Wagner march on Moscow."
+- id: event:destruction_of_kakhovka_dam
+  type: event
+  kind: incident
+  en: "Destruction of the Kakhovka dam"
+  aliases: ["Destruction of the Kakhovka dam"]
+  note: "6 Jun 2023. Destruction of the Kakhovka HPP dam on the Dnipro."
+- id: event:ukrainian_counteroffensive_2023
+  type: event
+  kind: offensive
+  en: "2023 Ukrainian counteroffensive"
+  aliases: ["2023 Ukrainian counteroffensive", "2023 counteroffensive"]
+  note: "May–Nov 2023. Western-equipped offensive, main axis Orikhiv–Tokmak from 3 Jun 2023; stalled in Russian defences."
+- id: event:battle_of_krynky
+  type: event
+  kind: battle
+  en: "Battle of Krynky"
+  aliases: ["Battle of Krynky", "Krynky bridgehead"]
+  parent: event:ukrainian_counteroffensive_2023
+  note: "Oct 2023 – mid-2024. Ukrainian marine lodgement on the left bank of the Dnipro; last attempt of the 2023 offensive."
+- id: event:battle_of_avdiivka
+  type: event
+  kind: battle
+  en: "Battle of Avdiivka"
+  aliases: ["Battle of Avdiivka"]
+  note: "10 Oct 2023 – Feb 2024. Russian offensive that took Avdiivka."
+
+# --- 2024 ----------------------------------------------------------------------------------------
+- id: event:ukrainian_mobilization_law_2024
+  type: event
+  kind: policy
+  en: "April 2024 mobilization law"
+  aliases: ["April 2024 mobilization law"]
+  note: "Apr 2024. Ukrainian mobilization law; mobilization age lowered to 25."
+- id: event:us_supplemental_2024
+  type: event
+  kind: aid_decision
+  en: "US supplemental appropriation April 2024"
+  aliases: ["US supplemental appropriation April 2024"]
+  note: "24 Apr 2024. US supplemental aid package after months of congressional delay."
+- id: event:russian_kharkiv_offensive_2024
+  type: event
+  kind: offensive
+  en: "2024 Kharkiv offensive"
+  aliases: ["2024 Kharkiv offensive", "Kharkiv/Vovchansk offensive"]
+  note: "From 10 May 2024. Russian cross-border push into northern Kharkiv Oblast (Vovchansk, Lyptsi); stalled at about 10 km."
+- id: event:us_permission_strike_near_kharkiv
+  type: event
+  kind: policy
+  en: "US permission to strike Russia near Kharkiv"
+  aliases: ["US permission to strike Russia near Kharkiv"]
+  note: "30 May 2024. US allowed its weapons to be used against targets in Russia near Kharkiv."
+- id: event:kursk_incursion
+  type: event
+  kind: offensive
+  en: "Kursk incursion"
+  uk: "Курська операція"
+  aliases: ["Kursk incursion"]
+  note: "6 Aug 2024 – Mar 2025. Ukrainian cross-border offensive into Kursk Oblast; pocket lost by spring 2025."
+- id: event:ukrainian_deep_strike_campaign
+  type: event
+  kind: strike
+  en: "Ukrainian deep-strike campaign"
+  aliases: ["Ukrainian deep-strike campaign"]
+  note: "2024 onwards (expanded Aug 2024 – Mar 2025). Long-range drone and missile strikes on Russian refineries and depots."
+- id: event:first_atacms_strike_inside_russia
+  type: event
+  kind: strike
+  en: "First ATACMS strike inside Russia"
+  aliases: ["First ATACMS strike inside Russia"]
+  note: "19 Nov 2024. First Ukrainian ATACMS strike on targets inside Russia."
+- id: event:battle_of_pokrovsk
+  type: event
+  kind: battle
+  en: "Battle of Pokrovsk"
+  uk: "Битва за Покровськ"
+  aliases: ["Battle of Pokrovsk"]
+  note: "Russian drive from Jul 2024; urban fight Sep 2025 – early 2026, Ukraine lost most of Pokrovsk and Myrnohrad."
+
+# --- 2025 ----------------------------------------------------------------------------------------
+- id: event:corps_reform
+  type: event
+  kind: policy
+  en: "Ukrainian corps reform"
+  aliases: ["corps reform"]
+  note: "Announced early 2025 (3rd Army Corps formed Mar 2025); 18 corps by early 2026. Brigade-to-corps restructuring."
+- id: event:geran_3_production_start
+  type: event
+  kind: production
+  en: "Geran-3 production start"
+  aliases: ["Geran-3 production start"]
+  note: "Early 2025. Start of Russian domestic production of the jet Geran-3."
+- id: event:oval_office_row
+  type: event
+  kind: incident
+  en: "Oval Office row"
+  aliases: ["Oval Office row"]
+  note: "28 Feb 2025. Trump–Vance–Zelensky confrontation in the Oval Office."
+- id: event:us_aid_intelligence_pause_2025
+  type: event
+  kind: aid_decision
+  en: "US aid and intelligence pause 2025"
+  aliases: ["US aid and intelligence pause 2025"]
+  note: "Early Mar 2025. Temporary US pause of military aid and intelligence sharing."
+- id: event:jeddah_talks
+  type: event
+  kind: negotiation
+  en: "Jeddah talks"
+  aliases: ["Jeddah talks"]
+  note: "11 Mar 2025. US–Ukraine talks in Jeddah; 30-day ceasefire offer."
+- id: event:operation_spiderweb
+  type: event
+  kind: operation
+  en: "Operation Spiderweb"
+  uk: "Операція «Павутина»"
+  aliases: ["Operation Spiderweb"]
+  note: "1 Jun 2025. SBU truck-launched FPV strikes on Russian strategic bomber bases."
+- id: event:purl_created
+  type: event
+  kind: aid_decision
+  en: "PURL created"
+  aliases: ["PURL created"]
+  note: "Jul 2025. Creation of NATO's Prioritised Ukraine Requirements List for European-funded US deliveries."
+- id: event:anchorage_summit
+  type: event
+  kind: negotiation
+  en: "Anchorage summit"
+  aliases: ["Anchorage summit"]
+  note: "15 Aug 2025. Trump–Putin summit in Anchorage, Alaska; no ceasefire."
+- id: event:peace_plan_28_point
+  type: event
+  kind: negotiation
+  en: "28-point US peace plan"
+  aliases: ["28-point US peace plan"]
+  note: "Nov 2025. US peace plan that ISW called 'very favorable to Russia'."
+- id: event:peace_plan_20_point
+  type: event
+  kind: negotiation
+  en: "20-point peace plan"
+  aliases: ["20-point peace plan"]
+  note: "Dec 2025. US–Ukrainian–European counter-plan; rejected by the Kremlin."
+- id: event:battle_of_huliaipole
+  type: event
+  kind: battle
+  en: "Battle of Huliaipole"
+  aliases: ["Battle of Huliaipole"]
+  note: "Nov–Dec 2025. Russian massed assault (up to nine brigades and regiments) and capture of Huliaipole."
+- id: event:ukrainian_sead_campaign
+  type: event
+  kind: operation
+  en: "Ukrainian SEAD/DEAD campaign"
+  aliases: ["Ukrainian SEAD/DEAD campaign"]
+  note: "From late 2025. Ukrainian campaign against Russian air defences, opening airspace for 2026 operations."
+- id: event:kupiansk_counterattack
+  type: event
+  kind: offensive
+  en: "Kupiansk counterattack"
+  aliases: ["Kupiansk counterattack"]
+  note: "Late Dec 2025. Ukraine retook much of Kupiansk and its surroundings (about 305 km²)."
+
+# --- 2026 ----------------------------------------------------------------------------------------
+- id: event:abu_dhabi_talks
+  type: event
+  kind: negotiation
+  en: "Abu Dhabi talks"
+  aliases: []
+  note: "Jan–Feb 2026. Trilateral US–Ukraine–Russia peace talks in Abu Dhabi (parent of the rounds)."
+- id: event:abu_dhabi_talks_round_1
+  type: event
+  kind: negotiation
+  en: "Abu Dhabi talks, first round"
+  aliases: ["Abu Dhabi talks, first round"]
+  parent: event:abu_dhabi_talks
+  note: "23–24 Jan 2026. First trilateral round in Abu Dhabi."
+- id: event:abu_dhabi_talks_round_2
+  type: event
+  kind: negotiation
+  en: "Abu Dhabi talks, second round"
+  aliases: ["Abu Dhabi talks, second round"]
+  parent: event:abu_dhabi_talks
+  note: "4–5 Feb 2026. Second round; 314-person exchange, no ceasefire."
+- id: event:energy_strike_moratorium_2026_02
+  type: event
+  kind: truce
+  en: "Energy-strike moratorium Feb 2026"
+  aliases: ["Energy-strike moratorium Feb 2026"]
+  note: "Early Feb 2026. Short moratorium on strikes against energy infrastructure, in force during the second Abu Dhabi round."
+- id: event:geneva_talks
+  type: event
+  kind: negotiation
+  en: "Geneva talks"
+  aliases: ["Geneva talks"]
+  note: "17–18 Feb 2026. Peace talks in Geneva; failed on Donbas."
+- id: event:starlink_cutoff
+  type: event
+  kind: technical
+  en: "Starlink cutoff"
+  aliases: ["Starlink cutoff", "Starlink cut-off"]
+  note: "Late Jan – 5 Feb 2026. Phased cutoff of Russian forces' smuggled Starlink terminals (speed cap, then whitelist)."
+- id: event:starlink_speed_cap
+  type: event
+  kind: technical
+  en: "Starlink speed cap"
+  aliases: ["Starlink speed cap"]
+  parent: event:starlink_cutoff
+  note: "Late Jan – 1 Feb 2026. First phase: terminals moving faster than about 75–90 km/h cut off (hit Starlink-equipped Shaheds and Molniyas)."
+- id: event:starlink_whitelist
+  type: event
+  kind: policy
+  en: "Starlink whitelist"
+  aliases: ["Starlink whitelist"]
+  parent: event:starlink_cutoff
+  note: "Announced 1 Feb, Cabinet resolution 2 Feb, enforced about 03:00 Kyiv time 5 Feb 2026. Only registered terminals may operate in Ukraine."
+- id: event:telegram_throttling_russia
+  type: event
+  kind: policy
+  en: "Telegram throttling in Russia"
+  aliases: ["Telegram throttling in Russia"]
+  note: "From 9 Feb 2026. Kremlin throttling of Telegram, compounding the Starlink cutoff's damage to Russian C2."
+- id: event:year_round_conscription_russia
+  type: event
+  kind: policy
+  en: "Year-round conscription in Russia"
+  aliases: ["Year-round conscription in Russia"]
+  note: "From 2026. Russian conscription made year-round."
+- id: event:us_iran_war
+  type: event
+  kind: battle
+  en: "2026 US–Iran war"
+  aliases: ["US–Iran war", "2026 US–Iran war"]
+  note: "From end Feb 2026 (full swing Mar–Apr 2026). US–Israeli war with Iran; drained Patriot, THAAD and ATACMS stocks."
+- id: event:operation_epic_fury
+  type: event
+  kind: operation
+  en: "Operation Epic Fury"
+  aliases: ["Operation Epic Fury"]
+  parent: event:us_iran_war
+  note: "2026. US air campaign against Iran (211–237 guided bombs a day)."
+- id: event:hormuz_crisis
+  type: event
+  kind: incident
+  en: "Hormuz crisis"
+  aliases: ["Hormuz crisis"]
+  parent: event:us_iran_war
+  note: "From Mar 2026. Disruption of Strait of Hormuz shipping; oil price spike boosted Russian revenue."
+- id: event:ukrainian_counteroffensive_2026
+  type: event
+  kind: offensive
+  en: "2026 Ukrainian counteroffensive"
+  aliases: ["2026 Ukrainian counteroffensive", "2026 counteroffensive"]
+  note: "Feb–Aug 2026. Ukrainian counteroffensive (745 km² claimed by 12 Aug 2026); parent of the southern and Vivaldi phases."
+- id: event:southern_counteroffensive_2026
+  type: event
+  kind: offensive
+  en: "2026 southern counteroffensive"
+  aliases: ["2026 southern counteroffensive"]
+  parent: event:ukrainian_counteroffensive_2026
+  note: "From 29 Jan / 9 Feb 2026. Air Assault Forces-led counterattacks in eastern Dnipropetrovsk and Zaporizhzhia oblasts."
+- id: event:oleksandrivka_offensive
+  type: event
+  kind: offensive
+  en: "Oleksandrivka offensive"
+  aliases: ["Oleksandrivka offensive"]
+  parent: event:southern_counteroffensive_2026
+  note: "29 Jan – Aug 2026. DShV offensive on the Oleksandrivka axis (Dnipropetrovsk–Zaporizhzhia border); 745 km² and 26 settlements claimed by 12 Aug."
+- id: event:operation_vivaldi
+  type: event
+  kind: operation
+  en: "Operation Vivaldi"
+  aliases: ["Operation Vivaldi"]
+  parent: event:ukrainian_counteroffensive_2026
+  note: "Late spring 2026 onwards, revealed 15 Sep 2026. 3rd Army Corps (Biletskyi) operation near Lyman."
+- id: event:middle_strike_campaign
+  type: event
+  kind: operation
+  en: "Middle strike campaign"
+  aliases: ["middle strike", "Logistics Lockdown"]
+  note: "2026 (scaled up from Feb–May). Ukrainian drone interdiction at 20–200 km depth against Russian logistics (R-280/M-14, bridges, fuel)."
+- id: event:gripen_pledge
+  type: event
+  kind: aid_decision
+  en: "Gripen pledge"
+  aliases: ["Gripen pledge"]
+  note: "May 2026. Swedish pledge of 16 Gripen C/D and 20 Gripen E/F."
+- id: event:eu_ukraine_support_loan
+  type: event
+  kind: aid_decision
+  en: "EU Ukraine Support Loan"
+  aliases: ["EU Ukraine Support Loan"]
+  note: "2026–27. EUR 90 bn European-financed loan for Ukraine."
+- id: event:ukrainian_unilateral_ceasefire_2026_05
+  type: event
+  kind: truce
+  en: "Ukrainian unilateral ceasefire May 2026"
+  aliases: ["Ukrainian unilateral ceasefire May 2026"]
+  note: "From 6 May 2026. Unilateral Ukrainian Victory Day ceasefire, ignored by Russia."
+- id: event:victory_day_ceasefire_2026
+  type: event
+  kind: truce
+  en: "Victory Day ceasefire 2026"
+  aliases: ["Victory Day ceasefire 2026"]
+  note: "9–11 May 2026. Agreed Russia–Ukraine ceasefire with a POW exchange; limited fighting continued."
+- id: event:orthodox_easter_truce_2026
+  type: event
+  kind: truce
+  en: "Orthodox Easter truce 2026"
+  aliases: ["Orthodox Easter truce 2026"]
+  note: "11–13 Apr 2026 (32 hours from 16:00 on 11 Apr). Orthodox Easter truce; 10,721 Russian violations logged."
+- id: event:july_2026_command_change
+  type: event
+  kind: appointment
+  en: "July 2026 command change"
+  aliases: ["July 2026 command change"]
+  note: "16–21 Jul 2026. Fedorov sacked as defence minister (Khmara acting from 16 Jul); Drapatyi replaced Syrskyi as Commander-in-Chief on 21 Jul."
+- id: event:us_envoys_visit_2026_09
+  type: event
+  kind: negotiation
+  en: "US envoys' visit Sep 2026"
+  aliases: ["US envoys' visit Sep 2026"]
+  note: "Early Sep 2026 (6 Sep agreement on 'fundamental principles'). Witkoff/Kushner visit to Kyiv."
+- id: event:capitals_strike_halt_2026_09
+  type: event
+  kind: truce
+  en: "Capitals strike halt Sep 2026"
+  aliases: ["Capitals strike halt Sep 2026"]
+  parent: event:us_envoys_visit_2026_09
+  note: "5–7 Sep 2026. Kyiv and Moscow halted long-range strikes on each other's capitals during the US envoys' visit."
+- id: event:frontline_truce_proposal_2026_09
+  type: event
+  kind: truce
+  en: "Frontline truce proposal Sep 2026"
+  aliases: ["Frontline truce proposal Sep 2026"]
+  parent: event:us_envoys_visit_2026_09
+  note: "5–8 Sep 2026. Ukrainian hold-fire along the front, proposed as a truce and rejected by Putin."
+- id: event:energy_ceasefire_2026_09
+  type: event
+  kind: truce
+  en: "Energy ceasefire Sep 2026"
+  aliases: ["Energy ceasefire Sep 2026"]
+  note: "14 Sep 2026. Trump-announced mutual 'energy ceasefire'; Zelensky conditional yes, no Russian response."
+
+# --- Western weapons: first deliveries and first combat use (milestones) ------------------------
+- id: event:javelin_first_delivery
+  type: event
+  kind: milestone
+  en: "Javelin first delivery"
+  aliases: ["Javelin first delivery"]
+  note: "2018. First Javelin delivery to Ukraine (US FMS sale of 210 missiles)."
+- id: event:javelin_first_combat_use
+  type: event
+  kind: milestone
+  en: "Javelin first combat use"
+  aliases: ["Javelin first combat use"]
+  note: "Feb 2022. First Ukrainian combat use of Javelin."
+- id: event:nlaw_first_combat_use
+  type: event
+  kind: milestone
+  en: "NLAW first combat use"
+  aliases: ["NLAW first combat use"]
+  note: "Feb 2022. First Ukrainian combat use of NLAW."
+- id: event:stinger_first_combat_use
+  type: event
+  kind: milestone
+  en: "Stinger first combat use"
+  aliases: ["Stinger first combat use"]
+  note: "Feb 2022. First Ukrainian combat use of Stinger."
+- id: event:m777_first_delivery
+  type: event
+  kind: milestone
+  en: "M777 first delivery"
+  aliases: ["M777 first delivery"]
+  note: "Apr 2022 (Canada announced delivery 23 Apr 2022). First M777 howitzers delivered."
+- id: event:himars_first_delivery
+  type: event
+  kind: milestone
+  en: "HIMARS first delivery"
+  aliases: ["HIMARS first delivery"]
+  note: "By 24 Jun 2022. First four HIMARS delivered."
+- id: event:himars_first_combat_use
+  type: event
+  kind: milestone
+  en: "HIMARS first combat use"
+  aliases: ["HIMARS first combat use"]
+  note: "Late Jun – Jul 2022. First HIMARS strikes, against Russian logistics."
+- id: event:m270_first_delivery
+  type: event
+  kind: milestone
+  en: "M270 first delivery"
+  aliases: ["M270 first delivery"]
+  note: "Jul 2022. First M270 MLRS delivered."
+- id: event:leopard_2_first_delivery
+  type: event
+  kind: milestone
+  en: "Leopard 2 first delivery"
+  aliases: ["Leopard 2 first delivery"]
+  note: "Feb–Mar 2023. First Leopard 2 tanks delivered."
+- id: event:leopard_2_first_combat_use
+  type: event
+  kind: milestone
+  en: "Leopard 2 first combat use"
+  aliases: ["Leopard 2 first combat use"]
+  note: "Jun 2023. First Leopard 2 combat use (2023 counteroffensive)."
+- id: event:challenger_2_first_delivery
+  type: event
+  kind: milestone
+  en: "Challenger 2 first delivery"
+  aliases: ["Challenger 2 first delivery"]
+  note: "Mar 2023. First Challenger 2 tanks delivered."
+- id: event:challenger_2_first_combat_use
+  type: event
+  kind: milestone
+  en: "Challenger 2 first combat use"
+  aliases: ["Challenger 2 first combat use"]
+  note: "Jun 2023. First Challenger 2 combat use."
+- id: event:bradley_first_delivery
+  type: event
+  kind: milestone
+  en: "Bradley first delivery"
+  aliases: ["Bradley first delivery"]
+  note: "Apr 2023. First Bradley IFVs delivered."
+- id: event:bradley_first_combat_use
+  type: event
+  kind: milestone
+  en: "Bradley first combat use"
+  aliases: ["Bradley first combat use"]
+  note: "Jun 2023. First Bradley combat use."
+- id: event:patriot_first_delivery
+  type: event
+  kind: milestone
+  en: "Patriot first delivery"
+  aliases: ["Patriot first delivery"]
+  note: "Apr 2023. First Patriot systems delivered by the US and Germany."
+- id: event:patriot_first_combat_use
+  type: event
+  kind: milestone
+  en: "Patriot first combat use"
+  aliases: ["Patriot first combat use"]
+  note: "27 Apr 2023 (second battery on combat duty, the file's milestone date). First Patriot combat use."
+- id: event:storm_shadow_first_delivery
+  type: event
+  kind: milestone
+  en: "Storm Shadow first delivery"
+  aliases: ["Storm Shadow first delivery"]
+  note: "Before May 2023. First British Storm Shadow missiles delivered."
+- id: event:scalp_first_delivery
+  type: event
+  kind: milestone
+  en: "SCALP first delivery"
+  aliases: ["SCALP first delivery"]
+  note: "Jul 2023. First French SCALP-EG missiles delivered."
+- id: event:storm_shadow_first_combat_use
+  type: event
+  kind: milestone
+  en: "Storm Shadow first combat use"
+  aliases: ["Storm Shadow first combat use"]
+  note: "May 2023. First Storm Shadow/SCALP combat use."
+- id: event:abrams_first_delivery
+  type: event
+  kind: milestone
+  en: "Abrams first delivery"
+  aliases: ["Abrams first delivery"]
+  note: "23 Sep 2023. First M1 Abrams tanks delivered."
+- id: event:atacms_first_delivery
+  type: event
+  kind: milestone
+  en: "ATACMS first delivery"
+  aliases: ["ATACMS first delivery"]
+  note: "Oct 2023. First ATACMS (M39 cluster variant, 165 km) delivered secretly."
+- id: event:atacms_first_combat_use
+  type: event
+  kind: milestone
+  en: "ATACMS first combat use"
+  aliases: ["ATACMS first combat use", "First ATACMS strike"]
+  note: "17 Oct 2023. First ATACMS strikes, on Berdiansk and Luhansk airfields."
+- id: event:f16_first_delivery
+  type: event
+  kind: milestone
+  en: "F-16 first delivery"
+  aliases: ["F-16 first delivery"]
+  note: "Late Jul / early Aug 2024. First F-16s delivered."
+- id: event:f16_first_combat_use
+  type: event
+  kind: milestone
+  en: "F-16 first combat use"
+  aliases: ["F-16 first combat use"]
+  note: "Aug 2024. First F-16 combat use."
+- id: event:mirage_2000_first_delivery
+  type: event
+  kind: milestone
+  en: "Mirage 2000-5 first delivery"
+  aliases: ["Mirage 2000-5 first delivery"]
+  note: "6 Feb 2025. First Mirage 2000-5 fighters delivered."
+- id: event:mirage_2000_first_combat_use
+  type: event
+  kind: milestone
+  en: "Mirage 2000-5 first combat use"
+  aliases: ["Mirage 2000-5 first combat use"]
+  note: "7 Mar 2025. First Mirage 2000-5 combat use."
+
+# --- Exercises, conferences, demonstrations ------------------------------------------------------
+- id: event:nato_tide_sprint
+  type: event
+  kind: milestone
+  en: "NATO TIDE Sprint"
+  aliases: ["NATO TIDE Sprint"]
+  note: "Recurring NATO interoperability event; mentions cover Oct 2022 (Virginia Beach, Delta unveiled) and Feb 2025 (Helsinki, Avengers shown)."
+- id: event:cwix
+  type: event
+  kind: milestone
+  en: "CWIX"
+  aliases: ["Coalition Warrior Interoperability eXercise"]
+  note: "Annual NATO Coalition Warrior Interoperability eXercise (parent of editions)."
+- id: event:cwix_2023
+  type: event
+  kind: milestone
+  en: "CWIX 2023"
+  aliases: ["CWIX 2023"]
+  parent: event:cwix
+  note: "2023. Delta exchanged data over Link 16 and integrated with 15 systems of 10 countries."
+- id: event:cwix_2024
+  type: event
+  kind: milestone
+  en: "CWIX 2024"
+  aliases: ["CWIX 2024"]
+  parent: event:cwix
+  note: "2024. Delta linked to Poland's TOPAZ artillery fire-control system."
+- id: event:repmus_24
+  type: event
+  kind: milestone
+  en: "REPMUS 24"
+  aliases: ["REPMUS 24"]
+  note: "Sep 2024, Portugal. NATO uncrewed-systems exercise; Delta coordinated 50+ uncrewed vehicles."
+- id: event:london_defence_conference
+  type: event
+  kind: milestone
+  en: "London Defence Conference"
+  aliases: ["London Defence Conference"]
+  note: "May 2025. Conference where the Avengers AI platform was shown."
+- id: event:arrcade_strike
+  type: event
+  kind: milestone
+  en: "Arrcade Strike"
+  aliases: ["Arrcade Strike"]
+  note: "May 2026. ARRC exercise rehearsing the defence of Estonia in 2030 with thousands of drones (exercise; no exercise kind)."
+
+# --- Historical, outside the war -----------------------------------------------------------------
+- id: event:operation_bagration
+  type: event
+  kind: operation
+  en: "Operation Bagration"
+  aliases: ["Operation Bagration"]
+  note: "Jun–Aug 1944. Soviet offensive in Belarus (depicted in Steel Division 2)."
+- id: event:great_stalin_plan
+  type: event
+  kind: policy
+  en: "Great Stalin Plan for the Transformation of Nature"
+  aliases: ["Great Stalin Plan for the Transformation of Nature", "Great Stalin Plan"]
+  note: "1948. Soviet shelterbelt-planting programme behind Ukraine's lesopolosa grid."

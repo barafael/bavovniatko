@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 04: Ground tactics, fortifications and manpower
 
 Research base for *bavovniatko*. Accessed 2026-09-28. English-language sources only, with Ukrainian outlets preferred and paired with Western analysis. Russian tactics are described as Ukrainian or Western observers report them. Casualty and recruitment figures are **claims**, and the claimant is always named. Citations use the form `[src:<id>]` and resolve in `sources/04-ground-tactics-manpower.yaml`.

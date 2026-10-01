@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 01 — Drones and uncrewed systems
 
 Research base for *bavovniatko*. The player is the Ukrainian side. Accessed 2026-09-28 to 2026-09-30. Sources are listed in `sources/01-drones-uncrewed.yaml` and cited inline as `[src:<id>]`. Figures from officials and manufacturers are claims, and the text names who makes each one.

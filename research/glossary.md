@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # Glossary
 
 Compiled from the Terms sections of the topic files. The last column shows which topic files use each

@@ -1,0 +1,40 @@
+{"pair": "e640ab0f9ab2", "relation": "none", "rationale": "Scope limits of drone games vs a vendor's list of simulators; no bearing."}
+{"pair": "e643fca8e4a4", "relation": "none", "rationale": "Functional layering of infantry vs chronology of penal units; different assertions."}
+{"pair": "e664c8e70657", "relation": "none", "rationale": "Developers of UFDS vs its commercial and military editions; different facts."}
+{"pair": "e711a0dfaaf9", "relation": "refines", "from": "claim:c08_0016_24", "to": "claim:c08_0006_46", "strength": 0.6, "rationale": "B specifies that the Bucha skirmish map A mentions comes in the free DLC; same source."}
+{"pair": "e7cd3c054a78", "relation": "duplicates", "from": "claim:c08_0008_23", "to": "claim:c08_0006_133", "strength": 0.85, "rationale": "Same fact (Death From Above's makers are German) from the same source, extracted twice."}
+{"pair": "e7ebe5e5bdc6", "relation": "supports", "from": "claim:c03_0004_04", "to": "claim:c03_0010_12", "strength": 0.7, "rationale": "Both RUSI judgments say late-June 2022 HIMARS strikes broke the rail-and-depot-dependent Russian artillery model; same report.", "independent": false}
+{"pair": "e8178b640226", "relation": "none", "rationale": "Two contrasting positions in the same treeline (destroyed trench vs surviving holes); not the same assertion."}
+{"pair": "e9d022c40666", "relation": "none", "rationale": "2025 advance rates vs late-December drone interdiction; different quantities."}
+{"pair": "ea07d226c24c", "relation": "none", "rationale": "Starlink as C2 backbone vs Mission Control's display; different aspects."}
+{"pair": "ea2ec5948120", "relation": "none", "rationale": "Double affiliation encoding vs symbol anatomy; different facts."}
+{"pair": "eaa23ed121e4", "relation": "none", "rationale": "US share of its own Patriot stock vs rounds used by the US/Israel and Gulf states; different measures."}
+{"pair": "eaee6a94c319", "relation": "none", "rationale": "Production rate vs speed/range specifications; different quantities."}
+{"pair": "ecfd55228879", "relation": "none", "rationale": "Different framings of the drone-sim genre; neither bears on the other."}
+{"pair": "edb73b106a1c", "relation": "supports", "from": "claim:c01_0024_06", "to": "claim:c02_0010_96", "strength": 0.8, "rationale": "Euromaidan and Ukrinform independently report Russian Starlink fitted to Shahed, Molniya and BM-35 drones before February 2026.", "independent": true}
+{"pair": "ee38e8d0f863", "relation": "none", "rationale": "Hex scale vs authorship and format; different facts."}
+{"pair": "ee5b18a4ee88", "relation": "none", "rationale": "Daily orbit count vs orbits per axis; different measures."}
+{"pair": "ee5d53cbc72d", "relation": "supports", "from": "claim:c07_0035_06", "to": "claim:c07_0004_07", "strength": 0.5, "rationale": "The legend's assessed Russian infiltration areas category is consistent with the dedicated infiltration layer A dates to December 2025; same ArcGIS source.", "independent": false}
+{"pair": "ef19d3738a75", "relation": "supports", "from": "claim:c00_0055_04", "to": "claim:c00_0053_02", "strength": 0.6, "rationale": "Ukrinform's report that Ukraine lost most of Pokrovsk and Myrnohrad over winter 2025-26 corroborates the urban fight for both towns in A.", "independent": true}
+{"pair": "ef25356c9137", "relation": "none", "rationale": "EW as main counter-UAS tool vs EW defeating precision weapons; different assertions."}
+{"pair": "ef29e8be415a", "relation": "supports", "from": "claim:c00_0033_02", "to": "claim:c04_0005_07", "strength": 0.5, "rationale": "RUSI's heavy Wagner/convict casualty figures at Bakhmut corroborate the attrition by expendable convict infantry B describes; both Watling/RUSI.", "independent": false}
+{"pair": "efbcd5bfb709", "relation": "none", "rationale": "Legend pictograms vs reuse terms and API pricing; different facts."}
+{"pair": "efc097d0b198", "relation": "none", "rationale": "Legend categories vs a layer creation date; different facts."}
+{"pair": "f13fc4aced01", "relation": "none", "rationale": "Legend icons vs update volume; different facts."}
+{"pair": "f141c1183aa1", "relation": "supports", "from": "claim:c04_0015_06", "to": "claim:c00_0029_02", "strength": 0.7, "rationale": "Both, from the same RUSI report, say Russia used the Dnipro as a barrier and began building Zaporizhzhia defence lines in late 2022.", "independent": false}
+{"pair": "f1589eae84a4", "relation": "duplicates", "from": "claim:c03_0027_038", "to": "claim:c03_0024_07", "strength": 0.9, "rationale": "Same ISW-reported development (FP-2 firing S-8 rockets at operational depth from May 2026), extracted twice."}
+{"pair": "f1cad6add889", "relation": "none", "rationale": "Early-2022 MALE drone use vs their vulnerability profile; different assertions."}
+{"pair": "f231de9a268b", "relation": "none", "rationale": "Neutral frame rule vs frame openness by domain; different facts."}
+{"pair": "f2d40eb40a62", "relation": "none", "rationale": "Starlink as C2 backbone vs Vezha/Avengers role in HQ streams; different aspects."}
+{"pair": "f37c2f930af6", "relation": "none", "rationale": "Genre overview vs a vendor list of simulators; no bearing."}
+{"pair": "f45596cf9960", "relation": "none", "rationale": "Epistemic legend design vs update cadence; different facts."}
+{"pair": "f53b87898a0c", "relation": "none", "rationale": "Geran-3 retirement vs jet-drone speed outrunning interceptors; different assertions."}
+{"pair": "f68b237e6207", "relation": "none", "rationale": "Daily orbit count vs interceptor attrition; different assertions."}
+{"pair": "f69de8275173", "relation": "none", "rationale": "Neutral frame rule vs echelon coding; different facts."}
+{"pair": "f6dd802b3316", "relation": "none", "rationale": "Library support vs monochrome legibility; different facts."}
+{"pair": "f6fc15bf5c49", "relation": "none", "rationale": "Hostile frame rule vs echelon coding; different facts."}
+{"pair": "f7261250bdbc", "relation": "refines", "from": "claim:c03_0024_53", "to": "claim:c03_0031_22", "strength": 0.6, "rationale": "A gives the debut date, range, warhead and launch platform for the air-launched Geran-5 with R-73 that B mentions; same source."}
+{"pair": "f78adb52ff53", "relation": "none", "rationale": "Echelon coding vs numeric SIDC scheme; different facts."}
+{"pair": "f81795f6399a", "relation": "supports", "from": "claim:c05_0005_10", "to": "claim:c03_0031_02", "strength": 0.5, "rationale": "B's description of Russian reconnaissance-fire circuits built on Strelets supports A's shift to the reconnaissance-fire complex; shared RUSI source.", "independent": false}
+{"pair": "f8be17156ee7", "relation": "refines", "from": "claim:c03_0024_53", "to": "claim:c03_0027_070", "strength": 0.6, "rationale": "A gives the exact debut date and specifications of the Geran-5 that B summarizes; shared Militarnyi source."}
+{"pair": "f9ab8543f4f7", "relation": "none", "rationale": "Fill colour of pre-2022 areas vs why they need a fixed mask; different facts."}

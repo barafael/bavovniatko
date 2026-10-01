@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 06 — Terrain and geodata
 
 Research pack for **bavovniatko**, covering the procedurally generated front-line landscape of eastern and southern Ukraine. Accessed 2026-09-28. Citations use the form `[src:<id>]` and resolve to `sources/06-terrain-geodata.yaml`. Era ids follow the canonical list (e1–e9).

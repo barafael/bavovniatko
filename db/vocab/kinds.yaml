@@ -1,0 +1,14 @@
+# Open vocabularies: kind:[domain, slug]. Add freely; nothing in the schema lists these.
+source: [think_tank, news, osint_dataset, map, game, official, software, dataset, academic, encyclopedia, review, standard, video, podcast, book]
+actor: [person, outlet, think_tank, government_body, armed_force, military_unit, intelligence_agency, company, game_studio,
+        ngo, academic_institution, international_org, platform, political_party, organisation]
+place: [country, oblast, raion, hromada, settlement, city_district, river, reservoir, forest, road, railway, bridge,
+        front_sector, axis, landform, facility, airfield, border_crossing, region, sample_box, sea]
+event: [battle, operation, offensive, strike, truce, negotiation, policy, appointment, technical, aid_decision,
+        production, incident, milestone]
+system: [recon_drone, fpv_drone, bomber_drone, loitering_munition, long_range_drone, interceptor_drone, ugv, naval_drone,
+         drone_component, tube_artillery, rocket_artillery, glide_bomb, missile, air_defence, aircraft, helicopter, armour,
+         vehicle, ew_system, gnss_countermeasure, passive_defence, c2_software, communications, sensor, mine,
+         fortification, munition, small_arms, technique, programme, training_sim, ship, satellite]
+media: [image, video, map, dataset, document, audio, satellite_image, web_page]
+work: [video_game, board_game, wargame, training_sim, map_product, dataset_product, software_product, mod, standard, publication]

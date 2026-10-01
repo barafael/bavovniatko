@@ -1,0 +1,40 @@
+{"pair": "831c3995f02b", "relation": "none", "rationale": "Russian Ka-52/Mi-28N lob firing vs Ukrainian Mi-8/Mi-24 lob firing; different sides."}
+{"pair": "832bb1050fbf", "relation": "none", "rationale": "Hostile frame definition vs monochrome legibility; related context only."}
+{"pair": "8357e36bb8a3", "relation": "none", "rationale": "Mechanized-wave tactic vs shelterbelt damage; different subjects."}
+{"pair": "85c77796892f", "relation": "none", "rationale": "Counters to robotic breaching vs counters to UGV casevac; different tactics with overlapping limits."}
+{"pair": "86062e663575", "relation": "none", "rationale": "Badge styling vs update cadence and licence; different facts."}
+{"pair": "862d18547254", "relation": "supports", "from": "claim:c05_0011_06", "to": "claim:c03_0004_05", "strength": 0.6, "rationale": "The Kyiv Independent's report that a few HIMARS wrecked most Russian depots within weeks corroborates RUSI's view that HIMARS ended the Donbas offensive.", "independent": true}
+{"pair": "86b0bdb16296", "relation": "duplicates", "from": "claim:c07_0035_08", "to": "claim:c07_0004_20", "strength": 0.9, "rationale": "Both state that ISW's ArcGIS layers are public but marked exclusive IP needing written consent; same source."}
+{"pair": "86c61b3d7ecb", "relation": "none", "rationale": "Redefinition of uncertainty categories vs update cadence; different facts."}
+{"pair": "86f217b19f27", "relation": "supports", "from": "claim:c03_0010_12", "to": "claim:c03_0027_011", "strength": 0.8, "rationale": "Both RUSI-based claims say GMLRS depot strikes from mid-2022 ended the Russian Donbas offensive.", "independent": false}
+{"pair": "8730e40fe626", "relation": "none", "rationale": "One editor's ranking vs a derived reliability rating; the ranking neither clearly backs nor undercuts it."}
+{"pair": "87b8cb293cbf", "relation": "none", "rationale": "Incursion start date vs a metric scoping note."}
+{"pair": "87ef3a1eccf0", "relation": "none", "rationale": "Shift to jet Gerans vs their speed band; different facts."}
+{"pair": "88153e280364", "relation": "none", "rationale": "Operator and formats vs licence text; different facts."}
+{"pair": "88e823e2d168", "relation": "none", "rationale": "Genre vs modelling-quality assessment; different claims."}
+{"pair": "89b393825965", "relation": "none", "rationale": "Roles and service dates vs EW vulnerability; different claims."}
+{"pair": "8a167a1d7e5f", "relation": "none", "rationale": "Standards alignment vs echelon coding; different facts."}
+{"pair": "8ae6726ed84f", "relation": "supports", "from": "claim:c02_0027_17", "to": "claim:c02_0010_70", "strength": 0.8, "rationale": "Both list tungsten hot wire, shotguns and net guns as Ukrainian counters to fibre FPVs; shared United24 source.", "independent": false}
+{"pair": "8b3c0a8a9c3d", "relation": "none", "rationale": "Licence terms vs method caveats; different facts."}
+{"pair": "8bb9a2b77ab6", "relation": "none", "rationale": "Legend epistemics vs infiltration service date; different facts."}
+{"pair": "8bec8f826a57", "relation": "none", "rationale": "Map design vs legend contents; different facts."}
+{"pair": "8cb67938b32e", "relation": "none", "rationale": "Unknown frame vs dimension frames; different definitions."}
+{"pair": "8d020ecf6d0f", "relation": "none", "rationale": "Category redefinition vs standing ROCA caveats; related context only."}
+{"pair": "8d5ba01ea959", "relation": "duplicates", "from": "claim:c05_0021_02", "to": "claim:c01_0020_12", "strength": 0.95, "rationale": "The same RUSI figure of 1,000-1,500 Orlan/Zala orbits a day in August 2024, extracted in topics 01 and 05."}
+{"pair": "8d8359e22edd", "relation": "supports", "from": "claim:c03_0004_07", "to": "claim:c03_0014_07", "strength": 0.8, "rationale": "Both RUSI works say Russian Krasnopol and Lancet did counter-battery work from 2023; same author.", "independent": false}
+{"pair": "8da5add9b82f", "relation": "supports", "from": "claim:c00_0031_02", "to": "claim:c04_0005_07", "strength": 0.5, "rationale": "A winter 2023 offensive weighted on Bakhmut fits the attritional fighting there that B describes; same RUSI author.", "independent": false}
+{"pair": "8dadbf608a80", "relation": "duplicates", "from": "claim:c02_0034_16", "to": "claim:c02_0010_134", "strength": 0.85, "rationale": "The same July 2026 adaptation of Arena-M against FPVs on the T-72B3A, from the same source, extracted twice in topic 02."}
+{"pair": "8de2e7afbb0e", "relation": "supports", "from": "claim:c04_0023_22", "to": "claim:c04_0037_22", "strength": 0.6, "rationale": "Russia's late-2024 switch to small motorcycle groups corroborates the smaller, faster units answer to the kill zone.", "independent": true}
+{"pair": "8f4a370859e8", "relation": "none", "rationale": "Friend frame vs frame line style; different definitions."}
+{"pair": "8fa66b6aa014", "relation": "none", "rationale": "Interceptor attrition vs daily orbit count; different claims."}
+{"pair": "9183b714e8cb", "relation": "supports", "from": "claim:c08_0008_13", "to": "claim:c08_0014_39", "strength": 0.4, "rationale": "The vendor's listing of UFDS and Obriy as used in UAV programmes loosely backs the judgement that domestic tools fill the drone end.", "independent": true}
+{"pair": "91aa1ad6eb3e", "relation": "none", "rationale": "Starlink as C2 backbone vs Mission Control's launch date; different claims."}
+{"pair": "91b782d64dc4", "relation": "supports", "from": "claim:c03_0004_04", "to": "claim:c03_0004_05", "strength": 0.7, "rationale": "GMLRS breaking the depot-dependent Russian artillery model backs RUSI calling it the end of the Donbas offensive; same source.", "independent": false}
+{"pair": "92605d0d49d3", "relation": "none", "rationale": "Invasion event vs a board game's coverage; no evidential bearing."}
+{"pair": "9360b6b38196", "relation": "refines", "from": "claim:c05_0025_36", "to": "claim:c01_0024_68", "strength": 0.8, "rationale": "B gives the same Vivaldi UGV air-drops with the reconnaissance targeting of command nodes; it shares A's source."}
+{"pair": "93ce470a53bf", "relation": "duplicates", "from": "claim:c02_0013_02", "to": "claim:c02_0003_03", "strength": 0.9, "rationale": "The same RUSI finding that EW was the primary counter-UAS means in 2022, extracted twice."}
+{"pair": "9453eb279ffc", "relation": "none", "rationale": "Same ambush, but B's caveat that Aerorozvidka's claims were only partly verified offsets the corroboration."}
+{"pair": "946c26c43b20", "relation": "refines", "from": "claim:c02_0017_02", "to": "claim:c02_0034_07", "strength": 0.8, "rationale": "A dates the Borisoglebsk-2 capture in Kharkiv oblast to September 2022; same source."}
+{"pair": "956473e04f66", "relation": "none", "rationale": "Geran-3 production stop vs jet Geran performance; different facts."}
+{"pair": "9686de79eaef", "relation": "none", "rationale": "EW defeating precision weapons vs EW as primary counter-UAS; different claims."}
+{"pair": "9745e9ad99e8", "relation": "none", "rationale": "Period covered vs designers; different facts."}

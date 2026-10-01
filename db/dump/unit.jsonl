@@ -1,0 +1,54 @@
+{"base":{"$rid":["unit","count_per_month"]},"dimension":"count/time","ext":{"_hash":"05041729b1bdfeae"},"id":{"$rid":["unit","people_per_day"]},"labels":{"en":"people/day"},"symbol":"people/day","to_base":30.4375}
+{"base":{"$rid":["unit","count_per_month"]},"dimension":"count/time","ext":{"_hash":"5ca6c912813a2b0a"},"id":{"$rid":["unit","count_per_year"]},"labels":{"en":"count/year"},"symbol":"count/year","to_base":0.0833333333}
+{"base":{"$rid":["unit","count_per_month"]},"dimension":"count/time","ext":{"_hash":"79915acefdeacdca"},"id":{"$rid":["unit","count_per_day"]},"labels":{"en":"count/day"},"symbol":"count/day","to_base":30.4375}
+{"base":{"$rid":["unit","count_per_month"]},"dimension":"count/time","ext":{"_hash":"92f8a122ef040f72"},"id":{"$rid":["unit","count_per_week"]},"labels":{"en":"count/week"},"symbol":"count/week","to_base":4.348214}
+{"base":{"$rid":["unit","eur"]},"dimension":"currency","ext":{"_hash":"79b494e42b98331a"},"id":{"$rid":["unit","eur_bn"]},"labels":{"en":"EUR bn"},"symbol":"EUR bn","to_base":1000000000.0}
+{"base":{"$rid":["unit","kg"]},"dimension":"mass","ext":{"_hash":"5fcb41a5a33589d8"},"id":{"$rid":["unit","t"]},"labels":{"en":"t"},"symbol":"t","to_base":1000.0}
+{"base":{"$rid":["unit","km"]},"dimension":"length","ext":{"_hash":"92c7e4cd977cec9e"},"id":{"$rid":["unit","m"]},"labels":{"en":"m"},"symbol":"m","to_base":0.001}
+{"base":{"$rid":["unit","km2"]},"dimension":"area","ext":{"_hash":"c8fb2d0fe38c5989"},"id":{"$rid":["unit","m2"]},"labels":{"en":"m²"},"symbol":"m²","to_base":1e-06}
+{"base":{"$rid":["unit","km2"]},"dimension":"area","ext":{"_hash":"e24b0687ece185bf"},"id":{"$rid":["unit","ha"]},"labels":{"en":"ha"},"symbol":"ha","to_base":0.01}
+{"base":{"$rid":["unit","km2_per_month"]},"dimension":"area/time","ext":{"_hash":"7d81ab5b09c32c3f"},"id":{"$rid":["unit","km2_per_day"]},"labels":{"en":"km²/day"},"symbol":"km²/day","to_base":30.4375}
+{"base":{"$rid":["unit","km2_per_month"]},"dimension":"area/time","ext":{"_hash":"8c4d82f813aa4721"},"id":{"$rid":["unit","km2_per_week"]},"labels":{"en":"km²/week"},"symbol":"km²/week","to_base":4.348214}
+{"base":{"$rid":["unit","km2_per_month"]},"dimension":"area/time","ext":{"_hash":"d846b6c0d2535372"},"id":{"$rid":["unit","km2_per_year"]},"labels":{"en":"km²/year"},"symbol":"km²/year","to_base":0.0833333333}
+{"base":{"$rid":["unit","km_per_h"]},"dimension":"speed","ext":{"_hash":"715cfda973c6d152"},"id":{"$rid":["unit","m_per_s"]},"labels":{"en":"m/s"},"symbol":"m/s","to_base":3.6}
+{"base":{"$rid":["unit","mhz"]},"dimension":"frequency","ext":{"_hash":"1ff1021e8d2ac6b9"},"id":{"$rid":["unit","ghz"]},"labels":{"en":"GHz"},"symbol":"GHz","to_base":1000.0}
+{"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"14e662df146040c7"},"id":{"$rid":["unit","month"]},"labels":{"en":"month"},"symbol":"month","to_base":43830.0}
+{"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"3927a171106be05e"},"id":{"$rid":["unit","h"]},"labels":{"en":"h"},"symbol":"h","to_base":60.0}
+{"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"6e252f05a50bfe9c"},"id":{"$rid":["unit","s"]},"labels":{"en":"s"},"symbol":"s","to_base":0.0166666667}
+{"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"6e29844748380a94"},"id":{"$rid":["unit","year"]},"labels":{"en":"year"},"symbol":"year","to_base":525960.0}
+{"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"7fe69a93ca406ac4"},"id":{"$rid":["unit","day"]},"labels":{"en":"day"},"symbol":"day","to_base":1440.0}
+{"base":{"$rid":["unit","per_100km2"]},"dimension":"density","ext":{"_hash":"ccef787ff68d51da"},"id":{"$rid":["unit","per_km2"]},"labels":{"en":"per km²"},"symbol":"per km²","to_base":100.0}
+{"base":{"$rid":["unit","uah"]},"dimension":"currency","ext":{"_hash":"71ef89139edf89c0"},"id":{"$rid":["unit","uah_bn"]},"labels":{"en":"UAH bn"},"symbol":"UAH bn","to_base":1000000000.0}
+{"base":{"$rid":["unit","usd"]},"dimension":"currency","ext":{"_hash":"2f4d0e4098fc2563"},"id":{"$rid":["unit","usd_m"]},"labels":{"en":"USD m"},"symbol":"USD m","to_base":1000000.0}
+{"base":{"$rid":["unit","usd"]},"dimension":"currency","ext":{"_hash":"786b9c2fd967ff07"},"id":{"$rid":["unit","usd_bn"]},"labels":{"en":"USD bn"},"symbol":"USD bn","to_base":1000000000.0}
+{"dimension":"angle","ext":{"_hash":"c36b9a09fd3b89bf"},"id":{"$rid":["unit","degree"]},"labels":{"en":"°"},"symbol":"°"}
+{"dimension":"area","ext":{"_hash":"24ebdd675ede2b67"},"id":{"$rid":["unit","km2"]},"labels":{"en":"km²"},"symbol":"km²"}
+{"dimension":"area/time","ext":{"_hash":"17a640c97276a3b3"},"id":{"$rid":["unit","km2_per_month"]},"labels":{"en":"km²/month"},"symbol":"km²/month"}
+{"dimension":"count","ext":{"_hash":"205a1af46419056d"},"id":{"$rid":["unit","people"]},"labels":{"en":"people"},"symbol":"people"}
+{"dimension":"count","ext":{"_hash":"a84d2efb68420add"},"id":{"$rid":["unit","count"]},"labels":{"en":"count"},"symbol":"count"}
+{"dimension":"count/area","ext":{"_hash":"5115837ed4e8e40a"},"id":{"$rid":["unit","casualties_per_km2"]},"labels":{"en":"casualties/km²"},"symbol":"casualties/km²"}
+{"dimension":"count/time","ext":{"_hash":"155d7cdde6894d04"},"id":{"$rid":["unit","rounds_per_day"]},"labels":{"en":"rounds/day"},"symbol":"rounds/day"}
+{"dimension":"count/time","ext":{"_hash":"ebbd21f083914774"},"id":{"$rid":["unit","count_per_month"]},"labels":{"en":"count/month"},"symbol":"count/month"}
+{"dimension":"currency","ext":{"_hash":"22b6d3acdc6152a0"},"id":{"$rid":["unit","rub"]},"labels":{"en":"RUB"},"symbol":"RUB"}
+{"dimension":"currency","ext":{"_hash":"2575bcfa66291a62"},"id":{"$rid":["unit","uah"]},"labels":{"en":"UAH"},"symbol":"UAH"}
+{"dimension":"currency","ext":{"_hash":"68eb3eb6ab75e5ad"},"id":{"$rid":["unit","eur"]},"labels":{"en":"EUR"},"symbol":"EUR"}
+{"dimension":"currency","ext":{"_hash":"9722f49d67e27a20"},"id":{"$rid":["unit","yuan"]},"labels":{"en":"CNY"},"symbol":"CNY"}
+{"dimension":"currency","ext":{"_hash":"b90394cc1941693e"},"id":{"$rid":["unit","usd"]},"labels":{"en":"USD"},"symbol":"USD"}
+{"dimension":"currency/length","ext":{"_hash":"942c6dbb6419d55d"},"id":{"$rid":["unit","cny_per_km"]},"labels":{"en":"CNY/km"},"symbol":"CNY/km"}
+{"dimension":"density","ext":{"_hash":"4b3302325d56b08d"},"id":{"$rid":["unit","km_per_km2"]},"labels":{"en":"km/km²"},"symbol":"km/km²"}
+{"dimension":"density","ext":{"_hash":"ace14e2ab4acb601"},"id":{"$rid":["unit","per_km"]},"labels":{"en":"per km"},"symbol":"per km"}
+{"dimension":"density","ext":{"_hash":"d70772a3aefe2c2f"},"id":{"$rid":["unit","per_100km2"]},"labels":{"en":"per 100 km²"},"symbol":"per 100 km²"}
+{"dimension":"frequency","ext":{"_hash":"4b33265d8b414837"},"id":{"$rid":["unit","mhz"]},"labels":{"en":"MHz"},"symbol":"MHz"}
+{"dimension":"frequency","ext":{"_hash":"9c7b1bbdb6a31046"},"id":{"$rid":["unit","fps"]},"labels":{"en":"fps"},"symbol":"fps"}
+{"dimension":"length","ext":{"_hash":"f5c51e16b7afa527"},"id":{"$rid":["unit","km"]},"labels":{"en":"km"},"symbol":"km"}
+{"dimension":"length/time","ext":{"_hash":"4aa538d010f522f5"},"id":{"$rid":["unit","km_per_year"]},"labels":{"en":"km/year"},"symbol":"km/year"}
+{"dimension":"mass","ext":{"_hash":"79f673038ea2753a"},"id":{"$rid":["unit","kg"]},"labels":{"en":"kg"},"symbol":"kg"}
+{"dimension":"other","ext":{"_hash":"f6d33444d6392436"},"id":{"$rid":["unit","other"]},"labels":{"en":"other"},"symbol":""}
+{"dimension":"points","ext":{"_hash":"87b2e2a7b855ecce"},"id":{"$rid":["unit","points"]},"labels":{"en":"points"},"symbol":"points"}
+{"dimension":"ratio","ext":{"_hash":"12fe2e6f75ee0794"},"id":{"$rid":["unit","percent"]},"labels":{"en":"%"},"symbol":"%"}
+{"dimension":"ratio","ext":{"_hash":"be4631318173dd0d"},"id":{"$rid":["unit","ratio"]},"labels":{"en":"ratio"},"symbol":"ratio"}
+{"dimension":"speed","ext":{"_hash":"3b1086638fbaddbb"},"id":{"$rid":["unit","km_per_h"]},"labels":{"en":"km/h"},"symbol":"km/h"}
+{"dimension":"speed_slow","ext":{"_hash":"4914c1203e80db4c"},"id":{"$rid":["unit","km_per_day"]},"labels":{"en":"km/day"},"symbol":"km/day"}
+{"dimension":"temperature","ext":{"_hash":"9ad2f42a5b87272b"},"id":{"$rid":["unit","celsius"]},"labels":{"en":"°C"},"symbol":"°C"}
+{"dimension":"time","ext":{"_hash":"db260afbc9b1d716"},"id":{"$rid":["unit","min"]},"labels":{"en":"min"},"symbol":"min"}
+{"dimension":"volume","ext":{"_hash":"e26f3833d75a7c53"},"id":{"$rid":["unit","litre"]},"labels":{"en":"l"},"symbol":"l"}

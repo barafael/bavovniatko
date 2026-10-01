@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 02 — Electronic warfare and the measure → countermeasure cycle
 
 *Research base for bavovniatko. Accessed 2026-09-28. Russian capabilities are described only as reported by Ukrainian and Western sources. Source metadata: `sources/02-ew-countermeasures.yaml`.*

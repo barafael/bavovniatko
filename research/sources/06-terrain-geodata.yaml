@@ -1,988 +1,1415 @@
-# Sources for research/06-terrain-geodata.md (terrain and geodata)
-# accessed 2026-09-28; verified = fetched means the page (or its Crossref / Europe PMC metadata) was retrieved.
-
-# ---------------------------------------------------------------- shelterbelts: history, dimensions, species
+# Sources cited in research/06-terrain-geodata.md, generated from the knowledge base by db/tools/render.py.
+- id: aljazeera-2025-psaropoulos-pokrovsk
+  title: Russia infiltrates Pokrovsk with new tactics that test Ukraine's drones
+  url: https://www.aljazeera.com/amp/news/2025/11/6/russia-infiltrates-pokrovsk-with-new-tactics-that-test-ukraines-drones
+  publisher: Al Jazeera
+  authors:
+  - John T. Psaropoulos
+  published: '2025-11-06'
+  accessed: '2026-09-28'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground-tactics
+  - infiltration
+  - weather
+  notes: The Ukrainian drone unit Peaky Blinders says Russia sent up to 300 soldiers a day into Pokrovsk 'in groups of three
+    people with the expectation that two will be destroyed'. Wet weather hampered light drones.
+- id: bonchkovskyi-2023-kyinska-craters
+  title: Remote sensing as a key tool for assessing war-induced damage to soil cover in Ukraine (the case study of Kyinska
+    territorial hromada)
+  url: https://doi.org/10.15421/112342
+  publisher: Journal of Geology, Geography and Geoecology (Dnipro)
+  authors:
+  - Oleksandr S. Bonchkovskyi
+  - Pavlo Ostapenko
+  - Volodymyr Shvaiko
+  - Andrii S. Bonchkovskyi
+  published: '2023-09-25'
+  accessed: '2026-09-28'
+  type: academic
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - battle-damage
+  - craters
+  - fields
+  notes: 'Metadata and abstract read via OpenAlex; the journal PDF is behind a bot check. Maxar imagery of Kyinska hromada
+    (Chernihiv oblast), about one month of fighting in 2022: 4,914 craters, 2,912 of them on arable land, 0.5-13.8 m in diameter,
+    about 3,136 m3 of soil displaced. The hromada area is not in the abstract, so no density is derived.'
+- id: cepa-2023-kallberg-treelines
+  title: Ukraine's War of the Treelines
+  url: https://cepa.org/article/ukraines-war-of-the-treelines/
+  publisher: Center for European Policy Analysis (CEPA)
+  authors:
+  - Jan Kallberg
+  published: '2023-10-02'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - terrain
+  - shelterbelts
+  - seasons
+  - tactics
+  notes: The southern battlefield is flat and open, with large fields separated by treelines. Russian forward defences are
+    in treelines, and reserves, artillery and logistics sit hidden 8-15 km behind the front. In summer 2023 the leaves protected
+    positions from drones and artillery, while autumn leaf-fall and later snow expose them. Some treelines 'evaporated' into
+    split wood. Opinion or analysis piece.
+- id: copernicus-dem-glo30
+  title: Copernicus DEM (COP-DEM) GLO-30 / GLO-90
+  url: https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM
+  publisher: Copernicus Data Space Ecosystem (ESA / EU)
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - elevation
+  notes: 30 m (GLO-30) and 90 m DSM from TanDEM-X data collected 2011-2015. As a DSM it includes buildings and vegetation,
+    so tall shelterbelts can show as ridges. Absolute vertical accuracy under 4 m (LE90). Free licence with attribution to
+    DLR/Airbus under Copernicus.
+- id: copernicus-sentinel-2
+  title: Harmonized Sentinel-2 MSI Level-2A (surface reflectance)
+  url: https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED
+  publisher: ESA Copernicus (via Google Earth Engine catalog)
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - imagery
+  - battle-damage
+  notes: Bands at 10/20/60 m with a 5-day revisit, L2A from 2017 to present. Free and open under the Copernicus Sentinel Data
+    Terms. The main open archive for year-by-year visuals of the front (burnt treelines, abandoned fields, Kakhovka).
+- id: deepstate-api-history
+  title: DeepStateMap history endpoints (/api/history/public and /api/history/last)
+  url: https://deepstatemap.live/api/history/public
+  publisher: DeepState UA
+  authors: []
+  published: '2022-04-03'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - colors
+  - data-access
+  - deepstate
+  - forests
+  - legend
+  - maps
+  notes: 'Undocumented JSON used by the web app. /api/history/{id}/geojson returns the full GeoJSON of any listed version
+    (checked for the first, 2022-04-03, and the latest), which is what makes a consistent territory time series possible.
+    /public lists 1,771 map versions (2022-04-03 to 2026-09-27) with UA/EN changelogs. /last is a GeoJSON FeatureCollection
+    with stated fills (Occupied #a52714, Liberated #0f9d58, recent #0288d1, Unknown #bcaaa4, ORDLO/Crimea #880e4f, foreign
+    #ff5252) and i18n keys. It is primary data, but there is no documented licence or API terms.'
+- id: defenceexpress-2024-kakhovka-refill
+  title: 'Satellite Images Show Water Returning to Kakhovka Reservoir: How It Can Affect Military Operations'
+  url: https://en.defence-ua.com/news/satellite_images_show_water_returning_to_kakhovka_reservoir_how_it_can_affect_military_operations-9835.html
+  publisher: Defense Express
+  authors: []
+  published: '2024-03-14'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - water
+  - terrain
+  - mobility
+  notes: 'Ukrainian defence outlet. Compares Sentinel imagery from 28 Oct 2023 and 11 Mar 2024: snowmelt refilled parts of
+    the old reservoir to pre-dam width near Novovorontsovka. Soft soil means ''no equipment, including amphibious vehicles,
+    will be able to pass'', which made it the least suitable sector for an advance (restored Velykyi Luh).'
+- id: emilien-2012-villages
+  title: Procedural generation of villages on arbitrary terrains
+  url: https://doi.org/10.1007/s00371-012-0699-7
+  publisher: The Visual Computer (Springer)
+  authors:
+  - Arnaud Emilien
+  - Adrien Bernhardt
+  - Adrien Peytavie
+  - Marie-Paule Cani
+  - Eric Galin
+  published: '2012'
+  accessed: '2026-09-28'
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - procgen
+  - settlements
+  notes: Metadata verified via Crossref, the paywalled text was not read. A terrain-aware village generator that grows roads,
+    parcels and buildings from the slope and access of the terrain. Closest academic match for rural villages following valleys.
 - id: eou-shelterbelt
-  title: "Shelterbelt"
+  title: Shelterbelt
   url: https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CS%5CH%5CShelterbelt.htm
   publisher: Internet Encyclopedia of Ukraine (Canadian Institute of Ukrainian Studies)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: encyclopedia
   origin: ukrainian
   reliability: high
   verified: fetched
   eras: []
-  topics: [terrain, shelterbelts, history]
-  notes: "Ukrainian scholarly encyclopedia. First shelterbelts 1809 (Lomykovsky, Poltava gubernia); Dokuchaev and Vysotsky research 1890s; systematic planting 1938-9 and 1948-52; mainly steppe and forest-steppe. Species: oak, pine, birch, poplar (upper); linden, maple, apple, pear (lower). No dimensions."
-
-- id: uncg-2022-shamina-stalin-plan
-  title: "The Great Stalin Plan for the Transformation of Nature: how was the nature of Ukraine destroyed under the Soviet Union?"
-  url: https://uncg.org.ua/en/the-great-stalin-plan-for-the-transformation-of-nature-how-was-the-nature-of-ukraine-destroyed-under-the-soviet-union/
-  publisher: Ukrainian Nature Conservation Group (UNCG)
-  authors: [Tetiana Shamina]
-  published: 2022-10-28
-  accessed: 2026-09-28
-  type: think-tank
-  origin: ukrainian
-  reliability: medium
+  topics:
+  - terrain
+  - shelterbelts
+  - history
+  notes: 'Ukrainian scholarly encyclopedia. First shelterbelts 1809 (Lomykovsky, Poltava gubernia); Dokuchaev and Vysotsky
+    research 1890s; systematic planting 1938-9 and 1948-52; mainly steppe and forest-steppe. Species: oak, pine, birch, poplar
+    (upper); linden, maple, apple, pear (lower). No dimensions.'
+- id: eox-2021-s2cloudless
+  title: EOxCloudless (Sentinel-2 cloudless) 2021 mosaic, WMTS tiles, and licence summary
+  url: https://cloudless.eox.at/documentation/license
+  alt_urls:
+  - https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/{z}/{y}/{x}.jpg
+  publisher: EOX IT Services GmbH (contains modified Copernicus Sentinel data 2021)
+  authors: []
+  published: '2021'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
   verified: fetched
   eras: []
-  topics: [terrain, shelterbelts, history, water]
-  notes: "Ukrainian conservation NGO. 440,000 ha of field-protective belts planted in 10 years from 1950; 154,500 ha in 20 years from 1971; claimed grain-yield gain 25-30%. Kakhovka reservoir flooded 709,900 ha incl. Velykyi Luh (up to 80,000 ha). NGO with an advocacy angle, figures not footnoted."
-
-- id: unfccc-ukr-agroforestry-brief
-  title: "Climate-oriented agroforestry for shelterbelt reconstruction and maintenance in Ukraine (Technology Needs Assessment policy brief)"
-  url: https://unfccc.int/ttclear/TNA/UKR-Policy_Brief-agroforestry.pdf
-  publisher: UNFCCC TT:CLEAR (Ukraine Technology Needs Assessment)
+  topics:
+  - geodata
+  - imagery
+  - remote-sensing
+  notes: '10 m cloud-free Sentinel-2 mosaic, pre-invasion (2021). Used only as an analysis check: z14 tiles around each OSM
+    sample box, OSM overlays and a black-top-hat belt detector. Commercial use needs an EOX Commercial Attribution-RestrictedUse
+    licence, so it is not a shippable asset.'
+- id: esa-2021-worldcover
+  title: ESA WorldCover 10m v200 (2021)
+  url: https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200
+  publisher: ESA / VITO consortium (via Google Earth Engine catalog)
+  authors: []
+  published: '2022'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - landcover
+  notes: 10 m global land cover for 2021 (v100 covers 2020) from Sentinel-1/2, with 11 classes (tree cover, shrubland, grassland,
+    cropland, built-up, bare, snow/ice, water, herbaceous wetland, mangroves, moss/lichen). CC BY 4.0. The 2021 map is the
+    last full-year baseline before the invasion. Project site is esa-worldcover.org.
+- id: eurocrops
+  title: EuroCrops
+  url: https://github.com/maja601/EuroCrops
+  publisher: TUM / EuroCrops project (data on Zenodo, record 8229128)
   authors: []
   published: unknown
-  accessed: 2026-09-28
-  type: official
-  origin: ukrainian
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
   reliability: high
   verified: fetched
   eras: []
-  topics: [terrain, shelterbelts, agriculture]
-  notes: "Ukrainian national TNA brief (c. 2021). About 400,000 ha of shelterbelts in Ukraine at the start of the 1990s; described as 'a mixture of perennial species planted in fields in a few rows'; unclear ownership and land-cadastre registration after the kolkhozes were broken up; 2020 dust storms caused 70% loss of winter crops in southern oblasts; goal of reconstructing 85-86k ha by 2030."
-
-- id: maliuha-2023-windbreaks
-  title: "The current state of windbreaks of the Left Bank Forest Steppe of Ukraine"
-  url: https://ouci.dntb.gov.ua/en/works/4EV6jrAl/
-  publisher: Ukrainian Journal of Forest and Wood Science (indexed by OUCI)
-  authors: [Volodymyr Maliuha, Oleksandr Sovakov, Sergii Dudarets]
-  published: 2023
-  accessed: 2026-09-28
-  type: academic
-  origin: ukrainian
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [terrain, shelterbelts, forestry]
-  notes: "Peer-reviewed Ukrainian forestry paper (abstract read). Studied oak windbreak 15.0 m wide, oak 'nests' spaced 5.0 x 3.0 m with 5 m alleys plus companion-tree and shrub rows; protective height 19.6-23.4 m; common oak (Quercus robur) dominant."
-
-- id: tarasov-usda-luhansk-wind-erosion
-  title: "Control of Wind Erosion on Agricultural Lands in the South-East Part of the Ukraine Steppe"
-  url: https://infosys.ars.usda.gov/WindErosion/symposium/proceedings/tarasov.pdf
-  publisher: USDA ARS Wind Erosion Research Unit (symposium proceedings)
-  authors: [V. I. Tarasov]
-  published: unknown
-  accessed: 2026-09-28
-  type: academic
+  topics:
+  - geodata
+  - fields
+  notes: Harmonised crop parcels from farmers' CAP self-declarations in 17 EU countries. CC BY-SA 4.0. Ukraine is not included,
+    so the 'EuroCrops Ukraine subset' named in the brief does not exist. EuroCrops 2.0 is hosted by the JRC.
+- id: euromaidan-2023-avdiivka-rain-fog
+  title: 'Frontline report: Russians leverage rains and fog to assault Avdiyivka when Ukrainian drones are less efficient'
+  url: https://euromaidanpress.com/2023/11/19/frontline-report-russians-leverage-rains-and-fog-to-assault-avdiyivka-when-ukrainian-drones-are-less-efficient/
+  publisher: Euromaidan Press
+  authors:
+  - Reporting from Ukraine
+  published: '2023-11-19'
+  accessed: '2026-09-28'
+  type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: []
-  topics: [terrain, shelterbelts, soil, seasons]
-  notes: "Ukrainian soil-conservation researcher, fieldwork 1995-96 in Luhansk oblast. Treeless steppe on chernozem, where forests occur mainly along rivers and in gullies; the main deflation winds come from the east; optimal belt width for trapping soil is about 10 m; belts are leafless and more permeable in winter and early spring. Conference paper, not peer reviewed."
-
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - weather
+  - drones
+  - terrain
+  notes: Russian forces timed assaults on the Avdiivka chemical plant to rain and dense morning fog, when Ukrainians struggled
+    to use drones. Qualitative; no weather figures.
+- id: euromaidan-2023-avdiivka-spoil-tip
+  title: 'Frontline report: Russia''s failed frontal assault on Avdiivka coal spoil tip shows Russian strategic lapses'
+  url: https://euromaidanpress.com/2023/10/16/frontline-report-russias-failed-frontal-assault-on-avdiivka-coal-spoil-tip-shows-russian-strategic-lapses/
+  publisher: Euromaidan Press
+  authors:
+  - Reporting from Ukraine
+  published: '2023-10-16'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - terrain
+  - industry
+  - terrikons
+  - tactics
+  notes: The Avdiivka terrikon (coal-mine waste heap) served as a fortification in front of the industrial zone. Defenders
+    saw every Russian move from its heights, the slope was steep, and attackers staged in treelines and crossed mined approaches.
+    Based on combat footage commentary.
+- id: euromaidan-2023-havrylets-avdiivka
+  title: 'Battle of Avdiivka: Russia strangles Ukrainian stronghold'
+  url: https://euromaidanpress.com/2023/11/30/battle-of-avdiivka-russian-forces-strangle-ukrainian-stronghold/
+  publisher: Euromaidan Press
+  authors:
+  - Serge Havrylets
+  published: '2023-11-30'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - terrain
+  - industry
+  - terrikons
+  - fortifications
+  notes: Avdiivka had a 40 m slag heap east of the coke plant. The coke plant was the 'gateway to the city from the northeast',
+    and the industrial zone (promzona) near Yasynuvata-2 station was the first line of defence. Positions were reinforced
+    concrete linked by trenches and tunnels. Avdiivka lies less than 10 km from Donetsk.
+- id: euromaidan-2023-mokri-yaly-dam
+  title: Russian forces blow up a dam in Zaporizhzhia Oblast, Ukraine's military spox says
+  url: https://euromaidanpress.com/2023/06/11/russian-forces-blow-up-a-dam-in-zaporizhzhia-oblast-ukraines-military-spox-says/
+  publisher: Euromaidan Press
+  authors: []
+  published: '2023-06-11'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - terrain
+  - water
+  - obstacles
+  notes: Spokesman Valeriy Shershen (Tavria JCC) claims Russian forces blew up the hydro facility on the Mokri Yaly near Novodarivka
+    'to slow down our advance'; both banks flooded. Follows the Karlivka and Kakhovka dams. Official claim.
+- id: euromaidan-2023-rivnopil-heights
+  title: 'Frontline report: Ukraine takes tactical heights in Rivnopil with minimal engagement'
+  url: https://euromaidanpress.com/2023/06/27/frontline-report-ukraine-takes-tactical-heights-in-rivnopil-with-minimal-engagement/
+  publisher: Euromaidan Press
+  authors:
+  - Reporting from Ukraine
+  published: '2023-06-27'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - terrain
+  - landforms
+  - balkas
+  notes: Rivnopil sits in the centre of an 'elevated platform'; Russian positions there were vulnerable because a gully cut
+    them off from the next platform. Shows how steppe interfluves and gullies set tactical value in the Velyka Novosilka axis.
+- id: euromaidan-2024-mukhina-kupiansk-weather
+  title: Russia shifts to mechanized assaults near Kupiansk as weather hampers Ukrainian drones
+  url: https://euromaidanpress.com/2024/12/26/russia-shifts-to-mechanized-assaults-near-kupiansk-as-weather-hampers-ukrainian-drones/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2024-12-26'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - weather
+  - drones
+  - tactics
+  notes: 'Maj. Maksym Zhorin (3rd Assault Bde): rain and frost significantly hampered reconnaissance and caused substantial
+    UAV losses, particularly Mavics; Russia switched from infantry-only to mechanised assaults to exploit the weather. A large
+    assault on 23 Dec 2024 came under cover of rain and fog (Achilles unit).'
+- id: euromaidan-2024-ngl-forest-destruction
+  title: 'Russia destroys over 60,000 hectares of Ukrainian forests worth over $360 mn: investigation'
+  url: https://euromaidanpress.com/2024/04/09/russia-destroys-over-60000-hectares-of-ukrainian-forests-worth-over-360-mn-investigation/
+  publisher: Euromaidan Press (relaying NGL.media)
+  authors: []
+  published: '2024-04-09'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - forests
+  - battle-damage
+  notes: 'NGL.media satellite investigation: over 60,000 ha of forest destroyed in two years; Sviati Hory national park (the
+    chalk-hill Holy Mountains) about 80% devastated; 40-45% of Kharkiv oblast forest mined or burned; Russian logging for
+    fortifications. Journalistic estimate, not peer-reviewed.'
+- id: euromaidan-2024-toretsk-highrises
+  title: 'Frontline report: Ukraine''s demolition squads turn Toretsk high-rises into Russian trap'
+  url: https://euromaidanpress.com/2024/10/20/frontline-report-ukraines-demolition-squads-turn-toretsk-high-rises-into-russian-trap/
+  publisher: Euromaidan Press
+  authors:
+  - Reporting from Ukraine
+  published: '2024-10-20'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - terrain
+  - settlements
+  - mining
+  - urban
+  notes: Toretsk is a mining town with a central high-rise district. The southern Zabalka district of single-storey houses
+    lies beneath two mine waste dumps over 100 m high. Ukrainian engineers demolished high-rises used by Russian troops.
+- id: euromaidan-2025-axe-foggy-advance
+  title: Foggy advance (Pokrovsk and Myrnohrad, November 2025)
+  url: https://euromaidanpress.com/2025/11/12/foggy-advance/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-12'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - weather
+  - drones
+  - infiltration
+  notes: '7th Rapid Response Corps: Russia used thick fog, which reduces aerial reconnaissance; over 300 Russian troops got
+    inside Pokrovsk during the foggy period (7-12 Nov 2025).'
+- id: euromaidan-2025-mukhina-oskil-crossing
+  title: Kupiansk in Kharkiv Oblast faces renewed Russian occupation as invaders cross Oskil River for key assault
+  url: https://euromaidanpress.com/2025/02/06/kupiansk-in-kharkiv-oblast-faces-renewed-russian-occupation-as-invaders-cross-oskil-river-for-key-assault/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-02-06'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - terrain
+  - water
+  - crossings
+  notes: Russia crossed the Oskil and took Novomlynsk north of Kupiansk; the pre-war bridge is almost certainly destroyed,
+    and the Ukrainian Air Force usually targets the floating spans when Russian engineers build pontoons (CDS). No river dimensions.
+- id: euromaidan-2026-axe-mala-tokmachka
+  title: Mala Tokmachka (Orikhiv front, August 2026)
+  url: https://euromaidanpress.com/2026/08/20/mala-tokmachka/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2026-08-20'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - terrain
+  - water
+  - landforms
+  notes: Russian 42nd Motor Rifle Division groups took eastern Mala Tokmachka and crossed north over the Kinska River to attack
+    Ukrainian trenches on the tactical heights beyond. No river dimensions.
+- id: euromaidan-2026-kossov-icy-fibre
+  title: 'Ukraine''s jam-proof drones have one weakness: icy weather'
+  url: https://euromaidanpress.com/2026/01/13/ukraines-jam-proof-drones-have-one-weakness-icy-weather/
+  publisher: Euromaidan Press
+  authors:
+  - Igor Kossov
+  published: '2026-01-13'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - drones
+  - fiber-optic
+  - fibre-optic
+  - weather
+  notes: Fibre freezes on spools and unreels badly; iced cable is brittle, snaps and sticks to obstacles; electronics rated
+    0-70 C lose 20-50% of signal to condensation; the Dronarium centre grounded its fibre drones in mid-January 2026.
+- id: euromaidan-2026-zoria-kupiansk-pipeline
+  title: Russia's pipeline into Kupiansk is now its escape route, with kidnapped civilians as human shields, Ukraine says
+  url: https://euromaidanpress.com/2026/09/28/russias-pipeline-into-kupiansk-is-now-its-escape-route-with-kidnapped-civilians-as-human-shields-ukraine-says/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-09-28'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - infiltration
+  - infrastructure
+  - terrain
+  notes: Russian troops entered Kupiansk through the inactive Shebelynka-Ostrohozhsk gas pipeline, about a 10 km walk in darkness
+    that exits in a forest; Ukraine retook about 90% of the city by Dec 2025 after disabling the route; by 27 Sep 2026 it
+    was used to evacuate soldiers and abducted civilians (Khartia corps claim).
 - id: ffm-oleshky-shelterbelts
-  title: "State of the protective forest belts of various purposes in the Oleshky district of Kherson Region"
+  title: State of the protective forest belts of various purposes in the Oleshky district of Kherson Region
   url: https://forestry-forestmelioration.org.ua/index.php/journal/article/view/236
   publisher: Forestry and Forest Melioration (URIFFM, Kharkiv)
   authors: []
   published: unknown
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: academic
   origin: ukrainian
   reliability: medium
   verified: search-only
   eras: []
-  topics: [terrain, shelterbelts]
-  notes: "Ukrainian forestry journal. The search snippet gives the average distance between forest belts in the Oleshky district as 350 to 780 m (mean 550 m). The site refused connections again on 2026-09-28. The figure is now corroborated by the Parfonov report and by OSM/Sentinel-2 measurements (549 m median at Huliaipole)."
-
-# ---------------------------------------------------------------- tactical role of treelines and terrain
-- id: cepa-2023-kallberg-treelines
-  title: "Ukraine's War of the Treelines"
-  url: https://cepa.org/article/ukraines-war-of-the-treelines/
-  publisher: Center for European Policy Analysis (CEPA)
-  authors: [Jan Kallberg]
-  published: 2023-10-02
-  accessed: 2026-09-28
-  type: think-tank
-  origin: western
-  reliability: medium
-  verified: fetched
-  eras: [e5-counteroffensive-23]
-  topics: [terrain, shelterbelts, seasons, tactics]
-  notes: "The southern battlefield is flat and open, with large fields separated by treelines. Russian forward defences are in treelines, and reserves, artillery and logistics sit hidden 8-15 km behind the front. In summer 2023 the leaves protected positions from drones and artillery, while autumn leaf-fall and later snow expose them. Some treelines 'evaporated' into split wood. Opinion or analysis piece."
-
-- id: saratoga-2026-parfonov-treelines
-  title: "New Report! Fighting Through the Treelines: Russian Tactical Adaptation in Shelterbelt Warfare in Ukraine"
-  url: https://www.saratoga-foundation.org/p/new-report-fighting-through-the-treelines
-  alt_urls: [https://drive.google.com/file/d/1MYVSZopRuMLUsLOFu8vy-FY6GrtkBPWh/view]
-  publisher: The Saratoga Foundation
-  authors: [Hlib Parfonov]
-  published: 2026-04-13
-  accessed: 2026-09-28
-  type: think-tank
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [terrain, shelterbelts, tactics]
-  notes: "10-page report by a Ukrainian analyst and serving soldier, based on his own combat experience, UA officers and NCOs, and captured Russian tactical guidance (full PDF read). Belt grid 300-400 m apart one way and 1,000-2,000 m the other, 3-4 tree rows, 10-30 m machinery gaps, rarely over 20-30 m wide. Longitudinal attack along the belt is the predominant method for both sides; perpendicular attack is rarely viable. Assault group 300-500 m deep (scouts 7-9 m apart, main body 30 m behind, consolidation group 100-150 m, reserve up to 450 m). Approaches are timed to rain, fog, darkness and pre-dawn. Guns 8-12 km and mortars 2-3 km from the target belt. Avoid CPs at belt intersections. One author, so medium."
-
-- id: wotr-2026-maurin-front-line
-  title: "The Strange Transformation of the Front Line in Ukraine"
-  url: https://warontherocks.com/the-strange-transformation-of-the-front-line-in-ukraine/
-  publisher: War on the Rocks
-  authors: [Édouard R. Maurin]
-  published: 2026-09-09
-  accessed: 2026-09-28
-  type: think-tank
-  origin: western
-  reliability: medium
-  verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [terrain, shelterbelts, tactics, drones]
-  notes: "First-hand account (callsign FIDES) from near Kotlyne, west of Pokrovsk, winter 2024-25. The CHAI treeline was about 1 km long. The exposed HOMAR trench (80 x 30 m) was lost, while the CRAB position (two fighting holes in the undergrowth) held for 10 days. The contested zone was about 1 km deep on 1 Jan 2025 and is now 5-8x wider. Troops used thermal ponchos."
-
-- id: kyivindependent-2022-ponomarenko-donbas-woods
-  title: "'Welcome to hell': Ukrainian airborne fighting Russia in Donbas woods"
-  url: https://kyivindependent.com/welcome-to-hell-ukrainian-airborne-fighting-russia-in-donbas-woods/
-  publisher: The Kyiv Independent
-  authors: [Illia Ponomarenko, Kostyantyn Chernichkin]
-  published: 2022-05-28
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: high
-  verified: fetched
-  eras: [e2-donbas-artillery]
-  topics: [terrain, forests, settlements]
-  notes: "Front-line reportage of the 79th Air Assault Brigade in the dense pine woods south of Lyman. Positions are sandy trenches, the enemy line is about 300 m away behind tall pines, holiday resorts, children's camps and cottages serve as positions, and there is constant Orlan-10 surveillance."
-
-- id: euromaidan-2023-avdiivka-spoil-tip
-  title: "Frontline report: Russia's failed frontal assault on Avdiivka coal spoil tip shows Russian strategic lapses"
-  url: https://euromaidanpress.com/2023/10/16/frontline-report-russias-failed-frontal-assault-on-avdiivka-coal-spoil-tip-shows-russian-strategic-lapses/
-  publisher: Euromaidan Press
-  authors: [Reporting from Ukraine]
-  published: 2023-10-16
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e6-avdiivka-attrition]
-  topics: [terrain, industry, terrikons, tactics]
-  notes: "The Avdiivka terrikon (coal-mine waste heap) served as a fortification in front of the industrial zone. Defenders saw every Russian move from its heights, the slope was steep, and attackers staged in treelines and crossed mined approaches. Based on combat footage commentary."
-
-- id: euromaidan-2023-havrylets-avdiivka
-  title: "Battle of Avdiivka: Russia strangles Ukrainian stronghold"
-  url: https://euromaidanpress.com/2023/11/30/battle-of-avdiivka-russian-forces-strangle-ukrainian-stronghold/
-  publisher: Euromaidan Press
-  authors: [Serge Havrylets]
-  published: 2023-11-30
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e6-avdiivka-attrition]
-  topics: [terrain, industry, terrikons, fortifications]
-  notes: "Avdiivka had a 40 m slag heap east of the coke plant. The coke plant was the 'gateway to the city from the northeast', and the industrial zone (promzona) near Yasynuvata-2 station was the first line of defence. Positions were reinforced concrete linked by trenches and tunnels. Avdiivka lies less than 10 km from Donetsk."
-
-- id: euromaidan-2024-toretsk-highrises
-  title: "Frontline report: Ukraine's demolition squads turn Toretsk high-rises into Russian trap"
-  url: https://euromaidanpress.com/2024/10/20/frontline-report-ukraines-demolition-squads-turn-toretsk-high-rises-into-russian-trap/
-  publisher: Euromaidan Press
-  authors: [Reporting from Ukraine]
-  published: 2024-10-20
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e7-kursk-pokrovsk]
-  topics: [terrain, settlements, mining, urban]
-  notes: "Toretsk is a mining town with a central high-rise district. The southern Zabalka district of single-storey houses lies beneath two mine waste dumps over 100 m high. Ukrainian engineers demolished high-rises used by Russian troops."
-
-- id: wikipedia-serebriansky-forest
-  title: "Serebriansky forest"
-  url: https://en.wikipedia.org/wiki/Serebriansky_forest
-  publisher: Wikipedia
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: encyclopedia
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: [e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [terrain, forests]
-  notes: "Reserve about 5 miles SW of Kreminna on the left bank of the Siverskyi Donets. The protected reserve covers 107.1 ha, while the wider pine forest is much larger. It includes forest, swamps and meadows and was a battleground from autumn 2022. The page says Russia held over 75% by 15 Sep 2025 and all of it by December 2025 (unreferenced there). DeepState polygons confirm the timeline (see deepstate-api-history)."
-
-- id: wikipedia-battle-of-marinka-2022
-  title: "Battle of Marinka (2022–2023)"
-  url: https://en.wikipedia.org/wiki/Battle_of_Marinka_(2022%E2%80%932023)
-  publisher: Wikipedia
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: encyclopedia
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition]
-  topics: [settlements, battle-damage]
-  notes: "Battle ran 18 Apr 2022 - 25 Dec 2023 (about 20 months) in a town of about 9,400 pre-war residents. By Dec 2022 the governor said 'not a single surviving house' remained. A standard example of a town erased by artillery before assault."
-
-- id: wikipedia-battle-of-pokrovsk
-  title: "Battle of Pokrovsk"
-  url: https://en.wikipedia.org/wiki/Battle_of_Pokrovsk
-  publisher: Wikipedia
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: encyclopedia
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [weather, tactics, mining]
-  notes: "In Feb 2025 Russian forces reinforced 'under the cover of thick fog', and in Aug 2025 heavy fog hampered Ukrainian drones. There was small-group infiltration (DeepState: groups of about 50; of 150 men only 30 reached the city, Aug 2025). Slag heaps and terrikons appear as terrain features. Wikipedia, it cites DeepState and ISW."
-
-- id: rferl-2026-lohinov-spring-battlefield
-  title: "On Springtime Battlefield In War's Fifth Year, Ukraine Claws Back Territory"
-  url: https://www.rferl.org/a/ukraine-russia-war-battlefield-gains/33761066.html
-  publisher: Radio Free Europe/Radio Liberty
-  authors: [Yehor Lohinov, Mike Eckel]
-  published: 2026-05-20
-  accessed: 2026-09-28
-  type: news
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [seasons, terrain, tactics]
-  notes: "North of Pokrovsk in May 2026, spring fields and rutted forest roads were still muddy, and as 'the ground hardens and foliage expands' soldiers gain cover from drones. Units use quad bikes. The front is a 'kill zone' rather than a line."
-
-- id: united24-2026-brizard-winter-camouflage
-  title: "As Ukraine Endures Extreme Cold, Soldiers Adapt Winter Camouflage for a Drone-Watched Front"
-  url: https://united24media.com/war-in-ukraine/as-ukraine-endures-extreme-cold-soldiers-adapt-winter-camouflage-for-a-drone-watched-front-15882
-  publisher: United24 Media
-  authors: [Lucile Brizard]
-  published: 2026-02-13
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [seasons, weather, drones, thermals]
-  notes: "Coldest winter in more than a decade, down to -20 C. Drone operators 'clearly see tracks in the snow'. Without snow 'everything looks grey'. Bare treelines stay dark against snow, and cold makes thermal cameras more effective. Troops use white ponchos and ghillie suits. Ukrainian state-backed outlet."
-
-- id: spire-2025-soil-moisture
-  title: "From fields to frontlines: How soil moisture shapes military operations in Ukraine and beyond"
-  url: https://spire.com/blog/weather-climate/from-fields-to-frontlines-how-soil-moisture-shapes-military-operations-in-ukraine-and-beyond/
-  publisher: Spire Global
-  authors: [Travis Turgeon, Meghan Mussoline]
-  published: 2025-10-08
-  accessed: 2026-09-28
-  type: news
-  origin: western
-  reliability: medium
-  verified: fetched
-  eras: [e1-invasion, e5-counteroffensive-23, e8-drone-kill-zone]
-  topics: [soil, seasons, mobility]
-  notes: "Corporate blog. Covers rasputitsa (Ukrainian: bezdorizhzhia): Russian columns stuck in spring 2022, autumn mud in Nov 2023, 'liquid earth' in March 2025, and hardened ground near Pokrovsk by mid-April 2025 that reopened mechanised assaults. Soil-moisture product at 500 m. Marketing context, but it collects dated examples."
-
-- id: euromaidan-2023-avdiivka-rain-fog
-  title: "Frontline report: Russians leverage rains and fog to assault Avdiyivka when Ukrainian drones are less efficient"
-  url: https://euromaidanpress.com/2023/11/19/frontline-report-russians-leverage-rains-and-fog-to-assault-avdiyivka-when-ukrainian-drones-are-less-efficient/
-  publisher: Euromaidan Press
-  authors: [Reporting from Ukraine]
-  published: 2023-11-19
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e6-avdiivka-attrition]
-  topics: [weather, drones, terrain]
-  notes: "Russian forces timed assaults on the Avdiivka chemical plant to rain and dense morning fog, when Ukrainians struggled to use drones. Qualitative; no weather figures."
-
-- id: euromaidan-2024-mukhina-kupiansk-weather
-  title: "Russia shifts to mechanized assaults near Kupiansk as weather hampers Ukrainian drones"
-  url: https://euromaidanpress.com/2024/12/26/russia-shifts-to-mechanized-assaults-near-kupiansk-as-weather-hampers-ukrainian-drones/
-  publisher: Euromaidan Press
-  authors: [Olena Mukhina]
-  published: 2024-12-26
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e7-kursk-pokrovsk]
-  topics: [weather, drones, tactics]
-  notes: "Maj. Maksym Zhorin (3rd Assault Bde): rain and frost significantly hampered reconnaissance and caused substantial UAV losses, particularly Mavics; Russia switched from infantry-only to mechanised assaults to exploit the weather. A large assault on 23 Dec 2024 came under cover of rain and fog (Achilles unit)."
-
-- id: euromaidan-2025-axe-foggy-advance
-  title: "Foggy advance (Pokrovsk and Myrnohrad, November 2025)"
-  url: https://euromaidanpress.com/2025/11/12/foggy-advance/
-  publisher: Euromaidan Press
-  authors: [David Axe]
-  published: 2025-11-12
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [weather, drones, infiltration]
-  notes: "7th Rapid Response Corps: Russia used thick fog, which reduces aerial reconnaissance; over 300 Russian troops got inside Pokrovsk during the foggy period (7-12 Nov 2025)."
-
-- id: euromaidan-2026-kossov-icy-fibre
-  title: "Ukraine's jam-proof drones have one weakness: icy weather"
-  url: https://euromaidanpress.com/2026/01/13/ukraines-jam-proof-drones-have-one-weakness-icy-weather/
-  publisher: Euromaidan Press
-  authors: [Igor Kossov]
-  published: 2026-01-13
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [weather, drones, fibre-optic]
-  notes: "Ice between fibres stops spools unwinding; iced cable snaps and sticks to tree limbs; SFP modules are rated 0-70 C and suffer condensation and 20-50% losses in frost (analyst Nazariy Barchuk). A tester: fibre drones fly less far and lose link more often. The Dronarium centre grounded its fibre drones in mid-January 2026."
-
-- id: aljazeera-2025-psaropoulos-pokrovsk
-  title: "Russia infiltrates Pokrovsk with new tactics that test Ukraine's drones"
-  url: https://www.aljazeera.com/amp/news/2025/11/6/russia-infiltrates-pokrovsk-with-new-tactics-that-test-ukraines-drones
-  publisher: Al Jazeera
-  authors: [John T. Psaropoulos]
-  published: 2025-11-06
-  accessed: 2026-09-28
-  type: news
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [weather, infiltration]
-  notes: "Ukrainian commanders say Russia took advantage of wet weather, which disadvantaged light FPV drones, during the Pokrovsk infiltration (same id as in 04)."
-
-- id: euromaidan-2023-rivnopil-heights
-  title: "Frontline report: Ukraine takes tactical heights in Rivnopil with minimal engagement"
-  url: https://euromaidanpress.com/2023/06/27/frontline-report-ukraine-takes-tactical-heights-in-rivnopil-with-minimal-engagement/
-  publisher: Euromaidan Press
-  authors: [Reporting from Ukraine]
-  published: 2023-06-27
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e5-counteroffensive-23]
-  topics: [terrain, landforms, balkas]
-  notes: "Rivnopil sits in the centre of an 'elevated platform'; Russian positions there were vulnerable because a gully cut them off from the next platform. Shows how steppe interfluves and gullies set tactical value in the Velyka Novosilka axis."
-
-# ---------------------------------------------------------------- landforms, water, settlements
-- id: wikipedia-siverskyi-donets
-  title: "Siverskyi Donets"
-  url: https://en.wikipedia.org/wiki/Siverskyi_Donets
-  publisher: Wikipedia
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: encyclopedia
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: []
-  topics: [terrain, rivers, landforms]
-  notes: "1,053 km long, about 950 km in Ukraine, basin 98,900 km2. The right bank is 'usually high, sometimes with chalk cliffs, and is dissected by gullies', while the left bank is flat with swamps, lakes and oxbows. Pine forests grow on left-bank terraces and willow, birch and alder on the floodplain. Russian crossing attempts above Lysychansk were stopped in May 2022."
-
-- id: uanimals-2026-kakhovka-forest
-  title: "What is happening at the bottom of the Kakhovka Reservoir three years after the disaster?"
-  url: https://uanimals.org/en/know-act/environment-war/a-forest-found-nowhere-else-in-ukraine-what-s-happening-at-the-bottom-of-the-kakhovka-reservoir-three-years-after-the-disaster/
-  publisher: UAnimals
-  authors: []
-  published: 2026-06
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e5-counteroffensive-23, e9-counteroffensive-26]
-  topics: [water, terrain, vegetation]
-  notes: "Ukrainian NGO expedition (May 2026) with botanist Ivan Moysienko. The former reservoir bed covers over 2,000 km2 and now holds a young willow-dominated forest three years after the dam was destroyed on 6 June 2023. Reservoir width was 3.6 km at Kamianska Sich and 13.5 km at Novovorontsovka."
-
-- id: defenceexpress-2024-kakhovka-refill
-  title: "Satellite Images Show Water Returning to Kakhovka Reservoir: How It Can Affect Military Operations"
-  url: https://en.defence-ua.com/news/satellite_images_show_water_returning_to_kakhovka_reservoir_how_it_can_affect_military_operations-9835.html
-  publisher: Defense Express
-  authors: []
-  published: 2024-03-14
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
-  topics: [water, terrain, mobility]
-  notes: "Ukrainian defence outlet. Compares Sentinel imagery from 28 Oct 2023 and 11 Mar 2024: snowmelt refilled parts of the old reservoir to pre-dam width near Novovorontsovka. Soft soil means 'no equipment, including amphibious vehicles, will be able to pass', which made it the least suitable sector for an advance (restored Velykyi Luh)."
-
-- id: wikipedia-khrushchevka
-  title: "Khrushchevka"
-  url: https://en.wikipedia.org/wiki/Khrushchevka
-  publisher: Wikipedia
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: encyclopedia
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: []
-  topics: [settlements, buildings]
-  notes: "Soviet mass housing built 1956 to the mid-1970s, usually 4-5 storeys (no lift required at 5 or fewer), in large panel or brick, with a raised ground floor and basement vents. Ukrainian design series 1-463, 1-480 and 1-437. Gives dimensions for town blocks."
-
-- id: deepstate-api-history
-  title: "DeepStateMap history endpoints (/api/history/public and /api/history/last)"
-  url: https://deepstatemap.live/api/history/public
-  publisher: DeepState UA
-  authors: []
-  published: 2022-04-03
-  accessed: 2026-09-28
-  type: dataset
-  origin: ukrainian
-  reliability: high
-  verified: fetched
-  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [maps, forests, deepstate]
-  notes: "Same id as in 07. For 06, we grepped the 1,771 changelogs for Serebrianka and point-sampled the per-version GeoJSON (/api/history/<id>/geojson) over the Serebrianka forest (273 points, 48.93-48.99 N, 38.04-38.20 E): occupied share 15% on 1 Aug 2025, 64% on 1 Sep, 90% on 1 Oct, 91% plus 9% grey on 1 Dec, 100% from 20 Dec 2025 and still on 27 Sep 2026. No open licence; used for analysis only."
-
-- id: wikipedia-mokri-yaly
-  title: "Mokri Yaly"
-  url: https://en.wikipedia.org/wiki/Mokri_Yaly
-  publisher: Wikipedia
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: encyclopedia
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: [e5-counteroffensive-23]
-  topics: [terrain, water]
-  notes: "River 147 km long, basin 2,660 km2, rising on the Azov Upland near Volnovakha and flowing north through Velyka Novosilka to the Vovcha. A WWII defensive line; the 2023 counteroffensive advanced along its banks, and a dam near Kliuchove/Staromlynivka was destroyed in June 2023."
-
-- id: euromaidan-2023-mokri-yaly-dam
-  title: "Russian forces blow up a dam in Zaporizhzhia Oblast, Ukraine's military spox says"
-  url: https://euromaidanpress.com/2023/06/11/russian-forces-blow-up-a-dam-in-zaporizhzhia-oblast-ukraines-military-spox-says/
-  publisher: Euromaidan Press
-  authors: []
-  published: 2023-06-11
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e5-counteroffensive-23]
-  topics: [terrain, water, obstacles]
-  notes: "Spokesman Valeriy Shershen (Tavria JCC) claims Russian forces blew up the hydro facility on the Mokri Yaly near Novodarivka 'to slow down our advance'; both banks flooded. Follows the Karlivka and Kakhovka dams. Official claim."
-
-- id: euromaidan-2025-mukhina-oskil-crossing
-  title: "Kupiansk in Kharkiv Oblast faces renewed Russian occupation as invaders cross Oskil River for key assault"
-  url: https://euromaidanpress.com/2025/02/06/kupiansk-in-kharkiv-oblast-faces-renewed-russian-occupation-as-invaders-cross-oskil-river-for-key-assault/
-  publisher: Euromaidan Press
-  authors: [Olena Mukhina]
-  published: 2025-02-06
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e7-kursk-pokrovsk]
-  topics: [terrain, water, crossings]
-  notes: "Russia crossed the Oskil and took Novomlynsk north of Kupiansk; the pre-war bridge is almost certainly destroyed, and the Ukrainian Air Force usually targets the floating spans when Russian engineers build pontoons (CDS). No river dimensions."
-
-- id: euromaidan-2026-zoria-kupiansk-pipeline
-  title: "Russia's pipeline into Kupiansk is now its escape route, with kidnapped civilians as human shields, Ukraine says"
-  url: https://euromaidanpress.com/2026/09/28/russias-pipeline-into-kupiansk-is-now-its-escape-route-with-kidnapped-civilians-as-human-shields-ukraine-says/
-  publisher: Euromaidan Press
-  authors: [Yuri Zoria]
-  published: 2026-09-28
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [terrain, infiltration, infrastructure]
-  notes: "Russian troops entered Kupiansk through the inactive Shebelynka-Ostrohozhsk gas pipeline, about a 10 km walk in darkness that exits in a forest; Ukraine retook about 90% of the city by Dec 2025 after disabling the route; by 27 Sep 2026 it was used to evacuate soldiers and abducted civilians (Khartia corps claim)."
-
-- id: euromaidan-2026-axe-mala-tokmachka
-  title: "Mala Tokmachka (Orikhiv front, August 2026)"
-  url: https://euromaidanpress.com/2026/08/20/mala-tokmachka/
-  publisher: Euromaidan Press
-  authors: [David Axe]
-  published: 2026-08-20
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [terrain, water, landforms]
-  notes: "Russian 42nd Motor Rifle Division groups took eastern Mala Tokmachka and crossed north over the Kinska River to attack Ukrainian trenches on the tactical heights beyond. No river dimensions."
-
-# ---------------------------------------------------------------- battle damage and fields (remote sensing)
-- id: umd-2023-duncan-craters
-  title: "Researchers Use Deep Learning, VHR Satellite Imagery to Map Artillery Craters in Eastern Ukraine"
-  url: https://geog.umd.edu/featured-content/researchers-use-deep-learning-vhr-satellite-imagery-map-artillery-craters-eastern
-  publisher: University of Maryland, Department of Geographical Sciences
-  authors: [Erik Duncan, Sergii Skakun, Ankit Kariryaa, Alexander Prishchepov]
-  published: 2023-06-21
-  accessed: 2026-09-28
-  type: academic
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [battle-damage, remote-sensing]
-  notes: "Summary of a peer-reviewed paper using 0.5 m WorldView-2 imagery from the 2014 onset of fighting. Found over 22,000 craters in an 858 km2 part of Donetsk oblast, covering 1.2 km2 (0.14%), or about 26 craters per km2. U-Net F1 of 0.80 for craters over 60 m2. The data predate the 2022 invasion, so treat them as a low baseline."
-
-- id: sadeh-2025-ukraine-field-boundaries
-  title: "National-Scale In-Season Field Boundaries of Ukraine Using Remote Sensing"
-  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12095754/
-  publisher: Scientific Data (Nature); data on NASA Harvest portal (https://data.harvestportal.org/)
-  authors: [Sadeh et al.]
-  published: 2025
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition]
-  topics: [fields, geodata]
-  notes: "Over 5 million field polygons of at least 1 ha for all of Ukraine, 2021-2023, from 3 m PlanetScope imagery, median IoU 0.77. Delineation is worse near the front because fields were abandoned. License CC BY-NC-ND 4.0, so non-commercial and no derivatives: fine for calibration, not for shipping in the game."
-
-- id: lesiv-2019-field-size
-  title: "Estimating the global distribution of field size using crowdsourcing"
-  url: https://doi.org/10.1111/gcb.14492
-  publisher: Global Change Biology (Wiley); IIASA
-  authors: [Myroslava Lesiv, Juan Carlos Laso Bayas, Linda See, Martina Duerauer]
-  published: 2019
-  accessed: 2026-09-28
-  type: academic
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [fields]
-  notes: "Metadata and abstract fetched via Europe PMC, class thresholds from the IIASA release on ScienceDaily. Global Geo-Wiki field-size map with classes very large (over 100 ha), large (16-100 ha), medium (2.56-16 ha), small (0.64-2.56 ha) and very small (under 0.64 ha). Large fields dominate post-Soviet countries (per search summary). Led by a Ukrainian-born IIASA researcher."
-
-- id: matsala-2024-war-protective-plantations
-  title: "War threatens 18% of protective plantations in eastern agroforestry region of Ukraine"
-  url: https://doi.org/10.1016/j.foreco.2024.122361
-  alt_urls: [https://pub.epsilon.slu.se/36737/1/matsala-m-et-al-20250317.pdf]
-  publisher: Forest Ecology and Management (Elsevier), vol. 578 (2025)
-  authors: [Maksym Matsala, Andrii Odruzhenko, Serhii H. Sydorenko, Svitlana Sydorenko]
-  published: 2024-12-09
-  accessed: 2026-09-28
-  type: academic
-  origin: ukrainian
-  reliability: high
-  verified: fetched
-  eras: [e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23]
-  topics: [terrain, shelterbelts, battle-damage, remote-sensing]
-  notes: "Peer-reviewed, CC BY, full text read (SLU repository). Sentinel-2 dNBR over front-line hromadas of Kharkiv and Donetsk oblasts, excluding the big Donets/Oskil forests. Protective forest damaged 92.4 km2 (11.5%) in 2022 and 144.7 km2 (18.1%) by 2023; shelterbelts (151 km2 in 2021) 15.8% then 21.5%. Cropland-protection function lost 1.9% then 2.7% on average but up to 57% in hotspots (Izium/Balakliia, Vuhledar, Avdiivka, Bakhmut); landscapes >50 km from battles were mostly unaffected. Canopy width x 0.46 = stem-to-stem belt width; unmanaged belts are 'dense' (K=0.7)."
-
-- id: matsala-2024-war-forest-fire-risk
-  title: "War drives forest fire risks and highlights the need for more ecologically-sound forest management in post-war Ukraine"
-  url: https://doi.org/10.1038/s41598-024-54811-5
-  publisher: Scientific Reports (Nature)
-  authors: [Maksym Matsala, Andrii Odruzhenko, Taras Hinchuk, Viktor Myroniuk, Igor Drobyshev, Serhii H. Sydorenko, Sergiy Zibtsev, Brian Milakovsky]
-  published: 2024-02-19
-  accessed: 2026-09-28
-  type: academic
-  origin: ukrainian
-  reliability: high
-  verified: fetched
-  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22]
-  topics: [terrain, forests, battle-damage, remote-sensing]
-  notes: "Peer-reviewed, open access, PDF read. Forest damaged Apr-Sep 2022: 24,180 +/- 4,715 ha (9.3%) in the 'East' AOI between Kharkiv and Luhansk (Izium, Balakliia, Lyman, Kreminna), 15.7% in Kherson, 5.0% in the Chornobyl zone. Shelling-caused fires were the main driver (up to 7,000 ha in the East); intense outgoing barrages defoliated oak forests temporarily."
-
-- id: wagner-2025-cropland-abandonment
-  title: "Monitoring cropland cultivation, abandonment, fallowing and recultivation dynamics with regard to conflict intensity in war-affected Ukraine"
-  url: https://doi.org/10.1016/j.srs.2025.100326
-  alt_urls: [https://cnrs.hal.science/hal-05372513]
-  publisher: Science of Remote Sensing (Elsevier)
-  authors: [Josef Wagner, Shabarinath S. Nair, Sergii V. Skakun, Erik C. Duncan, Fangjie Li, Oleksandra Oliinyk, Francoise Nerry, Jean Rehbinder, Inbal Becker-Reshef]
-  published: 2025-11-05
-  accessed: 2026-09-28
-  type: academic
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: [e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk]
-  topics: [fields, abandonment, remote-sensing]
-  notes: "Peer-reviewed, CC BY (NASA Harvest / UMD). Abstract and metadata read via OpenAlex; the HAL PDF is behind a bot check. Cultivated area fell 2.5 Mha (-8.5%) 2021-2024; by 2024 7% of cropland (2.213 +/- 0.256 Mha) was abandoned, of which 1.12-1.67 Mha may be permanently lost, mainly along front lines; up to 0.47 Mha were recultivated in 2024, far above official demining figures."
-
-- id: bonchkovskyi-2023-kyinska-craters
-  title: "Remote sensing as a key tool for assessing war-induced damage to soil cover in Ukraine (the case study of Kyinska territorial hromada)"
-  url: https://doi.org/10.15421/112342
-  publisher: Journal of Geology, Geography and Geoecology (Dnipro)
-  authors: [Oleksandr S. Bonchkovskyi, Pavlo Ostapenko, Volodymyr Shvaiko, Andrii S. Bonchkovskyi]
-  published: 2023-09-25
-  accessed: 2026-09-28
-  type: academic
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e1-invasion]
-  topics: [battle-damage, craters, fields]
-  notes: "Metadata and abstract read via OpenAlex; the journal PDF is behind a bot check. Maxar imagery of Kyinska hromada (Chernihiv oblast), about one month of fighting in 2022: 4,914 craters, 2,912 of them on arable land, 0.5-13.8 m in diameter, about 3,136 m3 of soil displaced. The hromada area is not in the abstract, so no density is derived."
-
-- id: euromaidan-2024-ngl-forest-destruction
-  title: "Russia destroys over 60,000 hectares of Ukrainian forests worth over $360 mn: investigation"
-  url: https://euromaidanpress.com/2024/04/09/russia-destroys-over-60000-hectares-of-ukrainian-forests-worth-over-360-mn-investigation/
-  publisher: Euromaidan Press (relaying NGL.media)
-  authors: []
-  published: 2024-04-09
-  accessed: 2026-09-28
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e1-invasion, e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition]
-  topics: [forests, battle-damage]
-  notes: "NGL.media satellite investigation: over 60,000 ha of forest destroyed in two years; Sviati Hory national park (the chalk-hill Holy Mountains) about 80% devastated; 40-45% of Kharkiv oblast forest mined or burned; Russian logging for fortifications. Journalistic estimate, not peer-reviewed."
-
-- id: sudnik-2006-windbreaks-southern-ukraine
-  title: "Dynamics of the flora of windbreaks in the agricultural landscape of steppes in southern Ukraine"
-  url: https://doi.org/10.14746/biorc.2006.1-2.16
-  publisher: Biodiversity Research and Conservation (Adam Mickiewicz University)
-  authors: [Barbara Sudnik-Wojcikowska, Ivan I. Moysiyenko, Pieter A. Slim]
-  published: 2006-06-30
-  accessed: 2026-09-28
-  type: academic
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: []
-  topics: [shelterbelts, terrain]
-  notes: "Abstract read via OpenAlex. Total windbreak length in Kherson oblast estimated at 30,000 km (about 1 km per km2 of oblast area); some belts have gaps from felling and die-back, colonised by steppe species from balkas, kurgans and valley verges; about 80 woody species."
-
-# ---------------------------------------------------------------- open geodata
-- id: osm-copyright
-  title: "OpenStreetMap copyright and license"
-  url: https://www.openstreetmap.org/copyright
-  publisher: OpenStreetMap Foundation
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, license]
-  notes: "OSM data is ODbL 1.0, requires credit to 'OpenStreetMap contributors', and derived databases must be shared under the same licence. Main vector source for farmland, tree rows, woods, highways, villages and buildings in Ukraine."
-
-- id: osm-wiki-tree-row
-  title: "Tag:natural=tree_row"
-  url: https://wiki.openstreetmap.org/wiki/Tag:natural%3Dtree_row
-  publisher: OpenStreetMap Wiki
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, shelterbelts]
-  notes: "natural=tree_row is a way along a line of trees, explicitly including windbreaks/shelterbelts. Wide belts are often mapped instead as natural=wood or landuse=forest areas. Optional height, leaf_type and leaf_cycle tags. The tag has no width attribute."
-
-- id: copernicus-dem-glo30
-  title: "Copernicus DEM (COP-DEM) GLO-30 / GLO-90"
-  url: https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM
-  publisher: Copernicus Data Space Ecosystem (ESA / EU)
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, elevation]
-  notes: "30 m (GLO-30) and 90 m DSM from TanDEM-X data collected 2011-2015. As a DSM it includes buildings and vegetation, so tall shelterbelts can show as ridges. Absolute vertical accuracy under 4 m (LE90). Free licence with attribution to DLR/Airbus under Copernicus."
-
-- id: usgs-srtmgl1
-  title: "NASA SRTM Digital Elevation 30m (SRTMGL1 v003)"
-  url: https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003
-  publisher: NASA / USGS (via Google Earth Engine catalog)
-  authors: []
-  published: 2000
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, elevation]
-  notes: "1 arc-second (about 30 m), acquired 11-22 Feb 2000, covering 60N-56S, which includes all of Ukraine. US-government data usable for any purpose (catalog cites the JPL use policy). An older, pre-war radar DEM that is a useful cross-check against Copernicus DEM."
-
-- id: esa-2021-worldcover
-  title: "ESA WorldCover 10m v200 (2021)"
-  url: https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200
-  publisher: ESA / VITO consortium (via Google Earth Engine catalog)
-  authors: []
-  published: 2022
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, landcover]
-  notes: "10 m global land cover for 2021 (v100 covers 2020) from Sentinel-1/2, with 11 classes (tree cover, shrubland, grassland, cropland, built-up, bare, snow/ice, water, herbaceous wetland, mangroves, moss/lichen). CC BY 4.0. The 2021 map is the last full-year baseline before the invasion. Project site is esa-worldcover.org."
-
-- id: copernicus-sentinel-2
-  title: "Harmonized Sentinel-2 MSI Level-2A (surface reflectance)"
-  url: https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED
-  publisher: ESA Copernicus (via Google Earth Engine catalog)
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, imagery, battle-damage]
-  notes: "Bands at 10/20/60 m with a 5-day revisit, L2A from 2017 to present. Free and open under the Copernicus Sentinel Data Terms. The main open archive for year-by-year visuals of the front (burnt treelines, abandoned fields, Kakhovka)."
-
-- id: google-dynamic-world
-  title: "Dynamic World V1"
-  url: https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1
-  publisher: Google / World Resources Institute / National Geographic Society
-  authors: []
-  published: 2022
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, landcover]
-  notes: "Near-real-time 10 m land cover with class probabilities for every Sentinel-2 scene since 27 Jun 2015. Nine classes (water, trees, grass, flooded vegetation, crops, shrub/scrub, built, bare, snow/ice). CC BY 4.0 with attribution. Can show land-cover change by season and by era."
-
-- id: umd-hansen-gfc
-  title: "Hansen Global Forest Change v1.12 (2000-2024)"
-  url: https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2024_v1_12
-  publisher: University of Maryland GLAD (via Google Earth Engine catalog)
-  authors: []
-  published: 2025
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, forests, battle-damage]
-  notes: "About 30 m, with treecover2000 (canopy over 5 m) and lossyear 2001-2024. CC BY 4.0. v1.12 is superseded by v1.13 (to 2025). The UMD tree-cover-loss data behind Global Forest Watch (the GFW site itself was not fetched). Belts 10-25 m wide are near or below its resolution."
-
-- id: microsoft-global-ml-building-footprints
-  title: "Global ML Building Footprints"
-  url: https://github.com/microsoft/GlobalMLBuildingFootprints
-  publisher: Microsoft (Bing Maps)
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, settlements]
-  notes: "1.4 billion ML-extracted building polygons from 2014-2024 imagery, 174 million with height estimates, as line-delimited GeoJSON by quadkey. The repo states CDLA Permissive 2.0, while Overture lists the source as ODbL, so check the licence of the release you use. The mix of imagery dates means the Ukrainian front shows a mix of pre-war and war-time footprints. The measurements used the 2026-02-03 release (level-9 quadkeys 120312321, 120330030-033, 120330101-102) to count 815-3,833 buildings per sample box, where OSM had only 1-18% of them."
-
-- id: overture-maps-attribution
-  title: "Overture Maps attribution and licensing"
-  url: https://docs.overturemaps.org/attribution/
-  publisher: Overture Maps Foundation
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, license]
-  notes: "Per-theme licences. Buildings, transportation, base (land use, water) and divisions are ODbL because they derive from OSM, with added Microsoft, Google Open Buildings and Esri buildings and ESA WorldCover in base. Places are CDLA Permissive 2.0. Offers conflated buildings and roads in cloud-native GeoParquet."
-
+  topics:
+  - terrain
+  - shelterbelts
+  notes: Ukrainian forestry journal. The search snippet gives the average distance between forest belts in the Oleshky district
+    as 350 to 780 m (mean 550 m). The site refused connections again on 2026-09-28. The figure is now corroborated by the
+    Parfonov report and by OSM/Sentinel-2 measurements (549 m median at Huliaipole).
 - id: ftw-2024-fields-of-the-world
-  title: "Fields of The World: A Machine Learning Benchmark Dataset For Global Agricultural Field Boundary Segmentation"
+  title: 'Fields of The World: A Machine Learning Benchmark Dataset For Global Agricultural Field Boundary Segmentation'
   url: https://arxiv.org/html/2409.16252v1
   publisher: arXiv / Taylor Geospatial Engine (fieldsofthe.world)
   authors: []
   published: 2024-09
-  accessed: 2026-09-28
+  accessed: '2026-09-28'
   type: dataset
   origin: international
   reliability: high
   verified: fetched
   eras: []
-  topics: [geodata, fields]
-  notes: "1.63 million field polygons in 24 countries with multi-date 10 m Sentinel-2 imagery. Ukraine is not included (GloCAB Ukraine data excluded for misalignment). Paper is CC BY 4.0, while each country subset keeps its source licence. The pretrained models could be run on Ukrainian Sentinel-2."
-
-- id: jrc-2023-ai4boundaries
-  title: "AI4Boundaries: an open AI-ready dataset to map field boundaries with Sentinel-2 and aerial photography"
-  url: https://essd.copernicus.org/articles/15/317/2023/
-  publisher: Earth System Science Data (EC Joint Research Centre)
-  authors: [Raphaël d'Andrimont, Martin Claverie, Pieter Kempeneers, Davide Muraro, Momchil Yordanov, Devis Peressutti, Matej Batič, François Waldner]
-  published: 2023
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, fields]
-  notes: "7,831 samples with 2.5 million parcels (47,105 km2) covering Austria, Catalonia, France, Luxembourg, the Netherlands, Slovenia and Sweden, with 10 m Sentinel-2 monthly composites and 1 m orthophotos. CC BY 4.0. No Ukraine coverage, so it is useful only as training or reference data."
-
-- id: eurocrops
-  title: "EuroCrops"
-  url: https://github.com/maja601/EuroCrops
-  publisher: TUM / EuroCrops project (data on Zenodo, record 8229128)
-  authors: []
-  published: unknown
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, fields]
-  notes: "Harmonised crop parcels from farmers' CAP self-declarations in 17 EU countries. CC BY-SA 4.0. Ukraine is not included, so the 'EuroCrops Ukraine subset' named in the brief does not exist. EuroCrops 2.0 is hosted by the JRC."
-
-- id: osm-overpass-2026-landscape-sample
-  title: "OpenStreetMap data for five 10 x 10 km front-line sample boxes, queried via the Overpass API"
-  url: https://overpass-api.de/api/interpreter
-  alt_urls: [https://overpass.kumi.systems/api/interpreter, https://www.openstreetmap.org/copyright]
-  publisher: OpenStreetMap contributors (ODbL 1.0), served by Overpass API
-  authors: []
-  published: 2026-09-28
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: medium
-  verified: fetched
-  eras: []
-  topics: [geodata, shelterbelts, fields, settlements, roads]
-  notes: "Queried 2026-09-28: tree_row, wood/forest, farmland, highway, residential, water, place nodes and building centres for boxes W of Pokrovsk, Robotyne, E of Kupiansk, E of Huliaipole, S of Chasiv Yar (bboxes in 06 §2.7). Analysed in python/numpy (local metric projection, convex-hull minimum-area rectangles, perpendicular belt spacing). Completeness varies strongly by box; buildings are 1-18% complete. (c) OpenStreetMap contributors."
-
-- id: eox-2021-s2cloudless
-  title: "EOxCloudless (Sentinel-2 cloudless) 2021 mosaic, WMTS tiles, and licence summary"
-  url: https://cloudless.eox.at/documentation/license
-  alt_urls: ["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/{z}/{y}/{x}.jpg"]
-  publisher: EOX IT Services GmbH (contains modified Copernicus Sentinel data 2021)
-  authors: []
-  published: 2021
-  accessed: 2026-09-28
-  type: dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [geodata, imagery, remote-sensing]
-  notes: "10 m cloud-free Sentinel-2 mosaic, pre-invasion (2021). Used only as an analysis check: z14 tiles around each OSM sample box, OSM overlays and a black-top-hat belt detector. Commercial use needs an EOX Commercial Attribution-RestrictedUse licence, so it is not a shippable asset."
-
-# ---------------------------------------------------------------- procedural generation
-- id: parish-muller-2001-cities
-  title: "Procedural Modeling of Cities"
-  url: https://cgl.ethz.ch/Downloads/Publications/Papers/2001/p_Par01.pdf
-  publisher: ACM SIGGRAPH 2001 (ETH Zurich)
-  authors: [Yoav I. H. Parish, Pascal Müller]
-  published: 2001
-  accessed: 2026-09-28
-  type: academic
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [procgen, roads]
-  notes: "Classic extended L-system road generator, where global goals (density maps, grid patterns) and local constraints (water, slope) grow highways and streets and then subdivide blocks into lots. The template for a grid-constrained rural road and field-block generator."
-
-- id: emilien-2012-villages
-  title: "Procedural generation of villages on arbitrary terrains"
-  url: https://doi.org/10.1007/s00371-012-0699-7
-  publisher: The Visual Computer (Springer)
-  authors: [Arnaud Emilien, Adrien Bernhardt, Adrien Peytavie, Marie-Paule Cani, Eric Galin]
-  published: 2012
-  accessed: 2026-09-28
-  type: academic
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: []
-  topics: [procgen, settlements]
-  notes: "Metadata verified via Crossref, the paywalled text was not read. A terrain-aware village generator that grows roads, parcels and buildings from the slope and access of the terrain. Closest academic match for rural villages following valleys."
-
+  topics:
+  - geodata
+  - fields
+  notes: 1.63 million field polygons in 24 countries with multi-date 10 m Sentinel-2 imagery. Ukraine is not included (GloCAB
+    Ukraine data excluded for misalignment). Paper is CC BY 4.0, while each country subset keeps its source licence. The pretrained
+    models could be run on Ukrainian Sentinel-2.
 - id: galin-2010-roads
-  title: "Procedural Generation of Roads"
+  title: Procedural Generation of Roads
   url: https://doi.org/10.1111/j.1467-8659.2009.01612.x
   publisher: Computer Graphics Forum (Eurographics 2010)
-  authors: [Eric Galin, Adrien Peytavie, Nicolas Maréchal, Eric Guérin]
-  published: 2010
-  accessed: 2026-09-28
+  authors:
+  - Eric Galin
+  - Adrien Peytavie
+  - Nicolas Maréchal
+  - Eric Guérin
+  published: '2010'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
   verified: fetched
   eras: []
-  topics: [procgen, roads]
-  notes: "Metadata verified via Crossref, text not read. Roads are routed across terrain by weighted shortest-path (slope, rivers, vegetation cost), and bridges and tunnels are generated. Suits connecting roads between villages across balkas and river valleys."
-
-- id: vanegas-2012-parcels
-  title: "Procedural Generation of Parcels in Urban Modeling"
-  url: https://doi.org/10.1111/j.1467-8659.2012.03047.x
-  publisher: Computer Graphics Forum (Eurographics 2012)
-  authors: [Carlos A. Vanegas, Tom Kelly, Basil Weber, Jan Halatsch, Daniel G. Aliaga, Pascal Müller]
-  published: 2012
-  accessed: 2026-09-28
+  topics:
+  - procgen
+  - roads
+  notes: Metadata verified via Crossref, text not read. Roads are routed across terrain by weighted shortest-path (slope,
+    rivers, vegetation cost), and bridges and tunnels are generated. Suits connecting roads between villages across balkas
+    and river valleys.
+- id: google-dynamic-world
+  title: Dynamic World V1
+  url: https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1
+  publisher: Google / World Resources Institute / National Geographic Society
+  authors: []
+  published: '2022'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - landcover
+  notes: Near-real-time 10 m land cover with class probabilities for every Sentinel-2 scene since 27 Jun 2015. Nine classes
+    (water, trees, grass, flooded vegetation, crops, shrub/scrub, built, bare, snow/ice). CC BY 4.0 with attribution. Can
+    show land-cover change by season and by era.
+- id: jrc-2023-ai4boundaries
+  title: 'AI4Boundaries: an open AI-ready dataset to map field boundaries with Sentinel-2 and aerial photography'
+  url: https://essd.copernicus.org/articles/15/317/2023/
+  publisher: Earth System Science Data (EC Joint Research Centre)
+  authors:
+  - Raphaël d'Andrimont
+  - Martin Claverie
+  - Pieter Kempeneers
+  - Davide Muraro
+  - Momchil Yordanov
+  - Devis Peressutti
+  - Matej Batič
+  - François Waldner
+  published: '2023'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - fields
+  notes: 7,831 samples with 2.5 million parcels (47,105 km2) covering Austria, Catalonia, France, Luxembourg, the Netherlands,
+    Slovenia and Sweden, with 10 m Sentinel-2 monthly composites and 1 m orthophotos. CC BY 4.0. No Ukraine coverage, so it
+    is useful only as training or reference data.
+- id: kyivindependent-2022-ponomarenko-donbas-woods
+  title: '''Welcome to hell'': Ukrainian airborne fighting Russia in Donbas woods'
+  url: https://kyivindependent.com/welcome-to-hell-ukrainian-airborne-fighting-russia-in-donbas-woods/
+  publisher: The Kyiv Independent
+  authors:
+  - Illia Ponomarenko
+  - Kostyantyn Chernichkin
+  published: '2022-05-28'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - terrain
+  - forests
+  - settlements
+  notes: Front-line reportage of the 79th Air Assault Brigade in the dense pine woods south of Lyman. Positions are sandy
+    trenches, the enemy line is about 300 m away behind tall pines, holiday resorts, children's camps and cottages serve as
+    positions, and there is constant Orlan-10 surveillance.
+- id: lesiv-2019-field-size
+  title: Estimating the global distribution of field size using crowdsourcing
+  url: https://doi.org/10.1111/gcb.14492
+  publisher: Global Change Biology (Wiley); IIASA
+  authors:
+  - Myroslava Lesiv
+  - Juan Carlos Laso Bayas
+  - Linda See
+  - Martina Duerauer
+  published: '2019'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
   verified: fetched
   eras: []
-  topics: [procgen, fields, settlements]
-  notes: "Metadata verified via Crossref, text not read. Oriented-bounding-box recursive splitting and straight-skeleton parcel subdivision of blocks. OBB splitting maps well onto rectangular kolkhoz fields and house plots along a village street."
-
-- id: smelik-2014-procedural-survey
-  title: "A Survey on Procedural Modelling for Virtual Worlds"
-  url: https://doi.org/10.1111/cgf.12276
-  publisher: Computer Graphics Forum
-  authors: [Ruben M. Smelik, Tim Tutenel, Rafael Bidarra, Bedrich Benes]
-  published: 2014
-  accessed: 2026-09-28
+  topics:
+  - fields
+  notes: Metadata and abstract fetched via Europe PMC, class thresholds from the IIASA release on ScienceDaily. Global Geo-Wiki
+    field-size map with classes very large (over 100 ha), large (16-100 ha), medium (2.56-16 ha), small (0.64-2.56 ha) and
+    very small (under 0.64 ha). Large fields dominate post-Soviet countries (per search summary). Led by a Ukrainian-born
+    IIASA researcher.
+- id: maliuha-2023-windbreaks
+  title: The current state of windbreaks of the Left Bank Forest Steppe of Ukraine
+  url: https://ouci.dntb.gov.ua/en/works/4EV6jrAl/
+  publisher: Ukrainian Journal of Forest and Wood Science (indexed by OUCI)
+  authors:
+  - Volodymyr Maliuha
+  - Oleksandr Sovakov
+  - Sergii Dudarets
+  published: '2023'
+  accessed: '2026-09-28'
+  type: academic
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - terrain
+  - shelterbelts
+  - forestry
+  notes: Peer-reviewed Ukrainian forestry paper (abstract read). Studied oak windbreak 15.0 m wide, oak 'nests' spaced 5.0
+    x 3.0 m with 5 m alleys plus companion-tree and shrub rows; protective height 19.6-23.4 m; common oak (Quercus robur)
+    dominant.
+- id: matsala-2024-war-forest-fire-risk
+  title: War drives forest fire risks and highlights the need for more ecologically-sound forest management in post-war Ukraine
+  url: https://doi.org/10.1038/s41598-024-54811-5
+  publisher: Scientific Reports (Nature)
+  authors:
+  - Maksym Matsala
+  - Andrii Odruzhenko
+  - Taras Hinchuk
+  - Viktor Myroniuk
+  - Igor Drobyshev
+  - Serhii H. Sydorenko
+  - Sergiy Zibtsev
+  - Brian Milakovsky
+  published: '2024-02-19'
+  accessed: '2026-09-28'
+  type: academic
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - terrain
+  - forests
+  - battle-damage
+  - remote-sensing
+  notes: 'Peer-reviewed, open access, PDF read. Forest damaged Apr-Sep 2022: 24,180 +/- 4,715 ha (9.3%) in the ''East'' AOI
+    between Kharkiv and Luhansk (Izium, Balakliia, Lyman, Kreminna), 15.7% in Kherson, 5.0% in the Chornobyl zone. Shelling-caused
+    fires were the main driver (up to 7,000 ha in the East); intense outgoing barrages defoliated oak forests temporarily.'
+- id: matsala-2024-war-protective-plantations
+  title: War threatens 18% of protective plantations in eastern agroforestry region of Ukraine
+  url: https://doi.org/10.1016/j.foreco.2024.122361
+  alt_urls:
+  - https://pub.epsilon.slu.se/36737/1/matsala-m-et-al-20250317.pdf
+  publisher: Forest Ecology and Management (Elsevier), vol. 578 (2025)
+  authors:
+  - Maksym Matsala
+  - Andrii Odruzhenko
+  - Serhii H. Sydorenko
+  - Svitlana Sydorenko
+  published: '2024-12-09'
+  accessed: '2026-09-28'
+  type: academic
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - terrain
+  - shelterbelts
+  - battle-damage
+  - remote-sensing
+  notes: Peer-reviewed, CC BY, full text read (SLU repository). Sentinel-2 dNBR over front-line hromadas of Kharkiv and Donetsk
+    oblasts, excluding the big Donets/Oskil forests. Protective forest damaged 92.4 km2 (11.5%) in 2022 and 144.7 km2 (18.1%)
+    by 2023; shelterbelts (151 km2 in 2021) 15.8% then 21.5%. Cropland-protection function lost 1.9% then 2.7% on average
+    but up to 57% in hotspots (Izium/Balakliia, Vuhledar, Avdiivka, Bakhmut); landscapes >50 km from battles were mostly unaffected.
+    Canopy width x 0.46 = stem-to-stem belt width; unmanaged belts are 'dense' (K=0.7).
+- id: microsoft-global-ml-building-footprints
+  title: Global ML Building Footprints
+  url: https://github.com/microsoft/GlobalMLBuildingFootprints
+  publisher: Microsoft (Bing Maps)
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - settlements
+  notes: 1.4 billion ML-extracted building polygons from 2014-2024 imagery, 174 million with height estimates, as line-delimited
+    GeoJSON by quadkey. The repo states CDLA Permissive 2.0, while Overture lists the source as ODbL, so check the licence
+    of the release you use. The mix of imagery dates means the Ukrainian front shows a mix of pre-war and war-time footprints.
+    The measurements used the 2026-02-03 release (level-9 quadkeys 120312321, 120330030-033, 120330101-102) to count 815-3,833
+    buildings per sample box, where OSM had only 1-18% of them.
+- id: osm-copyright
+  title: OpenStreetMap copyright and license
+  url: https://www.openstreetmap.org/copyright
+  publisher: OpenStreetMap Foundation
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - license
+  notes: OSM data is ODbL 1.0, requires credit to 'OpenStreetMap contributors', and derived databases must be shared under
+    the same licence. Main vector source for farmland, tree rows, woods, highways, villages and buildings in Ukraine.
+- id: osm-overpass-2026-landscape-sample
+  title: OpenStreetMap data for five 10 x 10 km front-line sample boxes, queried via the Overpass API
+  url: https://overpass-api.de/api/interpreter
+  alt_urls:
+  - https://overpass.kumi.systems/api/interpreter
+  - https://www.openstreetmap.org/copyright
+  publisher: OpenStreetMap contributors (ODbL 1.0), served by Overpass API
+  authors: []
+  published: '2026-09-28'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - shelterbelts
+  - fields
+  - settlements
+  - roads
+  notes: 'Queried 2026-09-28: tree_row, wood/forest, farmland, highway, residential, water, place nodes and building centres
+    for boxes W of Pokrovsk, Robotyne, E of Kupiansk, E of Huliaipole, S of Chasiv Yar (bboxes in 06 §2.7). Analysed in python/numpy
+    (local metric projection, convex-hull minimum-area rectangles, perpendicular belt spacing). Completeness varies strongly
+    by box; buildings are 1-18% complete. (c) OpenStreetMap contributors.'
+- id: osm-wiki-tree-row
+  title: Tag:natural=tree_row
+  url: https://wiki.openstreetmap.org/wiki/Tag:natural%3Dtree_row
+  publisher: OpenStreetMap Wiki
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - shelterbelts
+  notes: natural=tree_row is a way along a line of trees, explicitly including windbreaks/shelterbelts. Wide belts are often
+    mapped instead as natural=wood or landuse=forest areas. Optional height, leaf_type and leaf_cycle tags. The tag has no
+    width attribute.
+- id: overture-maps-attribution
+  title: Overture Maps attribution and licensing
+  url: https://docs.overturemaps.org/attribution/
+  publisher: Overture Maps Foundation
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - license
+  notes: Per-theme licences. Buildings, transportation, base (land use, water) and divisions are ODbL because they derive
+    from OSM, with added Microsoft, Google Open Buildings and Esri buildings and ESA WorldCover in base. Places are CDLA Permissive
+    2.0. Offers conflated buildings and roads in cloud-native GeoParquet.
+- id: parish-muller-2001-cities
+  title: Procedural Modeling of Cities
+  url: https://cgl.ethz.ch/Downloads/Publications/Papers/2001/p_Par01.pdf
+  publisher: ACM SIGGRAPH 2001 (ETH Zurich)
+  authors:
+  - Yoav I. H. Parish
+  - Pascal Müller
+  published: '2001'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: high
   verified: fetched
   eras: []
-  topics: [procgen]
-  notes: "Metadata verified via Crossref. Standard survey of terrain, vegetation, water, road-network, settlement and building generation, useful as an entry point to the literature."
-
+  topics:
+  - procgen
+  - roads
+  notes: Classic extended L-system road generator, where global goals (density maps, grid patterns) and local constraints
+    (water, slope) grow highways and streets and then subdivide blocks into lots. The template for a grid-constrained rural
+    road and field-block generator.
 - id: patel-2010-polygon-maps
-  title: "Polygon Map Generation, Part 1"
+  title: Polygon Map Generation, Part 1
   url: https://simblob.blogspot.com/2010/09/polygon-map-generation-part-1.html
   publisher: Red Blob Games (Amit Patel blog)
-  authors: [Amit Patel]
-  published: 2010-09-04
-  accessed: 2026-09-28
+  authors:
+  - Amit Patel
+  published: '2010-09-04'
+  accessed: '2026-09-28'
   type: academic
   origin: international
   reliability: medium
   verified: fetched
   eras: []
-  topics: [procgen]
-  notes: "Widely used game-dev article on Voronoi polygons with Lloyd relaxation, dual graphs, elevation and moisture, and rivers. Good for irregular macro features (woods, balka catchments), less so for rectilinear kolkhoz fields. Blog post, not peer reviewed."
+  topics:
+  - procgen
+  notes: Widely used game-dev article on Voronoi polygons with Lloyd relaxation, dual graphs, elevation and moisture, and
+    rivers. Good for irregular macro features (woods, balka catchments), less so for rectilinear kolkhoz fields. Blog post,
+    not peer reviewed.
+- id: rferl-2026-lohinov-spring-battlefield
+  title: On Springtime Battlefield In War's Fifth Year, Ukraine Claws Back Territory
+  url: https://www.rferl.org/a/ukraine-russia-war-battlefield-gains/33761066.html
+  publisher: Radio Free Europe/Radio Liberty
+  authors:
+  - Yehor Lohinov
+  - Mike Eckel
+  published: '2026-05-20'
+  accessed: '2026-09-28'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - seasons
+  - terrain
+  - tactics
+  notes: North of Pokrovsk in May 2026, spring fields and rutted forest roads were still muddy, and as 'the ground hardens
+    and foliage expands' soldiers gain cover from drones. Units use quad bikes. The front is a 'kill zone' rather than a line.
+- id: sadeh-2025-ukraine-field-boundaries
+  title: National-Scale In-Season Field Boundaries of Ukraine Using Remote Sensing
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12095754/
+  publisher: Scientific Data (Nature); data on NASA Harvest portal (https://data.harvestportal.org/)
+  authors:
+  - Sadeh et al.
+  published: '2025'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - fields
+  - geodata
+  notes: 'Over 5 million field polygons of at least 1 ha for all of Ukraine, 2021-2023, from 3 m PlanetScope imagery, median
+    IoU 0.77. Delineation is worse near the front because fields were abandoned. License CC BY-NC-ND 4.0, so non-commercial
+    and no derivatives: fine for calibration, not for shipping in the game.'
+- id: saratoga-2026-parfonov-treelines
+  title: 'New Report! Fighting Through the Treelines: Russian Tactical Adaptation in Shelterbelt Warfare in Ukraine'
+  url: https://www.saratoga-foundation.org/p/new-report-fighting-through-the-treelines
+  alt_urls:
+  - https://drive.google.com/file/d/1MYVSZopRuMLUsLOFu8vy-FY6GrtkBPWh/view
+  publisher: The Saratoga Foundation
+  authors:
+  - Hlib Parfonov
+  published: '2026-04-13'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - shelterbelts
+  - tactics
+  - terrain
+  notes: 10-page report by a Ukrainian analyst and serving soldier, based on his own combat experience, UA officers and NCOs,
+    and captured Russian tactical guidance (full PDF read). Belt grid 300-400 m apart one way and 1,000-2,000 m the other,
+    3-4 tree rows, 10-30 m machinery gaps, rarely over 20-30 m wide. Longitudinal attack along the belt is the predominant
+    method for both sides; perpendicular attack is rarely viable. Assault group 300-500 m deep (scouts 7-9 m apart, main body
+    30 m behind, consolidation group 100-150 m, reserve up to 450 m). Approaches are timed to rain, fog, darkness and pre-dawn.
+    Guns 8-12 km and mortars 2-3 km from the target belt. Avoid CPs at belt intersections. One author, so medium.
+- id: smelik-2014-procedural-survey
+  title: A Survey on Procedural Modelling for Virtual Worlds
+  url: https://doi.org/10.1111/cgf.12276
+  publisher: Computer Graphics Forum
+  authors:
+  - Ruben M. Smelik
+  - Tim Tutenel
+  - Rafael Bidarra
+  - Bedrich Benes
+  published: '2014'
+  accessed: '2026-09-28'
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - procgen
+  notes: Metadata verified via Crossref. Standard survey of terrain, vegetation, water, road-network, settlement and building
+    generation, useful as an entry point to the literature.
+- id: spire-2025-soil-moisture
+  title: 'From fields to frontlines: How soil moisture shapes military operations in Ukraine and beyond'
+  url: https://spire.com/blog/weather-climate/from-fields-to-frontlines-how-soil-moisture-shapes-military-operations-in-ukraine-and-beyond/
+  publisher: Spire Global
+  authors:
+  - Travis Turgeon
+  - Meghan Mussoline
+  published: '2025-10-08'
+  accessed: '2026-09-28'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e5-counteroffensive-23
+  - e8-drone-kill-zone
+  topics:
+  - soil
+  - seasons
+  - mobility
+  notes: 'Corporate blog. Covers rasputitsa (Ukrainian: bezdorizhzhia): Russian columns stuck in spring 2022, autumn mud in
+    Nov 2023, ''liquid earth'' in March 2025, and hardened ground near Pokrovsk by mid-April 2025 that reopened mechanised
+    assaults. Soil-moisture product at 500 m. Marketing context, but it collects dated examples.'
+- id: sudnik-2006-windbreaks-southern-ukraine
+  title: Dynamics of the flora of windbreaks in the agricultural landscape of steppes in southern Ukraine
+  url: https://doi.org/10.14746/biorc.2006.1-2.16
+  publisher: Biodiversity Research and Conservation (Adam Mickiewicz University)
+  authors:
+  - Barbara Sudnik-Wojcikowska
+  - Ivan I. Moysiyenko
+  - Pieter A. Slim
+  published: '2006-06-30'
+  accessed: '2026-09-28'
+  type: academic
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - shelterbelts
+  - terrain
+  notes: Abstract read via OpenAlex. Total windbreak length in Kherson oblast estimated at 30,000 km (about 1 km per km2 of
+    oblast area); some belts have gaps from felling and die-back, colonised by steppe species from balkas, kurgans and valley
+    verges; about 80 woody species.
+- id: tarasov-usda-luhansk-wind-erosion
+  title: Control of Wind Erosion on Agricultural Lands in the South-East Part of the Ukraine Steppe
+  url: https://infosys.ars.usda.gov/WindErosion/symposium/proceedings/tarasov.pdf
+  publisher: USDA ARS Wind Erosion Research Unit (symposium proceedings)
+  authors:
+  - V. I. Tarasov
+  published: unknown
+  accessed: '2026-09-28'
+  type: academic
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - terrain
+  - shelterbelts
+  - soil
+  - seasons
+  notes: Ukrainian soil-conservation researcher, fieldwork 1995-96 in Luhansk oblast. Treeless steppe on chernozem, where
+    forests occur mainly along rivers and in gullies; the main deflation winds come from the east; optimal belt width for
+    trapping soil is about 10 m; belts are leafless and more permeable in winter and early spring. Conference paper, not peer
+    reviewed.
+- id: uanimals-2026-kakhovka-forest
+  title: What is happening at the bottom of the Kakhovka Reservoir three years after the disaster?
+  url: https://uanimals.org/en/know-act/environment-war/a-forest-found-nowhere-else-in-ukraine-what-s-happening-at-the-bottom-of-the-kakhovka-reservoir-three-years-after-the-disaster/
+  publisher: UAnimals
+  authors: []
+  published: 2026-06
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e9-counteroffensive-26
+  topics:
+  - water
+  - terrain
+  - vegetation
+  notes: Ukrainian NGO expedition (May 2026) with botanist Ivan Moysienko. The former reservoir bed covers over 2,000 km2
+    and now holds a young willow-dominated forest three years after the dam was destroyed on 6 June 2023. Reservoir width
+    was 3.6 km at Kamianska Sich and 13.5 km at Novovorontsovka.
+- id: umd-2023-duncan-craters
+  title: Researchers Use Deep Learning, VHR Satellite Imagery to Map Artillery Craters in Eastern Ukraine
+  url: https://geog.umd.edu/featured-content/researchers-use-deep-learning-vhr-satellite-imagery-map-artillery-craters-eastern
+  publisher: University of Maryland, Department of Geographical Sciences
+  authors:
+  - Erik Duncan
+  - Sergii Skakun
+  - Ankit Kariryaa
+  - Alexander Prishchepov
+  published: '2023-06-21'
+  accessed: '2026-09-28'
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - battle-damage
+  - remote-sensing
+  notes: Summary of a peer-reviewed paper using 0.5 m WorldView-2 imagery from the 2014 onset of fighting. Found over 22,000
+    craters in an 858 km2 part of Donetsk oblast, covering 1.2 km2 (0.14%), or about 26 craters per km2. U-Net F1 of 0.80
+    for craters over 60 m2. The data predate the 2022 invasion, so treat them as a low baseline.
+- id: umd-hansen-gfc
+  title: Hansen Global Forest Change v1.12 (2000-2024)
+  url: https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2024_v1_12
+  publisher: University of Maryland GLAD (via Google Earth Engine catalog)
+  authors: []
+  published: '2025'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - forests
+  - battle-damage
+  notes: About 30 m, with treecover2000 (canopy over 5 m) and lossyear 2001-2024. CC BY 4.0. v1.12 is superseded by v1.13
+    (to 2025). The UMD tree-cover-loss data behind Global Forest Watch (the GFW site itself was not fetched). Belts 10-25
+    m wide are near or below its resolution.
+- id: uncg-2022-shamina-stalin-plan
+  title: 'The Great Stalin Plan for the Transformation of Nature: how was the nature of Ukraine destroyed under the Soviet
+    Union?'
+  url: https://uncg.org.ua/en/the-great-stalin-plan-for-the-transformation-of-nature-how-was-the-nature-of-ukraine-destroyed-under-the-soviet-union/
+  publisher: Ukrainian Nature Conservation Group (UNCG)
+  authors:
+  - Tetiana Shamina
+  published: '2022-10-28'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - terrain
+  - shelterbelts
+  - history
+  - water
+  notes: Ukrainian conservation NGO. 440,000 ha of field-protective belts planted in 10 years from 1950; 154,500 ha in 20
+    years from 1971; claimed grain-yield gain 25-30%. Kakhovka reservoir flooded 709,900 ha incl. Velykyi Luh (up to 80,000
+    ha). NGO with an advocacy angle, figures not footnoted.
+- id: unfccc-ukr-agroforestry-brief
+  title: Climate-oriented agroforestry for shelterbelt reconstruction and maintenance in Ukraine (Technology Needs Assessment
+    policy brief)
+  url: https://unfccc.int/ttclear/TNA/UKR-Policy_Brief-agroforestry.pdf
+  publisher: UNFCCC TT:CLEAR (Ukraine Technology Needs Assessment)
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - terrain
+  - shelterbelts
+  - agriculture
+  notes: Ukrainian national TNA brief (c. 2021). About 400,000 ha of shelterbelts in Ukraine at the start of the 1990s; described
+    as 'a mixture of perennial species planted in fields in a few rows'; unclear ownership and land-cadastre registration
+    after the kolkhozes were broken up; 2020 dust storms caused 70% loss of winter crops in southern oblasts; goal of reconstructing
+    85-86k ha by 2030.
+- id: united24-2026-brizard-winter-camouflage
+  title: As Ukraine Endures Extreme Cold, Soldiers Adapt Winter Camouflage for a Drone-Watched Front
+  url: https://united24media.com/war-in-ukraine/as-ukraine-endures-extreme-cold-soldiers-adapt-winter-camouflage-for-a-drone-watched-front-15882
+  publisher: United24 Media
+  authors:
+  - Lucile Brizard
+  published: '2026-02-13'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - seasons
+  - weather
+  - drones
+  - thermals
+  notes: Coldest winter in more than a decade, down to -20 C. Drone operators 'clearly see tracks in the snow'. Without snow
+    'everything looks grey'. Bare treelines stay dark against snow, and cold makes thermal cameras more effective. Troops
+    use white ponchos and ghillie suits. Ukrainian state-backed outlet.
+- id: usgs-srtmgl1
+  title: NASA SRTM Digital Elevation 30m (SRTMGL1 v003)
+  url: https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003
+  publisher: NASA / USGS (via Google Earth Engine catalog)
+  authors: []
+  published: '2000'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - geodata
+  - elevation
+  notes: 1 arc-second (about 30 m), acquired 11-22 Feb 2000, covering 60N-56S, which includes all of Ukraine. US-government
+    data usable for any purpose (catalog cites the JPL use policy). An older, pre-war radar DEM that is a useful cross-check
+    against Copernicus DEM.
+- id: vanegas-2012-parcels
+  title: Procedural Generation of Parcels in Urban Modeling
+  url: https://doi.org/10.1111/j.1467-8659.2012.03047.x
+  publisher: Computer Graphics Forum (Eurographics 2012)
+  authors:
+  - Carlos A. Vanegas
+  - Tom Kelly
+  - Basil Weber
+  - Jan Halatsch
+  - Daniel G. Aliaga
+  - Pascal Müller
+  published: '2012'
+  accessed: '2026-09-28'
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics:
+  - procgen
+  - fields
+  - settlements
+  notes: Metadata verified via Crossref, text not read. Oriented-bounding-box recursive splitting and straight-skeleton parcel
+    subdivision of blocks. OBB splitting maps well onto rectangular kolkhoz fields and house plots along a village street.
+- id: wagner-2025-cropland-abandonment
+  title: Monitoring cropland cultivation, abandonment, fallowing and recultivation dynamics with regard to conflict intensity
+    in war-affected Ukraine
+  url: https://doi.org/10.1016/j.srs.2025.100326
+  alt_urls:
+  - https://cnrs.hal.science/hal-05372513
+  publisher: Science of Remote Sensing (Elsevier)
+  authors:
+  - Josef Wagner
+  - Shabarinath S. Nair
+  - Sergii V. Skakun
+  - Erik C. Duncan
+  - Fangjie Li
+  - Oleksandra Oliinyk
+  - Francoise Nerry
+  - Jean Rehbinder
+  - Inbal Becker-Reshef
+  published: '2025-11-05'
+  accessed: '2026-09-28'
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  topics:
+  - abandonment
+  - fields
+  - remote-sensing
+  notes: Peer-reviewed, CC BY (NASA Harvest / UMD). Abstract and metadata read via OpenAlex; the HAL PDF is behind a bot check.
+    Cultivated area fell 2.5 Mha (-8.5%) 2021-2024; by 2024 7% of cropland (2.213 +/- 0.256 Mha) was abandoned, of which 1.12-1.67
+    Mha may be permanently lost, mainly along front lines; up to 0.47 Mha were recultivated in 2024, far above official demining
+    figures.
+- id: wikipedia-battle-of-marinka-2022
+  title: Battle of Marinka (2022–2023)
+  url: https://en.wikipedia.org/wiki/Battle_of_Marinka_(2022%E2%80%932023)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - settlements
+  - battle-damage
+  notes: Battle ran 18 Apr 2022 - 25 Dec 2023 (about 20 months) in a town of about 9,400 pre-war residents. By Dec 2022 the
+    governor said 'not a single surviving house' remained. A standard example of a town erased by artillery before assault.
+- id: wikipedia-battle-of-pokrovsk
+  title: Battle of Pokrovsk
+  url: https://en.wikipedia.org/wiki/Battle_of_Pokrovsk
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - weather
+  - tactics
+  - mining
+  notes: 'In Feb 2025 Russian forces reinforced ''under the cover of thick fog'', and in Aug 2025 heavy fog hampered Ukrainian
+    drones. There was small-group infiltration (DeepState: groups of about 50; of 150 men only 30 reached the city, Aug 2025).
+    Slag heaps and terrikons appear as terrain features. Wikipedia, it cites DeepState and ISW.'
+- id: wikipedia-khrushchevka
+  title: Khrushchevka
+  url: https://en.wikipedia.org/wiki/Khrushchevka
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - settlements
+  - buildings
+  notes: Soviet mass housing built 1956 to the mid-1970s, usually 4-5 storeys (no lift required at 5 or fewer), in large panel
+    or brick, with a raised ground floor and basement vents. Ukrainian design series 1-463, 1-480 and 1-437. Gives dimensions
+    for town blocks.
+- id: wikipedia-mokri-yaly
+  title: Mokri Yaly
+  url: https://en.wikipedia.org/wiki/Mokri_Yaly
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - terrain
+  - water
+  notes: River 147 km long, basin 2,660 km2, rising on the Azov Upland near Volnovakha and flowing north through Velyka Novosilka
+    to the Vovcha. A WWII defensive line; the 2023 counteroffensive advanced along its banks, and a dam near Kliuchove/Staromlynivka
+    was destroyed in June 2023.
+- id: wikipedia-serebriansky-forest
+  title: Serebriansky forest
+  url: https://en.wikipedia.org/wiki/Serebriansky_forest
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - terrain
+  - forests
+  notes: Reserve about 5 miles SW of Kreminna on the left bank of the Siverskyi Donets. The protected reserve covers 107.1
+    ha, while the wider pine forest is much larger. It includes forest, swamps and meadows and was a battleground from autumn
+    2022. The page says Russia held over 75% by 15 Sep 2025 and all of it by December 2025 (unreferenced there). DeepState
+    polygons confirm the timeline (see deepstate-api-history).
+- id: wikipedia-siverskyi-donets
+  title: Siverskyi Donets
+  url: https://en.wikipedia.org/wiki/Siverskyi_Donets
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-09-28'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - terrain
+  - rivers
+  - landforms
+  notes: 1,053 km long, about 950 km in Ukraine, basin 98,900 km2. The right bank is 'usually high, sometimes with chalk cliffs,
+    and is dissected by gullies', while the left bank is flat with swamps, lakes and oxbows. Pine forests grow on left-bank
+    terraces and willow, birch and alder on the floodplain. Russian crossing attempts above Lysychansk were stopped in May
+    2022.
+- id: wotr-2026-maurin-front-line
+  aliases:
+  - warontherocks-2026-maurin-front-line
+  title: The Strange Transformation of the Front Line in Ukraine
+  url: https://warontherocks.com/the-strange-transformation-of-the-front-line-in-ukraine/
+  publisher: War on the Rocks
+  authors:
+  - Édouard R. Maurin
+  published: '2026-09-09'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - drones
+  - frontline
+  - grey-zone
+  - maps
+  - shelterbelts
+  - tactics
+  - terrain
+  notes: First-hand account (callsign FIDES) from near Kotlyne, west of Pokrovsk, winter 2024-25. The CHAI treeline was about
+    1 km long. The exposed HOMAR trench (80 x 30 m) was lost, while the CRAB position (two fighting holes in the undergrowth)
+    held for 10 days. The contested zone was about 1 km deep on 1 Jan 2025 and is now 5-8x wider. Troops used thermal ponchos.

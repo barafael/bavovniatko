@@ -1,0 +1,40 @@
+{"pair": "2d22f21c49e1", "relation": "none", "rationale": "Interceptor attrition vs daily orbit count; different claims."}
+{"pair": "2f334c08f93c", "relation": "none", "rationale": "Kursk break-in event vs a metric scoping note."}
+{"pair": "300c4320406d", "relation": "supports", "from": "claim:c03_0014_07", "to": "claim:c03_0031_02", "strength": 0.6, "rationale": "Krasnopol and Lancet counter-battery work in 2023 instantiates the recon-fire complex RUSI describes; same RUSI source.", "independent": false}
+{"pair": "30600edb077f", "relation": "supports", "from": "claim:c03_0027_034", "to": "claim:c03_0004_19", "strength": 0.6, "rationale": "The Iran war draining PAC-3 output corroborates PAC-3 running short partly because of it; shared Atlantic Council source.", "independent": false}
+{"pair": "30a718f229de", "relation": "none", "rationale": "Geran-3 production stop vs jet Geran speed versus interceptors; different claims."}
+{"pair": "315de6d33828", "relation": "none", "rationale": "Dimension frames vs symbol anatomy; different definitions."}
+{"pair": "327a4d08a016", "relation": "supports", "from": "claim:c01_0012_02", "to": "claim:c01_0027_31", "strength": 0.7, "rationale": "Oryx's hits mostly on artillery, radars and SAM launchers corroborate the counter-battery, SAM and radar-hunting role; B cites Oryx.", "independent": false}
+{"pair": "32c7f529c153", "relation": "none", "rationale": "Production rate vs speed band; different quantities."}
+{"pair": "3336ad3329a9", "relation": "supports", "from": "claim:c00_0049_01", "to": "claim:c00_0073_35", "strength": 0.8, "rationale": "F-16s confirmed in Ukraine on 4 August 2024 fits first delivery in late July or early August; same source.", "independent": false}
+{"pair": "33dd28cff9d3", "relation": "none", "rationale": "Grid orientation vs block dimensions; different measures."}
+{"pair": "33eca5ac8b20", "relation": "refines", "from": "claim:c00_0064_03", "to": "claim:c04_0027_64", "strength": 0.9, "rationale": "A dates Drapatyi's replacement of Syrskyi to 21 July 2026."}
+{"pair": "340a5a41999e", "relation": "supports", "from": "claim:c01_0027_09", "to": "claim:c03_0027_071", "strength": 0.7, "rationale": "Both say Orlan-10/Zala have cued Russian artillery since 2022; shared RUSI source.", "independent": false}
+{"pair": "340ad706b711", "relation": "supports", "from": "claim:c00_0061_04", "to": "claim:c00_0061_02", "strength": 0.5, "rationale": "Musk's 1 February statement that SpaceX acted at Ukraine's request fits the MoD contacting SpaceX on 29 January.", "independent": true}
+{"pair": "342abca8ebd8", "relation": "refines", "from": "claim:c07_0050_11", "to": "claim:c07_0004_20", "strength": 0.8, "rationale": "B gives the exact IP and written-consent wording that A summarises; same source."}
+{"pair": "34dfc156ff95", "relation": "supports", "from": "claim:c01_0024_71", "to": "claim:c01_0027_25", "strength": 0.6, "rationale": "Russia fielding Berdysh and Vampire-type bombers backs B's Russian heavy-bomber entries; B cites A's source.", "independent": false}
+{"pair": "34f7be1bf793", "relation": "none", "rationale": "Update cadence vs licence terms; different facts."}
+{"pair": "358ce4f671b3", "relation": "none", "rationale": "DEM dates vs resolution; different facts."}
+{"pair": "35bbe2c9f2d0", "relation": "none", "rationale": "Pre-war stocks vs allocation to units; different facts."}
+{"pair": "35ec0fcf3244", "relation": "none", "rationale": "Atlas fielding and node range vs Kvertus's front-wide coverage estimate; different quantities."}
+{"pair": "363862b54ebe", "relation": "none", "rationale": "Interceptor attrition vs Russian ISR employment pattern; different claims."}
+{"pair": "36cb225f7598", "relation": "supports", "from": "claim:c00_0067_02", "to": "claim:c00_0006_02", "strength": 0.7, "rationale": "US use of half its Patriots and nearly all ATACMS in the Iran war corroborates the war competing for those stocks; same CNN source.", "independent": false}
+{"pair": "36d684528bbf", "relation": "none", "rationale": "Affiliation states vs SIDC encoding; different facts."}
+{"pair": "3818d2b695cc", "relation": "none", "rationale": "Developer credit vs content; different facts."}
+{"pair": "38a7d9a017ef", "relation": "none", "rationale": "Operator and formats vs licence terms; different facts."}
+{"pair": "3aa2a9c13a2a", "relation": "none", "rationale": "Developer credit vs a faction controversy; different facts."}
+{"pair": "3b652701b84f", "relation": "none", "rationale": "Glide bombs in Avdiivka's fall vs October 2023 mechanized waves; different claims."}
+{"pair": "3bb5a2fc7db3", "relation": "none", "rationale": "Early-war drone use vs EW vulnerability of ISR drones; different claims."}
+{"pair": "3c71ac98b1e6", "relation": "none", "rationale": "Friend frame definition vs monochrome legibility; related context only."}
+{"pair": "3e415f095c56", "relation": "supports", "from": "claim:c00_0006_02", "to": "claim:c00_0065_04", "strength": 0.7, "rationale": "CNN's competition for Patriot stocks and Euromaidan Press's Iran-war-squeezed Patriot supply corroborate each other.", "independent": true}
+{"pair": "3e75a137d73b", "relation": "supports", "from": "claim:c00_0026_02", "to": "claim:c04_0015_03", "strength": 0.7, "rationale": "The retaking of Balakliia, Izium and Kupiansk on 8-10 September corroborates the rapid four-day 75 km advance through them.", "independent": true}
+{"pair": "3e8c9be91971", "relation": "supports", "from": "claim:c07_0004_15", "to": "claim:c07_0042_24", "strength": 0.5, "rationale": "Vezha as a drone-stream module running Avengers fits Vezha and Avengers being the backbone of the HQ streams wall.", "independent": true}
+{"pair": "3fac16b4caea", "relation": "supports", "from": "claim:c04_0017_10", "to": "claim:c04_0005_07", "strength": 0.6, "rationale": "RUSI's count of about 19,500 Wagner dead at Bakhmut backs the attrition-by-expendable-infantry assessment; same RUSI author.", "independent": false}
+{"pair": "403455a0662c", "relation": "none", "rationale": "Standard support vs echelon coding; different facts."}
+{"pair": "408db884cfe0", "relation": "refines", "from": "claim:c00_0037_06", "to": "claim:c00_0073_33", "strength": 0.9, "rationale": "A gives the same 17 October 2023 first ATACMS use with variant and target details; same ISW source."}
+{"pair": "4177cdd7d45b", "relation": "none", "rationale": "Map platform vs legend; different facts."}
+{"pair": "41e0180de0eb", "relation": "supports", "from": "claim:c03_0004_04", "to": "claim:c03_0027_011", "strength": 0.7, "rationale": "Both RUSI assessments say 2022 GMLRS depot strikes broke the Russian Donbas artillery offensive.", "independent": false}
+{"pair": "42a71d0afa36", "relation": "supports", "from": "claim:c00_0067_02", "to": "claim:c00_0065_04", "strength": 0.6, "rationale": "The US using about half its Patriots in the Iran war corroborates A's squeezed Patriot supply.", "independent": true}
+{"pair": "42da05ea11fc", "relation": "none", "rationale": "Legend vs licence terms; different facts."}
+{"pair": "440a5b0d4f66", "relation": "none", "rationale": "Affiliation encoding vs echelon coding; different facts."}
+{"pair": "44d61d24cf2d", "relation": "none", "rationale": "Battle dates vs glide-bomb contribution; different claims."}

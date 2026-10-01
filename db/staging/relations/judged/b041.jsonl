@@ -1,0 +1,40 @@
+{"pair": "d16995ce4be3", "relation": "refines", "from": "claim:c08_0008_16", "to": "claim:c08_0006_177", "strength": 0.7, "rationale": "B gives the specific weapons (Igla, Stinger, DShK, M2) and scenes behind A's summary of Chaika training; same source."}
+{"pair": "d1d1e907ce62", "relation": "none", "rationale": "Reuse terms vs colour convention; different facts."}
+{"pair": "d2317dcfd330", "relation": "none", "rationale": "Layer creation date vs methodology caveat; different facts."}
+{"pair": "d238bc108642", "relation": "none", "rationale": "Inventory description vs confirmed loss counts; different quantities."}
+{"pair": "d23b6fe2d4e8", "relation": "supports", "from": "claim:c07_0035_11", "to": "claim:c07_0035_24", "strength": 0.8, "rationale": "Black Bird Group's site and ACLED's monitor independently confirm that ACLED takes its front line from Black Bird Group.", "independent": true}
+{"pair": "d2435255a6cc", "relation": "none", "rationale": "Scope limits of drone games vs which domestic tools cover drone/air-defence training; different assertions."}
+{"pair": "d2678645b86a", "relation": "refines", "from": "claim:c07_0030_06", "to": "claim:c07_0024_02", "strength": 0.5, "rationale": "B explains why A's computation uses a fixed pre-2022 mask (Crimea and ORDLO not drawn as polygons until mid-2022)."}
+{"pair": "d2896d3062dc", "relation": "none", "rationale": "Double affiliation encoding vs SIDC scheme; different facts."}
+{"pair": "d28ae9be10ed", "relation": "none", "rationale": "Uncertainty-category redefinition vs licence terms; different facts."}
+{"pair": "d2ace4f0ae82", "relation": "none", "rationale": "Arsenal shift vs speed figures; different assertions."}
+{"pair": "d317d080c97d", "relation": "none", "rationale": "Interceptor attrition vs daily orbit count; different assertions."}
+{"pair": "d33c2f103bce", "relation": "none", "rationale": "Friend frame rule vs symbol anatomy; different facts."}
+{"pair": "d34c5f364948", "relation": "none", "rationale": "Legend categories vs licence terms; different facts."}
+{"pair": "d40561593b22", "relation": "supports", "from": "claim:c05_0005_17", "to": "claim:c05_0028_20", "strength": 0.8, "rationale": "Both report, from the same two sources, the roughly 71% fall in M-14 freight from the 2026 middle-strike campaign.", "independent": false}
+{"pair": "d5a60610cec8", "relation": "none", "rationale": "Fill colour of pre-2022 areas vs the computed-area method; different facts."}
+{"pair": "d5b405c259b0", "relation": "none", "rationale": "Starlink as C2 backbone vs Vezha video streaming; different aspects."}
+{"pair": "d66ae623acf6", "relation": "none", "rationale": "Depot-strike assessment vs system range description."}
+{"pair": "d7be201506b3", "relation": "supports", "from": "claim:c03_0027_028", "to": "claim:c03_0005_02", "strength": 0.4, "rationale": "Ukrainian jets carrying HARM, JDAM-ER, AASM and Storm Shadow is consistent with an air force confined to stand-off strikes.", "independent": true}
+{"pair": "d820ad193801", "relation": "none", "rationale": "Library support vs frame-status rule; different facts."}
+{"pair": "d901a6a34f2f", "relation": "none", "rationale": "Neutral frame rule vs solid/dashed frame; different facts."}
+{"pair": "d909ab353824", "relation": "none", "rationale": "Mission Control's mission statistics vs its map display; different aspects."}
+{"pair": "d9a360146ae3", "relation": "refines", "from": "claim:c01_0020_04", "to": "claim:c01_0027_24", "strength": 0.6, "rationale": "A adds range (about 10 km) and handling limits to B's jam-immune-but-snags description; same RUSI source."}
+{"pair": "da6d062e0fef", "relation": "none", "rationale": "Hostomel subset losses vs war-long Oryx totals; neither implies the other."}
+{"pair": "daf610f024d1", "relation": "supports", "from": "claim:c05_0017_02", "to": "claim:c03_0004_07", "strength": 0.6, "rationale": "RUSI's 2023 observation of Krasnopol and Lancet precision fires supports its later account of the 2023-24 shift to those systems; same author and institute.", "independent": false}
+{"pair": "db36576dee45", "relation": "supports", "from": "claim:c00_0067_02", "to": "claim:c03_0024_49", "strength": 0.8, "rationale": "CNN and Reuters independently report that the Iran war nearly exhausted US ATACMS and PrSM stocks.", "independent": true}
+{"pair": "dce455ad1abc", "relation": "supports", "from": "claim:c00_0066_04", "to": "claim:c01_0032_28", "strength": 0.8, "rationale": "CSIS and HUR independently report the Geran-3 being dropped in favour of the Geran-4/5 by August 2026.", "independent": true}
+{"pair": "dd2241552545", "relation": "supports", "from": "claim:c03_0027_036", "to": "claim:c02_0010_50", "strength": 0.5, "rationale": "B's description of MANPADS and mobile fire groups as Ukraine's short-range layer against Gerans supports A; shared RUSI source.", "independent": false}
+{"pair": "dd48cb3084ec", "relation": "none", "rationale": "Early-2022 convoy strikes vs jets' later weapon fits; different assertions."}
+{"pair": "df0913dfba74", "relation": "refines", "from": "claim:c01_0032_28", "to": "claim:c01_0032_27", "strength": 0.4, "rationale": "B qualifies A's 2026 shift to Geran-3/4/5 by noting Geran-3 production stopped in favour of Geran-4/5."}
+{"pair": "df68aa2afc68", "relation": "none", "rationale": "Extra affiliation states vs monochrome legibility; different facts."}
+{"pair": "df7b085cc0f2", "relation": "refines", "from": "claim:c04_0030_13", "to": "claim:c04_0037_18", "strength": 0.6, "rationale": "A gives the range (5-15 km), speed and effect of the Zemledeliye remote mining that B states generally."}
+{"pair": "df968de4f6df", "relation": "none", "rationale": "Reference-map status vs licence terms; different facts."}
+{"pair": "e092f8b04a86", "relation": "supports", "from": "claim:c00_0062_01", "to": "claim:c05_0025_31", "strength": 0.6, "rationale": "Both attribute Operation Vivaldi north of Lyman to Biletskyi's 3rd Army Corps; shared Hromadske source.", "independent": false}
+{"pair": "e0c2251fdf9b", "relation": "supports", "from": "claim:c07_0042_09", "to": "claim:c05_0021_13", "strength": 0.7, "rationale": "Delta's Link 16 data exchange at CWIX 2023 corroborates CSIS's statement that Delta is being linked to Link 16.", "independent": true}
+{"pair": "e3b64183e490", "relation": "none", "rationale": "Donbas-offensive assessment vs system range description."}
+{"pair": "e3f554ef8ba9", "relation": "none", "rationale": "Employment of MALE UCAVs vs their vulnerability profile; different assertions."}
+{"pair": "e45683ce72a9", "relation": "none", "rationale": "Library support vs frame-openness rule; different facts."}
+{"pair": "e5336c1cfd3f", "relation": "supports", "from": "claim:c01_0024_58", "to": "claim:c00_0077_30", "strength": 0.4, "rationale": "HUR's estimate of about 3,000 Geran-4/5 a month supports the e9 shift of the arsenal to jet Gerans.", "independent": true}
+{"pair": "e5adbc297c42", "relation": "none", "rationale": "Infiltration layer vs methodology caveat; different facts."}
+{"pair": "e63a866a3dc5", "relation": "none", "rationale": "Hostile frame rule vs solid/dashed frame; different facts."}

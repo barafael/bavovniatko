@@ -1,3 +1,5 @@
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
 # 08 — Prior-art games and wargames
 
 Research for **bavovniatko** (Bevy wargame of the Russo-Ukrainian war, Ukrainian side only). Accessed 2026-09-28. Every claim is cited inline with its source id; the source list is in `sources/08-prior-art-games.yaml`.

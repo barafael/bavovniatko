@@ -1,0 +1,374 @@
+# Terrain profiles for the procedural map generator, derived from cited claims.
+# One profile per OSM sample box (10 x 10 km each, OSM Overpass 2026-09-28, Microsoft building footprints
+# 2026-02-03, Sentinel-2 cloudless 2021 check), plus `seasons` and `battle_damage`.
+# Conventions:
+#   - `measured` holds the claimed statistics as reported; `dist` is the sampling distribution for the generator,
+#     spanning the measured values. Where a box has no measurement, `dist` falls back to pooled claims and says so.
+#   - OSM completeness caveats (06-0027-*): about two-thirds of Sentinel-2-visible belts are mapped in the best
+#     boxes, so OSM belt densities are lower bounds and OSM spacings upper bounds; farmland polygons sometimes
+#     split one belt block, biasing field sizes low; OSM buildings are 1-18% complete, so buildings come from
+#     Microsoft footprints.
+#   - Belt form (rows, gaps, height) and settlement shape are only claimed pooled across boxes; each box
+#     carries the pooled values.
+terrain:
+
+- key: pokrovsk_w
+  place: place:pokrovsk_w_box
+  description: "West of Pokrovsk (Donetsk oblast), bbox S,W,N,E 48.22, 36.8325, 48.31, 36.9675. Open farmland with belts following field edges; belts almost unmapped in OSM, so belt spacing falls back to pooled values."
+  params:
+    main_belt_spacing_m:
+      measured: {available: false, note: "too few belts mapped in OSM; Sentinel-2 detector noisy"}
+      dist: {type: triangular, min: 300, mode: 549, max: 990}
+      fallback: "pooled: Parfonov's 300-400 m (min) and the Huliaipole E reference grid (median 549, p90 990)"
+    cross_belt_spacing_m:
+      measured: {available: false}
+      dist: {type: triangular, min: 1000, mode: 1200, max: 2000}
+      fallback: "pooled: Parfonov 1,000-2,000 m; Huliaipole E imagery 1.1-1.3 km"
+    belt_canopy_width_m: {measured: {osm_median: 27}, dist: {type: point, value: 27}}
+    belt_stem_width_m: {dist: {type: point, value: 12.4}, note: "0.46 x canopy width (forester conversion factor)"}
+    belt_rows: {dist: {type: uniform, min: 3, max: 4}, note: pooled (Parfonov)}
+    belt_gap_width_m: {dist: {type: uniform, min: 10, max: 30}, note: "machinery gaps, pooled (Parfonov)"}
+    belt_height_m: {dist: {type: uniform, min: 19.6, max: 23.4}, note: pooled mature belts}
+    belt_density_km_per_km2: {measured: {osm_mapped: 0.28}, note: "severe lower bound; belts exist as gaps between farmland polygons"}
+    belt_orientation_shares:
+      dist:
+        type: table
+        table: [{axis_deg: 160, label: NNW-SSE, share: 0.68}, {axis_deg: null, label: other, share: 0.32}]
+      note: share of belt length within +-20 deg of the axis
+    field_block_m:
+      measured: {mbr_median_short: 625, mbr_median_long: 1348}
+      dist: {type: table, table: {short: 625, long: 1348}}
+    field_aspect_ratio:
+      measured: {p10: 1.2, median: 2.0, p90: 4.3}
+      dist: {type: triangular, min: 1.2, mode: 2.0, max: 4.3}
+    field_area_ha:
+      measured: {n: 78, p10: 15, median: 65, p90: 172}
+      dist: {type: triangular, min: 15, mode: 65, max: 172}
+    median_field_area_ha: 65
+    track_density_km_per_km2: {measured: 0.55, dist: {type: point, value: 0.55}}
+    paved_road_density_km_per_km2: {measured: 0.13, dist: {type: point, value: 0.13}, note: "OSM primary-tertiary"}
+    settlement_density_per_100km2: {measured: 8, dist: {type: point, value: 8}, note: "clusters of >=20 Microsoft footprint buildings"}
+    building_density_per_100km2: {measured: 2758}
+    settlement_elongation:
+      small: {dist: {type: triangular, min: 1.8, mode: 4.1, max: 10.6}, median_size_buildings: 71, median_dims_m: [755, 254]}
+      large: {dist: {type: point, value: 2.3}, median_size_buildings: 595, median_dims_m: [2200, 1000]}
+      small_share: 0.77
+      note: "pooled across the five boxes (33 small, 10 large settlements); small <300 buildings"
+    farmland_share: {measured: 0.67, dist: {type: point, value: 0.67}}
+    osm_building_completeness: 0.018
+  derived_from: [06-0024-01, 06-0025-01, 06-0025-06, 06-0025-11, 06-0025-20, 06-0025-25, 06-0025-30, 06-0025-35, 06-0025-40, 06-0025-45, 06-0025-50, 06-0027-01, 06-0009-09, 06-0025-14, 06-0026-02, 06-0009-01, 06-0009-02, 06-0009-03, 06-0009-05, 06-0009-08, 06-0019-10, 06-0019-12, 06-0023-01, 06-0023-02, 06-0023-03, 06-0023-04, 06-0023-05]
+  method: "Box statistics from 06 section 2.7 (OSM + Microsoft footprints). Belt spacing unmeasurable here, so the Huliaipole E reference grid and Parfonov's front-line grid are used as a fallback. small_share = 33/43 settlements (derived)."
+  attribution: "© OpenStreetMap contributors (ODbL); derived statistics"
+
+- key: robotyne
+  place: place:robotyne_box
+  description: "Robotyne (Zaporizhzhia oblast), bbox 47.43, 35.7485, 47.52, 35.8815. Clean steppe belt grid like Huliaipole E rotated about 10 deg; the sparsest settlement of the five boxes."
+  params:
+    main_belt_spacing_m:
+      measured: {osm_p10: 271, osm_median: 1154, osm_p90: 1790, sentinel2_median: 1000, imagery_reading: [500, 600]}
+      dist: {type: triangular, min: 500, mode: 550, max: 1154}
+      note: "06 reads the imagery as main belts 0.5-0.6 km apart; OSM misses belts so its 1,154 m median is an upper bound"
+    cross_belt_spacing_m:
+      measured: {osm: 1134, sentinel2: 610, imagery_reading: [1000, 1200]}
+      dist: {type: triangular, min: 610, mode: 1100, max: 1200}
+    belt_canopy_width_m: {measured: {osm_median: 26}, dist: {type: point, value: 26}}
+    belt_stem_width_m: {dist: {type: point, value: 12.0}, note: "0.46 x canopy width"}
+    belt_rows: {dist: {type: uniform, min: 3, max: 4}, note: pooled (Parfonov)}
+    belt_gap_width_m: {dist: {type: uniform, min: 10, max: 30}, note: pooled (Parfonov)}
+    belt_height_m: {dist: {type: uniform, min: 19.6, max: 23.4}, note: pooled}
+    belt_density_km_per_km2: {measured: {osm_mapped: 1.34, strips: 151}, note: "lower bound (about 2/3 of visible belts mapped); a full grid implies 2.5-3 km per km2 of cropland"}
+    belt_orientation_shares:
+      dist:
+        type: table
+        table: [{axis_deg: 90, label: "~E-W", share: 0.42}, {axis_deg: 0, label: "~N-S", share: 0.34}, {axis_deg: null, label: other, share: 0.24}]
+      note: grid rotated about 10 deg off cardinal
+    field_block_m:
+      measured: {belt_block_short: [500, 600], belt_block_long: [1000, 1200], mbr_median_short: 533, mbr_median_long: 969}
+      dist: {type: table, table: {short: {type: uniform, min: 500, max: 600}, long: {type: uniform, min: 969, max: 1200}}}
+      fields_per_block: {type: uniform, min: 1, max: 3}
+    field_aspect_ratio:
+      measured: {p10: 1.1, median: 1.8, p90: 3.6}
+      dist: {type: triangular, min: 1.1, mode: 1.8, max: 3.6}
+    field_area_ha:
+      measured: {n: 109, p10: 8, median: 39, p90: 97}
+      dist: {type: triangular, min: 8, mode: 39, max: 97}
+    median_field_area_ha: 39
+    track_density_km_per_km2: {measured: 0.34, dist: {type: point, value: 0.34}}
+    paved_road_density_km_per_km2: {measured: 0.17, dist: {type: point, value: 0.17}}
+    settlement_density_per_100km2: {measured: 5, dist: {type: point, value: 5}}
+    building_density_per_100km2: {measured: 815}
+    settlement_elongation:
+      small: {dist: {type: triangular, min: 1.8, mode: 4.1, max: 10.6}, median_size_buildings: 71, median_dims_m: [755, 254]}
+      large: {dist: {type: point, value: 2.3}, median_size_buildings: 595, median_dims_m: [2200, 1000]}
+      small_share: 0.77
+      note: pooled across the five boxes
+    farmland_share: {measured: 0.57, dist: {type: point, value: 0.57}}
+    osm_building_completeness: 0.082
+  derived_from: [06-0024-02, 06-0025-02, 06-0025-07, 06-0025-12, 06-0025-16, 06-0025-21, 06-0025-26, 06-0025-31, 06-0025-36, 06-0025-41, 06-0025-46, 06-0025-51, 06-0026-03, 06-0009-11, 06-0013-06, 06-0009-15, 06-0027-02, 06-0009-01, 06-0009-02, 06-0009-03, 06-0009-05, 06-0009-08, 06-0019-10, 06-0019-12, 06-0023-01, 06-0023-06]
+  method: "Box statistics from 06 section 2.7. Main-belt spacing mode from the imagery reading (0.5-0.6 km), max at the OSM median (an upper bound); cross-belts span the Sentinel-2 610 m and the imagery 1.0-1.2 km. fields_per_block: blocks are 'sometimes split into two or three' (06-0013-06)."
+  attribution: "© OpenStreetMap contributors (ODbL); derived statistics"
+
+- key: kupiansk_e
+  place: place:kupiansk_e_box
+  description: "East of Kupiansk (Kharkiv oblast), bbox 49.70, 37.7005, 49.79, 37.8395. Forest-steppe with larger, less regular fields on an oblique grid, cut by wooded balkas; low farmland share."
+  params:
+    main_belt_spacing_m:
+      measured: {osm_p10: 482, osm_median: 1116, osm_p90: 2341, sentinel2: noisy}
+      dist: {type: triangular, min: 482, mode: 1116, max: 2341}
+      note: OSM spacings are upper bounds
+    cross_belt_spacing_m:
+      measured: {osm: 1094}
+      dist: {type: point, value: 1094}
+    belt_canopy_width_m: {measured: {osm_median: 23}, dist: {type: point, value: 23}}
+    belt_stem_width_m: {dist: {type: point, value: 10.6}, note: "0.46 x canopy width"}
+    belt_rows: {dist: {type: uniform, min: 3, max: 4}, note: pooled (Parfonov)}
+    belt_gap_width_m: {dist: {type: uniform, min: 10, max: 30}, note: pooled (Parfonov)}
+    belt_height_m: {dist: {type: uniform, min: 19.6, max: 23.4}, note: pooled}
+    belt_density_km_per_km2: {measured: {osm_mapped: 0.62, strips: 81}, note: lower bound}
+    belt_orientation_shares:
+      dist:
+        type: table
+        table: [{axis_deg: 112, label: WNW-ESE, share: 0.54}, {axis_deg: 22, label: NNE-SSW, share: 0.34}, {axis_deg: null, label: other, share: 0.12}]
+      note: oblique grid
+    field_block_m:
+      measured: {mbr_median_short: 416, mbr_median_long: 919}
+      dist: {type: table, table: {short: 416, long: 919}}
+    field_aspect_ratio:
+      measured: {p10: 1.1, median: 1.8, p90: 4.9}
+      dist: {type: triangular, min: 1.1, mode: 1.8, max: 4.9}
+    field_area_ha:
+      measured: {n: 47, p10: 6, median: 38, p90: 109}
+      dist: {type: triangular, min: 6, mode: 38, max: 109}
+    median_field_area_ha: 38
+    track_density_km_per_km2: {measured: 0.72, dist: {type: point, value: 0.72}}
+    paved_road_density_km_per_km2: {measured: 0.20, dist: {type: point, value: 0.20}}
+    settlement_density_per_100km2: {measured: 9, dist: {type: point, value: 9}}
+    building_density_per_100km2: {measured: 3621}
+    settlement_elongation:
+      small: {dist: {type: triangular, min: 1.8, mode: 4.1, max: 10.6}, median_size_buildings: 71, median_dims_m: [755, 254]}
+      large: {dist: {type: point, value: 2.3}, median_size_buildings: 595, median_dims_m: [2200, 1000]}
+      small_share: 0.77
+      note: pooled across the five boxes; villages sit along balkas
+    farmland_share: {measured: 0.26, dist: {type: point, value: 0.26}}
+    osm_building_completeness: 0.18
+  derived_from: [06-0024-03, 06-0025-03, 06-0025-08, 06-0025-13, 06-0025-17, 06-0025-22, 06-0025-27, 06-0025-32, 06-0025-37, 06-0025-42, 06-0025-47, 06-0025-52, 06-0026-04, 06-0009-20, 06-0009-01, 06-0009-02, 06-0009-03, 06-0009-05, 06-0009-08, 06-0019-10, 06-0019-12, 06-0023-01]
+  method: "Box statistics from 06 section 2.7; OSM only (Sentinel-2 noisy here). Orientation axes are the compass midpoints of the named directions."
+  attribution: "© OpenStreetMap contributors (ODbL); derived statistics"
+
+- key: huliaipole_e
+  place: place:huliaipole_e_box
+  description: "East of Huliaipole (Zaporizhzhia oblast), bbox 47.64, 36.2783, 47.73, 36.4117. The clean reference grid: N-S main belts about 550 m apart, E-W cross-belts 1.1-1.3 km, blocks about 0.55 x 1.2 km split into 40-50 ha fields."
+  params:
+    main_belt_spacing_m:
+      measured: {osm_p10: 379, osm_median: 549, osm_p90: 990, sentinel2_median: 547}
+      dist: {type: triangular, min: 379, mode: 549, max: 990}
+      note: OSM and Sentinel-2 agree within 1%
+    cross_belt_spacing_m:
+      measured: {osm: 769, sentinel2: 775, imagery_reading: [1100, 1300]}
+      dist: {type: triangular, min: 769, mode: 1200, max: 1300}
+      note: "06 recommends the visual 1.1-1.3 km; the ~770 m OSM/Sentinel-2 value is kept as the lower end"
+    belt_canopy_width_m: {measured: {osm_median: 27}, dist: {type: point, value: 27}}
+    belt_stem_width_m: {dist: {type: point, value: 12.4}, note: "0.46 x canopy width"}
+    belt_rows: {dist: {type: uniform, min: 3, max: 4}, note: pooled (Parfonov)}
+    belt_gap_width_m: {dist: {type: uniform, min: 10, max: 30}, note: pooled (Parfonov)}
+    belt_height_m: {dist: {type: uniform, min: 19.6, max: 23.4}, note: pooled}
+    belt_density_km_per_km2: {measured: {osm_mapped: 1.35, strips: 172}, note: "best-mapped box, still a lower bound; full grid implies 2.5-3 km per km2 of cropland"}
+    belt_orientation_shares:
+      dist:
+        type: table
+        table: [{axis_deg: 0, label: N-S, share: 0.55}, {axis_deg: 90, label: E-W, share: 0.29}, {axis_deg: null, label: other, share: 0.16}]
+    field_block_m:
+      measured: {belt_block_short: 550, belt_block_long: 1200, mbr_median_short: 609, mbr_median_long: 1050}
+      dist: {type: table, table: {short: {type: triangular, min: 379, mode: 549, max: 990}, long: {type: triangular, min: 769, mode: 1200, max: 1300}}}
+      fields_per_block: {type: uniform, min: 1, max: 3}
+      note: block sides follow the belt spacings
+    field_aspect_ratio:
+      measured: {p10: 1.2, median: 1.9, p90: 3.1}
+      dist: {type: triangular, min: 1.2, mode: 1.9, max: 3.1}
+    field_area_ha:
+      measured: {n: 119, p10: 15, median: 48, p90: 126, imagery_crop_fields: [40, 50]}
+      dist: {type: triangular, min: 15, mode: 48, max: 126}
+    median_field_area_ha: 48
+    track_density_km_per_km2:
+      measured: 0.02
+      dist: {type: uniform, min: 0.3, max: 0.9}
+      fallback: "tracks essentially unmapped in OSM here; pooled 0.3-0.9 km/km2 from the boxes where tracks are mapped"
+    track_along_belt_share: {dist: {type: uniform, min: 0.04, max: 0.24}, note: "pooled: share of track length within 40 m of a belt"}
+    paved_road_density_km_per_km2: {measured: 0.22, dist: {type: point, value: 0.22}}
+    settlement_density_per_100km2: {measured: 10, dist: {type: point, value: 10}}
+    building_density_per_100km2: {measured: 3833}
+    settlement_elongation:
+      small: {dist: {type: triangular, min: 1.8, mode: 4.1, max: 10.6}, median_size_buildings: 71, median_dims_m: [755, 254]}
+      large: {dist: {type: point, value: 2.3}, median_size_buildings: 595, median_dims_m: [2200, 1000]}
+      small_share: 0.77
+      note: pooled across the five boxes
+    farmland_share: {measured: 0.72, dist: {type: point, value: 0.72}}
+    osm_building_completeness: 0.008
+  derived_from: [06-0024-04, 06-0025-04, 06-0025-09, 06-0025-14, 06-0025-18, 06-0025-23, 06-0025-28, 06-0025-33, 06-0025-38, 06-0025-43, 06-0025-48, 06-0025-53, 06-0026-01, 06-0026-02, 06-0009-10, 06-0009-19, 06-0013-06, 06-0013-19, 06-0013-20, 06-0009-15, 06-0009-01, 06-0009-02, 06-0009-03, 06-0009-05, 06-0009-08, 06-0019-10, 06-0019-12, 06-0023-01, 06-0023-06]
+  method: "Box statistics from 06 section 2.7 (OSM + Sentinel-2 agree). Cross-belt mode from the imagery reading (06 'blocks of about 0.55 x 1.2 km'). Tracks fall back to the pooled mapped range."
+  attribution: "© OpenStreetMap contributors (ODbL); derived statistics"
+
+- key: chasiv_yar_s
+  place: place:chasiv_yar_s_box
+  description: "South of Chasiv Yar (Donetsk oblast), bbox 48.47, 37.7822, 48.56, 37.9178. Dissected ground with large woods, fragmented small fields and an irregular belt pattern; wartime earthworks confuse the imagery detector."
+  params:
+    main_belt_spacing_m:
+      measured: {osm_p10: 396, osm_median: 871, osm_p90: 2883, sentinel2: noisy}
+      dist: {type: triangular, min: 396, mode: 871, max: 2883}
+    cross_belt_spacing_m:
+      measured: {osm: 601}
+      dist: {type: point, value: 601}
+    belt_canopy_width_m: {measured: {osm_median: 20}, dist: {type: point, value: 20}}
+    belt_stem_width_m: {dist: {type: point, value: 9.2}, note: "0.46 x canopy width"}
+    belt_rows: {dist: {type: uniform, min: 3, max: 4}, note: pooled (Parfonov)}
+    belt_gap_width_m: {dist: {type: uniform, min: 10, max: 30}, note: pooled (Parfonov)}
+    belt_height_m: {dist: {type: uniform, min: 19.6, max: 23.4}, note: pooled}
+    belt_density_km_per_km2: {measured: {osm_mapped: 0.67, strips: 106}, note: lower bound}
+    belt_orientation_shares:
+      dist:
+        type: table
+        table: [{axis_deg: 68, label: ENE, share: 0.34}, {axis_deg: 338, label: NNW, share: 0.29}, {axis_deg: null, label: other, share: 0.37}]
+      note: irregular
+    field_block_m:
+      measured: {mbr_median_short: 386, mbr_median_long: 678}
+      dist: {type: table, table: {short: 386, long: 678}}
+    field_aspect_ratio:
+      measured: {p10: 1.2, median: 1.8, p90: 3.4}
+      dist: {type: triangular, min: 1.2, mode: 1.8, max: 3.4}
+    field_area_ha:
+      measured: {n: 52, p10: 3, median: 14, p90: 72}
+      dist: {type: triangular, min: 3, mode: 14, max: 72}
+    median_field_area_ha: 14
+    track_density_km_per_km2: {measured: 0.92, dist: {type: point, value: 0.92}}
+    paved_road_density_km_per_km2: {measured: 0.17, dist: {type: point, value: 0.17}}
+    settlement_density_per_100km2: {measured: 11, dist: {type: point, value: 11}}
+    building_density_per_100km2: {measured: 1526}
+    settlement_elongation:
+      small: {dist: {type: triangular, min: 1.8, mode: 4.1, max: 10.6}, median_size_buildings: 71, median_dims_m: [755, 254]}
+      large: {dist: {type: point, value: 2.3}, median_size_buildings: 595, median_dims_m: [2200, 1000]}
+      small_share: 0.77
+      note: pooled across the five boxes
+    farmland_share: {measured: 0.24, dist: {type: point, value: 0.24}}
+    osm_building_completeness: 0.058
+  derived_from: [06-0024-05, 06-0025-05, 06-0025-10, 06-0025-15, 06-0025-19, 06-0025-24, 06-0025-29, 06-0025-34, 06-0025-39, 06-0025-44, 06-0025-49, 06-0025-54, 06-0026-05, 06-0013-05, 06-0027-04, 06-0009-20, 06-0009-01, 06-0009-02, 06-0009-03, 06-0009-05, 06-0009-08, 06-0019-10, 06-0019-12, 06-0023-01]
+  method: "Box statistics from 06 section 2.7; OSM only (Sentinel-2 noisy from earthworks). Orientation axes are the compass midpoints of the named directions."
+  attribution: "© OpenStreetMap contributors (ODbL); derived statistics"
+
+- key: seasons
+  description: "Seasonal and weather conditions and their qualitative effects on ground mobility, concealment and drones. Claims give no numeric multipliers except where stated; the game should map levels to its own modifiers."
+  params:
+    table:
+      - condition: spring_thaw
+        months: [3, 4]
+        ground_mobility: "fields impassable ('liquid earth' chernozem over frozen subsoil); off-road vehicles stop, heavy traffic keeps to paved roads; infantry and quads keep moving but slowed"
+        foliage_visibility: "leafless belts, little cover"
+        drone_modifiers: "belts give little concealment"
+        claims: [06-0029-01, 06-0029-02, 06-0013-17]
+      - condition: late_spring
+        months: [4, 5]
+        ground_mobility: "ground hardens; mechanised assaults resumed near Pokrovsk by mid-April 2025"
+        foliage_visibility: "foliage expanding"
+        drone_modifiers: "concealment rising along treelines"
+        tactical: "infiltration along treelines rises; defenders prepare treelines before the leaves come in; Russia used new foliage for foot, motorcycle and quad-bike moves in spring 2026"
+        claims: [06-0029-03, 06-0029-04, 06-0029-05, 06-0011-04]
+      - condition: summer
+        months: [6, 7, 8, 9]
+        ground_mobility: "dry and firm (dust likely, unsourced)"
+        foliage_visibility: "full canopy"
+        drone_modifiers: "leaves hide treeline positions from drones and precision fires; canopy 'substantially degrades' FPV effectiveness"
+        claims: [06-0029-06, 06-0029-07, 06-0011-07, 06-0011-08, 06-0011-09]
+      - condition: autumn
+        months: [10, 11]
+        ground_mobility: "autumn rasputitsa; armies shift to the defensive (Nov 2023)"
+        foliage_visibility: "leaf-fall exposes positions"
+        drone_modifiers: "detection rises"
+        claims: [06-0029-08, 06-0029-09, 06-0011-07, 06-0004-02]
+      - condition: winter_snow
+        months: [12, 1, 2]
+        ground_mobility: "frozen ground (to -20 C in 2026)"
+        foliage_visibility: "bare dark treelines stand out against snow"
+        drone_modifiers: "tracks in snow lead drones to positions; movement on snow readily detected"
+        tactical: "white ponchos, single-file movement"
+        claims: [06-0029-10, 06-0029-11, 06-0029-12, 06-0029-13, 06-0038-50]
+      - condition: winter_no_snow
+        months: [12, 1, 2]
+        ground_mobility: "frozen or wet"
+        foliage_visibility: "everything grey; bare branches expose both sides"
+        drone_modifiers: "camouflage patterns harder to match"
+        claims: [06-0029-14, 06-0011-09]
+      - condition: winter_wind
+        months: [12, 1, 2, 3]
+        ground_mobility: "blown soil moves mainly in this period (dust effect)"
+        foliage_visibility: "leafless belts more permeable"
+        claims: [06-0029-15]
+      - condition: fog
+        months: any
+        ground_mobility: unchanged
+        foliage_visibility: "drones blinded"
+        drone_modifiers: "drones grounded; infiltration and reinforcement window"
+        tactical: "Avdiivka Nov 2023; Pokrovsk Feb and Aug 2025; more than 300 Russian troops got inside Pokrovsk in thick fog on 7-12 Nov 2025"
+        claims: [06-0029-16, 06-0029-17, 06-0029-18, 06-0029-19]
+      - condition: night_and_cold
+        months: any
+        foliage_visibility: "thermal imaging dominates, more effective in the cold"
+        drone_modifiers: "thermal detection bonus; troops use thermal ponchos and heated batteries"
+        claims: [06-0029-20, 06-0029-21]
+      - condition: rain_and_frost
+        months: any
+        ground_mobility: "mud (see thaw/autumn)"
+        drone_modifiers: "light quadcopters (Mavic class) and FPVs degraded, with 'substantial losses' of Mavics near Kupiansk (Dec 2024); wet weather disadvantaged light FPVs at Pokrovsk (2025)"
+        tactical: "attacker commits vehicles; belt assaults timed to rain, fog, darkness and pre-dawn"
+        claims: [06-0029-22, 06-0029-23, 06-0029-24, 06-0029-25]
+      - condition: icing
+        months: [12, 1, 2]
+        drone_modifiers: "fibre-optic FPVs: spool jams, iced fibre snaps or sticks to branches, SFP modules (rated 0-70 C) lose 20-50%; a Kyiv training centre grounded fibre drones in mid-January 2026"
+        fibre_fpv_performance_loss_percent: {type: uniform, min: 20, max: 50}
+        claims: [06-0029-26, 06-0029-27, 06-0029-28]
+  derived_from: [06-0004-02, 06-0013-17, 06-0011-04, 06-0011-07, 06-0011-08, 06-0011-09, 06-0029-01, 06-0029-02, 06-0029-03, 06-0029-04, 06-0029-05, 06-0029-06, 06-0029-07, 06-0029-08, 06-0029-09, 06-0029-10, 06-0029-11, 06-0029-12, 06-0029-13, 06-0029-14, 06-0029-15, 06-0029-16, 06-0029-17, 06-0029-18, 06-0029-19, 06-0029-20, 06-0029-21, 06-0029-22, 06-0029-23, 06-0029-24, 06-0029-25, 06-0029-26, 06-0029-27, 06-0029-28, 06-0038-50]
+  method: "Transcribes 06 section 3 (seasons table) row by row with its claims; months follow the table's stated spans. Only the icing SFP loss (20-50%) is numeric."
+
+- key: battle_damage
+  description: "Landscape damage by era for map ageing - craters, shelterbelt and forest loss, village destruction, abandonment, contested-zone width and the Kakhovka bed."
+  params:
+    crater_density_per_km2:
+      table:
+        - {era: pre-2022 baseline (2014 Donbas), value: 26, area_share_percent: 0.14, note: "22,000+ craters in 858 km2; a floor, hotspots in e4/e6 should be far denser"}
+        - {era: e1, note: "~1 month of fighting in Kyinska hromada left 4,914 craters (2,912 on arable land); hromada area not given, so no density"}
+        - {era: e2-e9, note: "no 2023-26 crater-density study found (gap)"}
+      crater_diameter_m: {type: uniform, min: 0.5, max: 13.8}
+    shelterbelt_damage_share_percent:
+      table:
+        - {by: end-2022 (e1-e3), value: 15.8}
+        - {by: end-2023 (e4-e5), value: 21.5}
+      scope: "front-line hromadas of Kharkiv and Donetsk oblasts (Sentinel-2); optical imagery undercounts damage"
+    cropland_protection_loss_percent:
+      table:
+        - {by: end-2022, area_average: 1.9}
+        - {by: end-2023, area_average: 2.7, hotspot_max: 57}
+      hotspots: [Izium/Balakliia, Vuhledar, Avdiivka, Bakhmut]
+      beyond_50km_from_battles: "mostly unaffected"
+    forest_damage:
+      table:
+        - {era: e1-e3, period: "Apr-Sep 2022", share_percent: 9.3, area_ha: {value: 24180, min: 19465, max: 28895}, scope: "Kharkiv-Luhansk AOI, mostly fires after shelling"}
+        - {era: e1-e3, period: "by end-2022", protective_forest_share_percent: 11.5, scope: "front-line hromadas, Kharkiv and Donetsk oblasts"}
+        - {era: e4-e5, period: "by end-2023", protective_forest_share_percent: 18.1, area_km2: {value: 145, min: 103, max: 187}}
+        - {era: e1-e6, period: "two years of war, national", area_ha_at_least: 60000, note: "includes Russian logging for fortifications (NGL.media)"}
+        - {era: e6, period: "by 2024", place: "Sviati Hory national park", share_percent: 80}
+    treeline_state_sequence: [intact, thinned, split_wood, impassable_deadfall]
+    undamaged_front_belts: "treat as possibly mined"
+    village_destruction:
+      example: "Marinka: damaged May 2022 -> few buildings standing Nov 2022 -> no surviving house Dec 2022 (~8 months); battle lasted ~20 months"
+      razing_months: {type: point, value: 8}
+    cropland_abandoned_share_percent: {by: 2024, value: 7, note: "national; mostly along the front, fallow grew most in retaken territory"}
+    contested_zone_depth_km:
+      table:
+        - {era: e7, value: 1}
+        - {era: e9, min: 5, max: 8}
+    kakhovka_bed_state:
+      table:
+        - {era: [e1, e2, e3, e4], state: open_water}
+        - {era: e5, state: mudflat, note: "dam destroyed 6 June 2023; soft ground no equipment can cross"}
+        - {era: [e6, e7], state: wetland_and_scrub}
+        - {era: [e8, e9], state: willow_forest, note: ">2,000 km2 vegetated by May 2026"}
+  derived_from: [06-0031-18, 06-0031-19, 06-0031-20, 06-0038-40, 06-0031-04, 06-0038-41, 06-0031-05, 06-0031-06, 06-0038-42, 06-0031-07, 06-0031-08, 06-0031-09, 06-0031-10, 06-0038-43, 06-0031-03, 06-0031-12, 06-0015-13, 06-0031-01, 06-0011-10, 06-0011-11, 06-0031-15, 06-0031-16, 06-0013-13, 06-0031-22, 06-0032-03, 06-0032-04, 06-0017-19, 06-0017-22, 06-0017-23, 06-0017-25]
+  method: "Transcribes 06 section 4. Year-end figures are mapped to the eras ending nearest that date. Marinka razing time is derived from the claimed May -> December 2022 sequence."

@@ -1,0 +1,55 @@
+# symbol, dimension, optional base unit + factor (value * to_base = value in base unit).
+- {id: count,           symbol: "count",        dimension: count}
+- {id: count_per_day,   symbol: "count/day",    dimension: count/time, base: count_per_month, to_base: 30.4375}
+- {id: count_per_week,  symbol: "count/week",   dimension: count/time, base: count_per_month, to_base: 4.348214}
+- {id: count_per_month, symbol: "count/month",  dimension: count/time}
+- {id: count_per_year,  symbol: "count/year",   dimension: count/time, base: count_per_month, to_base: 0.0833333333}
+- {id: people,          symbol: "people",       dimension: count}
+- {id: m,               symbol: "m",            dimension: length, base: km, to_base: 0.001}
+- {id: km,              symbol: "km",           dimension: length}
+- {id: km2,             symbol: "km²",          dimension: area}
+- {id: ha,              symbol: "ha",           dimension: area, base: km2, to_base: 0.01}
+- {id: km2_per_month,   symbol: "km²/month",    dimension: area/time}
+- {id: km2_per_day,     symbol: "km²/day",      dimension: area/time, base: km2_per_month, to_base: 30.4375}
+- {id: km2_per_year,    symbol: "km²/year",     dimension: area/time, base: km2_per_month, to_base: 0.0833333333}
+- {id: km_per_km2,      symbol: "km/km²",       dimension: density}
+- {id: per_100km2,      symbol: "per 100 km²",  dimension: density}
+- {id: per_km2,         symbol: "per km²",      dimension: density, base: per_100km2, to_base: 100}
+- {id: percent,         symbol: "%",            dimension: ratio}
+- {id: ratio,           symbol: "ratio",        dimension: ratio}
+- {id: km_per_h,        symbol: "km/h",         dimension: speed}
+- {id: s,               symbol: "s",            dimension: time, base: min, to_base: 0.0166666667}
+- {id: min,             symbol: "min",          dimension: time}
+- {id: h,               symbol: "h",            dimension: time, base: min, to_base: 60}
+- {id: day,             symbol: "day",          dimension: time, base: min, to_base: 1440}
+- {id: month,           symbol: "month",        dimension: time, base: min, to_base: 43830}
+- {id: year,            symbol: "year",         dimension: time, base: min, to_base: 525960}
+- {id: kg,              symbol: "kg",           dimension: mass}
+- {id: t,               symbol: "t",            dimension: mass, base: kg, to_base: 1000}
+- {id: usd,             symbol: "USD",          dimension: currency}
+- {id: eur,             symbol: "EUR",          dimension: currency}
+- {id: uah,             symbol: "UAH",          dimension: currency}
+- {id: yuan,            symbol: "CNY",          dimension: currency}
+- {id: usd_bn,          symbol: "USD bn",       dimension: currency, base: usd, to_base: 1.0e9}
+- {id: eur_bn,          symbol: "EUR bn",       dimension: currency, base: eur, to_base: 1.0e9}
+- {id: rounds_per_day,  symbol: "rounds/day",   dimension: count/time}
+- {id: casualties_per_km2, symbol: "casualties/km²", dimension: count/area}
+- {id: degree,          symbol: "°",            dimension: angle}
+- {id: other,           symbol: "",             dimension: other}
+- {id: points,          symbol: "points",       dimension: points}
+- {id: usd_m,           symbol: "USD m",        dimension: currency, base: usd, to_base: 1.0e6}
+- {id: uah_bn,          symbol: "UAH bn",       dimension: currency, base: uah, to_base: 1.0e9}
+- {id: km_per_day,      symbol: "km/day",       dimension: speed_slow}
+- {id: people_per_day,  symbol: "people/day",   dimension: count/time, base: count_per_month, to_base: 30.4375}
+- {id: m_per_s,         symbol: "m/s",          dimension: speed, base: km_per_h, to_base: 3.6}
+- {id: km2_per_week,    symbol: "km²/week",     dimension: area/time, base: km2_per_month, to_base: 4.348214}
+- {id: m2,              symbol: "m²",           dimension: area, base: km2, to_base: 1.0e-6}
+- {id: celsius,         symbol: "°C",           dimension: temperature}
+- {id: litre,           symbol: "l",            dimension: volume}
+- {id: mhz,             symbol: "MHz",          dimension: frequency}
+- {id: ghz,             symbol: "GHz",          dimension: frequency, base: mhz, to_base: 1000}
+- {id: cny_per_km,      symbol: "CNY/km",       dimension: currency/length}
+- {id: rub,             symbol: "RUB",          dimension: currency}
+- {id: fps,             symbol: "fps",          dimension: frequency}
+- {id: per_km,          symbol: "per km",       dimension: density}
+- {id: km_per_year,     symbol: "km/year",      dimension: length/time}

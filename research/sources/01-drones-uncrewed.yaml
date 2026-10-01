@@ -1,1142 +1,1725 @@
-# Sources for research/01-drones-uncrewed.md (topic 01: drones and uncrewed systems)
-# accessed 2026-09-28. "verified: fetched" = page/PDF retrieved and read during research.
-
-- id: rusi-2022-zabrodskyi-preliminary-lessons
-  title: "Preliminary Lessons in Conventional Warfighting from Russia's Invasion of Ukraine: February–July 2022"
-  url: https://static.rusi.org/359-SR-Ukraine-Preliminary-Lessons-Feb-July-2022-web-final.pdf
-  publisher: RUSI
-  authors: [Mykhaylo Zabrodskyi, Jack Watling, Oleksandr V Danylyuk, Nick Reynolds]
-  published: "2022-11-30"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e1-invasion, e2-donbas-artillery]
-  topics: [drones, isr, ew, artillery]
-  notes: "Co-written with Ukrainian officers. Around 90% of Ukrainian UAVs destroyed Feb–Jul 2022; a quadcopter lasted about 3 flights, a fixed-wing about 6; only about 1/3 of missions succeeded; Orlan-10 cueing gave Russian fires in 3–5 minutes. Baseline for the early war."
-
-- id: pravda-2023-fedorov-army-of-drones
-  title: "Deputy Prime Minister for Innovation says Army of Drones initiative so far ordered 3,200 UAVs"
-  url: https://www.pravda.com.ua/eng/news/2023/04/5/7396556/
-  publisher: Ukrainska Pravda
+# Sources cited in research/01-drones-uncrewed.md, generated from the knowledge base by db/tools/render.py.
+- id: athlonavia-2026-furia
+  title: A1-CM Furia Unmanned Aerial System
+  url: https://athlonavia.com/en/products/a1-sm-furia/
+  publisher: Athlon Avia
   authors: []
-  published: "2023-04-05"
-  accessed: "2026-09-28"
-  type: news
+  published: unknown
+  accessed: '2026-09-28'
+  type: official
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut]
-  topics: [drones, organization, procurement]
-  notes: "Fedorov: in its first 9 months, Army of Drones (UNITED24) contracted 3,200 UAV complexes worth over UAH 4bn (~$107m) and trained 7,000+ operators. Official claim, not independently audited."
-
-- id: oryx-2022-lancet-kill-list
-  title: "Hit Or Miss: The Russian Loitering Munition Kill List"
-  url: https://www.oryxspioenkop.com/2022/11/hit-or-miss-russian-loitering-munition.html
-  publisher: Oryx
-  authors: [Jakub Janovsky, naalsio26, Aloha, Dan, Kemal]
-  published: "2022-11-25"
-  accessed: "2026-09-28"
-  type: osint-dataset
-  origin: international
-  reliability: high
-  verified: fetched
-  eras: [e3-counteroffensives-22, e4-bakhmut]
-  topics: [drones, loitering-munitions, russia]
-  notes: "Visually confirmed Kub/Lancet strikes up to early March 2023: 113 hits, 41 misses and 4 decoy hits, mostly on artillery, radars and SAMs. Undercounts, because only filmed strikes are listed. The list was not updated after March 2023."
-
-- id: rusi-2023-watling-meatgrinder
-  title: "Meatgrinder: Russian Tactics in the Second Year of Its Invasion of Ukraine"
-  url: https://static.rusi.org/403-SR-Russian-Tactics-web-final.pdf
-  publisher: RUSI
-  authors: [Jack Watling, Nick Reynolds]
-  published: "2023-05-19"
-  accessed: "2026-09-28"
+  eras:
+  - e1-invasion
+  topics:
+  - isr
+  - fixed-wing
+  notes: 'Maker page: built since 2014, adopted by the AFU in 2020 after state trials; flying wing, 6 kg, 2 m span, at least
+    50 km operational range, up to 4 h, 65 km/h, 200 km route, tactical depth up to 70 km; three UAVs per system.'
+- id: csis-2025-bondar-ai-autonomy
+  title: Ukraine's Future Vision and Current Capabilities for Waging AI-Enabled Autonomous Warfare
+  url: https://www.csis.org/analysis/ukraines-future-vision-and-current-capabilities-waging-ai-enabled-autonomous-warfare
+  publisher: CSIS
+  authors:
+  - Kateryna Bondar
+  published: '2025-03-06'
+  accessed: '2026-09-28'
   type: think-tank
   origin: western
   reliability: high
   verified: fetched
-  eras: [e4-bakhmut]
-  topics: [drones, ew, russia, artillery]
-  notes: "Ukrainian UAV losses about 10,000 per month; at least one major Russian EW system per 10 km of front; Russian counter-battery work shifting to Lancet; layered Orlan-10 'complexes' at axis and artillery-brigade level."
-
-- id: rusi-2023-watling-stormbreak
-  title: "Stormbreak: Fighting Through Russian Defences in Ukraine's 2023 Offensive"
-  url: https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf
-  publisher: RUSI
-  authors: [Jack Watling, Nick Reynolds]
-  published: "2023-09"
-  accessed: "2026-09-28"
+  eras:
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - autonomy
+  - ai
+  - fpv
+  - swarms
+  notes: FPV missions succeed only 10-15% of the time without autonomy; autonomous terminal navigation gives 70-80%, and 1-2
+    drones per target instead of 8-9. Lock-on range 300 m to about 1 km (2 km best case; ZIR up to 3 km). Ukraine began buying
+    10,000 AI-enhanced drones in 2024 out of about 2m built (96.2% domestic). Swarming is 'small-scale experiments'; true
+    autonomy 'not yet present', humans stay in the loop.
+- id: csis-2025-hollenbeck-shahed-cost-effectiveness
+  title: Calculating the Cost-Effectiveness of Russia's Drone Strikes
+  url: https://www.csis.org/analysis/calculating-cost-effectiveness-russias-drone-strikes
+  publisher: CSIS
+  authors:
+  - Neil Hollenbeck
+  - Muhammed Hamza Altaf
+  - Faith Avila
+  - Javier Ramirez
+  - Anurag Sharma
+  - Benjamin Jensen
+  published: '2025-02-19'
+  accessed: '2026-09-28'
   type: think-tank
   origin: western
   reliability: high
   verified: fetched
-  eras: [e5-counteroffensive-23]
-  topics: [drones, bombers, loitering-munitions, ew]
-  notes: "Ukrainian night strikes with converted agricultural drones dropping RPGs (5 UAVs destroyed or badly damaged 7 tanks, and all 5 were lost), which worked only when Russian EW lapsed. Russian Lancet plus FPV strikes on lead elements; up to 25 UAVs watching a unit."
-
-- id: rusi-2025-watling-reynolds-third-year
-  title: "Tactical Developments During the Third Year of the Russo-Ukrainian War"
-  url: https://static.rusi.org/tactical-developments-third-year-russo-ukrainian-war-february-2205.pdf
-  publisher: RUSI
-  authors: [Jack Watling, Nick Reynolds]
-  published: "2025-02"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk]
-  topics: [drones, fpv, isr, ew, kill-zone, air-defence]
-  notes: "Key 2024 baseline. Tactical UAVs cause 60–70% of damaged or destroyed Russian systems, yet 60–80% of FPVs fail to reach their target. Battlefield transparency is dense to 3 km and thins out to 15 km, and targets can be tasked to 40 km. 1,000–1,500 Orlan/Zala orbits per day (Aug 2024). Wire-guided FPVs reach about 10 km."
-
+  eras:
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  topics:
+  - shahed
+  - cost
+  - air-defence
+  notes: 'Over 14,700 one-way attack drones (mostly Shaheds) from 28 Sep 2022 to 28 Dec 2024, about 90% shot down and under
+    10% reaching targets; Sep-Dec 2024 exceeded the preceding 23 months combined. Assumes $35,000 per Shahed (range $20k-80k),
+    about $350,000 per target struck. Caveat: decoys among ''Shaheds'' would make Russia more cost-effective.'
 - id: csis-2025-jensen-drone-saturation
-  title: "Drone Saturation: Russia's Shahed Campaign"
+  title: 'Drone Saturation: Russia''s Shahed Campaign'
   url: https://www.csis.org/analysis/drone-saturation-russias-shahed-campaign
   publisher: CSIS
-  authors: [Benjamin Jensen, Yasir Atalan]
-  published: "2025-05-13"
-  accessed: "2026-09-28"
+  authors:
+  - Benjamin Jensen
+  - Yasir Atalan
+  published: '2025-05-13'
+  accessed: '2026-09-28'
   type: think-tank
   origin: western
   reliability: high
   verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [shahed, long-range-strike, air-defence, russia]
-  notes: "Shahed launches rose from about 130/week before Sep 2024 to about 1,100/week by Mar 2025. Russia often loses over 75% of a salvo. Shahed cost is $20k–50k. Notes the jet Geran-3 variant (550–600 km/h claimed)."
-
-- id: osw-2025-game-of-drones
-  title: "Game of drones: the production and use of Ukrainian battlefield unmanned aerial vehicles"
-  url: https://www.osw.waw.pl/en/publikacje/osw-commentary/2025-10-14/game-drones-production-and-use-ukrainian-battlefield-unmanned
-  publisher: OSW Centre for Eastern Studies
-  authors: []
-  published: "2025-10-14"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [drones, production, casualties, organization, supply-chain]
-  notes: "Polish state think tank. About 2.2m Ukrainian UAVs built in 2024, 4.5m+ projected for 2025. Drones account for about 85% of targets destroyed and 70–80% of Russian casualties. 98% of light drones depend on Chinese parts. Drone Line aims at a 10–15 km kill zone."
-
-- id: rferl-2025-rubicon
-  title: "Inside Rubicon, The Elite Russian Drone Unit Wreaking Havoc On Ukraine's Troops"
-  url: https://www.rferl.org/a/russia-drone-rubicon-secret-ukraine-war/33532804.html
-  publisher: RFE/RL
-  authors: [Mark Krutov, Sergei Dobrynin, Yauhen Lehalau]
-  published: "2025-09-17"
-  accessed: "2026-09-28"
-  type: news
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [russia, rubikon, fiber-optic, logistics-interdiction]
-  notes: "Rubikon (Rubicon) strangled Ukrainian supply lines to Sudzha in the Kursk operation. In spring 2025 it had 7 units of 130–150 people each. In Sep 2025 over 25% of its strikes hit drone teams and 15% hit EW. Ukrainian observers call it systematic and professional."
-
-- id: fpri-2026-lee-putiata-rubicon
-  title: "Inside Rubicon: The Structure of Russia's Elite Drone Center"
-  url: https://www.fpri.org/article/2026/06/inside-rubicon-the-structure-of-russias-elite-drone-center/
-  publisher: Foreign Policy Research Institute
-  authors: [Rob Lee, Dmytro Putiata]
-  published: "2026-06-12"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [russia, rubikon, organization]
-  notes: "Rubikon founded 2 Aug 2024. It grew from about 1,450 personnel (Mar 2025) to about 5,000 (spring 2026), with 9,000 authorized. A 474-person detachment has FPV, fixed-wing, Supercam/Lancet recon-strike and counter-UAS elements. Russian USF targets 165,000 personnel by end of 2026."
-
-- id: ukrinform-2025-fedorov-fiber-optic-40km
-  title: "Ukrainian fiber-optic drones reach strike range of over 40 kilometers – Fedorov"
-  url: https://www.ukrinform.net/rubric-ato/4017356-ukrainian-fiberoptic-drones-reach-strike-range-of-over-40-kilometers-fedorov.html
-  publisher: Ukrinform
-  authors: []
-  published: "2025-07-22"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [fiber-optic, fpv, range]
-  notes: "Fedorov: Ukrainian fiber-optic FPVs went from about 20 km (spring 2025) to 40+ km (July 2025). This is an official claim of maximum range, not a typical range."
-
-- id: militarnyi-2025-brovdi-usf
-  title: "Robert \"Magyar\" Brovdi to lead the Unmanned Systems Forces"
-  url: https://militarnyi.com/en/news/robert-magyar-brovdi-to-lead-the-unmanned-systems-forces/
-  publisher: Militarnyi
-  authors: []
-  published: "2025-06-03"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: high
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [organization, usf, units]
-  notes: "Decree 386/2025 appointed Brovdi, commander of the 414th brigade 'Magyar's Birds', to replace Col. Sukharevskyi as head of the USF. Gives the unit's history from a territorial-defence group to a brigade."
-
-- id: kyivindependent-2025-york-spiderweb
-  title: "Operation Spiderweb — everything we know about Ukraine's 'audacious' attack on Russia's heavy bombers"
-  url: https://kyivindependent.com/operation-spiderweb-everything-we-know-about-ukraines-audacious-attack-on-russias-heavy-bombers/
-  publisher: Kyiv Independent
-  authors: [Chris York]
-  published: "2025-06-01"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [fpv, deep-strike, sbu]
-  notes: "1 June 2025: 117 FPVs launched from trucks at Russian bomber bases. The SBU and General Staff claim 41 aircraft hit, about $7bn in damage and 34% of strategic missile carriers disabled. Claims are Ukrainian; independent confirmation is lower."
-
-- id: defensenews-2025-ap-long-range-drones
-  title: "Launched in the shadows: Ukraine's long-range drones rattle Russia"
-  url: https://www.defensenews.com/unmanned/2025/10/31/launched-in-the-shadows-ukraines-long-range-drones-rattle-russia/
-  publisher: Defense News (Associated Press)
-  authors: [Derek Gatopoulos, Volodymyr Yurchuk]
-  published: "2025-10-31"
-  accessed: "2026-09-28"
-  type: news
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [long-range-strike, liutyi, refineries]
-  notes: "Liutyi range doubled to about 1,000 km; cost as low as $55k. Fewer than 30% reach the target area. The SBU claims 160+ successful strikes on Russian oil facilities in 2025."
-
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - shahed
+  - long-range-strike
+  - air-defence
+  - russia
+  notes: Shahed launches rose from about 130/week before Sep 2024 to about 1,100/week by Mar 2025. Russia often loses over
+    75% of a salvo. Shahed cost is $20k–50k. Notes the jet Geran-3 variant (550–600 km/h claimed).
 - id: defenceexpress-2025-sting-effectiveness
-  title: "Ukrainian Wild Hornets Workshop Revealed Impressive Effectiveness of Their Sting Interceptors Against Shahed/Gerbera Type UAVs"
+  title: Ukrainian Wild Hornets Workshop Revealed Impressive Effectiveness of Their Sting Interceptors Against Shahed/Gerbera
+    Type UAVs
   url: https://en.defence-ua.com/weapon_and_tech/ukrainian_wild_hornets_workshop_revealed_impressive_effectiveness_of_their_sting_interceptors_against_shahedgerbera_type_uavs-15885.html
   publisher: Defense Express
   authors: []
-  published: "2025-09-20"
-  accessed: "2026-09-28"
+  published: '2025-09-20'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [interceptors, shahed, air-defence]
-  notes: "Sting (Wild Hornets): first known in autumn 2024, over 315 km/h, about $2,000. 60–90% efficiency depending on crew and radar; 8 in 10 kills need only one interceptor; 10–15 s from detection to kill. The figures are the manufacturer's."
-
-- id: kmu-2025-950-interceptors
-  title: "Nearly 950 anti-Shahed interceptor drones per day: MoD's Defence Procurement Agency increased deliveries to the military in December"
-  url: https://www.kmu.gov.ua/en/news/maizhe-950-protyshakhednykh-droniv-na-dobu-aoz-minoborony-u-hrudni-zbilshyla-postachannia-perekhopliuvachiv-do-viiska
-  publisher: Cabinet of Ministers of Ukraine
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - interceptors
+  - shahed
+  - air-defence
+  notes: 'Sting (Wild Hornets): first known in autumn 2024, over 315 km/h, about $2,000. 60–90% efficiency depending on crew
+    and radar; 8 in 10 kills need only one interceptor; 10–15 s from detection to kill. The figures are the manufacturer''s.'
+- id: defensenews-2025-ap-long-range-drones
+  title: 'Launched in the shadows: Ukraine''s long-range drones rattle Russia'
+  url: https://www.defensenews.com/unmanned/2025/10/31/launched-in-the-shadows-ukraines-long-range-drones-rattle-russia/
+  publisher: Defense News (Associated Press)
+  authors:
+  - Derek Gatopoulos
+  - Volodymyr Yurchuk
+  published: '2025-10-31'
+  accessed: '2026-09-28'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - long-range-strike
+  - liutyi
+  - refineries
+  notes: Liutyi range doubled to about 1,000 km; cost as low as $55k. Fewer than 30% reach the target area. The SBU claims
+    160+ successful strikes on Russian oil facilities in 2025.
+- id: deviro-2026-leleka
+  title: Leleka unmanned aerial system ISR
+  url: https://deviro.ua/produkciya/leleka/?lang=en
+  publisher: Deviro
   authors: []
-  published: "2025-12-18"
-  accessed: "2026-09-28"
+  published: unknown
+  accessed: '2026-09-28'
   type: official
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [interceptors, procurement, production]
-  notes: "Official: an average of nearly 950 anti-Shahed interceptors delivered per day in Dec 2025, with 10+ contracted makers, bought through DOT-Chain Defence. Deliveries, not kills."
-
-- id: isis-2026-anokhin-shahed-2025
-  title: "A Comprehensive Analytical Review of Russian Shahed-type UAVs Deployment against Ukraine in 2025"
-  url: https://isis-online.org/isis-reports/a-comprehensive-analytical-review-of-russian-shahed-type-uavs-deployment-against-ukraine-in-2025
-  publisher: Institute for Science and International Security
-  authors: [Igor Anokhin]
-  published: "2026-01-22"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [shahed, long-range-strike, air-defence, russia]
-  notes: "Russia launched 54,538 Shahed-type UAVs in 2025, about 40% of them Gerbera/Parody decoys. July peak 6,297; record night 7 Sep 2025 with 810. Hit rate rose from 2–3% to about 17% by December (28% for strike variants). Jet Geran-4/5 appear late 2025. Built on Ukrainian Air Force data."
-
-- id: pravda-2025-hubina-3m-fpv
-  title: "Ukraine's Armed Forces obtain 3 million FPV drones in 2025"
-  url: https://www.pravda.com.ua/eng/news/2025/12/24/8013217/
-  publisher: Ukrainska Pravda
-  authors: [Yevheniia Hubina]
-  published: "2025-12-24"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [production, fpv, ugv]
-  notes: "Defence Minister Shmyhal: 3m FPVs obtained in 2025, about 2.5x 2024 (2.4m via the procurement agency plus 200k via DOT-Chain). Nearly 15,000 ground robots delivered in 2025, triple 2024."
-
+  eras:
+  - e1-invasion
+  - e8-drone-kill-zone
+  topics:
+  - isr
+  - fixed-wing
+  notes: 'Maker page: in AFU service since 2019; up to 5 h, 80 km combat radius, 340 km route, 3,500 m, two jam-resistant
+    links, GPS-free mode, 100x day zoom plus thermal. Deviro''s news (28 Jan 2026) says it received the most orders for recon
+    fixed-wings in 2025. Maker claims, so medium.'
 - id: digitalstate-2025-brave1-epoints
-  title: "3rd Assault Brigade becomes the first unit to receive drones through the new bonus system"
+  title: 3rd Assault Brigade becomes the first unit to receive drones through the new bonus system
   url: https://digitalstate.gov.ua/news/tech/3-okrema-shturmova-bryhada-pershoiu-obminiala-yebaly-na-drony-cherez-brave1-market
   publisher: Ministry of Digital Transformation of Ukraine
   authors: []
-  published: "2025-10-24"
-  accessed: "2026-09-28"
+  published: '2025-10-24'
+  accessed: '2026-09-28'
   type: official
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [organization, e-points, brave1, procurement]
-  notes: "Official description of e-points (ye-baly): confirmed hits uploaded to DELTA earn points that units spend on Brave1 Market (150+ models, 40+ makers, about 10-day delivery). Over UAH 5bn ordered with e-points since Aug 2025."
-
-- id: mezha-2026-molniya
-  title: "Cheap and dangerous. How the Molniya plywood drone turned into a big problem for the Defense Forces"
-  url: https://oboronka.mezha.ua/en/udarni-droni-molniya-harateristiki-chim-nebezpechni-307515/
-  publisher: Mezha / Ukrainska Pravda (Oboronka)
-  authors: [Iryna Lutsak]
-  published: "2026-01"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [russia, molniya, logistics-interdiction, relay]
-  notes: "Russian Molniya fixed-wing strike drone: 3–5 kg warhead, about 30 km range, now used 50+ km deep against logistics. Variants include fiber-optic, thermite, FPV-carrier and Starlink recon. Cost about UAH 35,000. The page shows '6 January' without a year; 2026 is inferred from the Ukrainska Pravda original of 15 Jan 2026."
-
-- id: euromaidan-2026-murdoch-syrskyi-december
-  title: "Syrskyi: Ukraine's drones now destroy Russian troops faster than Putin can replace them"
-  url: https://euromaidanpress.com/2026/01/06/december-first-month-russian-losses-matched-recruitment/
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - organization
+  - e-points
+  - brave1
+  - procurement
+  notes: 'Official description of e-points (ye-baly): confirmed hits uploaded to DELTA earn points that units spend on Brave1
+    Market (150+ models, 40+ makers, about 10-day delivery). Over UAH 5bn ordered with e-points since Aug 2025.'
+- id: euromaidan-2022-shark-himars
+  title: Ukraine's new UAV Shark will direct HIMARS fire under strong electronic warfare
+  url: https://euromaidanpress.com/2022/10/27/ukraines-new-uav-shark-will-direct-himars-fire-under-strong-electronic-warfare/
   publisher: Euromaidan Press
-  authors: [Benjamin Murdoch]
-  published: "2026-01-06"
-  accessed: "2026-09-28"
+  authors: []
+  published: '2022-10-27'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [casualties, usf, russia]
-  notes: "Syrskyi: in Dec 2025 the USF 'neutralised' about 33,000 Russians (video-confirmed), and Russian losses roughly matched recruitment. 339,000 UAV missions and 2,100 UGV tasks that month; the USF is 2.2% of personnel. Russian drone forces are about 80k, with 165.5k planned for 2026. The article wrongly dates the USF's founding to June 2025."
-
-- id: kyivindependent-2026-starlink-catastrophe
-  title: "Starlink 'catastrophe' for Russia as Musk shuts down access across front line in Ukraine"
-  url: https://kyivindependent.com/not-a-problem-a-catastrophe-russias-starlinks-switch-off-across-front-line/
-  publisher: Kyiv Independent
-  authors: [Kollen Post, Asami Terajima, Francis Farrell, Yuliia Taradiuk, Jimmy Rushton]
-  published: "2026-02-05"
-  accessed: "2026-09-28"
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - isr
+  - fixed-wing
+  notes: 'Ukrspecsystems Shark: 60 km link, 2+ h, 70-90 km/h cruise (150 max), 10 kg, 1.91 m span, 30x EO zoom, catapult launch,
+    parachute recovery; built to spot for HIMARS under EW. First combat footage Jan 2023.'
+- id: euromaidan-2023-shandra-lancet-new-model
+  title: Russia's new Lancet suicide drone model evades Ukraine's defenses
+  url: https://euromaidanpress.com/2023/11/10/russias-new-lancet-suicide-drone-model-evades-ukraines-defenses/
+  publisher: Euromaidan Press
+  authors:
+  - Alya Shandra
+  published: '2023-11-10'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
-  reliability: high
+  reliability: medium
   verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [starlink, russia, c2, shahed]
-  notes: "The 5 Feb 2026 whitelist (Diia registration) cut off Russian terminals. Russia had fitted Starlink to deep-strike Shaheds since early 2025. Beskrestnov ('Flash') called it a 'catastrophe', but brigades gave mixed reports on how much assaults changed."
-
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - lancet
+  - loitering-munitions
+  - russia
+  notes: New Lancet model pre-detonates its shaped charge to defeat nets and cage armour (Air Force's Ihnat, Militarnyi, LIGA).
+    Lancet-3 about 12 kg, Lancet-1 about 5 kg; estimated cost about $35,000.
+- id: euromaidan-2024-mukhina-hur-magura-ships
+  title: Ukraine's Intelligence agency says Russian attempts to copy Ukrainian naval drones likely to fail
+  url: https://euromaidanpress.com/2024/07/21/ukraines-intelligence-agency-says-russian-attempts-to-copy-ukrainian-naval-drones-likely-to-fail/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2024-07-21'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - naval-drones
+  notes: 'HUR (Yerin): Magura V5 hit Ivan Khurs, Sergey Kotov, Akula, Serna, Ivanovets, Tsezar Kunikov and patrol/landing
+    boats, for over $500m of damage. Official claims. Replaces the Wikipedia citation.'
+- id: euromaidan-2025-kirichenko-ai-swarms
+  title: Ukraine's AI drones have 18 months to outpace Russia in existential 'ruthless swarm' race
+  url: https://euromaidanpress.com/2025/09/19/ukraine-russia-drone-ai-swarms
+  publisher: Euromaidan Press
+  authors:
+  - David Kirichenko
+  published: '2025-09-19'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - autonomy
+  - swarms
+  - ai
+  notes: 'Swarmer software used on ''over a hundred'' swarm missions. Brave1 AI head Makarchuk: hit share ''constantly decreasing'';
+    simple AI targeting about $150 per drone. Russian V2U seen in groups of six with onboard AI and 4G modem. 100+ Ukrainian
+    firms on guidance.'
+- id: euromaidan-2025-kravchuk-magura-su30
+  title: Ukraine claims first-ever $50 million fighter jet kill with sea drone
+  url: https://euromaidanpress.com/2025/05/03/ukraine-claims-first-ever-50-million-fighter-jet-kill-with-sea-drone/
+  publisher: Euromaidan Press
+  authors:
+  - Vira Kravchuk
+  published: '2025-05-03'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - air-defence
+  notes: 'HUR (with Group 13 and SBU): a missile from a Magura V5 downed an Su-30 near Novorossiysk on 2 May 2025; a Magura
+    V5 destroyed two Mi-8s on 31 Dec 2024. Official claims.'
+- id: euromaidan-2026-axe-bomber-drones
+  title: FPV drones get all the attention. Ukraine's reusable heavy bombers are doing the real killing
+  url: https://euromaidanpress.com/2026/02/13/bomber-drones/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2026-02-13'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - heavy-bomber
+  - cost
+  notes: SkyFall makes 100,000 bombers a year at $8,500 (about 16 FPVs); three or four grenades a sortie; a bomber may fly
+    a dozen sorties before loss, so it is cheaper per mission than a one-use FPV. Maker figures via a columnist.
+- id: euromaidan-2026-axe-ring-fpv
+  title: Russia put a hula hoop on its attack drone. Now it flies 50 km into Ukraine’s rear.
+  url: https://euromaidanpress.com/2026/03/29/ring-fpv/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2026-03-29'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - fiber-optic
+  - russia
+  notes: 'Russian KVS: a KVN fibre FPV with an annular ring wing for lift; same 10-inch frame and 3 kg payload; reaches up
+    to 50 km into the rear. Confirmed by Ushkuynik''s Chadaev (Mar 2026).'
 - id: euromaidan-2026-axe-starlink-counterattacks
-  title: "Ukraine counterattacks as Musk's Starlink crackdown grounds Russian drones"
+  title: Ukraine counterattacks as Musk's Starlink crackdown grounds Russian drones
   url: https://euromaidanpress.com/2026/02/10/starlink-down/
   publisher: Euromaidan Press
-  authors: [David Axe]
-  published: "2026-02-10"
-  accessed: "2026-09-28"
+  authors:
+  - David Axe
+  published: '2026-02-10'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [starlink, counteroffensive, fpv]
-  notes: "Starlink throttled above 75 km/h, which hit larger Russian attack drones striking 20–200 km deep; FPVs on line-of-sight/mesh radio carried on. Ukrainian counterattacks from 5 Feb across nine vectors (Huliaipole, Zaporizhzhia, Dnipropetrovsk) made modest gains."
-
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - starlink
+  - counteroffensive
+  - fpv
+  notes: Starlink throttled above 75 km/h, which hit larger Russian attack drones striking 20–200 km deep; FPVs on line-of-sight/mesh
+    radio carried on. Ukrainian counterattacks from 5 Feb across nine vectors (Huliaipole, Zaporizhzhia, Dnipropetrovsk) made
+    modest gains.
+- id: euromaidan-2026-axe-unjammable-russian-drones
+  aliases:
+  - euromaidanpress-2026-unjammable-russian-drones
+  title: How Russia built a jam-proof drone force—and the Chinese supply chain that could still break it
+  url: https://euromaidanpress.com/2026/08/06/unjammable-russian-drones/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2026-08-06'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - c2
+  - drones
+  - ew
+  - fiber-optic
+  - russia
+  - supply-chain
+  notes: 'Tatarigami (Frontelligence Insight): about 60% of Russian FPVs in key sectors are fibre-optic. OSINT account @M0nstas:
+    about 10,000 Russian FPVs a day (low-confidence). WaPo: Chinese fibre exports to Russia 119,000 miles (May 2025) and 328,000
+    miles (Aug 2025).'
+- id: euromaidan-2026-katola-molniya-self-targeting
+  title: A Russian drone chose its own target and killed three. The code that told it what to look for was readable
+  url: https://euromaidanpress.com/2026/08/25/a-russian-drone-chose-its-own-target-and-killed-three-the-code-that-told-it-what-to-look-for-was-readable/
+  publisher: Euromaidan Press
+  authors:
+  - Zoriana Katola
+  published: '2026-08-25'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - autonomy
+  - ai
+  - molniya
+  - russia
+  notes: A Molniya with an Nvidia Jetson Orin module picked its own target near a Zaporizhzhia gas station on 6 Jul 2026,
+    killing three civilians; described as the first documented self-targeting Russian drone kill. Jetsons found in V2U, Lancet,
+    Klin and S-71 since June 2025. Comment from CSIS's Bondar.
+- id: euromaidan-2026-kossov-icy-fibre
+  title: 'Ukraine''s jam-proof drones have one weakness: icy weather'
+  url: https://euromaidanpress.com/2026/01/13/ukraines-jam-proof-drones-have-one-weakness-icy-weather/
+  publisher: Euromaidan Press
+  authors:
+  - Igor Kossov
+  published: '2026-01-13'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - drones
+  - fiber-optic
+  - fibre-optic
+  - weather
+  notes: Fibre freezes on spools and unreels badly; iced cable is brittle, snaps and sticks to obstacles; electronics rated
+    0-70 C lose 20-50% of signal to condensation; the Dronarium centre grounded its fibre drones in mid-January 2026.
+- id: euromaidan-2026-kossov-starlink-russian-drones
+  title: How Starlink made Russia's drones deadlier—and harder to jam
+  url: https://euromaidanpress.com/2026/02/03/why-starlink-makes-russian-drones-so-hard-to-stop/
+  publisher: Euromaidan Press
+  authors:
+  - Igor Kossov
+  published: '2026-02-03'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - starlink
+  - russia
+  notes: 'Starlink on Shahed, Molniya and BM-35. Ex-Antonov engineer Kryvolap: only a ''single-digit percentage'' of Russian
+    drones used it. Ukraine estimated about 30,000 active Starlink accounts to whitelist.'
+- id: euromaidan-2026-mukhina-dot-chain-500-units
+  title: Year ago, only 12 Ukrainian brigades could order weapons online. Now, 500 units participate in revolutionary program
+  url: https://euromaidanpress.com/2026/09/23/year-ago-only-12-ukrainian-brigades-could-order-weapons-online-now-500-units-participate-in-revolutionary-program/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-09-23'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - e-points
+  - procurement
+  notes: 'DOT-Chain Defence, Brave1 Market and the ''Army of Drones Bonus'': 500+ units (from 12 a year earlier) across the
+    forces, National Guard, border guard, police, SBU and HUR; about $1.9bn of equipment and 1.3m drones in the first year.
+    Shows the programme running after Fedorov''s dismissal.'
+- id: euromaidan-2026-mukhina-drone-line-880m
+  title: Ukraine's $880M Drone Line has turned Russian movement on frontline into death sentence in just 12 months
+  url: https://euromaidanpress.com/2026/03/04/ukraines-880m-drone-line-has-turned-russian-movement-on-frontline-into-death-sentence-in-just-12-months/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-03-04'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - drone-line
+  notes: 'MoD anniversary figures: the Drone Line started in March 2025 and cost $880m (Dutch co-funding); 1,000+ crews; about
+    30,000 Russians ''eliminated'' in winter 2025-26. The ''spring 2025'' date.'
+- id: euromaidan-2026-mukhina-syrskyi-fpv-ratio
+  title: Ukraine's drone output grew 12.7% month-on-month, but chief commander says don't relax
+  url: https://euromaidanpress.com/2026/06/11/ukraines-drone-output-grew-12-7-month-on-month-but-chief-commander-says-dont-relax/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-06-11'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - production
+  - fpv
+  notes: 'Syrskyi (monthly unmanned-systems meeting): 1.5:1 FPV advantage over Russia; drone output up 12.7% from April to
+    May 2026; about 180,000 confirmed targets struck in May; about 4,000 Shahed-types neutralised in May.'
+- id: euromaidan-2026-mukhina-vivaldi-ugv-drop
+  title: 'Ukraine is saving Donetsk Oblast with world''s first-of-its-kind operation: Vivaldi counteroffensive drops robots
+    directly from heavy bombers 10 kilometers behind Russian lines'
+  url: https://euromaidanpress.com/2026/09/21/for-first-time-in-war-ukraine-drops-small-robot-vehicles-behind-russian-lines-from-heavy-bombers-and-clears-125-square-kilometers-of-donetsk-oblast/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-09-21'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - counter-isr
+  - heavy-bomber
+  - operation-vivaldi
+  - ugv
+  notes: '3rd Army Corps says heavy bombers air-dropped kamikaze UGVs more than 10 km behind Russian lines. It claims 125+
+    km² cleared in two phases and 3,000+ Russian casualties. Biletskyi: ''drones and ground robots always go ahead'' of infantry.'
+- id: euromaidan-2026-murdoch-445000-intercepted
+  title: Ukraine has intercepted 445,000 Russian aerial targets since 2022, but cracks in the shield are starting to widen
+  url: https://euromaidanpress.com/2026/08/04/ukraine-has-intercepted-445000-russian-aerial-targets-since-2022/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Murdoch
+  published: '2026-08-04'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - shahed
+  - lancet
+  notes: 'Air Force statement of 2 Aug 2026, Feb 2022 to Aug 2026: 445,000+ aerial targets destroyed, including 65,618 Shaheds,
+    10,604 Lancets, 20,286 recon drones and 342,585 other drones. Official claim; no yearly breakdown.'
+- id: euromaidan-2026-murdoch-syrskyi-december
+  title: 'Syrskyi: Ukraine''s drones now destroy Russian troops faster than Putin can replace them'
+  url: https://euromaidanpress.com/2026/01/06/december-first-month-russian-losses-matched-recruitment/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Murdoch
+  published: '2026-01-06'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - usf
+  - russia
+  notes: 'Syrskyi: in Dec 2025 the USF ''neutralised'' about 33,000 Russians (video-confirmed), and Russian losses roughly
+    matched recruitment. 339,000 UAV missions and 2,100 UGV tasks that month; the USF is 2.2% of personnel. Russian drone
+    forces are about 80k, with 165.5k planned for 2026. The article wrongly dates the USF''s founding to June 2025.'
+- id: euromaidan-2026-stanovych-fedorov-dismissal
+  title: The Fedorov protesters lost. But they backed a man for what he built, not what he promised—and that may be new in
+    Ukraine
+  url: https://euromaidanpress.com/2026/08/20/the-fedorov-protesters-lost-but-they-backed-a-man-for-what-he-built-not-what-he-promised-and-that-may-be-new-in-ukraine/
+  publisher: Euromaidan Press
+  authors:
+  - Solomiia Stanovych
+  published: '2026-08-20'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - organization
+  - politics
+  notes: Fedorov dismissed as defence minister on 14 Jul 2026 amid conflict with then C-in-C Syrskyi; Yevhenii Khmara appointed
+    on 19 Aug 2026 (312 votes). Credits Fedorov with competitive procurement and 'robotization'.
+- id: euromaidan-2026-thomas-brovdi-102000
+  title: Ukraine's drone commander says his branch killed or wounded 102,000 Russians in 12 months
+  url: https://euromaidanpress.com/2026/06/11/magyar-brovdi-drone-forces-day-102000-russian-casualties/
+  publisher: Euromaidan Press
+  authors:
+  - Daniel Thomas
+  published: '2026-06-11'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - usf
+  - kill-claims
+  notes: 'Brovdi (USF): 102,000 Russians killed or wounded, 360,000 targets hit and 1.7m sorties in 12 months; strikes over
+    1,700 km deep. Self-reported unit claims.'
+- id: euromaidan-2026-thomas-hur-geran-production
+  title: Russia builds 3,000 jet drones monthly to counter Ukrainian interceptors, HUR says
+  url: https://euromaidanpress.com/2026/08/12/russia-geran-drones-production/
+  publisher: Euromaidan Press
+  authors:
+  - Daniel Thomas
+  published: '2026-08-12'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - jet-geran
+  - production
+  - russia
+  notes: 'HUR estimates about 3,000 Geran-4/5 a month; Geran-3 production has ceased. Beskrestnov: 95% of piston Shaheds stopped
+    in a documented May 2026 strike. Intelligence estimate.'
+- id: euromaidan-2026-vivdych-ng-fibre-70
+  title: '20% to 70%: Ukraine''s National Guard rewired its drone war around cables'
+  url: https://euromaidanpress.com/2026/09/09/20-to-70-ukraines-national-guard-rewired-its-drone-war-around-cables/
+  publisher: Euromaidan Press
+  authors:
+  - Taisiia Vivdych
+  published: '2026-09-09'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - fiber-optic
+  - ukrainian-adaptation
+  notes: 'National Guard commander Pivnenko: fibre-optic control now 70% of National Guard drones, up from about 20%; interceptor
+    crews doubled in six months; 243,000+ targets struck since Feb 2022.'
+- id: euromaidan-2026-vivdych-rassvet-windows
+  title: Six minutes in March, two hours by August. Russia's new satellite network may be the first comms system Ukraine can't
+    switch off
+  url: https://euromaidanpress.com/2026/09/28/for-years-ukraine-could-jam-or-switch-off-russias-battlefield-comms-rassvet-may-be-the-first-it-cant/
+  publisher: Euromaidan Press
+  authors:
+  - Taisiia Vivdych
+  published: '2026-09-28'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - c2
+  - rassvet
+  - russia
+  - russian-comms
+  - satellite
+  - starlink
+  notes: 'Rassvet (Bureau 1440): 32 satellites launched in March and July 2026, 292 planned by end-2027; coverage windows
+    from 6-10 minutes (March) to over an hour (late August); user terminals small enough for Geran-type drones. Beskrestnov,
+    Stepanets, HUR''s Skibitskyi.'
+- id: euromaidan-2026-zoria-jet-kill-rate-55
+  title: 'Ukraine''s jet-drone kill rate just hit 55%. Russia''s answer: $12 billion to make more of them'
+  url: https://euromaidanpress.com/2026/09/27/ukraines-jet-drone-kill-rate-just-hit-55-russias-answer-12-billion-to-make-more-of-them/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-09-27'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - jet-geran
+  - air-defence
+  - interceptors
+  notes: 'Ukraine intercepted 55% of jet drones in September 2026 (1,500+ of 2,730+). Jet output (~3,000/month) exceeded piston
+    output by August. Zelensky, citing HUR briefings on Russian documents: $12bn planned in 2027 for jet drones and loitering
+    munitions.'
+- id: euromaidan-2026-zoria-nk-shahed
+  aliases:
+  - euromaidanpress-2026-zoria-dprk-shaheds
+  title: The Kremlin calls mobilization talk 'nonsense'—Zelenskyy says it has already begun, with North Korean reinforcements
+  url: https://euromaidanpress.com/2026/09/29/the-kremlin-calls-mobilization-talk-nonsense-zelenskyy-says-it-has-already-begun-with-north-korean-reinforcements/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-09-29'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - industry
+  - north-korea
+  - production
+  - shahed
+  notes: 'Zelensky: ''North Korea has launched production of Shahed-type attack drones with Russian technical support'', up
+    from a June 2025 agreement to prepare production. Presidential claim.'
+- id: euromaidan-2026-zoria-russian-vampire-copies
+  title: Russia is deploying knockoffs of Ukraine's Vampire heavy bomber drones — and the 81st Brigade has already shot down
+    five
+  url: https://euromaidanpress.com/2026/03/06/russia-is-deploying-the-knockoffs-of-ukraines-vampire-heavy-bomber-drones-and-81st-brigade-has-already-shot-down-five/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-03-06'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - heavy-bomber
+  - russia
+  notes: 'Russian hexacopter copies nicknamed ''Baba Yaga'' fielded from 2025; the 81st Brigade shot down five. SkyFall Vampire:
+    up to 15 kg payload, 20 km range, about $8,500.'
+- id: euromaidanpress-2026-epoints-400-units
+  title: 'Ukraine turned combat into currency: more than 400 units now shop for their own weapons with points earned in battle'
+  url: https://euromaidanpress.com/2026/06/24/ukraine-turned-combat-into-currency-more-than-400-units-now-shop-for-their-own-weapons-with-points-earned-in-battle/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-06-24'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - brave1
+  - e-points
+  - gamification
+  - procurement
+  notes: 400+ units in the e-points programme; points now also reward reconnaissance, logistics and evacuation missions; updated
+    scheme tied to Brave1 Market from August 2025; 181,000+ items delivered by April 2026.
+- id: euromaidanpress-2026-vivdych-kill-zone-corps
+  title: Ukraine's eastern kill zone is 25 km deep - corps commander expects 30 by year's end
+  url: https://euromaidanpress.com/2026/07/03/ukraines-eastern-kill-zone-is-25-km-deep-corps-commander-expects-30-by-years-end/
+  publisher: Euromaidan Press
+  authors:
+  - Taisiia Vivdych
+  published: '2026-07-03'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - isr
+  - kill-zone
+  - tactics
+  notes: 'Brig. Gen. Lasiichuk (7th Air Assault Corps, Pokrovsk axis): kill zone 20-25 km on both sides, 30 km expected by
+    end-2026; drones 70-80% of damage vs under 30% for artillery; 60-70% of Russian infiltrators die before reaching Ukrainian
+    lines. A commander''s claims.'
+- id: fpri-2026-lee-putiata-rubicon
+  title: 'Inside Rubicon: The Structure of Russia''s Elite Drone Center'
+  url: https://www.fpri.org/article/2026/06/inside-rubicon-the-structure-of-russias-elite-drone-center/
+  publisher: Foreign Policy Research Institute
+  authors:
+  - Rob Lee
+  - Dmytro Putiata
+  published: '2026-06-12'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - drones
+  - isr
+  - logistics
+  - organization
+  - rubikon
+  - russia
+  notes: Rubikon founded 2 Aug 2024. It grew from about 1,450 personnel (Mar 2025) to about 5,000 (spring 2026), with 9,000
+    authorized. A 474-person detachment has FPV, fixed-wing, Supercam/Lancet recon-strike and counter-UAS elements. Russian
+    USF targets 165,000 personnel by end of 2026.
+- id: isis-2026-anokhin-shahed-2025
+  title: A Comprehensive Analytical Review of Russian Shahed-type UAVs Deployment against Ukraine in 2025
+  url: https://isis-online.org/isis-reports/a-comprehensive-analytical-review-of-russian-shahed-type-uavs-deployment-against-ukraine-in-2025
+  publisher: Institute for Science and International Security
+  authors:
+  - Igor Anokhin
+  published: '2026-01-22'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - shahed
+  - long-range-strike
+  - air-defence
+  - russia
+  notes: Russia launched 54,538 Shahed-type UAVs in 2025, about 40% of them Gerbera/Parody decoys. July peak 6,297; record
+    night 7 Sep 2025 with 810. Hit rate rose from 2–3% to about 17% by December (28% for strike variants). Jet Geran-4/5 appear
+    late 2025. Built on Ukrainian Air Force data.
+- id: isis-2026-anokhin-shahed-monthly
+  title: Monthly Analysis of Russian Shahed 136 Deployment Against Ukraine (August 2025 - June 2026)
+  url: https://isis-online.org/isis-reports/monthly-analysis-of-russian-shahed-136-deployment-against-ukraine
+  publisher: Institute for Science and International Security
+  authors:
+  - Igor Anokhin
+  published: '2026-07-07'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - crpa
+  - interceptors
+  - shahed
+  notes: Built from Air Force figures. Monthly launches from 4,128 (Aug 2025) to a record 8,161 (May 2026); overall hit rate
+    from 16.47% (Aug 2025) to 6.65% (May 2026). Jets only 0.5-1.5% of launches in May 2026. Interceptors flew about 6,300
+    sorties and killed 1,500+ UAVs in Feb 2026.
+- id: isis-2026-anokhin-shahed-monthly-sep
+  title: Monthly Analysis of Russian Shahed 136 Deployment Against Ukraine - Updated
+  url: https://isis-online.org/isis-reports/monthly-analysis-of-russian-shahed-136-deployment-against-ukraine-updated
+  publisher: Institute for Science and International Security
+  authors:
+  - Igor Anokhin
+  published: '2026-09-08'
+  accessed: '2026-09-30'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - jet-geran
+  - shahed
+  notes: 'From about 5 May 2026 the Air Force stopped consistently publishing Shahed/Geran counts, so later months are reconstructions.
+    August 2026: 4,288 UAVs shot down or suppressed, about 716 hits (13.86%), with 57-62% of genuine Shahed/Geran use assessed
+    as jet-powered.'
+- id: isw-2026-feb-26-assessment
+  title: Russian Offensive Campaign Assessment, February 26, 2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-february-26-2026/
+  publisher: ISW
+  authors: []
+  published: '2026-02-26'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - c2
+  - drones
+  - fiber-optic
+  - kill-zone
+  - russia
+  - russian-comms
+  - starlink
+  notes: 'Live site 403; read via the Wayback Machine. Dates the Starlink block to 1 Feb. Biletsky (3rd Army Corps, via The
+    Independent): outages cut Russian drone effectiveness by roughly 20-40% in two weeks; partial recovery in 1-2 months,
+    full recovery not for 3-5 years. ISW saw reduced tempo and depth of Russian tactical and mid-range strikes; workarounds
+    (SIM cards, relay drones) incomplete. Russian fibre FPVs up to 60 km since spring 2025; first fibre FPV at Kharkiv''s
+    outskirts on 25 Feb. Relays Russian industry reports of Chinese fibre prices rising from 16 to 40 yuan/km.'
 - id: justsecurity-2026-bidochko-drone-superpower
-  title: "How Ukraine Became a Drone Superpower"
+  title: How Ukraine Became a Drone Superpower
   url: https://www.justsecurity.org/138164/ukraine-drone-superpower/
   publisher: Just Security
-  authors: [Lesia Bidochko]
-  published: "2026-06-01"
-  accessed: "2026-09-28"
+  authors:
+  - Lesia Bidochko
+  published: '2026-06-01'
+  accessed: '2026-09-28'
   type: think-tank
   origin: western
   reliability: medium
   verified: fetched
-  eras: [e1-invasion, e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [production, costs, interceptors, supply-chain]
-  notes: "Ukrainian author on a US policy site. FPV output grew from 3–5k (2022) to about 3m (2025), with 8m+/yr capacity. FPVs cost $300–400, Sting $2,500, Shahed about $50k. Up to 1,000 interceptors/day in early 2026, and interceptors made about 70% of Shahed kills around Kyiv in Feb 2026. 89% of makers rely on Chinese parts."
-
-- id: rbc-2026-fedorov-drone-line
-  title: "Fedorov outlines results of Drone Line project"
-  url: https://newsukraine.rbc.ua/news/ukraine-s-drone-line-units-strike-every-fourth-1775751016.html
-  publisher: RBC-Ukraine
-  authors: []
-  published: "2026-04-09"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [drone-line, kill-zone, interceptors, organization]
-  notes: "Defence Minister Fedorov: Drone Line has 1,000+ crews, makes 1 in 4 front-line kills and aims at a 10–15 km kill zone. In March 2026 it struck 10,500+ Russian troops, and interceptors destroyed 33,000+ Russian UAVs. Claims a 1.3:1 strike-drone advantage. Official claims."
-
-- id: militarnyi-2026-zirka
-  title: "ZIRKA Interceptor, Based on the Nemesis Brigade's Experience, Unveiled in Ukraine"
-  url: https://militarnyi.com/en/news/zirka-interceptor-uav-unveiled-in-ukraine/
-  publisher: Militarnyi
-  authors: []
-  published: "2026-06-30"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [interceptors, autonomy, machine-vision]
-  notes: "ZIRKA (NOCTIS / Vyriy Industries, with input from the Darknode battalion of the 412th Nemesis brigade): 340+ km/h, 6 km ceiling, 30 km radius, 20 min endurance, up to $2,000, automatic detection, tracking and guidance. Specs are the manufacturer's."
-
-- id: pravda-2026-berdysh-russian-heavy-drone
-  title: "Russians unveil heavy drone described as equivalent of Ukraine's Baba Yaga – photo"
-  url: https://www.pravda.com.ua/eng/news/2026/05/26/8036480/
-  publisher: Ukrainska Pravda
-  authors: []
-  published: "2026-05-26"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: low
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [russia, heavy-bomber]
-  notes: "Russian 'Berdysh' heavy multicopter (20 kg payload, 25 km, Ural Drone Factory), relayed from Russian Telegram, so the specs are unverified. Notes reports of Russians repairing captured Ukrainian Vampire bombers."
-
-- id: united24-2026-ugv-missions
-  title: "Ukraine's Ground Robots Complete 112,000 Logistics and Evacuation Missions in 2026"
-  url: https://united24media.com/war-in-ukraine/ukraines-ground-robots-complete-112000-logistics-and-evacuation-missions-in-2026-22306
-  publisher: United24 Media
-  authors: [Dariia Mykhailenko]
-  published: "2026-09-07"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [ugv, logistics, casevac]
-  notes: "MoD/DELTA data: monthly UGV logistics and casevac missions rose from 7,511 (Jan 2026) to 25,143 (Aug 2026), about 112k in total. Plan to build 50,000+ UGVs in 2026. State-run outlet."
-
-- id: kyivindependent-2026-farrell-rubicon-vivaldi
-  title: "Russia pulls elite drone unit from northern Donetsk Oblast after losses from Operation Vivaldi, Ukraine's military says"
-  url: https://kyivindependent.com/russia-pulls-elite-drone-unit-from-northern-donetsk-oblast-after-losses-from-operation-vivaldi-military-says/
-  publisher: Kyiv Independent
-  authors: [Francis Farrell]
-  published: "2026-09-18"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [rubikon, counter-drone, operation-vivaldi]
-  notes: "3rd Army Corps claims it wrecked Rubikon's logistics, ammunition, launch sites and experienced operators near Lyman, forcing Russia to withdraw the unit. Unit claim, relayed by Kyiv Independent."
-
-- id: euromaidan-2026-mukhina-vivaldi-ugv-drop
-  title: "Ukraine is saving Donetsk Oblast with world's first-of-its-kind operation: Vivaldi counteroffensive drops robots directly from heavy bombers 10 kilometers behind Russian lines"
-  url: https://euromaidanpress.com/2026/09/21/for-first-time-in-war-ukraine-drops-small-robot-vehicles-behind-russian-lines-from-heavy-bombers-and-clears-125-square-kilometers-of-donetsk-oblast/
-  publisher: Euromaidan Press
-  authors: [Olena Mukhina]
-  published: "2026-09-21"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [ugv, heavy-bomber, operation-vivaldi]
-  notes: "3rd Army Corps says heavy bombers air-dropped kamikaze UGVs more than 10 km behind Russian lines. It claims 125+ km² cleared in two phases and 3,000+ Russian casualties. Biletskyi: 'drones and ground robots always go ahead' of infantry."
-
-- id: united24-2026-place-jet-gerans
-  title: "Jet-Powered Shaheds and Banderols: Why Russia's New Drones Are Harder to Stop"
-  url: https://united24media.com/war-in-ukraine/why-russias-new-jet-powered-drones-are-harder-to-stop-22666
-  publisher: United24 Media
-  authors: [Joseph Place]
-  published: "2026-09-21"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [shahed, jet-geran, air-defence, russia]
-  notes: "Specs for Geran-3/4/5 and the S8000 Banderol. About 2,800 jet drones launched in Aug 2026 versus about 350 in June. Air Force (Ihnat): only about 60% are intercepted. Says Russia builds about 3,000 Geran-4/5 a month, which is HUR's estimate (see euromaidan-2026-thomas-hur-geran-production)."
-
+  eras:
+  - e1-invasion
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - production
+  - costs
+  - interceptors
+  - supply-chain
+  notes: Ukrainian author on a US policy site. FPV output grew from 3–5k (2022) to about 3m (2025), with 8m+/yr capacity.
+    FPVs cost $300–400, Sting $2,500, Shahed about $50k. Up to 1,000 interceptors/day in early 2026, and interceptors made
+    about 70% of Shahed kills around Kyiv in Feb 2026. 89% of makers rely on Chinese parts.
 - id: kaggle-2026-ivaniuk-missile-attacks
-  title: "Massive Missile Attacks on Ukraine"
+  title: Massive Missile Attacks on Ukraine
   url: https://www.kaggle.com/datasets/piterfm/massive-missile-attacks-on-ukraine
-  publisher: "Kaggle"
-  authors: ["Petro Ivaniuk"]
-  published: "2026-09-26"
-  accessed: "2026-09-28"
+  publisher: Kaggle
+  authors:
+  - Petro Ivaniuk
+  published: '2026-09-26'
+  accessed: '2026-09-28'
   type: dataset
   origin: ukrainian
   reliability: high
   verified: fetched
-  eras: [e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [shahed, missiles, air-defence, dataset]
-  notes: "Hand-compiled from Ukrainian Air Force and General Staff posts since Sep 2022, CC BY-NC-SA 4.0 (version 212, updated 26 Sep 2026). Metadata read via the Kaggle API; figures computed on 2026-09-28 from a GitHub mirror of missile_attacks_daily.csv running to 18 Apr 2026, by summing launched/destroyed for rows whose model contains 'Shahed', by month. Yearly Shahed launches: 409 (Sep-Dec 2022), 3,123 (2023), 11,081 (2024), 54,796 (2025). Where only 'destroyed' was published, 'launched' is a minimum; from July 2024 EW-'lost' drones are counted separately, which lowers the 'destroyed' share. Cross-checks: 2025 total matches ISIS (54,538); July 2024/2025 match Kyiv Independent (423/6,129)."
-
-- id: csis-2025-hollenbeck-shahed-cost-effectiveness
-  title: "Calculating the Cost-Effectiveness of Russia's Drone Strikes"
-  url: https://www.csis.org/analysis/calculating-cost-effectiveness-russias-drone-strikes
-  publisher: "CSIS"
-  authors: ["Neil Hollenbeck", "Muhammed Hamza Altaf", "Faith Avila", "Javier Ramirez", "Anurag Sharma", "Benjamin Jensen"]
-  published: "2025-02-19"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23, e6-avdiivka-attrition, e7-kursk-pokrovsk]
-  topics: [shahed, cost, air-defence]
-  notes: "Over 14,700 one-way attack drones (mostly Shaheds) from 28 Sep 2022 to 28 Dec 2024, about 90% shot down and under 10% reaching targets; Sep-Dec 2024 exceeded the preceding 23 months combined. Assumes $35,000 per Shahed (range $20k-80k), about $350,000 per target struck. Caveat: decoys among 'Shaheds' would make Russia more cost-effective."
-
-- id: csis-2025-bondar-ai-autonomy
-  title: "Ukraine's Future Vision and Current Capabilities for Waging AI-Enabled Autonomous Warfare"
-  url: https://www.csis.org/analysis/ukraines-future-vision-and-current-capabilities-waging-ai-enabled-autonomous-warfare
-  publisher: "CSIS"
-  authors: ["Kateryna Bondar"]
-  published: "2025-03-06"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [autonomy, ai, fpv, swarms]
-  notes: "FPV missions succeed only 10-15% of the time without autonomy; autonomous terminal navigation gives 70-80%, and 1-2 drones per target instead of 8-9. Lock-on range 300 m to about 1 km (2 km best case; ZIR up to 3 km). Ukraine began buying 10,000 AI-enhanced drones in 2024 out of about 2m built (96.2% domestic). Swarming is 'small-scale experiments'; true autonomy 'not yet present', humans stay in the loop."
-
-- id: isis-2026-anokhin-shahed-monthly
-  title: "Monthly Analysis of Russian Shahed 136 Deployment Against Ukraine (August 2025 - June 2026)"
-  url: https://isis-online.org/isis-reports/monthly-analysis-of-russian-shahed-136-deployment-against-ukraine
-  publisher: "Institute for Science and International Security"
-  authors: ["Igor Anokhin"]
-  published: "2026-07-07"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [shahed, air-defence, interceptors]
-  notes: "Built from Air Force figures. Monthly launches from 4,128 (Aug 2025) to a record 8,161 (May 2026); overall hit rate from 16.47% (Aug 2025) to 6.65% (May 2026). Jets only 0.5-1.5% of launches in May 2026. Interceptors flew about 6,300 sorties and killed 1,500+ UAVs in Feb 2026."
-
-- id: isw-2026-feb-26-assessment
-  title: "Russian Offensive Campaign Assessment, February 26, 2026"
-  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-february-26-2026/
-  publisher: "ISW"
+  eras:
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - shahed
+  - missiles
+  - air-defence
+  - dataset
+  notes: 'Hand-compiled from Ukrainian Air Force and General Staff posts since Sep 2022, CC BY-NC-SA 4.0 (version 212, updated
+    26 Sep 2026). Metadata read via the Kaggle API; figures computed on 2026-09-28 from a GitHub mirror of missile_attacks_daily.csv
+    running to 18 Apr 2026, by summing launched/destroyed for rows whose model contains ''Shahed'', by month. Yearly Shahed
+    launches: 409 (Sep-Dec 2022), 3,123 (2023), 11,081 (2024), 54,796 (2025). Where only ''destroyed'' was published, ''launched''
+    is a minimum; from July 2024 EW-''lost'' drones are counted separately, which lowers the ''destroyed'' share. Cross-checks:
+    2025 total matches ISIS (54,538); July 2024/2025 match Kyiv Independent (423/6,129).'
+- id: kmu-2025-950-interceptors
+  title: 'Nearly 950 anti-Shahed interceptor drones per day: MoD''s Defence Procurement Agency increased deliveries to the
+    military in December'
+  url: https://www.kmu.gov.ua/en/news/maizhe-950-protyshakhednykh-droniv-na-dobu-aoz-minoborony-u-hrudni-zbilshyla-postachannia-perekhopliuvachiv-do-viiska
+  publisher: Cabinet of Ministers of Ukraine
   authors: []
-  published: "2026-02-26"
-  accessed: "2026-09-28"
-  type: think-tank
-  origin: western
-  reliability: high
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [starlink, fiber-optic, kill-zone, russia]
-  notes: "Live site 403; read via the Wayback Machine. Dates the Starlink block to 1 Feb. Biletsky (3rd Army Corps, via The Independent): outages cut Russian drone effectiveness by roughly 20-40% in two weeks; partial recovery in 1-2 months, full recovery not for 3-5 years. ISW saw reduced tempo and depth of Russian tactical and mid-range strikes; workarounds (SIM cards, relay drones) incomplete. Russian fibre FPVs up to 60 km since spring 2025; first fibre FPV at Kharkiv's outskirts on 25 Feb. Relays Russian industry reports of Chinese fibre prices rising from 16 to 40 yuan/km."
-
-- id: kyivindependent-2025-goncharova-drone-line-launch
-  title: "Ukraine to launch 'Drone Line' project to enhance battlefield operations"
-  url: https://kyivindependent.com/ukraine-to-launch-drone-line-project-to-enhance-battlefield-operations/
-  publisher: "Kyiv Independent"
-  authors: ["Olena Goncharova"]
-  published: "2025-02-09"
-  accessed: "2026-09-28"
-  type: news
+  published: '2025-12-18'
+  accessed: '2026-09-28'
+  type: official
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [drone-line, organization]
-  notes: "Defence Ministry (Umerov) announced the Drone Line on 9 Feb 2025: K-2, Achilles, Rarog, Magyar's Birds and Phoenix (Pomsta brigade) in the first phase; aim of a 10-15 km kill zone. Settles the founding-date conflict: this is the announcement."
-
-- id: kyivindependent-2025-hodunova-usf-drone-line-group
-  title: "Ukraine unites Unmanned Systems Forces with top 'Drone Line' units under new command group"
-  url: https://kyivindependent.com/ukraine-creates-new-grouping-of-unmanned-systems-forces/
-  publisher: "Kyiv Independent"
-  authors: ["Kateryna Hodunova"]
-  published: "2025-06-20"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e6-avdiivka-attrition, e8-drone-kill-zone]
-  topics: [drone-line, usf, organization]
-  notes: "On 20 Jun 2025 the USF and the Drone Line units were put under one command group led by Brovdi. This is the source of the 'June 2025' date. The USF became a separate branch in June 2024 (Sukharevskyi appointed 10 Jun 2024, dismissed 3 Jun 2025)."
-
-- id: euromaidan-2026-mukhina-drone-line-880m
-  title: "Ukraine's $880M Drone Line has turned Russian movement on frontline into death sentence in just 12 months"
-  url: https://euromaidanpress.com/2026/03/04/ukraines-880m-drone-line-has-turned-russian-movement-on-frontline-into-death-sentence-in-just-12-months/
-  publisher: "Euromaidan Press"
-  authors: ["Olena Mukhina"]
-  published: "2026-03-04"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [drone-line]
-  notes: "MoD anniversary figures: the Drone Line started in March 2025 and cost $880m (Dutch co-funding); 1,000+ crews; about 30,000 Russians 'eliminated' in winter 2025-26. The 'spring 2025' date."
-
-- id: kyivindependent-2025-zadorozhnyy-russia-2m-fpv
-  title: "Russia plans to produce 2 million FPV drones in 2025, Ukrainian intelligence says"
-  url: https://kyivindependent.com/russia-aims-to-produce-2-million-fpv-drones-in-2025-ukrainian-intelligence-says/
-  publisher: "Kyiv Independent"
-  authors: ["Tim Zadorozhnyy"]
-  published: "2025-06-05"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [production, russia, fpv]
-  notes: "SZRU spokesman Aleksandrov (to Politico): Russia aims for 2m FPVs, 30,000 long-range drones and 30,000 decoys in 2025, relying on Chinese components. Intelligence claim."
-
-- id: kyivindependent-2025-zadorozhnyy-79000-shahed
-  title: "Russia aims to build 79,000 Shahed-type drones in 2025, Ukraine's military intelligence says"
-  url: https://kyivindependent.com/russia-aims-to-build-79-000-shahed-type-drones-in-2025/
-  publisher: "Kyiv Independent"
-  authors: ["Tim Zadorozhnyy"]
-  published: "2025-08-13"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e6-avdiivka-attrition, e8-drone-kill-zone]
-  topics: [production, russia, shahed]
-  notes: "HUR deputy head Skibitskyi (12 Aug 2025): 79,000 Shahed-types planned for 2025, airframe, engine and navigation now Russian-made except chips. Air Force: 6,129 launched in July 2025 (record), 5,337 in June, 423 in July 2024."
-
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - interceptors
+  - procurement
+  - production
+  notes: 'Official: an average of nearly 950 anti-Shahed interceptors delivered per day in Dec 2025, with 10+ contracted makers,
+    bought through DOT-Chain Defence. Deliveries, not kills.'
 - id: kyivindependent-2023-farrell-lancet
-  title: "How Russia's homegrown Lancet drone became so feared in Ukraine"
+  title: How Russia's homegrown Lancet drone became so feared in Ukraine
   url: https://kyivindependent.com/how-russias-homegrown-lancet-drone-became-so-feared-in-ukraine/
-  publisher: "Kyiv Independent"
-  authors: ["Francis Farrell"]
-  published: "2023-11-08"
-  accessed: "2026-09-28"
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2023-11-08'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e4-bakhmut, e5-counteroffensive-23]
-  topics: [lancet, loitering-munitions, russia]
-  notes: "Lancets destroyed a MiG-29 and an Su-25 at Dovhyntseve (about 65 km from Russian-held ground) in autumn 2023; cued by Orlan-10/Supercam; nets as the last-ditch defence. Izdeliye-53 (tube-launched, claimed autonomous and swarm-capable) first claimed in use on 21 Oct 2023; HUR's Yusov (3 Nov) saw no evidence of mass use."
-
-- id: euromaidan-2023-shandra-lancet-new-model
-  title: "Russia's new Lancet suicide drone model evades Ukraine's defenses"
-  url: https://euromaidanpress.com/2023/11/10/russias-new-lancet-suicide-drone-model-evades-ukraines-defenses/
-  publisher: "Euromaidan Press"
-  authors: ["Alya Shandra"]
-  published: "2023-11-10"
-  accessed: "2026-09-28"
+  eras:
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - lancet
+  - loitering-munitions
+  - russia
+  notes: Lancets destroyed a MiG-29 and an Su-25 at Dovhyntseve (about 65 km from Russian-held ground) in autumn 2023; cued
+    by Orlan-10/Supercam; nets as the last-ditch defence. Izdeliye-53 (tube-launched, claimed autonomous and swarm-capable)
+    first claimed in use on 21 Oct 2023; HUR's Yusov (3 Nov) saw no evidence of mass use.
+- id: kyivindependent-2025-goncharova-drone-line-launch
+  title: Ukraine to launch 'Drone Line' project to enhance battlefield operations
+  url: https://kyivindependent.com/ukraine-to-launch-drone-line-project-to-enhance-battlefield-operations/
+  publisher: Kyiv Independent
+  authors:
+  - Olena Goncharova
+  published: '2025-02-09'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e5-counteroffensive-23]
-  topics: [lancet, loitering-munitions, russia]
-  notes: "New Lancet model pre-detonates its shaped charge to defeat nets and cage armour (Air Force's Ihnat, Militarnyi, LIGA). Lancet-3 about 12 kg, Lancet-1 about 5 kg; estimated cost about $35,000."
-
-- id: euromaidan-2026-murdoch-445000-intercepted
-  title: "Ukraine has intercepted 445,000 Russian aerial targets since 2022, but cracks in the shield are starting to widen"
-  url: https://euromaidanpress.com/2026/08/04/ukraine-has-intercepted-445000-russian-aerial-targets-since-2022/
-  publisher: "Euromaidan Press"
-  authors: ["Benjamin Murdoch"]
-  published: "2026-08-04"
-  accessed: "2026-09-28"
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - drone-line
+  - organization
+  notes: 'Defence Ministry (Umerov) announced the Drone Line on 9 Feb 2025: K-2, Achilles, Rarog, Magyar''s Birds and Phoenix
+    (Pomsta brigade) in the first phase; aim of a 10-15 km kill zone. Settles the founding-date conflict: this is the announcement.'
+- id: kyivindependent-2025-hodunova-usf-drone-line-group
+  title: Ukraine unites Unmanned Systems Forces with top 'Drone Line' units under new command group
+  url: https://kyivindependent.com/ukraine-creates-new-grouping-of-unmanned-systems-forces/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Hodunova
+  published: '2025-06-20'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [air-defence, shahed, lancet]
-  notes: "Air Force statement of 2 Aug 2026, Feb 2022 to Aug 2026: 445,000+ aerial targets destroyed, including 65,618 Shaheds, 10,604 Lancets, 20,286 recon drones and 342,585 other drones. Official claim; no yearly breakdown."
-
-- id: euromaidan-2026-katola-molniya-self-targeting
-  title: "A Russian drone chose its own target and killed three. The code that told it what to look for was readable"
-  url: https://euromaidanpress.com/2026/08/25/a-russian-drone-chose-its-own-target-and-killed-three-the-code-that-told-it-what-to-look-for-was-readable/
-  publisher: "Euromaidan Press"
-  authors: ["Zoriana Katola"]
-  published: "2026-08-25"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [autonomy, ai, molniya, russia]
-  notes: "A Molniya with an Nvidia Jetson Orin module picked its own target near a Zaporizhzhia gas station on 6 Jul 2026, killing three civilians; described as the first documented self-targeting Russian drone kill. Jetsons found in V2U, Lancet, Klin and S-71 since June 2025. Comment from CSIS's Bondar."
-
-- id: euromaidan-2025-kirichenko-ai-swarms
-  title: "Ukraine's AI drones have 18 months to outpace Russia in existential 'ruthless swarm' race"
-  url: https://euromaidanpress.com/2025/09/19/ukraine-russia-drone-ai-swarms
-  publisher: "Euromaidan Press"
-  authors: ["David Kirichenko"]
-  published: "2025-09-19"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [autonomy, swarms, ai]
-  notes: "Swarmer software used on 'over a hundred' swarm missions. Brave1 AI head Makarchuk: hit share 'constantly decreasing'; simple AI targeting about $150 per drone. Russian V2U seen in groups of six with onboard AI and 4G modem. 100+ Ukrainian firms on guidance."
-
-- id: euromaidan-2026-zoria-russian-vampire-copies
-  title: "Russia is deploying knockoffs of Ukraine's Vampire heavy bomber drones — and the 81st Brigade has already shot down five"
-  url: https://euromaidanpress.com/2026/03/06/russia-is-deploying-the-knockoffs-of-ukraines-vampire-heavy-bomber-drones-and-81st-brigade-has-already-shot-down-five/
-  publisher: "Euromaidan Press"
-  authors: ["Yuri Zoria"]
-  published: "2026-03-06"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [heavy-bomber, russia]
-  notes: "Russian hexacopter copies nicknamed 'Baba Yaga' fielded from 2025; the 81st Brigade shot down five. SkyFall Vampire: up to 15 kg payload, 20 km range, about $8,500."
-
-- id: euromaidan-2026-axe-bomber-drones
-  title: "FPV drones get all the attention. Ukraine's reusable heavy bombers are doing the real killing"
-  url: https://euromaidanpress.com/2026/02/13/bomber-drones/
-  publisher: "Euromaidan Press"
-  authors: ["David Axe"]
-  published: "2026-02-13"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [heavy-bomber, cost]
-  notes: "SkyFall makes 100,000 bombers a year at $8,500 (about 16 FPVs); three or four grenades a sortie; a bomber may fly a dozen sorties before loss, so it is cheaper per mission than a one-use FPV. Maker figures via a columnist."
-
-- id: euromaidan-2022-shark-himars
-  title: "Ukraine's new UAV Shark will direct HIMARS fire under strong electronic warfare"
-  url: https://euromaidanpress.com/2022/10/27/ukraines-new-uav-shark-will-direct-himars-fire-under-strong-electronic-warfare/
-  publisher: "Euromaidan Press"
-  authors: []
-  published: "2022-10-27"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e3-counteroffensives-22]
-  topics: [isr, fixed-wing]
-  notes: "Ukrspecsystems Shark: 60 km link, 2+ h, 70-90 km/h cruise (150 max), 10 kg, 1.91 m span, 30x EO zoom, catapult launch, parachute recovery; built to spot for HIMARS under EW. First combat footage Jan 2023."
-
-- id: militarnyi-2026-shark-m
-  title: "Ukrspecsystems Unveils Upgraded SHARK-M UAV"
-  url: https://militarnyi.com/en/news/ukrspecsystems-unveils-upgraded-shark-m-uav/
-  publisher: "Militarnyi"
-  authors: []
-  published: "2026"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [isr, fixed-wing]
-  notes: "Shark-M: up to 7 h, 180 km link, 420 km route, 3,000 m ceiling, 14.5 kg MTOW; detects targets at 35 km by day and 14 km at night; GNSS-denied launch. Maker specs."
-
-- id: deviro-2026-leleka
-  title: "Leleka unmanned aerial system ISR"
-  url: https://deviro.ua/produkciya/leleka/?lang=en
-  publisher: "Deviro"
-  authors: []
-  published: unknown
-  accessed: "2026-09-28"
-  type: official
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e1-invasion, e8-drone-kill-zone]
-  topics: [isr, fixed-wing]
-  notes: "Maker page: in AFU service since 2019; up to 5 h, 80 km combat radius, 340 km route, 3,500 m, two jam-resistant links, GPS-free mode, 100x day zoom plus thermal. Deviro's news (28 Jan 2026) says it received the most orders for recon fixed-wings in 2025. Maker claims, so medium."
-
-- id: athlonavia-2026-furia
-  title: "A1-CM Furia Unmanned Aerial System"
-  url: https://athlonavia.com/en/products/a1-sm-furia/
-  publisher: "Athlon Avia"
-  authors: []
-  published: unknown
-  accessed: "2026-09-28"
-  type: official
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e1-invasion]
-  topics: [isr, fixed-wing]
-  notes: "Maker page: built since 2014, adopted by the AFU in 2020 after state trials; flying wing, 6 kg, 2 m span, at least 50 km operational range, up to 4 h, 65 km/h, 200 km route, tactical depth up to 70 km; three UAVs per system."
-
-- id: euromaidan-2024-mukhina-hur-magura-ships
-  title: "Ukraine's Intelligence agency says Russian attempts to copy Ukrainian naval drones likely to fail"
-  url: https://euromaidanpress.com/2024/07/21/ukraines-intelligence-agency-says-russian-attempts-to-copy-ukrainian-naval-drones-likely-to-fail/
-  publisher: "Euromaidan Press"
-  authors: ["Olena Mukhina"]
-  published: "2024-07-21"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e6-avdiivka-attrition]
-  topics: [naval-drones]
-  notes: "HUR (Yerin): Magura V5 hit Ivan Khurs, Sergey Kotov, Akula, Serna, Ivanovets, Tsezar Kunikov and patrol/landing boats, for over $500m of damage. Official claims. Replaces the Wikipedia citation."
-
-- id: euromaidan-2025-kravchuk-magura-su30
-  title: "Ukraine claims first-ever $50 million fighter jet kill with sea drone"
-  url: https://euromaidanpress.com/2025/05/03/ukraine-claims-first-ever-50-million-fighter-jet-kill-with-sea-drone/
-  publisher: "Euromaidan Press"
-  authors: ["Vira Kravchuk"]
-  published: "2025-05-03"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e7-kursk-pokrovsk, e8-drone-kill-zone]
-  topics: [naval-drones, air-defence]
-  notes: "HUR (with Group 13 and SBU): a missile from a Magura V5 downed an Su-30 near Novorossiysk on 2 May 2025; a Magura V5 destroyed two Mi-8s on 31 Dec 2024. Official claims."
-
-- id: kyivindependent-2025-zadorozhnyy-kairos-virat
-  title: "'Successful' Ukrainian naval drone strike disables 2 Russian shadow fleet tankers, source says"
-  url: https://kyivindependent.com/ukrainian-naval-drones-behind-successful-strike-on-2-russian-shadow-fleet-tankers/
-  publisher: "Kyiv Independent"
-  authors: ["Tim Zadorozhnyy"]
-  published: "2025-11-29"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [naval-drones, shadow-fleet]
-  notes: "SBU source: Sea Baby drones disabled the empty Gambia-flagged tankers Kairos and Virat off Turkey on 28 Nov 2025, jointly with the Navy. Turkey protested the strikes in its EEZ."
-
+  eras:
+  - e6-avdiivka-attrition
+  - e8-drone-kill-zone
+  topics:
+  - drone-line
+  - usf
+  - organization
+  notes: On 20 Jun 2025 the USF and the Drone Line units were put under one command group led by Brovdi. This is the source
+    of the 'June 2025' date. The USF became a separate branch in June 2024 (Sukharevskyi appointed 10 Jun 2024, dismissed
+    3 Jun 2025).
 - id: kyivindependent-2025-myronyshena-sub-sea-baby
-  title: "Ukraine claims first Sea Baby underwater drone strike on Russian submarine"
+  title: Ukraine claims first Sea Baby underwater drone strike on Russian submarine
   url: https://kyivindependent.com/ukraine-claims-first-underwater-drone-sea-baby-strike-on-russian-submarine-knocking-it-out-of-service/
-  publisher: "Kyiv Independent"
-  authors: ["Tania Myronyshena"]
-  published: "2025-12-15"
-  accessed: "2026-09-28"
+  publisher: Kyiv Independent
+  authors:
+  - Tania Myronyshena
+  published: '2025-12-15'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [naval-drones]
-  notes: "SBU: underwater Sea Baby drones hit a Kilo-class (Varshavyanka) submarine with four Kalibr launchers in Novorossiysk on 15 Dec 2025, putting it out of service; joint with the Navy. SBU claim."
-
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  notes: 'SBU: underwater Sea Baby drones hit a Kilo-class (Varshavyanka) submarine with four Kalibr launchers in Novorossiysk
+    on 15 Dec 2025, putting it out of service; joint with the Navy. SBU claim.'
+- id: kyivindependent-2025-york-spiderweb
+  title: Operation Spiderweb — everything we know about Ukraine's 'audacious' attack on Russia's heavy bombers
+  url: https://kyivindependent.com/operation-spiderweb-everything-we-know-about-ukraines-audacious-attack-on-russias-heavy-bombers/
+  publisher: Kyiv Independent
+  authors:
+  - Chris York
+  published: '2025-06-01'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - fpv
+  - deep-strike
+  - sbu
+  notes: '1 June 2025: 117 FPVs launched from trucks at Russian bomber bases. The SBU and General Staff claim 41 aircraft
+    hit, about $7bn in damage and 34% of strategic missile carriers disabled. Claims are Ukrainian; independent confirmation
+    is lower.'
+- id: kyivindependent-2025-zadorozhnyy-79000-shahed
+  title: Russia aims to build 79,000 Shahed-type drones in 2025, Ukraine's military intelligence says
+  url: https://kyivindependent.com/russia-aims-to-build-79-000-shahed-type-drones-in-2025/
+  publisher: Kyiv Independent
+  authors:
+  - Tim Zadorozhnyy
+  published: '2025-08-13'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  - e8-drone-kill-zone
+  topics:
+  - production
+  - russia
+  - shahed
+  notes: 'HUR deputy head Skibitskyi (12 Aug 2025): 79,000 Shahed-types planned for 2025, airframe, engine and navigation
+    now Russian-made except chips. Air Force: 6,129 launched in July 2025 (record), 5,337 in June, 423 in July 2024.'
+- id: kyivindependent-2025-zadorozhnyy-kairos-virat
+  title: '''Successful'' Ukrainian naval drone strike disables 2 Russian shadow fleet tankers, source says'
+  url: https://kyivindependent.com/ukrainian-naval-drones-behind-successful-strike-on-2-russian-shadow-fleet-tankers/
+  publisher: Kyiv Independent
+  authors:
+  - Tim Zadorozhnyy
+  published: '2025-11-29'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - naval-drones
+  - shadow-fleet
+  notes: 'SBU source: Sea Baby drones disabled the empty Gambia-flagged tankers Kairos and Virat off Turkey on 28 Nov 2025,
+    jointly with the Navy. Turkey protested the strikes in its EEZ.'
+- id: kyivindependent-2025-zadorozhnyy-russia-2m-fpv
+  title: Russia plans to produce 2 million FPV drones in 2025, Ukrainian intelligence says
+  url: https://kyivindependent.com/russia-aims-to-produce-2-million-fpv-drones-in-2025-ukrainian-intelligence-says/
+  publisher: Kyiv Independent
+  authors:
+  - Tim Zadorozhnyy
+  published: '2025-06-05'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - production
+  - russia
+  - fpv
+  notes: 'SZRU spokesman Aleksandrov (to Politico): Russia aims for 2m FPVs, 30,000 long-range drones and 30,000 decoys in
+    2025, relying on Chinese components. Intelligence claim.'
+- id: kyivindependent-2026-farrell-rubicon-vivaldi
+  title: Russia pulls elite drone unit from northern Donetsk Oblast after losses from Operation Vivaldi, Ukraine's military
+    says
+  url: https://kyivindependent.com/russia-pulls-elite-drone-unit-from-northern-donetsk-oblast-after-losses-from-operation-vivaldi-military-says/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2026-09-18'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - rubikon
+  - counter-drone
+  - operation-vivaldi
+  notes: 3rd Army Corps claims it wrecked Rubikon's logistics, ammunition, launch sites and experienced operators near Lyman,
+    forcing Russia to withdraw the unit. Unit claim, relayed by Kyiv Independent.
 - id: kyivindependent-2026-post-starlink-scramble
-  title: "'Don't believe in fairy tales' — Russia scrambles for front-line signal after Starlink cut-off"
+  title: '''Don''t believe in fairy tales'' — Russia scrambles for front-line signal after Starlink cut-off'
   url: https://kyivindependent.com/dont-believe-in-fairy-tales-russia-scrambles-for-front-line-signal-after-starlink-cut-off/
-  publisher: "Kyiv Independent"
-  authors: ["Kollen Post"]
-  published: "2026-02-19"
-  accessed: "2026-09-28"
+  publisher: Kyiv Independent
+  authors:
+  - Kollen Post
+  published: '2026-02-19'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [starlink, russia, fiber-optic]
-  notes: "Russian pilots forced onto intercepted radio; workarounds (mesh on fixed-wings, balloons); Rassvet had 16 satellites built and none launched. Starlink 'largely unnecessary for Russia's dispersed assaults'; Russia keeps a 'colossal' fibre advantage to 50+ km. Starlink had also been used on Shaheds and in Shahed mesh fleets."
-
-- id: euromaidan-2026-kossov-starlink-russian-drones
-  title: "How Starlink made Russia's drones deadlier—and harder to jam"
-  url: https://euromaidanpress.com/2026/02/03/why-starlink-makes-russian-drones-so-hard-to-stop/
-  publisher: "Euromaidan Press"
-  authors: ["Igor Kossov"]
-  published: "2026-02-03"
-  accessed: "2026-09-28"
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - starlink
+  - russia
+  - fiber-optic
+  notes: Russian pilots forced onto intercepted radio; workarounds (mesh on fixed-wings, balloons); Rassvet had 16 satellites
+    built and none launched. Starlink 'largely unnecessary for Russia's dispersed assaults'; Russia keeps a 'colossal' fibre
+    advantage to 50+ km. Starlink had also been used on Shaheds and in Shahed mesh fleets.
+- id: kyivindependent-2026-starlink-catastrophe
+  title: Starlink 'catastrophe' for Russia as Musk shuts down access across front line in Ukraine
+  url: https://kyivindependent.com/not-a-problem-a-catastrophe-russias-starlinks-switch-off-across-front-line/
+  publisher: Kyiv Independent
+  authors:
+  - Kollen Post
+  - Asami Terajima
+  - Francis Farrell
+  - Yuliia Taradiuk
+  - Jimmy Rushton
+  published: '2026-02-05'
+  accessed: '2026-09-28'
   type: news
   origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [starlink, russia]
-  notes: "Starlink on Shahed, Molniya and BM-35. Ex-Antonov engineer Kryvolap: only a 'single-digit percentage' of Russian drones used it. Ukraine estimated about 30,000 active Starlink accounts to whitelist."
-
-- id: euromaidanpress-2026-vivdych-kill-zone-corps
-  title: "Ukraine's eastern kill zone is 25 km deep - corps commander expects 30 by year's end"
-  url: https://euromaidanpress.com/2026/07/03/ukraines-eastern-kill-zone-is-25-km-deep-corps-commander-expects-30-by-years-end/
-  publisher: "Euromaidan Press"
-  authors: ["Taisiia Vivdych"]
-  published: "2026-07-03"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [kill-zone, tactics]
-  notes: "Brig. Gen. Lasiichuk (7th Air Assault Corps, Pokrovsk axis): kill zone 20-25 km on both sides, 30 km expected by end-2026; drones 70-80% of damage vs under 30% for artillery; 60-70% of Russian infiltrators die before reaching Ukrainian lines. A commander's claims."
-
-- id: euromaidan-2026-axe-ring-fpv
-  title: "Russia put a hula hoop on its attack drone. Now it flies 50 km into Ukraine’s rear."
-  url: https://euromaidanpress.com/2026/03/29/ring-fpv/
-  publisher: "Euromaidan Press"
-  authors: ["David Axe"]
-  published: "2026-03-29"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [fiber-optic, russia]
-  notes: "Russian KVS: a KVN fibre FPV with an annular ring wing for lift; same 10-inch frame and 3 kg payload; reaches up to 50 km into the rear. Confirmed by Ushkuynik's Chadaev (Mar 2026)."
-
-- id: euromaidan-2026-axe-unjammable-russian-drones
-  title: "How Russia built a jam-proof drone force—and the Chinese supply chain that could still break it"
-  url: https://euromaidanpress.com/2026/08/06/unjammable-russian-drones/
-  publisher: "Euromaidan Press"
-  authors: ["David Axe"]
-  published: "2026-08-06"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [fiber-optic, russia, supply-chain]
-  notes: "Tatarigami (Frontelligence Insight): about 60% of Russian FPVs in key sectors are fibre-optic. OSINT account @M0nstas: about 10,000 Russian FPVs a day (low-confidence). WaPo: Chinese fibre exports to Russia 119,000 miles (May 2025) and 328,000 miles (Aug 2025)."
-
-- id: euromaidan-2026-vivdych-rassvet-windows
-  title: "Six minutes in March, two hours by August. Russia's new satellite network may be the first comms system Ukraine can't switch off"
-  url: https://euromaidanpress.com/2026/09/28/for-years-ukraine-could-jam-or-switch-off-russias-battlefield-comms-rassvet-may-be-the-first-it-cant/
-  publisher: "Euromaidan Press"
-  authors: ["Taisiia Vivdych"]
-  published: "2026-09-28"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [rassvet, starlink, russia]
-  notes: "Rassvet (Bureau 1440): 32 satellites launched in March and July 2026, 292 planned by end-2027; coverage windows from 6-10 minutes (March) to over an hour (late August); user terminals small enough for Geran-type drones. Beskrestnov, Stepanets, HUR's Skibitskyi."
-
-- id: euromaidan-2026-thomas-hur-geran-production
-  title: "Russia builds 3,000 jet drones monthly to counter Ukrainian interceptors, HUR says"
-  url: https://euromaidanpress.com/2026/08/12/russia-geran-drones-production/
-  publisher: "Euromaidan Press"
-  authors: ["Daniel Thomas"]
-  published: "2026-08-12"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [jet-geran, production, russia]
-  notes: "HUR estimates about 3,000 Geran-4/5 a month; Geran-3 production has ceased. Beskrestnov: 95% of piston Shaheds stopped in a documented May 2026 strike. Intelligence estimate."
-
-- id: euromaidan-2026-zoria-jet-kill-rate-55
-  title: "Ukraine's jet-drone kill rate just hit 55%. Russia's answer: $12 billion to make more of them"
-  url: https://euromaidanpress.com/2026/09/27/ukraines-jet-drone-kill-rate-just-hit-55-russias-answer-12-billion-to-make-more-of-them/
-  publisher: "Euromaidan Press"
-  authors: ["Yuri Zoria"]
-  published: "2026-09-27"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [jet-geran, air-defence, interceptors]
-  notes: "Ukraine intercepted 55% of jet drones in September 2026 (1,500+ of 2,730+). Jet output (~3,000/month) exceeded piston output by August. Zelensky, citing HUR briefings on Russian documents: $12bn planned in 2027 for jet drones and loitering munitions."
-
-- id: euromaidan-2026-thomas-brovdi-102000
-  title: "Ukraine's drone commander says his branch killed or wounded 102,000 Russians in 12 months"
-  url: https://euromaidanpress.com/2026/06/11/magyar-brovdi-drone-forces-day-102000-russian-casualties/
-  publisher: "Euromaidan Press"
-  authors: ["Daniel Thomas"]
-  published: "2026-06-11"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [usf, kill-claims]
-  notes: "Brovdi (USF): 102,000 Russians killed or wounded, 360,000 targets hit and 1.7m sorties in 12 months; strikes over 1,700 km deep. Self-reported unit claims."
-
-- id: euromaidan-2026-mukhina-syrskyi-fpv-ratio
-  title: "Ukraine's drone output grew 12.7% month-on-month, but chief commander says don't relax"
-  url: https://euromaidanpress.com/2026/06/11/ukraines-drone-output-grew-12-7-month-on-month-but-chief-commander-says-dont-relax/
-  publisher: "Euromaidan Press"
-  authors: ["Olena Mukhina"]
-  published: "2026-06-11"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [production, fpv]
-  notes: "Syrskyi (monthly unmanned-systems meeting): 1.5:1 FPV advantage over Russia; drone output up 12.7% from April to May 2026; about 180,000 confirmed targets struck in May; about 4,000 Shahed-types neutralised in May."
-
-- id: euromaidan-2026-zoria-nk-shahed
-  title: "The Kremlin calls mobilization talk 'nonsense'—Zelenskyy says it has already begun, with North Korean reinforcements"
-  url: https://euromaidanpress.com/2026/09/29/the-kremlin-calls-mobilization-talk-nonsense-zelenskyy-says-it-has-already-begun-with-north-korean-reinforcements/
-  publisher: "Euromaidan Press"
-  authors: ["Yuri Zoria"]
-  published: "2026-09-29"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [shahed, north-korea, production]
-  notes: "Zelensky: 'North Korea has launched production of Shahed-type attack drones with Russian technical support', up from a June 2025 agreement to prepare production. Presidential claim."
-
-- id: euromaidan-2026-stanovych-fedorov-dismissal
-  title: "The Fedorov protesters lost. But they backed a man for what he built, not what he promised—and that may be new in Ukraine"
-  url: https://euromaidanpress.com/2026/08/20/the-fedorov-protesters-lost-but-they-backed-a-man-for-what-he-built-not-what-he-promised-and-that-may-be-new-in-ukraine/
-  publisher: "Euromaidan Press"
-  authors: ["Solomiia Stanovych"]
-  published: "2026-08-20"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [organization, politics]
-  notes: "Fedorov dismissed as defence minister on 14 Jul 2026 amid conflict with then C-in-C Syrskyi; Yevhenii Khmara appointed on 19 Aug 2026 (312 votes). Credits Fedorov with competitive procurement and 'robotization'."
-
-- id: euromaidan-2026-mukhina-dot-chain-500-units
-  title: "Year ago, only 12 Ukrainian brigades could order weapons online. Now, 500 units participate in revolutionary program"
-  url: https://euromaidanpress.com/2026/09/23/year-ago-only-12-ukrainian-brigades-could-order-weapons-online-now-500-units-participate-in-revolutionary-program/
-  publisher: "Euromaidan Press"
-  authors: ["Olena Mukhina"]
-  published: "2026-09-23"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [e-points, procurement]
-  notes: "DOT-Chain Defence, Brave1 Market and the 'Army of Drones Bonus': 500+ units (from 12 a year earlier) across the forces, National Guard, border guard, police, SBU and HUR; about $1.9bn of equipment and 1.3m drones in the first year. Shows the programme running after Fedorov's dismissal."
-
-- id: united24-2025-khomenko-adb-launch
-  title: "Ukraine Launches Point-Based Rewards for Drone Operators"
-  url: https://united24media.com/latest-news/ukraines-launches-point-based-rewards-for-drone-operators-8002
-  publisher: "UNITED24 Media"
-  authors: ["Ivan Khomenko"]
-  published: "2025-04-30"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone]
-  topics: [e-points, gamification]
-  notes: "Army of Drones Bonus: points for DELTA-verified strikes, spent on Brave1 Market. Infantry kills tripled from 2 to 6 points, which reportedly doubled confirmed eliminations within a month. State-run outlet."
-
-- id: kyivpost-2026-korshak-epoints
-  title: "Ukraine Drone Troops Claim Big Russian Kill Scores, Announce Expansion Plans for 2026"
-  url: https://www.kyivpost.com/post/68951
-  publisher: "Kyiv Post"
-  authors: ["Stefan Korshak"]
-  published: "2026-01-28"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [e-points, gamification]
-  notes: "E-points price list, January 2026: soldier killed 12, wounded 8, drone operator killed or wounded 25, soldier captured alive 120."
-
-- id: euromaidanpress-2026-epoints-400-units
-  title: "Ukraine turned combat into currency: more than 400 units now shop for their own weapons with points earned in battle"
-  url: https://euromaidanpress.com/2026/06/24/ukraine-turned-combat-into-currency-more-than-400-units-now-shop-for-their-own-weapons-with-points-earned-in-battle/
-  publisher: "Euromaidan Press"
-  authors: ["Olena Mukhina"]
-  published: "2026-06-24"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [e-points, gamification]
-  notes: "400+ units in the e-points programme; points now also reward reconnaissance, logistics and evacuation missions; updated scheme tied to Brave1 Market from August 2025; 181,000+ items delivered by April 2026."
-
-- id: euromaidan-2026-vivdych-ng-fibre-70
-  title: "20% to 70%: Ukraine's National Guard rewired its drone war around cables"
-  url: https://euromaidanpress.com/2026/09/09/20-to-70-ukraines-national-guard-rewired-its-drone-war-around-cables/
-  publisher: "Euromaidan Press"
-  authors: ["Taisiia Vivdych"]
-  published: "2026-09-09"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
-  topics: [fiber-optic, ukrainian-adaptation]
-  notes: "National Guard commander Pivnenko: fibre-optic control now 70% of National Guard drones, up from about 20%; interceptor crews doubled in six months; 243,000+ targets struck since Feb 2022."
-
-- id: euromaidan-2026-kossov-icy-fibre
-  title: "Ukraine's jam-proof drones have one weakness: icy weather"
-  url: https://euromaidanpress.com/2026/01/13/ukraines-jam-proof-drones-have-one-weakness-icy-weather/
-  publisher: "Euromaidan Press"
-  authors: ["Igor Kossov"]
-  published: "2026-01-13"
-  accessed: "2026-09-28"
-  type: news
-  origin: ukrainian
-  reliability: medium
-  verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [weather, fiber-optic]
-  notes: "Fibre freezes on spools and unreels badly; iced cable is brittle, snaps and sticks to obstacles; electronics rated 0-70 C lose 20-50% of signal to condensation; the Dronarium centre grounded its fibre drones in mid-January 2026."
-
-- id: isis-2026-anokhin-shahed-monthly-sep
-  title: "Monthly Analysis of Russian Shahed 136 Deployment Against Ukraine - Updated"
-  url: https://isis-online.org/isis-reports/monthly-analysis-of-russian-shahed-136-deployment-against-ukraine-updated
-  publisher: Institute for Science and International Security
-  authors: ["Igor Anokhin"]
-  published: "2026-09-08"
-  accessed: "2026-09-30"
-  type: think-tank
-  origin: western
   reliability: high
   verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [shahed, jet-geran, air-defence]
-  notes: "From about 5 May 2026 the Air Force stopped consistently publishing Shahed/Geran counts, so later months are reconstructions. August 2026: 4,288 UAVs shot down or suppressed, about 716 hits (13.86%), with 57-62% of genuine Shahed/Geran use assessed as jet-powered."
-
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - c2
+  - russia
+  - shahed
+  - starlink
+  notes: The 5 Feb 2026 whitelist (Diia registration) cut off Russian terminals. Russia had fitted Starlink to deep-strike
+    Shaheds since early 2025. Beskrestnov ('Flash') called it a 'catastrophe', but brigades gave mixed reports on how much
+    assaults changed.
+- id: kyivpost-2026-korshak-epoints
+  title: Ukraine Drone Troops Claim Big Russian Kill Scores, Announce Expansion Plans for 2026
+  url: https://www.kyivpost.com/post/68951
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2026-01-28'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - drones
+  - e-points
+  - gamification
+  - military-ui
+  notes: 'E-points price list, January 2026: soldier killed 12, wounded 8, drone operator killed or wounded 25, soldier captured
+    alive 120.'
 - id: kyivpost-2026-syrsky-may-interceptors
-  title: "Russia to Double Jet Drone Strikes to 50% as Ukraine Downs 3,500 UAVs in May – Syrsky"
+  title: Russia to Double Jet Drone Strikes to 50% as Ukraine Downs 3,500 UAVs in May – Syrsky
   url: https://www.kyivpost.com/post/77491
   publisher: Kyiv Post
   authors: []
-  published: "2026-06-04"
-  accessed: "2026-09-30"
+  published: '2026-06-04'
+  accessed: '2026-09-30'
   type: news
   origin: ukrainian
   reliability: medium
   verified: fetched
-  eras: [e9-counteroffensive-26]
-  topics: [air-defence, interceptors, jet-geran, production]
-  notes: "Official claims for May 2026: 3,500+ drones downed, USF interceptors 1,200+, army aviation helicopters 440+; Syrskyi says Russia plans a 50% jet share. Beskrestnov: interceptors destroy about 50% of incoming Shahed-types, up from about 10% in winter. Citing Bloomberg: Russian drone output up 117% year on year in April 2026; intelligence estimates of up to 7.3m FPVs planned for 2026."
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - helicopters
+  - interceptor-drones
+  - interceptors
+  - jet-geran
+  - production
+  - shahed
+  notes: 'Official claims for May 2026: 3,500+ drones downed, USF interceptors 1,200+, army aviation helicopters 440+; Syrskyi
+    says Russia plans a 50% jet share. Beskrestnov: interceptors destroy about 50% of incoming Shahed-types, up from about
+    10% in winter. Citing Bloomberg: Russian drone output up 117% year on year in April 2026; intelligence estimates of up
+    to 7.3m FPVs planned for 2026.'
+- id: mezha-2026-molniya
+  title: Cheap and dangerous. How the Molniya plywood drone turned into a big problem for the Defense Forces
+  url: https://oboronka.mezha.ua/en/udarni-droni-molniya-harateristiki-chim-nebezpechni-307515/
+  publisher: Mezha / Ukrainska Pravda (Oboronka)
+  authors:
+  - Iryna Lutsak
+  published: 2026-01
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - russia
+  - molniya
+  - logistics-interdiction
+  - relay
+  notes: 'Russian Molniya fixed-wing strike drone: 3–5 kg warhead, about 30 km range, now used 50+ km deep against logistics.
+    Variants include fiber-optic, thermite, FPV-carrier and Starlink recon. Cost about UAH 35,000. The page shows ''6 January''
+    without a year; 2026 is inferred from the Ukrainska Pravda original of 15 Jan 2026.'
+- id: militarnyi-2025-brovdi-usf
+  title: Robert "Magyar" Brovdi to lead the Unmanned Systems Forces
+  url: https://militarnyi.com/en/news/robert-magyar-brovdi-to-lead-the-unmanned-systems-forces/
+  publisher: Militarnyi
+  authors: []
+  published: '2025-06-03'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - organization
+  - usf
+  - units
+  notes: Decree 386/2025 appointed Brovdi, commander of the 414th brigade 'Magyar's Birds', to replace Col. Sukharevskyi as
+    head of the USF. Gives the unit's history from a territorial-defence group to a brigade.
+- id: militarnyi-2026-shark-m
+  title: Ukrspecsystems Unveils Upgraded SHARK-M UAV
+  url: https://militarnyi.com/en/news/ukrspecsystems-unveils-upgraded-shark-m-uav/
+  publisher: Militarnyi
+  authors: []
+  published: '2026'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - isr
+  - fixed-wing
+  notes: 'Shark-M: up to 7 h, 180 km link, 420 km route, 3,000 m ceiling, 14.5 kg MTOW; detects targets at 35 km by day and
+    14 km at night; GNSS-denied launch. Maker specs.'
+- id: militarnyi-2026-zirka
+  title: ZIRKA Interceptor, Based on the Nemesis Brigade's Experience, Unveiled in Ukraine
+  url: https://militarnyi.com/en/news/zirka-interceptor-uav-unveiled-in-ukraine/
+  publisher: Militarnyi
+  authors: []
+  published: '2026-06-30'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - autonomy
+  - machine-vision
+  notes: 'ZIRKA (NOCTIS / Vyriy Industries, with input from the Darknode battalion of the 412th Nemesis brigade): 340+ km/h,
+    6 km ceiling, 30 km radius, 20 min endurance, up to $2,000, automatic detection, tracking and guidance. Specs are the
+    manufacturer''s.'
+- id: oryx-2022-lancet-kill-list
+  title: 'Hit Or Miss: The Russian Loitering Munition Kill List'
+  url: https://www.oryxspioenkop.com/2022/11/hit-or-miss-russian-loitering-munition.html
+  publisher: Oryx
+  authors:
+  - Jakub Janovsky
+  - naalsio26
+  - Aloha
+  - Dan
+  - Kemal
+  published: '2022-11-25'
+  accessed: '2026-09-28'
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  topics:
+  - drones
+  - loitering-munitions
+  - russia
+  notes: 'Visually confirmed Kub/Lancet strikes up to early March 2023: 113 hits, 41 misses and 4 decoy hits, mostly on artillery,
+    radars and SAMs. Undercounts, because only filmed strikes are listed. The list was not updated after March 2023.'
+- id: osw-2025-game-of-drones
+  title: 'Game of drones: the production and use of Ukrainian battlefield unmanned aerial vehicles'
+  url: https://www.osw.waw.pl/en/publikacje/osw-commentary/2025-10-14/game-drones-production-and-use-ukrainian-battlefield-unmanned
+  publisher: OSW Centre for Eastern Studies
+  authors: []
+  published: '2025-10-14'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - drones
+  - production
+  - casualties
+  - organization
+  - supply-chain
+  notes: Polish state think tank. About 2.2m Ukrainian UAVs built in 2024, 4.5m+ projected for 2025. Drones account for about
+    85% of targets destroyed and 70–80% of Russian casualties. 98% of light drones depend on Chinese parts. Drone Line aims
+    at a 10–15 km kill zone.
+- id: pravda-2023-fedorov-army-of-drones
+  title: Deputy Prime Minister for Innovation says Army of Drones initiative so far ordered 3,200 UAVs
+  url: https://www.pravda.com.ua/eng/news/2023/04/5/7396556/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-04-05'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  topics:
+  - drones
+  - organization
+  - procurement
+  notes: 'Fedorov: in its first 9 months, Army of Drones (UNITED24) contracted 3,200 UAV complexes worth over UAH 4bn (~$107m)
+    and trained 7,000+ operators. Official claim, not independently audited.'
+- id: pravda-2025-hubina-3m-fpv
+  title: Ukraine's Armed Forces obtain 3 million FPV drones in 2025
+  url: https://www.pravda.com.ua/eng/news/2025/12/24/8013217/
+  publisher: Ukrainska Pravda
+  authors:
+  - Yevheniia Hubina
+  published: '2025-12-24'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - production
+  - fpv
+  - ugv
+  notes: 'Defence Minister Shmyhal: 3m FPVs obtained in 2025, about 2.5x 2024 (2.4m via the procurement agency plus 200k via
+    DOT-Chain). Nearly 15,000 ground robots delivered in 2025, triple 2024.'
+- id: pravda-2026-berdysh-russian-heavy-drone
+  title: Russians unveil heavy drone described as equivalent of Ukraine's Baba Yaga – photo
+  url: https://www.pravda.com.ua/eng/news/2026/05/26/8036480/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2026-05-26'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - russia
+  - heavy-bomber
+  notes: Russian 'Berdysh' heavy multicopter (20 kg payload, 25 km, Ural Drone Factory), relayed from Russian Telegram, so
+    the specs are unverified. Notes reports of Russians repairing captured Ukrainian Vampire bombers.
+- id: rbc-2026-fedorov-drone-line
+  title: Fedorov outlines results of Drone Line project
+  url: https://newsukraine.rbc.ua/news/ukraine-s-drone-line-units-strike-every-fourth-1775751016.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: '2026-04-09'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - drone-line
+  - kill-zone
+  - interceptors
+  - organization
+  notes: 'Defence Minister Fedorov: Drone Line has 1,000+ crews, makes 1 in 4 front-line kills and aims at a 10–15 km kill
+    zone. In March 2026 it struck 10,500+ Russian troops, and interceptors destroyed 33,000+ Russian UAVs. Claims a 1.3:1
+    strike-drone advantage. Official claims.'
+- id: rferl-2025-rubicon
+  title: Inside Rubicon, The Elite Russian Drone Unit Wreaking Havoc On Ukraine's Troops
+  url: https://www.rferl.org/a/russia-drone-rubicon-secret-ukraine-war/33532804.html
+  publisher: RFE/RL
+  authors:
+  - Mark Krutov
+  - Sergei Dobrynin
+  - Yauhen Lehalau
+  published: '2025-09-17'
+  accessed: '2026-09-28'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - russia
+  - rubikon
+  - fiber-optic
+  - logistics-interdiction
+  notes: Rubikon (Rubicon) strangled Ukrainian supply lines to Sudzha in the Kursk operation. In spring 2025 it had 7 units
+    of 130–150 people each. In Sep 2025 over 25% of its strikes hit drone teams and 15% hit EW. Ukrainian observers call it
+    systematic and professional.
+- id: rusi-2022-zabrodskyi-preliminary-lessons
+  title: 'Preliminary Lessons in Conventional Warfighting from Russia''s Invasion of Ukraine: February–July 2022'
+  url: https://www.rusi.org/explore-our-research/publications/special-resources/preliminary-lessons-conventional-warfighting-russias-invasion-ukraine-february-july-2022
+  alt_urls:
+  - https://static.rusi.org/359-SR-Ukraine-Preliminary-Lessons-Feb-July-2022-web-final.pdf
+  publisher: RUSI
+  authors:
+  - Mykhaylo Zabrodskyi
+  - Jack Watling
+  - Oleksandr V Danylyuk
+  - Nick Reynolds
+  published: '2022-11-30'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - air-defence
+  - artillery
+  - aviation
+  - c2
+  - deception
+  - drones
+  - ew
+  - fires
+  - force-ratios
+  - force-structure
+  - ground-tactics
+  - isr
+  - logistics
+  - missiles
+  - precision-fires
+  - rail
+  - sensor-to-shooter
+  - timeline
+  - uas
+  notes: Based on Ukrainian General Staff data. Gives a 12:1 Russian force ratio north of Kyiv, starting artillery inventories,
+    a 10:1 Russian volume-of-fire edge by June 2022, and 90% UAS attrition. It is testimony, not an academic study.
+- id: rusi-2023-watling-meatgrinder
+  title: 'Meatgrinder: Russian Tactics in the Second Year of Its Invasion of Ukraine'
+  url: https://static.rusi.org/403-SR-Russian-Tactics-web-final.pdf
+  alt_urls:
+  - https://www.rusi.org/explore-our-research/publications/special-resources/meatgrinder-russian-tactics-second-year-its-invasion-ukraine
+  publisher: RUSI
+  authors:
+  - Jack Watling
+  - Nick Reynolds
+  published: '2023-05-19'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  topics:
+  - artillery
+  - aviation
+  - c2
+  - comms-intercept
+  - drones
+  - ew
+  - fires
+  - fortifications
+  - glide-bombs
+  - ground-tactics
+  - helicopters
+  - isr
+  - manpower
+  - mines
+  - russia
+  - russian-ew
+  - sensor-to-shooter
+  - uas
+  notes: Ukrainian UAV losses about 10,000 per month; at least one major Russian EW system per 10 km of front; Russian counter-battery
+    work shifting to Lancet; layered Orlan-10 'complexes' at axis and artillery-brigade level.
+- id: rusi-2023-watling-stormbreak
+  title: 'Stormbreak: Fighting Through Russian Defences in Ukraine''s 2023 Offensive'
+  url: https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf
+  publisher: RUSI
+  authors:
+  - Jack Watling
+  - Nick Reynolds
+  published: 2023-09
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - artillery
+  - bombers
+  - breaching
+  - c2
+  - drones
+  - ew
+  - fires
+  - fortifications
+  - gnss
+  - ground-tactics
+  - helicopters
+  - isr
+  - logistics
+  - loitering-munitions
+  - mines
+  - russian-ew
+  - sensor-to-shooter
+  - uas
+  notes: Ukrainian night strikes with converted agricultural drones dropping RPGs (5 UAVs destroyed or badly damaged 7 tanks,
+    and all 5 were lost), which worked only when Russian EW lapsed. Russian Lancet plus FPV strikes on lead elements; up to
+    25 UAVs watching a unit.
+- id: rusi-2025-watling-third-year
+  aliases:
+  - rusi-2025-watling-reynolds-third-year
+  - rusi-2025-watling-tactical-developments
+  title: Tactical Developments During the Third Year of the Russo–Ukrainian War
+  url: https://www.rusi.org/explore-our-research/publications/special-resources/tactical-developments-during-third-year-russo-ukrainian-war
+  alt_urls:
+  - https://static.rusi.org/tactical-developments-third-year-russo-ukrainian-war-february-2205.pdf
+  publisher: RUSI
+  authors:
+  - Jack Watling
+  - Nick Reynolds
+  published: '2025-02-14'
+  accessed: '2026-09-28'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - artillery
+  - c2
+  - casevac
+  - counter-uas
+  - deception
+  - drones
+  - ew
+  - fiber-optic
+  - fires
+  - fortifications
+  - fpv
+  - glide-bombs
+  - ground-tactics
+  - interceptors
+  - isr
+  - kill-zone
+  - logistics
+  - manpower
+  - missiles
+  - rotation
+  - russia
+  - shahed
+  - tactics
+  - uas
+  notes: 'Fieldwork Nov 2024-Jan 2025. Russia contracted 400k+ troops in 2024 and fielded about 580k in its operational group
+    (70k plus about 10k DPRK in Kursk). UMPK output 40k (2024) rising to 70k (2025). Tactical UAVs cause 60-70% of Russian
+    system losses; transparency within 3 km, observation to 15 km; fibre-optic FPVs appear. Full PDF: https://static.rusi.org/tactical-developments-third-year-russo-ukrainian-war-february-2205.pdf'
+- id: ukrinform-2025-fedorov-fiber-optic-40km
+  title: Ukrainian fiber-optic drones reach strike range of over 40 kilometers – Fedorov
+  url: https://www.ukrinform.net/rubric-ato/4017356-ukrainian-fiberoptic-drones-reach-strike-range-of-over-40-kilometers-fedorov.html
+  publisher: Ukrinform
+  authors: []
+  published: '2025-07-22'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - fiber-optic
+  - fpv
+  - range
+  notes: 'Fedorov: Ukrainian fiber-optic FPVs went from about 20 km (spring 2025) to 40+ km (July 2025). This is an official
+    claim of maximum range, not a typical range.'
+- id: united24-2025-khomenko-adb-launch
+  title: Ukraine Launches Point-Based Rewards for Drone Operators
+  url: https://united24media.com/latest-news/ukraines-launches-point-based-rewards-for-drone-operators-8002
+  publisher: UNITED24 Media
+  authors:
+  - Ivan Khomenko
+  published: '2025-04-30'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - drones
+  - e-points
+  - economy
+  - gamification
+  notes: 'Army of Drones Bonus: points for DELTA-verified strikes, spent on Brave1 Market. Infantry kills tripled from 2 to
+    6 points, which reportedly doubled confirmed eliminations within a month. State-run outlet.'
+- id: united24-2026-place-jet-gerans
+  title: 'Jet-Powered Shaheds and Banderols: Why Russia''s New Drones Are Harder to Stop'
+  url: https://united24media.com/war-in-ukraine/why-russias-new-jet-powered-drones-are-harder-to-stop-22666
+  publisher: United24 Media
+  authors:
+  - Joseph Place
+  published: '2026-09-21'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - crpa
+  - interceptors
+  - jet-geran
+  - russia
+  - shahed
+  notes: 'Specs for Geran-3/4/5 and the S8000 Banderol. About 2,800 jet drones launched in Aug 2026 versus about 350 in June.
+    Air Force (Ihnat): only about 60% are intercepted. Says Russia builds about 3,000 Geran-4/5 a month, which is HUR''s estimate
+    (see euromaidan-2026-thomas-hur-geran-production).'
+- id: united24-2026-ugv-missions
+  title: Ukraine's Ground Robots Complete 112,000 Logistics and Evacuation Missions in 2026
+  url: https://united24media.com/war-in-ukraine/ukraines-ground-robots-complete-112000-logistics-and-evacuation-missions-in-2026-22306
+  publisher: United24 Media
+  authors:
+  - Dariia Mykhailenko
+  published: '2026-09-07'
+  accessed: '2026-09-28'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ugv
+  - logistics
+  - casevac
+  notes: 'MoD/DELTA data: monthly UGV logistics and casevac missions rose from 7,511 (Jan 2026) to 25,143 (Aug 2026), about
+    112k in total. Plan to build 50,000+ UGVs in 2026. State-run outlet.'

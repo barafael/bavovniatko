@@ -10,6 +10,11 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
   in English are preferred and paired with Western analysis and OSINT. Places use Ukrainian spellings.
   Russian capabilities are described only as Ukrainian or Western sources report them. There is no
   Russian state media.
+- **Generated from the knowledge base.** Since 2026-09-30 the SurrealDB claim graph in [`db/`](../db/README.md)
+  is the source of truth: 3,706 atomic claims with their sources, claimants, eras, places and observations, and
+  typed relations between them. The topic files, the glossary, the source indexes and
+  [contradictions.md](contradictions.md) are regenerated from it by `db/tools/render.py`. Edit the data, not
+  the files. This README is still written by hand.
 - **Links only.** Nothing is committed except text. Some figures were *computed* from public data
   (OSM Overpass for 06, DeepState's map history for 07), and each such figure is labelled with its
   method and query date.
@@ -28,8 +33,9 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
 | 07 | [07-maps-ui-conventions.md](07-maps-ui-conventions.md) | DeepStateMap in depth, other front maps compared, APP-6/2525 symbology, glimpses of Ukrainian military UIs, data access |
 | 08 | [08-prior-art-games.md](08-prior-art-games.md) | Commercial, drone and training-sim, board and professional wargames: what they model and miss, plus ethics |
 | — | [glossary.md](glossary.md) | Frontline slang (transliterated Ukrainian), Russian terms as reported, systems, programmes, terrain and wargaming terms |
-| — | [sources.yaml](sources.yaml) | The merged, deduplicated index of every source. Regenerate it with `python3 research/tools/merge_sources.py`, which also checks every `[src:id]` citation |
-| — | `sources/NN-*.yaml` | Each topic's own source list, as its agent wrote it |
+| — | [contradictions.md](contradictions.md) | Every pair of claims that cannot both be true as stated, with claimants, sources and the explanation (generated) |
+| — | [sources.yaml](sources.yaml) | The deduplicated index of every source (generated from the knowledge base) |
+| — | `sources/NN-*.yaml` | The sources cited by each topic file (generated) |
 
 Every topic file has the same skeleton: overview → per-era notes → catalogue/figures tables →
 "Russia's side as reported" (00–05) → **Game/sim relevance** → Terms → Open questions/gaps → Sources.

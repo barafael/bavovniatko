@@ -1,0 +1,40 @@
+{"pair": "b4129d96075f", "relation": "supports", "from": "claim:c04_0033_02", "to": "claim:c00_0017_01", "strength": 0.4, "rationale": "RUSI's pre-war Javelin/NLAW delivery figures corroborate that Ukraine fought the invasion phase with Western light anti-armour stocks.", "independent": true}
+{"pair": "b4d18c7f5e32", "relation": "none", "rationale": "Founding history vs reuse terms and API pricing; different facts."}
+{"pair": "b50eba03e8a9", "relation": "none", "rationale": "Offensive's main effort vs fall date; related context only."}
+{"pair": "b537b070fd61", "relation": "none", "rationale": "Update cadence vs licence terms; different facts."}
+{"pair": "b541da02fff1", "relation": "none", "rationale": "Neutral frame rule vs symbol anatomy; different facts."}
+{"pair": "b63205df61cf", "relation": "none", "rationale": "Different facts about UA Control Map (content vs unverified legend/terms)."}
+{"pair": "b6479b657151", "relation": "supports", "from": "claim:c01_0024_58", "to": "claim:c01_0032_27", "strength": 0.4, "rationale": "HUR's estimate of about 3,000 Geran-4/5 a month supports the 2026 shift to jet Gerans.", "independent": true}
+{"pair": "b688bc13ae44", "relation": "none", "rationale": "Daily orbit count vs interceptor employment; different assertions."}
+{"pair": "b6c81c9de2fc", "relation": "refines", "from": "claim:c02_0010_91", "to": "claim:c02_0027_16", "strength": 0.5, "rationale": "A gives the length (6.4 km) and planned scale of the first Zaporizhzhia net tunnel that B dates to September 2025."}
+{"pair": "b6ce4adcf3a0", "relation": "none", "rationale": "Game-internal event vs a dispute over the game's premise."}
+{"pair": "b751c6b8e04b", "relation": "supports", "from": "claim:c01_0008_03", "to": "claim:c01_0027_03", "strength": 0.6, "rationale": "Both state Furia, Leleka and PD-1 have been in Ukrainian service since 2015; B includes the same RUSI source.", "independent": false}
+{"pair": "b7796c86c71f", "relation": "none", "rationale": "Shell/glide-bomb superiority vs mechanized-wave tactics at Avdiivka; different aspects."}
+{"pair": "b7d584a5bc6e", "relation": "none", "rationale": "Symbol anatomy vs SIDC encoding; different facts."}
+{"pair": "b7f4c08e249e", "relation": "none", "rationale": "Hostile frame rule vs symbol anatomy; different facts."}
+{"pair": "b8a3ef2dcf18", "relation": "supports", "from": "claim:c08_0016_21", "to": "claim:c08_0004_14", "strength": 0.6, "rationale": "B's description of the game opening with a glorified Russian airborne assault supports A's point that it is told from the Russian side; both Steam pages.", "independent": false}
+{"pair": "b936225c1733", "relation": "refines", "from": "claim:c03_0010_12", "to": "claim:c05_0011_05", "strength": 0.6, "rationale": "A is a fuller version of the same RUSI judgment, adding that HIMARS hit rail-mapped depots."}
+{"pair": "b9edf67561de", "relation": "duplicates", "from": "claim:c04_0017_10", "to": "claim:c00_0033_02", "strength": 0.85, "rationale": "Same RUSI Wagner Bakhmut figure; B is a copy lacking the convict share."}
+{"pair": "ba004373179f", "relation": "none", "rationale": "Update cadence vs licence terms; different facts."}
+{"pair": "bac51c9a41c9", "relation": "none", "rationale": "B merely names the developer of a title A lists; no evidential bearing."}
+{"pair": "bbc867f07ab5", "relation": "none", "rationale": "Different facts about BBC maps (content vs publication dates)."}
+{"pair": "bc1434a23a71", "relation": "none", "rationale": "Uncertainty-category redefinition vs licence terms; different facts."}
+{"pair": "bc2b982f3bea", "relation": "none", "rationale": "Double encoding of affiliation vs frame openness by domain; different facts."}
+{"pair": "bc763ae8075b", "relation": "supports", "from": "claim:c07_0035_10", "to": "claim:c07_0035_09", "strength": 0.5, "rationale": "The legend's two-sided front lines and movement categories match A's description of the map; same source.", "independent": false}
+{"pair": "bcadf9f8ad14", "relation": "supports", "from": "claim:c02_0010_10", "to": "claim:c03_0027_011", "strength": 0.6, "rationale": "Both RUSI assessments say 2022 HIMARS/GMLRS strikes on depots and C2 broke the Russian offensive.", "independent": false}
+{"pair": "bcf323be4d41", "relation": "none", "rationale": "Update cadence/ACLED feed vs colour convention; different facts."}
+{"pair": "bd5098e0c3e8", "relation": "none", "rationale": "Solid/dashed frame vs symbol anatomy; different facts."}
+{"pair": "bd713235bcd5", "relation": "supports", "from": "claim:c04_0033_07", "to": "claim:c00_0005_05", "strength": 0.4, "rationale": "RUSI's figure of 19,547 Wagner dead, 88% convicts, corroborates the Wagner/convict assault characterization; same source.", "independent": false}
+{"pair": "bd72a93e4770", "relation": "none", "rationale": "Board-game naming note vs video game controversy; different subjects."}
+{"pair": "bdf77e0a0515", "relation": "supports", "from": "claim:c04_0017_16", "to": "claim:c04_0037_14", "strength": 0.6, "rationale": "Both, from the same source, describe Storm-V replacing Storm-Z with no pardon and contracts until war's end.", "independent": false}
+{"pair": "bdfa27685e79", "relation": "none", "rationale": "Licence terms vs legend categories; different facts."}
+{"pair": "be0b9d679809", "relation": "supports", "from": "claim:c00_0031_01", "to": "claim:c04_0017_17", "strength": 0.7, "rationale": "Both, from the same RUSI report, describe the costly Russian winter 2023 offensive beginning at Vuhledar.", "independent": false}
+{"pair": "befdd8af1bb6", "relation": "none", "rationale": "Force composition at Bakhmut vs Strelets users; different subjects."}
+{"pair": "bf6dae6b1dc2", "relation": "supports", "from": "claim:c04_0023_19", "to": "claim:c04_0030_19", "strength": 0.6, "rationale": "Autumn-2024 battalion-sized mechanized pushes at Kurakhove are an instance of the tactic B lists for Kurakhove.", "independent": true}
+{"pair": "bfa2da681cc2", "relation": "none", "rationale": "Production rate vs speed and range; different quantities."}
+{"pair": "bfc8fe831ca1", "relation": "none", "rationale": "Effect assessment vs system description; different assertions."}
+{"pair": "bfefc11c2e9e", "relation": "supports", "from": "claim:c03_0031_15", "to": "claim:c00_0069_02", "strength": 0.7, "rationale": "B's pairing of jet Gerans and ballistic salvos against the Patriot shortage is the qualitative escalation A describes; same ISW source.", "independent": false}
+{"pair": "bfffb584134a", "relation": "supports", "from": "claim:c04_0021_11", "to": "claim:c00_0042_03", "strength": 0.5, "rationale": "B's account of the May 2024 cross-border push becoming an urban fight for Vovchansk corroborates A's contained Kharkiv/Vovchansk push.", "independent": true}
+{"pair": "c045214300af", "relation": "none", "rationale": "Neutral frame rule vs SIDC encoding; different facts."}
+{"pair": "c0474067cb5d", "relation": "none", "rationale": "Update cadence vs methodological caveat; different facts."}
+{"pair": "c08e37f4453d", "relation": "none", "rationale": "Legend categories vs licence terms; different facts."}

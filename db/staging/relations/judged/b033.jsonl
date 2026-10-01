@@ -1,0 +1,40 @@
+{"pair": "4620598256b5", "relation": "supports", "from": "claim:c05_0021_09", "to": "claim:c07_0042_01", "strength": 0.6, "rationale": "Delta beginning as an Aerorozvidka project later taken over by the MoD fits Wikipedia's MoD-plus-Aerorozvidka development credit.", "independent": true}
+{"pair": "4792becd7299", "relation": "none", "rationale": "Two different inferences about autumn 2022: logistics backdrop vs deception pattern."}
+{"pair": "47ab587a48da", "relation": "supports", "from": "claim:c08_0016_23", "to": "claim:c08_0006_41", "strength": 0.5, "rationale": "The developer's next game being \"on the topic of the Special Military Operation\" backs A's note of a Russian framing.", "independent": false}
+{"pair": "488d99274f11", "relation": "none", "rationale": "Unknown frame vs echelon coding; different definitions."}
+{"pair": "48e7ed6a7490", "relation": "none", "rationale": "Developer and publisher vs release dates; different facts."}
+{"pair": "494cb376e369", "relation": "supports", "from": "claim:c08_0008_08", "to": "claim:c08_0014_39", "strength": 0.5, "rationale": "Obriy as a crew trainer alongside UFDS backs the assessment that UFDS and Obriy cover drone crews; shared source.", "independent": false}
+{"pair": "49abd0704526", "relation": "none", "rationale": "Licence terms vs update cadence; different facts."}
+{"pair": "4a65c8e61b46", "relation": "supports", "from": "claim:c01_0024_68", "to": "claim:c03_0024_78", "strength": 0.9, "rationale": "Both report Vivaldi heavy bombers dropping kamikaze UGVs more than 10 km behind Russian lines; both trace to 3rd Corps via Euromaidan Press.", "independent": false}
+{"pair": "4b2a96a5aa75", "relation": "none", "rationale": "Founding history vs legend; different facts."}
+{"pair": "4bc2815b8657", "relation": "supports", "from": "claim:c02_0029_46", "to": "claim:c01_0032_27", "strength": 0.5, "rationale": "HUR's figure of about 3,000 Geran-4/5 a month backs Russia's 2026 shift to jet Gerans; same United24 source.", "independent": false}
+{"pair": "4bd77f486ebc", "relation": "supports", "from": "claim:c00_0016_06", "to": "claim:c00_0021_01", "strength": 0.6, "rationale": "The siege running into May 2022 is consistent with Mariupol falling in May 2022; same source.", "independent": false}
+{"pair": "4cc9c21eeda1", "relation": "supports", "from": "claim:c01_0027_43", "to": "claim:c03_0027_070", "strength": 0.7, "rationale": "Both give jet Geran-3/4/5 ranges of about 1,000 km and introduction in 2025-26, from different sources.", "independent": true}
+{"pair": "4d274f1ca673", "relation": "none", "rationale": "Legend categories vs colour convention; different facts."}
+{"pair": "4d2e40ccde02", "relation": "none", "rationale": "Operator and formats vs update cadence; overlapping description only."}
+{"pair": "4dd316d9e30b", "relation": "none", "rationale": "Production plans vs routing and countermeasures; different claims."}
+{"pair": "4e29e8a81972", "relation": "duplicates", "from": "claim:c08_0008_15", "to": "claim:c08_0006_175", "strength": 0.95, "rationale": "The same MoD codification of Chaika/Chaika-M in November 2025, from the same source, extracted twice."}
+{"pair": "4e445e9eb863", "relation": "none", "rationale": "Gun ranges vs Oryx loss counts; different quantities."}
+{"pair": "4f0de327aefe", "relation": "refines", "from": "claim:c08_0006_08", "to": "claim:c08_0004_04", "strength": 0.8, "rationale": "B gives the same Broken Arrow roadmap status with definition and a March 2026 date."}
+{"pair": "4f1366b7a936", "relation": "none", "rationale": "Account background vs posting channels; different facts."}
+{"pair": "4f311af7b2e2", "relation": "supports", "from": "claim:c00_0061_13", "to": "claim:c01_0024_11", "strength": 0.7, "rationale": "ISW's first sighting of counterattacks on the Dnipropetrovsk-Zaporizhzhia border after the Starlink block corroborates B's report of post-cutoff counterattacks there.", "independent": true}
+{"pair": "4f3549c70743", "relation": "none", "rationale": "Method caveats vs licence text; different facts."}
+{"pair": "4f9e3daa7cb0", "relation": "none", "rationale": "Scenario authorship vs game genre; different facts."}
+{"pair": "4fbb264f4737", "relation": "none", "rationale": "Legend vs update cadence; different facts."}
+{"pair": "5107af7ea108", "relation": "none", "rationale": "Hostile frame vs SIDC encoding; different facts."}
+{"pair": "510b3b7c7b7c", "relation": "none", "rationale": "Geran-3 retirement vs jet Geran performance; compatible, different facts."}
+{"pair": "5128abcc0b31", "relation": "none", "rationale": "Reputation assessment vs licence status; different grounds."}
+{"pair": "51349942e04b", "relation": "supports", "from": "claim:c00_0005_07", "to": "claim:c03_0018_05", "strength": 0.8, "rationale": "Both say glide bombs helped Russia take Avdiivka, from RUSI/Euromaidan Press and JAPCC.", "independent": true}
+{"pair": "5255c0cf52c4", "relation": "none", "rationale": "Legend epistemics vs licence terms; different facts."}
+{"pair": "52bd0339cf2c", "relation": "supports", "from": "claim:c04_0023_19", "to": "claim:c04_0005_10", "strength": 0.7, "rationale": "RUSI's autumn 2024 battalion-sized pushes at Kurakhove corroborate Frontelligence's later mechanized waves around Kurakhove.", "independent": true}
+{"pair": "544d7edbb7f1", "relation": "none", "rationale": "Destroyed bridge vs strikes on pontoons; related context only."}
+{"pair": "548f73f7a1f2", "relation": "none", "rationale": "Territorial loss vs urban morphology; different subjects."}
+{"pair": "56c79ce986ba", "relation": "none", "rationale": "Battle dates vs assault form; compatible, different facts."}
+{"pair": "573dc4cf5f95", "relation": "none", "rationale": "Legend vs reuse terms; different facts."}
+{"pair": "57eb8ed47714", "relation": "none", "rationale": "Aircraft roles vs loss counts; different facts."}
+{"pair": "5809612e50ae", "relation": "supports", "from": "claim:c02_0010_74", "to": "claim:c02_0027_01", "strength": 0.8, "rationale": "Both report 16-element Kometa-M CRPA antennas on Shaheds and Iskander-K in 2025; same Defense Express source.", "independent": false}
+{"pair": "5900b691cab7", "relation": "supports", "from": "claim:c01_0020_13", "to": "claim:c01_0027_53", "strength": 0.8, "rationale": "Both say Ukrainian radar-cued interceptors hunted Orlan/Zala drones from late 2024; same RUSI source.", "independent": false}
+{"pair": "5987cf1ecffe", "relation": "supports", "from": "claim:c00_0061_13", "to": "claim:c04_0006_02", "strength": 0.6, "rationale": "ISW's localised Ukrainian counterattacks on the Dnipropetrovsk-Zaporizhzhia border fit the Air Assault Forces' local counteroffensives there.", "independent": true}
+{"pair": "5a3eb8f272b9", "relation": "none", "rationale": "Interceptor use vs daily orbit count; different claims."}
+{"pair": "5a45c2255bf0", "relation": "none", "rationale": "Rocket lob technique vs convoy strikes; different claims."}
+{"pair": "5a5040aafa62", "relation": "supports", "from": "claim:c08_0016_08", "to": "claim:c08_0006_107", "strength": 0.5, "rationale": "Moving part of the team to Prague at the invasion explains GSC's Prague office; same source.", "independent": false}

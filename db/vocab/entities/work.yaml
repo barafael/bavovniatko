@@ -1,0 +1,836 @@
+# Curated work registry: games, wargames, simulators, mods, map products, datasets, software, documents.
+# note = maker and country (where known) + one line. Series and editions use `parent`.
+
+# --- This project ------------------------------------------------------------------------------
+- id: work:bavovniatko
+  type: work
+  kind: video_game
+  en: "bavovniatko"
+  uk: "бавовнятко"
+  aliases: ["bavovniatko"]
+  note: "This project: a Bevy game and simulation of the Russo-Ukrainian war, player always Ukrainian."
+
+# --- War maps (products, not the organisations) ------------------------------------------------
+- id: work:deepstatemap
+  type: work
+  kind: map_product
+  en: "DeepStateMap"
+  uk: "DeepStateMAP"
+  aliases: ["DeepStateMap", "DeepStateMAP", "DeepState map"]
+  note: "DeepState UA NGO, Ukraine. Front-line control map fed largely by Ukrainian military sources, published 2–3 days late."
+- id: work:isw_ctp_map
+  type: work
+  kind: map_product
+  en: "ISW/CTP control-of-terrain map"
+  aliases: ["ISW/CTP control-of-terrain map", "ISW/CTP map", "ISW map"]
+  note: "Institute for the Study of War and AEI Critical Threats Project, USA. Interactive map separating assessed from claimed control."
+- id: work:isw_roca
+  type: work
+  kind: map_product
+  en: "Russian Offensive Campaign Assessment"
+  aliases: ["Russian Offensive Campaign Assessment", "ROCA"]
+  note: "ISW/CTP, USA. Daily assessment with a theatre map and per-sector zoom maps."
+- id: work:geoconfirmed
+  type: work
+  kind: map_product
+  en: "GeoConfirmed"
+  aliases: ["GeoConfirmed"]
+  note: "International volunteer OSINT collective. Map of individually geolocated clips with sources and geolocation breakdowns."
+- id: work:liveuamap
+  type: work
+  kind: map_product
+  en: "Liveuamap"
+  aliases: ["Liveuamap"]
+  note: "Liveuamap LLC (founded in Dnipro, Ukraine, 2014; now Virginia, USA). Event-pin map fed by crawlers and curated by editors."
+- id: work:black_bird_group_map
+  type: work
+  kind: map_product
+  en: "Black Bird Group map"
+  aliases: ["Black Bird Group map"]
+  note: "Black Bird Group, Finnish NGO. Two-sided front lines plus movement arrows on an OpenFreeMap/OSM basemap."
+- id: work:amk_mapping_map
+  type: work
+  kind: map_product
+  en: "AMK Mapping control map"
+  aliases: ["AMK Mapping control map"]
+  note: "AMK Mapping, pseudonymous analyst (country unknown). Google My Maps control map with exportable KML."
+- id: work:ua_map_perpetua
+  type: work
+  kind: map_product
+  en: "UA map (Andrew Perpetua)"
+  aliases: ["UA map (Andrew Perpetua)", "Andrew Perpetua's map"]
+  note: "Andrew Perpetua with @Gaspo_sk (ukrdailyupdate.com). Leaflet web map built on geolocated footage, daily date slider."
+- id: work:ua_control_map
+  type: work
+  kind: map_product
+  en: "UA Control Map"
+  aliases: ["UA Control Map"]
+  note: "Pseudonymous operator (unverified), country unknown. Web data viewer of geolocations, front lines and unit positions."
+- id: work:suriyak_maps
+  type: work
+  kind: map_product
+  en: "Suriyak Maps"
+  aliases: ["Suriyak Maps", "Suriyak"]
+  note: "Anonymous X/Telegram account since Mar 2017, apparently Spanish-speaking. Static map images."
+- id: work:acled_ukraine_conflict_monitor
+  type: work
+  kind: map_product
+  en: "ACLED Ukraine Conflict Monitor"
+  aliases: ["ACLED Ukraine Conflict Monitor"]
+  note: "ACLED, international NGO. Event circles plus oblast choropleth, weekly updates; front line from Black Bird Group."
+- id: work:slivochny_kapriz
+  type: work
+  kind: map_product
+  en: "Slivochny Kapriz"
+  uk: "Сливочный каприз"
+  aliases: ["Slivochny Kapriz"]
+  note: "Russian mapping project. Credits any area where Russian troops were seen, so it gives high Russian gains."
+- id: work:bbc_ukraine_in_maps
+  type: work
+  kind: map_product
+  en: "BBC \"Ukraine in maps\""
+  aliases: ["BBC \"Ukraine in maps\"", "Ukraine in maps"]
+  note: "BBC Visual Journalism, UK. Explainer maps redrawing ISW/CTP assessments, since 24 Feb 2022."
+- id: work:nyt_tracking_invasion_maps
+  type: work
+  kind: map_product
+  en: "NYT \"Maps: Tracking the Russian Invasion of Ukraine\""
+  aliases: ["NYT \"Maps: Tracking the Russian Invasion of Ukraine\""]
+  note: "The New York Times, USA. Interactive explainer maps of the invasion."
+- id: work:militaryland_map
+  type: work
+  kind: map_product
+  en: "MilitaryLand"
+  aliases: ["MilitaryLand"]
+  note: "MilitaryLand.net (war-map and ORBAT site); the map product, ranked lower in a 2024 Wikipedia editor's comparison."
+- id: work:rybar_map
+  type: work
+  kind: map_product
+  en: "Rybar map"
+  aliases: ["Rybar"]
+  note: "Rybar, Russian pro-war Telegram milblogger channel, Russia. Its war maps (the product, not the channel)."
+
+# --- Geospatial datasets -----------------------------------------------------------------------
+- id: work:openstreetmap
+  type: work
+  kind: dataset_product
+  en: "OpenStreetMap"
+  aliases: ["OpenStreetMap", "OSM"]
+  note: "OpenStreetMap Foundation and contributors, international. Open map database under ODbL 1.0 (as a dataset)."
+- id: work:copernicus_dem_glo30
+  type: work
+  kind: dataset_product
+  en: "Copernicus DEM GLO-30"
+  aliases: ["Copernicus DEM GLO-30", "Copernicus DEM"]
+  note: "ESA/EU Copernicus with DLR and Airbus, Europe. 30 m global digital elevation model."
+- id: work:srtm_gl1
+  type: work
+  kind: dataset_product
+  en: "SRTM GL1"
+  aliases: ["SRTM GL1", "SRTM"]
+  note: "NASA/NGA, USA. Shuttle Radar Topography Mission 1-arc-second (about 30 m) DEM, Feb 2000."
+- id: work:srtm_gl1_v003
+  type: work
+  kind: dataset_product
+  en: "SRTM GL1 v003"
+  aliases: ["SRTM GL1 v003"]
+  parent: work:srtm_gl1
+  note: "NASA, USA. Version 3 of SRTM GL1, covering 60°N–56°S."
+- id: work:esa_worldcover
+  type: work
+  kind: dataset_product
+  en: "ESA WorldCover"
+  aliases: ["ESA WorldCover"]
+  note: "European Space Agency, Europe. 10 m global land-cover map, CC BY 4.0."
+- id: work:esa_worldcover_v200
+  type: work
+  kind: dataset_product
+  en: "ESA WorldCover v200"
+  aliases: ["ESA WorldCover v200"]
+  parent: work:esa_worldcover
+  note: "ESA, Europe. 2021 edition (v200) of WorldCover."
+- id: work:sentinel_2
+  type: work
+  kind: dataset_product
+  en: "Sentinel-2"
+  aliases: ["Sentinel-2"]
+  note: "ESA/EU Copernicus, Europe. 10 m multispectral satellite imagery (the imagery dataset)."
+- id: work:sentinel_2_l2a
+  type: work
+  kind: dataset_product
+  en: "Sentinel-2 L2A"
+  aliases: ["Sentinel-2 L2A"]
+  parent: work:sentinel_2
+  note: "ESA, Europe. Atmospherically corrected surface-reflectance product of Sentinel-2."
+- id: work:eoxcloudless_2021
+  type: work
+  kind: dataset_product
+  en: "EOxCloudless (Sentinel-2 cloudless) 2021"
+  aliases: ["EOxCloudless (Sentinel-2 cloudless) 2021", "EOxCloudless 2021", "Sentinel-2 cloudless 2021"]
+  note: "EOX IT Services, Austria. Global cloud-free 10 m RGB Sentinel-2 mosaic, pre-invasion; restricted-use licence."
+- id: work:dynamic_world
+  type: work
+  kind: dataset_product
+  en: "Dynamic World"
+  aliases: ["Dynamic World"]
+  note: "Google and World Resources Institute, USA. Near-real-time 10 m land-cover classification, CC BY 4.0."
+- id: work:dynamic_world_v1
+  type: work
+  kind: dataset_product
+  en: "Dynamic World V1"
+  aliases: ["Dynamic World V1"]
+  parent: work:dynamic_world
+  note: "Google/WRI, USA. Version 1 of Dynamic World."
+- id: work:hansen_global_forest_change
+  type: work
+  kind: dataset_product
+  en: "Hansen Global Forest Change"
+  aliases: ["Hansen Global Forest Change", "Hansen GFC"]
+  note: "University of Maryland (Hansen et al.), USA. Global tree-cover and loss dataset, CC BY 4.0."
+- id: work:hansen_global_forest_change_v1_12
+  type: work
+  kind: dataset_product
+  en: "Hansen Global Forest Change v1.12"
+  aliases: ["Hansen Global Forest Change v1.12"]
+  parent: work:hansen_global_forest_change
+  note: "University of Maryland, USA. Version 1.12 of Hansen GFC."
+- id: work:nasa_harvest_ukraine_fields
+  type: work
+  kind: dataset_product
+  en: "NASA Harvest Ukraine field boundaries"
+  aliases: ["NASA Harvest Ukraine field boundaries"]
+  note: "NASA Harvest, USA. 5M+ Ukrainian field polygons (2021–2023) from 3 m PlanetScope; CC BY-NC-ND 4.0."
+- id: work:fields_of_the_world
+  type: work
+  kind: dataset_product
+  en: "Fields of The World"
+  aliases: ["Fields of The World"]
+  note: "Fields of The World consortium, international. 1.63M field polygons for 24 countries (not Ukraine), CC BY 4.0."
+- id: work:ai4boundaries
+  type: work
+  kind: dataset_product
+  en: "AI4Boundaries"
+  aliases: ["AI4Boundaries"]
+  note: "EU Joint Research Centre, Europe. 2.5M parcels plus imagery for 7 EU regions, CC BY 4.0."
+- id: work:eurocrops
+  type: work
+  kind: dataset_product
+  en: "EuroCrops"
+  aliases: ["EuroCrops"]
+  note: "TU Munich-led project, Germany/EU. Harmonised EU crop-parcel dataset, CC BY-SA 4.0."
+- id: work:global_field_size_map
+  type: work
+  kind: dataset_product
+  en: "Global field-size map (Geo-Wiki)"
+  aliases: ["Global field-size map (Geo-Wiki)", "Global field-size map"]
+  note: "IIASA Geo-Wiki, Austria. Crowdsourced global grid of field-size classes; licence not recorded."
+- id: work:overture_maps
+  type: work
+  kind: dataset_product
+  en: "Overture Maps"
+  aliases: ["Overture Maps"]
+  note: "Overture Maps Foundation, USA. Open map data (buildings, transport, places); ODbL / CDLA-Permissive 2.0."
+- id: work:microsoft_building_footprints
+  type: work
+  kind: dataset_product
+  en: "Microsoft Global ML Building Footprints"
+  aliases: ["Microsoft Global ML Building Footprints"]
+  note: "Microsoft, USA. Machine-learned global building footprints; licence CDLA Permissive 2.0 vs ODbL needs checking."
+- id: work:nasa_firms
+  type: work
+  kind: dataset_product
+  en: "NASA FIRMS"
+  aliases: ["NASA FIRMS"]
+  note: "NASA, USA. Fire Information for Resource Management System: satellite active-fire detections."
+- id: work:geoboundaries
+  type: work
+  kind: dataset_product
+  en: "geoBoundaries"
+  aliases: ["geoBoundaries"]
+  note: "William & Mary geoLab, USA. Open administrative-boundary dataset."
+- id: work:natural_earth
+  type: work
+  kind: dataset_product
+  en: "Natural Earth"
+  aliases: ["Natural Earth"]
+  note: "Natural Earth (NACIS volunteers), international. Public-domain cartographic dataset; 10 m land used for clipping."
+- id: work:openfreemap
+  type: work
+  kind: dataset_product
+  en: "OpenFreeMap"
+  aliases: ["OpenFreeMap"]
+  note: "OpenFreeMap project, Hungary. Free OSM-based vector basemap tiles."
+- id: work:deepstate_map_data_scraper
+  type: work
+  kind: dataset_product
+  en: "cyterat/deepstate-map-data"
+  aliases: ["cyterat/deepstate-map-data"]
+  note: "Community GitHub scraper (cyterat), GPL-3.0 code. Daily GeoJSON of DeepStateMap occupied areas since 2024-07-08."
+- id: work:avengers_labs_dataset
+  type: work
+  kind: dataset_product
+  en: "Avengers Labs"
+  aliases: ["Avengers Labs"]
+  note: "Ukrainian MoD Avengers AI platform, Ukraine. Dataset of 5 million labelled drone-video images."
+
+# --- Symbology standards, reports and papers (documents; nearest kind dataset_product) ----------
+- id: work:app_6
+  type: work
+  kind: standard
+  en: "APP-6"
+  aliases: ["APP-6", "NATO APP-6", "STANAG 2019"]
+  note: "NATO, international. Joint military symbology standard (STANAG 2019); aligned with MIL-STD-2525. Document, no standard kind."
+- id: work:mil_std_2525
+  type: work
+  kind: standard
+  en: "MIL-STD-2525"
+  aliases: ["MIL-STD-2525"]
+  note: "US Department of Defense, USA. Joint military symbology standard, aligned with APP-6. Document, no standard kind."
+- id: work:rusi_meatgrinder
+  type: work
+  kind: publication
+  en: "Meatgrinder (RUSI report)"
+  aliases: ["Meatgrinder"]
+  note: "RUSI (Watling and Reynolds), UK, 2023. Report on Russian tactics in the second year of the invasion. Document, no report kind."
+- id: work:procedural_modeling_of_cities
+  type: work
+  kind: publication
+  en: "Procedural Modeling of Cities"
+  aliases: ["Procedural Modeling of Cities"]
+  note: "Parish and Müller, ETH Zurich, Switzerland, 2001 (SIGGRAPH). L-system road-network paper. Document, no paper kind."
+- id: work:procedural_generation_of_parcels
+  type: work
+  kind: publication
+  en: "Procedural Generation of Parcels"
+  aliases: ["Procedural Generation of Parcels"]
+  note: "Vanegas et al., USA, 2012. Block subdivision paper. Document, no paper kind."
+- id: work:procedural_generation_of_villages
+  type: work
+  kind: publication
+  en: "Procedural generation of villages on arbitrary terrains"
+  aliases: ["Procedural generation of villages on arbitrary terrains"]
+  note: "Emilien et al., France, 2012. Terrain-aware village growth paper. Document, no paper kind."
+- id: work:procedural_generation_of_roads
+  type: work
+  kind: publication
+  en: "Procedural Generation of Roads"
+  aliases: ["Procedural Generation of Roads"]
+  note: "Galin et al., France, 2010. Weighted shortest-path road routing paper. Document, no paper kind."
+- id: work:survey_procedural_modelling_virtual_worlds
+  type: work
+  kind: publication
+  en: "A Survey on Procedural Modelling for Virtual Worlds"
+  aliases: ["A Survey on Procedural Modelling for Virtual Worlds"]
+  note: "Smelik et al., Netherlands, 2014. Survey paper. Document, no paper kind."
+- id: work:polygon_map_generation
+  type: work
+  kind: publication
+  en: "Polygon Map Generation"
+  aliases: ["Polygon Map Generation"]
+  note: "Amit Patel (Red Blob Games), USA, 2010. Voronoi polygon map generation article. Document, no paper kind."
+
+# --- Software and libraries ---------------------------------------------------------------------
+- id: work:milsymbol
+  type: work
+  kind: software_product
+  en: "milsymbol"
+  aliases: ["milsymbol"]
+  note: "Måns Beckman (spatialillusions), Sweden. MIT-licensed JavaScript military symbol renderer (2525/APP-6)."
+- id: work:battle_staff_tools
+  type: work
+  kind: software_product
+  en: "Battle Staff Tools"
+  aliases: ["Battle Staff Tools", "unit generator"]
+  note: "Måns Beckman (Spatial Illusions), Sweden. Browser symbol and ORBAT tool; paid licence for offline use."
+- id: work:betaflight
+  type: work
+  kind: software_product
+  en: "Betaflight"
+  aliases: ["Betaflight"]
+  note: "Betaflight open-source community, international. FPV flight-controller firmware with OSD telemetry."
+- id: work:leaflet
+  type: work
+  kind: software_product
+  en: "Leaflet"
+  aliases: ["Leaflet"]
+  note: "Volodymyr Agafonkin (Kyiv) and contributors, Ukraine. Open-source JavaScript web-map library."
+- id: work:leaflet_pattern
+  type: work
+  kind: software_product
+  en: "leaflet.pattern"
+  aliases: ["leaflet.pattern"]
+  parent: work:leaflet
+  note: "Community Leaflet plugin for patterned fills."
+- id: work:openlayers
+  type: work
+  kind: software_product
+  en: "OpenLayers"
+  aliases: ["OpenLayers"]
+  note: "OpenLayers open-source project (OSGeo), international. JavaScript web-map library."
+- id: work:cesium
+  type: work
+  kind: software_product
+  en: "Cesium"
+  aliases: ["Cesium", "CesiumJS"]
+  note: "Cesium GS, USA. 3D globe and map library."
+- id: work:pixijs
+  type: work
+  kind: software_product
+  en: "PixiJS"
+  aliases: ["PixiJS"]
+  note: "PixiJS open-source project, international. WebGL 2D rendering library."
+- id: work:highcharts
+  type: work
+  kind: software_product
+  en: "Highcharts"
+  aliases: ["Highcharts"]
+  note: "Highsoft, Norway. JavaScript charting library."
+- id: work:fabric_js
+  type: work
+  kind: software_product
+  en: "fabric.js"
+  aliases: ["fabric.js"]
+  note: "fabric.js open-source project, international. HTML canvas drawing library."
+- id: work:discord
+  type: work
+  kind: software_product
+  en: "Discord"
+  aliases: ["Discord"]
+  note: "Discord Inc., USA. Chat and voice platform, used and later blocked in Russia (replaced by ASTRAS)."
+
+# --- Strategy and tactics video games -----------------------------------------------------------
+- id: work:broken_arrow
+  type: work
+  kind: video_game
+  en: "Broken Arrow"
+  aliases: ["Broken Arrow"]
+  note: "Steel Balalaika (Russia-based), published by Slitherine; 2025. Modern combined-arms RTS."
+- id: work:warno
+  type: work
+  kind: video_game
+  en: "WARNO"
+  aliases: ["WARNO"]
+  note: "Eugen Systems, France. Cold War combined-arms RTS."
+- id: work:steel_division_2
+  type: work
+  kind: video_game
+  en: "Steel Division 2"
+  aliases: ["Steel Division 2"]
+  note: "Eugen Systems, France; 2019. WWII RTS depicting Operation Bagration."
+- id: work:regiments
+  type: work
+  kind: video_game
+  en: "Regiments"
+  aliases: ["Regiments"]
+  note: "Bird's Eye Games (country not stated), published by MicroProse; 2022, DLC 2024. RTS set in 1989."
+- id: work:combat_mission_black_sea
+  type: work
+  kind: video_game
+  en: "Combat Mission: Black Sea"
+  aliases: ["Combat Mission: Black Sea"]
+  note: "Battlefront.com, USA (bought by Slitherine 2024); 2014, Steam 2021. Tactical wargame of a hypothetical 2017 war in Ukraine."
+- id: work:flashpoint_campaigns
+  type: work
+  kind: video_game
+  en: "Flashpoint Campaigns"
+  aliases: ["Flashpoint Campaigns series"]
+  note: "On Target Simulations, published by Matrix Games. Operational-tactical wargame series (parent of the titles)."
+- id: work:flashpoint_campaigns_red_storm
+  type: work
+  kind: video_game
+  en: "Flashpoint Campaigns: Red Storm"
+  aliases: ["Flashpoint Campaigns: Red Storm"]
+  parent: work:flashpoint_campaigns
+  note: "On Target Simulations / Matrix Games; 2014."
+- id: work:flashpoint_campaigns_southern_storm
+  type: work
+  kind: video_game
+  en: "Flashpoint Campaigns: Southern Storm"
+  aliases: ["Flashpoint Campaigns: Southern Storm"]
+  parent: work:flashpoint_campaigns
+  note: "On Target Simulations / Matrix Games; 2023."
+- id: work:flashpoint_campaigns_cold_war
+  type: work
+  kind: video_game
+  en: "Flashpoint Campaigns: Cold War"
+  aliases: ["Flashpoint Campaigns: Cold War"]
+  parent: work:flashpoint_campaigns
+  note: "On Target Simulations / Matrix Games; 2025."
+- id: work:command_modern_operations
+  type: work
+  kind: video_game
+  en: "Command: Modern Operations"
+  aliases: ["Command: Modern Operations", "CMO"]
+  note: "WarfareSims, published by Matrix Games/Slitherine. Air-naval-land operational simulation."
+- id: work:cmo_ukraine_2022_scenarios
+  type: work
+  kind: mod
+  en: "Command: Modern Operations Ukraine 2022 scenarios"
+  aliases: ["Command: Modern Operations Ukraine 2022 scenarios"]
+  parent: work:command_modern_operations
+  note: "Community authors. Scenarios of the 2022 war for CMO."
+- id: work:toaw_iv
+  type: work
+  kind: video_game
+  en: "The Operational Art of War IV"
+  aliases: ["The Operational Art of War IV", "TOAW IV"]
+  note: "Published by Matrix Games/Slitherine. Operational hex wargame."
+- id: work:toaw_iv_ukraine_2022
+  type: work
+  kind: mod
+  en: "TOAW IV \"Ukraine 2022\" scenario"
+  aliases: ["TOAW IV \"Ukraine 2022\" scenario"]
+  parent: work:toaw_iv
+  note: "Community authors sPzAbt653 and Josant. Operational scenario of the 2022 war."
+- id: work:ukraine_war_2022_sand_table
+  type: work
+  kind: video_game
+  en: "Ukraine War 2022"
+  aliases: ["Ukraine War 2022"]
+  note: "Sand Table Software (country not stated); 2024. Indie operational simulation of the war."
+- id: work:ukrainian_warfare_gostomel_heroes
+  type: work
+  kind: video_game
+  en: "Ukrainian Warfare: Gostomel Heroes"
+  aliases: ["Ukrainian Warfare: Gostomel Heroes"]
+  note: "Cats Who Play (country not stated); 2026. RTS of the 2022 invasion told from the Russian side."
+- id: work:hell_of_war_combined_arms
+  type: work
+  kind: video_game
+  en: "Hell Of War: Combined Arms"
+  aliases: ["Hell Of War: Combined Arms", "Hell Of War"]
+  note: "Ravens Row (country not stated), early access Sep 2026; English and Ukrainian audio. Command drone plus FPV."
+- id: work:men_of_war_ii
+  type: work
+  kind: video_game
+  en: "Men of War II"
+  aliases: ["Men of War II"]
+  note: "Best Way, Ukraine; published by Fulqrum; 2024. WWII tactical RTS."
+- id: work:gates_of_hell_ostfront
+  type: work
+  kind: video_game
+  en: "Call to Arms – Gates of Hell: Ostfront"
+  aliases: ["Call to Arms – Gates of Hell: Ostfront", "Gates of Hell: Ostfront"]
+  note: "Barbedwire Studios (Sagunt, Spain) with Digitalmindsoft; 2021. WWII RTS."
+- id: work:radio_commander
+  type: work
+  kind: video_game
+  en: "Radio Commander"
+  aliases: ["Radio Commander"]
+  note: "Serious Sim; 2019. Command-by-radio Vietnam War game."
+- id: work:radio_general
+  type: work
+  kind: video_game
+  en: "Radio General"
+  aliases: ["Radio General"]
+  note: "Foolish Mortals, Canada; 2020. Command-by-radio WWII game."
+
+# --- Shooters and other video games -------------------------------------------------------------
+- id: work:arma_series
+  type: work
+  kind: video_game
+  en: "Arma"
+  aliases: ["Arma series"]
+  note: "Bohemia Interactive, Czechia. Military sandbox series (parent of Arma 3 and Arma Reforger)."
+- id: work:arma_3
+  type: work
+  kind: video_game
+  en: "Arma 3"
+  aliases: ["Arma 3"]
+  parent: work:arma_series
+  note: "Bohemia Interactive, Czechia; 2013. Footage often passed off as real Ukrainian combat."
+- id: work:arma_reforger
+  type: work
+  kind: video_game
+  en: "Arma Reforger"
+  aliases: ["Arma Reforger"]
+  parent: work:arma_series
+  note: "Bohemia Interactive, Czechia; 2022."
+- id: work:arma_reforger_realistic_combat_drones
+  type: work
+  kind: mod
+  en: "Arma Reforger \"Realistic Combat Drones\" mod"
+  aliases: ["Arma Reforger \"Realistic Combat Drones\" mod", "Realistic Combat Drones"]
+  parent: work:arma_reforger
+  note: "SalamiBoiDev, on Bohemia's platform. FPV and combat-drone mod."
+- id: work:squad
+  type: work
+  kind: video_game
+  en: "Squad"
+  aliases: ["Squad"]
+  note: "Offworld Industries, Canada; early access 2015, release 2020. Tactical multiplayer shooter."
+- id: work:squad_22_zov
+  type: work
+  kind: video_game
+  en: "Squad 22: ZOV"
+  aliases: ["Squad 22: ZOV"]
+  note: "SPN Studio, Russia; 2025. Russian-framed shooter of the war."
+- id: work:gray_zone_warfare
+  type: work
+  kind: video_game
+  en: "Gray Zone Warfare"
+  aliases: ["Gray Zone Warfare"]
+  note: "MADFINGER Games, Czechia. Tactical extraction shooter."
+- id: work:escape_from_tarkov
+  type: work
+  kind: video_game
+  en: "Escape from Tarkov"
+  aliases: ["Escape from Tarkov"]
+  note: "Battlestate Games (country not stated in the sources); 1.0 in 2025. Extraction FPS in a fictional NW-Russia war."
+- id: work:stalker_2
+  type: work
+  kind: video_game
+  en: "S.T.A.L.K.E.R. 2: Heart of Chornobyl"
+  uk: "S.T.A.L.K.E.R. 2: Серце Чорнобиля"
+  aliases: ["S.T.A.L.K.E.R. 2: Heart of Chornobyl", "STALKER 2"]
+  note: "GSC Game World, Kyiv (Ukraine) with a Prague office; 2024."
+- id: work:grand_theft_auto_v
+  type: work
+  kind: video_game
+  en: "Grand Theft Auto V"
+  aliases: ["Grand Theft Auto V", "GTA V"]
+  note: "Rockstar Games, USA/UK; 2013. Host game for the FiveM WeTrueGun server."
+- id: work:wetruegun_fivem_server
+  type: work
+  kind: mod
+  en: "WeTrueGun GTA V/FiveM server"
+  aliases: ["WeTrueGun GTA V/FiveM server"]
+  parent: work:grand_theft_auto_v
+  note: "WeTrueGun, Ukrainian school. Shahed-interception FiveM server; not real training by its makers' account."
+- id: work:glory_to_the_heroes_video_game
+  type: work
+  kind: video_game
+  en: "Glory to the Heroes"
+  uk: "Героям слава"
+  aliases: ["Glory to the Heroes"]
+  note: "Deaf Tone Games, Ukraine; early access, 1.0 planned 2026. Video game (not Farren's board wargame)."
+- id: work:ukraine_war_stories
+  type: work
+  kind: video_game
+  en: "Ukraine War Stories"
+  aliases: ["Ukraine War Stories"]
+  note: "Starni Games, Kyiv (Ukraine); 2022. Free visual novel."
+- id: work:play_for_ukraine
+  type: work
+  kind: video_game
+  en: "Play for Ukraine"
+  aliases: ["Play for Ukraine"]
+  note: "Pro-Ukrainian browser game (maker not stated in the sources) in which players ran DDoS attacks on sites said to serve the Russian army."
+
+# --- Drone games and simulators -----------------------------------------------------------------
+- id: work:death_from_above
+  type: work
+  kind: video_game
+  en: "Death From Above"
+  aliases: ["Death From Above"]
+  note: "Rockodile / Lesser Evil, Germany; early access 2023, release 2024. Arcade drone game."
+- id: work:remote_reaper
+  type: work
+  kind: video_game
+  en: "Remote Reaper"
+  aliases: ["Remote Reaper"]
+  note: "Vladyslav Fomenko, Ukraine, with active pilots; 2025. Consumer FPV drone game."
+- id: work:ufds
+  type: work
+  kind: training_sim
+  en: "UFDS"
+  aliases: ["UFDS"]
+  note: "Simtech Solutions and Drone Fight Club Academy, Ukraine; 2025. FPV drone training simulator."
+- id: work:obriy
+  type: work
+  kind: training_sim
+  en: "Obriy"
+  uk: "Обрій"
+  aliases: ["Obriy"]
+  note: "Twist Robotics, Ukraine. Military-grade drone crew simulator with EW scenarios."
+- id: work:fpv_battleground
+  type: work
+  kind: training_sim
+  en: "FPV Battleground"
+  aliases: ["FPV Battleground"]
+  note: "BAZU, Ukraine. Military FPV simulator."
+- id: work:chaika
+  type: work
+  kind: training_sim
+  en: "Chaika / Chaika-M"
+  uk: "Чайка / Чайка-М"
+  aliases: ["Chaika / Chaika-M", "Chaika"]
+  note: "Ukraine; codified by the MoD Nov 2025. VR air-defence trainers ('Flyswatter')."
+- id: work:liftoff
+  type: work
+  kind: video_game
+  en: "Liftoff"
+  aliases: ["Liftoff"]
+  note: "LuGus Studios, Belgium. FPV drone simulator popular with beginners and instructors."
+- id: work:velocidrone
+  type: work
+  kind: video_game
+  en: "VelociDrone"
+  aliases: ["VelociDrone"]
+  note: "FPV racing simulator (maker not stated in the sources)."
+- id: work:drl_simulator
+  type: work
+  kind: video_game
+  en: "DRL Simulator"
+  aliases: ["DRL Simulator", "DRL"]
+  note: "Drone Racing League, USA. FPV simulator for beginners."
+- id: work:uncrashed
+  type: work
+  kind: video_game
+  en: "Uncrashed"
+  aliases: ["Uncrashed"]
+  note: "Uncrashed FPV drone simulator (maker not stated in the sources)."
+- id: work:dcl
+  type: work
+  kind: video_game
+  en: "DCL"
+  aliases: ["DCL", "DCL – The Game"]
+  note: "Drone Champions League game (maker not stated in the sources). FPV racing simulator."
+- id: work:realflight
+  type: work
+  kind: training_sim
+  en: "RealFlight"
+  aliases: ["RealFlight"]
+  note: "Horizon Hobby / Knife Edge Software, USA. RC and UAV flight simulator."
+- id: work:unigine_sim
+  type: work
+  kind: training_sim
+  en: "Unigine Sim"
+  aliases: ["Unigine Sim"]
+  note: "UNIGINE (engine vendor). Simulation SDK listed as used in UAV programmes."
+- id: work:xfly
+  type: work
+  kind: training_sim
+  en: "XFly"
+  aliases: ["XFly"]
+  note: "Listed by a Ukrainian vendor as used in UAV programmes (maker not stated)."
+
+# --- Professional training simulators -----------------------------------------------------------
+- id: work:steel_beasts_pro
+  type: work
+  kind: training_sim
+  en: "Steel Beasts Pro"
+  aliases: ["Steel Beasts Pro", "SBPro", "Steel Beasts"]
+  note: "eSim Games, USA. Armoured-warfare professional simulator, used by Ukraine 2022–25."
+- id: work:steel_beasts_pe
+  type: work
+  kind: training_sim
+  en: "Steel Beasts PE"
+  aliases: ["Steel Beasts PE", "Steel Beasts Pro PE"]
+  parent: work:steel_beasts_pro
+  note: "eSim Games, USA. Personal Edition, limited to 8 workstations; used for Ukrainian CPXs Dec 2022 – May 2023."
+- id: work:vbs
+  type: work
+  kind: training_sim
+  en: "VBS (Virtual Battlespace)"
+  aliases: ["Virtual Battlespace"]
+  note: "Bohemia Interactive Simulations, Czechia/UK. Military training simulation series (parent of VBS3, VBS4)."
+- id: work:vbs3
+  type: work
+  kind: training_sim
+  en: "VBS3"
+  aliases: ["VBS3"]
+  parent: work:vbs
+  note: "Bohemia Interactive Simulations. Used with JCATS and SBPro to feed drone views into commanders' picture."
+- id: work:vbs4
+  type: work
+  kind: training_sim
+  en: "VBS4"
+  aliases: ["VBS4"]
+  parent: work:vbs
+  note: "Bohemia Interactive Simulations; with Ukrainian terrain. Weak on brigade ops, logistics and morale per its vendor."
+- id: work:jcats
+  type: work
+  kind: training_sim
+  en: "JCATS"
+  aliases: ["JCATS", "Joint Conflict and Tactical Simulation"]
+  note: "Lawrence Livermore National Laboratory, USA. Joint Conflict and Tactical Simulation."
+
+# --- Board games --------------------------------------------------------------------------------
+- id: work:defiance
+  type: work
+  kind: board_game
+  en: "Defiance: 2nd Russo-Ukrainian War 2022-?"
+  aliases: ["Defiance: 2nd Russo-Ukrainian War 2022-?", "Defiance"]
+  note: "GMT Games, USA; designed by D. B. Dockter and Mark Herman. Board wargame of Feb–Apr 2022."
+- id: work:glory_to_the_heroes_farren
+  type: work
+  kind: board_game
+  en: "Glory to the Heroes (Farren)"
+  aliases: ["Glory to the Heroes (Farren)"]
+  note: "Maj Ed Farren, British Army, UK. Free print-and-play grand-strategic wargame (150 km hexes), after Philip Sabin."
+- id: work:ukrainian_crisis
+  type: work
+  kind: board_game
+  en: "Ukrainian Crisis"
+  aliases: ["Ukrainian Crisis"]
+  note: "Brian Train, Canada; print-and-play Mar 2014, boxed by Hollandspiele (USA) 2017."
+- id: work:bg_2022_ukraine
+  type: work
+  kind: board_game
+  en: "2022: Ukraine"
+  aliases: ["2022: Ukraine"]
+  note: "BoardGameGeek listing (first year of the war); maker not recorded, existence only confirmed."
+- id: work:bg_putins_war_2022
+  type: work
+  kind: board_game
+  en: "Putin's War 2022"
+  aliases: ["Putin's War 2022"]
+  note: "BoardGameGeek listing; maker not recorded, existence only confirmed."
+- id: work:bg_ukraine_2022_tabletop
+  type: work
+  kind: board_game
+  en: "Ukraine 2022: Tabletop Wargame"
+  aliases: ["Ukraine 2022: Tabletop Wargame"]
+  note: "BoardGameGeek listing; maker not recorded, existence only confirmed."
+- id: work:bg_to_kyiv
+  type: work
+  kind: board_game
+  en: "To Kyiv!"
+  aliases: ["To Kyiv!"]
+  note: "BoardGameGeek listing; maker not recorded, existence only confirmed."
+
+# --- Professional wargames ----------------------------------------------------------------------
+- id: work:mcu_pre_invasion_wargame
+  type: work
+  kind: wargame
+  en: "Marine Corps University pre-invasion wargame"
+  aliases: ["Marine Corps University pre-invasion wargame"]
+  note: "Marine Corps University, USA; Feb 2022, two weeks before the invasion. Anticipated the main axes."
+- id: work:mcu_long_war_wargame
+  type: work
+  kind: wargame
+  en: "Marine Corps University long-war wargame"
+  aliases: ["Marine Corps University long-war wargame"]
+  note: "Marine Corps University, USA. Follow-up with three-month turns; forecast stalemate."
+- id: work:rand_baltic_wargame
+  type: work
+  kind: wargame
+  en: "RAND Baltic wargame"
+  aliases: ["RAND Baltic wargame"]
+  note: "RAND Corporation, USA; 2014–16. NATO–Russia Baltic defence wargaming."
+- id: work:die_welt_marijampole_game
+  type: work
+  kind: wargame
+  en: "Die Welt / German Wargaming Center Marijampolė game"
+  aliases: ["Die Welt / German Wargaming Center Marijampolė game"]
+  note: "Die Welt and the German Wargaming Center (Helmut Schmidt University), Germany; Dec 2025. Russian seizure of Marijampolė."
+- id: work:canadian_army_structure_games
+  type: work
+  kind: wargame
+  en: "Canadian Army structure games"
+  aliases: ["Canadian Army structure games"]
+  note: "Canadian Army, run by Maj Ed Farren, Canada; 2024–26. Force-structure wargames on drones."
+- id: work:kshvi
+  type: work
+  kind: wargame
+  en: "KShVI"
+  uk: "КШВИ"
+  aliases: ["KShVI"]
+  note: "Russian Armed Forces, Russia. Command-staff military games (komandno-shtabnye voennye igry); rehearse procedure."
+- id: work:gpt_negotiation_game
+  type: work
+  kind: wargame
+  en: "GPT-assisted negotiation game"
+  aliases: ["GPT-assisted negotiation game"]
+  note: "Sep 2026; designer not named in the claims. Negotiation wargame drafted with GPT in about two hours."

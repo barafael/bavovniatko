@@ -1,0 +1,115 @@
+{"domain":"actor","ext":{"_hash":"1310fdbc4aae0a91"},"id":{"$rid":["kind",["actor","international_org"]]},"labels":{"en":"International org"}}
+{"domain":"actor","ext":{"_hash":"1a82966634a474e7"},"id":{"$rid":["kind",["actor","outlet"]]},"labels":{"en":"Outlet"}}
+{"domain":"actor","ext":{"_hash":"2e96c6d28a86953a"},"id":{"$rid":["kind",["actor","person"]]},"labels":{"en":"Person"}}
+{"domain":"actor","ext":{"_hash":"3d4b1e42b25d74a0"},"id":{"$rid":["kind",["actor","intelligence_agency"]]},"labels":{"en":"Intelligence agency"}}
+{"domain":"actor","ext":{"_hash":"3f77ac56116e193d"},"id":{"$rid":["kind",["actor","academic_institution"]]},"labels":{"en":"Academic institution"}}
+{"domain":"actor","ext":{"_hash":"47ef172cceaf8500"},"id":{"$rid":["kind",["actor","military_unit"]]},"labels":{"en":"Military unit"}}
+{"domain":"actor","ext":{"_hash":"4ac49a055920ed7a"},"id":{"$rid":["kind",["actor","armed_force"]]},"labels":{"en":"Armed force"}}
+{"domain":"actor","ext":{"_hash":"5bcea8f06e8aeb81"},"id":{"$rid":["kind",["actor","ngo"]]},"labels":{"en":"Ngo"}}
+{"domain":"actor","ext":{"_hash":"5d27c13c29459092"},"id":{"$rid":["kind",["actor","platform"]]},"labels":{"en":"Platform"}}
+{"domain":"actor","ext":{"_hash":"76f72cd19afaa2f6"},"id":{"$rid":["kind",["actor","organisation"]]},"labels":{"en":"Organisation"}}
+{"domain":"actor","ext":{"_hash":"7976fed096e07554"},"id":{"$rid":["kind",["actor","think_tank"]]},"labels":{"en":"Think tank"}}
+{"domain":"actor","ext":{"_hash":"c08c02072509e7ca"},"id":{"$rid":["kind",["actor","government_body"]]},"labels":{"en":"Government body"}}
+{"domain":"actor","ext":{"_hash":"ca395ffa13b043ca"},"id":{"$rid":["kind",["actor","company"]]},"labels":{"en":"Company"}}
+{"domain":"actor","ext":{"_hash":"d3c0881967265707"},"id":{"$rid":["kind",["actor","political_party"]]},"labels":{"en":"Political party"}}
+{"domain":"actor","ext":{"_hash":"f4f1e28a970833c3"},"id":{"$rid":["kind",["actor","game_studio"]]},"labels":{"en":"Game studio"}}
+{"domain":"event","ext":{"_hash":"272e2d2269b08e90"},"id":{"$rid":["kind",["event","technical"]]},"labels":{"en":"Technical"}}
+{"domain":"event","ext":{"_hash":"49a91e51efa961b1"},"id":{"$rid":["kind",["event","operation"]]},"labels":{"en":"Operation"}}
+{"domain":"event","ext":{"_hash":"53b7f7e9efed5dc0"},"id":{"$rid":["kind",["event","milestone"]]},"labels":{"en":"Milestone"}}
+{"domain":"event","ext":{"_hash":"668853431bb1b348"},"id":{"$rid":["kind",["event","truce"]]},"labels":{"en":"Truce"}}
+{"domain":"event","ext":{"_hash":"8027b37b48aef921"},"id":{"$rid":["kind",["event","incident"]]},"labels":{"en":"Incident"}}
+{"domain":"event","ext":{"_hash":"acaff45fb6d8b55c"},"id":{"$rid":["kind",["event","negotiation"]]},"labels":{"en":"Negotiation"}}
+{"domain":"event","ext":{"_hash":"d3d6a97826f0d384"},"id":{"$rid":["kind",["event","strike"]]},"labels":{"en":"Strike"}}
+{"domain":"event","ext":{"_hash":"d65cbdfe07717f0b"},"id":{"$rid":["kind",["event","policy"]]},"labels":{"en":"Policy"}}
+{"domain":"event","ext":{"_hash":"e376dfa958ee16c6"},"id":{"$rid":["kind",["event","production"]]},"labels":{"en":"Production"}}
+{"domain":"event","ext":{"_hash":"e484f820fbe55b7b"},"id":{"$rid":["kind",["event","aid_decision"]]},"labels":{"en":"Aid decision"}}
+{"domain":"event","ext":{"_hash":"f0869c128cf0a9c1"},"id":{"$rid":["kind",["event","offensive"]]},"labels":{"en":"Offensive"}}
+{"domain":"event","ext":{"_hash":"f49271927b80a33f"},"id":{"$rid":["kind",["event","battle"]]},"labels":{"en":"Battle"}}
+{"domain":"event","ext":{"_hash":"f6a4752705d3c64c"},"id":{"$rid":["kind",["event","appointment"]]},"labels":{"en":"Appointment"}}
+{"domain":"media","ext":{"_hash":"2ec0d0adf73ed9be"},"id":{"$rid":["kind",["media","map"]]},"labels":{"en":"Map"}}
+{"domain":"media","ext":{"_hash":"621428e7fecec626"},"id":{"$rid":["kind",["media","web_page"]]},"labels":{"en":"Web page"}}
+{"domain":"media","ext":{"_hash":"6282c5407bfd94a3"},"id":{"$rid":["kind",["media","video"]]},"labels":{"en":"Video"}}
+{"domain":"media","ext":{"_hash":"63eca7204bddab59"},"id":{"$rid":["kind",["media","image"]]},"labels":{"en":"Image"}}
+{"domain":"media","ext":{"_hash":"9bf7ca75f568e323"},"id":{"$rid":["kind",["media","audio"]]},"labels":{"en":"Audio"}}
+{"domain":"media","ext":{"_hash":"b245a2a6ff893b31"},"id":{"$rid":["kind",["media","dataset"]]},"labels":{"en":"Dataset"}}
+{"domain":"media","ext":{"_hash":"cb51aa13d771af56"},"id":{"$rid":["kind",["media","document"]]},"labels":{"en":"Document"}}
+{"domain":"media","ext":{"_hash":"ff8211146271887c"},"id":{"$rid":["kind",["media","satellite_image"]]},"labels":{"en":"Satellite image"}}
+{"domain":"place","ext":{"_hash":"14b010771737c0ca"},"id":{"$rid":["kind",["place","facility"]]},"labels":{"en":"Facility"}}
+{"domain":"place","ext":{"_hash":"171ffe7e65863b62"},"id":{"$rid":["kind",["place","road"]]},"labels":{"en":"Road"}}
+{"domain":"place","ext":{"_hash":"2d5e9c14a7293b9a"},"id":{"$rid":["kind",["place","front_sector"]]},"labels":{"en":"Front sector"}}
+{"domain":"place","ext":{"_hash":"2e2e252e6c07867f"},"id":{"$rid":["kind",["place","airfield"]]},"labels":{"en":"Airfield"}}
+{"domain":"place","ext":{"_hash":"35d7855f7d7b4803"},"id":{"$rid":["kind",["place","sample_box"]]},"labels":{"en":"Sample box"}}
+{"domain":"place","ext":{"_hash":"4c6735e7c12459be"},"id":{"$rid":["kind",["place","reservoir"]]},"labels":{"en":"Reservoir"}}
+{"domain":"place","ext":{"_hash":"692fd4259e8cdef0"},"id":{"$rid":["kind",["place","bridge"]]},"labels":{"en":"Bridge"}}
+{"domain":"place","ext":{"_hash":"6adda15ad3d28a4c"},"id":{"$rid":["kind",["place","region"]]},"labels":{"en":"Region"}}
+{"domain":"place","ext":{"_hash":"6f6d2f69eb0bb4ea"},"id":{"$rid":["kind",["place","sea"]]},"labels":{"en":"Sea"}}
+{"domain":"place","ext":{"_hash":"90dedd3506b16060"},"id":{"$rid":["kind",["place","hromada"]]},"labels":{"en":"Hromada"}}
+{"domain":"place","ext":{"_hash":"95ca9f2d7259472f"},"id":{"$rid":["kind",["place","landform"]]},"labels":{"en":"Landform"}}
+{"domain":"place","ext":{"_hash":"a812b1938cee38ad"},"id":{"$rid":["kind",["place","settlement"]]},"labels":{"en":"Settlement"}}
+{"domain":"place","ext":{"_hash":"c0fe4834f6dd4db4"},"id":{"$rid":["kind",["place","forest"]]},"labels":{"en":"Forest"}}
+{"domain":"place","ext":{"_hash":"c44d9a3bcbcec286"},"id":{"$rid":["kind",["place","raion"]]},"labels":{"en":"Raion"}}
+{"domain":"place","ext":{"_hash":"c6b25271bf1513ca"},"id":{"$rid":["kind",["place","country"]]},"labels":{"en":"Country"}}
+{"domain":"place","ext":{"_hash":"cc340298e25f397a"},"id":{"$rid":["kind",["place","axis"]]},"labels":{"en":"Axis"}}
+{"domain":"place","ext":{"_hash":"e46e788f2695c12e"},"id":{"$rid":["kind",["place","city_district"]]},"labels":{"en":"City district"}}
+{"domain":"place","ext":{"_hash":"e57459c23904d7f4"},"id":{"$rid":["kind",["place","railway"]]},"labels":{"en":"Railway"}}
+{"domain":"place","ext":{"_hash":"f0314ca8d8cdb3e3"},"id":{"$rid":["kind",["place","oblast"]]},"labels":{"en":"Oblast"}}
+{"domain":"place","ext":{"_hash":"f07663ee5bcf8459"},"id":{"$rid":["kind",["place","border_crossing"]]},"labels":{"en":"Border crossing"}}
+{"domain":"place","ext":{"_hash":"f3fa477094d39ad2"},"id":{"$rid":["kind",["place","river"]]},"labels":{"en":"River"}}
+{"domain":"source","ext":{"_hash":"158ef17208fc24fd"},"id":{"$rid":["kind",["source","encyclopedia"]]},"labels":{"en":"Encyclopedia"}}
+{"domain":"source","ext":{"_hash":"17dce64eb19e8c38"},"id":{"$rid":["kind",["source","news"]]},"labels":{"en":"News"}}
+{"domain":"source","ext":{"_hash":"238a3a13fdf72071"},"id":{"$rid":["kind",["source","game"]]},"labels":{"en":"Game"}}
+{"domain":"source","ext":{"_hash":"2b051fd9d67554a4"},"id":{"$rid":["kind",["source","official"]]},"labels":{"en":"Official"}}
+{"domain":"source","ext":{"_hash":"2ec0d0adf73ed9be"},"id":{"$rid":["kind",["source","map"]]},"labels":{"en":"Map"}}
+{"domain":"source","ext":{"_hash":"49d1ad34b2a851b0"},"id":{"$rid":["kind",["source","osint_dataset"]]},"labels":{"en":"Osint dataset"}}
+{"domain":"source","ext":{"_hash":"5761f01a6663777c"},"id":{"$rid":["kind",["source","book"]]},"labels":{"en":"Book"}}
+{"domain":"source","ext":{"_hash":"6282c5407bfd94a3"},"id":{"$rid":["kind",["source","video"]]},"labels":{"en":"Video"}}
+{"domain":"source","ext":{"_hash":"7976fed096e07554"},"id":{"$rid":["kind",["source","think_tank"]]},"labels":{"en":"Think tank"}}
+{"domain":"source","ext":{"_hash":"7ddd84f8d1bf00e5"},"id":{"$rid":["kind",["source","standard"]]},"labels":{"en":"Standard"}}
+{"domain":"source","ext":{"_hash":"8e488f6360d0e56c"},"id":{"$rid":["kind",["source","podcast"]]},"labels":{"en":"Podcast"}}
+{"domain":"source","ext":{"_hash":"b1301e0d150c2802"},"id":{"$rid":["kind",["source","academic"]]},"labels":{"en":"Academic"}}
+{"domain":"source","ext":{"_hash":"b245a2a6ff893b31"},"id":{"$rid":["kind",["source","dataset"]]},"labels":{"en":"Dataset"}}
+{"domain":"source","ext":{"_hash":"d1d11c8cc5da3393"},"id":{"$rid":["kind",["source","review"]]},"labels":{"en":"Review"}}
+{"domain":"source","ext":{"_hash":"db8e5d7a2eb6fb91"},"id":{"$rid":["kind",["source","software"]]},"labels":{"en":"Software"}}
+{"domain":"system","ext":{"_hash":"0b394f5905b68874"},"id":{"$rid":["kind",["system","armour"]]},"labels":{"en":"Armour"}}
+{"domain":"system","ext":{"_hash":"0fa6287201af261e"},"id":{"$rid":["kind",["system","recon_drone"]]},"labels":{"en":"Recon drone"}}
+{"domain":"system","ext":{"_hash":"1d5151baa7daeedc"},"id":{"$rid":["kind",["system","c2_software"]]},"labels":{"en":"C2 software"}}
+{"domain":"system","ext":{"_hash":"1f0d7c738cebee82"},"id":{"$rid":["kind",["system","mine"]]},"labels":{"en":"Mine"}}
+{"domain":"system","ext":{"_hash":"1f5caa23e53d17c5"},"id":{"$rid":["kind",["system","rocket_artillery"]]},"labels":{"en":"Rocket artillery"}}
+{"domain":"system","ext":{"_hash":"2623faca26b26365"},"id":{"$rid":["kind",["system","tube_artillery"]]},"labels":{"en":"Tube artillery"}}
+{"domain":"system","ext":{"_hash":"2820615a960d4021"},"id":{"$rid":["kind",["system","fpv_drone"]]},"labels":{"en":"Fpv drone"}}
+{"domain":"system","ext":{"_hash":"3e0cc267ff6753ff"},"id":{"$rid":["kind",["system","loitering_munition"]]},"labels":{"en":"Loitering munition"}}
+{"domain":"system","ext":{"_hash":"42e2bf9dbb2af4cf"},"id":{"$rid":["kind",["system","munition"]]},"labels":{"en":"Munition"}}
+{"domain":"system","ext":{"_hash":"46a63a12ab4ea284"},"id":{"$rid":["kind",["system","interceptor_drone"]]},"labels":{"en":"Interceptor drone"}}
+{"domain":"system","ext":{"_hash":"4c9ef8c6100e65fc"},"id":{"$rid":["kind",["system","programme"]]},"labels":{"en":"Programme"}}
+{"domain":"system","ext":{"_hash":"53749262e1418f48"},"id":{"$rid":["kind",["system","gnss_countermeasure"]]},"labels":{"en":"Gnss countermeasure"}}
+{"domain":"system","ext":{"_hash":"5d320c74ce5532a2"},"id":{"$rid":["kind",["system","aircraft"]]},"labels":{"en":"Aircraft"}}
+{"domain":"system","ext":{"_hash":"6db257a5ba93ddfc"},"id":{"$rid":["kind",["system","training_sim"]]},"labels":{"en":"Training sim"}}
+{"domain":"system","ext":{"_hash":"776744b1b9d294ad"},"id":{"$rid":["kind",["system","helicopter"]]},"labels":{"en":"Helicopter"}}
+{"domain":"system","ext":{"_hash":"7bf4dd7c4484c63c"},"id":{"$rid":["kind",["system","sensor"]]},"labels":{"en":"Sensor"}}
+{"domain":"system","ext":{"_hash":"7c5713a269615d3a"},"id":{"$rid":["kind",["system","ew_system"]]},"labels":{"en":"Ew system"}}
+{"domain":"system","ext":{"_hash":"7e052eb27ceed46d"},"id":{"$rid":["kind",["system","missile"]]},"labels":{"en":"Missile"}}
+{"domain":"system","ext":{"_hash":"8184de48ac8ba81d"},"id":{"$rid":["kind",["system","drone_component"]]},"labels":{"en":"Drone component"}}
+{"domain":"system","ext":{"_hash":"88290efefba39c58"},"id":{"$rid":["kind",["system","technique"]]},"labels":{"en":"Technique"}}
+{"domain":"system","ext":{"_hash":"903bd9b4d95b23b7"},"id":{"$rid":["kind",["system","air_defence"]]},"labels":{"en":"Air defence"}}
+{"domain":"system","ext":{"_hash":"95885551f315fb12"},"id":{"$rid":["kind",["system","fortification"]]},"labels":{"en":"Fortification"}}
+{"domain":"system","ext":{"_hash":"a02aee51c1db548b"},"id":{"$rid":["kind",["system","naval_drone"]]},"labels":{"en":"Naval drone"}}
+{"domain":"system","ext":{"_hash":"a7de943ce33a287e"},"id":{"$rid":["kind",["system","long_range_drone"]]},"labels":{"en":"Long range drone"}}
+{"domain":"system","ext":{"_hash":"a97c70e6d488ff36"},"id":{"$rid":["kind",["system","ship"]]},"labels":{"en":"Ship"}}
+{"domain":"system","ext":{"_hash":"c5b3cd120dcd9a43"},"id":{"$rid":["kind",["system","ugv"]]},"labels":{"en":"Ugv"}}
+{"domain":"system","ext":{"_hash":"cc5fcfaaf411efca"},"id":{"$rid":["kind",["system","satellite"]]},"labels":{"en":"Satellite"}}
+{"domain":"system","ext":{"_hash":"d1b4037cf9dc0669"},"id":{"$rid":["kind",["system","communications"]]},"labels":{"en":"Communications"}}
+{"domain":"system","ext":{"_hash":"d3b87fe44b582ae9"},"id":{"$rid":["kind",["system","glide_bomb"]]},"labels":{"en":"Glide bomb"}}
+{"domain":"system","ext":{"_hash":"dd1fe49545c114f4"},"id":{"$rid":["kind",["system","passive_defence"]]},"labels":{"en":"Passive defence"}}
+{"domain":"system","ext":{"_hash":"dd706bc23f08f276"},"id":{"$rid":["kind",["system","bomber_drone"]]},"labels":{"en":"Bomber drone"}}
+{"domain":"system","ext":{"_hash":"e28a16b9439a769d"},"id":{"$rid":["kind",["system","vehicle"]]},"labels":{"en":"Vehicle"}}
+{"domain":"system","ext":{"_hash":"feb5d0fc4758a6b1"},"id":{"$rid":["kind",["system","small_arms"]]},"labels":{"en":"Small arms"}}
+{"domain":"work","ext":{"_hash":"176b7091e411719b"},"id":{"$rid":["kind",["work","mod"]]},"labels":{"en":"Mod"}}
+{"domain":"work","ext":{"_hash":"2bd3668ff0bdb57c"},"id":{"$rid":["kind",["work","video_game"]]},"labels":{"en":"Video game"}}
+{"domain":"work","ext":{"_hash":"33235513c146e70a"},"id":{"$rid":["kind",["work","publication"]]},"labels":{"en":"Publication"}}
+{"domain":"work","ext":{"_hash":"439f804d8ccfa045"},"id":{"$rid":["kind",["work","board_game"]]},"labels":{"en":"Board game"}}
+{"domain":"work","ext":{"_hash":"6a4745b9ef1cc09b"},"id":{"$rid":["kind",["work","dataset_product"]]},"labels":{"en":"Dataset product"}}
+{"domain":"work","ext":{"_hash":"6db257a5ba93ddfc"},"id":{"$rid":["kind",["work","training_sim"]]},"labels":{"en":"Training sim"}}
+{"domain":"work","ext":{"_hash":"7ddd84f8d1bf00e5"},"id":{"$rid":["kind",["work","standard"]]},"labels":{"en":"Standard"}}
+{"domain":"work","ext":{"_hash":"921bb9d869c0f018"},"id":{"$rid":["kind",["work","wargame"]]},"labels":{"en":"Wargame"}}
+{"domain":"work","ext":{"_hash":"979fd4e3c90a4107"},"id":{"$rid":["kind",["work","map_product"]]},"labels":{"en":"Map product"}}
+{"domain":"work","ext":{"_hash":"bdbc8fb97918eb21"},"id":{"$rid":["kind",["work","software_product"]]},"labels":{"en":"Software product"}}
