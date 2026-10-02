@@ -4,7 +4,7 @@
   "description": "JavaScript libraries the Leptos app binds to (SurrealQL editor, map), bundled into one ES module",
   "type": "module",
   "scripts": {
-    "build": "esbuild src/bridge.js --bundle --format=iife --global-name=bavBridge --minify --target=es2022 --outfile=../crates/app/bridge/bridge.js && esbuild src/bridge.css --bundle --minify --outfile=../crates/app/bridge/bridge.css && cp node_modules/maplibre-gl/dist/maplibre-gl-worker.mjs node_modules/maplibre-gl/dist/maplibre-gl-shared.mjs ../crates/app/bridge/"
+    "build": "esbuild src/bridge.js --bundle --format=iife --global-name=bavBridge --minify --target=es2022 --outfile=../crates/app/bridge/bridge.js --metafile=../crates/app/bridge/meta.json && esbuild src/bridge.css --bundle --minify --outfile=../crates/app/bridge/bridge.css && cp node_modules/maplibre-gl/dist/maplibre-gl-worker.mjs node_modules/maplibre-gl/dist/maplibre-gl-shared.mjs ../crates/app/bridge/"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",
@@ -18,5 +18,6 @@
   },
   "devDependencies": {
     "esbuild": "^0.28.2"
-  }
+  },
+  "license": "MIT OR Apache-2.0"
 }

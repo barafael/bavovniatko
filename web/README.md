@@ -91,12 +91,19 @@ ready in 11.5 s, so it doesn't pay off. A first visit downloads about 10.5 MB gz
 Query timings are mostly 1–250 ms. One trap: correlated subqueries (`… WHERE x = $parent.id`) do not use indexes.
 A `GROUP BY` is usually orders of magnitude faster.
 
-## Before publishing
+## Licences
 
-- A licence for the code and for the data (none chosen yet).
-- Attribution is on the About page:
-  - place geometry: ODbL, © OpenStreetMap contributors;
-  - base map: OpenFreeMap / OpenMapTiles.
+- The explorer's code is MIT OR Apache-2.0, and its data CC BY 4.0, with OSM geometry under ODbL (see
+  `LICENSE-CONTENT.md` at the repository root).
+- `web/notices.py`, run by `build.sh`, writes the third-party notices into the site's `licenses/`:
+  - **THIRD-PARTY-NOTICES.txt:** every Rust crate linked into the wasm and every npm package esbuild bundled,
+    with licence texts. Packages that publish no licence file get the standard text of their declared licence.
+  - **SurrealDB-BSL-1.1.txt:** SurrealDB's Business Source License, which must be displayed with every copy. It is
+    linked from the footer of every page.
+- SurrealDB is used under the BSL's Additional Use Grant. That grant excludes only a "Database Service" letting third
+  parties create, manage or control schemas or tables, and the guest session refuses exactly that.
 - The map is the only part that makes third-party requests: tiles and fonts from OpenFreeMap.
-- A review pass over the data for publication: actor notes about pseudonymous people and channels, and quotes,
-  which are short but present.
+
+## Still to do before wider promotion
+
+- A review pass over the data: actor notes about pseudonymous people and channels.

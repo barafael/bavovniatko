@@ -16,3 +16,4 @@ web/bridge/node_modules/
 web/crates/app/bridge/
 web/crates/app/dist/
 web/crates/app/public/data/
+web/crates/app/public/licenses/

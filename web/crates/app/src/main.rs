@@ -65,6 +65,12 @@ fn App() -> impl IntoView {
                 Route::About => view! { <About /> }.into_any(),
             }}
         </main>
+        <footer>
+            "Content CC BY 4.0 · place geometry ODbL, © OpenStreetMap contributors · code MIT or Apache-2.0 · runs "
+            <a href="licenses/SurrealDB-BSL-1.1.txt">"SurrealDB (Business Source License 1.1)"</a>" · "
+            <a href="#/about">"licences and attribution"</a>" · "
+            <a href="https://github.com/barafael/bavovniatko">"source"</a>
+        </footer>
     }
 }
 
@@ -116,10 +122,29 @@ fn About() -> impl IntoView {
                 <li>"Claims were extracted from the research texts by AI agents and checked by tools and spot reviews.
                      Treat every claim as a pointer to its sources, not as established fact."</li>
             </ul>
+            <h2>"Licences"</h2>
+            <ul>
+                <li>"Content and data: "<a href="https://creativecommons.org/licenses/by/4.0/">"CC BY 4.0"</a>
+                    ", except the OpenStreetMap-derived place geometry, which is "
+                    <a href="https://opendatacommons.org/licenses/odbl/1-0/">"ODbL 1.0"</a>" (© OpenStreetMap contributors),
+                    and quotations, which remain their authors'. See "
+                    <a href="https://github.com/barafael/bavovniatko/blob/main/LICENSE-CONTENT.md">"LICENSE-CONTENT.md"</a>"."</li>
+                <li>"Code: MIT or Apache-2.0, at your option ("
+                    <a href="https://github.com/barafael/bavovniatko">"source on GitHub"</a>")."</li>
+                <li><strong>"This site runs SurrealDB, which is licensed under the "
+                    <a href="licenses/SurrealDB-BSL-1.1.txt">"Business Source License 1.1"</a>"."</strong>
+                    " It is used under the licence's Additional Use Grant: visitors query a read-only copy and cannot
+                     create, manage or control schemas or tables."</li>
+                <li>"All other bundled software and its licences: "
+                    <a href="licenses/THIRD-PARTY-NOTICES.txt">"third-party notices"</a>"."</li>
+            </ul>
             <h2>"Attribution"</h2>
             <p>{attribution}</p>
-            <p>"Base map: © OpenFreeMap, © OpenMapTiles, data © OpenStreetMap contributors. Query engine: SurrealDB.
-               Editor: CodeMirror. Map renderer: MapLibre GL."</p>
+            <p>"Base map: © OpenFreeMap, © OpenMapTiles, data © OpenStreetMap contributors. Weather figures: Open-Meteo
+               (CC BY 4.0), contains modified Copernicus Climate Change Service information. Frontline areas computed
+               from DeepStateMap's published maps. Elevation: SRTM (NASA/USGS, public domain)."</p>
+            <p>"Query engine: SurrealDB. Editor: CodeMirror with @surrealdb/codemirror. Map renderer: MapLibre GL.
+               UI: Leptos."</p>
         </article>
     }
 }

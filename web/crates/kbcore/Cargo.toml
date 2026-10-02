@@ -3,6 +3,7 @@ name = "kbcore"
 description = "The explorer's database core: load the web dataset into in-memory SurrealDB and run read-only queries"
 version.workspace = true
 edition.workspace = true
+license.workspace = true
 publish.workspace = true
 
 [dependencies]
