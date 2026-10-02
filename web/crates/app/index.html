@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bavovniatko knowledge base</title>
+  <meta name="description" content="A cited, queryable knowledge base of the Russo-Ukrainian war, running entirely in your browser.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='8' fill='%230057b7'/%3E%3Crect y='8' width='16' height='8' fill='%23ffd500'/%3E%3C/svg%3E">
+  <link data-trunk rel="rust" href="Cargo.toml" data-bin="kbapp" data-type="main" data-wasm-opt="0" />
+  <link data-trunk rel="rust" href="../worker/Cargo.toml" data-bin="kbworker" data-type="worker" data-wasm-opt="0" />
+  <link data-trunk rel="copy-file" href="kbworker_loader.js" />
+  <link data-trunk rel="copy-file" href="bridge/bridge.js" />
+  <link data-trunk rel="copy-file" href="bridge/maplibre-gl-worker.mjs" />
+  <link data-trunk rel="copy-file" href="bridge/maplibre-gl-shared.mjs" />
+  <script src="bridge.js"></script>
+  <link data-trunk rel="css" href="bridge/bridge.css" />
+  <link data-trunk rel="css" href="style.css" />
+  <link data-trunk rel="copy-dir" href="public/data" />
+</head>
+<body></body>
+</html>

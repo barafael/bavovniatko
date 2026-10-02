@@ -1,0 +1,4 @@
+[toolchain]
+# surrealdb 3.3 (its diskann dependency) does not build on current nightly; stable does.
+channel = "stable"
+targets = ["wasm32-unknown-unknown"]

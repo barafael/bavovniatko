@@ -10,3 +10,9 @@ db/staging/relations/batches/
 db/staging/relations/candidates.jsonl
 db/staging/entities/proposed.yaml
 db/staging/metrics_proposed.yaml
+# web explorer build outputs (regenerate with web/build.sh)
+web/target/
+web/bridge/node_modules/
+web/crates/app/bridge/
+web/crates/app/dist/
+web/crates/app/public/data/

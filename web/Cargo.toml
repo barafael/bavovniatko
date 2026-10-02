@@ -1,0 +1,34 @@
+[workspace]
+resolver = "3"
+members = ["crates/kbcore", "crates/kbcheck", "crates/worker", "crates/app"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace.dependencies]
+surrealdb = { version = "3.3.0", default-features = false, features = ["kv-mem"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+web-time = "1"
+wasm-bindgen = "0.2.129"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+web-sys = "0.3"
+kbcore = { path = "crates/kbcore" }
+
+# Release builds keep LTO off so they fit in memory and build quickly; `--profile dist` is for deployment.
+[profile.release]
+opt-level = 3
+codegen-units = 16
+
+# Size-optimised: the worker is 13 MB (3.3 MB brotli) against 38 MB at opt-level 3, and loads the dataset only
+# about 1 s slower (measured 2026-10-02, see README.md).
+[profile.dist]
+inherits = "release"
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true

@@ -80,6 +80,7 @@ db/dbctl.sh sql              # interactive SurrealQL shell
 | `dump.py export\|restore\|verify` | Export the committed JSONL dump, rebuild from it, and verify an exact round trip |
 | `check.py [-v]` | Run `checks/*.surql`. Exits 1 on any error-level violation. |
 | `sim.py series\|check\|load\|export` | Phase 8. Rule-built time series; validate and load the agent-derived loadouts, parameters and terrain in `staging/sim/`; export `game-data/sim-YYYYMMDD.json` |
+| `webexport.py [--check]` | Build the browser explorer's dataset from `db/dump/` (no database needed); see [web/README.md](../web/README.md) |
 
 ## Workflow for new research
 

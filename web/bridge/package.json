@@ -1,0 +1,22 @@
+{
+  "name": "bavovniatko-explorer-bridge",
+  "private": true,
+  "description": "JavaScript libraries the Leptos app binds to (SurrealQL editor, map), bundled into one ES module",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/bridge.js --bundle --format=iife --global-name=bavBridge --minify --target=es2022 --outfile=../crates/app/bridge/bridge.js && esbuild src/bridge.css --bundle --minify --outfile=../crates/app/bridge/bridge.css && cp node_modules/maplibre-gl/dist/maplibre-gl-worker.mjs node_modules/maplibre-gl/dist/maplibre-gl-shared.mjs ../crates/app/bridge/"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.20.3",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.13",
+    "@surrealdb/codemirror": "^1.0.8",
+    "codemirror": "^6.0.2",
+    "maplibre-gl": "^6.11.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

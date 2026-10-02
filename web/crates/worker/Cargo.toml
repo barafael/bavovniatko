@@ -1,0 +1,16 @@
+[package]
+name = "kbworker"
+description = "Web Worker that hosts the in-memory knowledge base and answers the app's queries"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+kbcore.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+js-sys.workspace = true
+console_error_panic_hook = "0.1"
+web-sys = { workspace = true, features = ["DedicatedWorkerGlobalScope", "MessageEvent", "Response", "WorkerGlobalScope", "console"] }
