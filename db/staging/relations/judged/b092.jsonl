@@ -1,0 +1,40 @@
+{"pair": "1afe0de0082e", "relation": "duplicates", "from": "claim:cv02_0006_02", "to": "claim:cc11_0010_27", "strength": 0.9, "rationale": "Both give the same Frontelligence satellite-confirmed loss of 109 Russian vehicles at Avdiivka on 10–20 October 2023."}
+{"pair": "1bb630ee521e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1c8a69ee2825", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1ceb75fd940e", "relation": "supersedes", "from": "claim:cc18_0013_59", "to": "claim:cc18_0013_55", "strength": 0.8, "rationale": "Klymenko's 08:00 report of 11 dead in Kyiv updates Tkachenko's 04:55 report of two dead."}
+{"pair": "1cfc9e506ba2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1d073c92d0d1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1d0de5ea1ba3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1d454691d526", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1d5ea4031056", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1d68319e8a47", "relation": "contradicts", "from": "claim:cc16_0007_08", "to": "claim:cc16_0011_48", "strength": 0.7, "rationale": "US officials estimated up to about 20 aircraft hit in Spiderweb, while the SBU claimed 41 bombers hit.", "resolution": "US officials' estimate from imagery versus the SBU's own claim, which counts every aircraft it says it struck."}
+{"pair": "1da9190d7eb5", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1df64a4f4086", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1dfdd9a6866e", "relation": "supersedes", "from": "claim:cc18_0013_62", "to": "claim:cc18_0013_55", "strength": 0.6, "rationale": "The Air Force's 09:00 report of 33 locations hit updates Tkachenko's 04:55 count of 28 locations hit in Kyiv."}
+{"pair": "1e89092b1adc", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1e8ff720c4e7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1e93e6ac8db9", "relation": "contradicts", "from": "claim:cc16_0008_01", "to": "claim:cc16_0047_11", "strength": 0.6, "rationale": "The historical floor of about 10 heavy bombers destroyed conflicts with Military Chronicle's claim that only one Tu-95MS was lost.", "resolution": "A pro-Russian blog minimising losses, against imagery-based counts by several analysts."}
+{"pair": "1ec498df3ea8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1ec560f17043", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1ef6ba5c6dcb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1f26a83b7a4d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1f62f7ab226d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1fb9e47cddbc", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "203742f227b2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "20da143aa442", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "20df0ba924ae", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "210446622f96", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "21bc78ca2af4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "222010860e71", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "227606f88ab3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "22a305b85f03", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "22a68da63ec9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "22bd1425fada", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2318901ab8a8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "23e9b2fa886a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "23ed060952d0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2405c92c2e60", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "240d51efce31", "relation": "supersedes", "from": "claim:c00_0074_54", "to": "claim:cc19_0006_06", "strength": 0.5, "rationale": "The 200–240 km² estimates update AMK's 151 km², which was made before seasons 2–3 were published."}
+{"pair": "2432f5d18517", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "244aa5e0a85d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "245b845bb618", "relation": "supports", "from": "claim:cc18_0008_14", "to": "claim:cc18_0010_07", "strength": 0.6, "rationale": "The derived outcome band of 91–92% of all weapons downed rests on the Air Force's 524 of 570 (92%).", "independent": false}

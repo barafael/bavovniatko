@@ -1,0 +1,40 @@
+{"pair": "59999f21dd1b", "relation": "duplicates", "from": "claim:cc11_0032_10", "to": "claim:cc11_0006_14", "strength": 0.95, "rationale": "Same UK MoD 30-50 glide bombs a day at Avdiivka, same source."}
+{"pair": "59c724984854", "relation": "weakens", "from": "claim:cc11_0007_17", "to": "claim:c00_0074_20", "strength": 0.4, "rationale": "ISW's 16,000-47,000 range of estimates and 'contested' label casts doubt on Ukraine's ~50,000."}
+{"pair": "59cdea9293c3", "relation": "supports", "from": "claim:c05_0025_34", "to": "claim:cc19_0005_13", "strength": 0.6, "rationale": "Mappers' 200-240 km2 underpins the upper end of the 125-240 km2 win band.", "independent": false}
+{"pair": "5a9e7c35124b", "relation": "supports", "from": "claim:c00_0074_54", "to": "claim:cc19_0005_13", "strength": 0.6, "rationale": "Mappers' 200-240 km2 underpins the upper end of the 125-240 km2 win band.", "independent": false}
+{"pair": "5ab05c26312b", "relation": "none", "rationale": "Bakhmut and Krynky losses are different scopes."}
+{"pair": "5b08eeae7f5c", "relation": "supports", "from": "claim:cc11_0024_04", "to": "claim:c03_0004_10", "strength": 0.6, "rationale": "Foka's 1:10 artillery odds at Avdiivka match the 1:10 shell ratio in Feb 2024.", "independent": true}
+{"pair": "5b8a0e00ff7f", "relation": "supports", "from": "claim:cc07_0039_03", "to": "claim:cc07_0038_01", "strength": 0.6, "rationale": "Defenders' account of ~10-man groups matches the intelligence report's 'dozen or fewer'.", "independent": true}
+{"pair": "5ba193cf0630", "relation": "duplicates", "from": "claim:cc19_0007_01", "to": "claim:cc19_0009_74", "strength": 0.85, "rationale": "The ~1,500 Russian losses claim is contained in the season-1 announcement from the same source."}
+{"pair": "5be8f0526427", "relation": "duplicates", "from": "claim:cc15_0016_08", "to": "claim:cc15_0007_77", "strength": 0.95, "rationale": "Same >300 Russians into Pokrovsk in fog, same source."}
+{"pair": "5c8e7cdbaf7e", "relation": "duplicates", "from": "claim:cc11_0032_13", "to": "claim:c03_0029_041", "strength": 0.9, "rationale": "Same ISW 'up to 500 glide bombs' at Avdiivka before 17 Feb 2024."}
+{"pair": "5d744133e564", "relation": "duplicates", "from": "claim:cc07_0007_24", "to": "claim:c00_0074_10", "strength": 0.95, "rationale": "Same RUSI ~10,000 Ukrainian killed or severely wounded at Bakhmut."}
+{"pair": "5d8841258b5f", "relation": "supports", "from": "claim:cc07_0005_01", "to": "claim:cc07_0015_01", "strength": 0.9, "rationale": "Same pre-war population of 70-75,000 from the same BBC sources.", "independent": false}
+{"pair": "5d99b303eb89", "relation": "refines", "from": "claim:cc11_0010_57", "to": "claim:cc11_0007_10", "strength": 0.8, "rationale": "Shtupun's statement adds the casualty cost to the same 1.5-2 km Tavria gain figure."}
+{"pair": "5df769658624", "relation": "duplicates", "from": "claim:cc15_0007_57", "to": "claim:cc15_0005_31", "strength": 0.95, "rationale": "Same Zelensky Dobropillia-axis loss claim, same source."}
+{"pair": "5e3e72866296", "relation": "duplicates", "from": "claim:cc07_0007_07", "to": "claim:cc07_0010_72", "strength": 0.9, "rationale": "Same ISW 76.5% / 30.68 km2 of Bakhmut on 11 April 2023."}
+{"pair": "5e3eb0cfe44d", "relation": "duplicates", "from": "claim:cc07_0007_24", "to": "claim:c04_0017_13", "strength": 0.95, "rationale": "Same RUSI ~10,000 Ukrainian killed or severely wounded at Bakhmut."}
+{"pair": "5fdeb1d2be5d", "relation": "none", "rationale": "A contested range across sources vs a single dated General Staff claim; no clear relation."}
+{"pair": "60363e85e107", "relation": "supports", "from": "claim:cc01_0011_12", "to": "claim:cc01_0009_07", "strength": 0.8, "rationale": "The account of three Ka-52s and a Mi-8 lost matches Forbes's at least 4 helicopters.", "independent": true}
+{"pair": "60549eb4deea", "relation": "duplicates", "from": "claim:cc14_0014_031", "to": "claim:cc14_0011_01", "strength": 0.9, "rationale": "Same Smirnov admission of 28 settlements, same source."}
+{"pair": "60b323e8882b", "relation": "refines", "from": "claim:cc14_0031_17", "to": "claim:cc14_0012_32", "strength": 0.8, "rationale": "Adds detail (wounded, Tuvan card) to the two North Korean prisoners of 9 Jan 2025."}
+{"pair": "6148c99b34ce", "relation": "refines", "from": "claim:cc15_0019_13", "to": "claim:cc15_0007_72", "strength": 0.6, "rationale": "Specifies Donetsk Oblast as the scope of Zelensky's 170,000 figure."}
+{"pair": "61db9c858e69", "relation": "refines", "from": "claim:cc19_0011_06", "to": "claim:cc19_0009_15", "strength": 0.7, "rationale": "Qualifies the 350 km2 peak as including ground east of the Zherebets."}
+{"pair": "629b444fd531", "relation": "none", "rationale": "Kalibr interception and drone interception rate are different quantities."}
+{"pair": "63d7797ca711", "relation": "duplicates", "from": "claim:cc18_0026_30", "to": "claim:cc18_0010_16", "strength": 0.95, "rationale": "Same record 52,500 sheltering in the Kyiv metro, same source."}
+{"pair": "645d0848f749", "relation": "none", "rationale": "National Russian dead and Wagner dead are different scopes."}
+{"pair": "64f251b529b0", "relation": "none", "rationale": "Zmiinyi Island and Bakhmut are unrelated."}
+{"pair": "65b8c5483c10", "relation": "none", "rationale": "Zmiinyi Island and Bakhmut are unrelated."}
+{"pair": "676b6257a02e", "relation": "supports", "from": "claim:cc16_0011_63", "to": "claim:cc16_0007_06", "strength": 0.4, "rationale": "SAR imagery of at least four damaged Tu-95s at Belaya partly corroborates the NATO count.", "independent": true}
+{"pair": "67a010a55cf3", "relation": "duplicates", "from": "claim:cc18_0026_18", "to": "claim:cc18_0013_03", "strength": 0.95, "rationale": "Same Syrskyi 500+ interceptor-drone kills in June 2026."}
+{"pair": "6978eb0e56ce", "relation": "none", "rationale": "A contested range across sources vs a single December 2024 JCS estimate; no clear relation."}
+{"pair": "6ab72b7ff1b5", "relation": "duplicates", "from": "claim:cv02_0006_16", "to": "claim:cc11_0010_58", "strength": 0.95, "rationale": "Same Stepove loss of up to 21 tanks and 14 IFVs/APCs, same source."}
+{"pair": "6b87992a86db", "relation": "none", "rationale": "Bakhmut and Kursk losses are different scopes."}
+{"pair": "6bd0d6ca4618", "relation": "duplicates", "from": "claim:cc14_0027_08", "to": "claim:c00_0074_32", "strength": 0.9, "rationale": "Same BBC count of 2,304 North Koreans killed."}
+{"pair": "6c6b94619f89", "relation": "supports", "from": "claim:cc16_0011_59", "to": "claim:cc16_0006_01", "strength": 0.8, "rationale": "Zelensky's 117 drones matches the BBC's 117 FPV drones, same source.", "independent": false}
+{"pair": "6ccded5ce2c5", "relation": "none", "rationale": "Different companies of the same battalion; manning figures do not bear on each other."}
+{"pair": "6d05b8585e22", "relation": "supersedes", "from": "claim:cc16_0007_02", "to": "claim:cc16_0011_50", "strength": 0.5, "rationale": "The official ~$7bn damage claim replaces the first report's 'over $2bn'."}
+{"pair": "6d372b6a86da", "relation": "duplicates", "from": "claim:cc07_0041_05", "to": "claim:c04_0017_14", "strength": 0.95, "rationale": "Same RUSI 5:1 artillery advantage at Bakhmut."}
+{"pair": "6de799daf745", "relation": "supports", "from": "claim:cc16_0007_01", "to": "claim:cc16_0008_02", "strength": 0.8, "rationale": "The outcome band's upper bound is taken from the SBU's 41-aircraft claim.", "independent": false}
+{"pair": "6df6982234d0", "relation": "duplicates", "from": "claim:cc07_0041_05", "to": "claim:c00_0074_11", "strength": 0.95, "rationale": "Same RUSI 5:1 artillery advantage at Bakhmut."}
+{"pair": "6e0469142eb7", "relation": "duplicates", "from": "claim:cc11_0032_20", "to": "claim:c03_0029_007", "strength": 0.85, "rationale": "Same Liga 1:10 shell ratio in Feb 2024."}

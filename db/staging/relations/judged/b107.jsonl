@@ -1,0 +1,40 @@
+{"pair": "b3787afbaf6b", "relation": "supports", "from": "claim:cc16_0007_06", "to": "claim:cc16_0007_01", "strength": 0.7, "rationale": "A NATO official's count of at least 40 aircraft damaged corroborates the SBU/General Staff claim of 41 hit.", "independent": true}
+{"pair": "b49683cf4690", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b5306644eb9f", "relation": "supports", "from": "claim:cc09_0017_08", "to": "claim:cc09_0035_04", "strength": 0.8, "rationale": "Both RUSI extractions give Russian minefield depth of about 500 m with stacked mines; same source.", "independent": false}
+{"pair": "b536f5200230", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b55ec6c20e92", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b5dd877debce", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b64999ed8373", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b68ab0a052ea", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b6e2da06618d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b6f582013ecd", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b7670c2efb45", "relation": "supports", "from": "claim:cc16_0007_11", "to": "claim:cc16_0007_07", "strength": 0.6, "rationale": "Bronk's count of at least 10 bombers destroyed (6 Tu-95MS + 4 Tu-22M3) falls within the NATO official's 10-13 destroyed.", "independent": true}
+{"pair": "b772351ca982", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b810d8331e39", "relation": "duplicates", "from": "claim:cc16_0028_03", "to": "claim:cc16_0011_28", "strength": 0.9, "rationale": "Same Russian-media claim of 40 Tu-22M3 and 11 Tu-95MS at Olenya on 30 May 2025 from the same source, extracted twice."}
+{"pair": "b8508baf8713", "relation": "supports", "from": "claim:cc09_0016_04", "to": "claim:c06_0038_11", "strength": 0.8, "rationale": "The same Sentinel-2 imagery measurement gives cross-belt spacing of about 1.0-1.2 km in the Robotyne box.", "independent": false}
+{"pair": "b8b41389cd12", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b9587188559c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b98715ac5b18", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b99e1253d07b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b9a05756049c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "b9ce20ae2fd7", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ba3f19237e35", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ba5b631aef4a", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ba8801eb7d1e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bad569aa1c33", "relation": "supports", "from": "claim:cc07_0007_20", "to": "claim:cc07_0007_18", "strength": 0.5, "rationale": "Zelensky's 21,000 Wagner killed is of the same magnitude as the 19,547 Wagner dead figure used by RUSI.", "independent": true}
+{"pair": "bb53b79fd87c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bbca6eba55ee", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bbd8e636aa0d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bc2bcde75080", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bc71ad38f74e", "relation": "duplicates", "from": "claim:cc07_0041_01", "to": "claim:c03_0029_001", "strength": 0.9, "rationale": "Same RUSI figure of about 20,000 Russian rounds a day peaking above 32,000 in summer 2022, extracted in topic 03 and chapter c07."}
+{"pair": "bccc1e200b6d", "relation": "contradicts", "from": "claim:cc11_0024_04", "to": "claim:cc11_0024_05", "strength": 0.5, "rationale": "The same brigade gives Russian odds at Avdiivka of 1:12 and 7:1 for the same final weeks.", "resolution": "Foka's 1:12 refers to infantry in the final weeks; the 7:1 may be an overall or earlier force ratio."}
+{"pair": "bd35e634186f", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bd39dfa370c6", "relation": "weakens", "from": "claim:cc16_0007_12", "to": "claim:cc16_0011_48", "strength": 0.5, "rationale": "BBC Verify could confirm only 12 aircraft damaged or destroyed, casting doubt on the SBU's claim of 41 bombers hit (imagery count is a lower bound)."}
+{"pair": "bd8cdbfb3096", "relation": "supports", "from": "claim:cc01_0011_12", "to": "claim:cc01_0009_09", "strength": 0.4, "rationale": "The eyewitness account of one Ka-52 downed plus two more Ka-52s and a Mi-8 is consistent with Oryx confirming about 6 helicopter losses at Hostomel.", "independent": true}
+{"pair": "bf8d86e940c4", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bfa2775ded14", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "bfe0ba9a8ad5", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c018d568fd3e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c04211a711bf", "relation": "supports", "from": "claim:cc18_0008_14", "to": "claim:cc18_0010_06", "strength": 0.5, "rationale": "The 92% overall interception arithmetic on Air Force figures agrees with the MoD's over-90% claim for the same night.", "independent": false}
+{"pair": "c06e482d8a6d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c24bd955dbb5", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}

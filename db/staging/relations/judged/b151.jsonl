@@ -1,0 +1,40 @@
+{"pair": "c27f6b32d3d4", "relation": "none", "rationale": "A milblogger report and a village location fact."}
+{"pair": "c2b52310afc2", "relation": "supports", "from": "claim:cc11_0010_38", "to": "claim:c04_0005_08", "strength": 0.4, "rationale": "Storm-Z units prepared for 'meat assaults' at Avdiivka corroborates RUSI's description of Storm-Z as disposable layered infantry.", "independent": true}
+{"pair": "c2bd931f2e31", "relation": "duplicates", "from": "claim:cc16_0011_36", "to": "claim:cc16_0040_14", "strength": 0.85, "rationale": "Same Euromaidan Press report of the truck exploding when a man opened the trailer; B has more sources."}
+{"pair": "c2c8c950deca", "relation": "none", "rationale": "Production rate and speed of jet Gerans."}
+{"pair": "c2f353a1eeab", "relation": "contradicts", "from": "claim:cc09_0006_16", "to": "claim:cc09_0050_18", "strength": 0.7, "rationale": "Ukrainian and Western sources said the Surovikin line was cut near Verbove; a Kremlin-affiliated milblogger insisted it was unbroken.", "resolution": "Opposing partisan claimants; ISW's 23 September assessment sided with the breach."}
+{"pair": "c303814d7e9f", "relation": "supports", "from": "claim:cc19_0025_13", "to": "claim:cc19_0009_100", "strength": 0.6, "rationale": "BTR VBIEDs cracking Nove's fortifications corroborates the corps' announcement of APC VBIEDs and Nove taken; shared source.", "independent": false}
+{"pair": "c3043cb9491b", "relation": "none", "rationale": "The 25/26 Feb breach and the 7-8 Mar enlargement are different events."}
+{"pair": "c32acffab29b", "relation": "none", "rationale": "Assault event and village coordinates."}
+{"pair": "c332f4d6dda5", "relation": "none", "rationale": "Successive drone alerts at different times."}
+{"pair": "c36db04819e9", "relation": "contradicts", "from": "claim:cc19_0005_08", "to": "claim:cc19_0009_102", "strength": 0.6, "rationale": "The 3rd Army Corps claimed Nove and Ridkodub liberated on 28 Sept 2026; the Russian MoD claimed them the next day.", "resolution": "The Russian MoD used older footage; DeepState and ISW geolocations back the Ukrainian claim."}
+{"pair": "c38955399f00", "relation": "none", "rationale": "Attack axes and town populations."}
+{"pair": "c3b466afa10b", "relation": "supports", "from": "claim:cc16_0016_05", "to": "claim:cc16_0008_01", "strength": 0.5, "rationale": "An OSINT-located burning An-12 at Olenya corroborates the An-12 in the loss floor; shared TWZ sources.", "independent": false}
+{"pair": "c41f00817c87", "relation": "supports", "from": "claim:cc01_0011_08", "to": "claim:cc01_0011_09", "strength": 0.6, "rationale": "Two 40th Brigade pilots killed in the morning attack corroborates at least 3 MiG-29s lost in 24 hours; same sources.", "independent": false}
+{"pair": "c48275da3bd2", "relation": "none", "rationale": "A damage estimate and a fleet-size estimate."}
+{"pair": "c4b4f3f48c1b", "relation": "none", "rationale": "Road reopening and a first-day action."}
+{"pair": "c4cc1c17764c", "relation": "supports", "from": "claim:cc09_0035_12", "to": "claim:c03_0004_07", "strength": 0.6, "rationale": "Both RUSI reports describe the shift to Krasnopol and Lancet strikes in 2023.", "independent": false}
+{"pair": "c506b28713fe", "relation": "supports", "from": "claim:cc07_0042_05", "to": "claim:cc07_0034_02", "strength": 0.5, "rationale": "Drone teams spotting for heavy guns corroborates drone teams cueing 2S7 Pions; same source.", "independent": false}
+{"pair": "c62466247f84", "relation": "none", "rationale": "A Ukrainian September advance and an October Russian counterattack."}
+{"pair": "c6553fd87c6d", "relation": "supports", "from": "claim:cc09_0007_12", "to": "claim:cc09_0010_15", "strength": 0.4, "rationale": "DeepState's loss count corroborates the attempt being hit by mines and artillery; shared source.", "independent": false}
+{"pair": "c660ce87ca93", "relation": "none", "rationale": "Village location and a withdrawal event."}
+{"pair": "c6cc42f30b81", "relation": "none", "rationale": "A changelog format note and a 2025 occupation status."}
+{"pair": "c6d07e2678c9", "relation": "none", "rationale": "Truck departure and a route-length fit."}
+{"pair": "c6d2da1add4a", "relation": "supports", "from": "claim:cc11_0010_02", "to": "claim:cc11_0006_02", "strength": 0.5, "rationale": "The 9 October localised attacks on both flanks corroborate the October pincer assault on Avdiivka; both ISW.", "independent": false}
+{"pair": "c6e5c131365b", "relation": "supports", "from": "claim:cc01_0011_106", "to": "claim:cc01_0008_01", "strength": 0.5, "rationale": "The mayor's report of 280 in mass graves corroborates the killings revealed after the withdrawal.", "independent": true}
+{"pair": "c6eccbc3e750", "relation": "supports", "from": "claim:cc07_0032_17", "to": "claim:cc07_0048_30", "strength": 0.6, "rationale": "Liut at Klishchiivka in September corroborates B's Liut brigade clearing it; shared Militarnyi source.", "independent": false}
+{"pair": "c72c0f0e536c", "relation": "supports", "from": "claim:cc14_0014_045", "to": "claim:cc14_0005_02", "strength": 0.6, "rationale": "Destruction of the last Seim bridge on 19 August underpins the isolation A describes; shared ISW source.", "independent": false}
+{"pair": "c73bdeccbb79", "relation": "duplicates", "from": "claim:cc15_0024_10", "to": "claim:cc15_0007_70", "strength": 0.85, "rationale": "Same Reuters report of the HUR helicopter landing in northern Pokrovsk overseen by Budanov."}
+{"pair": "c75ca88e93e0", "relation": "supports", "from": "claim:cc09_0010_14", "to": "claim:cc09_0010_15", "strength": 0.7, "rationale": "Both describe the two-group first attempt on 7 June; same sources.", "independent": false}
+{"pair": "c794213716ec", "relation": "none", "rationale": "Shooting of wounded and holding Zenit are different assertions."}
+{"pair": "c7ce199f56fa", "relation": "supports", "from": "claim:cc18_0028_01", "to": "claim:cc18_0017_34", "strength": 0.6, "rationale": "B's tally of Zircons and Iskanders from Kursk Oblast corroborates Kursk as a launch area; same source.", "independent": false}
+{"pair": "c7dc95f79675", "relation": "supports", "from": "claim:cc01_0011_57", "to": "claim:cc01_0028_19", "strength": 0.6, "rationale": "The 5 Mar Rakivka pontoon and the Furia cueing fire on it are linked events; same source.", "independent": false}
+{"pair": "c8221889313e", "relation": "none", "rationale": "Town and bridge coordinates are different points."}
+{"pair": "c84b937858c2", "relation": "none", "rationale": "River width and number of breaches."}
+{"pair": "c8662274ae84", "relation": "none", "rationale": "A video game's setting and a flooding assessment."}
+{"pair": "c8b13b73540d", "relation": "none", "rationale": "Start-line distance and breach formation."}
+{"pair": "c8cedc22e623", "relation": "supports", "from": "claim:cc19_0003_05", "to": "claim:cc19_0012_02", "strength": 0.6, "rationale": "Both date the first visible attack on Nove to 22 May 2026.", "independent": true}
+{"pair": "c92df3e7df17", "relation": "none", "rationale": "Map-box definition and pincer distances."}
+{"pair": "c96420d331e4", "relation": "duplicates", "from": "claim:cc01_0036_08", "to": "claim:cc01_0011_95", "strength": 0.85, "rationale": "Same Euromaidan report of Medinsky's 29 March pledge to reduce activity near Kyiv and Chernihiv."}
+{"pair": "c96dde7149e7", "relation": "none", "rationale": "Flooded area and water rise are different quantities."}
+{"pair": "c98925cc1b1b", "relation": "none", "rationale": "Bridge demolitions and the list of crossings."}

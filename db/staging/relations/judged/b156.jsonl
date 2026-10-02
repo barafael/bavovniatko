@@ -1,0 +1,40 @@
+{"pair": "e7c0a46938e2", "relation": "supports", "from": "claim:cc16_0016_05", "to": "claim:cc16_0011_76", "strength": 0.6, "rationale": "Strike videos placing a burning An-12 at Olenya corroborate AviVector's destroyed An-12.", "independent": true}
+{"pair": "e7cad1b1ddd2", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e7cc31f9b4e9", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e814d3d88a79", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e8525b0c20f9", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e8a0f8716c98", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e9711cd5034a", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e9a5a5f108a3", "relation": "duplicates", "from": "claim:cc16_0040_06", "to": "claim:cc16_0011_39", "strength": 0.9, "rationale": "Same launch from a truck at a petrol station by Olenegorsk 6–7 km from Olenya."}
+{"pair": "e9a80484923c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e9c0f7795348", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e9dc11513f1b", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e9fe9f6c9a1a", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ea40ec89a2af", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ea432f29ecad", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eaa7370172fc", "relation": "supports", "from": "claim:cc19_0025_11", "to": "claim:cc19_0009_87", "strength": 0.8, "rationale": "Both state season-2 Vivaldi UGVs were dropped more than 10 km behind the Russian line.", "independent": false}
+{"pair": "eab20bd9e800", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eb1aaf5bd1ce", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eb1f18b51585", "relation": "supports", "from": "claim:cc19_0023_14", "to": "claim:c03_0024_80", "strength": 0.8, "rationale": "Both say the 20th Army repair base was pushed back to Voronezh Oblast.", "independent": false}
+{"pair": "eb32bd39dc00", "relation": "duplicates", "from": "claim:cc19_0023_18", "to": "claim:c05_0025_36", "strength": 0.8, "rationale": "Same assertion of heavy bomber drones dropping kamikaze UGVs onto command nodes more than 10 km deep."}
+{"pair": "eb57143c1469", "relation": "supports", "from": "claim:cc19_0009_67", "to": "claim:cc19_0012_25", "strength": 0.7, "rationale": "Biletskyi at the Lavra on 7 September supports that Russian forces never reached Sviatohirsk.", "independent": false}
+{"pair": "eb7c40b842b6", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eb981a075b80", "relation": "duplicates", "from": "claim:cc19_0023_14", "to": "claim:c05_0025_44", "strength": 0.9, "rationale": "Same move of the 20th Army / 144th Division repair base to Voronezh Oblast, a 250 km route."}
+{"pair": "ebc608c1e6f0", "relation": "supports", "from": "claim:cc16_0015_03", "to": "claim:cc16_0040_06", "strength": 0.5, "rationale": "A locates the same petrol-station launch point 6–7 km from Olenya that B describes.", "independent": false}
+{"pair": "ebc624fc54aa", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ebcfcf3d586c", "relation": "supports", "from": "claim:cc19_0009_75", "to": "claim:c05_0025_44", "strength": 0.7, "rationale": "The 3rd Corps video names the 144th Division support moved back to Voronezh Oblast.", "independent": false}
+{"pair": "ebeb6a5dfdb9", "relation": "supports", "from": "claim:cc07_0048_30", "to": "claim:cc07_0010_103", "strength": 0.6, "rationale": "The 3rd Assault Brigade encircling Andriivka on 14–17 September is consistent with its retaking it on 14–15 September.", "independent": false}
+{"pair": "ebec45da9314", "relation": "duplicates", "from": "claim:cc01_0030_12", "to": "claim:cc01_0011_58", "strength": 0.8, "rationale": "Same 6 March 2022 Rakivka pontoon engagement where every tube in range fired."}
+{"pair": "ec2fb1029386", "relation": "supports", "from": "claim:cc07_0048_30", "to": "claim:cc07_0032_04", "strength": 0.7, "rationale": "B names the 80th among the brigades clearing Klishchiivka in September 2023.", "independent": false}
+{"pair": "ec8ea75bc6df", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ecf35aecd3d6", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ed41b1a62015", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ed6e0e546ac4", "relation": "supports", "from": "claim:cc16_0011_35", "to": "claim:cc16_0015_12", "strength": 0.6, "rationale": "A reports the Ukrainka-bound truck burning near Seryshevo, which B locates.", "independent": false}
+{"pair": "ed82fe0f9296", "relation": "supports", "from": "claim:cc11_0006_10", "to": "claim:cc11_0025_03", "strength": 0.7, "rationale": "The 15 January pipe infiltration behind Tsarska Okhota is the January shift to the pipe.", "independent": false}
+{"pair": "ee15ff82f612", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ee60fdafbdcb", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eea2ab42e7a5", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eeabf51764b1", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eedc07f81545", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "eef3197f30fe", "relation": "supports", "from": "claim:cc01_0030_11", "to": "claim:cc01_0014_12", "strength": 0.8, "rationale": "Both describe civilians crossing the blown P30 bridge at Romanivka under fire on 6 March 2022.", "independent": false}
+{"pair": "eefcb58c9f23", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}

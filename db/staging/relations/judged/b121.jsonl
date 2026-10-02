@@ -1,0 +1,40 @@
+{"pair": "97f97e6c36b7", "relation": "duplicates", "from": "claim:cc09_0017_02", "to": "claim:c04_0033_13", "strength": 0.95, "rationale": "Same RUSI ~30 km Orikhiv-Tokmak defence depth."}
+{"pair": "981666bcc21e", "relation": "none", "rationale": "Different claimants and dates (JCS Dec 2024 vs HUR June 2026)."}
+{"pair": "985ea3eed359", "relation": "duplicates", "from": "claim:cc15_0005_30", "to": "claim:cc15_0007_55", "strength": 0.9, "rationale": "Same Syrskyi Dobropillia-axis loss figures of 29 Sept 2025."}
+{"pair": "98fcd4f82dec", "relation": "supersedes", "from": "claim:c04_0027_82", "to": "claim:cc14_0014_129", "strength": 0.6, "rationale": "The NIS/UK ~6,000 is a later figure in the NIS series than its 4,700 of April 2025."}
+{"pair": "9999b06a8736", "relation": "duplicates", "from": "claim:cc07_0027_03", "to": "claim:c04_0017_14", "strength": 0.95, "rationale": "Same RUSI 5:1 artillery advantage at Bakhmut."}
+{"pair": "99e0713b7cf4", "relation": "duplicates", "from": "claim:cc18_0032_04", "to": "claim:cc18_0037_06", "strength": 0.9, "rationale": "Same Patriot result of 4 of 28 ballistic missiles on 1-2 July 2026."}
+{"pair": "9a1050b57c98", "relation": "duplicates", "from": "claim:c06_0025_02", "to": "claim:cc09_0016_04", "strength": 0.85, "rationale": "Same 1.34 km/km2 shelterbelt density around Robotyne."}
+{"pair": "9a244fe43ff4", "relation": "refines", "from": "claim:cc11_0010_27", "to": "claim:cc11_0006_04", "strength": 0.8, "rationale": "Adds the ~200 ground estimate to the same 109 satellite-confirmed losses."}
+{"pair": "9a5031e0ece9", "relation": "duplicates", "from": "claim:cc07_0010_93", "to": "claim:cc07_0007_23", "strength": 0.95, "rationale": "Same Biden 'over 100,000 casualties' at Bakhmut."}
+{"pair": "9abc13758392", "relation": "none", "rationale": "Different claimants and dates (NIS/UK 2026 vs General Staff April 2025)."}
+{"pair": "9b0b140f0d1c", "relation": "duplicates", "from": "claim:cc18_0037_07", "to": "claim:cc18_0013_75", "strength": 0.95, "rationale": "Same zero of 29 ballistic missiles intercepted on 5-6 July 2026."}
+{"pair": "9b54cee85954", "relation": "duplicates", "from": "claim:cc14_0012_03", "to": "claim:cc14_0006_05", "strength": 0.95, "rationale": "Same ~400 km2 Ukrainian-held Kursk salient in late Feb 2025."}
+{"pair": "9b55091ae663", "relation": "none", "rationale": "Olenivka POW deaths and Bakhmut losses are unrelated."}
+{"pair": "9bd9f6b21fb1", "relation": "supports", "from": "claim:cc11_0007_11", "to": "claim:c00_0074_20", "strength": 0.7, "rationale": "Tarnavskyi's 47,000+ underlies the ~50,000 Ukrainian claim.", "independent": false}
+{"pair": "9f736bf9c0a6", "relation": "duplicates", "from": "claim:cc15_0016_08", "to": "claim:c06_0029_19", "strength": 0.95, "rationale": "Same >300 Russians into Pokrovsk in fog, same source."}
+{"pair": "9f9f853b17c4", "relation": "duplicates", "from": "claim:cc14_0014_125", "to": "claim:cc14_0008_01", "strength": 0.95, "rationale": "Same ~30 km2 still held on 21 April 2025."}
+{"pair": "a077e8f40243", "relation": "none", "rationale": "ISW's 'at most 30,000' is an upper bound compatible with 11,000; no real bearing."}
+{"pair": "a079bcaf8deb", "relation": "supports", "from": "claim:c04_0033_35", "to": "claim:cc14_0012_31", "strength": 0.9, "rationale": "HUR's 7,000+ is the upper end of the contested range.", "independent": false}
+{"pair": "a080aa83e2e2", "relation": "supports", "from": "claim:c00_0062_04", "to": "claim:cc19_0009_74", "strength": 0.9, "rationale": "Same 3rd Army Corps claim of ~1,500 Russian losses in season 1.", "independent": false}
+{"pair": "a0f4b65fbde8", "relation": "none", "rationale": "Kherson and Bakhmut losses are different scopes and claimants."}
+{"pair": "a1b140d9caa7", "relation": "refines", "from": "claim:cc19_0011_06", "to": "claim:cc19_0003_03", "strength": 0.7, "rationale": "Qualifies the 350 km2 occupied area as including ground east of the Zherebets."}
+{"pair": "a2360e3c75b2", "relation": "none", "rationale": "'Seven in the best case' and 'as few as four' bound a range rather than conflict."}
+{"pair": "a2a75f55514b", "relation": "supports", "from": "claim:cc11_0024_04", "to": "claim:cc11_0032_20", "strength": 0.7, "rationale": "Foka's 1:10 artillery odds match the 1:10 shell ratio at Avdiivka.", "independent": true}
+{"pair": "a35fed3f6e2d", "relation": "duplicates", "from": "claim:cc15_0007_59", "to": "claim:cc15_0024_07", "strength": 0.9, "rationale": "Same Kucheriv Yar recapture with 50+ prisoners."}
+{"pair": "a3de3aa20660", "relation": "supports", "from": "claim:cc18_0008_13", "to": "claim:cc18_0032_08", "strength": 0.8, "rationale": "The 96% computed drone interception rate backs Ihnat's 'above 90%'.", "independent": false}
+{"pair": "a40166325775", "relation": "duplicates", "from": "claim:cc15_0005_35", "to": "claim:c00_0074_28", "strength": 0.9, "rationale": "Same Radio Svoboda ~85 casualties/km2 for 2025."}
+{"pair": "a40e450da937", "relation": "duplicates", "from": "claim:cc14_0014_030", "to": "claim:cc14_0011_03", "strength": 0.95, "rationale": "Same Syrskyi ~1,000 km2 claim of 12 Aug 2024."}
+{"pair": "a54841afc51c", "relation": "none", "rationale": "The corps claim and MWI's 'up to 250' differ by method and are not directly comparable."}
+{"pair": "a8c110adb3e8", "relation": "supports", "from": "claim:cc16_0011_59", "to": "claim:cc16_0026_14", "strength": 0.8, "rationale": "Zelensky's 117 drones matches the SBU's official 117.", "independent": false}
+{"pair": "aadc3d4256b8", "relation": "duplicates", "from": "claim:cc19_0009_68", "to": "claim:cc19_0006_07", "strength": 0.9, "rationale": "Same Molin >200 km2 estimate of 8 Sept 2026."}
+{"pair": "ab8861af6ce0", "relation": "supports", "from": "claim:cc19_0006_08", "to": "claim:c00_0062_08", "strength": 0.8, "rationale": "Muzyka's ~240 km2 is the mappers' upper figure cited by analysts.", "independent": false}
+{"pair": "aba1949c5b9f", "relation": "supports", "from": "claim:cc16_0011_57", "to": "claim:c01_0022_16", "strength": 0.85, "rationale": "Both report the SBU's ~$7bn damage claim.", "independent": false}
+{"pair": "abf4f76fbff5", "relation": "supports", "from": "claim:cv02_0006_03", "to": "claim:cc11_0006_04", "strength": 0.4, "rationale": "A ground count of ~200 is consistent with 'at least 109' by satellite.", "independent": false}
+{"pair": "ac3035062557", "relation": "supports", "from": "claim:cc14_0027_10", "to": "claim:cc14_0012_31", "strength": 0.9, "rationale": "HUR's 7,000+ is the upper end of the contested range.", "independent": false}
+{"pair": "ad2919b87a92", "relation": "none", "rationale": "UGV drops >10 km behind the line and logistics strikes 50-120 km deep are different strike types."}
+{"pair": "adafef465edc", "relation": "supports", "from": "claim:cc19_0006_04", "to": "claim:cc19_0006_08", "strength": 0.4, "rationale": "ISW's 'at least 125 km2', with its undercount caveat, is consistent with ~240 km2.", "independent": true}
+{"pair": "ae37f57ad759", "relation": "none", "rationale": "Different claimants and dates (Zelensky Dec 2024 vs NIS/UK 2026)."}
+{"pair": "af30cc07691c", "relation": "duplicates", "from": "claim:cc09_0006_02", "to": "claim:c00_0038_01", "strength": 0.9, "rationale": "Same RUSI three lines ~30 km deep on the Orikhiv axis."}
+{"pair": "af4b1c7f6e28", "relation": "duplicates", "from": "claim:cv02_0006_02", "to": "claim:cc11_0006_04", "strength": 0.9, "rationale": "Same 109 satellite-confirmed Russian vehicle losses."}
+{"pair": "b25012d7fbf2", "relation": "duplicates", "from": "claim:cc01_0025_17", "to": "claim:cc01_0011_92", "strength": 0.95, "rationale": "Same General Staff claim of 2 BTGs of the 106th VDV withdrawn."}

@@ -1,0 +1,40 @@
+{"pair": "8886740757c4", "relation": "supports", "from": "claim:cc15_0022_13", "to": "claim:cc15_0014_03", "strength": 0.6, "rationale": "B's daily vehicle hits on the T0515 corroborate A's drone interdiction of that road; same ISW report.", "independent": false}
+{"pair": "88b5556a8b45", "relation": "none", "rationale": "A crossing event and a description of the defensive array; context only."}
+{"pair": "88cea27508a0", "relation": "supports", "from": "claim:cc15_0007_03", "to": "claim:cc15_0019_05", "strength": 0.5, "rationale": "The 31st's July encirclement at Prohres corroborates B's statement that the 31st fought there; shared Forbes source.", "independent": false}
+{"pair": "89280f8427af", "relation": "none", "rationale": "The 11 Mar assault and the later withdrawal request are different events."}
+{"pair": "89788f277aa8", "relation": "none", "rationale": "Town location fact and the drone interdiction event."}
+{"pair": "89a39c64d4cf", "relation": "none", "rationale": "Distances to two different air bases."}
+{"pair": "89d2f35b6b8f", "relation": "none", "rationale": "Museum photography for AI training and the June 2025 retaliation strike."}
+{"pair": "89fced9e4ceb", "relation": "duplicates", "from": "claim:cc01_0026_07", "to": "claim:cc01_0011_78", "strength": 0.7, "rationale": "B's Pavliuk appointment is wholly contained in A from the same ISW report."}
+{"pair": "8a58b0322292", "relation": "none", "rationale": "Forbes' loss count and the emblematic image are different assertions."}
+{"pair": "8ab799343ec8", "relation": "none", "rationale": "Withdrawal-request exchange and an assessment of force shifting."}
+{"pair": "8b0d90dae4e4", "relation": "supports", "from": "claim:cc15_0026_15", "to": "claim:cc15_0020_03", "strength": 0.4, "rationale": "The 68th and 155th leaving Pokrovsk corroborates their role in the garrison.", "independent": false}
+{"pair": "8b3e7c467cee", "relation": "supports", "from": "claim:cc15_0004_07", "to": "claim:cc15_0020_07", "strength": 0.6, "rationale": "A's account of the 1st Azov Corps clearing the wedge supports B's naming it as the Dobropillia reserve; shared Kyiv Independent source.", "independent": false}
+{"pair": "8b84751bf450", "relation": "supports", "from": "claim:cc09_0010_76", "to": "claim:cc09_0030_10", "strength": 0.7, "rationale": "Both report the 41st CAA's transfer south/to Orikhiv from about 1 September 2023, from the same ISW report.", "independent": false}
+{"pair": "8bcf0f81718f", "relation": "none", "rationale": "Museum photography and a satellite count."}
+{"pair": "8bdd4d41a05a", "relation": "supports", "from": "claim:cc14_0037_17", "to": "claim:cc14_0014_126", "strength": 0.7, "rationale": "Both report Gerasimov's 26 April 2025 Gornal claim; shared BBC source.", "independent": false}
+{"pair": "8c2a9790c820", "relation": "refines", "from": "claim:cc15_0024_12", "to": "claim:cc15_0016_09", "strength": 0.8, "rationale": "B is a more detailed account of the same foggy column entering Pokrovsk."}
+{"pair": "8c33dac417eb", "relation": "supports", "from": "claim:cc01_0032_08", "to": "claim:cc01_0005_03", "strength": 0.6, "rationale": "B's debate over why the airlift was aborted presupposes A's abort; same sources.", "independent": false}
+{"pair": "8c44716f39f0", "relation": "duplicates", "from": "claim:cc09_0006_04", "to": "claim:c00_0038_01", "strength": 0.8, "rationale": "B's RUSI listing of the forward divisions is contained in A from the same RUSI source."}
+{"pair": "8c4b96c571c3", "relation": "supports", "from": "claim:cc09_0010_90", "to": "claim:cc09_0007_06", "strength": 0.7, "rationale": "Both quote Tarnavskyi's Tokmak 'minimum goal' to CNN.", "independent": false}
+{"pair": "8c5ecbd39abd", "relation": "none", "rationale": "Road-junction geography and an assessment of one road's role."}
+{"pair": "8c89ce06544b", "relation": "supports", "from": "claim:cc09_0010_82", "to": "claim:cc09_0037_06", "strength": 0.5, "rationale": "A's 10 Sep tank raid is an instance of the raid pattern B describes; same source.", "independent": false}
+{"pair": "8c971ac4dd13", "relation": "none", "rationale": "Drone concealment and the truck failure are different facts."}
+{"pair": "8cad0aec77d8", "relation": "supports", "from": "claim:cc16_0011_69", "to": "claim:cc16_0011_71", "strength": 0.5, "rationale": "Two US-sourced damage estimates broadly agree (4 Tu-22s, 6 vs at least 7 Tu-95s).", "independent": true}
+{"pair": "8ced2044fc80", "relation": "refines", "from": "claim:cc15_0024_15", "to": "claim:cc15_0022_75", "strength": 0.8, "rationale": "B is a more detailed account of the same 9 December flag-raising."}
+{"pair": "8dd5850ae38a", "relation": "none", "rationale": "Olenya count and the later strike force composition."}
+{"pair": "8e1113b199da", "relation": "supports", "from": "claim:cc01_0011_10", "to": "claim:cc01_0030_01", "strength": 0.7, "rationale": "A's detailed helicopter losses near the dam corroborate B's account; shared sources.", "independent": false}
+{"pair": "8ed37f478470", "relation": "refines", "from": "claim:cc14_0014_075", "to": "claim:c00_0049_07", "strength": 0.7, "rationale": "B specifies that 19 Nov was the first ATACMS use inside Russia and names the targets."}
+{"pair": "8eddc2ee9672", "relation": "none", "rationale": "Zelensky's thanks and battalion losses."}
+{"pair": "8ef364fe6b9e", "relation": "none", "rationale": "Loss of the road and a description of the road."}
+{"pair": "8f2de4fa09a0", "relation": "supports", "from": "claim:cc14_0014_043", "to": "claim:cc14_0029_13", "strength": 0.6, "rationale": "The 18 Aug holing of the Zvannoye bridge corroborates B's sequence of Seim bridge strikes; shared ISW source.", "independent": false}
+{"pair": "8f7971405ca7", "relation": "none", "rationale": "A coordinate and a distance, both computed; no bearing."}
+{"pair": "8f8631d217ca", "relation": "none", "rationale": "Road geography and glide-bomb strikes."}
+{"pair": "8f94ff3fd117", "relation": "supports", "from": "claim:cc14_0031_02", "to": "claim:cc14_0014_013", "strength": 0.7, "rationale": "Both describe the 6 Aug break-in past the Sudzha checkpoint towards Sudzha and Oleshnya; shared ISW source.", "independent": false}
+{"pair": "8fd36988321a", "relation": "none", "rationale": "Town description and interdiction rate."}
+{"pair": "8feefc3518be", "relation": "refines", "from": "claim:cc09_0040_02", "to": "claim:cc09_0010_15", "strength": 0.8, "rationale": "B is a fuller account of the same 7 June attempt south of Mala Tokmachka."}
+{"pair": "9001f746fc0b", "relation": "refines", "from": "claim:cc14_0033_08", "to": "claim:cc14_0005_02", "strength": 0.4, "rationale": "B qualifies A's isolation: the sequential bridge drops left a window to leave rather than a full encirclement."}
+{"pair": "9029c28fbf01", "relation": "supports", "from": "claim:cc18_0013_31", "to": "claim:cc18_0006_06", "strength": 0.7, "rationale": "B's 01:58 missile pair is part of the ballistic waves A describes; same Air Force source.", "independent": false}
+{"pair": "9060c559a1a4", "relation": "supports", "from": "claim:cc09_0006_20", "to": "claim:cc09_0029_03", "strength": 0.8, "rationale": "Both report Popov's removal about 11-12 July 2023; shared ISW source.", "independent": false}
+{"pair": "9084163c2698", "relation": "supports", "from": "claim:cc15_0005_23", "to": "claim:cc15_0020_03", "strength": 0.4, "rationale": "The 68th and 155th leaving Pokrovsk corroborates their role in the garrison.", "independent": false}
+{"pair": "909f72fd14f9", "relation": "none", "rationale": "Troop strength at Chernihiv and a General Staff report on renewed offensive."}

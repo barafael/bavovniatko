@@ -1,0 +1,40 @@
+{"pair": "2ca2dae88a2d", "relation": "none", "rationale": "Redeployment and cloud cover are unrelated."}
+{"pair": "2cf65dc2bca0", "relation": "none", "rationale": "Assembly totals and a hinge anecdote are different facts."}
+{"pair": "2d05f281cbbd", "relation": "supports", "from": "claim:cc15_0022_13", "to": "claim:cc15_0022_08", "strength": 0.6, "rationale": "Two or three vehicles hit daily on the T0515 shows it was under drone interdiction.", "independent": false}
+{"pair": "2d0c349a9bbc", "relation": "none", "rationale": "Holding Zenit and the treatment of wounded are different facts."}
+{"pair": "2d3931764b2e", "relation": "none", "rationale": "Different actions a month apart."}
+{"pair": "2e0408dcf590", "relation": "supports", "from": "claim:cc14_0005_01", "to": "claim:cc14_0005_02", "strength": 0.6, "rationale": "Dropping the three bridges underlies the assessment that it isolated the Russian troops.", "independent": false}
+{"pair": "2e10f9fcc282", "relation": "duplicates", "from": "claim:cc09_0050_03", "to": "claim:cc09_0010_22", "strength": 0.85, "rationale": "Same Popov credit to the minefields on 8 June 2023, same ISW source."}
+{"pair": "2e8813c81cac", "relation": "supports", "from": "claim:cc12_0020_15", "to": "claim:cc01_0028_30", "strength": 0.6, "rationale": "S-400s in Belarus underlie their effect on Ukrainian jets.", "independent": false}
+{"pair": "2e97eb5c88ee", "relation": "none", "rationale": "Crimean Bridge guards and the Kursk border force are unrelated."}
+{"pair": "2eb0b86dd913", "relation": "none", "rationale": "A Tu-160 at Olenya on 1 June and later departures are compatible separate facts."}
+{"pair": "2eb3804e1e19", "relation": "none", "rationale": "Bridge distance and bridge status are different facts."}
+{"pair": "2ee565d7d3e5", "relation": "duplicates", "from": "claim:cc19_0009_18", "to": "claim:c05_0025_03", "strength": 0.9, "rationale": "Same MoD contact with SpaceX on 29 January 2026, same source."}
+{"pair": "2f0a406316e3", "relation": "none", "rationale": "Counts at different bases."}
+{"pair": "2f5290f966f8", "relation": "none", "rationale": "A probe and a map box are unrelated."}
+{"pair": "2f63736115d5", "relation": "none", "rationale": "Different events months apart."}
+{"pair": "2f99003fb71d", "relation": "supports", "from": "claim:cc01_0009_05", "to": "claim:cc01_0011_14", "strength": 0.5, "rationale": "No Il-76 landing at Hostomel on 25 February is consistent with the aborted airlift.", "independent": false}
+{"pair": "2fc9a7afea94", "relation": "supports", "from": "claim:cc11_0032_01", "to": "claim:c04_0030_20", "strength": 0.4, "rationale": "Avdiivka's October 2023 mechanised waves driving into minefields illustrate the mines-based counter.", "independent": true}
+{"pair": "3028025f7fd9", "relation": "none", "rationale": "Contested flood area and number of breaches are different facts."}
+{"pair": "3080957b32fa", "relation": "supports", "from": "claim:cc18_0035_12", "to": "claim:cc18_0013_74", "strength": 0.7, "rationale": "Same 350 t petroleum spill into Lake Kyrylivske, same source.", "independent": false}
+{"pair": "30b6acb5dacb", "relation": "supports", "from": "claim:cc01_0030_10", "to": "claim:cc01_0014_22", "strength": 0.6, "rationale": "The dam blown at 13:30 on 25 February matches the first breach date.", "independent": true}
+{"pair": "30c26db1eed8", "relation": "none", "rationale": "River geography and a flooding assessment are different facts."}
+{"pair": "30df0bde9942", "relation": "none", "rationale": "Different campaigns aimed at the same cities."}
+{"pair": "30fafc4f4616", "relation": "duplicates", "from": "claim:cc14_0010_08", "to": "claim:cc14_0014_043", "strength": 0.9, "rationale": "Same holing of the Zvannoye bridge on 18 August 2024, same source."}
+{"pair": "3111880b3f31", "relation": "none", "rationale": "Drone and missile tracks at different times."}
+{"pair": "3130e9d94dbb", "relation": "none", "rationale": "The exit event and pipe dimensions are different facts."}
+{"pair": "314c3a547cad", "relation": "supports", "from": "claim:cc19_0009_60", "to": "claim:cc19_0005_08", "strength": 0.5, "rationale": "A Russian milblogger's admission that Ukrainians held the area between Nove and Katerynivka supports their later liberation.", "independent": true}
+{"pair": "31a4892df06d", "relation": "none", "rationale": "A game's setting and the extent of occupation are unrelated."}
+{"pair": "31d7bd9205f0", "relation": "duplicates", "from": "claim:cc01_0011_54", "to": "claim:cc01_0028_32", "strength": 0.85, "rationale": "Same RUSI account of the 3 March switch from time-slot to area deconfliction."}
+{"pair": "3253ee72dba8", "relation": "none", "rationale": "River width and water volume are different quantities."}
+{"pair": "327feef80385", "relation": "none", "rationale": "A press report of the line cut and the next belt's distance are different facts."}
+{"pair": "329aa8cc378c", "relation": "duplicates", "from": "claim:cc14_0025_03", "to": "claim:cc14_0014_033", "strength": 0.95, "rationale": "Same Dyumin appointment on 12 August 2024, same source."}
+{"pair": "329de42f9f1d", "relation": "supports", "from": "claim:cv01_0012_03", "to": "claim:cc01_0025_23", "strength": 0.6, "rationale": "Two 90th Division BTGs at Brovary matches the division advancing on Brovary.", "independent": true}
+{"pair": "32a1fbd51732", "relation": "duplicates", "from": "claim:cc07_0048_10", "to": "claim:cc07_0010_55", "strength": 0.9, "rationale": "Same two bridges down at Bakhmut on 3 March 2023, same source."}
+{"pair": "32acd4d5a154", "relation": "supports", "from": "claim:cc14_0024_05", "to": "claim:cc14_0004_01", "strength": 0.7, "rationale": "The 80th and 82nd leading the break-in is corroborated by a separate source.", "independent": true}
+{"pair": "32d1ebbc5a85", "relation": "supports", "from": "claim:cc18_0031_07", "to": "claim:cc18_0008_12", "strength": 0.7, "rationale": "Parodiya and Gerbera decoys in the mix match the 496-drone composition.", "independent": false}
+{"pair": "32f2cc5e7770", "relation": "none", "rationale": "A strike on forward positions and a repair-base move are different facts."}
+{"pair": "334539c0ea11", "relation": "none", "rationale": "Corps composition at Avdiivka and at Pokrovsk a year later are different states."}
+{"pair": "337bcf8180f6", "relation": "supports", "from": "claim:cc15_0018_02", "to": "claim:cc15_0019_11", "strength": 0.7, "rationale": "Solodchuk taking over in May 2025 matches his command from July 2025.", "independent": false}
+{"pair": "33ae23f751a1", "relation": "none", "rationale": "A repair-base move and a regiment's location are different facts."}
+{"pair": "33bc093ed1c9", "relation": "supports", "from": "claim:cc09_0017_01", "to": "claim:c04_0005_09", "strength": 0.5, "rationale": "Chernyk's minefields several kilometres deep corroborate the deep Russian mine belts.", "independent": true}

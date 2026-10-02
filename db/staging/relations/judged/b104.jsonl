@@ -1,0 +1,40 @@
+{"pair": "93a471add8c1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "93dd51084b2c", "relation": "supports", "from": "claim:c00_0074_32", "to": "claim:cc14_0012_31", "strength": 0.6, "rationale": "Both list the contested North Korean casualty figures and share the BBC count of 2,304 killed.", "independent": false}
+{"pair": "943d109144b6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9464326e4282", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "947ec935627d", "relation": "contradicts", "from": "claim:cc16_0040_08", "to": "claim:cc16_0047_11", "strength": 0.7, "rationale": "Four Tu-95MS burning on the Olenya apron is incompatible with Military Chronicle's claim that only one Tu-95MS was lost there.", "resolution": "Military Chronicle is a Russian milblogger channel minimising losses; the four burned airframes rest on imagery reporting."}
+{"pair": "9604ac08243b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "96498a93297d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "968db03a33af", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "96b697e991a2", "relation": "none", "rationale": "The NIS 6,000 figure is not among the endpoints of the contested range summary; related context only."}
+{"pair": "9701f797c83e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9758f7410c01", "relation": "duplicates", "from": "claim:cc16_0011_30", "to": "claim:cc16_0028_08", "strength": 0.9, "rationale": "The same AviVector count of 52 strategic aircraft at Belaya on 31 May 2025, extracted twice; B adds the breakdown."}
+{"pair": "977348ae0449", "relation": "supports", "from": "claim:cc01_0026_28", "to": "claim:cc01_0011_22", "strength": 0.8, "rationale": "MWI's 25,000 rifles and 10 million rounds matches the 26 February total in A.", "independent": false}
+{"pair": "981216c8bbe6", "relation": "supports", "from": "claim:cc16_0007_10", "to": "claim:cc16_0007_07", "strength": 0.7, "rationale": "TWZ's imagery-based 10–11 bombers destroyed falls within the NATO official's 10–13 destroyed.", "independent": true}
+{"pair": "98131192b71a", "relation": "supersedes", "from": "claim:cc11_0007_18", "to": "claim:cc11_0010_67", "strength": 0.9, "rationale": "Naalsio's 690 vehicles by 23 February 2024 updates his own count of 574 on 27 January."}
+{"pair": "981baee21492", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "98afb8431c22", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9905ea4996af", "relation": "none", "rationale": "Syrskyi's August 2024 figure and RUSI's later figure describe the Kursk force at different times."}
+{"pair": "99369ef862e0", "relation": "none", "rationale": "DeepState's theatre-wide October gross recapture and Syrskyi's cumulative August–October Dobropillia claim cover different periods."}
+{"pair": "99b9d5c05377", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "99dc608c4357", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9a0a20134a9e", "relation": "none", "rationale": "The corps claim for phases 1–2 and Muzyka's estimate measure the Vivaldi area at different stages and by different methods; the chapter treats them as a band."}
+{"pair": "9a3380c5e7b8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9a5dd78832a7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9a903b510370", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9abaa09aefd6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9b4ced77b249", "relation": "duplicates", "from": "claim:cc19_0006_01", "to": "claim:cc19_0009_74", "strength": 0.8, "rationale": "The same 3rd Army Corps 15 September claim of 75 km² cleared plus 10 km² liberated for Vivaldi season 1; B adds the loss claim."}
+{"pair": "9b6f366b2ef7", "relation": "supersedes", "from": "claim:cc14_0027_09", "to": "claim:cc14_0027_05", "strength": 0.4, "rationale": "The NIS/UK figure of about 6,000 in 2026 is a later point in the cumulative North Korean casualty count than Syrskyi's 4,000 in February 2025."}
+{"pair": "9bab3bf6c05b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9c1d12f1aa31", "relation": "none", "rationale": "The planned brigade count and the number properly equipped are different quantities."}
+{"pair": "9c249260284a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9c989ae71a54", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9d1fe76c8939", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9d3194c99770", "relation": "weakens", "from": "claim:cc16_0011_69", "to": "claim:cc16_0011_65", "strength": 0.4, "rationale": "A Western official's count of at least 7 Tu-95 and 4 Tu-22 destroyed or damaged on the same day sits far below Maliuk's 41 aircraft hit, casting doubt on the claim."}
+{"pair": "9d3a8a347d9b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9d633c1a1719", "relation": "contradicts", "from": "claim:cc11_0024_04", "to": "claim:cc11_0032_19", "strength": 0.5, "rationale": "For Avdiivka in February 2024, Foka gives 1:10 odds in artillery and ammunition while Ukrainian troops report a 5:1 shell advantage.", "resolution": "Foka describes the final weeks before withdrawal; the 5:1 figure is from early February, and different units and sources report."}
+{"pair": "9da79e757005", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9da7e18ae6e5", "relation": "none", "rationale": "Two helicopters downed in the first wave and four over two hours are compatible windows."}
+{"pair": "9dd213e2d916", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9deb032b5465", "relation": "duplicates", "from": "claim:cc14_0012_30", "to": "claim:c00_0074_31", "strength": 0.8, "rationale": "The 16,000–22,000 North Korean total deployment is the same figure carried in the topic-00 key figure."}
+{"pair": "9ea3724ed821", "relation": "none", "rationale": "All equipment and tanks only are different quantities."}

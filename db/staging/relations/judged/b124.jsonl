@@ -1,0 +1,40 @@
+{"pair": "da052f6deb04", "relation": "none", "rationale": "Olenivka POW deaths and Bakhmut losses are unrelated."}
+{"pair": "da504de073fe", "relation": "none", "rationale": "Different agencies and dates (JCS Dec 2024 vs NIS/UK 2026)."}
+{"pair": "da6530b16e03", "relation": "duplicates", "from": "claim:cc11_0029_01", "to": "claim:cc11_0024_06", "strength": 0.9, "rationale": "Same Forbes ~10,000 Ukrainian defenders at Avdiivka."}
+{"pair": "dad2ed459de6", "relation": "none", "rationale": "Different claimants and dates (NIS/UK 2026 vs Zelensky Dec 2024)."}
+{"pair": "db4eb31d1e7d", "relation": "refines", "from": "claim:cc14_0031_23", "to": "claim:cc14_0007_03", "strength": 0.7, "rationale": "Adds the 15 km crawl and industrial-zone exit to the same ~100-troop pipeline emergence."}
+{"pair": "db6499a9c387", "relation": "none", "rationale": "Type-level operational counts and an aggregate 'under 90' are compatible and do not bear on each other closely."}
+{"pair": "dbb5c16be9f6", "relation": "supports", "from": "claim:cc18_0010_05", "to": "claim:cc18_0008_12", "strength": 0.8, "rationale": "The MoD's 'almost 500' drones matches the Air Force's 496.", "independent": false}
+{"pair": "dc177731d9fb", "relation": "supports", "from": "claim:cc14_0027_08", "to": "claim:cc14_0012_31", "strength": 0.9, "rationale": "The BBC's 2,304 killed is the lower end of the contested range.", "independent": false}
+{"pair": "dc6f1aa3e79c", "relation": "supports", "from": "claim:cc15_0022_03", "to": "claim:cc15_0022_02", "strength": 0.4, "rationale": "Soldiers' '20-km kill zone' is consistent with Ukrainian sources' 'at least 10 km' in Aug 2025.", "independent": true}
+{"pair": "de6afc0ab119", "relation": "none", "rationale": "Wagner dead at Bakhmut and named dead at Avdiivka are different scopes."}
+{"pair": "defce03ed6bb", "relation": "duplicates", "from": "claim:cc11_0045_20", "to": "claim:cc11_0016_14", "strength": 0.85, "rationale": "Same Russian claim of a 0.5 m, 2 km pipe infiltration at Avdiivka."}
+{"pair": "df120e38bf6d", "relation": "duplicates", "from": "claim:cc14_0027_02", "to": "claim:cc14_0014_079", "strength": 0.95, "rationale": "Same Zelensky 3,000+ North Korean casualties on 23 Dec 2024."}
+{"pair": "df77ce31ab66", "relation": "none", "rationale": "Bakhmut and Krynky losses are different scopes."}
+{"pair": "dfa056fe5da2", "relation": "duplicates", "from": "claim:cc07_0044_03", "to": "claim:cc07_0010_57", "strength": 0.9, "rationale": "Same ~4,000 civilians left in Bakhmut in early March 2023."}
+{"pair": "e04b07f7b6b8", "relation": "duplicates", "from": "claim:cc07_0041_05", "to": "claim:cc07_0027_03", "strength": 0.95, "rationale": "Same RUSI 5:1 artillery advantage at Bakhmut."}
+{"pair": "e06a49134e05", "relation": "none", "rationale": "One brigade's named dead near Kyiv and Bakhmut dead are unrelated."}
+{"pair": "e07907b356a6", "relation": "none", "rationale": "A game-design gap claim and a measured kill-zone depth are not the same assertion."}
+{"pair": "e184d683a8ff", "relation": "none", "rationale": "The Air Force's hit locations and Kyiv's damaged sites are different counts."}
+{"pair": "e1fc99ca03bc", "relation": "none", "rationale": "Olenivka POW deaths and Bakhmut losses are unrelated."}
+{"pair": "e1fdbf3770db", "relation": "supports", "from": "claim:cc11_0024_04", "to": "claim:c03_0018_01", "strength": 0.6, "rationale": "Foka's 1:10 artillery odds at Avdiivka match the 1:10 shell ratio in Feb 2024.", "independent": true}
+{"pair": "e20c54fb8526", "relation": "duplicates", "from": "claim:cc15_0007_63", "to": "claim:cc15_0005_42", "strength": 0.95, "rationale": "Same General Staff ~200 Russians in Pokrovsk on 26 Oct 2025."}
+{"pair": "e2133b488245", "relation": "supports", "from": "claim:cc16_0026_14", "to": "claim:cc16_0006_01", "strength": 0.8, "rationale": "The SBU's official 117 matches the BBC's 117 FPVs.", "independent": false}
+{"pair": "e2ac0bb01da4", "relation": "supports", "from": "claim:cc16_0011_57", "to": "claim:cc16_0007_02", "strength": 0.85, "rationale": "Both report the SBU's ~$7bn damage claim.", "independent": false}
+{"pair": "e6364c41b8e6", "relation": "duplicates", "from": "claim:cc18_0008_14", "to": "claim:cc18_0006_09", "strength": 0.9, "rationale": "Same Air Force 524 of 570 downed or jammed."}
+{"pair": "e65dbe38e72f", "relation": "supports", "from": "claim:cc16_0007_09", "to": "claim:cc16_0007_04", "strength": 0.6, "rationale": "Imagery counts of 12-13 destroyed are consistent with Kovalenko's at least 13.", "independent": true}
+{"pair": "e76c930a5e08", "relation": "duplicates", "from": "claim:cc11_0007_12", "to": "claim:c00_0074_20", "strength": 0.9, "rationale": "Same ~50,000 Ukrainian claim of Russian losses at Avdiivka, same source."}
+{"pair": "e8a5e2f958af", "relation": "supports", "from": "claim:cc19_0006_08", "to": "claim:c00_0074_54", "strength": 0.8, "rationale": "Muzyka's ~240 km2 is the upper end of the mappers' 200-240 km2.", "independent": false}
+{"pair": "e8dc2b7ac903", "relation": "supports", "from": "claim:cc16_0040_14", "to": "claim:cc16_0011_37", "strength": 0.8, "rationale": "Independent accounts agree the fifth truck's driver died near Seryshevo on 1 June 2025.", "independent": true}
+{"pair": "e8fb7be7beb5", "relation": "none", "rationale": "Assault-group size and fire-team size are different units of organisation."}
+{"pair": "e909f4e87930", "relation": "none", "rationale": "Wagner dead over the whole Bakhmut battle vs Kirby's all-front figure since December: different scopes."}
+{"pair": "e918597e9b10", "relation": "none", "rationale": "DeepState staff and Kyiv rescuers are unrelated."}
+{"pair": "e973bbe4e265", "relation": "supports", "from": "claim:cc07_0016_01", "to": "claim:cc07_0015_10", "strength": 0.9, "rationale": "Same SRTM ~246 m at Chasiv Yar.", "independent": false}
+{"pair": "e979be8d6fb8", "relation": "duplicates", "from": "claim:cc18_0010_12", "to": "claim:cc18_0006_13", "strength": 0.95, "rationale": "Same final Kyiv toll of 31 killed and 102 injured."}
+{"pair": "ead2fa9a9bae", "relation": "duplicates", "from": "claim:cc11_0032_10", "to": "claim:cc11_0010_70", "strength": 0.95, "rationale": "Same UK MoD 30-50 glide bombs a day at Avdiivka."}
+{"pair": "eada7d97041f", "relation": "supports", "from": "claim:cc15_0022_06", "to": "claim:c01_0004_20", "strength": 0.85, "rationale": "The corps' 20-25 km kill-zone measurement backs the 20-25 km by July 2026.", "independent": false}
+{"pair": "eaff12d48265", "relation": "none", "rationale": "ISW's 'at most 30,000' is an upper bound compatible with ~12,000."}
+{"pair": "eb19560f70d1", "relation": "weakens", "from": "claim:cc11_0007_17", "to": "claim:c00_0043_02", "strength": 0.4, "rationale": "ISW's 16,000-47,000 range of estimates and 'contested' label casts doubt on the ~50,000 claim."}
+{"pair": "eb573ef05c82", "relation": "supports", "from": "claim:cc19_0006_08", "to": "claim:c05_0025_34", "strength": 0.8, "rationale": "Muzyka's ~240 km2 is the mappers' upper figure.", "independent": false}
+{"pair": "eb8bd81d88cc", "relation": "duplicates", "from": "claim:cc07_0007_18", "to": "claim:c00_0074_09", "strength": 0.95, "rationale": "Same RUSI 19,547 Wagner dead at Bakhmut."}
+{"pair": "ebd0e33626b3", "relation": "none", "rationale": "The corps claim and MWI's 'up to 250' differ by method and are not directly comparable."}

@@ -1,0 +1,40 @@
+{"pair": "392d35fb2084", "relation": "duplicates", "from": "claim:cc07_0041_01", "to": "claim:c04_0013_01", "strength": 0.9, "rationale": "Same RUSI figure of about 20,000 Russian rounds a day, peaking above 32,000, against under 6,000 Ukrainian, extracted twice."}
+{"pair": "3946da244f3b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "396cccd838be", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "397913a42f63", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "39b72031d89a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "39de97c79406", "relation": "duplicates", "from": "claim:cc16_0047_24", "to": "claim:cc16_0011_71", "strength": 0.6, "rationale": "The one A-50 counted by the NYT's Western officials is part of the same NYT report of 6 Tu-95, 4 Tu-22M and 1 A-50 hit."}
+{"pair": "39e2ec6a7467", "relation": "weakens", "from": "claim:cc11_0010_40", "to": "claim:cc11_0010_42", "strength": 0.4, "rationale": "The UK MoD's count of about 200 armoured vehicles lost by early November casts doubt on Zaluzhnyi's claim of 100+ tanks plus 250 armoured vehicles by 10 November."}
+{"pair": "39ebec18be74", "relation": "supersedes", "from": "claim:cc18_0013_66", "to": "claim:cc18_0013_59", "strength": 0.8, "rationale": "The afternoon toll of 21 dead updates Klymenko's 08:00 report of 11 dead in Kyiv."}
+{"pair": "3a0689b4725a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3a1d0343a08b", "relation": "supports", "from": "claim:cc16_0007_08", "to": "claim:cc16_0007_11", "strength": 0.8, "rationale": "The US officials' estimate of about 10 aircraft destroyed matches Bronk's count of at least 6 Tu-95MS and 4 Tu-22M3.", "independent": true}
+{"pair": "3a68ca3e5cd4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3a6c52f5720b", "relation": "contradicts", "from": "claim:cc16_0007_01", "to": "claim:cc16_0007_08", "strength": 0.7, "rationale": "The SBU claims 41 aircraft hit, while US officials estimated up to about 20 hit.", "resolution": "The SBU counts every aircraft it says it struck; US officials' estimate is independent and more conservative."}
+{"pair": "3aa1d60b0870", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3b099580e065", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3bb740589a51", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3bc8b9ae0475", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3bdebdfd900e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3c2fa16c3251", "relation": "supersedes", "from": "claim:cc18_0010_14", "to": "claim:cc18_0013_45", "strength": 0.7, "rationale": "The police figure of more than 110 injured updates Klitschko's 03:47 report of six injured."}
+{"pair": "3cbd6815195f", "relation": "contradicts", "from": "claim:cc14_0014_087", "to": "claim:cc14_0027_08", "strength": 0.4, "rationale": "The NIS put North Korean dead at 300 in January 2025, while a BBC analysis counted 2,304 killed.", "resolution": "Probably different dates; the NIS figure is an early official estimate made before later fighting."}
+{"pair": "3df7c0dc79e0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3e0c94d1554f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3e3637b6be04", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3ea326479ed3", "relation": "contradicts", "from": "claim:c07_0028_33", "to": "claim:cc19_0009_46", "strength": 0.6, "rationale": "DeepStateMap versions give Russia 85 km² gained in June 2026, while a report says front-wide Russian gains fell to about 30 km².", "resolution": "The report may use another mapping source or a narrower definition of gains."}
+{"pair": "3ed6f0218f52", "relation": "supersedes", "from": "claim:cc18_0013_66", "to": "claim:cc18_0013_55", "strength": 0.8, "rationale": "The afternoon toll of 21 dead and 85 injured updates Tkachenko's 04:55 report of two dead and 16 injured."}
+{"pair": "3ee035d4411d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3f03ebd08ef1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3f1474b71eeb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3f57780f3850", "relation": "supersedes", "from": "claim:cc14_0027_10", "to": "claim:cc14_0027_05", "strength": 0.5, "rationale": "HUR's June 2026 estimate of more than 7,000 North Korean casualties updates Syrskyi's February 2025 figure of about 4,000."}
+{"pair": "3f9cafd07da8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3fbbe57f9793", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3fd56c00f1f0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4026a7f96dc2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "402b2df29908", "relation": "contradicts", "from": "claim:c00_0055_09", "to": "claim:cc16_0026_13", "strength": 0.5, "rationale": "The SBU flew 117 FPVs in Spiderweb by the official account, while Butusov says 116 were launched.", "resolution": "Minor count difference; the official 117 may include a drone that did not take off."}
+{"pair": "405df5ff56b8", "relation": "refines", "from": "claim:cc09_0007_15", "to": "claim:cc09_0027_07", "strength": 0.6, "rationale": "The Challenger 2 destroyed by 6 September 2023 is specified as the first lost in the war, near Robotyne."}
+{"pair": "409103495dcf", "relation": "supports", "from": "claim:cc16_0007_08", "to": "claim:cc16_0008_01", "strength": 0.7, "rationale": "The US officials' estimate of about 10 aircraft destroyed agrees with the floor of about 10 heavy bombers destroyed derived from TWZ and Bronk.", "independent": true}
+{"pair": "40bb319c826d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "40d54a6d4dab", "relation": "duplicates", "from": "claim:cc09_0026_01", "to": "claim:c00_0037_03", "strength": 0.95, "rationale": "Same RUSI figure of at most 55 Ukrainian 155 mm guns on the main axis at 70 rounds a gun a day at peak, extracted twice."}
+{"pair": "40f4ec02b941", "relation": "contradicts", "from": "claim:cc11_0007_16", "to": "claim:cc11_0010_57", "strength": 0.5, "rationale": "A US estimate gives 13,000 Russian killed and wounded at Avdiivka in October–December 2023, while Shtupun implies about 20,000 on the Avdiivka axis in two months.", "resolution": "Ukrainian command claim versus a US intelligence estimate; slightly different periods."}
+{"pair": "4121d3b77765", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "412ea0547b20", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

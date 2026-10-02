@@ -1,0 +1,40 @@
+{"pair": "0004954bae55", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "00763e9b9994", "relation": "contradicts", "from": "claim:c01_0029_46", "to": "claim:cc16_0026_13", "strength": 0.5, "rationale": "SBU says 117 drones were used in Spiderweb while Butusov says 116 were launched.", "resolution": "Minor count difference; one drone may have been used but not launched, or sources count differently."}
+{"pair": "0102b13b1f47", "relation": "supersedes", "from": "claim:cc16_0007_11", "to": "claim:cc16_0011_56", "strength": 0.5, "rationale": "Bronk's later count of at least 6 Tu-95MS and 4 Tu-22M3 updates the early OSINT tally of 5 Tu-95MS and 2 Tu-22M3 confirmed by 18:00 on 1 June."}
+{"pair": "011c13d7d824", "relation": "contradicts", "from": "claim:cc16_0007_12", "to": "claim:cc16_0047_11", "strength": 0.7, "rationale": "BBC Verify's imagery count of 5 aircraft hit at Olenya conflicts with Military Chronicle's claim of only one lost and one damaged there.", "resolution": "Satellite-imagery count versus a pro-Russian blog minimising losses."}
+{"pair": "011e416a5cf0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "014bbb29a9c8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "015c36cc43b3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "0163b5a36e72", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "021844b480d0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "02265aa33c87", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "0231ec84d9e8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "02373d84935a", "relation": "supersedes", "from": "claim:cc14_0027_09", "to": "claim:cc14_0027_04", "strength": 0.6, "rationale": "The 2026 NIS/UK estimate of about 6,000 North Korean casualties updates the January 2025 Western estimate of 4,000."}
+{"pair": "0266f95ae437", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "02bec3b515eb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "02ce73b0ee73", "relation": "duplicates", "from": "claim:cc09_0007_14", "to": "claim:cc09_0027_07", "strength": 0.8, "rationale": "Both claims carry the same Forbes figure of five Leopard 2s destroyed by 6 September 2023 from the same source."}
+{"pair": "03ad8d2c43eb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "03c4003638f8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "03ccef8d1e8d", "relation": "weakens", "from": "claim:cc11_0007_18", "to": "claim:cc11_0007_11", "strength": 0.4, "rationale": "Naalsio's visually confirmed 690 vehicles of all types is well below Tarnavskyi's claimed 364 tanks plus 748 AFVs, though visual counts are a lower bound."}
+{"pair": "03d81294fdb9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "041af42a828f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "04432cd6dd3b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "044c3bd397c4", "relation": "duplicates", "from": "claim:cc09_0016_04", "to": "claim:c06_0026_03", "strength": 0.9, "rationale": "Same Robotyne belt-spacing measurement (0.5–0.6 km main belts, 1.0–1.2 km cross-belts) from the same OSM/Sentinel-2 sample extracted twice."}
+{"pair": "047f3618f871", "relation": "contradicts", "from": "claim:cc18_0004_03", "to": "claim:cc18_0008_03", "strength": 0.5, "rationale": "Ihnat's 28 ballistic missiles at Kyiv exceeds the Air Force's total of 24 Iskander-M/S-400 ballistic missiles for the whole attack.", "resolution": "Ihnat likely counted the 4 Zircon or other aeroballistic missiles as ballistic."}
+{"pair": "05280d5c6887", "relation": "contradicts", "from": "claim:cc11_0016_13", "to": "claim:cc11_0045_20", "strength": 0.5, "rationale": "The Avdiivka pipe is described as 1.3–1.4 m high, while Russian channels claim troops used a 0.5 m pipe.", "resolution": "Possibly different pipes, or the milblogger figure is inaccurate."}
+{"pair": "05bdb990cb26", "relation": "supports", "from": "claim:cc15_0022_19", "to": "claim:c04_0030_37", "strength": 0.7, "rationale": "FPRI's figure of about 5,000 Rubikon personnel by spring 2026 corroborates the ~5,000 size given in the tactic description.", "independent": false}
+{"pair": "05e4d43f18d4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "05ec520d24b3", "relation": "supersedes", "from": "claim:cc14_0027_10", "to": "claim:cc14_0027_04", "strength": 0.5, "rationale": "HUR's June 2026 figure of more than 7,000 North Korean casualties is a later count than the January 2025 Western estimate of 4,000."}
+{"pair": "063d54dcfd1c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "069172a5d02a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "0698897e5719", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "06d5162bfd1d", "relation": "weakens", "from": "claim:cc16_0007_11", "to": "claim:cc16_0007_04", "strength": 0.4, "rationale": "Bronk's count of about 10 bombers destroyed is below Kovalenko's claim of at least 13 aircraft destroyed."}
+{"pair": "071a334bab32", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "071a997914a4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "078545d4b821", "relation": "supersedes", "from": "claim:cc18_0010_13", "to": "claim:cc18_0013_59", "strength": 0.8, "rationale": "The interim toll of 27 killed in Kyiv on 2 July 2026 updates the 08:00 report of 11 dead."}
+{"pair": "0786175d4706", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "07c97761a41d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "081ec25b648b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "083c21b2d83b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "0844e3080b76", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "087c0ffab2e6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

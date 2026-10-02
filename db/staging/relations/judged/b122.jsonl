@@ -1,0 +1,40 @@
+{"pair": "b27bf4c42088", "relation": "duplicates", "from": "claim:cc15_0007_83", "to": "claim:cc15_0005_10", "strength": 0.85, "rationale": "Same ~1 km Myrnohrad corridor from the same source."}
+{"pair": "b36087f9a4d1", "relation": "duplicates", "from": "claim:cc11_0010_100", "to": "claim:c03_0018_07", "strength": 0.9, "rationale": "Same 60 KABs on Avdiivka on 17 Feb 2024, same source."}
+{"pair": "b361bdf3fe40", "relation": "supersedes", "from": "claim:cc14_0027_10", "to": "claim:cc14_0012_20", "strength": 0.4, "rationale": "HUR's June 2026 7,000+ is a later Ukrainian cumulative figure than April 2025's 4,500+."}
+{"pair": "b38a6134cb7a", "relation": "none", "rationale": "Front-wide DeepState gains for 1-27 Sept and MWI's Vivaldi total cover different areas and periods."}
+{"pair": "b39bf720d68f", "relation": "none", "rationale": "Residents of the Pokrovsk community in Aug 2024 and the city's pre-war population are different measures."}
+{"pair": "b3dc895edddb", "relation": "duplicates", "from": "claim:c00_0062_05", "to": "claim:cc19_0009_86", "strength": 0.9, "rationale": "Same season-2 announcement of 40 km2 more and three villages."}
+{"pair": "b50e52548905", "relation": "none", "rationale": "Bakhmut and Krynky losses are different scopes."}
+{"pair": "b54f7a150f34", "relation": "duplicates", "from": "claim:cv02_0014_02", "to": "claim:cc11_0024_06", "strength": 0.95, "rationale": "Same Forbes 40,000 vs 10,000 at Avdiivka."}
+{"pair": "b58218e301fd", "relation": "supports", "from": "claim:cc19_0006_04", "to": "claim:c00_0074_54", "strength": 0.4, "rationale": "ISW's 'at least 125 km2', with its undercount caveat, is consistent with 200-240 km2.", "independent": true}
+{"pair": "b5b30eea7f73", "relation": "duplicates", "from": "claim:cc14_0014_130", "to": "claim:cc14_0008_02", "strength": 0.95, "rationale": "Same Syrskyi ~90 km2 still held on 22 June 2025."}
+{"pair": "b5c04eb1f62b", "relation": "supports", "from": "claim:cc16_0005_03", "to": "claim:c01_0022_15", "strength": 0.8, "rationale": "BBC's 117 drones matches Kyiv Independent's 117 FPVs; both relay the SBU.", "independent": false}
+{"pair": "b6507333259e", "relation": "none", "rationale": "Aircraft seen at Olenya and the national bomber inventory are different quantities."}
+{"pair": "b6b4a252333b", "relation": "duplicates", "from": "claim:cc07_0007_24", "to": "claim:c00_0032_09", "strength": 0.95, "rationale": "Same RUSI ~10,000 Ukrainian killed or severely wounded at Bakhmut."}
+{"pair": "b6febf2436dd", "relation": "duplicates", "from": "claim:cv02_0013_04", "to": "claim:cc09_0027_08", "strength": 0.85, "rationale": "Same ~dozen Leopard 2A6s left in the 47th Brigade, same Forbes source."}
+{"pair": "b72c4e27a572", "relation": "supports", "from": "claim:cc16_0006_01", "to": "claim:c01_0022_15", "strength": 0.8, "rationale": "BBC's 117 FPVs matches the 117 launched from trucks; both relay the SBU.", "independent": false}
+{"pair": "b79f2c702742", "relation": "duplicates", "from": "claim:cc07_0041_05", "to": "claim:c00_0033_03", "strength": 0.95, "rationale": "Same RUSI 5:1 artillery advantage at Bakhmut."}
+{"pair": "b7fba318f67a", "relation": "duplicates", "from": "claim:cc07_0041_04", "to": "claim:c03_0014_01", "strength": 0.9, "rationale": "Same RUSI 12,000-38,000 rounds/day in Q1 2023."}
+{"pair": "b89a57090f3d", "relation": "duplicates", "from": "claim:cc07_0007_18", "to": "claim:c04_0033_07", "strength": 0.95, "rationale": "Same RUSI 19,547 Wagner dead at Bakhmut."}
+{"pair": "b8aaa8252454", "relation": "duplicates", "from": "claim:cc18_0037_04", "to": "claim:cc18_0013_67", "strength": 0.85, "rationale": "Same Zelensky 140-for-70 Patriot arithmetic, same source."}
+{"pair": "b91737454ea4", "relation": "duplicates", "from": "claim:cc15_0022_19", "to": "claim:c05_0023_03", "strength": 0.95, "rationale": "Same FPRI Rubikon strength figures."}
+{"pair": "b9b54fd84864", "relation": "none", "rationale": "BBC's named-dead floor of 6,641 is compatible with Morozov's 16,000 estimate; they measure differently."}
+{"pair": "b9ec76f95cac", "relation": "duplicates", "from": "claim:cc07_0007_24", "to": "claim:c04_0033_08", "strength": 0.95, "rationale": "Same RUSI ~10,000 Ukrainian killed or severely wounded at Bakhmut."}
+{"pair": "ba8b9af6a27c", "relation": "supports", "from": "claim:cc16_0011_59", "to": "claim:c00_0055_09", "strength": 0.8, "rationale": "Zelensky's 117 drones matches the SBU's 117 FPVs.", "independent": false}
+{"pair": "bb84e0a7e7fc", "relation": "supports", "from": "claim:c04_0027_81", "to": "claim:cc14_0012_31", "strength": 0.9, "rationale": "HUR's 7,000+ is the upper end of the contested range.", "independent": false}
+{"pair": "bba7f49db1e4", "relation": "supports", "from": "claim:cc16_0011_37", "to": "claim:cc16_0047_29", "strength": 0.7, "rationale": "The driver's death near Seryshevo (Amur) corroborates the fifth driver dying in the Amur fire.", "independent": true}
+{"pair": "bd25f91bc84f", "relation": "supports", "from": "claim:c03_0010_04", "to": "claim:cc07_0041_01", "strength": 0.9, "rationale": "Same RUSI finding that Ukraine fired under ~6,000 rounds a day in summer 2022.", "independent": false}
+{"pair": "bd6c0d689112", "relation": "duplicates", "from": "claim:cc14_0031_06", "to": "claim:cc14_0020_04", "strength": 0.9, "rationale": "Same ~42 million m3/day through Sudzha in Aug 2024."}
+{"pair": "bd90b0fef00c", "relation": "none", "rationale": "A single April 2025 claim vs a contested range across sources; no clear relation."}
+{"pair": "bef4f115b8c3", "relation": "duplicates", "from": "claim:cc15_0022_06", "to": "claim:c05_0031_24", "strength": 0.85, "rationale": "Same 7th Air Assault Corps 20-25 km kill zone, same source."}
+{"pair": "bf4129eeec7c", "relation": "supports", "from": "claim:cc11_0013_03", "to": "claim:cc11_0013_01", "strength": 0.6, "rationale": "'Less than 15 km wide' matches the 12-15 km-wide salient.", "independent": false}
+{"pair": "bf7a87d05787", "relation": "duplicates", "from": "claim:cc14_0012_12", "to": "claim:cc14_0008_02", "strength": 0.95, "rationale": "Same Syrskyi ~90 km2 still held on 22 June 2025."}
+{"pair": "bfcbabd6d6a4", "relation": "duplicates", "from": "claim:cc15_0024_14", "to": "claim:cc15_0022_44", "strength": 0.9, "rationale": "Same loss of 11 vehicles near Razine on 2 Dec 2025, same source."}
+{"pair": "c0125e9bf05c", "relation": "duplicates", "from": "claim:cc15_0007_95", "to": "claim:cc15_0005_12", "strength": 0.95, "rationale": "Same ISW 49% of Myrnohrad on 28 Dec 2025."}
+{"pair": "c0179bc7987b", "relation": "duplicates", "from": "claim:cc15_0022_06", "to": "claim:c01_0029_29", "strength": 0.9, "rationale": "Same 20-25 km kill zone on the Pokrovsk axis, same source."}
+{"pair": "c076dc1d916e", "relation": "duplicates", "from": "claim:cc07_0007_18", "to": "claim:c00_0033_02", "strength": 0.95, "rationale": "Same RUSI 19,547 Wagner dead at Bakhmut."}
+{"pair": "c0d1aefb1377", "relation": "supports", "from": "claim:cc07_0007_19", "to": "claim:cc07_0007_21", "strength": 0.4, "rationale": "Prigozhin's 20,000+ Wagner dead is consistent with ~21,000 total Russian dead at Bakhmut.", "independent": true}
+{"pair": "c19da22c8cc6", "relation": "none", "rationale": "Different claimants and dates (General Staff April 2025 vs NIS/UK 2026)."}
+{"pair": "c1e4677d5803", "relation": "none", "rationale": "Olenivka POW deaths and Bakhmut losses are unrelated."}
+{"pair": "c42c79743642", "relation": "duplicates", "from": "claim:cc15_0005_43", "to": "claim:cc15_0007_61", "strength": 0.9, "rationale": "Same Ukrainska Pravda report of at least 250 Russians in Pokrovsk."}
+{"pair": "c4430bf5ea89", "relation": "none", "rationale": "Bakhmut and Krynky losses are different scopes."}

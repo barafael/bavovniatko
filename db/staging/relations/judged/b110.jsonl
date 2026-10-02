@@ -1,0 +1,40 @@
+{"pair": "d5261e47ac38", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d5c173c2e0fc", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d5d71b822308", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d5f9206ad320", "relation": "contradicts", "from": "claim:cc14_0007_03", "to": "claim:cc14_0014_101", "strength": 0.4, "rationale": "Observers saw about a hundred Russian troops emerge from the Sudzha pipeline on 8 March 2025, while Gerasimov claimed over 600 took part.", "resolution": "Gerasimov's figure may count all participants and follow-on forces, and is a self-serving Russian claim; the hundred is those seen exiting."}
+{"pair": "d61e355c7981", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d6b24bd1b979", "relation": "supports", "from": "claim:cc16_0040_08", "to": "claim:cc16_0007_12", "strength": 0.6, "rationale": "Four Tu-95MS and a transport burning at Olenya matches BBC Verify's count of 5 aircraft hit at Olenya.", "independent": true}
+{"pair": "d6d00bb4307e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d70f7de6d9c9", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d71ec07e1404", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d733bffd2b97", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d78544418ee4", "relation": "supersedes", "from": "claim:cc18_0010_13", "to": "claim:cc18_0013_55", "strength": 0.7, "rationale": "The ISW/BBC interim toll of 27 killed and 91 injured in Kyiv updates Tkachenko's early-morning report of two dead and 16 injured for the same strike."}
+{"pair": "d795fbb3054c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d7ee4e96005c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d7f668e75970", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d878799ecb33", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d88cc863141f", "relation": "supports", "from": "claim:cc01_0022_02", "to": "claim:cc01_0022_01", "strength": 0.8, "rationale": "BAR's 2-4 °C with light rain and matching sun times corroborates the ERA5 weather for 24 Feb 2022 at Hostomel.", "independent": true}
+{"pair": "d8a5211d1575", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d8b6be006585", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d8f1a421cabf", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d8f365daeeca", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d92c306aab53", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d9502a6fb761", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d9679f50519a", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d973fba229d6", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d9d73fc163ca", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d9f8c4b6a17c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "da7a4b88e2ab", "relation": "duplicates", "from": "claim:cc09_0007_16", "to": "claim:cc09_0032_01", "strength": 0.9, "rationale": "Same WarSpotting tally of about 156 Russian losses on the Orikhiv axis, June-November 2023, with the same breakdown, extracted twice."}
+{"pair": "da9e26f9eb56", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dae9ef1ebe21", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "db897ef234a2", "relation": "contradicts", "from": "claim:cc11_0007_14", "to": "claim:cc11_0010_67", "strength": 0.5, "rationale": "Murz put lost Russian equipment at Avdiivka at 300 units, while Naalsio had visually counted 574 Russian vehicles lost by 27 January 2024.", "resolution": "Murz's is an informal milblogger figure, likely of irrecoverable armour only; Naalsio counts every visually confirmed vehicle loss, damaged ones included."}
+{"pair": "dbb39ab41d36", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dbc34fc01960", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dbe0d2bf556d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dbf39948f190", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dbfa78da8bc2", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dbfeb51afab9", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dc1880b5efab", "relation": "supports", "from": "claim:cc16_0006_02", "to": "claim:c00_0055_09", "strength": 0.8, "rationale": "Butusov's 116 drones airborne closely matches the 117 FPVs flown in Spiderweb.", "independent": true}
+{"pair": "dc39a1a8b03b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dc3e6a2e6296", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dc46abeeb645", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}

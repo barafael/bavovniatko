@@ -1,0 +1,40 @@
+{"pair": "867f155c2984", "relation": "none", "rationale": "Different claimants and dates (Ukraine April 2025 vs NIS/UK 2026); not the same series."}
+{"pair": "86a5051edb02", "relation": "duplicates", "from": "claim:cc14_0014_125", "to": "claim:cc14_0012_10", "strength": 0.95, "rationale": "Same DeepState ~30 km2 still held on 21 April 2025."}
+{"pair": "86b3e4f2834e", "relation": "duplicates", "from": "claim:cv02_0014_02", "to": "claim:cc11_0029_01", "strength": 0.9, "rationale": "Same Forbes ~10,000 Ukrainian defenders at Avdiivka."}
+{"pair": "871f3b8398a9", "relation": "none", "rationale": "Spiderweb drivers and a Kyiv strike death are unrelated."}
+{"pair": "874da432ee2d", "relation": "none", "rationale": "The Stoianka bridge death and Spiderweb drivers are unrelated."}
+{"pair": "87658d5092c6", "relation": "duplicates", "from": "claim:cc14_0014_130", "to": "claim:cc14_0012_12", "strength": 0.9, "rationale": "Same Syrskyi ~90 km2 still held on 22 June 2025."}
+{"pair": "87b879029ba4", "relation": "duplicates", "from": "claim:cc15_0022_06", "to": "claim:c05_0025_51", "strength": 0.85, "rationale": "Same 7th Air Assault Corps 20-25 km kill zone, same source."}
+{"pair": "87c73d89bf3b", "relation": "supports", "from": "claim:cc14_0024_18", "to": "claim:cc14_0024_17", "strength": 0.6, "rationale": "Al Jazeera's 11,000 falls within Massicot's 10,000-12,000.", "independent": true}
+{"pair": "87fb52e70e49", "relation": "none", "rationale": "Different dates and claimants; RUSI's ~70,000 is a later, broader estimate."}
+{"pair": "886c975ad0d7", "relation": "none", "rationale": "Avdiivka and Pokrovsk force ratios are different places and times."}
+{"pair": "88d30e7aeeaf", "relation": "duplicates", "from": "claim:cc19_0009_74", "to": "claim:c00_0062_03", "strength": 0.85, "rationale": "Same 3rd Army Corps season-1 75 + 10 km2 claim."}
+{"pair": "8957ae2ff5da", "relation": "duplicates", "from": "claim:cc11_0024_03", "to": "claim:cc11_0010_95", "strength": 0.9, "rationale": "Same 3rd Assault Brigade ~15,000 Russians in its sector."}
+{"pair": "8a17290b86b2", "relation": "duplicates", "from": "claim:cc14_0027_09", "to": "claim:c04_0027_82", "strength": 0.95, "rationale": "Same NIS/UK ~6,000 North Korean casualties."}
+{"pair": "8a38456e6794", "relation": "supports", "from": "claim:cc16_0006_01", "to": "claim:c00_0055_09", "strength": 0.8, "rationale": "BBC's 117 FPVs matches the 117 FPVs from trucks.", "independent": false}
+{"pair": "8bc9f60be592", "relation": "supports", "from": "claim:cc19_0006_08", "to": "claim:c05_0031_51", "strength": 0.6, "rationale": "Muzyka's ~240 km2 is the top of the mappers' 200-240 km2 cited against the corps claim.", "independent": false}
+{"pair": "8d638c851106", "relation": "duplicates", "from": "claim:cc11_0010_108", "to": "claim:cc11_0007_24", "strength": 0.9, "rationale": "Same NYT 850-1,000 captured or unaccounted for at Avdiivka."}
+{"pair": "8e3a225a0831", "relation": "refines", "from": "claim:cc14_0031_23", "to": "claim:cc14_0014_100", "strength": 0.7, "rationale": "Adds the 15 km crawl and industrial-zone exit to the same ~100-troop pipeline emergence."}
+{"pair": "8e3a47d214e1", "relation": "duplicates", "from": "claim:cc15_0022_67", "to": "claim:cc15_0016_08", "strength": 0.95, "rationale": "Same >300 Russians into Pokrovsk in fog, same source."}
+{"pair": "8f17f1fda031", "relation": "duplicates", "from": "claim:cc14_0031_10", "to": "claim:cc14_0014_036", "strength": 0.85, "rationale": "Same 100+ Russian surrender in a day on 14 Aug 2024, same source."}
+{"pair": "8f34949217ad", "relation": "duplicates", "from": "claim:cc07_0048_06", "to": "claim:cc07_0020_02", "strength": 0.9, "rationale": "Same ERA5 weather and 16:34 sunset on 20 Dec 2022."}
+{"pair": "8f5987d8652a", "relation": "supports", "from": "claim:cc15_0022_32", "to": "claim:cc15_0004_04", "strength": 0.7, "rationale": "Al Jazeera's groups of three corroborate infiltration in groups of two to three.", "independent": true}
+{"pair": "8f82ad0eab54", "relation": "supports", "from": "claim:cc15_0005_34", "to": "claim:c04_0033_58", "strength": 0.9, "rationale": "Both relay ISW's 53 casualties per km2 for autumn 2024.", "independent": false}
+{"pair": "8ff5b13f30ed", "relation": "supports", "from": "claim:cc11_0016_13", "to": "claim:cc11_0010_60", "strength": 0.6, "rationale": "Same source's description of the empty 1.3-1.4 m pipe underpins its use by assault groups.", "independent": false}
+{"pair": "90080c097c19", "relation": "none", "rationale": "Northern front 2022 and Bakhmut are different scopes."}
+{"pair": "90a403e06063", "relation": "supports", "from": "claim:cc16_0011_48", "to": "claim:cc16_0007_01", "strength": 0.85, "rationale": "The SBU source's 41 bombers hit corroborates the official 41-aircraft claim.", "independent": false}
+{"pair": "92640aec4ac7", "relation": "duplicates", "from": "claim:cc01_0011_105", "to": "claim:cc01_0009_19", "strength": 0.9, "rationale": "Same 2 April 2022 liberation of Kyiv region with 30+ settlements."}
+{"pair": "938168c0c498", "relation": "supports", "from": "claim:cc19_0006_04", "to": "claim:c00_0062_08", "strength": 0.4, "rationale": "ISW's 'at least 125 km2', with its own undercount caveat, is consistent with >200 km2.", "independent": true}
+{"pair": "9381cdb6397e", "relation": "duplicates", "from": "claim:cc14_0014_019", "to": "claim:cc14_0010_02", "strength": 0.95, "rationale": "Same ISW ~10 km confirmed advance along the 38K-030."}
+{"pair": "951f52e59b88", "relation": "supports", "from": "claim:cc19_0006_04", "to": "claim:c05_0031_51", "strength": 0.6, "rationale": "ISW's 'at least 125 km2' matches the corps' 125+ km2.", "independent": true}
+{"pair": "95e9c0367533", "relation": "none", "rationale": "Kyiv damage sites reported by the city and the Air Force's hit locations are different counts."}
+{"pair": "95f0678143b0", "relation": "supports", "from": "claim:cc11_0007_12", "to": "claim:cc11_0007_11", "strength": 0.7, "rationale": "'Almost 50,000' agrees with Tarnavskyi's over 47,000.", "independent": false}
+{"pair": "96385a04d700", "relation": "supports", "from": "claim:cc18_0006_10", "to": "claim:cc18_0008_04", "strength": 0.6, "rationale": "Both give 4 ballistic missiles stopped on 1-2 July 2026 from Air Force figures.", "independent": false}
+{"pair": "965743fbd36b", "relation": "duplicates", "from": "claim:cc09_0035_21", "to": "claim:cc09_0040_15", "strength": 0.9, "rationale": "Same eighth Ka-52 downed by the 47th Brigade's MANPADS on 17 Aug 2023."}
+{"pair": "9678f9efcf31", "relation": "duplicates", "from": "claim:cc11_0015_02", "to": "claim:cc11_0005_01", "strength": 0.9, "rationale": "Same ~32,000 pre-war population of Avdiivka."}
+{"pair": "96dc6c09f2a9", "relation": "none", "rationale": "Olenivka POW deaths and Bakhmut losses are unrelated."}
+{"pair": "96e44c68fbe6", "relation": "none", "rationale": "Different claimants and dates (NIS/UK 2026 vs Ukraine April 2025)."}
+{"pair": "970dc7431fdf", "relation": "duplicates", "from": "claim:cc18_0026_22", "to": "claim:cc18_0013_64", "strength": 0.9, "rationale": "The 300 km/h interceptor claim is contained in Ihnat's fuller statement."}
+{"pair": "9726f406fe0a", "relation": "none", "rationale": "National Russian dead and one brigade's named dead are different scopes."}
+{"pair": "9799f713aab3", "relation": "supports", "from": "claim:cc19_0006_09", "to": "claim:c00_0062_08", "strength": 0.7, "rationale": "MWI's up to 250 km2 agrees with analysts' 200-240 km2.", "independent": true}
+{"pair": "979cf15bd04a", "relation": "none", "rationale": "DeepState staff and Kyiv rescuers are unrelated."}

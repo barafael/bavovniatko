@@ -1,0 +1,40 @@
+{"pair": "ef3cea976c04", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ef5b08fff4a8", "relation": "supports", "from": "claim:cc19_0009_75", "to": "claim:cc19_0023_14", "strength": 0.7, "rationale": "The 3rd Corps video reports the 144th Division support moved back to Voronezh Oblast.", "independent": false}
+{"pair": "f0429241e66c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f0578fbd9308", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f0a68d2aba71", "relation": "supports", "from": "claim:cc09_0040_10", "to": "claim:cc09_0006_20", "strength": 0.7, "rationale": "Popov's 12 July memo as the fired commander corroborates his dismissal on 11–12 July.", "independent": false}
+{"pair": "f0cce1a5df05", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f11f6111fae1", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f18fe229707c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f1ba2723956a", "relation": "supports", "from": "claim:cc15_0018_01", "to": "claim:cc15_0007_27", "strength": 0.7, "rationale": "Both say Mordvichev left the Center Group in May 2025.", "independent": false}
+{"pair": "f1cc12da9382", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f1d08ad1f384", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f2250de8b3eb", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f226bdad9be7", "relation": "supports", "from": "claim:cc15_0024_03", "to": "claim:cc15_0020_03", "strength": 0.5, "rationale": "The 155th and 68th plugging the Zvirove gap fits their role as the Pokrovsk garrison.", "independent": false}
+{"pair": "f2586ba4cb2c", "relation": "supports", "from": "claim:cc12_0023_31", "to": "claim:cc01_0030_15", "strength": 0.5, "rationale": "Ukrainian pilots flying extremely low over Kyiv matches the low-level MiG-29 sorties in the set piece.", "independent": false}
+{"pair": "f258cd9bad10", "relation": "supports", "from": "claim:cc01_0028_19", "to": "claim:cc01_0014_18", "strength": 0.6, "rationale": "The Furia-cued fire on the Rakivka pontoon confirms Rakivka as a Russian pontoon site on 6 March.", "independent": false}
+{"pair": "f2a86aa70a3e", "relation": "refines", "from": "claim:cc09_0010_29", "to": "claim:cc09_0006_08", "strength": 0.8, "rationale": "B dates Zaluzhnyi's halt of frontal mechanised assaults to 11–12 June 2023."}
+{"pair": "f2fe6c2b68c9", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f3c73e3b090f", "relation": "supports", "from": "claim:c07_0012_05", "to": "claim:cc19_0009_97", "strength": 0.8, "rationale": "A quotes the 27 September 2026 DeepState changelog on Ridkodub, Nove and Katerynivka.", "independent": false}
+{"pair": "f3f67ddcc243", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f4485bc98581", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f46fbd9492a6", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f49fd38994e0", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f4c94e9d59ea", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f4e84e132477", "relation": "supports", "from": "claim:cc12_0010_08", "to": "claim:cc01_0030_15", "strength": 0.6, "rationale": "Low skirmishing against high Russian CAPs in the first days matches the low-level sorties under CAPs.", "independent": false}
+{"pair": "f4f4c10768a5", "relation": "supports", "from": "claim:cc17_0022_12", "to": "claim:cc14_0025_19", "strength": 0.6, "rationale": "The units named in the Sudzha pipe operation are a subset of those named in Kursk Oblast in March 2025.", "independent": false}
+{"pair": "f500eaae33dd", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f50d0ef64288", "relation": "supports", "from": "claim:cc09_0010_89", "to": "claim:cc09_0006_15", "strength": 0.7, "rationale": "WSJ reporting the main line near Verbove breached on 20–21 September supports ISW's 23 September judgement.", "independent": true}
+{"pair": "f53830262360", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f5500ab72e83", "relation": "refines", "from": "claim:cc09_0043_12", "to": "claim:cc09_0006_08", "strength": 0.8, "rationale": "B dates the halt to 11–12 June and adds the switch to infantry-led attrition."}
+{"pair": "f569fc8f5e35", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f5710907c1e3", "relation": "duplicates", "from": "claim:cc19_0025_15", "to": "claim:cc19_0005_02", "strength": 0.8, "rationale": "Same ISW assessment of Russians holding Ivanivka and Zarichne while withdrawing across the Zherebets."}
+{"pair": "f573c6803da8", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f61570954a95", "relation": "supports", "from": "claim:cc01_0009_03", "to": "claim:cc01_0006_05", "strength": 0.5, "rationale": "The Russian footprint at Bucha, Irpin and Moshchun without crossing east of the Irpin matches the assessed attack routes.", "independent": false}
+{"pair": "f6375f0fd249", "relation": "supports", "from": "claim:cc09_0010_53", "to": "claim:c03_0016_08", "strength": 0.7, "rationale": "The UK MoD report of Ka-52Ms with 15 km LMURs in use corroborates the LMUR's range.", "independent": false}
+{"pair": "f643ced50c10", "relation": "supports", "from": "claim:cc15_0007_71", "to": "claim:cc15_0007_70", "strength": 0.5, "rationale": "Russia's claim to have killed the landing party confirms that a HUR landing in Pokrovsk took place.", "independent": true}
+{"pair": "f665498dbb83", "relation": "supports", "from": "claim:cc14_0029_14", "to": "claim:cc14_0010_10", "strength": 0.7, "rationale": "FIRMS thermal data and imagery confirmed the Seim pontoon strikes.", "independent": true}
+{"pair": "f6d0c8d9c995", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f74473e0a1a5", "relation": "supports", "from": "claim:cc16_0007_12", "to": "claim:cc16_0008_01", "strength": 0.6, "rationale": "BBC Verify's 12 damaged or destroyed at Olenya and Belaya fits the floor of about 10 heavy bombers plus an An-12.", "independent": true}
+{"pair": "f7954c2baeb1", "relation": "supports", "from": "claim:cc14_0031_21", "to": "claim:cc14_0006_06", "strength": 0.7, "rationale": "Drones over the highway around the clock in Feb–Mar 2025 match the FPV fire on the single supply road.", "independent": false}
+{"pair": "f7dd55732e7c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}

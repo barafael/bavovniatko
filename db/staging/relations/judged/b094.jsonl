@@ -1,0 +1,40 @@
+{"pair": "2e49912a436e", "relation": "supersedes", "from": "claim:cc18_0013_46", "to": "claim:cc18_0013_45", "strength": 0.5, "rationale": "Tkachenko's report that the injured rose to 11 updates Klitschko's report of six injured, both at about 03:47."}
+{"pair": "2e6622a14e0b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2ebf8c263ba9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2f182a22cfac", "relation": "supports", "from": "claim:cc07_0007_17", "to": "claim:cc07_0007_21", "strength": 0.5, "rationale": "The 19,547 Wagner dead in leaked records is consistent with the estimate of about 21,000 Russian dead at Bakhmut and Soledar (range 19,100–25,250).", "independent": false}
+{"pair": "2f56b3643a78", "relation": "duplicates", "from": "claim:cc16_0047_21", "to": "claim:cc16_0011_85", "strength": 0.8, "rationale": "Both report Defense Express's count of only seven bombers (5 Tu-95MS, 2 Tu-160) in the 5–6 June 2025 retaliation barrage."}
+{"pair": "2f8842b8baee", "relation": "contradicts", "from": "claim:c00_0074_21", "to": "claim:cc11_0024_04", "strength": 0.4, "rationale": "Ukrainian troops reported a 5:1 shell ratio at Avdiivka in early 2024, while Foka put artillery odds at 1:10 in the final weeks.", "resolution": "Anecdotal ratios from different units and weeks; 8–9:1 at worst approaches Foka's figure."}
+{"pair": "300030e726f1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "30a4389bf7f7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "30d8077d4598", "relation": "supersedes", "from": "claim:cc07_0007_18", "to": "claim:cc07_0010_21", "strength": 0.5, "rationale": "The final count of 19,547 Wagner dead updates the cumulative named count of 3,605 at 29 November 2022."}
+{"pair": "3125a709e4ea", "relation": "supports", "from": "claim:cc19_0006_02", "to": "claim:c05_0025_33", "strength": 0.7, "rationale": "The corps' 125 km² for seasons 1–2, of which 50 km² had been occupied, matches 75 + 10 + 40 km² claimed per season.", "independent": false}
+{"pair": "31a9064608ba", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "31a9ba60f24d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "31b88548f53e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "31c7561db25c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "31eab4f5deb3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3208357b1ab0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "328b54cbdbff", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "32b5b0854846", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "32c2c80e9195", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "32dd9432a031", "relation": "supports", "from": "claim:cc16_0040_13", "to": "claim:cc16_0007_06", "strength": 0.4, "rationale": "Footage of drones hitting two A-50 radar domes at Ivanovo supports the NATO official's count of at least one A-50 damaged.", "independent": true}
+{"pair": "339b73f02717", "relation": "contradicts", "from": "claim:cc14_0014_129", "to": "claim:cc14_0027_08", "strength": 0.5, "rationale": "The NIS put North Korean dead at about 600 in April 2025, while a BBC analysis counted 2,304 killed.", "resolution": "Different methods and probably different dates; the NIS figure is an early official estimate."}
+{"pair": "33cb14f20f5e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3465feb26908", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "34c25cc3f862", "relation": "contradicts", "from": "claim:cc01_0025_03", "to": "claim:cc01_0025_24", "strength": 0.5, "rationale": "MWI puts the whole Northeastern Front (41st and 2nd CAA) at about 20,000, while Wikipedia gives the 41st CAA alone about 30,000 at Chernihiv.", "resolution": "Different counting; the Wikipedia figure likely includes attached units or is inflated."}
+{"pair": "34eb4aeb7fd9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3587b7cde632", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "358b5653512e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "35ea2f2fb985", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "35eb5216c6db", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "35fcc71f29a0", "relation": "supersedes", "from": "claim:cc18_0013_59", "to": "claim:cc18_0013_57", "strength": 0.8, "rationale": "Klymenko's 08:00 report of 11 dead updates the 07:00–07:30 toll of nine killed in Kyiv."}
+{"pair": "364a04d3f3be", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3661f5664be8", "relation": "weakens", "from": "claim:cc07_0007_25", "to": "claim:cc07_0058_18", "strength": 0.6, "rationale": "UALosses names only 4,557–5,501 Ukrainian dead at Bakhmut, which casts strong doubt on Prigozhin's claim of 50,000."}
+{"pair": "36def718b886", "relation": "contradicts", "from": "claim:c06_0025_12", "to": "claim:cc09_0016_04", "strength": 0.6, "rationale": "In the same Robotyne sample box, one computation gives a main-belt spacing of about 1,000–1,154 m while the other gives 0.5–0.6 km.", "resolution": "The two computations probably label main and cross belts differently; 1.0–1.2 km matches the other's cross-belt spacing."}
+{"pair": "36f1a4247427", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "370bc1d3e267", "relation": "supports", "from": "claim:cc18_0010_07", "to": "claim:cc18_0032_08", "strength": 0.6, "rationale": "The derived drone outcome of about 96% downed is consistent with Ihnat's statement that the drone interception rate stayed above 90%.", "independent": false}
+{"pair": "37a6585da471", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "37b04244cf65", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "37cb40fc7fb7", "relation": "weakens", "from": "claim:cc16_0047_24", "to": "claim:cc16_0011_75", "strength": 0.4, "rationale": "Western officials counted only one A-50 among the aircraft hit, which casts doubt on the footage of two A-50 radomes hit causing damage to both."}
+{"pair": "37f26d8a1884", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "3896028b356f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

@@ -11,7 +11,7 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
   Russian capabilities are described only as Ukrainian or Western sources report them. There is no
   Russian state media.
 - **Generated from the knowledge base.** Since 2026-09-30 the SurrealDB claim graph in [`db/`](../db/README.md)
-  is the source of truth: 7,100 atomic claims with their sources, claimants, eras, places and observations, and
+  is the source of truth: 10,780 atomic claims with their sources, claimants, eras, places and observations, and
   typed relations between them. The topic files, the glossary, the source indexes and
   [contradictions.md](contradictions.md) are regenerated from it by `db/tools/render.py`. Edit the data, not
   the files. This README is still written by hand.
@@ -46,16 +46,25 @@ Claims are cited inline as `[src:<id>]`, and each id resolves in `sources.yaml` 
 
 | dossier | chapter | window |
 |---|---|---|
+| [c01](chapters/c01-march-on-kyiv.md) | The march on Kyiv: Hostomel, the convoy and the Irpin line | 24 Feb – 6 Apr 2022 |
 | [c02](chapters/c02-snake-island-moskva.md) | Snake Island → the sinking of the Moskva | 24 Feb – 7 Jul 2022 |
 | [c03](chapters/c03-azovstal.md) | Mariupol and the Azovstal defence, with the helicopter air bridge | Feb – 20 May 2022 |
 | [c04](chapters/c04-kherson-antonivskyi.md) | Kherson and the HIMARS campaign against the Dnipro crossings | Jul – 11 Nov 2022 |
 | [c05](chapters/c05-kerch-bridge.md) | The Kerch bridge: truck bomb, sea drones, underwater charges | Oct 2022 – 2026 |
 | [c06](chapters/c06-kharkiv-offensive.md) | The Kharkiv counteroffensive | 29 Aug – early Oct 2022 |
+| [c07](chapters/c07-bakhmut.md) | The defence of Bakhmut, with Soledar | 1 Aug 2022 – 20 May 2023 |
 | [c08](chapters/c08-vuhledar.md) | Vuhledar: Russian mechanised assaults into minefields | Nov 2022 – Mar 2023 |
+| [c09](chapters/c09-robotyne.md) | Robotyne: the 2023 counteroffensive on the Orikhiv axis | 4 Jun – 30 Nov 2023 |
 | [c10](chapters/c10-krynky.md) | The Krynky bridgehead | Oct 2023 – Jul 2024 |
+| [c11](chapters/c11-avdiivka.md) | Avdiivka: the coke plant, the terrikon and the narrowing neck | 10 Oct 2023 – 17 Feb 2024 |
 | [c12](chapters/c12-a50-hunt.md) | Hunting the A-50 | Jan – Feb 2024 |
 | [c13](chapters/c13-black-sea-drone-war.md) | The Black Sea sea-drone war | Oct 2022 – May 2025 |
+| [c14](chapters/c14-kursk.md) | The Kursk incursion and the North Korean defence | 6 Aug 2024 – Apr 2025 |
+| [c15](chapters/c15-pokrovsk-myrnohrad.md) | The battle for Pokrovsk and Myrnohrad, with the Dobropillia wedge | Jul 2024 – Feb 2026 |
+| [c16](chapters/c16-spiderweb.md) | Operation Spiderweb: the trucks, the cabins and the bomber bases | Nov 2023 – 1 Jun 2025 |
 | [c17](chapters/c17-kupiansk-pipeline.md) | The Kupiansk gas-pipeline infiltration | 2025 – early 2026 |
+| [c18](chapters/c18-night-over-kyiv.md) | One night over Kyiv: the combined strike of 1–2 July 2026 | 1–2 Jul 2026 |
+| [c19](chapters/c19-vivaldi.md) | Operation Vivaldi: the Lyman salient | mid-Apr – 30 Sep 2026 |
 | [v01](chapters/v01-brovary-ambush.md) | Vignette: the Brovary ambush | 9–10 Mar 2022 |
 | [v02](chapters/v02-stepove-bradley.md) | Vignette: Bradley vs T-90M near Stepove | 11–12 Jan 2024 |
 

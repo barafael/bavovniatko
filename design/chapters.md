@@ -28,25 +28,25 @@ points, extracted into claims. Chapters marked good rely on the topic files and 
 
 | # | chapter | era | window | diorama and set piece | player's lever | historical outcome to reproduce | coverage |
 |---|---|---|---|---|---|---|---|
-| 1 | **The march on Kyiv**: Hostomel, the 60 km convoy | e1 | 24 Feb – early Apr 2022 | Hostomel airfield, the Irpin river, a forest road choked with the column | Ambushes (Javelin, Aerorozvidka at night), artillery, destroying the Irpin bridges, flooding | Russia fails to take Kyiv and withdraws from the north | good |
+| 1 | **The march on Kyiv**: Hostomel, the 60 km convoy | e1 | 24 Feb – early Apr 2022 | Hostomel airfield, the Irpin river, a forest road choked with the column | Ambushes (Javelin, Aerorozvidka at night), artillery, destroying the Irpin bridges, flooding | Russia fails to take Kyiv and withdraws from the north | **dossier** |
 | 2 | **Snake Island → the Moskva** (two acts) | e1–e2 | 24 Feb – 30 Jun 2022 | Act 1: a rock in the Black Sea, the garrison, "go f— yourself". Act 2: the cruiser, coastal Neptune batteries, a TB2 decoy. Coda: Russia abandons the island under fire. | Act 1 is defiance and survival; Act 2 is targeting, timing and distraction | The Moskva sinks on 14 Apr; Russia leaves Snake Island on 30 Jun | **dossier** |
 | 3 | **Azovstal** | e1–e2 | Mar – May 2022 | The steel plant's tunnels and ruins inside an encircled city | Rationing, wounded, civilian evacuation; an air-bridge act of night Mi-8 resupply flights into the encircled plant | Held until the negotiated surrender of 16–20 May | **dossier** |
 | 4 | **Kherson and the Antonivskyi bridge** (HIMARS) | e2–e3 | Jul – Nov 2022 | The Dnipro, its bridges and the dam road, a Russian bridgehead on the right bank | HIMARS targeting of bridges, ferries and depots; a pinning offensive | Russia withdraws across the Dnipro on 9–11 Nov 2022 | **dossier** |
 | 5 | **The Kerch bridge** (three acts) | e3–e8 | 8 Oct 2022 · 17 Jul 2023 · 3 Jun 2025 | The bridge, its piers, and Russian booms, barges and nets around them | Act 1: the truck bomb (route, timing). Act 2: Sea Baby boats running through the barricades. Act 3: underwater charges at the piers | The historical damage each time (spans dropped in 2022 and 2023), and the bridge always reopened; by 2026 no heavy trucks cross | **dossier** |
 | 6 | *Kharkiv lightning offensive* | e3 | 6–12 Sep 2022 | The Balakliia–Kupiansk steppe and a thin Russian line | Manoeuvre, speed, bypassing, cutting rail | The Russian front collapses to the Oskil | **dossier** |
-| 7 | **The defence of Bakhmut** | e4 | Aug 2022 – May 2023 | Town blocks, the flanks, the "road of life" | Rotation, artillery ammunition, holding the flanks | Months of Wagner attrition, then the city falls in May 2023 | good |
+| 7 | **The defence of Bakhmut** | e4 | Aug 2022 – May 2023 | Town blocks, the flanks, the "road of life" | Rotation, artillery ammunition, holding the flanks | Months of Wagner attrition, then the city falls in May 2023 | **dossier** |
 | 8 | *Vuhledar* | e4 | Jan – Feb 2023 | A town on a ridge above open fields and minefields | Mines, pre-planned artillery and ATGMs against massed armour | Russian mechanised assaults destroyed | **dossier** |
-| 9 | *Robotyne breach* | e5 | Jun – Aug 2023 | Dense minefields, Surovikin-line trenches, Ka-52 lob fire | Breaching order, dismounted infantry vs vehicles | Robotyne taken; the main breakthrough fails | good |
+| 9 | *Robotyne breach* | e5 | Jun – Aug 2023 | Dense minefields, Surovikin-line trenches, Ka-52 lob fire | Breaching order, dismounted infantry vs vehicles | Robotyne taken; the main breakthrough fails | **dossier** |
 | 10 | *Krynky bridgehead* | e5–e6 | Nov 2023 – Jul 2024 | Dnipro marshes, boats, a flooded village, drones overhead | Boat logistics, holding a foothold under glide bombs | A bridgehead held for months, then given up | **dossier** |
-| 11 | **Avdiivka** | e6 | Oct 2023 – Feb 2024 | The coke plant, the terrikon, the "Tsarska okhota" strongpoint, a narrowing neck | Shell rationing in the famine, glide bombs, timing the withdrawal | Withdrawal on 17 Feb 2024, with the coke plant held to the end | good |
+| 11 | **Avdiivka** | e6 | Oct 2023 – Feb 2024 | The coke plant, the terrikon, the "Tsarska okhota" strongpoint, a narrowing neck | Shell rationing in the famine, glide bombs, timing the withdrawal | Withdrawal on 17 Feb 2024, with the coke plant held to the end | **dossier** |
 | 12 | *Hunting the A-50* (air) | e6 | Jan – Feb 2024 | The Sea of Azov at night, radar picture only, an AWACS orbit | A Patriot or S-200 ambush, emission control, decoys, timing | Two A-50 airborne radars shot down | **dossier** |
 | 13 | **The Black Sea drone war**: sea drones, helicopters, and air defence on sea drones | e6–e8 | Feb 2024 – May 2025 | Night sea off Crimea, landing ships at anchor, Russian helicopters and gunboats hunting drones | Magura swarm tactics against ships; then missile-armed Maguras against hunting Mi-8s and jets | Ivanovets, Tsezar Kunikov and Sergey Kotov sunk (Feb – Mar 2024); two Mi-8s (31 Dec 2024) and an Su-30 (2 May 2025) shot down from sea drones | **dossier** |
-| 14 | **The Kursk incursion and the North Korean defence** | e7 | Aug 2024 – Mar 2025 | Border towns and Sudzha, North Korean assault waves across fields | Raid speed, drones against massed infantry, the single supply road | A deep raid, a long hold, then withdrawal from Sudzha | good |
-| 15 | *Pokrovsk–Myrnohrad* | e8 | 2025 | Mining towns and terrikons in a 20 km kill zone | Drone line, UGV resupply, fibre FPVs, stopping infiltration | Slow loss at a huge Russian cost per km² | good |
-| 16 | **Operation Spiderweb** | e8 | Nov 2023 – 1 Jun 2025 | Five Russian bomber bases across four time zones, and trucks with wooden cabins | Smuggling logistics, then target selection and the simultaneous strike (see below) | 117 FPVs launched; hits in the contested band (12–13 destroyed independently counted, 41 hit per the SBU) | ok |
+| 14 | **The Kursk incursion and the North Korean defence** | e7 | Aug 2024 – Mar 2025 | Border towns and Sudzha, North Korean assault waves across fields | Raid speed, drones against massed infantry, the single supply road | A deep raid, a long hold, then withdrawal from Sudzha | **dossier** |
+| 15 | *Pokrovsk–Myrnohrad* | e8 | 2025 | Mining towns and terrikons in a 20 km kill zone | Drone line, UGV resupply, fibre FPVs, stopping infiltration | Slow loss at a huge Russian cost per km² | **dossier** |
+| 16 | **Operation Spiderweb** | e8 | Nov 2023 – 1 Jun 2025 | Five Russian bomber bases across four time zones, and trucks with wooden cabins | Smuggling logistics, then target selection and the simultaneous strike (see below) | 117 FPVs launched; hits in the contested band (12–13 destroyed independently counted, 41 hit per the SBU) | **dossier** |
 | 17 | **The Kupiansk gas-pipeline infiltration** | e8 | 2025 | A town on the Oskil, and a 10 km pipeline running under the front | Detecting and plugging the infiltration, interdicting what comes out of the pipe | The historical result (needs research: how far the infiltration got, and how it ended) | **dossier** |
-| 18 | *One night over Kyiv* | e8–e9 | one night, 2025–26 | The city at night: hundreds of Shaheds, jet Gerans, ballistic missiles; F-16s on intercept | Mobile fire groups, interceptor drones, F-16 sorties, scarce Patriot rounds | The historical interception rate for that night: about 70% overall, about 55–57% for jet drones (Sep 2026) | good |
-| 19 | **Operation Vivaldi** | e9 | May – Sep 2026 | The Lyman forests and a Russian salient after the Starlink cutoff | Striking reinforcements, not chasing infiltrators | The salient eliminated; about 125–240 km² retaken | good |
+| 18 | *One night over Kyiv* | e8–e9 | one night, 2025–26 | The city at night: hundreds of Shaheds, jet Gerans, ballistic missiles; F-16s on intercept | Mobile fire groups, interceptor drones, F-16 sorties, scarce Patriot rounds | The night of 1–2 Jul 2026: 524 of 570 weapons downed or jammed (about 92%), but only 4 of 28 ballistic missiles; 31 dead in Kyiv | **dossier** |
+| 19 | **Operation Vivaldi** | e9 | May – Sep 2026 | The Lyman forests and a Russian salient after the Starlink cutoff | Striking reinforcements, not chasing infiltrators | The salient eliminated, with Lyman and Sviatohirsk held; 125–240 km² retaken (the corps says 176 km² by 28 Sep 2026) | **dossier** |
 
 **Vignettes** (proposed):
 - **The Brovary ambush** (9–10 Mar 2022): the 6th Tank Regiment's column ambushed on the M01 at Skybyn by the
@@ -90,10 +90,8 @@ It is the war's purest covert operation, so it plays as two very different halve
 
 ## Research status
 
-Ten chapters and both vignettes have dossiers (2026-10-01). Each dossier's §1 states the outcome to reproduce,
-and its claims carry an `OUTCOME` flag in the knowledge base. The remaining chapters (the march on Kyiv, Bakhmut,
-Robotyne, Avdiivka, Kursk, Pokrovsk–Myrnohrad, Spiderweb, One night over Kyiv, Vivaldi) have good topic coverage
-and need dossiers in the same format before they are scripted.
+All 19 chapters and both vignettes have dossiers in `research/chapters/` (2026-10-02). Each dossier's §1 states
+the outcome to reproduce, and its claims carry an `OUTCOME` flag in the knowledge base.
 
 Corrections from the research:
 - **Snake Island:** the "13 dead" defenders were a myth. About 80 were captured.

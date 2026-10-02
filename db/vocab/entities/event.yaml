@@ -304,7 +304,7 @@
   type: event
   kind: negotiation
   en: "Anchorage summit"
-  aliases: ["Anchorage summit"]
+  aliases: ["Anchorage summit", "Trump–Putin Alaska meeting"]
   note: "15 Aug 2025. Trump–Putin summit in Anchorage, Alaska; no ceasefire."
 - id: event:peace_plan_28_point
   type: event
@@ -1080,3 +1080,305 @@
   aliases: ["Stepove Bradley–T-90M duel", "Stepove duel", "Bradley vs T-90M at Stepove"]
   parent: event:battle_of_avdiivka
   note: "About 11 Jan 2024 (video 12 Jan). Two 47th Brigade Bradleys mission-killed a T-90M near Stepove; an FPV drone finished it."
+# March on Kyiv (c01)
+- id: event:kyiv_convoy
+  type: event
+  kind: incident
+  en: "Kyiv convoy"
+  aliases: ["Kyiv convoy", "Russian Kyiv convoy", "40-mile convoy"]
+  parent: event:battle_of_kyiv
+  note: "Late Feb – Mar 2022. Russian column of 40+ miles (64 km) stalled north of Kyiv between Prybirsk and Hostomel."
+- id: event:hostomel_counterattack
+  type: event
+  kind: battle
+  en: "Hostomel counterattack"
+  aliases: ["Hostomel counterattack"]
+  parent: event:battle_of_hostomel
+  note: "24 Feb 2022, sunset to 21:00. 72nd, 80th, 95th Brigades, 3rd SSO Regiment and volunteers retook Hostomel airfield and cratered the runway."
+- id: event:hostomel_airlift
+  type: event
+  kind: operation
+  en: "Hostomel airlift"
+  aliases: ["Hostomel airlift"]
+  parent: event:battle_of_hostomel
+  note: "24–25 Feb 2022. Planned Russian Il-76 follow-on airlift to Hostomel; aborted in mid-air."
+- id: event:kozarovychi_dam_breach
+  type: event
+  kind: operation
+  en: "Kozarovychi dam breach"
+  aliases: ["Kozarovychi dam breach"]
+  parent: event:battle_of_kyiv
+  note: "25 or 26 Feb 2022. Ukrainian demolition of the Kozarovychi dam that flooded the Irpin floodplain."
+- id: event:battle_of_moshchun
+  type: event
+  kind: battle
+  en: "Battle of Moshchun"
+  uk: "Бій за Мощун"
+  aliases: ["Battle of Moshchun"]
+  parent: event:battle_of_kyiv
+  note: "Late Feb – 21 Mar 2022. Defence of the Irpin river line at Moshchun, 72nd Mechanised Brigade."
+- id: event:battle_of_irpin
+  type: event
+  kind: battle
+  en: "Battle of Irpin"
+  aliases: ["Battle of Irpin"]
+  parent: event:battle_of_kyiv
+  note: "27 Feb – 28 Mar 2022. Fighting for Irpin; liberated 28 Mar 2022."
+- id: event:battle_of_bucha
+  type: event
+  kind: battle
+  en: "Battle of Bucha"
+  aliases: ["Battle of Bucha"]
+  parent: event:battle_of_kyiv
+  note: "27 Feb – 12 Mar 2022. Fighting for Bucha before full Russian occupation."
+- id: event:battle_of_makariv
+  type: event
+  kind: battle
+  en: "Battle of Makariv"
+  aliases: ["Battle of Makariv"]
+  parent: event:battle_of_kyiv
+  note: "Late Feb – Mar 2022. Fighting for Makariv; retaken 2 Mar 2022 by the 14th Mechanised and 95th Air Assault Brigades."
+- id: event:vokzalna_street_ambush
+  type: event
+  kind: battle
+  en: "Vokzalna Street ambush"
+  aliases: ["Vokzalna Street ambush"]
+  parent: event:battle_of_bucha
+  note: "27 Feb 2022. Ukrainian ambush of a Russian column on Vokzalna Street, Bucha."
+- id: event:romanivka_shelling
+  type: event
+  kind: incident
+  en: "Romanivka shelling"
+  aliases: ["Romanivka shelling"]
+  parent: event:battle_of_irpin
+  note: "6 Mar 2022, 09:30–14:00. Russian shelling of the evacuation point at the broken P30 bridge at Romanivka (Irpin); at least 8 civilians killed."
+- id: event:siege_of_chernihiv
+  type: event
+  kind: battle
+  en: "Siege of Chernihiv"
+  aliases: ["Siege of Chernihiv"]
+  parent: event:russian_full_scale_invasion
+  note: "24 Feb – early Apr 2022. Russian attack on and encirclement of Chernihiv (encircled by 10 Mar 2022)."
+- id: event:russian_withdrawal_from_kyiv_oblast
+  type: event
+  kind: operation
+  en: "Russian withdrawal from Kyiv Oblast"
+  aliases: ["Russian withdrawal from Kyiv Oblast"]
+  parent: event:battle_of_kyiv
+  note: "29 Mar – 2/6 Apr 2022. Russian pull-back from northern Ukraine into Belarus."
+# Bakhmut (c07)
+- id: event:eu_million_shell_plan
+  type: event
+  kind: aid_decision
+  en: "EU million-shell plan"
+  aliases: ["EU million-shell plan", "EU million-round plan"]
+  note: "20 Mar 2023. EU agreed €2 bn for one million 155 mm rounds for Ukraine within a year."
+- id: event:gerasimov_theatre_commander
+  type: event
+  kind: appointment
+  en: "Gerasimov appointed theatre commander"
+  aliases: ["Gerasimov appointed theatre commander"]
+  note: "11 Jan 2023. Gerasimov took over as commander of Russian forces in Ukraine."
+- id: event:surovikin_appointment
+  type: event
+  kind: appointment
+  en: "Surovikin appointment"
+  aliases: ["Surovikin appointment"]
+  note: "Oct 2022 (8 Oct). Surovikin appointed theatre commander of Russian forces in Ukraine."
+- id: event:operation_bakhmut_meatgrinder
+  type: event
+  kind: operation
+  en: "Operation Bakhmut Meatgrinder"
+  aliases: ["Operation Bakhmut Meatgrinder"]
+  parent: event:battle_of_bakhmut
+  note: "Oct 2022 (per Prigozhin's later claim). Wagner/Surovikin plan to draw Ukrainian forces into Bakhmut."
+# Robotyne (c09)
+- id: event:mala_tokmachka_breach
+  type: event
+  kind: battle
+  en: "Breach south of Mala Tokmachka"
+  aliases: ["Breach south of Mala Tokmachka"]
+  parent: event:ukrainian_counteroffensive_2023
+  note: "7–8 Jun 2023. Failed first breach attempt by the 47th and 33rd Mechanised Brigades south of Mala Tokmachka."
+- id: event:zaluzhnyi_halt_mechanized_assaults
+  type: event
+  kind: policy
+  en: "Zaluzhnyi halt of mechanized assaults"
+  aliases: ["Zaluzhnyi halt of mechanized assaults"]
+  parent: event:ukrainian_counteroffensive_2023
+  note: "About 11–12 Jun 2023. Zaluzhnyi stopped frontal mechanized assaults after the failed breach."
+- id: event:robotyne_push_2023_07_26
+  type: event
+  kind: battle
+  en: "26 July push"
+  aliases: ["26 July push", "26 July 2023 push"]
+  parent: event:ukrainian_counteroffensive_2023
+  note: "26 Jul 2023. Second Ukrainian mechanized push towards Robotyne, about 2.5 km penetration east of Robotyne."
+- id: event:battle_of_robotyne
+  type: event
+  kind: battle
+  en: "Battle of Robotyne"
+  uk: "Бій за Роботине"
+  aliases: ["Battle of Robotyne"]
+  parent: event:ukrainian_counteroffensive_2023
+  note: "Jun – Aug 2023. Fight for Robotyne; 47th Mechanised Brigade entered 22 Aug 2023, flag raised 23 Aug."
+- id: event:robotyne_liberation_announcement
+  type: event
+  kind: milestone
+  en: "Robotyne liberation announcement"
+  aliases: ["Robotyne liberation announcement"]
+  parent: event:battle_of_robotyne
+  note: "28 Aug 2023. Deputy Defence Minister Maliar declared Robotyne liberated."
+- id: event:verbove_breach
+  type: event
+  kind: battle
+  en: "Verbove breach"
+  aliases: ["Verbove breach"]
+  parent: event:ukrainian_counteroffensive_2023
+  note: "20–23 Sep 2023. Ukrainian armour crossed the anti-tank ditch west of Verbove."
+- id: event:storm_shadow_strike_58th_army_cp
+  type: event
+  kind: strike
+  en: "Storm Shadow strike on the 58th Army reserve command post"
+  aliases: ["Storm Shadow strike on the 58th Army reserve command post"]
+  note: "11 Jul 2023. Strike near Berdiansk that reportedly killed Lt. Gen. Oleg Tsokov."
+- id: event:popov_dismissal
+  type: event
+  kind: appointment
+  en: "Popov dismissal"
+  aliases: ["Popov dismissal"]
+  note: "About 11–13 Jul 2023. Maj. Gen. Ivan Popov dismissed as 58th Army commander."
+- id: event:lyamin_removal
+  type: event
+  kind: appointment
+  en: "Lyamin removal"
+  aliases: ["Lyamin removal"]
+  note: "8–10 Oct 2023 (reported). Lt. Gen. Denis Lyamin reportedly removed as 58th Army commander."
+- id: event:sak_removal
+  type: event
+  kind: appointment
+  en: "Sak removal"
+  aliases: ["Sak removal"]
+  note: "16 Sep 2023. Oleksandr Sak replaced as 47th Mechanised Brigade commander by Col. Oleksandr Pavlii."
+- id: event:black_sea_fleet_hq_strike
+  type: event
+  kind: strike
+  en: "Black Sea Fleet HQ strike"
+  aliases: ["Black Sea Fleet HQ strike"]
+  note: "22 Sep 2023. Ukrainian Storm Shadow strike on the Black Sea Fleet headquarters in Sevastopol."
+# Kursk (c14)
+- id: event:kursk_counterterrorism_regime
+  type: event
+  kind: policy
+  en: "Kursk counterterrorism operation regime"
+  aliases: ["Kursk counterterrorism operation regime"]
+  parent: event:kursk_incursion
+  note: "9 Aug 2024. Russia declared a counterterrorism operation regime in Kursk, Belgorod and Bryansk oblasts."
+- id: event:oktyabrskoye_convoy_strike
+  type: event
+  kind: strike
+  en: "Oktyabrskoye convoy strike"
+  aliases: ["Oktyabrskoye convoy strike"]
+  parent: event:kursk_incursion
+  note: "Night 8–9 Aug 2024. A Russian 14-truck reserve column destroyed on the 38K-017 near Oktyabrskoye, reportedly by HIMARS."
+- id: event:seim_bridge_strikes
+  type: event
+  kind: strike
+  en: "Seim bridge strikes"
+  aliases: ["Seim bridge strikes"]
+  parent: event:kursk_incursion
+  note: "16–19 Aug 2024. Ukrainian air and HIMARS strikes dropped the three Seim road bridges in Glushkovo Raion."
+- id: event:russian_kursk_counteroffensive
+  type: event
+  kind: offensive
+  en: "Russian Kursk counteroffensive"
+  aliases: ["Russian Kursk counteroffensive"]
+  parent: event:kursk_incursion
+  note: "From 10 Sep 2024 to Mar 2025. Russian counterattacks that retook the Kursk salient."
+- id: event:sudzha_pipeline_raid
+  type: event
+  kind: operation
+  en: "Sudzha pipeline raid"
+  aliases: ["Sudzha pipeline raid"]
+  parent: event:russian_kursk_counteroffensive
+  note: "8 Mar 2025. About a hundred Russian troops emerged from a disused gas pipeline inside Sudzha."
+- id: event:belgorod_incursion_2025_03
+  type: event
+  kind: offensive
+  en: "Belgorod Oblast incursion (March 2025)"
+  aliases: ["Belgorod Oblast incursion (March 2025)"]
+  note: "From 18 Mar 2025. Ukrainian diversionary attack into Belgorod Oblast at Demidovka."
+# Pokrovsk–Myrnohrad (c15)
+- id: event:dobropillia_breach
+  type: event
+  kind: battle
+  en: "Dobropillia breach"
+  aliases: ["Dobropillia breach"]
+  parent: event:battle_of_pokrovsk
+  note: "From 11 Aug 2025. Russian infiltration wedge of about 15 km towards Dobropillia."
+- id: event:dobropillia_counteroffensive
+  type: event
+  kind: operation
+  en: "Dobropillia counter-offensive"
+  aliases: ["Dobropillia counter-offensive", "Dobropillia operation"]
+  parent: event:battle_of_pokrovsk
+  note: "Aug – 29 Nov 2025. Ukrainian operation (1st Azov Corps and others) that cut off and cleared the Dobropillia wedge."
+- id: event:kucheriv_yar_pocket
+  type: event
+  kind: battle
+  en: "Kucheriv Yar pocket"
+  aliases: ["Kucheriv Yar pocket"]
+  parent: event:dobropillia_counteroffensive
+  note: "Oct 2025. Russian pocket at Kucheriv Yar, retaken 22 Oct 2025 by the 132nd Reconnaissance Battalion."
+- id: event:pokrovsk_black_hawk_landing
+  type: event
+  kind: operation
+  en: "Black Hawk landing in Pokrovsk"
+  aliases: ["Black Hawk landing in Pokrovsk"]
+  parent: event:battle_of_pokrovsk
+  note: "Late Oct 2025. HUR special forces landing by Black Hawk in northern Pokrovsk."
+- id: event:pokrovsk_fog_infiltration
+  type: event
+  kind: incident
+  en: "November fog infiltration"
+  aliases: ["November fog infiltration"]
+  parent: event:battle_of_pokrovsk
+  note: "7–12 Nov 2025. More than 300 Russian infiltrators entered Pokrovsk in thick fog."
+- id: event:witkoff_talks_2025_12
+  type: event
+  kind: negotiation
+  en: "Witkoff talks"
+  aliases: ["Witkoff talks"]
+  parent: event:peace_plan_28_point
+  note: "Early Dec 2025. US envoy Witkoff's talks with Russia on the US peace plan, just after Russia claimed Pokrovsk."
+# Night over Kyiv (c18)
+- id: event:kyiv_strike_2026_07_01
+  type: event
+  kind: strike
+  en: "1–2 July 2026 strike on Kyiv"
+  aliases: ["1–2 July 2026 strike on Kyiv", "1–2 July 2026 strike"]
+  note: "Night 1–2 Jul 2026. Russian combined strike of 570 weapons (74 missiles, 496 drones), main target Kyiv."
+- id: event:strike_2026_07_05
+  type: event
+  kind: strike
+  en: "5–6 July 2026 strike"
+  aliases: ["5–6 July 2026 strike"]
+  note: "Night 5–6 Jul 2026. Russian strike in which none of 29 ballistic missiles was intercepted."
+- id: event:kyiv_strike_2026_07_19
+  type: event
+  kind: strike
+  en: "19 July 2026 strike on Kyiv"
+  aliases: ["19 July 2026 strike on Kyiv"]
+  note: "19 Jul 2026. Record ballistic barrage on Kyiv: 41 missiles (35 ballistic) and 125 drones."
+- id: event:strike_2025_09_07
+  type: event
+  kind: strike
+  en: "7 September 2025 strike"
+  aliases: ["7 September 2025 strike"]
+  note: "Night 6–7 Sep 2025. Record 2025 drone night: 810 drones and 13 missiles; Cabinet of Ministers building hit."
+- id: event:nato_summit_ankara_2026
+  type: event
+  kind: negotiation
+  en: "NATO summit in Ankara"
+  aliases: ["NATO summit in Ankara", "NATO Ankara summit"]
+  note: "7–8 Jul 2026. NATO summit in Ankara; Trump said the US would license Ukraine to build Patriot interceptors."

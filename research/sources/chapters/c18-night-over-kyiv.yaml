@@ -1,0 +1,697 @@
+# Sources cited in research/chapters/c18-night-over-kyiv.md, generated from the knowledge base by db/tools/render.py.
+- id: bbc-2026-rainsford-most-massive-kyiv
+  title: '''Most massive'' Russian attack on Kyiv kills at least 30'
+  url: https://www.bbc.com/news/articles/c4gyv05gk4do
+  publisher: BBC News
+  authors:
+  - Sarah Rainsford
+  - Ben Hatton
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - strike-campaign
+  - casualties
+  - russian-claims
+  - chapter
+  notes: 'On-site report from Darnytskyi (two missiles: crater by a kindergarten, end of a nine-storey block collapsed); wave
+    structure (drones on the historic centre first, missiles about 01:00, lull, a dozen cruise missiles about 03:00, drones
+    until dawn; over 11 hours); Russian MoD and Peskov claims.'
+- id: euromaidan-2026-axe-f16-patriot-su35
+  title: Three F-16s and a Patriot battery teamed up to kill Russia's best fighter
+  url: https://euromaidanpress.com/2026/07/09/f-16s-and-patriot/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2026-07-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - aviation
+  - chapter
+  notes: Context on F-16 and Patriot teaming a week after the strike (Su-35 downed 8 July per UA Air Force; ambush details
+    from Russian channels, unconfirmed); APG-66 radar range about 83 km.
+- id: euromaidan-2026-mukhina-june-strikes-slowed
+  title: Russia's drone barrages slowed in June. Its bombers are worn out — but its factories are retooling for something
+    worse
+  url: https://euromaidanpress.com/2026/07/04/russias-drone-barrages-slowed-in-june-its-bombers-are-worn-out-but-its-factories-are-retooling-for-something-worse/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-07-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - strike-campaign
+  - drones
+  - chapter
+  notes: 'Informational Resistance (via OBOZ.UA): June 5,749 drones (92% intercepted); Kh-101 launches 34 of 92 possible,
+    bomber wear; 2 July as one of the largest-ever jet Shahed-238/Karrar deployments. Analyst group, medium reliability.'
+- id: euromaidan-2026-murdoch-19-july-ballistic
+  title: Russia launches record ballistic missile barrage on Kyiv, firing over 40 missiles in under an hour
+  url: https://euromaidanpress.com/2026/07/19/russia-launches-record-ballistic-missile-barrage-on-kyiv/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Murdoch
+  published: '2026-07-19'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - strike-campaign
+  - chapter
+  notes: 'Alternative night: 19 July 2026, 41 missiles (25 Iskander-M/S-400, 10 Zircon, 3 Oniks, 3 Kh-59/69) and 125 drones;
+    18 missiles and 108 drones downed; 23 missiles and 10 drones hit 20 locations; 1 killed, 16 injured.'
+- id: euromaidan-2026-murdoch-patriot-appeal
+  title: Ukraine urges partners to urgently release Patriot missiles after one of war's largest air attacks
+  url: https://euromaidanpress.com/2026/07/02/ukraine-urges-partners-to-urgently-release-patriot-missiles/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Murdoch
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - chapter
+  notes: 'MoD appeal and Zelensky at Darnytskyi: Norway-financed 200 interceptors, ''not a single one'' delivered; 74 vs 77
+    missile counts.'
+- id: euromaidan-2026-tril-kyiv-toll-30
+  title: Kyiv death toll climbs to 30 as rescuers dig for three still buried under a nine-story block
+  url: https://euromaidanpress.com/2026/07/03/kyiv-death-toll-climbs-to-30-as-rescuers-dig-for-three-still-buried-under-a-nine-story-block/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2026-07-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - russian-claims
+  - chapter
+  notes: 'Zelensky: one missile destroyed 64 apartments in Darnytskyi; police put the injured above 110; Russian MoD called
+    the strike retaliation for refinery strikes.'
+- id: euromaidan-2026-vivdych-patriot-playbook
+  title: Ukraine rewrote the Patriot playbook—but it's still running out of missiles
+  url: https://euromaidanpress.com/2026/07/09/ukraine-rewrote-the-patriot-playbook-but-its-still-running-out-of-missiles/
+  publisher: Euromaidan Press
+  authors:
+  - Taisiia Vivdych
+  published: '2026-07-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - tactics
+  - chapter
+  notes: Relays NYT reporting on Ukrainian Patriot tactics (one interceptor per ballistic missile, manual mode, shoot-and-scoot,
+    $30k decoys); Trump's 8 July licence pledge; 521 ballistic missiles launched in 2026 to date, 164 downed (NYT data).
+- id: isw-2026-07-02-roca
+  title: Russian Offensive Campaign Assessment, July 2, 2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-july-2-2026/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - strike-campaign
+  - chapter
+  notes: Fetched via the Wayback Machine (live page returned 403). Restates the Air Force counts; Svyrydenko's 20 buildings
+    hit / ~100 damaged; Red Cross warehouse; Ihnat on many jet drones that need fighters or SAMs; Beskrestnov on Shaheds over
+    Kyiv using a new 3,900-4,100 MHz band; June lull in large strikes.
+- id: kyivindependent-2026-fenbert-kyiv-attack-31-killed
+  title: '''Serious destruction'' — massive Russian missile, drone attack on Kyiv kills at least 31, injures over 100'
+  url: https://kyivindependent.com/explosions-rock-kyiv-as-ukraine-braces-for-russias-next-bombardment/
+  publisher: Kyiv Independent
+  authors:
+  - Abbey Fenbert
+  - Yuliia Taradiuk
+  - Lucy Pakhnyuk
+  - Tania Myronyshena
+  - Polina Moroziuk
+  published: '2026-07-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - strike-campaign
+  - casualties
+  - civilians
+  - chapter
+  notes: 'Running report, updated to 4 July: final 31 killed and 102 injured; 28 ballistic missiles at Kyiv (Ihnat, a record);
+    first explosions about 21:40; ballistic warning by Tkachenko at 00:45; up to 10 strategic bombers reported airborne; damage
+    by district; DTEK and Utels outages; record 52,500 in the metro; WOG night closures; Peskov''s claim.'
+- id: osm-photon-c18
+  aliases:
+  - osm-2026-bakhmut-geodata
+  title: 'Photon geocoder (komoot) over OpenStreetMap data: coordinates of Kyiv districts, sites and approach landmarks'
+  url: https://photon.komoot.io/
+  publisher: komoot / OpenStreetMap contributors
+  authors: []
+  published: '2026'
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e9-counteroffensive-26
+  topics:
+  - geodata
+  - geography
+  - chapter
+  notes: Point coordinates for OSM objects (district relations, the zoo, CHP-5 and CHP-6, Lake Kyrylivske, Kyiv Reservoir,
+    towns on the approaches, Russian launch-area cities). Nominatim refused generic clients, so Photon was used. Distances
+    are great-circle, computed by us.
+- id: pravda-2026-balachuk-17-killed
+  title: Russian attack on Kyiv kills 17, injures 86 and damages 28 locations
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042019/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - chapter
+  notes: 'Klymenko: part of a nine-storey building in Darnytskyi destroyed, 17 rescued there (7 from rubble); over 20 residential
+    buildings hit; rescuers at 15 locations.'
+- id: pravda-2026-balachuk-30-sites
+  title: Russian strike on Kyiv leaves more than 30 sites damaged, with people killed and injured
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042022/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - strike-campaign
+  - casualties
+  - chapter
+  notes: As of 07:00 more than 30 locations in every district; 9 killed and 34 injured, then 56 injured at 07:30; 570 rescuers
+    and 125 vehicles at work.
+- id: pravda-2026-balachuk-kyiv-oblast-seven-injured
+  title: Seven injured in Russian attack on Kyiv Oblast on 2 July
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042021/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - chapter
+  notes: 'Kalashnyk and DSNS: drones, ballistic and cruise missiles on Kyiv Oblast; seven injured (Bucha and Boryspil districts);
+    damage in Bucha, Brovary, Obukhiv, Fastiv and Vyshhorod districts.'
+- id: pravda-2026-balachuk-metro-52500
+  title: More than 52,000 people took shelter in Kyiv metro during Russian nighttime attack
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042054/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - civilians
+  - chapter
+  notes: 'Kyiv City State Administration: 52,500 people incl. nearly 4,500 children in the metro, the most in recent years;
+    46 underground stations serve as shelters; shelters at 17-18 °C.'
+- id: pravda-2026-balachuk-six-missing
+  title: Six people missing in Kyiv after Russia's overnight attack; family with child being searched for under rubble
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042042/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - chapter
+  notes: 'Interior Ministry and Klitschko: at least six missing; nine ambulances damaged and six crew injured at an ambulance
+    substation; acoustic life detectors in use.'
+- id: pravda-2026-bondarieva-fedorov-patriot-appeal
+  title: Ukrainian defence minister appeals to nearly 40 countries to transfer Patriot missiles this month
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042149/
+  publisher: Ukrainska Pravda
+  authors:
+  - Khrystyna Bondarieva
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - chapter
+  notes: 'MoD: almost 500 drones and 77 missiles (25 ballistic or hypersonic); over 90% of cruise missiles and 90% of Shahed-types
+    intercepted; PAC-2 contract (April), ~100 missiles via EU loan, NATO After Action Review doubled Patriot effectiveness
+    against Iskander; letters to ~40 states.'
+- id: pravda-2026-bondarieva-patriot-licences
+  title: Zelenskyy after Russian strike calls on US to grant Patriot missile production licences
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042147/
+  publisher: Ukrainska Pravda
+  authors:
+  - Khrystyna Bondarieva
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - chapter
+  notes: 'Zelensky''s evening address: wants US licences to build Patriot interceptors in Ukraine or Europe; air defence as
+    a key outcome of the NATO summit.'
+- id: pravda-2026-konyk-gerbera-fuel-tanks
+  title: Russian forces fit extra fuel tanks to Gerbera drones, Flash says
+  url: https://www.pravda.com.ua/eng/news/2026/07/01/8041967/
+  publisher: Ukrainska Pravda
+  authors:
+  - Andrii Konyk
+  published: '2026-07-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - drones
+  - specifications
+  - chapter
+  notes: 'Gerbera as decoy/recon/strike Shahed imitator: 2.5 m span, 18 kg MTOW, 160 km/h, 600 km (War&Sanctions); long-range
+    variants seen the day before the strike.'
+- id: pravda-2026-kovalenko-kyiv-aftermath
+  title: '"This is the sixth time my building''s been damaged": the aftermath of Russia''s massive overnight attack on Kyiv'
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042081/
+  publisher: Ukrainska Pravda
+  authors:
+  - Anna Kovalenko
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - civilians
+  - chapter
+  notes: 'UP.Zhyttia round-up: crater about 20 m from a five-storey block near Nyvky metro (plaster fell in the station),
+    Gymnasium No. 73, schools and kindergartens, the Palladin Institute of Biochemistry, Kyiv Zoo, NGO offices.'
+- id: pravda-2026-kryzhnyi-kyrylivske-oil
+  title: Russian strike on petrol station contaminates Kyiv lake with 350 tonnes of petroleum products
+  url: https://www.pravda.com.ua/eng/news/2026/07/04/8042370/
+  publisher: Ukrainska Pravda
+  authors:
+  - Artur Kryzhnyi
+  published: '2026-07-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - civilians
+  - chapter
+  notes: 'Ministry of Economy: over 350 t of petroleum products entered Lake Kyrylivske (Opechen lakes, Obolonskyi district)
+    after a strike on a petrol station.'
+- id: pravda-2026-kryzhnyi-power-outages
+  title: Russian strikes cause new power outages across Ukraine, with Sumy hit hardest
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042069/
+  publisher: Ukrainska Pravda
+  authors:
+  - Artur Kryzhnyi
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - energy
+  - chapter
+  notes: 'Ukrenergo: energy facilities among the targets; new outages in Kyiv city and four oblasts, Sumy worst.'
+- id: pravda-2026-kutielieva-mathernova-hell
+  title: EU ambassador to Ukraine describes Russian attack on Kyiv as "hell"
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042067/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Kutielieva
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - civilians
+  - chapter
+  notes: 'Mathernova: shelters fuller than ever after Zelensky''s warning; a diplomats'' residence burned; the attack lasted
+    more than 12 hours.'
+- id: pravda-2026-lobanok-zektser-building
+  title: Historic building by architect Zektser damaged in Russian attack on Kyiv
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042098/
+  publisher: Ukrainska Pravda
+  authors:
+  - Daria Lobanok
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - civilians
+  - chapter
+  notes: The 1901 Zektser building on Shevchenko Boulevard (CityHotel Residence) burned through the night (DSNS).
+- id: pravda-2026-oliynyk-death-toll-31
+  title: Death toll from Russian attack on Kyiv on 2 July rises to 31
+  url: https://www.pravda.com.ua/eng/news/2026/07/04/8042425/
+  publisher: Ukrainska Pravda
+  authors:
+  - Tetyana Oliynyk
+  published: '2026-07-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - chapter
+  notes: 'DSNS final figures: 31 killed, 102 injured; recovery finished at a 16-storey block in Darnytskyi (11th-12th floors).'
+- id: pravda-2026-oliynyk-zelensky-warning
+  title: Zelenskyy warns Ukrainians Russia is preparing new large-scale attack
+  url: https://www.pravda.com.ua/eng/news/2026/07/01/8041983/
+  publisher: Ukrainska Pravda
+  authors:
+  - Tetyana Oliynyk
+  published: '2026-07-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - civilians
+  - chapter
+  notes: 'Dublin press conference, 1 July: intelligence on a coming massive strike; Zelensky returns early and urges people
+    to use shelters.'
+- id: pravda-2026-pavliuk-injured-medics
+  title: What is known about condition of six medics injured in Russian attack on Kyiv
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042116/
+  publisher: Ukrainska Pravda
+  authors:
+  - Alyona Pavliuk
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - civilians
+  - chapter
+  notes: Three paramedics and three EMTs of the Kyiv emergency-care centre were hit on their way to the ambulances after being
+    called out during the alert.
+- id: pravda-2026-petrenko-syrskyi-june-air-defence
+  title: Ukraine's commander-in-chief reports air defence successes in June
+  url: https://www.pravda.com.ua/eng/news/2026/07/04/8042369/
+  publisher: Ukrainska Pravda
+  authors:
+  - Roman Petrenko
+  published: '2026-07-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - chapter
+  notes: 'Syrskyi''s June figures: almost 5,000 Shahed-types destroyed; army aviation 338; Kyiv air-defence interceptor drones
+    500+; 600+ downed or jammed in Kyiv Oblast; automated turrets 26. Official claims.'
+- id: pravda-2026-pohorilov-search-completed
+  title: 'Russian 2 July strike on Kyiv: 10 bodies recovered from destroyed apartment block, search operation completed'
+  url: https://www.pravda.com.ua/eng/news/2026/07/03/8042265/
+  publisher: Ukrainska Pravda
+  authors:
+  - Stanislav Pohorilov
+  published: '2026-07-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - chapter
+  notes: 'DSNS: search at the destroyed nine-storey block in Darnytskyi completed, 10 bodies recovered; work continues at
+    three Darnytskyi sites.'
+- id: pravda-2026-pohorilov-zelensky-patriot-140
+  title: 'Zelenskyy at Russian strike site in Kyiv: We could have saved more lives with enough air defence from partners'
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042118/
+  publisher: Ukrainska Pravda
+  authors:
+  - Stanislav Pohorilov
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - chapter
+  notes: 'Zelensky in Darnytskyi: at least 140 Patriot missiles are needed to stop about 70 ballistic missiles; partners''
+    deliveries are late.'
+- id: pravda-2026-romanenko-570-targets
+  title: Russia attacks Ukraine with 570 drones and missiles overnight; Air Force highlights feature of 2 July attack
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042035/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - strike-campaign
+  - chapter
+  notes: 'English rendering of the Air Force''s 09:00 report: 4 Zircon, 24 Iskander-M/S-400, 34 Kh-101, 8 Kalibr, 4 Kh-59/69,
+    496 drones (Shahed, Gerbera, Italmas, Banderol, Parodiya) with launch areas; 48 missiles and 476 drones downed or jammed;
+    25 ballistic and 12 drones hit 33 locations.'
+- id: pravda-2026-romanenko-death-toll-21
+  title: Death toll from Russian attack on Kyiv rises to 21
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042071/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - casualties
+  - chapter
+  notes: 'Toll through the day: 18 killed at 12:40 (prosecutors), 20 at 14:38 (Tkachenko), 21 and 85 injured at 16:35 (DSNS).'
+- id: pravda-2026-vakuliuk-kyiv-overnight-damage
+  title: Russian attack on Kyiv damages houses and medical facility, leaves people killed and injured
+  url: https://www.pravda.com.ua/eng/news/2026/07/02/8042014/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Vakuliuk
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - strike-campaign
+  - casualties
+  - chapter
+  notes: 'Overnight updates from Tkachenko and Klitschko with times (03:47, 04:15, 04:55): Shevchenkivskyi medical facility
+    and medics hurt, Holosiivskyi high-rise fire, Desnianskyi nine-storey with people trapped, market fire from debris, Darnytskyi
+    five-storey partly destroyed, 28 locations.'
+- id: pyephem-c18-moon
+  title: 'PyEphem astronomical computation: moon and twilight for Kyiv (50.45 N, 30.52 E), 1-2 July 2026'
+  url: https://rhodesmill.org/pyephem/
+  publisher: Brandon Rhodes (PyEphem library)
+  authors: []
+  published: '2026-10-01'
+  accessed: '2026-10-01'
+  type: dataset
+  origin: other
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - weather
+  - chapter
+  notes: 'Computed by us with PyEphem because the USNO API was unreachable: full moon 30 Jun 02:56 EEST; on 1-2 July the moon
+    was about 97% lit, rose 22:31 and set 06:51; civil dusk 21:59, civil dawn 04:05.'
+- id: uaf-2026-kpszsu-alerts-1-2-july
+  title: 'Ukrainian Air Force (Povitriani Syly ZSU) Telegram channel: real-time threat alerts and final report for the night
+    of 1-2 July 2026 (posts 66994-67115)'
+  url: https://t.me/s/kpszsu?before=67096
+  publisher: Ukrainian Air Force
+  authors: []
+  published: '2026-07-02'
+  accessed: '2026-10-01'
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - strike-campaign
+  - chapter
+  notes: Ukrainian-language primary source, translated by us. Timestamped alerts (UTC in the page; Kyiv is UTC+3) for drone
+    groups, jet drones, ballistic and cruise missiles and their approach directions to Kyiv, plus final report 67095 (570
+    launched, 524 downed/suppressed, by type and launch area; defenders listed as aviation, SAM troops, EW, unmanned-systems
+    units and mobile fire groups).
+- id: wikipedia-kyiv-strikes-2022-present
+  title: Kyiv strikes (2022–present)
+  url: https://en.wikipedia.org/wiki/Kyiv_strikes_(2022%E2%80%93present)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - strike-campaign
+  - casualties
+  - chapter
+  notes: 'List of strikes on Kyiv used to compare candidate nights: 28 Aug 2025 (23+ dead), 7 Sep 2025 (810 drones, Cabinet
+    of Ministers hit), 2 Jul 2026 (74 missiles, 496 drones, 31 dead), 6 and 19 Jul 2026 and later. Secondary; figures checked
+    against the cited outlets.'

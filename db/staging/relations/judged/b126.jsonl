@@ -1,0 +1,40 @@
+{"pair": "ff3c5dd77643", "relation": "supports", "from": "claim:cc15_0004_04", "to": "claim:c04_0030_33", "strength": 0.6, "rationale": "Pokrovsk reports of seepage in groups of two to three corroborate the small-group infiltration tactic.", "independent": true}
+{"pair": "ffce36417eba", "relation": "supports", "from": "claim:cc16_0026_14", "to": "claim:c00_0055_09", "strength": 0.8, "rationale": "The SBU's official 117-drone figure underlies the reported 117 FPVs.", "independent": false}
+{"pair": "ffd5942f06bf", "relation": "duplicates", "from": "claim:cc11_0035_04", "to": "claim:cc11_0010_09", "strength": 0.9, "rationale": "Same 70 Russian vehicles lost on 10 October 2023, same source."}
+{"pair": "00354d79503e", "relation": "none", "rationale": "A wreck's coordinates and a pre-strike aircraft count are different facts."}
+{"pair": "006d74642147", "relation": "supersedes", "from": "claim:cc01_0011_68", "to": "claim:cc01_0011_49", "strength": 0.5, "rationale": "The 10 March imagery of a dispersed convoy is a later status than the 1 March stretched convoy."}
+{"pair": "007a474af065", "relation": "none", "rationale": "Post-strike salvo composition and 2023 AI training photos are unrelated."}
+{"pair": "00b9b84a5e76", "relation": "refines", "from": "claim:cc09_0010_13", "to": "claim:c00_0036_04", "strength": 0.8, "rationale": "Gives the exact date, 6 June 2023, for the dam's destruction."}
+{"pair": "00c056929666", "relation": "none", "rationale": "General vulnerability assessment and early-war TB2 use are only loosely related."}
+{"pair": "00e82a456b62", "relation": "duplicates", "from": "claim:cc16_0040_09", "to": "claim:cc16_0011_45", "strength": 0.9, "rationale": "Same Usolye car-park stone-throwing incident, same sources."}
+{"pair": "00f98929facd", "relation": "contradicts", "from": "claim:cc16_0011_76", "to": "claim:cc16_0040_08", "strength": 0.5, "rationale": "AviVector counted three Tu-95MS destroyed at Olenya; the report says four burned.", "resolution": "Imagery counts only completely destroyed airframes; the press report counts all aircraft seen burning, some only damaged."}
+{"pair": "01ca914a5ca3", "relation": "none", "rationale": "Base location and wreck coordinates are separate facts."}
+{"pair": "01d2fd1b0d0e", "relation": "none", "rationale": "Water volume and contested depth are different quantities."}
+{"pair": "01e8e3f113ea", "relation": "none", "rationale": "Shift of effort to the pipe and its later reuse are sequential events, not corroboration."}
+{"pair": "01fd9de4aa49", "relation": "duplicates", "from": "claim:cc09_0029_03", "to": "claim:cc09_0007_17", "strength": 0.9, "rationale": "Same 58th Army command changes from the same ISW sources."}
+{"pair": "020fe248720c", "relation": "none", "rationale": "Popov's dismissal and his minefield remark are different facts."}
+{"pair": "0264e4e4a78d", "relation": "supports", "from": "claim:cc09_0030_09", "to": "claim:cc09_0043_21", "strength": 0.6, "rationale": "The 76th VDV transfer from Kreminna is an instance of the broader claim of moving in VDV divisions at Kreminna's expense.", "independent": false}
+{"pair": "026ca2dbad9a", "relation": "none", "rationale": "Russian attempts on the road and its blocked state are related context."}
+{"pair": "02769ca2792f", "relation": "none", "rationale": "Troops exiting the pipe and the pipe's infiltration length are different facts of the same raid."}
+{"pair": "02a4ada6d36f", "relation": "supports", "from": "claim:cc16_0047_03", "to": "claim:cc16_0007_12", "strength": 0.4, "rationale": "Russia's MoD admits aircraft fires in Murmansk and Irkutsk, consistent with BBC Verify's damage count at Olenya and Belaya.", "independent": true}
+{"pair": "02f3c49532d0", "relation": "none", "rationale": "Unit and aircraft on standby versus the abort are context only."}
+{"pair": "02f83c1a9d20", "relation": "duplicates", "from": "claim:cc15_0007_101", "to": "claim:cc15_0026_22", "strength": 0.8, "rationale": "Same transfer of the 425th to Huliaipole from the same source."}
+{"pair": "033cde813d00", "relation": "none", "rationale": "Total destroyed and a Dyagilevo snapshot are different scopes."}
+{"pair": "0347a8898247", "relation": "none", "rationale": "Taking the villages and their role in the axis are different facts."}
+{"pair": "0368d7f6c342", "relation": "none", "rationale": "A forecast and a later local push do not bear on each other."}
+{"pair": "037e1a968426", "relation": "duplicates", "from": "claim:cc15_0018_02", "to": "claim:cc15_0007_27", "strength": 0.85, "rationale": "Same report of Solodchuk taking over the Center group, same ISW source."}
+{"pair": "03a4a176fd86", "relation": "duplicates", "from": "claim:cv01_0013_04", "to": "claim:cc01_0026_12", "strength": 0.85, "rationale": "Same 72nd Brigade artillery group composition from the same MWI source."}
+{"pair": "03e8c500b192", "relation": "none", "rationale": "Corps composition and its unpublished strength are different facts."}
+{"pair": "0444b70d95d4", "relation": "supports", "from": "claim:c07_0012_05", "to": "claim:cc19_0005_08", "strength": 0.7, "rationale": "DeepState's changelog of 27 September recording the liberation of Ridkodub, Nove and Katerynivka corroborates the corps announcement.", "independent": true}
+{"pair": "04b4db5a10df", "relation": "supports", "from": "claim:cc01_0032_17", "to": "claim:cc01_0011_28", "strength": 0.5, "rationale": "The failed first attempt matches the two-attempt breach.", "independent": false}
+{"pair": "04c60633c91a", "relation": "none", "rationale": "Pre-strike and post-strike counts at different times."}
+{"pair": "04e9043dfc89", "relation": "none", "rationale": "Geran performance and production rate are different quantities."}
+{"pair": "0589f3b446bf", "relation": "supports", "from": "claim:cc01_0025_13", "to": "claim:cc01_0011_14", "strength": 0.6, "rationale": "The 18 Il-76s with the 76th Division matches the 18-aircraft version of the aborted airlift.", "independent": false}
+{"pair": "058d9f300dfc", "relation": "supports", "from": "claim:cc19_0009_60", "to": "claim:cc19_0009_63", "strength": 0.6, "rationale": "A Russian milblogger's admission and ISW's geolocated evidence both put Ukrainian forces around Nove and Katerynivka.", "independent": true}
+{"pair": "05e37a5b5f0f", "relation": "none", "rationale": "Different facets of 2022 air defence over Kyiv."}
+{"pair": "0616cc9a3787", "relation": "none", "rationale": "Two separate exchanges between the same commanders."}
+{"pair": "061f206dc47d", "relation": "none", "rationale": "Pipe dimensions and an exhibition are different facts."}
+{"pair": "067820a69f96", "relation": "duplicates", "from": "claim:cc15_0020_04", "to": "claim:cc15_0014_05", "strength": 0.9, "rationale": "Same 32nd Brigade holding the Pavlohrad highway flank, same source."}
+{"pair": "06a77df84a54", "relation": "supports", "from": "claim:cc19_0009_36", "to": "claim:cc19_0027_18", "strength": 0.5, "rationale": "The launch of Logistics Lockdown is part of MWI's assessment of Fedorov's shaping campaigns.", "independent": false}
+{"pair": "06ffce10d825", "relation": "supports", "from": "claim:cc01_0019_03", "to": "claim:cc01_0006_04", "strength": 0.6, "rationale": "The river turning into a lake over 400 m wide corroborates the floodplain flooding.", "independent": false}
+{"pair": "07151b0f28ae", "relation": "duplicates", "from": "claim:cc01_0011_112", "to": "claim:cc01_0009_26", "strength": 0.9, "rationale": "Same HRW count of 16 unlawful killings in Bucha."}

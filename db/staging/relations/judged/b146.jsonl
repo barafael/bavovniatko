@@ -1,0 +1,40 @@
+{"pair": "999e94820b5e", "relation": "none", "rationale": "Emergence of footage and a later death toll are different assertions."}
+{"pair": "99f1716be758", "relation": "none", "rationale": "The computed launch-point coordinate derives from the reported event; no independent bearing."}
+{"pair": "9a05913c0338", "relation": "supports", "from": "claim:cc07_0051_14", "to": "claim:cc07_0058_22", "strength": 0.5, "rationale": "Zelensky and Pushilin, from opposite sides, both say Bakhmut's fall would open the way to Kramatorsk and Sloviansk.", "independent": true}
+{"pair": "9a2cac02c5e7", "relation": "supports", "from": "claim:cc01_0017_02", "to": "claim:cc01_0006_01", "strength": 0.6, "rationale": "The computed ~72 km road length from Prybirsk to Antonov airport is consistent with the reported 64 km column.", "independent": true}
+{"pair": "9a48527b0b64", "relation": "none", "rationale": "A pre-strike aircraft claim and a report of four Tu-95MS burned; no conflict."}
+{"pair": "9a60ac49a073", "relation": "none", "rationale": "Description of Nove and a later pincer event."}
+{"pair": "9a8a1e57ce62", "relation": "none", "rationale": "The 11 Mar assault and the 19-21 Mar clearing are different events."}
+{"pair": "9ab489dd3bbc", "relation": "supports", "from": "claim:cc01_0011_08", "to": "claim:cc12_0019_15", "strength": 0.4, "rationale": "The 40th Brigade's MiG-29 attack on 24 Feb corroborates B's statement that its fighters operated over Kyiv.", "independent": true}
+{"pair": "9ad93d05ae10", "relation": "supports", "from": "claim:cc18_0028_11", "to": "claim:c01_0032_27", "strength": 0.4, "rationale": "HUR's estimate of mass Geran-4/5 output corroborates the 2026 shift to jet Gerans.", "independent": true}
+{"pair": "9b8289c3b228", "relation": "none", "rationale": "October 2023 assessment and a December 2023 engagement."}
+{"pair": "9bcb7d8b1dc9", "relation": "duplicates", "from": "claim:cc11_0032_23", "to": "claim:cc11_0035_12", "strength": 0.85, "rationale": "Same Pravda account of the pipe infiltration extracted twice; B has more sources."}
+{"pair": "9bf47a6230d5", "relation": "none", "rationale": "Encirclement and road reopening are different moments of the siege."}
+{"pair": "9c6162b35a8c", "relation": "none", "rationale": "A note on road naming and a note on source disagreement."}
+{"pair": "9c7a657874c4", "relation": "none", "rationale": "Truck count and the replacement truck's failure."}
+{"pair": "9cad1c42dfc5", "relation": "none", "rationale": "A video game's setting and town populations."}
+{"pair": "9d04b9f77ee3", "relation": "none", "rationale": "Sequential Rakivka pontoon events on different days."}
+{"pair": "9d05b0254cde", "relation": "none", "rationale": "Ballistic and cruise-missile waves at different times."}
+{"pair": "9d0e9735dc34", "relation": "none", "rationale": "River geography and the bridge strikes; context only."}
+{"pair": "9d804f3555be", "relation": "supports", "from": "claim:cc09_0006_20", "to": "claim:cc09_0010_45", "strength": 0.8, "rationale": "Popov's removal on 11-12 July and Lyamin's replacement of him are mutually corroborating; same sources.", "independent": false}
+{"pair": "9e5590c45906", "relation": "supports", "from": "claim:cc01_0011_93", "to": "claim:cc01_0025_08", "strength": 0.4, "rationale": "ISW's view of Chaiko running the regrouping is consistent with B's identification of him as commander against Kyiv; shared ISW source.", "independent": false}
+{"pair": "9eb69ff402cd", "relation": "none", "rationale": "The 7 June afternoon attempt and the 7-8 June night main breach are different attacks."}
+{"pair": "9ecc3cbc33d5", "relation": "supports", "from": "claim:cc14_0014_107", "to": "claim:cc14_0031_21", "strength": 0.7, "rationale": "Drones two or three a minute over the highway on 9 March corroborates 'around the clock' drone cover in February-March; same BBC source.", "independent": false}
+{"pair": "9ed3ae3656be", "relation": "none", "rationale": "A disputed Russian casualty claim and a report of the landing's purpose."}
+{"pair": "9ee65aa0c8c2", "relation": "none", "rationale": "An assessment of Russian axes and Ukrainian company sectors."}
+{"pair": "9ee981670dbe", "relation": "duplicates", "from": "claim:cc15_0026_05", "to": "claim:cc15_0004_07", "strength": 0.85, "rationale": "Same Kyiv Independent report that the Dobropillia salient was gone by late October after the Azov Corps was committed."}
+{"pair": "9eee0fe9c83e", "relation": "none", "rationale": "General defence specification and a specific crossing; context only."}
+{"pair": "9f0977b748bd", "relation": "supports", "from": "claim:cc09_0007_13", "to": "claim:cc09_0007_12", "strength": 0.6, "rationale": "Oryx's 5 Bradleys and 1 Leopard destroyed is consistent with DeepState's at-least 4 APCs and 1 Leopard irrecoverable.", "independent": true}
+{"pair": "9f4a5437d643", "relation": "supports", "from": "claim:cc07_0048_30", "to": "claim:cc07_0032_10", "strength": 0.6, "rationale": "B's 5th Brigade clearing Klishchiivka in September 2023 corroborates A; shared Militarnyi source.", "independent": false}
+{"pair": "9fafbaae86fb", "relation": "none", "rationale": "Glide-bomb targets and the aim of the Lyman salient."}
+{"pair": "9fdcce91aaaa", "relation": "refines", "from": "claim:cc16_0040_14", "to": "claim:cc16_0011_35", "strength": 0.7, "rationale": "B gives a fuller account of the same Seryshevo truck fire."}
+{"pair": "9ff62b3e6559", "relation": "supports", "from": "claim:cc09_0010_105", "to": "claim:cc09_0043_26", "strength": 0.6, "rationale": "The essay's date and content underpin the assessment that it signalled the offensive's end; same source.", "independent": false}
+{"pair": "a02ae3a2d87a", "relation": "supports", "from": "claim:cc16_0020_01", "to": "claim:cc16_0040_06", "strength": 0.4, "rationale": "The computed 7 km from Olenegorsk to Olenya is consistent with the reported 6-7 km launch distance.", "independent": true}
+{"pair": "a05199d62e69", "relation": "supports", "from": "claim:cc19_0025_06", "to": "claim:cc19_0004_01", "strength": 0.6, "rationale": "Both describe the 21 August 2026 cut to Kolodiazi; same source.", "independent": false}
+{"pair": "a058a5875540", "relation": "none", "rationale": "Post-strike salvo composition and a pre-strike count at Belaya."}
+{"pair": "a0b1a4168f1a", "relation": "none", "rationale": "Later relocation and the MoD's statement on fires."}
+{"pair": "a0c44bd3d3e5", "relation": "supports", "from": "claim:cc09_0010_14", "to": "claim:cc09_0040_01", "strength": 0.8, "rationale": "Both describe two groups of about 20 vehicles behind mine-clearing vehicles on 7 June; same sources.", "independent": false}
+{"pair": "a0e47b603a0b", "relation": "none", "rationale": "Milblogger report of strikes and a unit-subordination fact."}
+{"pair": "a0fed52f7a2a", "relation": "supports", "from": "claim:cc01_0030_10", "to": "claim:cc01_0032_16", "strength": 0.6, "rationale": "The 25 Feb dam blast corroborates Syrskyi's flooding decision on 25/26 Feb; same source.", "independent": false}
+{"pair": "a11fc8664c28", "relation": "supports", "from": "claim:cc19_0009_63", "to": "claim:c07_0012_05", "strength": 0.5, "rationale": "ISW's geolocated summer advances near Ridkodub, Katerynivka and Nove corroborate the DeepState changelog's liberation of those villages.", "independent": true}
+{"pair": "a164a4543f08", "relation": "none", "rationale": "Early-war jamming effects and later SAM lethality refer to different periods."}

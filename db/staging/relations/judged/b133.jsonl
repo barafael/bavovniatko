@@ -1,0 +1,40 @@
+{"pair": "340bddbdee20", "relation": "none", "rationale": "Siege duration and force size are different facts."}
+{"pair": "3412780902e7", "relation": "none", "rationale": "Time zones and a Russian MoD statement are unrelated."}
+{"pair": "345b1b6e469f", "relation": "none", "rationale": "ISW's shift of effort and the milblogger troop claim do not bear on each other directly."}
+{"pair": "346dc32fa4e6", "relation": "supports", "from": "claim:cc19_0009_89", "to": "claim:c05_0025_42", "strength": 0.7, "rationale": "Same corps claim that the Voronezh diesel pipeline carried 50% of fuel and was shut.", "independent": false}
+{"pair": "3514b1fe1259", "relation": "supports", "from": "claim:cc01_0014_28", "to": "claim:cc01_0006_01", "strength": 0.6, "rationale": "Prybirsk as the convoy's tail on 1 March matches the column stretching back to Prybirsk.", "independent": true}
+{"pair": "352dd5f17a33", "relation": "duplicates", "from": "claim:cc07_0051_02", "to": "claim:cc07_0058_11", "strength": 0.85, "rationale": "Same Prigozhin claim about planning the meat grinder with Surovikin."}
+{"pair": "3537f2dd45d7", "relation": "supports", "from": "claim:cc16_0028_12", "to": "claim:cc16_0015_10", "strength": 0.7, "rationale": "RBC-Ukraine describes the same role of Ivanovo Severny.", "independent": true}
+{"pair": "357664d5a230", "relation": "refines", "from": "claim:cc16_0011_36", "to": "claim:cc16_0011_35", "strength": 0.5, "rationale": "Gives the cause of the Seryshevo truck burning."}
+{"pair": "35a9cfcb7c0a", "relation": "supports", "from": "claim:cc09_0036_01", "to": "claim:c04_0019_09", "strength": 0.7, "rationale": "Same RUSI account of company breaches with MICLIC and UR-77.", "independent": false}
+{"pair": "35db696ff383", "relation": "none", "rationale": "Delta's origin and Aerorozvidka's targeting practice are related context only."}
+{"pair": "35eb3e82b26d", "relation": "none", "rationale": "July and October events of the same brigades."}
+{"pair": "360420584f2b", "relation": "duplicates", "from": "claim:cc16_0042_13", "to": "claim:cc16_0011_28", "strength": 0.8, "rationale": "Same Zeus's Lightning piece trailing bombers at Olenya and Engels."}
+{"pair": "3613f2c33f01", "relation": "none", "rationale": "Yurchenko's command and a rumour of his firing are different facts."}
+{"pair": "364c56f636e3", "relation": "supports", "from": "claim:cc01_0017_01", "to": "claim:cc01_0011_43", "strength": 0.5, "rationale": "The convoy on the P02 matches Maxar imagery of it on the P02.", "independent": false}
+{"pair": "367443404315", "relation": "supports", "from": "claim:cc09_0010_41", "to": "claim:cc09_0040_11", "strength": 0.6, "rationale": "The 11 July strike on the reserve command post is the same strike Popov referred to.", "independent": false}
+{"pair": "367d66f9638f", "relation": "none", "rationale": "Two separate uses of the pipe."}
+{"pair": "36cda05d86a4", "relation": "none", "rationale": "OSINT count and a photo of Maliuk are unrelated."}
+{"pair": "36e3814ef18e", "relation": "refines", "from": "claim:cc12_0010_55", "to": "claim:cc11_0035_25", "strength": 0.7, "rationale": "Dates the Sea of Azov beacon fixes to 19 February 2024 and names the Su-34 and Su-35S crews."}
+{"pair": "36f5e2bf8f2a", "relation": "supports", "from": "claim:cc01_0032_16", "to": "claim:cc01_0006_04", "strength": 0.6, "rationale": "Syrskyi's decision to flood the Irpin on 25/26 February matches the breach.", "independent": false}
+{"pair": "371c40eaed73", "relation": "none", "rationale": "Route and computed distance are separate facts."}
+{"pair": "37b966d400bf", "relation": "none", "rationale": "Base location and a loss claim are separate facts."}
+{"pair": "37fc87e08694", "relation": "supports", "from": "claim:cc15_0031_07", "to": "claim:cc15_0018_03", "strength": 0.5, "rationale": "Russian credit to the 27th Division and 506th Regiment for Pokrovsk matches ISW's attackers from the south.", "independent": true}
+{"pair": "38193f7f8cd4", "relation": "supports", "from": "claim:cc09_0010_89", "to": "claim:cc09_0010_91", "strength": 0.6, "rationale": "The WSJ report of the main line breached near Verbove matches ISW's judgement.", "independent": false}
+{"pair": "382c0f2a152c", "relation": "none", "rationale": "July and October events of the same brigades."}
+{"pair": "38a68fbcd555", "relation": "none", "rationale": "A command exchange and village coordinates are separate facts."}
+{"pair": "38c14f92f0af", "relation": "supports", "from": "claim:cc19_0009_75", "to": "claim:cc19_0003_08", "strength": 0.7, "rationale": "The corps video describes the diesel pipeline being shut.", "independent": false}
+{"pair": "38f246fc3265", "relation": "duplicates", "from": "claim:cc15_0031_16", "to": "claim:cc15_0019_25", "strength": 0.95, "rationale": "Same ISW judgement that the 51st and 2nd CAAs were severely degraded."}
+{"pair": "3900582e0db9", "relation": "none", "rationale": "Destroyed aircraft and surviving aircraft counts are different measures."}
+{"pair": "39125f749ca8", "relation": "none", "rationale": "Damage floor and base location are separate facts."}
+{"pair": "397313fcb58e", "relation": "supports", "from": "claim:cc01_0032_03", "to": "claim:cc01_0026_08", "strength": 0.5, "rationale": "The 2nd Battalion staying at Bila Tserkva matches the brigade's home there.", "independent": false}
+{"pair": "397438f720f8", "relation": "supports", "from": "claim:cc09_0025_12", "to": "claim:cc09_0010_58", "strength": 0.4, "rationale": "The leaked inventory of Strykers and Challenger 2s matches the vehicles seen with the 82nd.", "independent": false}
+{"pair": "399bdbd07950", "relation": "duplicates", "from": "claim:cc18_0037_13", "to": "claim:cc18_0013_76", "strength": 0.9, "rationale": "Same Ankara Patriot licence pledge without a timeline, same source."}
+{"pair": "39ac60172979", "relation": "duplicates", "from": "claim:cc01_0014_15", "to": "claim:cc01_0011_27", "strength": 0.85, "rationale": "Same OMON convoy destroyed at the Horenka bridge on 25 February 2022."}
+{"pair": "3a12d008d2bf", "relation": "supports", "from": "claim:cc09_0010_90", "to": "claim:cc09_0010_89", "strength": 0.6, "rationale": "Tarnavskyi's breakthrough statement to CNN corroborates the WSJ report of the breach near Verbove.", "independent": true}
+{"pair": "3a3087868f58", "relation": "supports", "from": "claim:cc15_0007_56", "to": "claim:cc15_0022_43", "strength": 0.7, "rationale": "Same ISW-reported fog-timed column attacks on Shakhove in October 2025.", "independent": false}
+{"pair": "3a52823b2669", "relation": "supports", "from": "claim:cc01_0011_82", "to": "claim:cc01_0011_109", "strength": 0.6, "rationale": "The 19 March image of bodies is the Maxar evidence against the staging claims.", "independent": false}
+{"pair": "3a5c38d9d70a", "relation": "supports", "from": "claim:cc01_0028_11", "to": "claim:cc01_0011_57", "strength": 0.4, "rationale": "Three Russian pontoons at Moshchun is consistent with the Rakivka pontoon.", "independent": true}
+{"pair": "3a71a44f473a", "relation": "supports", "from": "claim:cc01_0011_51", "to": "claim:cc01_0026_17", "strength": 0.7, "rationale": "Retaking Makariv on 2 March confirms the 14th fought there.", "independent": false}
+{"pair": "3aa383d1cd1f", "relation": "none", "rationale": "Commander briefings and unit moves are sequential preparations, not corroboration."}
+{"pair": "3ab7ccbd164a", "relation": "supports", "from": "claim:cc14_0029_29", "to": "claim:cc14_0031_21", "strength": 0.7, "rationale": "Same BBC report of constant drones over the Kursk supply highway.", "independent": false}

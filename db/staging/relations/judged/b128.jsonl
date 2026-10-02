@@ -1,0 +1,40 @@
+{"pair": "1084aba5f093", "relation": "none", "rationale": "An attack and a map box are unrelated."}
+{"pair": "108ed2bfa883", "relation": "none", "rationale": "A Russian pre-strike basing claim does not bear on the destroyed floor."}
+{"pair": "10aa55582f30", "relation": "supports", "from": "claim:cc01_0017_01", "to": "claim:cc01_0006_01", "strength": 0.6, "rationale": "The convoy route from Prybirsk to Hostomel matches the column stretching back to Prybirsk.", "independent": true}
+{"pair": "10da50fa9064", "relation": "supports", "from": "claim:cc11_0010_60", "to": "claim:cc11_0025_03", "strength": 0.6, "rationale": "Use of the service-water pipe in mid-January matches ISW's January shift to the pipe.", "independent": true}
+{"pair": "10f8dfbfbff9", "relation": "duplicates", "from": "claim:cc15_0014_07", "to": "claim:cc15_0010_06", "strength": 0.9, "rationale": "Same statement that only roads via Rivne and Svitle remained, same source."}
+{"pair": "10ff14fcef99", "relation": "supports", "from": "claim:cc01_0009_05", "to": "claim:cc01_0005_03", "strength": 0.5, "rationale": "No Il-76 landing on 25 February is consistent with the airlift being aborted.", "independent": false}
+{"pair": "110aa8b1c3f5", "relation": "none", "rationale": "An event and a computed location are different facts."}
+{"pair": "111425eacc07", "relation": "supports", "from": "claim:cc16_0016_04", "to": "claim:cc16_0040_08", "strength": 0.4, "rationale": "OSINT geolocating a destroyed Tu-95MS at Olenya corroborates Tu-95MS burning there.", "independent": true}
+{"pair": "112281050a0c", "relation": "none", "rationale": "Bakhmut aims and Kupiansk's road links are unrelated."}
+{"pair": "1156d0c58115", "relation": "none", "rationale": "The raid and a later exhibition are different facts."}
+{"pair": "1163c08379ea", "relation": "refines", "from": "claim:cc09_0010_15", "to": "claim:cc09_0006_05", "strength": 0.6, "rationale": "Explains how the first Mala Tokmachka breach failed: mines and drone-spotted artillery."}
+{"pair": "11b797c5f6a3", "relation": "duplicates", "from": "claim:cc19_0025_07", "to": "claim:cc19_0004_02", "strength": 0.9, "rationale": "Same escape toward the Zherebets during the Kolodiazi cut, same source."}
+{"pair": "11bf8db22884", "relation": "supports", "from": "claim:cc12_0023_29", "to": "claim:cc01_0028_29", "strength": 0.7, "rationale": "Same RUSI judgement that R-77-1-armed Su-35S outranged Ukrainian R-27s.", "independent": false}
+{"pair": "1239d36d9c01", "relation": "refines", "from": "claim:cc14_0031_01", "to": "claim:cc14_0004_01", "strength": 0.6, "rationale": "Specifies that an 80th Brigade company took the Sudzha checkpoint stronghold."}
+{"pair": "1253a7223b20", "relation": "supports", "from": "claim:cc01_0030_12", "to": "claim:cc01_0011_57", "strength": 0.5, "rationale": "Same Rakivka pontoon crossing at Moshchun on consecutive days.", "independent": false}
+{"pair": "127d12c5ece5", "relation": "supports", "from": "claim:cc09_0043_19", "to": "claim:cc09_0010_42", "strength": 0.6, "rationale": "Politico's account of Popov's firing in July matches the 11 July leak.", "independent": true}
+{"pair": "12b7143815ea", "relation": "none", "rationale": "Imagery timing and a Russian MoD statement are different facts."}
+{"pair": "1315b44b97e5", "relation": "none", "rationale": "Road geometry and a crossing event are separate facts."}
+{"pair": "1371f245a468", "relation": "duplicates", "from": "claim:cc14_0014_107", "to": "claim:cc14_0029_29", "strength": 0.9, "rationale": "Same BBC figure of two or three drones a minute over the Sudzha highway."}
+{"pair": "13df2280f012", "relation": "none", "rationale": "Invasion overview and company sectors are different facts."}
+{"pair": "13f43bd3dd4a", "relation": "none", "rationale": "Base location and a damage report are separate facts."}
+{"pair": "140cd26186d7", "relation": "none", "rationale": "Start of the road campaign and drone density are different facts."}
+{"pair": "1412d1244341", "relation": "refines", "from": "claim:cc07_0010_53", "to": "claim:cc07_0006_06", "strength": 0.6, "rationale": "Dates Wagner's push into Berkhivka and Yahidne to 22-27 February 2023."}
+{"pair": "142a7db345a1", "relation": "none", "rationale": "The event and the technique are related context only."}
+{"pair": "14382c4d7cb1", "relation": "supports", "from": "claim:cc14_0024_11", "to": "claim:cc14_0014_032", "strength": 0.7, "rationale": "Same Kyiv Independent report of the 225th at Darino on 12 August 2024.", "independent": false}
+{"pair": "144163317d20", "relation": "refines", "from": "claim:cc01_0011_28", "to": "claim:cc01_0006_04", "strength": 0.7, "rationale": "Gives the time, approval and two attempts of the Kozarovychi breach."}
+{"pair": "144b28e4909f", "relation": "none", "rationale": "Town populations and air-defence losses are unrelated."}
+{"pair": "144eeb97e8b1", "relation": "supports", "from": "claim:cc09_0018_04", "to": "claim:cc09_0015_18", "strength": 0.6, "rationale": "OSM geometry puts the N08 past Novopokrovka, matching its position on the axis' eastern flank.", "independent": true}
+{"pair": "1490ae950764", "relation": "duplicates", "from": "claim:cc19_0012_30", "to": "claim:cc19_0012_16", "strength": 0.85, "rationale": "Same Kolodiazi location 2 km west of the Zherebets, same source."}
+{"pair": "14abdc895a94", "relation": "duplicates", "from": "claim:cc19_0009_57", "to": "claim:cc19_0004_01", "strength": 0.9, "rationale": "Same 21 August cut to Kolodiazi, same source."}
+{"pair": "14e84be18fd1", "relation": "none", "rationale": "A repair-base move and a strike on positions are different facts."}
+{"pair": "1524f2ee74be", "relation": "duplicates", "from": "claim:cc09_0029_02", "to": "claim:cc09_0010_93", "strength": 0.9, "rationale": "Same Budanov claim that Romanchuk was wounded on 22 September 2023."}
+{"pair": "15b05bb1ef28", "relation": "supports", "from": "claim:cc09_0035_10", "to": "claim:c03_0031_02", "strength": 0.5, "rationale": "The southern-front kill chain of drones, artillery and Lancets illustrates the reconnaissance-fire complex.", "independent": true}
+{"pair": "15ce5cdac734", "relation": "none", "rationale": "Different dates and claimants on the Zherebets fighting; a progression, not corroboration."}
+{"pair": "15ebc8cfbc24", "relation": "none", "rationale": "The strike and a Russian media piece are different facts."}
+{"pair": "15f3c1e93a63", "relation": "refines", "from": "claim:cc15_0022_44", "to": "claim:cc15_0007_89", "strength": 0.8, "rationale": "Names the 40th Naval Infantry Brigade and the 11 vehicles lost at Razine."}
+{"pair": "16546725adb7", "relation": "none", "rationale": "Two different exchanges between the same commanders."}
+{"pair": "16a7ab2cb6e9", "relation": "duplicates", "from": "claim:cc01_0028_12", "to": "claim:cc01_0011_37", "strength": 0.85, "rationale": "Same Vokzalna Street ambush, same MWI source."}
+{"pair": "170199822f93", "relation": "supports", "from": "claim:cc19_0004_01", "to": "claim:cc19_0009_58", "strength": 0.8, "rationale": "Same Kolodiazi cut, same source.", "independent": false}
+{"pair": "173b7540ea2a", "relation": "none", "rationale": "Two separate uses of the pipe."}

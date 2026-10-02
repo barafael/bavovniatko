@@ -1,0 +1,4 @@
+{"pair": "ff999f124a4a", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ffaf5d5ed9b0", "relation": "supports", "from": "claim:cc16_0042_15", "to": "claim:cc16_0006_03", "strength": 0.8, "rationale": "Both say the Ukrainka-bound truck was lost (burned) before reaching its target.", "independent": false}
+{"pair": "ffe746fb94d8", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fffd7186fac9", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}

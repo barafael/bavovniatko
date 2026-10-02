@@ -1,0 +1,40 @@
+{"pair": "1e34827f9846", "relation": "none", "rationale": "Map box and road geometry are separate facts."}
+{"pair": "1e35e1f03766", "relation": "none", "rationale": "Map box and road geometry are separate facts."}
+{"pair": "1ea56844ef0e", "relation": "none", "rationale": "Distances to different bases."}
+{"pair": "1ee37dbee1c2", "relation": "none", "rationale": "An event and road geography are related context only."}
+{"pair": "1f135993a244", "relation": "contradicts", "from": "claim:cc11_0010_60", "to": "claim:cc11_0045_20", "strength": 0.5, "rationale": "The January 2024 Avdiivka pipe is 1.3-1.4 m wide in Ukrainian reporting but 0.5 m in the Russian milblogger claim.", "resolution": "Russian channels may describe a different conduit or exaggerate the feat; Ukrainska Pravda's dimensions come from Ukrainian sources."}
+{"pair": "1f9c6ddd1459", "relation": "supports", "from": "claim:cc09_0035_22", "to": "claim:c00_0037_06", "strength": 0.8, "rationale": "Same ISW report of ATACMS hitting Berdiansk on 17 October 2023.", "independent": false}
+{"pair": "1fb251527a28", "relation": "supports", "from": "claim:cc01_0017_02", "to": "claim:cc01_0014_28", "strength": 0.5, "rationale": "The road length from Prybirsk matches the convoy's tail at Prybirsk.", "independent": false}
+{"pair": "20691b0b1d5c", "relation": "supports", "from": "claim:cc14_0014_045", "to": "claim:cc14_0005_01", "strength": 0.8, "rationale": "The Karyzh bridge on 19 August completes the three-bridge sequence.", "independent": false}
+{"pair": "20734d5964ab", "relation": "none", "rationale": "Unit list and their denial statement are different facts."}
+{"pair": "20ed19b2c79e", "relation": "none", "rationale": "Claims about different bases."}
+{"pair": "21012412125f", "relation": "none", "rationale": "Launch event and base location are separate facts."}
+{"pair": "21246f67c790", "relation": "none", "rationale": "Town role and drone attacks on the road are related context."}
+{"pair": "213f9b8e4ec5", "relation": "none", "rationale": "A pre-strike claim and a photo of Maliuk are unrelated."}
+{"pair": "21ec01bbd130", "relation": "none", "rationale": "Invasion overview and river geography are unrelated."}
+{"pair": "21f55772e436", "relation": "none", "rationale": "Damage count and later redeployment are different facts."}
+{"pair": "222c44237330", "relation": "none", "rationale": "Gerasimov's appointment and Prigozhin's May tirade are different events."}
+{"pair": "225bb9f2c981", "relation": "supports", "from": "claim:cc11_0028_02", "to": "claim:cc11_0010_19", "strength": 0.7, "rationale": "The 110th holding the terrikon matches its role in defeating the assault on it.", "independent": false}
+{"pair": "227544a17a16", "relation": "duplicates", "from": "claim:cc16_0040_10", "to": "claim:cc16_0011_49", "strength": 0.85, "rationale": "Same Belaya video with Maliuk's voice, same source."}
+{"pair": "2281527d5a4e", "relation": "supports", "from": "claim:cc19_0009_87", "to": "claim:c05_0025_36", "strength": 0.7, "rationale": "The ISW-reported air-dropped UGVs over 10 km deep match the corps claim.", "independent": false}
+{"pair": "22ad87141d8e", "relation": "supports", "from": "claim:cc09_0040_17", "to": "claim:cc09_0010_89", "strength": 0.6, "rationale": "Armour crossing the line west of Verbove corroborates the reported breach.", "independent": false}
+{"pair": "22cdc1ed55ef", "relation": "none", "rationale": "Units in Kursk at different dates; not the same state."}
+{"pair": "22e74673fa58", "relation": "none", "rationale": "Location and an escape route are separate facts."}
+{"pair": "230f46bff0d1", "relation": "supports", "from": "claim:cc15_0007_48", "to": "claim:cc15_0007_38", "strength": 0.5, "rationale": "Ukraine retaking Vesele and Zolotyi Kolodiaz a week later confirms the Russian infiltrators had reached them.", "independent": true}
+{"pair": "232515d56ffb", "relation": "none", "rationale": "Counterattack and village coordinates are separate facts."}
+{"pair": "234790ef9b03", "relation": "none", "rationale": "Pre-war dispersal and the 3 March deconfliction change are different facts."}
+{"pair": "23af1b06fbf2", "relation": "supports", "from": "claim:cc19_0023_18", "to": "claim:cc19_0009_87", "strength": 0.7, "rationale": "Same air-dropped kamikaze UGVs more than 10 km deep.", "independent": false}
+{"pair": "23cdb4803d35", "relation": "duplicates", "from": "claim:cc07_0010_17", "to": "claim:cc07_0058_11", "strength": 0.85, "rationale": "Same Prigozhin claim that he and Surovikin planned the Bakhmut meat grinder in October 2022."}
+{"pair": "2403131b355a", "relation": "duplicates", "from": "claim:cc01_0030_17", "to": "claim:cc01_0011_82", "strength": 0.8, "rationale": "Same Maxar image of bodies on Yablunska Street on 19 March 2022."}
+{"pair": "242d2d265e65", "relation": "supports", "from": "claim:cc01_0014_09", "to": "claim:cc01_0011_82", "strength": 0.7, "rationale": "Same Maxar imaging of bodies on Yablunska Street, with location.", "independent": false}
+{"pair": "245cbd66d499", "relation": "supports", "from": "claim:cc01_0030_11", "to": "claim:cc01_0011_60", "strength": 0.6, "rationale": "Civilians crossing the broken P30 bridge under fire matches the shelling of the evacuation point.", "independent": false}
+{"pair": "24a3ea582ce0", "relation": "supports", "from": "claim:cc09_0018_02", "to": "claim:cc09_0018_01", "strength": 0.6, "rationale": "Shtupun's \"highway to Tokmak\" matches the T0408 axis through Robotyne to Tokmak.", "independent": true}
+{"pair": "24b3c6d15d11", "relation": "none", "rationale": "Different moments of the drone tracks."}
+{"pair": "24c6c4458a08", "relation": "supports", "from": "claim:c05_0025_42", "to": "claim:cc19_0003_08", "strength": 0.6, "rationale": "The diesel pipeline cut is the same one the corps found.", "independent": false}
+{"pair": "24f00c94ae93", "relation": "duplicates", "from": "claim:cc16_0040_02", "to": "claim:cc16_0011_15", "strength": 0.9, "rationale": "Same cabin-roof hinge anecdote, same source."}
+{"pair": "24f430e2cb10", "relation": "duplicates", "from": "claim:cc15_0024_15", "to": "claim:cc15_0007_91", "strength": 0.9, "rationale": "Same BBC flag-raising in northern Pokrovsk on 9 December 2025."}
+{"pair": "252583151802", "relation": "refines", "from": "claim:cc18_0013_37", "to": "claim:cc18_0006_06", "strength": 0.6, "rationale": "Specifies five ballistic missiles from Bryansk between 02:17 and 02:21."}
+{"pair": "253376b37075", "relation": "none", "rationale": "Assembly totals and a hinge anecdote are different facts."}
+{"pair": "25358c4d627e", "relation": "duplicates", "from": "claim:cc19_0025_11", "to": "claim:cc19_0023_18", "strength": 0.85, "rationale": "Same kamikaze UGV drops over 10 km deep, same source."}
+{"pair": "254c16c2f4f1", "relation": "none", "rationale": "Invasion overview and a flooding assessment are different facts."}
+{"pair": "2574ac91464d", "relation": "supports", "from": "claim:cv01_0007_06", "to": "claim:cc01_0025_03", "strength": 0.5, "rationale": "The General Staff names the 2nd and 41st Armies on the Chernihiv-Kyiv axis, matching MWI's Northeastern Front.", "independent": true}

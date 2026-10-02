@@ -166,6 +166,31 @@ def query_variants(q: str) -> list[str]:
     return out
 
 
+def photon(q: str) -> dict | None:
+    """Fallback geocoder (Photon by Komoot, OSM data; points only), shaped like a Nominatim hit."""
+    try:
+        r = requests.get("https://photon.komoot.io/api/", params={"q": q.replace(",", " "), "limit": 5, "bbox": "20,40,60,70",
+                                                                     "lang": "en"},
+                         headers={"User-Agent": UA}, timeout=30)
+        feats = r.json().get("features", []) if r.ok else []
+    except Exception:
+        return None
+    time.sleep(1.1)
+    # if the query names an oblast/region, insist the hit lies in it (Photon happily returns same-named villages elsewhere)
+    m = re.search(r"([A-Z][a-z]+(?:[- ][A-Z][a-z]+)?) (?:Oblast|Krai|Region)", q)
+    if m:
+        stem = m[1][:5].lower()
+        feats = [f for f in feats if stem in (f["properties"].get("state") or "").lower()]
+    if not feats:
+        return None
+    f = feats[0]
+    pr, (lon, lat) = f["properties"], f["geometry"]["coordinates"]
+    otype = {"N": "node", "W": "way", "R": "relation"}.get(pr.get("osm_type"), "osm")
+    return {"osm_type": otype, "osm_id": pr.get("osm_id"), "lat": lat, "lon": lon,
+            "display_name": ", ".join(x for x in (pr.get("name"), pr.get("state"), pr.get("country")) if x) + " (via Photon)",
+            "category": pr.get("osm_key"), "type": pr.get("osm_value"), "geojson": {"type": "Point", "coordinates": [lon, lat]}}
+
+
 def cmd_geocode(limit: int | None, retry_failed: bool = False):
     cache = {}
     if GEOCODE.exists():
@@ -194,6 +219,8 @@ def cmd_geocode(limit: int | None, retry_failed: bool = False):
                 if hits:
                     break
             best = hits[0] if hits else None
+            if not best:
+                best = photon(e.get("geocode_query") or e["en"])
             rec = {"id": e["id"], "query": q, "found": bool(best)}
             if best:
                 rec.update({"osm": f"{best.get('osm_type')}/{best.get('osm_id')}", "display_name": best.get("display_name"),

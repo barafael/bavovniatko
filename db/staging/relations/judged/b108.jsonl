@@ -1,0 +1,40 @@
+{"pair": "c26877f46276", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c295b1a71b7f", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c2a168b8f635", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c2b561a32d4a", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c2ba9641de75", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c2df03a25059", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c2ea63242d67", "relation": "supersedes", "from": "claim:cc09_0007_09", "to": "claim:cc09_0007_08", "strength": 0.8, "rationale": "The MoD's 260 km² by 18 September 2023 updates its 256.5 km² by 11 September for the same southern-front series."}
+{"pair": "c35cac6645a8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c3c49823e3a8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c430dc593543", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c454494f85e9", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c4cba1c3c3cd", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c4ecf7a1692a", "relation": "supports", "from": "claim:cc11_0016_05", "to": "claim:cc11_0016_04", "strength": 0.6, "rationale": "SRTM shows only about 30-50 m of relief for the Avdiivka terrikon, consistent with Euromaidan Press's forty-metre description.", "independent": true}
+{"pair": "c59fafd1fa78", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c5f69623d806", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c60917d5eb11", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c6507232b0f0", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c6b524c48a7d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c6f0911860a1", "relation": "supports", "from": "claim:cc09_0035_21", "to": "claim:cc09_0010_62", "strength": 0.5, "rationale": "The 47th Brigade's MANPADS downing of a Ka-52 on 17 August 2023 corroborates a Ka-52 loss near Robotyne that day.", "independent": false}
+{"pair": "c7113863d1e8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c74e55fabb43", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c82b105320cc", "relation": "contradicts", "from": "claim:cc14_0027_09", "to": "claim:cc14_0027_10", "strength": 0.5, "rationale": "NIS/UK put North Korean casualties at about 6,000 while HUR put them above 7,000 in the same months.", "resolution": "Different agencies' estimates; HUR's June 2026 figure may be a later or broader count than the NIS/UK one."}
+{"pair": "c850d9272610", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c87cabad7d04", "relation": "supports", "from": "claim:cc16_0006_02", "to": "claim:c01_0022_15", "strength": 0.8, "rationale": "Butusov's 116 drones airborne closely matches the 117 FPVs launched in Spiderweb.", "independent": true}
+{"pair": "c8877c34349c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c89793748230", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c96b925d8be6", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c9907cd02d78", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "c9d62b6d7e5d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ca064a92557b", "relation": "supports", "from": "claim:cc11_0010_42", "to": "claim:cc11_0032_29", "strength": 0.8, "rationale": "Zaluzhnyi's claim of 7 Su-25s lost at Avdiivka in a month is the basis of the later statement of seven Su-25s in a month.", "independent": false}
+{"pair": "ca25641d0209", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ca689498ee29", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cabfde3e4181", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cac7ee5b7fa8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cad1a1373e63", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cad783df51d6", "relation": "supports", "from": "claim:cc18_0010_05", "to": "claim:cc18_0004_01", "strength": 0.6, "rationale": "The MoD's rounder \"almost 500\" drones and 77 missiles roughly matches the Air Force count of 496 drones and 74 missiles.", "independent": false}
+{"pair": "cb0059e7af10", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cb4062962990", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cb54f61d3749", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cb5fd516ec75", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}

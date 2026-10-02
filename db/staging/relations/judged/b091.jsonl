@@ -1,0 +1,40 @@
+{"pair": "11fb928c5822", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1218cac64cea", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "12262d3f4a78", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "129c2a5e4449", "relation": "contradicts", "from": "claim:cc16_0006_02", "to": "claim:cc16_0026_14", "strength": 0.5, "rationale": "Butusov says 116 drones became airborne while the SBU says 117 were launched.", "resolution": "Minor count difference; the official 117 may include a drone that did not take off."}
+{"pair": "12f4c86645ec", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "134023c337ce", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "13b6c8e93731", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "13fdf748ac00", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1402f96b7430", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "14b4975c104e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "14d5061ce2f7", "relation": "supports", "from": "claim:cc18_0010_07", "to": "claim:cc18_0010_06", "strength": 0.5, "rationale": "The derived outcome band of about 96% of drones downed is consistent with the Defence Ministry's statement that 90% of Shahed-type drones were intercepted.", "independent": false}
+{"pair": "15145a0fd77f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1532de83e2e2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1584a7e3eecc", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1585be7e18e7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "161a6531ac8b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "16564e3ff44e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "16d8fef7c056", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "17057863bc51", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1714826bd9bb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1760a4665e5b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "17660dc001b9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "177d6e3c77d8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "17d577d85e12", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1824b9a94890", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "18597bb02d6a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "185b30821928", "relation": "supports", "from": "claim:cc07_0007_18", "to": "claim:cc07_0010_94", "strength": 0.6, "rationale": "The 19,547 named Wagner dead is consistent with Prigozhin's claim of more than 20,000 Wagner dead.", "independent": false}
+{"pair": "188c8a882820", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "18c153ab35bd", "relation": "supports", "from": "claim:cc14_0026_06", "to": "claim:cc14_0014_067", "strength": 0.6, "rationale": "The US and Ukraine's figure of about 12,000 North Korean troops in Russia by December 2024 bears out the NIS forecast of 10,000 by December.", "independent": true}
+{"pair": "193d261edded", "relation": "contradicts", "from": "claim:cc16_0007_11", "to": "claim:cc16_0047_11", "strength": 0.5, "rationale": "Bronk counts at least 6 Tu-95MS destroyed, while Military Chronicle claims only one Tu-95MS was lost at Olenya, where most were based.", "resolution": "Pro-Russian blog minimising losses; its claim covers only Olenya, not Belaya."}
+{"pair": "1952551a90cb", "relation": "contradicts", "from": "claim:cc16_0007_01", "to": "claim:cc16_0007_12", "strength": 0.7, "rationale": "The SBU claims 41 aircraft hit while BBC Verify counted 12 damaged or destroyed.", "resolution": "The SBU counts every aircraft it says it hit, including light damage; BBC counts only damage visible in satellite imagery."}
+{"pair": "1974c32c480d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "198cf7f04bf2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "19b607309da3", "relation": "supports", "from": "claim:c04_0033_07", "to": "claim:cc07_0007_17", "strength": 0.9, "rationale": "RUSI's 19,547 Wagner dead (88% convicts) is the same figure as the Mediazona/BBC count of leaked Wagner records (17,175 convicts).", "independent": false}
+{"pair": "19ce824d1cf4", "relation": "supports", "from": "claim:cc11_0035_04", "to": "claim:cc11_0010_10", "strength": 0.4, "rationale": "An observed loss of 70 Russian vehicles on 10 October 2023 makes Ukraine's claim of 34 tanks destroyed that day plausible.", "independent": true}
+{"pair": "19ed3704d165", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1a0e0a92f947", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1a38cc57e244", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1a57bf751b1a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "1aec47e60fa0", "relation": "duplicates", "from": "claim:cc01_0011_113", "to": "claim:cc01_0009_25", "strength": 0.9, "rationale": "Both are the Bucha officials' 8 August 2022 count of 458 dead, from the same source."}

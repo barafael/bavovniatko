@@ -1,0 +1,40 @@
+{"pair": "c9ec723b4d6e", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ca01d3165275", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ca0ec0fc198c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cafecf0a8a1e", "relation": "supports", "from": "claim:cc14_0031_11", "to": "claim:cc14_0014_040", "strength": 0.8, "rationale": "Both date the Glushkovo span collapse to 16 August 2024; B places it within the three-bridge sequence.", "independent": false}
+{"pair": "cb020df833ed", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cb22ec754629", "relation": "supports", "from": "claim:cc18_0006_09", "to": "claim:cc18_0026_01", "strength": 0.5, "rationale": "Same Air Force statement: A lists the same defender categories while giving the interception tally.", "independent": false}
+{"pair": "cbc042d96db5", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cbccce6ff1a0", "relation": "supports", "from": "claim:cc14_0014_044", "to": "claim:cc14_0010_10", "strength": 0.6, "rationale": "Kyiv acknowledging HIMARS strikes on Seim pontoons on 18 August is an instance of the repeated pontoon strikes.", "independent": false}
+{"pair": "cbd52c888b9d", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cbd8292b4cb3", "relation": "duplicates", "from": "claim:cc14_0014_045", "to": "claim:cc14_0010_09", "strength": 0.9, "rationale": "Same report of the Karyzh bridge destroyed on 19 August 2024, extracted twice."}
+{"pair": "cbea65b45366", "relation": "duplicates", "from": "claim:cc19_0025_11", "to": "claim:c03_0024_78", "strength": 0.8, "rationale": "Same 3rd Corps account of heavy bombers dropping kamikaze UGVs on mapped command nodes more than 10 km deep."}
+{"pair": "cc155db44d43", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cc1d92a1a601", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cc3848aa2c1e", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ccbd08319af9", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cccd11880b7d", "relation": "duplicates", "from": "claim:cc19_0009_58", "to": "claim:cc19_0004_02", "strength": 0.9, "rationale": "Same assertion that most Russians escaped when 3rd Corps cut through to Kolodiazi about 21 August 2026."}
+{"pair": "cd034b97e2cb", "relation": "duplicates", "from": "claim:cc15_0022_52", "to": "claim:cc15_0007_49", "strength": 0.9, "rationale": "Same assertion that the 93rd Brigade used gun-armed UGVs in the Dobropillia counter-attack."}
+{"pair": "cd60234ffa34", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cd717d813939", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cd89c8483bdd", "relation": "supports", "from": "claim:cc01_0030_08", "to": "claim:cc01_0011_37", "strength": 0.8, "rationale": "Both describe the Vokzalna Street column trapped between two hits and destroyed by artillery.", "independent": false}
+{"pair": "ce011e8dc1d1", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ce42404bc8ac", "relation": "duplicates", "from": "claim:cc17_0022_06", "to": "claim:cc11_0010_63", "strength": 0.9, "rationale": "Same Barabash quote on Tsarska Okhota; A is the dated, canonical extraction."}
+{"pair": "ce6ef1aef0fd", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ceae73cd92a4", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "cef62d4cb4e2", "relation": "supports", "from": "claim:cc09_0010_45", "to": "claim:cc09_0010_42", "strength": 0.6, "rationale": "Lyamin replacing Popov in July 2023 corroborates the leaked dismissal of 11 July.", "independent": false}
+{"pair": "cf2d4cbd0122", "relation": "supports", "from": "claim:cc11_0035_12", "to": "claim:cc11_0025_03", "strength": 0.6, "rationale": "The mid-January pipe-cutting operation is the concrete form of the January shift to the pipe.", "independent": false}
+{"pair": "cf5e58002a22", "relation": "supports", "from": "claim:cc14_0029_30", "to": "claim:cc14_0031_21", "strength": 0.8, "rationale": "Both describe the Sudzha–Sumy highway in Feb–Mar 2025 as blocked by wrecks under constant drone watch.", "independent": false}
+{"pair": "cff026f2470b", "relation": "weakens", "from": "claim:cc16_0011_69", "to": "claim:cc16_0007_06", "strength": 0.5, "rationale": "A second Western official giving only 7 Tu-95 and 4 Tu-22 hit casts doubt on the NATO official's 15 Tu-95 / 20 Tu-22; both are floors, so not a strict contradiction."}
+{"pair": "d0518e4b675e", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d05ab2bc2907", "relation": "supports", "from": "claim:cc04_0013_13", "to": "claim:cc09_0010_13", "strength": 0.8, "rationale": "A states the dam held until 6 June 2023, consistent with its destruction that day.", "independent": false}
+{"pair": "d071da3b2037", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d0e303caf2b4", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d0fb22c0f65f", "relation": "duplicates", "from": "claim:cc09_0035_19", "to": "claim:c03_0008_13", "strength": 0.8, "rationale": "Same claim that lofted S-8 rockets buy about 6–7 km of extra range, extracted in topic 03 and c09."}
+{"pair": "d153f8a484cd", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d168449378d0", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d1ab04c00800", "relation": "supports", "from": "claim:cc09_0030_08", "to": "claim:cc09_0010_64", "strength": 0.8, "rationale": "Both report the 7th VDV Division moved laterally from Kherson to the Robotyne/Orikhiv axis in mid-August 2023.", "independent": false}
+{"pair": "d1e11c270f23", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d1fbf6964fde", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d204b06706f4", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d229c3ea6762", "relation": "refines", "from": "claim:cc15_0022_54", "to": "claim:cc15_0024_16", "strength": 0.7, "rationale": "A gives the dated (15 Oct 2025) detail of the Zmiy evacuation under 152 mm fire that B summarises."}

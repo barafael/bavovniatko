@@ -1,0 +1,40 @@
+{"pair": "a1710642bde7", "relation": "duplicates", "from": "claim:cc15_0007_21", "to": "claim:cc15_0019_07", "strength": 0.85, "rationale": "Same Forbes report of the 155th and 157th failing and being broken up near Pokrovsk; B has more sources."}
+{"pair": "a19148be92b2", "relation": "none", "rationale": "The roof-slide incident and the replacement truck's later failure are separate facts."}
+{"pair": "a19eed2c1b61", "relation": "none", "rationale": "A computed distance and a withdrawal event."}
+{"pair": "a2083b177d7f", "relation": "duplicates", "from": "claim:cc15_0031_05", "to": "claim:cc15_0007_94", "strength": 0.9, "rationale": "Same ISW report of Solodchuk's Myrnohrad and Rodynske claim."}
+{"pair": "a21835ec0f96", "relation": "none", "rationale": "The same brigades in an early-March push and the April withdrawal screen."}
+{"pair": "a291ca0c46b2", "relation": "supports", "from": "claim:cc09_0007_13", "to": "claim:cc09_0006_05", "strength": 0.5, "rationale": "Oryx's logged Bradley and Leopard losses at Mala Tokmachka corroborate the failed first breach.", "independent": false}
+{"pair": "a2ae5b784ac4", "relation": "supports", "from": "claim:cc01_0030_07", "to": "claim:cc01_0014_27", "strength": 0.5, "rationale": "Honchar's account of Aerorozvidka night raids near Ivankiv corroborates A's ambushes; same Guardian source.", "independent": false}
+{"pair": "a2b71190b83c", "relation": "none", "rationale": "Drone alerts and a ballistic-missile alert at different times."}
+{"pair": "a2bc5cadebf7", "relation": "none", "rationale": "Cruise-missile and drone alerts at different times."}
+{"pair": "a2c608d65d4b", "relation": "supports", "from": "claim:cc11_0016_14", "to": "claim:cc11_0006_10", "strength": 0.4, "rationale": "Russian sources' description of the pipe infiltration corroborates that Russian troops came up a pipe.", "independent": true}
+{"pair": "a2e1047fc2e3", "relation": "supports", "from": "claim:cc09_0007_12", "to": "claim:cc09_0006_05", "strength": 0.5, "rationale": "DeepState's count of irrecoverable losses corroborates the failure of the first breach.", "independent": true}
+{"pair": "a324ab5bbce1", "relation": "none", "rationale": "Post-strike salvo composition and a pre-strike count at Olenya."}
+{"pair": "a326059fcbe2", "relation": "supports", "from": "claim:cc19_0012_16", "to": "claim:cc19_0004_02", "strength": 0.4, "rationale": "ISW's location of the pincer junction at Kolodiazi corroborates the cut to Kolodiazi.", "independent": true}
+{"pair": "a37948652828", "relation": "supports", "from": "claim:c01_0024_68", "to": "claim:cc19_0023_18", "strength": 0.7, "rationale": "Both report heavy bomber drones dropping kamikaze UGVs more than 10 km behind Russian lines; two Euromaidan Press articles.", "independent": false}
+{"pair": "a3c9ffc4bc29", "relation": "none", "rationale": "An OSINT-located destroyed Tu-95MS is consistent with Military Chronicle's at-least-one loss."}
+{"pair": "a41dc5f43d5a", "relation": "none", "rationale": "Different details of the pipe infiltration."}
+{"pair": "a42dd5ce5de2", "relation": "supports", "from": "claim:cc19_0009_84", "to": "claim:cc19_0031_02", "strength": 0.7, "rationale": "Both relay the same 19 September 2026 Russian MoD claim about Oskil, Krymky and Studenok; same ISW report.", "independent": false}
+{"pair": "a45f6fe2b33c", "relation": "duplicates", "from": "claim:cc09_0025_11", "to": "claim:cc09_0006_11", "strength": 0.9, "rationale": "Same Kofman-Lee statement of the mid-August commitment of the 46th and 82nd; A has more sources."}
+{"pair": "a48ac2de07ff", "relation": "duplicates", "from": "claim:cc01_0028_27", "to": "claim:cc01_0011_55", "strength": 0.85, "rationale": "Same RUSI figure of at least eight jets lost in a week at low level; A has more sources."}
+{"pair": "a4f6b4d8350b", "relation": "supports", "from": "claim:cc19_0025_06", "to": "claim:cc19_0009_58", "strength": 0.5, "rationale": "B's 'loose ring' at Kolodiazi is consistent with A's statement that most Russians escaped; same source.", "independent": false}
+{"pair": "a543a4333c96", "relation": "none", "rationale": "Pipe description and the January shift of effort."}
+{"pair": "a544449ec29a", "relation": "none", "rationale": "July Ukrainian probes and October Russian counterattacks are different events."}
+{"pair": "a5f02edfbcd3", "relation": "supports", "from": "claim:cc01_0011_57", "to": "claim:cc01_0014_18", "strength": 0.7, "rationale": "The 5 Mar pontoon at Rakivka corroborates Rakivka as a pontoon site on 5-6 Mar; same source.", "independent": false}
+{"pair": "a5f6d12c10b7", "relation": "none", "rationale": "Early-March foothold and an assessment of later force shifts."}
+{"pair": "a6644b074b24", "relation": "none", "rationale": "Russian tunnel video and Russian descriptions of the pipe; context only."}
+{"pair": "a6999e7d07f9", "relation": "none", "rationale": "Geran-3 retirement and jet-Geran speeds."}
+{"pair": "a6b496cd9f82", "relation": "supports", "from": "claim:cc11_0010_52", "to": "claim:cc11_0023_06", "strength": 0.5, "rationale": "The 239th Tank Regiment's commitment at Avdiivka corroborates its place in B's order of battle; both ISW.", "independent": false}
+{"pair": "a6cc7cd8f587", "relation": "none", "rationale": "Museum photography and a pre-strike count."}
+{"pair": "a6e8685c19ed", "relation": "none", "rationale": "A destruction estimate and a pre-strike presence claim."}
+{"pair": "a759fa2d2aae", "relation": "duplicates", "from": "claim:cc01_0011_29", "to": "claim:cc12_0025_17", "strength": 0.85, "rationale": "Same Kyiv Post finding that the Ghost of Kyiv clip was DCS footage; B has more sources."}
+{"pair": "a76a9d5e1c43", "relation": "none", "rationale": "Time-zone count and an MoD denial."}
+{"pair": "a78179b17056", "relation": "supports", "from": "claim:cc01_0009_05", "to": "claim:cc01_0032_08", "strength": 0.5, "rationale": "The cratered runway and no Il-76 landing corroborate one of the explanations B lists for the aborted airlift; shared WOTR source.", "independent": false}
+{"pair": "a789ff610981", "relation": "none", "rationale": "Road geography and a trench position."}
+{"pair": "a79bb75b2821", "relation": "none", "rationale": "Counterattack event and a location fact."}
+{"pair": "a7f4d9cf3d9e", "relation": "none", "rationale": "Drone and missile alerts at different times."}
+{"pair": "a84bfdb72b90", "relation": "supports", "from": "claim:cc15_0026_18", "to": "claim:cc15_0022_70", "strength": 0.6, "rationale": "Syrskyi's order sending SSO, HUR, SBU and military-police groups into Pokrovsk corroborates A's joint teams hunting infiltrators.", "independent": true}
+{"pair": "a88c77844a41", "relation": "none", "rationale": "The breach date and the contested water rise."}
+{"pair": "a8d176578f99", "relation": "duplicates", "from": "claim:cc14_0037_09", "to": "claim:cc14_0014_041", "strength": 0.8, "rationale": "Same Al Jazeera report of Zakharova blaming HIMARS for the Glushkovo bridge."}
+{"pair": "a9a0e1353d54", "relation": "supports", "from": "claim:cc09_0010_91", "to": "claim:cc09_0010_90", "strength": 0.6, "rationale": "ISW's judgment that the belt west of Verbove was broken corroborates Tarnavskyi's breakthrough claim.", "independent": true}
+{"pair": "a9c010663a5b", "relation": "supports", "from": "claim:cc16_0021_06", "to": "claim:cc16_0042_23", "strength": 0.6, "rationale": "Both report tyres on bombers kept in the open; shared ISW source.", "independent": false}

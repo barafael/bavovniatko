@@ -1,0 +1,40 @@
+{"pair": "ba55001ff86b", "relation": "none", "rationale": "Convoy guard numbers and an SSO action credited by the same speaker."}
+{"pair": "ba5c2460f783", "relation": "refines", "from": "claim:cv01_0012_02", "to": "claim:cc01_0025_23", "strength": 0.6, "rationale": "B specifies the 239th Tank Regiment's presence at Brovary within A's east-bank order of battle."}
+{"pair": "ba9eca900fb2", "relation": "none", "rationale": "A Russian media claim and a base location fact."}
+{"pair": "bac5f4f3d6e6", "relation": "none", "rationale": "Loss of the road and a description of the road."}
+{"pair": "badb8e21752c", "relation": "supports", "from": "claim:cc09_0040_01", "to": "claim:cc09_0025_05", "strength": 0.5, "rationale": "The breach column advancing behind a Leopard 2R and BMR-2 corroborates the 47th's engineer element.", "independent": true}
+{"pair": "bade86c14412", "relation": "supports", "from": "claim:cc19_0009_70", "to": "claim:cc19_0009_97", "strength": 0.4, "rationale": "Russian milbloggers' reports of Ukrainian counterattacks on the Ridkodub-Katerynivka sector are consistent with DeepState later marking those villages liberated.", "independent": true}
+{"pair": "baf26e53048b", "relation": "supports", "from": "claim:cc15_0026_04", "to": "claim:cc15_0026_05", "strength": 0.6, "rationale": "Syrskyi sending the 1st Azov Corps against the Dobropillia salient corroborates its commitment there; two Kyiv Independent articles.", "independent": false}
+{"pair": "baf5f45cb496", "relation": "none", "rationale": "Encirclement date and siege duration; context only."}
+{"pair": "bb3093ca5488", "relation": "supports", "from": "claim:cc01_0026_31", "to": "claim:cc12_0019_15", "strength": 0.4, "rationale": "The inventory of about 50 MiG-29s and 32 Su-27s corroborates B's fleet composition.", "independent": true}
+{"pair": "bc0b3c97bc58", "relation": "none", "rationale": "Holding Zenit and the claim of minimal withdrawal losses."}
+{"pair": "bc656087b054", "relation": "weakens", "from": "claim:cc11_0028_05", "to": "claim:cc11_0038_19", "strength": 0.4, "rationale": "A company at Zenit stripped of all its leaders casts doubt on the brigade's claim of 'minimal' losses."}
+{"pair": "bcf3b54161f6", "relation": "none", "rationale": "Breach event and dam description."}
+{"pair": "bd0599b79405", "relation": "supports", "from": "claim:cc09_0010_45", "to": "claim:cc09_0043_19", "strength": 0.7, "rationale": "Lyamin replacing Popov and Popov's firing by the defence minister corroborate each other; shared Politico source.", "independent": false}
+{"pair": "bd51489044e1", "relation": "none", "rationale": "Distances to two different air bases."}
+{"pair": "bd71b6caca69", "relation": "none", "rationale": "Sequential phases of the Moshchun fight."}
+{"pair": "bd996db2c0b7", "relation": "supports", "from": "claim:cc09_0035_18", "to": "claim:c03_0016_08", "strength": 0.7, "rationale": "Two sources give the LMUR's ~15 km reach beyond Ukrainian tactical air defence.", "independent": true}
+{"pair": "bdad63c59af6", "relation": "supports", "from": "claim:cc18_0028_06", "to": "claim:c03_0027_070", "strength": 0.4, "rationale": "B's 300-600 km/h range broadly corroborates A's ~500 km/h for jet Gerans.", "independent": true}
+{"pair": "bdbe6bf627a3", "relation": "supports", "from": "claim:cc01_0032_18", "to": "claim:cc01_0006_05", "strength": 0.6, "rationale": "NYT's account that the flooding funnelled Russians into Bucha and Irpin corroborates MWI's assessment.", "independent": true}
+{"pair": "bea62fbf4d80", "relation": "supports", "from": "claim:cc14_0014_076", "to": "claim:cc14_0031_15", "strength": 0.6, "rationale": "The 14-15 Dec assaults near Plekhovo are an instance of B's North Korean infantry attacks there; same CNN source.", "independent": false}
+{"pair": "beaca5b496c0", "relation": "none", "rationale": "Encirclement date and defenders' strength."}
+{"pair": "beb5d56c9129", "relation": "supports", "from": "claim:cc01_0011_37", "to": "claim:cc01_0014_08", "strength": 0.6, "rationale": "Both report the 27 Feb Vokzalna Street ambush; same MWI source.", "independent": false}
+{"pair": "beb69f0f052b", "relation": "none", "rationale": "Pipe infiltration methods and the pipe's later reuse."}
+{"pair": "bebab46d927e", "relation": "supports", "from": "claim:cc01_0028_26", "to": "claim:cc12_0025_16", "strength": 0.7, "rationale": "Pop-up Buk and S-300s making medium altitude dangerous from 3 Mar corroborates B's lethal high sky; same RUSI source.", "independent": false}
+{"pair": "bebfbee41f2e", "relation": "refines", "from": "claim:cc19_0025_11", "to": "claim:c01_0024_68", "strength": 0.6, "rationale": "B places the UGV drops in season 2 of Vivaldi and names the targets as command posts."}
+{"pair": "bed354c96696", "relation": "supports", "from": "claim:cc14_0014_086", "to": "claim:cc14_0006_06", "strength": 0.5, "rationale": "Russia's January 2025 effort to take the Sumy-Sudzha road corroborates the FPV fire on it.", "independent": true}
+{"pair": "beeef8210d24", "relation": "none", "rationale": "Holding force and later setback."}
+{"pair": "beff85e86757", "relation": "supports", "from": "claim:cc18_0028_11", "to": "claim:c00_0077_30", "strength": 0.5, "rationale": "HUR's estimate of mass Geran-4/5 output corroborates the shift to jet Gerans.", "independent": true}
+{"pair": "bf4735c46f13", "relation": "supports", "from": "claim:cc01_0014_18", "to": "claim:cc01_0030_12", "strength": 0.7, "rationale": "Rakivka as a pontoon site and the 6 Mar fire on the Rakivka pontoons are the same event; same source.", "independent": false}
+{"pair": "bfc5b86127f1", "relation": "none", "rationale": "Company sectors and a flooding assessment."}
+{"pair": "c02b6d843614", "relation": "none", "rationale": "Ukrainian helicopter tactics and Russian lofted-rocket reach."}
+{"pair": "c03a0346f946", "relation": "none", "rationale": "A DeepState changelog and a later Russian MoD video claim."}
+{"pair": "c051367edede", "relation": "supports", "from": "claim:cc15_0026_04", "to": "claim:cc15_0020_07", "strength": 0.6, "rationale": "Syrskyi sending the 1st Azov Corps to Dobropillia corroborates its role as the Dobropillia reserve.", "independent": true}
+{"pair": "c0ad25291cfe", "relation": "supports", "from": "claim:cc09_0010_15", "to": "claim:cc09_0040_01", "strength": 0.7, "rationale": "Both describe the two-group attempt south of Mala Tokmachka; same sources.", "independent": false}
+{"pair": "c0adaad29715", "relation": "supports", "from": "claim:cc07_0006_05", "to": "claim:cc07_0028_03", "strength": 0.6, "rationale": "Wagner and the VDV taking Soledar corroborates the VDV commitment at Soledar; shared ISW source.", "independent": false}
+{"pair": "c0b51de2cd33", "relation": "supports", "from": "claim:cc01_0011_28", "to": "claim:cc01_0030_10", "strength": 0.8, "rationale": "Both report the Kozarovychi dam blown at 13:30 on 25 Feb; shared MWI source.", "independent": false}
+{"pair": "c11ae5f4cd31", "relation": "none", "rationale": "Unclear command above the Zaporizhzhia grouping and a later Dnepr grouping appointment."}
+{"pair": "c180f7cb1518", "relation": "supports", "from": "claim:cc09_0007_17", "to": "claim:cc09_0043_19", "strength": 0.7, "rationale": "ISW's report of Popov's dismissal and Politico's report of his firing corroborate each other.", "independent": true}
+{"pair": "c220414678ad", "relation": "none", "rationale": "A computed distance and the encirclement event."}
+{"pair": "c2256d691c04", "relation": "duplicates", "from": "claim:cc09_0040_16", "to": "claim:cc09_0010_63", "strength": 0.95, "rationale": "Same WarSpotting Ka-52M loss record extracted twice."}
+{"pair": "c228c4070faa", "relation": "refines", "from": "claim:cc15_0024_12", "to": "claim:cc15_0022_40", "strength": 0.8, "rationale": "B is a fuller account of the same foggy column into Pokrovsk."}

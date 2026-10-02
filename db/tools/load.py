@@ -236,6 +236,7 @@ def merge_staged_sources(conn, files) -> tuple[list[dict], Counter]:
         for u in [r["url"], *(r.get("alt_urls") or [])]:
             existing[_norm_url(u)] = r
     by_url: dict[str, dict] = {}
+    by_id: dict[str, str] = {}
     updates: dict[str, dict] = {}
     report = Counter()
     for f in files:
@@ -243,6 +244,13 @@ def merge_staged_sources(conn, files) -> tuple[list[dict], Counter]:
             e = dict(e)
             e.setdefault("found_in", [f.stem])
             key = _norm_url(e["url"])
+            if key not in by_url and e["id"] in by_id and by_id[e["id"]] != key:
+                # same id staged twice with different URLs (e.g. two ISW mirrors): one source, extra URL kept
+                m = by_url[by_id[e["id"]]]
+                m["alt_urls"] = sorted(set(m.get("alt_urls") or []) | {e["url"]})
+                m["found_in"] = sorted(set(m.get("found_in") or []) | set(e.get("found_in") or []))
+                report["sources:merged_duplicate_id"] += 1
+                continue
             if key in by_url:
                 m = by_url[key]
                 if e["id"] != m["id"] and e["id"] not in m.setdefault("aliases", []):
@@ -262,6 +270,7 @@ def merge_staged_sources(conn, files) -> tuple[list[dict], Counter]:
                 report["sources:matched_existing"] += 1
                 continue
             by_url[key] = e
+            by_id[e["id"]] = key
     import import_base
     for u in updates.values():
         x = u["x"]

@@ -1,0 +1,2080 @@
+# Sources cited in research/chapters/c14-kursk.md, generated from the knowledge base by db/tools/render.py.
+- id: aljazeera-2024-duggal-mapping-kursk
+  title: Mapping Ukraine's surprise incursion into Russia's Kursk region
+  url: https://www.aljazeera.com/news/2024/8/15/mapping-ukraines-surprise-incursion-into-russias-kursk-region
+  publisher: Al Jazeera
+  authors:
+  - Hanna Duggal
+  published: '2024-08-15'
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - media
+  - energy
+  - chapter
+  notes: Maps of 6–14 Aug advance; Syrskyi's 1,000 km² against ISW's about 800 km²; Sudzha hosts the gas metering system for
+    about 42 million m³ a day of transit; gas flow not disrupted.
+- id: aljazeera-2024-seym-bridge-western-weapons
+  title: Russia says Ukraine used Western weapons to destroy bridge in Kursk
+  url: https://www.aljazeera.com/news/2024/8/17/russia-says-ukraine-used-western-weapons-to-destroy-bridge-in-kursk
+  publisher: Al Jazeera
+  authors: []
+  published: '2024-08-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - strikes
+  - russian-claims
+  - chapter
+  notes: 'Zakharova: the Glushkovsky district Seym bridge was ''completely destroyed'', probably by HIMARS; Miron: Kursk as
+    a ''bargaining chip''; Kyiv claims 82 settlements, 1,150 km².'
+- id: aljazeera-2025-nis-300-killed
+  title: Seoul says 300 North Korean soldiers killed, 2,700 wounded fighting Ukraine
+  url: https://www.aljazeera.com/news/2025/1/13/seoul-says-300-north-korean-soldiers-killed-2700-wounded-fighting-ukraine
+  publisher: Al Jazeera
+  authors: []
+  published: '2025-01-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - casualties
+  - pow
+  - chapter
+  notes: 'NIS via lawmaker Lee Seong-kweun: 300 killed, 2,700 wounded; ''lack of understanding of modern warfare''; memos
+    urging suicide or self-detonation; a soldier tried to detonate a grenade; Zelensky offers POW swap.'
+- id: aljazeera-2025-psaropoulos-kursk-us-cutoff
+  title: Russian forces recapture Kursk, raising questions about US-Ukraine cutoff
+  url: https://www.aljazeera.com/news/2025/3/13/russian-forces-recapture-kursk-raising-questions-about-us-ukraine-cutoff
+  publisher: Al Jazeera
+  authors:
+  - John T. Psaropoulos
+  published: '2025-03-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - intelligence
+  - withdrawal
+  - chapter
+  notes: 'Russian push intensified on 6 Mar, a day after the US cutoff; first Russian attacks into Sumy on 7 Mar; a Ukrainian
+    source (Time) says the cutoff was key; ISW: 655 km² recaptured by February; 11,000 Ukrainians pinned 78,000 Russians.'
+- id: bbc-2024-ewe-nk-pow-dies
+  title: 'North Korean soldier captured in Ukraine dies: reports'
+  url: https://www.bbc.com/news/articles/cq62qe131d7o
+  publisher: BBC News
+  authors:
+  - Koh Ewe
+  published: '2024-12-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - pow
+  - chapter
+  notes: 'First captured North Korean died of wounds (NIS via Yonhap); Kirby: 1,000 killed or wounded in a week in ''massed
+    dismounted assaults''; Storm Corps; fake Russian IDs.'
+- id: bbc-2024-waterhouse-entered-easily
+  title: Ukrainian troops 'entered Russia's Kursk easily'
+  url: https://www.bbc.com/news/articles/cze5pkg5jwlo
+  publisher: BBC News
+  authors:
+  - James Waterhouse
+  published: '2024-08-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - ew
+  - chapter
+  notes: 'Soldiers'' accounts: a drone unit spent two days suppressing Russian communications and surveillance; first groups
+    crossed at night on 6 Aug and quickly reached Sudzha''s western outskirts; triangle markings.'
+- id: bbc-2025-beale-retreat-from-kursk
+  title: 'Retreat from Kursk: Ukrainian troops tell of catastrophe and panic'
+  url: https://www.bbc.com/news/articles/c0q198zyppqo
+  publisher: BBC News
+  authors:
+  - Jonathan Beale
+  published: '2025-03-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - withdrawal
+  - fibre-optic
+  - logistics
+  - chapter
+  notes: 'Five soldiers: the single Sudzha–Sumy highway under drones ''around the clock'' (2–3 drones a minute), fibre-optic
+    FPVs, wrecks blocking routes, retreat on foot 15–20 km; up to 70,000 Russians incl. about 12,000 North Koreans; about
+    12,000 Ukrainians (Western estimate).'
+- id: bbc-2025-gardner-1000-nk-killed
+  title: About 1,000 North Koreans killed fighting Ukraine in Kursk, officials say
+  url: https://www.bbc.com/news/articles/c87djeezjxeo
+  publisher: BBC News
+  authors:
+  - Frank Gardner
+  published: '2025-01-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - casualties
+  - chapter
+  notes: 'Western officials: of about 11,000 sent, 4,000 battle casualties (about 1,000 killed) by mid-January, nearly 40%;
+    vulnerable to FPVs; Syrskyi: 11–12k motivated troops using Soviet tactics in platoons and companies.'
+- id: bbc-2025-mackintosh-90-sq-km
+  title: Ukraine still holds ground inside Russia's Kursk, commander says
+  url: https://www.bbc.com/news/articles/cvgepevvn47o
+  publisher: BBC News
+  authors:
+  - Thomas Mackintosh
+  published: '2025-06-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Syrskyi (22 Jun 2025): Ukraine still holds about 90 km² in Kursk Oblast against 10,000 Russian troops; 11,000 North
+    Koreans sent last autumn.'
+- id: bbc-2025-somerville-russia-claims-kursk
+  title: Russia claims it has regained full control of Kursk from Ukraine
+  url: https://www.bbc.com/news/articles/cx26166ngpdo
+  publisher: BBC News
+  authors:
+  - Ewan Somerville
+  published: '2025-04-26'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - russian-claims
+  - north-korea
+  - chapter
+  notes: 'Gerasimov: Gornal, the last village, retaken; 76,000 Ukrainian killed and wounded claimed; first acknowledgement
+    of North Korean ''heroism''; Ukraine calls it ''propaganda tricks''.'
+- id: cnn-2024-mezzofiore-nk-heavy-casualties
+  title: Ukraine says North Koreans took heavy casualties during weekend attack in Kursk region
+  url: https://edition.cnn.com/2024/12/16/europe/north-koreans-kursk-losses-intl/index.html
+  publisher: CNN
+  authors:
+  - Gianluca Mezzofiore
+  published: '2024-12-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - tactics
+  - chapter
+  notes: 'HUR: about 30 North Koreans killed or wounded near Plekhovo, Vorozhba and Martynovka; Pentagon confirms casualties,
+    infantry role; Butusov: massive fire support, EW against drones, assault groups kept moving; drone video of bodies in
+    an icy field.'
+- id: cnn-2025-edwards-russia-advancing-kursk
+  title: Russia is advancing in Kursk, threatening Ukraine's sole territorial bargaining counter
+  url: https://www.cnn.com/2025/03/09/europe/russia-advances-kursk-ukraine-intl/index.html
+  publisher: CNN
+  authors:
+  - Christian Edwards
+  - Sophie Tanno
+  published: '2025-03-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - pipeline
+  - politics
+  - chapter
+  notes: 'Butusov: an assault company used the pipeline undetected by drones; ''the Koreans keep coming''; ISW estimate of
+    at most 30,000 Ukrainian troops; Flesh: the bargaining value ''questionable''.'
+- id: cnn-2025-nk-pulled-back
+  title: North Korean troops pulled back from frontline after heavy losses, Ukrainian officials say
+  url: https://edition.cnn.com/2025/01/31/europe/ukraine-russia-kursk-north-korean-troops-intl/index.html
+  publisher: CNN
+  authors:
+  - Kosta Gak
+  - Victoria Butenko
+  - Lauren Kent
+  published: '2025-01-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - tactics
+  - chapter
+  notes: 'SSO: no North Koreans seen at the front for about three weeks; ''prepared for 1980 at best'' but good at shooting
+    drones at about 100 m; Zelensky at Davos: 60,000 Russians and 12,000 North Koreans in Kursk.'
+- id: dw-2024-first-clash-north-korean
+  title: Ukraine reports first clash with North Korean troops
+  url: https://www.dw.com/en/ukraine-reports-first-clash-with-north-korean-troops/a-70706179
+  publisher: Deutsche Welle
+  authors: []
+  published: '2024-11-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - chapter
+  notes: 'Umerov: a ''small engagement''; Kovalenko: first North Koreans shelled in Kursk; 10,000–12,000 transferred.'
+- id: dw-2025-two-nk-soldiers-captured
+  title: Ukraine says 2 North Korean soldiers captured
+  url: https://www.dw.com/en/ukraine-says-2-north-korean-soldiers-captured/live-71273185
+  publisher: Deutsche Welle
+  authors: []
+  published: '2025-01-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - pow
+  - chapter
+  notes: 'Zelensky: two wounded North Koreans taken to Kyiv and questioned by the SBU; NIS confirms capture on 9 Jan; Sybiha:
+    regular troops, not mercenaries.'
+- id: euromaidan-2024-seym-bridges-cauldron
+  title: 'Frontline report: Strategic bridge destruction in Kursk Oblast cuts off thousands of Russians from retreat'
+  url: https://euromaidanpress.com/2024/08/23/frontline-report-strategic-bridge-destruction-in-kursk-oblast-cuts-off-thousands-of-russians-from-retreat/
+  publisher: Euromaidan Press
+  authors:
+  - Reporting from Ukraine
+  published: '2024-08-23'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - strikes
+  - terrain
+  - chapter
+  notes: Analysis of the staggered destruction of three Seym bridges (a window for Russian withdrawal), pontoons 3 km north
+    of Glushkovo destroyed (satellite and FIRMS), the 700 km² Glushkovo pocket, high ground north of the river, JDAM-ER strikes
+    on Tyotkino.
+- id: euromaidan-2024-tril-himars-pontoons
+  title: Ukraine confirms using US-made weapons to strike pontoon bridges in Russia
+  url: https://euromaidanpress.com/2024/08/22/ukraine-confirms-using-us-made-weapons-to-strike-pontoon-bridges-in-russia/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2024-08-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - strikes
+  - chapter
+  notes: Ukraine acknowledges HIMARS strikes on Russian pontoon bridges in Kursk Oblast; Zvannoye bridge damaged on 18 Aug.
+- id: euromaidan-2025-kirichenko-troops-split-kursk
+  title: As Trump trades US aid for Putin peace, Ukraine's ammo-starved troops split over Kursk future
+  url: https://euromaidanpress.com/2025/02/27/as-trump-trades-us-aid-for-putin-peace-ukraines-ammo-starved-troops-split-over-kursk-future/
+  publisher: Euromaidan Press
+  authors:
+  - David Kirichenko
+  published: '2025-02-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - decision
+  - politics
+  - chapter
+  notes: 'Zelensky: ''We will exchange one territory for another''; soldiers divided over the cost; Syrskyi''s six-month claims;
+    more Russian drones and mines in winter.'
+- id: euromaidan-2025-kravchuk-nk-pow-ferry
+  title: North Korean soldier reveals secret deployment via cargo ferry to Russia's war effort in Kursk
+  url: https://euromaidanpress.com/2025/01/20/north-korean-soldier-reveals-secret-deployment-via-cargo-ferry-to-russias-war-effort-in-kursk/
+  publisher: Euromaidan Press
+  authors:
+  - Vira Kravchuk
+  published: '2025-01-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - pow
+  - media
+  - chapter
+  notes: 'Zelensky''s interrogation video: POW came by cargo ferry with 100+ others, a reconnaissance-battalion conscript
+    since 17, did not know he was going to war; prisoners say they came for training.'
+- id: euromaidan-2025-martyniuk-218-days
+  title: After 218 days in Russia, Ukraine is ending its Kursk campaign
+  url: https://euromaidanpress.com/2025/03/12/after-218-days-in-russia-ukraine-is-ending-its-kursk-campaign/
+  publisher: Euromaidan Press
+  authors:
+  - Yevheniia Martyniuk
+  published: '2025-03-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - withdrawal
+  - chapter
+  notes: 'Matveev: Russian advance followed the Ukrainian retreat rather than attempting encirclement; east bank of the Psel
+    lost (Myrny, Bondarevka); flags in Makhnovka, Dmitryukov, Zamostye; no evidence of mass surrender.'
+- id: euromaidan-2025-tril-nis-4700
+  title: 'South Korean intel: 600 North Korean soldiers killed fighting against Ukraine, bodies cremated before return'
+  url: https://euromaidanpress.com/2025/04/30/south-korean-intel-north-korean-forces-in-russias-kursk-oblast-have-suffered-4700-casualties-including-600-dead/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2025-04-30'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - north-korea
+  - casualties
+  - chapter
+  notes: 'NIS (30 Apr): about 4,700 North Korean casualties incl. 600 dead; combat capability improved with drones; bodies
+    cremated in Kursk Oblast.'
+- id: euromaidan-2025-tril-nk-acknowledges
+  title: North Korea acknowledges participation of its military in Russia's war against Ukraine
+  url: https://euromaidanpress.com/2025/04/28/north-korea-acknowledges-participation-of-its-military-in-russias-war-against-ukraine/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2025-04-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - north-korea
+  - chapter
+  notes: Pyongyang's Central Military Commission (27 Apr) confirms the Kursk deployment under Article 4 of the 2024 treaty;
+    Kim plans a monument; Ukraine says fighting continues.
+- id: euromaidan-2025-tril-sudzha-gas-station
+  title: Russia accuses Ukraine of Sudzha gas station attack, Kyiv calls claims "unfounded"
+  url: https://euromaidanpress.com/2025/03/21/russia-accuses-ukraine-of-sudzha-gas-station-attack-kyiv-calls-claims-unfounded/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2025-03-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - energy
+  - russian-claims
+  - chapter
+  notes: '21 Mar explosions and fire at the Sudzha gas metering station; General Staff: shelled by Russians themselves; Sudzha
+    was the last transit metering point after Sokhranivka closed in May 2022; transit ended 1 Jan 2025.'
+- id: euromaidan-2025-zoria-more-nk-deployed
+  title: Seoul says more North Korean soldiers deployed to Russia
+  url: https://euromaidanpress.com/2025/02/27/seoul-says-more-north-korean-soldiers-deployed-to-russia/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-02-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - chapter
+  notes: 'NIS: reinforcements entered combat in early February after a January pullback; Korean media estimate 1,000–3,000;
+    Kyiv still holds about 400 km².'
+- id: euromaidan-2025-zoria-nk-pow-asylum
+  title: Captured North Korean soldier in Ukraine requests asylum in South Korea
+  url: https://euromaidanpress.com/2025/02/20/captured-north-korean-soldier-in-ukraine-requests-asylum-in-south-korea/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-02-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - pow
+  - chapter
+  notes: One captured North Korean wants to go to Seoul; South Korea says it will accept them; Ukraine open to transfer or
+    a swap.
+- id: guardian-2024-beaumont-maps-footage
+  title: Ukraine's incursion into Russia explained in maps, footage and photos
+  url: https://www.theguardian.com/world/article/2024/aug/13/ukraines-incursion-into-russia-explained-in-maps-footage-and-photos
+  publisher: The Guardian
+  authors:
+  - Peter Beaumont
+  - Elena Morresi
+  - Paul Scruton
+  published: '2024-08-13'
+  accessed: '2026-10-01'
+  type: map
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - media
+  - maps
+  - chapter
+  notes: 'Visual explainer of the first week: maps, footage and photos.'
+- id: guardian-2024-syrskyi-1000-sq-km
+  title: Ukraine says it has seized 1,000 sq km in Kursk offensive as Putin vows 'worthy response'
+  url: https://www.theguardian.com/world/article/2024/aug/13/ukraine-kursk-offensive-1000-square-km-of-russia-seized-incursion
+  publisher: The Guardian
+  authors:
+  - Guardian staff and agencies
+  published: '2024-08-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - civilians
+  - chapter
+  notes: 'Syrskyi''s 1,000 km² claim (12 Aug) against Smirnov''s 28 settlements, 12 km deep and 40 km wide; 121,000 evacuated;
+    Zelensky: Sumy Oblast shelled about 2,100 times since 1 Jun.'
+- id: guardian-2024-walker-seized-papers
+  title: 'Revealed: Russia anticipated Kursk incursion months in advance, seized papers show'
+  url: https://www.theguardian.com/world/2024/sep/20/revealed-russia-anticipated-kursk-incursion-months-in-advance-seized-papers-show
+  publisher: The Guardian
+  authors:
+  - Shaun Walker
+  - Pjotr Sauer
+  published: '2024-09-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - intelligence
+  - russian-claims
+  - chapter
+  notes: 'Captured 488th Guards MRR documents: Feb warning of an 80 km ''rapid push''; mid-June warning of a Yunakivka–Sudzha
+    attack and of a Seym bridge strike; units 60–70% manned with weakly trained reserves.'
+- id: guardian-2025-sabbagh-border-sumy
+  title: Russian forces threaten border in effort to push Ukrainian army out of Kursk
+  url: https://www.theguardian.com/world/2025/mar/10/russian-forces-threaten-border-in-effort-to-push-ukrainian-army-out-of-kursk
+  publisher: The Guardian
+  authors:
+  - Dan Sabbagh
+  published: '2025-03-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - intelligence
+  - fibre-optic
+  - chapter
+  notes: 'Russia pushes at Novenke to cut supply lines; ISW''s intelligence-pause correlation; fibre-optic drones; over two-thirds
+    of the area lost; Syrskyi: ''no threat of encirclement''; Reynolds (RUSI) and Giles (Chatham House) assessments.'
+- id: isw-2024-08-06-roca
+  title: Russian Offensive Campaign Assessment, August 6, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_6-4/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-06'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Day 1: Russian MoD/FSB claim raids by a battalion''s worth of armour repelled near Nikolayevo-Darino and Oleshnya;
+    two axes from the Sudzha checkpoint and from Novenke; Smirnov says fighting continues.'
+- id: isw-2024-08-07-roca
+  title: Russian Offensive Campaign Assessment, August 7, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_7-4/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-07'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Confirmed advances up to 10 km along the 38K-030; two defensive lines and a stronghold penetrated; Russian sources
+    report the Sudzha checkpoint and the Sudzha gas distribution station seized; Gerasimov's '1,000 troops, advance halted';
+    FPV hit on a Mi-28.
+- id: isw-2024-08-08-roca
+  title: Russian Offensive Campaign Assessment, August 8, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_8-4/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-08'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Operational surprise achieved; Ukrainians reportedly up to 35 km from the border; ISW's four Russian courses of action.
+- id: isw-2024-08-09-roca
+  title: Russian Offensive Campaign Assessment, August 9, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_9-4/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-09'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Convoy of 14 trucks struck on the 38K-017 near Oktyabrskoye east of Rylsk; Russia relies on conscripts, border guards,
+    Akhmat and nearby units; DNR irregulars arrive.
+- id: isw-2024-08-10-roca
+  title: Russian Offensive Campaign Assessment, August 10, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_10-4/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-10'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Counterterrorism operation declared in Belgorod, Bryansk and Kursk oblasts on 9 Aug; Russia mixes conscripts, Northern
+    Grouping and lateral redeployments.
+- id: isw-2024-08-11-roca
+  title: Russian Offensive Campaign Assessment, August 11, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_11-4/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-11'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Ukraine seizes local initiative; battalion-and-below Russian redeployments cause C2 problems; mobile groups up to
+    25 km into Belovsky Raion; Zelensky acknowledges the operation on 10 Aug.
+- id: isw-2024-08-12-roca
+  title: Russian Offensive Campaign Assessment, August 12, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_12-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Syrskyi claims about 1,000 km²; ISW has observed claims of about 800 km² (maximalist extent, not control).
+- id: isw-2024-08-13-roca
+  title: Russian Offensive Campaign Assessment, August 13, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_13-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Putin reportedly appoints Dyumin on 12 Aug to supervise the 'counterterrorism operation'; Russia relies on conscripts
+    and units from less critical sectors.
+- id: isw-2024-08-14-roca
+  title: Russian Offensive Campaign Assessment, August 14, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_14-2/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Ukrainian tempo slows; Alaudinov poses as spokesman for the Russian defence but his claims are 'consistently false';
+    tangible defensive and logistic effects inside Russia.
+- id: isw-2024-08-15-roca
+  title: Russian Offensive Campaign Assessment, August 15, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_15-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-15'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Military commandant's office under Moskalyov; slower Ukrainian tempo; Russia keeps up pressure in Donetsk; overlapping
+    Russian C2.
+- id: isw-2024-08-16-roca
+  title: Russian Offensive Campaign Assessment, August 16, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_16-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-16'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Geolocated footage shows the Seim bridge at Glushkovo collapsed after a strike; Zvannoye bridge struck; only Karyzh
+    bridge left.
+- id: isw-2024-08-17-roca
+  title: Russian Offensive Campaign Assessment, August 17, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_18-2/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-17'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Framework: neither Kursk nor Pokrovsk is decisive; Ukraine says it has no long-term territorial aims; Qatar energy-strike
+    talks postponed; milbloggers say Russians blew Seim bridges at Tyotkino and Popovo-Lezhachi.'
+- id: isw-2024-08-18-roca
+  title: Russian Offensive Campaign Assessment, August 18, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_54/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-18'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Air Force commander Oleshchuk posts footage (18 Aug) of an airstrike holing the Seim bridge at Zvannoye; the Glushkovo
+    bridge was destroyed on 16 Aug; marginal advances SE of Sudzha.
+- id: isw-2024-08-19-roca
+  title: Russian Offensive Campaign Assessment, August 19, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_19-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-19'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Third and last Seim bridge in Glushkovo Raion (Karyzh) reportedly destroyed; satellite imagery shows a pontoon destroyed;
+    Alaudinov calls for conscripts.
+- id: isw-2024-08-20-roca
+  title: Russian Offensive Campaign Assessment, August 20, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_20-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-20'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Syrskyi map: 28–35 km deep, 93 settlements, 1,263 km²; drones hit pontoon equipment about 3 km north of Glushkovo;
+    units from the Chasiv Yar direction redeployed.'
+- id: isw-2024-08-22-roca
+  title: Russian Offensive Campaign Assessment, August 22, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_22-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-22'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: VDV regiment redeployed from western Zaporizhzhia; Northern Grouping forces meant for Kharkiv committed to Kursk.
+- id: isw-2024-08-25-roca
+  title: Russian Offensive Campaign Assessment, August 25, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-august-25-2024/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-25'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Commanders of the 810th and 155th Naval Infantry, 11th VDV Brigade, 56th and 51st VDV regiments brief Putin on 24
+    Aug.
+- id: isw-2024-08-28-roca
+  title: Russian Offensive Campaign Assessment, August 28, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_28-3/
+  alt_urls:
+  - https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-28-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-28'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Milbloggers: Ukrainian tempo slows and Ukrainians dig in to hold seized areas.'
+- id: isw-2024-09-11-roca
+  title: Russian Offensive Campaign Assessment, September 11, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_11-3/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-09-11'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Russian counterattacks on the western edge of the salient from 10 Sep, company-sized, near Snagost; aim may be to
+    bisect the salient.
+- id: isw-2024-09-12-roca
+  title: Russian Offensive Campaign Assessment, September 12, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_12-2/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-09-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: New Ukrainian cross-border push near Novy Put (SW of Glushkovo) past dragon's teeth; Russian gains so far only where
+    Ukraine did not hold ground; 106th VDV elements arrive.
+- id: isw-2024-09-13-roca
+  title: Russian Offensive Campaign Assessment, September 13, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_13-2/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-09-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Incursion reportedly spoiled planned Russian offensives along the border; second POW exchange since the incursion.
+- id: isw-2024-10-14-roca
+  title: Russian Offensive Campaign Assessment, October 14, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_14/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-10-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Russia has recaptured about 46% of the salient (visual evidence or claims).
+- id: isw-2024-10-23-roca
+  title: Russian Offensive Campaign Assessment, October 23, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_24/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-10-23'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - chapter
+  notes: 'Pentagon and White House confirm North Korean troops in Russia; Kirby: at least 3,000 to Vladivostok; NIS: 3,000
+    sent, 10,000 by December.'
+- id: isw-2024-10-28-roca
+  title: Russian Offensive Campaign Assessment, October 28, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_28/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-10-28'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - chapter
+  notes: 'Rutte: North Korean units are in Kursk Oblast; HUR: transfers on the E38 in civilian-plated vehicles; new Ukrainian
+    mechanised assault near Novy Put.'
+- id: isw-2024-11-05-roca
+  title: Russian Offensive Campaign Assessment, November 5, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_5/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-11-05'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - chapter
+  notes: 'First North Korean troops likely in combat; Umerov: ''small-scale'' clashes, troops disguised as Buryats; Zelensky:
+    11,000 North Koreans in Kursk Oblast.'
+- id: isw-2024-11-13-roca
+  title: Russian Offensive Campaign Assessment, November 13, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-november-13-2024/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-11-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - chapter
+  notes: 'NIS and US confirm North Koreans in combat; Patel: most of over 10,000 moved to western Kursk Oblast.'
+- id: isw-2024-12-17-roca
+  title: Russian Offensive Campaign Assessment, December 17, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-17-2024/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-12-17'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - chapter
+  notes: 'Kirby: North Koreans moving from ''second lines'' to the front and suffering losses; Zelensky: Russia burns faces
+    of dead North Koreans.'
+- id: isw-2024-12-23-roca
+  title: Russian Offensive Campaign Assessment, December 23, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-23-2024/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-12-23'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - chapter
+  notes: 'Zelensky: over 3,000 North Korean killed and wounded (about a quarter of 12,000); South Korean JCS: at least 1,100;
+    fake IDs naming Tuva as birthplace.'
+- id: isw-2024-12-27-roca
+  title: Russian Offensive Campaign Assessment, December 27, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-27-2024/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-12-27'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - pow
+  - chapter
+  notes: 'Kirby: about 1,000 North Korean casualties in a week, infantry assaults without armour; NIS confirms the first captured
+    North Korean soldier.'
+- id: isw-2025-01-05-roca
+  title: Russian Offensive Campaign Assessment, January 5, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-january-5-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-01-05'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Ukraine resumes offensive operations in at least three areas of the salient (towards Berdin, NE of Sudzha) while
+    Russia advances SE of Sudzha.
+- id: isw-2025-01-11-roca
+  title: Russian Offensive Campaign Assessment, January 11, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-january-11-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-01-11'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - pow
+  - chapter
+  notes: 'SBU: SSO captured a North Korean soldier on 9 Jan and air assault troops a second; Tuva registration card; large
+    North Korean assault groups ignoring drones; a 400–500-man assault in December.'
+- id: isw-2025-01-12-roca
+  title: Russian Offensive Campaign Assessment, January 12, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-january-12-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-01-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - north-korea
+  - pow
+  - chapter
+  notes: NIS confirms Ukrainian forces captured two North Korean soldiers in Kursk Oblast on 9 Jan.
+- id: isw-2025-02-06-roca
+  title: Russian Offensive Campaign Assessment, February 6, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-february-6-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-02-06'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: Battalion-sized Ukrainian assaults SE of Sudzha advance up to 5 km (Kolmakov, Fanaseyevka); about 78,000 Russian
+    troops incl. 11,000 North Koreans gathered; SSO infiltrated from June 2024.
+- id: isw-2025-03-08-roca
+  title: Russian Offensive Campaign Assessment, March 8, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-8-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-03-08'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: Multi-directional Russian push on 7–8 Mar; 8–10 vehicles break through between Kurilovka and Guyevo; attack on Sudzha
+    via the gas pipeline; bridges on the H-07 and Psel destroyed; no HIMARS seen.
+- id: isw-2025-03-09-roca
+  title: Russian Offensive Campaign Assessment, March 9, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-9-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-03-09'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: Russia collapses the northern salient (Malaya Loknya, Lebedevka, Novaya Sorochina); Novenke in Sumy Oblast taken;
+    'temporal correlation' with the US intelligence pause of 5 Mar.
+- id: isw-2025-03-10-roca
+  title: Russian Offensive Campaign Assessment, March 10, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-10-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-03-10'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: Russians consolidate and prepare to attack Sudzha; up to two North Korean battalions south of Sudzha; Syrskyi reinforces
+    with drone and EW units; Russia tries to cut the H-07.
+- id: isw-2025-03-11-roca
+  title: Russian Offensive Campaign Assessment, March 11, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-11-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-03-11'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: Russia seizes Bondarevka, Zamostye, Makhnovka; Gerasimov visits Kursk Grouping commander Solodchuk; US–Ukraine 30-day
+    ceasefire proposal, US intelligence resumes.
+- id: isw-2025-03-12-roca
+  title: Russian Offensive Campaign Assessment, March 12, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-12-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-03-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: Russian forces seize Sudzha (geolocated); Ukrainian withdrawal begins; Putin in uniform at a Kursk command post;
+    Gerasimov credits units of the pipeline operation.
+- id: isw-2025-03-13-roca
+  title: Russian Offensive Campaign Assessment, March 13, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-13-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-03-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: Syrskyi orders withdrawal from some positions to save lives (12 Mar); Russia claims Podol, Goncharovka, Zaoleshenka,
+    Rubanshchina; advance slows.
+- id: isw-2025-03-14-roca
+  title: Russian Offensive Campaign Assessment, March 14, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-march-14-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-03-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: No geolocated evidence of a large encirclement; Trump's 'completely surrounded' post and Putin's surrender offer;
+    Ukrainians keep egress routes.
+- id: isw-2025-04-26-roca
+  title: Russian Offensive Campaign Assessment, April 26, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-april-26-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-04-26'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: Gerasimov claims Gornal and all of Kursk Oblast retaken and acknowledges North Korean help; Ukraine denies; incursion
+    pinned VDV and naval infantry.
+- id: kyivindependent-2024-100-pows-syrskyi
+  title: Ukraine captures over 100 Russian troops in Kursk Oblast in less than a day, Syrskyi says
+  url: https://kyivindependent.com/in-kursk-ukraine-captures-more-than-100-russian-soldiers/
+  publisher: Kyiv Independent
+  authors:
+  - The Kyiv Independent news desk
+  published: '2024-08-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - pow
+  - chapter
+  notes: 'Syrskyi: more than 100 Russians captured since midnight on 14 Aug and advances of 1–2 km; Zelensky ties prisoners
+    to swaps.'
+- id: kyivindependent-2024-denisova-17800-casualties
+  title: Russia has suffered 17,800 casualties since start of Kursk incursion, Syrskyi claims
+  url: https://kyivindependent.com/russian-casualties-in-kursk/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2024-10-25'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - casualties
+  - chapter
+  notes: 'Syrskyi: 17,819 Russian casualties since 8 Aug (6,662 killed, 10,446 wounded, 711 captured); rejects Putin''s ''2,000
+    encircled'' claim.'
+- id: kyivindependent-2024-denisova-225th-darino
+  title: Ukraine's 225th battalion showed Russian flag removal in Kursk Oblast village, video alleged
+  url: https://kyivindependent.com/ukraines-225th-battalion-showed-russian-flag-removal-in-kursk-oblast-village-video-alleged/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2024-08-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - media
+  - chapter
+  notes: 'First official Ukrainian military footage from Kursk Oblast: the 225th Separate Assault Battalion removes a Russian
+    flag in Darino, about 4 km from the border.'
+- id: kyivindependent-2024-denisova-80th-crossed-early
+  title: First Ukrainian troops crossed into Kursk Oblast 2 days before incursion, commander says
+  url: https://kyivindependent.com/80-brigade-kursk/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2024-10-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: '80th Brigade commander Rozlach (TSN): a company in groups of six, helped by the SSO, hid in forest two days early,
+    then took a border stronghold; Russian comms disrupted; two battalions breached minefields.'
+- id: kyivindependent-2024-denisova-92-settlements
+  title: Ukraine in control of 92 settlements in Russia's Kursk Oblast, Zelensky claims
+  url: https://kyivindependent.com/ukraine-in-control-of-92-settlements-in-russias-kursk-oblast-zelensky-claims/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2024-08-19'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - pow
+  - chapter
+  notes: 'Zelensky (19 Aug): 92 settlements and more than 1,250 km²; ''largest investment'' in freeing Ukrainian POWs; KI
+    could not verify.'
+- id: kyivindependent-2024-denisova-nk-10000
+  title: '''First step to World War'' — North Korea preparing 10,000 soldiers to join Russia''s war, Zelensky confirms'
+  url: https://kyivindependent.com/north-korea-preparing-10-000-soldiers/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2024-10-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - chapter
+  notes: 'Zelensky (17 Oct): North Korea is preparing 10,000 soldiers of various branches to fight Ukraine.'
+- id: kyivindependent-2024-fornusek-counteroffensive-halted
+  title: Russia's Kursk counteroffensive halted, Kyiv claims
+  url: https://kyivindependent.com/russias-kursk-oblast-counteroffensive-halted-kyiv-claims/
+  publisher: Kyiv Independent
+  authors:
+  - Martin Fornusek
+  published: '2024-09-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - civilians
+  - chapter
+  notes: 'Military administration spokesman: the September flank counterattack was stopped; ''several thousand'' Russian civilians
+    remain in Ukrainian-held areas.'
+- id: kyivindependent-2024-fornusek-mi28-fpv
+  title: Ukrainian FPV drone hit Russian Mi-28 helicopter in 'historic' feat, source says
+  url: https://kyivindependent.com/ukrainian-fpv-drones-allegedly-hits-russian-helicopter/
+  publisher: Kyiv Independent
+  authors:
+  - Martin Fornusek
+  published: '2024-08-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - drones
+  - helicopters
+  - chapter
+  notes: SBU Centre 'A' FPV hit a Mi-28's tail rotor over Kursk Oblast on 6 Aug; a Russian milblogger says it landed and the
+    crew survived.
+- id: kyivindependent-2024-fornusek-military-administration
+  title: Ukraine forms military administration in Russia's Kursk Oblast, Syrskyi says
+  url: https://kyivindependent.com/ukraine-established-military-administration-in-russias-kursk-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - Martin Fornusek
+  published: '2024-08-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - civilians
+  - chapter
+  notes: 'Syrskyi (15 Aug): 35 km deep, 1,150 km², 82 settlements; Sudzha cleared on 14 Aug; commandant''s office under Gen.
+    Eduard Moskaliov.'
+- id: kyivindependent-2024-hodunova-sudzha-captured
+  title: Zelensky confirms full capture of Russian town of Sudzha in Kursk Oblast
+  url: https://kyivindependent.com/breaking-zelensky-confirms-full-capture-of-russian-town-of-sudzha-in-kursk-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Hodunova
+  published: '2024-08-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Zelensky (15 Aug): all of Sudzha captured; military administration set up in the town; Sudzha less than 10 km from
+    the border.'
+- id: kyivindependent-2024-ostiller-oktyabrskoe-column
+  title: Column of Russian vehicles, personnel destroyed in Kursk Oblast, multiple sources say
+  url: https://kyivindependent.com/column-of-russian-vehicles-personnel-destroyed-amid-fighting-in-kursk-oblast-multiple-sources-say/
+  publisher: Kyiv Independent
+  authors:
+  - Nate Ostiller
+  published: '2024-08-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - strikes
+  - chapter
+  notes: 'The Oktyabrskoe column: more than 14 vehicles destroyed or damaged, about 10 km from Rylsk and 30 km from Korenevo;
+    Rybar corroborated; casualties unknown.'
+- id: kyivindependent-2025-denisova-new-offensive-jan5
+  title: Ukraine launches new offensive in Russia's Kursk Oblast, mixed reports surface on outcome
+  url: https://kyivindependent.com/russia-claims-2/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2025-01-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Kovalenko: attacks in several directions on 5 Jan; Russian bloggers: thrust NE of Sudzha towards Bolshoye Soldatskoye
+    with armour and mine-clearing; Yevkurov arrives in Kursk.'
+- id: kyivindependent-2025-denisova-pipeline-video
+  title: Ukraine releases video of Russian attack via gas pipeline in Kursk Oblast
+  url: https://kyivindependent.com/ukraines-military-releases-video-of-russian-gas-pipeline-attack-in-kursk-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2025-03-09'
+  accessed: '2026-10-01'
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - media
+  - pipeline
+  - chapter
+  notes: Ukrainian military footage of Russian troops at the Sudzha pipeline exit.
+- id: kyivindependent-2025-gyori-sso-21-nk
+  title: Ukraine's Special Forces say they killed 21 North Korean soldiers, show combat footage
+  url: https://kyivindependent.com/ukraines-special-forces-say-they-killed-21-north-korean-soldiers-show-combat-footage/
+  publisher: Kyiv Independent
+  authors:
+  - Boldizsar Gyori
+  published: '2025-01-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - north-korea
+  - media
+  - chapter
+  notes: SSO 8th Regiment held a North Korean assault for eight hours (21 killed, 40 wounded) before leaving in two Humvees
+    with a third of its ammunition; footage of a large group crossing an open field.
+- id: kyivindependent-2025-sudzha-withdrawal-confirmed
+  title: 'Ukraine war latest: Ukraine confirms withdrawal from Sudzha in Russia''s Kursk Oblast'
+  url: https://kyivindependent.com/ukraine-war-latest-ukraine-confirms-withdrawal-from-sudzha-in-russias-kursk-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - The Kyiv Independent news desk
+  published: '2025-03-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - withdrawal
+  - chapter
+  notes: 'General Staff maps on 16 Mar show the retreat from Sudzha; Syrskyi: priority is saving soldiers'' lives; Trump''s
+    14 Mar ''spare'' post; Zelensky: forces were pulled from other fronts to Kursk.'
+- id: kyivindependent-2025-zadorozhnyy-russia-enters-sudzha
+  title: Russia reportedly enters Ukraine-held Sudzha in Kursk Oblast; military hasn't confirmed
+  url: https://kyivindependent.com/russia-reportedly-launches-assault-on-ukrainian-controlled-sudzha-in-kursk-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - Tim Zadorozhnyy
+  published: '2025-03-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'DeepState and ISW: Russians in Sudzha on 12 Mar; Syrskyi: repositioning to ''favorable defense lines'', no encirclement;
+    US aid and intelligence resumed on 11 Mar.'
+- id: kyivindependent-2025-zadorozhnyy-syrskyi-april
+  title: Russia intensifies push in Kursk, Sumy border areas as Ukraine holds line, Syrskyi says
+  url: https://kyivindependent.com/russia-steps-up-assault-on-sumy-oblast-kursk-border-as-ukraine-holds-line-syrskyi-says/
+  publisher: Kyiv Independent
+  authors:
+  - Tim Zadorozhnyy
+  published: '2025-04-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Syrskyi (21 Apr): Russian push to clear Kursk and enter Sumy; DeepState: about 30 km² still held in Kursk Oblast.'
+- id: kyivpost-2024-oktyabrskoye-himars
+  title: Russian Milbloggers Blame 'Incompetence' for Ukrainian HIMARS Strike That Destroyed Russian Battalion
+  url: https://www.kyivpost.com/post/37140
+  publisher: Kyiv Post
+  authors: []
+  published: '2024-08-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - strikes
+  - russian-claims
+  - chapter
+  notes: At least 14 burnt vehicles near Oktyabrskoye (Rylsky district), M30 submunition debris suggests HIMARS; some analysts
+    estimate up to 500 killed or injured (unverified); milblogger fury at moving in columns.
+- id: kyivpost-2024-ryan-battle-of-kursk
+  title: 'Analysis: The Battle of Kursk 2024'
+  url: https://www.kyivpost.com/analysis/37222
+  publisher: Kyiv Post
+  authors:
+  - Mick Ryan
+  published: '2024-08-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Early assessment: experienced 22nd Mech and 82nd Air Assault, a mobile mechanised force, effective air defence,
+    surprise achieved; possible operational and strategic objectives.'
+- id: militarnyi-2024-47th-brigade-kursk
+  title: 47th Brigade Overrun New Russian Positions in Kursk Oblast
+  url: https://militarnyi.com/en/news/47th-brigade-overrun-new-russian-positions-in-kursk-oblast/
+  publisher: Militarnyi
+  authors: []
+  published: '2024-10-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - armour
+  - chapter
+  notes: New border breakthrough with Abrams, Bradleys (TOW-2) and BMP-2s of the 130th Battalion, infantry of the 33rd Assault
+    Battalion, 21st Brigade artillery, smoke; forest near Obukhivka.
+- id: militarnyi-2024-kursk-crossings-osa
+  title: Defense Forces strike again at crossings in the Kursk oblast
+  url: https://mil.in.ua/en/news/defense-forces-strike-again-at-crossings-in-the-kursk-oblast/
+  publisher: Militarnyi
+  authors: []
+  published: '2024-09-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - strikes
+  - chapter
+  notes: 'SDB strikes on two pontoon crossings (one near Zvannoye) and HIMARS on an Osa SAM; with the Karyzh, Zvannoye and
+    Glushkovo bridges down, Russian troops are ''sandwiched'' against the Seim; Zelensky: over 1,300 km² held, 6,000 Russian
+    casualties in the first month.'
+- id: nv-2025-romanenko-pipeline-ambush
+  title: Ukrainian forces wipe out 80% of Russian group in attempted Sudzha gas pipeline ambush
+  url: https://english.nv.ua/nation/kursk-oblast-ukrainian-armed-forces-officer-says-military-eliminated-a-group-of-russians-in-sudzha-50496288.html
+  publisher: The New Voice of Ukraine
+  authors:
+  - Bohuslav Romanenko
+  published: '2025-03-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - infiltration
+  - pipeline
+  - chapter
+  notes: Officer Myroslav Hai claims an air assault brigade knew of the plan, collapsed the exit and killed about 80% of the
+    group; unverified.
+- id: openmeteo-2026-c14-sudzha-weather
+  title: Open-Meteo ERA5 daily archive, Sudzha (51.19 N, 35.27 E), 1 Aug 2024 – 30 Apr 2025
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=51.19&longitude=35.27&start_date=2024-08-01&end_date=2025-04-30&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,snow_depth_max,cloud_cover_mean,sunrise,sunset&timezone=Europe%2FMoscow
+  publisher: Open-Meteo (ERA5 reanalysis)
+  authors: []
+  published: '2026-10-01'
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - weather
+  - chapter
+  notes: Daily temperature, precipitation, snowfall, snow depth, cloud and sun times for key days; reanalysis, not station
+    data.
+- id: osm-overpass-2026-landscape-sample
+  aliases:
+  - osm-overpass-2026-c06-places
+  - osm-overpass-2026-c09-places
+  - osm-overpass-2026-c14-places
+  - osm-overpass-2026-kerch-bridge
+  title: OpenStreetMap data for five 10 x 10 km front-line sample boxes, queried via the Overpass API
+  url: https://overpass-api.de/api/interpreter
+  alt_urls:
+  - https://overpass.kumi.systems/api/interpreter
+  - https://www.openstreetmap.org/copyright
+  publisher: OpenStreetMap contributors (ODbL 1.0), served by Overpass API
+  authors: []
+  published: '2026-09-28'
+  accessed: '2026-09-28'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e5-counteroffensive-23
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - geodata
+  - shelterbelts
+  - fields
+  - settlements
+  - roads
+  notes: 'Queried 2026-09-28: tree_row, wood/forest, farmland, highway, residential, water, place nodes and building centres
+    for boxes W of Pokrovsk, Robotyne, E of Kupiansk, E of Huliaipole, S of Chasiv Yar (bboxes in 06 §2.7). Analysed in python/numpy
+    (local metric projection, convex-hull minimum-area rectangles, perpendicular belt spacing). Completeness varies strongly
+    by box; buildings are 1-18% complete. (c) OpenStreetMap contributors.'
+- id: osw-2024-wilk-kursk-action
+  title: Ukrainian military action in Kursk oblast
+  url: https://www.osw.waw.pl/en/publikacje/analyses/2024-08-07/ukrainian-military-action-kursk-oblast
+  publisher: Centre for Eastern Studies (OSW)
+  authors:
+  - Andrzej Wilk
+  published: '2024-08-07'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Day-1 analysis: two platoons, then about 400 men, 11 tanks, 20 AFVs across; whole grouping about 2,000 from the
+    22nd Mech and 82nd Air Assault; breach at two of four points, up to 7 km deep; reasons mainly political.'
+- id: politico-2024-dettmer-urged-not-to-invade
+  title: Zelenskyy was urged not to invade Kursk. He did it anyway.
+  url: https://www.politico.eu/article/kursk-russia-incursion-objections-war-in-ukraine-volodymyr-zelenskyy/
+  publisher: Politico Europe
+  authors:
+  - Jamie Dettmer
+  published: '2024-09-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - decision
+  - ground-ops
+  - chapter
+  notes: Zaluzhnyi (no clear second step) and 80th Brigade commander Ishkulov reportedly objected; elite units from four brigades;
+    FPVs 'indispensable'; Zelensky's shell-ratio claim (1:12 to 1:2.5).
+- id: pravda-2024-balachuk-60000-redeployed
+  title: Russians redeployed 60,000 troops to Kursk Oblast – Zelenskyy
+  url: https://www.pravda.com.ua/eng/news/2024/09/5/7473581/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2024-09-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - force-generation
+  - chapter
+  notes: 'Zelensky: about 60,000 Russian troops redeployed to Kursk; shell ratio in some areas shifted from 1:12 to 1:3; Syrskyi
+    (27 Aug): 30,000 deployed and 594 POWs.'
+- id: pravda-2024-kyrylenko-horets-95th
+  title: 'Andrii Horets, Deputy Commander of 95th Brigade: The enemy storms the Kursk front every day. No matter what anyone
+    says, they''re suffering huge losses'
+  url: https://www.pravda.com.ua/eng/articles/2024/11/14/7484379/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Kyrylenko
+  published: '2024-11-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 95th Brigade told a week before, three days to prepare; entered after 10 Aug; two-week clearance of Malaya Loknya;
+    Marders; no Starlink at first; defence from end-September; area halved from over 1,200 km² to about 600 km² (DeepState,
+    Nov).
+- id: pravda-2025-balachuk-40000-losses
+  title: Russia has lost 40,000 troops over 6 months of Ukraine's Kursk operation, Ukraine's commander-in-chief says
+  url: https://www.pravda.com.ua/eng/news/2025/02/6/7496971/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2025-02-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - casualties
+  - north-korea
+  - chapter
+  notes: 'Syrskyi at six months: 39,900 Russian losses (16,100 killed), 909 POWs; North Korean losses about 4,000, one brigade
+    destroyed and two not combat-capable, withdrawn; ''hundreds of km²'' still held.'
+- id: pravda-2025-kyrylenko-breach-south-sudzha
+  title: Russians breach Ukrainian defensive line near Sudzha, Russia
+  url: https://www.pravda.com.ua/eng/news/2025/03/7/7501734/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Kyrylenko
+  - Anastasia Prots
+  published: '2025-03-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - logistics
+  - chapter
+  notes: 'Source: Russians entered Kurilovka before New Year, then broke through south of Sudzha on 5–6 Mar; aim is the Sumy–Yunakivka–Sudzha
+    road, contested since January; first approach from the north via Novenke in late February.'
+- id: pravda-2025-shumilin-deepstate-sudzha-east
+  title: 'DeepState: Russian troops advance in Kursk Oblast, consolidate positions in eastern part of Sudzha'
+  url: https://www.pravda.com.ua/eng/news/2025/03/11/7502377/
+  publisher: Ukrainska Pravda
+  authors:
+  - Oleksandr Shumilin
+  published: '2025-03-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ground-ops
+  - north-korea
+  - chapter
+  notes: 'DeepState: Russians consolidate in eastern Sudzha, advance near Mirnoye and Zazulevka; North Koreans slowed near
+    Guyevo; push on Basivka in Sumy Oblast.'
+- id: pravda-2025-tyshchenko-67000-losses
+  title: Russia has lost nearly 67,000 Russian and North Korean troops in Kursk Oblast, says Ukraine's General Staff
+  url: https://www.pravda.com.ua/eng/news/2025/04/26/7509320/
+  publisher: Ukrainska Pravda
+  authors:
+  - Kateryna Tyshchenko
+  published: '2025-04-26'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - casualties
+  - chapter
+  notes: 'General Staff: 62,400 Russian losses (25,200 killed, 36,200 wounded), 983 POWs, more than 4,500 North Korean killed
+    and wounded since 6 Aug 2024.'
+- id: ukrinform-2024-syrskyi-20000-losses
+  title: Russia lost over 20,000 soldiers in Kursk region - Syrskyi
+  url: https://www.ukrinform.net/rubric-ato/3923964-russia-lost-over-20000-soldiers-in-kursk-region-syrskyi.html
+  publisher: Ukrinform
+  authors: []
+  published: '2024-11-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - casualties
+  - decision
+  - chapter
+  notes: 'Syrskyi: intelligence in May 2024 showed a Russian plan to attack Sumy from Kursk, hence the preventive offensive;
+    20,842 Russian casualties to 5 Nov (7,905 killed, 717 captured); 1,101 pieces of equipment; Russia has massed about 45,000.'
+- id: ukrinform-2025-general-staff-border-control
+  title: Ukrainian forces control situation on border between Sumy, Kursk regions – General Staff
+  url: https://www.ukrinform.net/rubric-ato/3972074-ukrainian-forces-control-situation-on-border-between-sumy-kursk-regions-general-staff.html
+  publisher: Ukrinform
+  authors: []
+  published: '2025-03-18'
+  accessed: '2026-10-01'
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - withdrawal
+  - chapter
+  notes: 'General Staff: reports of deep Russian advances into Sumy Oblast false; small groups eliminated; Ukraine still holds
+    positions in Kursk Oblast.'
+- id: wikimedia-2024-kursk-incursion-map
+  title: File:August 2024 Kursk Oblast incursion (Western Russia).svg
+  url: https://commons.wikimedia.org/wiki/File:August_2024_Kursk_Oblast_incursion_(Western_Russia).svg
+  publisher: Wikimedia Commons (Ecrusized)
+  authors: []
+  published: '2024-08-08'
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - media
+  - maps
+  - chapter
+  notes: Locator map of the incursion area in western Russia; CC0.
+- id: wikimedia-2025-kursk-front-map
+  title: File:Kursk front of the Russo-Ukrainian War.svg
+  url: https://commons.wikimedia.org/wiki/File:Kursk_front_of_the_Russo-Ukrainian_War.svg
+  publisher: Wikimedia Commons (Spähpanzer)
+  authors: []
+  published: '2025-03-12'
+  accessed: '2026-10-01'
+  type: map
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - media
+  - maps
+  - chapter
+  notes: Map of claimed Ukrainian-held areas in Kursk Oblast (Wikipedia infobox map, 28 Apr 2025 state); CC BY-SA 4.0.
+- id: wikipedia-kursk-campaign-order-of-battle
+  title: Kursk campaign order of battle
+  url: https://en.wikipedia.org/wiki/Kursk_campaign_order_of_battle
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - order-of-battle
+  - chapter
+  notes: Tree of Ukrainian, Russian and North Korean units in the Kursk and Belgorod operations; many entries thinly sourced,
+    used only as a checklist.

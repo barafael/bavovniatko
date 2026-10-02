@@ -8,17 +8,17 @@ Status: **built** on 2026-09-30. Where the build departed from this plan:
   via `includes`.
 - **Data corrections:** corrections after the import live in `db/fixes/`, and the audit trail begins with them.
 - **Place geometry:** OSM geometry is simplified (Douglas–Peucker, tolerance set per kind) so the dump stays
-  small (14 MB).
+  small (39 MB with all 21 dossiers).
 - **Counts:**
 
-  | records | count at the first build | after the chapter dossiers (2026-10-01) |
-  |---|---|---|
-  | claims | 3,706 | 7,100 |
-  | observations | 3,143 | 4,890 |
-  | claim relations | 1,233 | 2,220 |
-  | measure/countermeasure links | 221 | 308 |
-  | entities | 1,366 | about 3,070 |
-  | sources | 583 (568 archived) | 1,173 |
+  | records | count at the first build | after 12 chapter dossiers (2026-10-01) | after all 21 dossiers (2026-10-02) |
+  |---|---|---|---|
+  | claims | 3,706 | 7,100 | 10,780 |
+  | observations | 3,143 | 4,890 | 6,976 |
+  | claim relations | 1,233 | 2,220 | 3,508 |
+  | measure/countermeasure links | 221 | 308 | 404 |
+  | entities | 1,366 | about 3,070 | 4,301 |
+  | sources | 583 (568 archived) | 1,173 | 2,011 (1,963 archived) |
 
 ## Goal
 

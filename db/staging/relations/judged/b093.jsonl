@@ -1,0 +1,40 @@
+{"pair": "248ca431878f", "relation": "contradicts", "from": "claim:c04_0033_35", "to": "claim:cc14_0027_09", "strength": 0.5, "rationale": "HUR puts North Korean casualties at more than 7,000 in June 2026, while the NIS and UK put them at about 6,000 over the same period.", "resolution": "Different intelligence services with different methods; HUR's figure is the higher and less conservative one."}
+{"pair": "24a7a1bc36e9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "24a8d231af31", "relation": "supersedes", "from": "claim:cc18_0010_14", "to": "claim:cc18_0013_55", "strength": 0.7, "rationale": "The police figure of more than 110 injured updates Tkachenko's early 04:55 count of 16 injured in Kyiv."}
+{"pair": "256818b7754a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "256cc67b39b0", "relation": "contradicts", "from": "claim:cc14_0027_07", "to": "claim:cc14_0027_08", "strength": 0.5, "rationale": "The NIS put North Korean dead at about 600 in April 2025, while a BBC analysis counted 2,304 killed.", "resolution": "Different methods and probably different dates; the NIS figure is an early official estimate."}
+{"pair": "25c85eece6be", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "25d9ac5ef53e", "relation": "contradicts", "from": "claim:cc11_0007_22", "to": "claim:cc11_0007_23", "strength": 0.6, "rationale": "Ukrainian officials privately estimated about 100 Ukrainians captured at Avdiivka, while Mordvichev claimed about 200 surrendered.", "resolution": "A Russian commander's claim versus a private Ukrainian estimate; each side has an incentive to skew."}
+{"pair": "265c52d5fe86", "relation": "refines", "from": "claim:cc15_0022_34", "to": "claim:c04_0030_33", "strength": 0.5, "rationale": "By January 2026 Russian infiltration had narrowed from 2–4 soldier groups to single men."}
+{"pair": "265e3aa851d1", "relation": "supersedes", "from": "claim:cc18_0013_57", "to": "claim:cc18_0013_55", "strength": 0.8, "rationale": "The 07:00–07:30 toll of nine killed, 56 injured and 30+ locations updates Tkachenko's 04:55 report of two dead, 16 injured and 28 locations."}
+{"pair": "2681ff6b70af", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "26c6f4c2c249", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "270b2e3ee49b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "271b31bb30c3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2752a9331dc9", "relation": "contradicts", "from": "claim:c04_0027_81", "to": "claim:cc14_0027_09", "strength": 0.5, "rationale": "HUR claims over 7,000 North Korean casualties, while the NIS and UK put them at about 6,000 in February–June 2026.", "resolution": "Different intelligence services with different methods; HUR's figure is the higher one."}
+{"pair": "275525ff69ef", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2788e714ad1e", "relation": "supersedes", "from": "claim:cc18_0010_14", "to": "claim:cc18_0013_66", "strength": 0.6, "rationale": "The police figure of more than 110 injured is later than the afternoon DSNS count of 85 injured in Kyiv."}
+{"pair": "27d25f3a65c4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "27e53cce9ef7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "287a2ff725d7", "relation": "refines", "from": "claim:cc19_0009_75", "to": "claim:cc19_0003_07", "strength": 0.6, "rationale": "The 3rd Army Corps video reported by ISW gives the fuller version of the 50 km then 120 km deep logistics strikes."}
+{"pair": "287c81700d5f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "28a73216734b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "28b59813ea71", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "28e62fa6fc20", "relation": "contradicts", "from": "claim:cc16_0007_10", "to": "claim:cc16_0047_11", "strength": 0.6, "rationale": "The War Zone counts with certainty at least 6 Tu-95MS and 4 Tu-22M3 destroyed, while Military Chronicle claims only one Tu-95MS was lost.", "resolution": "A pro-Russian blog minimising losses, against an imagery-based count."}
+{"pair": "29111d5272e2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "296bf6e59577", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2987cd64aa51", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "29886366c3bd", "relation": "contradicts", "from": "claim:cc16_0005_03", "to": "claim:cc16_0006_02", "strength": 0.5, "rationale": "BBC says 117 drones hit the bases while Butusov says 116 became airborne.", "resolution": "Minor count difference; the official 117 may include a drone that did not take off."}
+{"pair": "29b68946abdb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2a64ef7c0eeb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2a6748244c29", "relation": "weakens", "from": "claim:cc14_0014_100", "to": "claim:cc14_0014_101", "strength": 0.4, "rationale": "The report that about 100 troops came out of the Sudzha pipeline casts doubt on Gerasimov's claim that over 600 took part."}
+{"pair": "2b0400ee9a68", "relation": "contradicts", "from": "claim:cc16_0007_11", "to": "claim:cc16_0047_12", "strength": 0.4, "rationale": "Bronk counts at least 6 Tu-95MS destroyed, while Military Chronicle relayed other sources giving 8 Tu-95MS lost.", "resolution": "An unverified relayed claim, possibly conflating 8 aircraft of all types with Tu-95MS; Bronk's figure is a floor."}
+{"pair": "2b26d8b462ad", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2b3b6e1fa6df", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2b87a7ff4b4e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2c1e3b6f8159", "relation": "supersedes", "from": "claim:cc18_0010_13", "to": "claim:cc18_0013_45", "strength": 0.7, "rationale": "The interim toll of 91 injured updates Klitschko's 03:47 report of six injured in Kyiv."}
+{"pair": "2c5bcb8e60f3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2d8f5150ab08", "relation": "contradicts", "from": "claim:cc16_0026_13", "to": "claim:cc16_0026_14", "strength": 0.5, "rationale": "Butusov says 116 drones were launched in Spiderweb while the SBU's official figure is 117.", "resolution": "Minor count difference; the official 117 may include a drone that did not take off."}
+{"pair": "2d956a9e5ec1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2de5db09b514", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "2de82d6ca635", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

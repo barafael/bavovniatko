@@ -1,0 +1,1974 @@
+- id: abc-au-2022-convoy-dispersed
+  title: New satellite images show the 64km Russian convoy outside Kyiv has dispersed
+  url: https://www.abc.net.au/news/2022-03-11/new-satellite-images-show-russian-convoy-outside-kyiv-disperse/100902058
+  publisher: ABC News (Australia)
+  authors: []
+  published: '2022-03-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Maxar 10 Mar imagery: regrouping at Ozera, resupply trucks and probable MLRS in firing positions at Berestianka, towed artillery in the trees at Lubianka; senior US official on Javelin attacks on the front of the convoy; Kirby.'
+- id: abc-au-2022-convoy-little-progress
+  title: Russia's 64km-long military convoy has made 'little discernible progress' towards Ukraine's capital, UK says
+  url: https://www.abc.net.au/news/2022-03-04/russian-advance-on-kyiv-has-made-little-progress/100881736
+  publisher: ABC News (Australia)
+  authors: []
+  published: '2022-03-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Quotes the UK MoD update of 3 Mar in full; US official: Javelin ground fire hit the front of the convoy, creating a roadblock; mud keeps vehicles on the roads; air defences in the column make air attack too risky.'
+- id: abc-au-2022-convoy-what-we-know
+  title: A 64-kilometre-long Russian military convoy is approaching Kyiv. Here's what we know so far
+  url: https://www.abc.net.au/news/2022-03-02/a-massive-russian-convoy-is-approaching-kyiv-heres-what-we-know/100874820
+  publisher: ABC News (Australia)
+  authors: []
+  published: '2022-03-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Maxar captions: on Tue 1 Mar the convoy ran from near Antonov airport to near Prybirsk; at least 90 trucks in one small section near Ivankiv; two or three abreast; an unnamed US official (AP) on columns running out of fuel and food.'
+- id: aljazeera-2022-convoy-dispersed
+  title: Satellite images show Russian army convoy near Kyiv has dispersed
+  url: https://www.aljazeera.com/news/2022/3/11/satellite-images-show-russian-army-convoy-near-kyiv-re-deployed
+  publisher: Al Jazeera
+  authors: []
+  published: '2022-03-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Maxar images taken Thu 10 Mar: the 64 km line broken up and redeployed, armour in towns near Antonov airport, vehicles in forests, towed howitzers in firing positions near Lubianka; Klitschko on Kyiv as a fortress.'
+- id: aljazeera-2022-kyiv-region-retaken
+  title: Ukraine 'retakes whole Kyiv region' as Russia looks east
+  url: https://www.aljazeera.com/news/2022/4/3/ukraine-retakes-whole-kyiv-region-as-russian-troops-pull-back
+  publisher: Al Jazeera (news agencies)
+  authors: []
+  published: '2022-04-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Malyar on Facebook (Sat 2 Apr): ''The whole Kyiv region is liberated from the invader''; 30+ towns and villages retaken; Fedoruk: 280 buried in a mass grave; AFP: 20+ bodies on one Bucha street; 1,500+ explosives found in Dmytrivka in one day; Russia frames drawdown as goodwill gesture.'
+- id: babel-2022-andreikovets-bucha-458
+  title: At least 458 Ukrainians died in the Bucha community as a result of the actions of the Russians
+  url: https://babel.ua/en/news/82626-at-least-458-ukrainians-died-in-the-bucha-community-as-a-result-of-the-actions-of-the-russians
+  publisher: Babel
+  authors:
+  - Kostia Andreikovets
+  published: '2022-08-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - war-crimes
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Deputy mayor Mykhailyna Skoryk and ritual-service head Serhiy Kaplichnyi: 458 dead in the Bucha community, 419 killed by weapons, 116 in the mass grave by St Andrew''s church, 50 found unburied, 12 under-21s. Local-official figures.'
+- id: bar-2024-sladden-collins-connable-irpin-river
+  title: The Battle of Irpin River, February/March 2022 (The British Army Review, Issue 187, Spring 2024)
+  url: https://chacr.org.uk/wp-content/uploads/2024/03/BAR-187-compressed.pdf
+  publisher: Centre for Historical Analysis and Conflict Research (British Army)
+  authors:
+  - James Sladden
+  - Liam Collins
+  - Ben Connable
+  published: 2024-03
+  accessed: '2026-10-01'
+  type: academic
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '54-page oral-history study (dozens of interviews, battlefield walks 2022-23) of the 72nd Brigade''s 2nd Mechanised Battalion and the Antonov Airport defenders: Russian and Ukrainian OOB, terrain, Irpin bridges with distances, Kozarovychi dam, Moshchun/Horenka/Huta-Mezhyhirska, the artillery fight; sunrise 06:52 / sunset 17:30 and 2-4 °C light rain on 24 Feb. Only Ukrainian interviewees (authors'' caveat).'
+- id: bbc-2022-bucha-satellite-image
+  title: 'Bucha killings: Satellite image of bodies site contradicts Russian claims'
+  url: https://www.bbc.com/news/60981238
+  publisher: BBC News
+  authors: []
+  published: '2022-04-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - war-crimes
+  - osint
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'BBC Reality Check: Maxar image of 19 Mar (first reported by NYT) shows bodies on the street in the positions later filmed; earlier, less clear Maxar image of 11 Mar; Russia says it left Bucha 30 Mar, Ukraine says early 31 Mar; rebuts Lavrov''s ''staged'' claim. (Page shows an 11 Apr update; datePublished 2022-04-04.)'
+- id: bbc-2022-urban-331st-regiment
+  title: The heavy losses of an elite Russian regiment in Ukraine
+  url: https://www.bbc.co.uk/news/world-europe-60946340
+  publisher: BBC News
+  authors:
+  - Mark Urban
+  published: '2022-04-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - osint
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'OSINT count: Kostroma 331st Guards Parachute Regiment lost CO Col Sergei Sukharev (13 Mar) and at least 39 others in the VDV column from Belarus (Hostomel, Bucha, Irpin); VDV elements filmed pulling back into Belarus on 29 Mar.'
+- id: bbc-2022-why-convoy-stopped
+  title: 'Ukraine: Why has Russia''s 64km convoy near Kyiv stopped moving?'
+  url: https://www.bbc.com/news/world-europe-60596629
+  publisher: BBC News
+  authors: []
+  published: '2022-03-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Explainer: column of armour, tanks and towed artillery; UK MoD ''little discernible progress in over three days''; food, fuel, poor and badly maintained tyres; Gen. Sir Richard Barrons on fuel, spare parts, tyres, mud and C2; Pentagon on deliberate regrouping; with a 3D model video. Fetched with curl (WebFetch blocks bbc.com).'
+- id: cbs-2022-perebyinis-family
+  title: Man returns after family killed near Kyiv
+  url: https://www.cbsnews.com/news/ukraine-news-perebeinis-family-killed-husband-returns-morgue/
+  publisher: CBS News
+  authors: []
+  published: '2022-03-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - civilians
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Names the Irpin victims: Tatiana Perebyinis, 43, Alisa, 9, and Mykyta, 18. Husband Serhiy. Wrongly says ''Monday''; the strike was Sunday 6 Mar.'
+- id: cnn-2022-mcgee-convoy-stalled
+  title: Here's what we know about the 40-mile-long Russian convoy outside Ukraine's capital
+  url: https://www.cnn.com/2022/03/03/europe/russian-convoy-stalled-outside-kyiv-intl/index.html
+  publisher: CNN
+  authors:
+  - Luke McGee
+  published: '2022-03-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'UK MoD 3 Mar update verbatim (over 30 km from the centre, ''staunch Ukrainian resistance, mechanical breakdown and congestion''); senior US official: ''no reason to doubt Ukrainian claims'' that attacks contributed to the stall; fuel and food shortages; Martti Kari on morale.'
+- id: cnn-2022-murphy-antonov-withdrawal-maxar
+  title: Russian forces have withdrawn from Antonov Airport, outside of Kyiv, satellite images confirm
+  url: https://www.cnn.com/europe/live-news/ukraine-russia-putin-news-04-2-22#h_c33699b81548c70cc5d9b911ada4fe82
+  publisher: CNN
+  authors:
+  - Paul P. Murphy
+  published: '2022-04-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Live-blog post: Maxar images taken Thursday 31 Mar show the Russians gone from Antonov Airport, leaving only earthen berms; same page carries Maliar''s 2 Apr statement that Bucha, Irpin, Hostomel and the whole Kyiv region were liberated.'
+- id: defenseone-2022-copp-convoy-stalled
+  title: '''The Convoy Is Stalled'': Logistics Failures Slow Russian Advance, Pentagon Says'
+  url: https://www.defenseone.com/threats/2022/03/convoy-stalled-logistics-failures-slow-russian-advance-pentagon-says/362666/
+  publisher: Defense One
+  authors:
+  - Tara Copp
+  published: '2022-03-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Senior US defence official, 2 Mar: ''We believe that the convoy is stalled''; problems include food, fuel and spare parts; Ukrainian attacks on it ''in limited fashion''; 82% of the force arrayed on the border inserted; SBU video of a POW sent with three days'' food (unverified).'
+- id: euromaidan-2022-day-35-kyiv-attacks
+  title: 'Russo-Ukrainian war, day 35: Russia continues attacks on Kyiv despite claims, Mariupol still fights, Ukraine''s "peace plan"'
+  url: https://euromaidanpress.com/2022/03/30/russo-ukrainian-war-day-35-russians-continue-attacks-on-kyiv-despite-claims-mariupol-still-fights-ukraines-peace-offer/
+  publisher: Euromaidan Press
+  authors: []
+  published: '2022-03-30'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - negotiations
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Daily report (read via the site''s WP REST API): Medinsky''s two ''de-escalatory steps'' at Istanbul on 29 Mar (drastically reduce activity toward Kyiv and Chernihiv); General Staff: withdrawal from Kyiv and Chernihiv oblasts continues but is ''probably a rotation'' meant to mislead.'
+- id: euromaidan-2022-day-38-kyiv-recaptured
+  title: 'Russo-Ukrainian war, day 38: Ukraine recaptures large swathes of terrain near Kyiv as Russia focuses on Ukraine''s east'
+  url: https://euromaidanpress.com/2022/04/02/russo-ukrainian-war-latest-news-april-2/
+  publisher: Euromaidan Press
+  authors: []
+  published: '2022-04-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Relays the General Staff report of 06:00 2 Apr: 38th and 37th MRBs and 5th Tank Bde cover the withdrawal; 5th, 29th, 35th CAAs and 155th Naval Infantry Bde pull back from the Chornobyl district into Belarus; lists villages retaken (Demydiv, Dymer, Kozarovychi... Nova Basan); Russians left the Chornobyl NPP.'
+- id: euromaidan-2023-havrylets-battle-of-kyiv-tactics
+  title: 'Battle of Kyiv: tactics and tricks that saved Ukrainian capital'
+  url: https://euromaidanpress.com/2023/04/02/battle-of-kyiv-tactics-and-tricks-that-saved-ukrainian-capital/
+  publisher: Euromaidan Press
+  authors:
+  - Serge Havrylets
+  published: '2023-04-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Ukrainian-perspective synthesis: Moshchun from 5 Mar, special forces blowing the dam on 8 Mar (water 2 m over the banks), Vdovychenko and Zaluzhnyi about 14 Mar, a 20:1 Russian artillery advantage, the 80th Air Assault Brigade reinforcing, and a convoy over 55 km long (Maxar, 1 Mar). Contains some loose distances (Moshchun ''3 km NW of Kyiv'').'
+- id: forbes-2022-axe-mig-pilots-kyiv-day-one
+  title: Five Brave Ukrainian MiG Pilots Blunted The Russian Attack On Kyiv On Day One Of The War. Not All Of Them Survived.
+  url: https://www.forbes.com/sites/davidaxe/2022/12/09/five-brave-ukrainian-mig-pilots-blunted-the-russian-attack-on-kyiv-on-day-one-of-the-war-not-all-of-them-survived/
+  alt_urls:
+  - http://web.archive.org/web/20251024201602/https://www.forbes.com/sites/davidaxe/2022/12/09/five-brave-ukrainian-mig-pilots-blunted-the-russian-attack-on-kyiv-on-day-one-of-the-war-not-all-of-them-survived/
+  publisher: Forbes
+  authors:
+  - David Axe
+  published: '2022-12-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Read via the Wayback Machine (the live page blocks scripts). Covers day one over Kyiv: Vasylkiv (40th TAB) dispersed and undamaged after a US tip-off. Five MiG-29s hit the Hostomel helicopter stream: 24 Mi-8s with 10 Mi-24/Ka-52 escorts and about 700 troops. At least 4 of 34 helicopters were downed. Covers Yerko''s claimed kills (2 Mi-24, a Su-25 and a Su-35, per the UA MoD), at least 3 MiG-29s lost in 24 h, and Su-24 bombing at Hostomel. The kill claims are relayed from the UA MoD.'
+- id: guardian-2022-beaumont-convoy-siege
+  title: Vast Russian military convoy may be harbinger of a siege of Kyiv
+  url: https://www.theguardian.com/world/2022/mar/01/vast-russian-military-convoy-kyiv-siege-ukraine
+  publisher: The Guardian
+  authors:
+  - Peter Beaumont
+  published: '2022-03-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Analysis of the Maxar images of 27–28 Feb: Rudnia-Shpylivska on the P02, vehicles three abreast, fuel tankers, BMP-3s, towed and self-propelled artillery, camps at Zdvyzhivka, the head passing near Hostomel on 1 Mar, 15,000 troops (estimate). Fetched with curl.'
+- id: guardian-2022-borger-aerorozvidka-convoy
+  title: The drone operators who halted Russian convoy headed for Kyiv
+  url: https://www.theguardian.com/world/2022/mar/28/the-drone-operators-who-halted-the-russian-armoured-vehicles-heading-for-kyiv
+  publisher: The Guardian
+  authors:
+  - Julian Borger
+  published: '2022-03-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - drones
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Primary for the Aerorozvidka night ambushes near Ivankiv: 30 special-forces troops and drone operators on quad bikes, thermal drones, 1.5 kg bomblets, two or three lead vehicles destroyed, then the supply depot. Honchar''s own account; the Guardian says not all details could be verified, but US officials said Ukrainian attacks helped halt the column. Fetched with curl.'
+- id: guardian-2022-mundy-irpin-hero-river
+  title: 'Before and after: how the destruction of the Irpin dam changed the landscape'
+  url: https://www.theguardian.com/environment/2022/may/11/ukraine-hero-irpin-river-helped-save-kyiv-but-what-now-for-its-newly-restored-wetlands-aoe
+  publisher: The Guardian
+  authors:
+  - Vincent Mundy
+  published: '2022-05-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - terrain
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Says the dam breach 'at the end of February' reflooded 13,000 ha of wetlands drained in the 1960s (conflicts with Wikipedia's 2,800 ha). The river is 162 km long; ecologist Boreyko's 'Hero River'. Includes a before/after interactive. Fetched with curl (WebFetch blocked).
+- id: hrw-2022-irpin-fleeing-civilians
+  title: 'Ukraine: Russian Assault Kills Fleeing Civilians'
+  url: https://www.hrw.org/news/2022/03/08/ukraine-russian-assault-kills-fleeing-civilians
+  publisher: Human Rights Watch
+  authors: []
+  published: '2022-03-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - civilians
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: The P30 intersection by St George's church, 6 km from the Kyiv city limits and just south of the bridge Ukraine destroyed. Shelling from 09:30 to 14:00, rounds every 5–10 min, at least 8 killed (mayor), the Ukrainian mortar 180 m away (NYT), rail evacuation cut on 5 Mar. Seven witnesses interviewed.
+- id: hrw-2022-trail-of-death-bucha
+  title: 'Ukraine: Russian Forces'' Trail of Death in Bucha'
+  url: https://www.hrw.org/news/2022/04/21/ukraine-russian-forces-trail-death-bucha
+  publisher: Human Rights Watch
+  authors: []
+  published: '2022-04-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - war-crimes
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'HRW field research in Bucha 4–10 Apr 2022: occupation 4(5)–31 Mar; 16 apparently unlawful killings documented (9 summary executions, 7 indiscriminate); Bucha official: 278 bodies by 15 Apr; prewar pop. ~36,000; many bodies on Yablunska St.'
+- id: independent-2022-james-convoy-40-miles
+  title: 'Ukraine: 40 mile-long Russian convoy heading to Kyiv twice as long as previously thought'
+  url: https://www.independent.co.uk/news/world/europe/russia-ukraine-war-kyiv-maxar-b2025365.html
+  publisher: The Independent
+  authors:
+  - Liam James
+  published: '2022-03-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Maxar: the column is more than 40 miles long, over twice the earlier 17-mile estimate; photographed on Monday 28 Feb approaching Antonov airport; armour, tanks, towed artillery and logistics vehicles. Byline per Wikipedia citation; page fetched.'
+- id: isw-2022-02-24-roca
+  title: 'Russia-Ukraine Warning Update: Initial Russian Offensive Campaign Assessment'
+  url: https://www.understandingwar.org/backgrounder/russia-ukraine-warning-update-initial-russian-offensive-campaign-assessment
+  alt_urls:
+  - https://web.archive.org/web/20220228122510id_/https://www.understandingwar.org/backgrounder/russia-ukraine-warning-update-initial-russian-offensive-campaign-assessment
+  publisher: Institute for the Study of War
+  authors:
+  - Mason Clark
+  - George Barros
+  - Kateryna Stepanenko
+  published: '2022-02-24'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Day-1 assessment: Ukrainians contesting Hostomel against VDV likely from the 31st GAAB as of 21:30 after several unsuccessful counterattacks; Chernobyl zone taken 19:30; 36th CAA halted at Chernihiv. ISW live site 403s; read via Wayback.'
+- id: isw-2022-02-25-roca
+  title: 'Russia-Ukraine Warning Update: Russian Offensive Campaign Assessment, February 25, 2022'
+  url: https://www.understandingwar.org/backgrounder/russia-ukraine-warning-update-russian-offensive-campaign-assessment-february-25-2022
+  alt_urls:
+  - https://web.archive.org/web/20220302040643id_/https://www.understandingwar.org/backgrounder/russia-ukraine-warning-update-russian-offensive-campaign-assessment-february-25-2022
+  publisher: Institute for the Study of War
+  authors:
+  - Mason Clark
+  - George Barros
+  - Kateryna Stepanenko
+  published: '2022-02-25'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Hostomel in Russian hands after Ukrainian withdrawal early 25 Feb, taken only when mechanised units from Belarus arrived; runway damaged enough to be unusable; VDV redeployed to the east bank; Russians in Obolon at 11:00; Russian MoD claims Kyiv isolated from the west at 15:30. Read via Wayback.
+- id: isw-2022-02-27-roca
+  title: 'Russia-Ukraine Warning Update: Russian Offensive Campaign Assessment February 27, 2022'
+  url: https://understandingwar.org/research/russia-ukraine/russia-ukraine-warning-update-russian_27/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-02-27'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'General Staff: Russian forces in an ''acute shortage of fuel and food'', using Belarusian rail; Russia recalibrating for a longer war; reinforcements in Belarus (15th Army Aviation Brigade at Machulishchy). RUSI cites the older backgrounder URL of this report.'
+- id: isw-2022-03-11-roca
+  title: Russian Offensive Campaign Assessment, March 11, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-11
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-11'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: No Russian offensive west of Kyiv on 11 Mar after failed attacks on 10 Mar; capture of a Russian ammunition supply column; Kolesnikov (29th CAA) claimed killed; units struggling to deliver supplies.
+- id: isw-2022-03-12-roca
+  title: Russian Offensive Campaign Assessment, March 12, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-12
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: No Russian offensive NW of Kyiv for a second day; limited attacks toward NE Kyiv (Zazymia, Vyshenky) and around Chernihiv; first armed Russian loitering-munition UAV shot down over central Kyiv; UA counterattacks on the NE line of communication.
+- id: isw-2022-03-16-roca
+  title: Russian Offensive Campaign Assessment, March 16, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-16
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-16'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Zelensky''s new Kyiv HQ (15 Mar): Pavliuk heads the Kyiv Regional Military Administration, Koskalov to the Joint Forces; only limited failed attacks NW of Kyiv; EMD reserves arriving; GS says 5th CAA reinforcement ''refused''. (Text from the c03 fork''s fetched copy.)'
+- id: isw-2022-03-19-roca
+  title: Russian Offensive Campaign Assessment, March 19, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-19
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-19'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Key judgement: ''the initial Russian campaign to seize Ukraine''s capital and major cities and force regime change has failed''; Russians digging in (Maxar trenches and revetments); failed Irpin crossing at Moshchun on 18 Mar; 152 mm range ~25 km.'
+- id: isw-2022-03-22-roca
+  title: Russian Offensive Campaign Assessment, March 22, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-22
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-22'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Shift to protracted bombardment after the failed encirclement; UA local counterattacks retake Moshchun and Makariv; Russians entrenched around Bucha; fortified artillery NW of Irpin (21 Mar imagery); another 90th Tank Div BTG to the NE axis.
+- id: isw-2022-03-25-roca
+  title: Russian Offensive Campaign Assessment, March 25, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-25
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-25'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - russian-claims
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Rudskoi''s 25 Mar briefing: ''main tasks of the first stage'' completed, focus on Donbas: ISW calls it inaccurate; UA gains in Irpin; Lukianivka retaken 24 Mar (claimed 9 APCs, 2 tanks, 40 troops), Russians pushed back from Brovary.'
+- id: isw-2022-03-26-roca
+  title: Russian Offensive Campaign Assessment, March 26, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-26
+  publisher: Institute for the Study of War
+  authors:
+  - Frederick Kagan
+  - George Barros
+  published: '2022-03-26'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Static fighting reflects Russian incapacity, not a change of aims; Hostomel a Russian salient 'exposed from several directions'; brigade commander run over by his own men; Slavutych entered 26 Mar.
+- id: isw-2022-03-27-roca
+  title: Russian Offensive Campaign Assessment, March 27, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-27
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-27'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: EMD commander Col Gen Alexander Chayko may be personally commanding the regrouping in Belarus; 35th CAA rotating damaged units to Belarus; EMD command post near Chornobyl; 165th Artillery Bde (35th CAA) using old ammunition (GS); UA counterattacks east of Brovary retook territory late 26 Mar.
+- id: isw-2022-03-28-roca
+  title: Russian Offensive Campaign Assessment, March 28, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-28
+  publisher: Institute for the Study of War
+  authors:
+  - Mason Clark
+  - George Barros
+  published: '2022-03-28'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Irpin recaptured 28 Mar (counterattacks from 22 Mar); 2 BTGs of 106th VDV Div withdrawn (GS, 27 Mar); 90th Tank Div and 2nd CAA halted toward Brovary; Russians blowing bridges in Chernihiv/Sumy oblasts; ISW: Kremlin has not abandoned Kyiv. (Text from the c03 fork''s fetched copy.)'
+- id: isw-2022-03-31-roca
+  title: Russian Offensive Campaign Assessment, March 31, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-31
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-03-31'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: UA pushed Russians north of the E40 highway NW of Kyiv; elements of the 35th and 36th CAAs and 76th Air Assault Div withdrew into Belarus (GS); UA exploited withdrawals east of Brovary; ISW still saw no sign of Russia fully relinquishing ground.
+- id: isw-2022-04-01-roca
+  title: Russian Offensive Campaign Assessment, April 1, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-1
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-01'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'ISW: Kremlin has revised its campaign plan; Russian forces around Kyiv conducting a retrograde behind a covering force; Ukraine retook large swathes NW and E of Kyiv; Russia withdrew much damaged combat power into Belarus; Izium fell 1 Apr.'
+- id: isw-2022-04-03-roca
+  title: Russian Offensive Campaign Assessment, April 3, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-3
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-03'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '''Ukraine has won the Battle of Kyiv'': withdrawal from both banks completing ''not in good order'', stragglers (''lost orcs'') left behind; victory ''significant but not decisive''; units in Belarus combat-ineffective for a protracted period.'
+- id: isw-2022-04-06-roca
+  title: Russian Offensive Campaign Assessment, April 6, 2022
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-6
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2022-04-06'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Sumy Oblast completely vacated (Zhyvytskyi, 6 Apr); Kyiv-axis units regroup in Belarus for rail redeployment (38th MRB of 35th CAA to Belgorod); 'highly unlikely to be combat capable'. (Text from the c03 fork's fetched copy.)
+- id: kyivindependent-2022-chornobyl-withdrawal-pentagon
+  title: 'Pentagon: Russian occupiers start to withdraw from Chornobyl nuclear power plant.'
+  url: https://kyivindependent.com/pentagon-russian-occupiers-start-to-withdraw-from-chornobyl-nuclear-power-plant/
+  publisher: Kyiv Independent
+  authors: []
+  published: '2022-03-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'AFP-cited US official, 30–31 Mar: Russian troops ''leaving, walking away from the Chornobyl facility and moving into Belarus''. Seized 24 Feb. Same-day Energoatom item: two columns heading to the Belarus border, a column forming in Slavutych.'
+- id: kyivindependent-2022-pentagon-short-food-fuel
+  title: 'Pentagon: Russian forces are short on food, fuel and winter gear.'
+  url: https://kyivindependent.com/pentagon-russian-forces-are-short-on-food-fuel-and-winter-gear/
+  publisher: Kyiv Independent
+  authors: []
+  published: '2022-03-23'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'US DoD official at a closed briefing on 22 Mar: some Russian troops ''taken out of the fight'' by frostbite for lack of warm clothes; the advance largely stalled. Read via the Ghost content API.'
+- id: kyivindependent-2022-ponomarenko-an225-chief-pilot
+  title: 'Chief pilot of destroyed An-225: ''We must complete the second Mriya'''
+  url: https://kyivindependent.com/national/chief-pilot-of-destroyed-an-225-we-must-complete-the-second-mriya/
+  publisher: Kyiv Independent
+  authors:
+  - Illia Ponomarenko
+  published: '2022-04-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Visit to the wreck (photos 8 Apr); chief pilot Dmytro Antonov's negligence charge (NATO/NSPA advised moving the fleet to Leipzig on 26 Jan; Mriya ready by 22:00 on 23 Feb; an An-124 left at midnight); other Antonov aircraft destroyed, possibly deliberately; Russians left the airfield on 31 Mar. Contains an error ('25 km southwest' of Kyiv).
+- id: kyivpost-2024-shashkova-ghost-of-kyiv-origins
+  title: 'The Ghost of Kyiv: Who Is the Legendary Pilot of the Russo-Ukrainian War?'
+  url: https://www.kyivpost.com/post/28468
+  publisher: Kyiv Post
+  authors:
+  - Maryna Shashkova
+  published: '2024-02-25'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'The myth''s makers named. Ground Forces spokesman Illia Yevlash says Volodymyr Fityo coined ''The Ghost of Kyiv'' in a brainstorm; Cherevatyi says the aim was ''an avenger, a national hero''. Ihnat: the Ghost is every 40th Brigade pilot. Restates the claimed six first-day kills (Su-27, MiG-29, 2 Su-35, 2 Su-25).'
+- id: moscowtimes-2022-beardsworth-31st-brigade
+  title: '''Are There Even Any Left?'' 100 Days of War in Ukraine For an Elite Russian Unit'
+  url: https://www.themoscowtimes.com/2022/06/03/are-there-even-any-left-100-days-of-war-in-ukraine-for-an-elite-russian-unit-a77877
+  publisher: The Moscow Times
+  authors:
+  - James Beardsworth
+  published: '2022-06-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Independent (exiled) Russian outlet reconstructing the 31st Guards Air Assault Brigade (Ulyanovsk): boarded helicopters believing they were bound for Grodno; ~2,000 committed (Rob Lee); 2 BTGs around Kyiv; Mediazona count 34 dead 25 Feb-7 Mar; HUR: up to 50 killed in Hostomel; Col. Sergei Karasev, Maj. Alexei Osokin; left northern Ukraine 1 Apr.'
+- id: nyt-2022-addario-kramer-irpin-family
+  title: Ukrainian Family's Dash for Safety Ends in Death
+  url: https://www.nytimes.com/2022/03/06/world/europe/ukrainian-family-killed-war.html
+  publisher: The New York Times
+  authors:
+  - Lynsey Addario
+  - Andrew E. Kramer
+  published: '2022-03-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Eyewitness account of the 6 Mar mortar strike on civilians crossing the blown Irpin bridge: a mother, two children and a family friend killed. Lynsey Addario''s photos, Andriy Dubchak''s video, outgoing Ukrainian mortar about 200 yards away. Read via the Wayback Machine.'
+- id: nyt-2022-kramer-demydiv-flood
+  title: They Flooded Their Own Village, and Kept the Russians at Bay (Ukrainians Flood Village of Demydiv to Keep Russians at Bay)
+  url: https://www.nytimes.com/2022/04/27/world/europe/ukraine-russia-war-flood-infrastructure.html
+  publisher: The New York Times
+  authors:
+  - Andrew E. Kramer
+  published: '2022-04-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Demydiv flooded 'on Feb. 25, the second day of the war'. About 750 households, roughly 50 flooded. Russians tried about a half-dozen times to cross the Irpin. More than 300 bridges destroyed nationwide (Kubrakov). Read via the Wayback Machine.
+- id: open-meteo-2026-era5-c01-hostomel
+  title: 'Open-Meteo Historical Weather API (ERA5): Antonov airport, Hostomel, 20 Feb – 3 Apr 2022 (query)'
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=50.60&longitude=30.19&start_date=2022-02-23&end_date=2022-04-03&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,snowfall_sum,sunrise,sunset,cloud_cover_mean,wind_speed_10m_max,snow_depth_max&timezone=GMT
+  alt_urls:
+  - https://archive-api.open-meteo.com/v1/archive?latitude=50.60&longitude=30.19&start_date=2022-02-20&end_date=2022-04-02&hourly=temperature_2m,cloud_cover,precipitation,soil_temperature_0_to_7cm,soil_moisture_0_to_7cm,wind_speed_10m&timezone=GMT
+  publisher: Open-Meteo (ECMWF ERA5 reanalysis)
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - weather
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Reanalysis, not observations (CC BY 4.0); times converted from GMT to EET (UTC+2) and, from 27 Mar, EEST (UTC+3). 24 Feb: 0.7–5.3 °C, 93% cloud, 1.2 mm rain, sunrise 06:54, sunset 17:31. 25 Feb dry, clearing mid-morning. Topsoil (0–7 cm) above 0 °C and wet (0.33–0.36 m³/m³) 20 Feb – 8 Mar; hard frost 9–12 Mar (min −8.2 °C), topsoil briefly frozen; dry and clear 14–23 Mar; rain 29 Mar – 2 Apr (8.1 and 8.4 mm on 1–2 Apr), snow 3 Apr. Snow depth 0–3 cm throughout. Fork B''s ERA5 point near Katiuzhanka (50.80, 30.10) gave the same unfrozen-topsoil result.'
+- id: oryx-2022-aircraft-losses-list
+  title: List Of Aircraft Losses During The Russian Invasion Of Ukraine
+  url: https://www.oryxspioenkop.com/2022/03/list-of-aircraft-losses-during-2022.html
+  publisher: Oryx
+  authors:
+  - Jakub Janovsky
+  - naalsio26
+  - Aloha
+  - Dan
+  - Kemal
+  published: '2022-03-20'
+  accessed: '2026-10-01'
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'A living list, started 20 Mar 2022, counting only losses with photo or video evidence or pilot death notices. Totals at access (cumulative, to 2026): Russia 380 (309 destroyed, 66 damaged, 5 captured), including 68 Ka-52, 51 Mi-8 and 42 Su-34; Ukraine 200, including 36 MiG-29 and 20 Su-27. Its text has no per-date or per-place breakdown, so e1 and Kyiv-region subtotals cannot be read from it.'
+- id: oryx-2022-janovsky-hostomel-destination-disaster
+  title: 'Destination Disaster: Russia''s Failure At Hostomel Airport'
+  url: https://www.oryxspioenkop.com/2022/04/destination-disaster-russias-failure-at.html
+  publisher: Oryx
+  authors:
+  - Jakub Janovsky
+  - naalsio26
+  - Aloha
+  - Dan
+  - Kemal
+  published: '2022-04-13'
+  accessed: '2026-10-01'
+  type: osint-dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Photo-verified list of Russian equipment destroyed/abandoned on the airport perimeter only: 7 AFVs, 23 IFVs (16 BMD-4M), 3 APCs, 2 Msta-B, 1 ZU-23, 1 Rtut-BM, 6 helicopters (4 Ka-52, 1 Mi-28, 1 Mi-8), 68 trucks; narrative of the 29 Mar withdrawal order.'
+- id: osm-2026-c01-kyiv-geodata
+  title: OpenStreetMap places, Irpin River bridges and road distances north and west of Kyiv (Nominatim, Photon, Overpass and OSRM queries, computed)
+  url: https://www.openstreetmap.org/#map=10/50.70/30.15
+  alt_urls:
+  - https://nominatim.openstreetmap.org/
+  - https://photon.komoot.io/
+  - https://overpass-api.de/api/interpreter
+  - https://router.project-osrm.org/
+  publisher: OpenStreetMap contributors
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - terrain
+  - geodata
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Computed 2026-10-01 (ODbL). Place nodes: Maidan 50.4502, 30.5241; Antonov aerodrome 50.6048, 30.1909; Hostomel 50.5883, 30.2591; Bucha 50.5503, 30.2107; Vokzalna St 50.5505, 30.2233; Yablunska St 50.5399, 30.2252; Irpin 50.5207, 30.2449; Moshchun 50.6046, 30.3081; Rakivka 50.6552, 30.2557; Demydiv 50.7277, 30.3306; Kozarovychi 50.7561, 30.3519; Makariv 50.4640, 29.8069; Borodianka 50.6438, 29.9278; Ivankiv 50.9330, 29.9043; Prybirsk 51.0136, 30.0377; Chornobyl 51.2705, 30.2196; Brovary 50.5111, 30.7900; Chernihiv 51.4941, 31.2943. Irpin road bridges (Overpass, within 25 m of the river way): M06 Stoianka 50.4470, 30.2351; P30 Romanivka 50.4911, 30.2585; M07/E373 Horenka 50.5534, 30.2849; Moshchun track 50.6110, 30.2805; Chervone track 50.6645, 30.2809; P02 Demydiv 50.7130, 30.3391; dam road 50.7440, 30.3688. OSRM: Prybirsk–Ivankiv–Antonov airport about 72 km by road (46.7 km straight). Distances are great-circle unless stated.'
+- id: pravda-2022-hlushchenko-irpin-attack-failed
+  title: Yet another attempt by invaders to seize Irpin failed - the General Staff
+  url: https://www.pravda.com.ua/eng/news/2022/02/28/7326668/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Hlushchenko
+  published: '2022-02-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'General Staff, midnight 28 Feb: the attempt on Irpin failed. Russians launched a pontoon crossing over the Irpin near Demydiv. The 27 Feb attack on Irpin was repulsed (Markushyn).'
+- id: pravda-2022-kalatur-makariv-deoccupied
+  title: Armed Forces of Ukraine deoccupied Makariv
+  url: https://www.pravda.com.ua/eng/news/2022/03/22/7333469/
+  publisher: Ukrainska Pravda
+  authors:
+  - Anastasiia Kalatur
+  published: '2022-03-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'MoD, 22 Mar 01:00: the flag is raised over Makariv and the enemy pushed away.'
+- id: pravda-2022-kizilova-bucha-after-fighting
+  title: 'Bucha after heavy fighting: burned enemy columns, damaged houses, losses'
+  url: https://www.pravda.com.ua/eng/news/2022/02/28/7326868/
+  publisher: Ukrainska Pravda
+  authors:
+  - Svitlana Kizilova
+  published: '2022-02-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '28 Feb: Bucha held. Mayor Fedoruk filmed on Vokzalna Street, ''the city''s artery which connects Bucha with Irpen'', amid burned columns. The column tried to break through along the Warsaw highway.'
+- id: pravda-2022-kizilova-stoyanka-bridge
+  title: A bridge blown up on the Kyiv-Zhytomyr highway. One child dead, several people wounded
+  url: https://www.pravda.com.ua/eng/news/2022/02/26/7326073/
+  publisher: Ukrainska Pravda
+  authors:
+  - Svitlana Kizilova
+  published: '2022-02-26'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '26 Feb: the bridge near Stoianka on the Kyiv–Zhytomyr highway (M06/E40) is blown and the road closed. Five cars fell; one boy (about 8) died and four were injured (SSES).'
+- id: pravda-2022-petrenko-irpin-liberated
+  title: 'Irpin Mayor: Irpin liberated from Russian occupation'
+  url: https://www.pravda.com.ua/eng/news/2022/03/28/7335265/
+  publisher: Ukrainska Pravda
+  authors:
+  - Roman Petrenko
+  published: '2022-03-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '28 Mar, 16:49: Markushyn on Telegram says Irpin is liberated; clearing under way, new attacks expected.'
+- id: pravda-2022-romanenko-makariv-liberated
+  title: Ukrainian military liberates Makarov in Kyiv region
+  url: https://www.pravda.com.ua/eng/news/2022/03/02/7327536/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2022-03-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Zaluzhnyi, 2 Mar: the 14th Mechanised and 95th Air Assault Brigades ''liberated Makarov… and established a foothold there''.'
+- id: pravda-2022-roshchina-hostomel-mayor-killed
+  title: Russian troops kill Mayor of Hostomil, wound Mayor of Bucha
+  url: https://www.pravda.com.ua/eng/news/2022/03/07/7329025/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olena Roshchina
+  published: '2022-03-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - civilians
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '7 Mar: Hostomel''s head Yuriy Prylypko is shot while delivering food and medicine, and Bucha''s mayor Fedoruk is wounded. Markushyn says part of Irpin is captured. No power, gas, water or mobile service in Irpin, Bucha or Hostomel.'
+- id: pravda-2022-tyshchenko-bucha-liberated
+  title: Mayor of Bucha says the city has been liberated from the occupiers
+  url: https://www.pravda.com.ua/eng/news/2022/04/01/7336396/
+  publisher: Ukrainska Pravda
+  authors:
+  - Kateryna Tyshchenko
+  published: '2022-04-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Fedoruk, 1 Apr: 31 March is ''the day of Bucha''s liberation''. Council members warned the same day of mines and that it was not yet safe.'
+- id: pravda-2024-kizilov-putin-no-storm
+  title: Putin claims he did not plan to storm Kyiv in 2022
+  url: https://www.pravda.com.ua/eng/news/2024/06/14/7460780/
+  publisher: Ukrainska Pravda
+  authors:
+  - Yevhen Kizilov
+  published: '2024-06-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - russian-claims
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Reports Putin''s June 2024 claim (as relayed from RIA): ''There was no political decision to storm the three-million-strong city; it was a coercive operation to establish peace.'' Russian claim reported by a Ukrainian outlet.'
+- id: pravda-2025-kizilov-898-wounded-belarus
+  title: Journalists identify Russian soldiers who received medical treatment in Belarus after march on Kyiv – photos
+  url: https://www.pravda.com.ua/eng/news/2025/06/10/7516548/
+  publisher: Ukrainska Pravda
+  authors:
+  - Yevhen Kizilov
+  published: '2025-06-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - war-crimes
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Relays an RFE/RL (Radio Liberty) investigation from leaked patient data: 898 Russian servicemen (SSO from Kubinka and Solnechnogorsk, GRU spetsnaz, VDV, Rosgvardia) treated in Gomel and Khoiniki hospitals after the Kyiv offensive; names a 234th Air Assault Regt company commander linked to a Bucha killing.'
+- id: reuters-2023-antonov-officials-detained
+  title: Ukraine detains officials over destruction of famous plane at start of war
+  url: https://www.reuters.com/world/europe/ukraine-detains-officials-over-destruction-famous-plane-start-war-2023-03-10/
+  alt_urls:
+  - https://web.archive.org/web/20230311152557id_/https://www.reuters.com/world/europe/ukraine-detains-officials-over-destruction-famous-plane-start-war-2023-03-10/
+  publisher: Reuters
+  authors: []
+  published: '2023-03-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Prosecutor General and SBU hand suspicion notices to three former Antonov top managers for preventing the National Guard from fortifying the airport in Jan-Feb 2022; two detained, the former DG wanted; up to 15 years. Read via Wayback (live page is JS-gated).
+- id: rferl-2022-krutov-64th-brigade
+  title: 'The Dead Of The 64th: A Notorious Russian Army Unit And Its High Casualty Rate'
+  url: https://www.rferl.org/a/russia-army-casualty-rate-64th-brigade-bucha-deaths/31982194.html
+  publisher: RFE/RL
+  authors:
+  - Mark Krutov
+  published: '2022-08-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - forces
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'The 64th Separate Guards Motor Rifle Brigade (unit 51460, Khabarovsk): about 1,500 deployed, came via exercises in Belarus, accused by the Ukrainian MoD of the Bucha atrocities, and honoured by Putin on 18 Apr 2022. At least 44 dead on its memorial wall for late Feb and March (30 corroborated). One column was ambushed near Borodianka on 3 Mar.'
+- id: rferl-2022-levchenko-bucha-pensioner-rpg
+  title: Ukrainian Pensioner Who Took On Russian Column Shares Phone Video Of Destruction
+  url: https://www.rferl.org/a/ukraine-bucha-pensioner-rpg-russia-column-ambush-russia/31972521.html
+  publisher: RFE/RL
+  authors:
+  - Taras Levchenko
+  published: '2022-08-03'
+  accessed: '2026-10-01'
+  type: video
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Bucha, 27 Feb: pensioner Valentyn Didkovskiy fired a captured grenade launcher at the Russian column passing his house and blew up a fuel truck. Includes his phone video of the wrecked column.'
+- id: rferl-2022-nuzhnenko-moshchun-rebuilds
+  title: 'Moshchun: The Ukrainian Village Rebuilding After The Russian Invasion'
+  url: https://www.rferl.org/a/moshchun-ukrainian-village-rebuilds-after-russian-invasion/31961721.html
+  publisher: RFE/RL
+  authors:
+  - Serhiy Nuzhnenko
+  published: '2022-07-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Photo essay: Moshchun liberated 21 Mar, nearly 85% of buildings destroyed. Calls the village ''30 kilometers north of the capital'' (the OSM centre is about 23 km from central Kyiv).'
+- id: rferl-2023-dzhulay-furlong-moshchun-dam
+  title: 'Revealed: How Ukraine Blew Up A Dam To Save Kyiv'
+  url: https://www.rferl.org/a/ukraine-russia-moshchun-irpin-kyiv-war-battle/32286263.html
+  publisher: RFE/RL
+  authors:
+  - Dmytro Dzhulay
+  - Ray Furlong
+  published: '2023-02-26'
+  accessed: '2026-10-01'
+  type: video
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Video report (RFE/RL Ukrainian Service): Russian marines built three pontoon bridges at Moshchun, and Ukrainians destroyed two. The request to retreat was denied, and the dam blast flooded the Irpin and stranded Russian troops in a swamp.'
+- id: swj-2022-rice-untold-story-battle-kyiv
+  title: The Untold Story of the Battle for Kyiv
+  url: https://smallwarsjournal.com/2022/05/31/untold-story-battle-kyiv/
+  publisher: Small Wars Journal
+  authors:
+  - Dan Rice
+  published: '2022-05-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Interviews with Zaluzhnyi, Col. Vdovychenko (Moshchun, 15 May 2022) and Maj. Dmytro Zaretsky (16 May 2022): the NLAW head-and-tail ambush in Irpin, ''30,000 Russians against around 3,000 Ukrainians'', and Zaluzhnyi refusing withdrawal (dated 21 Mar here). An enthusiastic personal account with some loose claims (''100%'' of a battalion destroyed), so low reliability.'
+- id: thenational-2022-harding-drone-strikes
+  title: Ukraine's drone strikes a threat to Russia's advancing forces
+  url: https://www.thenationalnews.com/world/uk-news/2022/03/01/ukraines-drone-strikes-a-threat-to-russias-advancing-forces/
+  publisher: The National
+  authors:
+  - Thomas Harding
+  published: '2022-03-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - drones
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: By Tue 1 Mar the convoy was about 25 km from Kyiv and commanders were weighing how to attack it; TB2 tally (3 SAM systems, four 152 mm guns, 10+ trucks, several tanks) per evidence given to RUSI; at least 12 TB2s; GPS/radio signature makes them trackable; RUSI's Cranny-Evans on 'unmasking'.
+- id: twz-2022-trevithick-terrible-day
+  title: The Russian Air Force Just Had A Terrible Day Over Ukraine
+  url: https://www.twz.com/44602/the-russian-air-force-just-had-a-terrible-day-over-ukraine
+  publisher: The War Zone
+  authors:
+  - Joseph Trevithick
+  published: '2022-03-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'datePublished 2022-03-05 (updated 7 Mar; RUSI cites it as 7 Mar). Gives Oryx''s count for about one day: 1 Su-30SM, 2 Su-34, 2 Su-25, 2 Mi-24/35, 2 Mi-8 and 1 Orlan. MANPADS were a major factor, including Stingers and Igla; a soldier named Albert claims a Su-30SM with an Igla. MANPADS covered the Irpin evacuation. Places are not given.'
+- id: ukrinform-2023-pavliuk-30-sof
+  title: Defense official recalls 30 Ukrainian SOF soldiers hampering Russia's advance toward Kyiv
+  url: https://www.ukrinform.net/rubric-ato/3694293-defense-official-recalls-30-ukrainian-sof-soldiers-hampering-russias-advance-toward-kyiv.html
+  publisher: Ukrinform
+  authors: []
+  published: '2023-04-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'First Deputy Defence Minister Lt Gen Oleksandr Pavliuk (via RBC-Ukraine): ~70,000 Russians and 7,000 armoured vehicles from Belarus covered 115 km, then ran dry; a 30-man SOF unit disabled the lead 3 vehicles of the 64 km convoy; ~2,000 convoy guards; bridges blown. Also: 1,374 killed in Kyiv region, 280 missing. Official Ukrainian claim.'
+- id: ukroboronprom-2022-an225-destroyed
+  title: Russians destroy An-225 "Mriya", it will be restored at the expense of the occupant
+  url: https://ukroboronprom.com.ua/en/news/rosiyani-znishhili-an-225-mriya-vona-bude-vidnovlena-za-kosti-okupanta
+  alt_urls:
+  - https://web.archive.org/web/2022id_/https://ukroboronprom.com.ua/en/news/rosiyani-znishhili-an-225-mriya-vona-bude-vidnovlena-za-kosti-okupanta
+  publisher: Ukroboronprom
+  authors: []
+  published: '2022-02-27'
+  accessed: '2026-10-01'
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Official announcement that Russian forces destroyed the An-225 at Hostomel; restoration over $3bn and 5+ years; plane was under repair so could not leave; quote by DG Yuriy Husyev. Live URL redirects to the homepage; read via Wayback.
+- id: wapo-2022-sonne-battle-for-kyiv
+  title: 'Battle for Kyiv: Ukrainian valor, Russian blunders combined to save the capital'
+  url: https://www.washingtonpost.com/national-security/interactive/2022/kyiv-battle-ukraine-survival/
+  alt_urls:
+  - https://web.archive.org/web/2022id_/https://www.washingtonpost.com/national-security/interactive/2022/kyiv-battle-ukraine-survival/
+  publisher: The Washington Post
+  authors:
+  - Paul Sonne
+  - Isabelle Khurshudyan
+  - Serhiy Morgunov
+  - Kostiantyn Khudov
+  published: '2022-08-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Long reconstruction from interviews with Syrskyi, Zaluzhnyi, Vdovychenko, Budanov and Capt. Roman Kovalenko: Syrskyi''s two defensive rings, the Moshchun fight (27 Feb, 6 Mar, 11 Mar), the dam and sluice blasts (''The Diver''), Zaluzhnyi''s ''We will look for strength and means'', and the 152 mm shortage. Also the Hostomel day (Rudenko, the Igla gunner Falatyuk, Su-24s on the runway) and Chernihiv (Khoda''s 1st Tank Brigade, Lukashivka). Read in full (Wayback and direct fetch with a browser UA).'
+- id: wapo-2022-thebault-moriarty-hydraulic-warfare
+  title: Satellite images show flooding north of Kyiv in possible sign of 'hydraulic warfare'
+  url: https://www.washingtonpost.com/world/2022/03/09/ukraine-intentional-flooding/
+  publisher: The Washington Post
+  authors:
+  - Reis Thebault
+  - Dylan Moriarty
+  published: '2022-03-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Planet Labs imagery of the flooded land north of Kyiv. The Ukrainian ambassador's 26 Feb claim that Russia had destroyed a reservoir dam. RAND's Marta Kepe on hydraulic warfare. Read via the Wayback Machine.
+- id: wikipedia-2026-112th-territorial-defense-brigade
+  title: 112th Territorial Defense Brigade
+  url: https://en.wikipedia.org/wiki/112th_Territorial_Defense_Brigade
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Kyiv city TDF brigade (Operational Command North), nine battalions by 7 Feb 2022. It manned hundreds of roadblocks and was full within 3 days. It fought at Kyiv, Hostomel, Brovary, Moshchun, Bucha and Irpin. The 206th Battalion (funded by Poroshenko) was at Obolon, Hostomel and the Irpin evacuation. The 241st Brigade split off on 14 Apr 2022.
+- id: wikipedia-2026-40th-tactical-aviation-brigade
+  title: 40th Tactical Aviation Brigade
+  url: https://en.wikipedia.org/wiki/40th_Tactical_Aviation_Brigade
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: The MiG-29 brigade at Vasylkiv. Its per-airframe fate table for 2022 lists Blue 03 (Radionov, KIA 24 Feb after take-off from Vasylkiv), White 05 (Yerko, KIA 24 Feb near Volodymyrivka), Blue 35 (crashed 25 Feb, pilot ejected), White 10 (Lysenko, KIA 9 Mar near Novopil, Zhytomyr), White 15 (lost 14 Mar, wreck at Nova Basan, Chernihiv Oblast) and White 16 (damaged at Vasylkiv on 24 Feb). Honorary title 'Ghost of Kyiv' (2024).
+- id: wikipedia-2026-aerorozvidka
+  title: Aerorozvidka
+  url: https://en.wikipedia.org/wiki/Aerorozvidka
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - drones
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Unit history (founded May 2014, unit A2724 2015, liquidated 2020, restored 2021); in 2022 attacks from the direction of Malyn, columns dispersed into groups of 5–10 vehicles after the first hits; R18 octocopters (50 sets by 24 Feb); Starlink. Relays Ukrainian-language sources (Glavcom interview with Honchar, 16 Apr 2022).
+- id: wikipedia-2026-antonov-an-225-mriya
+  title: Antonov An-225 Mriya
+  url: https://en.wikipedia.org/wiki/Antonov_An-225_Mriya
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Read as raw wikitext. Destruction timeline: last mission 2-5 Feb; prepared for evacuation for the morning of 24 Feb on NATO advice; ''intact'' on 24 Feb; burning-hangar photo and Ukroboronprom/Kuleba statements 27 Feb; Antonov deferred comment; video 3 Mar; Channel One footage 4 Mar; pilot''s accusation 19 Mar.'
+- id: wikipedia-2026-battle-of-antonov-airport
+  title: Battle of Antonov Airport
+  url: https://en.wikipedia.org/wiki/Battle_of_Antonov_Airport
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Read as raw wikitext. Coordinates 50°35′27″N 30°12′27″E; occupation until 2 Apr; relays Russian MoD claims (200 helicopters, ~200 Ukrainians killed, no Russian losses), Russian 141st Kadyrovite regiment, Georgian Legion, the 5 MiG-29s of the 40th TAB (via Forbes), Capt. Boldyrev, NYT logbook (~300 paratroopers killed), Moscow Times (60+ of the 31st killed), Atlantic Council/RUSI/Syrskyi assessments.
+- id: wikipedia-2026-battle-of-bucha
+  title: Battle of Bucha
+  url: https://en.wikipedia.org/wiki/Battle_of_Bucha
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Read as raw wikitext. Russian units: 76th VDV (234th Regt), 56th Air Assault Regt, 64th MRB, 36th CAA, SOBR/OMON. Timeline: entry 27 Feb, flag raised 3 Mar, full occupation 12 Mar, 67 buried in a mass grave 13 Mar, Pavliuk 22 Mar, retaken 31 Mar. Infobox: 458 civilians killed per Ukraine, 73 per UN.'
+- id: wikipedia-2026-battle-of-irpin
+  title: Battle of Irpin
+  url: https://en.wikipedia.org/wiki/Battle_of_Irpin
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Read as raw wikitext. Kemerovo OMON/SOBR convoy destroyed 25 Feb (3 of 80 survived), Giraffe mall fight 27 Feb, Su-25 (2 Mar) and Su-30 (3 Mar) downed, part of Irpin taken 6 Mar, half occupied 14 Mar, Markushyn claims recapture 28 Mar (Reuters confirmed 30 Mar). Infobox: 30,000 RU v 3,000 UA (including Moshchun); about 70% of the city damaged.'
+- id: wikipedia-2026-battle-of-kyiv-2022
+  title: Battle of Kyiv (2022)
+  url: https://en.wikipedia.org/wiki/Battle_of_Kyiv_(2022)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'The city battle article, read as raw wikitext. Covers Oksanchenko''s Su-27 shot down over the city (25 Feb), the curfews (26 Feb, 17:00–08:00; 21 Mar, 21:00–07:00) and the rifle handouts (18,000 on day one; Monastyrskyi on 26 Feb: 25,000+ rifles and about 10m rounds). Also: 2 Su-35s claimed over Kyiv (2 Mar), a Kub-BLA downed over Podil (12 Mar), the Antonov plant hit (14 Mar) and Retroville (20 Mar). Other forks may also propose it; deduplicate.'
+- id: wikipedia-2026-battle-of-makariv
+  title: Battle of Makariv
+  url: https://en.wikipedia.org/wiki/Battle_of_Makariv
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Read as raw wikitext. A column of 15 tanks, 25 APCs and 15 Urals passed on 27 Feb. The 14th Mech and 95th Air Assault retook the town 2 Mar. Vasich's T-64BV crew fought on 8 Mar. The MoD said 'fully liberated' 22 Mar, but the mayor said 15% was still Russian on 23 Mar and Gruzevych called it a 'gray zone' 25 Mar. Motyzhyn retaken 28 Mar, the hromada clear 1 Apr. The 37th MRB's Col. Medvedev was run over by his own men (a claim). Over 200 civilians killed.
+- id: wikipedia-2026-battle-of-moshchun
+  title: Battle of Moshchun
+  url: https://en.wikipedia.org/wiki/Battle_of_Moshchun
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Read as raw wikitext. Battle 5–21 Mar. Commanders Chubarykin (76th VDV), Syrskyi, Vdovychenko and Kovalenko. Units: 76th VDV and 155th Naval Infantry Brigade against the 72nd. Losses per Ukraine: 100 Russians identified (45 of the 331st VDV Regiment, 30 of the 155th), 118 Ukrainians. About 2,000 of 2,800 buildings destroyed. River 1.5–2 m over its banks.'
+- id: wikipedia-2026-bucha-massacre
+  title: Bucha massacre
+  url: https://en.wikipedia.org/wiki/Bucha_massacre
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - war-crimes
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Raw wikitext. Relays: 458 bodies (8 Aug 2022), OHCHR at least 73 civilians unlawfully killed (Dec 2022), 1,316 bodies in Kyiv Oblast (13 Jun 2022, AP), NYT Dec 2022 finding (234th Air Assault Regt, Yablunska St), units (64th MRB, 76th VDV, Kadyrovites), Russian denials (Lavrov, Nebenzia, MoD).'
+- id: wikipedia-2026-georgian-legion
+  title: Georgian Legion (Ukraine)
+  url: https://en.wikipedia.org/wiki/Georgian_Legion_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Fought at Antonov Airport and Hostomel from the first days, mainly under HUR. 30 Mar 2022: the Dmytrivka (near Bucha) BMD-2 ambush video, including the shooting of a wounded Russian prisoner by an unidentified Ukrainian fighter. Commander Mamulashvili''s ''no prisoners'' remark.'
+- id: wikipedia-2026-ghost-of-kyiv
+  title: Ghost of Kyiv
+  url: https://en.wikipedia.org/wiki/Ghost_of_Kyiv
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Read as raw wikitext. The myth''s timeline: six claimed kills in the first 30 hours (2 Su-35, 2 Su-25, a Su-27, a MiG-29); Zaluzhnyi confirmed only six Russian planes downed on day one. Then Poroshenko''s photo (Pilshchykov, MoD 2019), the SBU''s 10 kills (27 Feb), the Air Force''s admission (30 Apr), Yevlash''s 2024 account, and the honorary title ''Ghost of Kyiv'' for the 40th Brigade (2024).'
+- id: wikipedia-2026-international-legion
+  title: International Legion (Ukraine)
+  url: https://en.wikipedia.org/wiki/International_Legion_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Created on 27 Feb 2022. First image of legionnaires in trenches outside Kyiv on 7 Mar. Zelensky claimed 16,000 applicants (3 Mar) and Kuleba 20,000+ from 52 countries (7 Mar); NYT and VICE in 2023 put actual foreign fighters at 1,500–2,000. Contested.
+- id: wikipedia-2026-kozarovychi-dam
+  title: Destruction of the Kozarovychi Dam
+  url: https://en.wikipedia.org/wiki/Destruction_of_the_Kozarovychi_Dam
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - terrain
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Read as raw wikitext. Dates the blast to 26 Feb 2022 (others give 25 Feb) and says it had to be blown twice. The dam is 1.4 km long, at 50°44′39″N 30°22′06″E, and the reservoir stood 3 m above the floodplain. More than 2,800 ha flooded, including Kozarovychi and Demydiv. Damage of 27.5m hryvnias (Strilets). Korea to fund a $14m repair.
+- id: wikipedia-2026-kyiv-shopping-centre-bombing
+  title: 2022 Kyiv shopping centre bombing
+  url: https://en.wikipedia.org/wiki/2022_Kyiv_shopping_centre_bombing
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - strike
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Retroville, Podilskyi District, 20 Mar 2022 at about 22:45 (fire reported 22:48). At least 8 killed. The Russian MoD claimed MLRS were stored there, and a TikTok poster who filmed vehicles near it was detained.
+- id: wikipedia-2026-kyiv-tv-tower
+  title: Kyiv TV Tower
+  url: https://en.wikipedia.org/wiki/Kyiv_TV_Tower
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - strike
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '1 Mar 2022 missile strike: 5 killed (Ukrainian officials), including the journalist Yevhenii Sakun. Broadcasting was disrupted and the tower stayed standing, next to the Babyn Yar memorial. Links the Forensic Architecture investigation of 10 Jun 2022.'
+- id: wikipedia-2026-northern-front
+  title: Northern front of the Russian invasion of Ukraine
+  url: https://en.wikipedia.org/wiki/Northern_front_of_the_Russian_invasion_of_Ukraine
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Former ''Kyiv offensive (2022)'' article (raw wikitext, fetched by fork D as D-wiki-northern-front.txt). Relays the General Staff on airborne troops fighting at Dymer and Ivankiv on 25 Feb, the Teteriv bridge blown at Ivankiv, 80 vehicles through Dymer and Katiuzhanka, a 3-mile column near Ivankiv on 27 Feb (CNN), and the retaking of Ivankiv by 1 Apr. Also: infobox (70,000 RU from Belarus per Pavliuk; UA 20,000 + 18,000 irregulars; RU commander Chaiko), stalemate 11–15 Mar, counteroffensive 16 Mar – 4 Apr, villages retaken, UA losses 530+ killed (aggregated).'
+- id: wikipedia-2026-oleksandr-oksanchenko
+  title: Oleksandr Oksanchenko
+  url: https://en.wikipedia.org/wiki/Oleksandr_Oksanchenko
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Col. Oksanchenko ('Grey Wolf'), a retired Su-27 display pilot who returned in 2022, was killed on the night of 25 Feb over Kyiv by a missile (the lede says an S-400). Posthumously awarded Hero of Ukraine.
+- id: wikipedia-2026-russian-kyiv-convoy
+  title: Russian Kyiv convoy
+  url: https://en.wikipedia.org/wiki/Russian_Kyiv_convoy
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - logistics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Read as raw wikitext. Useful as an index and for relays of sources we could not fetch (Reuters/Maxar, Forbes/Telenko tyres, DoD 16 and 31 Mar, Global News, Economist). Prybirsk–Hostomel via Ivankiv; 15,000 troops; reasons debated.
+- id: wikipedia-2026-siege-of-chernihiv
+  title: Siege of Chernihiv
+  url: https://en.wikipedia.org/wiki/Siege_of_Chernihiv
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: '24 Feb – 4 Apr 2022: 41st CAA (~30,000) vs 1st Tank Bde (2,000 initially), 58th Mot Bde, 27th NG Regt (~6,000); encirclement 10 Mar; road reopened 31 Mar; city about 70% destroyed; 350–400 civilians killed (mayor) / 700+ (infobox).'
+- id: wikipedia-2026-stepan-tarabalka
+  title: Stepan Tarabalka
+  url: https://en.wikipedia.org/wiki/Stepan_Tarabalka
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Maj. Tarabalka (MiG-29, aged 29) was shot down on 13 Mar 2022 over Zhytomyr Oblast in a dogfight against several Russian jets. The Air Force says he was not the Ghost and that the 40 kills belong to the whole 40th Brigade.
+- id: wikipedia-2026-territorial-defence-forces
+  title: Territorial Defence Forces (Ukraine)
+  url: https://en.wikipedia.org/wiki/Territorial_Defence_Forces_(Ukraine)
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: TDF made a separate branch on 1 Jan 2022. Covers 18,000 guns handed out in Kyiv on 25 Feb, almost 100,000 volunteers by 6 Mar, and the International Legion created on 27 Feb under the TDF.
+- id: wikipedia-2026-volodymyr-zelenskyy
+  title: Volodymyr Zelenskyy
+  url: https://en.wikipedia.org/wiki/Volodymyr_Zelenskyy
+  publisher: Wikipedia
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - politics
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: Used only for the 'I need ammunition, not a ride' quote (relays WaPo/AP of 25–26 Feb 2022; the WaPo original is paywalled and AP blocks fetching).
+- id: wotr-2023-collins-kofman-spencer-hostomel
+  title: 'The Battle of Hostomel Airport: A Key Moment in Russia''s Defeat in Kyiv'
+  url: https://warontherocks.com/the-battle-of-hostomel-airport-a-key-moment-in-russias-defeat-in-kyiv/
+  alt_urls:
+  - https://warontherocks.com/2023/08/the-battle-of-hostomel-airport-a-key-moment-in-russias-defeat-in-kyiv/
+  publisher: War on the Rocks
+  authors:
+  - Liam Collins
+  - Michael Kofman
+  - John Spencer
+  published: '2023-08-10'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ground
+  - air
+  - chapter
+  found_in:
+  - c01-march-on-kyiv
+  notes: 'Fieldwork-based reconstruction of the 24-25 Feb battle: ~34 helicopters and 200-300 VDV (31st GAAB, 45th Spetsnaz) from Bolshoy Bokov; border 09:30, spotted at the Kyiv HPP dam 10:30, at Hostomel 11:00, airfield secured 13:00; ~200 NGU 4th Rapid Reaction Brigade defenders under Maj. Vitalii Rudenko; 18 Il-76 with ~1,000 troops aborted; counterattack at sunset (80th, 95th, 72nd, 3rd SSO), retaken by 21:00, runway cratered, Russians back on 25 Feb. Read via the WP JSON API (old dated URL now 404s).'

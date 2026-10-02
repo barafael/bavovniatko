@@ -1,0 +1,40 @@
+{"pair": "6009f054f85d", "relation": "supports", "from": "claim:cc09_0010_64", "to": "claim:cc09_0043_21", "strength": 0.6, "rationale": "The 7th VDV's shift from Kherson is one of the moves that B describes.", "independent": false}
+{"pair": "60130329dd77", "relation": "supports", "from": "claim:cc14_0014_028", "to": "claim:cc14_0031_13", "strength": 0.6, "rationale": "The 95th entering on 10 Aug to clear Malaya Loknya fits B's account of its encirclement and clearing.", "independent": false}
+{"pair": "60565bb74b33", "relation": "duplicates", "from": "claim:cc11_0006_13", "to": "claim:cc11_0010_82", "strength": 0.9, "rationale": "Same loss of the Lastochkyne main road into Avdiivka on 12–14 Feb 2024; B has more sources."}
+{"pair": "6068a2b4f39a", "relation": "supports", "from": "claim:cc16_0011_80", "to": "claim:cc16_0008_01", "strength": 0.6, "rationale": "The imagery of 3 Tu-95MS and 4 Tu-22M3 destroyed at Belaya contributes to the floor of about 10 bombers.", "independent": false}
+{"pair": "606ad3547afe", "relation": "refines", "from": "claim:cc15_0007_17", "to": "claim:cc15_0003_06", "strength": 0.8, "rationale": "B gives the exact dates and road numbers of the January 2025 highway cuts in A."}
+{"pair": "60aa5e1dbf94", "relation": "supports", "from": "claim:cc10_0033_05", "to": "claim:cc11_0027_02", "strength": 0.5, "rationale": "Both name Lykhovii as Tavria OSG spokesman in 2024.", "independent": true}
+{"pair": "60d95a3d94e9", "relation": "none", "rationale": "Inventories at different bases."}
+{"pair": "60f37c6e47c1", "relation": "none", "rationale": "The counterattack starting on 22 Mar and the liberation on 28 Mar are consistent stages, not a corroboration."}
+{"pair": "6147f3f99fd8", "relation": "supports", "from": "claim:cc09_0006_15", "to": "claim:cc09_0010_90", "strength": 0.6, "rationale": "ISW judging the fortifications west of Verbove broken corroborates Tarnavskyi's claimed breakthrough.", "independent": true}
+{"pair": "62b02e710756", "relation": "supports", "from": "claim:cv01_0007_04", "to": "claim:cc01_0026_09", "strength": 0.5, "rationale": "The 3rd Battalion's ambush positions at Brovary corroborate its deployment east of the Dnipro.", "independent": false}
+{"pair": "62e7e03d5db6", "relation": "supports", "from": "claim:cc14_0031_11", "to": "claim:cc14_0010_07", "strength": 0.7, "rationale": "B confirms that the Glushkovo span collapsed on 16 August.", "independent": false}
+{"pair": "630f17038199", "relation": "none", "rationale": "Distances to different bases."}
+{"pair": "633384302567", "relation": "refines", "from": "claim:cc15_0024_06", "to": "claim:cc15_0007_49", "strength": 0.7, "rationale": "B specifies what the 93rd's gun robots and tanks cleared in the Dobropillia counter-attack."}
+{"pair": "637f15633584", "relation": "none", "rationale": "Attack locations and a map box."}
+{"pair": "63a4a4a9cd17", "relation": "duplicates", "from": "claim:cc07_0016_20", "to": "claim:cc07_0010_99", "strength": 0.75, "rationale": "Same Maliar claim of a July 2023 canal crossing and gains near Klishchiivka."}
+{"pair": "63b2eb5b0ef1", "relation": "supports", "from": "claim:cc15_0007_37", "to": "claim:cc15_0019_20", "strength": 0.6, "rationale": "The 5th, 110th and 132nd brigades of the 51st CAA pushing toward Dobropillia fits their listing on that sector.", "independent": false}
+{"pair": "63b2f3a60ebb", "relation": "none", "rationale": "Fighting at Ivanivka at different times and stages."}
+{"pair": "642b229b11b2", "relation": "none", "rationale": "The flooding and the risks and first failure of the breach are different details."}
+{"pair": "645fe4b1affa", "relation": "none", "rationale": "The two uses of the pipe are different events."}
+{"pair": "6485c0456065", "relation": "none", "rationale": "The July gap-plugging and the October withdrawal are different events."}
+{"pair": "64b32a7fa8f7", "relation": "supports", "from": "claim:cc09_0029_03", "to": "claim:cc09_0010_45", "strength": 0.8, "rationale": "Both have Lyamin replacing Popov as 58th Army commander in July 2023.", "independent": false}
+{"pair": "64d0c57951ca", "relation": "none", "rationale": "A distance and time zones."}
+{"pair": "64ddc4b7477b", "relation": "none", "rationale": "Different sectors and periods for the 5th Brigade."}
+{"pair": "64f2ce693c5b", "relation": "refines", "from": "claim:cc01_0011_14", "to": "claim:cc01_0005_03", "strength": 0.8, "rationale": "B adds the aircraft and troop numbers to the aborted Il-76 airlift."}
+{"pair": "64f9b93c14e2", "relation": "none", "rationale": "Russian advances and town populations."}
+{"pair": "650a4961df0d", "relation": "none", "rationale": "Fleet size and low-level tactics."}
+{"pair": "65aa8fe7b575", "relation": "none", "rationale": "A one-day loss estimate and whole-war totals have different scopes."}
+{"pair": "65abb848e19f", "relation": "supports", "from": "claim:cc09_0010_44", "to": "claim:cc09_0043_19", "strength": 0.6, "rationale": "The memo's content on counter-battery fire corroborates that Popov raised counter-battery problems before his firing.", "independent": false}
+{"pair": "65c213a314e1", "relation": "none", "rationale": "A loss count and the dates the imagery cleared."}
+{"pair": "66e129b7024f", "relation": "none", "rationale": "Stopped columns and map geography."}
+{"pair": "670a2669c8ec", "relation": "supports", "from": "claim:cc18_0013_13", "to": "claim:cc18_0035_02", "strength": 0.6, "rationale": "A's 20:16–20:55 tracks toward Vyshneve and past Dymer are part of B's evening jet-drone probes.", "independent": false}
+{"pair": "67534172f23b", "relation": "none", "rationale": "A later salvo's composition and a pre-strike inventory."}
+{"pair": "675c98e318c5", "relation": "supports", "from": "claim:cc14_0014_107", "to": "claim:cc14_0006_06", "strength": 0.5, "rationale": "Two or three drones a minute over the highway on 9 March corroborates the FPV fire on the supply road.", "independent": false}
+{"pair": "678d3d27988e", "relation": "none", "rationale": "The bridge loss in February and the March counterattack are different events."}
+{"pair": "67d4f50e01b6", "relation": "supports", "from": "claim:cc14_0029_13", "to": "claim:cc14_0010_08", "strength": 0.6, "rationale": "B's MiG-29 JDAM-ER strikes on Zvannoye corroborate the bridge being holed on 18 Aug.", "independent": false}
+{"pair": "681146703495", "relation": "none", "rationale": "The raid and a later exhibition."}
+{"pair": "68696a89390c", "relation": "none", "rationale": "Ukrainian helicopter lob tactics and the reach of Russian lofted S-8s concern different sides."}
+{"pair": "686b8f2dc540", "relation": "none", "rationale": "River-bank geography and an operational aim."}
+{"pair": "68762b9cd3eb", "relation": "supports", "from": "claim:cc12_0010_08", "to": "claim:cc01_0028_23", "strength": 0.5, "rationale": "Low-level skirmishes in the first three days fit Ukrainian fighters carrying the early air defence.", "independent": false}
+{"pair": "68943fa1259d", "relation": "none", "rationale": "Battery rotation and the composition of the artillery group."}

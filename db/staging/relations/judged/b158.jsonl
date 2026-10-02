@@ -1,0 +1,40 @@
+{"pair": "f7fbe2cb2fe4", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f7ff1de1e18b", "relation": "duplicates", "from": "claim:cc19_0005_06", "to": "claim:cc19_0009_86", "strength": 0.8, "rationale": "Same 20 September 3rd Corps announcement; B adds Drobysheve and the area."}
+{"pair": "f82b715eb454", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f88e2e72c6c4", "relation": "duplicates", "from": "claim:cc15_0022_08", "to": "claim:cc15_0014_03", "strength": 0.8, "rationale": "Same ISW identification of the T-0514 and T-0515 as the drone-interdicted roads."}
+{"pair": "f8ce4efae36f", "relation": "supports", "from": "claim:cc14_0031_11", "to": "claim:cc14_0010_09", "strength": 0.8, "rationale": "B confirms the Karyzh bridge went last in the 16–20 August sequence.", "independent": false}
+{"pair": "f8e20a43f11c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "f90648df8745", "relation": "duplicates", "from": "claim:cc14_0033_25", "to": "claim:cc14_0014_122", "strength": 0.85, "rationale": "Same diversion into Belgorod Oblast opened on 18 March 2025."}
+{"pair": "f948961d8820", "relation": "supports", "from": "claim:cc14_0031_11", "to": "claim:cc14_0010_08", "strength": 0.8, "rationale": "B confirms the Zvannoye deck was holed in the 16–20 August strikes.", "independent": false}
+{"pair": "f9bac783a779", "relation": "duplicates", "from": "claim:cc19_0009_16", "to": "claim:c05_0023_32", "strength": 0.85, "rationale": "Same late-December 2025 use of Starlink-fitted BM-35 and Molniya-2 drones deep in the Ukrainian rear."}
+{"pair": "f9e917757ac2", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fa232bd7c444", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fa78237d24a1", "relation": "refines", "from": "claim:cc15_0007_66", "to": "claim:cc15_0005_23", "strength": 0.8, "rationale": "B dates the 68th and 155th brigades' departure from Pokrovsk on foot to 27 October 2025."}
+{"pair": "fa867cefb3b4", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fb074e5db1cb", "relation": "supports", "from": "claim:cc09_0007_11", "to": "claim:cc09_0027_04", "strength": 0.5, "rationale": "Forbes's 25-vehicle count for 8 June fits its estimate of about a fifth of Bradleys and Leopard 2A6s and half the Leopard 2Rs.", "independent": false}
+{"pair": "fb1ce6951951", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fb3f68161170", "relation": "supports", "from": "claim:cc15_0007_34", "to": "claim:cc15_0020_03", "strength": 0.5, "rationale": "The 155th and 68th plugging the Zvirove gap fits their role as the Pokrovsk garrison.", "independent": false}
+{"pair": "fb711a3df5ad", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fbb33ee881f3", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fbb869e04621", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fbc0ea3bf0b9", "relation": "duplicates", "from": "claim:cc19_0009_17", "to": "claim:c05_0025_02", "strength": 0.85, "rationale": "Same ISW assessment that Starlink-fitted BM-35 and Molniya-2 use triggered the Starlink cutoff."}
+{"pair": "fbc5b9d9e79d", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fbdbba38a893", "relation": "supports", "from": "claim:cc09_0035_22", "to": "claim:c00_0073_33", "strength": 0.7, "rationale": "B names Berdiansk as the occupied airfield of the first ATACMS combat use on 17 October 2023.", "independent": false}
+{"pair": "fbf2157feeea", "relation": "refines", "from": "claim:cc01_0009_20", "to": "claim:cc01_0011_110", "strength": 0.6, "rationale": "A qualifies MWI's 6 April end date as contested against Ukraine's MoD date of 2 April."}
+{"pair": "fbf31d39d3dc", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fc8d31fd4cd2", "relation": "duplicates", "from": "claim:cc18_0013_74", "to": "claim:cc18_0017_12", "strength": 0.85, "rationale": "Same 350 t petrol spill from the Obolonskyi station into Lake Kyrylivske."}
+{"pair": "fcb13560aa15", "relation": "duplicates", "from": "claim:cc01_0028_19", "to": "claim:cc01_0011_58", "strength": 0.8, "rationale": "Same Furia-cued fire on the Rakivka pontoon on 6 March 2022."}
+{"pair": "fcecd316b677", "relation": "supports", "from": "claim:cc16_0005_04", "to": "claim:cc16_0015_12", "strength": 0.6, "rationale": "A reports the fifth truck burning near Seryshevo, which B locates.", "independent": false}
+{"pair": "fd2b17c944dc", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fd47efcdb9e5", "relation": "supports", "from": "claim:cc19_0027_13", "to": "claim:c00_0062_13", "strength": 0.6, "rationale": "Both describe the Russian shift toward Mykolaivka and continued pressure on Dobropillia in response to Vivaldi.", "independent": false}
+{"pair": "fd50f8498d04", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "fdb77a1e200a", "relation": "supports", "from": "claim:cc14_0004_01", "to": "claim:c04_0023_01", "strength": 0.8, "rationale": "Both have the 80th and 82nd Air Assault Brigades leading the 6 August 2024 break-in.", "independent": false}
+{"pair": "fe2792a11a88", "relation": "supports", "from": "claim:cc14_0017_03", "to": "claim:cc14_0005_02", "strength": 0.6, "rationale": "With the three Glushkovo bridges the only Seim crossings, dropping them isolates the troops beyond.", "independent": false}
+{"pair": "fedf3dc65bab", "relation": "duplicates", "from": "claim:cc01_0014_27", "to": "claim:cc01_0011_23", "strength": 0.85, "rationale": "Same blowing of the Teteriv bridge at Ivankiv on 25 February 2022."}
+{"pair": "fee2271551c9", "relation": "supports", "from": "claim:cc01_0011_104", "to": "claim:cc01_0008_01", "strength": 0.6, "rationale": "Footage of bodies in Bucha emerging on 1 April is the revelation that followed the withdrawal.", "independent": false}
+{"pair": "feeb09739258", "relation": "refines", "from": "claim:cc16_0011_85", "to": "claim:cc16_0005_08", "strength": 0.8, "rationale": "B dates the reduced-force salvo to 5–6 June and gives the 36 Kh-101 and loading."}
+{"pair": "fef13d991761", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ff3d703c4bb9", "relation": "supports", "from": "claim:cc14_0007_03", "to": "claim:cc14_0029_32", "strength": 0.7, "rationale": "About a hundred troops emerging from the pipeline inside Sudzha on 8 March is the end of the pipe infiltration.", "independent": false}
+{"pair": "ff638bd48768", "relation": "duplicates", "from": "claim:cc19_0011_03", "to": "claim:cc19_0003_01", "strength": 0.8, "rationale": "B restates that the salient north of Lyman lay between the Nitrius and Zherebets."}
+{"pair": "ff75d7d6ea2a", "relation": "supports", "from": "claim:cc14_0031_08", "to": "claim:cc14_0024_11", "strength": 0.7, "rationale": "The 225th pulling down the flag in Darino in mid-August supports its presence there on 12 August.", "independent": false}
+{"pair": "ff86078380b5", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}

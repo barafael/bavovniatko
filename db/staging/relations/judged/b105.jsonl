@@ -1,0 +1,40 @@
+{"pair": "9f1aaa21adbc", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "9f1df82a55ef", "relation": "none", "rationale": "Middle strikes at 50–120 km and long-range drone strikes beyond 205 km are different strike categories."}
+{"pair": "a01f9e151686", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a06fecb73361", "relation": "none", "rationale": "A summary of early contested claims and a later HUR figure; no single series to update."}
+{"pair": "a0bcb43c854d", "relation": "none", "rationale": "ISR coverage depth and kill-zone depth are different measures."}
+{"pair": "a0ed47081a97", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a108b1a84726", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a1152361186a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a13bfae10ec1", "relation": "weakens", "from": "claim:cc16_0007_08", "to": "claim:cc16_0007_04", "strength": 0.4, "rationale": "US officials' estimate of about 10 aircraft destroyed sits below Kovalenko's claim of at least 13 destroyed."}
+{"pair": "a1403cc564c7", "relation": "none", "rationale": "An initial deployment of 11–12k and a war-long total of 16–22k are compatible, different scopes."}
+{"pair": "a196f81356ac", "relation": "supersedes", "from": "claim:cc14_0027_10", "to": "claim:cc14_0027_03", "strength": 0.5, "rationale": "HUR's June 2026 figure of more than 7,000 North Korean casualties is a later Ukrainian point in the same cumulative series than Zelensky's 3,800 in January 2025."}
+{"pair": "a1cab9faafee", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a1dc50f39ee5", "relation": "supports", "from": "claim:cc18_0008_13", "to": "claim:cc18_0010_07", "strength": 0.8, "rationale": "The outcome band's about 96% of drones is derived from the Air Force's 476 of 496.", "independent": false}
+{"pair": "a22634402731", "relation": "supports", "from": "claim:cc07_0007_17", "to": "claim:cc07_0007_18", "strength": 0.9, "rationale": "RUSI's 19,547 Wagner dead is the same figure as the leaked Wagner records counted by Mediazona and BBC Russian.", "independent": false}
+{"pair": "a273689050b2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a278b6ef8665", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a2ee384c1cd3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a31b9cfa3285", "relation": "duplicates", "from": "claim:cc07_0058_21", "to": "claim:cc07_0007_25", "strength": 0.8, "rationale": "The same UALosses Bakhmut name counts of 4,557 to about 5,501, extracted twice in chapter c07."}
+{"pair": "a330d4dee9d2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a396eeb72d33", "relation": "none", "rationale": "The NIS/UK 6,000 figure is not among the endpoints of the contested range summary; related context only."}
+{"pair": "a420070aa481", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a4574e619819", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a481dfbecc03", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a4b6b76dd09f", "relation": "none", "rationale": "A one-week casualty figure and a cumulative total are different quantities."}
+{"pair": "a4fbb2ae6bdf", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a54031b89938", "relation": "none", "rationale": "An early OSINT tally of 8 confirmed is a floor taken hours after the strike, compatible with 10–13 destroyed."}
+{"pair": "a54ee144d8f8", "relation": "contradicts", "from": "claim:cc11_0007_22", "to": "claim:cc11_0045_15", "strength": 0.6, "rationale": "For the fall of Avdiivka, Ukrainian officials privately estimated about 100 captured while Mordvichev claimed 200 surrendered.", "resolution": "A Russian commander's claim likely inflates captures and may count wounded left behind; the Ukrainian estimate was private and early."}
+{"pair": "a590a5224094", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a5c908ba40e1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a5f3d555a568", "relation": "none", "rationale": "Missile and drone interception rates are different quantities."}
+{"pair": "a65ae7a5b774", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a67fa243150a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a6b93013de0c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a700dcb8ef61", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a731814bc8bd", "relation": "none", "rationale": "The 4 Zircons are part of the 28 ballistic missiles; compatible."}
+{"pair": "a7cc18befd50", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a7d8d5b08fd3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a7d92358265e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a7e5b662b897", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a7f44f091dcb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

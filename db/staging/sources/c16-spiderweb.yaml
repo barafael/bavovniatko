@@ -1,0 +1,691 @@
+# New sources cited by research/chapters/c16-spiderweb.md (sources already in the knowledge base are cited by id only).
+- id: twz-2025-altman-rogoway-bombers-destroyed
+  title: "Russian Strategic Bombers Destroyed In Unprecedented Wide-Scale Drone Attack (Updated)"
+  url: https://www.twz.com/news-features/russian-strategic-bombers-destroyed-in-unprecedented-wide-scale-drone-attack
+  publisher: The War Zone
+  authors: [Howard Altman, Tyler Rogoway]
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, aviation, sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Live first-day report: General Staff '40+ aircraft', Russian MoD statement (five regions, fires in Murmansk and Irkutsk), Gov. Kobzev on the truck at Sredny, Zelensky's 'one year, six months, and nine days', Kolyasnikov's Chelyabinsk warehouse claim (28A Sverdlovsky Trakt, 350,000 roubles), stone-throwing locals, Axios correction that the US was not told."
+- id: twz-2025-newdick-bomber-force-meaning
+  title: "What Ukraine's Unprecedented Drone Attack Means For Russia's Bomber Force"
+  url: https://www.twz.com/air/what-ukraines-unprecedented-drone-attack-means-for-russian-bomber-force
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2025-06-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, strategic-effect, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Fleet background (Tu-95MS: 88 built, under 50 at war start; Tu-22M3: about 60 in service; Tu-160: about 16), basing (40th Composite Regt at Olenya, 200th Heavy Bomber Regt at Belaya, Dyagilevo LRA training centre, Ivanovo A-50 home base), Tu-95MS RF-94257 '22 Red' destroyed at Olenya, Butowski on cost, tyres and decoys, likely dispersal."
+- id: twz-2025-altman-what-we-know-spiderweb
+  title: "What We Know About Ukraine's Mass Drone Assault On Russian Bombers"
+  url: https://www.twz.com/news-features/what-we-know-about-ukraines-mass-drone-assault-on-russian-bombers
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2025-06-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, sabotage, aviation, chapter]
+  found_in: [c16-spiderweb]
+  notes: "SBU and Maliuk statements (41 hit, 34%), Kovalenko's 13 destroyed, early SAR-based tallies, OSINT coordinates of burning aircraft at Olenya, FighterBomber's 'single digits', Military Chronicle's counter-claim, SBU spokesman on disclosure policy, ArduPilot screenshot analysis, driver recruitment as reported, nationwide truck checks."
+- id: twz-2025-trevithick-loss-assessments
+  title: "Latest On Russian Aircraft Loss Assessments From Ukrainian Drone Strikes"
+  url: https://www.twz.com/air/latest-on-russian-aircraft-loss-assessments-from-ukrainian-drone-strikes
+  publisher: The War Zone
+  authors: [Joseph Trevithick]
+  published: "2025-06-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [satellite-imagery, aviation, chapter]
+  found_in: [c16-spiderweb]
+  notes: "ICEYE SAR of Belaya on 1 June (at least four Tu-95s likely damaged/destroyed), cloud cover forcing SAR, OSINT coordinates of aircraft at Olenya, AviVector counts at Olenya (3 Jun) and Dyagilevo (2 Jun, no serious damage)."
+- id: twz-2025-newdick-confirmed-losses
+  title: "Confirmed Losses Of Russian Aircraft Mount After Ukrainian Drone Assault"
+  url: https://www.twz.com/air/firm-evidence-of-russian-aircraft-losses-after-ukrainian-drone-strikes
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [satellite-imagery, aviation, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Maxar/Airbus/Planet imagery: 3 Tu-95MS + 4 Tu-22M3 destroyed at Belaya; burn marks for 5 aircraft at Olenya (3+ Tu-95MS, likely An-12); A-50s at Ivanovo possibly non-operational; no damage seen at Dyagilevo; verdict at least 6 (likely 7) Tu-95MS and 4 Tu-22M3 destroyed. Quotes the SBU AI statement; Kh-101 loaded on Tu-95MS."
+- id: twz-2025-altman-revenge-strikes
+  title: "Russia Executes Revenge Strikes Against Ukraine For Blowing Up Its Bombers"
+  url: https://www.twz.com/news-features/russia-executes-revenge-strikes-against-ukraine-for-blowing-up-its-bombers
+  publisher: The War Zone
+  authors: [Howard Altman]
+  published: "2025-06-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, deep-strike, chapter]
+  found_in: [c16-spiderweb]
+  notes: "6 June 2025: Russia's declared retaliation barrage and Ukraine's 'preemptive' drone strikes on the Engels fuel depot and Dyagilevo (little visible damage at Dyagilevo in Maxar imagery)."
+- id: twz-2026-newdick-bomber-shelters
+  title: "Russia Is Building Huge Protective Shelters For Its Strategic Bombers"
+  url: https://www.twz.com/air/russia-is-building-huge-protective-shelters-for-its-strategic-bombers
+  publisher: The War Zone
+  authors: [Thomas Newdick]
+  published: "2026-06-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [aviation, satellite-imagery, strategic-effect, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Planet imagery of 20 June 2026: at least 17 bomber-sized shelters under construction at Engels-2 (home of the 22nd Heavy Bomber Aviation Division); work began April 2025, before Spiderweb; Belousov shown a Tu-160 hangar model."
+- id: reuters-2025-stewart-ali-us-estimate
+  title: "Exclusive: Ukraine hit fewer Russian planes than it estimated, US officials say"
+  url: https://www.reuters.com/business/aerospace-defense/ukraine-hit-fewer-russian-planes-than-it-estimated-us-officials-say-2025-06-04/
+  publisher: Reuters
+  authors: [Phil Stewart, Idrees Ali]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Read via the Wayback Machine (snapshot 2025-06-29). Two US officials: as many as 20 warplanes hit, around 10 destroyed; US given no notice; Zelensky said half of 41 cannot be repaired; Kellogg on escalation risk."
+- id: kyivindependent-2025-york-sbu-bombers-burning
+  title: "'Russian bombers are burning en masse' — Ukraine's SBU drones hit 'more than 40' aircraft in mass attack, source says"
+  url: https://kyivindependent.com/enemy-bombers-are-burning-en-masse-ukraines-sbu-drones-hit-more-than-40-russian-aircraft/
+  publisher: Kyiv Independent
+  authors: [Chris York]
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "First report (10:52 UTC, 1 June): SBU source on 41 bombers at four airfields, drones under remotely opened roofs of mobile wooden cabins on trucks, people 'in Ukraine for a long time'; Zelensky's 'something I authorized a year and six months ago'."
+- id: kyivpost-2025-orlova-zakharchenko-spiderweb-7bn
+  title: "'Spiderweb' Strikes Cripple 34% of Russian Bomber Fleet in $7 Billion Blow, SBU Confirms"
+  url: https://www.kyivpost.com/post/53749
+  publisher: Kyiv Post
+  authors: [Alisa Orlova, Kateryna Zakharchenko]
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, sabotage, chapter, media]
+  found_in: [c16-spiderweb]
+  notes: "SBU's $7bn / 34% statement with the photo of Maliuk at the schematic map; Kyiv Post intelligence sources on 41 aircraft; Maliuk's voice on the Belaya video; Russian MoD statement; updated 21:18 Kyiv time."
+- id: kyivpost-2025-brown-ai-museum
+  title: "Ukraine Trained AI for Its 'Spiderweb' Airfield Drone Attacks at Aviation Museum"
+  url: https://www.kyivpost.com/post/53784
+  publisher: Kyiv Post
+  authors: [Steve Brown]
+  published: "2025-06-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, ai, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Reports (citing the site Antikor) that in 2023 HUR operators photographed Tu-95/Tu-22M3/Tu-160 at the Poltava Museum of Heavy Bomber Aviation to train target-recognition AI. Second-hand and unconfirmed by the SBU, hence low."
+- id: kyivpost-2025-brown-manhunt-drivers
+  title: "Spiderweb – Russian Manhunt for 'Agent' Who Duped Truck Drivers Into Delivering Attack Drones"
+  url: https://www.kyivpost.com/post/53935
+  publisher: Kyiv Post
+  authors: [Steve Brown]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, logistics, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Relays Baza (Russian security-linked Telegram) on the organiser (37, Ukrainian-born, Chelyabinsk cargo company registered Oct 2024) and the drivers' accounts: Rosneft station near Olenya, Teremok cafe car park in Usolye-Sibirskoye about 10 km from Belaya, roof lifting near Ryazan, Ivanovo, the Seryshevo fire. Baza-derived, hence low."
+- id: pravda-2025-petrenko-pavutyna-first
+  title: "Ukraine launches large-scale drone attack on Russian airfields, 40 strategic bombers reportedly hit – videos"
+  url: https://www.pravda.com.ua/eng/news/2025/06/1/7515052/
+  publisher: Ukrainska Pravda
+  authors: [Roman Petrenko]
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, chapter, media]
+  found_in: [c16-spiderweb]
+  notes: "Published 13:56 Kyiv time on 1 June: SSU source, the Pavutyna codename, Maliuk's voice on the Belaya video, early damage estimate over US$2bn, lorries at petrol stations."
+- id: euromaidanpress-2025-zoria-bombers-ablaze
+  title: "Breaking: Russian strategic bombers ablaze en masse under SBU drone attack (video)"
+  url: https://euromaidanpress.com/2025/06/01/breaking-russian-strategic-bombers-ablaze-en-mass-under-sbu-drone-attack-video/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Breaking report (12:22 UTC): Olenya and Belaya burning, a long-haul truck in Olenegorsk launching drones and its driver detained, at least 10 explosions at Olenya, first-ever drone attack in Irkutsk Oblast."
+- id: euromaidanpress-2025-zoria-trojan-truck
+  title: "Trojan truck op: Kyiv destroys \"34%\" of Russia's strategic bomber fleet within hours with truck-launched FPV drones (updated)"
+  url: https://euromaidanpress.com/2025/06/02/trojan-truck-attack-ukraine-used-ai-trained-fpv-drones-launched-from-trucks-to-destroy-34-of-russias-strategic-bomber-fleet-in-a-day/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2025-06-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Zelensky: operatives across three time zones, withdrawn on the eve; OSINT count of 8 destroyed by 18:00 on 1 June; Belaya home of the 326th Heavy Bomber Division; Olenya hosting 22nd Guards Division regiments; Chelyabinsk warehouse geolocation; failed Ukrainka attempt; Russian MoD statement."
+- id: bbc-2025-adams-spiders-web-strike
+  title: "Ukraine drones strike bombers during major attack in Russia"
+  url: https://www.bbc.com/news/articles/c1ld7ppre9vo
+  publisher: BBC News
+  authors: [Paul Adams]
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Zelensky: 117 drones each with its own pilot, the 'office' next to the FSB; SBU sources: drones smuggled first, cabins later; Kovalenko's 13 destroyed; Istanbul talks on 2 June; 472 Russian drones overnight."
+- id: bbc-2025-gozzi-how-ukraine-did-it
+  title: "How Ukraine carried out daring 'Spider Web' attack on Russian bombers"
+  url: https://www.bbc.co.uk/news/articles/cq69qnvj6nlo
+  publisher: BBC News
+  authors: [Laura Gozzi, BBC Verify]
+  published: "2025-06-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Maliuk on smuggling and remotely detachable roofs; Baza-reported driver stories; a driver to RIA Novosti on throwing stones; Ust-Kut post seeking a 37-year-old; Capella SAR of Belaya; Russian state TV quiet; Budanov's 2024 count of eight A-50s."
+- id: bbc-2025-brown-spencer-satellite
+  title: "Satellite images show Russian bombers destroyed in Ukraine attack"
+  url: https://www.bbc.co.uk/news/articles/cvg9zdxwk29o
+  publisher: BBC News (BBC Verify)
+  authors: [Paul Brown, Thomas Spencer]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [satellite-imagery, chapter, media]
+  found_in: [c16-spiderweb]
+  notes: "Maxar and Planet imagery of 4 June: 12 aircraft damaged or destroyed (5 at Olenya, 7 at Belaya); SBU video shows no Russian defensive action, tyres on aircraft, loaded missiles; Ivanovo wreckage predates the attack; no damage seen at Dyagilevo."
+- id: bbc-2025-adams-turning-point
+  title: "Are the surprise airfield attacks a turning point for Ukraine?"
+  url: https://www.bbc.co.uk/news/articles/cn4gp2g7g47o
+  publisher: BBC News
+  authors: [Paul Adams]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, strategic-effect, chapter, media]
+  found_in: [c16-spiderweb]
+  notes: "SBU four-minute compilation of 4 June; Zelensky: 'half of them cannot be restored', no operation had a ceasefire been in place; A-50 domes targeted at Ivanovo; snow in the SBU truck video; booby-trapped container exploding; Trump on Putin's promised response."
+- id: guardian-2025-mazhulin-visual-guide
+  title: "Operation Spiderweb: a visual guide to Ukraine's destruction of Russian aircraft"
+  url: https://www.theguardian.com/world/2025/jun/02/operation-spiderweb-visual-guide-ukraine-drone-attack-russian-aircraft
+  publisher: The Guardian
+  authors: [Artem Mazhulin, Oliver Holmes, Lucy Swan, Laure Boulinier, Arnel Hecimovic]
+  published: "2025-06-02"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, chapter, media]
+  found_in: [c16-spiderweb]
+  notes: "Visual guide: containers disguised as wooden sheds, quadcopters among the roof beams, roof panels lifted by a remote mechanism; launching from Ukraine would have been much harder."
+- id: barentsobserver-2025-chentemirov-olenya-attack
+  title: "Successful and devastating: Massiv drone attacks on Olenya airbase"
+  url: https://www.thebarentsobserver.com/security/successful-and-devastating-massiv-drone-attacks-on-olenya-airbasenbsp/430777
+  publisher: The Barents Observer
+  authors: [Georgii Chentemirov]
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, arctic, chapter, media]
+  found_in: [c16-spiderweb]
+  notes: "Published 11:11 UTC on 1 June: geolocated videos from Olenegorsk; launches from a truck by a gas station 6–7 km from Olenya; smoke over the central and southern runway; clouds over Murmansk; Åtland (FFI) assessment."
+- id: barentsobserver-2025-staalesen-olenya-satellite
+  title: "Satellite images from Olenya show 4 strategic bombers destroyed"
+  url: https://www.thebarentsobserver.com/security/satellite-images-from-olenya-show-4-strategic-bombers-destroyed/431046/
+  publisher: The Barents Observer
+  authors: [Atle Staalesen]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [satellite-imagery, arctic, chapter]
+  found_in: [c16-spiderweb]
+  notes: "AviVector imagery: at least four Tu-95MS and one An-12 destroyed at Olenya, two Mi-24s possibly damaged, a Tu-160 on the runway apparently unhit; residents heard at least 10 explosions."
+- id: abc-2025-skinner-spiderweb-satellite
+  title: "Aftermath of Ukraine drone strike on Russian airfields shown in satellite imagery"
+  url: https://abcnews.go.com/International/aftermath-ukraine-drone-strike-russian-airfields-shown-satellite/story?id=122514076
+  publisher: ABC News
+  authors: [Helena Skinner]
+  published: "2025-06-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [satellite-imagery, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Janes: 4 Tu-95 + 1 An-12 destroyed at Olenya, 3 Tu-95 + 4 Tu-22 at Belaya, scorch marks but no aircraft damage at Dyagilevo; MAIAR: eight A-50s unmoved at Ivanovo; Brady Africk: one Tu-22 damaged at Dyagilevo; at least 11 bombers + 1 transport overall."
+- id: aljazeera-2025-airbases-unprecedented
+  title: "Ukrainian drones target Russian airbases in unprecedented operation"
+  url: https://www.aljazeera.com/news/2025/6/1/ukrainian-drones-target-russian-airbases-in-unprecedented-operation
+  publisher: Al Jazeera
+  authors: []
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Russian MoD statement; distances (Belaya about 4,300 km and Olenya about 1,800 km from Ukraine); 472 Russian drones overnight; Bryansk bridge collapse the same night; Istanbul delegation."
+- id: newsweek-2025-cook-tu160-anadyr
+  title: "Has Russia Moved Strategic Aviation Nearer to Alaska? What We Know"
+  url: https://www.newsweek.com/russia-tu160-strategic-bombers-alaska-anadyr-ukraine-spiderweb-2081937
+  publisher: Newsweek
+  authors: [Ellie Cook]
+  published: "2025-06-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, satellite-imagery, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Bronk (RUSI): at least six Tu-95MS and four Tu-22M3 destroyed; Planet imagery disputes a Tu-160 move to Anadyr; Ledwidge and Bagwell on routine dispersal; Tu-160 used on 6 June; Ukraine strikes Dyagilevo and Engels."
+- id: moscowtimes-2025-bombers-relocated
+  title: "Russia Relocates Strategic Bombers After Ukraine's 'Spider's Web' Drone Attack"
+  url: https://www.themoscowtimes.com/2025/06/12/russia-relocates-strategic-bombers-after-ukraines-spiders-web-drone-attack-a89427
+  publisher: The Moscow Times
+  authors: []
+  published: "2025-06-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, satellite-imagery, strategic-effect, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Independent Russian outlet in exile. AviVector imagery: Tu-160s left Belaya and Olenya (two to Anadyr, three to Yelizovo, three to Tatarstan); Tu-22M3/Tu-95MS to Tatarstan, Amur, Saratov and Mozdok; NYT-cited US officials: at least six Tu-95, four Tu-22M, several A-50."
+- id: moscowtimes-2025-kozlov-nato-retaliate
+  title: "Senior NATO Official to MT: We Expect Putin to Retaliate Against Ukraine for 'Spider's Web' Operation"
+  url: https://www.themoscowtimes.com/2025/06/04/senior-nato-official-to-mt-we-expect-putin-to-retaliate-against-ukraine-for-spiders-web-operation-a89341
+  publisher: The Moscow Times
+  authors: [Pyotr Kozlov]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Independent Russian outlet in exile. Second senior NATO official: over 40 damaged, 10 to 13 destroyed including at least one A-50; base locations are public information."
+- id: eurointegration-2025-sydorenko-nato-count
+  title: "У НАТО порахували, скільки літаків стратавіації РФ знищила операція СБУ \"Павутина\" (NATO counted how many Russian strategic aircraft the SBU's Spiderweb destroyed)"
+  url: https://www.eurointegration.com.ua/news/2025/06/4/7213067/
+  publisher: Yevropeiska Pravda
+  authors: [Serhii Sydorenko]
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language. Senior NATO official in Brussels: at least 40 damaged, 10–13 fully destroyed; among the damaged 15 Tu-95, 20 Tu-22 and at least one A-50; 34% of missile carriers; some may have been parts donors."
+- id: militarnyi-2025-liuksikov-tu160-strike
+  title: "Russian Tu-160s Strike Ukraine With Cruise Missiles as Aggressor Lacks Tu-95 MSM Bombers"
+  url: https://militarnyi.com/en/news/russian-tu-160s-strike-ukraine-with-cruise-missiles-as-aggressor-lacks-tu-95-msm-bombers/
+  publisher: Militarnyi
+  authors: [Mykhailo Liuksikov]
+  published: "2025-06-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, strategic-effect, chapter]
+  found_in: [c16-spiderweb]
+  notes: "6 June 2025: Tu-160s fire 36 Kh-101; identified Tu-95MS losses RF-94120 'Kozelsk' (Belaya), RF-94132 'Voronezh' and RF-94257 'Chelyabinsk' (Olenya) plus five more unidentified; reads Tu-160 use as a Tu-95MSM shortage."
+- id: defenseexpress-2025-seven-bombers-kh101
+  title: "РФ вперше за 8 місяців завантажила на Ту-95МС та Ту-160 майже повний боєкомплект Х-101 й все одно не допомогло (Russia loaded Tu-95MS and Tu-160 almost fully with Kh-101 for the first time in 8 months)"
+  url: https://defence-ua.com/news/rf_vpershe_za_roki_zavantazhila_na_tu_95ms_ta_tu_160_majzhe_povnij_bojekomplekt_h_101_j_vse_odno_ne_dopomoglo-19076.html
+  publisher: Defense Express
+  authors: []
+  published: "2025-06-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, strategic-effect, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language. Own sources: the 6 June 'retaliation' used only 5 Tu-95MS and 2 Tu-160, about 5 Kh-101 each (previously 1–3); 36 Kh-101 detected, 30 shot down; compares with 11 Tu-95MS launching 77 Kh-101 earlier."
+- id: isw-2025-06-01-roca
+  title: "Russian Offensive Campaign Assessment, June 1, 2025"
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-june-1-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-06-02"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, strategic-effect, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Data cut-off 13:15 ET on 1 June. Close launch evaded EW and denied reaction time; first drone strike in Siberia; may temporarily constrain Russian long-range strikes; Gurulev and milbloggers blame the security services and open-air parking; nuclear rhetoric framed as reflexive control."
+- id: isw-2025-06-03-roca
+  title: "Russian Offensive Campaign Assessment, June 3, 2025"
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-june-3-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ihnat: 10–12 of 19 Tu-160 and 36 of 57 Tu-95 operational before 1 June; Bloomberg's Western official (at least 7 Tu-95 + 4 Tu-22); NYT (6 Tu-95, 4 Tu-22M, 1 A-50, up to 20); Frontelligence (11 bombers + 1 An-12); GUR missile stockpile and production figures."
+- id: ssu-2025-pavutyna-video-41
+  title: "СБУ показала унікальні кадри спецоперації «Павутина», у результаті якої уражено 41 військовий літак стратегічної авіації рф (відео) (SBU shows unique footage of Spiderweb, which hit 41 Russian strategic aviation aircraft)"
+  url: https://ssu.gov.ua/novyny/sbu-pokazala-unikalni-kadry-spetsoperatsii-pavutyna-u-rezultati-yakoi-urazheno-41-viiskovyi-litak-stratehichnoi-aviatsii-rf-video
+  publisher: Security Service of Ukraine
+  authors: []
+  published: "2025-06-04"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, ai, chapter, media]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language official statement, read via the Wayback Machine (the live site returns 403). Video of strikes at Olenya, Ivanovo, Dyagilevo and Belaya; hit types A-50, Tu-95, Tu-22, Tu-160, An-12, Il-78; AI fallback on signal loss along a pre-planned route with automatic warhead trigger on contact; over $7bn. Claimant: SBU."
+- id: texty-2025-butusov-pavutyna-preparation
+  title: "Знищення літаків стратегічної авіації РФ. Як готували спецоперацію \"Павутина\" (Destroying Russian strategic aviation: how Spiderweb was prepared)"
+  url: https://texty.org.ua/fragments/115198/znyshennya-41-litaka-stratehichnoyi-aviaciyi-rf-yak-hotuvaly-specoperaciyu-pavutyna-foto/
+  publisher: Texty.org.ua
+  authors: []
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language. Quotes journalist Yurii Butusov: 150 small strike drones and 300 munitions smuggled, 116 drones flew, control over Russian telecom networks with automatic terminal guidance, daytime attack while Russia expected night strikes by heavy drones; Ihor Lutsenko on control over the internet. Butusov is an unofficial claimant."
+- id: texty-2025-zeus-lightning
+  title: "Росіяни погрожували розгромним ударом до «Павутини»: пропагандисти охрестили операцію «Блискавка Зевса» (Before Spiderweb Russians threatened a crushing strike they called 'Zeus's Lightning')"
+  url: https://texty.org.ua/fragments/115244/rosiyany-pohrozhuvaly-rozhromnym-udarom-do-pavutyny-propahandysty-ohrestyly-operaciyu-blyskavka-zevsa/
+  publisher: Texty.org.ua
+  authors: []
+  published: "2025-06-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, information-war, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language summary of a 30 May 2025 Russian Bloknot piece: 40 Tu-22M3 and 11 Tu-95MS massed at Olenya, 6 Tu-95MS + 3 Tu-160 at Engels, eight Il-76 flights to Engels in four days, a threatened strike if Kyiv rejected Russia's Istanbul demands. Russian claim relayed second-hand, hence low."
+- id: nv-2025-semenova-wsj-spiderweb
+  title: "«Що за чорт?». Операцію Павутина ледь не зірвав водій, який передчасно знайшов сховані дрони — нові деталі зухвалої атаки від WSJ ('What the hell?': a driver who found the hidden drones nearly wrecked Spiderweb — new WSJ details)"
+  url: https://nv.ua/ukr/ukraine/events/operaciya-pavutina-yak-sbu-urazila-40-litakiv-rf-dronami-novi-detali-wsj-50567321.html
+  publisher: NV (New Voice of Ukraine)
+  authors: [Inna Semenova]
+  published: "2025-12-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, logistics, drones, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language summary of the paywalled WSJ reconstruction 'Inside Ukraine's Daring Operation Spiderweb Attack on Russia' (10 Dec 2025; not read directly). Couple of agents vetted by polygraph in Lviv; drones smuggled in parts via smuggling schemes and customs corruption; 150 drones and 8 cabins assembled in a Chelyabinsk warehouse; battery/solar-powered cabins with remote locks; ready by end of April, 9 May date slipped; five trucks left 23–26 May; roof-slip crisis and Maliuk's hunting-cabin cover story; replacement truck lost to fire; pilots told the target only on 1 June."
+- id: meduza-2025-mediazona-drivers
+  title: "«Медиазона» подтвердила личности водителей фур, которых Украина вслепую использовала в операции «Паутина» (Mediazona confirms the identities of the truck drivers Ukraine used blind in Spiderweb)"
+  url: https://meduza.io/feature/2025/09/11/mediazona-podtverdila-lichnosti-voditeley-fur-kotoryh-ukraina-vslepuyu-ispolzovala-v-operatsii-pautina
+  publisher: Meduza (summarising Mediazona)
+  authors: []
+  published: "2025-09-11"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [sabotage, logistics, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Russian-language, independent outlet in exile. Five Chelyabinsk drivers: one killed in the Amur fire, four arrested on terrorism charges; two drivers had spent about two months repairing used trucks on a salary; the Ukrainka truck broke down about 600 km short of Blagoveshchensk on 31 May; organisers reportedly left for Kazakhstan (Mash claim). Personal details of drivers are not reproduced in the dossier."
+- id: meduza-2026-court-frees-drivers
+  title: "Moscow court frees four truck drivers unwittingly used by Ukraine in 2025 'Operation Spiderweb' drone attack on Russian military airfields"
+  url: https://meduza.io/en/news/2026/09/16/moscow-court-frees-four-truck-drivers-unwittingly-used-by-ukraine-in-2025-operation-spiderweb-drone-attack-on-russian-military-airfields
+  publisher: Meduza
+  authors: []
+  published: "2026-09-16"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Independent outlet in exile, citing Kommersant. 16 Sep 2026: Moscow City Court refuses to extend detention of the four drivers after the Prosecutor General's office declined the indictment for lack of direct evidence; five drivers in all, one killed; organisers on the wanted list."
+- id: mediazona-2025-deep-web
+  title: "Deep web. Ukraine used drones hidden in mobile huts to strike airbases thousands of kilometres inside Russia"
+  url: https://en.zona.media/article/2025/06/01/web
+  publisher: Mediazona
+  authors: []
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Independent Russian outlet in exile. Five targeted airfields, the failed Ukrainka attack, remote control from Ukraine implying a lack or failure of EW countermeasures at the bases."
+- id: istories-2025-airfield-attacks-main
+  title: "Украина провела серию атак на аэродромы базирования стратегической авиации России. Главное (Ukraine carried out a series of attacks on Russia's strategic aviation bases: the main points)"
+  url: https://istories.media/news/2025/06/01/ukraina-provela-seriyu-atak-na-aerodromi-v-rossii-glavnoe/
+  publisher: iStories (Important Stories)
+  authors: []
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, ew, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Russian-language, independent outlet in exile. Compiles governors' statements (Kobzev, Malkov, Chibis), seven explosions near Dyagilevo, the Seryshevo truck fire, Zelensky's address (intelligence on a planned massed strike); milblogger reactions (FighterBomber: too close for Pantsir/S-300; Rybar: special-services failures); Rogozin: satellite navigation jammed but drones controlled via mobile SIM data."
+- id: rbcukraine-2025-deadly-spiderweb
+  title: "Deadly 'Spiderweb': How Ukraine destroyed 40 Russian jets in historic behind-the-lines op"
+  url: https://newsukraine.rbc.ua/news/deadly-spiderweb-how-ukraine-destroyed-40-1748792204.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: "2025-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [drones, chapter]
+  found_in: [c16-spiderweb]
+  notes: "First-day explainer: governors' confirmations (Kobzev: Sredny and Novomaltinsk; Chibis; Malkov), Ivanovo Severny's units (combat employment centre, Il-76 regiment), no SBU statement as of 17:00 Kyiv time, no air alarms near the airfields."
+- id: telegraph-2025-barnes-a50-spy-planes
+  title: "Ukraine strikes Putin's prized spy planes"
+  url: https://www.telegraph.co.uk/world-news/2025/06/03/ukraine-strikes-putin-prized-spy-plane/
+  publisher: The Telegraph
+  authors: [Joe Barnes, James Rushton]
+  published: "2025-06-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [aviation, a50, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Read via the Wayback Machine. Footage shared with the paper: drones landing on the radomes of two A-50s at Ivanovo Severny, one protected with sandbags and one with tyres (matching Maxar imagery of 2 May); IISS: seven operational A-50s; Western officials: around 11 destroyed or damaged."
+- id: unian-2026-shenderovskyi-drivers-charged
+  title: "У Росії знайшли перших обвинувачених у справі щодо операції \"Павутина\" (Russia names the first defendants in the Spiderweb case)"
+  url: https://www.unian.ua/world/operaciya-pavutina-u-rosiji-znayshli-pershih-obvinuvachenih-13270644.html
+  publisher: UNIAN
+  authors: [Nikita Shenderovskyi]
+  published: "2026-01-29"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [sabotage, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language. Four drivers charged with a group terrorist act; a Moscow court extended detention on 28 Jan 2026; defence cites videos of drivers trying to bring the drones down; investigators say a Ukrainian-born couple coordinated for the SBU."
+- id: nbu-2025-pavutyna-coin
+  title: "НБУ присвятив нову пам'ятну монету Службі безпеки України та її унікальній спецоперації \"Павутина\" (NBU dedicates a commemorative coin to the SBU and Spiderweb)"
+  url: https://bank.gov.ua/ua/news/all/nbu-prisvyativ-novu-pamyatnu-monetu-slujbi-bezpeki-ukrayini-ta-yiyi-unikalniy-spetsoperatsiyi-pavutina
+  publisher: National Bank of Ukraine
+  authors: []
+  published: "2025-12-12"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [media, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Ukrainian-language. 5-hryvnia coin issued 12 Dec 2025 (up to 75,000): Trojan horse and truck on the obverse, '117 FPV' and a web linking four airfields on the reverse; restates the official 41 aircraft and 'hunting cabins'."
+- id: osm-2026-c16-overpass-places
+  title: "OpenStreetMap Overpass query: Spiderweb airbases, launch towns and the Chelyabinsk warehouse (computed)"
+  url: https://www.openstreetmap.org/
+  publisher: OpenStreetMap contributors
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [terrain, geodata, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Overpass query on 2026-10-01 (OSM base 2026-10-01T21:30Z, ODbL). Feature centres: Olenya (way 1058596337, ICAO XLMO) 68.153, 33.451; Belaya (way 228831533, UIIB) 52.916, 103.560; Dyagilevo (relation 5609799) 54.644, 39.569; Ivanovo Severny (way 101374565) 57.054, 40.981; Ukrainka (way 366468209) 51.167, 128.457; Engels-2 51.481, 46.231; 28A Sverdlovsky Trakt, Chelyabinsk 55.200, 61.378; Olenegorsk 68.141, 33.283; Vysokiy 68.138, 33.410; Sredny 52.882, 103.489; Novomaltinsk 52.869, 103.554; Usolye-Sibirskoye 52.758, 103.641; Seryshevo 51.091, 128.381. Distances computed as great circles."
+- id: open-meteo-2026-era5-spiderweb-jun-2025
+  title: "Open-Meteo Historical Weather API (ERA5): the five Spiderweb airbases, 1–4 June 2025 (query)"
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=68.153&longitude=33.451&start_date=2025-06-01&end_date=2025-06-04&hourly=temperature_2m,cloud_cover,wind_speed_10m,precipitation&daily=sunrise,sunset,daylight_duration&timezone=UTC
+  publisher: Open-Meteo (ECMWF ERA5 reanalysis)
+  authors: []
+  published: unknown
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [weather, chapter]
+  found_in: [c16-spiderweb]
+  notes: "Reanalysis, not observations (CC BY 4.0); same query run for all five bases (URL shows Olenya). 1 June 2025, 09–11 UTC: Olenya 8–9 °C, 100% cloud, light drizzle, polar day (24 h daylight); Belaya 14–15 °C, 82–100% cloud, sunset 13:20 UTC; Dyagilevo 23–25 °C, 11–39% cloud, wind 20–23 km/h; Ivanovo 17–20 °C, 94–99% cloud, showers; Ukrainka 16–19 °C, clear, sunset 11:31 UTC. Olenya stays overcast until 3 June; Belaya clears on 4 June."

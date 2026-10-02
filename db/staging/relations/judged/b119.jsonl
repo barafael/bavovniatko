@@ -1,0 +1,40 @@
+{"pair": "6e6bf91d0525", "relation": "duplicates", "from": "claim:cc15_0022_06", "to": "claim:c01_0024_27", "strength": 0.85, "rationale": "Same 7th Air Assault Corps 20-25 km kill zone, same source."}
+{"pair": "6e9a13eed5cc", "relation": "none", "rationale": "A five-storey office and five-storey staff flats are different buildings."}
+{"pair": "6ee9376ad621", "relation": "duplicates", "from": "claim:cc07_0027_03", "to": "claim:c00_0074_11", "strength": 0.95, "rationale": "Same RUSI 5:1 artillery advantage at Bakhmut."}
+{"pair": "6f0139fd8040", "relation": "supports", "from": "claim:cc14_0026_05", "to": "claim:cc14_0025_16", "strength": 0.6, "rationale": "Zelensky's ~11,000 and RUSI's ~10,000 North Koreans in Kursk agree.", "independent": true}
+{"pair": "6f7bd36ebf4b", "relation": "duplicates", "from": "claim:cc11_0032_20", "to": "claim:c03_0018_01", "strength": 0.85, "rationale": "Same Liga 1:10 shell ratio in Feb 2024."}
+{"pair": "6f7cac22e855", "relation": "duplicates", "from": "claim:cc15_0022_19", "to": "claim:c01_0029_62", "strength": 0.95, "rationale": "Same FPRI Rubikon strength figures."}
+{"pair": "700e84a281fb", "relation": "duplicates", "from": "claim:cc18_0028_07", "to": "claim:cc18_0013_64", "strength": 0.9, "rationale": "The 500 km/h jet-drone speed is contained in Ihnat's fuller statement."}
+{"pair": "705daa8951e7", "relation": "duplicates", "from": "claim:cc15_0015_03", "to": "claim:c06_0025_01", "strength": 0.85, "rationale": "Same OSM 0.28 km/km2 shelterbelt density west of Pokrovsk."}
+{"pair": "70e486143225", "relation": "duplicates", "from": "claim:cc14_0027_10", "to": "claim:c04_0027_81", "strength": 0.95, "rationale": "Same HUR claim of more than 7,000 North Korean casualties."}
+{"pair": "71180d1b50f5", "relation": "duplicates", "from": "claim:cc14_0014_047", "to": "claim:c00_0074_30", "strength": 0.85, "rationale": "Same Zelensky 1,250 km2 Kursk claim of 19 Aug 2024."}
+{"pair": "714ed0775c98", "relation": "none", "rationale": "UGV drops >10 km behind the line and logistics strikes 50-120 km deep are different strike types."}
+{"pair": "72752349a9c7", "relation": "supports", "from": "claim:cc16_0005_03", "to": "claim:c01_0029_46", "strength": 0.8, "rationale": "BBC's 117 drones matches the SBU claim, though it relays the SBU.", "independent": false}
+{"pair": "74acf0b4f7f2", "relation": "supports", "from": "claim:c04_0033_07", "to": "claim:cc07_0007_21", "strength": 0.4, "rationale": "19,547 Wagner dead is consistent with ~21,000 total Russian dead at Bakhmut.", "independent": false}
+{"pair": "755ec969de07", "relation": "duplicates", "from": "claim:cc14_0012_02", "to": "claim:cc14_0006_04", "strength": 0.95, "rationale": "Same ~600 km2 Ukrainian-held Kursk salient in Nov 2024."}
+{"pair": "75991a05543d", "relation": "supersedes", "from": "claim:cc16_0011_57", "to": "claim:cc16_0011_50", "strength": 0.5, "rationale": "The SBU's ~$7bn damage claim replaces the first report's 'over $2bn'."}
+{"pair": "7642807ec120", "relation": "duplicates", "from": "claim:cc15_0022_67", "to": "claim:c06_0029_19", "strength": 0.95, "rationale": "Same >300 Russians into Pokrovsk in fog, same source."}
+{"pair": "77fe1415e8cb", "relation": "supports", "from": "claim:cc18_0032_06", "to": "claim:cc18_0032_05", "strength": 0.4, "rationale": "Per-salvo intercepts of 0-50% are consistent with CSIS's 10-15% average.", "independent": true}
+{"pair": "7838edd3c1af", "relation": "none", "rationale": "UGV drops >10 km behind the line and logistics strikes 50-120 km deep are different strike types."}
+{"pair": "785e597c239b", "relation": "duplicates", "from": "claim:cc09_0007_10", "to": "claim:c07_0028_05", "strength": 0.9, "rationale": "Same DeepState-derived 350 km2 gross Ukrainian recapture in Q2 2023."}
+{"pair": "785fe8815806", "relation": "duplicates", "from": "claim:cc14_0014_064", "to": "claim:cc14_0012_01", "strength": 0.95, "rationale": "Same ISW ~46% of the Kursk salient retaken by mid-October 2024."}
+{"pair": "7950629422ca", "relation": "none", "rationale": "A contested range across sources vs a single December 2024 claim; no clear relation."}
+{"pair": "7a6232616a3a", "relation": "supersedes", "from": "claim:c04_0027_82", "to": "claim:cc14_0027_07", "strength": 0.6, "rationale": "The NIS/UK ~6,000 is a later figure in the NIS series than its 4,700 of April 2025."}
+{"pair": "7aaa840208c0", "relation": "duplicates", "from": "claim:cc14_0011_05", "to": "claim:c00_0048_02", "strength": 0.85, "rationale": "Same Zelensky 1,250 km2 and 92 settlements claim."}
+{"pair": "7c823a58f4d4", "relation": "supports", "from": "claim:cc15_0005_34", "to": "claim:c04_0027_76", "strength": 0.9, "rationale": "Both relay ISW's 53 Russian casualties per km2 for autumn 2024.", "independent": false}
+{"pair": "7c944022e596", "relation": "supports", "from": "claim:cc14_0024_18", "to": "claim:cc14_0024_19", "strength": 0.5, "rationale": "Al Jazeera's ~11,000 and Western officials' ~12,000 for the Ukrainian Kursk force agree.", "independent": true}
+{"pair": "7d4a7e6df1f0", "relation": "supports", "from": "claim:cc19_0006_04", "to": "claim:cc19_0005_13", "strength": 0.5, "rationale": "ISW's 'at least 125 km2' anchors the lower end of the 125-240 km2 band.", "independent": false}
+{"pair": "7da6400d31d6", "relation": "none", "rationale": "Kherson and Bakhmut losses are different scopes and claimants."}
+{"pair": "7eb8ecffe52b", "relation": "duplicates", "from": "claim:cc15_0005_35", "to": "claim:c00_0058_04", "strength": 0.9, "rationale": "Same Radio Svoboda ~85 casualties/km2 for 2025."}
+{"pair": "7ec5ce81b0c6", "relation": "duplicates", "from": "claim:cc15_0024_02", "to": "claim:cc15_0022_30", "strength": 0.85, "rationale": "Same DeepState account of the July 2025 infiltration walk: ~30 of 150 arrived."}
+{"pair": "7f67b6c15833", "relation": "supports", "from": "claim:cc14_0014_072", "to": "claim:cc14_0025_16", "strength": 0.6, "rationale": "Zelensky's 11,000 and RUSI's ~10,000 North Koreans in Kursk agree.", "independent": true}
+{"pair": "80b5ed49a513", "relation": "duplicates", "from": "claim:cc14_0014_038", "to": "claim:cc14_0011_04", "strength": 0.95, "rationale": "Same Syrskyi 1,150 km2 and 82 settlements claim of 15 Aug 2024."}
+{"pair": "812c579e1c77", "relation": "duplicates", "from": "claim:cc09_0007_10", "to": "claim:c07_0028_06", "strength": 0.9, "rationale": "Same DeepState-derived 294 km2 gross Ukrainian recapture in Q3 2023."}
+{"pair": "824d2ab381df", "relation": "supports", "from": "claim:cc19_0006_06", "to": "claim:cc19_0005_13", "strength": 0.4, "rationale": "AMK's 151 km2 lies within the 125-240 km2 win band.", "independent": false}
+{"pair": "828b50f8f9ac", "relation": "duplicates", "from": "claim:cc14_0011_05", "to": "claim:c00_0074_30", "strength": 0.85, "rationale": "Same Zelensky 1,250 km2 Kursk claim."}
+{"pair": "83563d97f75d", "relation": "duplicates", "from": "claim:cc16_0007_02", "to": "claim:c01_0029_46", "strength": 0.9, "rationale": "Same SBU ~$7bn damage claim from Kyiv Independent."}
+{"pair": "837d9453dd5b", "relation": "supports", "from": "claim:cc16_0026_14", "to": "claim:c01_0029_46", "strength": 0.85, "rationale": "Both give the SBU's official 117-drone figure.", "independent": false}
+{"pair": "84737ab02159", "relation": "duplicates", "from": "claim:cc11_0029_05", "to": "claim:cc11_0010_67", "strength": 0.9, "rationale": "Same Naalsio count of 44 Ukrainian vehicles lost at Avdiivka."}
+{"pair": "85a5c105fc3c", "relation": "supports", "from": "claim:cc19_0006_09", "to": "claim:c00_0074_54", "strength": 0.7, "rationale": "MWI's up to 250 km2 agrees with analysts' 200-240 km2.", "independent": true}
+{"pair": "8621d2690fae", "relation": "supports", "from": "claim:c00_0062_08", "to": "claim:cc19_0005_13", "strength": 0.6, "rationale": "Analysts' 200-240 km2 underpins the upper end of the win band.", "independent": false}
+{"pair": "8630b5494dfa", "relation": "supersedes", "from": "claim:cc14_0027_09", "to": "claim:cc14_0027_07", "strength": 0.7, "rationale": "The NIS's 2026 ~6,000 updates its April 2025 figure of ~4,700."}

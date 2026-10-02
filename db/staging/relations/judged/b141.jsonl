@@ -1,0 +1,40 @@
+{"pair": "6fad278a535d", "relation": "none", "rationale": "An occupation status and an assessment of the flooding's effect."}
+{"pair": "6fbec899a68b", "relation": "none", "rationale": "An ambush and coordinates."}
+{"pair": "708aff63a940", "relation": "none", "rationale": "Holding Zenit and a leaderless company are different facts."}
+{"pair": "70a4bbc7f1d5", "relation": "supports", "from": "claim:cc15_0019_18", "to": "claim:cc15_0018_03", "strength": 0.5, "rationale": "The 27th MRD and 15th MRB of the 2nd CAA, still south-west of Pokrovsk in 2025–26, corroborate their axis in 2024–25.", "independent": false}
+{"pair": "70a5bc195b37", "relation": "none", "rationale": "A burning An-12 and a later inventory."}
+{"pair": "70a6a861d4f4", "relation": "supports", "from": "claim:cc16_0047_03", "to": "claim:cc16_0008_01", "strength": 0.4, "rationale": "The Russian MoD's admission that aircraft caught fire in Murmansk and Irkutsk corroborates losses at Olenya and Belaya, though it gives no count.", "independent": true}
+{"pair": "70d1c976a1fc", "relation": "supports", "from": "claim:cc12_0025_14", "to": "claim:cc01_0030_15", "strength": 0.6, "rationale": "MiG-29s and Su-27s hugging the ground under high Su-35 patrols corroborates the low-level MiG-29 sorties under Russian CAPs.", "independent": false}
+{"pair": "70e09cbe111f", "relation": "duplicates", "from": "claim:cc12_0010_51", "to": "claim:cc11_0010_102", "strength": 0.9, "rationale": "Same Air Force claim of two Su-34s and a Su-35 over Donetsk Oblast on 17 Feb 2024."}
+{"pair": "71b046b35a65", "relation": "none", "rationale": "Unit composition and whole-war losses."}
+{"pair": "71ec081c24a0", "relation": "duplicates", "from": "claim:cc14_0031_08", "to": "claim:cc14_0014_032", "strength": 0.9, "rationale": "Same report of the 225th pulling down the Russian flag in Darino in August 2024."}
+{"pair": "725aab0cf54b", "relation": "refines", "from": "claim:cc16_0005_04", "to": "claim:cc16_0006_03", "strength": 0.7, "rationale": "A specifies how the Ukrainka truck was lost (it caught fire and exploded near Seryshevo)."}
+{"pair": "72a94bfec08c", "relation": "none", "rationale": "The leak and ISW's reading of the appeal."}
+{"pair": "72e397a7e02e", "relation": "none", "rationale": "Coordinates and an inventory."}
+{"pair": "72fb693bdad8", "relation": "refines", "from": "claim:cc12_0010_12", "to": "claim:cc01_0028_30", "strength": 0.8, "rationale": "B dates the RUSI finding to early March and adds Crimea-based S-400s and the 48Ya6 designation."}
+{"pair": "730ce0035d7d", "relation": "none", "rationale": "Breach dates and the first failed attempt."}
+{"pair": "733c7bd55b07", "relation": "supports", "from": "claim:cc12_0023_34", "to": "claim:cc01_0028_30", "strength": 0.6, "rationale": "The Podlet-K1's coverage down to 15 ft explains why it forced Ukrainian jets below 100 ft.", "independent": false}
+{"pair": "73605f00c4b0", "relation": "duplicates", "from": "claim:cc09_0035_22", "to": "claim:cc09_0010_101", "strength": 0.9, "rationale": "Same ISW report of the first ATACMS strike, on Berdiansk, on 17 Oct 2023."}
+{"pair": "73a19cf3b093", "relation": "none", "rationale": "A withdrawal status and a location."}
+{"pair": "73bc72fd6787", "relation": "none", "rationale": "Basing before the strike and a Russian claim about losses."}
+{"pair": "73c14b79d786", "relation": "none", "rationale": "The line holding and a pontoon attempt."}
+{"pair": "73ce0774cfc7", "relation": "none", "rationale": "B interprets the memo's subject; it does not corroborate the event."}
+{"pair": "73ec6fd1e5be", "relation": "none", "rationale": "An attack and a strength estimate."}
+{"pair": "74386c9c33c7", "relation": "duplicates", "from": "claim:cc15_0016_09", "to": "claim:cc15_0007_78", "strength": 0.9, "rationale": "Same BBC observation of a Russian column of cars and motorbikes entering Pokrovsk in fog on 9 Nov 2025."}
+{"pair": "743a064afb77", "relation": "none", "rationale": "The invasion's first day and the later occupation status."}
+{"pair": "746310ab9904", "relation": "none", "rationale": "Time zones and imagery-clearing dates."}
+{"pair": "74644b57eafe", "relation": "supports", "from": "claim:cc15_0026_04", "to": "claim:cc15_0004_07", "strength": 0.6, "rationale": "Azov being sent against the Dobropillia salient in August corroborates its part in clearing the wedge by October.", "independent": false}
+{"pair": "7478ff579758", "relation": "supports", "from": "claim:cc01_0014_22", "to": "claim:cc01_0011_28", "strength": 0.5, "rationale": "B confirms the 25/26 Feb breach of the Kozarovychi dam.", "independent": false}
+{"pair": "74896366d5f6", "relation": "supports", "from": "claim:cc19_0009_16", "to": "claim:c05_0025_02", "strength": 0.7, "rationale": "B's report of Starlink-fitted BM-35 and Molniya-2 drones in late December is the premise of A's trigger account.", "independent": false}
+{"pair": "74a1dab37576", "relation": "supports", "from": "claim:cc09_0050_08", "to": "claim:c04_0005_09", "strength": 0.5, "rationale": "Milbloggers crediting landmines and layered fortifications corroborates RUSI's assessment that the defence belts broke the offensive.", "independent": true}
+{"pair": "74cfca06b840", "relation": "none", "rationale": "The encirclement date and a force size."}
+{"pair": "750b6b885f03", "relation": "supports", "from": "claim:cc09_0027_04", "to": "claim:cc09_0006_05", "strength": 0.5, "rationale": "Heavy Bradley and Leopard losses on 8 June corroborate the failure of the first breach.", "independent": true}
+{"pair": "75270313602b", "relation": "supports", "from": "claim:cc07_0017_04", "to": "claim:cc07_0016_13", "strength": 0.5, "rationale": "Both have Yuvileina St as the road out of Bakhmut to Khromove.", "independent": false}
+{"pair": "753702ca252b", "relation": "supports", "from": "claim:cc12_0025_10", "to": "claim:cc11_0035_25", "strength": 0.7, "rationale": "Oleshchuk's 19 Feb beacon pings in the Sea of Azov are the detections in A.", "independent": false}
+{"pair": "753d6b0a0ad1", "relation": "refines", "from": "claim:cc09_0010_91", "to": "claim:cc09_0006_15", "strength": 0.8, "rationale": "B gives the depth (1.7–3.5 km west of Verbove) of the belt that ISW judged broken on 23 Sept."}
+{"pair": "7557224cbf95", "relation": "duplicates", "from": "claim:cc19_0007_13", "to": "claim:c04_0027_23", "strength": 0.85, "rationale": "Same Euromaidan report of Russia shifting south to Mykolaivka and the approach to Sloviansk during Vivaldi."}
+{"pair": "75a76c1b8a20", "relation": "supports", "from": "claim:cc19_0009_87", "to": "claim:c01_0024_68", "strength": 0.7, "rationale": "Both report UGVs air-dropped more than 10 km behind Russian lines in Vivaldi.", "independent": false}
+{"pair": "76b508ea823f", "relation": "none", "rationale": "An inventory and a strike video."}
+{"pair": "76dd5ce2abf9", "relation": "supports", "from": "claim:cc19_0009_63", "to": "claim:cc19_0005_08", "strength": 0.5, "rationale": "ISW's geolocated summer advances near Ridkodub, Katerynivka and Nove support the 28 Sept liberation claim.", "independent": true}
+{"pair": "7742ec270d2e", "relation": "supports", "from": "claim:cc11_0010_07", "to": "claim:cc11_0006_02", "strength": 0.6, "rationale": "Confirmed advances near Sieverne, Stepove and Krasnohorivka on 10–11 Oct corroborate the October flank attacks.", "independent": false}
+{"pair": "7756521fd929", "relation": "none", "rationale": "The river's width and its depth rise are different measures."}

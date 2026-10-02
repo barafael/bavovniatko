@@ -1,0 +1,40 @@
+{"pair": "d22fd4eec7bf", "relation": "supports", "from": "claim:cc11_0010_64", "to": "claim:cc11_0035_12", "strength": 0.5, "rationale": "Russian video of men with cutting torches in a tunnel corroborates the torch-cut pipe exits.", "independent": false}
+{"pair": "d24c0004e4b2", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d26b0c37ad6a", "relation": "duplicates", "from": "claim:cc18_0026_07", "to": "claim:c03_0027_033", "strength": 0.9, "rationale": "Same assertion: Patriot and SAMP/T are the only Iskander-capable systems and need 2–3 interceptors per missile."}
+{"pair": "d26f56443cc8", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d28b2a23b2e3", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d33ea84107eb", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d3646ea29a48", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d37a7f7e4cbd", "relation": "refines", "from": "claim:cc09_0010_94", "to": "claim:cc09_0007_05", "strength": 0.6, "rationale": "B dates the entry into northern Verbove and the approach to Novoprokopivka to 25 September 2023."}
+{"pair": "d38a5094f5e8", "relation": "duplicates", "from": "claim:cc15_0022_40", "to": "claim:cc15_0007_78", "strength": 0.9, "rationale": "Same 9 November 2025 fog column of cars and motorbikes on the Selydove highway."}
+{"pair": "d395aaa56168", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d3a0412d93c6", "relation": "supports", "from": "claim:cc16_0015_08", "to": "claim:cc16_0011_40", "strength": 0.6, "rationale": "B restates that the Belaya launch was from the car park in Usolye-Sibirskoye.", "independent": false}
+{"pair": "d3e766cb2c10", "relation": "supports", "from": "claim:cc16_0042_25", "to": "claim:cc16_0038_07", "strength": 0.8, "rationale": "B includes the post-Spiderweb dispersal of bombers that A states.", "independent": false}
+{"pair": "d3ef5eb90da0", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d4587c68592a", "relation": "supports", "from": "claim:cc09_0030_02", "to": "claim:cc09_0010_36", "strength": 0.8, "rationale": "B places the 429th Regiment of the 19th Division southwest of Orikhiv in June 2023.", "independent": false}
+{"pair": "d46e70750b38", "relation": "supports", "from": "claim:cc09_0040_10", "to": "claim:cc09_0010_42", "strength": 0.6, "rationale": "Popov's own 12 July memo as the fired commander corroborates the leaked dismissal.", "independent": true}
+{"pair": "d47fb04518d1", "relation": "supports", "from": "claim:c00_0037_01", "to": "claim:cc09_0005_01", "strength": 0.7, "rationale": "A's plan to isolate Tokmak and reach Melitopol matches B's single main effort Orikhiv–Tokmak–Melitopol.", "independent": false}
+{"pair": "d4f1594fc726", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d5416ad56adc", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d5467e8a85c1", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d54dcd7cb17c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d568d44e43d6", "relation": "duplicates", "from": "claim:cc16_0030_04", "to": "claim:cc16_0011_94", "strength": 0.9, "rationale": "Same count of at least 17 bomber shelters under construction at Engels by June 2026."}
+{"pair": "d57c7e140a56", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d598832e103e", "relation": "supports", "from": "claim:cc15_0022_70", "to": "claim:cc15_0020_09", "strength": 0.6, "rationale": "B's joint SSO/HUR/SBU/military police/police hunter teams match A's list of special forces at Pokrovsk.", "independent": false}
+{"pair": "d59a493adee4", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d5eda572e0a3", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d6224268659d", "relation": "supports", "from": "claim:cc01_0026_16", "to": "claim:cc01_0011_51", "strength": 0.6, "rationale": "B places the 95th Air Assault Brigade at Makariv, consistent with A's retaking of Makariv.", "independent": false}
+{"pair": "d673d518bb99", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d6907b66c611", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d6b7270e272a", "relation": "supports", "from": "claim:cc09_0040_17", "to": "claim:cc09_0010_90", "strength": 0.6, "rationale": "Observed vehicles crossing the ditch and dragon's teeth west of Verbove back Tarnavskyi's breakthrough claim.", "independent": true}
+{"pair": "d6cc400d1200", "relation": "supports", "from": "claim:cc16_0047_03", "to": "claim:cc16_0005_03", "strength": 0.5, "rationale": "Russia's MoD admitting aircraft fires in Murmansk and Irkutsk corroborates strikes on Olenya and Belaya.", "independent": true}
+{"pair": "d72ad4d0df50", "relation": "supports", "from": "claim:cc15_0014_06", "to": "claim:cc15_0022_40", "strength": 0.7, "rationale": "A states the November fog column came in on the Selydove highway, as B describes.", "independent": false}
+{"pair": "d7554902c99f", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d76905860ef5", "relation": "supports", "from": "claim:cc09_0010_71", "to": "claim:cc09_0043_21", "strength": 0.7, "rationale": "The 76th VDV elements shifted from Kreminna are part of the August transfers B describes.", "independent": false}
+{"pair": "d78822ef3831", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d7aa606766e3", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d818f2b6dd95", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d84146a50b6f", "relation": "supports", "from": "claim:cc14_0014_013", "to": "claim:cc14_0004_01", "strength": 0.8, "rationale": "Both describe the 6 August 2024 break-in on two axes, from the Sudzha checkpoint and from Novenke.", "independent": false}
+{"pair": "d8759fa83337", "relation": "supports", "from": "claim:cc09_0010_16", "to": "claim:cc09_0006_05", "strength": 0.6, "rationale": "Romanchuk's account of the main breach on the night of 7–8 June along Mala Tokmachka matches A.", "independent": true}
+{"pair": "d87ca6298226", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d87d57ee3057", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}

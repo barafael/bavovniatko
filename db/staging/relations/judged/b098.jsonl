@@ -1,0 +1,40 @@
+{"pair": "584c36dab100", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "590b6d713714", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "592273e558f4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5a1566484980", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5a82f2147809", "relation": "duplicates", "from": "claim:cc15_0015_04", "to": "claim:c06_0025_40", "strength": 0.95, "rationale": "The same OSM road and track density figures for the Pokrovsk west sample box, extracted in topic 06 and chapter c15."}
+{"pair": "5ace765ef0a4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5b807093e1bb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5bb117fb74e4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5bda99165b2b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5be37cc8c02e", "relation": "duplicates", "from": "claim:cc19_0006_03", "to": "claim:cc19_0009_101", "strength": 0.8, "rationale": "Both carry the 3rd Army Corps 28 September 2026 claim of 51 km² added for 176 km² total; B adds losses and prisoners."}
+{"pair": "5bf7cb62be06", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5c4d19cbdfba", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5c8865aef908", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5c924f786e8b", "relation": "none", "rationale": "OSW's 2,000 is the initial breakthrough grouping on 6 August 2024; the 12,000 is the later total force in Kursk Oblast, a different time and scope."}
+{"pair": "5ca89678ccff", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5cb35e8fb49f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5d3936be0160", "relation": "none", "rationale": "An initial deployment of 11–12k and a war-long total of 16–22k are compatible, different scopes."}
+{"pair": "5d4de83c3c20", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5d85871a49e9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5dddcf2363bd", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5e00583a3fd4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5e27d0f47ce5", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5e4bd6be408b", "relation": "none", "rationale": "A national February 2024 shell ratio and a local Avdiivka ratio differ in scope."}
+{"pair": "5e5fcbeba0e6", "relation": "none", "rationale": "The 4 Zircons are a subset of the 25 ballistic or hypersonic missiles; compatible."}
+{"pair": "5ec940d99c40", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5ede1d397626", "relation": "none", "rationale": "Loss count and an emblematic drone image are related context, not corroboration of the same assertion."}
+{"pair": "5eebee6b5a1a", "relation": "supports", "from": "claim:cc18_0010_06", "to": "claim:cc18_0008_13", "strength": 0.6, "rationale": "The Defence Ministry's 90% Shahed interception figure is consistent with the Air Force's 476 of 496 drones (96%) for the same night.", "independent": false}
+{"pair": "5eef7c75e92e", "relation": "supersedes", "from": "claim:cc18_0010_14", "to": "claim:cc18_0013_57", "strength": 0.6, "rationale": "The National Police figure of above 110 injured is a later count of the same Kyiv injury toll that stood at 56 by 07:30."}
+{"pair": "5f5ca3594c69", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5f5f8c926960", "relation": "supersedes", "from": "claim:cc14_0027_10", "to": "claim:cc14_0014_088", "strength": 0.5, "rationale": "HUR's June 2026 figure of more than 7,000 North Korean casualties is a later point in the same cumulative series than the January 2025 figure of 4,000."}
+{"pair": "5fc5c202c369", "relation": "supports", "from": "claim:cc14_0027_09", "to": "claim:c00_0051_02", "strength": 0.5, "rationale": "Both give South Korean intelligence's figure of about 6,000 North Korean killed or wounded.", "independent": false}
+{"pair": "6014e5b58715", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "604fa25492c8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "605c34b07d5d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6088417e19d2", "relation": "supports", "from": "claim:cc16_0007_08", "to": "claim:cc16_0007_12", "strength": 0.5, "rationale": "US officials' estimate of up to about 20 aircraft hit is consistent with BBC Verify's imagery count of 12 damaged or destroyed, both far below Ukraine's claim.", "independent": true}
+{"pair": "60920dc4c06f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "60bd46d6473f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "60c148aecab3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6111f3da3990", "relation": "supports", "from": "claim:cc19_0006_04", "to": "claim:c00_0074_53", "strength": 0.6, "rationale": "ISW's \"at least 125 km²\" matches the 3rd Army Corps' 125 km² claim for phases 1–2 of Vivaldi.", "independent": false}
+{"pair": "619dff032715", "relation": "none", "rationale": "A national shell-ratio change and a local Avdiivka ratio are different scopes."}

@@ -1,0 +1,40 @@
+{"pair": "6ab778da1dee", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6afa8861df49", "relation": "refines", "from": "claim:cc15_0022_19", "to": "claim:c04_0037_24", "strength": 0.7, "rationale": "B gives Rubikon's growth from about 1,450 in March 2025 to about 5,000 by spring 2026, dating A's undated size of about 5,000."}
+{"pair": "6b015ec06aa8", "relation": "supports", "from": "claim:c00_0062_05", "to": "claim:cc19_0006_02", "strength": 0.6, "rationale": "Phase 2's 40 km² added to phase 1's 85 km² gives the 3rd Army Corps' 125 km² total for seasons 1–2.", "independent": false}
+{"pair": "6ce5a5213fe5", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6d65bcfdbdc3", "relation": "weakens", "from": "claim:cc16_0047_27", "to": "claim:cc16_0029_07", "strength": 0.4, "rationale": "MAIAR's imagery of eight A-50s in unchanged positions at Ivanovo casts doubt on the BBC's \"as few as four\" left after Spiderweb."}
+{"pair": "6d710dddf21f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6dc5773d0d25", "relation": "none", "rationale": "Anti-drone net corridors 15–30 km from the front and kill-zone depth are related context, not the same assertion."}
+{"pair": "6e357845970c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6e937c7ccbdd", "relation": "contradicts", "from": "claim:cc16_0007_06", "to": "claim:cc16_0007_12", "strength": 0.6, "rationale": "A NATO official's at least 40 aircraft damaged in Spiderweb is incompatible with BBC Verify's count of 12 damaged or destroyed.", "resolution": "BBC Verify counts only aircraft confirmed on imagery at Olenya and Belaya; the NATO estimate covers all airfields and likely includes lighter damage not visible from above."}
+{"pair": "6ea653396cda", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6ebd8c6361b0", "relation": "supports", "from": "claim:cc16_0007_10", "to": "claim:cc16_0007_04", "strength": 0.5, "rationale": "TWZ's imagery-based 10–11 bombers destroyed broadly corroborates Kovalenko's at least 13 destroyed.", "independent": true}
+{"pair": "6ed46537be1c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6f3255512697", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6f4937c94ba9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6fe4336a5edb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "708e10989eec", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "70949b8fb093", "relation": "supports", "from": "claim:cc18_0008_06", "to": "claim:cc18_0010_06", "strength": 0.6, "rationale": "The Air Force's 32 of 34 Kh-101 downed (94%) is consistent with the Defence Ministry's over 90% of cruise missiles intercepted.", "independent": false}
+{"pair": "70bef7830432", "relation": "supports", "from": "claim:cc15_0022_02", "to": "claim:c08_0018_03", "strength": 0.6, "rationale": "ISW's report that Ukrainian sources put the kill zone at \"at least 10 km\" by 2025 supports the design note's ~10 km no-vehicle belt.", "independent": false}
+{"pair": "70e3a7920676", "relation": "supports", "from": "claim:cc11_0007_13", "to": "claim:cc11_0007_14", "strength": 0.7, "rationale": "Tavria's 17,000 Russians killed at Avdiivka and Murz's 16,000 irrecoverable losses come from opposing sides and agree closely.", "independent": true}
+{"pair": "71318719ad2f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7144a3a1f2a1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "716ae327ac29", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "71c6fecdaee3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "71c719548e70", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "72656c46de35", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "728b65a89153", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "728cbf3e686b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7328a5969d3f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7333a3f88fc3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "733f3ec04bb9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7371334fd2fa", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7374057898b9", "relation": "none", "rationale": "Pre-war population and civilians remaining in February 2023 describe different times."}
+{"pair": "7375f9819a79", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "737f9776150f", "relation": "none", "rationale": "IISS counts operational A-50s fleet-wide; MAIAR counts airframes seen at Ivanovo. These are different measures."}
+{"pair": "73840fcbf9f4", "relation": "contradicts", "from": "claim:cc18_0008_11", "to": "claim:cc18_0010_05", "strength": 0.5, "rationale": "For the same night, the Air Force counts 74 missiles launched and the Defence Ministry 77.", "resolution": "The Defence Ministry gave rounded figures and may count missile categories differently, e.g. 25 rather than 28 ballistic or hypersonic."}
+{"pair": "73ade369f809", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "73c9b77de264", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "74014d73c4e7", "relation": "none", "rationale": "Different denominators: 4 of 24 Iskanders versus 4 of 28 ballistic missiles including Zircons; consistent."}
+{"pair": "7401558ea7ba", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "742f900f9b31", "relation": "none", "rationale": "The Kalibr figure is one component of the 74-missile total."}

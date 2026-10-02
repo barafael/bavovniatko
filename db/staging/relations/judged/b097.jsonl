@@ -1,0 +1,40 @@
+{"pair": "4ec4e4707285", "relation": "supersedes", "from": "claim:cc14_0027_09", "to": "claim:cc14_0027_03", "strength": 0.5, "rationale": "The 2026 NIS/UK estimate of about 6,000 North Korean casualties updates Zelensky's January 2025 figure of 3,800."}
+{"pair": "4f1ada7b292c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4f89cfe0be60", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4f8ee5e30c13", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4f90738d2f12", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4faf46a6e5c3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4ff63924a7c2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "503df6491648", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "50b1f3a61cae", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "511b88149b88", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "516d17e160a8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "519173f8db8c", "relation": "duplicates", "from": "claim:cc09_0018_07", "to": "claim:c06_0025_41", "strength": 0.85, "rationale": "Same OSM measurement of 0.34 km of mapped tracks per km² in the Robotyne sample box, extracted twice."}
+{"pair": "51a38b295b9a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "51b15c27240b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "51beb494cd41", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "51c96780ccc6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "52118bacab64", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "521e0da113ef", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "522faaf358f6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "526f75e0867e", "relation": "supersedes", "from": "claim:c04_0027_82", "to": "claim:cc14_0014_088", "strength": 0.6, "rationale": "The NIS/UK estimate of about 6,000 North Korean casualties updates the January 2025 Western estimate of 4,000."}
+{"pair": "52add7ac4a93", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "52d9af354cba", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "531afea48cfb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5358c39636e6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "5378b436c653", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "53c7ec19772d", "relation": "supersedes", "from": "claim:c04_0027_82", "to": "claim:cc14_0027_03", "strength": 0.5, "rationale": "The NIS/UK estimate of about 6,000 North Korean casualties updates Zelensky's January 2025 figure of 3,800."}
+{"pair": "53d1330f2ba9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "53dcfc8dd388", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "54f00a576ecd", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "54fa56304dde", "relation": "supersedes", "from": "claim:cc14_0027_10", "to": "claim:c00_0051_02", "strength": 0.4, "rationale": "HUR's June 2026 figure of more than 7,000 North Korean casualties is later than the contested 2024–25 claims of 4,500–6,000."}
+{"pair": "55012fcfccd7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "551099c59d66", "relation": "supports", "from": "claim:cc16_0011_56", "to": "claim:cc16_0007_08", "strength": 0.5, "rationale": "Early OSINT confirmation of 8 aircraft destroyed is consistent with the US officials' estimate of about 10 destroyed.", "independent": true}
+{"pair": "55ff63d7cb54", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "566d599faf86", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "56b25008ce3e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "56f3b9029929", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "570c9d1c622a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "572049dfbdde", "relation": "duplicates", "from": "claim:cc09_0017_07", "to": "claim:c04_0019_02", "strength": 0.9, "rationale": "Same RUSI figure of Russian anti-tank ditches 4 m deep and 6 m wide, extracted twice."}
+{"pair": "575c8fca49ec", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "57aa64a24256", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

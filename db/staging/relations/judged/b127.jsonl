@@ -1,0 +1,40 @@
+{"pair": "07156a8886de", "relation": "supports", "from": "claim:cc19_0007_13", "to": "claim:c00_0062_13", "strength": 0.7, "rationale": "Same report of Russia shifting effort south towards Mykolaivka and Sloviansk.", "independent": false}
+{"pair": "075238b7b1eb", "relation": "none", "rationale": "Pre-war dispersal and later jet/SAM deconfliction are different facts."}
+{"pair": "078cd7d6892c", "relation": "none", "rationale": "An order of battle and where the columns were stopped are related context only."}
+{"pair": "07aa2b1e3551", "relation": "none", "rationale": "Fleet size and early air skirmishes are different facts."}
+{"pair": "07aa3396d589", "relation": "none", "rationale": "The road's role and Yunakivka's location are separate facts."}
+{"pair": "082250d11478", "relation": "none", "rationale": "Bridge strikes and a terrain judgement are different facts."}
+{"pair": "0872cb347ff6", "relation": "supports", "from": "claim:cc16_0020_01", "to": "claim:cc16_0011_39", "strength": 0.6, "rationale": "The computed 7 km from Olenegorsk to Olenya matches the reported 6-7 km launch distance.", "independent": true}
+{"pair": "087fc17d6fa9", "relation": "supports", "from": "claim:cc19_0025_12", "to": "claim:cc19_0012_07", "strength": 0.5, "rationale": "Both identify Shandryholove-Zelena Dolyna as the season-3 feint axis.", "independent": true}
+{"pair": "088518a6c3b9", "relation": "none", "rationale": "A map box and unit positions are unrelated."}
+{"pair": "08cf6fceab82", "relation": "none", "rationale": "Different days of the Moshchun fight."}
+{"pair": "09092b22febb", "relation": "none", "rationale": "Delta's origin and Aerorozvidka's targeting practice are related context only."}
+{"pair": "091ff1efa536", "relation": "none", "rationale": "Different moments of the Moshchun battle."}
+{"pair": "097d958c258d", "relation": "refines", "from": "claim:cc09_0043_22", "to": "claim:cc09_0043_21", "strength": 0.5, "rationale": "ISW characterises the August-September moves as the third lateral transfer of the counteroffensive."}
+{"pair": "0a0132368bb6", "relation": "none", "rationale": "A loss count and the size of one assault group are different quantities."}
+{"pair": "0a0ecbea77e6", "relation": "none", "rationale": "The road's description and the cut of it are related context."}
+{"pair": "0a414cb05e9c", "relation": "none", "rationale": "DeepState's floor of irrecoverable losses and Forbes' share lost are different measures, not in conflict."}
+{"pair": "0a9e5e2b2b93", "relation": "supports", "from": "claim:cc01_0032_16", "to": "claim:cc01_0014_22", "strength": 0.6, "rationale": "MWI's account of the two decisions matches the two breach dates.", "independent": true}
+{"pair": "0ab148e83316", "relation": "none", "rationale": "The report that Russia recycled old footage is compatible with DeepState marking the villages liberated."}
+{"pair": "0b2487b4bb04", "relation": "none", "rationale": "A pre-strike count and later redeployment are different facts."}
+{"pair": "0bcde9e9e850", "relation": "none", "rationale": "Damage imagery and a photo of Maliuk are unrelated."}
+{"pair": "0bd115553021", "relation": "supports", "from": "claim:cc09_0010_98", "to": "claim:cc09_0007_17", "strength": 0.7, "rationale": "Same ISW report of Lyamin's removal around 9 October 2023.", "independent": false}
+{"pair": "0c10410b0e34", "relation": "supports", "from": "claim:cc09_0040_01", "to": "claim:cc09_0036_01", "strength": 0.5, "rationale": "The breach group moving behind a Leopard 2R and BMR-2 matches the designed breach package.", "independent": false}
+{"pair": "0c8773cc7aea", "relation": "none", "rationale": "The pipe's reuse in February and a January milblogger claim are separate events."}
+{"pair": "0cba4712f288", "relation": "none", "rationale": "Pre-strike count and later redeployment are different facts."}
+{"pair": "0cee8718a397", "relation": "none", "rationale": "A single drone video does not bear on the destroyed-bomber floor."}
+{"pair": "0d901d3f6049", "relation": "duplicates", "from": "claim:cc12_0010_02", "to": "claim:cc01_0028_22", "strength": 0.9, "rationale": "Same RUSI account of S-300 and Buk worst hit north of Kyiv, extracted in two topics."}
+{"pair": "0df6be1b513b", "relation": "none", "rationale": "The decision to breach and the risk of breaching are different facts."}
+{"pair": "0dfdfdd938eb", "relation": "none", "rationale": "Production stop and speed are different facts."}
+{"pair": "0e07db04fd33", "relation": "none", "rationale": "Battle outcome and village coordinates are separate facts."}
+{"pair": "0e28247dc79a", "relation": "duplicates", "from": "claim:cc09_0006_13", "to": "claim:cc09_0010_72", "strength": 0.9, "rationale": "Same Maliar announcement on 28 August 2023."}
+{"pair": "0e719231f125", "relation": "none", "rationale": "Retaliation salvo and a pre-strike base count are different facts."}
+{"pair": "0e7a03027647", "relation": "supports", "from": "claim:cc14_0024_06", "to": "claim:cc14_0004_01", "strength": 0.7, "rationale": "OSW's identification of the 22nd and 82nd matches the breakthrough account.", "independent": false}
+{"pair": "0ebc3b12b451", "relation": "refines", "from": "claim:cc16_0011_36", "to": "claim:cc16_0005_04", "strength": 0.5, "rationale": "Gives the cause of the Seryshevo truck explosion."}
+{"pair": "0ec720fbff6f", "relation": "duplicates", "from": "claim:cc09_0043_19", "to": "claim:cc09_0006_20", "strength": 0.8, "rationale": "Same Politico account of Popov's firing in July 2023."}
+{"pair": "0ee667a83521", "relation": "none", "rationale": "Losses and the attempt's composition are different facts."}
+{"pair": "0f09617dff06", "relation": "supports", "from": "claim:cc19_0012_28", "to": "claim:cc19_0003_01", "strength": 0.5, "rationale": "The Nitrius as the salient's western boundary matches the salient between the Nitrius and Zherebets.", "independent": false}
+{"pair": "0f45a1c49432", "relation": "supports", "from": "claim:cc14_0029_32", "to": "claim:cc14_0020_03", "strength": 0.7, "rationale": "A 15 km pipe matches the reported 15 km infiltration.", "independent": true}
+{"pair": "0fdde9dfcfb3", "relation": "supports", "from": "claim:cc09_0035_09", "to": "claim:cc09_0025_04", "strength": 0.5, "rationale": "A mine-roller anecdote from the 47th confirms its T-64s carried rollers.", "independent": false}
+{"pair": "1035ab1c9231", "relation": "supports", "from": "claim:cc14_0029_29", "to": "claim:cc14_0017_02", "strength": 0.6, "rationale": "Two or three drones a minute over the highway by March 2025 is the drone interdiction of the H-07.", "independent": false}
+{"pair": "1039c9cb8334", "relation": "supports", "from": "claim:cc14_0029_13", "to": "claim:cc14_0024_25", "strength": 0.7, "rationale": "The bridge campaign with MiG-29s dropping JDAM-ER and SDB corroborates their use in Kursk.", "independent": false}

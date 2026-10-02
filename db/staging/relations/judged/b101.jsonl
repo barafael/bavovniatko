@@ -1,0 +1,40 @@
+{"pair": "743cfc4046fc", "relation": "none", "rationale": "A national monthly KAB total and a Pokrovsk-only figure differ in scope; compatible."}
+{"pair": "744b70460903", "relation": "none", "rationale": "The Kh-59/69 count is one component of the 77-missile total."}
+{"pair": "74a5f3de92dc", "relation": "none", "rationale": "The Kalibr count is one component of the 77-missile total."}
+{"pair": "74cc968f3212", "relation": "supersedes", "from": "claim:cc16_0008_01", "to": "claim:cc16_0011_56", "strength": 0.5, "rationale": "The later historical floor of about 10 heavy bombers plus an An-12 replaces the early OSINT tally of 8 aircraft confirmed by 18:00 on 1 June."}
+{"pair": "74f6ef45d1e6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "758f89017590", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "76aaa34712b5", "relation": "supports", "from": "claim:cc07_0041_05", "to": "claim:cc07_0041_09", "strength": 0.4, "rationale": "RUSI's 5:1 Russian artillery advantage at Bakhmut is broadly consistent with Reznikov's statement that Ukraine fired a quarter of Russia's shells in spring 2023.", "independent": true}
+{"pair": "76b43d8aa03f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "76eaf5073363", "relation": "duplicates", "from": "claim:cc11_0045_15", "to": "claim:cc11_0007_23", "strength": 0.9, "rationale": "The same Mordvichev claim of about 200 Ukrainians surrendering at Avdiivka, extracted twice; A also has the 100 more expected."}
+{"pair": "7716eac67d78", "relation": "supports", "from": "claim:cc16_0006_01", "to": "claim:cc16_0006_02", "strength": 0.7, "rationale": "117 FPV drones launched and Butusov's 116 airborne agree to within one drone.", "independent": false}
+{"pair": "772fbf09e1bb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "774f5fafb9c9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7760c89e65f0", "relation": "supersedes", "from": "claim:cc18_0013_57", "to": "claim:cc18_0013_46", "strength": 0.7, "rationale": "Nine killed and 56 injured by 07:30 is a later count of the same Kyiv toll that stood at one dead and 11 injured at 03:47."}
+{"pair": "77944b52d305", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "779ff7e76c84", "relation": "none", "rationale": "0 of 4 Zircons is consistent with 4 of 28 ballistic missiles stopped; one is a component of the other."}
+{"pair": "77c080c163c0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "783ed22a10f3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "78c81f4ebb3c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "797793808e27", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "79ad61ecefbb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "79b40a203831", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "79b65be3e874", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7a140d3f9753", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7a67bcfe4a75", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7a9e488e4706", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7ab131130713", "relation": "supports", "from": "claim:cc18_0008_10", "to": "claim:cc18_0010_06", "strength": 0.4, "rationale": "The Air Force's 4 of 4 Kh-59/69 downed is consistent with the Defence Ministry's over 90% of cruise missiles intercepted.", "independent": false}
+{"pair": "7b1c1f48d831", "relation": "supports", "from": "claim:cc11_0010_27", "to": "claim:cv02_0006_03", "strength": 0.7, "rationale": "Frontelligence's ground estimate of near 200 vehicles lost on 10–20 October 2023 matches B's ground count of about 200.", "independent": false}
+{"pair": "7b323d9c0639", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7b98cf173507", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7c5de3e62091", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7cefdefc6d65", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7d26de4e3f45", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7d5f550b7952", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7d9d56560a86", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "7e6703f6d106", "relation": "weakens", "from": "claim:cc07_0007_25", "to": "claim:cc07_0007_26", "strength": 0.4, "rationale": "UALosses name counts cited by Meduza and Mediazona (4,557–5,501 Bakhmut dead) cast doubt on the unverified Wikipedia figure of 14,235 killed attributed to UALosses; a later count date or wider area may explain part of the gap."}
+{"pair": "7f1d40247b13", "relation": "none", "rationale": "A February 2025 reinforcement of 1,000–3,000 and a total of 11,000 North Koreans in February 2025 are compatible."}
+{"pair": "7f9fa136cfbc", "relation": "supersedes", "from": "claim:cc16_0007_10", "to": "claim:cc16_0011_56", "strength": 0.5, "rationale": "TWZ's later imagery assessment of at least 6–7 Tu-95MS and 4 Tu-22M3 destroyed updates the early OSINT tally of 5 Tu-95MS and 2 Tu-22M3 on 1 June."}
+{"pair": "7facc8a272da", "relation": "none", "rationale": "The Bakhmut artillery ratio and the Avdiivka ratio concern different battles."}
+{"pair": "7fdfdfedce75", "relation": "none", "rationale": "B is a game outcome band built on the SBU claim, not an independent estimate of the same quantity."}
+{"pair": "8007a67e10b7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

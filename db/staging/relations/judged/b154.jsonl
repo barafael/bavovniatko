@@ -1,0 +1,40 @@
+{"pair": "d944d19ac108", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "d9760c284c21", "relation": "duplicates", "from": "claim:cc01_0036_08", "to": "claim:cc01_0007_03", "strength": 0.8, "rationale": "Same 29 March 2022 Istanbul announcement of drastically reduced activity near Kyiv and Chernihiv, made by Medinsky."}
+{"pair": "d9ad4cc075b2", "relation": "supports", "from": "claim:cc11_0010_64", "to": "claim:cc11_0032_23", "strength": 0.5, "rationale": "Russian video of men with cutting torches in the tunnel corroborates the torch-cut pipe exits.", "independent": false}
+{"pair": "da28610872c2", "relation": "duplicates", "from": "claim:cc11_0038_07", "to": "claim:cc11_0010_73", "strength": 0.9, "rationale": "Same 6 February 2024 SSO statement that Russians still used the Avdiivka pipe."}
+{"pair": "daa68601dcce", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "dad2fd501eee", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "dada637b63f9", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "daf35174d7e7", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "daf55a0e8078", "relation": "supports", "from": "claim:cc09_0010_101", "to": "claim:c00_0037_06", "strength": 0.8, "rationale": "Both date the first ATACMS use to 17 October 2023 against Berdiansk.", "independent": false}
+{"pair": "db026dea426a", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "db4b0dc17aeb", "relation": "supports", "from": "claim:cc01_0011_47", "to": "claim:cc01_0028_10", "strength": 0.4, "rationale": "The Demydiv pontoon is one instance of the dozen or more Irpin wet-gap crossings.", "independent": false}
+{"pair": "db7fd9ba5ce6", "relation": "supports", "from": "claim:cc19_0031_12", "to": "claim:cc19_0021_03", "strength": 0.6, "rationale": "The Western Group source is the basis for the reported dismissal of Yurchenko.", "independent": false}
+{"pair": "dbb34506b8a0", "relation": "supports", "from": "claim:cc09_0010_15", "to": "claim:cc09_0006_06", "strength": 0.7, "rationale": "B details how mines and drone-cued artillery stopped the columns south of Mala Tokmachka.", "independent": false}
+{"pair": "dbdd945f4ebf", "relation": "supports", "from": "claim:cc19_0009_70", "to": "claim:cc19_0009_63", "strength": 0.5, "rationale": "Russian milbloggers describing Ukrainian counterattacks on the Ridkodub–Katerynivka sector match ISW's geolocated advances there.", "independent": true}
+{"pair": "dc7473ff0422", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "ddc6bb5b8f0c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "de086af27a58", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "de756d092759", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "de8a86c14f1c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "de8c62892ab1", "relation": "duplicates", "from": "claim:cc16_0042_17", "to": "claim:cc16_0036_04", "strength": 0.9, "rationale": "Same assertion that Tu-95MS stood fuelled and loaded with Kh-101 when Spiderweb struck."}
+{"pair": "de94cd6da06c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "dee354c43a0c", "relation": "supports", "from": "claim:cc01_0011_49", "to": "claim:cc01_0014_28", "strength": 0.7, "rationale": "Maxar showing the convoy reaching near Prybirsk supports Prybirsk as its tail on 1 March 2022.", "independent": false}
+{"pair": "df539cedfdb5", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "df75496af828", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "df772dfff897", "relation": "supports", "from": "claim:cc01_0011_82", "to": "claim:cc01_0036_11", "strength": 0.8, "rationale": "The 19 March Maxar image of bodies on Yablunska Street is the imagery that refutes the staging claim.", "independent": false}
+{"pair": "e0010aa527f1", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e00c65f867f9", "relation": "supports", "from": "claim:cc09_0010_101", "to": "claim:c00_0073_33", "strength": 0.7, "rationale": "B names Berdiansk as the occupied airfield of the first ATACMS use on 17 October 2023.", "independent": false}
+{"pair": "e0579eb3514f", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e0d22abc969d", "relation": "contradicts", "from": "claim:cc16_0011_76", "to": "claim:cc16_0047_11", "strength": 0.8, "rationale": "AviVector imagery shows 3 Tu-95MS destroyed at Olenya, while Military Chronicle claims only one lost and one damaged.", "resolution": "Military Chronicle is a pro-Russian channel minimising losses; AviVector counts from post-strike satellite imagery, which should be preferred."}
+{"pair": "e1422fb38d74", "relation": "supports", "from": "claim:cc15_0024_06", "to": "claim:cc15_0007_38", "strength": 0.5, "rationale": "Ukrainian clearing of Zolotyi Kolodiaz and Vesele implies the Russian infiltrators had reached them.", "independent": false}
+{"pair": "e14b8f028710", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e153df7b1abd", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e176d994ef35", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e1958d3b8bbb", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e198c1f3c32d", "relation": "refines", "from": "claim:cc15_0007_37", "to": "claim:cc15_0004_06", "strength": 0.7, "rationale": "B gives the 7–11 August dates, units and 5–6 km width of the 15 km wedge towards Dobropillia."}
+{"pair": "e1cd0e0d05cc", "relation": "supports", "from": "claim:cc19_0005_08", "to": "claim:cc19_0009_70", "strength": 0.5, "rationale": "The later liberation of Ridkodub and Katerynivka is consistent with the counterattacks milbloggers reported there.", "independent": true}
+{"pair": "e26e1a09d644", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e26f853a5c61", "relation": "supports", "from": "claim:cc14_0024_12", "to": "claim:cc14_0014_060", "strength": 0.7, "rationale": "B places the 116th Mechanised at Novy Put in Sept–Oct 2024, supporting its attribution for the 12 September breach.", "independent": false}
+{"pair": "e2b87cb1aff2", "relation": "supports", "from": "claim:cc11_0045_20", "to": "claim:cc11_0006_10", "strength": 0.6, "rationale": "Russian channels' claim of a 2 km pipe infiltration corroborates troops coming up the pipe behind Tsarska Okhota.", "independent": true}
+{"pair": "e2c915dd700f", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}

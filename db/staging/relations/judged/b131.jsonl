@@ -1,0 +1,40 @@
+{"pair": "25b273db6fad", "relation": "supports", "from": "claim:cc09_0010_88", "to": "claim:cc09_0010_91", "strength": 0.6, "rationale": "Armour crossing the ditch west of Verbove supports ISW's judgement that the belt was broken.", "independent": false}
+{"pair": "25d190f7bd27", "relation": "supports", "from": "claim:cc16_0011_21", "to": "claim:cc16_0004_05", "strength": 0.5, "rationale": "Five trucks carrying the cabins out of Chelyabinsk matches the cabins being loaded on trucks.", "independent": true}
+{"pair": "25d9f0e84452", "relation": "none", "rationale": "Simulator content and wartime MANPADS impact are unrelated."}
+{"pair": "25e696c13ff9", "relation": "supports", "from": "claim:cc01_0011_49", "to": "claim:cc01_0006_01", "strength": 0.7, "rationale": "Maxar imagery of the convoy stretching to Prybirsk on 1 March corroborates the press reports.", "independent": true}
+{"pair": "2651090a60e0", "relation": "none", "rationale": "A bridge's destruction and the river's role are related context only."}
+{"pair": "265795c5fb06", "relation": "supports", "from": "claim:cc11_0035_12", "to": "claim:cc11_0006_10", "strength": 0.7, "rationale": "Same mid-January pipe infiltration emerging behind Tsarska Okhota, with more detail.", "independent": false}
+{"pair": "2688398e74c7", "relation": "supports", "from": "claim:cc18_0019_01", "to": "claim:cc18_0013_39", "strength": 0.6, "rationale": "The same Air Force tracks of missiles west across Zaporizhzhia toward Vinnytsia.", "independent": false}
+{"pair": "26be8a2a07f0", "relation": "supports", "from": "claim:cc01_0030_13", "to": "claim:cc01_0011_70", "strength": 0.6, "rationale": "The assault reaching within 10 m of the trenches on 11 March is part of the main assault that day.", "independent": false}
+{"pair": "26c0cd09c64f", "relation": "none", "rationale": "The last bridge's destruction and an assessment of the sequencing are different facts."}
+{"pair": "26cc9b4b9046", "relation": "none", "rationale": "The strike and cloud cover are separate facts."}
+{"pair": "26d887d1b444", "relation": "supports", "from": "claim:cc16_0042_15", "to": "claim:cc16_0005_04", "strength": 0.7, "rationale": "Same fifth truck burning before reaching Ukrainka.", "independent": false}
+{"pair": "26ef6ee8dd5a", "relation": "none", "rationale": "Road interdiction and an order of battle are different facts."}
+{"pair": "270bb562e524", "relation": "supports", "from": "claim:cc07_0048_30", "to": "claim:cc07_0051_41", "strength": 0.6, "rationale": "The September 2023 recapture of Andriivka and Klishchiivka is corroborated by both.", "independent": true}
+{"pair": "27407fcb0b66", "relation": "duplicates", "from": "claim:cc15_0007_66", "to": "claim:cc15_0026_15", "strength": 0.95, "rationale": "Same 27 October 2025 departure of the 68th and 155th on foot, same source."}
+{"pair": "27e750abcbec", "relation": "refines", "from": "claim:cc16_0011_16", "to": "claim:cc16_0021_08", "strength": 0.6, "rationale": "Dates the start of bomber-shelter construction at Engels-2 to April 2025."}
+{"pair": "280778e3cc02", "relation": "supersedes", "from": "claim:cc15_0007_96", "to": "claim:cc15_0007_92", "strength": 0.5, "rationale": "Skhid's January 2026 statement is a later status of the northern Pokrovsk holdout."}
+{"pair": "2895913bcee5", "relation": "none", "rationale": "Missile and drone tracks at different times."}
+{"pair": "2918d9bdbbec", "relation": "duplicates", "from": "claim:cc18_0028_11", "to": "claim:c01_0024_58", "strength": 0.95, "rationale": "Same HUR estimate of about 3,000 Geran-4/5 a month, extracted in two topics."}
+{"pair": "293c0041d733", "relation": "none", "rationale": "Drone and missile tracks at different times."}
+{"pair": "293e96c2ced6", "relation": "none", "rationale": "Technique report and a Russian troop-number claim do not bear on each other directly."}
+{"pair": "29c395b783ab", "relation": "supports", "from": "claim:c04_0019_02", "to": "claim:cc09_0017_04", "strength": 0.5, "rationale": "RUSI's description of ditches and dragon's teeth corroborates ISW's obstacle array beyond Robotyne.", "independent": true}
+{"pair": "29e028a0767b", "relation": "supports", "from": "claim:cc09_0010_76", "to": "claim:cc09_0043_21", "strength": 0.7, "rationale": "The 41st CAA moving south from 31 August is part of the same lateral transfers.", "independent": false}
+{"pair": "29e521921a75", "relation": "supports", "from": "claim:cv01_0013_01", "to": "claim:cc01_0026_09", "strength": 0.6, "rationale": "The 1st and 3rd Battalions fighting at Brovary confirms them east of the Dnipro.", "independent": true}
+{"pair": "29fe765ff118", "relation": "duplicates", "from": "claim:cc15_0022_40", "to": "claim:cc15_0016_09", "strength": 0.9, "rationale": "Same BBC report of the 9 November 2025 fog column into Pokrovsk."}
+{"pair": "2a297e06d7dd", "relation": "supports", "from": "claim:cc19_0009_70", "to": "claim:c07_0012_05", "strength": 0.4, "rationale": "Milbloggers' report of Ukrainian counterattacks on the Ridkodub-Katerynivka sector precedes their recorded liberation.", "independent": true}
+{"pair": "2a3759e75d6d", "relation": "duplicates", "from": "claim:cc01_0032_09", "to": "claim:cc01_0011_15", "strength": 0.9, "rationale": "Same Zaluzhnyi-Vdovychenko exchange on 24 February 2022, same source."}
+{"pair": "2ad97a1f3be3", "relation": "supports", "from": "claim:cc01_0014_12", "to": "claim:cc01_0011_60", "strength": 0.7, "rationale": "Civilians evacuated across the blown P30 bridge under fire matches the shelling of that evacuation point.", "independent": false}
+{"pair": "2af50c8f4ee2", "relation": "supports", "from": "claim:cv01_0012_01", "to": "claim:cc01_0025_23", "strength": 0.7, "rationale": "The 6th Guards Tank Regiment of the 90th Division fighting at Brovary matches the east-bank order of battle.", "independent": false}
+{"pair": "2b054622a68b", "relation": "none", "rationale": "Two different Tu-95 positions at Olenya."}
+{"pair": "2b09c934fabd", "relation": "none", "rationale": "Two road descriptions."}
+{"pair": "2b171fd3864d", "relation": "weakens", "from": "claim:cc16_0011_89", "to": "claim:cc16_0011_87", "strength": 0.4, "rationale": "Planet imagery disputing a Tu-160 at Anadyr casts doubt on the reported redeployment there."}
+{"pair": "2b2fbf71de10", "relation": "supports", "from": "claim:cc11_0028_18", "to": "claim:cc11_0010_99", "strength": 0.7, "rationale": "The 53rd holding the 9th quarter to the last matches its leaving it on 17 February.", "independent": false}
+{"pair": "2b438073771b", "relation": "supports", "from": "claim:cc19_0009_24", "to": "claim:c03_0024_03", "strength": 0.6, "rationale": "ISW saw the southern counterattacks exploiting the Starlink cutoff, matching the coincidence.", "independent": true}
+{"pair": "2bcf9af96dc4", "relation": "none", "rationale": "Road junction and naming convention are different facts."}
+{"pair": "2bd7ba7ab5fc", "relation": "duplicates", "from": "claim:cc07_0048_10", "to": "claim:cc07_0017_12", "strength": 0.95, "rationale": "Same two bridges down at Bakhmut on 3 March 2023, same source."}
+{"pair": "2bdc2437db17", "relation": "none", "rationale": "August bridge strikes and early-September pontoon strikes are separate events."}
+{"pair": "2bfcfe4e2bc8", "relation": "supports", "from": "claim:cc09_0010_53", "to": "claim:cc09_0035_18", "strength": 0.7, "rationale": "The UK MoD report of Ka-52M with LMUR underlies the reported 15 km range.", "independent": false}
+{"pair": "2c2b043df879", "relation": "none", "rationale": "An event and a map edge are separate facts."}
+{"pair": "2c46be97e1dc", "relation": "supports", "from": "claim:cc09_0043_17", "to": "claim:cc09_0006_11", "strength": 0.5, "rationale": "Lee and Kofman's assessment presupposes the mid-August commitment of the 82nd and 46th.", "independent": false}
+{"pair": "2c82cafd07e6", "relation": "duplicates", "from": "claim:cc18_0028_06", "to": "claim:c02_0010_124", "strength": 0.95, "rationale": "Same jet Geran speed figure extracted in two topics."}

@@ -1,0 +1,40 @@
+{"pair": "173ef6db21c4", "relation": "none", "rationale": "The bridges' role and their destruction are related context only."}
+{"pair": "173fbf6a4116", "relation": "none", "rationale": "An event and computed locations are separate facts."}
+{"pair": "17914d8911f0", "relation": "supports", "from": "claim:cc07_0032_09", "to": "claim:cc07_0010_103", "strength": 0.7, "rationale": "The brigade history includes taking Andriivka in September 2023.", "independent": false}
+{"pair": "17aad06b637a", "relation": "none", "rationale": "Distances to different bases."}
+{"pair": "17b216da6449", "relation": "none", "rationale": "Terrain and control of the forest are different facts."}
+{"pair": "1813ebe08a1e", "relation": "supports", "from": "claim:cc01_0014_21", "to": "claim:cc01_0011_47", "strength": 0.7, "rationale": "NYT independently reports the 28 February pontoon at Demydiv.", "independent": true}
+{"pair": "1822506a105f", "relation": "none", "rationale": "Total destroyed and a Dyagilevo snapshot are different scopes."}
+{"pair": "184f230bb2c9", "relation": "none", "rationale": "A December road situation and a January control claim are different facts."}
+{"pair": "187d1b18c3c3", "relation": "none", "rationale": "Different moments of the drone tracks."}
+{"pair": "188cc7703407", "relation": "none", "rationale": "An early-June count and whole-war totals are different scopes."}
+{"pair": "188d30a93a48", "relation": "supports", "from": "claim:cc01_0028_27", "to": "claim:cc12_0025_16", "strength": 0.5, "rationale": "VKS losses while flying low corroborate MANPADS making the low sky lethal.", "independent": false}
+{"pair": "18c67e328709", "relation": "supports", "from": "claim:cc15_0031_08", "to": "claim:cc15_0019_20", "strength": 0.5, "rationale": "Russian credits to the 5th and 9th Brigades of the 51st CAA match ISW's order of battle.", "independent": true}
+{"pair": "18e67b836696", "relation": "supports", "from": "claim:cc14_0014_045", "to": "claim:cc14_0031_11", "strength": 0.7, "rationale": "The Karyzh bridge going last on 19 August is part of the same bridge sequence.", "independent": false}
+{"pair": "190c030e070c", "relation": "supports", "from": "claim:cc19_0005_03", "to": "claim:cc19_0003_02", "strength": 0.5, "rationale": "ISW's judgement that eliminating the salient ruined the northern pincer presupposes the salient's stated aim.", "independent": false}
+{"pair": "196682422918", "relation": "none", "rationale": "Different days and facts of the Moshchun battle."}
+{"pair": "1a21e05171c0", "relation": "refines", "from": "claim:cc15_0026_15", "to": "claim:cc15_0005_23", "strength": 0.8, "rationale": "Dates the 68th and 155th withdrawal from Pokrovsk to about 27 October 2025, on foot."}
+{"pair": "1a2271f11c75", "relation": "supports", "from": "claim:cc09_0010_88", "to": "claim:cc09_0006_15", "strength": 0.6, "rationale": "Armour crossing the ditch and dragon's teeth west of Verbove supports ISW's judgement that the fortifications were broken.", "independent": false}
+{"pair": "1a3b4d46c0c4", "relation": "supports", "from": "claim:cc19_0009_57", "to": "claim:cc19_0009_58", "strength": 0.7, "rationale": "Same 21 August cut to Kolodiazi, same source.", "independent": false}
+{"pair": "1a47aa9b4a1b", "relation": "supports", "from": "claim:cc19_0009_57", "to": "claim:cc19_0004_02", "strength": 0.7, "rationale": "Same 21 August cut to Kolodiazi, same source.", "independent": false}
+{"pair": "1a9782ddf7dc", "relation": "none", "rationale": "A pre-strike count and a post-strike loss claim are different facts."}
+{"pair": "1ae46226bdca", "relation": "supports", "from": "claim:cc15_0031_07", "to": "claim:cc15_0019_18", "strength": 0.6, "rationale": "Russian credits to the 27th Division, 506th and 1435th regiments and 30th Brigade match ISW's order of battle.", "independent": false}
+{"pair": "1b400d0e1895", "relation": "none", "rationale": "An event and a map box are unrelated."}
+{"pair": "1b6cfe1b9445", "relation": "duplicates", "from": "claim:cc18_0006_04", "to": "claim:cc18_0013_23", "strength": 0.9, "rationale": "Same drone fire at the Zektser building on the night of 1-2 July 2026."}
+{"pair": "1b6d43faec5a", "relation": "duplicates", "from": "claim:cc19_0031_03", "to": "claim:cc19_0009_102", "strength": 0.95, "rationale": "Same ISW report of Russia's recycled videos on 29 September 2026."}
+{"pair": "1bbf689ec2f1", "relation": "none", "rationale": "Kherson withdrawal reactions and Surovikin's tenure are different facts."}
+{"pair": "1bee46444afd", "relation": "none", "rationale": "Base location and a drone video are separate facts."}
+{"pair": "1c22d9ff90e3", "relation": "supports", "from": "claim:cc19_0009_63", "to": "claim:cc19_0009_97", "strength": 0.5, "rationale": "ISW's geolocated summer advances near the three villages make their later liberation more likely.", "independent": true}
+{"pair": "1c4d680193e5", "relation": "none", "rationale": "Assault composition and start-line distance are different facts."}
+{"pair": "1c5771790861", "relation": "supports", "from": "claim:cv01_0003_04", "to": "claim:cc01_0026_09", "strength": 0.6, "rationale": "The 1st and 3rd Battalions at the Brovary ambush confirms them on the east bank.", "independent": true}
+{"pair": "1c58496c487e", "relation": "supports", "from": "claim:cv01_0007_13", "to": "claim:cc01_0025_23", "strength": 0.6, "rationale": "HUR names the 6th and 239th Tank Regiments of the 90th Division on the east-bank axis.", "independent": false}
+{"pair": "1c89c85b4e13", "relation": "duplicates", "from": "claim:cc01_0036_11", "to": "claim:cc01_0011_109", "strength": 0.8, "rationale": "Same BBC report that Maxar imagery refutes Russian staging claims about Bucha."}
+{"pair": "1cf9f3ebaca0", "relation": "none", "rationale": "Different phases of Ukrainian SAM performance."}
+{"pair": "1d1fd158251b", "relation": "duplicates", "from": "claim:cc19_0025_11", "to": "claim:c05_0025_36", "strength": 0.85, "rationale": "Same corps claim of heavy bombers dropping kamikaze UGVs over 10 km deep, extracted in two topics."}
+{"pair": "1d351a290bd8", "relation": "none", "rationale": "A game's setting and the occupation date are unrelated."}
+{"pair": "1d3fc96b8d2f", "relation": "supports", "from": "claim:cc09_0007_13", "to": "claim:cc09_0006_07", "strength": 0.5, "rationale": "Oryx's loss tally at Mala Tokmachka underlies the emblematic photographs.", "independent": false}
+{"pair": "1db362cd7687", "relation": "none", "rationale": "What stopped the columns and DeepState's loss floor are different facts."}
+{"pair": "1de0cf0a420b", "relation": "supports", "from": "claim:cc16_0011_35", "to": "claim:cc16_0005_04", "strength": 0.8, "rationale": "Same Seryshevo truck burning, with an additional source.", "independent": false}
+{"pair": "1df1aff6db31", "relation": "supports", "from": "claim:cc15_0026_06", "to": "claim:cc15_0026_04", "strength": 0.5, "rationale": "Axe's counter-fixation argument presupposes Azov being sent against the Dobropillia salient.", "independent": true}
+{"pair": "1df657829113", "relation": "supports", "from": "claim:cc09_0040_17", "to": "claim:cc09_0017_04", "strength": 0.4, "rationale": "Vehicles crossing the ditch and dragon's teeth west of Verbove confirm the obstacle array beyond Robotyne.", "independent": false}
+{"pair": "1e0ceeff0114", "relation": "supersedes", "from": "claim:cc01_0011_49", "to": "claim:cc01_0011_43", "strength": 0.4, "rationale": "The 1 March image is a later state of the convoy than the 27 February one."}

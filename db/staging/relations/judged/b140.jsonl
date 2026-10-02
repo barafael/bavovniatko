@@ -1,0 +1,40 @@
+{"pair": "68af56555bdd", "relation": "none", "rationale": "A loss count and base coordinates."}
+{"pair": "6913e931b319", "relation": "none", "rationale": "A foothold claim and the area's geography."}
+{"pair": "6941da8b605d", "relation": "none", "rationale": "A Russian aim and river geography."}
+{"pair": "6981a6b04f48", "relation": "supports", "from": "claim:cv01_0007_06", "to": "claim:cc01_0025_23", "strength": 0.6, "rationale": "The General Staff's 9 Mar report of the 2nd and 41st CAAs and the 90th Tank Division renewing the offensive corroborates A's east-bank order of battle.", "independent": false}
+{"pair": "699e80b765f5", "relation": "duplicates", "from": "claim:cc19_0025_08", "to": "claim:cc19_0009_67", "strength": 0.85, "rationale": "Same 7 Sept 2026 video of Biletskyi at the Sviatohirsk Lavra."}
+{"pair": "69d16efd1e14", "relation": "none", "rationale": "Low-level losses and the later switch to night sorties are different findings."}
+{"pair": "69e2628df973", "relation": "supports", "from": "claim:cc01_0011_56", "to": "claim:cc01_0009_03", "strength": 0.6, "rationale": "Russian control of Bucha, Hostomel and Vorzel on 5 Mar corroborates A's account of how far the Russians got.", "independent": false}
+{"pair": "69fb1cca2d2c", "relation": "none", "rationale": "A loss count and time zones."}
+{"pair": "6a037b551d99", "relation": "supports", "from": "claim:cc01_0030_17", "to": "claim:cc01_0014_09", "strength": 0.7, "rationale": "Both have bodies on Yablunska Street imaged by satellite on 19 Mar 2022.", "independent": false}
+{"pair": "6a0bffe3b548", "relation": "supports", "from": "claim:cc18_0013_40", "to": "claim:cc18_0006_07", "strength": 0.6, "rationale": "B's 02:48–02:56 cruise-missile tracks from Sumy into Chernihiv Oblast are the start of A's wave.", "independent": false}
+{"pair": "6a948ba3565b", "relation": "duplicates", "from": "claim:cc15_0014_06", "to": "claim:cc15_0007_78", "strength": 0.75, "rationale": "Same BBC report of the 9 Nov 2025 fog column entering Pokrovsk on the Selydove highway."}
+{"pair": "6a9d71116c39", "relation": "supports", "from": "claim:cc12_0025_14", "to": "claim:cc01_0028_23", "strength": 0.4, "rationale": "Ukrainian MiG-29s and Su-27s fighting low over Kyiv fits the fighters carrying the early air defence.", "independent": false}
+{"pair": "6a9f43d28835", "relation": "refines", "from": "claim:cc09_0007_05", "to": "claim:cc09_0006_18", "strength": 0.6, "rationale": "B gives the precise extent of the salient tip (the edges of Novoprokopivka and Verbove, neither cleared) behind A's 'stopped short'."}
+{"pair": "6aafeed073bc", "relation": "supports", "from": "claim:cc14_0029_13", "to": "claim:cc14_0014_040", "strength": 0.6, "rationale": "HIMARS hitting Glushkovo first corroborates the collapse of the Glushkovo bridge on 16 Aug.", "independent": false}
+{"pair": "6aca39d7987b", "relation": "none", "rationale": "A changelog format example from 2026 and a 2025 map state."}
+{"pair": "6b16eaceaa43", "relation": "supports", "from": "claim:cc09_0025_07", "to": "claim:cc09_0006_05", "strength": 0.8, "rationale": "Both say the Leopard 2A6s at Mala Tokmachka on 8 June came from the 33rd Brigade.", "independent": false}
+{"pair": "6b45586b0d31", "relation": "none", "rationale": "A loss count and the breach timing."}
+{"pair": "6b69b6fd98aa", "relation": "none", "rationale": "Two geolocations about 450 m apart mark different aircraft."}
+{"pair": "6ba970fc2d14", "relation": "none", "rationale": "A Tu-160 still at Olenya on 3 June is consistent with them having left by 12 June."}
+{"pair": "6bbca746ae0c", "relation": "duplicates", "from": "claim:cc09_0043_23", "to": "claim:cc09_0007_06", "strength": 0.8, "rationale": "Same Tarnavskyi CNN statement that Tokmak was 'the minimum goal'."}
+{"pair": "6bd7864f20fc", "relation": "duplicates", "from": "claim:cc16_0042_07", "to": "claim:cc16_0011_05", "strength": 0.85, "rationale": "Same account of the polygraph in Lviv and the FSB questioning of the agent couple."}
+{"pair": "6bde4dd8c562", "relation": "duplicates", "from": "claim:cc07_0048_24", "to": "claim:cc07_0010_80", "strength": 0.85, "rationale": "Same report of the 3rd Assault Brigade breaking the Russian 72nd Brigade south-west of Bakhmut in May 2023."}
+{"pair": "6be59c26d98d", "relation": "supports", "from": "claim:cc01_0011_43", "to": "claim:cc01_0030_06", "strength": 0.4, "rationale": "Maxar placing the column on the P02 on 27 Feb fits the later 64 km column stalled on the P02.", "independent": true}
+{"pair": "6c0265ad265d", "relation": "duplicates", "from": "claim:cc18_0031_07", "to": "claim:cc18_0028_03", "strength": 0.75, "rationale": "B's Parodiya and Gerbera decoys are part of the same Air Force breakdown of the 1–2 July drone mix."}
+{"pair": "6c0b2a8b7de0", "relation": "none", "rationale": "Different assembly details."}
+{"pair": "6c63b07ddc3d", "relation": "refines", "from": "claim:cc19_0004_02", "to": "claim:cc19_0004_01", "strength": 0.6, "rationale": "B adds that most of the Russians escaped during the 21 Aug cut to Kolodiazi."}
+{"pair": "6c8d87eae3e8", "relation": "none", "rationale": "Four bases struck and five targeted in time zones differ only in scope (the Ukrainka truck failed)."}
+{"pair": "6d02e3ed7bf7", "relation": "supports", "from": "claim:cc15_0024_03", "to": "claim:cc15_0007_34", "strength": 0.8, "rationale": "Both have the 155th and 68th plugging the Zvirove gap in July 2025.", "independent": false}
+{"pair": "6d26a3e57515", "relation": "none", "rationale": "B's assessment of the salient's aim builds on A without corroborating it."}
+{"pair": "6d3b5fc53319", "relation": "refines", "from": "claim:c02_0010_16", "to": "claim:cc07_0042_03", "strength": 0.8, "rationale": "A gives the figures (55% to 6%, Jan–Aug 2023) for B's collapse in Excalibur accuracy."}
+{"pair": "6ddcb8a783e2", "relation": "none", "rationale": "A fighting stage and coordinates."}
+{"pair": "6e11c7f77573", "relation": "none", "rationale": "A start line and road geometry."}
+{"pair": "6e22b2ebcebc", "relation": "none", "rationale": "A pre-strike basing claim and a post-strike loss claim."}
+{"pair": "6e8d150e0bbb", "relation": "supports", "from": "claim:cc19_0009_30", "to": "claim:c00_0062_01", "strength": 0.5, "rationale": "The 22 May attack by the 3rd Assault battalion and the 60th fits their place in the 3rd Army Corps' Vivaldi forces.", "independent": true}
+{"pair": "6ee61dad793e", "relation": "supports", "from": "claim:cc19_0009_87", "to": "claim:c03_0024_78", "strength": 0.7, "rationale": "Both have 3rd Corps UGVs air-dropped more than 10 km behind the Russian line.", "independent": false}
+{"pair": "6f39924bb3b9", "relation": "none", "rationale": "Fleet size and an early-days role."}
+{"pair": "6f3b960ac1cd", "relation": "supports", "from": "claim:cc09_0030_10", "to": "claim:cc09_0043_21", "strength": 0.6, "rationale": "The 41st CAA's transfer is one of the moves that B describes.", "independent": false}
+{"pair": "6f58512f4801", "relation": "none", "rationale": "River crossings and terrain judgement."}
+{"pair": "6f929934b19e", "relation": "supports", "from": "claim:cc14_0029_13", "to": "claim:cc14_0010_07", "strength": 0.6, "rationale": "HIMARS hitting Glushkovo first corroborates the destruction of the Glushkovo bridge on 16 Aug.", "independent": false}
+{"pair": "6fa1fb113cf8", "relation": "none", "rationale": "A loss count and the start-line distance."}

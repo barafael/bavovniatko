@@ -1,0 +1,40 @@
+{"pair": "61c934a9123f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "61e57e77ab58", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "61f42baabb03", "relation": "supports", "from": "claim:cc07_0007_17", "to": "claim:c04_0017_10", "strength": 0.9, "rationale": "RUSI's 19,547 Wagner dead is the same figure as the leaked Wagner records counted by Mediazona and BBC Russian.", "independent": false}
+{"pair": "62222555b984", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6291fe8b05b9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6292d9f544b0", "relation": "supersedes", "from": "claim:cc18_0010_13", "to": "claim:cc18_0013_46", "strength": 0.7, "rationale": "The interim toll of 27 killed is a later count of the same Kyiv toll that stood at one dead at 03:47."}
+{"pair": "62d444f61a81", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6306b30afca5", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "636f584dcb23", "relation": "weakens", "from": "claim:cc07_0007_25", "to": "claim:cc07_0058_17", "strength": 0.4, "rationale": "UALosses' named Bakhmut dead of about 4,557–5,501 for the whole battle casts doubt on Prigozhin's claim of 11,000 killed in February 2023 alone, though name counts are a floor."}
+{"pair": "63c63bf83b67", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "63c7b795ad9d", "relation": "none", "rationale": "Zelensky's 11,000 in Kursk in November 2024 and a war-long deployment total of 16–22k are different scopes."}
+{"pair": "63f2fa70d7ce", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "643997a275e4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "644ca3843056", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "645a3e6e8902", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "645f4fe8e9dc", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "650234e53b3e", "relation": "duplicates", "from": "claim:cc15_0007_68", "to": "claim:cc15_0019_16", "strength": 0.9, "rationale": "The same 7th Corps 29 October 2025 statement of 11,000 Russian troops committed and 27,000 in the zone, extracted twice."}
+{"pair": "656a339548f2", "relation": "none", "rationale": "Syrskyi's November 2024 figure and RUSI's later figure including North Koreans describe the Kursk force at different times."}
+{"pair": "65eb5575157d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "65ecaa1ef243", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6678fe696d21", "relation": "none", "rationale": "DeepState's September gross recapture is theatre-wide for one month; Vivaldi gains accumulated from May to September in one area."}
+{"pair": "668486618dba", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "668ce8f77c31", "relation": "none", "rationale": "DeepState's September gross recapture is theatre-wide for one month; Vivaldi gains accumulated from May to September in one area."}
+{"pair": "66be0d8912c9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "66dc80448b02", "relation": "supports", "from": "claim:cc16_0007_10", "to": "claim:cc16_0008_01", "strength": 0.85, "rationale": "TWZ's at least 6–7 Tu-95MS plus 4 Tu-22M3 underpins the derived floor of about 10 heavy bombers destroyed.", "independent": false}
+{"pair": "6719957d3554", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "672f1591f93f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6791549c0288", "relation": "weakens", "from": "claim:cc07_0007_26", "to": "claim:cc07_0058_18", "strength": 0.4, "rationale": "Even the high UALosses-based figure of 14,235 killed plus 16,569 missing falls well short of Prigozhin's 50,000 dead at Bakhmut, though both are unverified."}
+{"pair": "67a2340a1e57", "relation": "supersedes", "from": "claim:cc18_0013_66", "to": "claim:cc18_0013_45", "strength": 0.7, "rationale": "The afternoon toll of 21 dead and 85 injured is a later count of the same Kyiv toll that stood at six injured at 03:47."}
+{"pair": "67acf13cd6f9", "relation": "supports", "from": "claim:cc16_0047_12", "to": "claim:cc16_0007_10", "strength": 0.4, "rationale": "Military Chronicle's relayed 8 Tu-95MS lost is broadly consistent with TWZ's \"at least 6, probably 7\".", "independent": true}
+{"pair": "67f288646d08", "relation": "none", "rationale": "Regiments near Robotyne in 2023 and formations sent to Kursk in 2024–25 are different places and times."}
+{"pair": "683acc737b4d", "relation": "none", "rationale": "Regiments near Robotyne in 2023 and formations sent to Kursk in 2024–25 are different places and times."}
+{"pair": "6855daadb3a3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "68a83410ae58", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "68ae86003ea0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "68b00a2e77a2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "690397a148ae", "relation": "none", "rationale": "A June 2022 theatre-wide fire ratio and a Bakhmut-specific ratio differ in time and scope."}
+{"pair": "6984ccbcb873", "relation": "contradicts", "from": "claim:cc11_0006_15", "to": "claim:cc11_0032_12", "strength": 0.5, "rationale": "Ukrainian sources give different daily glide-bomb counts for Avdiivka in February 2024: about 60 versus 80–110.", "resolution": "Different observers and days: unit reports of a typical daily rate versus Foka's figure, possibly a peak or a wider sector."}
+{"pair": "69d5f1fbffc1", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "6a6f064d4270", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

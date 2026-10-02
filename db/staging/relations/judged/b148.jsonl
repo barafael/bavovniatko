@@ -1,0 +1,40 @@
+{"pair": "aa7d1c08b4a8", "relation": "none", "rationale": "Bodies in mass graves on 2 April and the August community death toll are different scopes."}
+{"pair": "aa96dbc34496", "relation": "none", "rationale": "Loss count and a description of the breach formation."}
+{"pair": "aaa348bdf723", "relation": "none", "rationale": "Emergence of footage and the mayor's mass-grave figure are different assertions."}
+{"pair": "aaa8dc66f3e6", "relation": "none", "rationale": "A map-box definition and the salient's settlements; context only."}
+{"pair": "aad493a54abe", "relation": "supports", "from": "claim:cc19_0009_75", "to": "claim:c05_0025_42", "strength": 0.4, "rationale": "The corps' later report that the diesel pipeline was shut presupposes the pipeline A describes finding; both 3rd Army Corps claims.", "independent": false}
+{"pair": "ab2db7097466", "relation": "duplicates", "from": "claim:cc14_0014_075", "to": "claim:c03_0020_21", "strength": 0.95, "rationale": "Identical ATACMS first-use claim from the same Wikipedia source; A is the lower topic."}
+{"pair": "ab32015774fc", "relation": "none", "rationale": "Thorkill's encirclement assessment and repelled attacks are compatible, different assertions."}
+{"pair": "ab46529c204d", "relation": "none", "rationale": "Counts at two different bases."}
+{"pair": "ab4b66380c8a", "relation": "none", "rationale": "Distances to two different air bases."}
+{"pair": "ab5244f3d582", "relation": "supports", "from": "claim:cc16_0036_03", "to": "claim:cc16_0042_17", "strength": 0.5, "rationale": "Drones going for Kh-101 pylons corroborates bombers standing loaded with Kh-101.", "independent": true}
+{"pair": "ac098f8b4895", "relation": "none", "rationale": "Village coordinates and their role as a sub-axis."}
+{"pair": "ac76884d126c", "relation": "duplicates", "from": "claim:cc14_0014_020", "to": "claim:cc14_0010_03", "strength": 0.85, "rationale": "Same ISW 7 August 2024 report of the Sudzha checkpoint and gas station falling."}
+{"pair": "ac8ec924c47f", "relation": "none", "rationale": "Water volume and the number of breaches."}
+{"pair": "acd718c542a1", "relation": "none", "rationale": "Production rate and speed of jet Gerans."}
+{"pair": "ace59e986840", "relation": "none", "rationale": "Tarnavskyi's statement and his command role."}
+{"pair": "ad109ad1ff15", "relation": "supports", "from": "claim:cc19_0009_100", "to": "claim:cc19_0027_17", "strength": 0.7, "rationale": "Both describe the season 3 Nove main effort with a Zelena Dolyna feint; shared ISW source.", "independent": false}
+{"pair": "ad38635bc1eb", "relation": "none", "rationale": "October assessment at Avdiivka and a December tactical pattern at Stepove."}
+{"pair": "ad4a57feeec1", "relation": "supports", "from": "claim:cc19_0012_28", "to": "claim:cc19_0011_03", "strength": 0.6, "rationale": "ISW's Nitrius as the salient's western boundary corroborates the salient lying between the Nitrius and Zherebets.", "independent": true}
+{"pair": "ad6098ca6366", "relation": "supports", "from": "claim:cc16_0011_80", "to": "claim:cc16_0007_11", "strength": 0.5, "rationale": "Imagery of 3 Tu-95MS and 4 Tu-22M3 destroyed at Belaya is consistent with Bronk's overall floor of 6 Tu-95MS and 4 Tu-22M3.", "independent": true}
+{"pair": "ad9a73e01359", "relation": "supports", "from": "claim:cc01_0028_31", "to": "claim:cc12_0025_16", "strength": 0.5, "rationale": "The VKS switch to night sorties because of MANPADS corroborates MANPADS making the low sky lethal; same RUSI source.", "independent": false}
+{"pair": "ae5c784199be", "relation": "none", "rationale": "Bradley use and a commander's ultimatum."}
+{"pair": "ae6d37d41d37", "relation": "supports", "from": "claim:cc18_0013_26", "to": "claim:cc18_0026_04", "strength": 0.5, "rationale": "Tkachenko's warning as KCMA head corroborates his role in July 2026.", "independent": true}
+{"pair": "ae90a2a9c02a", "relation": "none", "rationale": "Romanchuk's night main breach and the two-group movement are different accounts of the breach phases."}
+{"pair": "aea2766bddb3", "relation": "none", "rationale": "Breach date and the contested flooded area."}
+{"pair": "aeb3eea57825", "relation": "supports", "from": "claim:cc09_0040_10", "to": "claim:cc09_0007_17", "strength": 0.6, "rationale": "Popov's 12 July voice memo as fired commander corroborates his dismissal; shared ISW source.", "independent": false}
+{"pair": "aec83d4938b8", "relation": "none", "rationale": "Unit subordination and a rear-base relocation."}
+{"pair": "aedeb1a0e558", "relation": "none", "rationale": "A counterattack on the T0504 and an assessment of its role."}
+{"pair": "af3d99dce9ea", "relation": "supports", "from": "claim:cc16_0011_40", "to": "claim:cc16_0040_09", "strength": 0.6, "rationale": "Both place the Belaya launch at a car park in Usolye-Sibirskoye, from different sources.", "independent": true}
+{"pair": "af759c63bd08", "relation": "supports", "from": "claim:cc01_0011_55", "to": "claim:cc12_0025_16", "strength": 0.6, "rationale": "Low-flying VKS jets losing eight to MANPADS in a week corroborates MANPADS making the low sky lethal; shared RUSI source.", "independent": false}
+{"pair": "af9f8e205d93", "relation": "supports", "from": "claim:cc14_0029_30", "to": "claim:cc14_0006_06", "strength": 0.6, "rationale": "Daytime movement impossible on the Sudzha-Sumy highway corroborates the FPV fire on the supply road; shared BBC source.", "independent": false}
+{"pair": "b01fab7a7b9e", "relation": "supports", "from": "claim:cc14_0024_27", "to": "claim:c00_0049_07", "strength": 0.6, "rationale": "ATACMS use against Kursk targets from 19 Nov corroborates ATACMS strikes inside Russia from that date.", "independent": true}
+{"pair": "b03041af0df4", "relation": "none", "rationale": "Loss count and a photograph of Maliuk."}
+{"pair": "b0467a28ce60", "relation": "none", "rationale": "Area losses in June 2023 and whole-war totals are different scopes."}
+{"pair": "b128aead9606", "relation": "none", "rationale": "Campaign plan and a map-box definition."}
+{"pair": "b277d5c68b6c", "relation": "none", "rationale": "First-day Chernihiv action and encirclement by 10 Mar."}
+{"pair": "b27d06492e8a", "relation": "supports", "from": "claim:cc14_0029_29", "to": "claim:cc14_0006_06", "strength": 0.6, "rationale": "Two or three drones a minute over the highway corroborates the FPV fire on the supply road; shared BBC source.", "independent": false}
+{"pair": "b2bca2ec18ef", "relation": "duplicates", "from": "claim:cc14_0014_040", "to": "claim:cc14_0010_07", "strength": 0.9, "rationale": "Same ISW report of the Glushkovo bridge destroyed on 16 August 2024."}
+{"pair": "b2eb91de9a5b", "relation": "refines", "from": "claim:cc15_0024_12", "to": "claim:cc15_0007_78", "strength": 0.8, "rationale": "B is a fuller account of the same foggy column into Pokrovsk."}
+{"pair": "b2ef47b12c37", "relation": "supports", "from": "claim:cc11_0032_02", "to": "claim:c04_0030_20", "strength": 0.5, "rationale": "The Avdiivka October 2023 outcome is an instance of A's counters to mechanised waves.", "independent": true}
+{"pair": "b2f0246eb930", "relation": "supports", "from": "claim:cc07_0010_29", "to": "claim:cc07_0048_07", "strength": 0.7, "rationale": "Both report the Wagner fighter at the Artemsil plant and Ukrainians at the salt mine; same ISW source.", "independent": false}

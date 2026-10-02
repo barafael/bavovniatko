@@ -1,0 +1,40 @@
+{"pair": "3ace4ed107ce", "relation": "none", "rationale": "A is a clearing announcement, B a map-box definition; they only share place names."}
+{"pair": "3b04cdcb04bd", "relation": "supports", "from": "claim:cc01_0030_15", "to": "claim:cc12_0010_03", "strength": 0.4, "rationale": "A's MiG-29 sorties and Su-27 loss over Kyiv on 25 Feb are consistent with Ukrainian MiG-29s and Su-27s carrying the early air defence.", "independent": false}
+{"pair": "3b32790fe061", "relation": "duplicates", "from": "claim:cc19_0015_02", "to": "claim:c06_0003_04", "strength": 0.9, "rationale": "Same assertion about sandy pine forests on the Siverskyi Donets terraces at Lyman, Kreminna and Serebrianka, from the same sources."}
+{"pair": "3b385c235958", "relation": "duplicates", "from": "claim:cc15_0014_08", "to": "claim:c06_0017_04", "strength": 0.85, "rationale": "Both name the Vovcha and Kazennyi Torets as river lines near Pokrovsk, from the same source."}
+{"pair": "3c6d360cd817", "relation": "supports", "from": "claim:cc14_0014_107", "to": "claim:cc14_0029_30", "strength": 0.6, "rationale": "Two or three drones a minute over the highway explains why daytime movement on it was impossible.", "independent": false}
+{"pair": "3c7a30a6f64a", "relation": "none", "rationale": "A describes the pipeline raid; B gives the pipe's dimensions."}
+{"pair": "3c8966fa87a5", "relation": "none", "rationale": "Different battles and periods for the same commander."}
+{"pair": "3c8a48c1b7d2", "relation": "none", "rationale": "The timing of the breach and the start-line location are different details, and neither bears on the other."}
+{"pair": "3cc3ae1144d6", "relation": "none", "rationale": "A dates the shift to the pipe; B describes the infiltration technique."}
+{"pair": "3cc570cc51a6", "relation": "none", "rationale": "A sortie report for one night and a monthly launch-limit estimate are different quantities."}
+{"pair": "3d3d2d8d307a", "relation": "supports", "from": "claim:cc01_0032_16", "to": "claim:cc01_0011_28", "strength": 0.6, "rationale": "B corroborates that Syrskyi approved the 25/26 Feb Kozarovychi breach.", "independent": false}
+{"pair": "3e1f1d126304", "relation": "none", "rationale": "Different missile tracks at different times on the same night."}
+{"pair": "3e56f1c147ef", "relation": "none", "rationale": "A Russian media inventory claim and a base-unit fact are different assertions."}
+{"pair": "3e6a72edc760", "relation": "none", "rationale": "B gives the computed feint length; A gives the feint axis. Neither makes the other more likely."}
+{"pair": "3e8419591c0b", "relation": "duplicates", "from": "claim:cc09_0040_18", "to": "claim:cc09_0010_90", "strength": 0.85, "rationale": "Same Tarnavskyi CNN 'breakthrough' at Verbove claim extracted twice."}
+{"pair": "3ea690abad06", "relation": "none", "rationale": "River geography and a Russian operational aim."}
+{"pair": "3efb248fad75", "relation": "refines", "from": "claim:cc14_0025_07", "to": "claim:cc14_0004_01", "strength": 0.6, "rationale": "B lists the Russian border force in more detail (adding Rosgvardia and two regiments) than A's conscripts, FSB border guards and Akhmat."}
+{"pair": "3f45e587ef02", "relation": "duplicates", "from": "claim:cc09_0040_12", "to": "claim:cc09_0010_51", "strength": 0.7, "rationale": "Same ISW 26–27 July footage of Bradleys and a T-72 abandoned 2.5 km east of Robotyne and a lone vehicle near Verbove."}
+{"pair": "3f471de03c02", "relation": "supports", "from": "claim:cc01_0014_22", "to": "claim:cc01_0006_04", "strength": 0.6, "rationale": "B confirms the 25/26 Feb breach of the Kozarovychi dam.", "independent": false}
+{"pair": "3f49e79c18d0", "relation": "none", "rationale": "Different events (a partial fall on 6 Mar vs counterattacks from 22 Mar)."}
+{"pair": "3f4ca0dfc467", "relation": "none", "rationale": "Both mention the T0513 road; the assertions are different."}
+{"pair": "3f65960eea4b", "relation": "supports", "from": "claim:cc12_0010_03", "to": "claim:cc01_0028_23", "strength": 0.7, "rationale": "B, from the same RUSI source, specifies that MiG-29s and Su-27s carried the early air defence that A describes.", "independent": false}
+{"pair": "3fa75fbd3082", "relation": "none", "rationale": "A is the first (25/26 Feb) breach; B is the separate 7–8 Mar enlargement."}
+{"pair": "3ffaf05f8dc5", "relation": "none", "rationale": "The partial fall on 6 Mar and the liberation on 28 Mar are different events."}
+{"pair": "4026cbd6dfa2", "relation": "none", "rationale": "A daily airstrike count and a command-structure fact."}
+{"pair": "402b482256cd", "relation": "duplicates", "from": "claim:cc07_0051_05", "to": "claim:cc07_0024_02", "strength": 0.9, "rationale": "Same ISW assessment of Gerasimov taking theatre command on 11 Jan 2023 to reassert the MoD over Prigozhin."}
+{"pair": "4087d4bb5460", "relation": "none", "rationale": "Convoy route and an Aerorozvidka raid near Ivankiv."}
+{"pair": "40c210174024", "relation": "refines", "from": "claim:cc01_0032_15", "to": "claim:cc01_0011_39", "strength": 0.4, "rationale": "B says the Moshchun bridge was overlooked on 27 Feb, which points to the later of A's '27 or 28 Feb' demolition dates."}
+{"pair": "40c5b4880f08", "relation": "supports", "from": "claim:cc01_0026_16", "to": "claim:cc01_0011_18", "strength": 0.6, "rationale": "B corroborates the 80th and 95th Brigades' part in the 24 Feb Hostomel counterattack.", "independent": false}
+{"pair": "4152b2e09cf9", "relation": "refines", "from": "claim:cc15_0014_02", "to": "claim:cc15_0003_06", "strength": 0.8, "rationale": "B names the specific roads (T-0504/H-32 and T-0406) that A says were cut in January 2025."}
+{"pair": "41b0dfc1e087", "relation": "supports", "from": "claim:cc14_0031_21", "to": "claim:cc14_0017_02", "strength": 0.6, "rationale": "Round-the-clock drones over the highway in Feb–Mar 2025 corroborate the drone interdiction of the H-07 from January.", "independent": false}
+{"pair": "4200bf135e3b", "relation": "supports", "from": "claim:cc09_0035_01", "to": "claim:cc09_0006_06", "strength": 0.5, "rationale": "ISW's account of mines and strongpoints slowing the 8 June attack is consistent with A's list of what stopped the columns.", "independent": false}
+{"pair": "421ca0b3b0b8", "relation": "supports", "from": "claim:cc15_0016_04", "to": "claim:cc15_0007_56", "strength": 0.7, "rationale": "B confirms that the Shakhove armoured attacks were timed to rain and fog on 6, 9 and 13 October.", "independent": false}
+{"pair": "421cfb20d732", "relation": "supports", "from": "claim:cc14_0029_14", "to": "claim:cc14_0014_046", "strength": 0.6, "rationale": "FIRMS and satellite confirmation of Ukrainian pontoon kills on the Seim corroborates the 19 Aug pontoon destruction.", "independent": true}
+{"pair": "4266504a1fe2", "relation": "supports", "from": "claim:cc14_0025_18", "to": "claim:cc14_0033_35", "strength": 0.6, "rationale": "Elements of all VDV and most naval infantry formations deployed to Kursk support the assessment that the incursion pinned them.", "independent": false}
+{"pair": "42aece4fefa0", "relation": "duplicates", "from": "claim:cc14_0031_12", "to": "claim:cc14_0014_049", "strength": 0.85, "rationale": "Same ISW report of drones hitting pontoon equipment 3 km north of Glushkovo on 20 Aug 2024."}
+{"pair": "42d329b802ef", "relation": "supports", "from": "claim:cc15_0022_27", "to": "claim:cc15_0019_24", "strength": 0.6, "rationale": "B names the same Russian drone units (Sudny Den, Grom-Kaskad, Archangels) on the Pokrovsk axis.", "independent": false}
+{"pair": "43305e608f13", "relation": "supports", "from": "claim:cc16_0028_07", "to": "claim:cc16_0015_05", "strength": 0.7, "rationale": "Both place the 200th Heavy Bomber Regiment at Belaya.", "independent": false}
+{"pair": "434680d4af60", "relation": "none", "rationale": "Different times, places and parts of the 51st CAA's fighting."}
+{"pair": "4353419c9233", "relation": "supports", "from": "claim:cc01_0011_64", "to": "claim:cc01_0028_08", "strength": 0.6, "rationale": "The 7–8 Mar sluice breach is the second of B's two breaches.", "independent": false}

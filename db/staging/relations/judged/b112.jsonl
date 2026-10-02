@@ -1,0 +1,40 @@
+{"pair": "e75e648cc106", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e78248185096", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e7c8500bb1da", "relation": "supports", "from": "claim:cc14_0026_06", "to": "claim:cc14_0026_02", "strength": 0.4, "rationale": "About 12,000 North Korean troops in Russia by December 2024 is consistent with the NIS's planned 10,000 by December.", "independent": true}
+{"pair": "e7f640b56138", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e813d75d46f3", "relation": "supports", "from": "claim:cc16_0007_06", "to": "claim:cc16_0008_02", "strength": 0.5, "rationale": "A NATO official's at least 40 aircraft damaged lends plausibility to the SBU's 41 used as the upper outcome band.", "independent": true}
+{"pair": "e88579a19363", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e8870243195b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e8ec304553fa", "relation": "contradicts", "from": "claim:cc16_0047_11", "to": "claim:cc16_0047_12", "strength": 0.6, "rationale": "Military Chronicle claimed only one Tu-95MS lost at Olenya, while the \"other sources\" it relayed gave 8 Tu-95MS lost.", "resolution": "The one-loss figure is a minimising Russian milblogger line about Olenya; the eight comes from unnamed other sources and may cover all bases."}
+{"pair": "e99dbd06e379", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e9abbcdcd6a7", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ea458d358c96", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "eb2639dfd276", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "eb397f15c609", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "eb636b03492e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "eb6c64610d11", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "eb9a89846bd3", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ebcfe53b96bc", "relation": "contradicts", "from": "claim:cc16_0007_06", "to": "claim:cc16_0007_08", "strength": 0.7, "rationale": "A NATO official said at least 40 aircraft were damaged, while two US officials put those hit at up to about 20.", "resolution": "Different Western officials' estimates; the NATO count may include lightly damaged aircraft, the US count only significant hits."}
+{"pair": "ec20ff159c37", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ec37f802f65e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ed126b773c57", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ed2d27274143", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ed46af2cdc7b", "relation": "supports", "from": "claim:cc16_0008_01", "to": "claim:cc16_0007_07", "strength": 0.6, "rationale": "The floor of at least 10 heavy bombers plus an An-12 destroyed falls within the NATO official's 10-13 destroyed.", "independent": true}
+{"pair": "edcf6611d554", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ef14d6ef1a84", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ef1aa2d9f91b", "relation": "duplicates", "from": "claim:cc15_0022_35", "to": "claim:cc15_0016_11", "strength": 0.9, "rationale": "Same commanders' figure of up to 10 infiltrators a day on sunny days and 30-40 on rainy ones, from the same source, extracted twice."}
+{"pair": "ef566ca3d35b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "efd81c00a944", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "effdf8b408e9", "relation": "refines", "from": "claim:cc18_0032_02", "to": "claim:cc18_0026_07", "strength": 0.5, "rationale": "Under the 2026 interceptor shortage Patriot crews moved to one interceptor per ballistic missile, qualifying the typical 2-3."}
+{"pair": "f0373aa6fb60", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f08a23eb3648", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f08bc9a5f2de", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f104ad5052dc", "relation": "contradicts", "from": "claim:c06_0025_16", "to": "claim:cc09_0016_04", "strength": 0.5, "rationale": "A gives Robotyne cross-belt spacing of about 610 m by Sentinel-2, while B gives cross-belts 1.0-1.2 km apart from the same imagery.", "resolution": "A's OSM 1,134 m agrees with B; its ~610 m Sentinel-2 figure matches B's main-belt spacing, which suggests main and cross belts were mixed up."}
+{"pair": "f1ea5fa9ac15", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f23061f593fc", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f27f0d9dee4d", "relation": "duplicates", "from": "claim:cc11_0032_19", "to": "claim:c00_0074_21", "strength": 0.9, "rationale": "Same Ukrainian troops' report of a 5:1 Russian shell advantage (8-9:1 at worst) at Avdiivka, from the same source, extracted in topic 00 and chapter c11."}
+{"pair": "f29f690902db", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f2a2b0aefe9d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f3329485a30b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f3faca0e4d96", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f4033d47e053", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}

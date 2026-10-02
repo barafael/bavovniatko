@@ -1,0 +1,40 @@
+{"pair": "7f7f385a1133", "relation": "none", "rationale": "Distances to two different air bases; independent computed facts."}
+{"pair": "7fb62890f8b4", "relation": "none", "rationale": "A later line-stabilisation statement and an earlier attack report share places but bear on different events."}
+{"pair": "7fd30672cdcc", "relation": "duplicates", "from": "claim:cc11_0010_107", "to": "claim:cc12_0010_54", "strength": 0.95, "rationale": "Identical claim extracted twice; B has more sources."}
+{"pair": "7ff96802df51", "relation": "none", "rationale": "An advance report and a map-box definition share place names only."}
+{"pair": "802973ea8ea8", "relation": "duplicates", "from": "claim:cc01_0036_07", "to": "claim:cc01_0011_91", "strength": 0.9, "rationale": "Same Rudskoi statement from the same ISW report extracted twice; A is the lower topic number."}
+{"pair": "80562a56e969", "relation": "weakens", "from": "claim:cc16_0028_02", "to": "claim:cc16_0011_28", "strength": 0.4, "rationale": "AviVector's satellite count of 2 Tu-95MS at Olenya four days earlier casts doubt on a Russian outlet's claim of 11 Tu-95MS and 40 Tu-22M3 there."}
+{"pair": "8097b773bf98", "relation": "refines", "from": "claim:cc15_0024_06", "to": "claim:cc15_0022_52", "strength": 0.6, "rationale": "B specifies what the 93rd's gun robots did in the Dobropillia counter-attack that A states generally."}
+{"pair": "8111ae7857c5", "relation": "supports", "from": "claim:cc01_0032_22", "to": "claim:cc01_0009_14", "strength": 0.5, "rationale": "B's Moshchun counterattack on 19 Mar is consistent with and corroborates A's clearing on 19-21 Mar; same source.", "independent": false}
+{"pair": "8120c3d489ad", "relation": "supports", "from": "claim:cc19_0009_78", "to": "claim:cc19_0021_03", "strength": 0.6, "rationale": "The Russian source's claim of Yurchenko's firing underlies the report that he was dismissed; same ISW report.", "independent": false}
+{"pair": "814ba419c812", "relation": "supports", "from": "claim:c03_0022_40", "to": "claim:cc18_0028_12", "strength": 0.4, "rationale": "MoD plans of 750+ Iskander-M a year (~62/month) are consistent with HUR's 60-70/month estimate; Kh-101 figures fit less closely.", "independent": true}
+{"pair": "81a3f4eb3be9", "relation": "none", "rationale": "A location fact and an aircraft-count claim."}
+{"pair": "81a637b72395", "relation": "supports", "from": "claim:cc09_0025_05", "to": "claim:cc09_0036_01", "strength": 0.4, "rationale": "The 47th's engineer element having Leopard 2R, Wisent and BMR-2 corroborates the breach design built around those vehicles.", "independent": true}
+{"pair": "81c3a3c89800", "relation": "none", "rationale": "Different details of the Avdiivka pipe infiltration."}
+{"pair": "81cb501be64a", "relation": "refines", "from": "claim:cc16_0030_04", "to": "claim:cc16_0021_08", "strength": 0.6, "rationale": "B quantifies the Engels shelter construction that A says began in 2025-26."}
+{"pair": "81e7a75c2654", "relation": "none", "rationale": "Map box and a forecast about water obstacles share place names only."}
+{"pair": "820e77df93a6", "relation": "supports", "from": "claim:cc14_0017_02", "to": "claim:cc14_0014_086", "strength": 0.6, "rationale": "B's account of Russia cutting the H-07 Sumy-Sudzha road from January 2025 corroborates A; shared Pravda source.", "independent": false}
+{"pair": "8211f16d0cb0", "relation": "supports", "from": "claim:cc15_0026_05", "to": "claim:cc15_0020_07", "strength": 0.5, "rationale": "B's statement that the 1st Azov Corps was committed at Dobropillia supports A's identification of it as the reserve.", "independent": false}
+{"pair": "821f0d23b3eb", "relation": "none", "rationale": "A list of Irpin crossings and the status of two bridges on 27 Feb; context only."}
+{"pair": "823ded2b2784", "relation": "none", "rationale": "The 11 Mar assault and the later withdrawal request are different events."}
+{"pair": "825454be189a", "relation": "duplicates", "from": "claim:cc15_0014_02", "to": "claim:cc15_0007_17", "strength": 0.85, "rationale": "Same ISW 13 January 2025 report of the T-0504 and T-0406 cuts extracted twice; A is the more precise canonical."}
+{"pair": "8323e19a85df", "relation": "none", "rationale": "Two different assertions from the same secondary NYT account."}
+{"pair": "8368ab3df685", "relation": "none", "rationale": "A truck explosion event and a coordinate fact."}
+{"pair": "83a25f36b60a", "relation": "none", "rationale": "Town populations and company sectors."}
+{"pair": "83b2b861f7e6", "relation": "supports", "from": "claim:cc15_0007_27", "to": "claim:cc15_0019_11", "strength": 0.5, "rationale": "A's May 2025 report of Solodchuk taking over Center is consistent with B's command from July 2025; both ISW.", "independent": false}
+{"pair": "83f1e384a925", "relation": "none", "rationale": "July plugging of the gap and October withdrawal are different events."}
+{"pair": "840f1f0febfa", "relation": "none", "rationale": "Street-level advance and a description of western Bakhmut."}
+{"pair": "844d6f671739", "relation": "supports", "from": "claim:cc01_0011_101", "to": "claim:cc01_0014_33", "strength": 0.6, "rationale": "The road reopening on 31 Mar matches the siege's end date; same source.", "independent": false}
+{"pair": "84c4c30ef92a", "relation": "none", "rationale": "First-day tank action and a troop-strength figure."}
+{"pair": "84d81ce21342", "relation": "none", "rationale": "A coordinate fact and the event description it derives from."}
+{"pair": "850057a2d8d2", "relation": "none", "rationale": "The withdrawal-request exchange and the counterattack are different events."}
+{"pair": "8539a67c44c3", "relation": "none", "rationale": "Different points (launch station vs town centre) near Olenya."}
+{"pair": "85c409d6638e", "relation": "supports", "from": "claim:cc09_0043_22", "to": "claim:cc09_0010_76", "strength": 0.6, "rationale": "B's assessment that this was the third lateral transfer repeats A's characterisation from the same ISW report.", "independent": false}
+{"pair": "865e8a47c6fa", "relation": "none", "rationale": "Broad assessment of fighters' role and a set-piece description; context only."}
+{"pair": "867686e7edf6", "relation": "none", "rationale": "MiG-29 losses and the fleet composition."}
+{"pair": "86a871ddfc9b", "relation": "none", "rationale": "DeepState's loss count does not bear on the photos' emblematic status."}
+{"pair": "86aeae70681b", "relation": "duplicates", "from": "claim:cc18_0028_03", "to": "claim:cc18_0008_12", "strength": 0.95, "rationale": "Same 496-drone launch claim extracted twice; A has more sources."}
+{"pair": "87b7a2e90b93", "relation": "none", "rationale": "Different settlements and claimants on different dates."}
+{"pair": "87f277bff7a0", "relation": "supports", "from": "claim:cc14_0014_043", "to": "claim:cc14_0031_11", "strength": 0.7, "rationale": "A's 18 Aug strike on the Zvannoye bridge corroborates B's statement that the Zvannoye deck was holed; shared ISW source.", "independent": false}
+{"pair": "8850be614b12", "relation": "none", "rationale": "Truck-route distance and time-zone count."}
+{"pair": "888301fc5ce9", "relation": "none", "rationale": "Different stages of fighting in the Tsarska Okhota area."}

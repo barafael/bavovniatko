@@ -1,0 +1,3142 @@
+# Sources cited in research/chapters/c15-pokrovsk-myrnohrad.md, generated from the knowledge base by db/tools/render.py.
+- id: bbc-2025-abdurasulov-fog-pokrovsk
+  title: 'Pokrovsk: Russian forces use fog cover to push further into key Ukraine town'
+  url: https://www.bbc.com/news/articles/cx276px3280o
+  publisher: BBC
+  authors:
+  - Abdujalil Abdurasulov
+  published: '2025-11-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: BBC verified the location of the viral fog-column video.
+- id: bbc-2025-beale-flag-pokrovsk
+  title: Ukrainians raise flag in Pokrovsk to show BBC the fight goes on in city claimed by Russia
+  url: https://www.bbc.com/news/articles/cd6x3vv7y60o
+  publisher: BBC
+  authors:
+  - Jonathan Beale
+  published: '2025-12-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: type news+video
+- id: cnn-2025-kottasova-bakhmut-to-pokrovsk-tactics
+  title: From Bakhmut to Pokrovsk, here's how Russian tactics have shifted
+  url: https://edition.cnn.com/2025/11/16/world/pokrovsk-russia-ukraine-tactics-intl
+  publisher: CNN
+  authors:
+  - Ivana Kottasová
+  - Kostya Gak
+  - Victoria Butenko
+  published: '2025-11-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: CNN geolocated the fog-column video. Combat medic on how far evacuation vehicles can get (10–15 km).
+- id: cnn-2025-kottasova-pokrovsk-poised
+  title: Russian forces are poised to finally capture Pokrovsk, a symbolically important victory with a heavy cost
+  url: https://edition.cnn.com/2025/11/08/europe/pokrovsk-ukraine-russia-putin-intl
+  publisher: CNN
+  authors:
+  - Ivana Kottasová
+  - Kostya Gak
+  published: '2025-11-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Russian forces are poised to finally capture Pokrovsk, a symbolically important victory with a heavy cost
+- id: cnn-2025-stockwell-capture-claim
+  title: Russia claims to have captured key city of Pokrovsk, as Ukraine dismisses Moscow's 'loud statements' ahead of Witkoff
+    talks
+  url: https://edition.cnn.com/2025/12/01/europe/russia-ukraine-pokrovsk-capture-claim-latam-intl
+  publisher: CNN
+  authors:
+  - Billy Stockwell
+  published: '2025-12-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Russia claims to have captured key city of Pokrovsk, as Ukraine dismisses Moscow's 'loud statements' ahead of Witkoff
+    talks
+- id: cnn-2025-tarasova-markina-patchy-defenses
+  title: Russian troops pierce Ukraine's patchy defenses in Donetsk, days before Trump-Putin summit
+  url: https://edition.cnn.com/2025/08/12/europe/russia-ukraine-donetsk-dobropillia-trump-putin-intl
+  publisher: CNN
+  authors:
+  - Daria Tarasova-Markina
+  - Christian Edwards
+  - Nick Paton Walsh
+  - Victoria Butenko
+  published: '2025-08-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: '"two-man positions resupplied by drones alone"; Manko "thousand cuts"; Trehubov 5–10 men; Krotevych "complete mess".'
+- id: cnn-2025-walsh-summer-offensive
+  title: Russia's summer offensive is turning into an escalating crisis for Ukraine
+  url: https://edition.cnn.com/2025/07/30/europe/russias-summer-offensive-ukraine-analysis-latam-intl
+  publisher: CNN
+  authors:
+  - Nick Paton Walsh
+  published: '2025-07-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Russia's summer offensive is turning into an escalating crisis for Ukraine
+- id: dw-2025-oelofse-170000-troops
+  title: Ukraine says 170,000 Russian troops deployed in Donetsk (live)
+  url: https://www.dw.com/en/ukraine-zelenskyy-says-russia-deployed-170000-troops-for-push-in-donetsk/live-74565746
+  publisher: Deutsche Welle
+  authors:
+  - Louis Oelofse
+  published: '2025-10-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Zelensky's 170,000 figure for Donetsk, focused on Pokrovsk.
+- id: dw-2025-shepeleva-is-ukraine-losing
+  title: 'Heavy fighting for Pokrovsk: Is Ukraine losing the city?'
+  url: https://www.dw.com/en/ukraine-russia-war-pokrovsk-donetsk-united-states-witkoff/a-75024595
+  publisher: Deutsche Welle
+  authors:
+  - Anastasia Shepeleva
+  published: '2025-12-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '"Krasnoarmeysk" claim. Lykhovyi: north along the railway held as of 3 Dec. DeepState (Pohorilyi, Mykula) on Myrnohrad.
+    Reisner: "the city has already fallen".'
+- id: eurointegration-2025-nato-95-percent
+  title: NATO says Myrnohrad is "virtually encircled" and Russians control over 95% of Pokrovsk
+  url: https://www.eurointegration.com.ua/eng/news/2025/12/2/7226211/
+  publisher: European Pravda
+  authors: []
+  published: '2025-12-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: 'Senior NATO official in Brussels: >95% of Pokrovsk. Myrnohrad has a narrow corridor and is supplied by drones.'
+- id: euromaidan-2024-ben-children-evacuation
+  title: Ukraine starts mandatory evacuation of children from Pokrovsk as Russian troops are 12 km from the town
+  url: https://euromaidanpress.com/2024/08/19/ukraine-starts-mandatory-evacuation-of-children-from-pokrovsk-as-russian-troops-are-12-km-from-the-town/
+  publisher: Euromaidan Press
+  authors:
+  - Bohdan Ben
+  published: '2024-08-19'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 'Filashkin: 53,000 in community.'
+- id: euromaidan-2024-kravchuk-pokrovsk-infrastructure
+  title: Russia severely damages critical infrastructure in Pokrovsk, key Ukrainian logistics hub
+  url: https://euromaidanpress.com/2024/10/05/russia-severely-damages-critical-infrastructure-in-pokrovsk-key-ukrainian-logistics-hub/
+  publisher: Euromaidan Press
+  authors:
+  - Vira Kravchuk
+  published: '2024-10-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 'Dobriak via Reuters: 13,050 residents, 80% infrastructure.'
+- id: euromaidan-2024-tril-31st-encirclement
+  title: Ukrainian forces defend in encirclement as Russia advances in Donetsk Oblast
+  url: https://euromaidanpress.com/2024/07/24/ukrainian-forces-defend-in-encirclement-as-russia-advances-in-donetsk-oblast/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2024-07-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - ground
+  - chapter
+  notes: DeepState on 31st SMB 1st+3rd bns.
+- id: euromaidan-2024-zoria-53-per-km2
+  title: 'ISW: Russia loses 53 troops per km² of captured territory this fall'
+  url: https://euromaidanpress.com/2024/12/06/isw-russia-loses-53-troops-per-km%c2%b2-of-captured-territory-this-fall/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2024-12-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: ISW 5 Dec 2024 casualty-per-km² (front-wide, NOT Pokrovsk-specific).
+- id: euromaidan-2024-zoria-isw-southern-turning
+  title: 'ISW: Russians resume offensive to capture Donetsk Oblast''s Pokrovsk from south'
+  url: https://euromaidanpress.com/2024/12/08/isw-russians-resume-offensive-to-capture-donetsk-oblasts-pokrovsk-from-south/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2024-12-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: 'ISW 7 Dec: 15th MRB, 90th TD; turning maneuver.'
+- id: euromaidan-2025-axe-razyne-river
+  title: One river stands between Russia and Ukraine's fortress city Pokrovsk
+  url: https://euromaidanpress.com/2025/07/14/russia-pokrovsk-river-crossing/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-07-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Razine/Kazennyi Torets; UA and RU units in east.
+- id: euromaidan-2025-martyniuk-matveyev-final-battle
+  title: Putin's army hammers Ukrainian trenches near Pokrovsk—the final battle for Donbas may have just begun
+  url: https://euromaidanpress.com/2025/05/21/putins-army-hammers-ukrainian-trenches-near-pokrovsk-the-final-battle-for-donbas-may-have-just-begun/
+  publisher: Euromaidan Press
+  authors:
+  - Yevheniia Martyniuk
+  published: '2025-05-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Matveyev analysis: Malynivka 12 May, Nova Poltavka 17 May, Myroliubivka 14 May.'
+- id: euromaidan-2025-mukhina-111000
+  title: Russia concentrates 111,000 troops for breakthrough in this hottest sector of Ukraine's front
+  url: https://euromaidanpress.com/2025/06/27/russia-concentrates-111000-troops-for-breakthrough-in-this-hottest-sector-of-ukraines-front/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-06-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Syrskyi: 111,000; ≥50 engagements/day.'
+- id: euromaidan-2025-mukhina-32nd-brigade
+  title: Russian military ramps up attacks in Donetsk Oblast to sever Ukrainian logistics at Pokrovsk, says commander
+  url: https://euromaidanpress.com/2025/07/21/russian-military-ramps-up-attacks-in-donetsk-oblast-to-sever-ukrainian-logistics-at-pokrovsk-says-commander/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-07-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: '32nd Separate Mech Bde bn cdr (via Suspilne). - NOT FETCHED: Reuters 2025-01-13 "Ukraine halts production at Pokrovsk
+    coal mine as Russian troops near, sources say" url: https://www.reuters.com/markets/commodities/ukraine-halts-production-pokrovsk-coal-mine-russian-troops-near-sources-say-2025-01-13/
+    — blocked (captcha; no usable archive). Only known via Wikipedia citation; do not cite directly unless another helper
+    fetches it. Use kyivindependent-2024-ivanyshyn-metinvest-pokrovsk + euromaidan-2025-zoria-nyt-coking-mine + bbc-2025-guerin-inside-pokrovsk
+    instead.'
+- id: euromaidan-2025-mukhina-40pct-casualties
+  title: Russia's deadly innovations ahead of sacred holiday cost 40% of all casualties in Pokrovsk
+  url: https://euromaidanpress.com/2025/05/05/russias-deadly-innovations-cost-40-of-all-casualties-in-pokrovsk-as-putins-races-to-dnipropetrovsk-border-ahead-of-sacred-holiday/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-05-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: (cites Radio Svoboda) 50–60k RU personnel; 30–40% of casualties.
+- id: euromaidan-2025-mukhina-chechen-war-losses
+  title: Russian casualties near Pokrovsk exceed entire second Chechen war death toll, says Ukrainian military
+  url: https://euromaidanpress.com/2025/02/06/russian-casualties-near-pokrovsk-exceed-entire-second-chechen-war-death-toll-says-ukrainian-military/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-02-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 'Trehubov citing Syrskyi: 7,000 KIA, 15,000 total (Jan).'
+- id: euromaidan-2025-tril-two-supply-routes
+  title: Russian forces cut off two supply routes to strategic Pokrovsk hub
+  url: https://euromaidanpress.com/2025/01/16/russian-forces-cut-off-two-supply-routes-to-strategic-pokrovsk-hub/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2025-01-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: Dnipro–Pokrovsk railway cut near Kotlyne; Butusov on Khortytsia.
+- id: euromaidan-2025-zoria-16-km2
+  title: Ukrainian forces liberate 16 km² near Pokrovsk, top general says
+  url: https://euromaidanpress.com/2025/04/17/ukrainian-forces-liberate-16-km%c2%b2-near-pokrovsk-top-general-says/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-04-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Syrskyi; Donetsk OTG under Brig. Gen. Oleksandr Tarnavskyi.
+- id: euromaidan-2025-zoria-counterattacks
+  title: Ukraine launches counterattacks near Donetsk's Pokrovsk amid reduced Russian assaults
+  url: https://euromaidanpress.com/2025/02/13/ukraine-launches-counterattacks-near-donetsks-pokrovsk-amid-reduced-russian-assaults/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-02-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: BBC Russian on Drapatyi; Dachenske, Pishchane; 25th AAB.
+- id: euromaidan-2025-zoria-isw-novoekonomichne
+  title: 'ISW: Russia halts Kostiantynivka push—now Pokrovsk braces for encirclement threat'
+  url: https://euromaidanpress.com/2025/07/08/russia-halts-kostyantynivka-push-shifts-focus-to-pokrovsk-in-donetsk-oblast/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-07-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'ISW 7 Jul: entry into Novoekonomichne.'
+- id: euromaidan-2025-zoria-nyt-coking-mine
+  title: 'NYT: Ukraine destroys vital coking coal mine to prevent Russian tunnel access'
+  url: https://euromaidanpress.com/2025/01/16/nyt-ukraine-destroys-vital-coking-coal-mine-to-prevent-russian-tunnel-access/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-01-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: (reports NYT) shaft No. 3 blown ~20 Dec 2024; steel output forecast.
+- id: euromaidan-2025-zoria-pishchane-reclaimed
+  title: Ukrainians reclaim Pishchane near Pokrovsk from Russian occupation, military confirms
+  url: https://euromaidanpress.com/2025/02/16/ukrainians-reclaim-pishchane-near-pokrovsk-from-russian-occupation-military-confirms/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-02-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: Trehubov; DeepState 11 Feb.
+- id: euromaidanpress-2025-axe-155th-marines-himars
+  title: Russian marines rushed to save the Pokrovsk offensive—HIMARS had other ideas
+  url: https://euromaidanpress.com/2025/09/02/russian-reinforcements-destroyed/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-09-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: 28 Aug SBU Ivan Franko Group FPV and HIMARS strike on 155th Naval Infantry Brigade column near Malynivka; Perpetua
+    on deliberately empty trenches.
+- id: euromaidanpress-2025-axe-76th-division
+  title: Ukrainian troops are shredding an entire Russian "elite" division near Pokrovsk
+  url: https://euromaidanpress.com/2025/12/17/76th-gaad-destroyed/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-12-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - casualties
+  - chapter
+  notes: '76th VDV Division committed. Brovdi: 505 killed by drones on 11 Dec.'
+- id: euromaidanpress-2025-axe-armed-robots
+  title: Robot counterattack! Ukraine rolls gun-‘bots into brutal Pokrovsk battle.
+  url: https://euromaidanpress.com/2025/08/16/armed-robots-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-08-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - infiltration
+  - casualties
+  - chapter
+  notes: 93rd Mechanized Brigade used gun-armed UGVs to clear Hruzke and Vesele near Dobropillia; 51st CAA infiltrated 15
+    km past empty trenches; Azov Corps claims 271 killed, 101 wounded, 13 captured.
+- id: euromaidanpress-2025-axe-commandos-escape-corridor
+  title: Ukrainian commandos rush into Pokrovsk to hold escape corridor open for fleeing garrison
+  url: https://euromaidanpress.com/2025/11/06/retreating-from-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: Analysis citing observer "Thorkill". 425th company, 82nd Air Assault company and 3 SOF units cover the 68th/155th
+    exit. 100,000+ vs about 20,000.
+- id: euromaidanpress-2025-axe-dobropillia-diversion
+  title: 'Dobropillia diversion: did Russia trick Ukraine into losing Pokrovsk?'
+  url: https://euromaidanpress.com/2025/11/08/dobropillia-diversion/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-08'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '"counter-fixation axis" thesis (citing analyst "Delwin" on X); 132nd MRB; 225th Assault Regt + 33rd Mech Bde held
+    Shakhove; salient "40-square-kilometer". Not usable unverified leads: - president.gov.ua/en/news/dobropilska-kontrnastupalna-operaciya-zirvala-rosijsku-litny-100693
+    (Zelensky, 8 Oct 2025): HTTP 403 directly, via Wayback (snapshot holds the 403) and via reader. Content known only through
+    ISW 9 Oct relay (above). - Reuters 12 Aug 14 Aug 16 Oct 2025 items (urls in the Wikipedia refs): HTTP 401, not verified.
+    Time (time.com/7309066): HTTP 406, not verified.'
+- id: euromaidanpress-2025-axe-drone-strike-rubicon
+  title: Ukraine hits elite Rubicon drone base, but it’s too late to save Pokrovsk
+  url: https://euromaidanpress.com/2025/11/05/drone-strike-on-rubicon/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: 'HUR long-range FPV strike on a claimed Rubikon base near Avdiivka; Rubikon FPVs (radio and fibre, thermal) hold
+    the two main supply roads; CIT: about 3 km corridor left north of Pokrovsk.'
+- id: euromaidanpress-2025-axe-raiders-425th
+  title: Ukrainian raiders stalk Russians in Pokrovsk—but hundreds of tanks are coming
+  url: https://euromaidanpress.com/2025/11/25/452th-assault-regiment-in-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-25'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 7th Corps holds positions south of the railway. 425th raids. 388 Russians killed since early November. 76th VDV division
+    coming.
+- id: euromaidanpress-2025-axe-reinforce-pokrovsk
+  title: Pokrovsk is falling. Huliaipole is threatened. Azov Corps can only save one front
+  url: https://euromaidanpress.com/2025/11/13/reinforce-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Reserve dilemma: Azov Corps mopping up the 40 km² Dobropillia salient vs Huliaipole; 68th and 155th began retreating
+    north in late October; ISW: Russia very likely to seize both towns. Analysis.'
+- id: euromaidanpress-2025-axe-road-into-myrnohrad
+  title: Russia doesn't need to storm Myrnohrad—just wait for a sunny day
+  url: https://euromaidanpress.com/2025/11/27/road-into-myrnohrad/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-26'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: Single road under Rubikon fire control. Myrnohrad held by the 38th Marine and 79th Air Assault; Rodynske by the 82nd
+    and 95th Air Assault. 35th Marine sent.
+- id: euromaidanpress-2025-axe-russian-bmp
+  title: Ukrainian troops nearly cut off as Russian armor consolidates in Pokrovsk
+  url: https://euromaidanpress.com/2025/11/27/russian-bmp-in-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 68th Jaeger withdrawn to the fields north; Russian BMP in central Pokrovsk; corridor out of Myrnohrad about 1 km;
+    25th and 35th brigades in Myrnohrad.
+- id: euromaidanpress-2025-axe-time-to-retreat-myrnohrad
+  title: 'Ukraine’s window closes: Russian forces 3km from trapping Myrnohrad troops'
+  url: https://euromaidanpress.com/2025/11/04/time-to-retreat-from-myrnohrad/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-11-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 'CIT: 3 km gap, "time to abandon Myrnohrad"; 25th and 38th brigades in Myrnohrad; Sternenko on the road kill zone
+    and late withdrawals. Analysis.'
+- id: euromaidanpress-2025-axe-turtle-tanks-myrnohrad
+  title: Ukraine’s drones finally beat the fog—11 Russian tanks burn near Myrnohrad
+  url: https://euromaidanpress.com/2025/12/04/turtle-tanks-myrnohrad/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-12-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: 2 Dec 40th Naval Infantry Brigade turtle-tank assault in fog near Razine, 3 tanks and 8 AFVs lost; about 150,000
+    Russians vs about 30,000 Ukrainians; Ukrainian anti-fog methods.
+- id: euromaidanpress-2025-kossov-zmiy-evacuation
+  title: Ukrainian robot survives artillery, mines and FPVs to save wounded soldier (video)
+  url: https://euromaidanpress.com/2025/10/17/ukrainian-robot-survives-artillery-mines-and-fpvs-to-save-wounded-soldier-video/
+  publisher: Euromaidan Press
+  authors:
+  - Igor Kossov
+  published: '2025-10-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - casualties
+  - chapter
+  notes: '15 Oct Zmiy UGV casevac on the Pokrovsk front under 152 mm fire, a mine and an FPV; 1.5 h link loss; Zmiy: 500 kg,
+    10 km/h, 20 km range.'
+- id: euromaidanpress-2025-mukhina-13-sq-km
+  title: '"Impossible to stop them, they''re everywhere": Ukraine holds Pokrovsk against 170,000 Russians, but Myrnohrad evacuation
+    routes collapse (VIDEO)'
+  url: https://euromaidanpress.com/2025/12/10/impossible-to-stop-them-theyre-everywhere-ukraine-holds-13-sq-km-of-pokrovsk-against-170000-russians-but-myrnohrad-evacuation-routes-collapse-video/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-12-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: Nearly 13 km² of northern Pokrovsk held, "80% seized" (unattributed). Myrnohrad exit via Rivne and Svitle (UP sources).
+- id: euromaidanpress-2025-mukhina-20-bodies
+  title: '20 Russian bodies in 10 square meters: Price Moscow pays to use Pokrovsk as leverage in peace talks, and city still
+    holds (VIDEO)'
+  url: https://euromaidanpress.com/2025/12/02/20-russian-bodies-in-10-square-meters-price-moscow-pays-to-use-pokrovsk-as-leverage-in-peace-talks-and-city-still-holds/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-12-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: '155th Brigade: front line along the railway, up to 20 bodies per 10 m²; 7th Corps confirms Rubikon cutting logistics;
+    850 KABs in October, 156 in one day; nearly 170,000 Russian troops.'
+- id: euromaidanpress-2025-mukhina-flag-on-mine
+  title: 'Russia’s Pokrovsk twin city strategy: Can’t capture it, so plant flag on ruined mine, die, let Ukraine remove it
+    (VIDEO)'
+  url: https://euromaidanpress.com/2025/11/15/russias-pokrovsk-twin-city-strategy-cant-capture-it-so-plant-flag-on-ruined-mine-die-let-ukraine-remove-it-video/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-11-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - casualties
+  - chapter
+  notes: 14 Nov Russian flag on a ruined mine in SE Myrnohrad destroyed; 1,350 civilians in Myrnohrad; 8th and 51st armies,
+    four marine brigades, 9th DNR brigade, Rubikon, Judgment Day and the Irish; "30,000–40,000 Russians killed" (unattributed
+    analytical estimates).
+- id: euromaidanpress-2025-mukhina-kill-zones-everywhere
+  title: '“Kill zones everywhere”: Ukrainian military describes new “combination” replacing mass assaults across main fronts'
+  url: https://euromaidanpress.com/2025/12/24/kill-zones-everywhere-ukrainian-military-describes-new-combination-replacing-mass-assaults-across-main-fronts/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-12-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'National Guard spokesman Muzychuk: kill zones up to 30 km deep on the Pokrovsk and Dobropillia axes, most intense
+    5–10 km.'
+- id: euromaidanpress-2025-mukhina-rubikon-holiday
+  title: Pokrovsk defense was like “holiday” for Ukrainian forces before they arrived and turned Ukrainian strongholds into
+    kill zones
+  url: https://euromaidanpress.com/2025/11/13/pokrovsk-defense-was-like-holiday-for-ukrainian-forces-before-they-arrived-and-turned-ukrainian-strongholds-into-kill-zones/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-11-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: 'Relays FT and LIGA: Rubikon (about 5,000, 24/7 shifts) on the Pokrovsk sector; soldiers say defence was "like a
+    holiday" before it arrived.'
+- id: euromaidanpress-2025-mukhina-sword-group
+  title: Ukraine’s SWORD GROUP breaks Russian blockade on Pokrovsk front to rescue trapped infantry
+  url: https://euromaidanpress.com/2025/11/24/ukraines-sword-group-breaks-russian-blockade-on-pokrovsk-front-to-rescue-trapped-infantry/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-11-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: 3rd SSO Regiment raid unblocks a position; three wounded evacuated by ground robot; 425th cleared the railway station,
+    pedagogical college and Sobornyi Park.
+- id: euromaidanpress-2025-murdoch-kucheriv-yar
+  title: Ukrainian paratroopers liberate Donetsk village in daring raid, capturing 50 Russian troops and rescuing trapped
+    civilians
+  url: https://euromaidanpress.com/2025/10/23/ukrainian-paratroopers-liberate-kucheriv-yar/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Murdoch
+  published: '2025-10-23'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'relays Militarnyi: 132nd Recon Bn; >50 POW; civilians found in basements; SBU intercept "not to take civilians alive".'
+- id: euromaidanpress-2025-murdoch-outnumbered-8-to-1
+  title: Outnumbered eight to one, but Ukrainians still hold Pokrovsk
+  url: https://euromaidanpress.com/2025/10/28/outnumbered-eight-to-one-but-ukrainians-still-hold-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Murdoch
+  published: '2025-10-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: Zelensky 8:1; Russian drone advantage about 10:1 per Ukrainian military sources; over 1,200 civilians in the city,
+    evacuation suspended.
+- id: euromaidanpress-2025-rfu-black-hawk-corridor
+  title: 'Frontline report: Ukrainian special forces launch daring Black Hawk raid to hold Pokrovsk’s northern corridor'
+  url: https://euromaidanpress.com/2025/11/09/frontline-report-2025-11-08/
+  publisher: Euromaidan Press
+  authors:
+  - Reporting from Ukraine
+  published: '2025-11-09'
+  accessed: '2026-10-01'
+  type: video
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - infiltration
+  - logistics
+  - chapter
+  notes: 'Video-blog script (Reporting from Ukraine): Pokrovsk easy to infiltrate from the south via Zvirove, Myrnohrad in
+    open fields; Black Hawk landing to hold the northern corridor. Low reliability; used only for terrain colour.'
+- id: euromaidanpress-2025-tril-isw-21-months
+  title: 'ISW: Russia took 21 months to reach Pokrovsk using air interdiction and drone suppression'
+  url: https://euromaidanpress.com/2025/11/05/isw-russia-took-21-months-to-reach-pokrovsk-using-air-interdiction-and-drone-suppression/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2025-11-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - infiltration
+  - chapter
+  notes: 'Relays ISW: 39 km in 21 months; battlefield air interdiction from July 2025 denied Pokrovsk as a hub; Rubikon sent
+    to the axis; about 100 three-man fireteams a day; Mashovets three-phase infiltration process.'
+- id: euromaidanpress-2025-tril-syrskyi-no-encirclement
+  title: '“No encirclement”: Syrskyy says Ukraine’s forces join fight to hold Pokrovsk as Russia pays “highest price”'
+  url: https://euromaidanpress.com/2025/11/01/371088/
+  publisher: Euromaidan Press
+  authors:
+  - Maria Tril
+  published: '2025-11-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Syrskyi 1 Nov: no encirclement or blockade; SSO, military police, SBU and HUR in the city by his order; "Pokrovsk
+    – we hold. Myrnohrad – we hold".'
+- id: euromaidanpress-2025-zoria-29-vehicles-volodymyrivka
+  title: 'Six-hour tank assault, 29 armored vehicles, zero breakthroughs: Russia''s biggest autumn push fails near Volodymyrivka'
+  url: https://euromaidanpress.com/2025/10/28/six-hour-tank-assault-29-armored-vehicles-zero-breakthroughs-russias-biggest-autumn-push-fails-near-volodymyrivka/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-10-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 27 Oct assault in fog/wet conditions; 1st Azov Corps, 33rd and 93rd Mech Bdes defending Shakhove/Volodymyrivka.
+- id: euromaidanpress-2025-zoria-deepstate-wedge
+  title: 'DeepState: Russians breach near Pokrovsk, cut highway toward Dobropillia in Donetsk Oblast'
+  url: https://euromaidanpress.com/2025/08/11/russian-wedge-threatens-pokrovsk-in-donetsk-oblast/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-08-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'DeepState: ~15 km deep, 5–6 km wide, over five days from 7 Aug; ~20 Russians in Vesele.'
+- id: euromaidanpress-2025-zoria-isw-close-pocket
+  title: 'ISW: Russia tries to close Pokrovsk pocket — Ukraine still fighting inside city center (MAPS)'
+  url: https://euromaidanpress.com/2025/11/24/isw-russia-tries-to-close-pokrovsk-pocket-ukraine-still-fighting-inside-city-center-maps/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-11-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Northern Rodynske advance 22 Nov. SSO strikes on the 336th Naval Inf Bde and the 6th Tank Regt (90th TD).
+- id: euromaidanpress-2025-zoria-isw-fix-from-west
+  title: 'ISW: Russia can’t seal the east — so it tries to fix Ukrainian troops in Pokrovsk from the west (MAP)'
+  url: https://euromaidanpress.com/2025/11/18/isw-russia-cant-seal-the-east-so-it-tries-to-fix-ukrainian-troops-in-pokrovsk-from-the-west-map/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-11-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 'Relays ISW 17 Nov: 2nd and 51st CAAs try to close the ring; T-0504 and O0544 roads cleared for vehicles; milblogger:
+    Dobropillia base too narrow; Russia likely to use vehicles in bad weather.'
+- id: euromaidanpress-2025-zoria-isw-pace-logistics
+  title: 'ISW: Russian advance pace in Pokrovsk remains decreased as Moscow focuses on logistics'
+  url: https://euromaidanpress.com/2025/11/10/isw-russian-advance-pace-in-pokrovsk-remains-decreased-as-moscow-focuses-on-logistics/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-11-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: 'Relays ISW 9 Nov: Russians in most parts of Pokrovsk but unable to encircle; FPV and winged drones on supply routes;
+    milbloggers claim clearing Dinas microdistrict.'
+- id: euromaidanpress-2025-zoria-putin-claims-isw
+  title: Putin claims Russia seized Pokrovsk — ISW finds no sign of that (MAP)
+  url: https://euromaidanpress.com/2025/12/03/putin-claims-russia-seized-pokrovsk-isw-finds-no-sign-of-that-map/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-12-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 'Relays ISW 2 Dec: no evidence of full seizure; Russia achieved the logistics-hub effect by July 2025; 51st CAA severely
+    degraded; Putin: a "good base" for advances.'
+- id: euromaidanpress-2025-zoria-robotic-logistics
+  title: Ukraine’s war logistics go robotic in battle zones
+  url: https://euromaidanpress.com/2025/12/16/ukraines-war-logistics-go-robotic-in-battle-zones/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-12-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: 'Relays Militarnyi: brigades shift supply to UGVs and Vampire heavy drones; 3rd Assault moves 40 t a week; one Air
+    Assault brigade 10–12 t a month (about 80% of deliveries); UGV share fell from 80% to 50% with winter weather.'
+- id: euromaidanpress-2025-zoria-salient-withdrawal
+  title: Ukrainian forces retreat from salient south of Pokrovsk to avoid encirclement (MAP)
+  url: https://euromaidanpress.com/2025/12/09/ukrainian-forces-retreat-from-salient-south-of-pokrovsk-to-avoid-encirclement-map/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-12-09'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '7th Corps 8 Dec "organized maneuver". UP sources: Lysiivka and Sukhyi Yar, held by the 25th and 68th.'
+- id: euromaidanpress-2026-axe-falling-back-north
+  title: Kyiv robbed Pokrovsk to save Zaporizhzhia. The gamble is paying off
+  url: https://euromaidanpress.com/2026/02/18/falling-back-north-of-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2026-02-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - chapter
+  notes: Ukraine "fell back a short distance north of Pokrovsk" by choice. 425th sent south. Rodynske back under Russian control.
+- id: euromaidanpress-2026-mukhina-burrow
+  title: '“He finds some kind of ‘burrow’ and corrects fire”: Russia’s Pokrovsk tactics reveal new generation of war'
+  url: https://euromaidanpress.com/2026/02/05/he-finds-some-kind-of-burrow-and-corrects-fire-russias-pokrovsk-tactics-reveal-new-generation-of-war/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-02-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - infiltration
+  - logistics
+  - chapter
+  notes: '152nd Ranger Brigade chief of staff: Russian infiltrators carry two radios, one to pass the line and one to correct
+    fire from a hide; logistics targeted.'
+- id: euromaidanpress-2026-mukhina-myrnohrad-encircled
+  title: '"Situation is critical": Russia is encircling Myrnohrad from all four directions to conduct final suppression of
+    Ukrainian troops'
+  url: https://euromaidanpress.com/2026/01/17/situation-is-critical-russia-is-encircling-myrnohrad-from-all-four-directions-to-conduct-final-suppression-of-ukrainian-troops/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-01-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '79th Bde spokesman Pysarenko. UNIAN soldier: south of Myrnohrad not held "for several weeks".'
+- id: euromaidanpress-2026-murdoch-ugv-evacuation
+  title: Ukrainian ground drone takes direct FPV hit – still evacuates two wounded soldiers near Pokrovsk
+  url: https://euromaidanpress.com/2026/02/20/ukrainian-ground-drone-evacuates-two-wounded-soldiers-pokrovsk/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Murdoch
+  published: '2026-02-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: 25th Airborne Brigade UGV evacuates two wounded in a six-hour mission after a direct FPV hit; kill zones along logistics
+    routes.
+- id: euromaidanpress-2026-zoria-azov-rodynske
+  title: Ukraine defends Rodynske against Russian assaults, keeping Myrnohrad's vital supply line intact, Azov says
+  url: https://euromaidanpress.com/2026/01/04/ukraine-defends-rodynske-against-russian-assaults-keeps-myrnohrads-vital-supply-line-intact-azov-says-video-map/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-01-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 'Azov Corps: 14th "Chervona Kalyna", 20th "Liubart" and 132nd Recon Bn in Rodynske. Flag raised 31 Dec.'
+- id: euromaidanpress-2026-zoria-hryshyne-center
+  title: Ukraine holds Hryshyne's center and northern Pokrovsk outskirts as Russia builds up for its next push, military says
+  url: https://euromaidanpress.com/2026/04/16/ukraine-holds-hryshynes-center-and-northern-pokrovsk-outskirts-as-russia-builds-up-for-its-next-push-military-says/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-04-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - chapter
+  notes: '7th Corps 16 Apr: holds Pokrovsk''s northern outskirts. Fighting in Hryshyne.'
+- id: euromaidanpress-2026-zoria-hryshyne-clearing
+  title: Hryshyne clearing operations continue as Russia tries to turn occupied Pokrovsk into a launchpad for the next advance
+  url: https://euromaidanpress.com/2026/03/16/hryshyne-clearing-operations-continue-as-russia-tries-to-turn-occupied-pokrovsk-into-a-launchpad-for-the-next-advance/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-03-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - chapter
+  notes: 425th Skelia and 155th Mech clearing central Hryshyne on 15 Mar.
+- id: euromaidanpress-2026-zoria-myrnohrad-quad-bikes
+  title: Russia's direct assaults near Myrnohrad are failing. The quad bike flanking runs aren't going much better
+  url: https://euromaidanpress.com/2026/03/02/russias-direct-assaults-near-myrnohrad-are-failing-the-quad-bike-flanking-runs-arent-going-much-better/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-03-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - chapter
+  notes: 79th Bde claims it is still operating "in Myrnohrad and on its northern outskirts" (1 Mar). Contradicts ISW.
+- id: euromaidanpress-2026-zoria-one-by-one
+  title: Russia switches to one-by-one infiltrations near Pokrovsk, hoping to slip past unnoticed
+  url: https://euromaidanpress.com/2026/01/02/russia-switches-to-one-by-one-infiltrations-near-pokrovsk-hoping-to-slip-past-unnoticed/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-01-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - infiltration
+  - chapter
+  notes: 'National Guard: Russians now infiltrate one man at a time; weather limited Ukrainian counter-assaults (Pivnenko,
+    27 Dec).'
+- id: forbes-2024-axe-47th-pokrovsk-40000
+  title: Lobbing Glide Bombs And Firing Anti-Tank Missiles, Russian Forces Are Beating Back The Ukrainian 47th Mechanized
+    Brigade—And Marching On Pokrovsk
+  url: https://www.forbes.com/sites/davidaxe/2024/08/02/lobbing-glide-bombs-and-firing-anti-tank-missiles-russian-forces-are-beating-back-the-ukrainian-47th-mechanized-brigade-and-marching-on-pokrovsk/
+  publisher: Forbes
+  authors:
+  - David Axe
+  published: '2024-08-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: 40,000 vs 12,000 force estimate. Fetched via web.archive.org.
+- id: forbes-2024-axe-prohres-breakout
+  title: A Day After Getting Surrounded Near Prohres, Two Ukrainian Battalions Overruled Their Commander—And Fought Their
+    Way To Safety
+  url: https://www.forbes.com/sites/davidaxe/2024/07/25/a-day-after-getting-surrounded-near-prohres-two-ukrainian-battalions-overruled-their-commander-and-fought-their-way-to-safety/
+  publisher: Forbes
+  authors:
+  - David Axe
+  published: '2024-07-25'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - ground
+  - chapter
+  notes: 31st Mech breakout, 110th or 111th TD collapse, 47th lost 2 Abrams. Fetched via web.archive.org.
+- id: forbes-2024-axe-reinforcements-counterattack
+  title: Ukrainian Reinforcements Are Counterattacking Outside Pokrovsk
+  url: https://www.forbes.com/sites/davidaxe/2024/09/06/ukrainian-reinforcements-are-counterattacking-outside-pokrovsk/
+  publisher: Forbes
+  authors:
+  - David Axe
+  published: '2024-09-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: 2nd CAA vs Tavriya OSGT ~4:1; Kara-Dag, 12th Azov, 93rd. Fetched via web.archive.org.
+- id: forbes-2024-axe-salient-south-pokrovsk
+  title: Hundreds Of Ukrainian Troops Are About To Get Surrounded South Of Pokrovsk
+  url: https://www.forbes.com/sites/davidaxe/2024/09/02/hundreds-of-ukrainian-troops-are-about-to-get-surrounded-south-of-pokrovsk/
+  publisher: Forbes
+  authors:
+  - David Axe
+  published: '2024-09-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: UA brigades in salient (59th, 68th, 117th TD, 15th NG, 25th AAB). Fetched via web.archive.org.
+- id: forbes-2025-axe-157th-disintegrating
+  title: Another Ukrainian Brigade Is Disintegrating As It Deploys To Pokrovsk
+  url: https://www.forbes.com/sites/davidaxe/2025/01/27/another-ukrainian-brigade-is-disintegrating-as-it-deploys-to-pokrovsk/
+  publisher: Forbes
+  authors:
+  - David Axe
+  published: '2025-01-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: 155th and 157th Mech brigades broken up. Fetched via web.archive.org.
+- id: guardian-2025-harding-pishchane
+  title: Ukraine recaptures frontline village amid signs of slowing Russian advance
+  url: https://www.theguardian.com/world/2025/feb/16/ukraine-recaptures-frontline-village-amid-signs-of-slowing-russian-advance
+  publisher: The Guardian
+  authors:
+  - Luke Harding
+  published: '2025-02-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: Trehubov loss figures (variant).
+- id: hromadske-2025-butsko-encirclement-myrnohrad
+  title: Is there a risk of encirclement in Pokrovsk and what awaits Myrnohrad? Soldiers explain
+  url: https://hromadske.ua/en/war/254005-ti-khto-v-pokrovsku-na-peredovykh-pozytsiiakh-vze-v-pryntsypi-v-otochenni-z-iakoho-malo-shansiv-vyyty
+  publisher: Hromadske
+  authors:
+  - Diana Butsko
+  published: '2025-11-04'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Officer: "About 60% of the city the Russians control". 1,000–1,500 could be encircled. 38th Marine and 32nd Mech
+    quoted.'
+- id: interfax-2016-rada-renames
+  title: Rada renames some towns and districts as part of de-communization
+  url: https://en.interfax.com.ua/news/general/342983.html
+  publisher: Interfax-Ukraine
+  authors: []
+  published: '2016-05-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Dymytrov became Myrnohrad and Krasnoarmiysk became Pokrovsk (Resolution No. 4468).
+- id: interfax-2026-skhid-northern-pokrovsk
+  title: 'Skhid force: Occupiers intensify attempts to infiltrate northern Pokrovsk; Defense Forces repelling them'
+  url: https://en.interfax.com.ua/news/general/1136424.html
+  publisher: Interfax-Ukraine
+  authors: []
+  published: '2026-01-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - infiltration
+  - logistics
+  - chapter
+  notes: 'Skhid group: north of both cities held. Supply by heavy drones and UGVs.'
+- id: isw-2024-07-19-roca
+  title: Russian Offensive Campaign Assessment, July 19, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-19-2024
+  publisher: Institute for the Study of War
+  authors:
+  - Angelica Evans
+  - Christina Harward
+  - Nicole Wolkov
+  - Riley Bailey
+  - Davit Gasparyan
+  - George Barros
+  published: '2024-07-19'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - ground
+  - chapter
+  notes: Prohres seized (geolocated); milblogger unit claim.
+- id: isw-2024-08-28-roca
+  title: Russian Offensive Campaign Assessment, August 28, 2024
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_28-3/
+  alt_urls:
+  - https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-28-2024
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2024-08-28'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground-ops
+  - chapter
+  notes: 'Milbloggers: Ukrainian tempo slows and Ukrainians dig in to hold seized areas.'
+- id: isw-2024-10-30-roca
+  title: Russian Offensive Campaign Assessment, October 30, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-october-30-2024
+  publisher: Institute for the Study of War
+  authors:
+  - Davit Gasparyan
+  - Christina Harward
+  - Nicole Wolkov
+  - Kateryna Stepanenko
+  - Nate Trotter
+  - William Runkel
+  - Frederick W. Kagan
+  published: '2024-10-30'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: Selydove seized (Mashovets); units. Fetched via web.archive.org.
+- id: isw-2024-12-15-roca
+  title: Russian Offensive Campaign Assessment, December 15, 2024
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-december-15-2024
+  publisher: Institute for the Study of War
+  authors:
+  - Grace Mappes
+  - Davit Gasparyan
+  - Nicole Wolkov
+  - Christina Harward
+  - Nate Trotter
+  - William Runkel
+  - Brian Carter
+  - Frederick W. Kagan
+  published: '2024-12-15'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: Shevchenko seized. Fetched via web.archive.org.
+- id: isw-2025-01-02-roca
+  title: Russian Offensive Campaign Assessment, January 2, 2025
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-2-2025
+  publisher: Institute for the Study of War
+  authors:
+  - Grace Mappes
+  - Christina Harward
+  - Kateryna Stepanenko
+  - Nate Trotter
+  - Olivia Gibson
+  - William Runkel
+  - George Barros
+  published: '2025-01-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: Vozdvyzhenka seized; two-flank envelopment. Fetched via web.archive.org.
+- id: isw-2025-01-13-roca
+  title: Russian Offensive Campaign Assessment, January 13, 2025
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-13-2025
+  publisher: Institute for the Study of War
+  authors:
+  - Nicole Wolkov
+  - Angelica Evans
+  - Olivia Gibson
+  - Grace Mappes
+  - Nate Trotter
+  - William Runkel
+  - Frederick W. Kagan
+  published: '2025-01-13'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: T-0504 and T-0406 cut, Pishchane seized; detailed Russian ORBAT. Fetched via web.archive.org.
+- id: isw-2025-02-26-roca
+  title: Russian Offensive Campaign Assessment, February 26, 2025
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-26-2025
+  publisher: Institute for the Study of War
+  authors:
+  - Davit Gasparyan
+  - Grace Mappes
+  - Nicole Wolkov
+  - Christina Harward
+  - Karolina Hird
+  - Frederick W. Kagan
+  published: '2025-02-26'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: Ukrainian brigade claims Kotlyne seized. Fetched via web.archive.org.
+- id: isw-2025-05-16-roca
+  title: Russian Offensive Campaign Assessment, May 16, 2025
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-16-2025
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-05-16'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Mordvichev → Ground Forces CinC; Solodchuk CMD; Myroliubivka/Mykhailivka seized. Fetched via web.archive.org.
+- id: isw-2025-08-07-bai
+  title: Russian Drone Innovations are Likely Achieving Effects of Battlefield Air Interdiction in Ukraine
+  url: https://understandingwar.org/research/russia-ukraine/russian-drone-innovations-are-likely-achieving-effects-of-battlefield-air-interdiction-in-ukraine/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-08-07'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: Russian Drone Innovations are Likely Achieving Effects of Battlefield Air Interdiction in Ukraine
+- id: isw-2025-08-12-roca
+  title: Russian Offensive Campaign Assessment, August 12, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-august-12-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-08-12'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: 'penetration context: drone BAI, 55 km in 17 months, "not immediate" but after months of condition-setting.'
+- id: isw-2025-08-15-roca
+  title: Russian Offensive Campaign Assessment, August 15, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-august-15-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-08-15'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Mashovets OOB: 5th, 110th, 132nd MRBs (51st CAA), ≤300–350 men; 114th MRB; 8th CAA battalions requested. Fetched
+    via web.archive.org.'
+- id: isw-2025-10-02-roca
+  title: Russian Offensive Campaign Assessment, October 2, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-october-2-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-10-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Dorozhnie liberated (geoloc); Syrskyi totals 177.8 km² 198.9 km²; 3rd Spetsnaz Brigade (GRU). Fetched via a reader
+    proxy.
+- id: isw-2025-10-09-roca
+  title: Russian Offensive Campaign Assessment, October 9, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-october-9-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-10-09'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 'relays Zelensky 8 Oct: 12,000 casualties incl. 7,000 KIA (cites president.gov.ua item 100693, which itself returned
+    403). Fetched via a reader proxy.'
+- id: isw-2025-10-14-roca
+  title: Russian Offensive Campaign Assessment, October 14, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-october-14-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-10-14'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'KEY for weather: mechanized assaults in rain/fog (6, 9, 13 Oct); 5th MRB + 155th Naval Infantry Bde. Fetched via
+    a reader proxy.'
+- id: isw-2025-11-16-roca
+  title: Russian Offensive Campaign Assessment, November 16, 2025
+  url: https://www.understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-november-16-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-11-16'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Russians now prioritise closing the encirclement north of Pokrovsk. Fog cuts both ways. 10–15 km vehicle stand-off.
+- id: isw-2025-12-02-roca
+  title: Russian Offensive Campaign Assessment, December 2, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-2-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-12-02'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: No evidence of full capture. Solodchuk credits 27th MRD units. Okishev statement.
+- id: isw-2025-12-24-roca
+  title: Russian Offensive Campaign Assessment, December 24, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-24-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-12-24'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Order of battle: 9th MRB in Rodynske, 35th MRB and 1452nd MRR in NW Pokrovsk, 5th MRB in N Myrnohrad, 90th TD regiments.'
+- id: isw-2025-12-28-roca
+  title: Russian Offensive Campaign Assessment, December 28, 2025
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-28-2025/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2025-12-28'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Solodchuk claims Myrnohrad and Rodynske (27 Dec). ISW sees a Russian presence in only 49% of Myrnohrad. Credited
+    units.
+- id: isw-2026-01-24-roca
+  title: Russian Offensive Campaign Assessment, January 24, 2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-january-24-2026/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2026-01-24'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '7th Corps commander Brig. Gen. Yevhen Lasiychuk on 23 Jan: holds the north of both cities, Svitle and Rivne.'
+- id: isw-2026-01-27-roca
+  title: Russian Offensive Campaign Assessment, January 27, 2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-january-27-2026/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2026-01-27'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '7th Corps spokesman Polevyi: "partially control" the north. 76th VDV elements pulled back.'
+- id: isw-2026-01-28-roca
+  title: Russian Offensive Campaign Assessment, January 28, 2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-january-28-2026/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2026-01-28'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Order of battle: 15th MRB (2nd CAA), 74th MRB near Hryshyne, Grom-Kaskad, Sparta.'
+- id: isw-2026-02-04-roca
+  title: Russian Offensive Campaign Assessment, February 4, 2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-february-4-2026/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2026-02-04'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - chapter
+  notes: Myrnohrad assessed seized "on a prior date" (cites UP 28 Jan).
+- id: isw-2026-02-25-roca
+  title: Russian Offensive Campaign Assessment, February 25, 2026
+  url: https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-february-25-2026/
+  publisher: Institute for the Study of War
+  authors: []
+  published: '2026-02-25'
+  accessed: '2026-10-01'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - chapter
+  notes: No Ukrainian forces seen in Pokrovsk since 28 Jan. MoD claimed Myrnohrad on 28 Dec. Hryshyne not taken.
+- id: kyivindependent-2024-court-train-station
+  title: Pokrovsk train station closes for civilian evacuations as security situation deteriorates
+  url: https://kyivindependent.com/pokrovsk-train-station-closes-for-civilian-evacuations/
+  publisher: Kyiv Independent
+  authors:
+  - Elsa Court
+  published: '2024-09-05'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: 'Filashkin: 26,000 remain.'
+- id: kyivindependent-2024-ivanyshyn-metinvest-pokrovsk
+  title: Ukraine's largest steelmaker partially suspends operations at Pokrovsk coal mine
+  url: https://kyivindependent.com/ukraines-largest-steelmaker-suspends-operations-at-donetsk-oblast-site/
+  publisher: Kyiv Independent
+  authors:
+  - Volodymyr Ivanyshyn
+  published: '2024-12-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: one of three sites suspended; half of Metinvest coal.
+- id: kyivindependent-2024-tense-and-difficult
+  title: Pokrovsk situation 'tense and difficult,' Ukrainian military says
+  url: https://kyivindependent.com/pokrovsk-situation-tense-and-difficult-ukraines-military-says/
+  publisher: Kyiv Independent
+  authors: []
+  published: '2024-07-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - ground
+  - chapter
+  notes: Khortytsia spokesman Voloshyn; Prohres 23 km E of Pokrovsk.
+- id: kyivindependent-2024-york-selydove
+  title: Ukraine facing 'grim' situation in Donetsk Oblast, as Russia claims capture of Selydove
+  url: https://kyivindependent.com/ukraine-facing-grim-situation-in-donetsk-oblast-as-russia-claims-capture-of-selydove/
+  publisher: Kyiv Independent
+  authors:
+  - Chris York
+  published: '2024-10-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: RU MoD claim 29 Oct; Kastehelmi.
+- id: kyivindependent-2025-denisova-attacks-ramp-up
+  title: Russia ramps up attacks near Pokrovsk, Ukrainian military says
+  url: https://kyivindependent.com/russia-steps-up-attacks-near-pokrovsk-ukrainian-military-says/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Denisova
+  published: '2025-03-25'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: Syrskyi 7,000 KIA in January; Chervona Kalyna NG brigade.
+- id: kyivindependent-2025-farrell-24h-pokrovsk
+  title: As Russia closes in on Pokrovsk, battle for key city enters its final act
+  url: https://kyivindependent.com/24-hours-inside-pokrovsk-battle-for-key-ukrainian-city-enters-its-final-act/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2025-07-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: embedded with the 68th Jaeger Bde "Hornets of Dovbush" FPV team. Rubicon and Sudny Den arrival, net tunnels, 15-km
+    fibre spool, drive-in procedure.
+- id: kyivindependent-2025-farrell-dobropillia-lessons
+  title: 'Analysis: Ukraine learns hard lessons from Russia''s evolving tactics after clearing Dobropillia ''breakthrough'''
+  url: https://kyivindependent.com/analysis-clean-up-of-dobropillia-breakthrough-nears-final-phase-but-larger-concerns-remain/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2025-10-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Best single narrative: terrain (ravines, foliage), two exhausted NGU brigades at a seam, false reporting, "fire-fighting"
+    not a counteroffensive, 93rd tanks clear Zolotyi Kolodiaz, Prokopenko commands.'
+- id: kyivindependent-2025-farrell-encirclement-what-we-know
+  title: What we know now about the 'encirclement' of Ukraine's Pokrovsk
+  url: https://kyivindependent.com/pokrovsk-defense-deteriorates-further-as-putin-claims-encirclement-what-we-know/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2025-10-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: What we know now about the 'encirclement' of Ukraine's Pokrovsk
+- id: kyivindependent-2025-farrell-knife-edge
+  title: Ukraine's defense of Pokrovsk on a knife-edge as high command resists calls to withdraw
+  url: https://kyivindependent.com/ukraines-defense-of-pokrovsk-on-a-knife-edge-as-high-command-resists-calls-to-withdraw/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2025-11-06'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Ukraine's defense of Pokrovsk on a knife-edge as high command resists calls to withdraw
+- id: kyivindependent-2025-farrell-myrnohrad-encirclement
+  title: As Russia takes Pokrovsk, sister city Myrnohrad stares down encirclement
+  url: https://kyivindependent.com/pokrovsk-in-russias-grip-as-sister-city-stares-down-encirclement/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2025-12-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: As Russia takes Pokrovsk, sister city Myrnohrad stares down encirclement
+- id: kyivindependent-2025-farrell-north-of-pokrovsk
+  title: Russian troops spotted north of Pokrovsk, military confirms
+  url: https://kyivindependent.com/russian-troops-spotted-north-of-pokrovsk-military-confirms/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2025-11-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: '7th Corps: Russians at a farm north of the city. 314 KIA and 71 WIA in November. Russian aim is Hryshyne.'
+- id: kyivindependent-2025-farrell-pokrovsk-brink
+  title: 'Analysis: Pokrovsk on the brink as Russian troops, drones infiltrate deeper into Ukraine''s fortress city'
+  url: https://kyivindependent.com/analysis-pokrovsk-on-the-brink-as-russian-troops-drones-infiltrate-deeper-into-ukraines-fortress-city/
+  publisher: Kyiv Independent
+  authors:
+  - Francis Farrell
+  published: '2025-10-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - infiltration
+  - chapter
+  notes: 'Analysis: Pokrovsk on the brink as Russian troops, drones infiltrate deeper into Ukraine''s fortress city'
+- id: kyivindependent-2025-fenbert-putin-claims-pokrovsk
+  title: Putin claims Russian capture of Pokrovsk, Vovchansk; Kyiv denies
+  url: https://kyivindependent.com/putin-claims-russian-capture-of-pokrovsk-vovchansk-as-kyiv-warns-of-kremlin-propaganda-blitz-amid-peace-talks/
+  publisher: Kyiv Independent
+  authors:
+  - Abbey Fenbert
+  published: '2025-12-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 'General Staff 2 Dec: holding "the northern part of the city along the railway line". Calls the video a "flag op".
+    106 Russians killed in 24 h.'
+- id: kyivindependent-2025-fenbert-total-infiltration
+  title: Russian troops resort to 'total infiltration' tactics in front-line Pokrovsk, Ukraine's commander-in-chief says
+  url: https://kyivindependent.com/russian-troops-resort-to-total-infiltration-tactics-in-front-line-pokrovsk-ukraines-commander-in-chief-says/
+  publisher: Kyiv Independent
+  authors:
+  - Abbey Fenbert
+  published: '2025-08-02'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - infiltration
+  - chapter
+  notes: Russian troops resort to 'total infiltration' tactics in front-line Pokrovsk, Ukraine's commander-in-chief says
+- id: kyivindependent-2025-fornusek-155th-probe
+  title: Ukraine investigating French-trained brigade after reports of desertions, mismanagement
+  url: https://kyivindependent.com/ukraine-investigating-french-trained-brigade/
+  publisher: Kyiv Independent
+  authors:
+  - Martin Fornusek
+  published: '2025-01-03'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: 155th "Anne of Kyiv" near Pokrovsk.
+- id: kyivindependent-2025-fratsyvir-donetsk-gains
+  title: Ukraine claims battlefield success in Donetsk Oblast
+  url: https://kyivindependent.com/ukraine-claims-battlefield-success-in-donetsk-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - Anna Fratsyvir
+  published: '2025-08-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 'GS 17 Aug: six villages retaken; Russian losses 910 KIA 335 WIA 37 POW.'
+- id: kyivindependent-2025-hodunova-azov-deployed
+  title: Elite Azov Corps deployed to Pokrovsk sector amid Russian advances in Donetsk Oblast
+  url: https://kyivindependent.com/azov-corps-takes-defensive-positions-near-pokrovsk-amid-escalating-battles/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Hodunova
+  published: '2025-08-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 1st Azov Corps statement of 12 Aug; arrived "several days" earlier.
+- id: kyivindependent-2025-hodunova-dobropillia-breach
+  title: Russian forces pierce Ukrainian defense in Donetsk Oblast, bypassing fortifications, monitoring group says
+  url: https://kyivindependent.com/russian-forces-advance-toward-dobropillia-in-donetsk-oblast-bypassing-fortifications-monitoring-group-says/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Hodunova
+  published: '2025-08-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: DeepState 11 Aug report, villages entered, "Dobropillia falls faster than Pokrovsk" quote, GS 11 Aug evening update.
+- id: kyivindependent-2025-hodunova-pankivka
+  title: Ukrainian troops clear another village near Dobropillia in Donetsk Oblast, military reports
+  url: https://kyivindependent.com/ukrainian-troops-drive-out-russian-forces-from-another-village-in-dobropillia-sector-in-donetsk-oblast/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Hodunova
+  published: '2025-09-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Pankivka cleared (Azov Corps, 15 Sep); Azov Corps = four infantry brigades + a marine regiment.
+- id: kyivindependent-2025-hodunova-syrskyi-encircled
+  title: Some Russian units encircled near Dobropillia in Donetsk Oblast, Syrskyi says
+  url: https://kyivindependent.com/some-russian-units-encircled-near-dobropillia-in-donetsk-oblast-syrskyi-says/
+  publisher: Kyiv Independent
+  authors:
+  - Kateryna Hodunova
+  published: '2025-09-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 'Syrskyi 29 Sep: 175 km² liberated, 195 km² cleared, 3,185 Russian casualties incl. 1,769 killed, 969 equipment.'
+- id: kyivindependent-2025-myronyshena-hur-raid
+  title: Russia claims HUR special forces raid in embattled Pokrovsk thwarted, Ukraine denies, Syrskyi insists 'no encirclement'
+  url: https://kyivindependent.com/ukraines-hur-launches-special-forces-raid-in-embattled-pokrovsk-media-report/
+  publisher: Kyiv Independent
+  authors:
+  - Tania Myronyshena
+  published: '2025-11-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Russia claims HUR special forces raid in embattled Pokrovsk thwarted, Ukraine denies, Syrskyi insists 'no encirclement'
+- id: kyivindependent-2025-newsdesk-russian-troops-enter-pokrovsk
+  title: 'Ukraine war latest: Russian troops enter Pokrovsk, Ukrainian ''search and destroy'' operation ongoing'
+  url: https://kyivindependent.com/ukraine-war-latest-105/
+  publisher: Kyiv Independent
+  authors: []
+  published: '2025-07-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'English version of the DeepState and soldier reports. Entry via Zvirove. Syrskyi: 110,000+ Russian troops in the
+    area.'
+- id: kyivindependent-2025-pakhnyuk-crab-claws
+  title: Russian units surrounded near Dobropillia, Ukraine's military says
+  url: https://kyivindependent.com/russian-units-surrounded-near-dobropillia-ukraines-military-says/
+  publisher: Kyiv Independent
+  authors:
+  - Lucy Pakhnyuk
+  published: '2025-08-30'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Trehubov "crab claws" cut off and surrounded.
+- id: kyivindependent-2025-terajima-8-to-1
+  title: Russian troops outnumber Ukraine 8-1 in Pokrovsk sector, Zelensky says
+  url: https://kyivindependent.com/russian-troops-outnumber-ukraine-8-1-in-pokrovsk-sector-zelensky-says/
+  publisher: Kyiv Independent
+  authors:
+  - Asami Terajima
+  published: '2025-10-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Zelensky 8:1 (27 Oct). 15 km gap (DeepState). Black Bird Group view on withdrawal. Role of fog.
+- id: kyivindependent-2026-terajima-if-you-stop-you-die
+  title: Ukrainian infantry fight to survive on the Pokrovsk front as Russia closes in
+  url: https://kyivindependent.com/if-you-stop-you-die-inside-ukraines-last-fight-for-pokrovsk-and-myrnohrad/
+  publisher: Kyiv Independent
+  authors:
+  - Asami Terajima
+  published: '2026-02-17'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ground
+  - chapter
+  notes: Ukrainian infantry fight to survive on the Pokrovsk front as Russia closes in
+- id: kyivpost-2024-korshak-novohrodivka-72h
+  title: Russia's Donbas Offensive Rolls On Against Outgunned Ukrainian Troops
+  url: https://www.kyivpost.com/post/38085
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2024-08-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: Novohrodivka lost in 72 h; 4:1 firepower; Butusov "catastrophic".
+- id: kyivpost-2025-korshak-reserves-contain
+  title: Ukraine Reserves Contain Russian Penetration Threatening Critical Pokrovsk Sector
+  url: https://www.kyivpost.com/post/58196
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2025-08-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: KEY for "200–300 men, walked two weeks from Selydove"; units committed (Azov, 93rd, 4th NGU Rubizh, Da Vinci); 3-km-wide
+    salient.
+- id: kyivpost-2025-struck-feshchenko-kotlyne
+  title: Ukrainian Paratroopers Crush Russian Forces Near Pokrovsk – Hundreds Eliminated
+  url: https://www.kyivpost.com/post/47896
+  publisher: Kyiv Post
+  authors:
+  - Julia Struck-Feshchenko
+  published: '2025-02-26'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: 25th AAB retakes Kotlyne.
+- id: moscowtimes-2025-tenisheva-gerasimov-encirclement
+  title: Gerasimov Says Russia Encircled Pokrovsk and Kupiansk. Experts and Pro-War Bloggers Doubt It.
+  url: https://www.themoscowtimes.com/2025/10/28/gerasimov-says-russia-encircled-pokrovsk-and-kupiansk-experts-and-pro-war-bloggers-doubt-it-a90955
+  publisher: The Moscow Times
+  authors:
+  - Anastasia Tenisheva
+  published: '2025-10-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Gerasimov claim (Sun 26 Oct) of up to 10,000 encircled. Milbloggers and ISW dispute it.
+- id: nv-2025-horova-deepstate-150-saboteurs
+  title: 'DeepState: Зі 150 ворожих диверсантів до Покровська дійшло близько 30, решту — ліквідували'
+  url: https://nv.ua/ukr/ukraine/events/pokrovsk-doneckoji-oblasti-rosiyski-diversiyni-grupi-zaznali-znachnih-vtrat-na-pidstupah-50536020.html
+  publisher: NV (Novoye Vremya)
+  authors:
+  - Viktoriia Horova
+  published: '2025-08-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - chapter
+  notes: 'DeepState account: 3 groups of about 50, about 30 of 150 got through, a 14-day route at about 600 m a day, supply
+    by drone.'
+- id: nv-2025-romanenko-koptieve
+  title: Russian forces capture Donbas village, push near Pokrovsk
+  url: https://english.nv.ua/nation/russia-occupies-koptieve-and-advances-in-pokrovsk-sector-50526433.html
+  publisher: NV
+  authors:
+  - Bohuslav Romanenko
+  published: '2025-07-01'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Koptieve occupied.
+- id: nv-2025-romanenko-lysivka
+  title: Ukraine regains ground near Pokrovsk, Russia captures village in Kursk Oblast
+  url: https://english.nv.ua/nation/fighting-for-pokrovsk-ukrainian-armed-forces-push-back-russians-near-lysivka-donetsk-oblast-50491666.html
+  publisher: NV (New Voice of Ukraine)
+  authors:
+  - Bohuslav Romanenko
+  published: '2025-02-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: 'DeepState: Lysivka; Pishchane 11 Feb; Skala; Azov at Malynivka.'
+- id: nv-2025-sonko-razine
+  title: Russians occupy Razine and advance near four settlements in Donetsk Oblast — DeepState
+  url: https://english.nv.ua/russian-war/russians-occupy-razine-and-advance-in-donetsk-oblast-50529503.html
+  publisher: NV
+  authors:
+  - Alona Sonko
+  published: '2025-07-13'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Razine occupied.
+- id: open-meteo-2026-era5-pokrovsk-2025-26
+  title: 'Open-Meteo Historical Weather API (ERA5): Pokrovsk, 15 July 2025 – 28 February 2026 (query)'
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=48.28&longitude=37.18&start_date=2025-07-15&end_date=2026-02-28&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,snow_depth_max,cloud_cover_mean,relative_humidity_2m_mean,wind_speed_10m_max,sunrise,sunset&hourly=relative_humidity_2m,wind_speed_10m,cloud_cover_low&timezone=Europe%2FKyiv
+  publisher: Open-Meteo (ECMWF ERA5 reanalysis)
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - weather
+  - chapter
+  notes: Reanalysis, not station data. Daily temperatures, precipitation, cloud and sunrise/sunset for key days; our fog proxy
+    counts hours with RH >= 97% and wind <= 10 km/h (84 hours in Nov 2025).
+- id: osm-photon-2026-pokrovsk-places
+  title: OpenStreetMap place, mine and spoil-heap features around Pokrovsk and Myrnohrad, via the Photon geocoder (computed
+    distances)
+  url: https://photon.komoot.io/api/?q=Hryshyne&bbox=36.6,47.95,37.75,48.75
+  publisher: OpenStreetMap contributors (Photon by Komoot)
+  authors: []
+  published: unknown
+  accessed: '2026-10-01'
+  type: dataset
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - geodata
+  - chapter
+  notes: Queried 2026-10-01 (ODbL). Settlement coordinates for about 70 places, OSM town extents (Pokrovsk 8.6 x 7.3 km, Myrnohrad
+    5.1 x 8.5 km), mines and terrikons (Tsentralna, Kapitalna, Rodynska, Pokrovske, mine No. 3); great-circle distances computed
+    by us. Nominatim rate-limited this session.
+- id: pravda-2024-hlushchenko-myrnohrad-3-settlements
+  title: Russians occupy 3 settlements near Myrnohrad in Donetsk Oblast – DeepState
+  url: https://www.pravda.com.ua/eng/news/2024/10/11/7479154/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Hlushchenko
+  published: '2024-10-11'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ground
+  - chapter
+  notes: Mykolaivka, Krasnyi Yar, Krutyi Yar.
+- id: pravda-2024-ivashkiv-prohres-48h
+  title: Russians occupy Prohres in Donetsk Oblast after 48 hours of fighting
+  url: https://www.pravda.com.ua/eng/news/2024/07/21/7466685/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olena Ivashkiv
+  published: '2024-07-21'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - ground
+  - chapter
+  notes: DeepState narrative; heights 229.0 and 224.8.
+- id: pravda-2025-deepstate-infiltrating-pokrovsk
+  title: Russians infiltrating Pokrovsk and crippling Ukrainian logistics – DeepState analysts
+  url: https://www.pravda.com.ua/eng/news/2025/10/29/8004926/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2025-10-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - infiltration
+  - logistics
+  - chapter
+  notes: Entry points Zvirove, Shevchenko and the railway from Kotlyne. "Several hundred" inside. DeepState calls for a brigade-size
+    mop-up.
+- id: pravda-2025-kyrylenko-250-russians-pokrovsk
+  title: At least 250 Russians in Pokrovsk, Ukrainian troops walk 10-15 km to reach positions – UP
+  url: https://www.pravda.com.ua/eng/news/2025/10/24/8004333/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Kyrylenko
+  published: '2025-10-24'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '"beyond critical". Officers from 2 brigades. Russians re-entered around mid-August.'
+- id: pravda-2025-kyrylenko-azov-defence-line
+  title: Azov fighters take up defence line on Pokrovsk front
+  url: https://www.pravda.com.ua/eng/news/2025/08/12/7525750/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Kyrylenko
+  published: '2025-08-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'UP sources: Pokrovsk Tactical Group "completely failing to hold the defence" on this section.'
+- id: pravda-2025-oliynyk-druzhkivka-evacuation
+  title: Mandatory evacuation of families with children begins in Donetsk Oblast
+  url: https://www.pravda.com.ua/eng/news/2025/08/14/7526218/
+  publisher: Ukrainska Pravda
+  authors:
+  - Tetyana Oliynyk
+  published: '2025-08-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - logistics
+  - chapter
+  notes: Druzhkivka + 4 villages, ~1,879 children.
+- id: pravda-2025-petrenko-genstaff-200-in-pokrovsk
+  title: Ukraine's General Staff confirms presence of Russian troops in Pokrovsk
+  url: https://www.pravda.com.ua/eng/news/2025/10/26/8004505/
+  publisher: Ukrainska Pravda
+  authors:
+  - Roman Petrenko
+  published: '2025-10-26'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'General Staff: "about 200" inside. Shapoval: "not critical".'
+- id: pravda-2025-petrenko-sukhetske
+  title: Ukrainian paratroopers liberate Sukhetske in Donetsk Oblast and wipe out over 50 Russian troops
+  url: https://www.pravda.com.ua/eng/news/2025/10/25/8004429/
+  publisher: Ukrainska Pravda
+  authors:
+  - Roman Petrenko
+  published: '2025-10-25'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 82nd Bukovyna Air Assault Brigade; 60+ engaged, 44 killed, 8 wounded, 9 surrendered.
+- id: pravda-2025-pohorilov-11000-troops
+  title: Russia has amassed around 11,000 troops in attempt to encircle Pokrovsk
+  url: https://www.pravda.com.ua/eng/news/2025/10/29/8004936/
+  publisher: Ukrainska Pravda
+  authors:
+  - Stanislav Pohorilov
+  published: '2025-10-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '7th Corps: 11,000 for the encirclement and 27,000 in its area of responsibility, with tanks, armoured vehicles and
+    artillery.'
+- id: pravda-2025-pohorilov-flag-destroyed
+  title: Ukrainian defence forces destroy Russian flag hung on entrance to Pokrovsk – video
+  url: https://www.pravda.com.ua/eng/news/2025/10/29/8004960/
+  publisher: Ukrainska Pravda
+  authors:
+  - Stanislav Pohorilov
+  published: '2025-10-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Flag up at 09:40 and destroyed by 10:40. DeepState: city "essentially a grey zone".'
+- id: pravda-2025-romanenko-firefights-myrnohrad
+  title: Number of firefights increasing in Pokrovsk, Russians stepping up attempts to infiltrate Myrnohrad
+  url: https://www.pravda.com.ua/eng/news/2025/11/18/8007816/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2025-11-18'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - infiltration
+  - chapter
+  notes: Same 7th Corps report. Infiltration into Myrnohrad from Krasnyi Lyman.
+- id: pravda-2025-romanenko-genstaff-measures
+  title: Ukraine's General Staff reports on measures taken to stop Russian advance on Dobropillia and Pokrovsk fronts
+  url: https://www.pravda.com.ua/eng/news/2025/08/12/7525837/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2025-08-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - infiltration
+  - chapter
+  notes: 'Kovalov: 110,000+ Russians on Pokrovsk front; infiltration of Vesele, Vilne, Rubizhne, Kucheriv Yar.'
+- id: pravda-2025-romanenko-kucheriv-yar
+  title: Ukrainian paratroopers liberate Kucheriv Yar on the Dobropillia front, capture more than 50 Russians – video
+  url: https://www.pravda.com.ua/eng/news/2025/10/22/8003981/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2025-10-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Air Assault Forces incl. 132nd Separate Reconnaissance Battalion; >50 POW.
+- id: pravda-2025-romanenko-pokrovsk-cleared
+  title: Pokrovsk cleared of Russian sabotage groups – Ukraine's 7th Air Assault Corps
+  url: https://www.pravda.com.ua/eng/news/2025/08/15/7526357/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2025-08-15'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - infiltration
+  - chapter
+  notes: 7th Corps clearance claim. Background line gives the first entry as 15 Jul.
+- id: pravda-2025-shumilin-military-deny-breakthrough
+  title: Ukrainian military deny Russian breakthrough near Pokrovsk and Dobropillia fronts
+  url: https://www.pravda.com.ua/eng/news/2025/08/12/7525796/
+  publisher: Ukrainska Pravda
+  authors:
+  - Oleksandr Shumilin
+  published: '2025-08-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Trehubov "one basement" quote; StratCom: reports "not reliable".'
+- id: pravda-2025-up-russians-entered-pokrovsk
+  title: Росіяни проникли у Покровськ – джерела УП
+  url: https://www.pravda.com.ua/news/2025/07/22/7522843/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2025-07-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Soldiers: first Russian infantry seen 17 Jul. Quotes DeepState 21 Jul: "one brigade simply ran out of infantry";
+    155th and 68th brigades fixed it.'
+- id: pravda-2026-kyrylenko-myrnohrad-staffs
+  title: Росіяни розгорнули в Мирнограді свою артилерію та штаби – УП
+  url: https://www.pravda.com.ua/news/2026/01/28/8018382/
+  publisher: Ukrainska Pravda
+  authors:
+  - Olha Kyrylenko
+  published: '2026-01-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Officer: Russians have artillery, HQs and a commandant''s office in Myrnohrad. HQs moved from Novohrodivka. "Наказу
+    на вихід з міста не було" (no order to leave).'
+- id: rbc-2025-sabotage-team-railway-station
+  title: Ukrainian forces stop Russian sabotage team in Pokrovsk after civilian killings
+  url: https://newsukraine.rbc.ua/news/ukrainian-forces-stop-russian-sabotage-team-1760958683.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: '2025-10-20'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - infiltration
+  - casualties
+  - chapter
+  notes: Railway-station incident and 14 Russians killed in 2 days.
+- id: rbcukraine-2025-azov-mechanized-assault
+  title: Azov brigade releases footage of crushing Russian mechanized assault near Ukrainian Dobropillia
+  url: https://newsukraine.rbc.ua/news/azov-brigade-releases-footage-of-crushing-1760623985.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: '2025-10-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: '16 Oct assault on Shakhove: 22 AFVs, main column 11 from Malynivka ~07:50; 9 destroyed, 4 damaged.'
+- id: rbcukraine-2025-dobropillia-stabilization
+  title: Dobropillia attacked by Russians - General Staff announces stabilization of situation
+  url: https://newsukraine.rbc.ua/news/dobropillia-front-sees-signs-of-stabilization-1755156788.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: '2025-08-14'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Kovalov "stabilizing"; RBC military sources: advance from Novotoretske; "seepage" for almost a week; mined area.'
+- id: rbcukraine-2025-kucheriv-yar-liberated
+  title: 'Ukraine''s Forces liberate Kucheriv Yar in Dobropillia direction: Over 50 soldiers captured, footage'
+  url: https://newsukraine.rbc.ua/news/ukraine-s-forces-liberate-kucheriv-yar-in-1761149660.html
+  publisher: RBC-Ukraine
+  authors: []
+  published: '2025-10-22'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Syrskyi cumulative >180 km² liberated, >210 km² cleared; Zelensky 10 Oct: Russian relief attempt failed.'
+- id: reuters-2025-dysa-balmforth-special-forces-pokrovsk
+  title: Ukraine lands special forces in embattled Pokrovsk, sources say
+  url: https://www.reuters.com/world/europe/ukraine-lands-special-forces-embattled-pokrovsk-sources-say-2025-10-31/
+  publisher: Reuters
+  authors:
+  - Yuliia Dysa
+  - Tom Balmforth
+  published: '2025-10-31'
+  accessed: '2026-10-01'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: 'Black Hawk landing overseen by Budanov. At least 10 troops seen in video. DeepState: at least half the city contested.'
+- id: suspilne-2025-ivantsiv-how-breakthrough
+  title: Як росіяни здійснили прорив між Дружківкою та Добропіллям і що роблять Сили оборони (How the Russians broke through
+    between Druzhkivka and Dobropillia)
+  url: https://suspilne.media/1089168-klesna-na-dobropilla-ak-rosiani-zdijsnili-proriv-na-pokrovskomu-napramku/
+  publisher: Suspilne
+  authors:
+  - Anastasiia Ivantsiv
+  - Taras Ibrahimov
+  published: '2025-08-12'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: thermal blankets, groups up to 15, favourable weather/foliage, 20-km kill zone; Bilozerske 4x FAB-250, ~400 left.
+- id: uacrisis-2025-day-1251-mashovets
+  title: 'Day 1,251: Russia trying to envelop Pokrovsk, military analyst says'
+  url: https://uacrisis.org/en/1251
+  publisher: Ukraine Crisis Media Center (UACRISIS.ORG)
+  authors: []
+  published: '2025-07-28'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Mashovets 110–112k troops, equipment counts. (English source requested.)
+- id: ukrainskapravda-2025-kyrylenko-five-observations
+  title: 'How Pokrovsk is imperceptibly falling: five observations by Ukrainska Pravda'
+  url: https://www.pravda.com.ua/eng/articles/2025/10/27/8004562/
+  publisher: Ukrainska Pravda (EN)
+  authors:
+  - Olha Kyrylenko
+  published: '2025-10-27'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - logistics
+  - casualties
+  - chapter
+  notes: '"waiting" FPVs on every road, drones cutting anti-drone nets, UGVs now "almost the only means" of supply and casualty
+    evacuation, a 20–25 km walk to Myrnohrad.'
+- id: ukrinform-2025-apostol-dobropillia-finished
+  title: Operation on Dobropillia axis finished, Pokrovsk still holding - Ukrainian commander says
+  url: https://www.ukrinform.net/rubric-ato/4064273-operation-on-dobropillia-axis-finished-pokrovsk-still-holding-ukrainian-commander-says.html
+  publisher: Ukrinform
+  authors: []
+  published: '2025-11-29'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Apostol "preliminarily completed"; Russian aim Barvinkove; marines from east, 76th Division from south.
+- id: united24-2025-kulakova-25000-october
+  title: 'Breaking: Zelenskyy Counts Record 25,000 Russian Losses in October—Pokrovsk Turns Into a Mass Graveyard'
+  url: https://united24media.com/latest-news/breaking-zelenskyy-counts-record-25000-russian-losses-in-october-pokrovsk-turns-into-a-mass-graveyard-13213
+  publisher: United24 Media
+  authors:
+  - Maryna Kulakova
+  published: '2025-11-07'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - casualties
+  - chapter
+  notes: 'Breaking: Zelenskyy Counts Record 25,000 Russian Losses in October—Pokrovsk Turns Into a Mass Graveyard'
+- id: united24-2025-litnarovych-155000
+  title: Pokrovsk Under Fire As Russia Commits 155,000 of Its Invasion Force to Single Front
+  url: https://united24media.com/latest-news/pokrovsk-under-fire-as-russia-commits-155000-of-its-invasion-force-to-single-front-14146
+  publisher: United24 Media
+  authors:
+  - Vlad Litnarovych
+  published: '2025-12-10'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Pokrovsk Under Fire As Russia Commits 155,000 of Its Invasion Force to Single Front
+- id: united24-2025-wesdorp-rubikon
+  title: Russia's New Deadly Rubikon Unit Escalates Drone War Against Ukrainian Civilians
+  url: https://united24media.com/war-in-ukraine/russias-new-deadly-rubicon-unit-escalates-drone-war-against-ukrainian-civilians-9916
+  publisher: United24 Media
+  authors:
+  - Daphne Wesdorp
+  published: '2025-07-16'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - drones
+  - chapter
+  notes: Russia's New Deadly Rubikon Unit Escalates Drone War Against Ukrainian Civilians
+- id: united24-2026-litnarovych-winter
+  title: Winter Is No Longer Russia's Ally on the Battlefield Near Pokrovsk
+  url: https://united24media.com/latest-news/winter-is-no-longer-russias-ally-on-the-battlefield-near-pokrovsk-15284
+  publisher: United24 Media
+  authors:
+  - Vlad Litnarovych
+  published: '2026-01-23'
+  accessed: '2026-10-01'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ground
+  - chapter
+  notes: Winter Is No Longer Russia's Ally on the Battlefield Near Pokrovsk

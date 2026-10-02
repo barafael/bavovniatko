@@ -240,7 +240,7 @@
   type: work
   kind: dataset_product
   en: "NASA FIRMS"
-  aliases: ["NASA FIRMS"]
+  aliases: ["NASA FIRMS", "FIRMS"]
   note: "NASA, USA. Fire Information for Resource Management System: satellite active-fire detections."
 - id: work:geoboundaries
   type: work
@@ -882,3 +882,9 @@
   en: "allied wargames (2022 offensive planning)"
   aliases: ["allied wargames (2022 offensive planning)", "allied wargames of summer 2022"]
   note: "Western and Ukrainian planners; summer 2022. Reportedly showed Ukraine lacked the means for a Zaporizhzhia–Melitopol offensive."
+- id: work:on_storm_z
+  type: work
+  kind: publication
+  en: "On Storm Z"
+  aliases: ["On Storm Z"]
+  note: "Russian MoD, Russia; 2023. Internal document on the Storm-Z convict assault units; reportedly authorised shooting deserters."

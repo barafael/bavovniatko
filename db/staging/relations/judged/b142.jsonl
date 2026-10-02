@@ -1,0 +1,40 @@
+{"pair": "77880c64d3d5", "relation": "supports", "from": "claim:cc18_0013_56", "to": "claim:cc18_0035_11", "strength": 0.6, "rationale": "Both have jet drones flying south over the Kyiv Reservoir past Kotsiubynske on the morning of 2 July; the windows overlap.", "independent": false}
+{"pair": "779b306ccd51", "relation": "none", "rationale": "Coordinates and a command exchange."}
+{"pair": "77a8e88ed1ec", "relation": "supports", "from": "claim:cc16_0024_03", "to": "claim:cc16_0024_02", "strength": 0.6, "rationale": "The skies clearing only on 4 June fits cloud forcing the first counts onto SAR imagery.", "independent": false}
+{"pair": "77ac09341fb7", "relation": "duplicates", "from": "claim:cc15_0022_75", "to": "claim:cc15_0007_91", "strength": 0.75, "rationale": "Same BBC report of the Ukrainian flag raised in northern Pokrovsk on 9 Dec 2025."}
+{"pair": "77fe8aeff859", "relation": "none", "rationale": "The raid and a later exhibition."}
+{"pair": "78392e5dbe10", "relation": "refines", "from": "claim:cc09_0043_24", "to": "claim:cc09_0005_01", "strength": 0.5, "rationale": "B qualifies A's Tokmak-then-Melitopol plan: by September the aim had shrunk to Tokmak."}
+{"pair": "785bf76f34fb", "relation": "supports", "from": "claim:cc14_0029_30", "to": "claim:cc14_0017_02", "strength": 0.6, "rationale": "Daytime movement being impossible by March corroborates the drone interdiction of the H-07 from January.", "independent": false}
+{"pair": "78f3b5fa4cb3", "relation": "none", "rationale": "A launch site and the length of the road run."}
+{"pair": "793af15899f3", "relation": "supports", "from": "claim:cc09_0010_42", "to": "claim:cc09_0006_20", "strength": 0.6, "rationale": "The 11 July leak is consistent with Popov being fired on about 11–12 July.", "independent": false}
+{"pair": "79677630c269", "relation": "none", "rationale": "Coordinates and river geography."}
+{"pair": "7972e05ca0c6", "relation": "none", "rationale": "An isolation assessment and terrain judgement."}
+{"pair": "79885a7e82f4", "relation": "none", "rationale": "An attack-axis assessment and river geography."}
+{"pair": "7994d61dd9c7", "relation": "none", "rationale": "Time zones and imagery conditions."}
+{"pair": "79b86fe346f5", "relation": "supports", "from": "claim:cc07_0010_43", "to": "claim:cc07_0006_06", "strength": 0.6, "rationale": "The 4–8 Feb advances at Krasna Hora and Ivanivske are part of Wagner's envelopment of Bakhmut.", "independent": false}
+{"pair": "7a14b2b6b3e0", "relation": "supports", "from": "claim:cc01_0030_10", "to": "claim:cc01_0006_04", "strength": 0.6, "rationale": "The explosives run and the 13:30 blast that turned the river into a lake corroborate the 25/26 Feb flooding breach.", "independent": false}
+{"pair": "7a340bff7ccd", "relation": "none", "rationale": "The ballistic wave (01:53–02:31) and the cruise tracks (02:48–02:56) are different."}
+{"pair": "7a5bd9ea36a2", "relation": "duplicates", "from": "claim:cc19_0023_18", "to": "claim:c03_0024_78", "strength": 0.9, "rationale": "Same Euromaidan report of heavy bomber drones dropping kamikaze UGVs on command nodes more than 10 km behind the line."}
+{"pair": "7a658826034f", "relation": "none", "rationale": "Different Seim bridges on different dates."}
+{"pair": "7b0df7394258", "relation": "none", "rationale": "The loss of the canal bridge and the later status of the T0504 as a GLOC concern different points in time."}
+{"pair": "7b2aa77cedf9", "relation": "duplicates", "from": "claim:cc16_0040_01", "to": "claim:cc16_0011_14", "strength": 0.85, "rationale": "Same WSJ account of 150 drones and 8 cabins assembled in Chelyabinsk under video instruction."}
+{"pair": "7b8d6b1c63b6", "relation": "none", "rationale": "The invasion's first day and the extent of the advance."}
+{"pair": "7be3008a385f", "relation": "refines", "from": "claim:cc16_0035_03", "to": "claim:cc16_0011_03", "strength": 0.6, "rationale": "B qualifies A: the Poltava museum training-data story is reported but not confirmed by the SBU."}
+{"pair": "7c1082a77f86", "relation": "supports", "from": "claim:cc14_0014_046", "to": "claim:cc14_0014_044", "strength": 0.4, "rationale": "A pontoon destroyed over the Seim on 19 Aug fits the acknowledged HIMARS campaign against Seim pontoons.", "independent": true}
+{"pair": "7c221d150e40", "relation": "none", "rationale": "Whole-war losses and the breach design."}
+{"pair": "7c86ccf6fd88", "relation": "supports", "from": "claim:cc14_0031_11", "to": "claim:cc14_0029_13", "strength": 0.7, "rationale": "B's sequence (Glushkovo collapsed, Zvannoye holed, Karyzh last) corroborates the one-at-a-time bridge campaign in A.", "independent": false}
+{"pair": "7c92dac9fac1", "relation": "supports", "from": "claim:cc16_0028_05", "to": "claim:cc16_0011_27", "strength": 0.4, "rationale": "Both place Tu-160s at Olenya before the strike.", "independent": true}
+{"pair": "7ccbf7aa289c", "relation": "none", "rationale": "River crossings and a bridge's coordinates."}
+{"pair": "7cf81cdda70a", "relation": "supports", "from": "claim:cc09_0040_17", "to": "claim:c04_0019_02", "strength": 0.4, "rationale": "Ukrainian armour crossing the anti-tank ditch and dragon's teeth at Verbove corroborates their use in the Russian defences.", "independent": true}
+{"pair": "7d3f28d88b08", "relation": "supports", "from": "claim:cc14_0029_14", "to": "claim:cc14_0014_044", "strength": 0.6, "rationale": "FIRMS and satellite confirmation of pontoon kills corroborates Kyiv's acknowledgment of HIMARS strikes on Seim pontoons.", "independent": true}
+{"pair": "7d56c9f264e1", "relation": "refines", "from": "claim:cc16_0040_14", "to": "claim:cc16_0005_04", "strength": 0.8, "rationale": "B adds the unstable link, the explosion on opening and the driver's death to the loss of the fifth truck near Seryshevo."}
+{"pair": "7d94215b0ae5", "relation": "none", "rationale": "Zelensky's 2023 warning and a 2026 Russian aim."}
+{"pair": "7d98c18b5809", "relation": "supports", "from": "claim:cv01_0003_02", "to": "claim:cc01_0025_23", "strength": 0.6, "rationale": "The 6th Tank Regiment column driving into Skybyn on 9 Mar corroborates the 90th Division's advance on Brovary.", "independent": true}
+{"pair": "7db05e819706", "relation": "none", "rationale": "Artillery composition and battery rotation."}
+{"pair": "7dcaa8f11bee", "relation": "none", "rationale": "B is geodata. It does not corroborate the capture."}
+{"pair": "7dd2ccfe8713", "relation": "duplicates", "from": "claim:cc09_0035_12", "to": "claim:c03_0031_02", "strength": 0.75, "rationale": "Same RUSI finding that Russia moved to Krasnopol and Lancet strikes, 'effect over volume'."}
+{"pair": "7df1c4266355", "relation": "duplicates", "from": "claim:cc09_0050_17", "to": "claim:cc09_0010_79", "strength": 0.9, "rationale": "Same Shoigu remark that Zaporizhzhia was 'the tensest' direction in September 2023."}
+{"pair": "7e46ce3af148", "relation": "none", "rationale": "Holding the line and the later counterattack."}
+{"pair": "7e4f3482f4c6", "relation": "supports", "from": "claim:cc16_0028_01", "to": "claim:cc16_0015_02", "strength": 0.6, "rationale": "Both name Olenya as a base of Tu-22M3 and heavy-bomber regiments.", "independent": false}
+{"pair": "7f29ef305b06", "relation": "none", "rationale": "The first attack at Nove and a later encirclement."}
+{"pair": "7f4a00dbdb7e", "relation": "supports", "from": "claim:cc01_0011_21", "to": "claim:cc01_0026_34", "strength": 0.4, "rationale": "The 1st Tank Brigade destroying the first columns north of Chernihiv corroborates its place among the defenders.", "independent": false}

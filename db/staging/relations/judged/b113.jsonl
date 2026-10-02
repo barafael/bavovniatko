@@ -1,0 +1,40 @@
+{"pair": "f43887927e0e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f44e2ef2eb8d", "relation": "supports", "from": "claim:cc16_0007_09", "to": "claim:cc16_0008_01", "strength": 0.6, "rationale": "Imagery counts of 12-13 aircraft destroyed are consistent with the floor of at least 10 heavy bombers plus an An-12.", "independent": false}
+{"pair": "f51535910da3", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f566a4a6533a", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f5803bcc6491", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f5b3275f7382", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f5c12af3b208", "relation": "supports", "from": "claim:cc11_0010_42", "to": "claim:cc11_0023_07", "strength": 0.5, "rationale": "Both Ukrainian claims give 250 Russian armoured vehicles lost at Avdiivka over the same first month, likely the same tally.", "independent": false}
+{"pair": "f5c5dd5d8371", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f60d3ba267d0", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f643c17e9e8b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f695d4a8f374", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f70822ceeac9", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f7dee498910c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f7f79ffc6e16", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f8765b9c55d2", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f8eb8a3696a2", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f8f75dd0fe3b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f9c52ca642c8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "f9dcdb0358d8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fa428d2a4875", "relation": "duplicates", "from": "claim:cc16_0028_02", "to": "claim:cc16_0011_27", "strength": 0.95, "rationale": "Same AviVector count of 2 Tu-95MS, 3 Tu-160 and 2 Su-34 at Olenya on 26 May 2025, from the same source, extracted twice."}
+{"pair": "fa898d3e9280", "relation": "supersedes", "from": "claim:cc14_0012_18", "to": "claim:cc14_0012_17", "strength": 0.9, "rationale": "Ukraine's 20,842 Russian losses in Kursk by 5 November 2024 updates its 17,819 by 25 October."}
+{"pair": "fab0e6e30e4d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "faba8c616a45", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fb1182c266b3", "relation": "duplicates", "from": "claim:cc09_0016_04", "to": "claim:c06_0009_11", "strength": 0.95, "rationale": "Same computed Robotyne belt spacing (0.5-0.6 km main, 1.0-1.2 km cross) from the same OSM and Sentinel-2 data, extracted in topic 06 and chapter c09."}
+{"pair": "fb32e853c8b0", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fb936fbb1e8b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fb9a174ee428", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fba34713ef7f", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fbe7b77a7645", "relation": "supports", "from": "claim:cc11_0016_05", "to": "claim:cc11_0035_05", "strength": 0.6, "rationale": "SRTM's 30-50 m relief for the Avdiivka terrikon is consistent with the reported 40 m wall.", "independent": true}
+{"pair": "fbfe8fefc412", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fc7d93660c5c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fca96f55004d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fcd7e5bfad7b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fd4c28c105b5", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fd9289fe926a", "relation": "contradicts", "from": "claim:cc16_0011_82", "to": "claim:cc16_0011_83", "strength": 0.6, "rationale": "On 4 June 2025 a NATO official said at least 40 aircraft were damaged, while two US officials said about 20 were hit.", "resolution": "The two agree on about 10 destroyed; the NATO count probably includes lightly damaged aircraft."}
+{"pair": "fda9c53156e2", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fdac51d16a84", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fdee08428661", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fe14a912d7fb", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "fe9562953e3e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}

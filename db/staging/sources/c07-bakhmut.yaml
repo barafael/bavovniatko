@@ -1,0 +1,2790 @@
+- id: aljazeera-2023-psaropoulos-wagner-advances-bakhmut
+  title: "Wagner advances in Bakhmut as Ukraine gears up for counterattack"
+  url: https://www.aljazeera.com/news/2023/4/6/wagner-advances-in-bakhmut-as-ukraine-gears-up-for-counterattack
+  publisher: Al Jazeera
+  authors: ["John T Psaropoulos"]
+  published: "2023-04-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Week 58: Wagner within 400 m of town hall 31 Mar; flag over city hall; complete control of AZOM; Avangard stadium, Bakhmut-1 station; assault counts fall."
+- id: aljazeera-2023-wagner-legal-control-bakhmut
+  title: "Wagner claims 'legal' control of Ukraine's Bakhmut"
+  url: https://www.aljazeera.com/news/2023/4/3/wagner-claims-legal-control-of-ukraines-bakhmut
+  publisher: Al Jazeera
+  authors: []
+  published: "2023-04-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin: Russian flag raised on the administrative building, 'legally' taken; Zhdanov: AZOM captured after days of defence; Ukraine repelled >20 attacks."
+- id: ap-2023-blann-prigozhin-20000-dead
+  title: "Head of Russian private army Wagner says more than 20,000 of his troops died in Bakhmut battle"
+  url: https://apnews.com/article/russia-ukraine-war-border-raid-4f63ade7fb3899b6fa903b562ada0e2c
+  publisher: Associated Press
+  authors: ["Susie Blann"]
+  published: "2023-05-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback. Prigozhin: >20,000 Wagner dead at Bakhmut, about half convicts (a Russian claim relayed by AP)."
+- id: apnews-2023-litvinova-russia-tv-berlin
+  title: "Russia TV celebrates as it reports the capture of Bakhmut, comparing it to Berlin in 1945"
+  url: https://apnews.com/article/russia-ukraine-bakhmut-79ce2a44951613509ce9d1afede86f97
+  publisher: AP
+  authors: ["Dasha Litvinova"]
+  published: "2023-05-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Russian state TV framing of the capture (Channel One 'myth ... crushed', Berlin 1945 comparisons, Russia 1 claims road open to Kramatorsk/Dnipro). Russian claims reported, not repeated. Fetched via Wayback."
+- id: armyinform-2022-zelensky-93-10-bakhmut
+  title: "Час сказати слова вдячності – Володимир Зеленський відзначив воїнів, які зараз боронять Україну на Донеччині"
+  url: https://armyinform.com.ua/2022/09/26/chas-skazaty-slova-vdyachnosti-volodymyr-zelenskyj-vidznachyv-voyiniv-yaki-zaraz-boronyat-ukrayinu-na-donechchyni/
+  publisher: ArmiyaInform (MoD of Ukraine)
+  authors: []
+  published: "2022-09-26"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky thanks the 93rd and 10th Mountain Assault for the 'heroic defence on the Bakhmut direction'; 2,135 soldiers of the 93rd, 10th and 80th decorated."
+- id: armyinform-2023-palisa-losses-colossal
+  title: "Втрати противника на Бахмутському напрямку колосальні, але недостатні — комбриг холодноярців"
+  url: https://armyinform.com.ua/2023/05/02/vtraty-protyvnyka-na-bahmutskomu-napryamku-kolosalni-ale-nedostatni-kombryg-holodnoyarcziv/
+  publisher: ArmiyaInform (MoD of Ukraine)
+  authors: []
+  published: "2023-05-02"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, decision]
+  found_in: [c07-bakhmut]
+  notes: "Col Palisa (93rd): in Bakhmut since Aug 2022, re-entered in January; holding buys time for the new units; enemy losses 'colossal but insufficient'. Medium: MoD outlet."
+- id: babel-2023-yelizarov-soledar-commander
+  title: "Investigators identified the commander of the 'Wagneri' in Soledar"
+  url: https://babel.ua/en/news/89398-investigators-identified-the-commander-of-the-wagneri-in-soledar
+  publisher: Babel
+  authors: ["Sofiia Telishevska"]
+  published: "2023-01-16"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Dossier Center: Wagner in Soledar commanded by ex-GRU officer Anton Yelizarov ('Lotos'), 41, ex-VDV, Hero of Russia. Secondary report of an investigation."
+- id: bbc-2022-bachega-zelensky-visits-bakhmut
+  title: "Ukraine war: Volodymyr Zelensky visits front-line city of Bakhmut"
+  url: https://www.bbc.com/news/world-europe-64038140
+  publisher: BBC News
+  authors: ["Hugo Bachega", "Robert Greenall"]
+  published: "2022-12-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Unannounced visit 20 Dec 2022; awards; 'Bakhmut is breaking ... the Russian army' quote; pre-war population 70,000; Maliar also visited."
+- id: bbc-2022-chatterjee-zelensky-visit-russia-reaction
+  title: "Ukraine war: Zelensky's visit shows neither Ukraine nor US want peace, Russia says"
+  url: https://www.bbc.com/news/world-us-canada-64066584
+  publisher: BBC News
+  authors: ["Phelan Chatterjee"]
+  published: "2022-12-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky presented Congress 'a battle flag signed by the defenders of Bakhmut'; Battle of the Bulge comparison."
+- id: bbc-2023-adams-western-officials-30000
+  title: "Up to 30,000 Russian casualties claimed in Bakhmut"
+  url: https://www.bbc.com/news/world-europe-64880268
+  publisher: BBC
+  authors: ["Paul Adams"]
+  published: "2023-03-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Western officials: 20–30k Russian killed and wounded; 'a unique opportunity to kill a lot of Russians'; they reject Shoigu's claim of 11k Ukrainian losses in February. Medium: anonymous official briefing."
+- id: bbc-2023-greenall-bakhmut-defenders-double-down
+  title: "Ukraine war: Bakhmut defenders double down – Zelensky"
+  url: https://www.bbc.com/news/world-europe-64864496
+  publisher: BBC
+  authors: ["Robert Greenall"]
+  published: "2023-03-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, decision]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky's 6 Mar 2023 address ('not to withdraw, but to strengthen'), the Bild report that Zaluzhnyi favoured retreat, and Syrskyi's 'highest level of tension'."
+- id: bbc-2023-landale-gozzi-bakhmut-deputy-mayor
+  title: "Bakhmut: Fighting in the street but Russia not in control - deputy mayor"
+  url: https://www.bbc.com/news/world-europe-64846666
+  publisher: BBC News
+  authors: ["James Landale", "Laura Gozzi"]
+  published: "2023-03-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Deputy mayor Marchenko: 4,000 civilians left in shelters, bridges destroyed, 'not a single building' untouched; 95% of population gone; pre-war ~75,000."
+- id: bbc-2023-wright-heavy-losses-bakhmut
+  title: "Ukraine war: Heavy losses reported as battle for Bakhmut rages"
+  url: https://www.bbc.com/news/world-europe-64935449
+  publisher: BBC
+  authors: ["George Wright"]
+  published: "2023-03-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky's claim of 1,100+ Russians killed and 1,500 badly wounded since 6 Mar; Russia's claim of 220 Ukrainians killed; 'fortress of our morale'. Medium: relays unverified claims from both sides."
+- id: businessinsider-2023-baker-jankowicz-unyielding-city
+  title: "The Unyielding City – How Ukraine lost Bakhmut and Russia won a hollow victory"
+  url: https://www.businessinsider.com/bakhmut-how-ukraine-lost-city-russia-won-hollow-victory-2023-12
+  publisher: Business Insider
+  authors: ["Sinéad Baker", "Mia Jankowicz"]
+  published: "2023-12-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Long-form, 45+ interviews: T0504 'Road of Life', the 'Nest', 135th TD Bn last stand, Yabchanka bodycam fight, Prigozhin in Artwinery cellars. Has at least one date error (Soledar 'February 13')."
+- id: censor-2023-zelensky-80-93-bakhmut
+  title: "Дякую за стійкість та результативність, - Зеленський відзначив кілька бригад, які відзначилися у боях"
+  url: https://censor.net/ua/news/3421161/dyakuyu_za_stiyikist_ta_rezultatyvnist_zelenskyyi_vidznachyv_kilka_brygad_yaki_vidznachylysya_u_boyah
+  publisher: Censor.net
+  authors: []
+  published: "2023-05-27"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky's 27 May address: thanks the 80th Air Assault and 93rd Mechanized on the Bakhmut direction. Medium: partisan outlet relaying the official text."
+- id: cnn-2023-bertrand-russian-artillery-down-75
+  title: "Russian artillery fire down nearly 75%, US officials say, in latest sign of struggles for Moscow"
+  url: https://www.cnn.com/2023/01/10/politics/russian-artillery-fire-down-75-percent-ukraine/index.html
+  publisher: CNN
+  authors: ["Natasha Bertrand", "Oren Liebermann", "Alex Marquardt"]
+  published: "2023-01-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "US officials: Ukraine averaged 4,000–7,000 rounds/day; Russian fire 20,000 -> ~5,000/day (US) vs 60,000 -> 20,000 (Ukrainian estimate); Russia using 40-year-old shells."
+- id: cnn-2023-britzky-ukraine-burning-ammo
+  title: "Ukraine is burning through ammunition faster than the US and NATO can produce it. Inside the Pentagon's plan to close the gap"
+  url: https://www.cnn.com/2023/02/17/politics/us-weapons-factories-ukraine-ammunition/index.html
+  publisher: CNN
+  authors: ["Haley Britzky", "Oren Liebermann"]
+  published: "2023-02-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Scranton plant ~11,000 shells/month; US 155 mm production 15,000 -> 70,000/month target in 12–18 months; Stoltenberg 13 Feb: Ukraine's expenditure 'many times higher' than production."
+- id: cnn-2023-knight-nothing-left-to-grind
+  title: "'Nothing left to grind the meat with': Wagner boss threatens to withdraw from Bakhmut amid ammo shortage"
+  url: https://www.cnn.com/2023/05/06/europe/wagner-bakhmut-withdraw-meat-grind-intl-hnk/index.html
+  publisher: CNN
+  authors: ["Mariya Knight", "Josh Pennington"]
+  published: "2023-05-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "6 May: '95% of Bakhmut' taken; 'Bakhmut meat grinder' launched 8 Oct 2022 with Surovikin to draw in Ukrainian forces; Kadyrov offers Akhmat to replace Wagner."
+- id: cnn-2023-lendon-prigozhin-fat-cats
+  title: "Wagner chief says his forces are dying as Russia's military leaders 'sit like fat cats'"
+  url: https://edition.cnn.com/2023/05/05/europe/wagner-military-group-prigozhin-ammunition-tirade-intl-hnk-ml/index.html
+  publisher: CNN
+  authors: ["Brad Lendon", "Josh Pennington", "Uliana Pavlova"]
+  published: "2023-05-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Night video (posted 4 May) among bodies: '70% of the needed ammunition' lacking, 'Shoigu, Gerasimov, where...is the ammunition?'; 5 May statement: withdraw on 10 May; Mizintsev joins as deputy commander."
+- id: cnn-2023-lister-wagner-stops-convicts
+  title: "Russia's Wagner mercenary group says it's no longer recruiting convicts. This may signal a shift in strategy"
+  url: https://www.cnn.com/2023/02/09/europe/wagner-russia-convicts-ukraine-intl-cmd/index.html
+  publisher: CNN
+  authors: ["Tim Lister"]
+  published: "2023-02-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin halts prison recruitment 9 Feb 2023 after 40,000–50,000 signed; FSIN prison-population drops (-23,000 Sep–Oct 2022 vs -6,000 Nov–Jan); captured convicts on helicopter prison visits Aug–Sep 2022 and executions of refusers."
+- id: cnn-2023-lister-wagner-tactics-report
+  title: "Deadly and disposable: Wagner's brutal tactics in Ukraine revealed by intelligence report"
+  url: https://www.cnn.com/2023/01/23/europe/russia-wagner-tactics-report-ukraine-intl/index.html
+  publisher: CNN
+  authors: ["Tim Lister", "Frederik Pleitgen", "Victoria Butenko"]
+  published: "2023-01-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Leaked Ukrainian military-intelligence assessment (dated Dec 2022) of Wagner assault-group tactics: groups of about a dozen or fewer, RPGs, drones as 'key element', execution for unauthorised withdrawal, wounded left until night. Single-source document, not independently authenticated by CNN."
+- id: cnn-2023-lister-zombie-movie
+  title: "Fighting Wagner is like a 'zombie movie' says Ukrainian soldier"
+  url: https://www.cnn.com/2023/02/01/europe/ukraine-soldiers-fighting-wagner-intl-cmd/index.html
+  publisher: CNN
+  authors: ["Tim Lister", "Frederik Pleitgen", "Konstantin Hak"]
+  published: "2023-02-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian defenders SW of Bakhmut: 10-hour uninterrupted assault, ~20 vs ~200; convict first waves dig in 30 m at a time, experienced fighters follow from flanks."
+- id: cnn-2023-picheta-prigozhin-revolution
+  title: "Wagner chief warns Russians could revolt if invasion continues to struggle"
+  url: https://www.cnn.com/2023/05/24/europe/wagner-prigozhin-russia-manpower-ukraine-intl/index.html
+  publisher: CNN
+  authors: ["Rob Picheta", "Mariya Knight"]
+  published: "2023-05-24"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Dolgov interview ~23–24 May 2023: warns of 'revolution, just like in 1917'; calls for martial law and new mobilisation; precursor rhetoric to the mutiny."
+- id: cnn-2023-picheta-soledar-explainer
+  title: "Why Russia is so intent on capturing the town of Soledar"
+  url: https://www.cnn.com/2023/01/11/europe/soledar-ukraine-russia-explainer-intl/index.html
+  publisher: CNN
+  authors: ["Rob Picheta", "Tim Lister", "Olga Voitovych"]
+  published: "2023-01-11"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Artemsil salt mines; Prigozhin 'no units other than Wagner'; MoD claim of >700 Ukrainian servicemen killed in 3 days; Berezovets: street fighting by 4–8-man groups, captured Wagner fighter said 3 of 35 in platoon survived. Updated after 13 Jan."
+- id: cnn-2023-picheta-zelensky-open-road
+  title: "Exclusive: Volodymyr Zelensky warns of 'open road' through Ukraine's east if Russia captures Bakhmut"
+  url: https://edition.cnn.com/2023/03/07/europe/ukraine-volodymyr-zelensky-cnn-interview-bakhmut-intl/index.html
+  publisher: CNN
+  authors: ["Rob Picheta"]
+  published: "2023-03-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, decision]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky's interview with Wolf Blitzer explaining why he held Bakhmut; NATO official's 5:1 estimate; Podolyak's 'achieved its goals by 1,000%'."
+- id: cnn-2023-walsh-mod-convicts-storm
+  title: "Exclusive: Russian convicts say defense ministry is sending them from jail to fight as 'cannon fodder' in Ukraine"
+  url: https://www.cnn.com/2023/02/14/europe/russian-army-prisoners-conscripts-ukraine-intl/index.html
+  publisher: CNN
+  authors: ["Nick Paton Walsh", "Darya Tarasova"]
+  published: "2023-02-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "MoD's own convict 'Storm' unit 08807 (later 40321) deployed to Soledar Oct 2022 with catastrophic losses (batch of 130 to ~40); alleged execution of survivor Sevalnev; FSIN -27,000 Mar–Nov 2022. Precursor of Storm-Z."
+- id: commons-2022-pelosi-zelensky-bakhmut-flag
+  title: "File:Volodymyr Zelensky and Nancy Pelosi with flag of Ukraine signed by the defenders of Bakhmut.jpg"
+  url: https://commons.wikimedia.org/wiki/File:Volodymyr_Zelensky_and_Nancy_Pelosi_with_flag_of_Ukraine_signed_by_the_defenders_of_Bakhmut.jpg
+  publisher: Wikimedia Commons (Office of the US House Speaker)
+  authors: ["Office of U.S. House Speaker"]
+  published: "2022-12-21"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Public-domain photo (PD-USGov-Congress-Speaker) of the signed Bakhmut flag in Congress; source tweet by @SpeakerPelosi."
+- id: commons-2022-zelensky-bakhmut-visit
+  title: "Category:Working trip of Volodymyr Zelenskyy to Donetsk Oblast, 20 December 2022"
+  url: https://commons.wikimedia.org/wiki/Category:Working_trip_of_Volodymyr_Zelenskyy_to_Donetsk_Oblast,_20_December_2022
+  publisher: "Wikimedia Commons (Office of the President of Ukraine, Flickr)"
+  authors: ["President Of Ukraine"]
+  published: "2022-12-20"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "10+ CC0 photos of Zelensky with troops near Bakhmut, 20 Dec 2022, from the President's Flickr stream (FlickreviewR passed)."
+- id: commons-2023-category-battle-of-bakhmut
+  title: "Category:Battle of Bakhmut (2022–2023)"
+  url: https://commons.wikimedia.org/wiki/Category:Battle_of_Bakhmut_(2022%E2%80%932023)
+  publisher: Wikimedia Commons
+  authors: []
+  published: "2026-10-01"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut, e5-counteroffensive-23]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "~50 files: National Police, SBGS (CC BY 4.0, incl. War_in_Bakhmut,_2023-03.webm), HUR (Budanov in Bakhmut 28 Dec 2022), 30th Bde, maps. Licence per file; some uploads have unclear authorship."
+- id: commons-2023-war-damages-in-bakhmut
+  title: "Category:War damages in Bakhmut (2022 Russian invasion of Ukraine)"
+  url: https://commons.wikimedia.org/wiki/Category:War_damages_in_Bakhmut_(2022_Russian_invasion_of_Ukraine)
+  publisher: Wikimedia Commons
+  authors: []
+  published: "2026-10-01"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "~70 CC BY 4.0 photos by SES, National Police, Donetsk ODA, ArmyInform: dated damage to specific buildings (Palace of Culture 8 Sep 2022, Myru St 53 on 26 Dec 2022, etc.)."
+- id: commons-2024-bakhmut-offensive-map
+  title: "File:2022-23 Bakhmut Offensive.svg"
+  url: https://commons.wikimedia.org/wiki/File:2022-23_Bakhmut_Offensive.svg
+  publisher: Wikimedia Commons
+  authors: ["Rr016"]
+  published: "2024-05-15"
+  accessed: "2026-10-01"
+  type: map
+  origin: other
+  reliability: low
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "CC0 user-made map of the 2022-23 Bakhmut offensive; reusable base but unsourced lines, check against ISW/DeepState."
+- id: euromaidan-2023-prigozhin-video-losses
+  title: "Frontline report: Prigozhin's video exposes high losses and failure of Wagner Group in battle for Bakhmut"
+  url: https://euromaidanpress.com/2023/05/27/frontline-report-prigozhins-video-exposes-high-losses-and-failure-of-wagner-group-in-battle-for-bakhmut/
+  publisher: Euromaidan Press
+  authors: ["Reporting from Ukraine"]
+  published: "2023-05-27"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Summarises Prigozhin's Dolgov interview (35,000 Wagner + 50,000 convicts; 10,000 + 10,000 killed) and Girkin's higher estimates; Wagner frontage 85 km mid-winter -> <5 km. Analytical extrapolations are speculative."
+- id: euromaidanpress-2023-frontline-wagnerites-high-rises
+  title: "Frontline report: \"Wagnerites\" bombard high-rises in Bakhmut as Ukraine keeps pushing on the flanks"
+  url: https://euromaidanpress.com/2023/05/19/frontline-report-wagnerites-bombard-high-rises-in-bakhmut-as-ukraine-keeps-pushing-on-the-flanks/
+  publisher: Euromaidan Press
+  authors: ["Reporting from Ukraine"]
+  published: "2023-05-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Wagner tank/artillery fire on the last block of high-rises 17-18 May 2023; reported temporary withdrawal to Ivanivske. Low: YouTube-channel analysis reposted, 'some sources indicate'."
+- id: euromaidanpress-2023-midttun-day378-forced-evacuation-children
+  title: "Russo-Ukrainian War. Day 378: Ukrainian government approves forced evacuation of children from Bakhmut"
+  url: https://euromaidanpress.com/2023/03/08/russo-ukrainian-war-day-378-ukrainian-government-approves-forced-evacuation-of-children-from-bakhmut/
+  publisher: Euromaidan Press
+  authors: ["Hans Petter Midttun"]
+  published: "2023-03-08"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Forced evacuation of children (Bakhmut the only qualifying area); UK MoD: Russian strike destroyed bridge on the only paved supply road ~2 Mar 2023."
+- id: euromaidanpress-2023-zoria-maliar-airplane-area
+  title: "Situation in Bakhmut City \"critical,\" Ukraine controls westernmost area - Deputy Defense Minister"
+  url: https://euromaidanpress.com/2023/05/20/situation-in-bakhmut-city-critical-ukraine-controls-westernmost-area-deputy-defense-minister/
+  publisher: Euromaidan Press
+  authors: ["Yuri Zoria"]
+  published: "2023-05-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Maliar 20 May 2023: defence held in the 'Airplane' area by the former MiG-17 monument; industrial/infrastructure facilities and private houses."
+- id: euromaidanpress-2023-zoria-road-of-life-cherevatyi
+  title: "Russians far from capturing lifeline route to Bakhmut - Ukrainian army spox"
+  url: https://euromaidanpress.com/2023/04/30/russians-far-from-capturing-lifeline-route-to-bakhmut-ukrainian-army-spox/
+  publisher: Euromaidan Press
+  authors: ["Yuri Zoria"]
+  published: "2023-04-29"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Cherevatyi (to ZN.UA, 29 Apr 2023) on the Chasiv Yar–Bakhmut 'road of life': SOF and artillery prevent fire control; engineers pave new routes."
+- id: forbes-2022-axe-eight-brigades
+  title: "Bakhmut Is 'Soaked In Blood' As Eight Of Ukraine's Best Brigades Battle 40,000 Former Russian Prisoners"
+  url: https://www.forbes.com/sites/davidaxe/2022/12/22/bakhmut-is-soaked-in-blood-as-eight-of-ukraines-best-brigades-battle-40000-former-russian-prisoners/
+  publisher: Forbes
+  authors: ["David Axe"]
+  published: "2022-12-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback. Dec 2022 brigade list: 60th, 71st, 24th, 57th, 58th, 4th Tank, 46th, 128th; Kirby's 50k Wagner (40k ex-prisoners). Medium: open-source compilation by a columnist."
+- id: forbes-2023-axe-241st
+  title: "A Brigade of Ukrainian Moms, Dads And Retirees Is Resisting Russia's Human Wave Attacks In Bakhmut"
+  url: https://www.forbes.com/sites/davidaxe/2023/02/07/a-brigade-of-ukrainian-moms-dads-bloggers-and-retirees-is-resisting-russias-human-wave-attacks-in-bakhmut/
+  publisher: Forbes
+  authors: ["David Axe"]
+  published: "2023-02-07"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback. 241st TDF (Kyiv) in Bakhmut; sub-unit cut off at New Year; 72nd Mechanized 'doing a lot of the killing'. Medium: columnist's open-source compilation."
+- id: forbes-2023-axe-jdams-bakhmut
+  title: "A Symphony Of Bomb Blasts: One After Another, Four Ukrainian JDAMs Apparently Strike Russian Positions In Bakhmut"
+  url: https://www.forbes.com/sites/davidaxe/2023/04/26/a-symphony-of-bomb-blasts-one-after-another-four-ukrainian-jdams-apparently-strike-russian-positions-in-bakhmut/
+  publisher: Forbes
+  authors: ["David Axe"]
+  published: "2023-04-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian drone video of four GBU-62/B JDAMs on a high-rise complex; both sides demolishing high-rises (CIT). Fetched via Wayback (live 403)."
+- id: freeradio-2023-nazarova-artwinery-ruins-video
+  title: "Бахмут: як виглядає завод вин «Артвайнері» на східній околиці міста (відео)"
+  url: https://freeradio.com.ua/bakhmut-iak-vyhliadaie-zavod-vyn-artvaineri-na-skhidnii-okolytsi-mista-video/
+  publisher: Vilne Radio
+  authors: ["Hanna Nazarova"]
+  published: "2023-03-14"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Bakhmut local outlet: Artwinery on the eastern outskirts in ruins in Russian video of 10 Mar 2023 (drive east on Lumumba St, narrated by Prigozhin). Title transcribed from the page heading."
+- id: guardian-2017-miller-artwinery-brut-force
+  title: "Brut force: the winery in the middle of a war zone"
+  url: https://www.theguardian.com/world/2017/feb/17/eastern-ukraine-wine-tour-war-zone-artwinery
+  publisher: The Guardian
+  authors: ["Christopher Miller"]
+  published: "2017-02-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Pre-war Artwinery: 250,000 sq m of caves under >80 m of earth, opened 1950; 19m bottles in 2013. Background for the underground terrain."
+- id: guardian-2022-beaumont-bakhmut-meat-grinder
+  title: "In the 'Bakhmut meat grinder', deadlocked enemy forces slog it out"
+  url: https://www.theguardian.com/world/2022/dec/10/russia-ukraine-war-bakhmut-meat-grinder-deadlock
+  publisher: The Guardian
+  authors: ["Peter Beaumont"]
+  published: "2022-12-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "24th Mech Bde gun crews; city once 72,000, civilians down to 12,000 living in basements; Libkos/AP photo."
+- id: guardian-2023-beaumont-borger-zelenskiy-denies-bakhmut
+  title: "Ukraine: Zelenskiy denies Russian claims to have taken Bakhmut"
+  url: https://www.theguardian.com/world/2023/may/21/ukraine-zelenskiy-denies-russian-claims-to-have-taken-bakhmut
+  publisher: The Guardian
+  authors: ["Peter Beaumont", "Julian Borger"]
+  published: "2023-05-21"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "'Bakhmut is only in our hearts'; Maliar on the 'airplane area' near the multistorey block Wagner called the last Ukrainian-held building; city 'surrounded by salt and gypsum mines'."
+- id: guardian-2023-beaumont-hellish-soledar
+  title: "'Hellish' battle for Soledar symbolises state of Russia's war in Ukraine"
+  url: https://www.theguardian.com/world/2023/jan/13/hellish-battle-soledar-symbolises-russia-war-ukraine
+  publisher: The Guardian
+  authors: ["Peter Beaumont"]
+  published: "2023-01-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "46th Airmobile soldier: Russian commanders shouting 'Not a step back. We will shoot'; Ukrainians holding NW Soledar around the salt mine and rail junction; MoD described airborne troops in the battle."
+- id: guardian-2023-inside-soledar-in-pictures
+  title: "Inside Soledar, the site of heavy battles between Ukraine and Russia – in pictures"
+  url: https://www.theguardian.com/world/gallery/2023/jan/12/inside-soledar-the-site-of-heavy-battles-between-ukraine-and-russia-in-pictures
+  publisher: The Guardian
+  authors: []
+  published: "2023-01-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, soledar, media]
+  found_in: [c07-bakhmut]
+  notes: "Gallery: Roman Chop/AP and Clodagh Kilcoyne/Reuters photos (43rd Arty Bde PzH 2000, Syrskyi in Soledar shelter) + Maxar/Reuters satellite image of south Soledar 10 Jan."
+- id: guardian-2023-kirby-wagner-tco
+  title: "US to designate Russia's Wagner Group as 'transnational criminal organization'"
+  url: https://www.theguardian.com/us-news/2023/jan/20/us-russia-wagner-group-transnational-criminal-organization
+  publisher: The Guardian
+  authors: ["Staff and agencies in Washington"]
+  published: "2023-01-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Kirby (NSC), 20 Jan 2023: Wagner ~50,000 in Ukraine = 10,000 contractors + 40,000 convicts; ~$100m/month; tensions with MoD; 'rival power center'. Official US estimate."
+- id: isw-2022-08-01-roca
+  title: "Russian Offensive Campaign Assessment, August 1, 2022"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-1
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-08-01"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Russian assaults S and SE of Bakhmut fail; attacks on Soledar and Yakovlivka repelled. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2022-08-04-roca
+  title: "Russian Offensive Campaign Assessment, August 4, 2022"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-august-4
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-08-04"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Russia attacks Bakhmut in five to seven strike groups; Ukrainian withdrawal from Semihirya and Dolomitne. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2022-09-20-roca
+  title: "Russian Offensive Campaign Assessment, September 20, 2022"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-september-20
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-09-20"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner recruiting directly from Russian prisons. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2022-11-15-roca
+  title: "Russian Offensive Campaign Assessment, November 15, 2022"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-15
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-11-15"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Attacks NE of Bakhmut along the T1302 near Bilohorivka and Bakhmutske. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2022-11-29-roca
+  title: "Russian Offensive Campaign Assessment, November 29, 2022"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-november-29
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-11-29"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Marginal Russian gains around Bakhmut, slower than Russian sources claim. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2022-12-27-roca
+  title: "Russian Offensive Campaign Assessment, December 27, 2022"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-december-27
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2022-12-27"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Russia may be nearing culmination at Bakhmut; squad-sized assault groups; Wagner intensifies on Soledar, takes most of Bakhmutske. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2023-01-03-roca
+  title: "Russian Offensive Campaign Assessment, January 3, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-3-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-01-03"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin: each house a fortress, lines every 10 m; earlier pace 100-200 m a day; Wagner blames lack of shells and armour. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-01-07-roca
+  title: "Russian Offensive Campaign Assessment, January 7, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-7-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-01-07"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner at the Artemsil plant in Soledar; Ukrainians hold the salt mine; Wagner enters Klishchiivka; T0513 and E40 distances. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-01-10-roca
+  title: "Russian Offensive Campaign Assessment, January 10, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-10-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-01-10"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner in central Soledar; Cherevatyi: Wagner's most capable forces concentrated there; fight for Klishchiivka and the T0504. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-01-11-roca
+  title: "Russian Offensive Campaign Assessment, January 11, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-11-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-01-11"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner reaches western Soledar and interdicts its supply roads; Gerasimov appointed theatre commander. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2023-01-13-roca
+  title: "Russian Offensive Campaign Assessment, January 13, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-13-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-01-13"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Russian MoD claims Soledar (evening of 12 Jan), omits Wagner, then credits it six hours later. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2023-01-16-roca
+  title: "Russian Offensive Campaign Assessment, January 16, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-16-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-01-16"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner takes Sil station; Putin credits the MoD for Soledar; Wagner defector Medvedev. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2023-01-20-roca
+  title: "Russian Offensive Campaign Assessment, January 20, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-january-20-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-01-20"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin and the MoD claim Klishchiivka; Wagner's TOS-1A, SPGs and Su-25 come from the MoD. Old backgrounder URL redirects to the current ISW page."
+- id: isw-2023-02-20-roca
+  title: "Russian Offensive Campaign Assessment, February 20, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-20-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-02-20"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky: defend Bakhmut but not at any cost; Paraskoviivka falls; MoD credits 'volunteers of assault detachments'. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-02-22-roca
+  title: "Russian Offensive Campaign Assessment, February 22, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-22-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-02-22"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner fights into Berkhivka and Yahidne; Prigozhin: MoD 'spitting at' Wagner. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-02-24-roca
+  title: "Russian Offensive Campaign Assessment, February 24, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-24-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-02-24"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "MoD names 76th and 106th VDV elements at Bakhmut; Wagner in northern Yahidne. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-02-27-roca
+  title: "Russian Offensive Campaign Assessment, February 27, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-27-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-02-27"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner threatens the Khromove road; 32 attacks around and 14 inside the city on 26 Feb; MoD institutionalises Wagner tactics. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-03-roca
+  title: "Russian Offensive Campaign Assessment, March 3, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-3-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-03"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukraine destroys bridges over the Bakhmutka and on the Khromove road; controlled withdrawal from parts of the city prepared. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-04-roca
+  title: "Russian Offensive Campaign Assessment, March 4, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-4-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-04"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Turning movement in the north; Cherevatyi blames Russia for the Khromove bridge; Tavr meat plant. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-06-roca
+  title: "Russian Offensive Campaign Assessment, March 6, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-6-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-06"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky orders reinforcements after Zaluzhnyi and Syrskyi recommend holding; Austin; Wagner flag at the T-34 monument. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-07-roca
+  title: "Russian Offensive Campaign Assessment, March 7, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-7-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-07"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian controlled withdrawal from east of the Bakhmutka; T0504 described as last GLOC; Prigozhin claims 11,000 Ukrainian dead in February. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-08-roca
+  title: "Russian Offensive Campaign Assessment, March 8, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-8-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-08"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin claims all of eastern Bakhmut; ISW: Russia holds at least 50% of the city. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-13-roca
+  title: "Russian Offensive Campaign Assessment, March 13, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-13-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-13"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin's '550 attempts' for ammunition; Wagner assaults underground sections of AZOM; Russian gains on the T0504 in SW Bakhmut. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-19-roca
+  title: "Russian Offensive Campaign Assessment, March 19, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-19-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-19"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian counterattack SW of Ivanivske pushes Russians from the T0504. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-23-roca
+  title: "Russian Offensive Campaign Assessment, March 23, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-23-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-23"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Syrskyi: Wagner still the main force; Russians ford the Bakhmutka; Prigozhin's 200,000 reserves claim; Bloomberg on credit. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-03-29-roca
+  title: "Russian Offensive Campaign Assessment, March 29, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-29-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-03-29"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "ISW: Wagner likely occupied AZOM on 28 Mar; conventional forces hold the flanks. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-04-03-roca
+  title: "Russian Offensive Campaign Assessment, April 3, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-3-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-04-03"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner seizes the city administration building; Prigozhin's flag; AZOM confirmed in Russian hands. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-04-08-roca
+  title: "Russian Offensive Campaign Assessment, April 8, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-8-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-04-08"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Russian claims of cut GLOCs exaggerated; Wagner-MoD credit tensions over the Bakhmut-1 station. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-04-11-roca
+  title: "Russian Offensive Campaign Assessment, April 11, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-11-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-04-11"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "ISW: Russia holds at least 30.68 km2 (76.5%) of Bakhmut; Wagner in the city, VDV on the flanks. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-04-17-roca
+  title: "Russian Offensive Campaign Assessment, April 17, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-17-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-04-17"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner gets reinforcements and ammunition; Wagner trains three mobilised brigades; Teplinsky; VDV/LNR line on the northern flank; ex-Wagner atrocity accounts. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-04-21-roca
+  title: "Russian Offensive Campaign Assessment, April 21, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-21-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-04-21"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner takes the Bakhmut-2 station; claims on the O0506 Khromove-Chasiv Yar road; heavy rain limits wheeled traffic. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-04-26-roca
+  title: "Russian Offensive Campaign Assessment, April 26, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-26-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-04-26"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Russians reach Persha Lisova St near the Yuvileina (O0506) road; PMC Potok accused of abandoning positions. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-04-30-roca
+  title: "Russian Offensive Campaign Assessment, April 30, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-april-30-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-04-30"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Putin's turn against Wagner during Soledar; Surovikin and Teplinsky; VDV in human-wave attacks reported. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-05-roca
+  title: "Russian Offensive Campaign Assessment, May 5, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-5-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-05"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin's videos among Wagner dead and 10 May withdrawal threat; MoD deprioritises Bakhmut; Mizintsev; canal bridge down. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-07-roca
+  title: "Russian Offensive Campaign Assessment, May 7, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-7-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-07"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "MoD promises Wagner ammunition; Prigozhin's 41-point letter and 'Operation Bakhmut Meatgrinder'. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-09-roca
+  title: "Russian Offensive Campaign Assessment, May 9, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-9-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-09"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin stays; MoD treason threat; accuses the 72nd Motor Rifle Brigade; claims Ukraine holds 2.36 km2. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-10-roca
+  title: "Russian Offensive Campaign Assessment, May 10, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-10-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-10"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian counterattacks north of Khromove and near Bila Hora; 72nd Brigade companies destroyed (UA claim). Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-11-roca
+  title: "Russian Offensive Campaign Assessment, May 11, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-11-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-11"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Syrskyi: Russians retreat up to 2 km; MoD cut Wagner penal recruitment by January; degraded units on the flanks. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-12-roca
+  title: "Russian Offensive Campaign Assessment, May 12, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-12-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-12"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian gains NW of Bakhmut at the Berkhivka reservoir; 200th Motor Rifle Brigade loses positions. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-13-roca
+  title: "Russian Offensive Campaign Assessment, May 13, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-13-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-13"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Cherevatyi: 17.3 km2 retaken in three days; ISW 16.85 km2; O0506 interdiction degraded. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-14-roca
+  title: "Russian Offensive Campaign Assessment, May 14, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-14-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-14"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Malyar: 10+ positions taken; Cherevatyi: aim is to encircle, not assault frontally. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-16-roca
+  title: "Russian Offensive Campaign Assessment, May 16, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-16-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-16"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Malyar: about 20 km2 retaken; Russian VDV reinforce flanks; LNR 4th Brigade at Ivanivske; Prigozhin leak. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-18-roca
+  title: "Russian Offensive Campaign Assessment, May 18, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-18-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-18"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukraine seizes the tactical initiative; Prigozhin admits loss of flanks; ISW on UA prioritising the western GLOCs. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-20-roca
+  title: "Russian Offensive Campaign Assessment, May 20, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-20-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-20"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin declares Bakhmut captured at the last high-rise near the MiG-17 monument; Ukrainians still in SW Bakhmut. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-21-roca
+  title: "Russian Offensive Campaign Assessment, May 21, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-21-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-21"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner secures western Bakhmut; Ukraine holds an 'insignificant' SW part; dominant heights; Wagner culminated. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-22-roca
+  title: "Russian Offensive Campaign Assessment, May 22, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-22-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-22"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin: handover to the army on 25 May, full withdrawal by 1 Jun. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-25-roca
+  title: "Russian Offensive Campaign Assessment, May 25, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-25-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-25"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Wagner begins handing over positions to the MoD; DNR units arrive. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-05-27-roca
+  title: "Russian Offensive Campaign Assessment, May 27, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-may-27-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-05-27"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Russian attacks fall to two skirmishes; Malyar: Ukraine holds heights N and S and the SW outskirts. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-06-01-roca
+  title: "Russian Offensive Campaign Assessment, June 1, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-june-1-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-06-01"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Prigozhin: about 90 Wagner left, all out by 5 Jun; Malyar: Ukraine holds the SW outskirts. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-07-10-roca
+  title: "Russian Offensive Campaign Assessment, July 10, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-10-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-07-10"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukraine claims fire control over Bakhmut and 24 km2 retaken in the Bakhmut direction. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-07-24-roca
+  title: "Russian Offensive Campaign Assessment, July 24, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-july-24-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-07-24"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Malyar: 4 km2 retaken in a week; Russian difficulties on the southern flank. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-09-15-roca
+  title: "Russian Offensive Campaign Assessment, September 15, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-september-15-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-09-15"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Ukraine liberates Andriivka; 3rd Assault Brigade claims destruction of the 72nd Brigade. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-2023-09-18-roca
+  title: "Russian Offensive Campaign Assessment, September 18, 2023"
+  url: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-september-18-2023
+  publisher: Institute for the Study of War
+  authors: []
+  published: "2023-09-18"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, ground-ops]
+  found_in: [c07-bakhmut]
+  notes: "Syrskyi: Bakhmut-Horlivka line breached at Klishchiivka and Andriivka; three Russian brigades lose combat capability. Fetched via a Wayback Machine snapshot (direct page blocked)."
+- id: isw-storymap-interactive-map-ukraine
+  title: "Interactive Map: Russia's Invasion of Ukraine"
+  url: https://storymaps.arcgis.com/stories/36a7f6a6f5a9448496de641cf64bd375
+  publisher: ISW / AEI Critical Threats
+  authors: []
+  published: "2022-04-24"
+  accessed: "2026-10-01"
+  type: map
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e2-donbas-artillery, e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "ISW/CTP interactive control-of-terrain map (ArcGIS StoryMaps, created 24 Apr 2022, still updated)."
+- id: iwpr-2023-soledar-salt-mines
+  title: "Ukraine: The Battle for Soledar's Salt Mines"
+  url: https://iwpr.net/global-voices/ukraine-battle-soledars-salt-mines
+  publisher: IWPR
+  authors: []
+  published: "2023-03-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, soledar]
+  found_in: [c07-bakhmut]
+  notes: "Artemsil mines: ~200 km tunnels, ~260 m deep, 94% of UA salt; flag over the mine 14 Jan, town lost 2 days later; Prigozhin 'underground cities' vs Artemsil scepticism. Date per Wikipedia citation (page has none)."
+- id: kyivindependent-2022-governor-60pct-bakhmut-infrastructure
+  title: "Governor: Over 60% of infrastructure in Bakhmut damaged or destroyed"
+  url: https://news.yahoo.com/governor-over-60-infrastructure-bakhmut-195427592.html
+  publisher: Kyiv Independent (syndicated on Yahoo News)
+  authors: ["The Kyiv Independent news desk"]
+  published: "2022-12-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Kyrylenko 26 Dec 2022: >60% of infrastructure partly or fully destroyed; Cherevatyi: 28 combat episodes, 225 shellings that day. Medium: syndicated copy."
+- id: kyivindependent-2023-cherevatyi-denies-russian-shortage
+  title: "Military spokesperson denies reports of Russia's ammunition shortage in eastern Ukraine"
+  url: https://kyivindependent.com/military-spokesperson-denies-reports-of-russias-ammunition-shortage-in-eastern-ukraine/
+  publisher: Kyiv Independent
+  authors: ["Kyiv Independent news desk"]
+  published: "2023-04-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Cherevatyi 5 Apr 2023: no shell deficit on Bakhmut/Kupiansk/Lyman axes, 245 strikes on Bakhmut/day; Reznikov: Ukraine fires ~110,000 155 mm shells a month, a quarter of Russia's."
+- id: kyivindependent-2023-farrell-bakhmut-flanks-hold
+  title: "Bakhmut flanks hold as brutal urban fighting continues for city blocks"
+  url: https://kyivindependent.com/bakhmut-flanks-hold-as-brutal-urban-fighting-continues-for-city-blocks/
+  publisher: Kyiv Independent
+  authors: ["Francis Farrell"]
+  published: "2023-04-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Two roads (Khromove north, T0504 via Ivanivske) within 1 km of Russians; city hall flattened with Wagner flags on rubble; MiG-17 gone; 93rd Bde cornerstone; Da Vinci's Wolves road-of-life footage."
+- id: kyivindependent-2023-farrell-hell-in-high-definition
+  title: "Hell in high definition: Inside front-line aerial unit surveilling battle of Bakhmut"
+  url: https://kyivindependent.com/hell-in-high-definition-inside-front-line-aerial-unit-surveilling-battle-of-bakhmut/
+  publisher: Kyiv Independent
+  authors: ["Francis Farrell"]
+  published: "2023-01-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, drones]
+  found_in: [c07-bakhmut]
+  notes: "Skala drone team in an industrial building inside Bakhmut (29 Dec 2022) spotting for 2S7 Pion; recon-strike loop detail."
+- id: kyivindependent-2023-farrell-one-night-in-bakhmut
+  title: "One night in Bakhmut: Inside the bleak world of city's civilians as Russia draws closer"
+  url: https://kyivindependent.com/one-night-in-bakhmut-inside-the-bleak-world-of-citys-civilians-as-russia-draws-closer/
+  publisher: Kyiv Independent
+  authors: ["Francis Farrell"]
+  published: "2023-02-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Overnight in central Bakhmut, Jan 2023: SES fire station, basements, residents waiting for Russia; police: ~5,900 civilians incl. 200+ children as of 2 Feb 2023."
+- id: kyivindependent-2023-farrell-russia-takes-bakhmut
+  title: "Russia takes Bakhmut: Taking stock of the war's bloodiest battle so far"
+  url: https://kyivindependent.com/russia-takes-bakhmut-taking-stock-of-the-wars-bloodiest-battle-so-far/
+  publisher: Kyiv Independent
+  authors: ["Francis Farrell", "Stanislav Storozhenko"]
+  published: "2023-05-21"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian retrospective on the battle: overruling rumours and Syrskyi's visits, Zaluzhnyi on 25 Mar, Syrskyi on 26 Mar and 21 May, Zelensky's AP 'compromise' remark, the 93rd battalion 'Menthol'. Front-line reporting."
+- id: kyivindependent-2023-farrell-ukraine-strikes-back-last-streets
+  title: "Ukraine strikes back around Bakhmut as Wagner reaches last streets in the city"
+  url: https://kyivindependent.com/ukraine-strikes-back-around-bakhmut-as-wagner-reaches-last-streets-in-the-city/
+  publisher: Kyiv Independent
+  authors: ["Francis Farrell"]
+  published: "2023-05-18"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Russia >95% of Bakhmut on 18 May; 'two main Roads of Life'; Russian claim to the 'Nest' 17 May; flank counterattacks."
+- id: kyivindependent-2023-khrebet-july-25
+  title: "Ukraine war latest: Russian troops retreat from village near Bakhmut as Ukraine advances"
+  url: https://kyivindependent.com/ukraine-war-latest-july-25/
+  publisher: Kyiv Independent
+  authors: ["Alexander Khrebet"]
+  published: "2023-07-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, counteroffensive]
+  found_in: [c07-bakhmut]
+  notes: "General Staff (Kovalov): Russians retreated from Andriivka positions; cluster munitions used near Bakhmut; Syrskyi on 20 Jul: Russians 'semi-encircled'. Medium: daily roundup of official claims."
+- id: kyivindependent-2023-kossov-bakhmut-troops-not-protected
+  title: "Ukrainian soldiers in Bakhmut: 'Our troops are not being protected'"
+  url: https://kyivindependent.com/ukrainian-soldiers-in-bakhmut-our-troops-are-not-being-protected/
+  publisher: Kyiv Independent
+  authors: ["Igor Kossov"]
+  published: "2023-03-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Interviews with >12 soldiers: 30/70 survival odds, WWII-era mortars, ammo scarcity; Khromove bridge destroyed 3 Mar 2023 by Russian attack (CNN, soldiers)."
+- id: kyivindependent-2023-ponomarenko-artillery-gasps
+  title: "As Battle of Bakhmut nears culmination, Ukraine's artillery gasps for more ammo"
+  url: https://kyivindependent.com/national/as-battle-of-bakhmut-nears-culmination-ukraines-artillery-gasps-for-more-ammo
+  publisher: Kyiv Independent
+  authors: ["Illia Ponomarenko"]
+  published: "2023-01-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "24th Mech Bde artillery: per-battery supply fell from up to 150 full loads/day (~6,000 rounds) to ~30; Budanov: Russian daily fire 60,000 -> 19,000–20,000 by end 2022; Russian switch to 10–15-man squads; VDV sent to augment Wagner."
+- id: kyivindependent-2023-ponomarenko-loss-of-soledar
+  title: "With the loss of Soledar, Ukrainian positions in Bakhmut jeopardized"
+  url: https://kyivindependent.com/with-the-loss-of-soledar-ukrainian-positions-in-bakhmut-jeopardized/
+  publisher: Kyiv Independent
+  authors: ["Illia Ponomarenko"]
+  published: "2023-01-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Best Ukrainian-side account of the fall: VDV redeployed early 2023; two-axis attack from 5 Jan; 46th Brigade withdrew from last pockets ~12 Jan; by 20 Jan fire control over 2 of 3 Bakhmut supply roads; ~15 brigades' elements, C2 chaos, ammo shortfall."
+- id: kyivindependent-2023-prigozhin-shell-hunger-photo
+  title: "Wagner boss slams Russia's defense ministry for not providing ammo"
+  url: https://kyivindependent.com/wagner-group-boss-again-slams-russias-defemse-ministry-for-shell-hunger/
+  publisher: Kyiv Independent
+  authors: ["Kyiv Independent news desk"]
+  published: "2023-02-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "22 Feb 2023 photo of dozens of Wagner dead 'killed the previous day', 'should have been five times less'; 21 Feb 'treason' accusation against Gerasimov and Shoigu."
+- id: kyivindependent-2023-soledar-withdrawal-confirmed
+  title: "Ukraine confirms withdrawal from Soledar, Donetsk Oblast"
+  url: https://kyivindependent.com/ukraine-confirms-withdrawal-from-soledar-donetsk-oblast/
+  publisher: Kyiv Independent
+  authors: ["Kyiv Independent news desk"]
+  published: "2023-01-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Cherevatyi 25 Jan 2023 (to Suspilne): withdrew 'to save the lives of the personnel', no encirclement or capture; first official Ukrainian confirmation."
+- id: kyivindependent-2023-terajima-bakhmut-lags
+  title: "As Bakhmut counteroffensive lags, soldiers burnt out from horrors of war"
+  url: https://kyivindependent.com/as-bakhmut-counteroffensive-lags-soldiers-burnt-out-from-horrors-of-war/
+  publisher: Kyiv Independent
+  authors: ["Asami Terajima"]
+  published: "2023-10-26"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut, e5-counteroffensive-23]
+  topics: [chapter, bakhmut, order-of-battle, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Field report: 93rd company with 4 of 110 left; 17th Tank lost 13 at a command post in April; units 3rd, 80th, 22nd, 28th, 92nd and 10th on the sector; soldiers estimate 'at least thousands' killed."
+- id: kyivindependent-2023-terajima-bakhmut-soldiers-worry
+  title: "Battle of Bakhmut: Ukrainian soldiers worry Russians begin to taste victory"
+  url: https://kyivindependent.com/battle-of-bakhmut-ukrainian-soldiers-worry-russians-begin-to-taste-victory/
+  publisher: Kyiv Independent
+  authors: ["Asami Terajima"]
+  published: "2023-03-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Soldier testimonies: 'being sent to death'; ~90% of losses from artillery/tanks/aviation; 8 of 25 men of a 58th Bde platoon went out; Russian drone-then-fire-then-infantry tactic."
+- id: kyivindependent-2023-tsurkan-bakhmut-mayor-casualties
+  title: "Mayor: 204 Bakhmut residents killed, 505 injured since start of full-scale invasion"
+  url: https://kyivindependent.com/mayor-of-bakhmut-on-civilian-casualties-since-start-of-invasion/
+  publisher: Kyiv Independent
+  authors: ["Kate Tsurkan"]
+  published: "2023-06-01"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Mayor Reva, 31 May 2023: 204 killed (4 children), 505 injured (17 children), ~500 residents remain; prewar ~80,000 incl. 70,000 city residents."
+- id: kyivpost-2023-biden-100000-bakhmut
+  title: "President Biden Reveals Massive Number of Russian Casualties in Bakhmut"
+  url: https://www.kyivpost.com/post/17336
+  publisher: Kyiv Post
+  authors: []
+  published: "2023-05-21"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Biden at G7 Hiroshima: 'Russians have suffered over 100,000 casualties in Bakhmut'."
+- id: kyivpost-2023-korshak-gains-bakhmut
+  title: "Ukraine Makes Further Gains Amid Heavy Fighting Around Bakhmut"
+  url: https://www.kyivpost.com/post/19062
+  publisher: Kyiv Post
+  authors: ["Stefan Korshak"]
+  published: "2023-07-04"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, counteroffensive, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Maliar on 3 Jul: biggest gains near Klishchiivka; canal crossed; Syrskyi 'positions changing hands twice a day'; spearhead units 3rd Assault, 22nd and 28th Mechanized, 80th Air Assault, 17th Tank M109s. Medium: partly unconfirmed social-media posts."
+- id: mediazona-2024-price-of-bakhmut
+  title: "The price of Bakhmut. We reveal the staggering toll of Russia's bloodiest battle since WW2 and Wagner's inmates recruited to fight it"
+  url: https://en.zona.media/article/2024/06/10/wagner
+  publisher: Mediazona
+  authors: ["Mediazona data team"]
+  published: "2024-06-10"
+  accessed: "2026-10-01"
+  type: osint-dataset
+  origin: other
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22, e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "With BBC Russian, from Wagner's posthumous-payment records: 19,547 Wagner killed (17,175 convicts), dated running totals, and UALosses' 4,871+630 Ukrainian dead for comparison. Independent Russian outlet in exile; documents cross-verified four ways."
+- id: meduza-2023-prigozhin-aborted-rebellion
+  title: "Prigozhin's aborted rebellion. Meduza's interactive map shows how far Wagner Group got during its advance on Moscow"
+  url: https://meduza.io/en/feature/2023/06/24/prigozhin-s-aborted-rebellion
+  publisher: Meduza
+  authors: []
+  published: "2023-06-24"
+  accessed: "2026-10-01"
+  type: map
+  origin: other
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Geolocated map of the 23–24 Jun 2023 'march of justice': Rostov taken, convoys to ~200 km from Moscow, aircraft downed, turnaround; Prigozhin: 'They wanted to dissolve Wagner Group.'"
+- id: meduza-2024-75000-dead
+  title: "75 тысяч погибших российских солдат"
+  url: https://meduza.io/feature/2024/02/24/75-tysyach-pogibshih-rossiyskih-soldat
+  publisher: Meduza
+  authors: ["Meduza", "Mediazona"]
+  published: "2024-02-24"
+  accessed: "2026-10-01"
+  type: osint-dataset
+  origin: other
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Probate-registry estimate: ~21,000 (19,100–25,250) Russian dead at Bakhmut and Soledar; UALosses 4,557 Ukrainian dead in Bakhmut raion; ratio 4.6:1 to 2.3:1. Russian-language; exile outlet."
+- id: militarnyi-2023-andriivka-taken
+  title: "Сили оборони оволоділи Андріївкою – Генштаб"
+  url: https://mil.in.ua/uk/news/syly-oborony-ovolodily-andriyivkoyu-genshtab/
+  publisher: Militarnyi
+  authors: []
+  published: "2023-09-15"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, counteroffensive]
+  found_in: [c07-bakhmut]
+  notes: "General Staff, 15 Sep 2023: Andriivka taken; 3rd Assault: garrison encircled and destroyed, almost all of the 72nd Brigade's infantry."
+- id: militarnyi-2023-klishchiivka-cleared
+  title: "Штурмовики ЗСУ та Національної поліції зачистили Кліщіївку біля Бахмута"
+  url: https://mil.in.ua/uk/news/shturmovyky-zsu-ta-natsionalnoyi-politsiyi-zachystyly-klishhiyivku-bilya-bahmuta/
+  publisher: Militarnyi
+  authors: []
+  published: "2023-09-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut, counteroffensive]
+  found_in: [c07-bakhmut]
+  notes: "Klishchiivka liberated (Syrskyi) by the 80th Air Assault, 5th Assault and the police 'Liut' brigade; Zelensky also cites the 95th."
+- id: newsweek-2022-vanbrugen-drone-bakhmut-video
+  title: "Ukrainian Drone Captures Horrors of Bakhmut Battle as Fighting Rages—Video"
+  url: https://www.newsweek.com/ukrainian-drone-battle-bakhmut-video-isw-fighting-1768328
+  publisher: Newsweek
+  authors: ["Isabel van Brugen"]
+  published: "2022-12-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "3.5-min Ukrainian drone clip (posted 19 Dec 2022) of fighting on Fedora Maksymenka St, eastern outskirts, shared by ISW; Wolfhound MRAPs."
+- id: novayagazeta-2022-morozov-convicts-in-arms
+  title: "Convicts in arms. Russian convicts are now used to fuel the war in Ukraine"
+  url: https://novayagazeta.eu/articles/2022/11/12/convicts-in-arms
+  publisher: Novaya Gazeta Europe
+  authors: ["Alexey Morozov", "Georgy Aleksandrov"]
+  published: "2022-11-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Prison-yard recruitment pitch (Hero of Russia speaker, six months for a pardon, shot for desertion/drugs/looting); Romanova ~30,000 recruited by Nov 2022; 'experienced Wagner fighters form anti-retreat units for convicts'. Testimony-based."
+- id: nyt-2023-engelbrecht-bakhmut-success
+  title: "What Does Russia's Success in Bakhmut Mean for the War in Ukraine?"
+  url: https://www.nytimes.com/2023/05/25/world/europe/bakhmut-ukraine-russia-war.html
+  publisher: New York Times
+  authors: ["Cora Engelbrecht"]
+  published: "2023-05-25"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, analysis]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback. The Pentagon warned Kyiv against wasting ammunition; the State Department called Prigozhin's 20k an undercount; the defence cost Ukraine 'some of their most capable troops'."
+- id: nyt-2023-kramer-final-blocks
+  title: "The Final Blocks: Inside Ukraine's Bloody Stand for Bakhmut"
+  url: https://www.nytimes.com/2023/04/12/world/europe/bakhmut-ukraine-russia.html
+  publisher: New York Times
+  authors: ["Andrew E. Kramer"]
+  published: "2023-04-12"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback. Palisa (93rd) holds most of the urban front; leaked US documents had shown the city near encirclement about six weeks earlier; allies question the cost."
+- id: nyt-2023-lopez-biggest-battle
+  title: "The Biggest Battle in Ukraine"
+  url: https://www.nytimes.com/2023/03/30/briefing/bakhmut-ukraine.html
+  publisher: New York Times
+  authors: ["German Lopez"]
+  published: "2023-03-30"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback (newsletter). Ukrainian officials' 7:1 claim. Medium: brief newsletter."
+- id: open-meteo-2026-era5-bakhmut-2022-23
+  title: "Open-Meteo Historical Weather API (ERA5): Bakhmut, 1 August 2022 – 31 July 2023 (query)"
+  url: https://archive-api.open-meteo.com/v1/archive?latitude=48.59&longitude=38.00&start_date=2022-08-01&end_date=2023-07-31&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,snow_depth_max,cloud_cover_mean,wind_speed_10m_max,sunrise,sunset&timezone=Europe%2FKyiv
+  publisher: Open-Meteo (ECMWF ERA5 reanalysis)
+  authors: []
+  published: "unknown"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23]
+  topics: [weather, chapter]
+  found_in: [c07-bakhmut]
+  notes: "Daily ERA5 reanalysis for the grid cell 48.54 N 38.03 E (elev. 103 m), local Kyiv time; monthly means and key days computed. Reanalysis, not observations."
+- id: osm-2026-bakhmut-geodata
+  title: "OpenStreetMap data via the Photon geocoder: Bakhmut, its flanks and city features (computed)"
+  url: https://photon.komoot.io/
+  publisher: OpenStreetMap contributors (Photon geocoder by Komoot)
+  authors: []
+  published: "unknown"
+  accessed: "2026-10-01"
+  type: dataset
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [terrain, geodata, chapter]
+  found_in: [c07-bakhmut]
+  notes: "Computed 2026-10-01 (ODbL). Bakhmut 48.5894, 38.0021; city council 48.5891, 38.0003; AZOM (Zavod kolorovykh metaliv) 48.6106, 37.9945; Artwinery industrial area 48.5981, 38.0337; Khromove 48.5991, 37.9453; Ivanivske 48.5749, 37.9246; Chasiv Yar 48.5874, 37.8373; Klishchiivka 48.5279, 37.9583; Andriivka 48.5014, 37.9669; Soledar 48.6957, 38.0672; Berkhivka 48.6432, 37.9619; Yahidne 48.6306, 37.9825; Siverskyi Donets-Donbas canal; other villages as in the dossier. Distances computed great-circle. Nominatim and Overpass refused requests, so Photon was used."
+- id: pbs-2022-freking-zelensky-dc-visit
+  title: "Why Zelenskyy's D.C. visit took months to coordinate"
+  url: https://www.pbs.org/newshour/politics/why-zelenskyys-d-c-visit-took-months-to-coordinate
+  publisher: PBS NewsHour (Associated Press)
+  authors: ["Kevin Freking"]
+  published: "2022-12-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "AP: flag pledged 'from the boys to the Congress'; Congress closing words 'Let this flag stay with you ... a symbol of our victory'. Byline shows Kevin Freking (AP) among others."
+- id: politico-2023-dettmer-zelenskyy-digs-in
+  title: "Zelenskyy digs in against calls to quit Bakhmut"
+  url: https://www.politico.eu/article/zelenskyy-digs-in-against-calls-to-quit-bakhmut-us-western-allies-eu-russia-frontlines-valeriy-zaluzhnyy-kyiv-soledar-kupol/
+  publisher: Politico Europe
+  authors: ["Jamie Dettmer", "Veronika Melkozerova"]
+  published: "2023-03-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, decision, analysis]
+  found_in: [c07-bakhmut]
+  notes: "The core debate piece: Zelensky's 15 Mar Stavka statement; Zaluzhnyi ('key in the stability of the defense of the entire front'); Kofman and Lee on diminishing returns; Austin 'symbolic'; Petraeus and Hertling; Kupol removed from his post; 7:1 vs 5:1 claims."
+- id: pravda-2022-kyrylenko-bridge-bisects-bakhmut
+  title: "Russian occupiers destroy bridge that bisects Bakhmut"
+  url: https://www.pravda.com.ua/eng/news/2022/09/22/7368676/
+  publisher: Ukrainska Pravda
+  authors: ["Olha Kyrylenko"]
+  published: "2022-09-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Bridge over the Bakhmutka destroyed 22 Sep 2022 ~11:00; eastern bank ('Zabakhmutka') cut off; 58th Bde press officer quote."
+- id: pravda-2022-kyrylenko-invincibility-centre-bakhmut
+  title: "Invincibility centre Bakhmut. What is happening at the most difficult axis of the front"
+  url: https://www.pravda.com.ua/eng/articles/2022/12/8/7379743/
+  publisher: Ukrainska Pravda
+  authors: ["Olha Kyrylenko"]
+  published: "2022-12-08"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e3-counteroffensives-22, e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Front-line report: the 93rd at Soledar, NGU Svoboda battalion (Kuzyk) south of Bakhmut, the NGU 4th Rapid Response Brigade; one company down to 7 of 93 combat-ready."
+- id: pravda-2023-3rd-assault-72nd-flees
+  title: "Russian army brigade flees Bakhmut"
+  url: https://www.pravda.com.ua/eng/news/2023/05/9/7401428/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-05-09"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, counteroffensive]
+  found_in: [c07-bakhmut]
+  notes: "The 3rd Assault Brigade confirms Prigozhin's claim that the 72nd Motor Rifle Brigade fled; 64 killed, 87 'being clarified'. Medium: unit claims."
+- id: pravda-2023-mazurenko-mig17-monument-destroyed
+  title: "Russian invaders destroy MiG-17 aircraft monument in Bakhmut"
+  url: https://www.pravda.com.ua/eng/news/2023/03/10/7392844/
+  publisher: Ukrainska Pravda
+  authors: ["Alona Mazurenko", "Olha Kyrylenko"]
+  published: "2023-03-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "MiG-17 monument in Druzhba Square blown up ~9-10 Mar 2023; withdrawal from east bank; Maxar bridge imagery; UK MoD: two key bridges destroyed in 36 h (4 Mar)."
+- id: pravda-2023-romanenko-phosphorus-bakhmut-sof
+  title: "Bakhmut on fire: Russia uses phosphorus bombs en masse – SOF"
+  url: https://www.pravda.com.ua/eng/news/2023/05/5/7400917/
+  publisher: Ukrainska Pravda
+  authors: ["Valentyna Romanenko"]
+  published: "2023-05-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "SOF video/statement on phosphorus and incendiary munitions in Bakhmut, 5 May 2023. Claim by Ukrainian SOF; Russia denies."
+- id: pravda-2023-wp-carnage-kirby
+  title: "US fears Ukrainian counteroffensive will become carnage – WP"
+  url: https://www.pravda.com.ua/eng/news/2023/05/3/7400418/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-05-03"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Relays WaPo and Kirby (1 May): 20k Russians killed and 80k wounded since December, nearly half the dead Wagner; leaked Feb doc: 42.5k Russian vs up to 17k Ukrainian KIA. Medium: secondhand (Reuters and WaPo originals blocked)."
+- id: pravda-2023-zelensky-5th-80th-south-bakhmut
+  title: "Zelenskyy comments on achievements on the front and reveals plans for further sanctions against Russia"
+  url: https://www.pravda.com.ua/eng/news/2023/02/22/7390559/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: "2023-02-22"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky: the 5th Separate Assault Regiment and 80th Air Assault Brigade are 'destroying the enemy south of Bakhmut'."
+- id: president-2022-address-indomitable-bakhmut
+  title: "Support our indomitable Bakhmut and its defenders - address by the President of Ukraine"
+  url: https://www.president.gov.ua/en/news/pidtrimujte-nash-neskorenij-bahmut-i-jogo-zahisnikiv-zvernen-79981
+  publisher: Office of the President of Ukraine
+  authors: ["Volodymyr Zelenskyy"]
+  published: "2022-12-20"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "'our Bakhmut fortress', '#bakhmutfortress'; fighters gave him a flag to pass on. Fetched via Wayback snapshot 20221220222424 (live site 403)."
+- id: president-2022-zelensky-bakhmut-visit-awards
+  title: "President of Ukraine met with the Ukrainian military in Bakhmut and presented state awards"
+  url: https://www.president.gov.ua/en/news/prezident-ukrayini-v-bahmuti-zustrivsya-z-ukrayinskimi-vijsk-79973
+  publisher: Office of the President of Ukraine
+  authors: []
+  published: "2022-12-20"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Official account of the 20 Dec 2022 visit: frontline positions of a mechanized brigade, awards to several branches. Fetched via Wayback snapshot 20221220141702 (live site 403)."
+- id: president-2023-zelensky-soledar-46-77
+  title: "Zelensky evening address, 12 January 2023 (Soledar, 77th and 46th airmobile brigades)"
+  url: https://www.president.gov.ua/en/news/obovyazkovo-nastane-den-koli-ukrayinskij-prapor-bude-narivni-80353
+  publisher: Office of the President of Ukraine
+  authors: ["Volodymyr Zelensky"]
+  published: "2023-01-12"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, soledar, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback. Thanks the 77th and 46th Airmobile brigades holding Soledar."
+- id: reuters-2023-faulconbridge-no-contracts-shoigu
+  title: "Prigozhin says Wagner will not sign contracts with Russia defence minister"
+  url: https://www.reuters.com/world/europe/prigozhin-says-wagner-will-not-sign-any-contract-with-russian-defence-minister-2023-06-11/
+  publisher: Reuters
+  authors: ["Guy Faulconbridge"]
+  published: "2023-06-11"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "MoD order (10 Jun 2023): all 'volunteer detachments' must sign MoD contracts by 1 Jul; Prigozhin refuses 11 Jun. Direct trigger chain to the mutiny. Fetched via Wayback."
+- id: reuters-2023-gray-eu-220000-shells
+  title: "EU says it's sent 220,000 artillery shells to Ukraine"
+  url: https://www.reuters.com/world/europe/eu-says-its-sent-220000-artillery-shells-ukraine-2023-05-23/
+  publisher: Reuters
+  authors: ["Andrew Gray"]
+  published: "2023-05-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Borrell 23 May 2023: 220,000 shells + 1,300 missiles delivered under track 1 of the million-round plan; joint contracts expected summer. Fetched via Wayback."
+- id: reuters-2023-gray-eu-million-shells
+  title: "EU seals plan to send a million artillery shells to Ukraine"
+  url: https://www.reuters.com/world/europe/eu-agrees-plan-send-million-artillery-shells-ukraine-2023-03-20/
+  publisher: Reuters
+  authors: ["Andrew Gray", "Sabine Siebold"]
+  published: "2023-03-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "20 Mar 2023: EUR 2 bn from European Peace Facility for 1 million 155 mm rounds within a year (EUR 1 bn from stocks, EUR 1 bn joint procurement; 17 states + Norway sign EDA arrangement). Fetched via Wayback."
+- id: reuters-2023-light-prigozhin-lick-wounds
+  title: "Russian mercenary chief says fighters to leave Ukraine's Bakhmut to 'lick wounds'"
+  url: https://www.reuters.com/world/europe/russian-mercenary-chief-prigozhin-says-his-forces-will-leave-bakhmut-next-week-2023-05-05/
+  publisher: Reuters
+  authors: ["Felix Light", "Caleb Davis", "Andrew Osborn"]
+  published: "2023-05-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "5 May 2023: withdraw on 10 May; Wagner held all but 2.5 of 45 km2; MoD says paratroopers support assault units; Rob Lee on MoD rationing ahead of counteroffensive. Fetched via Wayback."
+- id: reuters-2023-mod-claims-bakhmut
+  title: "Russia says its troops have taken full control of Bakhmut"
+  url: https://www.reuters.com/world/europe/russia-says-its-troops-have-taken-control-bakhmut-2023-05-20/
+  publisher: Reuters
+  authors: ["Reuters"]
+  published: "2023-05-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "MoD statement 20 May 2023: 'liberation of Artyomovsk has been completed' by Wagner assault units supported by artillery and aviation of the Southern Group of Forces. Fetched via Wayback."
+- id: reuters-2023-osborn-moscow-agrees-shells
+  title: "Moscow agrees to give Wagner more Ukraine battle shells after row - mercenary boss"
+  url: https://www.reuters.com/world/europe/prigozhin-says-wagner-is-now-receiving-ammunition-ukraine-war-2023-02-23/
+  publisher: Reuters
+  authors: ["Andrew Osborn"]
+  published: "2023-02-23"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "23 Feb: shells dispatched 'on paper'; MoD (21 Feb) called shell-starvation claims 'completely untrue'; Putin 21 Feb address: end 'interdepartmental contradictions'. Fetched via Wayback."
+- id: reuters-2023-osborn-prigozhin-10pct-shells
+  title: "Russian mercenary chief says he's still not getting enough shells for Ukraine"
+  url: https://www.reuters.com/world/europe/russian-mercenary-chief-says-hes-still-not-getting-enough-shells-ukraine-2023-05-10/
+  publisher: Reuters
+  authors: ["Andrew Osborn"]
+  published: "2023-05-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "10 May: 'only getting 10%' of shells; warned withdrawal would be treachery; 'happy grandfather' tirade of 9 May. Fetched via Wayback."
+- id: reuters-2023-prigozhin-denying-ammunition
+  title: "Russian officials are denying ammunition to Wagner fighters - group founder"
+  url: https://www.reuters.com/world/europe/russian-officials-are-denying-ammunition-wagner-fighters-group-founder-2023-02-20/
+  publisher: Reuters
+  authors: ["Reuters"]
+  published: "2023-02-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "20 Feb 2023 seven-minute audio: must 'apologise and obey' to get shells; those interfering 'directly working for the enemy'; 'golden plates', Dubai. Fetched via Wayback."
+- id: reuters-2023-putin-congratulates-wagner
+  title: "Putin says battle for Bakhmut is over, thanks Wagner, army"
+  url: https://www.reuters.com/world/europe/putin-says-battle-bakhmut-is-over-thanks-wagner-mercenaries-russian-army-2023-05-21/
+  publisher: Reuters
+  authors: ["Reuters"]
+  published: "2023-05-21"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Kremlin statement (night 20–21 May 2023): Putin congratulates 'Wagner's assault groups' and army units 'who provided ... cover on their flanks'; state awards promised. Fetched via Wayback."
+- id: reuters-2023-russia-claims-soledar-wagner-nod
+  title: "Russia claims Soledar capture, Zelenskiy mocks nod to Wagner role"
+  url: https://www.reuters.com/world/europe/russia-says-it-has-taken-control-ukraines-soledar-2023-01-13/
+  publisher: Reuters
+  authors: ["Reuters"]
+  published: "2023-01-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "MoD 13 Jan: Soledar captured 'Thursday evening' (12 Jan), first statement omits Wagner, second credits 'volunteers from the Wagner assault detachments'; Prigozhin on attempts to 'steal victory'; Zelensky mockery. Fetched via Wayback."
+- id: reuters-2023-shalal-wagner-30000-casualties
+  title: "White House: Wagner Group has suffered over 30,000 casualties in Ukraine"
+  url: https://www.reuters.com/world/europe/white-house-wagner-group-has-suffered-over-30000-casualties-ukraine-2023-02-17/
+  publisher: Reuters
+  authors: ["Andrea Shalal", "Paul Grant"]
+  published: "2023-02-17"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "US downgraded intel, 17 Feb 2023: >30,000 Wagner casualties incl. ~9,000 KIA; ~90% of Wagner dead since December were convicts; half of deaths since mid-December. Fetched via Wayback."
+- id: reuters-2023-trevelyan-prigozhin-claims-bakhmut
+  title: "Russia's Prigozhin claims capture of Bakhmut, Ukraine says fighting goes on"
+  url: https://www.reuters.com/world/europe/russias-prigozhin-claims-full-control-bakhmut-2023-05-20/
+  publisher: Reuters
+  authors: ["Mark Trevelyan"]
+  published: "2023-05-20"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "20 May 2023: 'at 12 noon, Bakhmut was completely taken'; withdraw from 25 May; 'five times more guys died than they should have'; UK: several battalions reinforced flanks. Fetched via Wayback."
+- id: reuters-2023-zafra-mcclure-bakhmut-destruction-analysis
+  title: "Uncovering the extensive destruction of Bakhmut in a new detailed analysis"
+  url: https://www.reuters.com/graphics/UKRAINE-CRISIS/MAPS/klvygwawavg/2023-06-21/uncovering-the-extensive-destruction-of-bakhmut-in-a-new-detailed-analysis/
+  publisher: Reuters
+  authors: ["Mariano Zafra", "Jon McClure"]
+  published: "2023-06-21"
+  accessed: "2026-10-01"
+  type: map
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut, e5-counteroffensive-23]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Building-damage analysis by Masae Analytics from Copernicus Sentinel-1; worst destruction in the western districts; 3D model with drone footage."
+- id: rferl-2022-dubchak-explosions-every-minute-bakhmut
+  title: "'Explosions Every Minute:' Inside Bakhmut As Fighting Rages"
+  url: https://www.rferl.org/a/bakhmut-photos-inside-war-ukraine/32183369.html
+  publisher: RFE/RL
+  authors: ["Andriy Dubchak"]
+  published: "2022-12-19"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Photo essay by Donbas Frontliner's Andriy Dubchak (18 Dec 2022); ~10,000 of ~70,000 residents remained."
+- id: rferl-2023-bakhmut-bloodiest-infantry-brawl
+  title: "The Battle For Bakhmut: The Bloodiest Infantry Brawl Since World War II"
+  url: https://www.rferl.org/a/ukraine-russia-battle-bakhmut-ruins-/32351803.html
+  publisher: RFE/RL
+  authors: []
+  published: "2023-04-06"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Photo essay: 28th Mechanized Brigade in trenches near Bakhmut, 5 Apr 2023; Prigozhin's 3 Apr claim."
+- id: rferl-2024-belovodyev-storm-gladiator
+  title: "Storm Gladiator: How Russia Uses Recruited Convicts To Fight In 'Fierce' Assault Units In Ukraine"
+  url: https://www.rferl.org/a/russia-recruited-convicts-fierce-assault-units-storm-gladiator-/32806371.html
+  publisher: RFE/RL
+  authors: ["Daniil Belovodyev"]
+  published: "2024-02-05"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut, e5-counteroffensive-23]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Systema investigation: MoD 'On Storm Z' document (Feb 2023) authorises shooting deserters; MoD recruiters in prisons from autumn 2022; by Apr 2023 MoD sought >=1,400 inmates for ~100-man Z groups; June 2023 law -> Storm-V."
+- id: texty-2023-who-commands-bakhmut-defence
+  title: "Хто керує обороною Бахмута: Міноборони розкрило деталі"
+  url: https://texty.org.ua/fragments/109239/hto-keruye-oboronoyu-bahmuta-minoborony-rozkrylo-detali/
+  publisher: Texty.org.ua
+  authors: []
+  published: "2023-03-21"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, command]
+  found_in: [c07-bakhmut]
+  notes: "Maliar on the chain of command: Syrskyi (OSUV Khortytsia), Brig-Gen Andrii Hnatov over Bakhmut, Col Palisa (93rd) and Col Pivnenko (3rd NGU brigade) inside the city."
+- id: ukrinform-2023-3rd-assault-700m
+  title: "Ukraine pushes Russia \"another 700 meters\" back near Bakhmut - Ground Forces"
+  url: https://www.ukrinform.net/rubric-ato/3712322-ukraine-clears-another-700-meters-of-russian-troops-near-bakhmut-ground-forces.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-05-21"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, counteroffensive]
+  found_in: [c07-bakhmut]
+  notes: "3rd Assault Brigade: 1,730 m x 700 m cleared; 72nd Brigade 'shattered'; 23 killed, 40+ wounded (2nd Assault Battalion). Medium: unit claim."
+- id: ukrinform-2023-azov-3rd-assault-brigade
+  title: "Azov becomes Separate Assault Brigade with Army's Ground Forces"
+  url: https://www.ukrinform.net/rubric-ato/3659853-azov-becomes-separate-assault-brigade-with-armys-ground-forces.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-01-26"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Biletskyi: Azov SSO becomes the 3rd Separate Assault Brigade; 'Our combat path begins from the most difficult area, Bakhmut'."
+- id: ukrinform-2023-cherevaty-ammo-shortage-fake
+  title: "Cherevaty calls 'ammo shortage' of Russians in Bakhmut a fake as 524 strikes launched in past day"
+  url: https://www.ukrinform.net/rubric-ato/3707387-cherevaty-calls-ammo-shortage-of-russians-in-bakhmut-a-fake-as-524-strikes-launched-in-past-day.html
+  publisher: Ukrinform
+  authors: ["Ukrinform"]
+  published: "2023-05-10"
+  accessed: "2026-10-01"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Ukrainian Eastern Group: 524 Russian strikes/day on Bakhmut axis; Wagner still main attacking force but increasingly reliant on regular units. Official Ukrainian claim."
+- id: ukrinform-2023-maliar-20-sq-km
+  title: "Ukraine's forces retake about 20 square kilometers of land near Bakhmut – defense official"
+  url: https://www.ukrinform.net/rubric-ato/3710068-ukraines-forces-retake-about-20-square-kilometers-of-land-near-bakhmut-defense-official.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-05-16"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, counteroffensive]
+  found_in: [c07-bakhmut]
+  notes: "Maliar: ~20 km² liberated north and south of the Bakhmut suburbs in the previous few days. Medium: official claim."
+- id: ukrinform-2023-zelensky-best-weapons-bakhmut
+  title: "Zelensky: Best and newest weapons sent to Bakhmut"
+  url: https://www.ukrinform.net/rubric-ato/3719177-zelensky-best-and-newest-weapons-sent-to-bakhmut.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-06-06"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, decision, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky: Bakhmut a 'magnet'; best weapons sent there; 50,000 shells a day; 21k Wagner killed and 60k wounded (81k). Medium: belligerent claim."
+- id: ukrinform-2023-zelensky-thanks-57-77-93
+  title: "Greater unity is needed to defeat tyranny - Zelensky"
+  url: https://www.ukrinform.net/rubric-ato/3689184-greater-unity-is-needed-to-defeat-tyranny-zelensky.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-03-29"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky's address thanking the 57th Motorized, 77th Airmobile and 93rd Mechanized for the Bakhmut direction (confirms units)."
+- id: ukrinform-2023-zelensky-thanks-77-67-92-80-5
+  title: "President Zelensky: Rashism must face a total defeat"
+  url: https://www.ukrinform.net/rubric-ato/3690717-president-zelensky-rashism-must-face-a-total-defeat.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-04-02"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, order-of-battle]
+  found_in: [c07-bakhmut]
+  notes: "Thanks the 77th, 67th and 92nd, the 80th and the 5th Assault, right after 'Especially Bakhmut!'. Medium: the units are not explicitly tied to Bakhmut sector by sector."
+- id: ukrinform-2023-zelensky-wagner-100000
+  title: "Zelensky: Wagner lost about 100,000 soldiers killed and wounded in eastern Ukraine"
+  url: https://www.ukrinform.net/rubric-ato/3730181-zelensky-wagner-lost-about-100000-soldiers-killed-and-wounded-in-eastern-ukraine.html
+  publisher: Ukrinform
+  authors: []
+  published: "2023-07-02"
+  accessed: "2026-10-01"
+  type: official
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Zelensky's claim: 21,000 Wagner eliminated and 80,000 wounded in the east. Medium: belligerent claim."
+- id: wapo-2023-khurshudyan-short-of-skilled-troops
+  title: "Ukraine short of skilled troops and munitions as losses, pessimism grow"
+  url: https://www.washingtonpost.com/world/2023/03/13/ukraine-casualties-pessimism-ammunition-shortage/
+  publisher: Washington Post
+  authors: ["Isabelle Khurshudyan", "Paul Sonne", "Karen DeYoung"]
+  published: "2023-03-13"
+  accessed: "2026-10-01"
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, decision, casualties]
+  found_in: [c07-bakhmut]
+  notes: "Fetched via Wayback. The US advised retreat 'since at least January'; Kupol (46th) on losing 100 KIA and 400 wounded out of ~500; Syrskyi 'Some people defend, others prepare'; 120k Ukrainian casualties estimate."
+- id: warontherocks-2023-kofman-lee-perseverance
+  title: "Perseverance and Adaptation: Ukraine's Counteroffensive at Three Months"
+  url: https://warontherocks.com/2023/09/perseverance-and-adaptation-ukraines-counteroffensive-at-three-months/
+  publisher: War on the Rocks
+  authors: ["Michael Kofman", "Rob Lee"]
+  published: "2023-09-04"
+  accessed: "2026-10-01"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut, e5-counteroffensive-23]
+  topics: [chapter, bakhmut, analysis, counteroffensive]
+  found_in: [c07-bakhmut]
+  notes: "Field-research verdict: 1:3–1:4 ratio over the battle; Ukraine could have held the heights west of the city with fewer units; experienced brigades kept on the line; brigades on the Bakhmut flanks in summer 2023."
+- id: wikipedia-artwinery
+  title: "Artwinery"
+  url: https://en.wikipedia.org/wiki/Artwinery
+  publisher: Wikipedia
+  authors: []
+  published: "2026-10-01"
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Plant founded 1950 in the city's gypsum tunnels: 13-14 C, 85-90% humidity, 26 ha underground."
+- id: wikipedia-battle-of-bakhmut
+  title: "Battle of Bakhmut"
+  url: https://en.wikipedia.org/wiki/Battle_of_Bakhmut
+  publisher: Wikipedia
+  authors: []
+  published: "2026-10-01"
+  accessed: "2026-10-01"
+  type: encyclopedia
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e4-bakhmut, e5-counteroffensive-23]
+  topics: [chapter, bakhmut]
+  found_in: [c07-bakhmut]
+  notes: "Used as a finder and for FT/Telegraph/ISW points not fetched directly (FT 7-15k civilians of 80k; M03/H32 under fire; AZOM 26 Mar; bridges destroyed by Ukrainians by 3 Mar)."
+- id: youtube-2022-bbc-zelensky-visits-bakhmut
+  title: "Ukraine's President Zelensky visits front-line city of Bakhmut – BBC News"
+  url: https://www.youtube.com/watch?v=cRfR5zlXiLs
+  publisher: BBC News (YouTube)
+  authors: []
+  published: "2022-12-20"
+  accessed: "2026-10-01"
+  type: video
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "4:27 news video of the 20 Dec 2022 visit (president's office footage)."
+- id: youtube-2023-3oshbr-road-of-life-trench-battle
+  title: "Віч-на-віч з ворогом: траншейні бої 3 ОШБр за \"дорогу життя\" до Бахмута"
+  url: https://www.youtube.com/watch?v=-LulaA-U7-M
+  publisher: Third Army Corps / 3rd Assault Brigade (YouTube)
+  authors: []
+  published: "2023-05-28"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Full trench-assault footage by the road of life (defined as T0504 Chasiv Yar–Khromove–Bakhmut); brigade claims 30 Russians killed. ~11m views. Unit claims."
+- id: youtube-2023-antytila-fortetsia-bakhmut
+  title: "АНТИТІЛА - Фортеця Бахмут / Official Video"
+  url: https://www.youtube.com/watch?v=OmqLVrUXsTQ
+  publisher: Antytila (YouTube)
+  authors: []
+  published: "2023-02-09"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Music video 'Fortress Bakhmut' filmed on the front line in Bakhmut with real soldiers; morale-symbol artefact."
+- id: youtube-2023-dsns-vyklyk-u-bakhmut
+  title: "Документальний фільм \"Виклик у Бахмут\""
+  url: https://www.youtube.com/watch?v=TWsW3cu2Tyc
+  publisher: State Emergency Service of Ukraine (YouTube)
+  authors: []
+  published: "2023-04-13"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "SES documentary; description: 3,739 people evacuated from Bakhmut raion by SES since the invasion, incl. 626 children."
+- id: youtube-2023-france24-inside-bakhmut
+  title: "Ukraine's Bakhmut: Inside the frontline city • FRANCE 24 English"
+  url: https://www.youtube.com/watch?v=jO94rW4tHNs
+  publisher: FRANCE 24 English (YouTube)
+  authors: ["James André", "Mayssa Awad"]
+  published: "2023-01-11"
+  accessed: "2026-10-01"
+  type: video
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "15-min reportage, six days inside the city in winter 2022-23."
+- id: youtube-2023-hromadske-bakhmut-medevac
+  title: "«Краще не спати, живішим будеш» - репортаж із Бахмута / hromadske"
+  url: https://www.youtube.com/watch?v=t_OAI2XbpO4
+  publisher: hromadske (YouTube)
+  authors: []
+  published: "2023-04-19"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Report with 93rd Bde evacuation chief Capt. Oleksandr Sokoliuk 'Sokil', evacuating wounded from inside the city."
+- id: youtube-2023-novynarnia-bakhmut-chronicle-april
+  title: "БОЇ ЗА БАХМУТ. Хроніка початку квітня 2023"
+  url: https://www.youtube.com/watch?v=ZzvqkR83Aos
+  publisher: Novynarnia (YouTube)
+  authors: []
+  published: "2023-04-04"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "1:23 h chronicle of 1-2 Apr 2023 push to the centre."
+- id: youtube-2023-reuters-satellite-destruction-bakhmut
+  title: "Satellite images show the destruction in Bakhmut"
+  url: https://www.youtube.com/watch?v=hEdK-8hevyg
+  publisher: Reuters (YouTube)
+  authors: []
+  published: "2023-03-10"
+  accessed: "2026-10-01"
+  type: video
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "0:25 satellite before/after video, 10 Mar 2023; imagery provider not named in the description."
+- id: youtube-2023-sso-fortetsia-bakhmut
+  title: "\"ФОРТЕЦЯ\". Ч.1. \"Доброго ранку, Бахмуте!\" Документальний фільм про роботу ССО в Бахмуті"
+  url: https://www.youtube.com/watch?v=AYjsSHDyssk
+  publisher: Special Operations Forces of Ukraine (YouTube)
+  authors: ["Oleksandr Solovii", "Yehor Troshkin"]
+  published: "2023-08-22"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Two-part SSO documentary (pt 2: watch?v=DVSh0xnwFH4, 2023-08-23): Military TV journalists with an SSO group in Bakhmut, March 2023."
+- id: youtube-2023-thesun-satellite-bridges-bakhmut
+  title: "Satellite images show destroyed bridges and damaged buildings in embattled Bakhmut"
+  url: https://www.youtube.com/watch?v=hIplqbgk5mA
+  publisher: The Sun (YouTube)
+  authors: []
+  published: "2023-03-11"
+  accessed: "2026-10-01"
+  type: video
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "Imagery released 10 Mar 2023; description quotes UK MoD: Bakhmutka the front line, river crossing 'a killing zone'."
+- id: youtube-2023-united24-bakhmut-bloodiest-battle
+  title: "Bakhmut: the Bloodiest Battle of the War. A year of fighting the indomitable Ukrainian troops"
+  url: https://www.youtube.com/watch?v=URmE3prf58c
+  publisher: UNITED24 Media (YouTube)
+  authors: []
+  published: "2023-05-12"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "5:33 explainer with hromadske and 3rd Assault Bde footage; cover photo Sergey Shestak/AFP."
+- id: youtube-2024-sbu-bakhmut-road-of-life
+  title: "Bakhmut. The Road of Life"
+  url: https://www.youtube.com/watch?v=27SYy3269HU
+  publisher: Security Service of Ukraine (YouTube)
+  authors: []
+  published: "2024-06-24"
+  accessed: "2026-10-01"
+  type: video
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "SBU Special Operations Centre 'A' snipers defending the Road of Life near Bakhmut, spring 2023 (27:58)."
+- id: youtube-2024-welt-bloodshed-in-bakhmut
+  title: "BLOODSHED IN BAKHMUT: Fearless Fighters in Ukraine's Deadliest Meat Grinder | WELT Documentary"
+  url: https://www.youtube.com/watch?v=haDrij8046s
+  publisher: WELT Documentary (YouTube)
+  authors: []
+  published: "2024-03-08"
+  accessed: "2026-10-01"
+  type: video
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "50-min German TV documentary (English version) on defenders of Bakhmut; ~2m views."
+- id: youtube-2025-storyful-maxar-bakhmut-bridges
+  title: "Satellite Images Show Destroyed Bridges and Damaged Buildings in Embattled Bakhmut"
+  url: https://www.youtube.com/watch?v=asbiVeYz1QY
+  publisher: Storyful News & Weather (YouTube)
+  authors: []
+  published: "2025-04-26"
+  accessed: "2026-10-01"
+  type: video
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e4-bakhmut]
+  topics: [chapter, bakhmut, media]
+  found_in: [c07-bakhmut]
+  notes: "'Credit: Maxar Technologies via Storyful'; licensed clip of the March 2023 Maxar bridge imagery (upload date is a 2025 re-upload)."

@@ -1,0 +1,40 @@
+{"pair": "e2f253e69aed", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e304b0f6c458", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e304c6bda691", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e312b1aa8c6f", "relation": "refines", "from": "claim:cc15_0022_43", "to": "claim:cc15_0016_04", "strength": 0.7, "rationale": "B extends ISW's list of fog-timed Shakhove attacks to 16 and 27 October and gives column sizes."}
+{"pair": "e3279071faa5", "relation": "supports", "from": "claim:cc14_0010_09", "to": "claim:cc14_0005_01", "strength": 0.7, "rationale": "The Karyzh bridge destroyed on 19 August is the last of the three bridges dropped 16–19 August.", "independent": false}
+{"pair": "e38a8d9d0856", "relation": "supports", "from": "claim:cc16_0011_80", "to": "claim:cc16_0007_10", "strength": 0.5, "rationale": "Imagery of 3 Tu-95MS and 4 Tu-22M3 destroyed at Belaya fits within TWZ's total of 6–7 Tu-95MS and 4 Tu-22M3.", "independent": false}
+{"pair": "e3aaaf8ae68f", "relation": "refines", "from": "claim:cc11_0010_93", "to": "claim:cc11_0028_15", "strength": 0.7, "rationale": "A gives the dated 15 February action of the 3rd Assault Brigade's Bradleys on the supply road."}
+{"pair": "e3bccb9267c6", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e3ec7938b131", "relation": "duplicates", "from": "claim:cc11_0038_04", "to": "claim:cc11_0032_04", "strength": 0.9, "rationale": "Same assertion that Russia replaced mechanised waves with infantry assaults at Avdiivka from November 2023."}
+{"pair": "e3fea8cf4914", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e417cf876ce9", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e43feac14584", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e44f481d7e8b", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e45608670362", "relation": "supports", "from": "claim:cc09_0050_08", "to": "claim:cc09_0017_01", "strength": 0.4, "rationale": "Russian milbloggers crediting landmines and layered fortifications match Chernyk's deep minefield echelon.", "independent": true}
+{"pair": "e46b8c6ff6e7", "relation": "supports", "from": "claim:cc19_0009_67", "to": "claim:cc19_0005_11", "strength": 0.8, "rationale": "Biletskyi filming himself at the Sviatohirsk Lavra on 7 September is the evidence that Putin's claim was false.", "independent": false}
+{"pair": "e4943dfe5c78", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e4f9366cfb54", "relation": "refines", "from": "claim:cc10_0015_007", "to": "claim:cc09_0010_13", "strength": 0.8, "rationale": "B gives the 02:00–02:54 time window for the 6 June 2023 dam destruction."}
+{"pair": "e50c1f495442", "relation": "supports", "from": "claim:cc09_0030_01", "to": "claim:cc09_0010_17", "strength": 0.6, "rationale": "B confirms the 70th and 291st Regiments held the line on 7–8 June, where A says a position was penetrated then retaken.", "independent": false}
+{"pair": "e50f316642a4", "relation": "supports", "from": "claim:cc19_0009_97", "to": "claim:cc19_0005_08", "strength": 0.8, "rationale": "DeepState marking Ridkodub, Nove and Katerynivka liberated on 27 September corroborates the 3rd Corps announcement.", "independent": true}
+{"pair": "e55887850876", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e55e53a6aa8d", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e5634a03178f", "relation": "supports", "from": "claim:cc16_0011_76", "to": "claim:cc16_0008_01", "strength": 0.6, "rationale": "AviVector's 3 Tu-95MS and an An-12 destroyed at Olenya is part of the basis for the historical floor.", "independent": false}
+{"pair": "e5b8f822f58a", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e5bd6747d65e", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e5c015000b2f", "relation": "refines", "from": "claim:cc15_0019_03", "to": "claim:cc15_0007_20", "strength": 0.7, "rationale": "B dates Drapatyi's takeover of Khortytsia to late January 2025."}
+{"pair": "e5eced5f07ec", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e5ef53d5f992", "relation": "refines", "from": "claim:cc01_0011_83", "to": "claim:cc01_0009_14", "strength": 0.7, "rationale": "B names the 72nd Brigade counterattack that cleared Moshchun by 21 March."}
+{"pair": "e60b467dbed6", "relation": "supports", "from": "claim:cc15_0022_44", "to": "claim:cc15_0016_13", "strength": 0.6, "rationale": "B confirms a turtle-tank assault near Razine on 2 December 2025.", "independent": false}
+{"pair": "e617bf641eee", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e6483c1a7c2b", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e6669a10ed91", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e6a58f531280", "relation": "supports", "from": "claim:cc09_0040_02", "to": "claim:cc09_0035_01", "strength": 0.6, "rationale": "Vehicles hitting mines and then drone-cued fire match ISW's first echelon slowing the attack with mines.", "independent": true}
+{"pair": "e6bd860fe563", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e6c3685b75e4", "relation": "supports", "from": "claim:cc01_0030_07", "to": "claim:cc01_0032_19", "strength": 0.7, "rationale": "Aerorozvidka night teams bombing the convoy head and depot match the chosen approach of small night teams.", "independent": true}
+{"pair": "e710597bedf5", "relation": "supports", "from": "claim:cc14_0014_075", "to": "claim:cc14_0024_27", "strength": 0.7, "rationale": "A's first ATACMS use inside Russia on 19 November 2024, including Kursk region, matches B.", "independent": false}
+{"pair": "e71d0d7d4ecf", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e746074f4d2f", "relation": "supports", "from": "claim:cc15_0024_12", "to": "claim:cc15_0014_06", "strength": 0.8, "rationale": "B describes the 9 November fog column on the Selydove highway that A refers to.", "independent": false}
+{"pair": "e7a7126c2584", "relation": "duplicates", "from": "claim:cc11_0038_16", "to": "claim:cc11_0010_109", "strength": 0.8, "rationale": "Same 110th Brigade claim that its Zenit wounded were shot after Russia agreed to evacuate them."}
+{"pair": "e7a932a38b1a", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}
+{"pair": "e7bb6bbb566c", "relation": "none", "rationale": "Related context only; different events, quantities or facets."}

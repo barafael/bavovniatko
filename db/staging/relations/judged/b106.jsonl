@@ -1,0 +1,40 @@
+{"pair": "a81b3a75f15a", "relation": "supersedes", "from": "claim:cc18_0013_66", "to": "claim:cc18_0013_57", "strength": 0.8, "rationale": "The afternoon toll of 21 dead and 85 injured is a later count of the same Kyiv toll that stood at nine killed and 56 injured at 07:30."}
+{"pair": "a8278c53df90", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a8b89d391b95", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a8e4cab49d7c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a9008f6d5200", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "a9773c810110", "relation": "supports", "from": "claim:cc16_0007_10", "to": "claim:cc16_0007_08", "strength": 0.6, "rationale": "TWZ's imagery-based 10–11 bombers destroyed agrees with US officials' estimate of about 10 destroyed.", "independent": true}
+{"pair": "a99ecb66fc58", "relation": "none", "rationale": "BBC Verify's count covers Olenya and Belaya; the A-50 strikes were at Ivanovo. Different scopes."}
+{"pair": "aa00477ab797", "relation": "supports", "from": "claim:cc16_0007_11", "to": "claim:cc16_0007_09", "strength": 0.6, "rationale": "Bronk's at least 6 Tu-95MS and 4 Tu-22M3 destroyed is consistent with imagery counts of 12–13 aircraft destroyed.", "independent": false}
+{"pair": "aaf59d4bc580", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "ab1255a5f0e0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "ab4f2843ee5d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "ab5fe3a83b26", "relation": "supports", "from": "claim:c00_0062_07", "to": "claim:cc19_0005_13", "strength": 0.7, "rationale": "The corps' 125 km² claim is the lower end of the derived Vivaldi win band.", "independent": false}
+{"pair": "ab8075194124", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "ab964d18c03b", "relation": "contradicts", "from": "claim:c04_0027_82", "to": "claim:cc14_0027_10", "strength": 0.4, "rationale": "For roughly the same period in 2026, NIS/UK put North Korean casualties at about 6,000 and HUR at more than 7,000.", "resolution": "Different agencies and methods: Ukrainian intelligence counts tend to run higher than South Korean and British estimates."}
+{"pair": "abcbd42e467b", "relation": "supersedes", "from": "claim:c04_0027_82", "to": "claim:cc14_0027_05", "strength": 0.4, "rationale": "The NIS/UK figure of about 6,000 is a later point in the cumulative North Korean casualty count than Syrskyi's 4,000 in February 2025."}
+{"pair": "ac2e2f43493b", "relation": "supports", "from": "claim:cc16_0007_10", "to": "claim:cc16_0007_09", "strength": 0.6, "rationale": "TWZ's at least 10–11 bombers destroyed is consistent with independent imagery counts of 12–13 aircraft destroyed.", "independent": false}
+{"pair": "ac8b0fd2b8a2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "acca9b6098bb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "ad39a2f2c940", "relation": "supersedes", "from": "claim:cc16_0007_09", "to": "claim:cc16_0011_56", "strength": 0.5, "rationale": "Later imagery counts of 12–13 destroyed replace the early OSINT tally of 8 confirmed by 18:00 on 1 June."}
+{"pair": "ad49b5844140", "relation": "supersedes", "from": "claim:cc18_0013_57", "to": "claim:cc18_0013_45", "strength": 0.7, "rationale": "56 injured by 07:30 is a later count of the same Kyiv injury toll that Klitschko put at six at 03:47."}
+{"pair": "add355fb1c3f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "ae5cff8e7006", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "ae70a7bff038", "relation": "none", "rationale": "An early NIS figure from January 2025 and a later BBC count of killed use different times and methods."}
+{"pair": "ae90ee8386c7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "af4218db345e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "af4e6cb8bdef", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "af511819c11b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "af99b8a72040", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "afbf3aac8a09", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "afbf7ffd9584", "relation": "none", "rationale": "The Kh-101 count is one component of the 77-missile total."}
+{"pair": "afda23ab322b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "b077e70f3796", "relation": "weakens", "from": "claim:cc16_0028_14", "to": "claim:cc16_0029_07", "strength": 0.4, "rationale": "MAIAR's imagery of eight A-50s in unchanged positions at Ivanovo casts doubt on the BBC's \"as few as four\" left after Spiderweb."}
+{"pair": "b199fa7876ea", "relation": "duplicates", "from": "claim:cc09_0031_05", "to": "claim:cc09_0010_33", "strength": 0.9, "rationale": "The same 13 June 2023 imagery count of 27 helicopters at Berdiansk including 5 Ka-52, extracted twice; A adds the 20 new arrivals."}
+{"pair": "b1d29967ba8c", "relation": "supersedes", "from": "claim:cc14_0012_20", "to": "claim:cc14_0012_19", "strength": 0.9, "rationale": "Ukraine's claim of 62,400 Russian Kursk losses by 26 April 2025 updates its claim of 39,900 by 6 February."}
+{"pair": "b21cb36d6c69", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "b225597f77ba", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "b31139d8b2f2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "b35a740e3838", "relation": "none", "rationale": "Pre-war population and civilians remaining in December 2022 describe different times."}
+{"pair": "b36c8d299910", "relation": "supports", "from": "claim:cc16_0007_11", "to": "claim:cc16_0008_01", "strength": 0.8, "rationale": "Bronk's at least 6 Tu-95MS and 4 Tu-22M3 destroyed matches the derived floor of about 10 heavy bombers.", "independent": false}
+{"pair": "b36ddb331fba", "relation": "supports", "from": "claim:c00_0074_53", "to": "claim:cc19_0005_13", "strength": 0.6, "rationale": "The corps' 125 km² for phases 1–2 is the lower end of the derived Vivaldi win band.", "independent": false}

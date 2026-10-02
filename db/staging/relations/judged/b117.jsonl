@@ -1,0 +1,40 @@
+{"pair": "42cea0687921", "relation": "supports", "from": "claim:cc16_0011_57", "to": "claim:c01_0029_46", "strength": 0.85, "rationale": "Both report the SBU's ~$7bn Spiderweb damage claim.", "independent": false}
+{"pair": "436dd2c251d8", "relation": "refines", "from": "claim:cc07_0010_72", "to": "claim:cc07_0006_09", "strength": 0.8, "rationale": "ISW's 76.5% / 30.68 km2 is the precise version of 'about 76%' of Bakhmut on 11 April 2023."}
+{"pair": "43af1c95219e", "relation": "none", "rationale": "Spiderweb drivers and a Kyiv missile death are unrelated."}
+{"pair": "448a11791109", "relation": "supports", "from": "claim:cc14_0025_16", "to": "claim:cc14_0012_28", "strength": 0.5, "rationale": "RUSI's ~10,000 North Koreans in Kursk is consistent with the initial 11,000-12,000.", "independent": true}
+{"pair": "45a734403d0e", "relation": "none", "rationale": "AMK's 151 km2 is an explicitly earlier, partial count; not comparable with MWI's later 250 km2."}
+{"pair": "4658cb37067d", "relation": "duplicates", "from": "claim:cc15_0019_15", "to": "claim:cc15_0007_65", "strength": 0.95, "rationale": "Same Zelensky 8:1 Pokrovsk ratio claim, same source."}
+{"pair": "47be5a18b7dd", "relation": "duplicates", "from": "claim:cc15_0007_19", "to": "claim:cc15_0005_28", "strength": 0.95, "rationale": "Same Syrskyi Pokrovsk-axis January 2025 losses, same source."}
+{"pair": "4965174e07ca", "relation": "none", "rationale": "Wagner dead over the whole Bakhmut battle vs Kirby's all-front figure since December: different scopes."}
+{"pair": "4a18080c0a08", "relation": "supports", "from": "claim:cc09_0017_02", "to": "claim:c04_0005_09", "strength": 0.7, "rationale": "RUSI's ~30 km deep Orikhiv-Tokmak defence matches the 30 km-deep belts.", "independent": false}
+{"pair": "4b971259d232", "relation": "none", "rationale": "Kh-101 interception and drone interception rate are different quantities."}
+{"pair": "4c6bfabc2e4e", "relation": "none", "rationale": "Northern front 2022 and Prigozhin's Bakhmut claim are different scopes."}
+{"pair": "4c8d623401ff", "relation": "supports", "from": "claim:cc16_0007_04", "to": "claim:cc16_0007_07", "strength": 0.5, "rationale": "Kovalenko's at least 13 sits at the top of the NATO official's 10-13.", "independent": true}
+{"pair": "4c97831fc85e", "relation": "duplicates", "from": "claim:cc14_0012_28", "to": "claim:c00_0050_04", "strength": 0.85, "rationale": "Same 11-12k initial North Korean contingent; the c00 claim is canonical."}
+{"pair": "4d818bb8174c", "relation": "duplicates", "from": "claim:cc16_0047_27", "to": "claim:cc16_0028_14", "strength": 0.95, "rationale": "Same MAIAR observation of eight A-50s at Ivanovo."}
+{"pair": "4e7ee13ec85c", "relation": "duplicates", "from": "claim:cc18_0037_05", "to": "claim:cc18_0032_02", "strength": 0.85, "rationale": "Same Patriot one-round-per-missile practice from the same source."}
+{"pair": "4f6bc29b80f3", "relation": "supports", "from": "claim:cc16_0006_01", "to": "claim:c01_0029_46", "strength": 0.8, "rationale": "BBC's 117 FPV drones matches the SBU's 117-drone claim, though it relays the SBU.", "independent": false}
+{"pair": "50719fc3361e", "relation": "none", "rationale": "National Russian dead and Wagner dead at Bakhmut are different scopes."}
+{"pair": "523484920432", "relation": "duplicates", "from": "claim:cc01_0009_12", "to": "claim:cc01_0006_01", "strength": 0.8, "rationale": "Same ~64 km stalled convoy north of Kyiv, overlapping sources."}
+{"pair": "529dd9f0aeaa", "relation": "supports", "from": "claim:c00_0033_02", "to": "claim:cc07_0007_21", "strength": 0.4, "rationale": "19,547 Wagner dead is consistent with ~21,000 total Russian dead at Bakhmut.", "independent": false}
+{"pair": "53602fd538e7", "relation": "duplicates", "from": "claim:cc14_0037_03", "to": "claim:cc14_0014_021", "strength": 0.95, "rationale": "Same Gerasimov '1,000 attackers' report, same source."}
+{"pair": "53a2a9ec7dc5", "relation": "duplicates", "from": "claim:cc18_0026_20", "to": "claim:c01_0022_28", "strength": 0.9, "rationale": "Same Sting speed and cost from the same source."}
+{"pair": "53e2db6944f6", "relation": "supports", "from": "claim:cc11_0024_06", "to": "claim:cc11_0024_01", "strength": 0.6, "rationale": "Forbes's ~40,000 Russians at Avdiivka matches Shtupun's estimate.", "independent": false}
+{"pair": "5472390421fd", "relation": "none", "rationale": "Northern front 2022 and Bakhmut are different scopes."}
+{"pair": "549807da6d04", "relation": "none", "rationale": "Olenivka POW deaths and Bakhmut losses are unrelated."}
+{"pair": "54bee2c12f14", "relation": "duplicates", "from": "claim:cc18_0026_29", "to": "claim:cc18_0013_58", "strength": 0.95, "rationale": "Same 570 rescuers and 125+ vehicles in Kyiv, same source."}
+{"pair": "552e78c25fce", "relation": "duplicates", "from": "claim:cc07_0027_03", "to": "claim:c00_0033_03", "strength": 0.95, "rationale": "Same RUSI 5:1 artillery advantage at Bakhmut."}
+{"pair": "5568ffa62990", "relation": "duplicates", "from": "claim:cc14_0025_12", "to": "claim:cc14_0014_053", "strength": 0.95, "rationale": "Same Syrskyi 30,000 Russians in Kursk claim, same source."}
+{"pair": "55bce6e2390a", "relation": "duplicates", "from": "claim:cc11_0006_14", "to": "claim:cc11_0010_70", "strength": 0.9, "rationale": "Same UK MoD 30-50 glide bombs a day at Avdiivka; B is fuller."}
+{"pair": "571655efa644", "relation": "duplicates", "from": "claim:cc15_0013_16", "to": "claim:cc15_0005_10", "strength": 0.8, "rationale": "Same ~1 km Myrnohrad corridor from the same source."}
+{"pair": "57c7b174e307", "relation": "supports", "from": "claim:c00_0074_09", "to": "claim:cc07_0007_21", "strength": 0.4, "rationale": "19,547 Wagner dead is consistent with ~21,000 total Russian dead at Bakhmut.", "independent": false}
+{"pair": "57e4c45ae8e2", "relation": "supports", "from": "claim:cc16_0040_13", "to": "claim:cc16_0008_03", "strength": 0.7, "rationale": "The account of drones hitting two A-50 domes backs the claim that two were struck on video.", "independent": false}
+{"pair": "57fa701463eb", "relation": "duplicates", "from": "claim:cv01_0013_08", "to": "claim:cc01_0028_01", "strength": 0.9, "rationale": "Same RUSI credit to two artillery brigades for stopping the Kyiv drive."}
+{"pair": "580ff6069f3c", "relation": "supersedes", "from": "claim:cc14_0027_10", "to": "claim:cc14_0014_079", "strength": 0.4, "rationale": "HUR's June 2026 7,000+ is a later Ukrainian cumulative figure than Zelensky's Dec 2024 3,000+."}
+{"pair": "581469e19399", "relation": "duplicates", "from": "claim:cc15_0005_35", "to": "claim:c04_0027_75", "strength": 0.9, "rationale": "Same Radio Svoboda 85 casualties/km2 for 2025."}
+{"pair": "5817de4369ed", "relation": "duplicates", "from": "claim:cc14_0026_02", "to": "claim:cc14_0014_067", "strength": 0.95, "rationale": "Same NIS 3,000 sent / 10,000 expected statement."}
+{"pair": "586d98c0561f", "relation": "duplicates", "from": "claim:cc14_0027_07", "to": "claim:cc14_0014_129", "strength": 0.95, "rationale": "Same NIS 4,700 casualties incl. 600 dead on 30 April 2025."}
+{"pair": "588b5487c35f", "relation": "supports", "from": "claim:cc11_0016_12", "to": "claim:cc11_0015_54", "strength": 0.9, "rationale": "Same SRTM 248 m elevation of the Avdiivka industrial zone.", "independent": false}
+{"pair": "58c945e4fa45", "relation": "none", "rationale": "Avdiivka-era shell ratio and Bakhmut artillery ratio are different scopes."}
+{"pair": "58cffc7abf0f", "relation": "supports", "from": "claim:cc16_0007_08", "to": "claim:cc16_0007_07", "strength": 0.6, "rationale": "US officials' ~10 destroyed is consistent with the NATO official's 10-13.", "independent": true}
+{"pair": "594d4fdac6d8", "relation": "supports", "from": "claim:cc11_0032_20", "to": "claim:c03_0022_07", "strength": 0.5, "rationale": "The 1:10 Avdiivka ratio in Feb 2024 matches Pavel's starting 1:10.", "independent": true}

@@ -1,0 +1,40 @@
+{"pair": "41921a4838cb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "41ae0d51001b", "relation": "supports", "from": "claim:c02_0029_62", "to": "claim:cc19_0003_07", "strength": 0.8, "rationale": "MWI/EUobserver and ISW both report Vivaldi's logistics strikes going 50 km and then 120 km deep.", "independent": false}
+{"pair": "41f6a64431b0", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "436c4bdeee13", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4396f8dd506f", "relation": "weakens", "from": "claim:cc14_0031_23", "to": "claim:cc14_0014_101", "strength": 0.4, "rationale": "The report that about a hundred troops crawled through the pipeline casts doubt on Gerasimov's claim that over 600 took part."}
+{"pair": "43c282994775", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "44643e0614fd", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "44aa03a26b87", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "44b25ed5733d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "45459482dabd", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "45533b80ef4e", "relation": "duplicates", "from": "claim:cc07_0041_01", "to": "claim:c03_0004_01", "strength": 0.9, "rationale": "Same RUSI figure of about 20,000 Russian rounds a day with peaks above 32,000 in summer 2022, extracted twice."}
+{"pair": "471bc89384d9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4771f0ca6919", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "477abbe2a055", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "47aa579a13d5", "relation": "supports", "from": "claim:cc07_0016_15", "to": "claim:cc07_0016_14", "strength": 0.7, "rationale": "The Guardian's 250,000 m² of caves matches the 26 ha given for the Artwinery tunnels.", "independent": false}
+{"pair": "48432fabff52", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "486332044cdf", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "489e7c3bd19f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "48cf4569967f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "48f78ae3d69d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "491b7a448d81", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "493edf7cf90c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4940c0950c7b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "497978057e90", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "497e0467ebad", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4985c3014745", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "49ebfbd6d49b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4a65a1c99742", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4a8209f5447f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4b25bb71d156", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4b8e14ce7c52", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4bef9146d395", "relation": "supersedes", "from": "claim:cc19_0006_08", "to": "claim:cc19_0006_06", "strength": 0.4, "rationale": "Muzyka's ~240 km² estimate post-dates AMK's 151 km², which was made before seasons 2–3 were published."}
+{"pair": "4c2bde170af7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4c3a3ae2deb8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4c9e42996876", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4d324e56657e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4d851528d93f", "relation": "refines", "from": "claim:cc18_0037_05", "to": "claim:cc18_0026_07", "strength": 0.5, "rationale": "Ukraine's documented practice of one Patriot round per missile qualifies the general rule that a ballistic missile takes 2–3 interceptors."}
+{"pair": "4db298e2490d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4dbd5b951d1b", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "4e7c7d249489", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

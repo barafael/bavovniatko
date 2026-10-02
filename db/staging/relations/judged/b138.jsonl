@@ -1,0 +1,40 @@
+{"pair": "59100ba8f58e", "relation": "none", "rationale": "A control assessment and a computed distance."}
+{"pair": "59e62f45a379", "relation": "none", "rationale": "River geography and company sectors."}
+{"pair": "59f0a9ea5def", "relation": "none", "rationale": "What stopped the columns and the timing of the breach are different details."}
+{"pair": "59fcd1559e5d", "relation": "supports", "from": "claim:cc09_0030_08", "to": "claim:cc09_0043_21", "strength": 0.6, "rationale": "The 7th VDV's transfer from Kherson is one of the moves that B describes.", "independent": false}
+{"pair": "5a0bf4d930ee", "relation": "none", "rationale": "Museum training photos and a Russian media inventory claim."}
+{"pair": "5a5fd57fca19", "relation": "none", "rationale": "The September advance and the October counterattack are different events."}
+{"pair": "5ab34bf8c1fb", "relation": "duplicates", "from": "claim:cc09_0035_12", "to": "claim:c05_0017_02", "strength": 0.8, "rationale": "Same RUSI finding that Russia shifted to Krasnopol and Lancet strikes on Ukrainian lead elements."}
+{"pair": "5adb1cf8b121", "relation": "supports", "from": "claim:cc16_0011_45", "to": "claim:cc16_0011_40", "strength": 0.5, "rationale": "Onlookers attacking a launching truck at the Usolye car park corroborates the launch from that car park.", "independent": true}
+{"pair": "5adf4ad2910c", "relation": "none", "rationale": "Generic fleet composition and a set-piece description."}
+{"pair": "5b0fdbcf5a29", "relation": "duplicates", "from": "claim:cc07_0016_19", "to": "claim:cc07_0010_47", "strength": 0.85, "rationale": "Same ISW report of the T0504 canal bridge west of Ivanivske found down on 11 Feb 2023."}
+{"pair": "5b34ab301d12", "relation": "supports", "from": "claim:cc09_0006_07", "to": "claim:cc09_0006_05", "strength": 0.4, "rationale": "The emblematic photographs of abandoned Leopards and Bradleys are consistent with the failed first breach.", "independent": false}
+{"pair": "5b4f79344dcd", "relation": "none", "rationale": "An ambush and a bridge location on the same street."}
+{"pair": "5b5d113ca88a", "relation": "supports", "from": "claim:cc01_0026_30", "to": "claim:cc12_0019_15", "strength": 0.4, "rationale": "The 40th Brigade's MiG-29s flying from Vasylkiv corroborates its fighters operating over Kyiv.", "independent": true}
+{"pair": "5b7149923914", "relation": "supports", "from": "claim:cc15_0024_11", "to": "claim:cc15_0024_10", "strength": 0.4, "rationale": "Russia's claim to have killed the landing party corroborates that a HUR helicopter landing took place.", "independent": true}
+{"pair": "5b80dd3142d0", "relation": "supports", "from": "claim:cc14_0020_03", "to": "claim:cc14_0031_23", "strength": 0.6, "rationale": "The 15 km length of the pipe matches the 15 km crawl.", "independent": false}
+{"pair": "5bcce969111f", "relation": "supports", "from": "claim:cc14_0024_27", "to": "claim:c00_0073_34", "strength": 0.8, "rationale": "Both date the first ATACMS use against targets inside Russia (Kursk) to 19 Nov 2024.", "independent": false}
+{"pair": "5bd8cb277fc7", "relation": "supports", "from": "claim:cc16_0011_94", "to": "claim:cc16_0021_08", "strength": 0.6, "rationale": "At least 17 shelters under construction in June 2026 confirms that shelter building at Engels started in 2025–26.", "independent": false}
+{"pair": "5bf66fd5dfee", "relation": "supports", "from": "claim:cc11_0010_64", "to": "claim:cc11_0025_03", "strength": 0.6, "rationale": "Video of men with cutting torches in a tunnel on 25 Jan corroborates the January shift to the pipe.", "independent": true}
+{"pair": "5bf7691c46ee", "relation": "duplicates", "from": "claim:cc07_0007_06", "to": "claim:cc07_0006_09", "strength": 0.85, "rationale": "Same ISW dates for the fall of AZOM (28 Mar) and the city hall (2 Apr)."}
+{"pair": "5bfb7431da42", "relation": "none", "rationale": "A dismissal fact and ISW's reading of the appeal."}
+{"pair": "5c280082b772", "relation": "supports", "from": "claim:cc14_0006_06", "to": "claim:cc14_0017_02", "strength": 0.7, "rationale": "Fibre-optic FPV fire on the Sumy–Sudzha road is the drone interdiction of the H-07 in B.", "independent": false}
+{"pair": "5c31c2de61de", "relation": "supports", "from": "claim:cc12_0025_10", "to": "claim:cc11_0010_107", "strength": 0.6, "rationale": "The beacon pings and the rescuers' report of a Su-35 pilot corroborate the claimed Su-34 and Su-35S kills.", "independent": false}
+{"pair": "5c623ddf4863", "relation": "duplicates", "from": "claim:cc19_0031_12", "to": "claim:cc19_0009_78", "strength": 0.9, "rationale": "Same Russian-source claim that Gerasimov may have fired the 20th CAA's commander, Yurchenko."}
+{"pair": "5cce6c655d6b", "relation": "none", "rationale": "The 11 Mar assault and the delayed 19 Mar counterattack."}
+{"pair": "5cce917f4fa0", "relation": "supports", "from": "claim:cc11_0035_12", "to": "claim:cc11_0010_60", "strength": 0.6, "rationale": "B's account of cutting exits and emerging behind Tsarska Okhota corroborates A's use of the pipe in mid-January.", "independent": false}
+{"pair": "5cd6279b50ec", "relation": "none", "rationale": "Museum photos and an inventory at Olenya."}
+{"pair": "5d1a9706c1ad", "relation": "duplicates", "from": "claim:cc14_0024_05", "to": "claim:c04_0023_01", "strength": 0.9, "rationale": "Same assertion that the 80th and 82nd Air Assault brigades led the 6 Aug 2024 Kursk break-in."}
+{"pair": "5d20d7bf69bc", "relation": "none", "rationale": "A warning about Sloviansk and Kramatorsk and the road links from Kupiansk."}
+{"pair": "5d5bdd5c62c2", "relation": "none", "rationale": "A hit count and an estimate of the fleet's size."}
+{"pair": "5dd2aeb2cf42", "relation": "none", "rationale": "Both describe the map box; neither asserts the same thing as the other."}
+{"pair": "5de759ac9969", "relation": "supports", "from": "claim:cc01_0030_06", "to": "claim:cc01_0017_01", "strength": 0.5, "rationale": "The 64 km column stalled on the P02 corroborates the convoy's route on the P02.", "independent": true}
+{"pair": "5e1b62d660ba", "relation": "weakens", "from": "claim:cc11_0038_16", "to": "claim:cc11_0038_19", "strength": 0.4, "rationale": "Wounded left at Zenit and then shot casts doubt on the brigade's claim that withdrawal losses were 'minimal'."}
+{"pair": "5e6c7f11d73b", "relation": "duplicates", "from": "claim:cc09_0010_85", "to": "claim:cc09_0007_18", "strength": 0.85, "rationale": "Same report of Sak's replacement at the 47th Brigade on 16 Sept 2023."}
+{"pair": "5ef348bdf974", "relation": "duplicates", "from": "claim:cc12_0023_28", "to": "claim:cc11_0035_25", "strength": 0.75, "rationale": "Same report of Cospas-Sarsat beacons from downed Russian aircraft in the Sea of Azov, published by Oleshchuk."}
+{"pair": "5f301bbe83f7", "relation": "none", "rationale": "A later salvo's composition and a pre-strike inventory."}
+{"pair": "5f4af18a6af9", "relation": "none", "rationale": "An occupation date and town populations."}
+{"pair": "5f4ec721160b", "relation": "none", "rationale": "Different strikes (19 July and 1–2 July 2026)."}
+{"pair": "5f650e2739c2", "relation": "supports", "from": "claim:cc07_0048_30", "to": "claim:cc07_0032_09", "strength": 0.6, "rationale": "The encirclement of Andriivka on 14–17 Sept corroborates the 3rd Assault Brigade taking it in September.", "independent": false}
+{"pair": "5fa4bb1fb2bf", "relation": "none", "rationale": "B reports that the Russian counterclaim used old footage. That neither weakens nor really corroborates the Ukrainian liberation claim."}
+{"pair": "5fb2d88e7636", "relation": "weakens", "from": "claim:cc11_0010_109", "to": "claim:cc11_0038_19", "strength": 0.4, "rationale": "Wounded at Zenit being shot after evacuation failed casts doubt on the brigade's 'minimal' loss claim."}

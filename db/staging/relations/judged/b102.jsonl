@@ -1,0 +1,40 @@
+{"pair": "804b400d091f", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "806a018d6ad2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "80751b4436d6", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "8095f5dc1ce4", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "80a416093e9e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "80ae9c3943fb", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "80b6d3834a34", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "80d0e1e25f46", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "813dfdbdb231", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "81bcf23cce07", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "81c2b4bc1da7", "relation": "weakens", "from": "claim:cc11_0010_67", "to": "claim:cc11_0007_11", "strength": 0.4, "rationale": "Naalsio's visually confirmed 574 Russian vehicles lost by late January 2024 is well below Tarnavskyi's claimed 1,100+ tanks and AFVs, casting doubt on the claim, though visual counts are a floor."}
+{"pair": "81d2628e0870", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "81f33890e6ef", "relation": "supersedes", "from": "claim:cc14_0012_24", "to": "claim:cc14_0012_23", "strength": 0.9, "rationale": "983 prisoners by 26 April 2025 is a later point in the same Ukrainian Kursk prisoner count than 909 by 6 February 2025."}
+{"pair": "822c205bd7d8", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "8236fc13352f", "relation": "supports", "from": "claim:cc16_0007_09", "to": "claim:cc16_0007_08", "strength": 0.5, "rationale": "Independent imagery counts of 12–13 destroyed broadly corroborate US officials' estimate of about 10 destroyed.", "independent": true}
+{"pair": "828a8cb3a7b3", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "828fa0e96dad", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "82cd65a87934", "relation": "none", "rationale": "Syrskyi's 10,000 facing the remaining Ukrainian foothold in June 2025 and RUSI's Kursk Oblast total are different scopes and times."}
+{"pair": "82d7a6fe9ce1", "relation": "none", "rationale": "Rounds falling on one company position and theatre-wide daily fire rates are different quantities."}
+{"pair": "82e6269db583", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "82fbf7f53a8c", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "8308921fa92b", "relation": "none", "rationale": "An early OSINT tally of 8 confirmed is a floor taken hours after the strike, compatible with a claim of at least 13."}
+{"pair": "834be104a2db", "relation": "contradicts", "from": "claim:cc11_0016_13", "to": "claim:cc11_0016_14", "strength": 0.7, "rationale": "The same Avdiivka pipe is described as a mostly empty 1.3–1.4 m service-water main versus a flooded 0.5 m drainage pipe.", "resolution": "The Russian accounts are unverified and may dramatise the infiltration or describe a different conduit; the technical description is better sourced."}
+{"pair": "83780142b544", "relation": "none", "rationale": "All equipment items and tanks only are different quantities."}
+{"pair": "83a1a3670773", "relation": "contradicts", "from": "claim:cc18_0004_03", "to": "claim:cc18_0010_05", "strength": 0.5, "rationale": "For the same night Ihnat gives 28 ballistic missiles and the Defence Ministry 25 ballistic or hypersonic missiles.", "resolution": "The Defence Ministry gave rounded figures and may classify the Zircons or S-400 missiles differently from the Air Force tally of 24 Iskander/S-400 plus 4 Zircon."}
+{"pair": "83bda48d5dbc", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "846b63b02d3e", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "84999e8507e2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "849e20913da2", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "84e4c22ce721", "relation": "none", "rationale": "One day's General Staff claim and a four-day soldiers' claim cover different periods."}
+{"pair": "84f4cbd8a116", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "853bd947be4c", "relation": "supports", "from": "claim:cc19_0006_04", "to": "claim:c00_0062_07", "strength": 0.6, "rationale": "ISW's \"at least 125 km²\" matches the 3rd Army Corps' 125 km² claim for Vivaldi.", "independent": false}
+{"pair": "855688f7277a", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "855b2fcd7054", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "85bbfa5a53d9", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "86361fbfef6d", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "86b5c8dcf922", "relation": "none", "rationale": "An early-2024 frontline ratio and the Bakhmut ratio share a value but differ in time and place."}
+{"pair": "86e57a9914fb", "relation": "none", "rationale": "AMK's 151 km² predates seasons 2–3; it is not the same estimate as the later 200–240 km² mapper range."}
+{"pair": "874b1ebccfb7", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}
+{"pair": "87748b8b1b90", "relation": "none", "rationale": "Different subjects, scopes or quantities; no meaningful relation."}

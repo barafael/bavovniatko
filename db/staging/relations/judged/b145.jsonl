@@ -1,0 +1,40 @@
+{"pair": "90c01f5c334b", "relation": "none", "rationale": "A failed first breach attempt (B) can precede the successful 13:30 blast (A); different details of the dam operation."}
+{"pair": "90e2d2f25e55", "relation": "supports", "from": "claim:cc09_0040_17", "to": "claim:cc09_0006_15", "strength": 0.7, "rationale": "The armour crossing the ditch and dragon's teeth west of Verbove underpins ISW's judgment that the fortifications were broken; shared ISW source.", "independent": false}
+{"pair": "9105e9f5e386", "relation": "none", "rationale": "Two different Zaluzhnyi-Vdovychenko exchanges on different dates."}
+{"pair": "91561c892c76", "relation": "none", "rationale": "Coordinates of a launch site and a description of the air base's setting."}
+{"pair": "91acb7d034ee", "relation": "none", "rationale": "A computed feint length and an event on that axis."}
+{"pair": "91f212e2c963", "relation": "supports", "from": "claim:cc01_0011_64", "to": "claim:cc01_0032_16", "strength": 0.7, "rationale": "Both report Syrskyi ordering the enlarged Kozarovychi breach on 7-8 Mar; shared MWI source.", "independent": false}
+{"pair": "9209c2a12df6", "relation": "supports", "from": "claim:cc15_0024_06", "to": "claim:cc15_0007_48", "strength": 0.6, "rationale": "B's report that the 93rd cleared Zolotyi Kolodiaz, Hruzke and Vesele in August corroborates the General Staff's claim of retaking them.", "independent": false}
+{"pair": "9231a008e510", "relation": "duplicates", "from": "claim:cc09_0043_12", "to": "claim:cc09_0010_29", "strength": 0.85, "rationale": "Same WaPo-via-Euromaidan report of Zaluzhnyi halting frontal assaults on day 4."}
+{"pair": "9267516111d5", "relation": "none", "rationale": "A loss floor and the timing of imagery clearing."}
+{"pair": "927bc453bc0d", "relation": "none", "rationale": "The 11 Mar assault and the 15-18 Mar situation are different events."}
+{"pair": "928183c0b3b4", "relation": "none", "rationale": "Different dates and aircraft types at Olenya; no conflict."}
+{"pair": "928833c36b03", "relation": "none", "rationale": "Unit holding Moshchun and the village's coordinates."}
+{"pair": "929d4599dd4c", "relation": "none", "rationale": "The failed first breach and the emblematic image are different assertions."}
+{"pair": "92adbc747ef3", "relation": "supports", "from": "claim:cc16_0011_16", "to": "claim:cc16_0015_13", "strength": 0.5, "rationale": "A's April 2025 start of shelter building at Engels-2 corroborates B's note of shelters built there from 2025.", "independent": false}
+{"pair": "92d1062804b3", "relation": "none", "rationale": "Base location fact and a note on Tu-95MS arrivals."}
+{"pair": "9361b116a920", "relation": "supports", "from": "claim:cc01_0011_49", "to": "claim:cc01_0017_01", "strength": 0.5, "rationale": "Maxar imagery of the convoy reaching Prybirsk corroborates B's convoy route from Prybirsk towards Hostomel.", "independent": true}
+{"pair": "93dc6eec2d17", "relation": "contradicts", "from": "claim:cc16_0005_03", "to": "claim:cc16_0047_02", "strength": 0.7, "rationale": "Ukraine reports drones hitting Ivanovo and Dyagilevo (Ryazan); the Russian MoD said all attacks in Ivanovo and Ryazan were repelled.", "resolution": "Russian MoD denial of damage versus Ukrainian and imagery-backed reports of hits; the MoD statement is self-serving."}
+{"pair": "944e0714da24", "relation": "none", "rationale": "Pokrovsk special-forces order and Kupiansk group composition are different sectors."}
+{"pair": "947e4ef67367", "relation": "none", "rationale": "Museum photography and a post-strike count."}
+{"pair": "9493541e0e85", "relation": "none", "rationale": "Distances to two different air bases."}
+{"pair": "94f7fe877dd3", "relation": "duplicates", "from": "claim:cc07_0034_03", "to": "claim:cc07_0032_14", "strength": 0.8, "rationale": "B's 17th Brigade M109s are contained in A from the same source."}
+{"pair": "94fc74ce4b13", "relation": "refines", "from": "claim:cc11_0038_12", "to": "claim:cc11_0006_17", "strength": 0.6, "rationale": "B specifies the 3rd Assault Brigade's role as the security force for the 110th's withdrawal that A describes generally."}
+{"pair": "95064ef66f92", "relation": "duplicates", "from": "claim:cc19_0009_21", "to": "claim:c05_0025_07", "strength": 0.9, "rationale": "Same Starlink whitelist resolution from the same source; A is the lower topic and fuller."}
+{"pair": "95159f76cc35", "relation": "none", "rationale": "ISW's assessment of Russian attack capacity and Ukrainian company sectors."}
+{"pair": "951e729c4cf3", "relation": "supports", "from": "claim:cc01_0025_23", "to": "claim:cc01_0025_03", "strength": 0.5, "rationale": "Both place the 2nd and 41st CAAs on the east bank; B adds the 90th Tank Division.", "independent": true}
+{"pair": "959eff700462", "relation": "none", "rationale": "Road naming conventions and a road-of-life count."}
+{"pair": "960243b51e1c", "relation": "supports", "from": "claim:cc18_0028_06", "to": "claim:c03_0024_54", "strength": 0.5, "rationale": "B's 300-600 km/h speed range for jet Gerans is consistent with A's ~500 km/h.", "independent": true}
+{"pair": "965dd2808b52", "relation": "supports", "from": "claim:cc14_0014_107", "to": "claim:cc14_0017_02", "strength": 0.6, "rationale": "Two or three Russian drones a minute over the Sudzha highway corroborates the drone interdiction of the H-07; shared BBC source.", "independent": false}
+{"pair": "967fc1eabc43", "relation": "none", "rationale": "Counts at two different bases on different dates."}
+{"pair": "96dd4a891e5e", "relation": "none", "rationale": "Water volume and flooded area are different quantities."}
+{"pair": "9737f12f941f", "relation": "none", "rationale": "A destruction floor at two bases and a count of surviving aircraft types at Olenya."}
+{"pair": "97a3dc9a576f", "relation": "supports", "from": "claim:cc14_0014_046", "to": "claim:cc14_0010_10", "strength": 0.6, "rationale": "The 19 Aug pontoon destruction is an instance of the repeated strikes on Seim pontoons A describes.", "independent": true}
+{"pair": "97afd973ef53", "relation": "supports", "from": "claim:cc01_0032_22", "to": "claim:cc01_0011_83", "strength": 0.5, "rationale": "B's Moshchun counterattack on 19 Mar corroborates A's 19-21 Mar counterattack; same source.", "independent": false}
+{"pair": "97c22290c0cc", "relation": "supports", "from": "claim:cc01_0014_28", "to": "claim:cc01_0017_01", "strength": 0.5, "rationale": "Prybirsk as the convoy's tail on 1 Mar corroborates B's convoy route from Prybirsk.", "independent": true}
+{"pair": "97c81734648c", "relation": "duplicates", "from": "claim:cc12_0010_05", "to": "claim:cc01_0011_29", "strength": 0.95, "rationale": "The same Ghost of Kyiv/DCS claim extracted in topics 01 and 12; A is the lower topic."}
+{"pair": "984779ad20b0", "relation": "duplicates", "from": "claim:cc07_0017_12", "to": "claim:cc07_0010_55", "strength": 0.9, "rationale": "Same ISW report of the two Bakhmut bridges blown on 3 March 2023."}
+{"pair": "98cac96a13c5", "relation": "duplicates", "from": "claim:cc14_0024_21", "to": "claim:cc14_0024_06", "strength": 0.75, "rationale": "B's 82nd on Strykers is contained in A from the same OSW source."}
+{"pair": "98d252c39cd0", "relation": "none", "rationale": "Moon conditions and an interception tally."}
+{"pair": "98d5ea6b2f36", "relation": "duplicates", "from": "claim:cc19_0015_02", "to": "claim:cc06_0015_02", "strength": 0.8, "rationale": "B's pine-forest terraces are contained in A from the same sources; A is the lower topic."}
+{"pair": "9951637fd5d2", "relation": "none", "rationale": "Successive hourly alerts describing different moments."}

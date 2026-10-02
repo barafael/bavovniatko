@@ -59,3 +59,15 @@ island_extent: site_extent
 mission_count: missions_flown
 radar_range: detection_range
 ship_length: vessel_length
+area_held: territory_held
+daylight_duration: daylight_length
+humidity: relative_humidity
+missiles_per_aircraft: munitions_per_aircraft
+negotiation_duration: procedure_duration
+questioning_duration: procedure_duration
+pipeline_supply_share: supply_share
+rent_paid: payment_amount
+salary: payment_amount
+settlement_area: site_area
+supply_lift_mass: freight_volume
+vehicles_hit_rate: vehicles_hit

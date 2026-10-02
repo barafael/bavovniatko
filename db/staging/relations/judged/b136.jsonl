@@ -1,0 +1,40 @@
+{"pair": "495512f124da", "relation": "none", "rationale": "The trucks' departure and the roof incident on the road are different events."}
+{"pair": "497ef5678c46", "relation": "supersedes", "from": "claim:cc09_0010_87", "to": "claim:cc09_0010_83", "strength": 0.8, "rationale": "Maliar's 18 Sept figure of 260 km² updates her 11 Sept figure of 256.5 km² for the same southern total."}
+{"pair": "499d37c8b2d6", "relation": "supports", "from": "claim:cc09_0010_42", "to": "claim:cc09_0007_17", "strength": 0.6, "rationale": "The leak on 11 July is consistent with Popov's dismissal on 12–13 July.", "independent": false}
+{"pair": "49cc087fc135", "relation": "weakens", "from": "claim:cc16_0011_89", "to": "claim:cc16_0030_01", "strength": 0.5, "rationale": "Planet imagery disputing a Tu-160 at Anadyr casts doubt on the report that Tu-160s moved there."}
+{"pair": "49d233788072", "relation": "supports", "from": "claim:cc01_0014_22", "to": "claim:cc01_0011_64", "strength": 0.5, "rationale": "B confirms the 7–8 Mar second breach of the Kozarovychi dam.", "independent": false}
+{"pair": "49f11f9078e0", "relation": "none", "rationale": "Dyagilevo imagery and a photo of Maliuk are unrelated."}
+{"pair": "4a53200f77eb", "relation": "supports", "from": "claim:cc15_0007_38", "to": "claim:cc15_0010_15", "strength": 0.5, "rationale": "The infiltrators reaching Kucheriv Yar and Zolotyi Kolodiaz is consistent with those villages being in the Dobropillia salient.", "independent": false}
+{"pair": "4a7a365f4f47", "relation": "supports", "from": "claim:cc16_0036_04", "to": "claim:cc16_0036_03", "strength": 0.5, "rationale": "Tu-95MS standing loaded with Kh-101 corroborates the drones going for the Kh-101 pylons.", "independent": true}
+{"pair": "4a821fac63c6", "relation": "none", "rationale": "Different facts about the 110th Brigade at Zenit (leadership gaps and the wounded who were shot)."}
+{"pair": "4a9c72d35162", "relation": "supports", "from": "claim:cc15_0007_66", "to": "claim:cc15_0020_03", "strength": 0.5, "rationale": "The 68th and 155th leaving Pokrovsk in October is consistent with them being its garrison.", "independent": false}
+{"pair": "4aa337115fbe", "relation": "none", "rationale": "The July plug of the Zvirove gap and the October withdrawal are different events."}
+{"pair": "4ac1b4ea63d9", "relation": "none", "rationale": "An arsenal-shift assessment and drone speeds."}
+{"pair": "4ac4d5a5ae44", "relation": "supersedes", "from": "claim:cc19_0009_06", "to": "claim:cc19_0009_05", "strength": 0.7, "rationale": "The DeepState status of 1 June 2025 (Russian-occupied) replaces that of 1 March 2025 for Nove and Katerynivka."}
+{"pair": "4b3f3192f629", "relation": "duplicates", "from": "claim:cc16_0030_01", "to": "claim:cc16_0011_87", "strength": 0.8, "rationale": "Same Moscow Times report that Tu-160s moved to Anadyr, Yelizovo and Tatarstan after Spiderweb."}
+{"pair": "4b48737b0ddf", "relation": "none", "rationale": "A Russian bridge demolition claim and the map edge."}
+{"pair": "4b6fac166016", "relation": "none", "rationale": "A command fact and Popov's assessment of the minefields."}
+{"pair": "4baf893bdc4d", "relation": "none", "rationale": "The attack sequence and the start-line distance are different details."}
+{"pair": "4c185da0f0f8", "relation": "none", "rationale": "Two OSINT geolocations about 100 m apart probably mark different burning aircraft."}
+{"pair": "4c839fa86656", "relation": "supports", "from": "claim:cc16_0021_08", "to": "claim:cc16_0015_13", "strength": 0.6, "rationale": "Both have bomber-shelter construction at Engels starting in 2025.", "independent": true}
+{"pair": "4ca65c9f9374", "relation": "refines", "from": "claim:cc11_0035_05", "to": "claim:cc11_0010_19", "strength": 0.6, "rationale": "B describes the failed 16 Oct terrikon assault in more detail."}
+{"pair": "4cb6473088e1", "relation": "none", "rationale": "Distances to different air bases."}
+{"pair": "4ce0b647b91e", "relation": "none", "rationale": "ISW's reading of Popov's appeal adds interpretation and neither corroborates nor undercuts the memo."}
+{"pair": "4ce13871e95d", "relation": "none", "rationale": "The flooding's effect and early air-defence losses."}
+{"pair": "4d585cce8fb8", "relation": "none", "rationale": "A geographic distance and the escape route."}
+{"pair": "4d77fcdf68af", "relation": "none", "rationale": "B characterises the series of transfers. It does not corroborate A's transfer date."}
+{"pair": "4ddd5271cc43", "relation": "none", "rationale": "The garrison at Moshchun and the request to withdraw."}
+{"pair": "4df0c595254e", "relation": "refines", "from": "claim:c00_0062_05", "to": "claim:cc19_0005_06", "strength": 0.7, "rationale": "A adds the area (40 km²) and Drobysheve to the same 20 Sept announcement that Shandryholove and Derylove were liberated."}
+{"pair": "4e00bca8a7ce", "relation": "none", "rationale": "The route and the departure base of the same air assault are complementary details."}
+{"pair": "4e26a7acd364", "relation": "none", "rationale": "The company registration and the plausible length of the truck run."}
+{"pair": "4f6941d6d848", "relation": "none", "rationale": "A loss count and base coordinates."}
+{"pair": "4f9e271ff4ce", "relation": "none", "rationale": "A location and a distance."}
+{"pair": "4fa8069484c8", "relation": "none", "rationale": "Different assembly details."}
+{"pair": "4fae55658625", "relation": "none", "rationale": "The bridge strikes and the river geography."}
+{"pair": "4fd085822cb1", "relation": "duplicates", "from": "claim:cc01_0011_95", "to": "claim:cc01_0007_03", "strength": 0.95, "rationale": "Same 29 Mar Istanbul announcement that Russia would 'drastically reduce' activity near Kyiv and Chernihiv."}
+{"pair": "5030f5311141", "relation": "none", "rationale": "The road reopening and a force-size figure."}
+{"pair": "508ee0957c5c", "relation": "none", "rationale": "An occupied-area figure and the river's course."}
+{"pair": "5094d141a1e9", "relation": "duplicates", "from": "claim:cc18_0035_12", "to": "claim:cc18_0017_12", "strength": 0.85, "rationale": "Same petrol-station hit in Obolon that spilled 350 t into Lake Kyrylivske."}
+{"pair": "50f8623c640d", "relation": "supports", "from": "claim:cc15_0022_08", "to": "claim:cc15_0010_07", "strength": 0.4, "rationale": "ISW places the T-0515 through Rodynske, which corroborates A's location of Rodynske on the T0515.", "independent": true}
+{"pair": "51243093bad4", "relation": "none", "rationale": "A later salvo's composition and the bombers' loaded state when struck."}
+{"pair": "51535bb530d6", "relation": "none", "rationale": "Inventories at different bases."}

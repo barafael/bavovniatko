@@ -1,0 +1,40 @@
+{"pair": "b31a823438e4", "relation": "supports", "from": "claim:cc11_0016_17", "to": "claim:cc11_0007_30", "strength": 0.4, "rationale": "ISW's expectation that the water obstacles between Berdychi and Orlivka would slow the Russians is consistent with Tarnavskyi's line stabilising there.", "independent": true}
+{"pair": "b327d10bbbfe", "relation": "duplicates", "from": "claim:cc09_0018_03", "to": "claim:cc09_0010_95", "strength": 0.95, "rationale": "Same ISW 4 October 2023 report of the T0408 trench."}
+{"pair": "b3345c3a7d63", "relation": "none", "rationale": "Early-war SAM losses and the later pop-up SAM threat refer to different periods."}
+{"pair": "b36391c9cf5b", "relation": "none", "rationale": "A liberation announcement and a map-box definition."}
+{"pair": "b3a1b0a4fd8e", "relation": "none", "rationale": "A Russian claim and a map-box definition."}
+{"pair": "b3a4eb427840", "relation": "supports", "from": "claim:cc09_0010_90", "to": "claim:cc09_0043_23", "strength": 0.8, "rationale": "Both report Tarnavskyi's 'minimum goal' of Tokmak to CNN in September 2023.", "independent": false}
+{"pair": "b421c7ac831b", "relation": "none", "rationale": "Imagery of destroyed aircraft and a drone path video."}
+{"pair": "b43fc31ff016", "relation": "none", "rationale": "Defenders pushed back and the later counterattack are sequential events."}
+{"pair": "b49031b8dd1e", "relation": "supports", "from": "claim:cc14_0014_045", "to": "claim:cc14_0017_03", "strength": 0.4, "rationale": "The Karyzh bridge as 'the third and last' Seim bridge in Glushkovo Raion is consistent with B's three crossings.", "independent": true}
+{"pair": "b4a174021c49", "relation": "none", "rationale": "River width and flooded area are different quantities."}
+{"pair": "b538da58013f", "relation": "none", "rationale": "Belt location and a milblogger's denial do not bear on each other."}
+{"pair": "b59cd0b73371", "relation": "none", "rationale": "A destruction count and a pre-strike presence claim."}
+{"pair": "b5d5538cf50e", "relation": "none", "rationale": "The retaliation strike's composition and the bombers' state at the time of the strike."}
+{"pair": "b605270a79f9", "relation": "none", "rationale": "The original plan and a later shrinking of aims are different periods."}
+{"pair": "b62af474f707", "relation": "none", "rationale": "Losses in one breach and whole-war totals."}
+{"pair": "b64f2b7c3764", "relation": "supports", "from": "claim:cc01_0028_19", "to": "claim:cc01_0030_12", "strength": 0.7, "rationale": "The Furia cueing fire on the Rakivka pontoon and every tube firing on 6 Mar describe the same event; same source.", "independent": false}
+{"pair": "b68eab5a044f", "relation": "none", "rationale": "General missile tactics and one night's launch tally."}
+{"pair": "b6aa0c123ceb", "relation": "supports", "from": "claim:cc01_0006_04", "to": "claim:cc01_0028_08", "strength": 0.6, "rationale": "The 25/26 Feb Kozarovychi breach is one of the two breaches B says flooded the floodplain; shared MWI source.", "independent": false}
+{"pair": "b6c4f4c0ebb7", "relation": "none", "rationale": "Coordinates and an assessment of force shifts."}
+{"pair": "b6dbdd9aa8a8", "relation": "none", "rationale": "Base units and a post-strike count."}
+{"pair": "b6e7075a7dff", "relation": "refines", "from": "claim:cc14_0014_075", "to": "claim:c00_0073_34", "strength": 0.7, "rationale": "B adds the first targets (a Bryansk arsenal and an S-400 in Kursk region) to A's first ATACMS use inside Russia."}
+{"pair": "b71d54ad03d8", "relation": "supports", "from": "claim:cc09_0040_09", "to": "claim:cc09_0010_16", "strength": 0.5, "rationale": "The pre-dawn 8 June assault group taking a height corroborates Romanchuk's account of a main night breach on 7-8 June.", "independent": true}
+{"pair": "b725eeefea4c", "relation": "none", "rationale": "Loss count and the brigade's engineer equipment."}
+{"pair": "b72cb15715d9", "relation": "supports", "from": "claim:cc09_0040_17", "to": "claim:cc09_0010_91", "strength": 0.7, "rationale": "The armour crossing west of Verbove underpins ISW's judgment that the belt was broken; shared ISW source.", "independent": false}
+{"pair": "b76692bbe6ed", "relation": "duplicates", "from": "claim:c04_0015_06", "to": "claim:cc09_0010_02", "strength": 0.9, "rationale": "Same RUSI statement that Russia began the Surovikin line in Zaporizhzhia in late 2022; B has more sources."}
+{"pair": "b7ab2f518bbd", "relation": "none", "rationale": "Bakhmut road geography and the Lyman salient's aim."}
+{"pair": "b7eec474c354", "relation": "none", "rationale": "A counterattack event and a map-box definition."}
+{"pair": "b7f8212f6e4a", "relation": "supports", "from": "claim:cc07_0017_05", "to": "claim:cc07_0017_07", "strength": 0.5, "rationale": "Kyiv Independent's two roads of life underpin the dossier's treating both roads as supply routes.", "independent": false}
+{"pair": "b8549aa26247", "relation": "none", "rationale": "Pokrovsk hunter teams and the Kupiansk group composition."}
+{"pair": "b85b09edc3de", "relation": "supports", "from": "claim:cc09_0010_88", "to": "claim:cc09_0010_89", "strength": 0.6, "rationale": "The armour crossing the ditch west of Verbove corroborates the WSJ report that the line was breached; same ISW report.", "independent": false}
+{"pair": "b8666f69c493", "relation": "supports", "from": "claim:cc11_0010_64", "to": "claim:cc11_0045_20", "strength": 0.4, "rationale": "Russian video of men with torches in a tunnel corroborates Russian channels' claim of a pipe infiltration; both Russian-origin.", "independent": false}
+{"pair": "b8e52f425a46", "relation": "duplicates", "from": "claim:cc07_0027_06", "to": "claim:c05_0015_02", "strength": 0.9, "rationale": "Same RUSI statement on Strelets use by the VDV and Wagner; A is the lower topic."}
+{"pair": "b8fe696896af", "relation": "none", "rationale": "A retaking event and a map-box definition."}
+{"pair": "b90f02755593", "relation": "none", "rationale": "Bomber relocation and the imagery timing analysis."}
+{"pair": "b92888a3b9d7", "relation": "none", "rationale": "Road description and a location fact."}
+{"pair": "b95cb6326889", "relation": "none", "rationale": "Popov's dismissal report and ISW's interpretation of his appeal."}
+{"pair": "b9754050fa78", "relation": "none", "rationale": "February start-line assessment and the Lyman salient's aim."}
+{"pair": "b9839cb850fd", "relation": "refines", "from": "claim:cc14_0031_23", "to": "claim:cc14_0029_32", "strength": 0.7, "rationale": "B dates the 15 km Sudzha pipe infiltration to 8 March 2025 and gives the troop number."}
+{"pair": "b997fcc4c3d9", "relation": "supports", "from": "claim:cc09_0018_04", "to": "claim:cc09_0015_30", "strength": 0.6, "rationale": "The N08 running east towards Polohy corroborates Polohy as the eastern end of the N08 sector.", "independent": true}
+{"pair": "b9bc302bf57e", "relation": "none", "rationale": "ISW's geolocated advances and a later Russian MoD video claim."}

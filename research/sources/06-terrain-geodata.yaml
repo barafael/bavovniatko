@@ -797,6 +797,8 @@
 - id: osm-overpass-2026-landscape-sample
   aliases:
   - osm-overpass-2026-c06-places
+  - osm-overpass-2026-c09-places
+  - osm-overpass-2026-c14-places
   - osm-overpass-2026-kerch-bridge
   title: OpenStreetMap data for five 10 x 10 km front-line sample boxes, queried via the Overpass API
   url: https://overpass-api.de/api/interpreter
@@ -813,6 +815,9 @@
   verified: fetched
   eras:
   - e3-counteroffensives-22
+  - e5-counteroffensive-23
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
   topics:
   - geodata
   - shelterbelts

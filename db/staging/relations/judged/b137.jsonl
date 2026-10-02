@@ -1,0 +1,40 @@
+{"pair": "51704a9dc6fb", "relation": "none", "rationale": "A loss count and the breach design share vehicle types only."}
+{"pair": "5181e68b8a59", "relation": "none", "rationale": "The 11 Mar assault and the 19–21 Mar counterattack are different events."}
+{"pair": "51c40f49d46d", "relation": "none", "rationale": "The launch site and the base's geography."}
+{"pair": "51e0c5c29f3c", "relation": "none", "rationale": "An assessment of the front line and the salient's geography."}
+{"pair": "523485b5a2f1", "relation": "supports", "from": "claim:cc15_0026_05", "to": "claim:cc15_0026_06", "strength": 0.4, "rationale": "The salient vanishing once Azov was committed is consistent with Axe's argument that it absorbed Azov.", "independent": true}
+{"pair": "5251da395f12", "relation": "supports", "from": "claim:c05_0025_33", "to": "claim:cc19_0005_06", "strength": 0.7, "rationale": "The Corps' cumulative claim includes the 20 Sept liberation of Shandryholove and Derylove.", "independent": false}
+{"pair": "52767ccee78a", "relation": "supports", "from": "claim:cc01_0011_27", "to": "claim:cc01_0025_21", "strength": 0.4, "rationale": "The OMON/SOBR convoy destroyed near Horenka corroborates Rosgvardia OMON/SOBR fighting on the west bank.", "independent": false}
+{"pair": "5295f7eb5465", "relation": "none", "rationale": "Inventories at different bases."}
+{"pair": "52aedd2632e6", "relation": "refines", "from": "claim:cc16_0011_21", "to": "claim:cc16_0026_10", "strength": 0.7, "rationale": "A adds the 23–26 May departure from Chelyabinsk to B's count of 5 trucks and 8 cabins."}
+{"pair": "530df436ef3b", "relation": "none", "rationale": "Russian advances and the Bucha River geography."}
+{"pair": "53594cf61478", "relation": "none", "rationale": "A map box and glide-bomb use."}
+{"pair": "536d1c7b835e", "relation": "none", "rationale": "A tank raid and a map box."}
+{"pair": "53bb5ecdc19a", "relation": "supports", "from": "claim:cc09_0013_01", "to": "claim:cc09_0010_82", "strength": 0.7, "rationale": "Both have Lyamin succeeding Popov at the 58th Army in July 2023.", "independent": false}
+{"pair": "53c95c93bc6a", "relation": "duplicates", "from": "claim:cc01_0011_40", "to": "claim:cc01_0009_10", "strength": 0.95, "rationale": "Same Ukroboronprom announcement of 27 Feb 2022 that the An-225 was destroyed."}
+{"pair": "53f1428b2254", "relation": "supports", "from": "claim:cc16_0028_05", "to": "claim:cc16_0028_04", "strength": 0.5, "rationale": "Both put a Tu-160 at Olenya around the strike.", "independent": true}
+{"pair": "5474e2308865", "relation": "supports", "from": "claim:cc16_0011_22", "to": "claim:cc16_0004_05", "strength": 0.5, "rationale": "The driver seeing drones under a cabin roof that slid off corroborates that the drones were hidden in the cabin roofs.", "independent": true}
+{"pair": "54e25a4e0838", "relation": "none", "rationale": "The same brigade at different battles (Avdiivka and Pokrovsk)."}
+{"pair": "54fc5787a5b7", "relation": "duplicates", "from": "claim:cc18_0037_08", "to": "claim:c02_0010_126", "strength": 0.8, "rationale": "Same Ihnat statement that mobile fire groups 'can no longer be relied upon' against jet Gerans."}
+{"pair": "550bf5583721", "relation": "none", "rationale": "The invasion axes and town populations."}
+{"pair": "550ec844a339", "relation": "none", "rationale": "A loss floor and the base's units."}
+{"pair": "55156652684b", "relation": "supports", "from": "claim:cc09_0036_01", "to": "claim:c04_0030_15", "strength": 0.5, "rationale": "The June 2023 breach design is an instance of the MICLIC/UR-77 mechanised-breach tactic.", "independent": false}
+{"pair": "551a126adc5d", "relation": "supports", "from": "claim:cc09_0030_01", "to": "claim:c00_0038_01", "strength": 0.6, "rationale": "ISW has the 42nd Motor Rifle Division of the 58th Army holding the line, which matches RUSI's forward divisions.", "independent": true}
+{"pair": "555908fd9945", "relation": "none", "rationale": "Different Seim bridges on different dates."}
+{"pair": "5605326c0d97", "relation": "none", "rationale": "A later salvo and the bombers' loaded state."}
+{"pair": "562bbdaf9af1", "relation": "none", "rationale": "The list of crossings and a distance check."}
+{"pair": "56e864469132", "relation": "duplicates", "from": "claim:cc01_0032_20", "to": "claim:cc01_0011_77", "strength": 0.85, "rationale": "Same Vdovychenko–Zaluzhnyi exchange over withdrawing from Moshchun, with the same SWJ date caveat."}
+{"pair": "572dfbcec4c8", "relation": "contradicts", "from": "claim:cc16_0007_06", "to": "claim:cc16_0011_71", "strength": 0.7, "rationale": "For the same aircraft hit in Spiderweb, the NATO official's 40+ (15 Tu-95, 20 Tu-22) is incompatible with the NYT's 6 Tu-95, 4 Tu-22M and 1 A-50 (up to 20).", "resolution": "An unnamed NATO official counted 'damaged' aircraft early; the NYT figure rests on US officials' count of hit aircraft. Later imagery-based counts favour the lower figure."}
+{"pair": "574f841f9c42", "relation": "none", "rationale": "Fleet size and low-level tactics."}
+{"pair": "5764b9617f33", "relation": "none", "rationale": "The strike and the dates the imagery cleared."}
+{"pair": "5799e810417f", "relation": "duplicates", "from": "claim:cc01_0011_105", "to": "claim:cc01_0007_04", "strength": 0.85, "rationale": "Same 2 Apr 2022 Maliar declaration that the whole Kyiv region was liberated."}
+{"pair": "57a2f4d0ca0e", "relation": "supports", "from": "claim:cc09_0040_10", "to": "claim:cc09_0029_03", "strength": 0.5, "rationale": "The voice memo of 12 July, after his firing, is consistent with Popov's command ending on 11–12 July.", "independent": false}
+{"pair": "57a6e90d222f", "relation": "none", "rationale": "Compartmentalisation and the cover-story improvisation."}
+{"pair": "57b4acddfbd1", "relation": "supports", "from": "claim:cc18_0028_01", "to": "claim:cc18_0032_10", "strength": 0.5, "rationale": "A's tally of cruise and air-launched missiles (34 Kh-101, 8 Kalibr, 4 Kh-59/69) sums to the 46 in B.", "independent": false}
+{"pair": "57bcfbf16554", "relation": "supports", "from": "claim:cc01_0011_58", "to": "claim:cc01_0014_18", "strength": 0.6, "rationale": "The 6 Mar strike on vehicles at the Rakivka pontoon confirms Rakivka as a Russian pontoon site on 5–6 Mar.", "independent": false}
+{"pair": "57ff2982b5d4", "relation": "none", "rationale": "River geography and a bridge's coordinates."}
+{"pair": "582bc11fa926", "relation": "supports", "from": "claim:cc09_0010_15", "to": "claim:cc09_0035_01", "strength": 0.4, "rationale": "The first group stopped on mines is consistent with ISW's account of mines slowing the attack.", "independent": true}
+{"pair": "5858bc806872", "relation": "duplicates", "from": "claim:cc09_0010_88", "to": "claim:cc09_0040_17", "strength": 0.75, "rationale": "Same ISW observation of armour crossing the obstacle belt west of Verbove; B extends it to 23 Sept and has more sources."}
+{"pair": "585a732acecc", "relation": "none", "rationale": "The garrison and the 11 Mar assault."}
+{"pair": "5880a6e229a5", "relation": "duplicates", "from": "claim:cc11_0028_20", "to": "claim:cc11_0010_16", "strength": 0.8, "rationale": "Same Kyiv Post report of the 129th TDF Brigade holding the terrikon and coke plant in October 2023."}
+{"pair": "5887a8602440", "relation": "none", "rationale": "The escape route and the salient's geography."}

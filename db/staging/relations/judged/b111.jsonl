@@ -1,0 +1,40 @@
+{"pair": "dc774f2bc92a", "relation": "supports", "from": "claim:cc01_0011_12", "to": "claim:cc01_0009_08", "strength": 0.4, "rationale": "The account of a Ka-52 downed plus two more Ka-52s and a Mi-8 falling is consistent with WOTR/MWI's 6-7 helicopter losses at Hostomel.", "independent": false}
+{"pair": "dc989467913b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dd0cac8bcacf", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dd40ce306383", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dd74c5e356c4", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dd92b200626e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dd990953e577", "relation": "supports", "from": "claim:c00_0051_02", "to": "claim:cc14_0012_31", "strength": 0.5, "rationale": "Both summaries describe North Korean casualties as contested, sharing the BBC count of 2,304 killed and higher intelligence estimates.", "independent": false}
+{"pair": "ddddd7323231", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "de4f55bcde6d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dec123132e2d", "relation": "supports", "from": "claim:cc16_0006_02", "to": "claim:c01_0029_46", "strength": 0.8, "rationale": "Butusov's 116 drones airborne closely matches the SBU's 117 drones used in Spiderweb.", "independent": true}
+{"pair": "dedb5a3b55d7", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "df4ffa8793db", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "df6d1685cefc", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dfbd132fc991", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dfbe846741e4", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "dfe7cc16fb70", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e00c462a742d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e02f5db9f154", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e0466c3cf97d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e09f43cc909b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e0aee7b596d8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e11aafa78f57", "relation": "refines", "from": "claim:cc01_0019_03", "to": "claim:cc01_0018_01", "strength": 0.5, "rationale": "The Irpin's 10-20 m width held before the Kozarovychi dam breach; afterwards it became a lake over 400 m wide in places."}
+{"pair": "e14c0f3fa9bc", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e16c10c364e0", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e1d75d794df4", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e225631d74ea", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e22c255ac4de", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e239ef07ea77", "relation": "duplicates", "from": "claim:cc11_0032_19", "to": "claim:c00_0044_01", "strength": 0.9, "rationale": "Same Ukrainian troops' report of a 5:1 Russian shell advantage in February 2024 (8-9:1 at worst), from the same source, extracted in topic 00 and chapter c11."}
+{"pair": "e24527d9541c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e38e37d31a1e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e3d7c93948b8", "relation": "duplicates", "from": "claim:cc11_0007_31", "to": "claim:cc11_0010_120", "strength": 0.9, "rationale": "Same Ukrainian MoD tally of 10 Su-34s, 2 Su-35s and an A-50 downed in February 2024, from the same source, extracted twice."}
+{"pair": "e43fedcdaf8d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e4ad3d3f1fd2", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e529b7d902b8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e53a873dc73e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e546264d464e", "relation": "supports", "from": "claim:cc16_0007_06", "to": "claim:cc16_0011_48", "strength": 0.7, "rationale": "A NATO official's count of at least 40 aircraft damaged corroborates the SBU's claim of 41 bombers hit.", "independent": true}
+{"pair": "e5a3682e9ec0", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e67ffddc49ae", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e702cae1001c", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "e7225afee217", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}

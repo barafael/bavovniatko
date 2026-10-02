@@ -1,0 +1,40 @@
+{"pair": "cb72a2ab3217", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cb7385ba5cfc", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cbbbdd2957ae", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cbf9d837312d", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cc09a0d1acc6", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cc8169924ece", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cc8f9484fbc6", "relation": "supports", "from": "claim:cc16_0026_13", "to": "claim:cc16_0011_59", "strength": 0.8, "rationale": "Butusov's 116 drones launched closely matches Zelensky's 117 drones used in Spiderweb.", "independent": true}
+{"pair": "cd1524eeb0fa", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cd4e100c468e", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cd9184346aa3", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cdec0968e268", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ce66b91839a8", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "ce9dad7fe0ef", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cebed72e0230", "relation": "none", "rationale": "IISS's seven operational A-50s and the BBC's \"as few as four\" after Spiderweb likely describe pre- and post-strike fleets; no clear relation as stated."}
+{"pair": "cf0a63a8cf55", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cfc088d28a3b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "cfdc774bca92", "relation": "supports", "from": "claim:cc16_0011_71", "to": "claim:cc16_0011_72", "strength": 0.6, "rationale": "NYT's 6 Tu-95, 4 Tu-22M and 1 A-50 hit is close to Frontelligence's independent count of 11 bombers plus an An-12.", "independent": true}
+{"pair": "d055921e223b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d08892a5442f", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d0e3d4164e69", "relation": "duplicates", "from": "claim:cc07_0041_01", "to": "claim:c04_0033_03", "strength": 0.9, "rationale": "Same RUSI figure of about 20,000 Russian rounds a day (peak above 32,000) against under 6,000 Ukrainian, extracted in topic 04 and chapter c07."}
+{"pair": "d0f568ac94f9", "relation": "supports", "from": "claim:cc07_0041_09", "to": "claim:cc07_0027_03", "strength": 0.4, "rationale": "Reznikov's statement that Ukraine fired about a quarter of Russia's shells is broadly consistent with RUSI's 5:1 Russian artillery advantage at Bakhmut.", "independent": true}
+{"pair": "d1309c2692d2", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d168bdda21e3", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d16ae1901d9f", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d1a79573e05a", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d1bade3fce4b", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d2661fc80e1a", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d26b3408c583", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d271a1a9c491", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d2a81aff970f", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d30f1fe72ac6", "relation": "duplicates", "from": "claim:cc07_0041_01", "to": "claim:c03_0010_01", "strength": 0.9, "rationale": "Same RUSI figure of about 20,000 Russian rounds a day peaking above 32,000 in summer 2022, extracted in topic 03 and chapter c07."}
+{"pair": "d3212491e9aa", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d3853586d9d0", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d3a35ee4e636", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d3b170d2fd82", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d3ce36703e92", "relation": "duplicates", "from": "claim:cc15_0015_02", "to": "claim:c06_0025_25", "strength": 0.9, "rationale": "The same OSM computation gives the 625 × 1,348 m median field dimensions in the Pokrovsk W box, extracted twice."}
+{"pair": "d4186a1f59d0", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d4795a065b63", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d48be57c36b1", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
+{"pair": "d4b585f3d2df", "relation": "none", "rationale": "Different subjects or scopes; no meaningful relation."}
