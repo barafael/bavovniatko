@@ -1,0 +1,78 @@
+# Build the knowledge-base explorer (web/) and publish it to GitHub Pages.
+# The dataset is built from the committed dump (db/dump/), so no database is needed. See web/README.md.
+name: Explorer on GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "db/dump/**", "db/schema/**", "db/queries.md", "db/tools/webexport.py", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  TRUNK_VERSION: v0.21.14
+  BINARYEN_VERSION: version_116
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Rust (stable, wasm32)
+        run: |
+          rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown
+          rustup default stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: web -> target
+          cache-targets: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/bridge/package-lock.json
+
+      - name: Trunk and wasm-opt
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -sSfL "https://github.com/trunk-rs/trunk/releases/download/${TRUNK_VERSION}/trunk-x86_64-unknown-linux-gnu.tar.gz" | tar -xz -C "$HOME/.local/bin"
+          curl -sSfL "https://github.com/WebAssembly/binaryen/releases/download/${BINARYEN_VERSION}/binaryen-${BINARYEN_VERSION}-x86_64-linux.tar.gz" | tar -xz -C "$RUNNER_TEMP"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "$RUNNER_TEMP/binaryen-${BINARYEN_VERSION}/bin" >> "$GITHUB_PATH"
+
+      - name: Build
+        # configure-pages gives e.g. "/bavovniatko"; Trunk wants a trailing slash.
+        run: PUBLIC_URL="${{ steps.pages.outputs.base_path }}/" web/build.sh
+
+      - name: Check the dataset and the read-only guarantees
+        working-directory: web
+        run: cargo run --release -p kbcheck
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/crates/app/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
