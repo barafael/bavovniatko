@@ -34,12 +34,14 @@ fn post(v: serde_json::Value) {
 /// requested at once, so downloads overlap with loading.
 struct Fetcher {
     base: String,
+    /// The worker's own query string (`?v=<build>`), appended to every data URL as a cache key.
+    query: String,
     pending: RefCell<HashMap<String, Promise>>,
 }
 
 impl Fetcher {
     fn start(&self, path: &str) -> Promise {
-        scope().fetch_with_str(&format!("{}{}", self.base, path))
+        scope().fetch_with_str(&format!("{}{}{}", self.base, path, self.query))
     }
 }
 
@@ -77,7 +79,8 @@ struct Request {
 
 async fn boot() {
     let t0 = js_sys::Date::now();
-    let fetcher = Fetcher { base: "data/".into(), pending: RefCell::new(HashMap::new()) };
+    let query = scope().location().search();
+    let fetcher = Fetcher { base: "data/".into(), query, pending: RefCell::new(HashMap::new()) };
     let result = async {
         let mut kb = Kb::open().await?;
         let manifest = kb.load(&fetcher, |p| post(json!({"type": "progress", "progress": p}))).await?;

@@ -53,6 +53,12 @@ struct Inner {
     pending: HashMap<u64, oneshot::Sender<QueryResult>>,
 }
 
+/// Set by web/build.sh (git commit and dataset version); "dev" for local builds.
+pub const BUILD: &str = match option_env!("BAV_BUILD") {
+    Some(b) => b,
+    None => "dev",
+};
+
 thread_local! {
     static INNER: RefCell<Option<Inner>> = const { RefCell::new(None) };
 }
@@ -63,8 +69,10 @@ impl Kb {
             status: RwSignal::new(Status::Loading { file: "manifest.json".into(), done: 0, total: 1, ms: 0.0 }),
             tables: RwSignal::new(BTreeSet::new()),
         };
-        // Trunk builds the worker crate as `kbworker` and generates this loader next to index.html.
-        let worker = Worker::new("./kbworker_loader.js").expect("start the database worker");
+        // Trunk builds the worker crate as `kbworker`; kbworker_loader.js starts it. The build id is passed on as
+        // the query string to the worker's script, its wasm and every data file, because those keep their names
+        // across deploys and GitHub Pages lets browsers cache them for 10 minutes.
+        let worker = Worker::new(&format!("./kbworker_loader.js?v={BUILD}")).expect("start the database worker");
         let onmessage = Closure::<dyn FnMut(MessageEvent)>::new(move |ev: MessageEvent| {
             let Some(text) = ev.data().as_string() else { return };
             let Ok(msg) = serde_json::from_str::<Value>(&text) else { return };

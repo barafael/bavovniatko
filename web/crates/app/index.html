@@ -9,10 +9,9 @@
   <link data-trunk rel="rust" href="Cargo.toml" data-bin="kbapp" data-type="main" data-wasm-opt="0" />
   <link data-trunk rel="rust" href="../worker/Cargo.toml" data-bin="kbworker" data-type="worker" data-wasm-opt="0" />
   <link data-trunk rel="copy-file" href="kbworker_loader.js" />
-  <link data-trunk rel="copy-file" href="bridge/bridge.js" />
   <link data-trunk rel="copy-file" href="bridge/maplibre-gl-worker.mjs" />
   <link data-trunk rel="copy-file" href="bridge/maplibre-gl-shared.mjs" />
-  <script src="bridge.js"></script>
+  <script data-trunk src="bridge/bridge.js"></script>
   <link data-trunk rel="css" href="bridge/bridge.css" />
   <link data-trunk rel="css" href="style.css" />
   <link data-trunk rel="copy-dir" href="public/data" />

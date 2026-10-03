@@ -14,4 +14,4 @@ wasm-bindgen.workspace = true
 wasm-bindgen-futures.workspace = true
 js-sys.workspace = true
 console_error_panic_hook = "0.1"
-web-sys = { workspace = true, features = ["DedicatedWorkerGlobalScope", "MessageEvent", "Response", "WorkerGlobalScope", "console"] }
+web-sys = { workspace = true, features = ["DedicatedWorkerGlobalScope", "MessageEvent", "Response", "WorkerGlobalScope", "WorkerLocation", "console"] }

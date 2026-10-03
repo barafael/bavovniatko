@@ -68,6 +68,8 @@ footer { width: 100%; max-width: 150rem; margin: 0 auto; padding: 1rem var(--gap
          font-size: .78rem; border-top: 1px solid var(--line); }
 footer a { color: var(--muted); }
 
+/* every page is centred in the frame and grows up to its own maximum width */
+.page, .claim-page, .about, .chapters, .notebook, .map-page { margin-left: auto; margin-right: auto; }
 .page { max-width: 110rem; }
 .page h1, .chapter-body h1, .about h1 { font-size: 1.6rem; margin: .2rem 0 .4rem; letter-spacing: -.01em; }
 .lede { color: var(--muted); max-width: 60rem; font-size: 1.02rem; margin-top: 0; }
@@ -167,6 +169,7 @@ a.rid.named { font-family: var(--sans); font-size: inherit; white-space: normal;
 }
 pre.json { margin: 0; padding: .8rem 1rem; overflow: auto; max-height: 72vh; font-size: .82rem; background: var(--panel); }
 table.obs { width: auto; min-width: min(100%, 36rem); margin-top: .5rem; }
+.page > table.obs { width: 100%; }
 
 /* --- claim page -------------------------------------------------------------------------------------------- */
 .claim-page { max-width: 120rem; }
@@ -272,7 +275,7 @@ svg.chart .pt:hover circle { stroke: var(--ink); stroke-width: 1.5; }
 }
 
 /* --- about ------------------------------------------------------------------------------------------------- */
-.about { max-width: 52rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+.about { max-width: 64rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
          padding: .6rem clamp(1rem, 3vw, 2rem) 1.4rem; box-shadow: var(--shadow); line-height: 1.6; }
 .about h2 { font-size: 1.1rem; margin-top: 1.5rem; }
 .about li { margin-bottom: .4rem; }
