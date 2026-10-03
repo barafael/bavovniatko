@@ -8,7 +8,7 @@ use wasm_bindgen::prelude::*;
 
 use crate::bridge::Editor;
 use crate::kb::{Kb, QueryResult, fetch_text};
-use crate::results::Results;
+use crate::results::{ClaimSources, Results, claim_ids, fetch_sources};
 use crate::router::{self, Route};
 
 #[derive(Debug, Clone, Deserialize)]
@@ -30,7 +30,7 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
     let from_hash = initial;
     let autorun = RwSignal::new(from_hash.is_some());
     let code = RwSignal::new(from_hash.unwrap_or_else(|| DEFAULT_QUERY.to_string()));
-    let result: RwSignal<Option<QueryResult>> = RwSignal::new(None);
+    let result: RwSignal<Option<(QueryResult, ClaimSources)>> = RwSignal::new(None);
     let running = RwSignal::new(false);
 
     let run = move || {
@@ -42,7 +42,8 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
         running.set(true);
         spawn_local(async move {
             let r = kb.query(q).await;
-            result.set(Some(r));
+            let sources = fetch_sources(kb, claim_ids(&r)).await;
+            result.set(Some((r, sources)));
             running.set(false);
         });
     };
@@ -126,7 +127,7 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
                         <span class="hint">"SurrealQL · read-only · "<code>"fn::"</code>" helpers in the examples"</span>
                     </div>
                 </div>
-                {move || result.get().map(|r| view! { <Results result=r /> })}
+                {move || result.get().map(|(r, s)| view! { <Results result=r sources=s /> })}
             </section>
         </div>
     }
