@@ -1,5 +1,5 @@
 //! The map: every place the knowledge base talks about, sized by the number of claims about it in a chosen month
-//! range. Click a place for its claims. `#/map/place:…` focuses a place; `#/map/topic:c14` a chapter's places.
+//! range. Click a place for its claims. `#/map/place:…` focuses a place; `#/map/topic:c14` a dossier's places.
 
 use leptos::prelude::*;
 use leptos::task::spawn_local;
@@ -155,7 +155,7 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
                         on:input=move |ev| { let v: i32 = event_target_value(&ev).parse().unwrap_or(0); to.set(v.max(from.get_untracked())); } /></label>
                 <label><input type="checkbox" prop:checked=move || undated.get() on:change=move |ev| undated.set(event_target_checked(&ev)) />
                     " include undated claims"</label>
-                {chapter.clone().map(|t| view! { <span class="chip">{format!("highlighting chapter {}", t.replace("topic:", ""))}</span> })}
+                {chapter.clone().map(|t| view! { <span class="chip">{format!("highlighting dossier {}", t.replace("topic:", ""))}</span> })}
                 <span class="muted small">"Circle size: claims about the place in the range. Purple boxes: terrain sample areas."</span>
             </div>
             <div class="map-body">

@@ -19,7 +19,9 @@ load speed (see web/README.md):
 - **gallery.json:** example queries (db/queries.md plus web/kb/gallery.surql).
 - **manifest.json:** the file list with sizes and hashes, row counts, and the dataset version.
 
-The private archive tables (`snapshot`, `revision`) and `migration` are left out.
+The private archive tables (`snapshot`, `revision`) and `migration` are left out. **webscrub.py** then takes the
+game out of the public dataset: the knowledge base keeps everything for the game, but the website presents the
+research about the war on its own terms. The export fails if any game wording is left.
 """
 from __future__ import annotations
 
@@ -30,13 +32,18 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 REPO = Path(__file__).resolve().parents[2]
 DUMP = REPO / "db" / "dump"
 SCHEMA = REPO / "db" / "schema"
 WEBKB = REPO / "web" / "kb"
 OUT = REPO / "web" / "crates" / "app" / "public" / "data"
 
-EXCLUDE = {"snapshot", "revision", "migration"}
+import webscrub  # noqa: E402
+
+# The private archive (snapshot, revision), bookkeeping (migration) and the game-only tables (see webscrub.py).
+EXCLUDE = {"snapshot", "revision", "migration"} | webscrub.DROP_TABLES
 ORDER = ["kind", "era", "topic", "unit", "metric", "actor", "place", "event", "system", "work", "source", "term",
          "media", "claim", "observation", "passage", "question", "design_note"]
 DROP_FIELDS = {"prov", "created_at", "updated_at"}
@@ -185,8 +192,10 @@ def gallery() -> list[dict]:
             if line.startswith("-- ") or line.strip() == "--":
                 query = "\n".join(lines).strip()
                 if query and not re.search(r"\b(" + "|".join(EXCLUDE) + r")\b", query):   # not shipped to the browser
-                    t = title or section
-                    items.append({"section": section, "title": t[:1].upper() + t[1:], "query": query})
+                    t = webscrub.rename(title or section)
+                    sec = webscrub.rename(re.sub(r"\s*\(the tech tree\)", "", section))
+                    if not webscrub.has_game(t + " " + sec):
+                        items.append({"section": sec, "title": t[:1].upper() + t[1:], "query": query})
                     lines, title = [], None
                 if line.strip() not in ("--", "-- "):
                     title = line[3:].strip() if title is None else title + " " + line[3:].strip()
@@ -220,10 +229,17 @@ def build() -> dict[str, bytes]:
     relations = {t for t, p in files.items() if '"in":' in p.open().readline()}
     order = ([t for t in ORDER if t in files] + sorted(t for t in files if t not in ORDER and t not in relations)
              + sorted(relations))
+    data = {t: [slim(json.loads(l)) for l in files[t].read_text().splitlines() if l.strip()] for t in order}
+    data, report = webscrub.scrub(data, relations)
+    left = webscrub.leftovers(data)
+    if left:
+        sys.exit("game wording left in the web dataset (extend webscrub.py):\n  " + "\n  ".join(left[:40]))
     out: dict[str, bytes] = {}
     counts, tables = {}, []
     for t in order:
-        rows = [slim(json.loads(l)) for l in files[t].read_text().splitlines() if l.strip()]
+        rows = data.get(t, [])
+        if not rows:
+            continue
         stmts = [f"INSERT {'RELATION ' if t in relations else ''}INTO {t} [{','.join(lit(r) for r in rows[i:i + CHUNK])}];"
                  for i in range(0, len(rows), CHUNK)]
         out[f"tables/{t}.surql"] = ("\n".join(stmts) + "\n").encode()
@@ -233,14 +249,14 @@ def build() -> dict[str, bytes]:
     out["indexes.surql"] = web_indexes(text).encode()
     fn = WEBKB / "functions.surql"
     out["functions.surql"] = fn.read_bytes() if fn.exists() else b""
-    out["schema.json"] = json.dumps(schema_json(text), ensure_ascii=False, indent=1, sort_keys=True).encode()
+    out["schema.json"] = json.dumps(webscrub.rewrite(schema_json(text)), ensure_ascii=False, indent=1, sort_keys=True).encode()
     out["gallery.json"] = json.dumps(gallery(), ensure_ascii=False, indent=1).encode()
     entries = [{"path": p, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()} for p, b in sorted(out.items())]
     version = hashlib.sha256("".join(e["sha256"] for e in entries).encode()).hexdigest()[:16]
     manifest = {"format": 1, "version": version, "engine": "surrealdb 3.3",
                 "load": ["schema.surql", *[f"tables/{t}.surql" for t in tables], "indexes.surql", "functions.surql"],
                 "files": entries, "counts": counts,
-                "attribution": "Place geometry: ODbL 1.0, © OpenStreetMap contributors."}
+                "attribution": "Place geometry: ODbL 1.0, © OpenStreetMap contributors.", "scrub": report}
     out["manifest.json"] = json.dumps(manifest, ensure_ascii=False, indent=1).encode()
     return out
 

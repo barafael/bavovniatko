@@ -75,7 +75,7 @@ fn ClaimView(data: Value) -> impl IntoView {
             <div class="claim-head">
                 <div class="badges">
                     {badges.into_iter().map(|(k, v)| view! { <span class=format!("badge {k} {v}")>{v.clone()}</span> }).collect_view()}
-                    {outcome.then(|| view! { <span class="badge outcome" title="This claim is part of a chapter's historical outcome: its win condition">"outcome"</span> })}
+                    {outcome.then(|| view! { <span class="badge outcome" title="This claim describes the historical outcome of a dossier's episode">"outcome"</span> })}
                     {(!time.is_empty()).then(|| view! { <span class="when">{time.clone()}</span> })}
                 </div>
                 <p class="claim-text">{c["text"].as_str().unwrap_or_default().to_string()}</p>
@@ -84,7 +84,9 @@ fn ClaimView(data: Value) -> impl IntoView {
                     <span class="rid-label">{id.clone()}</span>
                     {eras.into_iter().map(|e| view! { <span class="chip">{e.replace("era:", "")}</span> }).collect_view()}
                     {topics.into_iter().map(|t| view! { <span class="chip">{rid_link(&t, Some(t.replace("topic:", "")))}</span> }).collect_view()}
-                    {anchor["file"].as_str().map(|f| view! { <span class="from">{format!("from {f}, {}", anchor["section"].as_str().unwrap_or_default())}</span> })}
+                    {anchor["file"].as_str().map(|f| view! { <span class="from">"from "
+                        <a href=format!("https://github.com/barafael/bavovniatko/blob/main/{f}")>"the research text"</a>
+                        {format!(", {}", anchor["section"].as_str().unwrap_or_default())}</span> })}
                 </div>
                 {(canonical != id && !canonical.is_empty()).then(|| view! {
                     <p class="note">"This is an extracted copy. Canonical claim: "{rid_link(&canonical, None)}</p>
@@ -120,7 +122,8 @@ fn ClaimView(data: Value) -> impl IntoView {
                                 });
                                 let m = o["metric"].as_str().unwrap_or_default().to_string();
                                 view! { <tr>
-                                    <td>{rid_link(&m, Some(m.replace("metric:", "").replace('_', " ")))}</td>
+                                    <td>{rid_link(&m, Some(o["metric_label"].as_str().map(String::from)
+                                        .unwrap_or_else(|| m.replace("metric:", "").replace('_', " "))))}</td>
                                     <td class="num">{value}</td>
                                     <td>{o["unit"].as_str().unwrap_or_default().replace("unit:", "")}</td>
                                     <td>{o["side"].as_str().unwrap_or_default().to_string()}</td>

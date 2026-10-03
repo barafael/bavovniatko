@@ -47,7 +47,7 @@ pub fn Disputes() -> impl IntoView {
                values. Many come with an explanation (different counting methods, periods or claimants)."</p>
             <div class="filters">
                 <select on:change=move |ev| topic.set(event_target_value(&ev))>
-                    <option value="">"All topics and chapters"</option>
+                    <option value="">"All topics and dossiers"</option>
                     {move || data.get().flatten().and_then(|r| r.ok()).map(|rows| {
                         let mut ts: Vec<String> = rows.iter().flat_map(|r| [strs(&r["a_topics"]), strs(&r["b_topics"])].concat()).collect();
                         ts.sort();

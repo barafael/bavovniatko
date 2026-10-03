@@ -44,7 +44,7 @@ fn App() -> impl IntoView {
             </a>
             <nav>
                 {tab(Route::Notebook(None), "Notebook")}
-                {tab(Route::Chapters(None), "Chapters")}
+                {tab(Route::Chapters(None), "Dossiers")}
                 {tab(Route::Map(None), "Map")}
                 {tab(Route::Arms, "Arms race")}
                 {tab(Route::Series(None), "Numbers")}
@@ -106,8 +106,8 @@ fn About() -> impl IntoView {
     view! {
         <article class="about">
             <h1>"About this explorer"</h1>
-            <p>"A research knowledge base for "<em>"bavovniatko"</em>", a game and simulation of the Russo-Ukrainian war.
-               Every statement is an atomic, cited "<strong>"claim"</strong>", with its claimants, eras, places,
+            <p>"A cited research knowledge base on the Russo-Ukrainian war, from the full-scale invasion of February 2022
+               to the present. Every statement is an atomic, cited "<strong>"claim"</strong>", with its claimants, eras, places,
                observations (numbers with units and ranges) and its relations to other claims: supports, weakens,
                contradicts, refines, supersedes, duplicates."</p>
             <p>"The whole knowledge base runs in your browser: SurrealDB compiled to WebAssembly, loaded fresh on

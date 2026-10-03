@@ -14,14 +14,27 @@ bridge/          npm package bundling CodeMirror 6 + @surrealdb/codemirror and M
 crates/kbcheck   native check: loads the dataset exactly as the browser does, runs the gallery and write probes
 ```
 
+## No game on the website
+
+The knowledge base exists to feed a game, and it keeps everything for that purpose. The website presents the
+research about the war on its own terms. `db/tools/webscrub.py` (run by `webexport.py`):
+
+- **Leaves out:** the prior-art games topic, the design notes, the game-feed tables and the game-relevance
+  sections, together with the claims about designing the game and anything only they used.
+- **Renames:** "diorama" becomes "dossier area", "chapter" becomes "dossier", "win band" becomes "outcome range".
+- **Fails the export** if any game wording is left, except a short whitelist of genuine war facts: the 2023
+  tabletop war games, and the DCS World footage behind the "Ghost of Kyiv" clip.
+
+In the UI, the chapters are **dossiers**: `#/dossiers/topic:c14`, with the older `#/chapters` links still
+working.
+
 ## Views
 
 All views are hash routes, so every state is a shareable link.
 
 - **Notebook** (`#/notebook?q=…`): a SurrealQL editor with highlighting and autocomplete, and an example
   gallery. Results show as tables (record ids link to their views) or JSON.
-- **Chapters** (`#/chapters/topic:c14`): each chapter's outcome claims, which are its win conditions, and its
-  dated claims as the self-running script.
+- **Dossiers** (`#/dossiers/topic:c14`): each episode's historical outcome and its dated claims as a timeline.
 - **Map** (`#/map`, `#/map/place:avdiivka`, `#/map/topic:c19`): places sized by the claims about them in a
   month range, with each place's claim history. A chapter link highlights and fits that chapter's places.
 - **Arms race** (`#/arms`): measure/countermeasure links on a timeline, in lanes by the kind of measure, with
@@ -85,7 +98,7 @@ The spike (2026-10-02) measured how to load 80,000 rows plus their indexes faste
 
 The production build (`--profile dist`: size-optimised, fat LTO, then `wasm-opt -Oz`) has a 13.3 MB worker (4.7 MB
 gzip, 3.3 MB brotli) and is ready in about 12.7 s in Chromium. An opt-level 3 LTO build was 38 MB (9.6 MB gzip) and
-ready in 11.5 s, so it doesn't pay off. A first visit downloads about 10.5 MB gzipped: the worker 4.7, the dataset
+ready in 11.5 s, so it doesn't pay off. A first visit downloads about 10 MB gzipped: the worker 4.7, the dataset
 4.8, the app, editor and map 1.
 
 Query timings are mostly 1–250 ms. One trap: correlated subqueries (`… WHERE x = $parent.id`) do not use indexes.

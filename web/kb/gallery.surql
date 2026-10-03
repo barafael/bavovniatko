@@ -59,13 +59,13 @@ SELECT name, count() AS contradictions FROM (
     SELECT VALUE array::flatten([in->asserted_by->actor.labels.en, out->asserted_by->actor.labels.en]) FROM contradicts
 ).flatten().map(|$n| { name: $n }) GROUP BY name ORDER BY contradictions DESC LIMIT 20;
 
--- ## Chapters
+-- ## Dossiers
 
--- The win conditions of the Kursk chapter (claims flagged as the historical outcome)
+-- The historical outcome of the Kursk incursion (claims flagged as outcome)
 SELECT key, text FROM claim WHERE topics CONTAINS topic:c14 AND ext.outcome = true ORDER BY key;
 
--- Operation Vivaldi as a dated script
+-- Operation Vivaldi as a dated timeline
 fn::timeline(topic:c19);
 
--- Outcome claims per chapter
-SELECT topics[0].code AS chapter, count() AS outcome_claims FROM claim WHERE ext.outcome = true GROUP BY chapter ORDER BY chapter;
+-- Outcome claims per dossier
+SELECT topics[0].code AS dossier, count() AS outcome_claims FROM claim WHERE ext.outcome = true GROUP BY dossier ORDER BY dossier;

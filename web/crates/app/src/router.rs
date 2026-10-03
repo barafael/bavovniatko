@@ -1,6 +1,6 @@
 //! Hash routes, so every view is a shareable link and the site works as plain static files:
 //! `#/notebook?q=…`, `#/claim/claim:…`, `#/disputes`, `#/map[/place:…|/topic:…]`, `#/arms`,
-//! `#/series[/metric:…]`, `#/chapters[/topic:…]`, `#/about`. The older `#q=…` opens the notebook.
+//! `#/series[/metric:…]`, `#/dossiers[/topic:…]` (or the older `#/chapters`), `#/about`. The older `#q=…` opens the notebook.
 
 use leptos::prelude::*;
 use wasm_bindgen::prelude::*;
@@ -40,7 +40,7 @@ pub fn parse(hash: &str) -> Route {
         "map" => Route::Map(arg),
         "arms" => Route::Arms,
         "series" => Route::Series(arg),
-        "chapters" => Route::Chapters(arg),
+        "dossiers" | "chapters" => Route::Chapters(arg),
         "about" => Route::About,
         _ => Route::Notebook(query.strip_prefix("q=").map(decode)),
     }
@@ -59,7 +59,7 @@ pub fn href(r: &Route) -> String {
         Route::Map(a) => with("map", a),
         Route::Arms => "#/arms".into(),
         Route::Series(a) => with("series", a),
-        Route::Chapters(a) => with("chapters", a),
+        Route::Chapters(a) => with("dossiers", a),
         Route::About => "#/about".into(),
     }
 }

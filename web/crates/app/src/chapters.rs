@@ -1,5 +1,5 @@
-//! The game's chapters: each is a diorama of one episode, won by reaching the historical outcome. A chapter's page
-//! shows its outcome claims (the win conditions) and its dated claims as a self-running script.
+//! Dossiers: each covers one bounded episode of the war. A dossier's page shows its historical outcome (the claims
+//! flagged as such) and its dated claims as a timeline.
 
 use leptos::prelude::*;
 use serde_json::{Value, json};
@@ -14,7 +14,7 @@ const LIST: &str = "LET $out = (SELECT topics[0] AS t, count() AS n FROM claim W
     FROM topic WHERE string::starts_with(code, 'c') OR string::starts_with(code, 'v') ORDER BY code";
 
 fn title(v: &Value) -> String {
-    v.as_str().unwrap_or_default().trim_start_matches("Chapter: ").trim_start_matches("Vignette: ").to_string()
+    v.as_str().unwrap_or_default().trim_start_matches("Dossier: ").trim_start_matches("Chapter: ").trim_start_matches("Vignette: ").to_string()
 }
 
 #[component]
@@ -24,7 +24,7 @@ pub fn Chapters(topic: Option<String>) -> impl IntoView {
     view! {
         <div class="chapters">
             <details class="chapter-list side-list" open=crate::ui::wide_screen()>
-                <summary>"Chapters"</summary>
+                <summary>"Dossiers"</summary>
                 {move || match list.get() {
                     None => loading(),
                     Some(None) => waiting_for_db(),
@@ -43,11 +43,11 @@ pub fn Chapters(topic: Option<String>) -> impl IntoView {
             </details>
             <section class="chapter-body">
                 {match topic {
-                    None => view! { <div class="panel"><h1>"Chapters as dioramas"</h1>
-                        <p>"Each chapter of the game is a bounded episode that runs by itself if the player does nothing,
-                           and is won by reaching the outcome that actually happened. The knowledge base marks those outcomes:
-                           claims flagged "<span class="badge outcome">"outcome"</span>" are the win conditions."</p>
-                        <p class="muted">"Pick a chapter on the left."</p></div> }.into_any(),
+                    None => view! { <div class="panel"><h1>"Dossiers"</h1>
+                        <p>"Each dossier covers one bounded episode of the war, from the march on Kyiv to Operation Vivaldi:
+                           what happened and how it ended, a dated timeline, the geography, the forces and the disputed figures.
+                           Claims flagged "<span class="badge outcome">"outcome"</span>" describe the historical outcome."</p>
+                        <p class="muted">"Pick a dossier from the list."</p></div> }.into_any(),
                     Some(t) => view! { <Chapter topic=t /> }.into_any(),
                 }}
             </section>
@@ -69,7 +69,10 @@ fn Chapter(topic: String) -> impl IntoView {
     view! {
         {move || head.get().flatten().and_then(|r| r.ok()).and_then(|r| r.into_iter().next()).map(|h| view! {
             <h1>{title(&h["title"])}</h1>
-            <p class="muted small">{h["file"].as_str().unwrap_or_default().to_string()}</p>
+            <p class="muted small">
+                <a href=format!("https://github.com/barafael/bavovniatko/blob/main/{}", h["file"].as_str().unwrap_or_default())>
+                    "Read the full dossier text"</a>
+            </p>
         })}
         <p>
             <a href=href(&Route::Map(Some(topic_map.clone())))>"Show its places on the map"</a>" · "
@@ -77,7 +80,7 @@ fn Chapter(topic: String) -> impl IntoView {
         </p>
         <div class="chapter-cols">
         <section class="panel">
-            <h2>"The outcome to reproduce"</h2>
+            <h2>"Historical outcome"</h2>
             {move || match outcome.get() {
                 None => loading(),
                 Some(None) => waiting_for_db(),
@@ -90,7 +93,7 @@ fn Chapter(topic: String) -> impl IntoView {
             }}
         </section>
         <section class="panel">
-            <h2>"The script: dated claims in order"</h2>
+            <h2>"Timeline: dated claims in order"</h2>
             {move || match timeline.get() {
                 None => loading(),
                 Some(None) => waiting_for_db(),

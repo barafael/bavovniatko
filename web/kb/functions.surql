@@ -13,7 +13,7 @@ DEFINE FUNCTION fn::place_history($place: record<place>) {
         FROM $claims ORDER BY t, key;
 } PERMISSIONS FULL;
 
--- Places whose centroid lies inside a region's polygon (an oblast, raion or diorama box).
+-- Places whose centroid lies inside a region's polygon (an oblast, raion or map box).
 DEFINE FUNCTION fn::in_region($region: record<place>) {
     LET $g = $region.geometry;
     RETURN IF $g = NONE { [] } ELSE { SELECT VALUE id FROM place WHERE centroid != NONE AND centroid INSIDE $g };
@@ -92,7 +92,8 @@ DEFINE FUNCTION fn::claim($claim: record<claim>) {
                 out.origin AS origin, out.reliability AS reliability, out.published AS published, quote
             FROM cites WHERE in = $claim),
         about: (SELECT out AS target, out.labels.en AS name, role FROM about WHERE in = $claim),
-        observations: (SELECT metric, value, low, high, qualifier, value_text, unit, side, time FROM observation WHERE claim = $claim),
+        observations: (SELECT metric, metric.labels.en AS metric_label, value, low, high, qualifier, value_text, unit, side, time
+            FROM observation WHERE claim = $claim),
         relations: fn::relations($claim),
         canonical: fn::canonical($claim)
     };
@@ -104,7 +105,7 @@ DEFINE FUNCTION fn::search($q: string) {
         FROM claim WHERE text @0@ $q ORDER BY score DESC LIMIT 100;
 } PERMISSIONS FULL;
 
--- A chapter's (or topic's) dated claims in order, outcome claims flagged: the self-running script of a diorama.
+-- A dossier's (or topic's) dated claims in order, with the historical-outcome claims flagged.
 DEFINE FUNCTION fn::timeline($topic: record<topic>) {
     RETURN SELECT id, time.from AS t, time.to AS t_to, time.precision AS precision, key, kind, text,
             ext.outcome = true AS outcome, ->asserted_by->actor.labels.en AS claimants
