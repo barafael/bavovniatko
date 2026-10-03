@@ -83,8 +83,8 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
 
     view! {
         <div class="notebook">
-            <aside class="gallery">
-                <h2>"Examples"</h2>
+            <details class="gallery side-list" open=crate::ui::wide_screen()>
+                <summary>"Examples"</summary>
                 {move || gallery.get().map(|items| {
                     let mut sections: Vec<(String, Vec<GalleryItem>)> = vec![];
                     for it in items {
@@ -106,7 +106,7 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
                         </section>
                     }).collect_view()
                 })}
-            </aside>
+            </details>
             <section class="work">
                 <div class="editor">
                     <div class="cm-host" node_ref=host></div>

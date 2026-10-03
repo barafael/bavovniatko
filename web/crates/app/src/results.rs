@@ -114,7 +114,7 @@ fn Table(value: Value) -> impl IntoView {
                         rows.with_value(|rows| rows.iter().take(limit).map(|r| view! {
                             <tr>{cols.with_value(|cols| cols.iter().map(|c| {
                                 let v = if objects { r.get(c).cloned().unwrap_or(Value::Null) } else { r.clone() };
-                                view! { <td>{cell(&v)}</td> }
+                                view! { <td data-label=c.clone()>{cell(&v)}</td> }
                             }).collect_view())}</tr>
                         }).collect_view())
                     }}

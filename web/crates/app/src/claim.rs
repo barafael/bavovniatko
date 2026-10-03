@@ -4,7 +4,7 @@
 use leptos::prelude::*;
 use serde_json::Value;
 
-use crate::router::{Route, href};
+use crate::router::{Route, go, href};
 use crate::ui::{error_box, fmt_time, loading, rid_link, rows_resource, strs, waiting_for_db};
 
 pub const RELATIONS: &[(&str, &str, &str)] = &[
@@ -147,12 +147,15 @@ fn ClaimView(data: Value) -> impl IntoView {
                 </section>
             </div>
 
-            <section class="panel">
+            <section class="panel claim-relations">
                 <h2>{format!("Relations to other claims ({})", relations.len())}</h2>
                 {if relations.is_empty() {
                     view! { <p class="muted">"No related claims were found for this one."</p> }.into_any()
                 } else {
-                    view! { <EgoGraph relations=relations.clone() /> <RelationList relations=relations /> }.into_any()
+                    view! { <div class="relations-layout">
+                        <div><EgoGraph relations=relations.clone() /></div>
+                        <RelationList relations=relations />
+                    </div> }.into_any()
                 }}
             </section>
         </article>
@@ -163,11 +166,11 @@ fn ClaimView(data: Value) -> impl IntoView {
 #[component]
 fn EgoGraph(relations: Vec<Value>) -> impl IntoView {
     let n = relations.len().min(40);
-    let (w, h, r) = (640.0_f64, 300.0_f64, 120.0_f64);
+    let (w, h, r) = (560.0_f64, 340.0_f64, 140.0_f64);
     let (cx, cy) = (w / 2.0, h / 2.0);
     let nodes: Vec<_> = relations.iter().take(n).enumerate().map(|(i, rel)| {
         let a = (i as f64 / n as f64) * std::f64::consts::TAU - std::f64::consts::FRAC_PI_2;
-        let (x, y) = (cx + r * 1.9 * a.cos(), cy + r * a.sin());
+        let (x, y) = (cx + r * 1.7 * a.cos(), cy + r * a.sin());
         let other = rel["other"].as_str().unwrap_or_default().to_string();
         let kind = rel["rel"].as_str().unwrap_or_default().to_string();
         let title = format!("{} — {}", phrase(&kind, rel["dir"].as_str().unwrap_or_default()), rel["text"].as_str().unwrap_or_default());
@@ -180,9 +183,8 @@ fn EgoGraph(relations: Vec<Value>) -> impl IntoView {
             }).collect_view()}
             <circle cx=cx cy=cy r="16" class="ego-center" />
             {nodes.into_iter().map(|(x, y, other, kind, title, _)| view! {
-                <a href=href(&Route::Claim(other))>
-                    <circle cx=x cy=y r="9" fill=relation_color(&kind)><title>{title}</title></circle>
-                </a>
+                <circle class="node" cx=x cy=y r="9" fill=relation_color(&kind)
+                    on:click=move |_| go(Route::Claim(other.clone()))><title>{title}</title></circle>
             }).collect_view()}
         </svg>
         <div class="legend">{RELATIONS.iter().map(|(r, c, _)| view! {

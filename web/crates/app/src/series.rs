@@ -73,7 +73,7 @@ pub fn SeriesPage(metric: Option<String>) -> impl IntoView {
                                     {format!("{} ({n})", u.replace("unit:", ""))}</button> }
                             }).collect_view()}</div>
                         })}
-                        <Chart points=pts.clone() unit=current.replace("unit:", "") />
+                        <div class="chart-wrap"><Chart points=pts.clone() unit=current.replace("unit:", "") /></div>
                         <div class="legend">{[("ua", "Ukraine"), ("ru", "Russia"), ("western", "Western"), ("", "unspecified")].into_iter().map(|(s, l)| view! {
                             <span><i style=format!("background:{}", side_color(Some(s)))></i>{l}</span>
                         }).collect_view()}</div>

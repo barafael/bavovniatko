@@ -112,7 +112,7 @@ pub fn Arms() -> impl IntoView {
                             }).collect_view()}
                         </div>
                         <div class="timeline-wrap">
-                            <svg class="timeline" width=width height=height viewBox=format!("0 0 {width} {height}")>
+                            <svg class="timeline" viewBox=format!("0 0 {width} {height}") preserveAspectRatio="xMinYMin meet">
                                 {(0..=5).map(|i| {
                                     let x = LEFT + (i * 12) as f64 * MONTH_PX;
                                     view! { <g><line x1=x y1="14" x2=x y2=height class="year-line" />

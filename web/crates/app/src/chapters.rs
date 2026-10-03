@@ -23,8 +23,8 @@ pub fn Chapters(topic: Option<String>) -> impl IntoView {
     let current = topic.clone();
     view! {
         <div class="chapters">
-            <aside class="chapter-list">
-                <h2>"Chapters"</h2>
+            <details class="chapter-list side-list" open=crate::ui::wide_screen()>
+                <summary>"Chapters"</summary>
                 {move || match list.get() {
                     None => loading(),
                     Some(None) => waiting_for_db(),
@@ -40,7 +40,7 @@ pub fn Chapters(topic: Option<String>) -> impl IntoView {
                         </li> }
                     }).collect_view()}</ol> }.into_any(),
                 }}
-            </aside>
+            </details>
             <section class="chapter-body">
                 {match topic {
                     None => view! { <div class="panel"><h1>"Chapters as dioramas"</h1>
@@ -75,6 +75,7 @@ fn Chapter(topic: String) -> impl IntoView {
             <a href=href(&Route::Map(Some(topic_map.clone())))>"Show its places on the map"</a>" · "
             <a href=href(&Route::Notebook(Some(format!("fn::timeline({topic_nb});"))))>"open the timeline in the notebook"</a>
         </p>
+        <div class="chapter-cols">
         <section class="panel">
             <h2>"The outcome to reproduce"</h2>
             {move || match outcome.get() {
@@ -105,5 +106,6 @@ fn Chapter(topic: String) -> impl IntoView {
                 }).collect_view()}</ul> }.into_any(),
             }}
         </section>
+        </div>
     }
 }

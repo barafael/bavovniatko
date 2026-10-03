@@ -91,3 +91,8 @@ pub fn rows_resource(query: impl Fn() -> Option<String> + 'static) -> LocalResou
         }
     })
 }
+
+/// Whether side lists (examples, chapters) start open: on screens at least 64em (1024 px) wide.
+pub fn wide_screen() -> bool {
+    web_sys::window().and_then(|w| w.inner_width().ok()).and_then(|v| v.as_f64()).is_some_and(|w| w >= 1024.0)
+}
