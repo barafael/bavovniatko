@@ -9,6 +9,7 @@ use wasm_bindgen::prelude::*;
 pub enum Route {
     Notebook(Option<String>),
     Claim(String),
+    Record(String),
     Disputes,
     Map(Option<String>),
     Arms,
@@ -36,6 +37,7 @@ pub fn parse(hash: &str) -> Route {
     let arg = arg.filter(|a| !a.is_empty());
     match page {
         "claim" => arg.map(Route::Claim).unwrap_or(Route::Notebook(None)),
+        "record" => arg.map(Route::Record).unwrap_or(Route::Notebook(None)),
         "disputes" => Route::Disputes,
         "map" => Route::Map(arg),
         "arms" => Route::Arms,
@@ -55,6 +57,7 @@ pub fn href(r: &Route) -> String {
         Route::Notebook(None) => "#/notebook".into(),
         Route::Notebook(Some(q)) => format!("#/notebook?q={}", encode(q)),
         Route::Claim(id) => format!("#/claim/{}", encode(id)),
+        Route::Record(id) => format!("#/record/{}", encode(id)),
         Route::Disputes => "#/disputes".into(),
         Route::Map(a) => with("map", a),
         Route::Arms => "#/arms".into(),
@@ -104,8 +107,7 @@ pub fn record_route(table: &str, rid: &str) -> Route {
         "claim" => Route::Claim(rid.into()),
         "place" | "topic" => if table == "topic" && is_chapter(rid) { Route::Chapters(Some(rid.into())) } else { Route::Map(Some(rid.into())) },
         "metric" => Route::Series(Some(rid.into())),
-        "system" => Route::Notebook(Some(format!("SELECT * FROM ONLY {rid};\nfn::counters_of({rid});"))),
-        _ => Route::Notebook(Some(format!("SELECT * FROM ONLY {rid};"))),
+        _ => Route::Record(rid.into()),
     }
 }
 

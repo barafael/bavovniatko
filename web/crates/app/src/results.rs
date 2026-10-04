@@ -6,11 +6,11 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use leptos::prelude::*;
-use serde_json::Value;
+use serde_json::{Map, Value};
 
 use crate::kb::{Kb, QueryResult, StatementResult};
 use crate::router::{Route, href};
-use crate::ui::rid_link;
+use crate::ui::{LABEL_FIELDS, claim_key, claim_of_key, label_of, rid_link};
 
 /// Sources of the claims in a result: claim id → [(title, url)].
 #[derive(Clone, Default)]
@@ -140,13 +140,24 @@ fn columns(rows: &[Value]) -> Vec<String> {
             }
         }
     }
-    cols.sort_by_key(|c| column_rank(c));
+    rank_columns(&mut cols, rows);
     cols
 }
 
-/// Identity, time and text come first, then a claim's sources, so they stay in view when a wide table scrolls.
-fn column_rank(c: &str) -> u8 {
-    match c { "id" => 0, "key" => 1, "t" | "time" | "month" => 2, "text" => 3, "sources" => 4, _ => 5 }
+/// Identity, time and text come first, then links to other records (`{id, name}` objects, such as a counter and
+/// its measure), then a claim's sources, so they stay in view when a wide table scrolls.
+fn rank_columns(cols: &mut [String], rows: &[Value]) {
+    let links = |c: &str| rows.iter().take(50).filter_map(|r| r.get(c)).find(|v| !v.is_null())
+        .is_some_and(|v| label_of(v).is_some() && v["id"].as_str().is_some_and(|id| id.contains(':')));
+    cols.sort_by_cached_key(|c| match c.as_str() {
+        "id" => 0,
+        "key" => 1,
+        "t" | "time" | "month" => 2,
+        "text" => 3,
+        "sources" => 5,
+        c if links(c) => 4,
+        _ => 6,
+    });
 }
 
 #[component]
@@ -165,7 +176,7 @@ fn Table(value: Value) -> impl IntoView {
     if with_sources && !cols.iter().any(|c| c == "sources") {
         cols.push("sources".into());
         if objects {
-            cols.sort_by_key(|c| column_rank(c));
+            rank_columns(&mut cols, &rows);
         }
     }
     let sources = StoredValue::new(sources);
@@ -217,22 +228,75 @@ fn marked(s: &str) -> AnyView {
         .collect_view().into_any()
 }
 
-fn cell(v: &Value) -> AnyView {
+/// Nested objects and lists render as links and short field lists down to this depth, then as compact JSON.
+const NEST: usize = 2;
+const NESTED_CHARS: usize = 2000;
+const LIST_ITEMS: usize = 30;
+
+pub fn cell(v: &Value) -> AnyView {
+    cell_at(v, 0)
+}
+
+fn cell_at(v: &Value, depth: usize) -> AnyView {
     let kb = expect_context::<Kb>();
+    let nests = |v: &Value| depth <= NEST && v.to_string().len() <= NESTED_CHARS;
     match v {
         Value::Null => view! { <span class="null">"—"</span> }.into_any(),
         Value::Bool(b) => b.to_string().into_any(),
         Value::Number(n) => view! { <span class="num">{n.to_string()}</span> }.into_any(),
+        Value::String(s) if s.starts_with("claim:") && kb.record_table(s).is_some() => view! {
+            <a class="rid" href=href(&Route::Claim(s.clone())) title=s.clone()>{claim_key(s)}</a>
+        }.into_any(),
         Value::String(s) if kb.record_table(s).is_some() => rid_link(s, None),
-        Value::String(s) => marked(&short(s, CELL_CHARS)),
-        Value::Array(a) if a.iter().all(|x| x.is_string() || x.is_number()) && a.len() <= 30 => view! {
-            <span class="list">{a.iter().map(|x| view! { <span class="item">{cell(x)}</span> }).collect_view()}</span>
+        // A date without a time of day ("2025-09-01T00:00:00Z") as just the date.
+        Value::String(s) if s.len() == 20 && s.ends_with("T00:00:00Z") && s.as_bytes()[..4].iter().all(u8::is_ascii_digit) => {
+            view! { <span class="num">{s[..10].to_string()}</span> }.into_any()
+        }
+        Value::String(s) if s.starts_with("https://") || s.starts_with("http://") => view! {
+            <a href=s.clone() target="_blank" rel="noopener noreferrer">{short(s, 80)}</a>
+        }.into_any(),
+        Value::String(s) => match claim_of_key(s) {
+            Some(id) => view! { <a class="rid" href=href(&Route::Claim(id))>{s.clone()}</a> }.into_any(),
+            None => marked(&short(s, CELL_CHARS)),
+        },
+        Value::Array(a) if a.iter().all(|x| !x.is_array() && !x.is_object()) => {
+            let more = a.len().saturating_sub(LIST_ITEMS);
+            view! {
+                <span class="list">
+                    {a.iter().take(LIST_ITEMS).map(|x| view! { <span class="item">{cell_at(x, depth + 1)}</span> }).collect_view()}
+                    {(more > 0).then(|| view! { <span class="null">{format!("+{more} more")}</span> })}
+                </span>
+            }.into_any()
+        }
+        Value::Array(a) if a.len() <= LIST_ITEMS && a.iter().all(|x| !x.is_array()) && nests(v) => view! {
+            <span class="list block">{a.iter().map(|x| view! { <span class="item">{cell_at(x, depth + 1)}</span> }).collect_view()}</span>
         }.into_any(),
         Value::Object(o) if o.contains_key("type") && o.contains_key("coordinates") => {
             view! { <span class="geo">{format!("geometry: {}", o["type"].as_str().unwrap_or("?"))}</span> }.into_any()
         }
+        Value::Object(o) if o.len() <= 12 && nests(v) => fields(o, depth),
         other => view! { <code class="compact">{short(&other.to_string(), CELL_CHARS)}</code> }.into_any(),
     }
+}
+
+/// An object: a link when it has a record `id` (labelled by its name, title or text), then its other fields.
+fn fields(o: &Map<String, Value>, depth: usize) -> AnyView {
+    let kb = expect_context::<Kb>();
+    let id = o.get("id").and_then(|v| v.as_str()).filter(|id| kb.record_table(id).is_some());
+    let label = id.and(LABEL_FIELDS.iter().copied().find(|k| o.get(*k).is_some_and(|v| v.is_string())));
+    let head = id.map(|id| rid_link(id, label.and_then(|k| o[k].as_str()).map(|s| short(s, CELL_CHARS))));
+    let rest: Vec<(String, Value)> = o.iter()
+        .filter(|(k, v)| !v.is_null() && !(id.is_some() && (*k == "id" || Some(k.as_str()) == label)))
+        .map(|(k, v)| (k.clone(), v.clone()))
+        .collect();
+    view! {
+        <span class="obj">
+            {head}
+            {rest.into_iter().map(|(k, v)| view! {
+                <span class="field"><span class="k">{k}</span>" "{cell_at(&v, depth + 1)}</span>
+            }).collect_view()}
+        </span>
+    }.into_any()
 }
 
 fn source_links(srcs: Option<&Vec<(String, String)>>) -> AnyView {

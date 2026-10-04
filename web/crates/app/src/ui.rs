@@ -20,6 +20,29 @@ pub fn rid_link(rid: &str, label: Option<String>) -> AnyView {
     }
 }
 
+/// The fields that name a record in a query result (`{id, name}`, `{id, title}`, …), in order of preference.
+pub const LABEL_FIELDS: [&str; 4] = ["name", "label", "title", "text"];
+
+/// The label of a `{id, name}`-style object.
+pub fn label_of(v: &Value) -> Option<&str> {
+    let o = v.as_object()?;
+    LABEL_FIELDS.iter().find_map(|k| o.get(*k)?.as_str())
+}
+
+/// The claim a well-formed claim key stands for: "07-0030-17" is claim:c07_0030_17, "c09-0014-02" is
+/// claim:cc09_0014_02, "v01-0003-01" is claim:cv01_0003_01.
+pub fn claim_of_key(s: &str) -> Option<String> {
+    let parts: Vec<&str> = s.strip_prefix(['c', 'v']).unwrap_or(s).split('-').collect();
+    let digits = parts.iter().all(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit()));
+    let shape = matches!(parts.as_slice(), [a, b, c] if a.len() == 2 && b.len() == 4 && (2..=3).contains(&c.len()));
+    (digits && shape).then(|| format!("claim:c{}", s.replace('-', "_")))
+}
+
+/// "claim:cc15_0022_15" → "c15-0022-15", the claim's key.
+pub fn claim_key(id: &str) -> String {
+    id.strip_prefix("claim:c").unwrap_or(id).replace('_', "-")
+}
+
 /// "2024-08-06T00:00:00Z" with precision "month" → "Aug 2024".
 pub fn fmt_date(v: &Value, precision: Option<&str>) -> String {
     let Some(s) = v.as_str() else { return String::new() };
@@ -59,7 +82,7 @@ pub fn kind_label(v: &Value) -> String {
 
 pub fn strs(v: &Value) -> Vec<String> {
     match v {
-        Value::Array(a) => a.iter().filter_map(|x| x.as_str().map(String::from)).collect(),
+        Value::Array(a) => a.iter().filter_map(|x| x.as_str().or_else(|| label_of(x)).map(String::from)).collect(),
         Value::String(s) => vec![s.clone()],
         _ => vec![],
     }

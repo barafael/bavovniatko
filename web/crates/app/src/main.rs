@@ -9,6 +9,7 @@ mod disputes;
 mod kb;
 mod map;
 mod notebook;
+mod record;
 mod results;
 mod router;
 mod schema;
@@ -57,6 +58,7 @@ fn App() -> impl IntoView {
             {move || match route.get() {
                 Route::Notebook(q) => view! { <notebook::Notebook initial=q /> }.into_any(),
                 Route::Claim(id) => view! { <claim::ClaimPage id=id /> }.into_any(),
+                Route::Record(id) => view! { <record::RecordPage id=id /> }.into_any(),
                 Route::Disputes => view! { <disputes::Disputes /> }.into_any(),
                 Route::Map(focus) => view! { <map::MapPage focus=focus /> }.into_any(),
                 Route::Arms => view! { <arms::Arms /> }.into_any(),

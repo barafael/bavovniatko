@@ -33,7 +33,10 @@ working.
 All views are hash routes, so every state is a shareable link.
 
 - **Notebook** (`#/notebook?q=…`): a SurrealQL editor with highlighting and autocomplete, and an example
-  gallery. Results show as tables (record ids link to their views) or JSON.
+  gallery. Results show as tables or JSON. Record ids and claim keys link to their views, also inside lists and
+  nested objects. An object `{id, name}` (or `title`, `label`, `text`) shows as a link with that name, so queries
+  should keep ids rather than select bare names: `{id: in, name: in.labels.en} AS counter`, or
+  `->asserted_by->actor.{id, name: labels.en} AS claimants`.
 - **Dossiers** (`#/dossiers/topic:c14`): each episode's historical outcome and its dated claims as a timeline.
 - **Map** (`#/map`, `#/map/place:avdiivka`, `#/map/topic:c19`): places sized by the claims about them in a
   month range, with each place's claim history. A chapter link highlights and fits that chapter's places.
@@ -44,6 +47,9 @@ All views are hash routes, so every state is a shareable link.
   claim, plus who claims what and how the disagreement is explained.
 - **Claim pages** (`#/claim/claim:…`): claimants, sources with quotes, what the claim is about, its numbers, and a
   relation graph.
+- **Record pages** (`#/record/system:zhdun`): every other record (systems, actors, sources, events, works, kinds,
+  relation edges) with its fields, what counters it and what it counters, its parts, a kind's members, and the
+  claims about it, asserted by it or citing it (`fn::record`).
 
 ## Building
 

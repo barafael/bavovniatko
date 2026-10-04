@@ -10,7 +10,7 @@ fn::place_history(place:robotyne);
 fn::place_history(place:avdiivka);
 
 -- Places inside Kursk Oblast that the knowledge base mentions
-SELECT labels.en AS place, kind FROM fn::in_region(place:kursk_oblast) ORDER BY place;
+SELECT {id: id, name: labels.en} AS place, kind FROM fn::in_region(place:kursk_oblast) ORDER BY place.name;
 
 -- ## Sightings and series
 
@@ -38,7 +38,8 @@ fn::counter_chain(system:fibre_optic_fpv);
 fn::counters_of(system:geran_2);
 
 -- The quickest countermeasures: shortest lag from a measure to its counter
-SELECT in.labels.en AS counter, out.labels.en AS measure, lag_days, first_observed.from AS since
+SELECT {id: in, name: in.labels.en} AS counter, {id: out, name: out.labels.en} AS measure, lag_days,
+       first_observed.from AS since, evidence
 FROM counters WHERE lag_days != NONE ORDER BY lag_days LIMIT 20;
 
 -- ## Claims and disputes
@@ -50,14 +51,16 @@ fn::search("glide bomb Kharkiv");
 fn::claim(claim:c00_0063_04);
 
 -- The strongest contradictions between claimants, with how they are explained
-SELECT strength, in.text AS a, in->asserted_by->actor.labels.en AS a_by, out.text AS b,
-       out->asserted_by->actor.labels.en AS b_by, resolution
+SELECT strength, in.{id, text} AS a, in->asserted_by->actor.{id, name: labels.en} AS a_by, out.{id, text} AS b,
+       out->asserted_by->actor.{id, name: labels.en} AS b_by, resolution
 FROM contradicts ORDER BY strength DESC LIMIT 25;
 
 -- Which claimants are contradicted most often
-SELECT name, count() AS contradictions FROM (
-    SELECT VALUE array::flatten([in->asserted_by->actor.labels.en, out->asserted_by->actor.labels.en]) FROM contradicts
-).flatten().map(|$n| { name: $n }) GROUP BY name ORDER BY contradictions DESC LIMIT 20;
+SELECT {id: actor, name: actor.labels.en} AS claimant, contradictions FROM (
+    SELECT actor, count() AS contradictions FROM (
+        SELECT VALUE array::flatten([in->asserted_by->actor, out->asserted_by->actor]) FROM contradicts
+    ).flatten().map(|$a| { actor: $a }) GROUP BY actor
+) ORDER BY contradictions DESC LIMIT 20;
 
 -- ## Dossiers
 
@@ -68,4 +71,5 @@ SELECT key, text FROM claim WHERE topics CONTAINS topic:c14 AND ext.outcome = tr
 fn::timeline(topic:c19);
 
 -- Outcome claims per dossier
-SELECT topics[0].code AS dossier, count() AS outcome_claims FROM claim WHERE ext.outcome = true GROUP BY dossier ORDER BY dossier;
+SELECT {id: topics[0], name: topics[0].labels.en} AS dossier, count() AS outcome_claims FROM claim WHERE ext.outcome = true
+GROUP BY dossier ORDER BY dossier;

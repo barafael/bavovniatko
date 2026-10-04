@@ -100,7 +100,7 @@ fn ClaimView(data: Value) -> impl IntoView {
                         view! { <p class="muted">"No explicit claimant: the cited sources state it."</p> }.into_any()
                     } else {
                         view! { <ul class="plain">{claimants.into_iter().map(|a| view! {
-                            <li>{a["name"].as_str().unwrap_or_default().to_string()}
+                            <li>{rid_link(a["actor"].as_str().unwrap_or_default(), a["name"].as_str().map(String::from))}
                                 {a["side"].as_str().map(|s| view! { <span class=format!("side {s}")>{s.to_string()}</span> })}
                                 {a["role"].as_str().map(|r| view! { <span class="muted">{format!(" · {r}")}</span> })}</li>
                         }).collect_view()}</ul> }.into_any()

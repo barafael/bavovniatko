@@ -8,7 +8,7 @@ DEFINE FUNCTION fn::place_history($place: record<place>) {
     LET $places = array::union([$place], (SELECT VALUE id FROM place WHERE parent = $place));
     LET $claims = array::distinct(array::flatten((SELECT VALUE <-about<-claim FROM $places)));
     RETURN SELECT id, time.from AS t, time.precision AS precision, key, kind, epistemic, status, text,
-            ->about->place.labels.en AS places, ->asserted_by->actor.labels.en AS claimants,
+            ->about->place.{id, name: labels.en} AS places, ->asserted_by->actor.{id, name: labels.en} AS claimants,
             ->cites->source.title AS sources
         FROM $claims ORDER BY t, key;
 } PERMISSIONS FULL;
@@ -36,25 +36,25 @@ DEFINE FUNCTION fn::sightings($kind: string, $region: record<place>) {
 -- Every observation of a metric over time, with its range, side, claimants and claim (a number series).
 DEFINE FUNCTION fn::series($metric: record<metric>) {
     RETURN SELECT time.from AS t, time.to AS t_to, value, low, high, qualifier, value_text, unit, side,
-            claim AS id, claim.key AS claim, claim.status AS status, claim->asserted_by->actor.labels.en AS claimants
+            claim AS id, claim.key AS claim, claim.status AS status, claim->asserted_by->actor.{id, name: labels.en} AS claimants
         FROM observation WHERE metric = $metric ORDER BY t, claim;
 } PERMISSIONS FULL;
 
 -- What counters a system, and what it counters (one step each way of the measure/countermeasure graph).
 DEFINE FUNCTION fn::counters_of($system: record<system>) {
     RETURN {
-        system: $system.labels.en,
-        countered_by: (SELECT in AS system, in.labels.en AS name, first_observed.from AS since, lag_days, effect,
-                rationale FROM counters WHERE out = $system ORDER BY since),
-        counters: (SELECT out AS system, out.labels.en AS name, first_observed.from AS since, lag_days, effect,
-                rationale FROM counters WHERE in = $system ORDER BY since)
+        system: { id: $system, name: $system.labels.en },
+        countered_by: (SELECT { id: in, name: in.labels.en } AS system, first_observed.from AS since, lag_days, effect,
+                rationale, evidence FROM counters WHERE out = $system ORDER BY since),
+        counters: (SELECT { id: out, name: out.labels.en } AS system, first_observed.from AS since, lag_days, effect,
+                rationale, evidence FROM counters WHERE in = $system ORDER BY since)
     };
 } PERMISSIONS FULL;
 
 -- A measure, what countered it, and what countered those (two steps of the arms race).
 DEFINE FUNCTION fn::counter_chain($system: record<system>) {
-    RETURN SELECT in AS counter, in.labels.en AS counter_name, first_observed.from AS since, lag_days,
-            (SELECT in AS counter, in.labels.en AS counter_name, first_observed.from AS since, lag_days
+    RETURN SELECT { id: in, name: in.labels.en } AS counter, first_observed.from AS since, lag_days,
+            (SELECT { id: in, name: in.labels.en } AS counter, first_observed.from AS since, lag_days
                 FROM counters WHERE out = $parent.in ORDER BY since) AS countered_by
         FROM counters WHERE out = $system ORDER BY since;
 } PERMISSIONS FULL;
@@ -108,6 +108,32 @@ DEFINE FUNCTION fn::search($q: string) {
 -- A dossier's (or topic's) dated claims in order, with the historical-outcome claims flagged.
 DEFINE FUNCTION fn::timeline($topic: record<topic>) {
     RETURN SELECT id, time.from AS t, time.to AS t_to, time.precision AS precision, key, kind, text,
-            ext.outcome = true AS outcome, ->asserted_by->actor.labels.en AS claimants
+            ext.outcome = true AS outcome, ->asserted_by->actor.{id, name: labels.en} AS claimants
         FROM claim WHERE topics CONTAINS $topic AND time != NONE ORDER BY t, key;
+} PERMISSIONS FULL;
+
+-- Any record with what points at it: claims about it, claims it asserts or that cite it, its parts (records whose
+-- parent it is), a kind's members, a system's measure/countermeasure links, and the names of the records its fields
+-- refer to. The explorer's record pages use it.
+DEFINE FUNCTION fn::record($r: record) {
+    LET $record = (SELECT * FROM ONLY $r);
+    RETURN {
+        record: $record,
+        names: object::values($record ?? {}).flatten().filter(|$v| type::is_record($v) AND $v != $r)
+            .map(|$v| { id: $v, name: $v.labels.en ?? $v.title }),
+        parts: (SELECT id, labels.en ?? title ?? key AS name FROM type::table(record::tb($r)) WHERE parent = $r ORDER BY name),
+        members: IF record::tb($r) = "kind" {
+            (SELECT id, labels.en ?? title ?? key AS name FROM type::table(record::id($r)[0]) WHERE kind = $r ORDER BY name)
+        } ELSE { [] },
+        about: (SELECT in AS id, in.key AS key, in.text AS text, in.time.from AS t, in.time.precision AS precision, role
+            FROM $r<-about ORDER BY t, key),
+        asserted: (SELECT in AS id, in.key AS key, in.text AS text, in.time.from AS t, in.time.precision AS precision, role
+            FROM $r<-asserted_by ORDER BY t, key),
+        cited_by: (SELECT in AS id, in.key AS key, in.text AS text, in.time.from AS t, in.time.precision AS precision, quote
+            FROM $r<-cites ORDER BY t, key),
+        counters: (SELECT { id: out, name: out.labels.en } AS system, first_observed.from AS since, lag_days, effect,
+            rationale, evidence FROM $r->counters ORDER BY since),
+        countered_by: (SELECT { id: in, name: in.labels.en } AS system, first_observed.from AS since, lag_days, effect,
+            rationale, evidence FROM $r<-counters ORDER BY since)
+    };
 } PERMISSIONS FULL;
