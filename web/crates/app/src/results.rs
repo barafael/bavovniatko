@@ -140,9 +140,13 @@ fn columns(rows: &[Value]) -> Vec<String> {
             }
         }
     }
-    let rank = |c: &str| match c { "id" => 0, "key" => 1, "t" | "time" | "month" => 2, "text" => 3, _ => 4 };
-    cols.sort_by_key(|c| rank(c));
+    cols.sort_by_key(|c| column_rank(c));
     cols
+}
+
+/// Identity, time and text come first, then a claim's sources, so they stay in view when a wide table scrolls.
+fn column_rank(c: &str) -> u8 {
+    match c { "id" => 0, "key" => 1, "t" | "time" | "month" => 2, "text" => 3, "sources" => 4, _ => 5 }
 }
 
 #[component]
@@ -160,6 +164,9 @@ fn Table(value: Value) -> impl IntoView {
     let with_sources = !sources.0.is_empty() && rows.iter().any(|r| claim_ref(r).is_some_and(|c| sources.0.contains_key(&c)));
     if with_sources && !cols.iter().any(|c| c == "sources") {
         cols.push("sources".into());
+        if objects {
+            cols.sort_by_key(|c| column_rank(c));
+        }
     }
     let sources = StoredValue::new(sources);
     let rows = StoredValue::new(rows);
