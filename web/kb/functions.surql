@@ -142,6 +142,8 @@ DEFINE FUNCTION fn::graph($seeds: array, $hops: int) {
     LET $e1 = fn::edges_from($s0);
     LET $e2 = IF $hops > 1 { fn::edges_from(array::distinct($e1.map(|$e| $e.to))) } ELSE { [] };
     LET $e3 = IF $hops > 2 { fn::edges_from(array::distinct($e2.map(|$e| $e.to))) } ELSE { [] };
+    -- array::append takes (array, value) rather than two arrays, so adding edges hop by hop nests them: [[], []].
+    -- array::flatten is the one that concatenates.
     LET $edges = array::flatten([$e1, $e2, $e3]);
     LET $ids = array::distinct(array::flatten($edges.map(|$e| [$e.from, $e.to])));
     RETURN {
