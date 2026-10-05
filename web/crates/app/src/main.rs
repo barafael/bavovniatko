@@ -6,13 +6,17 @@ mod bridge;
 mod chapters;
 mod claim;
 mod disputes;
+mod graph;
+mod home;
 mod kb;
 mod map;
 mod notebook;
+mod questions;
 mod record;
 mod results;
 mod router;
 mod schema;
+mod search;
 mod series;
 mod ui;
 
@@ -39,24 +43,32 @@ fn App() -> impl IntoView {
     };
     view! {
         <header>
-            <a class="brand" href="#/notebook">
+            <a class="brand" href="#/">
                 <span class="title">"bavovniatko"</span>
                 <span class="subtitle">"knowledge base of the Russo-Ukrainian war"</span>
             </a>
             <nav>
-                {tab(Route::Notebook(None), "Notebook")}
+                {tab(Route::Home, "Home")}
+                {tab(Route::Search(String::new()), "Search")}
                 {tab(Route::Chapters(None), "Dossiers")}
                 {tab(Route::Map(None), "Map")}
                 {tab(Route::Arms, "Arms race")}
                 {tab(Route::Series(None), "Numbers")}
                 {tab(Route::Disputes, "Disputes")}
+                {tab(Route::Graph(None, 2), "Graph")}
+                {tab(Route::Questions, "Questions")}
+                {tab(Route::Notebook(None), "Notebook")}
                 {tab(Route::About, "About")}
             </nav>
             <LoadStatus />
         </header>
         <main>
             {move || match route.get() {
+                Route::Home => view! { <home::Home /> }.into_any(),
                 Route::Notebook(q) => view! { <notebook::Notebook initial=q /> }.into_any(),
+                Route::Search(q) => view! { <search::Search initial=q /> }.into_any(),
+                Route::Questions => view! { <questions::Questions /> }.into_any(),
+                Route::Graph(seed, hops) => view! { <graph::Graph seed=seed hops=hops /> }.into_any(),
                 Route::Claim(id) => view! { <claim::ClaimPage id=id /> }.into_any(),
                 Route::Record(id) => view! { <record::RecordPage id=id /> }.into_any(),
                 Route::Disputes => view! { <disputes::Disputes /> }.into_any(),
