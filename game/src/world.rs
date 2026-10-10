@@ -7,7 +7,7 @@ use bevy::{
     image::{ImageAddressMode, ImageSampler, ImageSamplerDescriptor},
     light::CascadeShadowConfigBuilder,
     prelude::*,
-    render::render_resource::{Extent3d, Face, TextureDimension, TextureFormat},
+    render::render_resource::{Extent3d, TextureDimension, TextureFormat},
 };
 
 pub struct WorldPlugin;
@@ -29,6 +29,9 @@ pub struct Palette {
     pub charred: Handle<StandardMaterial>,
     pub branches: Handle<StandardMaterial>,
 }
+
+#[derive(Resource)]
+struct Skirt(Handle<StandardMaterial>);
 
 /// The steppe beyond the diorama: a coarse skirt out to 9 km so the box never shows its edge.
 fn spawn_skirt(commands: &mut Commands, meshes: &mut Assets<Mesh>, materials: &mut Assets<StandardMaterial>) {
@@ -54,13 +57,17 @@ fn spawn_skirt(commands: &mut Commands, meshes: &mut Assets<Mesh>, materials: &m
             let k = if p.distance(mid[0]) < 1.0 || p.distance(far[0]) < 1.0 { 0 } else { 1 };
             if p.distance(rings[0]) < 1.0 { edge[0] - 0.3 } else if p.distance(rings[1]) < 1.0 { edge[1] - 0.3 } else { edge[k] - 1.5 - (p.length() / 9000.0) * 6.0 }
         };
-        let snow = [0.70, 0.72, 0.74];
+        // White: the unlit material's colour (the fog's) is the whole colour.
+        let white = [1.0, 1.0, 1.0];
         for (a, b) in [(rings, mid), (mid, far)] {
             let p = [a[0], a[1], b[1], b[0]].map(|q| Vec3::new(q.x, h(q), q.y));
-            m.poly(&[p[0], p[3], p[2], p[1]], snow);
+            m.poly(&[p[0], p[3], p[2], p[1]], white);
         }
     }
-    commands.spawn((Mesh3d(meshes.add(m.build())), MeshMaterial3d(materials.add(StandardMaterial { perceptual_roughness: 0.95, ..default() }))));
+    // Unlit in the fog's colour: beyond the diorama there is only haze.
+    let mat = materials.add(StandardMaterial { base_color: Color::srgb(0.70, 0.72, 0.75), unlit: true, ..default() });
+    commands.insert_resource(Skirt(mat.clone()));
+    commands.spawn((Mesh3d(meshes.add(m.build())), MeshMaterial3d(mat)));
 }
 
 fn spawn_light(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>) {
@@ -159,6 +166,12 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
             if belt.gaps.iter().any(|&(a, b)| s > a && s < b) {
                 continue;
             }
+            // Belts thin out into the haze towards the map edge.
+            let p_edge = belt.line.point(s);
+            let edge = (HALF_X - p_edge.x.abs()).min(HALF_Z - p_edge.y.abs());
+            if hash01(id, 31) > (edge / 450.0).clamp(0.0, 1.0) {
+                continue;
+            }
             let rows = 3;
             for row in 0..rows {
                 id += 1;
@@ -172,7 +185,7 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
                 // Shelling has split and thinned the belts closest to the fighting.
                 let shattered = hash01(id, 9) < 0.12 + 0.18 * (bi < 2) as i32 as f32;
                 let k = (hash01(id, 4) * 6.0) as usize % 6;
-                let mut xf = Transform::from_translation(p).with_rotation(Quat::from_rotation_y(hash01(id, 5) * 6.28));
+                let mut xf = Transform::from_translation(p).with_rotation(Quat::from_rotation_y(hash01(id, 5) * std::f32::consts::TAU));
                 let h = 7.0 + k as f32 * 1.6;
                 if shattered {
                     xf.scale = Vec3::new(1.0, 0.35 + 0.3 * hash01(id, 6), 1.0);
@@ -344,7 +357,7 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
         }
         let p = geo::ground(Vec2::new(x, z)) - Vec3::Y * 0.2;
         if k % 9 == 0 {
-            let yaw = hash01(k, 85) * 6.28;
+            let yaw = hash01(k, 85) * std::f32::consts::TAU;
             let rot = Quat::from_rotation_y(yaw);
             let c = if hash01(k, 86) < 0.7 { [0.2, 0.17, 0.15] } else { [0.45, 0.42, 0.38] };
             cars.cuboid(p + Vec3::Y * 0.6, Vec3::new(0.85, 0.45, 2.1), rot, c);
@@ -362,7 +375,7 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
 
     // Dachas: garden plots, most houses already wrecked; and the villages down in the valley.
     let mut dachas = MeshBuilder::new();
-    let mut place_village = |rect: geo::Rect, spacing: f32, ruin: f32, seed: u32, out: &mut MeshBuilder| {
+    let place_village = |rect: geo::Rect, spacing: f32, ruin: f32, seed: u32, out: &mut MeshBuilder| {
         let mut z = rect.min.y + spacing * 0.5;
         let mut k = 0;
         while z < rect.max.y {
@@ -402,7 +415,6 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
         s += 42.0;
     }
     commands.spawn((Mesh3d(meshes.add(poles.build())), MeshMaterial3d(solid.clone())));
-    let _ = Face::Back;
 }
 
 /// The light over the day: grey dawn at 07:40, a flat overcast noon, and dusk closing in after 16:00, when the
@@ -413,8 +425,11 @@ fn daylight(
     mut ambient: ResMut<GlobalAmbientLight>,
     mut clear: ResMut<ClearColor>,
     mut fog: Query<&mut bevy::pbr::DistanceFog>,
+    skirt: Option<Res<Skirt>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut last: Local<Option<Color>>,
 ) {
-    let dbg = std::env::var("VUHLEDAR_DAYDBG").unwrap_or_default();
+    let dbg = crate::dev_env::dev().daydbg.as_deref().unwrap_or_default();
     if dbg == "off" {
         return;
     }
@@ -443,5 +458,11 @@ fn daylight(
     clear.0 = sky;
     for mut f in &mut fog {
         f.color = sky;
+    }
+    // Keep the haze band matching the sky (only when it has visibly changed: it re-uploads the material).
+    let changed = last.is_none_or(|l| (l.to_srgba().red - sky.to_srgba().red).abs() > 0.004);
+    if changed && let Some(sk) = skirt.as_ref() && let Some(mut m) = materials.get_mut(&sk.0) {
+        m.base_color = sky;
+        *last = Some(sky);
     }
 }

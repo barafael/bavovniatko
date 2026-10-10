@@ -125,6 +125,13 @@ impl Polyline {
         Vec2::new(-t.y, t.x)
     }
 
+    /// Signed lateral offset of `p` from the line (positive to the right), and the arc length of the closest point.
+    pub fn lateral(&self, p: Vec2) -> (f32, f32) {
+        let (d, s) = self.project(p);
+        let side = (p - self.point(s)).dot(self.normal(s)).signum();
+        (d * side, s)
+    }
+
     /// Distance from `p` to the polyline, and the arc length of the closest point.
     pub fn project(&self, p: Vec2) -> (f32, f32) {
         let mut best = (f32::MAX, 0.0);
@@ -139,13 +146,6 @@ impl Polyline {
             }
         }
         best
-    }
-
-    /// Signed lateral offset of `p` from the line (positive to the right).
-    pub fn lateral(&self, p: Vec2) -> (f32, f32) {
-        let (d, s) = self.project(p);
-        let side = (p - self.point(s)).dot(self.normal(s)).signum();
-        (d * side, s)
     }
 }
 
@@ -180,16 +180,9 @@ pub struct Rect {
     pub max: Vec2,
 }
 
-impl Rect {
-    pub fn contains(&self, p: Vec2) -> bool {
-        p.x >= self.min.x && p.x <= self.max.x && p.y >= self.min.y && p.y <= self.max.y
-    }
-}
-
 /// An approach route: the polyline the columns drive, where they deploy, and where their troops go.
 #[derive(Clone, Debug)]
 pub struct Route {
-    pub name: &'static str,
     pub line: Polyline,
     /// Arc length where columns leave single file and fan out to dismount.
     pub deploy_s: f32,
@@ -221,8 +214,6 @@ pub struct Layout {
     pub dachas: Rect,
     pub pavlivka: Rect,
     pub mykilske: Rect,
-    /// The Ukrainian observation post on the roof of a high-rise.
-    pub op: Vec3,
     /// Ukrainian positions in the tree lines: ATGM teams and rifle positions.
     pub ua_positions: Vec<Vec2>,
     /// Pre-registered artillery target points on the approach roads.
@@ -317,8 +308,10 @@ fn build_layout() -> Layout {
     }
 
     let routes = vec![
-        Route { name: "the dacha road", line: Polyline::new(road_a.pts.clone()), deploy_s: road_a.project(v(1010.0, -300.0)).1, objective: v(800.0, -760.0) },
-        Route { name: "the Pavlivka road", line: Polyline::new(road_b.pts.clone()), deploy_s: road_b.project(v(-830.0, -200.0)).1, objective: v(-700.0, -760.0) },
+        // 0: the dacha road
+        Route { line: Polyline::new(road_a.pts.clone()), deploy_s: road_a.project(v(1010.0, -300.0)).1, objective: v(800.0, -760.0) },
+        // 1: the Pavlivka road
+        Route { line: Polyline::new(road_b.pts.clone()), deploy_s: road_b.project(v(-830.0, -200.0)).1, objective: v(-700.0, -760.0) },
     ];
 
     // Shoulder minefields on both approach roads, from the middle belt to the town edge, plus a stretch further
@@ -337,7 +330,8 @@ fn build_layout() -> Layout {
     ];
 
     let ua_positions = vec![
-        v(-930.0, -655.0), v(-560.0, -660.0), v(560.0, -665.0), v(930.0, -658.0), // the first belt: ATGM teams
+        // The first belt: ATGM teams, each with a clear line down its road (none behind a north-south belt).
+        v(-930.0, -655.0), v(-560.0, -660.0), v(780.0, -664.0), v(930.0, -658.0),
         v(-1500.0, -665.0), v(1350.0, -662.0), // flanks
         v(-760.0, -1060.0), v(250.0, -1100.0), v(820.0, -1060.0), // town edge and dachas
     ];
@@ -373,7 +367,6 @@ fn build_layout() -> Layout {
         dachas: Rect { min: v(480.0, -1250.0), max: v(1250.0, -880.0) },
         pavlivka: Rect { min: v(-2100.0, 1560.0), max: v(-900.0, HALF_Z) },
         mykilske: Rect { min: v(1750.0, 1480.0), max: v(HALF_X, HALF_Z) },
-        op: Vec3::ZERO, // filled in by the town builder, which knows the roof height
         ua_positions,
         trps,
         old_wrecks,

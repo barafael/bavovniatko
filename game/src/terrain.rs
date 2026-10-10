@@ -234,13 +234,12 @@ fn spawn_terrain(
     }
     for belt in &lay.belts {
         let n = (belt.line.length() / 35.0) as u32;
-        for j in 0..n {
+        for _ in 0..n {
             let s = geo::hash01(k, 51) * belt.line.length();
             let off = (geo::hash01(k, 52) - 0.5) * 70.0;
             let p = belt.line.point(s) + belt.line.normal(s) * off;
             crater(&mut px, &mut bare, p, 2.0 + geo::hash01(k, 53) * 3.5, k);
             k += 1;
-            let _ = j;
         }
     }
     // Scattered harassing fire in clusters (a battery's sheaf lands as a group).

@@ -9,6 +9,7 @@ publish = false
 [dependencies]
 bevy = { version = "=0.19.1", features = ["wayland"] }
 rand = { version = "0.9", features = ["small_rng"] }
+strum = { version = "0.28.0", features = ["derive"] }
 
 # Fast iteration: optimise dependencies even in dev builds.
 [profile.dev]
@@ -20,3 +21,7 @@ opt-level = 3
 [profile.release]
 codegen-units = 1
 lto = "thin"
+
+# Bevy systems and spawn helpers take many parameters by design.
+[lints.clippy]
+too_many_arguments = "allow"

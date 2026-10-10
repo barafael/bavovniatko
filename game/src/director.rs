@@ -96,7 +96,6 @@ impl Script {
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn run_script(
     mut commands: Commands,
     time: Res<Time>,

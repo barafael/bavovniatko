@@ -9,7 +9,7 @@ pub struct FxPlugin;
 
 impl Plugin for FxPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(FxRng(SmallRng::seed_from_u64(2023_02_06)))
+        app.insert_resource(FxRng(SmallRng::seed_from_u64(20230206)))
             .insert_resource(Wind(Vec3::new(3.5, 0.0, -1.2)))
             .add_systems(Startup, setup_fx)
             .add_systems(Update, (update_particles, update_emitters, update_flashes));
@@ -127,7 +127,7 @@ pub struct Particle {
     streak: f32,
 }
 
-pub const MAX_PARTICLES: usize = 5000;
+pub const MAX_PARTICLES: usize = 9000;
 
 pub struct Spawn {
     pub kind: Kind,
@@ -188,8 +188,8 @@ fn update_particles(
         p.vel = vel * (1.0 - p.drag * dt).max(0.0) + Vec3::Y * (p.buoyancy - p.gravity) * dt;
         tf.translation += (p.vel + windward) * dt;
         let size = p.size0 + (p.size1 - p.size0) * (1.0 - (1.0 - t) * (1.0 - t));
-        // Fade in fast, out slow.
-        let a = p.alpha * (t / 0.08).min(1.0) * (1.0 - t).powf(1.3);
+        // Fade in fast; fade out slowly, so old smoke thins into a wide veil rather than vanishing.
+        let a = p.alpha * (t / 0.05).min(1.0) * (1.0 - t).powf(1.8) * (1.0 - 0.45 * t);
         let step = ((a * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
         if step != p.step {
             p.step = step;
@@ -260,16 +260,16 @@ fn update_emitters(
             let jitter = Vec3::new(r.random_range(-1.0..1.0), 0.0, r.random_range(-1.0..1.0));
             match em.kind {
                 EmitterKind::WreckFire => {
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(3.0..6.0), life: r.random_range(18.0..30.0), size0: 2.5, size1: r.random_range(14.0..22.0), alpha: 0.85, drag: 0.15, buoyancy: 0.4, ..default() });
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(3.0..6.0), life: r.random_range(45.0..80.0), size0: 2.5, size1: r.random_range(35.0..60.0), alpha: 0.62, drag: 0.15, buoyancy: 0.35, ..default() });
                     if r.random_bool(0.7) {
                         spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 0.8 + Vec3::Y * r.random_range(0.8..2.0), vel: Vec3::Y * r.random_range(1.5..3.5), life: r.random_range(0.4..0.9), size0: r.random_range(1.2..2.4), size1: 0.6, alpha: 0.9, ..default() });
                     }
                 }
                 EmitterKind::Smoulder => {
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base + jitter + Vec3::Y, vel: Vec3::Y * r.random_range(1.0..2.5), life: r.random_range(10.0..16.0), size0: 1.5, size1: r.random_range(6.0..10.0), alpha: 0.5, drag: 0.2, buoyancy: 0.2, ..default() });
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base + jitter + Vec3::Y, vel: Vec3::Y * r.random_range(1.0..2.5), life: r.random_range(30.0..50.0), size0: 1.5, size1: r.random_range(15.0..28.0), alpha: 0.45, drag: 0.2, buoyancy: 0.2, ..default() });
                 }
                 EmitterKind::SmokeScreen => {
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::WhiteSmoke, pos: base + jitter, vel: Vec3::new(r.random_range(-1.0..1.0), r.random_range(0.3..1.0), r.random_range(-1.0..1.0)), life: r.random_range(25.0..40.0), size0: 3.0, size1: r.random_range(16.0..26.0), alpha: 0.75, drag: 0.3, ..default() });
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::WhiteSmoke, pos: base + jitter, vel: Vec3::new(r.random_range(-1.0..1.0), r.random_range(0.3..1.0), r.random_range(-1.0..1.0)), life: r.random_range(60.0..100.0), size0: 3.0, size1: r.random_range(35.0..60.0), alpha: 0.7, drag: 0.3, ..default() });
                 }
                 EmitterKind::Exhaust => {
                     spawn(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base, vel: Vec3::Y * 1.0, life: 2.5, size0: 0.6, size1: 2.5, alpha: 0.35, ..default() });
@@ -296,10 +296,10 @@ fn update_flashes(mut commands: Commands, time: Res<Time>, mut q: Query<(Entity,
         }
         let k = 1.0 - f.age / f.life;
         light.intensity = f.intensity * k * k;
-        if let Some(mut tf) = tf {
-            if tf.scale.x > 0.01 {
-                tf.scale *= 0.9;
-            }
+        if let Some(mut tf) = tf
+            && tf.scale.x > 0.01
+        {
+            tf.scale *= 0.9;
         }
     }
 }
@@ -325,22 +325,37 @@ pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng,
         PointLight { intensity: 0.0, range: 1.0, ..default() },
         Flash { age: 0.0, life: 0.12, intensity: 0.0 },
     ));
-    // 1. The ejecta column: frozen earth thrown straight up, dark against the snow, falling back.
-    for _ in 0..(16.0 * size) as u32 {
-        let dir = Vec3::new(rng.random_range(-0.35..0.35), 1.0, rng.random_range(-0.35..0.35)).normalize();
-        spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(18.0..42.0) * size.sqrt(), life: rng.random_range(1.8..3.4), size0: 2.2 * size, size1: 8.5 * size, alpha: 0.95, drag: 1.4, gravity: 9.0, ..default() });
+    // 0. The fireball: a fraction of a second of white-orange heat at the burst.
+    for _ in 0..(6.0 * size) as u32 {
+        let d = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.0..1.0), rng.random_range(-1.0..1.0));
+        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 1.5 + d * size, vel: d * rng.random_range(4.0..12.0), life: rng.random_range(0.12..0.3), size0: 3.0 * size, size1: 6.5 * size, alpha: 1.0, drag: 3.0, ..default() });
     }
-    // 2. The skirt: snow and dirt racing out low along the ground.
+    // 1. Spikes: frozen earth thrown out in fast dark jets, the splash silhouette of a hit in snow.
+    for _ in 0..(14.0 * size) as u32 {
+        let dir = Vec3::new(rng.random_range(-0.65..0.65), 1.0, rng.random_range(-0.65..0.65)).normalize();
+        spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(30.0..62.0) * size.sqrt(), life: rng.random_range(0.6..1.2), size0: 0.7 * size, size1: 1.4 * size, alpha: 0.95, drag: 0.9, gravity: 9.8, streak: 4.5, ..default() });
+    }
+    // 2. The column: dark earth heaving up and collapsing back.
+    for _ in 0..(14.0 * size) as u32 {
+        let dir = Vec3::new(rng.random_range(-0.35..0.35), 1.0, rng.random_range(-0.35..0.35)).normalize();
+        spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(16.0..38.0) * size.sqrt(), life: rng.random_range(1.8..3.4), size0: 2.2 * size, size1: 9.0 * size, alpha: 0.95, drag: 1.4, gravity: 9.0, ..default() });
+    }
+    // 3. Clods: bits of earth arcing out and falling, pocking the snow round the crater.
+    for _ in 0..(18.0 * size) as u32 {
+        let a = rng.random_range(0.0..std::f32::consts::TAU);
+        let v = Vec3::new(a.cos(), rng.random_range(0.6..1.6), a.sin()).normalize() * rng.random_range(10.0..28.0) * size.sqrt();
+        spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at + Vec3::Y, vel: v, life: rng.random_range(1.4..2.8), size0: 0.45, size1: 0.35, alpha: 1.0, drag: 0.15, gravity: 9.8, streak: 2.0, ..default() });
+    }
+    // 4. The skirt: snow and dirt racing out low along the ground.
     for _ in 0..(14.0 * size) as u32 {
         let a = rng.random_range(0.0..std::f32::consts::TAU);
         let v = Vec3::new(a.cos(), rng.random_range(0.05..0.25), a.sin()) * rng.random_range(14.0..30.0) * size.sqrt();
-        spawn(commands, fx, Spawn { kind: if snow { Kind::Snow } else { Kind::GreySmoke }, pos: at + Vec3::Y * 0.8, vel: v, life: rng.random_range(1.8..3.6), size0: 2.5 * size, size1: 10.0 * size, alpha: 0.75, drag: 2.2, gravity: 1.0, ..default() });
+        spawn(commands, fx, Spawn { kind: if snow { Kind::Snow } else { Kind::GreySmoke }, pos: at + Vec3::Y * 0.8, vel: v, life: rng.random_range(2.5..5.0), size0: 2.5 * size, size1: 12.0 * size, alpha: 0.75, drag: 2.2, gravity: 1.0, ..default() });
     }
-    // 3. The cloud that hangs: grey-brown, rising slowly, drifting with the wind.
-    for _ in 0..(7.0 * size) as u32 {
-        // In the footage the hanging cloud is pale: powdered snow and dust, not soot.
-        let k = if rng.random_bool(0.25) { Kind::GreySmoke } else { Kind::Snow };
-        spawn(commands, fx, Spawn { kind: k, pos: at + Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(2.0..8.0), rng.random_range(-3.0..3.0)), vel: Vec3::new(rng.random_range(-2.0..2.0), rng.random_range(1.5..4.0), rng.random_range(-2.0..2.0)), life: rng.random_range(8.0..15.0), size0: 6.0 * size, size1: 22.0 * size, alpha: if k == Kind::Snow { 0.55 } else { 0.4 }, drag: 0.6, buoyancy: 0.25, ..default() });
+    // 5. The cloud that hangs for half a minute: pale snow dust and grey smoke, drifting off with the wind.
+    for _ in 0..(8.0 * size) as u32 {
+        let k = if rng.random_bool(0.3) { Kind::GreySmoke } else { Kind::Snow };
+        spawn(commands, fx, Spawn { kind: k, pos: at + Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(2.0..9.0), rng.random_range(-3.0..3.0)), vel: Vec3::new(rng.random_range(-2.0..2.0), rng.random_range(1.0..3.5), rng.random_range(-2.0..2.0)), life: rng.random_range(22.0..40.0), size0: 6.0 * size, size1: 32.0 * size, alpha: if k == Kind::Snow { 0.5 } else { 0.4 }, drag: 0.6, buoyancy: 0.15, ..default() });
     }
     for _ in 0..(8.0 * size) as u32 {
         let dir = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.3..1.2), rng.random_range(-1.0..1.0)).normalize();

@@ -7,7 +7,10 @@ Usage: showcase_mix.py <dir> <out.wav> <lead-in seconds>
 game played, and the ambience levels each frame) and segments.txt (video time, game time and length per shot).
 Each shot's sounds are placed at their video time and cut at the shot's end, as an editor would.
 """
-import sys, wave
+import sys
+import wave
+from pathlib import Path
+
 import numpy as np
 
 RATE = 44100
@@ -17,7 +20,7 @@ def load(name):
     with wave.open(f"{d}/sfx-{name}.wav") as w:
         return np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16).astype(np.float32) / 32767.0
 
-segs = [tuple(map(float, l.split())) for l in open(f"{d}/segments.txt") if l.strip()]
+segs = [tuple(map(float, l.split())) for l in Path(f"{d}/segments.txt").read_text().splitlines() if l.strip()]
 total = segs[-1][0] + segs[-1][2] + lead
 mix = np.zeros(int(total * RATE) + RATE, dtype=np.float32)
 bank = {}
@@ -29,7 +32,8 @@ def seg_of(t):
     return None
 
 amb = []
-for line in open(f"{d}/audio.log"):
+log = Path(f"{d}/audio.log").read_text().splitlines()
+for line in log:
     p = line.split()
     if p[0] == "sfx":
         t, name, vol, speed = float(p[1]), p[2], float(p[3]), float(p[4])
@@ -86,4 +90,4 @@ with wave.open(out, "wb") as w:
     w.setsampwidth(2)
     w.setframerate(RATE)
     w.writeframes(pcm.tobytes())
-print(f"mixed {total:.1f} s, {sum(1 for l in open(d + '/audio.log') if l.startswith('sfx'))} sounds logged")
+print(f"mixed {total:.1f} s, {sum(1 for l in log if l.startswith('sfx'))} sounds logged")

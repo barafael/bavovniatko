@@ -316,9 +316,9 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let rumble = add(bed(&mut rng, 40.0, 90.0, 180.0, 9));
     let engines = add(engines(&mut rng));
     let rotor = add(rotor(&mut rng));
-    if let Ok(dir) = std::env::var("VUHLEDAR_SHOWCASE") {
+    if let Some(dir) = crate::dev_env::dev().showcase.as_deref() {
         // The showcase rebuilds the soundtrack offline from these.
-        let mut dump = |name: &str, h: &Handle<Synth>| {
+        let dump = |name: &str, h: &Handle<Synth>| {
             if let Some(a) = assets.get(h) {
                 write_wav(&format!("{dir}/sfx-{name}.wav"), &a.samples);
             }
@@ -375,7 +375,7 @@ fn play_pending(mut commands: Commands, time: Res<Time>, bank: Option<Res<Bank>>
             continue; // the mix is saturated; drop the quiet ones
         }
         busy += 1;
-        if let Ok(dir) = std::env::var("VUHLEDAR_SHOWCASE") {
+        if let Some(dir) = crate::dev_env::dev().showcase.as_deref() {
             crate::showcase::append(&format!("{dir}/audio.log"), &format!("sfx {:.4} {:?} {:.5} {:.4}\n", now, item.1, item.2.min(1.5), item.3));
         }
         commands.spawn((AudioPlayer(bank.get(item.1)), PlaybackSettings::DESPAWN.with_volume(Volume::Linear(item.2.min(1.5))).with_speed(item.3)));
@@ -409,7 +409,7 @@ pub struct AmbienceLevels {
 
 fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, mut q: Query<(&Ambience, &mut AudioSink)>) {
     let Some(levels) = levels else { return };
-    if let Ok(dir) = std::env::var("VUHLEDAR_SHOWCASE") {
+    if let Some(dir) = crate::dev_env::dev().showcase.as_deref() {
         crate::showcase::append(&format!("{dir}/audio.log"), &format!("amb {:.4} {:.4} {}\n", time.elapsed_secs_f64(), levels.engines, levels.drone_view as u8));
     }
     for (a, mut sink) in &mut q {

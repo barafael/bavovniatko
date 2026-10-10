@@ -7,6 +7,7 @@
 
 use crate::audio::{self, Pending, Sfx};
 use crate::camera::{self, MainCamera, Mode, Shake, View};
+use crate::dev_env::dev;
 use crate::fx::{self, FxAssets, FxRng};
 use crate::geo;
 use crate::terrain::{Paint, PaintQueue};
@@ -24,7 +25,7 @@ impl Plugin for FirePlugin {
             .add_systems(Startup, spawn_positions.after(units::setup_models).after(crate::world::spawn_belts))
             .add_systems(
                 Update,
-                (player_fire, run_missions, land_shells, atgm_teams, fly_missiles, ua_small_arms, russian_fire, pre_registered_fires, ua_tank, ua_mortars)
+                (player_fire, player_atgm, fly_guided, run_missions, land_shells, atgm_teams, fly_missiles, ua_small_arms, russian_fire, pre_registered_fires, ua_tank, ua_mortars)
                     .chain()
                     .run_if(crate::running),
             )
@@ -55,6 +56,69 @@ pub enum ShellKind {
     Tos,
     TankHe,
     Cannon30,
+}
+
+/// The two ATGMs on this front in February 2023 (dossier §4: Javelin and Stugna-P).
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::Display, strum::EnumString)]
+#[strum(ascii_case_insensitive)]
+pub enum Atgm {
+    /// Ukrainian, wire-guided (semi-automatic command to line of sight): the gunner holds the sight on the target.
+    #[strum(to_string = "Stugna-P", serialize = "stugna")]
+    Stugna,
+    /// American, fire-and-forget: the seeker locks, the missile climbs and dives onto the roof.
+    Javelin,
+}
+
+impl Atgm {
+    pub fn range(self) -> f32 {
+        match self {
+            Atgm::Stugna => 4500.0,
+            Atgm::Javelin => 2500.0,
+        }
+    }
+    pub fn reload(self) -> f32 {
+        match self {
+            Atgm::Stugna => 40.0,
+            Atgm::Javelin => 25.0,
+        }
+    }
+    pub fn speed(self) -> f32 {
+        match self {
+            Atgm::Stugna => 190.0,
+            Atgm::Javelin => 140.0,
+        }
+    }
+    /// Missiles carried by a team.
+    pub fn load(self) -> u32 {
+        match self {
+            Atgm::Stugna => 6,
+            Atgm::Javelin => 4,
+        }
+    }
+}
+
+/// What the player can call down (and what the dev scripts can call: `VUHLEDAR_FIRE="100:he,130:raam"`).
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
+#[strum(ascii_case_insensitive)]
+pub enum Strike {
+    /// 155 mm high explosive, four rounds.
+    He,
+    /// Remote anti-armour mines scattered onto a lane, three shells.
+    Raam,
+    /// Two guided rockets.
+    Himars,
+}
+
+impl Strike {
+    /// The one place a fire mission is built: rounds, spacing, flight time and dispersion for each kind.
+    pub fn mission(self, target: Vec2, sigma: f32, now: f64, player: bool) -> Mission {
+        let (kind, rounds, interval, flight, sigma, delay) = match self {
+            Strike::He => (ShellKind::He155, 4, 3.5, 24.0, sigma, 2.0),
+            Strike::Raam => (ShellKind::Raam, 3, 5.0, 28.0, sigma * 1.2, 3.0),
+            Strike::Himars => (ShellKind::Himars, 2, 4.0, 55.0, 3.0, 2.0),
+        };
+        Mission { target, kind, rounds, sigma, interval, next: now + delay, flight, player }
+    }
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -101,7 +165,8 @@ pub struct UaPosition {
     pub atgm: u32,
     pub reload: f32,
     pub fire_timer: f32,
-    pub weapon: &'static str,
+    /// None: riflemen only.
+    pub weapon: Option<Atgm>,
     pub figures: Vec<Entity>,
 }
 
@@ -119,7 +184,6 @@ pub struct Missile {
     pub target: Entity,
     pub launched_at: Vec3,
     pub speed: f32,
-    pub from: Entity,
     pub trail: f32,
 }
 
@@ -130,9 +194,11 @@ pub struct UaTank {
 
 fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
     let lay = geo::layout();
-    let weapons = ["Stugna-P", "Javelin", "Stugna-P", "Javelin", "Stugna-P", "Stugna-P", "", "", ""];
+    // Positions with a clear view down their road: the Stugnas cover the long shots, the Javelins the close ones.
+    use Atgm::*;
+    let weapons = [Some(Stugna), Some(Javelin), Some(Javelin), Some(Stugna), Some(Stugna), Some(Javelin), None, None, None];
     for (i, p) in lay.ua_positions.iter().enumerate() {
-        let atgm = if weapons[i].is_empty() { 0 } else if weapons[i] == "Javelin" { 4 } else { 6 };
+        let atgm = weapons[i].map_or(0, Atgm::load);
         let mut figures = Vec::new();
         // A few figures in the trench line under the trees, mostly hidden.
         for k in 0..3 {
@@ -191,11 +257,10 @@ fn observed_sigma(view: &View, target: Vec2) -> f32 {
             let d = Vec2::new(view.drone_pos.x, view.drone_pos.z).distance(target);
             if view.feed_down > 0.0 { 40.0 } else { 9.0 + d * 0.006 }
         }
-        Mode::Op => 14.0 + 0.004 * (target.y + 1200.0).abs(),
+        Mode::Op | Mode::Ground => 14.0 + 0.004 * (target.y + 1200.0).abs(),
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn player_fire(
     time: Res<Time>,
     buttons: Res<ButtonInput<MouseButton>>,
@@ -207,7 +272,7 @@ fn player_fire(
     mut radio: ResMut<Radio>,
     mut pending: ResMut<Pending>,
 ) {
-    if !buttons.just_pressed(MouseButton::Left) {
+    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground {
         return;
     }
     let now = time.elapsed_secs_f64();
@@ -223,7 +288,7 @@ fn player_fire(
             return;
         }
         fc.himars -= 1;
-        fc.missions.push(Mission { target, kind: ShellKind::Himars, rounds: 2, sigma: 3.0, interval: 4.0, next: now + 2.0, flight: 55.0, player: true });
+        fc.missions.push(Strike::Himars.mission(target, sigma, now, true));
         radio.say(now, format!("HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
     } else if shift {
         if fc.raam == 0 {
@@ -231,7 +296,7 @@ fn player_fire(
             return;
         }
         fc.raam -= 1;
-        fc.missions.push(Mission { target, kind: ShellKind::Raam, rounds: 3, sigma: sigma * 1.2, interval: 5.0, next: now + 3.0, flight: 28.0, player: true });
+        fc.missions.push(Strike::Raam.mission(target, sigma, now, true));
         radio.say(now, format!("RAAM, three shells, {lat:.4} {lon:.4}. Mines going down on that lane."));
     } else {
         if fc.shells < 4 {
@@ -248,7 +313,7 @@ fn player_fire(
         fc.shells -= 4;
         fc.battery_busy_until = now + 18.0;
         fc.last_call = Some((target, now));
-        fc.missions.push(Mission { target, kind: ShellKind::He155, rounds: 4, sigma, interval: 3.5, next: now + 2.0, flight: 24.0, player: true });
+        fc.missions.push(Strike::He.mission(target, sigma, now, true));
         radio.say(now, format!("Fire mission, {lat:.4} {lon:.4}, four rounds. {}", if adjust { "Adjusting from the last." } else { "Shot, over." }));
         if fc.shells <= 32 && !fc.warned_low {
             fc.warned_low = true;
@@ -267,6 +332,9 @@ fn aim_gizmo(
     fc: Res<FireControl>,
     time: Res<Time>,
 ) {
+    if view.mode == Mode::Ground {
+        return;
+    }
     if let Some(hit) = camera::cursor_ground(&window, cam.0, cam.1) {
         let t = Vec2::new(hit.x, hit.z);
         let sigma = observed_sigma(&view, t);
@@ -322,7 +390,6 @@ pub fn gauss(rng: &mut SmallRng) -> f32 {
     (-2.0 * u.ln()).sqrt() * (std::f32::consts::TAU * v).cos()
 }
 
-#[allow(clippy::too_many_arguments)]
 fn land_shells(
     mut commands: Commands,
     time: Res<Time>,
@@ -377,7 +444,7 @@ fn land_shells(
                     let ent = commands
                         .spawn((Mesh3d(models.raam.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(mp)), NotShadowCaster))
                         .id();
-                    mf.add(Mine { pos: mp, live: true, raam: true, entity: Some(ent) });
+                    mf.add(Mine { pos: mp, live: true, entity: Some(ent) });
                 }
                 continue;
             }
@@ -400,7 +467,7 @@ fn land_shells(
                 shake.flash = (shake.flash + 0.5).min(1.0);
             }
         }
-        blasts.write(Blast { at: p, radius, cause, by: s.by });
+        blasts.write(Blast { at: p, radius, cause });
         // Russian fire on the tree lines and the town hurts the defenders.
         if s.by == Side::Ru {
             for mut pos in &mut positions {
@@ -433,7 +500,6 @@ fn land_shells(
 // ---------------------------------------------------------------------------------------------------------
 // ATGM teams
 
-#[allow(clippy::too_many_arguments)]
 fn atgm_teams(
     mut commands: Commands,
     time: Res<Time>,
@@ -448,6 +514,7 @@ fn atgm_teams(
     vehicles: Query<(Entity, &Vehicle, &Transform)>,
     missiles: Query<&Missile>,
     mut teams: Query<(Entity, &mut UaPosition)>,
+    view: Res<View>,
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
@@ -458,14 +525,16 @@ fn atgm_teams(
         .collect();
     let targeted: Vec<Entity> = missiles.iter().map(|m| m.target).collect();
     for (team, mut pos) in &mut teams {
-        if pos.atgm == 0 || pos.strength < 2 {
+        let Some(weapon) = pos.weapon else { continue };
+        // Reloading goes on whoever is at the launcher, the AI or the player.
+        pos.reload = (pos.reload - dt).max(0.0);
+        if pos.atgm == 0 || pos.strength < 2 || (view.mode == Mode::Ground && view.ground_team == Some(team)) {
             continue;
         }
-        pos.reload -= dt;
         if pos.reload > 0.0 {
             continue;
         }
-        let range = if pos.weapon == "Javelin" { 2500.0 } else { 4500.0 };
+        let range = weapon.range();
         let mut best: Option<(Entity, f32, Vec3)> = None;
         for (e, v, tf) in &vehicles {
             if !v.state.alive() || v.side != Side::Ru || targeted.contains(&e) {
@@ -493,7 +562,7 @@ fn atgm_teams(
             continue;
         }
         pos.atgm -= 1;
-        pos.reload = if pos.weapon == "Javelin" { 25.0 } else { 40.0 };
+        pos.reload = weapon.reload();
         let from = geo::ground(pos.pos) + Vec3::Y * 1.2;
         let dir = (tp - from).normalize();
         fx::muzzle(&mut commands, &mut fx, &mut fxr.0, from, dir, false);
@@ -501,21 +570,20 @@ fn atgm_teams(
             fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: from - dir * 2.0, vel: -dir * fxr.0.random_range(4.0..12.0) + Vec3::Y, life: 4.0, size0: 1.0, size1: 5.0, alpha: 0.6, drag: 1.5, ..default() });
         }
         audio::play_at(&mut pending, now, cam.translation(), from, Sfx::AtgmLaunch, 0.9);
-        let speed = if pos.weapon == "Javelin" { 140.0 } else { 190.0 };
+        let speed = weapon.speed();
         commands.spawn((
             Mesh3d(models.missile.clone()),
             MeshMaterial3d(palette.vertex.clone()),
             Transform::from_translation(from).looking_to(dir, Vec3::Y),
-            Missile { target, launched_at: from, speed, from: team, trail: 0.0 },
+            Missile { target, launched_at: from, speed, trail: 0.0 },
             NotShadowCaster,
         ));
         if fxr.0.random_bool(0.5) {
-            radio.say(now, format!("{}: launch.", pos.weapon));
+            radio.say(now, format!("{weapon}: launch."));
         }
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn fly_missiles(
     mut commands: Commands,
     time: Res<Time>,
@@ -546,7 +614,8 @@ fn fly_missiles(
             fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation, vel: Vec3::Y * 0.3, life: 3.5, size0: 0.4, size1: 2.4, alpha: 0.55, drag: 0.5, ..default() });
             fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::Flash, pos: tf.translation, vel: Vec3::ZERO, life: 0.05, size0: 0.8, size1: 0.6, alpha: 1.0, ..default() });
         }
-        if d < 3.0 {
+        // Within this frame's flight of the target counts as arrival: no flying through it at low frame rates.
+        if d < 3.0 + m.speed * dt {
             commands.entity(e).despawn();
             let rng = &mut fxr.0;
             // Long wire-guided shots miss more often: the gunner holds the crosshair for 15-25 s under fire.
@@ -560,7 +629,6 @@ fn fly_missiles(
                 fx::explosion(&mut commands, &mut fx, rng, geo::ground(miss), 0.6, true);
                 paint.push(Paint::Crater { at: miss, radius: 1.2, seed: rng.random() });
             }
-            let _ = m.from;
         }
     }
 }
@@ -568,7 +636,6 @@ fn fly_missiles(
 // ---------------------------------------------------------------------------------------------------------
 // Small arms and the Russian return fire
 
-#[allow(clippy::too_many_arguments)]
 fn ua_small_arms(
     mut commands: Commands,
     time: Res<Time>,
@@ -626,7 +693,6 @@ fn ua_small_arms(
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn russian_fire(
     mut commands: Commands,
     time: Res<Time>,
@@ -708,7 +774,6 @@ fn russian_fire(
 }
 
 /// The brigade's pre-registered fires: when a column stalls on a known point, the guns fire on their own.
-#[allow(clippy::too_many_arguments)]
 fn pre_registered_fires(time: Res<Time>, mut fc: ResMut<FireControl>, mut radio: ResMut<Radio>, mut last: Local<Vec<f64>>, vehicles: Query<(&Vehicle, &Transform)>, soldiers: Query<(&Soldier, &Transform)>) {
     let now = time.elapsed_secs_f64();
     let trps = &geo::layout().trps;
@@ -738,7 +803,6 @@ fn pre_registered_fires(time: Res<Time>, mut fc: ResMut<FireControl>, mut radio:
 }
 
 /// The Wanderer: the T-64 crew in the hide fires on stalled columns at long range, on a drone pilot's word.
-#[allow(clippy::too_many_arguments)]
 fn ua_tank(mut commands: Commands, time: Res<Time>, mut fx: ResMut<FxAssets>, mut fxr: ResMut<FxRng>, mut pending: ResMut<Pending>, cam: Single<&GlobalTransform, With<MainCamera>>, vehicles: Query<(&Vehicle, &Transform)>, mut q: Query<(&mut UaTank, &Transform)>) {
     let now = time.elapsed_secs_f64();
     let rng = &mut fxr.0;
@@ -784,4 +848,166 @@ fn ua_mortars(time: Res<Time>, mut fc: ResMut<FireControl>, mut rng: ResMut<Fire
     fc.mortar_bombs -= rounds;
     fc.missions.push(Mission { target, kind: ShellKind::Mortar120, rounds, sigma: 22.0, interval: 2.5, next: now, flight: 16.0, player: false });
     *next = now + rng.random_range(14.0..26.0);
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// The player's own ATGM shot, from the ground view
+
+/// A missile flying on the player's wire: it follows the sight's line of sight, so the gunner must hold the
+/// crosshair on the tank for the whole 10-20 s of flight (Stugna-P: semi-automatic command to line of sight).
+#[derive(Component)]
+pub struct GuidedMissile {
+    pub travelled: f32,
+    pub speed: f32,
+    pub trail: f32,
+    /// The launching team and the sight's position: the wire runs back to that trench, whatever the player does.
+    pub team: Entity,
+    pub eye: Vec3,
+    /// The line the sight last held. Updated only while the player is at that sight.
+    pub dir: Vec3,
+}
+
+/// Javelin seekers lock after this long on the target.
+pub const JAVELIN_LOCK: f32 = 2.5;
+
+fn player_atgm(
+    mut commands: Commands,
+    time: Res<Time>,
+    buttons: Res<ButtonInput<MouseButton>>,
+    mut view: ResMut<View>,
+    mut fx: ResMut<FxAssets>,
+    mut fxr: ResMut<FxRng>,
+    mut pending: ResMut<Pending>,
+    mut radio: ResMut<Radio>,
+    mut shake: ResMut<Shake>,
+    (models, palette): (Res<Models>, Res<Palette>),
+    cam: Single<&GlobalTransform, With<MainCamera>>,
+    guided: Query<(), With<GuidedMissile>>,
+    mut teams: Query<&mut UaPosition>,
+) {
+    let now = time.elapsed_secs_f64();
+    let scripted = dev().auto_atgm.is_some_and(|t| now >= t && now - time.delta_secs_f64() < t);
+    let fire = buttons.just_pressed(MouseButton::Left) || scripted;
+    if view.mode != Mode::Ground || !fire || !view.sight || !guided.is_empty() {
+        return;
+    }
+    let Some(team) = view.ground_team else { return };
+    let Ok(mut pos) = teams.get_mut(team) else { return };
+    let Some(weapon) = pos.weapon else { return };
+    if pos.strength < 2 {
+        radio.say(now, "Nobody left here to work the launcher.");
+        return;
+    }
+    if pos.atgm == 0 {
+        radio.say(now, "Out of missiles at this position.");
+        return;
+    }
+    if pos.reload > 0.0 {
+        radio.say(now, format!("Reloading. {:.0} seconds.", pos.reload.ceil()));
+        return;
+    }
+    let locked = view.lock.filter(|(_, t)| *t >= JAVELIN_LOCK).map(|(e, _)| e);
+    if weapon == Atgm::Javelin && locked.is_none() {
+        radio.say(now, "No lock. Hold the seeker on him.");
+        return;
+    }
+    pos.atgm -= 1;
+    pos.reload = weapon.reload();
+    // A lock is spent by the shot.
+    view.lock = None;
+    let gt = cam.compute_transform();
+    let fwd = *gt.forward();
+    let from = gt.translation + fwd * 1.6 + Vec3::Y * 0.1;
+    let rng = &mut fxr.0;
+    fx::flash(&mut commands, from, 1.5e6, 30.0, 0.08);
+    // The launch blows snow and smoke back over the position: for a moment the gunner is half blind.
+    for _ in 0..14 {
+        fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: from + Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(-0.5..0.5), rng.random_range(-1.0..1.0)), vel: -fwd * rng.random_range(2.0..8.0) + Vec3::Y * rng.random_range(0.2..1.5), life: rng.random_range(3.0..6.0), size0: 1.2, size1: 6.0, alpha: 0.5, drag: 1.2, ..default() });
+    }
+    audio::play_now(&mut pending, now, Sfx::AtgmLaunch, 1.3);
+    shake.trauma = (shake.trauma + 0.35).min(1.0);
+    let missile = (Mesh3d(models.missile.clone()), MeshMaterial3d(palette.vertex.clone()), NotShadowCaster);
+    match (weapon, locked) {
+        (Atgm::Javelin, Some(target)) => {
+            // Fire and forget: it climbs, then dives onto the roof by itself.
+            commands.spawn((missile, Transform::from_translation(from).looking_to((fwd + Vec3::Y * 0.6).normalize(), Vec3::Y), Missile { target, launched_at: from, speed: weapon.speed(), trail: 0.0 }));
+            radio.say(now, "Javelin away. Get down, move.");
+        }
+        _ => {
+            commands.spawn((missile, Transform::from_translation(from).looking_to(fwd, Vec3::Y), GuidedMissile { travelled: 1.2, speed: 40.0, trail: 0.0, team, eye: gt.translation, dir: fwd }));
+            radio.say(now, format!("{weapon}: launch. Hold it on him."));
+        }
+    }
+}
+
+/// Distance from `c` to the segment `a`–`b`.
+fn segment_distance(a: Vec3, b: Vec3, c: Vec3) -> f32 {
+    let ab = b - a;
+    let t = if ab.length_squared() > 0.0 { ((c - a).dot(ab) / ab.length_squared()).clamp(0.0, 1.0) } else { 0.0 };
+    (a + ab * t).distance(c)
+}
+
+fn fly_guided(
+    mut commands: Commands,
+    time: Res<Time>,
+    view: Res<View>,
+    mut fx: ResMut<FxAssets>,
+    mut fxr: ResMut<FxRng>,
+    mut hits: MessageWriter<DirectHit>,
+    mut paint: ResMut<PaintQueue>,
+    mut pending: ResMut<Pending>,
+    mut radio: ResMut<Radio>,
+    cam: Single<&GlobalTransform, With<MainCamera>>,
+    vehicles: Query<(Entity, &Vehicle, &Transform), Without<GuidedMissile>>,
+    mut q: Query<(Entity, &mut GuidedMissile, &mut Transform)>,
+) {
+    let dt = time.delta_secs().min(0.05);
+    let now = time.elapsed_secs_f64();
+    let gt = cam.compute_transform();
+    for (e, mut m, mut tf) in &mut q {
+        // Boost, then sustain at about 190 m/s.
+        m.speed = (m.speed + 240.0 * dt).min(Atgm::Stugna.speed());
+        m.travelled += m.speed * dt;
+        // The guidance steers onto the sight's line at the missile's range. Only the launching sight steers it;
+        // if the player leaves it, the wire carries the last line it held.
+        if view.mode == Mode::Ground && view.ground_team == Some(m.team) {
+            m.dir = *gt.forward();
+        }
+        // Real missiles fly a little above the sight line, clear of the ground in front.
+        let lift = Vec3::Y * (1.2 + 1.6 * (1.0 - (m.travelled / 400.0).min(1.0)));
+        let los = m.eye + m.dir * m.travelled + lift;
+        let prev = tf.translation;
+        let step = (los - prev).clamp_length_max(m.speed * dt * 1.25);
+        let dir = step.normalize_or(*tf.forward());
+        tf.translation += step;
+        tf.look_to(dir, Vec3::Y);
+        m.trail += dt;
+        let rng = &mut fxr.0;
+        if m.trail > 0.025 {
+            m.trail = 0.0;
+            fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation, vel: Vec3::Y * 0.3, life: 5.0, size0: 0.35, size1: 2.6, alpha: 0.5, drag: 0.5, ..default() });
+            fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::Flash, pos: tf.translation - dir * 0.6, vel: Vec3::ZERO, life: 0.04, size0: 0.9, size1: 0.6, alpha: 1.0, ..default() });
+        }
+        let p = tf.translation;
+        // Test the whole path flown this frame, so a fast missile cannot pass through a hull between samples.
+        let hit = vehicles.iter().find(|(_, v, vt)| v.side == Side::Ru && segment_distance(prev, p, vt.translation + Vec3::Y * 1.2) < 3.8);
+        let ground = m.travelled > 40.0 && p.y < geo::height(p.x, p.z) + 0.15;
+        if let Some((target, v, _)) = hit {
+            commands.entity(e).despawn();
+            fx::explosion(&mut commands, &mut fx, rng, p, 0.7, false);
+            audio::play_at(&mut pending, now, gt.translation, p, Sfx::BlastNear, 1.0);
+            if v.state.alive() {
+                hits.write(DirectHit { target, cause: Cause::Atgm });
+                radio.say(now, "Hit! He's burning.");
+            }
+        } else if ground || m.travelled > Atgm::Stugna.range() + 700.0 {
+            commands.entity(e).despawn();
+            if ground {
+                fx::explosion(&mut commands, &mut fx, rng, p, 0.6, true);
+                paint.push(Paint::Crater { at: Vec2::new(p.x, p.z), radius: 1.2, seed: rng.random() });
+                audio::play_at(&mut pending, now, gt.translation, p, Sfx::BlastNear, 0.8);
+                radio.say(now, "Miss. Into the ground.");
+            }
+        }
+    }
 }

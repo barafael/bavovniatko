@@ -8,7 +8,8 @@
 
 struct FeedEffect {
     time: f32,
-    mode: f32,
+    // FeedMode: 0 drone, 1 binoculars, 2 eye, 3 sight.
+    mode: u32,
     grain: f32,
     glitch: f32,
     flash: f32,
@@ -36,7 +37,7 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
     let px = 1.0 / dims;
     let frame = floor(fx.time * 24.0);
 
-    if fx.mode < 0.5 {
+    if fx.mode == 0u {
         // ---- Drone feed ----
         if fx.down > 0.5 {
             let n = hash(floor(uv * dims / 3.0) + frame);
@@ -86,6 +87,26 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
         let d = distance(uv, vec2<f32>(0.5));
         c *= 1.0 - smoothstep(0.45, 0.85, d) * 0.45;
         c += vec3<f32>(fx.flash) * 0.7;
+        return vec4<f32>(clamp(c, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0);
+    }
+
+    // ---- Ground: the naked eye (2) and the ATGM sight (3) ----
+    if fx.mode >= 2u {
+        var c = textureSample(screen_texture, texture_sampler, uv).rgb;
+        let d = distance(uv, vec2<f32>(0.5));
+        if fx.mode == 3u {
+            // Through the sight: a single round eyepiece, slightly cold, a little noise from the optics.
+            let l = luma(c);
+            c = mix(vec3<f32>(l), c, 0.7) * vec3<f32>(0.95, 1.0, 1.03);
+            c = (c - 0.5) * 1.1 + 0.5;
+            c += (hash(uv * dims + frame) - 0.5) * 0.03;
+            let q = (uv - 0.5) * vec2<f32>(dims.x / dims.y, 1.0);
+            c *= 1.0 - smoothstep(0.43, 0.47, length(q));
+        } else {
+            c += (hash(uv * dims + frame) - 0.5) * 0.02 * fx.grain;
+            c *= 1.0 - smoothstep(0.55, 0.95, d) * 0.35;
+        }
+        c += vec3<f32>(fx.flash);
         return vec4<f32>(clamp(c, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0);
     }
 

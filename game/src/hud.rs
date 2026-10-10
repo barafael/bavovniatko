@@ -3,7 +3,7 @@
 
 use crate::camera::{Mode, View};
 use crate::director::{self, Script};
-use crate::fire::{AtgmMode, FireControl, UaPosition};
+use crate::fire::{Atgm, AtgmMode, FireControl, JAVELIN_LOCK, UaPosition};
 use crate::geo;
 use crate::units::{Radio, Stats};
 use crate::Phase;
@@ -36,6 +36,8 @@ struct NoSignal;
 #[derive(Component)]
 struct Crosshair;
 #[derive(Component)]
+struct Reticle;
+#[derive(Component)]
 struct Briefing;
 #[derive(Component)]
 struct Debrief;
@@ -44,7 +46,6 @@ struct DebriefText;
 
 const AMBER: Color = Color::srgb(0.95, 0.85, 0.55);
 const WHITE: Color = Color::srgba(0.95, 0.96, 0.97, 0.92);
-const DIM: Color = Color::srgba(0.85, 0.87, 0.9, 0.7);
 
 fn text(s: &str, size: f32, color: Color) -> (Text, TextFont, TextColor) {
     (Text::new(s), TextFont { font_size: FontSize::Px(size), ..default() }, TextColor(color))
@@ -52,8 +53,8 @@ fn text(s: &str, size: f32, color: Color) -> (Text, TextFont, TextColor) {
 
 fn spawn_hud(mut commands: Commands) {
     // Larger offscreen renders (the showcase films at 1080p) scale the interface with them.
-    if let Some(h) = std::env::var("VUHLEDAR_RES").ok().and_then(|r| r.split_once('x').and_then(|(_, h)| h.parse::<f32>().ok())) {
-        commands.insert_resource(UiScale(1.35 * h / 900.0));
+    if let Some((_, h)) = crate::dev_env::dev().res {
+        commands.insert_resource(UiScale(1.35 * h as f32 / 900.0));
     }
     let abs = |top: Option<f32>, bottom: Option<f32>, left: Option<f32>, right: Option<f32>| Node {
         position_type: PositionType::Absolute,
@@ -88,6 +89,23 @@ fn spawn_hud(mut commands: Commands) {
         ));
     }
 
+    // The ATGM sight's reticle: a long thin cross with stadia ticks.
+    let line = |w: f32, h: f32, dx: f32, dy: f32| {
+        (
+            Node { position_type: PositionType::Absolute, left: percent(50), top: percent(50), width: px(w), height: px(h), margin: UiRect { left: px(dx), top: px(dy), ..default() }, ..default() },
+            BackgroundColor(Color::srgba(0.05, 0.05, 0.05, 0.85)),
+            Visibility::Hidden,
+            Reticle,
+        )
+    };
+    for (w, h, dx, dy) in [(260.0, 1.5, -290.0, -0.75), (260.0, 1.5, 30.0, -0.75), (1.5, 180.0, -0.75, 30.0), (1.5, 120.0, -0.75, -150.0)] {
+        commands.spawn(line(w, h, dx, dy));
+    }
+    for k in 1..=4 {
+        let y = 30.0 + k as f32 * 34.0;
+        commands.spawn(line(18.0 - k as f32 * 2.0, 1.5, -(9.0 - k as f32), y));
+    }
+
     // The briefing.
     let briefing = "VUHLEDAR\n6 FEBRUARY 2023\n\n\
 Vuhledar is a coal-mining town of Soviet apartment blocks on a ridge above open, flat fields.\n\
@@ -120,7 +138,7 @@ Press Enter.";
 }
 
 fn briefing_input(keys: Res<ButtonInput<KeyCode>>, phase: Res<State<Phase>>, mut next: ResMut<NextState<Phase>>) {
-    if *phase.get() == Phase::Briefing && (keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::NumpadEnter) || std::env::var("VUHLEDAR_SKIP_BRIEFING").is_ok()) {
+    if *phase.get() == Phase::Briefing && (keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::NumpadEnter) || crate::dev_env::dev().skip_briefing) {
         next.set(Phase::Playing);
     }
 }
@@ -149,9 +167,13 @@ fn update_hud(
         Single<&mut Text, With<Banner>>,
         Single<&mut Text, With<NoSignal>>,
     )>,
-    mut crosshair: Query<&mut Visibility, With<Crosshair>>,
+    mut crosshair: Query<&mut Visibility, (With<Crosshair>, Without<Reticle>)>,
+    mut reticle: Query<&mut Visibility, (With<Reticle>, Without<Crosshair>)>,
     phase: Res<State<Phase>>,
 ) {
+    for mut v in &mut reticle {
+        v.set_if_neq(if view.mode == Mode::Ground && view.sight { Visibility::Inherited } else { Visibility::Hidden });
+    }
     let now = time.elapsed_secs_f64();
     let rec = script.t as u32;
     let p2 = Vec2::new(view.drone_pos.x, view.drone_pos.z);
@@ -166,6 +188,31 @@ fn update_hud(
             view.drones_left
         )),
         Mode::Op => Text::new(format!("OBSERVATION POST, 9TH FLOOR   x{:.1}", view.zoom())),
+        Mode::Ground => {
+            let team = view.ground_team.and_then(|e| positions.get(e).ok());
+            let (weapon, left) = team.map(|p| (p.weapon, p.atgm)).unwrap_or((None, 0));
+            let name = weapon.map_or("ATGM".to_string(), |w| w.to_string().to_uppercase());
+            if view.sight {
+                let how = if weapon == Some(Atgm::Javelin) {
+                    match view.lock {
+                        Some((_, t)) if t >= JAVELIN_LOCK => "LOCKED   [LMB] fire and forget".to_string(),
+                        Some((_, t)) => format!("LOCKING {:.0}%   hold the seeker on him", t / JAVELIN_LOCK * 100.0),
+                        None => "no target: put the crosshair on a vehicle".to_string(),
+                    }
+                } else {
+                    "[LMB] launch, then hold the crosshair on him until impact".to_string()
+                };
+                Text::new(format!(
+                    "{} SIGHT x10   RANGE {}   MISSILES {}\n{}",
+                    name,
+                    view.ground_range.map(|r| format!("{:.0} m", r)).unwrap_or("----".into()),
+                    left,
+                    how
+                ))
+            } else {
+                Text::new(format!("TREE LINE, {} TEAM   MISSILES {}\n[RMB] sight   [3] next position   [1] drone", name, left))
+            }
+        }
     };
     let committed = stats.vehicles_committed;
     let out = stats.destroyed + stats.abandoned;
@@ -201,7 +248,7 @@ fn update_hud(
         String::new()
     });
     for mut v in &mut crosshair {
-        *v = if view.mode == Mode::Drone && view.feed_down <= 0.0 && *phase.get() == Phase::Playing { Visibility::Inherited } else { Visibility::Hidden };
+        v.set_if_neq(if view.mode == Mode::Drone && view.feed_down <= 0.0 && *phase.get() == Phase::Playing { Visibility::Inherited } else { Visibility::Hidden });
     }
 }
 

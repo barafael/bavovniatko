@@ -6,6 +6,7 @@
 //! it plays to `<dir>/audio.log`, so `scripts/showcase.py` can rebuild the soundtrack offline.
 
 use crate::camera::{Mode, View};
+use crate::fire::Strike;
 use crate::units::{Side, SState, Soldier, Vehicle};
 use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};
@@ -15,7 +16,7 @@ pub struct ShowcasePlugin;
 
 impl Plugin for ShowcasePlugin {
     fn build(&self, app: &mut App) {
-        if let Ok(dir) = std::env::var("VUHLEDAR_SHOWCASE") {
+        if let Some(dir) = crate::dev_env::dev().showcase.clone() {
             std::fs::create_dir_all(&dir).ok();
             app.insert_resource(Tour { dir, shot: 0, frame: 0, video_t: 0.0, aim: None, fired: Vec::new(), shot_frames: 0 })
                 .insert_resource(TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(STEP_SKIP)))
@@ -33,6 +34,7 @@ enum Aim {
     Vehicle(u32),
     Men,
     /// The OP looking at a point (x, z) on the ground.
+    #[expect(dead_code, reason = "no shot in the current tour looks through the OP, but the camera supports it")]
     OpAt(Vec2),
 }
 
@@ -43,8 +45,8 @@ struct Shot {
     pos1: Vec3,
     aim: Aim,
     fov: (f32, f32),
-    /// Fire missions to call (game time, kind) before or during the shot, on the nearest stalled vehicle.
-    fire: &'static [(f32, &'static str)],
+    /// Fire missions to call (game time, strike) before or during the shot, on the nearest stalled vehicle.
+    fire: &'static [(f32, Strike)],
     debrief: bool,
 }
 
@@ -67,7 +69,7 @@ fn shots() -> Vec<Shot> {
         // From behind the tree line: the ATGM teams open up.
         s(68.0, 9.0, (1500.0, -300.0, 90.0), (1490.0, -320.0, 90.0), Aim::Vehicle(0), (22.0, 16.0)),
         // The kill zone: mines, wrecks, crews in the snow, a fire mission landing among them.
-        Shot { fire: &[(80.0, "he"), (90.0, "he")], ..s(97.0, 10.0, (750.0, -500.0, 120.0), (760.0, -480.0, 120.0), Aim::Vehicle(2), (5.0, 4.2)) },
+        Shot { fire: &[(80.0, Strike::He), (90.0, Strike::He)], ..s(97.0, 10.0, (750.0, -500.0, 120.0), (760.0, -480.0, 120.0), Aim::Vehicle(2), (5.0, 4.2)) },
         // The TOS-1A salvo landing on the town's southern blocks.
         s(164.0, 8.0, (250.0, -760.0, 140.0), (230.0, -780.0, 140.0), Aim::Point(Vec2::new(-290.0, -1150.0)), (34.0, 30.0)),
         // Afternoon: infantry on foot across the field, the battalion mortars working over them.
@@ -91,7 +93,6 @@ struct Tour {
     shot_frames: u32,
 }
 
-#[allow(clippy::too_many_arguments)]
 fn direct(
     mut commands: Commands,
     mut tour: ResMut<Tour>,
@@ -115,8 +116,8 @@ fn direct(
     let t = script.t;
     let si = tour.shot;
     // Fire missions for this shot, called at their own times (possibly before the shot starts).
-    for (k, (at, kind)) in shot.fire.iter().enumerate() {
-        if t >= *at && !tour.fired.contains(&(si, k)) {
+    for (k, &(at, kind)) in shot.fire.iter().enumerate() {
+        if t >= at && !tour.fired.contains(&(si, k)) {
             tour.fired.push((si, k));
             let me = Vec2::new(view.drone_pos.x, view.drone_pos.z);
             if let Some((_, tf)) = vehicles
@@ -125,9 +126,7 @@ fn direct(
                 .min_by(|a, b| Vec2::new(a.1.translation.x, a.1.translation.z).distance(me).total_cmp(&Vec2::new(b.1.translation.x, b.1.translation.z).distance(me)))
             {
                 let target = Vec2::new(tf.translation.x, tf.translation.z);
-                let now = time.elapsed_secs_f64();
-                let kind_ = if *kind == "raam" { crate::fire::ShellKind::Raam } else { crate::fire::ShellKind::He155 };
-                fc.missions.push(crate::fire::Mission { target, kind: kind_, rounds: 4, sigma: 12.0, interval: 3.0, next: now + 1.0, flight: 24.0, player: true });
+                fc.missions.push(kind.mission(target, 12.0, time.elapsed_secs_f64(), true));
             }
         }
     }

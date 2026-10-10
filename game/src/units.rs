@@ -26,7 +26,7 @@ impl Plugin for UnitsPlugin {
             .add_systems(Startup, (setup_models, lay_minefields, spawn_old_wrecks).chain().after(crate::world::spawn_belts))
             .add_systems(
                 Update,
-                (drive_vehicles, check_mines, resolve_blasts, resolve_direct_hits, crew_bailout, move_soldiers, animate_legs, fly_debris, drop_riders)
+                (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, crew_bailout, move_soldiers, animate_legs, fly_debris, drop_riders)
                     .chain()
                     .run_if(crate::running),
             );
@@ -44,25 +44,21 @@ pub enum Side {
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum VKind {
+    /// T-80BV
     T80,
+    /// T-72B3
     T72,
+    /// BMP-1AM
     Bmp1,
+    /// BMP-2
     Bmp2,
+    /// MT-LB
     Mtlb,
 }
 
 impl VKind {
     pub fn is_tank(self) -> bool {
         matches!(self, VKind::T80 | VKind::T72)
-    }
-    pub fn name(self) -> &'static str {
-        match self {
-            VKind::T80 => "T-80BV",
-            VKind::T72 => "T-72B3",
-            VKind::Bmp1 => "BMP-1AM",
-            VKind::Bmp2 => "BMP-2",
-            VKind::Mtlb => "MT-LB",
-        }
     }
     fn crew(self) -> u32 {
         if self == VKind::Mtlb { 2 } else { 3 }
@@ -127,6 +123,16 @@ pub struct Vehicle {
     pub counted_returned: bool,
     /// Set once the wreck has been counted and set burning (several blasts can claim it in one frame).
     pub wrecked: bool,
+    /// Hull heading (rate-limited: a tank turns, it does not snap).
+    pub yaw: f32,
+    /// Suspension: pitch and roll and their rates, a damped spring.
+    pub pitch: f32,
+    pub pitch_v: f32,
+    pub roll: f32,
+    pub roll_v: f32,
+    /// After a hit or a mine: how fast it grinds to a halt, and how it slews round the dead track.
+    pub coast_decel: f32,
+    pub slew: f32,
 }
 
 #[derive(Component)]
@@ -154,7 +160,6 @@ pub struct Soldier {
     pub fear: f32,
     pub timer: f32,
     pub phase: f32,
-    pub legs: [Entity; 2],
 }
 
 #[derive(Component)]
@@ -286,7 +291,6 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
 pub struct Mine {
     pub pos: Vec2,
     pub live: bool,
-    pub raam: bool,
     pub entity: Option<Entity>,
 }
 
@@ -334,7 +338,7 @@ fn lay_minefields(mut commands: Commands) {
             let side = if rng.random_bool(0.5) { 1.0 } else { -1.0 };
             let lat = side * rng.random_range(f.inner..f.outer);
             let p = road.point(s) + road.normal(s) * lat;
-            mf.add(Mine { pos: p, live: true, raam: false, entity: None });
+            mf.add(Mine { pos: p, live: true, entity: None });
         }
     }
     for (line, width) in &lay.field_mines {
@@ -346,7 +350,7 @@ fn lay_minefields(mut commands: Commands) {
             if lay.roads.iter().any(|r| r.line.project(p).0 < 7.0) {
                 continue;
             }
-            mf.add(Mine { pos: p, live: true, raam: false, entity: None });
+            mf.add(Mine { pos: p, live: true, entity: None });
         }
     }
     info!("minefields: {} TM-62", mf.mines.len());
@@ -417,6 +421,13 @@ pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette
             reversing: false,
             counted_returned: false,
             wrecked: false,
+            yaw,
+            pitch: 0.0,
+            pitch_v: 0.0,
+            roll: 0.0,
+            roll_v: 0.0,
+            coast_decel: 3.0,
+            slew: 0.0,
         },
     ));
     e.add_child(turret);
@@ -481,7 +492,7 @@ pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette
         Mesh3d(body),
         MeshMaterial3d(palette.vertex.clone()),
         Transform::from_translation(geo::ground(at)),
-        Soldier { side, state: SState::Advance, goal, home, speed: rng.random_range(1.5..2.3), fear: 0.0, timer: 0.0, phase: rng.random_range(0.0..6.0), legs: [l0, l1] },
+        Soldier { side, state: SState::Advance, goal, home, speed: rng.random_range(1.5..2.3), fear: 0.0, timer: 0.0, phase: rng.random_range(0.0..6.0) },
         NotShadowCaster,
     ));
     e.add_children(&[l0, l1]);
@@ -499,7 +510,6 @@ pub enum Cause {
     TankGun,
     Himars,
     Thermobaric,
-    SmallArms,
 }
 
 /// An explosion that hurts whatever is near it.
@@ -509,7 +519,6 @@ pub struct Blast {
     /// Lethal radius for people in the open; vehicles need much closer hits.
     pub radius: f32,
     pub cause: Cause,
-    pub by: Side,
 }
 
 /// A guided weapon striking a specific vehicle.
@@ -533,7 +542,6 @@ struct Snap {
     reversing: bool,
 }
 
-#[allow(clippy::too_many_arguments)]
 fn drive_vehicles(
     mut commands: Commands,
     time: Res<Time>,
@@ -542,8 +550,6 @@ fn drive_vehicles(
     mut fx: ResMut<FxAssets>,
     mut paint: ResMut<PaintQueue>,
     mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
-    mut pending: ResMut<Pending>,
     models: Res<Models>,
     palette: Res<Palette>,
     cam: Single<&GlobalTransform, With<MainCamera>>,
@@ -552,7 +558,6 @@ fn drive_vehicles(
     mut turrets: Query<&mut Transform, With<Turret>>,
 ) {
     let dt = time.delta_secs().min(0.05);
-    let now = time.elapsed_secs_f64();
     let lay = geo::layout();
     let snaps: Vec<Snap> = q.iter().map(|(e, v, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing }).collect();
     let cam_pos = cam.translation();
@@ -684,8 +689,11 @@ fn drive_vehicles(
             _ => {}
         }
 
-        // Move in route coordinates.
-        v.speed += (want_speed - v.speed).clamp(-4.0 * dt, 2.0 * dt);
+        // Move in route coordinates. A tank accelerates at about 1 m/s² and brakes at about 2; it brakes hard only
+        // when something is right in front of it.
+        let hard = blocker.is_some_and(|b| (b.s - v.s).abs() < 22.0) || v.panic > 0.7;
+        let prev_speed = v.speed;
+        v.speed += (want_speed - v.speed).clamp(-if hard { 3.5 } else { 1.8 } * dt, 1.1 * dt);
         let lat_rate = (v.target_lat - v.lat).clamp(-2.5, 2.5);
         let ds = v.speed * dt * if v.reversing { -1.0 } else { 1.0 };
         v.s = (v.s + ds).clamp(0.0, route.length());
@@ -693,11 +701,19 @@ fn drive_vehicles(
         let p = route.point(v.s) + route.normal(v.s) * v.lat;
         let fwd = route.tangent(v.s) * if v.reversing { -1.0 } else { 1.0 };
         let heading = (fwd * v.speed.max(0.5) + route.normal(v.s) * lat_rate * (v.speed / 4.0).clamp(0.2, 1.0) * if v.reversing { -1.0 } else { 1.0 }).normalize_or_zero();
-        let yaw = if heading.length_squared() > 0.0 { vehicle_yaw(heading) } else { tf.rotation.to_euler(EulerRot::YXZ).0 };
+        // The hull turns at most ~26°/s (reversing, the hull keeps facing forward).
+        let want_yaw = if heading.length_squared() > 0.0 { vehicle_yaw(heading * if v.reversing { -1.0 } else { 1.0 }) } else { v.yaw };
+        let dyaw = wrap(want_yaw - v.yaw).clamp(-0.45 * dt, 0.45 * dt);
+        v.yaw = wrap(v.yaw + dyaw);
+        let yaw = v.yaw;
         let old = Vec2::new(tf.translation.x, tf.translation.z);
         tf.translation = geo::ground(p) + Vec3::Y * 0.05;
-        let target_rot = ground_rotation(p, yaw);
-        tf.rotation = tf.rotation.slerp(target_rot, (dt * 3.0).min(1.0));
+        // Suspension: nose down under braking, squat under power, roll in turns, pitching over the ruts.
+        let accel = (v.speed - prev_speed) / dt.max(1e-4) * if v.reversing { -1.0 } else { 1.0 };
+        let rough = geo::value_noise(v.s * 0.35, v.idx as f32 * 3.1, 77) * 0.03 * (v.speed / 5.0);
+        let roll_target = -dyaw / dt.max(1e-4) * v.speed * 0.012;
+        suspension(&mut v, accel * 0.022 + rough, roll_target, dt);
+        tf.rotation = ground_rotation(p, yaw) * Quat::from_rotation_x(v.pitch) * Quat::from_rotation_z(v.roll);
         let moved = old.distance(p);
         v.travelled += moved;
         if v.travelled > 2.0 {
@@ -710,7 +726,6 @@ fn drive_vehicles(
         if v.speed > 0.5 {
             nearest_engine = nearest_engine.min(cam_pos.distance(tf.translation));
         }
-        let _ = (&mut stats, &mut radio, &mut pending, now);
 
         // Turret: track the aim point.
         if let Some(aim) = v.aim {
@@ -724,6 +739,53 @@ fn drive_vehicles(
         }
     }
     levels.engines = if nearest_engine < f32::MAX { (0.6 * 120.0 / (120.0 + nearest_engine)).min(0.5) } else { 0.0 };
+}
+
+/// A damped spring on the hull's pitch and roll.
+fn suspension(v: &mut Vehicle, pitch_target: f32, roll_target: f32, dt: f32) {
+    let (w, z) = (5.5f32, 0.28f32);
+    v.pitch_v += (w * w * (pitch_target.clamp(-0.12, 0.12) - v.pitch) - 2.0 * z * w * v.pitch_v) * dt;
+    v.pitch += v.pitch_v * dt;
+    v.roll_v += (w * w * (roll_target.clamp(-0.1, 0.1) - v.roll) - 2.0 * z * w * v.roll_v) * dt;
+    v.roll += v.roll_v * dt;
+}
+
+/// Vehicles knocked out or immobilised while moving coast to a stop, slewing; then the hull settles.
+fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, mut q: Query<(&mut Vehicle, &mut Transform)>) {
+    let dt = time.delta_secs().min(0.05);
+    let lay = geo::layout();
+    for (mut v, mut tf) in &mut q {
+        if v.state.mobile() || v.side != Side::Ru {
+            continue;
+        }
+        let moving = v.speed > 0.02;
+        if !moving && v.pitch.abs() < 1e-4 && v.pitch_v.abs() < 1e-4 && v.roll.abs() < 1e-4 && v.roll_v.abs() < 1e-4 {
+            continue;
+        }
+        let prev = v.speed;
+        if moving {
+            v.speed = (v.speed - v.coast_decel * dt).max(0.0);
+            v.slew *= (1.0 - dt * 0.8).max(0.0);
+            let yaw = v.yaw + v.slew * dt * (v.speed / 3.0).min(1.0);
+            v.yaw = wrap(yaw);
+            let dir = Vec2::new(-v.yaw.sin(), -v.yaw.cos()) * if v.reversing { -1.0 } else { 1.0 };
+            let p = Vec2::new(tf.translation.x, tf.translation.z) + dir * v.speed * dt;
+            tf.translation = geo::ground(p) + Vec3::Y * 0.05;
+            // Keep route coordinates current so the vehicles behind see where the wreck actually is.
+            let route = &lay.routes[v.route].line;
+            (v.lat, v.s) = route.lateral(p);
+            v.target_lat = v.lat;
+            v.travelled += v.speed * dt;
+            if v.travelled > 2.0 {
+                v.travelled = 0.0;
+                paint.push(Paint::Track { at: p, dir, gauge: 2.8 });
+            }
+        }
+        let accel = (v.speed - prev) / dt.max(1e-4);
+        suspension(&mut v, accel * 0.022, 0.0, dt);
+        let p = Vec2::new(tf.translation.x, tf.translation.z);
+        tf.rotation = ground_rotation(p, v.yaw) * Quat::from_rotation_x(v.pitch) * Quat::from_rotation_z(v.roll);
+    }
 }
 
 pub fn wrap(a: f32) -> f32 {
@@ -747,7 +809,6 @@ fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
 // ---------------------------------------------------------------------------------------------------------
 // Mines
 
-#[allow(clippy::too_many_arguments)]
 fn check_mines(
     mut commands: Commands,
     time: Res<Time>,
@@ -799,7 +860,11 @@ fn check_mines(
                 // TM-62 under a track: the track and road wheels are gone. Often more.
                 let kill = rng.0.random_bool(if v.kind.is_tank() { 0.3 } else { 0.5 });
                 v.state = VState::Immobilized;
-                v.speed = 0.0;
+                // The track is off on that side: it lurches, slews round the dead side and grinds to a stop.
+                v.coast_decel = rng.0.random_range(4.0..6.5);
+                v.slew = x.signum() * -rng.0.random_range(0.35..0.8);
+                v.pitch_v += rng.0.random_range(1.8..3.0);
+                v.roll_v += x.signum() * rng.0.random_range(1.5..2.5);
                 v.timer = 0.0;
                 if kill {
                     v.state = VState::Destroyed;
@@ -820,13 +885,12 @@ fn check_mines(
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn detonate(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, paint: &mut PaintQueue, pending: &mut Pending, blasts: &mut MessageWriter<Blast>, now: f64, listener: Vec3, at: Vec2) {
     let p = geo::ground(at);
     fx::explosion(commands, fx, rng, p, 1.1, true);
     paint.push(Paint::Crater { at, radius: 2.0, seed: rng.random() });
     audio::play_at(pending, now, listener, p, Sfx::MineBlast, 1.0);
-    blasts.write(Blast { at: p, radius: 6.0, cause: Cause::Mine, by: Side::Ua });
+    blasts.write(Blast { at: p, radius: 6.0, cause: Cause::Mine });
 }
 
 /// A vehicle has just been destroyed: char it, set it burning, maybe throw its turret.
@@ -836,7 +900,6 @@ pub struct Wrecked {
     pub cause: Cause,
 }
 
-#[allow(clippy::too_many_arguments)]
 pub fn on_wrecked(
     ev: On<Wrecked>,
     mut commands: Commands,
@@ -860,8 +923,14 @@ pub fn on_wrecked(
     v.wrecked = true;
     let now = time.elapsed_secs_f64();
     let rng = &mut fxr.0;
+    // It does not stop dead: the driver is gone, the engine dies, the hull rolls on and slews. (A vehicle already
+    // immobilised, by a mine say, keeps the slew round its dead track that it already has.)
+    if v.state.mobile() {
+        v.coast_decel = rng.random_range(2.5..4.0);
+        v.slew = rng.random_range(-0.3..0.3);
+    }
+    v.pitch_v -= rng.random_range(0.8..1.6);
     v.state = VState::Destroyed;
-    v.speed = 0.0;
     mat.0 = palette.charred.clone();
     stats.destroyed += 1;
     stats.wave(v.wave).1 += 1;
@@ -879,7 +948,7 @@ pub fn on_wrecked(
     paint.push(Paint::Scorch { at: Vec2::new(p.x, p.z), radius: 9.0 });
     // Men riding on top are thrown into the snow.
     for k in 0..dead.min(5) {
-        let at = Vec2::new(p.x, p.z) + Vec2::from_angle(rng.random_range(0.0..6.28)) * rng.random_range(3.0..9.0);
+        let at = Vec2::new(p.x, p.z) + Vec2::from_angle(rng.random_range(0.0..std::f32::consts::TAU)) * rng.random_range(3.0..9.0);
         commands.spawn((Mesh3d(models.ru_fallen.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(Quat::from_rotation_y(k as f32 * 1.9)), NotShadowCaster));
     }
     fx::explosion(&mut commands, &mut fx, rng, p + Vec3::Y, 1.4, false);
@@ -910,7 +979,6 @@ pub fn on_wrecked(
 // ---------------------------------------------------------------------------------------------------------
 // Damage
 
-#[allow(clippy::too_many_arguments)]
 fn resolve_blasts(
     mut commands: Commands,
     mut blasts: MessageReader<Blast>,
@@ -942,7 +1010,9 @@ fn resolve_blasts(
                         v.panic = (v.panic + 0.5).min(1.0);
                         if v.state.mobile() && rng.random_bool(0.25) {
                             v.state = VState::Immobilized;
-                            v.speed = 0.0;
+                            v.coast_decel = 4.0;
+                            v.slew = rng.random_range(-0.4..0.4);
+                            v.roll_v += rng.random_range(-1.5..1.5);
                             v.timer = 0.0;
                         }
                     }
@@ -972,12 +1042,11 @@ fn resolve_blasts(
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette, stats: &mut Stats, e: Entity, s: &Soldier, tf: &Transform, rng: &mut SmallRng) {
     commands.entity(e).despawn();
     let mesh = if s.side == Side::Ru { models.ru_fallen.clone() } else { models.ua_fallen.clone() };
     let p = Vec2::new(tf.translation.x, tf.translation.z);
-    commands.spawn((Mesh3d(mesh), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(p)).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..6.28))), NotShadowCaster));
+    commands.spawn((Mesh3d(mesh), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(p)).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..std::f32::consts::TAU))), NotShadowCaster));
     if s.side == Side::Ru {
         stats.ru_dead += 1;
     } else {
@@ -985,7 +1054,6 @@ pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette,
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit>, mut rng: ResMut<UnitRng>, mut q: Query<&mut Vehicle>) {
     for h in hits.read() {
         let Ok(mut v) = q.get_mut(h.target) else { continue };
@@ -998,7 +1066,9 @@ fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit
             commands.trigger(Wrecked { vehicle: h.target, cause: h.cause });
         } else {
             v.state = VState::Immobilized;
-            v.speed = 0.0;
+            v.coast_decel = 3.5;
+            v.slew = rng.0.random_range(-0.3..0.3);
+            v.pitch_v -= 1.2;
             v.timer = 0.0;
             v.panic = 1.0;
         }
@@ -1050,7 +1120,6 @@ pub struct Fleeing;
 // ---------------------------------------------------------------------------------------------------------
 // Soldiers
 
-#[allow(clippy::too_many_arguments)]
 fn move_soldiers(
     mut commands: Commands,
     time: Res<Time>,

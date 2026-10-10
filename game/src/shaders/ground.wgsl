@@ -2,6 +2,7 @@
 // The base texture's alpha carries the field's furrow direction (0 = no furrows here).
 
 #import bevy_pbr::{
+    mesh_view_bindings::fog,
     pbr_fragment::pbr_input_from_standard_material,
     pbr_functions::alpha_discard,
     forward_io::{VertexOutput, FragmentOutput},
@@ -69,6 +70,10 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
     pbr_input.material.base_color = alpha_discard(pbr_input.material, pbr_input.material.base_color);
     var out: FragmentOutput;
     out.color = apply_pbr_lighting(pbr_input);
+    // The diorama has no edge: the last 600 m of ground dissolve into the haze.
+    let edge = min(2304.0 - abs(w.x), 1792.0 - abs(w.y));
+    let e = 1.0 - smoothstep(0.0, 600.0, edge);
+    out.color = vec4<f32>(mix(out.color.rgb, fog.base_color.rgb, e * e), out.color.a);
     out.color = main_pass_post_lighting_processing(pbr_input, out.color);
     return out;
 }
