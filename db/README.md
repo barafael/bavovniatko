@@ -25,7 +25,7 @@ db/dbctl.sh sql              # interactive SurrealQL shell
 | path | contents |
 |---|---|
 | `schema/` | Ordered, idempotent migrations. Never edit an applied one; add a new one. |
-| `vocab/` | Curated vocabularies: `eras.yaml`, `topics.yaml`, `kinds.yaml`, `units.yaml`, `metrics.yaml`, `entities.yaml` (the entity registry) |
+| `vocab/` | Curated vocabularies: `eras.yaml`, `topics.yaml`, `kinds.yaml`, `units.yaml`, `metrics.yaml`, and `entities/` (the entity registry, one file per type) |
 | `staging/` | Agent-produced input: `claims/NN.jsonl`, `relations/judged/*.jsonl`, `sim/*.yaml`, `sources/*.yaml` (new sources), and `entities/geocode.jsonl` (Nominatim cache). The briefs are `EXTRACTION.md`, `ENTITIES.md` and `RELATIONS.md`. |
 | `checks/` | Integrity queries. Each returns violating ids and has a severity header. |
 | `fixes/` | Idempotent data corrections, e.g. extraction errors found in review. Applied with `migrate.py --fixes`. |
@@ -89,7 +89,7 @@ db/dbctl.sh sql              # interactive SurrealQL shell
    `load.py sources`.
 2. **Extract.** `stage.py worksheet`, then agents follow `staging/EXTRACTION.md`. `stage.py check`
    must be clean.
-3. **Entities.** `entities.py unmatched`, then add new names to `vocab/entities.yaml`, then
+3. **Entities.** `entities.py unmatched`, then add new names to `vocab/entities/<type>.yaml`, then
    `entities.py geocode` for new places.
 4. **Load and relate.** `load.py all`, then `relate.py candidates`, `relate.py batches`, agent
    judgments following `staging/RELATIONS.md`, `relate.py validate` and `relate.py load`.

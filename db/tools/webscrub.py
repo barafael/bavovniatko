@@ -194,7 +194,7 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
 
     # 3. Entities: keep what anything kept refers to; drop unreferenced ones with game wording.
     tables["term"] = [r for r in tables.get("term", []) if not has_game(str(r.get("group", "")))]
-    entity_rows = {t: tables.get(t, []) for t in ENTITY_TABLES}
+    entity_rows = {t: tables.get(t, []) for t in sorted(ENTITY_TABLES)}
     used: set = set()
     for t, rows in tables.items():
         if t not in ENTITY_TABLES:
