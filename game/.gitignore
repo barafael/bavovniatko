@@ -1,0 +1,3 @@
+target/
+# Local development history (screenshots, clips, run logs): kept out of git.
+devlog/

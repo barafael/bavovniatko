@@ -1,0 +1,23 @@
+[package]
+name = "vuhledar"
+version = "0.1.0"
+edition = "2024"
+description = "Vuhledar, 6 February 2023: the first diorama of bavovniatko"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[dependencies]
+bevy = { version = "=0.19.1", features = ["wayland"] }
+rand = { version = "0.9", features = ["small_rng"] }
+noise = "0.9"
+
+# Fast iteration: optimise dependencies even in dev builds.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
