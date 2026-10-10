@@ -9,7 +9,6 @@ publish = false
 [dependencies]
 bevy = { version = "=0.19.1", features = ["wayland"] }
 rand = { version = "0.9", features = ["small_rng"] }
-noise = "0.9"
 
 # Fast iteration: optimise dependencies even in dev builds.
 [profile.dev]

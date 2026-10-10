@@ -67,6 +67,11 @@ VUHLEDAR_HEADLESS=1 VUHLEDAR_SKIP_BRIEFING=1 VUHLEDAR_SHOT=out.png VUHLEDAR_SHOT
 scripts/record.sh <name> "<x,z,agl,yaw,pitch,fov>" <from-s> <secs> "note" [vehicle-idx]
 ```
 
+`scripts/showcase.sh <out.mp4>` films a directed one-minute tour of the day at 1920x1080 with sound. The game
+runs on a fixed step while filming, logs every sound it plays, and `scripts/showcase_mix.py` rebuilds the
+soundtrack offline. It takes about ten minutes, with no window or speakers, and the day is deterministic, so
+every run films the same tour.
+
 `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle, and `VUHLEDAR_SPEED`
 scales game time. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
 `devlog/videos.md`. The history is part of the development.

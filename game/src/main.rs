@@ -12,6 +12,7 @@ mod fx;
 mod geo;
 mod hud;
 mod meshes;
+mod showcase;
 mod terrain;
 mod units;
 mod world;
@@ -37,8 +38,10 @@ fn main() {
                 .set(WindowPlugin { primary_window: None, exit_condition: ExitCondition::DontExit, ..default() })
                 .set(AudioPlugin { global_volume: GlobalVolume::new(Volume::SILENT), ..default() })
                 .disable::<WinitPlugin>(),
-        )
-        .add_plugins(ScheduleRunnerPlugin::run_loop(std::time::Duration::from_secs_f64(1.0 / 60.0)));
+        );
+        // Filming runs on a fixed game step, so there is no reason to wait for wall-clock frames.
+        let wait = if std::env::var("VUHLEDAR_SHOWCASE").is_ok() { 0.0 } else { 1.0 / 60.0 };
+        app.add_plugins(ScheduleRunnerPlugin::run_loop(std::time::Duration::from_secs_f64(wait)));
     } else {
         app.add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
@@ -59,7 +62,7 @@ fn main() {
         .add_plugins((units::UnitsPlugin, fire::FirePlugin, director::DirectorPlugin, hud::HudPlugin))
         .add_observer(units::on_wrecked)
         .add_systems(Update, drone_view_audio)
-        .add_plugins(dev::DevPlugin)
+        .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin))
         .run();
 }
 

@@ -152,7 +152,8 @@ fn spawn_camera(mut commands: Commands, mut view: ResMut<View>, mut images: ResM
         IsDefaultUiCamera,
     ));
     if crate::headless() {
-        let mut img = Image::new_target_texture(1600, 900, bevy::render::render_resource::TextureFormat::Rgba8UnormSrgb, None);
+        let (w, h) = std::env::var("VUHLEDAR_RES").ok().and_then(|r| r.split_once('x').and_then(|(a, b)| Some((a.parse().ok()?, b.parse().ok()?)))).unwrap_or((1600u32, 900u32));
+        let mut img = Image::new_target_texture(w, h, bevy::render::render_resource::TextureFormat::Rgba8UnormSrgb, None);
         img.texture_descriptor.usage |= bevy::render::render_resource::TextureUsages::COPY_SRC;
         let h = images.add(img);
         cam.insert(bevy::camera::RenderTarget::Image(h.clone().into()));

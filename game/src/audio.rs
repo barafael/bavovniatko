@@ -275,6 +275,27 @@ fn rotor(_rng: &mut SmallRng) -> Vec<f32> {
     }).collect()
 }
 
+fn write_wav(path: &str, samples: &[f32]) {
+    let mut b = Vec::with_capacity(44 + samples.len() * 2);
+    let data = (samples.len() * 2) as u32;
+    b.extend_from_slice(b"RIFF");
+    b.extend_from_slice(&(36 + data).to_le_bytes());
+    b.extend_from_slice(b"WAVEfmt ");
+    b.extend_from_slice(&16u32.to_le_bytes());
+    b.extend_from_slice(&1u16.to_le_bytes());
+    b.extend_from_slice(&1u16.to_le_bytes());
+    b.extend_from_slice(&RATE.to_le_bytes());
+    b.extend_from_slice(&(RATE * 2).to_le_bytes());
+    b.extend_from_slice(&2u16.to_le_bytes());
+    b.extend_from_slice(&16u16.to_le_bytes());
+    b.extend_from_slice(b"data");
+    b.extend_from_slice(&data.to_le_bytes());
+    for s in samples {
+        b.extend_from_slice(&((s.clamp(-1.0, 1.0) * 32767.0) as i16).to_le_bytes());
+    }
+    let _ = std::fs::write(path, b);
+}
+
 fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let mut rng = SmallRng::seed_from_u64(0x2023_0206);
     let mut add = |v: Vec<f32>| assets.add(Synth { samples: Arc::new(v) });
@@ -295,6 +316,21 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let rumble = add(bed(&mut rng, 40.0, 90.0, 180.0, 9));
     let engines = add(engines(&mut rng));
     let rotor = add(rotor(&mut rng));
+    if let Ok(dir) = std::env::var("VUHLEDAR_SHOWCASE") {
+        // The showcase rebuilds the soundtrack offline from these.
+        let mut dump = |name: &str, h: &Handle<Synth>| {
+            if let Some(a) = assets.get(h) {
+                write_wav(&format!("{dir}/sfx-{name}.wav"), &a.samples);
+            }
+        };
+        for (k, h) in &sounds {
+            dump(&format!("{k:?}"), h);
+        }
+        dump("Wind", &wind);
+        dump("Rumble", &rumble);
+        dump("Engines", &engines);
+        dump("Rotor", &rotor);
+    }
     commands.insert_resource(Bank { sounds, wind, rumble, engines, rotor });
 }
 
@@ -339,6 +375,9 @@ fn play_pending(mut commands: Commands, time: Res<Time>, bank: Option<Res<Bank>>
             continue; // the mix is saturated; drop the quiet ones
         }
         busy += 1;
+        if let Ok(dir) = std::env::var("VUHLEDAR_SHOWCASE") {
+            crate::showcase::append(&format!("{dir}/audio.log"), &format!("sfx {:.4} {:?} {:.5} {:.4}\n", now, item.1, item.2.min(1.5), item.3));
+        }
         commands.spawn((AudioPlayer(bank.get(item.1)), PlaybackSettings::DESPAWN.with_volume(Volume::Linear(item.2.min(1.5))).with_speed(item.3)));
     }
     pending.queue = keep;
@@ -368,8 +407,11 @@ pub struct AmbienceLevels {
     pub drone_view: bool,
 }
 
-fn ambience_mix(levels: Option<Res<AmbienceLevels>>, mut q: Query<(&Ambience, &mut AudioSink)>) {
+fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, mut q: Query<(&Ambience, &mut AudioSink)>) {
     let Some(levels) = levels else { return };
+    if let Ok(dir) = std::env::var("VUHLEDAR_SHOWCASE") {
+        crate::showcase::append(&format!("{dir}/audio.log"), &format!("amb {:.4} {:.4} {}\n", time.elapsed_secs_f64(), levels.engines, levels.drone_view as u8));
+    }
     for (a, mut sink) in &mut q {
         let v = match a.0 {
             AmbienceKind::Wind => if levels.drone_view { 0.18 } else { 0.3 },

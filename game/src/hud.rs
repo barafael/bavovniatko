@@ -51,6 +51,10 @@ fn text(s: &str, size: f32, color: Color) -> (Text, TextFont, TextColor) {
 }
 
 fn spawn_hud(mut commands: Commands) {
+    // Larger offscreen renders (the showcase films at 1080p) scale the interface with them.
+    if let Some(h) = std::env::var("VUHLEDAR_RES").ok().and_then(|r| r.split_once('x').and_then(|(_, h)| h.parse::<f32>().ok())) {
+        commands.insert_resource(UiScale(1.35 * h / 900.0));
+    }
     let abs = |top: Option<f32>, bottom: Option<f32>, left: Option<f32>, right: Option<f32>| Node {
         position_type: PositionType::Absolute,
         top: top.map(px).unwrap_or(Val::Auto),
