@@ -58,3 +58,5 @@
 - {id: knot,            symbol: "kn",           dimension: speed, base: km_per_h, to_base: 1.852}
 - {id: nmi,             symbol: "nmi",          dimension: length, base: km, to_base: 1.852}
 - {id: hour_of_day,     symbol: "h (clock)",    dimension: clock_time}
+- {id: ms,              symbol: "ms",           dimension: time, base: min, to_base: 1.66666667e-5}
+- {id: gb,              symbol: "GB",           dimension: data}

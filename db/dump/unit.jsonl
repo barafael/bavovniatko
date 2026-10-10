@@ -18,6 +18,7 @@
 {"base":{"$rid":["unit","mhz"]},"dimension":"frequency","ext":{"_hash":"1ff1021e8d2ac6b9"},"id":{"$rid":["unit","ghz"]},"labels":{"en":"GHz"},"symbol":"GHz","to_base":1000.0}
 {"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"14e662df146040c7"},"id":{"$rid":["unit","month"]},"labels":{"en":"month"},"symbol":"month","to_base":43830.0}
 {"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"3927a171106be05e"},"id":{"$rid":["unit","h"]},"labels":{"en":"h"},"symbol":"h","to_base":60.0}
+{"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"64a03cff4260d8d4"},"id":{"$rid":["unit","ms"]},"labels":{"en":"ms"},"symbol":"ms","to_base":1.66666667e-05}
 {"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"6e252f05a50bfe9c"},"id":{"$rid":["unit","s"]},"labels":{"en":"s"},"symbol":"s","to_base":0.0166666667}
 {"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"6e29844748380a94"},"id":{"$rid":["unit","year"]},"labels":{"en":"year"},"symbol":"year","to_base":525960.0}
 {"base":{"$rid":["unit","min"]},"dimension":"time","ext":{"_hash":"7fe69a93ca406ac4"},"id":{"$rid":["unit","day"]},"labels":{"en":"day"},"symbol":"day","to_base":1440.0}
@@ -40,6 +41,7 @@
 {"dimension":"currency","ext":{"_hash":"9722f49d67e27a20"},"id":{"$rid":["unit","yuan"]},"labels":{"en":"CNY"},"symbol":"CNY"}
 {"dimension":"currency","ext":{"_hash":"b90394cc1941693e"},"id":{"$rid":["unit","usd"]},"labels":{"en":"USD"},"symbol":"USD"}
 {"dimension":"currency/length","ext":{"_hash":"942c6dbb6419d55d"},"id":{"$rid":["unit","cny_per_km"]},"labels":{"en":"CNY/km"},"symbol":"CNY/km"}
+{"dimension":"data","ext":{"_hash":"b43015e7695b0ca3"},"id":{"$rid":["unit","gb"]},"labels":{"en":"GB"},"symbol":"GB"}
 {"dimension":"density","ext":{"_hash":"4b3302325d56b08d"},"id":{"$rid":["unit","km_per_km2"]},"labels":{"en":"km/km²"},"symbol":"km/km²"}
 {"dimension":"density","ext":{"_hash":"ace14e2ab4acb601"},"id":{"$rid":["unit","per_km"]},"labels":{"en":"per km"},"symbol":"per km"}
 {"dimension":"density","ext":{"_hash":"d70772a3aefe2c2f"},"id":{"$rid":["unit","per_100km2"]},"labels":{"en":"per 100 km²"},"symbol":"per 100 km²"}

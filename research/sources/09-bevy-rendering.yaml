@@ -1,0 +1,636 @@
+# Sources cited in research/09-bevy-rendering.md, generated from the knowledge base by db/tools/render.py.
+- id: bevy-0.19-release
+  aliases:
+  - bevy-blog-0-19
+  title: Bevy 0.19
+  url: https://bevy.org/news/bevy-0-19/
+  publisher: Bevy Foundation
+  authors:
+  - Bevy Contributors
+  published: '2026-06-19'
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: '0.19 release notes: GPU-driven rendering (1.6M cubes 49.5ms to 18.8ms culled), contact shadows, PB SSR, vignette
+    + lens distortion built-ins, render graph replaced by ECS schedules in Core3d/Core2d, BSN scenes, Solari improvements.'
+- id: bevy-3d-tiles
+  title: bevy_3d_tiles — OGC 3D Tiles streaming renderer
+  url: https://github.com/Arvikasoft/bevy_3d_tiles
+  publisher: Arvikasoft (GitHub)
+  authors: []
+  published: 2026-07
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: .3tz ranged reader, per-tile SSE traversal, glTF/b3dm, KTX2+meshopt, ECEF georeferencing, Google
+    Photorealistic 3D Tiles; no stable release channel at access - reference only.'
+- id: bevy-a5
+  title: bevy_a5 — A5 geospatial pentagonal cells for floating origin and spatial queries
+  url: https://github.com/jonititan/bevy_a5
+  publisher: jonititan (GitHub)
+  authors: []
+  published: 2026-05
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata only: 0.1.2, A5 discrete global grid cells as spatial partitioning/queries; alternative if dioramas
+    ever merge.'
+- id: bevy-aqua
+  title: bevy-aqua — camera-centred ocean rendering (FFT + analytic waves)
+  url: https://github.com/sayhisam1/bevy-aqua
+  publisher: sayhisam1 (GitHub)
+  authors:
+  - Sam H
+  published: 2026-08
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: '0.1.3 for bevy 0.19: five displacement cascades, Tessendorf FFT + Crest-style analytic waves, persistent whitecaps/foam,
+    BedHeightMap shoaling, bounded WaterBody/WaterShape circles/polygons/river corridors with per-body optics, GPU WaveQuery
+    (256 probes/frame, ~1 frame latency), planar reflections + optional SSR, caustics, opt-in underwater, Hanabi spray, WebGPU
+    demos; limits: one active Camera3d supported, one horizontal level per body, known bevy 0.19.1 mirror normal-polarity
+    bug; MIT/Apache.'
+- id: bevy-clipmap
+  title: bevy-clipmap — GPU geometry clipmaps for huge worlds
+  url: https://github.com/kirillsurkov/bevy-clipmap
+  publisher: kirillsurkov (GitHub)
+  authors:
+  - Kirill Surkov
+  published: 2025-12
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: Losasso/Hoppe GPU clipmaps; README table lists 1.0.5 for bevy 0.19 (crates.io showed 1.0.4 at access - verify on
+    adoption); Python pipeline 16-bit PNG to KTX2 plus horizon maps; horizon maps cost 360*W*H*4 bytes (1.4GB at 1k, prohibitive
+    past ~8k).
+- id: bevy-examples-tree
+  title: Bevy v0.19.1 examples tree (camera/, 3d/, large_scenes/)
+  url: https://github.com/bevyengine/bevy/tree/v0.19.1/examples
+  publisher: Bevy Engine
+  authors: []
+  published: '2026-08-13'
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Verified example inventory: camera/ (split via viewport lives in 3d/split_screen, free_camera_controller, first_person_view_model,
+    custom_projection, projection_zoom, orthographic in 3d/), 3d/ (atmosphere, fog, fog_volumes, volumetric_fog, scrolling_fog,
+    skybox, render_to_texture, split_screen, two_passes, camera_sub_view, post_processing, color_grading, tonemapping, auto_exposure,
+    motion_blur, visibility_range, occlusion_culling, meshlet, transmission, solari), large_scenes/bevy_city.'
+- id: bevy-fast-clouds
+  title: bevy_fast_clouds — hierarchical trigonometric wavelet cloud volumes
+  url: https://github.com/steven-moss-notebook/bevy_fast_clouds
+  publisher: steven-moss-notebook (GitHub)
+  authors:
+  - Steven Moss
+  published: 2026-09
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 0.19.x tracks bevy 0.19; fog-volume-style rasterized boxes, ray-parallel stripe cancellation and sub-pixel octave
+    dropping, LodPolicy by distance, planet-approach demo; first release Sep 2026, tiny adoption - alternative if bevy_weather
+    cloud cost bites.
+- id: bevy-feronia
+  title: bevy_feronia — foliage/grass scattering with wind simulation
+  url: https://github.com/NicoZweifel/bevy_feronia
+  publisher: NicoZweifel (GitHub)
+  authors:
+  - Nico Zweifel
+  published: 2025-07
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'README + Cargo.toml fetched: scatter layers with LOD-matched items, wind shaders inspired by Ghost of Tsushima GDC
+    talks, heightmap baking, ordered scattering; main branch pins bevy 0.17.2 (crates 0.8.4 updated 2026-06) - mine the WGSL,
+    do not depend yet.'
+- id: bevy-geo-tiles
+  title: bevy_geo_tiles — slippy-map raster tiles in Bevy
+  url: https://github.com/Moritz-Schmidt/bevy_geo_tiles
+  publisher: Moritz-Schmidt (GitHub)
+  authors: []
+  published: 2025-11
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.2.1 (2026-03); OSM-style xyz tiles for briefing screens and the 2D country map background;
+    mind OSM tile-usage policy.'
+- id: bevy-hanabi
+  title: bevy_hanabi — GPU particle system
+  url: https://github.com/djeedai/bevy_hanabi
+  publisher: djeedai (GitHub)
+  authors:
+  - Jérôme Humbert
+  published: '2022'
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 0.19.0 released 2026-06 for bevy 0.19 (crates.io metadata); the standard GPU particles plugin - smoke, dust, blooms,
+    tracers.
+- id: bevy-hanabi-loader
+  title: bevy_hanabi_loader — RON asset definitions for bevy_hanabi
+  url: https://crates.io/crates/bevy_hanabi_loader
+  publisher: crates.io
+  authors: []
+  published: 2024-02
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.19.0; define VFX in RON files.'
+- id: bevy-map-viewer
+  title: bevy_map_viewer — xyz tile maps in Bevy
+  url: https://github.com/SO9010/bevy-map-viewer
+  publisher: SO9010 (GitHub)
+  authors: []
+  published: 2026-08
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.2.1 (2026-08); alternative to bevy_geo_tiles.'
+- id: bevy-mesh-terrain
+  title: bevy_mesh_terrain — heightmap terrain plugin
+  url: https://github.com/ethereumdegen/bevy_mesh_terrain
+  publisher: ethereumdegen (GitHub)
+  authors: []
+  published: 2023-09
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.15.11 on bevy 0.15 (lagged); chunked heightmap terrain with splat mapping; code to mine, not
+    to depend on.'
+- id: bevy-procedural-tree
+  title: bevy_procedural_tree — procedurally generated 3D trees
+  url: https://github.com/Affinator/bevy_procedural_tree
+  publisher: Affinator (GitHub)
+  authors: []
+  published: 2025-09
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.4.0, 2026-07; candidate for oak/pine/poplar/birch shelterbelt variety.'
+- id: bevy-regions
+  title: bevy_regions — region painting with a u16 texture
+  url: https://github.com/ethereumdegen/bevy_regions
+  publisher: ethereumdegen (GitHub)
+  authors: []
+  published: 2024-05
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.16.0 on bevy 0.16; also bevy_foliage_paint; splat/region-painting pattern for fields and roads.'
+- id: bevy-releases
+  title: Bevy GitHub releases
+  url: https://github.com/bevyengine/bevy/releases
+  publisher: Bevy Engine
+  authors: []
+  published: '2026'
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Version facts: 0.19.1 stable published 2026-08-13; 0.20.0-rc.2 published 2026-09-28; 0.18.1 2026-03-02.'
+- id: bevy-rts-camera
+  title: bevy_rts_camera — RTS-style camera controls
+  url: https://github.com/Plonq/bevy_rts_camera
+  publisher: Plonq (GitHub)
+  authors:
+  - Plonq
+  published: 2024-02
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: v0.14 for bevy 0.19 (compat table fetched); pan/zoom/rotate, Ground-marker ground-following, smoothing, edge pan,
+    optional controller; ~100 stars; MIT/Apache. The ground-command/drone-operator station view.
+- id: bevy-spatial
+  title: bevy_spatial — track bevy entities in spatial indices
+  url: https://github.com/laundmo/bevy-spatial
+  publisher: laundmo (GitHub)
+  authors:
+  - laundmo
+  published: '2022'
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata only: 0.11.0 updated 2025-05 (likely bevy 0.15/0.16, lagged); KD-tree entity tracking for nearest-neighbour
+    sim queries.'
+- id: bevy-stage
+  title: bevy_stage — glTF levels with streaming sectors and LOD
+  url: https://github.com/etwodev/bevy_stage
+  publisher: etwodev (GitHub)
+  authors: []
+  published: 2026-09
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.2.0, bevy 0.19-era, same author as bevy_weather; node tags, seamless transitions, streaming
+    sectors - sector-streaming reference.'
+- id: bevy-symbios-ground
+  title: bevy_symbios_ground — algorithmic terrain engine integration
+  url: https://github.com/TheJanusStream/bevy_symbios_ground
+  publisher: TheJanusStream (GitHub)
+  authors: []
+  published: 2026-02
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.5.0, active 2026-08; small adoption; watch.'
+- id: bevy-volumetric-clouds
+  title: bevy-volumetric-clouds — raymarched clouds (Horizon Zero Dawn method)
+  url: https://github.com/evroon/bevy-volumetric-clouds
+  publisher: evroon (GitHub)
+  authors: []
+  published: 2025-11
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: '0.2.x on bevy 0.18 (lagged); HZD method; limits: own simple sky (no Bevy atmosphere integration), no depth integration
+    (ground views only), fixed 1920x1080 target. MIT.'
+- id: bevy-water
+  title: bevy_water — dynamic water material with waves
+  url: https://github.com/Neopallium/bevy_water
+  publisher: Neopallium (GitHub)
+  authors: []
+  published: 2022-08
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 0.18.1 on bevy 0.18 (lagged); tileable endless ocean, vertex waves, get_wave_point() for floating objects, bevy_pbr
+    lighting, wasm examples; camera-agnostic fallback where multi-view breaks aqua.
+- id: bevy-weather
+  title: bevy_weather — weather and sky plugin
+  url: https://github.com/etwodev/bevy_weather
+  publisher: etwodev (GitHub)
+  authors: []
+  published: 2026-09
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: '0.2.0 for bevy 0.19: day/night from solar geometry (latitude/tilt/date), Bruneton atmosphere wiring, procedural
+    stars/galaxy/moon/meteors, raymarched volumetric clouds with light cookie shadows, volumetric fog + god rays, GPU rain/snow,
+    Poisson lightning with speed-of-sound delay, GroundConditions persistent wetness/snow, deterministic pure function of
+    clock+seed with forecast(), quality tiers Potato-Ultra (12-128 cloud steps), --bench sweep; cost is per-pixel cloud raymarch,
+    broken sky most expensive. MIT/Apache.'
+- id: bevytiles
+  title: bevytiles — 3D geospatial engine for Bevy (raytiles port)
+  url: https://github.com/ziv/bevytiles
+  publisher: ziv (GitHub)
+  authors: []
+  published: 2026-08
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 0.1.0 for bevy 0.19; lat/lon WorldConfig, quadtree LOD policy snapshot-tested vs C++ original, Terrarium decode +
+    ancestor synthesis to zoom 22, uint16 bilinear ground_height() queries, TerrainAnchor large-world rebase (absolute = user
+    - world_offset), worker-thread fetch + disk cache, wasm via fetch; streams Esri imagery + Mapzen/AWS terrain tiles (terms
+    must be respected); built for UAV sims, flight planning, digital sand tables. MIT/Apache.
+- id: big-space
+  title: Big Space — a floating origin plugin for Bevy
+  url: https://github.com/aevyrie/big_space
+  publisher: aevyrie (GitHub)
+  authors:
+  - aevyrie
+  published: '2023'
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: Floating origin via nestable i8-i128 integer grid cells, absolute coords without drift, Transform-compatible, spatial
+    hashing/partitioning; 0.12.0 targets bevy 0.18 (0.19 port pending at access); 37k downloads.
+- id: big-space-solari
+  title: big_space_solari
+  url: https://github.com/SindSieEcht/big_space_solari
+  publisher: SindSieEcht (GitHub)
+  authors: []
+  published: 2026-06
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Resets ray-traced lighting temporal history on floating-origin recenter; scale-bias keeps ray-traced geometry artefact-free
+    at large coordinates. Lesson: recentering must reset temporal GPU effects.'
+- id: chunky-bevy
+  title: chunky-bevy — chunk management system
+  url: https://github.com/ChousX/chunky-bevy
+  publisher: ChousX (GitHub)
+  authors: []
+  published: 2025-11
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.18.0 (2026-01); simple load-in/load-out chunk management.'
+- id: crates-io-bevy
+  title: bevy — versions on crates.io
+  url: https://crates.io/crates/bevy/versions
+  publisher: crates.io
+  authors: []
+  published: '2026'
+  accessed: '2026-10-10'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Release dates from the crates.io API: 0.19.0 on 2026-06-19, 0.19.1 on 2026-08-13, 0.20.0-rc.1 on 2026-09-15, 0.20.0-rc.2
+    on 2026-09-28, 0.20.0 on 2026-10-08.'
+- id: crates-io-big-space
+  title: big_space — versions on crates.io
+  url: https://crates.io/crates/big_space/versions
+  publisher: crates.io
+  authors: []
+  published: '2026'
+  accessed: '2026-10-10'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 0.12.0 on 2026-02-09; 0.13.0 (bevy ^0.19) and 0.14.0-rc.0 (bevy ^0.20.0-rc.2) on 2026-10-08.
+- id: digital-extinction-game
+  aliases:
+  - de-game
+  title: Digital Extinction — 3D RTS in Rust/Bevy
+  url: https://github.com/DigitalExtinction/Game
+  publisher: DigitalExtinction (GitHub)
+  authors:
+  - Indy2222
+  - DE contributors
+  published: 2022-03
+  accessed: '2026-10-02'
+  type: game
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'README fetched: most complete Bevy RTS - heightmap terrain (de_terrain crate), spatial index (de_index), pathfinding,
+    minimap, lobby; ARCHIVED (last push 2024-09), AGPL-3.0 - study architecture, never copy code or assets.'
+- id: evroon-bevy-open-world
+  title: bevy-open-world — open-world rendering demo crates
+  url: https://github.com/evroon/bevy-open-world
+  publisher: evroon (GitHub)
+  authors: []
+  published: 2026-03
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'README fetched: bevy-osm (OSM buildings/roads), bevy-terrain (quadtree), bevy-adsb (live ADS-B traffic), bevy-earth,
+    bevy-flight-sim, bevy-night-sky, bevy-skybox, bevy-svg; author states demo quality, not published to crates.io.'
+- id: frostbite-2016-sky-clouds
+  title: Physically Based Sky, Atmosphere and Cloud Rendering in Frostbite
+  url: https://media.contentapi.ea.com/content/dam/eacom/frostbite/files/s2016-pbs-frostbite-sky-clouds-new.pdf
+  publisher: EA Frostbite
+  authors:
+  - Sébastien Hillaire
+  published: '2016'
+  accessed: '2026-10-02'
+  type: academic
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: Physically based sky/atmosphere/cloud course cited by the Bevy cloud plugins; pairs with Bevy's Bruneton atmosphere.
+- id: guerrilla-hzd-cloudscapes
+  title: The real-time volumetric cloudscapes of Horizon Zero Dawn
+  url: https://www.guerrilla-games.com/read/the-real-time-volumetric-cloudscapes-of-horizon-zero-dawn
+  publisher: Guerrilla Games
+  authors:
+  - Andrew Schneider
+  - Nathan Vos
+  published: '2015'
+  accessed: '2026-10-02'
+  type: academic
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: Foundational volumetric cloud method cited by bevy-volumetric-clouds; canonical design reading.
+- id: hoppe-2004-gpugcm
+  aliases:
+  - losasso-hoppe-2004-clipmaps
+  title: 'Geometry Clipmaps: Terrain Rendering on Graphics Hardware'
+  url: https://hhoppe.com/gpugcm.pdf
+  publisher: ACM SIGGRAPH
+  authors:
+  - Frank Losasso
+  - Hugues Hoppe
+  published: '2004'
+  accessed: '2026-10-02'
+  type: academic
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: The paper bevy-clipmap implements; canonical reference for terrain LOD via nested concentric grids.
+- id: iron-curtain
+  title: iron-curtain — Rust-native RTS engine on Bevy (C&C community)
+  url: https://github.com/iron-curtain-engine/iron-curtain
+  publisher: iron-curtain-engine (GitHub)
+  authors: []
+  published: 2026-03
+  accessed: '2026-10-02'
+  type: game
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'GitHub search metadata: young (2026-03), GPL-3.0 with modding exception; watch.'
+- id: milsymbol-rs-js
+  title: milsymbol-rs — Rust wrapper around the milsymbol JS library
+  url: https://codeberg.org/bcow/milsymbol-rs
+  publisher: bcow (Codeberg)
+  authors: []
+  published: 2026-03
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.3.2; JS-library wrapper alternative to the native port.'
+- id: milsymbol-rust
+  title: milsymbol — native Rust port of milsymbol.js (MIL-STD-2525 / APP-6)
+  url: https://github.com/luofang34/milsymbol
+  publisher: luofang34 (GitHub)
+  authors: []
+  published: 2026-09
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.3.0, created 2026-09-28, brand new; military symbol generation in native Rust. Verify APP-6
+    subset coverage (incl. Ukrainian-specific marks) before building the AWACS overlay.'
+- id: rusty-rotor-fpv
+  title: rusty-rotor — FPV drone simulator in Rust/Bevy (WIP)
+  url: https://github.com/HalavicH/rusty-rotor
+  publisher: HalavicH (GitHub)
+  authors: []
+  published: 2025-08
+  accessed: '2026-10-02'
+  type: game
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'GitHub search metadata: WIP, MIT, 0 stars, last push 2025-08; the only FPV-drone Bevy prior art found.'
+- id: terraink
+  title: terraink — DEM (GeoTIFF, Terrarium) and MVT visualizer built with Bevy
+  url: https://github.com/fn-a/terraink
+  publisher: fn-a (GitHub)
+  authors: []
+  published: 2026-07
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata only: 0.0.2, early; reference for the Copernicus GLO-30 GeoTIFF ingest path.'
+- id: utm-crate
+  title: utm — convert latitudes/longitudes to UTM and back
+  url: https://github.com/gadomski/utm
+  publisher: gadomski (GitHub)
+  authors:
+  - Pete Gadomski
+  published: 2022-11
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: high
+  verified: fetched
+  eras: []
+  topics: []
+  notes: MIT, ~300 lines, no_std-capable; lat/lon to UTM metres for converting OSM/GLO-30 sample boxes to local game coordinates.
+- id: warbler-grass
+  title: warbler_grass — 3D grass plugin
+  url: https://github.com/EmiOnGit/warbler_grass
+  publisher: EmiOnGit (GitHub)
+  authors: []
+  published: 2023-02
+  accessed: '2026-10-02'
+  type: software
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics: []
+  notes: 'Crates.io metadata: 0.6.1, last updated 2024-06 (bevy ~0.13/0.14 era, outdated); canonical dense GPU billboard-grass
+    approach.'

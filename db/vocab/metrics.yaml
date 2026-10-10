@@ -406,3 +406,8 @@ video_duration:             ["Video length", time, min]
 water_volume:               ["Volume of water released or flowing", volume, other]
 wingspan:                   ["Wingspan", length, m]
 structure_width:            ["Width or diameter of a structure (pipe, tunnel)", length, m]
+# software and rendering (research/09, 2026-10-10)
+frame_time:                  ["Frame time", time, ms]
+float_resolution:            ["Floating-point positional resolution", length, cm]
+data_size:                   ["Data size", data, gb]
+diorama_size:                ["Diorama extent", length, km]

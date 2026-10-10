@@ -8922,3 +8922,94 @@
   en: "Russian vehicle logistics into Lyman"
   aliases: ["Russian vehicle logistics into Lyman"]
   sides: ["ru"]
+
+# --- Units inventory gaps (design/units.md, 2026-10-10) ---------------------------------------
+- id: system:t_80u
+  type: system
+  kind: armour
+  en: "T-80U"
+  aliases: ["T-80U"]
+  parent: system:t_80
+  sides: [ru]
+  note: "Captured example photographed on a flatbed during the Kharkiv counteroffensive (Sep 2022)."
+
+- id: system:bmd_3
+  type: system
+  kind: armour
+  en: "BMD-3"
+  aliases: ["BMD-3", "BMD-3M"]
+  parent: system:bmd
+  sides: [ru]
+  note: "Airborne IFV; appears only as a destroyed-vehicle media photo at Krynky, so low priority."
+
+- id: system:mi_28nm
+  type: system
+  kind: helicopter
+  en: "Mi-28NM"
+  aliases: ["Mi-28NM", "Mi-28NE"]
+  parent: system:mi_28n
+  sides: [ru]
+  note: "Upgraded Night Hunter; named as an LMUR (Izdeliye-305) launch platform in the fires research."
+
+- id: system:ondatra
+  type: system
+  kind: ship
+  en: "Ondatra landing craft"
+  aliases: ["Ondatra", "Project 1176 Ondatra"]
+  parent: system:landing_ship
+  sides: [ru]
+  note: "Listed damaged alongside Serna and Akula in the Nov 2023 convoy hunt off Chornomorske (Oryx)."
+
+- id: system:kilo_class_submarine
+  type: system
+  kind: ship
+  en: "Kilo-class submarine"
+  aliases: ["Kilo-class submarine", "Project 636.3 Varshavyanka", "Rostov-on-Don"]
+  parent: system:ship_generic
+  sides: [ru]
+  note: "Novorossiysk sub pen; one disabled by the underwater Sea Baby on 15 Dec 2025."
+
+- id: system:kairos
+  type: system
+  kind: ship
+  en: "Kairos (shadow-fleet tanker)"
+  aliases: ["Kairos"]
+  parent: system:ship_generic
+  sides: [ru]
+  note: "Shadow-fleet tanker disabled by Sea Baby USVs off Turkey, 28 Nov 2025."
+
+- id: system:virat
+  type: system
+  kind: ship
+  en: "Virat (shadow-fleet tanker)"
+  aliases: ["Virat"]
+  parent: system:ship_generic
+  sides: [ru]
+  note: "Shadow-fleet tanker disabled alongside Kairos by Sea Baby USVs off Turkey, 28 Nov 2025."
+
+- id: system:rpg_18
+  type: system
+  kind: small_arms
+  en: "RPG-18 Mukha"
+  aliases: ["RPG-18", "Mukha"]
+  parent: system:rpg
+  sides: [ua]
+  note: "Disposable light AT launcher in the Zalissia forward ambush at Brovary; single weak source (Tyzden lead), flagged in the dossier."
+
+- id: system:neo_1
+  type: system
+  kind: ugv
+  en: "NEO-1 demining robot"
+  aliases: ["NEO-1"]
+  parent: system:ugv
+  sides: [ua]
+  note: "Named sapper/demining UGV in the clearance research (460,000-hectare programme)."
+
+- id: system:spiderweb_fpv
+  type: system
+  kind: fpv_drone
+  en: "Spiderweb FPV quadcopter"
+  aliases: ["Spiderweb FPV", "Pavutyna FPV", "Spiderweb strike quadcopter"]
+  parent: system:fpv_drone
+  sides: [ua]
+  note: "The ~$2,000 dinner-plate quadcopter launched from cabin roofs on 1 Jun 2025 (117 built for the strike; Wikipedia calls it 'Osa'). Do NOT add the bare alias 'Osa': it maps to system:osa (9K33 Osa SAM)."

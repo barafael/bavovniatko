@@ -3,7 +3,7 @@
 The knowledge base exists to feed a game, and it keeps everything for that purpose. The public website, though,
 presents the research about the war on its own terms, so this step:
 
-- **Leaves out** the game-only material: the prior-art games topic (t08) and everything only it uses, the design
+- **Leaves out** the game-only material: the prior-art games and Bevy rendering topics (t08, t09) and everything only they use, the design
   notes, the game-feed tables (`sim_*`), and the "game/sim relevance" sections of the research texts.
 - **Renames** the game framing: "diorama" becomes "dossier area", "chapter" becomes "dossier", "win band" becomes
   "range", and "playable area" becomes "map area".
@@ -21,7 +21,7 @@ from __future__ import annotations
 import re
 
 DROP_TABLES = {"design_note", "sim_loadout", "sim_param", "sim_series", "sim_terrain_profile"}
-DROP_TOPICS = {"t08"}                                   # Prior-art games & wargames
+DROP_TOPICS = {"t08", "t09"}                            # Prior-art games & wargames; Bevy rendering prior art
 # Fields that are not shown on the site or are internal bookkeeping.
 DROP_FIELDS = {"legacy_ids", "geometry_source"}
 DROP_EXT = {"topic_tags", "document", "publisher_raw", "date_raw"}
@@ -135,6 +135,15 @@ def topics_of(row) -> set:
     return {rid(t)[1] for t in row.get("topics", []) if rid(t)} | ({rid(row["topic"])[1]} if rid(row.get("topic")) else set())
 
 
+def dropped_topic_refs(row) -> set:
+    """The left-out topics a source-like row was found in or is filed under."""
+    return {rid(t)[1] for f in ("topics", "found_in") for t in row.get(f) or [] if rid(t) and rid(t)[0] == "topic"} & DROP_TOPICS
+
+
+def live_topic_refs(row) -> set:
+    return {rid(t)[1] for f in ("topics", "found_in") for t in row.get(f) or [] if rid(t) and rid(t)[0] == "topic"} - DROP_TOPICS
+
+
 def is_game_section(section: str) -> bool:
     return bool(re.search(r"game|sim relevance|design lessons|prior[- ]art", section or "", re.I))
 
@@ -150,6 +159,7 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
 
     # 1. Claims: drop the game-only topic, rename the framing, then drop what is still about the game.
     dropped = set()
+    orphans: set = set()                                # what the dropped rows refer to
     kept_claims = []
     for r in tables["claim"]:
         cid = rid(r["id"])
@@ -157,6 +167,7 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
         text = r.get("text", "")
         if topics_of(r) & DROP_TOPICS or DESIGN.search(text) or has_game(text):
             dropped.add(cid)
+            refs(r, orphans)
         else:
             kept_claims.append(r)
     for r in kept_claims:                               # extraction notes: "OUTCOME; win condition: …"
@@ -178,6 +189,7 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
         r2 = rewrite(r)
         if topics_of(r) & DROP_TOPICS or is_game_section(r.get("section", "")) or has_game(r2.get("markdown", "")):
             passages_dropped.add(rid(r["id"]))
+            refs(r, orphans)
         else:
             kept.append(r2)
     tables["passage"] = kept
@@ -186,6 +198,7 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
     gone = dropped | passages_dropped
     for t in relations:
         if t in tables:
+            refs([r for r in tables[t] if rid(r.get("in")) in gone or rid(r.get("out")) in gone], orphans)
             tables[t] = [r for r in tables[t] if rid(r.get("in")) not in gone and rid(r.get("out")) not in gone]
     if "counters" in tables:
         for r in tables["counters"]:
@@ -208,14 +221,28 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
                     refs(r, used)
         if len(used) == before:
             break
+    def game_only(r) -> bool:
+        return (rid(r["id"]) not in used and
+                (any(has_game(s) for _, s in strings(rewrite(r))) or rid(r["id"]) in orphans
+                 or bool(dropped_topic_refs(r) and not live_topic_refs(r))))
+    for _ in range(6):                                  # what only the left-out entities used goes too
+        before = len(orphans)
+        for t, rows in entity_rows.items():
+            for r in rows:
+                if t not in ("era", "unit", "topic") and game_only(r):
+                    refs(r, orphans)
+        if len(orphans) == before:
+            break
     for t, rows in entity_rows.items():
         keep = []
         for r in rows:
             r2 = rewrite(r)
-            game_words = any(has_game(s) for _, s in strings(r2))
             if t == "media" and str(r.get("ext", {}).get("document", "")).startswith("research/08"):
                 continue
-            if rid(r["id"]) in used or not game_words or t in ("era", "unit", "topic"):
+            if not game_only(r) or t in ("era", "unit", "topic"):
+                for f in ("topics", "found_in"):         # no links to the topics left out
+                    if isinstance(r2.get(f), list):
+                        r2[f] = [x for x in r2[f] if not (rid(x) and rid(x)[0] == "topic" and rid(x)[1] in DROP_TOPICS)]
                 keep.append(r2)
         tables[t] = keep
     report["entities_dropped"] = {t: len(entity_rows[t]) - len(tables[t]) for t in entity_rows if len(entity_rows[t]) != len(tables[t])}

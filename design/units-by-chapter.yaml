@@ -1,0 +1,638 @@
+# Chapter → unit crosswalk for bavovniatko.
+#
+# Companion to design/units.md. Each entry lists the depicted systems for a chapter, using canonical
+# registry ids (db/vocab/entities/system.yaml), including the 10 added on 2026-10-10. Formations/actors are not listed here: brigades
+# are already linked to chapters through the dossier claims in the knowledge base.
+#
+# c07 Bakhmut, c09 Robotyne, c14 Kursk and c15 Pokrovsk were rebuilt on 2026-10-10 from the knowledge
+# base: every `system` that a claim of the chapter's topic is `about`, minus techniques, software,
+# programmes and satellites, with roles taken from those claims. Entries marked `basis: era` are not
+# named in the dossier and come from the era loadouts in game-data/sim-20260930.json.
+# Written 2026-10-02.
+
+- chapter: c01
+  title: "The march on Kyiv: Hostomel, the 60 km convoy"
+  dossier: true
+  units:
+    - {id: system:ka_52, side: ru, role: "leads the Hostomel helicopter stream"}
+    - {id: system:mi_24, side: ru, role: "gunship in the stream"}
+    - {id: system:mi_8, side: ru, role: "assault transport"}
+    - {id: system:il_76, side: ru, role: "aborted airlift over the runway"}
+    - {id: system:an_225, side: ua, role: "destroyed in its hangar - iconic one-off"}
+    - {id: system:su_35s, side: ru, role: "CAP with R-77-1"}
+    - {id: system:su_34, side: ru, role: "night penetration sorties from 9 Mar"}
+    - {id: system:mig_29, side: ua, role: "40th Bde, day-one losses"}
+    - {id: system:su_27, side: ua, role: "Oksanchenko shot down over Kyiv"}
+    - {id: system:su_24, side: ua, role: "sunset strikes on Hostomel"}
+    - {id: system:su_25, side: ua, role: "strike sorties"}
+    - {id: system:kalibr, side: ru, role: "opens the war on the airport"}
+    - {id: system:r18, side: ua, role: "Aerorozvidka night thermal bombing"}
+    - {id: system:furia, side: ua, role: "spots the Rakivka pontoon"}
+    - {id: system:bayraktar_tb2, side: ua, role: "fewer than a dozen, hits SAMs and trucks"}
+    - {id: system:manpads, side: ua, role: "Igla drops a Ka-52 onto the runway"}
+    - {id: system:stinger, side: ua, role: "major factor vs low-flying VKS"}
+    - {id: system:s_300, side: ru, role: "pop-up SAM threat"}
+    - {id: system:buk, side: ru, role: "TELARs screening the Dnipro"}
+    - {id: system:s_400, side: ru, role: "pins UA jets below 100 ft"}
+    - {id: system:podlet_k1, side: ru, role: "Belarus-based low-altitude radar"}
+    - {id: system:2s1, side: ua, role: "72nd Bde artillery group"}
+    - {id: system:2s3, side: ua, role: "72nd Bde artillery group"}
+    - {id: system:grad, side: ua, role: "72nd Bde artillery group"}
+    - {id: system:mt_12, side: ua, role: "AT gun battery"}
+    - {id: system:2s7, side: ua, role: "training-centre guns moved up"}
+    - {id: system:d_30, side: ua, role: "National Guard at Horenka"}
+    - {id: system:javelin, side: ua, role: "head-and-tail ambushes"}
+    - {id: system:nlaw, side: ua, role: "head-and-tail ambushes"}
+    - {id: system:t_72b3, side: ru, role: "convoy tanks"}
+    - {id: system:bmp_3, side: ru, role: "convoy IFVs"}
+    - {id: system:bmd_2, side: ru, role: "Moshchun bridge crossing"}
+    - {id: system:tos_1a, side: ru, role: "with the convoy"}
+    - {id: system:pantsir_s1, side: ru, role: "convoy air defence"}
+    - {id: system:tor, side: ru, role: "convoy air defence"}
+    - {id: system:iskander, side: ru, role: "launchers inside the convoy"}
+    - {id: system:fuel_tanker, side: ru, role: "the column's soft underbelly"}
+    - {id: system:pontoon_bridge, side: ru, role: "a dozen wet-gap crossings"}
+    - {id: system:atv, side: ua, role: "Aerorozvidka quad-bike night teams"}
+
+- chapter: c02
+  title: "Snake Island → the Moskva"
+  dossier: true
+  units:
+    - {id: system:moskva, side: ru, role: "flagship, sunk 14 Apr"}
+    - {id: system:vasily_bykov, side: ru, role: "patrol ship at the island"}
+    - {id: system:sapfir, side: ru, role: "the '13 dead' rescue-ship trap"}
+    - {id: system:su_27, side: ua, role: "toss-bombing raid, 7 May"}
+    - {id: system:su_34, side: ru, role: "24 Feb strikes"}
+    - {id: system:su_30, side: ru, role: "downs Bedzai's Mi-14; phosphorus run"}
+    - {id: system:su_24mr, side: ua, role: "lost 26 Jun"}
+    - {id: system:mi_8, side: ru, role: "troop transport, bombed by TB2"}
+    - {id: system:mi_24, side: ua, role: "aborted May assault"}
+    - {id: system:mi_14, side: ua, role: "Col. Bedzai's rescue amphibian"}
+    - {id: system:hiurza_m, side: ua, role: "assault gunboats"}
+    - {id: system:raptor, side: ru, role: "TB2's dawn kills"}
+    - {id: system:serna, side: ru, role: "the ramp kill, 7 May"}
+    - {id: system:dyugon, side: ru, role: "landing craft"}
+    - {id: system:vasily_bekh, side: ru, role: "rescue tug with Tor-M2KM, Harpooned"}
+    - {id: system:vsevolod_bobrov, side: ru, role: "logistics ship, claimed hit"}
+    - {id: system:tor_m2km, side: ru, role: "island SHORAD, boat-deck fits"}
+    - {id: system:pantsir_s1, side: ru, role: "island SHORAD, tug sterns"}
+    - {id: system:strela_10, side: ru, role: "island SHORAD"}
+    - {id: system:zmiinyi_island_shorad, side: ru, role: "composite island air defence"}
+    - {id: system:bayraktar_tb2, side: ua, role: "the island's ghost - hunts everything"}
+    - {id: system:neptune_r360m, side: ua, role: "two-missile salvo at 120 km"}
+    - {id: system:harpoon, side: ua, role: "first combat use 17 Jun"}
+    - {id: system:bohdana, side: ua, role: "the prototype's 46-round finale"}
+    - {id: system:caesar, side: ua, role: "delta-shore artillery"}
+    - {id: system:uragan, side: ua, role: "delta-shore artillery"}
+    - {id: system:dji_mavic, side: ua, role: "fire adjustment to ~20 m"}
+
+- chapter: c03
+  title: "Azovstal"
+  dossier: true
+  units:
+    - {id: system:mi_8, side: ua, role: "the night air bridge, NVG fits"}
+    - {id: system:mi_24, side: ua, role: "escort/decoy for the corridor"}
+    - {id: system:tu_22m3, side: ru, role: "heavy strikes from 16 Apr"}
+    - {id: system:fab_3000_umpk, side: ru, role: "photographed beside a Tu-22M"}
+    - {id: system:kab, side: ru, role: "bunker-busters on the plant"}
+    - {id: system:pantsir_s1, side: ru, role: "briefed corridor threat"}
+    - {id: system:buk, side: ru, role: "briefed absent"}
+    - {id: system:manpads, side: ru, role: "downs the last rescue Mi-8"}
+    - {id: system:atgm_generic, side: ru, role: "strikes an evacuation vehicle"}
+    - {id: system:nlaw, side: ua, role: "flown in by air bridge"}
+    - {id: system:stinger, side: ua, role: "flown in by air bridge"}
+    - {id: system:javelin, side: ua, role: "on the first flight manifest"}
+    - {id: system:gaz_66, side: ua, role: "tunnel ambulance"}
+    - {id: system:ropucha, side: ru, role: "Berdiansk landing ships struck 24 Mar"}
+
+- chapter: c04
+  title: "Kherson and the Antonivskyi bridge"
+  dossier: true
+  units:
+    - {id: system:himars, side: ua, role: "bridge, ferry and depot interdiction"}
+    - {id: system:m270, side: ua, role: "British launchers from July"}
+    - {id: system:mars_ii, side: ua, role: "German M270 variant, 1 Aug"}
+    - {id: system:gmlrs, side: ua, role: "salvoes of ~8, sub-metre CEP"}
+    - {id: system:excalibur, side: ua, role: "vs crossings and depots"}
+    - {id: system:vulcano, side: ua, role: "possibly used"}
+    - {id: system:harm, side: ua, role: "vs Russian air defence"}
+    - {id: system:orlan_10, side: ru, role: "spotting for fires"}
+    - {id: system:pontoon_ferry, side: ru, role: "six ferry sites - the target set"}
+    - {id: system:pontoon_bridging_column, side: ru, role: "struck 29 Jul"}
+    - {id: system:barge, side: ru, role: "shipyard-repaired barges"}
+    - {id: system:barge_bridge, side: ru, role: "beside the road bridge by 22 Oct"}
+    - {id: system:project_22870, side: ru, role: "river tugs manoeuvring ferries"}
+    - {id: system:antonivskyi_fuel_pipeline, side: ru, role: "fuel line along the rail bridge"}
+    - {id: system:s_300, side: ru, role: "defensive SAM layer"}
+    - {id: system:buk, side: ru, role: "withdrawal cover"}
+    - {id: system:tank_generic, side: ru, role: "tanks in concrete shelters"}
+    - {id: system:btr, side: ru, role: "126th Bde, one BTR per 80 soldiers"}
+    - {id: system:mortar_120, side: ru, role: "defensive fires"}
+    - {id: system:atgm_generic, side: ru, role: "ambushes in the prepared lines"}
+
+- chapter: c05
+  title: "The Kerch bridge: truck bomb, sea drones, underwater charges"
+  dossier: true
+  units:
+    - {id: system:sea_baby_crimean_bridge, side: ua, role: "Act 2 span strike, 17 Jul 2023"}
+    - {id: system:sea_baby_underwater, side: ua, role: "Act 3 underwater charges context"}
+    - {id: system:magura_v5, side: ua, role: "2026 ferry strikes (MoLoCHKa)"}
+    - {id: system:s_200, side: ua, role: "claimed downings over the bridge"}
+    - {id: system:atacms, side: ua, role: "claimed 12 downed, Aug 2024"}
+    - {id: system:s_400, side: ru, role: "bridge air defence"}
+    - {id: system:pantsir_s1, side: ru, role: "bridge air defence"}
+    - {id: system:pantsir_s1m, side: ru, role: "on the bridge deck itself, Aug 2024"}
+    - {id: system:bal, side: ru, role: "coastal missile cover"}
+    - {id: system:bastion, side: ru, role: "coastal missile cover"}
+    - {id: system:sergey_kotov, side: ru, role: "southern guard, sunk Mar 2024"}
+    - {id: system:okhotnik, side: ru, role: "2026 Black Sea-side guard"}
+    - {id: system:grachonok, side: ru, role: "anti-sabotage boats"}
+    - {id: system:sobol, side: ru, role: "patrol boats, one struck 2026"}
+    - {id: system:shmel_gunboat, side: ru, role: "2026 guard"}
+    - {id: system:mangust, side: ru, role: "pre-2022 guard"}
+    - {id: system:bk_16, side: ru, role: "reserve assault boats"}
+    - {id: system:mi_8, side: ru, role: "USV-hunting helicopters"}
+    - {id: system:ka_29, side: ru, role: "USV-hunting gunship"}
+    - {id: system:su_27, side: ru, role: "bridge patrols"}
+    - {id: system:il_38, side: ru, role: "maritime patrol"}
+    - {id: system:target_ship_436bis, side: ru, role: "radar decoy at the bridge"}
+    - {id: system:radar_reflector_target_barges, side: ru, role: "decoy barges"}
+    - {id: system:boom_barges, side: ru, role: "the barrier layers"}
+    - {id: system:crimean_bridge_barriers, side: ru, role: "composite barrier system"}
+    - {id: system:crane_barge, side: ru, role: "barrier-laying workhorse"}
+    - {id: system:kerch_ferries, side: ru, role: "the truck workaround"}
+    - {id: system:slavyanin, side: ru, role: "rail ferry struck Mar-Apr 2026"}
+    - {id: system:avangard_vessel, side: ru, role: "rail ferry damaged Mar 2026"}
+    - {id: system:sig_tanker, side: ru, role: "Sea Baby hit, Aug 2023"}
+    - {id: system:olenegorsky_gornyak, side: ru, role: "Novorossiysk landing ship, Aug 2023"}
+    - {id: system:kalibr, side: ru, role: "retaliation salvos"}
+    - {id: system:geran_2, side: ru, role: "retaliation drone strikes"}
+    - {id: system:plavnik, side: ru, role: "underwater detection"}
+    - {id: system:amulet_p, side: ru, role: "anti-diver sonar"}
+
+- chapter: c06
+  title: "The Kharkiv lightning offensive"
+  dossier: true
+  units:
+    - {id: system:m777, side: ua, role: ">=8 per attacking brigade"}
+    - {id: system:himars, side: ua, role: "depot and CP strikes before H-hour"}
+    - {id: system:m270, side: ua, role: "night fires 5-6 Sep"}
+    - {id: system:grad, side: ua, role: "107th Rocket Artillery Brigade"}
+    - {id: system:t_90m, side: ru, role: "first intact capture, 18 Sep"}
+    - {id: system:t_72b3, side: ru, role: "abandoned in Izium"}
+    - {id: system:t_80u, side: ru, role: "photographed on a flatbed"}
+    - {id: system:bmp, side: ru, role: "captured in dozens"}
+    - {id: system:btr, side: ru, role: "Balakliia garrison vehicles"}
+    - {id: system:tank_generic, side: ru, role: "three-tank ambush at Korovii Yar"}
+    - {id: system:zoopark, side: ru, role: "the force's only radar, destroyed"}
+    - {id: system:borisoglebsk_2, side: ru, role: "captured intact"}
+    - {id: system:zhitel, side: ru, role: "destroyed in Kharkiv Oblast"}
+    - {id: system:atgm_generic, side: ru, role: "Fagot stocks fall from 24 to 4"}
+    - {id: system:dji_mavic, side: ru, role: "off-the-shelf recon, 2 drones left"}
+    - {id: system:kalibr, side: ru, role: "11 Sep strike on Kharkiv TEC-5"}
+    - {id: system:geran_2, side: ru, role: "first fragment recovered 13 Sep"}
+    - {id: system:s_300, side: ru, role: "convoys pulling back"}
+    - {id: system:pontoon_bridge, side: ua, role: "decoys feinting at Izium"}
+
+- chapter: c07
+  title: "The defence of Bakhmut"
+  dossier: true
+  units:
+    - {id: system:tos_1a, side: ru, role: "MoD thermobaric support that Wagner depended on"}
+    - {id: system:su_25, side: ru, role: "MoD close air support on the Wagner infographic"}
+    - {id: system:t_90, side: ru, role: "sent by the MoD to Wagner, Mar-Apr 2023"}
+    - {id: system:lancet, side: ru, role: "emerges as the key Russian precision tool"}
+    - {id: system:fpv_drone, side: ru, role: "first Russian FPVs appear here"}
+    - {id: system:recon_drone_generic, side: both, role: "four UAVs over every Wagner assault group; UA teams spot from the industrial buildings"}
+    - {id: system:rpg, side: ru, role: "assault-group weapon of the dozen-man Wagner groups"}
+    - {id: system:incendiary_munitions, side: ru, role: "phosphorus and incendiary use alleged by UA SOF"}
+    - {id: system:2s7, side: ua, role: "Pions cued by drone teams"}
+    - {id: system:m109, side: ua, role: "17th Brigade guns in the July 2023 flank attacks"}
+    - {id: system:gun_122, side: ua, role: "24th Brigade 122 mm guns"}
+    - {id: system:mortar_generic, side: ua, role: "mortars built in 1938-43"}
+    - {id: system:excalibur, side: ua, role: "guided rounds losing accuracy under jamming"}
+    - {id: system:jdam_er, side: ua, role: "GBU-62s dropped on high-rises, 26 Apr 2023"}
+    - {id: system:mig_29, side: ua, role: "the likely JDAM-ER carrier"}
+    - {id: system:wolfhound, side: ua, role: "MRAPs in the street fighting"}
+    - {id: system:house_strongpoint, side: both, role: "\"every house a fortress\": the diorama's basic block"}
+    - {id: system:bakhmut_west_fortifications, side: ua, role: "the prepared line west of the city"}
+    - {id: system:t_72b3, side: ru, role: "assault tanks", basis: era}
+    - {id: system:bmp, side: ru, role: "assault IFVs", basis: era}
+    - {id: system:m777, side: ua, role: "the 155 mm workhorse under shell famine", basis: era}
+    - {id: system:mine_generic, side: ua, role: "flank belts", basis: era}
+
+- chapter: c08
+  title: "Vuhledar"
+  dossier: true
+  units:
+    - {id: system:t_80bvm, side: ru, role: "marine-assault tanks"}
+    - {id: system:t_80bv, side: ru, role: "marine-assault tanks"}
+    - {id: system:t_72b3, side: ru, role: "listed among assault tanks"}
+    - {id: system:t_90, side: ru, role: "90th Tank Regiment support"}
+    - {id: system:bmp_1, side: ru, role: "Black Monday columns"}
+    - {id: system:bmp_1am, side: ru, role: "knocked out by the 72nd"}
+    - {id: system:bmp_2, side: ru, role: "assault columns"}
+    - {id: system:bmp_3, side: ru, role: "infantry vehicles"}
+    - {id: system:btr_82a, side: ru, role: "wheeled APC"}
+    - {id: system:mine_plow, side: ru, role: "lane-clearing lead tanks"}
+    - {id: system:tos_1a, side: ru, role: "district-level thermobaric fires"}
+    - {id: system:tyulpan, side: ru, role: "240 mm SP mortar, Dec 2022"}
+    - {id: system:ka_52, side: ru, role: "supporting attacks"}
+    - {id: system:su_25, side: ru, role: "close support"}
+    - {id: system:kab, side: ru, role: "the 2024 epilogue"}
+    - {id: system:t_64, side: ua, role: "firing from hides"}
+    - {id: system:javelin, side: ua, role: "tree-line ambush teams"}
+    - {id: system:stugna, side: ua, role: "tree-line ambush teams"}
+    - {id: system:m777, side: ua, role: "55th Artillery Bde"}
+    - {id: system:caesar, side: ua, role: "55th Artillery Bde"}
+    - {id: system:himars, side: ua, role: "stalled column and Vostok HQ"}
+    - {id: system:dji_matrice, side: ua, role: "kill-zone spotting"}
+    - {id: system:bomber_drone, side: ua, role: "grenade-drop quadcopters"}
+    - {id: system:gmz_minelayer, side: ua, role: "TM-62 belts"}
+    - {id: system:raam, side: ua, role: "the RAAM-corridor set piece"}
+    - {id: system:anti_tank_mine, side: ua, role: "the kill-zone floor"}
+
+- chapter: c09
+  title: "The Robotyne breach"
+  dossier: true
+  units:
+    - {id: system:leopard_2r, side: ua, role: "lead mine-clearing tank; 3 lost south of Mala Tokmachka, 8 Jun"}
+    - {id: system:wisent, side: ua, role: "breaching tank of the 47th Brigade engineers"}
+    - {id: system:bmr_2, side: ua, role: "leads the breach with the Leopard 2R"}
+    - {id: system:miclic, side: ua, role: "M58 line charges in the breach plan"}
+    - {id: system:ur_77, side: ua, role: "line-charge vehicle in the breach plan"}
+    - {id: system:meteorit, side: ua, role: "line charges in the breach plan"}
+    - {id: system:m1150, side: ua, role: "Assault Breacher, usable only from October"}
+    - {id: system:leopard_2a6, side: ua, role: "tank raids on tree lines; 4 lost at Mala Tokmachka"}
+    - {id: system:bradley, side: ua, role: "M2A2 ODS; 17 lost on 8 Jun; armoured taxis for assault groups"}
+    - {id: system:t_64, side: ua, role: "47th Brigade tanks with mine rollers"}
+    - {id: system:mine_roller, side: ua, role: "survives up to four blasts, but one stacked mine"}
+    - {id: system:challenger_2, side: ua, role: "first one lost near Robotyne, Sep 2023"}
+    - {id: system:cope_cage, side: ua, role: "on the 82nd Brigade Challenger 2"}
+    - {id: system:stryker, side: ua, role: "82nd Air Assault; one hit by a Lancet, 15 Aug"}
+    - {id: system:marder, side: ua, role: "82nd Air Assault, 40 vehicles"}
+    - {id: system:mrap, side: ua, role: "wheeled vehicles outnumbering tanks; one burned past the Verbove trench"}
+    - {id: system:bmp_2, side: ua, role: "burned beyond the trench line west of Verbove"}
+    - {id: system:t_72, side: ua, role: "abandoned with two Bradleys east of Robotyne, 26 Jul"}
+    - {id: system:howitzer_155, side: ua, role: "about 55 guns on the main axis, 10-70 rounds a day"}
+    - {id: system:dpicm, side: ua, role: "cluster rounds arriving in July 2023"}
+    - {id: system:gmlrs, side: ua, role: "about 7 a day for the whole theatre"}
+    - {id: system:storm_shadow, side: ua, role: "strikes on Russian headquarters"}
+    - {id: system:atacms, side: ua, role: "first strike, on the Berdiansk helicopter base"}
+    - {id: system:agricultural_bomber_drone, side: ua, role: "night bombing in the counter-battery war"}
+    - {id: system:manpads, side: ua, role: "downs the 47th Brigade's eighth Ka-52, 17 Aug"}
+    - {id: system:stinger, side: ua, role: "drilled from rooftops"}
+    - {id: system:smoke_screen, side: both, role: "Bradley smoke covering dismounts; blinds UA drone feeds"}
+    - {id: system:ka_52, side: ru, role: "lob fire: the defining threat"}
+    - {id: system:ka_52m, side: ru, role: "LMUR shots to about 15 km; one lost 17 Aug"}
+    - {id: system:vikhr, side: ru, role: "Ka-52 missile from 8-10 km"}
+    - {id: system:lmur, side: ru, role: "long-range helicopter ATGM"}
+    - {id: system:s_8, side: ru, role: "lofted rockets for 6-7 km more reach"}
+    - {id: system:lancet, side: ru, role: "hunts guns and lead vehicles"}
+    - {id: system:lancet_3, side: ru, role: "strikes an abandoned Leopard 2A6"}
+    - {id: system:krasnopol, side: ru, role: "\"effect over volume\" on lead elements"}
+    - {id: system:kab, side: ru, role: "levels Orikhiv"}
+    - {id: system:ew_generic, side: ru, role: "escorts the Ka-52s; jams GPS, radios and drones"}
+    - {id: system:fpv_drone, side: ru, role: "takes the small-unit edge by Sep 2023"}
+    - {id: system:recon_drone_generic, side: ru, role: "spots the columns for the kill chain"}
+    - {id: system:atgm_generic, side: ru, role: "in the prepared lines"}
+    - {id: system:artillery_generic, side: both, role: "shells on columns bunched at the minefield"}
+    - {id: system:t_80bv, side: ru, role: "among the commonest Russian losses on the axis"}
+    - {id: system:t_72b3, side: ru, role: "among the commonest Russian losses on the axis"}
+    - {id: system:btr_82a, side: ru, role: "among the commonest Russian losses on the axis"}
+    - {id: system:mt_lb, side: ru, role: "among the commonest Russian losses on the axis"}
+    - {id: system:bmd_4m, side: ru, role: "among the commonest Russian losses on the axis"}
+    - {id: system:surovikin_line, side: ru, role: "the three defensive belts"}
+    - {id: system:anti_tank_ditch, side: ru, role: "4 m deep, 6 m wide"}
+    - {id: system:dragons_teeth, side: ru, role: "crossed west of Verbove, 20-21 Sep"}
+    - {id: system:mine_generic, side: ru, role: "fields grown from 120 m to about 500 m deep"}
+    - {id: system:stacked_anti_tank_mines, side: ru, role: "mines stacked two high"}
+    - {id: system:anti_personnel_mine, side: ru, role: "mixed into the anti-tank fields"}
+    - {id: system:barrier_minefield, side: ru, role: "barrier fields up to 5 km deep"}
+    - {id: system:artillery_scatterable_mines, side: ru, role: "make night resupply through the lanes deadly"}
+    - {id: system:isdm_zemledeliye, side: ru, role: "remote mine-laying rockets"}
+    - {id: system:remote_detonated_mine, side: ru, role: "left in empty trenches"}
+
+- chapter: c10
+  title: "The Krynky bridgehead"
+  dossier: true
+  units:
+    - {id: system:hexacopter_cargo_drone, side: ua, role: "20 kg bridgehead resupply"}
+    - {id: system:mamont, side: ua, role: "heavy FPV carrier, Prytula's 40"}
+    - {id: system:fpv_drone, side: ua, role: "RPG-7 warheads vs vehicles 7-8 km inland"}
+    - {id: system:bomber_drone, side: ua, role: "small attack drones"}
+    - {id: system:himars, side: ua, role: "Hladkivka column strike"}
+    - {id: system:mortar_80mm, side: ua, role: "crossed to the bridgehead"}
+    - {id: system:light_mortar, side: ua, role: "crossed to the bridgehead"}
+    - {id: system:su_34, side: ru, role: "flattens Krynky from 50+ km"}
+    - {id: system:umpk, side: ru, role: "glide-bomb kits"}
+    - {id: system:kab, side: ru, role: "the near-impunity strike class"}
+    - {id: system:iskander, side: ru, role: "rail-bridge embankment strike"}
+    - {id: system:tos_1, side: ru, role: "7th VDV strike, Jun 2023"}
+    - {id: system:tos_1a, side: ru, role: "close-range fires, Nov 2023"}
+    - {id: system:winged_long_range_fpv, side: ru, role: "up to 80/day over the bridgehead"}
+    - {id: system:fixed_wing_isr_drone, side: ru, role: "spots boats at the river bends"}
+    - {id: system:anti_tank_mine, side: ru, role: "drone-laid, 2 Jul 2024"}
+    - {id: system:t_90, side: ru, role: "destroyed at Korsunka"}
+    - {id: system:bmd_3, side: ru, role: "media-photo wreck"}
+
+- chapter: c11
+  title: "Avdiivka"
+  dossier: true
+  units:
+    - {id: system:bradley_m2a2_ods, side: ua, role: "47th, 3rd Assault and 67th Bdes"}
+    - {id: system:leopard_2a6, side: ua, role: "northern-flank heavy armour"}
+    - {id: system:t_90m, side: ru, role: "mission-killed at Stepove (v02)"}
+    - {id: system:t_72b3, side: ru, role: "the mechanised waves"}
+    - {id: system:t_80bvm, side: ru, role: "65 T-80s lost"}
+    - {id: system:bmp_1, side: ru, role: "77 of 173 IFV losses"}
+    - {id: system:mt_lb, side: ru, role: "Bradley's 30-second triple kill"}
+    - {id: system:su_25, side: ru, role: "5-7 downed"}
+    - {id: system:su_34, side: ru, role: "glide-bomb carriers"}
+    - {id: system:su_35s, side: ru, role: "escort"}
+    - {id: system:a_50, side: ru, role: "second one downed 23 Feb"}
+    - {id: system:kab, side: ru, role: "30-60/day, the defining weapon"}
+    - {id: system:umpk, side: ru, role: "glide kits"}
+    - {id: system:fpv_drone, side: ua, role: "SBU Alpha from the coke plant"}
+    - {id: system:bomber_drone, side: ua, role: "drops on the terrikon climbers"}
+    - {id: system:dpicm, side: ua, role: "flush infantry, then tube artillery"}
+    - {id: system:mine_generic, side: ru, role: "stops the October waves"}
+    - {id: system:cope_cage, side: ru, role: "EW-fitted armour by February"}
+
+- chapter: c12
+  title: "Hunting the A-50"
+  dossier: true
+  units:
+    - {id: system:a_50u, side: ru, role: "the two kills (RF-93966, RF-50610)"}
+    - {id: system:a_50, side: ru, role: "the radar-scope chapter"}
+    - {id: system:il_22m11, side: ru, role: "hit over Strilkove, limps home"}
+    - {id: system:a_60, side: ru, role: "hit at Taganrog, Nov 2025"}
+    - {id: system:e_96m, side: ru, role: "2022 jamming decoy"}
+    - {id: system:su_35s, side: ru, role: "high CAP, R-77-1"}
+    - {id: system:su_30sm, side: ru, role: "Azov patrols"}
+    - {id: system:su_34, side: ru, role: "KAB runs, 42 Oryx losses"}
+    - {id: system:mig_31k, side: ru, role: "Kinzhal tandem with the A-50"}
+    - {id: system:tu_22m3, side: ru, role: "S-200 claim at 308 km"}
+    - {id: system:mi_8mtpr_1, side: ru, role: "Bryansk EW helicopter"}
+    - {id: system:mi_8, side: ru, role: "third Bryansk shootdown"}
+    - {id: system:su_25, side: ru, role: "2022 low-level losses"}
+    - {id: system:podlet_k1, side: ru, role: "Belarus low-altitude radar"}
+    - {id: system:patriot, side: ua, role: "the wandering SAMbush, 14 Jan"}
+    - {id: system:s_200, side: ua, role: "the 23 Feb kill at 170-300 km"}
+    - {id: system:s_300, side: ua, role: "radar-as-bait"}
+    - {id: system:s_125, side: ua, role: "legacy layer"}
+    - {id: system:buk_m1, side: ua, role: "best pop-up SAM in the 2022 vignette"}
+    - {id: system:manpads, side: ua, role: "punishing low-flying jets"}
+    - {id: system:mig_29, side: ua, role: "40th Bde low-level ambushes"}
+    - {id: system:su_27, side: ua, role: "same role"}
+    - {id: system:su_24m, side: ua, role: "Crimea radar-blinding hypothesis"}
+    - {id: system:r_77_1, side: ru, role: ">100 km shots"}
+    - {id: system:r_27, side: ua, role: "older semi-active AAM"}
+
+- chapter: c13
+  title: "The Black Sea drone war"
+  dossier: true
+  units:
+    - {id: system:magura_v5, side: ua, role: "Group 13's kamikaze boat"}
+    - {id: system:magura_v5_r73, side: ua, role: "two Mi-8s, 31 Dec 2024"}
+    - {id: system:magura_v7, side: ua, role: "hull-turn aiming"}
+    - {id: system:magura_v7_aim9, side: ua, role: "Su-30SM kill, 2 May 2025"}
+    - {id: system:sea_baby_crimean_bridge, side: ua, role: "span strike, 17 Jul 2023"}
+    - {id: system:sea_baby_hmg, side: ua, role: "Kerch Bay firefight"}
+    - {id: system:rpv_16, side: ua, role: "Sea Baby thermobar launcher fit"}
+    - {id: system:sea_baby_minelaying, side: ua, role: "15+ mines off Crimea"}
+    - {id: system:sea_baby_underwater, side: ua, role: "Kilo sub disabled, Dec 2025"}
+    - {id: system:mamai, side: ua, role: "Novorossiysk hits"}
+    - {id: system:katran, side: ru, role: "Russia's own USV"}
+    - {id: system:kmz_dandelion, side: ru, role: "Russian naval drone"}
+    - {id: system:admiral_makarov, side: ru, role: "Sevastopol swarm raid"}
+    - {id: system:ivan_golubets, side: ru, role: "minesweeper, same raid"}
+    - {id: system:ivanovets, side: ru, role: "6 Magura hits at Donuzlav"}
+    - {id: system:tsezar_kunikov, side: ru, role: "sunk off Alupka"}
+    - {id: system:sergey_kotov, side: ru, role: "sunk near Kerch Strait"}
+    - {id: system:novocherkassk, side: ru, role: "Feodosia, Storm Shadow"}
+    - {id: system:olenegorsky_gornyak, side: ru, role: "Novorossiysk, Aug 2023"}
+    - {id: system:samum, side: ru, role: "Sea Baby hit"}
+    - {id: system:ivan_khurs, side: ru, role: "6-hour chase"}
+    - {id: system:vasily_bykov, side: ru, role: "damaged 14 Sep 2023"}
+    - {id: system:pavel_derzhavin, side: ru, role: "damaged Oct 2023"}
+    - {id: system:vladimir_kozitsky, side: ru, role: "survey ship hit"}
+    - {id: system:professor_nikolai_muru, side: ru, role: "tug hit"}
+    - {id: system:sig_tanker, side: ru, role: "holed near Kerch"}
+    - {id: system:serna, side: ru, role: "convoy hunt, Nov 2023"}
+    - {id: system:akula_landing_craft, side: ru, role: "convoy hunt"}
+    - {id: system:ondatra, side: ru, role: "Oryx-damaged craft"}
+    - {id: system:ks_701_tunets, side: ru, role: "four hit, May 2024"}
+    - {id: system:raptor, side: ru, role: "Kerch Bay fight"}
+    - {id: system:grachonok, side: ru, role: "anti-USV boats"}
+    - {id: system:mi_8, side: ru, role: "USV hunting, two downed by R-73"}
+    - {id: system:ka_27, side: ru, role: "post-Kunikov search"}
+    - {id: system:ka_29, side: ru, role: "gunning down a USV on video"}
+    - {id: system:mi_24vp, side: ru, role: "lost at sea, Apr 2024"}
+    - {id: system:su_30sm, side: ru, role: "downed by AIM-9s from Maguras"}
+    - {id: system:be_12, side: ru, role: "USV spotter"}
+    - {id: system:ak_630m, side: ru, role: "Ivanovets' futile CIWS"}
+    - {id: system:neptune, side: ua, role: "context fires on BSF ships"}
+    - {id: system:harpoon, side: ua, role: "context fires"}
+    - {id: system:storm_shadow, side: ua, role: "BSF HQ, Novocherkassk"}
+    - {id: system:r_73, side: ua, role: "the drone-fired missile"}
+    - {id: system:aim_9, side: ua, role: "Magura V7 fit"}
+
+- chapter: c14
+  title: "The Kursk incursion and the North Korean defence"
+  dossier: true
+  units:
+    - {id: system:stryker, side: ua, role: "82nd Air Assault and 22nd Mechanised in the break-in echelon"}
+    - {id: system:marder, side: ua, role: "95th Air Assault"}
+    - {id: system:abrams, side: ua, role: "47th Brigade; Novy Put breakthrough, Oct 2024"}
+    - {id: system:bradley, side: ua, role: "47th Brigade; Novy Put breakthrough"}
+    - {id: system:bmp_2, side: ua, role: "47th Brigade battalions"}
+    - {id: system:hmmwv, side: ua, role: "SSO pull-out after an 8-hour stand against North Koreans"}
+    - {id: system:ew_generic, side: ua, role: "blinds Russian sensors before the crossing"}
+    - {id: system:fpv_drone, side: both, role: "UA breaks up counterattacks and hits a Mi-28; NK FPV teams later"}
+    - {id: system:himars, side: ua, role: "drops the Glushkovo bridge; the Sverdlikovo cluster ambush"}
+    - {id: system:gbu_39, side: ua, role: "SDBs on the Zvannoye pontoons"}
+    - {id: system:jdam_er, side: ua, role: "on the Seim bridges"}
+    - {id: system:mig_29, side: ua, role: "SDB and JDAM-ER carrier"}
+    - {id: system:atacms, side: ua, role: "first use inside Russia, on an S-400, 19 Nov 2024"}
+    - {id: system:storm_shadow, side: ua, role: "strikes in Kursk region, Nov 2024"}
+    - {id: system:ka_52, side: ru, role: "one downed early in the incursion"}
+    - {id: system:mi_28, side: ru, role: "tail rotor clipped by an SBU FPV, 6 Aug"}
+    - {id: system:kvn, side: ru, role: "first fibre-optic FPV, seen here in Aug 2024"}
+    - {id: system:fibre_optic_fpv, side: ru, role: "interdicts the H-07 supply road from Jan 2025"}
+    - {id: system:pontoon_bridge, side: ru, role: "Seim crossings struck again and again"}
+    - {id: system:kamaz_truck, side: ru, role: "reserve column burned on the 38K-017"}
+    - {id: system:ural_truck, side: ru, role: "reserve column burned on the 38K-017"}
+    - {id: system:osa, side: ru, role: "hit by HIMARS, Sep 2024"}
+    - {id: system:s_400, side: ru, role: "the ATACMS target"}
+    - {id: system:volnorez, side: ru, role: "jammer captured with its documents"}
+    - {id: system:kab, side: ru, role: "scarce in the first days under the UA air-defence umbrella"}
+    - {id: system:atgm_generic, side: ru, role: "North Korean mobile ATGM crews"}
+    - {id: system:dragons_teeth, side: ru, role: "unmanned at Novy Put"}
+
+- chapter: c15
+  title: "Pokrovsk-Myrnohrad"
+  dossier: true
+  units:
+    - {id: system:fibre_optic_fpv, side: ru, role: "controls every entrance to Pokrovsk by summer 2025"}
+    - {id: system:rf_fpv, side: ru, role: "radio FPVs with thermal cameras"}
+    - {id: system:long_range_fpv, side: ru, role: "road interdiction"}
+    - {id: system:zhdun, side: ru, role: "\"waiter\" drones parked along the roads"}
+    - {id: system:thermobaric_munition, side: ru, role: "FPV warheads on the roads"}
+    - {id: system:fpv_drone, side: ru, role: "Rubikon fire control over the Myrnohrad road; a 10:1 edge"}
+    - {id: system:thermal_camera_drone, side: both, role: "hunts the infiltrators and the road traffic"}
+    - {id: system:kab, side: ru, role: "850 on Pokrovsk in Oct 2025"}
+    - {id: system:gun_152, side: ru, role: "shells the Zmiy evacuation"}
+    - {id: system:motorcycle, side: ru, role: "6-8-bike groups carrying 2-3 EW sets"}
+    - {id: system:atv, side: ru, role: "quad bikes for flanking runs, Mar 2026"}
+    - {id: system:civilian_car, side: ru, role: "the fog column into southern Pokrovsk, 9 Nov 2025"}
+    - {id: system:tactical_jammer, side: ru, role: "carried by the motorcycle groups"}
+    - {id: system:turtle_tank, side: ru, role: "40th Naval Infantry at Razine; 11 vehicles lost"}
+    - {id: system:armour_generic, side: ru, role: "column attacks on Shakhove: 35 vehicles, then 22"}
+    - {id: system:anti_thermal_poncho, side: ru, role: "the infiltrators' cloaks"}
+    - {id: system:thermal_blanket, side: ru, role: "hides the Dobropillia infiltrators"}
+    - {id: system:radio_repeater, side: ru, role: "antennas on the Myrnohrad high-rises"}
+    - {id: system:anti_drone_net_tunnel, side: both, role: "netted roads; FPVs cut through them"}
+    - {id: system:anti_tank_ditch, side: ua, role: "the fog column at Razine runs into it"}
+    - {id: system:drone_drop, side: both, role: "supplies infiltrators; kills about 120 of 150"}
+    - {id: system:ugv, side: ua, role: "forward supply and ground spotting; stuck in mud and craters"}
+    - {id: system:zmiy, side: ua, role: "evacuates a wounded man under 152 mm fire"}
+    - {id: system:armed_ugv, side: ua, role: "93rd Brigade gun robots at Dobropillia"}
+    - {id: system:heavy_bomber_drone, side: ua, role: "supplies Myrnohrad (60 mm bombs, not 120)"}
+    - {id: system:vampire, side: ua, role: "carries most forward supply for some brigades"}
+    - {id: system:loudspeaker_drone, side: ua, role: "broadcasts surrender instructions"}
+    - {id: system:ai_terminal_guidance_fpv, side: ua, role: "a counter to movement in fog"}
+    - {id: system:uh_60, side: ua, role: "HUR Black Hawk landing in northern Pokrovsk"}
+    - {id: system:himars, side: ua, role: "hits a 155th Naval Infantry column near Malynivka"}
+    - {id: system:tank_generic, side: ua, role: "93rd Brigade tanks at Dobropillia"}
+    - {id: system:abrams, side: ua, role: "47th Brigade at Prohres, 2024"}
+
+- chapter: c16
+  title: "Operation Spiderweb"
+  dossier: true
+  units:
+    - {id: system:spiderweb_fpv, side: ua, role: "117 launched from cabin roofs"}
+    - {id: system:spiderweb_cabin_launcher, side: ua, role: "8 fake hunting cabins"}
+    - {id: system:ural_truck, side: ua, role: "the Trojan cargo trucks"}
+    - {id: system:tu_95ms, side: ru, role: "main target, fuelled and loaded"}
+    - {id: system:tu_22m3, side: ru, role: "Belaya's 200th Regiment"}
+    - {id: system:tu_160, side: ru, role: "flee to Anadyr"}
+    - {id: system:a_50, side: ru, role: "two radomes struck at Ivanovo"}
+    - {id: system:an_12, side: ru, role: "confirmed burn at Olenya"}
+    - {id: system:il_76, side: ru, role: "Ivanovo regiment, Dyagilevo ramp"}
+    - {id: system:il_78m, side: ru, role: "Dyagilevo tankers"}
+    - {id: system:mig_31, side: ru, role: "30 parked at Belaya"}
+    - {id: system:su_34, side: ru, role: "2 at Olenya"}
+    - {id: system:su_30sm, side: ru, role: "2 at Dyagilevo"}
+    - {id: system:mi_24, side: ru, role: "on the Olenya runway"}
+    - {id: system:kh_101, side: ru, role: "on loaded pylons - the aim points"}
+    - {id: system:pantsir_s1, side: ru, role: "useless at point-blank"}
+    - {id: system:s_300, side: ru, role: "never fires"}
+    - {id: system:tyres_on_wings, side: ru, role: "the iconic futile protection"}
+    - {id: system:decoy, side: ru, role: "dummy aircraft and tarmac paint"}
+    - {id: system:bomber_shelter, side: ru, role: "17+ under construction by 2026"}
+
+- chapter: c17
+  title: "The Kupiansk gas-pipeline infiltration"
+  dossier: true
+  units:
+    - {id: system:gas_pipeline_infiltration, side: ru, role: "the 1.2 m pipe under the Oskil"}
+    - {id: system:pontoon_bridge, side: ru, role: "Oskil crossings, struck on sight"}
+    - {id: system:motorcycle, side: ru, role: "fog kill-zone crossings"}
+    - {id: system:molniya_2, side: ru, role: "mothership, 40-50 km FPV launches"}
+    - {id: system:fpv_drone, side: ru, role: "carried and ground-launched"}
+    - {id: system:anti_tank_mine, side: ru, role: "remote mining of cleared areas"}
+    - {id: system:bomber_drone, side: ua, role: "77th Bde saturates the pipe exits"}
+    - {id: system:ugv, side: ua, role: "3-4-mission lifespan"}
+    - {id: system:logistics_ugv, side: ua, role: "resupply attrition"}
+    - {id: system:tube_artillery_generic, side: ua, role: "saturating the exits"}
+    - {id: system:mlrs_generic, side: ua, role: "failed attempts on the pipe"}
+    - {id: system:himars, side: ua, role: "Sudzha-precedent strike on the exit"}
+
+- chapter: c18
+  title: "One night over Kyiv"
+  dossier: true
+  units:
+    - {id: system:geran_2, side: ru, role: "the piston mass layer"}
+    - {id: system:jet_geran, side: ru, role: "300-600 km/h, around the clock"}
+    - {id: system:gerbera, side: ru, role: "decoy/scout/attack"}
+    - {id: system:parody, side: ru, role: "decoy waves"}
+    - {id: system:italmas, side: ru, role: "in the drone mix"}
+    - {id: system:banderol, side: ru, role: "dawn-tail down the Dnipro"}
+    - {id: system:zircon, side: ru, role: "4 from Kursk, 0 intercepted"}
+    - {id: system:iskander, side: ru, role: "record 28-missile salvo"}
+    - {id: system:kh_101, side: ru, role: "34 from Vologda"}
+    - {id: system:kalibr, side: ru, role: "8 from the Black Sea"}
+    - {id: system:kh_59_69, side: ru, role: "4 from Voronezh"}
+    - {id: system:patriot, side: ua, role: "the only ballistic answer, rationed"}
+    - {id: system:samp_t, side: ua, role: "the other Iskander-capable system"}
+    - {id: system:f_16, side: ua, role: "fighter layer vs jet drones"}
+    - {id: system:mirage_2000_5, side: ua, role: "second fighter type"}
+    - {id: system:iris_t_slm, side: ua, role: "medium SAM layer"}
+    - {id: system:nasams, side: ua, role: "medium SAM layer"}
+    - {id: system:skynex, side: ua, role: "4x35 mm AHEAD point defence"}
+    - {id: system:gepard, side: ua, role: "Shahed gunnery"}
+    - {id: system:sting, side: ua, role: "~315 km/h interceptor"}
+    - {id: system:zirka, side: ua, role: "AI auto-tracking, unveiled 1 Jul"}
+    - {id: system:mobile_fire_group, side: ua, role: "pickups vs Geran waves"}
+    - {id: system:helicopter_shahed_hunting, side: ua, role: "338 kills in June"}
+    - {id: system:lima, side: ua, role: "20,500+ Shaheds jammed"}
+
+- chapter: c19
+  title: "Operation Vivaldi"
+  dossier: true
+  units:
+    - {id: system:m113, side: ua, role: "22 May Nove raid force"}
+    - {id: system:stryker, side: ua, role: "same raid"}
+    - {id: system:btr_4, side: ua, role: "same raid"}
+    - {id: system:btr_60, side: ua, role: "VBIED crack-team"}
+    - {id: system:bullspike, side: ua, role: "armed UGV, fires then detonates"}
+    - {id: system:logistics_ugv, side: ua, role: "demining UGVs clear 30 km of routes"}
+    - {id: system:kamikaze_ugv, side: ua, role: "air-dropped onto command posts"}
+    - {id: system:heavy_bomber_drone, side: ua, role: "the UGV air-drop carriers"}
+    - {id: system:hornet, side: ua, role: "river-crossing kills >150 km deep"}
+    - {id: system:fpv_drone, side: ua, role: "SBU Alpha burns trucks and a tank"}
+    - {id: system:protective_drone, side: ua, role: "EW credited with ~20,000 drones"}
+    - {id: system:fibre_optic_fpv, side: ru, role: "flies through the jamming"}
+    - {id: system:atv, side: ru, role: "the reinforcement pipeline"}
+    - {id: system:motorcycle, side: ru, role: "the reinforcement pipeline"}
+    - {id: system:fab_500_umpk, side: ru, role: "~40 strikes on Izium"}
+    - {id: system:molniya_2, side: ru, role: "Starlink deep strikes that trigger the cutoff"}
+    - {id: system:bm_35, side: ru, role: "same campaign"}
+    - {id: system:armour_generic, side: ru, role: "11th Tank Bde assaults take critical losses"}
+
+- chapter: v01
+  title: "Vignette: the Brovary ambush"
+  dossier: true
+  units:
+    - {id: system:t_72b3, side: ru, role: "dominant model (contested vs older T-72s)"}
+    - {id: system:t_72, side: ru, role: "WaPo's 'older T-72s'"}
+    - {id: system:tos_1, side: ru, role: "near the column front"}
+    - {id: system:bmp_2, side: ru, role: "3 IFVs lost"}
+    - {id: system:btr_82a, side: ru, role: "1 lost"}
+    - {id: system:2s1, side: ua, role: "shoot-and-scoot"}
+    - {id: system:2s3, side: ua, role: "shoot-and-scoot"}
+    - {id: system:grad, side: ua, role: "shoot-and-scoot"}
+    - {id: system:mt_12, side: ua, role: "AT gun group"}
+    - {id: system:mortar_120, side: ua, role: "pre-registered on the choke"}
+    - {id: system:javelin, side: ua, role: "close-range teams"}
+    - {id: system:nlaw, side: ua, role: "Zalissia forward ambush"}
+    - {id: system:stugna, side: ua, role: "two teams farther back"}
+    - {id: system:corsar_atgm, side: ua, role: "two teams farther back"}
+    - {id: system:rpg_18, side: ua, role: "Zalissia forward ambush"}
+    - {id: system:dshk, side: ua, role: "3rd Battalion positions"}
+    - {id: system:commercial_quadcopter, side: ua, role: "filmed the ambush"}
+
+- chapter: v02
+  title: "Vignette: Bradley vs T-90M near Stepove"
+  dossier: true
+  units:
+    - {id: system:bradley_m2a2_ods, side: ua, role: "the two duelists"}
+    - {id: system:leopard_2a6, side: ua, role: "2 abandoned at Stepove"}
+    - {id: system:m1a1_abrams, side: ua, role: "first combat video possibly here"}
+    - {id: system:t_90m, side: ru, role: "the antagonist, blinded then killed"}
+    - {id: system:mt_lb, side: ru, role: "three killed in ~30 s"}
+    - {id: system:bmp, side: ru, role: "destroyed point-blank"}
+    - {id: system:fpv_drone, side: ua, role: "the coup de grace"}
+    - {id: system:commercial_quadcopter, side: ua, role: "films the duel"}
+    - {id: system:anti_tank_mine, side: ua, role: "laid at night on the approaches"}

@@ -7,6 +7,7 @@
 {"code":"06","ext":{"_hash":"bf04e892184d1840"},"file":"research/06-terrain-geodata.md","id":{"$rid":["topic","t06"]},"labels":{"en":"Terrain & geodata"}}
 {"code":"07","ext":{"_hash":"5db7187338af66d2"},"file":"research/07-maps-ui-conventions.md","id":{"$rid":["topic","t07"]},"labels":{"en":"Maps & UI conventions"}}
 {"code":"08","ext":{"_hash":"b1909c92591c63cb"},"file":"research/08-prior-art-games.md","id":{"$rid":["topic","t08"]},"labels":{"en":"Prior-art games & wargames"}}
+{"code":"09","ext":{"_hash":"664663cb4fcc78ae"},"file":"research/09-bevy-rendering.md","id":{"$rid":["topic","t09"]},"labels":{"en":"Bevy rendering & simulation prior art"}}
 {"code":"c01","ext":{"_hash":"4c08840d6d346878"},"file":"research/chapters/c01-march-on-kyiv.md","id":{"$rid":["topic","c01"]},"labels":{"en":"Chapter: The march on Kyiv"}}
 {"code":"c02","ext":{"_hash":"f61201e6a68e2d2d"},"file":"research/chapters/c02-snake-island-moskva.md","id":{"$rid":["topic","c02"]},"labels":{"en":"Chapter: Snake Island → the Moskva"}}
 {"code":"c03","ext":{"_hash":"edc3ea712170bb52"},"file":"research/chapters/c03-azovstal.md","id":{"$rid":["topic","c03"]},"labels":{"en":"Chapter: Azovstal"}}

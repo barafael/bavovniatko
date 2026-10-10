@@ -888,3 +888,239 @@
   en: "On Storm Z"
   aliases: ["On Storm Z"]
   note: "Russian MoD, Russia; 2023. Internal document on the Storm-Z convict assault units; reportedly authorised shooting deserters."
+
+# --- Bevy engine and ecosystem (research/09, 2026-10-10) --------------------------------------
+- id: work:bevy
+  type: work
+  kind: software_product
+  en: "Bevy"
+  aliases: ["Bevy", "Bevy engine"]
+  note: "Bevy Foundation and contributors, international. Open-source Rust ECS game engine; bavovniatko targets 0.19."
+- id: work:bevy_solari
+  type: work
+  kind: software_product
+  en: "Solari"
+  aliases: ["Solari", "bevy_solari"]
+  parent: work:bevy
+  note: "Bevy contributors. Bevy's real-time path-traced renderer."
+- id: work:bevy_weather
+  type: work
+  kind: software_product
+  en: "bevy_weather"
+  aliases: ["bevy_weather"]
+  parent: work:bevy
+  note: "etwodev (GitHub). Deterministic sky, cloud, precipitation and ground-condition plugin for Bevy 0.19."
+- id: work:bevy_aqua
+  type: work
+  kind: software_product
+  en: "bevy-aqua"
+  aliases: ["bevy-aqua", "bevy_aqua"]
+  parent: work:bevy
+  note: "sayhisam1 (GitHub). Ocean, river and underwater water rendering for Bevy 0.19."
+- id: work:big_space
+  type: work
+  kind: software_product
+  en: "big_space"
+  aliases: ["big_space", "big-space"]
+  parent: work:bevy
+  note: "aevyrie (GitHub). Floating-origin integer-grid coordinates for Bevy."
+- id: work:big_space_solari
+  type: work
+  kind: software_product
+  en: "big_space_solari"
+  aliases: ["big_space_solari"]
+  parent: work:big_space
+  note: "SindSieEcht (GitHub). Resets Solari temporal history on big_space recentring."
+- id: work:bevytiles
+  type: work
+  kind: software_product
+  en: "bevytiles"
+  aliases: ["bevytiles"]
+  parent: work:bevy
+  note: "ziv (GitHub). Geo-spatial terrain tile streaming for Bevy, a port of raytiles."
+- id: work:bevy_clipmap
+  type: work
+  kind: software_product
+  en: "bevy-clipmap"
+  aliases: ["bevy-clipmap", "bevy_clipmap"]
+  parent: work:bevy
+  note: "kirillsurkov (GitHub). GPU geometry-clipmap terrain renderer for Bevy."
+- id: work:bevy_hanabi
+  type: work
+  kind: software_product
+  en: "bevy_hanabi"
+  aliases: ["bevy_hanabi", "Hanabi"]
+  parent: work:bevy
+  note: "djeedai (GitHub). GPU particle system for Bevy."
+- id: work:utm_crate
+  type: work
+  kind: software_product
+  en: "utm"
+  aliases: ["utm", "utm crate"]
+  note: "gadomski (GitHub). Rust lat/lon to UTM conversion crate."
+- id: work:bevy_rts_camera
+  type: work
+  kind: software_product
+  en: "bevy_rts_camera"
+  aliases: ["bevy_rts_camera"]
+  parent: work:bevy
+  note: "Plonq (GitHub). RTS-style camera controller for Bevy."
+- id: work:bevy_open_world
+  type: work
+  kind: software_product
+  en: "bevy-open-world"
+  aliases: ["bevy-open-world", "evroon/bevy-open-world", "bevy-adsb"]
+  parent: work:bevy
+  note: "evroon (GitHub). Collection of Bevy demonstrations: OSM, terrain, ADS-B traffic, globe, flight instruments."
+- id: work:rusty_rotor
+  type: work
+  kind: software_product
+  en: "rusty-rotor"
+  aliases: ["rusty-rotor"]
+  parent: work:bevy
+  note: "HalavicH (GitHub). Work-in-progress FPV drone simulator in Bevy."
+- id: work:bevy_3d_tiles
+  type: work
+  kind: software_product
+  en: "bevy_3d_tiles"
+  aliases: ["bevy_3d_tiles"]
+  parent: work:bevy
+  note: "Arvikasoft (GitHub). OGC 3D Tiles streaming for Bevy (preview)."
+- id: work:terraink
+  type: work
+  kind: software_product
+  en: "terraink"
+  aliases: ["terraink"]
+  parent: work:bevy
+  note: "fn-a (GitHub). Small Bevy renderer for DEMs and vector tiles."
+- id: work:bevy_mesh_terrain
+  type: work
+  kind: software_product
+  en: "bevy_mesh_terrain"
+  aliases: ["bevy_mesh_terrain"]
+  parent: work:bevy
+  note: "ethereumdegen (GitHub). Chunked heightmap terrain with splat mapping for Bevy."
+- id: work:bevy_regions
+  type: work
+  kind: software_product
+  en: "bevy_regions"
+  aliases: ["bevy_regions"]
+  parent: work:bevy_mesh_terrain
+  note: "ethereumdegen (GitHub). Region-paint texture companion to bevy_mesh_terrain."
+- id: work:bevy_symbios_ground
+  type: work
+  kind: software_product
+  en: "bevy_symbios_ground"
+  aliases: ["bevy_symbios_ground"]
+  parent: work:bevy
+  note: "TheJanusStream (GitHub). Algorithmic terrain integration for Bevy."
+- id: work:bevy_a5
+  type: work
+  kind: software_product
+  en: "bevy_a5"
+  aliases: ["bevy_a5"]
+  parent: work:bevy
+  note: "jonititan (GitHub). A5 pentagonal geospatial cells for Bevy."
+- id: work:bevy_feronia
+  type: work
+  kind: software_product
+  en: "bevy_feronia"
+  aliases: ["bevy_feronia"]
+  parent: work:bevy
+  note: "NicoZweifel (GitHub). Vegetation scatter and wind-shader system for Bevy 0.17."
+- id: work:warbler_grass
+  type: work
+  kind: software_product
+  en: "warbler_grass"
+  aliases: ["warbler_grass"]
+  parent: work:bevy
+  note: "EmiOnGit (GitHub). GPU billboard grass for Bevy (outdated)."
+- id: work:bevy_procedural_tree
+  type: work
+  kind: software_product
+  en: "bevy_procedural_tree"
+  aliases: ["bevy_procedural_tree"]
+  parent: work:bevy
+  note: "Affinator (GitHub). Procedural 3D tree meshes for Bevy."
+- id: work:bevy_water
+  type: work
+  kind: software_product
+  en: "bevy_water"
+  aliases: ["bevy_water"]
+  parent: work:bevy
+  note: "Neopallium (GitHub). Tileable dynamic ocean material for Bevy."
+- id: work:bevy_volumetric_clouds
+  type: work
+  kind: software_product
+  en: "bevy-volumetric-clouds"
+  aliases: ["bevy-volumetric-clouds"]
+  parent: work:bevy
+  note: "evroon (GitHub). Horizon Zero Dawn-style raymarched clouds for Bevy 0.18."
+- id: work:bevy_fast_clouds
+  type: work
+  kind: software_product
+  en: "bevy_fast_clouds"
+  aliases: ["bevy_fast_clouds"]
+  parent: work:bevy
+  note: "steven-moss-notebook (GitHub). Wavelet-volume clouds for Bevy 0.19."
+- id: work:bevy_stage
+  type: work
+  kind: software_product
+  en: "bevy_stage"
+  aliases: ["bevy_stage"]
+  parent: work:bevy
+  note: "etwodev (GitHub). glTF level streaming with sectors and LOD for Bevy."
+- id: work:chunky_bevy
+  type: work
+  kind: software_product
+  en: "chunky-bevy"
+  aliases: ["chunky-bevy"]
+  parent: work:bevy
+  note: "ChousX (GitHub). Chunk load-in/load-out management for Bevy."
+- id: work:bevy_spatial
+  type: work
+  kind: software_product
+  en: "bevy_spatial"
+  aliases: ["bevy_spatial"]
+  parent: work:bevy
+  note: "laundmo (GitHub). KD-tree spatial indices for Bevy entities."
+- id: work:milsymbol_rust
+  type: work
+  kind: software_product
+  en: "milsymbol (Rust)"
+  aliases: ["milsymbol (Rust)", "milsymbol Rust port"]
+  parent: work:milsymbol
+  note: "luofang34 (GitHub). Native Rust port of milsymbol.js."
+- id: work:milsymbol_rs
+  type: work
+  kind: software_product
+  en: "milsymbol-rs"
+  aliases: ["milsymbol-rs"]
+  parent: work:milsymbol
+  note: "bcow (Codeberg). Rust wrapper around the milsymbol JavaScript library."
+- id: work:bevy_geo_tiles
+  type: work
+  kind: software_product
+  en: "bevy_geo_tiles"
+  aliases: ["bevy_geo_tiles"]
+  parent: work:bevy
+  note: "Moritz-Schmidt (GitHub). Slippy-map raster tiles in Bevy."
+- id: work:bevy_map_viewer
+  type: work
+  kind: software_product
+  en: "bevy_map_viewer"
+  aliases: ["bevy_map_viewer"]
+  parent: work:bevy
+  note: "SO9010 (GitHub). Slippy-map viewer for Bevy."
+- id: work:digital_extinction
+  type: work
+  kind: video_game
+  en: "Digital Extinction"
+  aliases: ["Digital Extinction"]
+  note: "DigitalExtinction (GitHub), archived 2024. AGPL-3.0 open-source RTS built on Bevy."
+- id: work:iron_curtain
+  type: work
+  kind: software_product
+  en: "iron-curtain"
+  aliases: ["iron-curtain"]
+  note: "iron-curtain-engine (GitHub), 2026. GPL-3.0 Rust C&C-style RTS engine on Bevy."
