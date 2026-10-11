@@ -1145,7 +1145,7 @@ fn drive_vehicles(
             }
             // Hard going throws more: the tracks dig.
             if v.speed > 2.0 && rng.random_bool((0.5 / going.max(0.4)).min(1.0) as f64) {
-                fx::spray(&mut commands, &mut fx, &mut fxr.0, geo::ground(p) + Vec3::new(0.0, 0.0, 0.0) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
+                fx::spray(&mut commands, &mut fx, geo::ground(p) + Vec3::new(0.0, 0.0, 0.0) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
             }
         }
         if v.speed > 0.5 {
@@ -1261,23 +1261,30 @@ pub fn wrap(a: f32) -> f32 {
     a
 }
 
-/// Smoke grenades: a white wall in front of the vehicle within seconds, which hides it from the ATGM teams'
-/// sights, and from the drone overhead.
+/// Smoke grenades: a fan of grenades arcs 40–60 m ahead and each burns on the ground into a low wall within a
+/// minute, which hides the vehicle from the ATGM teams' sights, and from the drone overhead. The Soviet 902
+/// "Tucha" dischargers make grey-black HC smoke for two minutes and more; a Bradley's are white phosphorus,
+/// a near-instant dense white burst that is gone in half a minute.
 pub fn pop_smoke(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, smoke: &mut fx::Smoke, v: &mut Vehicle, tf: &Transform, now: f64) {
     if v.smoked {
         return;
     }
     v.smoked = true;
     let fwd = (tf.rotation * Vec3::NEG_Z).xz().normalize_or_zero();
-    for k in 0..8 {
-        let a = (k as f32 - 3.5) * 0.28;
+    let from = tf.translation + Vec3::Y * 2.2;
+    for k in 0..10 {
+        let a = (k as f32 - 4.5) * 0.22;
         let dir = Vec2::from_angle(a).rotate(fwd);
-        let at = tf.translation + Vec3::new(dir.x, 0.0, dir.y) * 2.0 + Vec3::Y * 2.2;
-        for _ in 0..3 {
-            fx::spawn(commands, fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: at, vel: Vec3::new(dir.x, 0.35, dir.y) * rng.random_range(14.0..22.0), life: rng.random_range(50.0..80.0), size0: 2.0, size1: rng.random_range(18.0..30.0), alpha: 0.75, drag: 0.9, ..default() });
-        }
+        let range = rng.random_range(35.0..60.0);
+        // Flat arc: 2–3 s in the air with the thin grey trail of the launch charge.
+        let secs = rng.random_range(2.0..2.8);
+        let land = tf.translation.xz() + dir * range;
+        let vel = Vec3::new(dir.x * range / secs, 0.5 * 9.8 * secs, dir.y * range / secs);
+        fx::spawn(commands, fx, fx::Spawn { kind: fx::Kind::GreySmoke, pos: from, vel, life: secs, size0: 0.6, size1: 0.8, alpha: 0.9, drag: 0.0, gravity: 9.8, streak: 5.0, ..default() });
+        let (kind, rate, burn) = if v.side == Side::Ua { (EmitterKind::Wp, 1.5, rng.random_range(18.0..30.0)) } else { (EmitterKind::Hc, 0.8, rng.random_range(90.0..150.0)) };
+        commands.spawn((Transform::from_translation(geo::ground(land)), Emitter::after(secs, kind, rate, burn, Vec3::Y * 0.3)));
     }
-    smoke.add(tf.translation.xz() + fwd * 22.0, 28.0, now + 60.0);
+    smoke.add(tf.translation.xz() + fwd * 45.0, 32.0, now + 120.0);
 }
 
 fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
@@ -1407,7 +1414,7 @@ fn check_mines(
 
 fn detonate(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, paint: &mut PaintQueue, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, at: Vec2) {
     let p = geo::ground(at);
-    fx::explosion(commands, fx, rng, p, 1.1, true);
+    fx::explosion(commands, fx, p, 1.1, true);
     paint.push(Paint::Crater { at, radius: 2.0, seed: rng.random() });
     sound.at(p, Sfx::MineBlast, 1.0);
     blasts.write(Blast { at: p, radius: 6.0, cause: Cause::Mine });
@@ -1505,8 +1512,8 @@ fn burst_strength(kind: VKind) -> f32 {
 }
 
 /// The charges go all at once: the fireball, its sound, and the blast on whoever stands near.
-fn cook_off_blast(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, p: Vec3) {
-    fx::fireball(commands, fx, rng, p);
+fn cook_off_blast(commands: &mut Commands, fx: &mut FxAssets, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, p: Vec3) {
+    fx::fireball(commands, fx, p);
     sound.at(p, Sfx::CookOff, 1.4);
     blasts.write(Blast { at: p, radius: 8.0, cause: Cause::CookOff });
 }
@@ -1618,7 +1625,7 @@ pub fn on_wrecked(
     let toss_later = ev.how != Kill::BrewUp && v.kind.carousel() && rng.random_bool(0.5);
     match ev.how {
         Kill::BrewUp => {
-            cook_off_blast(&mut commands, &mut fx, rng, &mut sound, &mut blasts, p);
+            cook_off_blast(&mut commands, &mut fx, &mut sound, &mut blasts, p);
             if v.kind.carousel()
                 && let Some(t) = turret.as_ref()
             {
@@ -1626,7 +1633,7 @@ pub fn on_wrecked(
             }
         }
         Kill::Torch => {
-            fx::explosion(&mut commands, &mut fx, rng, p + Vec3::Y, 0.9, false);
+            fx::explosion(&mut commands, &mut fx, p + Vec3::Y, 0.9, false);
             sound.at(p, Sfx::BlastNear, 1.0);
         }
         Kill::Quiet => {}
@@ -1673,13 +1680,13 @@ fn burn(
                     f.next_burst = f.t + rng.random_range(8.0..90.0);
                     if toss {
                         f.toss_at = None;
-                        cook_off_blast(&mut commands, &mut fx, rng, &mut sound, &mut blasts, p);
+                        cook_off_blast(&mut commands, &mut fx, &mut sound, &mut blasts, p);
                         if let Ok(t) = turrets.get(v.turret) {
                             toss_turret(&mut commands, rng, &mut stats, &mut radio, v, t, now);
                         }
                     } else {
                         let s = burst_strength(v.kind);
-                        fx::cookoff(&mut commands, &mut fx, rng, p, s);
+                        fx::cookoff(&mut commands, &mut fx, p, s);
                         sound.at(p, Sfx::CookOff, 0.4 + 0.5 * s);
                     }
                 }
@@ -2076,7 +2083,6 @@ fn move_soldiers(
 struct FootMines<'w, 's> {
     mf: ResMut<'w, Minefield>,
     fx: ResMut<'w, FxAssets>,
-    fxr: ResMut<'w, FxRng>,
     sound: Sound<'w, 's>,
     blasts: MessageWriter<'w, Blast>,
     near: Local<'s, Vec<usize>>,
@@ -2090,7 +2096,7 @@ impl FootMines<'_, '_> {
         let Some(i) = self.near.iter().copied().find(|&i| mf.mines[i].ap && mf.mines[i].pos.distance(p) < 0.45) else { return };
         mf.mines[i].live = false;
         let at = geo::ground(p);
-        fx::explosion(commands, &mut self.fx, &mut self.fxr.0, at, 0.35, true);
+        fx::explosion(commands, &mut self.fx, at, 0.35, true);
         self.sound.at(at, Sfx::MineBlast, 0.5);
         self.blasts.write(Blast { at, radius: 2.5, cause: Cause::Mine });
     }

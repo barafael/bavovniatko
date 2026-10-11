@@ -304,7 +304,8 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let sounds = vec![
         (Sfx::BlastNear, add(blast(&mut rng, 3.0, 2600.0, 1.0))),
         (Sfx::BlastFar, add(blast(&mut rng, 3.5, 300.0, 1.0))),
-        (Sfx::Thermobaric, add(blast(&mut rng, 5.0, 700.0, 1.4))),
+        // Thermobaric: deep, long, no crack; the salvo's thuds overlap into one roll.
+        (Sfx::Thermobaric, add(blast(&mut rng, 7.0, 350.0, 1.8))),
         (Sfx::MineBlast, add(blast(&mut rng, 2.5, 1800.0, 1.2))),
         (Sfx::TankGun, add(blast(&mut rng, 2.0, 3500.0, 0.9))),
         (Sfx::Cannon30, add(burst(&mut rng, 6, 0.18, 2800.0))),

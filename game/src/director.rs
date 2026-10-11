@@ -208,7 +208,9 @@ fn run_script(
             Act::Tos { label } => {
                 // Twenty-four rockets rippling onto the southern blocks: the observers' building is the target.
                 let aim = op.building + Vec2::new(rng.random_range(-250.0..250.0), rng.random_range(30.0..110.0));
-                fc.missions.push(Mission { target: aim, kind: ShellKind::Tos, rounds: 24, sigma: 75.0, interval: 0.3, next: now + 3.0, flight: 12.0, player: false, by: Side::Ru });
+                // Twenty-four rockets in pairs over about ten seconds, scattered over some 200 × 400 m with the long
+                // axis along the line of fire (from the south).
+                fc.missions.push(Mission { target: aim, kind: ShellKind::Tos, rounds: 24, sigma: 100.0, interval: 0.4, next: now + 3.0, flight: 12.0, player: false, by: Side::Ru });
                 radio.say(now, "TOS! Solntsepyok on the town! Get down!");
                 *banner = Some((label.to_string(), 4.0));
             }

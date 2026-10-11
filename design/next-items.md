@@ -355,6 +355,14 @@ sight shot. `same-day.sh` identical (the texels still carry the same paint event
 
 **Cost.** 6 h.
 
+**In progress (2026-10-11, late).** Written and compiled, not yet looked at: the paint widens the snow–earth
+transition to a gradient a few metres wide (`base_colour`), and the ground shader samples the texel through a
+world-space jitter of up to 0.35 m, re-cuts the ragged patch edge below the texel from two octaves of noise
+where the texel says the cover is partial (full snow, full earth, craters, scorch and tracks pass through
+unchanged), and adds a quarter-metre crust. The shots `b-snow-squares`, `b-killzone-x13` and `b-ground-view`
+were queued when the session ended: look at them against `20261011-2005-snow-squares.jpg` before committing
+`src/terrain.rs` and `src/shaders/ground.wgsl`, which are left uncommitted in the tree.
+
 ### C. Smoke, fire and the TOS (**look**) — observations 3, 5, 14, and the toss blast of 6
 
 **Now.** One puff texture, nine kinds, eight alpha steps, shared materials so everything batches (keep that).
@@ -397,6 +405,29 @@ and particles are in `Step::Effects` after the sim and must not touch the sim's 
 which is separate; keep it so).
 
 **Cost.** 14–18 h (the biggest look package).
+
+**Done so far (2026-10-11, late).** First the plumbing: the effects now draw from their own random stream
+(`FxAssets.rng`), so what a puff looks like no longer shifts what the day decides; the composites lost their
+`rng` parameter, and the back-blast and white-phosphorus visuals moved out of `fire.rs` into `fx`. Then the
+look: a 2×2 atlas of four puff shapes on four quads, each puff with its own spin, turn rate and mirror; the
+kinds `Fog` (TDA screens: no rise, a ribbon the wind lays out), `Hc` (grenade smoke, grey, ground-hugging),
+`Steam` (pure white), `Dust` (June earth), `TracerGreen` (Russian tracers; ours are red); per-kind wind coupling
+(fog and grenade smoke at once, hot smoke after it has risen, dust barely), buoyancy that decays over 20 s so a
+plume bends over, a turbulence field each particle samples at its own place, a shared gust envelope; the TDA
+screen as a low fog ribbon; grenades as ten arcs with grey trails and ground emitters that start when they land
+(Soviet HC for two minutes, white phosphorus for half a minute on a Bradley); the smoke round as a burst 80 m
+up with twelve falling white streamers each seeding a white bank; the engine fire's smoke white, then grey,
+then black; shell bursts by season (a dark chunky column with a snow skirt and a haze that clears in 20–40 s in
+February; a wide khaki column and a brown haze that hangs 1–2 min in June); the tank gun's grey-white ball
+hanging 5–9 s with a ground ring; missile trails only for the motor burn (beam riders have no wire); and the
+TOS: a two-frame flash, a 10→26 m fireball that darkens inside two seconds, a 24-puff ground ring at 40–50 m/s,
+a sooty head climbing on a grey-brown stem, concrete dust over the block, the salvo of 24 in pairs 0.4 s apart
+over a 200 × 400 m ellipse along the line of fire, and a seven-second thud with no crack. Clips
+`20261011-2323-c-tos.mp4`, `20261011-2324-c-screens.mp4`, `20261011-2329-c-grenades.mp4` (the first try: far
+too much, too black; the fix is in, its clip was recording when the session ended). The day moved once (the
+TOS spread and the grenade cloud are sim inputs); `target/same-day/c2-*` is the look baseline from here on.
+Not done from the list: the pool fire beside the hull, the June grass fire, the ERA pops; the chunk-level
+smoke contact sheet.
 
 ### D. Vehicle fates and mobility kills (**sim**) — observations 6, 14, 20
 
