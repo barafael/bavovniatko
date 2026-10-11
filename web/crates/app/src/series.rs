@@ -1,11 +1,13 @@
 //! Number series: every dated observation of a metric, plotted over time with its range (low–high), coloured by
 //! side, so competing claims sit side by side. Pick a metric (most observations first) and a unit.
 
+use std::cmp::Reverse;
+
 use leptos::prelude::*;
 use serde_json::Value;
 
 use crate::router::{Route, go, href};
-use crate::ui::{GREY, Side, claim_link, fmt_date, key_of, ok_rows, on_rows, rows_resource, strs, text, ymd};
+use crate::ui::{GREY, Side, claim_link, fmt_date, key_of, ok_rows, on_rows, rows_resource, strs, tally, text, value_label, ymd};
 
 const METRICS: &str = "SELECT metric AS id, metric.labels.en AS label, count() AS n FROM observation
     WHERE time != NONE GROUP BY id, label ORDER BY n DESC";
@@ -44,12 +46,8 @@ pub fn SeriesPage(metric: Option<String>) -> impl IntoView {
                 <a href=href(&Route::Notebook(Some(format!("fn::series({chosen});"))))>"open in notebook"</a>
             </div>
             {move || on_rows(points.get(), |rows| {
-                    let mut units: Vec<(String, usize)> = vec![];
-                    for r in &rows {
-                        let u = text(&r["unit"]);
-                        match units.iter_mut().find(|x| x.0 == u) { Some(x) => x.1 += 1, None => units.push((u, 1)) }
-                    }
-                    units.sort_by_key(|u| std::cmp::Reverse(u.1));
+                    let mut units = tally(rows.iter().map(|r| text(&r["unit"])));
+                    units.sort_by_key(|u| Reverse(u.1));
                     let current = unit.get().filter(|u| units.iter().any(|x| &x.0 == u)).or_else(|| units.first().map(|u| u.0.clone())).unwrap_or_default();
                     let pts: Vec<Value> = rows.into_iter().filter(|r| r["unit"].as_str() == Some(current.as_str()) && !r["t"].is_null()).collect();
                     view! {
@@ -67,7 +65,7 @@ pub fn SeriesPage(metric: Option<String>) -> impl IntoView {
                             <thead><tr><th>"when"</th><th>"value"</th><th>"side"</th><th>"claimants"</th><th>"claim"</th></tr></thead>
                             <tbody>{pts.into_iter().map(|p| view! { <tr>
                                 <td>{fmt_date(&p["t"], None)}</td>
-                                <td class="num">{p["value_text"].as_str().map(String::from).unwrap_or_else(|| p["value"].to_string())}</td>
+                                <td class="num">{value_label(&p)}</td>
                                 <td>{text(&p["side"])}</td>
                                 <td>{strs(&p["claimants"]).join(", ")}</td>
                                 <td>{claim_link(&p["id"], &p["claim"])}</td>
@@ -115,9 +113,7 @@ fn Chart(points: Vec<Value>, unit: String) -> impl IntoView {
             {points.into_iter().filter_map(|p| {
                 let x = sx(day_index(&p["t"])?);
                 let color = side_color(&p["side"]);
-                let title = format!("{} · {} · {}", fmt_date(&p["t"], None),
-                    p["value_text"].as_str().map(String::from).unwrap_or_else(|| p["value"].to_string()),
-                    strs(&p["claimants"]).join(", "));
+                let title = format!("{} · {} · {}", fmt_date(&p["t"], None), value_label(&p), strs(&p["claimants"]).join(", "));
                 let id = text(&p["id"]);
                 let range = match (p["low"].as_f64(), p["high"].as_f64()) {
                     (Some(lo), Some(hi)) => Some((sy(lo), sy(hi))),

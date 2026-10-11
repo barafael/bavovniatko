@@ -25,6 +25,8 @@ pub enum Status {
 #[derive(Clone, Copy)]
 pub struct Kb {
     pub status: RwSignal<Status>,
+    /// Whether the dataset is loaded; unlike `status`, it only changes twice, so readers aren't re-run per file.
+    pub ready: Memo<bool>,
     /// Table names in the dataset, for recognising record ids in results.
     pub tables: RwSignal<BTreeSet<String>>,
 }
@@ -47,8 +49,10 @@ thread_local! {
 
 impl Kb {
     pub fn start() -> Kb {
+        let status = RwSignal::new(Status::Loading(Progress { file: "manifest.json".into(), done_bytes: 0, total_bytes: 1, ms: 0.0 }));
         let kb = Kb {
-            status: RwSignal::new(Status::Loading(Progress { file: "manifest.json".into(), done_bytes: 0, total_bytes: 1, ms: 0.0 })),
+            status,
+            ready: Memo::new(move |_| status.with(|s| matches!(s, Status::Ready { .. }))),
             tables: RwSignal::new(BTreeSet::new()),
         };
         // Trunk builds the worker crate as `kbworker`; kbworker_loader.js starts it. The build id is passed on as
@@ -82,7 +86,7 @@ impl Kb {
     }
 
     pub fn is_ready(&self) -> bool {
-        matches!(self.status.get(), Status::Ready { .. })
+        self.ready.get()
     }
 
     pub async fn query(&self, q: String) -> QueryResult {

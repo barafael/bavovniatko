@@ -70,6 +70,31 @@ pub fn list(v: &Value) -> Vec<Value> {
     v.as_array().cloned().unwrap_or_default()
 }
 
+/// Each distinct item and how often it occurs, in order of first appearance.
+pub fn tally<K: PartialEq>(items: impl IntoIterator<Item = K>) -> Vec<(K, usize)> {
+    let mut out: Vec<(K, usize)> = vec![];
+    for k in items {
+        match out.iter_mut().find(|x| x.0 == k) {
+            Some(x) => x.1 += 1,
+            None => out.push((k, 1)),
+        }
+    }
+    out
+}
+
+/// The items grouped by `key`: the groups in order of first appearance, the items in their original order.
+pub fn group_by<K: PartialEq, V>(items: impl IntoIterator<Item = V>, key: impl Fn(&V) -> K) -> Vec<(K, Vec<V>)> {
+    let mut out: Vec<(K, Vec<V>)> = vec![];
+    for v in items {
+        let k = key(&v);
+        match out.iter_mut().find(|g| g.0 == k) {
+            Some(g) => g.1.push(v),
+            None => out.push((k, vec![v])),
+        }
+    }
+    out
+}
+
 /// A link to a claim's page.
 pub fn claim_link(id: &Value, label: &Value) -> impl IntoView + use<> {
     view! { <a href=href(&Route::Claim(text(id)))>{text(label)}</a> }
@@ -125,17 +150,30 @@ pub fn fmt_date(v: &Value, precision: Option<Precision>) -> String {
     }
 }
 
+/// A span of time as text: its start, and its end when that reads differently ("Aug 2024 – Nov 2024").
+pub fn fmt_when(from: &Value, to: Option<&Value>, precision: &Value) -> String {
+    let p = precision.as_str().and_then(|p| p.parse().ok());
+    let from = fmt_date(from, p);
+    match to.filter(|v| !v.is_null()) {
+        Some(to) if fmt_date(to, p) != from => format!("{from} – {}", fmt_date(to, p)),
+        _ => from,
+    }
+}
+
 /// A claim's time object `{from, to, precision}` as text.
 pub fn fmt_time(t: &Value) -> String {
     if t.is_null() {
         return String::new();
     }
-    let p = t["precision"].as_str().and_then(|p| p.parse().ok());
-    let from = fmt_date(&t["from"], p);
-    match t.get("to").filter(|v| !v.is_null()) {
-        Some(to) if fmt_date(to, p) != from => format!("{from} – {}", fmt_date(to, p)),
-        _ => from,
-    }
+    fmt_when(&t["from"], t.get("to"), &t["precision"])
+}
+
+/// An observation's value as text: its `value_text`, else its value, else its low–high range.
+pub fn value_label(o: &Value) -> String {
+    o["value_text"].as_str().map(String::from).unwrap_or_else(|| match (&o["value"], &o["low"], &o["high"]) {
+        (v, _, _) if !v.is_null() => v.to_string(),
+        (_, l, h) => format!("{l}–{h}"),
+    })
 }
 
 /// "kind:['system', 'fpv_drone']" → "fpv drone".

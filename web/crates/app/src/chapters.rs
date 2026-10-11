@@ -2,10 +2,10 @@
 //! flagged as such) and its dated claims as a timeline.
 
 use leptos::prelude::*;
-use serde_json::{Value, json};
+use serde_json::Value;
 
 use crate::router::{Route, href};
-use crate::ui::{claim_link, fmt_time, ok_rows, on_rows, rows_resource, strs, text};
+use crate::ui::{claim_link, fmt_time, fmt_when, ok_rows, on_rows, rows_resource, strs, text};
 
 const LIST: &str = "LET $out = (SELECT topics[0] AS t, count() AS n FROM claim WHERE ext.outcome = true GROUP BY t);
     LET $all = (SELECT topics[0] AS t, count() AS n FROM claim GROUP BY t);
@@ -87,7 +87,7 @@ fn Chapter(topic: String) -> impl IntoView {
         <section class="panel">
             <h2>"Timeline: dated claims in order"</h2>
             {move || on_rows(timeline.get(), |rows| view! { <ul class="history script">{rows.into_iter().map(|r| {
-                let when = fmt_time(&json!({"from": r["t"], "to": r["t_to"], "precision": r["precision"]}));
+                let when = fmt_when(&r["t"], Some(&r["t_to"]), &r["precision"]);
                 let claimants = strs(&r["claimants"]);
                 view! { <li class:outcome=r["outcome"].as_bool().unwrap_or(false)>
                     <span class="when">{when}</span>

@@ -9,7 +9,7 @@ use serde_json::{Value, json};
 
 use crate::results::cell;
 use crate::router::{Route, href};
-use crate::ui::{Precision, claim_key, claim_link, error_box, fmt_date, fmt_time, kind_label, list, on_rows, rid_link, rows_resource, text};
+use crate::ui::{Precision, claim_key, claim_link, error_box, fmt_date, fmt_when, kind_label, list, on_rows, rid_link, rows_resource, text};
 
 /// Fields the page shows elsewhere (the title) or that mean nothing to a reader.
 const HIDDEN: &[&str] = &["id", "labels", "ext", "geometry", "legacy_ids", "created_at", "updated_at", "published_raw"];
@@ -161,7 +161,7 @@ fn claims_panel(title: &'static str, rows: Vec<Value>) -> Option<impl IntoView> 
             <h2>{title}<span class="muted small">{format!(" {total}")}</span></h2>
             <ul class="history compact">{move || rows.with_value(|rows| rows.iter().take(if all.get() { total } else { CLAIMS_SHOWN }).map(|c| view! {
                 <li>
-                    <span class="when">{fmt_time(&json!({"from": c["t"], "precision": c["precision"]}))}</span>
+                    <span class="when">{fmt_when(&c["t"], None, &c["precision"])}</span>
                     {claim_link(&c["id"], &c["text"])}
                     {c["role"].as_str().map(|r| view! { <span class="muted small">{r.to_string()}</span> })}
                     {c["quote"].as_str().map(|q| view! { <blockquote>{q.to_string()}</blockquote> })}

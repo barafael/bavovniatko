@@ -2,11 +2,13 @@
 //! countered (first seen minus the reported lag) to when the counter was first observed; lanes group the measures
 //! by kind. Click a bar for its effect, rationale and evidence.
 
+use std::cmp::Reverse;
+
 use leptos::prelude::*;
 use serde_json::Value;
 
 use crate::router::{Route, href};
-use crate::ui::{fmt_time, kind_label, on_rows, rid_link, rows_resource, strs, text, ymd};
+use crate::ui::{claim_link, fmt_time, group_by, kind_label, on_rows, rid_link, rows_resource, strs, tally, text, ymd};
 
 const QUERY: &str = "SELECT id, in AS counter, in.labels.en AS counter_name, out AS measure, out.labels.en AS measure_name,
     out.kind AS kind, first_observed, lag_days, effect, rationale, evidence
@@ -33,18 +35,9 @@ struct Bar {
 }
 
 fn layout(rows: &[Value], lanes_on: &[String]) -> (Vec<Bar>, Vec<(String, f64, usize)>) {
-    let mut by_lane: Vec<(String, Vec<&Value>)> = vec![];
-    for r in rows {
-        let lane = kind_label(&r["kind"]);
-        if !lanes_on.is_empty() && !lanes_on.contains(&lane) {
-            continue;
-        }
-        match by_lane.iter_mut().find(|l| l.0 == lane) {
-            Some(l) => l.1.push(r),
-            None => by_lane.push((lane, vec![r])),
-        }
-    }
-    by_lane.sort_by_key(|l| std::cmp::Reverse(l.1.len()));
+    let mut by_lane = group_by(rows, |r| kind_label(&r["kind"]));
+    by_lane.retain(|(lane, _)| lanes_on.is_empty() || lanes_on.contains(lane));
+    by_lane.sort_by_key(|l| Reverse(l.1.len()));
     let mut bars = vec![];
     let mut lanes = vec![];
     let mut y = 24.0;
@@ -82,12 +75,8 @@ pub fn Arms() -> impl IntoView {
             <p class="lede">"Measure and countermeasure: each bar runs from a measure being countered to the counter's first
                observation (the reported lag), in lanes by the kind of measure. Hover for names; click for the evidence."</p>
             {move || on_rows(data.get(), |rows| {
-                    let mut kinds: Vec<(String, usize)> = vec![];
-                    for r in &rows {
-                        let k = kind_label(&r["kind"]);
-                        match kinds.iter_mut().find(|x| x.0 == k) { Some(x) => x.1 += 1, None => kinds.push((k, 1)) }
-                    }
-                    kinds.sort_by_key(|k| std::cmp::Reverse(k.1));
+                    let mut kinds = tally(rows.iter().map(|r| kind_label(&r["kind"])));
+                    kinds.sort_by_key(|k| Reverse(k.1));
                     let on = lanes_on.get();
                     let (bars, lanes) = layout(&rows, &on);
                     let height = lanes.last().map_or(80.0, |(_, t, n)| t + *n as f64 * ROW_PX + 30.0);
@@ -145,8 +134,9 @@ pub fn Arms() -> impl IntoView {
                         {s["effect"].as_str().map(|e| view! { <p><strong>"Effect: "</strong>{e.to_string()}</p> })}
                         {s["rationale"].as_str().map(|e| view! { <p>{e.to_string()}</p> })}
                         <h3>"Evidence"</h3>
-                        <ul class="plain">{strs(&s["evidence"]).into_iter().map(|c| view! {
-                            <li><a href=href(&Route::Claim(c.clone()))>{c.clone()}</a></li>
+                        <ul class="plain">{strs(&s["evidence"]).into_iter().map(|c| {
+                            let c = Value::String(c);
+                            view! { <li>{claim_link(&c, &c)}</li> }
                         }).collect_view()}</ul>
                         <p><a href=href(&Route::Notebook(Some(format!("fn::counter_chain({measure});"))))>
                             "What else countered this measure, and what countered those →"</a></p>

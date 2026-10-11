@@ -1,6 +1,8 @@
 //! The dispute board: every contradiction between claims, strongest first, with who claims what and how the
 //! disagreement is explained. Filter by chapter or topic, or by words.
 
+use std::collections::HashMap;
+
 use leptos::prelude::*;
 use serde_json::Value;
 
@@ -17,18 +19,19 @@ const QUERY: &str = "SELECT strength, state, rationale, resolution,
 /// One entry per canonical pair (either order), keeping the strongest and counting the copies.
 fn collapse(rows: Vec<Value>) -> Vec<(Value, usize)> {
     let mut out: Vec<(Value, usize)> = vec![];
+    let mut index: HashMap<(String, String), usize> = HashMap::new();
     for r in rows {
         let (a, b) = (text(&r["a"]), text(&r["b"]));
         if a == b {
             continue;
         }
         let key = if a < b { (a, b) } else { (b, a) };
-        match out.iter_mut().find(|(x, _)| {
-            let (xa, xb) = (x["a"].as_str().unwrap_or_default(), x["b"].as_str().unwrap_or_default());
-            (xa, xb) == (key.0.as_str(), key.1.as_str()) || (xb, xa) == (key.0.as_str(), key.1.as_str())
-        }) {
-            Some((_, n)) => *n += 1,
-            None => out.push((r, 1)),
+        match index.get(&key) {
+            Some(&i) => out[i].1 += 1,
+            None => {
+                index.insert(key, out.len());
+                out.push((r, 1));
+            }
         }
     }
     out

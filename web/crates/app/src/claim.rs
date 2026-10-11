@@ -7,7 +7,7 @@ use serde_json::Value;
 use strum::{IntoStaticStr, VariantArray};
 
 use crate::router::{Route, go, href};
-use crate::ui::{GREY, error_box, fmt_time, key_of, list, on_rows, rid_link, rows_resource, strs, text};
+use crate::ui::{GREY, error_box, fmt_time, group_by, key_of, list, on_rows, rid_link, rows_resource, strs, text, value_label};
 
 /// The claim-to-claim edges (one table each in the schema).
 #[derive(Clone, Copy, PartialEq, Eq, Deserialize, IntoStaticStr, VariantArray)]
@@ -146,10 +146,7 @@ fn ClaimView(data: Value) -> impl IntoView {
                         <table class="obs">
                             <thead><tr><th>"metric"</th><th>"value"</th><th>"unit"</th><th>"side"</th><th>"when"</th></tr></thead>
                             <tbody>{observations.into_iter().map(|o| {
-                                let value = o["value_text"].as_str().map(String::from).unwrap_or_else(|| match (&o["value"], &o["low"], &o["high"]) {
-                                    (v, _, _) if !v.is_null() => v.to_string(),
-                                    (_, l, h) => format!("{l}–{h}"),
-                                });
+                                let value = value_label(&o);
                                 let m = text(&o["metric"]);
                                 view! { <tr>
                                     <td>{rid_link(&m, Some(o["metric_label"].as_str().map(String::from)
@@ -225,14 +222,7 @@ fn EgoGraph(relations: Vec<Link>) -> impl IntoView {
 
 #[component]
 fn RelationList(relations: Vec<Link>) -> impl IntoView {
-    let mut groups: Vec<(String, Vec<Link>)> = vec![];
-    for l in relations {
-        let key = l.rel.phrase(l.dir);
-        match groups.iter_mut().find(|g| g.0 == key) {
-            Some(g) => g.1.push(l),
-            None => groups.push((key, vec![l])),
-        }
-    }
+    let groups = group_by(relations, |l| l.rel.phrase(l.dir));
     view! {
         <div class="relations">{groups.into_iter().map(|(title, items)| view! {
             <h3>{title}</h3>

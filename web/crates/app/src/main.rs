@@ -102,10 +102,10 @@ fn LoadStatus() -> impl IntoView {
 #[component]
 fn About() -> impl IntoView {
     let kb = expect_context::<Kb>();
-    let attribution = move || match kb.status.get() {
-        Status::Ready { manifest, .. } => manifest.attribution,
+    let attribution = move || kb.status.with(|s| match s {
+        Status::Ready { manifest, .. } => manifest.attribution.clone(),
         _ => String::new(),
-    };
+    });
     view! {
         <article class="about">
             <h1>"About this explorer"</h1>

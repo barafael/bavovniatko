@@ -9,7 +9,7 @@ use wasm_bindgen::prelude::*;
 use crate::bridge::GeoMap;
 use crate::kb::Kb;
 use crate::router::{Route, href};
-use crate::ui::{MONTHS, claim_link, fmt_time, key_of, list, rows_resource, text, ymd};
+use crate::ui::{MONTHS, claim_link, fmt_when, key_of, list, ok_rows, rows_resource, text, ymd};
 
 /// Month index 0 = Jan 2022.
 const MONTH_COUNT: i32 = 12 * 5;
@@ -81,11 +81,9 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
     // Points and areas, recomputed when the data or the filters change.
     Effect::new(move |_| {
         let (lo, hi, und) = (from.get(), to.get(), undated.get());
-        let Some(Some(Ok(rows))) = places.get() else { return };
-        let highlight: Vec<String> = match chapter_places.get() {
-            Some(Some(Ok(r))) => r.iter().filter_map(|v| v.as_str().map(String::from)).collect(),
-            _ => vec![],
-        };
+        let Some(rows) = ok_rows(places.get()) else { return };
+        let highlight: Vec<String> = ok_rows(chapter_places.get()).unwrap_or_default()
+            .iter().filter_map(|v| v.as_str().map(String::from)).collect();
         let sel = selected.get();
         let mut feats = vec![];
         let mut hl_points = vec![];
@@ -106,11 +104,8 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
             feats.push(json!({"type": "Feature", "geometry": r["centroid"],
                 "properties": {"id": id, "label": r["label"], "n": n, "color": color}}));
         }
-        let areas: Vec<Value> = match boxes.get() {
-            Some(Some(Ok(b))) => b.iter().map(|b| json!({"type": "Feature", "geometry": b["geometry"],
-                "properties": {"id": b["id"], "label": b["label"], "color": "#7b2cbf"}})).collect(),
-            _ => vec![],
-        };
+        let areas: Vec<Value> = ok_rows(boxes.get()).unwrap_or_default().iter().map(|b| json!({"type": "Feature",
+            "geometry": b["geometry"], "properties": {"id": b["id"], "label": b["label"], "color": "#7b2cbf"}})).collect();
         map.with_value(|m| if let Some(m) = m {
             m.set_data(&json!({"type": "FeatureCollection", "features": feats}).to_string(),
                        &json!({"type": "FeatureCollection", "features": areas}).to_string());
@@ -170,7 +165,7 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
                                     <a href=href(&Route::Notebook(Some(format!("fn::place_history({id});"))))>"open in notebook"</a></p>
                                 <ul class="history">{shown.into_iter().map(|r| view! {
                                     <li>
-                                        <span class="when">{fmt_time(&json!({"from": r["t"], "precision": r["precision"]}))}</span>
+                                        <span class="when">{fmt_when(&r["t"], None, &r["precision"])}</span>
                                         {claim_link(&r["id"], &r["text"])}
                                     </li>
                                 }).collect_view()}</ul>

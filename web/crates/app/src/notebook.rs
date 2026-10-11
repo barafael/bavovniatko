@@ -10,6 +10,7 @@ use crate::bridge::Editor;
 use crate::kb::{BUILD, Kb, QueryResult, fetch_text};
 use crate::results::{ClaimSources, Results, claim_ids, fetch_sources};
 use crate::router::{self, Route};
+use crate::ui::group_by;
 
 #[derive(Debug, Clone, Deserialize)]
 struct GalleryItem {
@@ -87,14 +88,7 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
             <details class="gallery side-list" open=crate::ui::wide_screen()>
                 <summary>"Examples"</summary>
                 {move || gallery.get().map(|items| {
-                    let mut sections: Vec<(String, Vec<GalleryItem>)> = vec![];
-                    for it in items {
-                        match sections.last_mut() {
-                            Some((s, v)) if *s == it.section => v.push(it),
-                            _ => sections.push((it.section.clone(), vec![it])),
-                        }
-                    }
-                    sections.into_iter().map(|(s, items)| view! {
+                    group_by(items, |it| it.section.clone()).into_iter().map(|(s, items)| view! {
                         <section>
                             <h3>{s}</h3>
                             <ul>

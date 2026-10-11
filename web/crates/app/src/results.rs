@@ -27,9 +27,7 @@ pub fn claim_ref(row: &Value) -> Option<String> {
     if let Some(id) = id.filter(|s| s.starts_with("claim:")) {
         return Some(id.to_string());
     }
-    let key = row.get("key")?.as_str()?;
-    let well_formed = key.split('-').count() == 3 && key.chars().all(|c| c.is_ascii_alphanumeric() || c == '-');
-    well_formed.then(|| format!("claim:c{}", key.replace('-', "_")))
+    row.get("key")?.as_str().and_then(claim_of_key)
 }
 
 /// The claims referred to by any statement's rows (at most 2,000).
