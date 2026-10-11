@@ -1,6 +1,9 @@
 //! The map: every place the knowledge base talks about, sized by the number of claims about it in a chosen month
 //! range. Click a place for its claims. `#/map/place:…` focuses a place; `#/map/topic:c14` a dossier's places.
 
+use std::collections::HashSet;
+use std::sync::Arc;
+
 use leptos::prelude::*;
 use leptos::task::spawn_local;
 use serde_json::{Value, json};
@@ -9,7 +12,7 @@ use wasm_bindgen::prelude::*;
 use crate::bridge::GeoMap;
 use crate::kb::Kb;
 use crate::router::{Route, href};
-use crate::ui::{MONTHS, claim_link, fmt_when, key_of, list, ok_rows, rows_resource, text, ymd};
+use crate::ui::{MONTHS, claim_link, fmt_when, key_of, rows_in, rows_resource, text, ymd};
 
 /// Month index 0 = Jan 2022.
 const MONTH_COUNT: i32 = 12 * 5;
@@ -29,6 +32,39 @@ const PLACES: &str = "SELECT id, labels.en AS label, kind, centroid, (<-about<-c
     kind:['place', 'sea'], kind:['place', 'axis'], kind:['place', 'front_sector']]";
 const BOXES: &str = "SELECT id, labels.en AS label, geometry FROM place WHERE kind = kind:['place', 'sample_box'] AND geometry != NONE";
 
+/// A place as the map needs it: the months of its claims, sorted, so a slider move counts them with two binary
+/// searches instead of parsing every date again.
+#[derive(PartialEq)]
+struct Place {
+    id: String,
+    label: Value,
+    centroid: Value,
+    months: Vec<i32>,
+    /// Claims whose time has no month.
+    undated: usize,
+}
+
+impl Place {
+    fn of(r: &Value) -> Place {
+        let times = r["times"].as_array().map(Vec::as_slice).unwrap_or_default();
+        let mut months: Vec<i32> = times.iter().filter_map(month_of).collect();
+        months.sort_unstable();
+        Place { id: text(&r["id"]), label: r["label"].clone(), centroid: r["centroid"].clone(), undated: times.len() - months.len(), months }
+    }
+
+    /// The claims about the place in the month range, and the undated ones if they count.
+    fn claims(&self, lo: i32, hi: i32, undated: bool) -> usize {
+        let from = self.months.partition_point(|m| *m < lo);
+        let to = self.months.partition_point(|m| *m <= hi);
+        to - from + if undated { self.undated } else { 0 }
+    }
+
+    fn xy(&self) -> (f64, f64) {
+        let c = &self.centroid["coordinates"];
+        (c[0].as_f64().unwrap_or(0.0), c[1].as_f64().unwrap_or(0.0))
+    }
+}
+
 /// The box around the central 80% of points, so a few far-off places (Moscow, Pyongyang) don't stretch it.
 fn bbox_of(points: &[(f64, f64)]) -> Option<(f64, f64, f64, f64)> {
     if points.is_empty() {
@@ -41,6 +77,10 @@ fn bbox_of(points: &[(f64, f64)]) -> Option<(f64, f64, f64, f64)> {
     let q = |v: &[f64], f: f64| v[((v.len() - 1) as f64 * f).round() as usize];
     let (lo, hi) = if points.len() >= 10 { (0.1, 0.9) } else { (0.0, 1.0) };
     Some((q(&xs, lo), q(&ys, lo), q(&xs, hi), q(&ys, hi)))
+}
+
+fn collection(features: Vec<Value>) -> String {
+    json!({"type": "FeatureCollection", "features": features}).to_string()
 }
 
 #[component]
@@ -57,9 +97,15 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
     let chapter_q = chapter.clone().map(|t| format!(
         "array::distinct(array::flatten((SELECT VALUE ->about->place FROM claim WHERE topics CONTAINS {t})))"));
     let chapter_places = rows_resource(move || chapter_q.clone());
+    // Parsed once when the rows arrive, not on every slider move.
+    let parsed: Memo<Option<Arc<[Place]>>> = Memo::new(move |_| places.with(|r| rows_in(r).map(|rows| rows.iter().map(Place::of).collect())));
+    let highlight: Memo<HashSet<String>> = Memo::new(move |_| chapter_places.with(|r| {
+        rows_in(r).map(|rows| rows.iter().filter_map(|v| v.as_str().map(String::from)).collect()).unwrap_or_default()
+    }));
 
     let host = NodeRef::<leptos::html::Div>::new();
     let map = StoredValue::new_local(None::<GeoMap>);
+    let has_map = RwSignal::new(false);
     let fitted = StoredValue::new(false);
     Effect::new(move |_| {
         let Some(el) = host.get() else { return };
@@ -75,52 +121,56 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
         });
         map.set_value(Some(GeoMap::new(&el, on_click.as_ref())));
         on_click.forget();
+        has_map.set(true);
     });
     on_cleanup(move || map.with_value(|m| if let Some(m) = m { m.destroy() }));
 
-    // Points and areas, recomputed when the data or the filters change.
+    // The points, recomputed when the data or the filters change.
     Effect::new(move |_| {
         let (lo, hi, und) = (from.get(), to.get(), undated.get());
-        let Some(rows) = ok_rows(places.get()) else { return };
-        let highlight: Vec<String> = ok_rows(chapter_places.get()).unwrap_or_default()
-            .iter().filter_map(|v| v.as_str().map(String::from)).collect();
+        let Some(places) = parsed.get() else { return };
+        if !has_map.get() {
+            return;
+        }
         let sel = selected.get();
         let mut feats = vec![];
         let mut hl_points = vec![];
-        for r in &rows {
-            let times = list(&r["times"]);
-            let n = times.iter().filter(|t| match month_of(t) { Some(m) => m >= lo && m <= hi, None => und }).count();
-            let id = text(&r["id"]);
-            let is_hl = highlight.contains(&id);
-            if n == 0 && !is_hl && sel.as_deref() != Some(id.as_str()) {
+        highlight.with(|hl| for p in places.iter() {
+            let n = p.claims(lo, hi, und);
+            let is_sel = sel.as_deref() == Some(p.id.as_str());
+            let is_hl = hl.contains(&p.id);
+            if n == 0 && !is_hl && !is_sel {
                 continue;
             }
-            let c = &r["centroid"]["coordinates"];
-            let (x, y) = (c[0].as_f64().unwrap_or(0.0), c[1].as_f64().unwrap_or(0.0));
             if is_hl {
-                hl_points.push((x, y));
+                hl_points.push(p.xy());
             }
-            let color = if sel.as_deref() == Some(id.as_str()) { "#c1121f" } else if is_hl { "#e0a800" } else { "#0057b7" };
-            feats.push(json!({"type": "Feature", "geometry": r["centroid"],
-                "properties": {"id": id, "label": r["label"], "n": n, "color": color}}));
-        }
-        let areas: Vec<Value> = ok_rows(boxes.get()).unwrap_or_default().iter().map(|b| json!({"type": "Feature",
-            "geometry": b["geometry"], "properties": {"id": b["id"], "label": b["label"], "color": "#7b2cbf"}})).collect();
+            let role = if is_sel { "selected" } else if is_hl { "highlight" } else { "place" };
+            feats.push(json!({"type": "Feature", "geometry": p.centroid,
+                "properties": {"id": p.id, "label": p.label, "n": n, "role": role}}));
+        });
         map.with_value(|m| if let Some(m) = m {
-            m.set_data(&json!({"type": "FeatureCollection", "features": feats}).to_string(),
-                       &json!({"type": "FeatureCollection", "features": areas}).to_string());
+            m.set_points(&collection(feats));
             if !fitted.get_value() {
                 if let Some((w, s, e, n)) = bbox_of(&hl_points) {
                     m.fit(w - 0.1, s - 0.1, e + 0.1, n + 0.1);
                     fitted.set_value(true);
-                } else if let Some(p) = sel.as_ref().and_then(|s| rows.iter().find(|r| r["id"].as_str() == Some(s.as_str()))) {
-                    let c = &p["centroid"]["coordinates"];
-                    let (x, y) = (c[0].as_f64().unwrap_or(0.0), c[1].as_f64().unwrap_or(0.0));
+                } else if let Some(p) = sel.as_ref().and_then(|s| places.iter().find(|p| &p.id == s)) {
+                    let (x, y) = p.xy();
                     m.fit(x - 0.25, y - 0.15, x + 0.25, y + 0.15);
                     fitted.set_value(true);
                 }
             }
         });
+    });
+    // The areas (the terrain sample boxes) go to the map once.
+    Effect::new(move |_| {
+        if !has_map.get() {
+            return;
+        }
+        let Some(areas) = boxes.with(|r| rows_in(r).map(|rows| rows.iter().map(|b| json!({"type": "Feature",
+            "geometry": b["geometry"], "properties": {"id": b["id"], "label": b["label"], "role": "area"}})).collect())) else { return };
+        map.with_value(|m| if let Some(m) = m { m.set_areas(&collection(areas)) });
     });
 
     // The selected place's claims.

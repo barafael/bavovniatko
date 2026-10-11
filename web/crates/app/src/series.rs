@@ -7,13 +7,13 @@ use leptos::prelude::*;
 use serde_json::Value;
 
 use crate::router::{Route, go, href};
-use crate::ui::{GREY, Side, claim_link, fmt_date, key_of, ok_rows, on_rows, rows_resource, strs, tally, text, value_label, ymd};
+use crate::ui::{Side, claim_link, fmt_date, key_of, ok_rows, on_rows, rows_resource, strs, tally, text, value_label, ymd};
 
 const METRICS: &str = "SELECT metric AS id, metric.labels.en AS label, count() AS n FROM observation
     WHERE time != NONE GROUP BY id, label ORDER BY n DESC";
 
 fn side_color(v: &Value) -> &'static str {
-    Side::parse(v).map_or(GREY, Side::color)
+    Side::parse(v).unwrap_or(Side::Other).color()
 }
 
 fn day_index(v: &Value) -> Option<f64> {

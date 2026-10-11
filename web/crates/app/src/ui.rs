@@ -7,7 +7,9 @@ use strum::{EnumString, IntoStaticStr};
 use crate::kb::Kb;
 use crate::router::{Route, href, record_route};
 
-pub const GREY: &str = "#6b7280";
+/// Colours are the stylesheet's variables, so charts, legends and the map follow the light or dark theme like
+/// everything else. This one is for whatever has no side or relation of its own.
+pub const MUTED: &str = "var(--muted)";
 
 /// Whose side a claimant or a number is on (`side` in the schema).
 #[derive(Clone, Copy, PartialEq, Eq, EnumString, IntoStaticStr)]
@@ -27,11 +29,11 @@ impl Side {
 
     pub fn color(self) -> &'static str {
         match self {
-            Side::Ua => "#0057b7",
-            Side::Ru => "#c1121f",
-            Side::Western => "#2e8540",
-            Side::International => "#7b2cbf",
-            Side::Other => GREY,
+            Side::Ua => "var(--ua)",
+            Side::Ru => "var(--ru)",
+            Side::Western => "var(--ok)",
+            Side::International => "var(--intl)",
+            Side::Other => MUTED,
         }
     }
 }
@@ -102,7 +104,11 @@ pub fn claim_link(id: &Value, label: &Value) -> impl IntoView + use<> {
 
 /// A link to a record's view ("claim:…" → claim page, "place:…" → map, …); plain text if not a record id.
 pub fn rid_link(rid: &str, label: Option<String>) -> AnyView {
-    let kb = expect_context::<Kb>();
+    rid_link_with(&expect_context::<Kb>(), rid, label)
+}
+
+/// `rid_link` with the database handle in hand, for the thousands of cells of a result table.
+pub fn rid_link_with(kb: &Kb, rid: &str, label: Option<String>) -> AnyView {
     match kb.record_table(rid) {
         Some(table) => {
             let h = href(&record_route(&table, rid));
@@ -238,7 +244,13 @@ pub fn rows_resource(query: impl Fn() -> Option<String> + 'static) -> LocalResou
     })
 }
 
-/// Whether side lists (examples, chapters) start open: on screens at least 64em (1024 px) wide.
+/// Whether side lists (examples, chapters) start open: on screens at least 64em wide, the stylesheet's own
+/// breakpoint for putting them beside the page.
 pub fn wide_screen() -> bool {
-    web_sys::window().and_then(|w| w.inner_width().ok()).and_then(|v| v.as_f64()).is_some_and(|w| w >= 1024.0)
+    web_sys::window().and_then(|w| w.match_media("(min-width: 64em)").ok().flatten()).is_some_and(|q| q.matches())
+}
+
+/// The rows of a query, borrowed, if they are in.
+pub fn rows_in(rows: &Rows) -> Option<&[Value]> {
+    rows.as_ref()?.as_ref()?.as_deref().ok()
 }

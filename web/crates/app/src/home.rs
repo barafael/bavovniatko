@@ -63,7 +63,7 @@ pub fn Home() -> impl IntoView {
                         let n = |k: &str| s[k].as_u64().unwrap_or(0).to_string();
                         // Most claims were never judged related to another, which is what the graph view is for.
                         let (claims, connected) = (s["claims"].as_u64().unwrap_or(0), s["connected"].as_u64().unwrap_or(0));
-                        let pct = if claims > 0 { connected * 100 / claims } else { 0 };
+                        let pct = (connected * 100).checked_div(claims).unwrap_or(0);
                         view! {
                             <div class="figures">
                                 <Figure label="claims" value=claims.to_string() note="atomic, cited statements".to_string()

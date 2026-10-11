@@ -26,8 +26,13 @@ extern "C" {
     pub type GeoMap;
     #[wasm_bindgen(constructor)]
     pub fn new(parent: &HtmlElement, on_click: &JsValue) -> GeoMap;
-    #[wasm_bindgen(method, js_name = setData)]
-    pub fn set_data(this: &GeoMap, points: &str, areas: &str);
+    /// The places, a GeoJSON FeatureCollection as text; each feature's `role` (place, highlight, selected) picks
+    /// its colour from the stylesheet.
+    #[wasm_bindgen(method, js_name = setPoints)]
+    pub fn set_points(this: &GeoMap, points: &str);
+    /// The areas (role `area`), likewise.
+    #[wasm_bindgen(method, js_name = setAreas)]
+    pub fn set_areas(this: &GeoMap, areas: &str);
     #[wasm_bindgen(method)]
     pub fn fit(this: &GeoMap, west: f64, south: f64, east: f64, north: f64);
     #[wasm_bindgen(method)]

@@ -60,53 +60,81 @@ const STYLE_LIGHT = "https://tiles.openfreemap.org/styles/positron";
 const STYLE_DARK = "https://tiles.openfreemap.org/styles/dark";
 const EMPTY = { type: "FeatureCollection", features: [] };
 
+// The map's colours are the stylesheet's variables (style.css), read when a style loads, so the map follows the
+// light or dark theme like the rest of the page. A feature's `role` picks its colour.
+const DARK = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+const ROLE_VARS = { place: "--ua", highlight: "--highlight", selected: "--ru", area: "--intl" };
+
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+/** A MapLibre expression: the feature's role → its colour. */
+function roleColor() {
+  const expr = ["match", ["get", "role"]];
+  for (const [role, v] of Object.entries(ROLE_VARS)) expr.push(role, cssVar(v));
+  expr.push(cssVar("--ua"));
+  return expr;
+}
+
 export class GeoMap {
   /** onClick receives the clicked feature's properties as a JSON string. */
   constructor(parent, onClick) {
-    const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    this.points = EMPTY;
+    this.areas = EMPTY;
     this.map = new maplibregl.Map({
       container: parent,
-      style: dark ? STYLE_DARK : STYLE_LIGHT,
+      style: DARK?.matches ? STYLE_DARK : STYLE_LIGHT,
       center: [35.5, 48.5],
       zoom: 5.2,
       attributionControl: { compact: true },
     });
-    this.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-    this.ready = new Promise((res) => this.map.on("load", res));
-    this.ready.then(() => {
-      const m = this.map;
-      m.addSource("areas", { type: "geojson", data: EMPTY });
-      m.addSource("points", { type: "geojson", data: EMPTY });
-      m.addLayer({ id: "areas-fill", type: "fill", source: "areas",
-        paint: { "fill-color": ["coalesce", ["get", "color"], "#0057b7"], "fill-opacity": 0.12 } });
-      m.addLayer({ id: "areas-line", type: "line", source: "areas",
-        paint: { "line-color": ["coalesce", ["get", "color"], "#0057b7"], "line-width": 1.5 } });
-      m.addLayer({ id: "points", type: "circle", source: "points",
-        paint: {
-          "circle-radius": ["interpolate", ["linear"], ["coalesce", ["get", "n"], 1], 1, 4, 50, 10, 500, 18],
-          "circle-color": ["coalesce", ["get", "color"], "#0057b7"],
-          "circle-opacity": 0.75, "circle-stroke-color": "#fff", "circle-stroke-width": 1 } });
-      m.addLayer({ id: "labels", type: "symbol", source: "points", minzoom: 7,
-        layout: { "text-field": ["get", "label"], "text-font": ["Noto Sans Regular"], "text-size": 11, "text-offset": [0, 1.1], "text-anchor": "top" },
-        paint: { "text-color": dark ? "#e3e7ea" : "#1d232b", "text-halo-color": dark ? "#12161b" : "#fff", "text-halo-width": 1.2 } });
-      for (const layer of ["points", "areas-fill"]) {
-        m.on("click", layer, (e) => { if (e.features.length) onClick(JSON.stringify(e.features[0].properties)); });
-        m.on("mouseenter", layer, () => { m.getCanvas().style.cursor = "pointer"; });
-        m.on("mouseleave", layer, () => { m.getCanvas().style.cursor = ""; });
-      }
-    });
+    const m = this.map;
+    m.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+    this.ready = new Promise((res) => m.once("load", res));
+    // The sources and layers belong to a style: they are added when the first style loads, and again when the
+    // theme changes and the other style replaces it.
+    m.on("style.load", () => this.addLayers());
+    this.onTheme = () => m.setStyle(DARK.matches ? STYLE_DARK : STYLE_LIGHT, { diff: false });
+    DARK?.addEventListener("change", this.onTheme);
+    for (const layer of ["points", "areas-fill"]) {
+      m.on("click", layer, (e) => { if (e.features.length) onClick(JSON.stringify(e.features[0].properties)); });
+      m.on("mouseenter", layer, () => { m.getCanvas().style.cursor = "pointer"; });
+      m.on("mouseleave", layer, () => { m.getCanvas().style.cursor = ""; });
+    }
   }
-  /** Replace the layers' data: GeoJSON FeatureCollections as JSON strings. */
-  setData(points, areas) {
-    this.ready.then(() => {
-      this.map.getSource("points").setData(JSON.parse(points));
-      this.map.getSource("areas").setData(JSON.parse(areas));
-    });
+  addLayers() {
+    const m = this.map;
+    const color = roleColor();
+    m.addSource("areas", { type: "geojson", data: this.areas });
+    m.addSource("points", { type: "geojson", data: this.points });
+    m.addLayer({ id: "areas-fill", type: "fill", source: "areas", paint: { "fill-color": color, "fill-opacity": 0.12 } });
+    m.addLayer({ id: "areas-line", type: "line", source: "areas", paint: { "line-color": color, "line-width": 1.5 } });
+    m.addLayer({ id: "points", type: "circle", source: "points",
+      paint: {
+        "circle-radius": ["interpolate", ["linear"], ["coalesce", ["get", "n"], 1], 1, 4, 50, 10, 500, 18],
+        "circle-color": color, "circle-opacity": 0.75, "circle-stroke-color": cssVar("--panel"), "circle-stroke-width": 1 } });
+    m.addLayer({ id: "labels", type: "symbol", source: "points", minzoom: 7,
+      layout: { "text-field": ["get", "label"], "text-font": ["Noto Sans Regular"], "text-size": 11, "text-offset": [0, 1.1], "text-anchor": "top" },
+      paint: { "text-color": cssVar("--ink"), "text-halo-color": cssVar("--panel"), "text-halo-width": 1.2 } });
+  }
+  /** The places: a GeoJSON FeatureCollection as a JSON string. */
+  setPoints(points) {
+    this.points = JSON.parse(points);
+    this.ready.then(() => this.map.getSource("points")?.setData(this.points));
+  }
+  /** The areas, likewise. */
+  setAreas(areas) {
+    this.areas = JSON.parse(areas);
+    this.ready.then(() => this.map.getSource("areas")?.setData(this.areas));
   }
   /** Fit to [west, south, east, north]. */
   fit(w, s, e, n) {
     this.ready.then(() => this.map.fitBounds([[w, s], [e, n]], { padding: 40, maxZoom: 11, duration: 600 }));
   }
   resize() { this.map.resize(); }
-  destroy() { this.map.remove(); }
+  destroy() {
+    DARK?.removeEventListener("change", this.onTheme);
+    this.map.remove();
+  }
 }

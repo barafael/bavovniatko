@@ -176,7 +176,7 @@ fn GraphIntro() -> impl IntoView {
     let text = RwSignal::new(String::new());
     let go_to = move || {
         let s = text.get_untracked().trim().to_string();
-        if let Some(id) = crate::ui::claim_of_key(&s).or((!s.is_empty()).then(|| s)) {
+        if let Some(id) = crate::ui::claim_of_key(&s).or((!s.is_empty()).then_some(s)) {
             go(Route::Graph(Some(id), 2));
         }
     };

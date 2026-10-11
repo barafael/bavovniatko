@@ -92,6 +92,7 @@ python3 db/tools/webexport.py         # after any change to db/dump or web/kb
 (cd web/bridge && npm install && npm run build)
 (cd web/crates/app && trunk serve --release)       # http://127.0.0.1:8770
 cargo run --release -p kbcheck        # in web/: load natively, run every gallery query and the write probes
+db/.venv/bin/python web/bench.py      # how long each interaction blocks the browser (long tasks), on the built site
 ```
 
 `webexport.py --check` reports whether the dataset on disk is current. The release profile skips LTO so builds

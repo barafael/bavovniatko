@@ -55,7 +55,8 @@ pub fn Search(initial: String) -> impl IntoView {
         }
     });
 
-    let results: LocalResource<Option<Result<(Vec<Value>, ClaimSources), String>>> = LocalResource::new(move || {
+    // The hits and their sources: `None` until there is a query and the database is ready.
+    let results = LocalResource::new(move || {
         let terms = terms.get();
         let ready = matches!(kb.status.get(), Status::Ready { .. });
         async move {

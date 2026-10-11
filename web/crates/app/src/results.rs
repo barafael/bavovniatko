@@ -1,6 +1,10 @@
 //! Result views for a notebook query: one panel per statement, as a table (arrays of records) or as JSON.
 //! Record ids in results are links that open the record. Whenever rows are claims (they have a claim `id` or a
 //! claim `key`), the notebook fetches their sources too, so every claim on the page shows where it comes from.
+//!
+//! A big result is rendered a batch of rows at a time, each batch its own `<tbody>`: the table starts with two,
+//! and "Show all" appends one per frame without re-rendering what is shown, so the page keeps responding. The
+//! browser still lays the whole table out after each batch, which is what bounds a batch's cost.
 
 use std::collections::HashMap;
 use std::sync::Arc;
@@ -10,7 +14,7 @@ use serde_json::{Map, Value};
 
 use crate::kb::{Kb, QueryResult, StatementResult};
 use crate::router::{Route, href};
-use crate::ui::{LABEL_FIELDS, claim_key, claim_of_key, label_of, rid_link};
+use crate::ui::{LABEL_FIELDS, claim_key, claim_of_key, label_of, rid_link_with, text};
 
 /// Sources of the claims in a result: claim id → [(title, url)].
 #[derive(Clone, Default)]
@@ -57,8 +61,11 @@ pub async fn fetch_sources(kb: Kb, ids: Vec<String>) -> ClaimSources {
     ClaimSources(Arc::new(map))
 }
 
-const ROWS_SHOWN: usize = 200;
+/// Rows per batch, and how many rows a table shows before "Show all".
+const BATCH: usize = 100;
+const ROWS_SHOWN: usize = 2 * BATCH;
 const CELL_CHARS: usize = 400;
+const JSON_CHARS: usize = 300_000;
 
 #[component]
 pub fn Results(result: QueryResult, sources: ClaimSources) -> impl IntoView {
@@ -82,48 +89,67 @@ enum Mode {
     Json,
 }
 
-fn is_table(v: &Value) -> bool {
-    matches!(v, Value::Array(a) if !a.is_empty())
-}
-
 #[component]
 fn Statement(index: usize, count: usize, statement: StatementResult) -> impl IntoView {
     let StatementResult { result, error } = statement;
-    let mode = RwSignal::new(if is_table(&result) { Mode::Table } else { Mode::Json });
-    let rows = match &result {
+    let summary = match &result {
         Value::Array(a) => format!("{} rows", a.len()),
         Value::Null => String::new(),
         _ => "1 value".into(),
     };
     let label = if count > 1 { format!("Statement {}", index + 1) } else { "Result".into() };
-    let result = StoredValue::new(result);
+    // An array is a table of its items; any other value is a table of one row, and shows as JSON first.
+    let array = result.is_array();
+    let rows: Arc<[Value]> = match result {
+        Value::Array(a) => a.into(),
+        v => vec![v].into(),
+    };
+    let table = array && !rows.is_empty();
+    let mode = RwSignal::new(if table { Mode::Table } else { Mode::Json });
+    // The JSON text is made once, the first time it is shown.
+    let json: StoredValue<Option<Arc<str>>> = StoredValue::new(None);
+    let body = {
+        let rows = rows.clone();
+        move || match mode.get() {
+            Mode::Table => view! { <Table rows=rows.clone() /> }.into_any(),
+            Mode::Json => {
+                let s = json.get_value().unwrap_or_else(|| {
+                    let s: Arc<str> = pretty(&rows, array).into();
+                    json.set_value(Some(s.clone()));
+                    s
+                });
+                view! { <pre class="json">{s.to_string()}</pre> }.into_any()
+            }
+        }
+    };
     view! {
         <div class="statement">
             <div class="statement-head">
                 <span class="label">{label}</span>
-                <span class="rows">{rows}</span>
+                <span class="rows">{summary}</span>
                 <span class="modes">
                     <button class:active=move || mode.get() == Mode::Table on:click=move |_| mode.set(Mode::Table)
-                        disabled=move || !result.with_value(is_table)>"Table"</button>
+                        disabled=!table>"Table"</button>
                     <button class:active=move || mode.get() == Mode::Json on:click=move |_| mode.set(Mode::Json)>"JSON"</button>
                 </span>
             </div>
             {match error {
                 Some(e) => view! { <div class="error">{e}</div> }.into_any(),
-                None => (move || match mode.get() {
-                    Mode::Table => result.with_value(|v| view! { <Table value=v.clone() /> }).into_any(),
-                    Mode::Json => result.with_value(|v| {
-                        let mut s = serde_json::to_string_pretty(v).unwrap_or_default();
-                        if s.len() > 300_000 {
-                            s.truncate(s.char_indices().take_while(|(i, _)| *i < 300_000).last().map_or(0, |(i, _)| i));
-                            s.push_str("\n… (truncated)");
-                        }
-                        view! { <pre class="json">{s}</pre> }
-                    }).into_any(),
-                }).into_any(),
+                None => body.into_any(),
             }}
         </div>
     }
+}
+
+/// The statement's value as indented JSON, cut at JSON_CHARS.
+fn pretty(rows: &[Value], array: bool) -> String {
+    let json = if array { serde_json::to_string_pretty(rows) } else { serde_json::to_string_pretty(&rows[0]) };
+    let mut s = json.unwrap_or_default();
+    if s.len() > JSON_CHARS {
+        s.truncate(s.char_indices().take_while(|(i, _)| *i < JSON_CHARS).last().map_or(0, |(i, _)| i));
+        s.push_str("\n… (truncated)");
+    }
+    s
 }
 
 /// Column order: identifying fields first, then the rest as they first appear.
@@ -158,57 +184,73 @@ fn rank_columns(cols: &mut [String], rows: &[Value]) {
     });
 }
 
+/// A cell's value when its row lacks the column.
+static NULL: Value = Value::Null;
+
 #[component]
-fn Table(value: Value) -> impl IntoView {
-    let rows = match value {
-        Value::Array(a) => a,
-        v => vec![v],
-    };
-    let all = RwSignal::new(false);
+fn Table(rows: Arc<[Value]>) -> impl IntoView {
+    let kb = expect_context::<Kb>();
     let total = rows.len();
-    let objects = rows.iter().all(|r| r.is_object());
+    let objects = rows.iter().all(Value::is_object);
     let mut cols = if objects { columns(&rows) } else { vec!["value".into()] };
-    // Claims always show their sources, whatever the query selected.
+    // The claim each row stands for, found once per row. Claims always show their sources, whatever the query
+    // selected.
+    let claims: Arc<[Option<String>]> = rows.iter().map(claim_ref).collect();
     let sources = use_context::<ClaimSources>().unwrap_or_default();
-    let with_sources = !sources.0.is_empty() && rows.iter().any(|r| claim_ref(r).is_some_and(|c| sources.0.contains_key(&c)));
+    let with_sources = claims.iter().flatten().any(|c| sources.0.contains_key(c));
     if with_sources && !cols.iter().any(|c| c == "sources") {
         cols.push("sources".into());
         if objects {
             rank_columns(&mut cols, &rows);
         }
     }
-    let sources = StoredValue::new(sources);
-    let rows = StoredValue::new(rows);
-    let cols = StoredValue::new(cols);
+    let cols: Arc<[String]> = cols.into();
+    let shown = RwSignal::new(total.min(ROWS_SHOWN));
+    let growing = RwSignal::new(false);
+    // Outside the view: a `>` inside a `view!` attribute would end the tag.
+    let all_shown = move || shown.get() >= total;
+    let head = cols.iter().map(|c| view! { <th>{c.clone()}</th> }).collect_view();
+    let row = move |i: usize| {
+        let r = &rows[i];
+        let claim = claims[i].as_deref();
+        let cells = cols.iter().map(|c| {
+            let v = if objects { r.get(c).unwrap_or(&NULL) } else { r };
+            let content = match (c.as_str(), claim) {
+                ("sources", Some(id)) if with_sources => source_links(sources.0.get(id)),
+                ("key", Some(id)) => view! { <a class="rid" href=href(&Route::Claim(id.to_string()))>{text(v)}</a> }.into_any(),
+                _ => cell_at(&kb, v, 0),
+            };
+            view! { <td data-label=c.clone()>{content}</td> }
+        }).collect_view();
+        view! { <tr>{cells}</tr> }
+    };
+    let batch = move |b: usize| {
+        let rows = (b * BATCH..((b + 1) * BATCH).min(total)).map(row.clone()).collect_view();
+        view! { <tbody>{rows}</tbody> }
+    };
     view! {
         <div class="table-wrap">
             <table>
-                <thead><tr>{cols.get_value().into_iter().map(|c| view! { <th>{c}</th> }).collect_view()}</tr></thead>
-                <tbody>
-                    {move || {
-                        let limit = if all.get() { total } else { ROWS_SHOWN };
-                        rows.with_value(|rows| rows.iter().take(limit).map(|r| view! {
-                            <tr>{cols.with_value(|cols| cols.iter().map(|c| {
-                                let v = if objects { r.get(c).cloned().unwrap_or(Value::Null) } else { r.clone() };
-                                let claim = claim_ref(r);
-                                let content = match (c.as_str(), &claim) {
-                                    ("sources", Some(id)) if with_sources => sources.with_value(|s| source_links(s.0.get(id))),
-                                    ("key", Some(id)) => view! { <a class="rid" href=href(&Route::Claim(id.clone()))>
-                                        {v.as_str().unwrap_or_default().to_string()}</a> }.into_any(),
-                                    _ => cell(&v),
-                                };
-                                view! { <td data-label=c.clone()>{content}</td> }
-                            }).collect_view())}</tr>
-                        }).collect_view())
-                    }}
-                </tbody>
+                <thead><tr>{head}</tr></thead>
+                <For each=move || 0..shown.get().div_ceil(BATCH) key=|b| *b children=batch />
             </table>
             {(total > ROWS_SHOWN).then(|| view! {
-                <button class="more" on:click=move |_| all.set(true) hidden=move || all.get()>
+                <button class="more" hidden=all_shown disabled=move || growing.get()
+                    on:click=move |_| { growing.set(true); grow(shown, total); }>
                     {format!("Show all {total} rows")}
                 </button>
             })}
         </div>
+    }
+}
+
+/// Appends a batch of rows per frame until all are shown, so the page keeps responding while thousands render.
+fn grow(shown: RwSignal<usize>, total: usize) {
+    // The table may be gone by the next frame.
+    let Some(n) = shown.try_get_untracked().map(|n| (n + BATCH).min(total)) else { return };
+    shown.set(n);
+    if n < total {
+        request_animation_frame(move || grow(shown, total));
     }
 }
 
@@ -231,13 +273,34 @@ const NEST: usize = 2;
 const NESTED_CHARS: usize = 2000;
 const LIST_ITEMS: usize = 30;
 
-pub fn cell(v: &Value) -> AnyView {
-    cell_at(v, 0)
+/// Whether a value's JSON stays under `chars`, estimated while walking it and stopping as soon as it does not.
+fn fits(v: &Value, chars: usize) -> bool {
+    fn walk(v: &Value, left: &mut isize) -> bool {
+        *left -= match v {
+            Value::Null => 4,
+            Value::Bool(_) => 5,
+            Value::Number(_) => 8,
+            Value::String(s) => s.len() as isize + 2,
+            Value::Array(a) => 2 + a.len() as isize,
+            Value::Object(o) => 2 + o.keys().map(|k| k.len() as isize + 4).sum::<isize>(),
+        };
+        match v {
+            Value::Array(a) => a.iter().all(|x| walk(x, left)),
+            Value::Object(o) => o.values().all(|x| walk(x, left)),
+            _ => *left >= 0,
+        }
+    }
+    let mut left = chars as isize;
+    walk(v, &mut left) && left >= 0
 }
 
-fn cell_at(v: &Value, depth: usize) -> AnyView {
-    let kb = expect_context::<Kb>();
-    let nests = |v: &Value| depth <= NEST && v.to_string().len() <= NESTED_CHARS;
+/// A result value as a cell: record ids and claim keys as links, dates and URLs shortened, nested values unfolded.
+pub fn cell(v: &Value) -> AnyView {
+    cell_at(&expect_context::<Kb>(), v, 0)
+}
+
+fn cell_at(kb: &Kb, v: &Value, depth: usize) -> AnyView {
+    let nests = |v: &Value| depth <= NEST && fits(v, NESTED_CHARS);
     match v {
         Value::Null => view! { <span class="null">"—"</span> }.into_any(),
         Value::Bool(b) => b.to_string().into_any(),
@@ -245,7 +308,7 @@ fn cell_at(v: &Value, depth: usize) -> AnyView {
         Value::String(s) if s.starts_with("claim:") && kb.record_table(s).is_some() => view! {
             <a class="rid" href=href(&Route::Claim(s.clone())) title=s.clone()>{claim_key(s)}</a>
         }.into_any(),
-        Value::String(s) if kb.record_table(s).is_some() => rid_link(s, None),
+        Value::String(s) if kb.record_table(s).is_some() => rid_link_with(kb, s, None),
         // A date without a time of day ("2025-09-01T00:00:00Z") as just the date.
         Value::String(s) if s.len() == 20 && s.ends_with("T00:00:00Z") && s.as_bytes()[..4].iter().all(u8::is_ascii_digit) => {
             view! { <span class="num">{s[..10].to_string()}</span> }.into_any()
@@ -261,40 +324,32 @@ fn cell_at(v: &Value, depth: usize) -> AnyView {
             let more = a.len().saturating_sub(LIST_ITEMS);
             view! {
                 <span class="list">
-                    {a.iter().take(LIST_ITEMS).map(|x| view! { <span class="item">{cell_at(x, depth + 1)}</span> }).collect_view()}
+                    {a.iter().take(LIST_ITEMS).map(|x| view! { <span class="item">{cell_at(kb, x, depth + 1)}</span> }).collect_view()}
                     {(more > 0).then(|| view! { <span class="null">{format!("+{more} more")}</span> })}
                 </span>
             }.into_any()
         }
         Value::Array(a) if a.len() <= LIST_ITEMS && a.iter().all(|x| !x.is_array()) && nests(v) => view! {
-            <span class="list block">{a.iter().map(|x| view! { <span class="item">{cell_at(x, depth + 1)}</span> }).collect_view()}</span>
+            <span class="list block">{a.iter().map(|x| view! { <span class="item">{cell_at(kb, x, depth + 1)}</span> }).collect_view()}</span>
         }.into_any(),
         Value::Object(o) if o.contains_key("type") && o.contains_key("coordinates") => {
             view! { <span class="geo">{format!("geometry: {}", o["type"].as_str().unwrap_or("?"))}</span> }.into_any()
         }
-        Value::Object(o) if o.len() <= 12 && nests(v) => fields(o, depth),
+        Value::Object(o) if o.len() <= 12 && nests(v) => fields(kb, o, depth),
         other => view! { <code class="compact">{short(&other.to_string(), CELL_CHARS)}</code> }.into_any(),
     }
 }
 
 /// An object: a link when it has a record `id` (labelled by its name, title or text), then its other fields.
-fn fields(o: &Map<String, Value>, depth: usize) -> AnyView {
-    let kb = expect_context::<Kb>();
+fn fields(kb: &Kb, o: &Map<String, Value>, depth: usize) -> AnyView {
     let id = o.get("id").and_then(|v| v.as_str()).filter(|id| kb.record_table(id).is_some());
     let label = id.and(LABEL_FIELDS.iter().copied().find(|k| o.get(*k).is_some_and(|v| v.is_string())));
-    let head = id.map(|id| rid_link(id, label.and_then(|k| o[k].as_str()).map(|s| short(s, CELL_CHARS))));
-    let rest: Vec<(String, Value)> = o.iter()
+    let head = id.map(|id| rid_link_with(kb, id, label.and_then(|k| o[k].as_str()).map(|s| short(s, CELL_CHARS))));
+    let rest = o.iter()
         .filter(|(k, v)| !v.is_null() && !(id.is_some() && (*k == "id" || Some(k.as_str()) == label)))
-        .map(|(k, v)| (k.clone(), v.clone()))
-        .collect();
-    view! {
-        <span class="obj">
-            {head}
-            {rest.into_iter().map(|(k, v)| view! {
-                <span class="field"><span class="k">{k}</span>" "{cell_at(&v, depth + 1)}</span>
-            }).collect_view()}
-        </span>
-    }.into_any()
+        .map(|(k, v)| view! { <span class="field"><span class="k">{k.clone()}</span>" "{cell_at(kb, v, depth + 1)}</span> })
+        .collect_view();
+    view! { <span class="obj">{head}{rest}</span> }.into_any()
 }
 
 fn source_links(srcs: Option<&Vec<(String, String)>>) -> AnyView {

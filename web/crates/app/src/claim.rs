@@ -7,7 +7,7 @@ use serde_json::Value;
 use strum::{IntoStaticStr, VariantArray};
 
 use crate::router::{Route, go, href};
-use crate::ui::{GREY, error_box, fmt_time, group_by, key_of, list, on_rows, rid_link, rows_resource, strs, text, value_label};
+use crate::ui::{MUTED, error_box, fmt_time, group_by, key_of, list, on_rows, rid_link, rows_resource, strs, text, value_label};
 
 /// The claim-to-claim edges (one table each in the schema).
 #[derive(Clone, Copy, PartialEq, Eq, Deserialize, IntoStaticStr, VariantArray)]
@@ -25,12 +25,12 @@ pub enum Relation {
 impl Relation {
     pub fn color(self) -> &'static str {
         match self {
-            Relation::Supports => "#2e8540",
-            Relation::Weakens => "#d97706",
-            Relation::Contradicts => "#c1121f",
-            Relation::Refines => "#0057b7",
-            Relation::Supersedes => "#7b2cbf",
-            Relation::Duplicates => GREY,
+            Relation::Supports => "var(--ok)",
+            Relation::Weakens => "var(--warn)",
+            Relation::Contradicts => "var(--ru)",
+            Relation::Refines => "var(--ua)",
+            Relation::Supersedes => "var(--intl)",
+            Relation::Duplicates => MUTED,
         }
     }
 
@@ -51,7 +51,7 @@ impl Relation {
 
 /// A relation's colour by name; grey for anything unknown.
 pub fn relation_color(rel: &str) -> &'static str {
-    Relation::VARIANTS.iter().find(|r| <&str>::from(**r) == rel).map_or(GREY, |r| r.color())
+    Relation::VARIANTS.iter().find(|r| <&str>::from(**r) == rel).map_or(MUTED, |r| r.color())
 }
 
 /// Whether the edge leaves this claim (`to` the other) or arrives at it (`from` the other).
