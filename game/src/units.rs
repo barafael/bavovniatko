@@ -11,7 +11,7 @@ use crate::diorama::{Diorama, diorama};
 use crate::camera::MainCamera;
 use crate::fx::{self, Emitter, EmitterKind, FxAssets, FxRng};
 use crate::geo::{self, Polyline};
-use crate::meshes::{self, MUD, RU_GREEN, UA_GREEN, WEST_GREEN};
+use crate::meshes::{self, WEST_GREEN};
 use crate::terrain::{Paint, PaintQueue};
 use crate::baked::{self, Part};
 use crate::world::Palette;
@@ -421,94 +421,44 @@ impl Models {
 }
 
 pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>, palette: Res<Palette>) {
-    // Slight per-type colour variation, and mud on the lower hull.
-    let paint = |k: VKind| {
-        let v = 1.0 + (k as u32 as f32 - 2.0) * 0.03;
-        if k.western() || k == VKind::Bmr2 {
-            let v = 1.0 + (k as u32 as f32 - 7.0) * 0.025;
-            return [WEST_GREEN[0] * v, WEST_GREEN[1] * v, WEST_GREEN[2] * v];
-        }
-        [RU_GREEN[0] * v, RU_GREEN[1] * v, RU_GREEN[2] * v * 0.98]
-    };
-    let built = |meshes: &mut Assets<Mesh>, m: meshes::MeshBuilder, mud: bool| {
-        let mut m = m;
-        if mud {
-            m.tint([MUD[0] / 0.33, MUD[1] / 0.29, MUD[2] / 0.24].map(|x: f32| 0.9 + 0.1 * x));
-        }
-        vec![Part { mesh: meshes.add(m.build()), material: palette.vertex.clone(), charred: palette.charred.clone() }]
-    };
-    let mut procedural = HashMap::new();
-    for &k in VKind::VARIANTS {
-        let m = match k {
-            VKind::T80 | VKind::T72 => meshes::tank(paint(k), false, false),
-            VKind::Bmp1 => meshes::bmp(paint(k), false),
-            VKind::Bmp2 => meshes::bmp(paint(k), true),
-            VKind::Mtlb => meshes::mtlb(paint(k)),
-            VKind::Leo2a6 => meshes::leopard2a6(paint(k)),
-            VKind::Leo2r => meshes::leopard2r(paint(k)),
-            VKind::Wisent => meshes::wisent(paint(k)),
-            VKind::Bmr2 => meshes::bmr2(paint(k)),
-            VKind::Bradley => meshes::bradley(paint(k)),
-        };
-        let plow_hull = k.carousel().then(|| built(&mut meshes, meshes::tank(paint(k), true, false).hull, true));
-        procedural.insert(k, VehicleMeshes { hull: built(&mut meshes, m.hull, true), plow_hull, turret: built(&mut meshes, m.turret, false), turret_at: m.turret_at, muzzle: Vec3::new(0.0, 0.38, -6.2) });
-    }
-    let ua = meshes::tank(UA_GREEN, false, true);
-    let mut ua_tank = VehicleMeshes { hull: built(&mut meshes, ua.hull, false), plow_hull: None, turret: built(&mut meshes, ua.turret, false), turret_at: ua.turret_at, muzzle: Vec3::new(0.0, 0.38, -6.2) };
-    // The real models, where they have been baked (tools/bake). Their paint is in the textures; this only
-    // weathers it. The Leopard 2R keeps its hand-built superstructure on the 2A4 hull, and the plow tanks their
-    // hand-built KMT-7.
+    // The real models (tools/bake). Their paint is in the textures; this only weathers it.
     let weathered = Color::srgb(0.93, 0.9, 0.84);
-    let mut baked: HashMap<&str, baked::Baked> = HashMap::new();
-    for id in ["t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley"] {
-        if let Some(b) = baked::load(id, weathered, &mut meshes, &mut images, &mut materials) {
-            baked.insert(id, b);
-        }
-    }
+    let baked: HashMap<&str, baked::Baked> = baked::IDS.iter().map(|&id| (id, baked::load(id, weathered, &mut meshes, &mut images, &mut materials))).collect();
+    let hand = |meshes: &mut Assets<Mesh>, m: meshes::MeshBuilder| vec![Part { mesh: meshes.add(m.build()), material: palette.vertex.clone(), charred: palette.charred.clone() }];
     let mut vehicles = HashMap::new();
     for &k in VKind::VARIANTS {
-        let mut m = procedural.remove(&k).unwrap();
-        // The model whose hull it takes, and whether its turret comes too. The Leopard 2R and the Wisent (a
-        // Leopard 1 hull, near enough a 2A4's) and the BMR-2 (a T-55's, here a T-64's) keep their hand-built tops.
-        let (id, own_turret) = match k {
-            VKind::T80 => ("t80", true),
-            VKind::T72 => ("t72", true),
-            VKind::Bmp1 => ("bmp1", true),
-            VKind::Bmp2 => ("bmp2", true),
-            VKind::Mtlb => ("mtlb", true),
-            VKind::Leo2a6 => ("leo2a6", true),
-            VKind::Leo2r | VKind::Wisent => ("leo2r", false),
-            VKind::Bmr2 => ("t64", false),
-            VKind::Bradley => ("bradley", true),
+        // The model whose hull it takes, and the hand-built top for those without a model of their own: the
+        // Leopard 2R and the Wisent (a Leopard 1 hull, near enough a 2A4's), and the BMR-2 (a T-55's, here a T-64's).
+        let (id, top) = match k {
+            VKind::T80 => ("t80", None),
+            VKind::T72 => ("t72", None),
+            VKind::Bmp1 => ("bmp1", None),
+            VKind::Bmp2 => ("bmp2", None),
+            VKind::Mtlb => ("mtlb", None),
+            VKind::Leo2a6 => ("leo2a6", None),
+            VKind::Leo2r => ("leo2r", Some(meshes::leopard2r_top(WEST_GREEN))),
+            VKind::Wisent => ("leo2r", Some(meshes::wisent_top(WEST_GREEN))),
+            VKind::Bmr2 => ("t64", Some(meshes::bmr2_top(WEST_GREEN))),
+            VKind::Bradley => ("bradley", None),
         };
-        if let Some(b) = baked.get(id) {
-            if own_turret {
-                m.turret = b.turret.clone();
-                m.turret_at = b.turret_at;
-                m.muzzle = b.muzzle;
-            } else {
-                // The hand-built top sits on the model's deck.
-                m.turret_at.y = b.hull_hi.y.min(m.turret_at.y);
-            }
-            let extra = match k {
-                VKind::Leo2r => built(&mut meshes, meshes::full_plow_only(-4.4, 4.2), false),
-                VKind::Wisent => built(&mut meshes, meshes::full_plow_only(-4.1, 3.8), false),
-                VKind::Bmr2 => built(&mut meshes, meshes::kmt_rollers(), false),
-                _ => vec![],
-            };
-            if k.carousel() {
-                m.plow_hull = Some(b.hull.iter().cloned().chain(built(&mut meshes, meshes::kmt7(), false)).collect());
-            }
-            m.hull = b.hull.iter().cloned().chain(extra).collect();
-        }
-        vehicles.insert(k, m);
+        let b = &baked[id];
+        let (turret, turret_at, muzzle) = match top {
+            Some((t, at)) => (hand(&mut meshes, t), at, Vec3::new(0.0, 0.6, -1.6)),
+            None => (b.turret.clone(), b.turret_at, b.muzzle),
+        };
+        let extra = match k {
+            VKind::Leo2r => hand(&mut meshes, meshes::full_plow(-4.4, 4.2)),
+            VKind::Wisent => hand(&mut meshes, meshes::full_plow(-4.1, 3.8)),
+            VKind::Bmr2 => hand(&mut meshes, meshes::kmt_rollers()),
+            _ => vec![],
+        };
+        // The carousel tanks may carry a KMT-7 at the head of a column.
+        let plow_hull = k.carousel().then(|| b.hull.iter().cloned().chain(hand(&mut meshes, meshes::kmt7())).collect());
+        let hull = b.hull.iter().cloned().chain(extra).collect();
+        vehicles.insert(k, VehicleMeshes { hull, plow_hull, turret, turret_at, muzzle });
     }
-    if let Some(b) = baked.get("t64") {
-        ua_tank = VehicleMeshes { hull: b.hull.clone(), plow_hull: None, turret: b.turret.clone(), turret_at: b.turret_at, muzzle: b.muzzle };
-    }
-    let mut baked_ids: Vec<&str> = baked.keys().copied().collect();
-    baked_ids.sort();
-    info!("vehicle models baked from real ones: {baked_ids:?}");
+    let t64 = &baked["t64"];
+    let ua_tank = VehicleMeshes { hull: t64.hull.clone(), plow_hull: None, turret: t64.turret.clone(), turret_at: t64.turret_at, muzzle: t64.muzzle };
     let mut figure = |coat, trousers, helmet, tape| {
         let f = meshes::figure(coat, trousers, helmet, Some(tape));
         (FigureMeshes { body: meshes.add(f.body.build()), leg: meshes.add(f.leg.build()), fallen: meshes.add(meshes::fallen(coat, trousers).build()) }, f.hip)

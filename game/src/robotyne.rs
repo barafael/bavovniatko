@@ -171,7 +171,7 @@ impl Plugin for RobotynePlugin {
 /// The observers' water tower, by the farm on the N08.
 const TOWER: Vec2 = Vec2::new(-1150.0, -1470.0);
 
-pub fn spawn_set(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>) {
+pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>) {
     let solid = materials.add(StandardMaterial { perceptual_roughness: 0.95, ..default() });
     let mut set = MeshBuilder::new();
     // The kolkhoz by the highway: long sheds, two of them roofless, a row of silos, and the water tower.
@@ -221,14 +221,8 @@ pub fn spawn_set(mut commands: Commands, palette: Res<Palette>, mut meshes: ResM
     commands.spawn((Mesh3d(meshes.add(set.build())), MeshMaterial3d(solid)));
     commands.insert_resource(ObservationPost { eye: g + Vec3::new(0.0, 18.4, 2.7), building: TOWER });
 
-    let heli = match crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials) {
-        Some(b) => HeliModels { body: b.hull, rotor: b.turret, rotor_at: b.turret_at },
-        None => {
-            let (body, rotor) = meshes::ka52();
-            let part = |m: Handle<Mesh>| vec![Part { mesh: m, material: palette.vertex.clone(), charred: palette.charred.clone() }];
-            HeliModels { body: part(meshes.add(body.build())), rotor: part(meshes.add(rotor.build())), rotor_at: Vec3::new(0.0, 2.6, -0.4) }
-        }
-    };
+    let b = crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials);
+    let heli = HeliModels { body: b.hull, rotor: b.turret, rotor_at: b.turret_at };
     commands.insert_resource(heli);
 }
 

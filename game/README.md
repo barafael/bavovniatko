@@ -49,9 +49,9 @@ terrain, ground textures, trees, buildings, people and sound. The two WGSL shade
 
 The vehicles and the Ka-52 are real 3D models: the freely licensed ones catalogued in
 [`research/assets/`](../research/assets/README.md), baked into `assets/vehicles/*.veh` (credits in
-[`assets/vehicles/CREDITS.md`](assets/vehicles/CREDITS.md)). The game looks for that folder next to the binary and
-then in this source tree. Without it, every vehicle is built in code as before. The Wisent and the BMR-2 have no model of their own: they sit on the Leopard 2A4's and the T-64's
-hulls, with their tops, plows and rollers still built in code.
+[`assets/vehicles/CREDITS.md`](assets/vehicles/CREDITS.md)) and built into the binary. The Leopard 2R, the Wisent
+and the BMR-2 have no model of their own: they sit on the Leopard 2A4's and the T-64's hulls, with their tops,
+plows and rollers built in code.
 
 To rebake after changing a model or its spec, download the models (`research/assets/fetch.py`) and run:
 
@@ -87,7 +87,7 @@ the pieces that reach above a height, to write a ring from.
 | `src/robotyne.rs` | Mala Tokmachka: its layout and height, the farm and water tower, dug-in tanks, the Ka-52s, the June light |
 | `src/terrain.rs` | chunked ground with a painted 1 m/texel texture; craters, scorch and tracks are stamped in live |
 | `src/world.rs` | shelterbelts, panel blocks, dachas, the power line, light, the steppe beyond |
-| `src/meshes.rs` | the procedural modelling kit: T-80BV, T-72B3, T-64BV, BMP-1/2, MT-LB, Leopard 2A6 and 2R, Wisent, BMR-2, Bradley, Ka-52, soldiers, buildings |
+| `src/meshes.rs` | the procedural modelling kit: soldiers, buildings, trees, the plows and rollers, the tops of the Leopard 2R, Wisent and BMR-2 |
 | `src/baked.rs`, `tools/bake/` | the real vehicle models: the loader for the baked `.veh` files, and the tool that bakes them |
 | `src/units.rs` | vehicles, soldiers, mines, damage, wrecks, turret tosses |
 | `src/fire.rs` | positions and ATGM teams on both sides, artillery, RAAM, smoke, HIMARS, the vehicles' guns |

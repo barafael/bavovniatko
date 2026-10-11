@@ -165,8 +165,9 @@ fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes:
     let rot = Quat::from_rotation_y(heading.to_radians());
     let across = rot * Vec3::X;
     let back = rot * Vec3::Z;
-    let ka52 = crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials).map(|b| VehicleMeshes { hull: b.hull, plow_hull: None, turret: b.turret, turret_at: b.turret_at, muzzle: b.muzzle });
-    let all: Vec<&VehicleMeshes> = VKind::VARIANTS.iter().map(|k| models.vehicle(*k)).chain([&models.ua_tank]).chain(ka52.as_ref()).collect();
+    let b = crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials);
+    let ka52 = VehicleMeshes { hull: b.hull, plow_hull: None, turret: b.turret, turret_at: b.turret_at, muzzle: b.muzzle };
+    let all: Vec<&VehicleMeshes> = VKind::VARIANTS.iter().map(|k| models.vehicle(*k)).chain([&models.ua_tank, &ka52]).collect();
     for (i, m) in all.into_iter().enumerate() {
         for row in 0..2 {
             let at = Vec3::new(x, 0.0, z) + across * (i as f32 * 10.0) + back * (row as f32 * 14.0);

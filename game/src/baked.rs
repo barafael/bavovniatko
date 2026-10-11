@@ -2,9 +2,7 @@
 //!
 //! A `.veh` file is a hull and a turret (or a helicopter's rotors), each a few meshes, one per material, already in
 //! the game's frame: metres, the front towards -Z, the tracks on y = 0, and the turret's parts relative to its
-//! ring. The files are optional. Without them the game builds every vehicle in code, as it always has.
-
-use std::path::PathBuf;
+//! ring. They are built into the binary, so it runs from anywhere.
 
 use bevy::asset::RenderAssetUsages;
 use bevy::image::{CompressedImageFormats, ImageAddressMode, ImageFilterMode, ImageSampler, ImageSamplerDescriptor, ImageType};
@@ -26,20 +24,21 @@ pub struct Baked {
     pub turret_at: Vec3,
     /// The gun's muzzle in the turret frame.
     pub muzzle: Vec3,
-    pub hull_hi: Vec3,
 }
 
-/// Where the baked files are: next to the binary, or in the source tree it was built from.
-fn dir() -> Option<PathBuf> {
-    let mut dirs = Vec::new();
-    if let Ok(d) = std::env::var("VUHLEDAR_ASSETS") {
-        dirs.push(PathBuf::from(d));
+/// Every baked model, by the name `tools/bake` gives it.
+pub const IDS: [&str; 10] = ["t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley", "ka52"];
+
+fn file(id: &str) -> &'static [u8] {
+    macro_rules! veh {
+        ($($id:literal),*) => {
+            match id {
+                $($id => include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/assets/vehicles/", $id, ".veh")),)*
+                _ => panic!("no baked vehicle {id}"),
+            }
+        };
     }
-    if let Some(exe) = std::env::current_exe().ok().and_then(|e| e.parent().map(|p| p.join("assets/vehicles"))) {
-        dirs.push(exe);
-    }
-    dirs.push(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("assets/vehicles"));
-    dirs.into_iter().find(|d| d.is_dir())
+    veh!("t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley", "ka52")
 }
 
 struct Reader<'a> {
@@ -67,16 +66,11 @@ impl Reader<'_> {
     }
 }
 
-/// Loads `<id>.veh`, or `None` if it is not there. `paint` multiplies every colour (the side's paint, weather).
-pub fn load(id: &str, paint: Color, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>) -> Option<Baked> {
-    let path = dir()?.join(format!("{id}.veh"));
-    let bytes = std::fs::read(&path).ok()?;
-    let mut r = Reader { b: &bytes, at: 0 };
-    if r.bytes(4) != b"VEH1" {
-        warn!("{}: not a baked vehicle", path.display());
-        return None;
-    }
-    let (turret_at, muzzle, _hull_lo, hull_hi) = (r.v3(), r.v3(), r.v3(), r.v3());
+/// Builds the meshes and materials of a baked model. `paint` multiplies every colour (weathering).
+pub fn load(id: &str, paint: Color, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>) -> Baked {
+    let mut r = Reader { b: file(id), at: 0 };
+    assert_eq!(r.bytes(4), b"VEH1", "{id}.veh: not a baked vehicle");
+    let (turret_at, muzzle, _hull_lo, _hull_hi) = (r.v3(), r.v3(), r.v3(), r.v3());
     let paint = paint.to_linear();
     let mut mats = Vec::new();
     for _ in 0..r.u32() {
@@ -129,7 +123,7 @@ pub fn load(id: &str, paint: Color, meshes: &mut Assets<Mesh>, images: &mut Asse
             .with_inserted_indices(Indices::U32(vec![0, 1, 2]));
         turret.push(Part { mesh: meshes.add(empty), material: hull[0].material.clone(), charred: hull[0].charred.clone() });
     }
-    Some(Baked { hull, turret, turret_at, muzzle, hull_hi })
+    Baked { hull, turret, turret_at, muzzle }
 }
 
 /// A texture and its mip levels, each stored encoded, smallest last.
