@@ -317,12 +317,72 @@ pub fn enter_ground(view: &mut View, team: Entity, pos: Vec2) {
     view.lock = None;
 }
 
+/// What the operator's hands do this frame: the sticks, the gimbal wheel, the zoom rocker. Read from the keys and
+/// the mouse, or from `VUHLEDAR_FLY` while a scripted leg is running.
+#[derive(Default, Clone, Copy)]
+struct Stick {
+    /// Forward and sideways, -1..1.
+    fwd: f32,
+    right: f32,
+    /// Turn (left positive) and climb, -1..1.
+    yaw: f32,
+    climb: f32,
+    /// Sport mode (shift).
+    sport: bool,
+    /// Gimbal tilt rate, -1..1 (up positive).
+    gimbal: f32,
+    /// Zoom, in wheel notches (in positive).
+    zoom: f32,
+    /// The mouse's yaw and tilt this frame, in radians.
+    pan: f32,
+    tilt: f32,
+}
+
+impl Stick {
+    fn read(keys: &ButtonInput<KeyCode>, buttons: &ButtonInput<MouseButton>, motion: &AccumulatedMouseMotion, scroll: &AccumulatedMouseScroll, view: &View) -> Self {
+        let axis = |a, b| keys.pressed(a) as u8 as f32 - keys.pressed(b) as u8 as f32;
+        let mut s = Self { fwd: axis(KeyCode::KeyW, KeyCode::KeyS), right: axis(KeyCode::KeyD, KeyCode::KeyA), yaw: axis(KeyCode::KeyQ, KeyCode::KeyE), climb: axis(KeyCode::KeyR, KeyCode::KeyF), sport: keys.pressed(KeyCode::ShiftLeft), zoom: scroll.delta.y, ..default() };
+        if buttons.pressed(MouseButton::Right) || buttons.pressed(MouseButton::Middle) {
+            s.pan = -motion.delta.x * 0.0025 / view.zoom().sqrt();
+            s.tilt = -motion.delta.y * 0.0025 / view.zoom().sqrt();
+        }
+        s
+    }
+
+    /// The scripted leg at game time `t`, if one is running: `w a s d q e r f` as on the keys, `+` sport, `u`/`n` gimbal
+    /// up/down, `z`/`x` zoom in/out.
+    fn scripted(t: f32, dt: f32) -> Option<Self> {
+        let (_, _, spec) = dev().fly.iter().find(|(from, to, _)| (*from..*to).contains(&t))?;
+        let mut s = Self::default();
+        for c in spec.chars() {
+            match c {
+                'w' => s.fwd += 1.0,
+                's' => s.fwd -= 1.0,
+                'd' => s.right += 1.0,
+                'a' => s.right -= 1.0,
+                'q' => s.yaw += 1.0,
+                'e' => s.yaw -= 1.0,
+                'r' => s.climb += 1.0,
+                'f' => s.climb -= 1.0,
+                '+' => s.sport = true,
+                'u' => s.gimbal += 1.0,
+                'n' => s.gimbal -= 1.0,
+                'z' => s.zoom += 4.0 * dt,
+                'x' => s.zoom -= 4.0 * dt,
+                _ => {}
+            }
+        }
+        Some(s)
+    }
+}
+
 fn drone_control(
     time: Res<Time>,
     keys: Res<ButtonInput<KeyCode>>,
     buttons: Res<ButtonInput<MouseButton>>,
     motion: Res<AccumulatedMouseMotion>,
     scroll: Res<AccumulatedMouseScroll>,
+    script: Res<crate::director::Script>,
     mut view: ResMut<View>,
 ) {
     let dt = time.delta_secs();
@@ -344,24 +404,19 @@ fn drone_control(
     if view.mode != Mode::Drone || dev().showcase.is_some() {
         return;
     }
-    let shift = keys.pressed(KeyCode::ShiftLeft);
+    let stick = Stick::scripted(script.t, dt).unwrap_or_else(|| Stick::read(&keys, &buttons, &motion, &scroll, &view));
     // A Mavic-class drone: about 7 m/s for steady filming, 17 m/s in sport mode.
-    let (max_speed, max_accel) = if shift { (17.0, 5.0) } else { (7.0, 2.5) };
+    let (max_speed, max_accel) = if stick.sport { (17.0, 5.0) } else { (7.0, 2.5) };
     let yaw = view.drone_yaw;
     let fwd = Vec3::new(-yaw.sin(), 0.0, -yaw.cos());
     let right = Vec3::new(yaw.cos(), 0.0, -yaw.sin());
-    let mut stick = Vec3::ZERO;
-    if keys.pressed(KeyCode::KeyW) { stick += fwd }
-    if keys.pressed(KeyCode::KeyS) { stick -= fwd }
-    if keys.pressed(KeyCode::KeyD) { stick += right }
-    if keys.pressed(KeyCode::KeyA) { stick -= right }
-    let desired = stick.normalize_or_zero() * max_speed;
+    let desired = (fwd * stick.fwd + right * stick.right).normalize_or_zero() * max_speed;
     let horizontal = Vec3::new(view.drone_vel.x, 0.0, view.drone_vel.z);
     // The flight controller only half-cancels the gust before it is felt.
     let accel = ((desired - horizontal) * 1.3 - gust * 0.35).clamp_length_max(max_accel);
     let mut vel = horizontal + accel * dt;
     // Vertical: climb or sink towards the commanded rate, gently.
-    let climb_cmd = if keys.pressed(KeyCode::KeyR) { 1.0 } else if keys.pressed(KeyCode::KeyF) { -1.0 } else { 0.0 } * if shift { 6.0 } else { 3.0 };
+    let climb_cmd = stick.climb * if stick.sport { 6.0 } else { 3.0 };
     view.climb += (climb_cmd - view.climb).clamp(-2.0 * dt, 2.0 * dt);
     vel.y = view.climb;
     view.drone_vel = vel;
@@ -376,19 +431,17 @@ fn drone_control(
     }
     let ground = geo::height(view.drone_pos.x, view.drone_pos.z);
     view.drone_pos.y = view.drone_pos.y.clamp(ground + 25.0, ground + 700.0);
-    // Yaw and gimbal slew towards their targets; the zoom motor takes its time.
-    if keys.pressed(KeyCode::KeyQ) { view.yaw_target += dt * 0.6 }
-    if keys.pressed(KeyCode::KeyE) { view.yaw_target -= dt * 0.6 }
-    if buttons.pressed(MouseButton::Right) || buttons.pressed(MouseButton::Middle) {
-        view.yaw_target -= motion.delta.x * 0.0025 / view.zoom().sqrt();
-        view.gimbal_target = (view.gimbal_target - motion.delta.y * 0.0025 / view.zoom().sqrt()).clamp(-1.55, 0.1);
-    }
+    // Yaw and gimbal slew towards their targets, slower the further in the zoom is (as the DJI app does, and as the
+    // mouse already did); the zoom motor takes its time.
+    let gain = dt / view.zoom();
+    view.yaw_target += stick.yaw * gain * 0.6 + stick.pan;
+    view.gimbal_target = (view.gimbal_target + stick.gimbal * gain * 0.4 + stick.tilt).clamp(-1.55, 0.1);
     let dyaw = crate::units::wrap(view.yaw_target - view.drone_yaw);
     view.drone_yaw += (dyaw * (1.0 - (-dt * 4.0).exp())).clamp(-1.2 * dt, 1.2 * dt);
     let dg = view.gimbal_target - view.gimbal;
     view.gimbal += (dg * (1.0 - (-dt * 6.0).exp())).clamp(-1.5 * dt, 1.5 * dt);
-    if scroll.delta.y != 0.0 {
-        view.fov_target = (view.fov_target * (1.0 - scroll.delta.y * 0.12)).clamp(3f32.to_radians(), 70f32.to_radians());
+    if stick.zoom != 0.0 {
+        view.fov_target = (view.fov_target * (1.0 - stick.zoom * 0.12)).clamp(3f32.to_radians(), 70f32.to_radians());
     }
     let lf = view.drone_fov.ln() + (view.fov_target.ln() - view.drone_fov.ln()) * (1.0 - (-dt * 3.0).exp());
     view.drone_fov = lf.exp();
