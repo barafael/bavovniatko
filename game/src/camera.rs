@@ -87,9 +87,15 @@ pub struct View {
 
 impl Default for View {
     fn default() -> Self {
+        // At Vuhledar over the town looking south across the fields; at Mala Tokmachka over the forward tree
+        // line, looking south up the slope to the crest.
+        let drone_pos = match crate::diorama::diorama() {
+            crate::diorama::Diorama::Vuhledar => Vec3::new(150.0, 0.0, -700.0),
+            crate::diorama::Diorama::Robotyne => Vec3::new(80.0, 0.0, -1150.0),
+        };
         Self {
             mode: Mode::Drone,
-            drone_pos: Vec3::new(150.0, 0.0, -700.0),
+            drone_pos,
             drone_yaw: std::f32::consts::PI,
             gimbal: -0.62,
             drone_fov: 52f32.to_radians(),
@@ -164,11 +170,11 @@ impl Target {
     pub fn locate(self, near: Vec3, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) -> Option<Vec3> {
         match self {
             Target::Point(p) => Some(geo::ground(p)),
-            Target::Vehicle(idx) => vehicles.iter().filter(|(v, _)| v.idx == idx && v.side == Side::Ru).min_by_key(|(v, _)| v.wave).map(|(_, t)| t.translation),
+            Target::Vehicle(idx) => vehicles.iter().filter(|(v, _)| v.idx == idx && v.side == crate::diorama::diorama().attacker()).min_by_key(|(v, _)| v.wave).map(|(_, t)| t.translation),
             Target::Men => {
                 let pts: Vec<Vec3> = men
                     .iter()
-                    .filter(|(s, t)| s.side == Side::Ru && s.state != SState::Flee && t.translation.distance(near) < 1400.0)
+                    .filter(|(s, t)| s.side == crate::diorama::diorama().attacker() && s.state != SState::Flee && t.translation.distance(near) < 1400.0)
                     .map(|(_, t)| t.translation)
                     .collect();
                 (!pts.is_empty()).then(|| pts.iter().copied().sum::<Vec3>() / pts.len() as f32)
@@ -212,7 +218,8 @@ pub struct FeedEffect {
     pub flash: f32,
     pub zoom: f32,
     pub down: f32,
-    pub _pad: f32,
+    /// How much colour the drone camera keeps: the February snow came through nearly grey, June stays green.
+    pub saturation: f32,
 }
 
 impl FullscreenMaterial for FeedEffect {
@@ -246,7 +253,7 @@ fn spawn_camera(mut commands: Commands, mut view: ResMut<View>, mut images: ResM
             directional_light_exponent: 12.0,
             falloff: FogFalloff::from_visibility_colors(3000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77)),
         },
-        FeedEffect { grain: 1.0, zoom: 1.0, ..default() },
+        FeedEffect { grain: 1.0, zoom: 1.0, saturation: if crate::diorama::diorama().summer() { 0.68 } else { 0.45 }, ..default() },
         IsDefaultUiCamera,
         // Point-light shadows are detailed around the drone (headless, no camera renders to a window).
         ShadowLodOrigin,
@@ -261,7 +268,7 @@ fn spawn_camera(mut commands: Commands, mut view: ResMut<View>, mut images: ResM
     }
 }
 
-fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::UaPosition)>) {
+fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::Post)>) {
     if keys.just_pressed(KeyCode::Digit1) {
         view.mode = Mode::Drone;
     }
@@ -270,7 +277,7 @@ fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Q
     }
     if keys.just_pressed(KeyCode::Digit3) {
         // Into a tree line with an ATGM team; pressing again moves on to the next team still in action.
-        let mut live: Vec<(Entity, Vec2)> = teams.iter().filter(|(_, p)| p.atgm > 0 && p.strength >= 2).map(|(e, p)| (e, p.pos)).collect();
+        let mut live: Vec<(Entity, Vec2)> = teams.iter().filter(|(_, p)| p.side == Side::Ua && p.atgm > 0 && p.strength >= 2).map(|(e, p)| (e, p.pos)).collect();
         live.sort_by(|a, b| a.1.x.total_cmp(&b.1.x));
         if !live.is_empty() {
             let i = match (view.mode, view.ground_team) {
@@ -361,8 +368,9 @@ fn drone_control(
     // Keep the drone over Ukrainian-held ground, mostly: it may creep forward, at a price in jamming.
     view.drone_pos.x = view.drone_pos.x.clamp(-geo::HALF_X + 50.0, geo::HALF_X - 50.0);
     view.drone_pos.z = view.drone_pos.z.clamp(-geo::HALF_Z + 50.0, 1400.0);
-    if view.drone_pos.z > -100.0 {
-        view.jamming = (view.jamming + dt * 0.05 * ((view.drone_pos.z + 100.0) / 500.0)).min(1.0);
+    let jam_z = geo::layout().jam_z;
+    if view.drone_pos.z > jam_z {
+        view.jamming = (view.jamming + dt * 0.05 * ((view.drone_pos.z - jam_z) / 500.0)).min(1.0);
     }
     let ground = geo::height(view.drone_pos.x, view.drone_pos.z);
     view.drone_pos.y = view.drone_pos.y.clamp(ground + 25.0, ground + 700.0);

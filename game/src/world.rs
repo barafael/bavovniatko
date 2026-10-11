@@ -1,6 +1,7 @@
 //! Set dressing: the shelterbelts, the town's ruined panel blocks, the dachas, the power line, and the sky.
 
 use crate::dev::DayDebug;
+use crate::diorama::{Diorama, diorama};
 use crate::geo::{self, CHUNK, CHUNKS_X, HALF_X, HALF_Z, hash01};
 use crate::meshes::{self, MeshBuilder};
 use bevy::{
@@ -18,8 +19,15 @@ impl Plugin for WorldPlugin {
         app.insert_resource(ClearColor(Color::srgb(0.70, 0.72, 0.74)))
             .insert_resource(GlobalAmbientLight { color: Color::srgb(0.80, 0.86, 1.0), brightness: 450.0, ..default() })
             .insert_resource(bevy::light::DirectionalLightShadowMap { size: 4096 })
-            .add_systems(Startup, (spawn_light, spawn_belts, spawn_town.after(spawn_belts)))
-            .add_systems(Update, daylight.in_set(crate::Step::Effects));
+            .add_systems(Startup, (spawn_light, spawn_belts));
+        match diorama() {
+            Diorama::Vuhledar => {
+                app.add_systems(Startup, spawn_town.after(spawn_belts)).add_systems(Update, daylight.in_set(crate::Step::Effects));
+            }
+            Diorama::Robotyne => {
+                app.add_systems(Startup, crate::robotyne::spawn_set.after(spawn_belts)).add_systems(Update, crate::robotyne::daylight.in_set(crate::Step::Effects));
+            }
+        }
     }
 }
 
@@ -32,7 +40,7 @@ pub struct Palette {
 }
 
 #[derive(Resource)]
-struct Skirt(Handle<StandardMaterial>);
+pub struct Skirt(pub Handle<StandardMaterial>);
 
 /// The steppe beyond the diorama: a coarse skirt out to 9 km so the box never shows its edge.
 fn spawn_skirt(commands: &mut Commands, meshes: &mut Assets<Mesh>, materials: &mut Assets<StandardMaterial>) {
@@ -80,6 +88,33 @@ fn spawn_light(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut mat
         // Long, hard winter shadows matter at drone range: the first cascade covers the near kilometre.
         CascadeShadowConfigBuilder { num_cascades: 2, first_cascade_far_bound: 900.0, maximum_distance: 2800.0, ..default() }.build(),
     ));
+}
+
+/// A summer crown: clusters of leaves inside a ragged rounded silhouette, as an alpha mask.
+fn leaf_texture() -> Image {
+    const N: usize = 256;
+    let mut a = vec![0u8; N * N];
+    for y in 0..N {
+        for x in 0..N {
+            let p = Vec2::new(x as f32 / N as f32 * 2.0 - 1.0, 1.0 - y as f32 / N as f32 * 2.0);
+            // A crown on a short bare trunk: the silhouette is an egg over the lower fifth.
+            let crown = Vec2::new(p.x / 0.95, (p.y - 0.25) / 0.78).length();
+            let edge = geo::fbm(p.x * 3.0, p.y * 3.0, 3, 41) * 0.28;
+            let clusters = geo::value_noise(p.x * 14.0, p.y * 14.0, 42) * 0.5 + 0.5;
+            let leaf = crown + edge < 1.0 && clusters > 0.3 + 0.35 * crown;
+            let trunk = p.y < -0.5 && p.x.abs() < 0.035 + (p.y + 1.0) * 0.01;
+            if leaf || trunk {
+                a[y * N + x] = 255;
+            }
+        }
+    }
+    let mut data = Vec::with_capacity(N * N * 4);
+    for v in a {
+        data.extend_from_slice(&[255, 255, 255, v]);
+    }
+    let mut img = Image::new(Extent3d { width: N as u32, height: N as u32, depth_or_array_layers: 1 }, TextureDimension::D2, data, TextureFormat::Rgba8UnormSrgb, RenderAssetUsages::default());
+    img.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor::linear());
+    img
 }
 
 /// Bare winter branches: recursive strokes into an alpha mask.
@@ -136,8 +171,9 @@ fn branch_texture() -> Image {
 pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
     let vertex = materials.add(StandardMaterial { perceptual_roughness: 0.9, ..default() });
     let charred = materials.add(StandardMaterial { base_color: Color::srgb(0.22, 0.2, 0.19), perceptual_roughness: 1.0, ..default() });
+    let summer = diorama().summer();
     let branches = materials.add(StandardMaterial {
-        base_color_texture: Some(images.add(branch_texture())),
+        base_color_texture: Some(images.add(if summer { leaf_texture() } else { branch_texture() })),
         alpha_mode: AlphaMode::Mask(0.5),
         double_sided: true,
         cull_mode: None,
@@ -196,14 +232,18 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
                 if !shattered {
                     let w = 6.0 + hash01(id, 8) * 4.5;
                     let tone = 0.2 + hash01(id, 10) * 0.1;
-                    meshes::crown_cards(&mut crowns[ci], p + Vec3::Y * (h * 0.3), w, h * 0.78, hash01(id, 11) * 3.0, [tone, tone * 0.93, tone * 0.86]);
+                    // In June: dense green, locust and ash and wild apricot, a little dusty.
+                    let c = if summer { [tone * 0.95, tone * 1.3 + 0.03, tone * 0.62] } else { [tone, tone * 0.93, tone * 0.86] };
+                    let (w, ch) = if summer { (w * 1.15, h * 0.85) } else { (w, h * 0.78) };
+                    meshes::crown_cards(&mut crowns[ci], p + Vec3::Y * (h * 0.3), w, ch, hash01(id, 11) * 3.0, c);
                 }
             }
             // Scrub between the rows.
-            if hash01(id, 12) < 0.45 {
+            if hash01(id, 12) < if summer { 0.8 } else { 0.45 } {
                 let p2 = belt.line.point(s) + belt.line.normal(s) * ((hash01(id, 13) - 0.5) * belt.width * 1.2);
                 let tone = 0.3 + hash01(id, 14) * 0.1;
-                meshes::crown_cards(&mut crowns[chunk_of(p2)], geo::ground(p2) - Vec3::Y * 0.2, 3.0, 2.6, hash01(id, 15) * 3.0, [tone * 1.05, tone, tone * 0.85]);
+                let c = if summer { [tone * 0.8, tone * 1.05, tone * 0.5] } else { [tone * 1.05, tone, tone * 0.85] };
+                meshes::crown_cards(&mut crowns[chunk_of(p2)], geo::ground(p2) - Vec3::Y * 0.2, 3.0, 2.6, hash01(id, 15) * 3.0, c);
             }
         }
     }
@@ -434,7 +474,7 @@ fn daylight(
     if dbg == Some(DayDebug::Off) {
         return;
     }
-    let minutes = crate::director::DAY_START_MIN + script.t * crate::director::COMPRESSION;
+    let minutes = crate::director::clock_minutes(script.t);
     let h = minutes / 60.0;
     // Solar elevation, roughly: 0 at 07:50 and 17:40, 24 degrees at 12:45.
     let elev_true = (((h - 7.83) / (17.67 - 7.83)) * std::f32::consts::PI).sin().max(0.0) * 24f32.to_radians();

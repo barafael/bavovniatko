@@ -40,32 +40,53 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
     var c = base.rgb;
     let w = in.world_position.xz;
 
-    if code > 0.002 {
-        let ang = code * 3.14159265;
-        let dir = vec2<f32>(cos(ang), sin(ang));
-        let along = dot(w, dir);
-        let across = dot(w, vec2<f32>(-dir.y, dir.x));
-        // Fade out before the rows alias into moire.
-        let fw = fwidth(along);
-        let fade = 1.0 - smoothstep(0.05, 0.2, fw);
-        let row = abs(fract(along / 0.75) - 0.5) * 2.0;
-        let ridge = 1.0 - smoothstep(0.0, 0.45, row);
-        // Thin snow (darker base) lets more of the earth through.
-        let lum = dot(c, vec3<f32>(0.3, 0.59, 0.11));
-        let thin = 1.0 - smoothstep(0.38, 0.62, lum);
-        let stub = ridge * step(0.6, hash(floor(vec2<f32>(across * 2.5, along / 0.75))));
-        // Drifted snow hides the rows in patches; they show only where the wind has scoured it thin.
-        let drift = smoothstep(0.4, 0.75, vnoise(w / 9.0) * 0.5 + vnoise(w / 31.0 + 3.7) * 0.5);
-        let k = (ridge * mix(0.03, 0.28, thin) + stub * mix(0.04, 0.18, thin)) * drift * fade * ground.params.x;
-        c = mix(c, vec3<f32>(0.07, 0.055, 0.045), k);
-        // At distance, the rows average out into a slightly darker field.
-        c = mix(c, c * (1.0 - 0.18 * mix(0.3, 1.0, thin)), 1.0 - fade);
+    if ground.params.z > 0.5 {
+        // June: rows of plants where a field was sown (last year's dead sunflowers, this year's few crops), and
+        // the mottle of grass and weeds everywhere else.
+        if code > 0.002 {
+            let ang = code * 3.14159265;
+            let dir = vec2<f32>(cos(ang), sin(ang));
+            let along = dot(w, dir);
+            let across = dot(w, vec2<f32>(-dir.y, dir.x));
+            let fade = 1.0 - smoothstep(0.05, 0.2, fwidth(along));
+            let row = abs(fract(along / 0.7) - 0.5) * 2.0;
+            let ridge = 1.0 - smoothstep(0.0, 0.5, row);
+            let plant = ridge * step(0.35, hash(floor(vec2<f32>(across * 3.0, along / 0.7))));
+            c = mix(c, vec3<f32>(0.15, 0.21, 0.07), (ridge * 0.22 + plant * 0.25) * fade * ground.params.x);
+            c = mix(c, c * 0.9, 1.0 - fade);
+        }
+        let fg = fwidth(w.x);
+        let near = 1.0 - smoothstep(0.1, 0.5, fg);
+        let clump = (vnoise(w * 1.3) - 0.5) * 0.18 + (vnoise(w * 0.31 + 7.0) - 0.5) * 0.12;
+        let blade = (hash(floor(w * 5.0)) - 0.5) * 0.09 * near;
+        c = c * (1.0 + (clump * mix(0.5, 1.0, near) + blade) * ground.params.y);
+    } else {
+        if code > 0.002 {
+            let ang = code * 3.14159265;
+            let dir = vec2<f32>(cos(ang), sin(ang));
+            let along = dot(w, dir);
+            let across = dot(w, vec2<f32>(-dir.y, dir.x));
+            // Fade out before the rows alias into moire.
+            let fw = fwidth(along);
+            let fade = 1.0 - smoothstep(0.05, 0.2, fw);
+            let row = abs(fract(along / 0.75) - 0.5) * 2.0;
+            let ridge = 1.0 - smoothstep(0.0, 0.45, row);
+            // Thin snow (darker base) lets more of the earth through.
+            let lum = dot(c, vec3<f32>(0.3, 0.59, 0.11));
+            let thin = 1.0 - smoothstep(0.38, 0.62, lum);
+            let stub = ridge * step(0.6, hash(floor(vec2<f32>(across * 2.5, along / 0.75))));
+            // Drifted snow hides the rows in patches; they show only where the wind has scoured it thin.
+            let drift = smoothstep(0.4, 0.75, vnoise(w / 9.0) * 0.5 + vnoise(w / 31.0 + 3.7) * 0.5);
+            let k = (ridge * mix(0.03, 0.28, thin) + stub * mix(0.04, 0.18, thin)) * drift * fade * ground.params.x;
+            c = mix(c, vec3<f32>(0.07, 0.055, 0.045), k);
+            // At distance, the rows average out into a slightly darker field.
+            c = mix(c, c * (1.0 - 0.18 * mix(0.3, 1.0, thin)), 1.0 - fade);
+        }
+        // Wind-packed grain in the snow.
+        let fg = fwidth(w.x);
+        let g = (hash(floor(w * 3.0)) - 0.5) * 0.05 * (1.0 - smoothstep(0.1, 0.4, fg)) * ground.params.y;
+        c = c * (1.0 + g);
     }
-    // Wind-packed grain in the snow.
-    let fg = fwidth(w.x);
-    let g = (hash(floor(w * 3.0)) - 0.5) * 0.05 * (1.0 - smoothstep(0.1, 0.4, fg)) * ground.params.y;
-    c = c * (1.0 + g);
-
     pbr_input.material.base_color = vec4<f32>(c, 1.0);
     pbr_input.material.base_color = alpha_discard(pbr_input.material, pbr_input.material.base_color);
     var out: FragmentOutput;

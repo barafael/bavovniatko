@@ -15,7 +15,7 @@ struct FeedEffect {
     flash: f32,
     zoom: f32,
     down: f32,
-    _pad: f32,
+    saturation: f32,
 }
 
 @group(0) @binding(2) var<uniform> fx: FeedEffect;
@@ -24,6 +24,18 @@ fn hash(p: vec2<f32>) -> f32 {
     var q = fract(p * vec2<f32>(123.34, 456.21));
     q += dot(q, q + 45.32);
     return fract(q.x * q.y);
+}
+
+// Film grain needs a hash with no structure: the fract-based one above draws stripes in dark frames.
+fn pcg(v: u32) -> u32 {
+    let s = v * 747796405u + 2891336453u;
+    let w = ((s >> ((s >> 28u) + 4u)) ^ s) * 277803737u;
+    return (w >> 22u) ^ w;
+}
+
+fn grain_at(p: vec2<f32>, frame: f32) -> f32 {
+    let h = pcg(u32(p.x) + pcg(u32(p.y) + pcg(u32(frame))));
+    return f32(h) / 4294967295.0;
 }
 
 fn luma(c: vec3<f32>) -> f32 {
@@ -71,7 +83,7 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
         // Washed-out, desaturated small-sensor colour with clipped whites.
         let l = luma(c);
         // Washed-out small-sensor colour, hard contrast: snow clips, steel goes near black.
-        c = mix(vec3<f32>(l), c, 0.45);
+        c = mix(vec3<f32>(l), c, fx.saturation);
         c = (c - 0.5) * 1.18 + 0.52;
         c = clamp(c, vec3<f32>(0.03), vec3<f32>(0.96));
         c = c * vec3<f32>(0.97, 1.0, 1.02);
@@ -81,7 +93,7 @@ fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
             c.r = mix(c.r, r, g);
         }
         // Grain, re-rolled every frame, stronger in the shadows.
-        let n = hash(uv * dims + frame * 1.37) - 0.5;
+        let n = grain_at(floor(uv * dims), frame) - 0.5;
         c += n * (0.035 + 0.035 * (1.0 - l)) * fx.grain;
         // Lens vignette.
         let d = distance(uv, vec2<f32>(0.5));

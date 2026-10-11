@@ -458,3 +458,226 @@ pub fn pole(lean: f32) -> MeshBuilder {
     m.cuboid(rot * Vec3::new(0.0, 9.4, 0.0), Vec3::new(0.9, 0.06, 0.06), rot, [0.3, 0.3, 0.3]);
     m
 }
+
+// ---------------------------------------------------------------------------------------------------------
+// Summer 2023: the Western armour of the 47th and 33rd Brigades, and what stood against it.
+
+pub const WEST_GREEN: Rgb = [0.31, 0.34, 0.25];
+
+impl MeshBuilder {
+    /// A polygon with both faces, for wedges and plates whose winding is not worth reasoning about.
+    pub fn poly2(&mut self, pts: &[Vec3], c: Rgb) {
+        self.poly(pts, c);
+        let rev: Vec<Vec3> = pts.iter().rev().copied().collect();
+        self.poly(&rev, c);
+    }
+}
+
+/// The Leopard 2 hull and running gear (2A4 and 2A6 alike): long, high-sided, heavy skirts.
+fn leopard_hull(body: Rgb) -> MeshBuilder {
+    let mut h = MeshBuilder::new();
+    running_gear(&mut h, 3.55, 1.5, 7, 0.36, true, body);
+    let prof = [Vec2::new(3.75, 0.5), Vec2::new(3.75, 1.55), Vec2::new(-2.55, 1.62), Vec2::new(-3.9, 1.12), Vec2::new(-3.65, 0.5)];
+    h.extrude_x(&prof, 1.2, Vec3::ZERO, body);
+    // The 2A6's thick front skirt sections, and the engine deck.
+    for side in [-1.0f32, 1.0] {
+        h.boxc(Vec3::new(side * 1.84, 0.92, -2.9), Vec3::new(0.12, 0.62, 1.4), body);
+    }
+    h.boxc(Vec3::new(0.0, 1.63, 2.5), Vec3::new(2.2, 0.05, 1.8), [0.2, 0.22, 0.17]);
+    h.boxc(Vec3::new(0.0, 1.15, 3.8), Vec3::new(2.3, 0.6, 0.12), [body[0] * 0.85, body[1] * 0.85, body[2] * 0.85]);
+    h
+}
+
+/// Leopard 2A6: the arrowhead of spaced armour on the turret front, and the long L55 gun.
+pub fn leopard2a6(body: Rgb) -> VehicleModel {
+    let h = leopard_hull(body);
+    let mut t = MeshBuilder::new();
+    let prof = [Vec2::new(2.7, 0.0), Vec2::new(2.7, 0.66), Vec2::new(-1.2, 0.76), Vec2::new(-1.45, 0.08), Vec2::new(-1.4, 0.0)];
+    t.extrude_x(&prof, 1.62, Vec3::ZERO, body);
+    // The wedge: two sloped plates meeting ahead of the turret face.
+    let (l0, r0, tip0) = (Vec3::new(-1.62, 0.06, -1.35), Vec3::new(1.62, 0.06, -1.35), Vec3::new(0.0, 0.1, -2.75));
+    let (l1, r1, tip1) = (Vec3::new(-1.62, 0.74, -1.25), Vec3::new(1.62, 0.74, -1.25), Vec3::new(0.0, 0.58, -2.6));
+    for (a, b, c, d) in [(l0, tip0, tip1, l1), (tip0, r0, r1, tip1)] {
+        t.poly2(&[a, b, c, d], body);
+    }
+    t.poly2(&[l1, tip1, r1], [body[0] * 0.92, body[1] * 0.92, body[2] * 0.92]);
+    // Mantlet and the 120 mm L55, 6.6 m of barrel with its thermal sleeve and fume extractor.
+    t.boxc(Vec3::new(0.0, 0.4, -1.55), Vec3::new(0.7, 0.55, 0.5), body);
+    t.cylinder(Vec3::new(0.0, 0.42, -1.7), Vec3::new(0.0, 0.0, -6.6), 0.075, 8, body);
+    t.cylinder(Vec3::new(0.0, 0.42, -3.6), Vec3::new(0.0, 0.0, -0.9), 0.12, 8, body);
+    // Commander's PERI sight, gunner's sight, smoke dischargers, the stowage basket on the bustle.
+    t.cylinder(Vec3::new(-0.7, 0.72, -0.4), Vec3::new(0.0, 0.42, 0.0), 0.17, 8, body);
+    t.boxc(Vec3::new(-0.7, 1.2, -0.4), Vec3::new(0.32, 0.22, 0.32), [0.18, 0.19, 0.16]);
+    t.boxc(Vec3::new(0.95, 0.82, -1.0), Vec3::new(0.45, 0.24, 0.5), body);
+    for side in [-1.0f32, 1.0] {
+        for k in 0..4 {
+            t.cylinder(Vec3::new(side * 1.55, 0.5, 0.2 + k as f32 * 0.18), Vec3::new(side * 0.25, 0.08, -0.05), 0.05, 5, STEEL);
+        }
+    }
+    t.boxc(Vec3::new(0.0, 0.5, 2.85), Vec3::new(2.8, 0.55, 0.35), [0.25, 0.26, 0.2]);
+    VehicleModel { hull: h, turret: t, turret_at: Vec3::new(0.0, 1.6, -0.1) }
+}
+
+/// A full-width mine plow on arms ahead of the hull: Pearson (Leopard 2R) or a dozer-plow (Wisent).
+fn full_plow(h: &mut MeshBuilder, z: f32, width: f32) {
+    h.cuboid(Vec3::new(0.0, 0.45, z), Vec3::new(width * 0.5, 0.42, 0.12), Quat::from_rotation_x(-0.35), STEEL);
+    for k in 0..12 {
+        let x = (k as f32 / 11.0 - 0.5) * width * 0.95;
+        h.cuboid(Vec3::new(x, 0.1, z - 0.35), Vec3::new(0.05, 0.12, 0.35), Quat::from_rotation_x(0.5), STEEL);
+    }
+    for side in [-1.0f32, 1.0] {
+        h.boxc(Vec3::new(side * 1.2, 0.8, z + 0.8), Vec3::new(0.16, 0.16, 1.7), STEEL);
+    }
+}
+
+/// Leopard 2R: a 2A4 hull with a fixed armoured superstructure instead of a turret, a full-width plow and
+/// the lane-marking rack (all six Finnish vehicles went to Ukraine).
+pub fn leopard2r(body: Rgb) -> VehicleModel {
+    let mut h = leopard_hull(body);
+    full_plow(&mut h, -4.4, 4.2);
+    let mut t = MeshBuilder::new();
+    let prof = [Vec2::new(2.2, 0.0), Vec2::new(2.2, 0.95), Vec2::new(-0.6, 1.0), Vec2::new(-1.6, 0.3), Vec2::new(-1.6, 0.0)];
+    t.extrude_x(&prof, 1.35, Vec3::ZERO, body);
+    t.cylinder(Vec3::new(0.6, 1.0, 0.4), Vec3::new(0.0, 0.3, 0.0), 0.3, 8, body);
+    // Lane markers in their rack at the rear.
+    for k in 0..6 {
+        t.cylinder(Vec3::new(-1.2 + k as f32 * 0.12, 0.6, 2.25), Vec3::new(0.0, 1.1, 0.0), 0.025, 4, [0.85, 0.6, 0.2]);
+    }
+    VehicleModel { hull: h, turret: t, turret_at: Vec3::new(0.0, 1.6, 0.2) }
+}
+
+/// Wisent 1: a Leopard 1 hull with a dozer-plow and a crane, for clearing and recovery.
+pub fn wisent(body: Rgb) -> VehicleModel {
+    let mut h = MeshBuilder::new();
+    running_gear(&mut h, 3.3, 1.42, 7, 0.34, true, body);
+    let prof = [Vec2::new(3.5, 0.5), Vec2::new(3.5, 1.5), Vec2::new(-2.4, 1.55), Vec2::new(-3.6, 1.05), Vec2::new(-3.4, 0.5)];
+    h.extrude_x(&prof, 1.12, Vec3::ZERO, body);
+    full_plow(&mut h, -4.1, 3.8);
+    let mut t = MeshBuilder::new();
+    t.boxc(Vec3::new(0.0, 0.5, 0.0), Vec3::new(2.3, 1.0, 2.6), body);
+    // The crane folded back along the hull.
+    t.cuboid(Vec3::new(0.85, 1.15, 0.4), Vec3::new(0.14, 0.14, 2.3), Quat::from_rotation_x(0.12), [0.62, 0.55, 0.22]);
+    VehicleModel { hull: h, turret: t, turret_at: Vec3::new(0.0, 1.55, -0.3) }
+}
+
+/// BMR-2: a T-55 hull with its turret gone, an armoured cab, a heavy machine gun, and KMT-7 rollers ahead.
+pub fn bmr2(body: Rgb) -> VehicleModel {
+    let mut h = MeshBuilder::new();
+    running_gear(&mut h, 3.0, 1.35, 5, 0.4, false, body);
+    let prof = [Vec2::new(3.1, 0.5), Vec2::new(3.1, 1.45), Vec2::new(-2.2, 1.5), Vec2::new(-3.25, 1.0), Vec2::new(-3.05, 0.5)];
+    h.extrude_x(&prof, 1.05, Vec3::ZERO, body);
+    // The rollers: a set of heavy discs ahead of each track on a frame.
+    for side in [-1.0f32, 1.0] {
+        for k in 0..3 {
+            h.cylinder(Vec3::new(side * 1.35 - 0.3 + k as f32 * 0.22, 0.42, -4.7), Vec3::new(0.12, 0.0, 0.0), 0.42, 10, STEEL);
+        }
+        h.boxc(Vec3::new(side * 1.2, 0.75, -3.85), Vec3::new(0.14, 0.14, 1.5), STEEL);
+    }
+    h.boxc(Vec3::new(0.0, 0.75, -4.7), Vec3::new(2.5, 0.12, 0.12), STEEL);
+    let mut t = MeshBuilder::new();
+    t.frustum(Vec3::ZERO, Vec3::new(0.0, 0.55, 0.0), 0.75, 0.6, 8, body, true);
+    t.cylinder(Vec3::new(0.0, 0.62, -0.2), Vec3::new(0.0, 0.0, -1.4), 0.03, 5, STEEL);
+    VehicleModel { hull: h, turret: t, turret_at: Vec3::new(0.0, 1.5, -0.6) }
+}
+
+/// M2A2 ODS Bradley: a tall box with bolted appliqué tiles, the 25 mm turret with its TOW box, a rear ramp.
+pub fn bradley(body: Rgb) -> VehicleModel {
+    let mut h = MeshBuilder::new();
+    running_gear(&mut h, 3.0, 1.35, 6, 0.32, false, body);
+    let prof = [Vec2::new(3.25, 0.5), Vec2::new(3.25, 2.0), Vec2::new(-1.75, 2.04), Vec2::new(-3.3, 1.3), Vec2::new(-3.3, 0.55)];
+    h.extrude_x(&prof, 1.42, Vec3::ZERO, body);
+    // Appliqué armour tiles along the sides, standing proud of the hull.
+    for side in [-1.0f32, 1.0] {
+        for row in 0..2 {
+            for k in 0..6 {
+                let z = -2.3 + k as f32 * 0.9;
+                h.boxc(Vec3::new(side * 1.5, 1.2 + row as f32 * 0.5, z), Vec3::new(0.08, 0.44, 0.84), [body[0] * 0.95, body[1] * 0.95, body[2] * 0.93]);
+            }
+        }
+    }
+    // The rear ramp's outline and the trim vane on the nose.
+    h.boxc(Vec3::new(0.0, 1.15, 3.28), Vec3::new(1.7, 1.4, 0.05), [body[0] * 0.8, body[1] * 0.8, body[2] * 0.8]);
+    h.cuboid(Vec3::new(0.0, 1.45, -3.0), Vec3::new(1.3, 0.04, 0.35), Quat::from_rotation_x(-0.8), body);
+    let mut t = MeshBuilder::new();
+    let tprof = [Vec2::new(1.2, 0.0), Vec2::new(1.2, 0.68), Vec2::new(-0.7, 0.72), Vec2::new(-1.2, 0.25), Vec2::new(-1.2, 0.0)];
+    t.extrude_x(&tprof, 0.95, Vec3::ZERO, body);
+    t.cylinder(Vec3::new(0.15, 0.35, -1.2), Vec3::new(0.0, 0.0, -2.4), 0.045, 6, STEEL);
+    t.cylinder(Vec3::new(0.15, 0.35, -1.2), Vec3::new(0.0, 0.0, -0.5), 0.1, 6, body);
+    // The twin TOW launcher box on the turret's left side.
+    t.boxc(Vec3::new(-1.15, 0.45, 0.05), Vec3::new(0.42, 0.48, 1.45), [body[0] * 0.9, body[1] * 0.9, body[2] * 0.9]);
+    t.boxc(Vec3::new(0.55, 0.85, 0.1), Vec3::new(0.5, 0.25, 0.45), [0.2, 0.22, 0.18]);
+    VehicleModel { hull: h, turret: t, turret_at: Vec3::new(0.25, 2.02, -0.35) }
+}
+
+/// Ka-52 "Alligator": side-by-side cockpit, stub wings with launchers, twin fins, and two coaxial rotors
+/// (returned separately, so they can spin).
+pub fn ka52() -> (MeshBuilder, MeshBuilder) {
+    let c: Rgb = [0.27, 0.29, 0.28];
+    let glass: Rgb = [0.08, 0.1, 0.12];
+    let mut m = MeshBuilder::new();
+    m.boxc(Vec3::new(0.0, 0.2, -1.6), Vec3::new(1.9, 1.7, 3.6), c);
+    m.cuboid(Vec3::new(0.0, 0.55, -3.1), Vec3::new(0.9, 0.55, 0.9), Quat::from_rotation_x(0.6), glass);
+    m.boxc(Vec3::new(0.0, 0.3, 1.2), Vec3::new(1.6, 1.6, 3.0), c);
+    m.frustum(Vec3::new(0.0, 0.5, 2.6), Vec3::new(0.0, 0.0, 5.8), 0.55, 0.25, 6, c, true);
+    for side in [-1.0f32, 1.0] {
+        m.cuboid(Vec3::new(side * 0.9, 1.2, 8.2), Vec3::new(0.06, 0.9, 0.6), Quat::from_rotation_z(side * -0.2), c);
+        // Stub wings and their pods.
+        m.boxc(Vec3::new(side * 2.2, -0.1, -0.4), Vec3::new(2.8, 0.12, 1.1), c);
+        for k in 0..2 {
+            m.cylinder(Vec3::new(side * (1.6 + k as f32 * 1.2), -0.45, 0.4), Vec3::new(0.0, 0.0, -1.8), 0.22, 6, [0.22, 0.24, 0.22]);
+        }
+    }
+    m.cylinder(Vec3::new(0.0, 1.0, -0.4), Vec3::new(0.0, 1.6, 0.0), 0.18, 6, c);
+    let mut r = MeshBuilder::new();
+    for level in [0.0f32, 0.9] {
+        for k in 0..3 {
+            let a = k as f32 * std::f32::consts::TAU / 3.0 + level;
+            let d = Vec3::new(a.cos(), 0.0, a.sin());
+            r.cuboid(Vec3::new(0.0, level, 0.0) + d * 3.6, Vec3::new(3.6, 0.03, 0.22), Quat::from_rotation_y(-a), [0.18, 0.19, 0.18]);
+        }
+    }
+    (m, r)
+}
+
+/// A Rozhnovsky water tower, the steppe village's landmark and its observers' perch: a brick shaft and a
+/// steel tank. The eye sits in the tank's hatch at about 18 m.
+pub fn water_tower() -> MeshBuilder {
+    let mut m = MeshBuilder::new();
+    m.frustum(Vec3::ZERO, Vec3::new(0.0, 14.5, 0.0), 1.5, 1.2, 10, [0.55, 0.36, 0.28], false);
+    m.frustum(Vec3::new(0.0, 14.5, 0.0), Vec3::new(0.0, 1.0, 0.0), 1.2, 2.5, 12, [0.38, 0.40, 0.38], false);
+    m.cylinder(Vec3::new(0.0, 15.5, 0.0), Vec3::new(0.0, 2.6, 0.0), 2.5, 12, [0.42, 0.44, 0.42]);
+    m.frustum(Vec3::new(0.0, 18.1, 0.0), Vec3::new(0.0, 1.1, 0.0), 2.6, 0.2, 12, [0.30, 0.31, 0.30], false);
+    // A shell hole through the tank, and the ladder.
+    m.boxc(Vec3::new(1.9, 16.6, 1.2), Vec3::new(0.6, 0.9, 0.9), [0.06, 0.06, 0.06]);
+    m.boxc(Vec3::new(0.0, 7.5, -1.45), Vec3::new(0.5, 15.0, 0.05), [0.2, 0.2, 0.2]);
+    m
+}
+
+/// A long collective-farm shed, roof half fallen in.
+pub fn farm_shed(len: f32, ruined: f32) -> MeshBuilder {
+    let mut m = MeshBuilder::new();
+    let wall: Rgb = [0.58, 0.56, 0.52];
+    m.boxc(Vec3::new(0.0, 1.8, 0.0), Vec3::new(12.0, 3.6, len), wall);
+    let keep = len * (1.0 - ruined);
+    if keep > 1.0 {
+        let p = [Vec2::new(-6.6, 3.6), Vec2::new(6.6, 3.6), Vec2::new(0.0, 5.6)];
+        let mut roof = MeshBuilder::new();
+        roof.extrude_x(&p, keep * 0.5, Vec3::ZERO, [0.42, 0.44, 0.43]);
+        m.append(&roof, Transform::from_xyz(0.0, 0.0, -len * 0.5 + keep * 0.5).with_rotation(Quat::from_rotation_y(std::f32::consts::FRAC_PI_2)));
+    }
+    m
+}
+
+/// A combine harvester burned in last summer's field.
+pub fn combine() -> MeshBuilder {
+    let mut m = MeshBuilder::new();
+    let c: Rgb = [0.23, 0.2, 0.18];
+    m.boxc(Vec3::new(0.0, 2.0, 0.6), Vec3::new(2.8, 2.6, 6.0), c);
+    m.boxc(Vec3::new(0.0, 3.6, -1.6), Vec3::new(1.6, 1.2, 1.6), [0.12, 0.12, 0.12]);
+    m.boxc(Vec3::new(0.0, 0.8, -3.4), Vec3::new(6.4, 0.8, 1.4), [0.3, 0.22, 0.17]);
+    for (x, z, r) in [(-1.5f32, -1.0f32, 0.85f32), (1.5, -1.0, 0.85), (-1.4, 2.6, 0.55), (1.4, 2.6, 0.55)] {
+        m.cylinder(Vec3::new(x - 0.25, r, z), Vec3::new(0.5, 0.0, 0.0), r, 8, [0.08, 0.08, 0.08]);
+    }
+    m.cuboid(Vec3::new(1.6, 3.4, 1.8), Vec3::new(0.18, 0.18, 2.2), Quat::from_rotation_x(0.3) * Quat::from_rotation_y(0.4), c);
+    m
+}

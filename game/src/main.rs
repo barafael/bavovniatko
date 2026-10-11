@@ -7,12 +7,14 @@
 mod audio;
 mod camera;
 mod dev;
+mod diorama;
 mod director;
 mod fire;
 mod fx;
 mod geo;
 mod hud;
 mod meshes;
+mod robotyne;
 mod showcase;
 mod terrain;
 mod units;
@@ -42,7 +44,7 @@ fn main() {
     } else {
         app.add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
-                title: "Vuhledar, 6 February 2023".into(),
+                title: diorama::diorama().title().into(),
                 present_mode: PresentMode::AutoVsync,
                 ..default()
             }),
@@ -59,7 +61,7 @@ fn main() {
         .add_plugins((units::UnitsPlugin, fire::FirePlugin, director::DirectorPlugin, hud::HudPlugin))
         .add_observer(units::on_wrecked)
         .add_systems(Update, drone_view_audio.in_set(Step::Camera))
-        .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin))
+        .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin, robotyne::RobotynePlugin))
         .run();
 }
 

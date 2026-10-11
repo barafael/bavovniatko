@@ -2,6 +2,7 @@
 //! the battle's memory. Roads, furrows under thin snow and belts are painted at start; every crater, scorch
 //! and track mark is stamped in afterwards and never cleaned up.
 
+use crate::diorama::{Diorama, diorama};
 use crate::geo::{self, CHUNK, CHUNKS_X, CHUNKS_Z, HALF_X, HALF_Z, RoadKind, TEX_PER_CHUNK, fbm, value_noise};
 use bevy::{
     asset::RenderAssetUsages,
@@ -51,6 +52,8 @@ pub enum Paint {
     Scorch { at: Vec2, radius: f32 },
     Track { at: Vec2, dir: Vec2, gauge: f32 },
     Footprints { at: Vec2 },
+    /// A mine plow's strip of turned earth, with spoil thrown to both sides.
+    Plow { at: Vec2, dir: Vec2 },
 }
 
 #[derive(Resource, Default)]
@@ -74,6 +77,24 @@ const SNOW: Px = [0.80, 0.82, 0.84];
 const EARTH: Px = [0.36, 0.31, 0.26];
 const DARK_EARTH: Px = [0.20, 0.17, 0.15];
 
+/// The colours the battle paints with, by season: earth thrown on snow in February, on grass in June.
+struct Pal {
+    earth: Px,
+    dark_earth: Px,
+    core: Px,
+    clod: Px,
+    throw: Px,
+    track: Px,
+    plow: Px,
+}
+
+const WINTER: Pal = Pal { earth: EARTH, dark_earth: DARK_EARTH, core: [0.12, 0.10, 0.09], clod: [0.16, 0.13, 0.11], throw: [0.48, 0.43, 0.38], track: [0.55, 0.52, 0.48], plow: [0.30, 0.26, 0.22] };
+const SUMMER: Pal = Pal { earth: [0.50, 0.43, 0.33], dark_earth: [0.30, 0.25, 0.19], core: [0.20, 0.16, 0.12], clod: [0.31, 0.26, 0.20], throw: [0.58, 0.52, 0.42], track: [0.46, 0.44, 0.32], plow: [0.44, 0.36, 0.26] };
+
+fn pal() -> &'static Pal {
+    if diorama().summer() { &SUMMER } else { &WINTER }
+}
+
 fn mix(a: Px, b: Px, t: f32) -> Px {
     let t = t.clamp(0.0, 1.0);
     [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]
@@ -85,14 +106,60 @@ fn tex_of(p: Vec2) -> (f32, f32) {
 
 /// Furrow direction per field block, as the alpha code the ground shader reads (1..=255; 0 = no furrows).
 fn furrow_code(x: f32, z: f32) -> u8 {
+    if diorama().summer() {
+        // Only the sown fields have rows: last year's unharvested sunflowers, and this year's few crops.
+        let (kind, t) = summer_field(x, z);
+        return if matches!(kind, 3..=5) { 1 + (t * 254.0) as u8 } else { 0 };
+    }
     let bx = ((x + HALF_X) / 1200.0).floor();
     let bz = ((z + 760.0) / 550.0).floor();
     let t = geo::hash01((bx as i32 * 7 + bz as i32 * 13 + 100) as u32, 5);
     1 + (t * 254.0) as u8
 }
 
+/// The field block a point is in (between the summer tree lines), as a kind of cover and a row direction.
+/// 0 lush weeds, 1 dry fallow grass, 2 weeds in flower, 3 last year's sunflowers never harvested, 4 young
+/// sunflowers on bare earth, 5 green wheat. Near the front almost nothing has been sown since 2022.
+fn summer_field(x: f32, z: f32) -> (u32, f32) {
+    let bx = ((x + 1650.0) / 1150.0).floor();
+    let bz = ((z + 1450.0) / 550.0).floor();
+    let id = (bx as i32 * 7 + bz as i32 * 13 + 300) as u32;
+    let h = geo::hash01(id, 7);
+    let rear = z < -1100.0;
+    let kind = if rear && h < 0.5 { 5 } else if rear && h < 0.75 { 4 } else { (h * 4.0) as u32 % 4 };
+    (kind, geo::hash01(id, 8))
+}
+
+fn summer_colour(x: f32, z: f32) -> Px {
+    let (kind, _) = summer_field(x, z);
+    let broad = fbm(x / 60.0, z / 60.0, 3, 23) * 0.5 + 0.5;
+    let fine = value_noise(x / 3.0, z / 3.0, 24) * 0.5 + 0.5;
+    let lush: Px = [0.42, 0.50, 0.25];
+    let dry: Px = [0.60, 0.58, 0.40];
+    let mut c = match kind {
+        0 => mix(lush, dry, broad * 0.5),
+        1 => mix(dry, lush, broad * 0.45),
+        2 => {
+            let bloom = ((fbm(x / 6.0, z / 6.0, 3, 25) - 0.15) * 3.0).clamp(0.0, 1.0);
+            mix(mix(lush, dry, broad * 0.3), [0.68, 0.64, 0.33], bloom * 0.45)
+        }
+        3 => mix([0.42, 0.37, 0.29], lush, broad * 0.55),
+        4 => mix([0.53, 0.45, 0.34], [0.46, 0.51, 0.28], broad * 0.3),
+        _ => mix([0.49, 0.56, 0.28], [0.58, 0.59, 0.34], broad * 0.4),
+    };
+    // A year of shelling between the lines: the grass grows back thin and patchy over churned earth.
+    let churn = (1.0 - ((z - 150.0).abs() / 650.0)).clamp(0.0, 1.0);
+    let bare = ((fbm(x / 9.0, z / 9.0, 3, 26) + 0.25 - churn * 0.55) * 4.0).clamp(0.0, 1.0);
+    c = mix([0.49, 0.42, 0.32], c, 0.35 + 0.65 * bare);
+    let n = (fine - 0.5) * 0.06;
+    [c[0] + n, c[1] + n, c[2] + n * 0.6]
+}
+
 /// Base ground colour at a world point: snow over ploughed fields, thinner in patches where the wind scoured it.
 fn base_colour(x: f32, z: f32) -> Px {
+    if diorama().summer() {
+        return summer_colour(x, z);
+    }
     // Thin snow, patchy at every scale: the wind strips it off the crests, weeks of shelling churned the rest.
     // Earth shows through in dark patches (compare the February drone footage).
     let broad = fbm(x / 45.0, z / 45.0, 3, 3);
@@ -154,7 +221,8 @@ fn spawn_terrain(
     };
 
     // The river: ice and reeds.
-    let river = &lay.river;
+    let no_river = geo::Polyline::new(vec![Vec2::ZERO, Vec2::ZERO]);
+    let river = lay.river.as_ref().unwrap_or(&no_river);
     let mut s = 0.0;
     while s < river.length() {
         let p = river.point(s);
@@ -171,9 +239,12 @@ fn spawn_terrain(
         while s < belt.line.length() {
             let p = belt.line.point(s);
             let r = belt.width * 0.65;
+            let summer = diorama().summer();
             stamp(&mut px, &mut bare, p, r, &|d, c, w| {
                 let n = value_noise(w.x / 3.0, w.y / 3.0, 21) * 0.5 + 0.5;
-                mix(c, mix([0.42, 0.39, 0.35], [0.30, 0.27, 0.24], n), (1.0 - d * d) * 0.85)
+                // Leaf litter and trampled snow in winter; deep shade and nettles in June.
+                let under = if summer { mix([0.25, 0.29, 0.15], [0.18, 0.21, 0.11], n) } else { mix([0.42, 0.39, 0.35], [0.30, 0.27, 0.24], n) };
+                mix(c, under, (1.0 - d * d) * 0.85)
             });
             s += 2.5;
         }
@@ -187,8 +258,21 @@ fn spawn_terrain(
             let p = road.line.point(s);
             let nrm = road.line.normal(s);
             let kind = road.kind;
+            let summer = diorama().summer();
             stamp(&mut px, &mut bare, p, r, &|d, c, w| {
                 let lat = (w - p).dot(nrm).abs();
+                if summer {
+                    // June: grey asphalt with dry verges; dirt tracks of pale dust with two darker ruts.
+                    return match kind {
+                        RoadKind::Asphalt => if d < 0.8 { mix([0.34, 0.34, 0.33], [0.42, 0.41, 0.39], value_noise(w.x / 5.0, w.y / 5.0, 5) * 0.5 + 0.5) } else { mix(c, [0.58, 0.55, 0.42], 0.5) },
+                        RoadKind::Dirt | RoadKind::Track => {
+                            let rut = (1.0 - ((lat - 1.4).abs() / 0.6).min(1.0)).powf(0.7);
+                            let dust = mix([0.63, 0.58, 0.47], [0.57, 0.52, 0.42], value_noise(w.x / 2.0, w.y / 2.0, 6) * 0.5 + 0.5);
+                            let base = mix(c, dust, (1.0 - d.powi(3)) * if kind == RoadKind::Dirt { 0.85 } else { 0.55 });
+                            mix(base, [0.47, 0.41, 0.32], rut * 0.6)
+                        }
+                    };
+                }
                 match kind {
                     RoadKind::Asphalt => {
                         let edge_snow = value_noise(w.x / 4.0, w.y / 4.0, 5) * 0.5 + 0.5;
@@ -253,9 +337,51 @@ fn spawn_terrain(
         }
     }
 
+    if diorama() == Diorama::Robotyne {
+        // A year of artillery between the lines: no-man's-land is pocked from the forward minefield to the crest.
+        for _ in 0..240 {
+            let c = Vec2::new((geo::hash01(k, 67) * 2.0 - 1.0) * HALF_X, -480.0 + geo::hash01(k, 68) * 1250.0);
+            k += 1;
+            for _ in 0..(1 + (geo::hash01(k, 69) * 4.0) as u32) {
+                let p = c + Vec2::new(geo::hash01(k, 70) - 0.5, geo::hash01(k, 71) - 0.5) * 70.0;
+                crater(&mut px, &mut bare, p, 1.0 + geo::hash01(k, 72).powi(2) * 3.2, k);
+                k += 1;
+            }
+        }
+        // The Russian first line: a zigzag trench along the crest tree line, spoil thrown forward, communication
+        // trenches back into the trees, dugouts at each platoon position. A short Ukrainian trench in the forward
+        // tree line opposite.
+        let trench = |px: &mut Vec<Px>, bare: &mut Vec<bool>, a: Vec2, b: Vec2, spoil_side: f32| {
+            let n = (a.distance(b) / 0.8) as usize;
+            let nrm = (b - a).normalize_or_zero().perp();
+            for i in 0..=n {
+                let p = a.lerp(b, i as f32 / n.max(1) as f32);
+                stamp(px, bare, p + nrm * spoil_side * 1.8, 1.6, &|d, c, _| mix(c, [0.55, 0.48, 0.37], (1.0 - d) * 0.8));
+                stamp(px, bare, p, 0.8, &|_, _, w| mix([0.15, 0.12, 0.09], [0.22, 0.18, 0.13], value_noise(w.x, w.y, 8) * 0.5 + 0.5));
+            }
+        };
+        let tz = crate::robotyne::TRENCH_Z;
+        let mut x = -HALF_X + 30.0;
+        let mut side = 1.0;
+        while x < HALF_X - 30.0 {
+            let a = Vec2::new(x, tz + side * 6.0);
+            let b = Vec2::new(x + 22.0, tz - side * 6.0);
+            trench(&mut px, &mut bare, a, b, -1.0);
+            x += 22.0;
+            side = -side;
+        }
+        for (i, p) in lay.ru_positions.iter().enumerate() {
+            trench(&mut px, &mut bare, *p, *p + Vec2::new(8.0 * (i as f32 - 3.0).signum(), 30.0), 1.0);
+            stamp(&mut px, &mut bare, *p + Vec2::new(5.0, 14.0), 3.0, &|_, _, _| [0.17, 0.14, 0.11]);
+        }
+        for p in &lay.ua_positions {
+            trench(&mut px, &mut bare, *p + Vec2::new(-25.0, 7.0), *p + Vec2::new(25.0, 9.0), -1.0);
+        }
+    }
+
     // Upload as chunk textures and meshes.
     let mat_template = StandardMaterial { perceptual_roughness: 0.93, reflectance: 0.3, ..default() };
-    let detail = GroundDetail { params: Vec4::new(1.0, 1.0, 0.0, 0.0) };
+    let detail = GroundDetail { params: Vec4::new(1.0, 1.0, if diorama().summer() { 1.0 } else { 0.0 }, 0.0) };
     let mut handles = Vec::new();
     let verts_per_side = 65usize;
     let step = CHUNK / (verts_per_side - 1) as f32;
@@ -335,15 +461,16 @@ fn crater_colour(d: f32, c: Px, w: Vec2, centre: Vec2, seed: u32) -> Px {
     let rays = (value_noise(ang * 3.0, (seed % 997) as f32, 71) * 0.5 + 0.5).powf(1.5);
     // Wobble the radius so no crater is a perfect disc.
     let d = d * (1.0 + 0.25 * value_noise(ang * 2.0 + (seed % 997) as f32, 0.5, 72));
+    let pal = pal();
     if d < 0.45 {
-        mix(DARK_EARTH, [0.12, 0.10, 0.09], value_noise(w.x, w.y, seed) * 0.5 + 0.5)
+        mix(pal.dark_earth, pal.core, value_noise(w.x, w.y, seed) * 0.5 + 0.5)
     } else if d < 0.6 {
-        mix(c, EARTH, 0.9)
+        mix(c, pal.earth, 0.9)
     } else {
         // Thrown clods: a speckle of dark dots over the snow, densest near the rim and along the rays.
         let throw = (1.0 - (d - 0.6) / 0.4).powf(1.2) * (0.35 + 0.65 * rays);
         let clod = geo::hash01((w.x.floor() as i32 * 7919 + w.y.floor() as i32 * 104_729) as u32, seed % 991);
-        if clod < throw * 0.75 { mix(c, [0.16, 0.13, 0.11], 0.85) } else { mix(c, [0.48, 0.43, 0.38], throw * 0.35) }
+        if clod < throw * 0.75 { mix(c, pal.clod, 0.85) } else { mix(c, pal.throw, throw * 0.35) }
     }
 }
 
@@ -358,7 +485,9 @@ fn crater(px: &mut [Px], bare: &mut [bool], at: Vec2, radius: f32, seed: u32) {
             let d = w.distance(at) / r;
             if d <= 1.0 {
                 let i = zz * W + xx;
-                px[i] = crater_colour(d, px[i], w, at, seed);
+                let c = crater_colour(d, px[i], w, at, seed);
+                // In June last year's craters are half grown over.
+                px[i] = if diorama().summer() { mix(c, px[i], 0.45) } else { c };
                 bare[i] = d < 0.75;
             }
         }
@@ -375,6 +504,8 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
     queue.timer = 0.2;
     let ops = std::mem::take(&mut queue.ops);
     let mut seed = 1000u32;
+    let pal = pal();
+    let summer = diorama().summer();
     for op in ops {
         seed = seed.wrapping_add(7919);
         let (at, r) = match op {
@@ -382,6 +513,7 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
             Paint::Scorch { at, radius } => (at, radius),
             Paint::Track { at, gauge, .. } => (at, gauge * 0.5 + 0.8),
             Paint::Footprints { at } => (at, 0.8),
+            Paint::Plow { at, .. } => (at, 3.2),
         };
         let (cx, cz) = tex_of(at);
         let (x0, x1) = ((cx - r).floor().max(0.0) as i64, ((cx + r).ceil() as i64).min(W as i64 - 1));
@@ -410,17 +542,26 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
                             Paint::Scorch { .. } => mix(c, [0.10, 0.09, 0.08], (1.0 - d) * 0.8 * (0.6 + 0.4 * value_noise(w.x / 2.0, w.y / 2.0, seed))),
                             Paint::Track { dir, gauge, .. } => {
                                 // Tracks compact the snow to a fixed tone; they never darken what is already darker.
+                                // In June they crush the grass flat and grind the dust: a fixed tone either way.
                                 let lat = (w - at).perp_dot(dir).abs();
                                 let on_track = ((lat - gauge * 0.5).abs() < 0.5) as i32 as f32;
-                                let track = [0.55, 0.52, 0.48];
+                                let track = pal.track;
                                 let lum = |p: Px| p[0] * 0.3 + p[1] * 0.59 + p[2] * 0.11;
-                                if lum(c) > lum(track) { mix(c, track, on_track * 0.6) } else { c }
+                                if summer || lum(c) > lum(track) { mix(c, track, on_track * 0.6) } else { c }
                             }
-                            Paint::Footprints { .. } => if c[0] > 0.62 { mix(c, [0.62, 0.60, 0.58], 0.3 * (1.0 - d)) } else { c },
+                            Paint::Footprints { .. } => {
+                                if summer { mix(c, [0.52, 0.51, 0.38], 0.12 * (1.0 - d)) } else if c[0] > 0.62 { mix(c, [0.62, 0.60, 0.58], 0.3 * (1.0 - d)) } else { c }
+                            }
+                            Paint::Plow { dir, .. } => {
+                                // Turned earth across the plow's width, a ridge of spoil at each edge.
+                                let lat = (w - at).perp_dot(dir).abs();
+                                if lat < 2.1 { mix(c, pal.plow, 0.85) } else { mix(c, pal.dark_earth, 0.7 * (1.0 - (lat - 2.1) / 1.1).clamp(0.0, 1.0)) }
+                            }
                         };
                         // Craters and scorch wipe out the furrows; tracks and footprints don't.
                         let code = match op {
                             Paint::Crater { .. } | Paint::Scorch { .. } if d < 0.7 => 0,
+                            Paint::Plow { .. } => 0,
                             _ => data[o + 3],
                         };
                         data[o..o + 4].copy_from_slice(&to_srgb8(n, code));

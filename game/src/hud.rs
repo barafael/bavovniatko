@@ -1,11 +1,12 @@
 //! The screen: drone telemetry, the radio net, fire control, the tally, the briefing and the debrief.
-//! The debrief puts the day next to the record, with every claimant named (dossier §1, §10).
+//! The debrief is the day's own account. The record shaped the day; it does not grade it (design/next.md).
 
 use crate::camera::{Mode, View};
 use crate::director::{self, Script};
-use crate::fire::{Atgm, AtgmMode, FireControl, JAVELIN_LOCK, UaPosition};
+use crate::fire::{Atgm, AtgmMode, FireControl, JAVELIN_LOCK, Post};
 use crate::geo;
-use crate::units::{Radio, Stats};
+use crate::diorama::{Diorama, diorama};
+use crate::units::{ColumnOrder, Radio, Side, Stats};
 use crate::Phase;
 use bevy::prelude::*;
 
@@ -107,7 +108,7 @@ fn spawn_hud(mut commands: Commands) {
     }
 
     // The briefing.
-    let briefing = "VUHLEDAR\n6 FEBRUARY 2023\n\n\
+    let briefing = if diorama() == Diorama::Robotyne { ROBOTYNE_BRIEFING } else { "VUHLEDAR\n6 FEBRUARY 2023\n\n\
 Vuhledar is a coal-mining town of Soviet apartment blocks on a ridge above open, flat fields.\n\
 Since late October the Pacific Fleet's 155th Naval Infantry Brigade has attacked it, and been cut to pieces.\n\
 On 24 January Russia attacked again. Today is the largest assault yet.\n\n\
@@ -118,7 +119,7 @@ Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F
 Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.\n\
 Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / rooftop observer.  P: pause.  [ ]: time.\n\
 3: into a tree line with an ATGM team (again for the next).  Right button: the sight.  Left click: launch.\n\n\
-Press Enter.";
+Press Enter." };
     commands
         .spawn((
             Node { position_type: PositionType::Absolute, width: percent(100), height: percent(100), justify_content: JustifyContent::Center, align_items: AlignItems::Center, ..default() },
@@ -137,6 +138,20 @@ Press Enter.";
         ))
         .with_child((text("", 15.0, WHITE), Node { max_width: px(1100), ..default() }, DebriefText));
 }
+
+const ROBOTYNE_BRIEFING: &str = "SOUTH OF MALA TOKMACHKA\n8 JUNE 2023\n\n\
+South of Orikhiv the steppe climbs towards Tokmak through fields cut by tree lines.\n\
+Since the autumn Russia has dug in across it: minefields hundreds of metres deep, a trench on every crest,\n\
+guns registered on every track.\n\n\
+Before dawn the 47th Mechanised Brigade goes forward with its new armour: Leopards and Bradleys,\n\
+mine plows in front. The guns have finished their preparation. The column is late.\n\n\
+You are with the brigade: a drone operator and a fire controller. These are our vehicles, and our men.\n\
+The morning will run whether or not you do anything. What you do decides what it costs.\n\n\
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.\n\
+Left click: 155 mm fire mission (4 rounds).  Shift+click: smoke.  Ctrl+click: HIMARS.\n\
+Space: the column PUSH ON / HOLD / PULL BACK.  1/2 or Tab: drone / the water tower.  P: pause.  [ ]: time.\n\
+3: into the forward tree line with an ATGM team.  Right button: the sight.  Left click: launch.\n\n\
+Press Enter.";
 
 fn briefing_input(keys: Res<ButtonInput<KeyCode>>, phase: Res<State<Phase>>, mut next: ResMut<NextState<Phase>>) {
     if *phase.get() == Phase::Briefing && (keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::NumpadEnter) || crate::dev::dev().skip_briefing) {
@@ -159,7 +174,8 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    positions: Query<&UaPosition>,
+    order: Res<ColumnOrder>,
+    positions: Query<&Post>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
         Single<&mut Text, With<Tally>>,
@@ -180,7 +196,7 @@ fn update_hud(
     let p2 = view.drone_pos.xz();
     let (lat, lon) = geo::latlon(p2);
     let agl = view.drone_pos.y - geo::height(p2.x, p2.y);
-    let home = Vec2::new(-400.0, -1300.0);
+    let home = geo::layout().home;
     **texts.p0() = match view.mode {
         Mode::Drone => Text::new(format!(
             "REC {:02}:{:02}:{:02}   BAT {:>3.0}%   H {:>3.0} m   D {:.2} km   {:.5} N {:.5} E   x{:.1}{}\nDRONES LEFT {}",
@@ -188,7 +204,7 @@ fn update_hud(
             if view.jamming > 0.3 { "   SIGNAL WEAK" } else { "" },
             view.drones_left
         )),
-        Mode::Op => Text::new(format!("OBSERVATION POST, 9TH FLOOR   x{:.1}", view.zoom())),
+        Mode::Op => Text::new(format!("{}   x{:.1}", if diorama() == Diorama::Robotyne { "OBSERVER, WATER TOWER" } else { "OBSERVATION POST, 9TH FLOOR" }, view.zoom())),
         Mode::Ground => {
             let team = view.ground_team.and_then(|e| positions.get(e).ok());
             let (weapon, left) = team.map(|p| (p.weapon, p.atgm)).unwrap_or((None, 0));
@@ -217,10 +233,16 @@ fn update_hud(
     };
     let committed = stats.vehicles_committed;
     let out = stats.destroyed + stats.abandoned;
-    **texts.p1() = Text::new(format!(
-        "06 FEB 2023   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}",
-        director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
-    ));
+    **texts.p1() = Text::new(match diorama() {
+        Diorama::Vuhledar => format!(
+            "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}",
+            diorama().date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
+        ),
+        Diorama::Robotyne => format!(
+            "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
+            diorama().date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
+        ),
+    });
     let mut log = String::new();
     for (t, line) in radio.lines.iter().rev().take(7).collect::<Vec<_>>().into_iter().rev() {
         let age = now - t;
@@ -229,19 +251,26 @@ fn update_hud(
         }
     }
     **texts.p2() = Text::new(log);
-    let teams = positions.iter().filter(|p| p.atgm > 0 && p.strength >= 2).count();
-    let missiles: u32 = positions.iter().filter(|p| p.strength >= 2).map(|p| p.atgm).sum();
+    let teams = positions.iter().filter(|p| p.side == Side::Ua && p.atgm > 0 && p.strength >= 2).count();
+    let missiles: u32 = positions.iter().filter(|p| p.side == Side::Ua && p.strength >= 2).map(|p| p.atgm).sum();
     let mode = match fc.atgm_mode {
         AtgmMode::Auto => "AUTO",
         AtgmMode::Hold => "HOLD",
         AtgmMode::Free => "FREE",
     };
     let speed = vtime.relative_speed();
-    **texts.p3() = Text::new(format!(
-        "155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}",
-        fc.shells, fc.raam, fc.himars, teams, missiles, mode,
-        if (speed - 1.0).abs() > 0.01 { format!("\ntime x{speed}") } else { String::new() }
-    ));
+    let speed_line = if (speed - 1.0).abs() > 0.01 { format!("\ntime x{speed}") } else { String::new() };
+    **texts.p3() = Text::new(match diorama() {
+        Diorama::Vuhledar => format!("155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, teams, missiles, mode, speed_line),
+        Diorama::Robotyne => {
+            let order = match *order {
+                ColumnOrder::Push => "PUSH ON",
+                ColumnOrder::Hold => "HOLD",
+                ColumnOrder::PullBack => "PULL BACK",
+            };
+            format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
+        }
+    });
     **texts.p4() = Text::new(script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default());
     **texts.p5() = Text::new(if view.mode == Mode::Drone && view.feed_down > 0.0 {
         format!("NO SIGNAL\nbattery swap, relaunching ({:.0} s)", view.feed_down)
@@ -253,50 +282,64 @@ fn update_hud(
     }
 }
 
-fn show_debrief(stats: Res<Stats>, fc: Res<FireControl>, mut root: Query<&mut Node, With<Debrief>>, mut t: Single<&mut Text, With<DebriefText>>) {
+fn show_debrief(stats: Res<Stats>, fc: Res<FireControl>, positions: Query<&Post>, soldiers: Query<&crate::units::Soldier>, mut root: Query<&mut Node, With<Debrief>>, mut t: Single<&mut Text, With<DebriefText>>) {
     for mut n in &mut root {
         n.display = Display::Flex;
     }
     let out = stats.destroyed + stats.abandoned;
-    let closest = (1130.0 - stats.max_advance).max(0.0);
-    let town_held = stats.foothold < 6;
-    let in_band = (22..=40).contains(&out);
-    let verdict = if town_held && in_band {
-        "HISTORICAL. Vuhledar held, and the columns died in the fields as they did."
-    } else if !town_held {
-        "NOT WHAT HAPPENED. Russian infantry hold the first tree line. In February 2023 they never did."
-    } else if out < 22 {
-        "NOT QUITE WHAT HAPPENED. Too many vehicles got away. The record is worse for Russia than this."
-    } else {
-        "HELD, AND MORE. Losses above even the Ukrainian claim for the week."
-    };
     let mut waves = String::new();
-    for (i, w) in stats.per_wave.iter().enumerate().skip(1) {
-        waves.push_str(&format!("   column {}: {} vehicles, {} destroyed, {} abandoned\n", i, w.vehicles, w.destroyed, w.abandoned));
-    }
-    **t = Text::new(format!(
-        "THE DAY\n\n\
+    **t = Text::new(match diorama() {
+        Diorama::Vuhledar => {
+            for (i, w) in stats.per_wave.iter().enumerate().skip(1) {
+                waves.push_str(&format!("   column {}: {} vehicles, {} destroyed, {} abandoned\n", i, w.vehicles, w.destroyed, w.abandoned));
+            }
+            let closest = (1130.0 - stats.max_advance).max(0.0);
+            format!(
+                "THE DAY\n\n\
 Russian vehicles committed  {}\n{}\
 Knocked out  {}  ({} destroyed, {} abandoned; {} on mines, {} by ATGM, {} by artillery; {} turrets thrown)\n\
 Withdrew  {}\n\
 Men sent forward  {}.  Came back  {}.  Russian dead  {}.\n\
 Closest any Russian got to the town  {:.0} m.  Ukrainian casualties  {}.\n\
 Shells left  {} of 96.\n\n\
-THE RECORD\n\n\
-ISW: one filmed engagement cost a 155th formation 13 tanks and 12 BMPs.\n\
-UK MoD: at least 30 \"mostly intact\" armoured vehicles abandoned in a single incident.\n\
-Oryx: 103 Russian vehicles, 36 of them tanks, at Avdiivka and Vuhledar on 8-10 February.\n\
-Ukrainian military: 130 tanks and APCs over three weeks.\n\
-A Russian officer's notebook, 1-5 March: 100, 116, 103, 115 men sent; 16, 23, 15, 3 came back.\n\
-ISW, 26 March: \"effectively no gains at staggering costs.\"\n\
-Girkin: \"Only morons attack head-on in the same place.\"\n\n\
-{}\n\n\
 The 155th was rebuilt, and attacked again. Russia kept coming at the town's front for another year and a half.\n\
 Vuhledar fell on 1-2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.\n\n\
 R: the same day again, down the same roads.     Esc: quit.",
-        stats.vehicles_committed, waves, out, stats.destroyed, stats.abandoned, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, stats.turret_tosses,
-        stats.withdrawn, stats.sent, stats.returned, stats.ru_dead, closest, stats.ua_losses, fc.shells, verdict
-    ));
+                stats.vehicles_committed, waves, out, stats.destroyed, stats.abandoned, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, stats.turret_tosses,
+                stats.withdrawn, stats.sent, stats.returned, stats.attacker_dead, closest, stats.defender_losses, fc.shells
+            )
+        }
+        Diorama::Robotyne => {
+            let names = ["", "the first group", "the second group", "sent back in for the men"];
+            for (i, w) in stats.per_wave.iter().enumerate().skip(1) {
+                let name = names.get(i).copied().unwrap_or("another group");
+                waves.push_str(&format!("   {}: {} vehicles, {} burned, {} left in the field\n", name, w.vehicles, w.destroyed, w.abandoned));
+            }
+            let trench = crate::robotyne::TRENCH_Z;
+            let short = |a: f32| if a > trench - 1.0 { "in the trench".to_string() } else { format!("{:.0} m short of the trench", trench - a) };
+            let ru = positions.iter().filter(|p| p.side == Side::Ru).count();
+            let lying = soldiers.iter().filter(|s| s.side == Side::Ua && s.state == crate::units::SState::Wounded).count();
+            let quiet = positions.iter().filter(|p| p.side == Side::Ru && p.strength == 0).count();
+            format!(
+                "THE MORNING\n\n\
+Our vehicles committed  {}\n{}\
+Left in the field  {}:  {} burned out,  {} immobilised and abandoned. The recovery crews will try for those tonight.\n\
+Came back  {}.\n\
+Men sent forward  {}.  Brought out  {}, {} of them picked up in the field by a Bradley.  Killed  {}.\n\
+Wounded  {}:  {} brought out,  {} still lying out there.\n\
+The overwatch in the forward tree line lost  {}.\n\
+The furthest vehicle stopped {}. On foot, the furthest anyone got: {}.\n\
+Russian positions on the crest silenced  {} of {}.  Their dug-in tanks knocked out  {} of 2.\n\
+Shells left  {} of 64.  Smoke left  {} of 6.\n\n\
+Within days the armour was stopped, and the brigades went forward on foot instead, a tree line at a time.\n\
+Robotyne, eleven kilometres to the south, was taken in August. Tokmak was not reached.\n\n\
+R: the same morning again, down the same tracks.     Esc: quit.",
+                stats.vehicles_committed, waves, out, stats.destroyed, stats.abandoned, stats.withdrawn,
+                stats.sent, stats.returned, stats.picked_up, stats.attacker_dead, stats.wounded, stats.wounded_out, lying, stats.overwatch_losses,
+                short(stats.vehicle_advance), short(stats.max_advance), quiet, ru, stats.defender_vehicles, fc.shells, fc.smoke
+            )
+        }
+    });
 }
 
 fn debrief_input(keys: Res<ButtonInput<KeyCode>>, mut exit: MessageWriter<AppExit>) {

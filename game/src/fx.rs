@@ -11,9 +11,11 @@ pub struct FxPlugin;
 impl Plugin for FxPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(FxRng(SmallRng::seed_from_u64(20230206)))
-            .insert_resource(Wind(Vec3::new(3.5, 0.0, -1.2)))
+            .insert_resource(Wind(if crate::diorama::diorama().summer() { Vec3::new(1.6, 0.0, 0.9) } else { Vec3::new(3.5, 0.0, -1.2) }))
+            .init_resource::<Smoke>()
+            .insert_resource(FxLight(1.0))
             .add_systems(Startup, setup_fx)
-            .add_systems(Update, (update_particles, update_emitters, update_flashes).chain().in_set(crate::Step::Effects));
+            .add_systems(Update, (update_particles, update_emitters, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
     }
 }
 
@@ -23,6 +25,36 @@ pub struct FxRng(pub SmallRng);
 /// Wind drifts every plume the same way: east-north-east at a few m/s (ERA5: up to 26 km/h on 7–8 Feb).
 #[derive(Resource)]
 pub struct Wind(pub Vec3);
+
+/// Smoke on the ground thick enough to hide a vehicle from a sight: grenades and smoke shells. (The particles are
+/// what you see; this is what a gunner cannot see through.)
+#[derive(Resource, Default)]
+pub struct Smoke {
+    clouds: Vec<(Vec2, f32, f64)>,
+}
+
+impl Smoke {
+    pub fn add(&mut self, at: Vec2, radius: f32, until: f64) {
+        self.clouds.push((at, radius, until));
+    }
+
+    /// Does smoke lie across the line from `a` to `b` at game time `now`?
+    pub fn blocks(&self, a: Vec2, b: Vec2, now: f64) -> bool {
+        self.clouds.iter().any(|&(c, r, until)| {
+            if now > until {
+                return false;
+            }
+            let ab = b - a;
+            let t = if ab.length_squared() > 0.0 { ((c - a).dot(ab) / ab.length_squared()).clamp(0.0, 1.0) } else { 0.0 };
+            (a + ab * t).distance(c) < r
+        })
+    }
+
+    /// Is `p` inside smoke?
+    pub fn covers(&self, p: Vec2, now: f64) -> bool {
+        self.blocks(p, p, now)
+    }
+}
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::VariantArray)]
 pub enum Kind {
@@ -39,10 +71,17 @@ pub enum Kind {
 
 const STEPS: usize = 8;
 
+/// How bright the scene is lit, for the unlit particles (1 in daylight). Smoke that ignores the light glows white
+/// in the blue hour; this dims it with everything else.
+#[derive(Resource)]
+pub struct FxLight(pub f32);
+
 #[derive(Resource)]
 pub struct FxAssets {
     quad: Handle<Mesh>,
     mats: Vec<Handle<StandardMaterial>>,
+    /// Each non-emissive material's own colour, to scale by [`FxLight`].
+    base: Vec<Option<Color>>,
     pub crater_flash: Handle<StandardMaterial>,
     pub sphere: Handle<Mesh>,
     count: usize,
@@ -74,6 +113,7 @@ fn puff_texture() -> Image {
 fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>) {
     let tex = images.add(puff_texture());
     let mut mats = Vec::new();
+    let mut base = Vec::new();
     for &k in Kind::VARIANTS {
         for a in 0..STEPS {
             let alpha = (a as f32 + 1.0) / STEPS as f32;
@@ -83,13 +123,15 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
                 Kind::GreySmoke => ([0.30, 0.30, 0.30], 0.0),
                 Kind::WhiteSmoke => ([0.62, 0.63, 0.64], 0.0),
                 Kind::Dirt => ([0.13, 0.11, 0.09], 0.0),
-                Kind::Snow => ([0.70, 0.71, 0.73], 0.0),
+                // In summer the same particles are dust: pale, warm, and visible from kilometres.
+                Kind::Snow => if crate::diorama::diorama().summer() { ([0.60, 0.55, 0.46], 0.0) } else { ([0.70, 0.71, 0.73], 0.0) },
                 Kind::Fire => ([1.0, 0.55, 0.15], 6.0),
                 Kind::Flash => ([1.0, 0.85, 0.6], 30.0),
                 Kind::Tracer => ([1.0, 0.7, 0.3], 20.0),
                 Kind::Spark => ([1.0, 0.6, 0.2], 12.0),
             };
             let c = Color::srgba(rgb[0], rgb[1], rgb[2], alpha);
+            base.push((emissive == 0.0).then_some(c));
             mats.push(materials.add(StandardMaterial {
                 base_color: c,
                 base_color_texture: Some(tex.clone()),
@@ -107,7 +149,7 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
     let quad = meshes.add(Rectangle::new(1.0, 1.0));
     let sphere = meshes.add(Sphere::new(1.0).mesh().ico(2).unwrap());
     let crater_flash = materials.add(StandardMaterial { base_color: Color::srgb(1.0, 0.8, 0.5), emissive: LinearRgba::rgb(40.0, 22.0, 8.0), unlit: true, ..default() });
-    commands.insert_resource(FxAssets { quad, mats, crater_flash, sphere, count: 0 });
+    commands.insert_resource(FxAssets { quad, mats, base, crater_flash, sphere, count: 0 });
 }
 
 #[derive(Component)]
@@ -209,6 +251,19 @@ fn update_particles(
         }
     }
     fx.count = alive;
+}
+
+fn light_particles(light: Res<FxLight>, fx: Res<FxAssets>, mut materials: ResMut<Assets<StandardMaterial>>, mut last: Local<Option<f32>>) {
+    if last.is_some_and(|l| (l - light.0).abs() < 0.01) {
+        return;
+    }
+    *last = Some(light.0);
+    for (h, c) in fx.mats.iter().zip(&fx.base) {
+        if let (Some(c), Some(mut m)) = (c, materials.get_mut(h)) {
+            let s = c.to_srgba();
+            m.base_color = Color::srgba(s.red * light.0, s.green * light.0, s.blue * light.0, s.alpha);
+        }
+    }
 }
 
 /// A long-lived source: a burning wreck's fire and smoke column, a vehicle's exhaust smoke screen.
@@ -401,7 +456,11 @@ pub fn tracer(commands: &mut Commands, fx: &mut FxAssets, from: Vec3, to: Vec3, 
     spawn(commands, fx, Spawn { kind: Kind::Tracer, pos: from, vel: d / len * speed, life: len / speed, size0: 0.35, size1: 0.35, alpha: 1.0, drag: 0.0, streak: 18.0, ..default() });
 }
 
-/// A track-throw of snow behind a moving vehicle.
+/// A track-throw of snow behind a moving vehicle; in summer, a dust plume that hangs over the track.
 pub fn spray(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, at: Vec3, vel: Vec3) {
+    if crate::diorama::diorama().summer() {
+        spawn(commands, fx, Spawn { kind: Kind::Snow, pos: at + Vec3::Y * 0.8, vel: -vel * 0.25 + Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.6..1.6), rng.random_range(-1.0..1.0)), life: rng.random_range(5.0..8.0), size0: 1.6, size1: rng.random_range(7.0..11.0), alpha: 0.2, drag: 0.8, ..default() });
+        return;
+    }
     spawn(commands, fx, Spawn { kind: Kind::Snow, pos: at + Vec3::Y * 0.5, vel: -vel * 0.2 + Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.5..1.5), rng.random_range(-1.0..1.0)), life: rng.random_range(1.5..2.5), size0: 1.2, size1: 4.0, alpha: 0.45, drag: 1.0, ..default() });
 }

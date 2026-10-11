@@ -105,7 +105,7 @@ The debrief, rebuilt without the record. It is the day's own account, in four pa
 
 **Winning** stays the historical outcome, kept invisible. The game knows the bands: no Russian foothold in the first belt, no position inside the town, armour losses in the plausible range. Breaking them ends the campaign early, with a quiet card: *the line moved.* Holding them is not celebrated. The next night simply comes.
 
-The campaign ends on 31 March with the field. How many wrecks, counted by the drone. Then one line about October 2024, if we decide we want it (see the questions below).
+The campaign ends on 31 March with the field. How many wrecks, counted by the drone. Then one line about October 2024: the town fell to its flanks, not its front.
 
 ### The embodied vignettes
 
@@ -183,11 +183,13 @@ Each milestone ends with a clip in `devlog/videos/`, as the history requires.
 4. **Three days of campaign.** Days 1, 3 and 5, with rationing carried across them. *The clip: three dawns over the same road.*
 5. **The vignettes.** The ambush, the Wanderer, the roof, the notebook. *The clip: the notebook.*
 6. **The full winter.** All nine days, and the end of March.
-7. **Robotyne.** First the breach of 8 June alone, as a single diorama, then the summer.
+7. **Robotyne.** First the breach of 8 June alone, as a single diorama (started now, see the decisions below), then the summer.
 
-## Questions for you
+## Decisions (2026-10-11)
 
-- **The end card.** Should the campaign's last line say what happened in October 2024, that the town fell to its flanks? That is narration, not a comparison, but it is the record speaking in the interface.
-- **Names.** The 72nd's soldiers in the ledger: call signs (fictional), or no names at all, only numbers? Real names are out.
-- **The ambush's prisoners.** The source video contains footage of prisoners. The vignette can stop at "taken alive", or show them being walked back. I would stop.
-- **Robotyne's weight.** The breach of 8 June killed few men and destroyed much Western armour. Playing your own side's column into a minefield is the hardest thing this game will ask. Should it be the second diorama, or wait until the winter has taught the player what a minefield is?
+- **The end card.** The campaign's closing note mentions October 2024: the town fell to an attack on its flanks.
+  It's the one place the record speaks in the interface, and it's narration, not a comparison.
+- **Names.** Fictional call signs in the ledger. Real names stay out.
+- **The ambush's prisoners.** The vignette stops at "taken alive". Walking them back stays an open question.
+- **Robotyne's weight.** Its place in the sequence is decided later. For now it's built as it happened: the breach
+  of 8 June south of Mala Tokmachka, into the minefields, as a second diorama next to Vuhledar.

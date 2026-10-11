@@ -2,7 +2,7 @@
 //! "Development"), and the helpers they drive. F12 saves a screenshot.
 
 use crate::camera::{HeadlessTarget, Mode, Target, View, look_angles};
-use crate::fire::{Atgm, FireControl, Strike, UaPosition};
+use crate::fire::{Atgm, FireControl, Strike, Post};
 use crate::units::{Radio, Side, Soldier, Stats, Vehicle};
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}};
 use std::{str::FromStr, sync::OnceLock};
@@ -49,6 +49,8 @@ pub struct DevEnv {
     pub fire: Vec<(f32, Strike)>,
     pub diag: bool,
     pub log_stats: bool,
+    /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
+    pub light: [f32; 3],
 }
 
 fn var(k: &str) -> Option<String> {
@@ -100,6 +102,9 @@ impl DevEnv {
             fire,
             diag: var("VUHLEDAR_DIAG").is_some(),
             log_stats: var("VUHLEDAR_LOG_STATS").is_some(),
+            light: var("VUHLEDAR_LIGHT")
+                .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
+                .unwrap_or([1.0, 1.0, 0.0]),
         }
     }
 }
@@ -129,14 +134,19 @@ fn shot_of(target: Option<&HeadlessTarget>) -> Screenshot {
     }
 }
 
-/// `VUHLEDAR_SHOT=<path>`: save a screenshot after `VUHLEDAR_SHOT_AT` seconds (default 6) and exit.
-fn auto_shot(mut commands: Commands, time: Res<Time<Real>>, target: Option<Res<HeadlessTarget>>, mut done: Local<u8>, mut exit: MessageWriter<AppExit>) {
+/// `VUHLEDAR_SHOT=<path>`: save a screenshot after `VUHLEDAR_SHOT_AT` seconds (default 6) and exit. With
+/// `VUHLEDAR_WARP_TO`, the seconds count from when the warp arrives, so a shot lands at a chosen game time.
+fn auto_shot(mut commands: Commands, time: Res<Time<Real>>, script: Res<crate::director::Script>, target: Option<Res<HeadlessTarget>>, mut done: Local<u8>, mut from: Local<Option<f32>>, mut exit: MessageWriter<AppExit>) {
     let Some(path) = dev().shot.clone() else { return };
     let t = time.elapsed_secs();
-    if *done == 0 && t > dev().shot_at {
+    if from.is_none() && dev().warp_to.is_none_or(|w| script.t >= w) {
+        *from = Some(t);
+    }
+    let Some(t0) = *from else { return };
+    if *done == 0 && t - t0 > dev().shot_at {
         commands.spawn(shot_of(target.as_deref())).observe(save_to_disk(path));
         *done = 1;
-    } else if *done == 1 && t > dev().shot_at + 1.5 {
+    } else if *done == 1 && t - t0 > dev().shot_at + 1.5 {
         exit.write(AppExit::Success);
         *done = 2;
     }
@@ -229,17 +239,20 @@ fn record(
 }
 
 /// `VUHLEDAR_LOG_STATS=1`: print the tally once a game minute.
-fn log_stats(script: Res<crate::director::Script>, stats: Res<Stats>, fc: Res<FireControl>, soldiers: Query<&Soldier>, vehicles: Query<&Vehicle>, mut last: Local<u32>) {
+fn log_stats(script: Res<crate::director::Script>, stats: Res<Stats>, fc: Res<FireControl>, order: Res<crate::units::ColumnOrder>, soldiers: Query<&Soldier>, vehicles: Query<&Vehicle>, mut last: Local<u32>) {
     if !dev().log_stats || script.t as u32 / 60 == *last {
         return;
     }
     *last = script.t as u32 / 60;
     let moving = vehicles.iter().filter(|v| v.state.mobile()).count();
-    let men = soldiers.iter().filter(|s| s.side == Side::Ru).count();
+    let men = soldiers.iter().filter(|s| s.side == crate::diorama::diorama().attacker()).count();
     info!(
         "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={}",
-        script.t, crate::director::clock_text(script.t), stats.vehicles_committed, stats.destroyed, stats.abandoned, stats.withdrawn, moving, men, stats.sent, stats.returned, stats.ru_dead, stats.foothold, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, fc.shells, fc.brigade_shells, stats.ua_losses
+        script.t, crate::director::clock_text(script.t), stats.vehicles_committed, stats.destroyed, stats.abandoned, stats.withdrawn, moving, men, stats.sent, stats.returned, stats.attacker_dead, stats.foothold, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, fc.shells, fc.brigade_shells, stats.defender_losses
     );
+    if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
+        info!("     picked_up={} ru_vehicles={} vehicle_advance={:.0} foot_advance={:.0} order={:?} overwatch_lost={} wounded={}/{} deaths={:?}", stats.picked_up, stats.defender_vehicles, stats.vehicle_advance.max(-9999.0), stats.max_advance.max(-9999.0), *order, stats.overwatch_losses, stats.wounded_out, stats.wounded, stats.deaths);
+    }
 }
 
 /// `VUHLEDAR_FIRE="100:he,130:raam,160:himars"`: at those game seconds, call that strike on the nearest stalled
@@ -275,13 +288,16 @@ fn frame_times(time: Res<Time<Real>>, mut acc: Local<(f32, f32, u32, f32)>) {
 /// `VUHLEDAR_VIEW=ground`: start in the tree line nearest the dacha road with a `VUHLEDAR_TEAM` launcher
 /// (default Stugna-P), sight up, tracking the nearest moving Russian vehicle the way a gunner would.
 /// `VUHLEDAR_AUTO_ATGM=<s>` launches then.
-fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &UaPosition)>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
+fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
     if dev().view != Some(Mode::Ground) {
         return;
     }
     if !*started {
         let want = dev().team.unwrap_or(Atgm::Stugna);
-        let kz = Vec2::new(930.0, -658.0);
+        let kz = match crate::diorama::diorama() {
+            crate::diorama::Diorama::Vuhledar => Vec2::new(930.0, -658.0),
+            crate::diorama::Diorama::Robotyne => Vec2::new(-100.0, crate::robotyne::UA_LINE_Z),
+        };
         let Some((e, p)) = teams.iter().filter(|(_, p)| p.atgm > 0 && p.weapon == Some(want)).min_by(|a, b| a.1.pos.distance(kz).total_cmp(&b.1.pos.distance(kz))) else {
             return;
         };

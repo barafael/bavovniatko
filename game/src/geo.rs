@@ -6,6 +6,7 @@
 //! fields cut by shelterbelts falling 40 m to the river, Pavlivka to the south-west and Mykilske to the
 //! south-east, and the dirt roads the columns drove up.
 
+use crate::diorama::{Diorama, diorama};
 use bevy::math::{Vec2, Vec3};
 use std::sync::OnceLock;
 
@@ -56,7 +57,7 @@ pub fn hash01(i: u32, seed: u32) -> f32 {
     hash2(i as i32, (i >> 16) as i32 ^ 0x5f3, seed)
 }
 
-fn smoothstep(e0: f32, e1: f32, x: f32) -> f32 {
+pub fn smoothstep(e0: f32, e1: f32, x: f32) -> f32 {
     let t = ((x - e0) / (e1 - e0)).clamp(0.0, 1.0);
     t * t * (3.0 - 2.0 * t)
 }
@@ -198,6 +199,20 @@ pub struct ShoulderField {
     pub density: f32,
 }
 
+/// A barrier minefield across open ground, the Surovikin line's kind: hundreds of metres deep, anti-tank mines
+/// often stacked two high, anti-personnel mines among them, and no lanes left open.
+#[derive(Clone, Debug)]
+pub struct Barrier {
+    pub z0: f32,
+    pub z1: f32,
+    /// Anti-tank mines per square metre.
+    pub at: f32,
+    /// Share of anti-tank mines stacked two high (a plow or roller does not survive one).
+    pub stacked: f32,
+    /// Anti-personnel mines per square metre.
+    pub ap: f32,
+}
+
 pub struct Layout {
     pub roads: Vec<Road>,
     pub belts: Vec<Belt>,
@@ -205,26 +220,42 @@ pub struct Layout {
     pub shoulder_fields: Vec<ShoulderField>,
     /// Belts of mines in open field (in front of the town edge).
     pub field_mines: Vec<(Polyline, f32)>,
-    pub river: Polyline,
+    /// Barrier minefields across the whole width of the box.
+    pub barriers: Vec<Barrier>,
+    pub river: Option<Polyline>,
     pub town: Rect,
     pub dachas: Rect,
     pub pavlivka: Rect,
     pub mykilske: Rect,
     /// Ukrainian positions in the tree lines: ATGM teams and rifle positions.
     pub ua_positions: Vec<Vec2>,
+    /// Russian positions: trenches and ATGM teams.
+    pub ru_positions: Vec<Vec2>,
     /// Pre-registered artillery target points on the approach roads.
     pub trps: Vec<Vec2>,
-    /// Where the earlier assaults (24 Jan – 4 Feb) left wrecks.
+    /// Where earlier fighting left wrecks.
     pub old_wrecks: Vec<(Vec2, f32)>,
+    /// Which way the attack goes along z: -1 north (Vuhledar), +1 south (Robotyne).
+    pub advance: f32,
+    /// The defenders' forward line (z): attackers alive at or past it hold a foothold.
+    pub foothold_z: f32,
+    /// The drone's base, and the z beyond which it flies into the enemy's jamming.
+    pub home: Vec2,
+    pub jam_z: f32,
+    /// Where the defenders' mortars reach (a z band in front of their line).
+    pub mortar_band: (f32, f32),
 }
 
 static LAYOUT: OnceLock<Layout> = OnceLock::new();
 
 pub fn layout() -> &'static Layout {
-    LAYOUT.get_or_init(build_layout)
+    LAYOUT.get_or_init(|| match diorama() {
+        Diorama::Vuhledar => build_layout(),
+        Diorama::Robotyne => crate::robotyne::build_layout(),
+    })
 }
 
-fn v(x: f32, z: f32) -> Vec2 {
+pub fn v(x: f32, z: f32) -> Vec2 {
     Vec2::new(x, z)
 }
 
@@ -279,29 +310,7 @@ fn build_layout() -> Layout {
         let line = Polyline::new(vec![v(x, -950.0), v(x + 15.0, 1380.0)]);
         belts.push(Belt { line, width: 12.0, gaps: vec![] });
     }
-    // Cut gaps where roads cross belts, plus a few natural gaps.
-    for (bi, belt) in belts.iter_mut().enumerate() {
-        let n = (belt.line.length() / 8.0) as usize;
-        let mut in_gap: Option<f32> = None;
-        for k in 0..=n {
-            let s = k as f32 * 8.0;
-            let p = belt.line.point(s);
-            let near_road = roads.iter().any(|r| r.line.project(p).0 < r.width * 0.5 + 9.0);
-            let natural = value_noise(s / 90.0, bi as f32 * 7.0, 99) > 0.62;
-            let gap = near_road || natural;
-            match (gap, in_gap) {
-                (true, None) => in_gap = Some(s),
-                (false, Some(g0)) => {
-                    belt.gaps.push((g0, s));
-                    in_gap = None;
-                }
-                _ => {}
-            }
-        }
-        if let Some(g0) = in_gap {
-            belt.gaps.push((g0, belt.line.length()));
-        }
-    }
+    cut_gaps(&mut belts, &roads);
 
     let routes = vec![
         // 0: the dacha road
@@ -358,22 +367,63 @@ fn build_layout() -> Layout {
         routes,
         shoulder_fields,
         field_mines,
-        river,
+        barriers: Vec::new(),
+        river: Some(river),
         town: Rect { min: v(-HALF_X, -HALF_Z), max: v(450.0, -1130.0) },
         dachas: Rect { min: v(480.0, -1250.0), max: v(1250.0, -880.0) },
         pavlivka: Rect { min: v(-2100.0, 1560.0), max: v(-900.0, HALF_Z) },
         mykilske: Rect { min: v(1750.0, 1480.0), max: v(HALF_X, HALF_Z) },
         ua_positions,
+        ru_positions: Vec::new(),
         trps,
         old_wrecks,
+        advance: -1.0,
+        foothold_z: -560.0,
+        home: v(-400.0, -1300.0),
+        jam_z: -100.0,
+        mortar_band: (-900.0, 700.0),
+    }
+}
+
+/// Cut gaps where roads cross belts, plus a few natural gaps.
+pub fn cut_gaps(belts: &mut [Belt], roads: &[Road]) {
+    for (bi, belt) in belts.iter_mut().enumerate() {
+        let n = (belt.line.length() / 8.0) as usize;
+        let mut in_gap: Option<f32> = None;
+        for k in 0..=n {
+            let s = k as f32 * 8.0;
+            let p = belt.line.point(s);
+            let near_road = roads.iter().any(|r| r.line.project(p).0 < r.width * 0.5 + 9.0);
+            let natural = value_noise(s / 90.0, bi as f32 * 7.0, 99) > 0.62;
+            let gap = near_road || natural;
+            match (gap, in_gap) {
+                (true, None) => in_gap = Some(s),
+                (false, Some(g0)) => {
+                    belt.gaps.push((g0, s));
+                    in_gap = None;
+                }
+                _ => {}
+            }
+        }
+        if let Some(g0) = in_gap {
+            belt.gaps.push((g0, belt.line.length()));
+        }
     }
 }
 
 // ---------------------------------------------------------------------------------------------------------
 // Terrain height
 
-/// Ground height in metres above sea level (SRTM-like: ~190 m on the town ridge, ~142 m in the valley).
+/// Ground height in metres above sea level.
 pub fn height(x: f32, z: f32) -> f32 {
+    match diorama() {
+        Diorama::Vuhledar => height_vuhledar(x, z),
+        Diorama::Robotyne => crate::robotyne::height(x, z),
+    }
+}
+
+/// SRTM-like: ~190 m on the town ridge, ~142 m in the valley.
+fn height_vuhledar(x: f32, z: f32) -> f32 {
     // The ridge: flat on the town plateau, falling to the Kashlahach.
     let slope = 1.0 - smoothstep(-1350.0, 1550.0, z);
     let mut h = 146.0 + 42.0 * slope.powf(1.15);
@@ -432,9 +482,14 @@ pub fn raycast(origin: Vec3, dir: Vec3, max: f32) -> Option<Vec3> {
     None
 }
 
-/// Map position to WGS84, anchored on the Vuhledar town node (47.7810 N, 37.2461 E) at (-900, -1500).
+/// Map position to WGS84. Vuhledar is anchored on the town node (47.7810 N, 37.2461 E) at (-900, -1500);
+/// Robotyne's box on the fields about 4 km south of Mala Tokmachka (47.4967 N, 35.8968 E at the origin).
 pub fn latlon(p: Vec2) -> (f64, f64) {
-    let lat = 47.7810 - (p.y as f64 + 1500.0) / 111_200.0;
-    let lon = 37.2461 + (p.x as f64 + 900.0) / 74_740.0;
+    let (lat0, lon0, x0, z0, m_per_lon) = match diorama() {
+        Diorama::Vuhledar => (47.7810, 37.2461, -900.0, -1500.0, 74_740.0),
+        Diorama::Robotyne => (47.4967, 35.8968, 0.0, 0.0, 75_250.0),
+    };
+    let lat = lat0 - (p.y as f64 - z0) / 111_200.0;
+    let lon = lon0 + (p.x as f64 - x0) / m_per_lon;
     (lat, lon)
 }

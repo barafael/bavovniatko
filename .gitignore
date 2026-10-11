@@ -17,3 +17,5 @@ web/crates/app/bridge/
 web/crates/app/dist/
 web/crates/app/public/data/
 web/crates/app/public/licenses/
+# Local notes on pending and leftover work: kept out of git.
+pending/

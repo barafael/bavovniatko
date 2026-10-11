@@ -66,6 +66,25 @@ fn shots() -> Vec<Shot> {
         fire: &[],
         debrief: false,
     };
+    if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
+        return vec![
+            // The blue hour: our guns' preparation walking along the crest, the column not yet moving.
+            s(20.0, 6.0, (100.0, -1100.0, 150.0), (140.0, -1070.0, 150.0), Drone(Point(Vec2::new(0.0, 700.0))), (22.0, 17.0)),
+            // First light: the first group moves off down the western track behind the plow, raising dust.
+            s(150.0, 7.0, (-300.0, -1250.0, 90.0), (-285.0, -1190.0, 90.0), Drone(Column(0)), (26.0, 18.0)),
+            // The plow in the forward minefield: the lane, the markers, the first mine.
+            s(470.0, 8.0, (-380.0, -720.0, 110.0), (-370.0, -700.0, 110.0), Drone(Column(0)), (9.0, 7.0)),
+            // The second group bunching behind its stopped plow on the eastern track.
+            s(600.0, 7.0, (420.0, -800.0, 140.0), (440.0, -780.0, 140.0), Drone(Point(Vec2::new(665.0, -360.0))), (12.0, 9.0)),
+            // The men in the field, between the burning vehicles.
+            s(690.0, 7.0, (-260.0, -700.0, 120.0), (-250.0, -690.0, 120.0), Drone(Point(Vec2::new(-492.0, -330.0))), (9.0, 7.0)),
+            // Smoke on the wrecks, and the Bradleys that went back in for the men.
+            Shot { fire: &[(745.0, Strike::Smoke)], ..s(760.0, 8.0, (-250.0, -800.0, 130.0), (-240.0, -790.0, 130.0), Drone(Point(Vec2::new(-492.0, -360.0))), (11.0, 8.0)) },
+            // Late morning: the row of wrecks along the track, still smoking.
+            s(1350.0, 5.0, (-650.0, -950.0, 240.0), (-630.0, -930.0, 240.0), Drone(Point(Vec2::new(-492.0, -330.0))), (16.0, 13.0)),
+            Shot { debrief: true, ..s(1355.0, 4.0, (-630.0, -930.0, 240.0), (-630.0, -930.0, 240.0), Drone(Point(Vec2::new(-492.0, -330.0))), (13.0, 13.0)) },
+        ];
+    }
     vec![
         // Dawn over the January wrecks on the dacha road, before the first column.
         s(4.0, 6.0, (1150.0, 200.0, 70.0), (1220.0, 300.0, 60.0), Drone(Point(Vec2::new(1440.0, 530.0))), (26.0, 20.0)),

@@ -1,14 +1,17 @@
 //! Vehicles, soldiers, mines, and what happens when steel and explosive meet.
 //!
-//! The Russian column behaviour follows the dossier (§5): single file down known dirt roads, a plow tank in front,
-//! exhaust smoke, poor reaction to mines. Drivers who panic leave the road onto the mined shoulders, and the
-//! wrecks block the road for the next column, which comes down the same road anyway.
+//! The attacking columns behave the same in both dioramas, because the minefield does the same thing to them:
+//! single file down a known track behind a plow, the lead stops, the ones behind bunch up, drivers who go round
+//! leave the cleared lane, and the wrecks block the track for whoever comes next. At Vuhledar the Russian columns
+//! do it (dossier c08 §5); south of Mala Tokmachka the 47th Brigade's do (c09 §5), in better vehicles, and most of
+//! their crews get out.
 
 use crate::audio::{self, Sfx, Sound};
+use crate::diorama::{Diorama, diorama};
 use crate::camera::MainCamera;
 use crate::fx::{self, Emitter, EmitterKind, FxAssets, FxRng};
 use crate::geo::{self, Polyline};
-use crate::meshes::{self, MUD, RU_GREEN, UA_GREEN};
+use crate::meshes::{self, MUD, RU_GREEN, UA_GREEN, WEST_GREEN};
 use crate::terrain::{Paint, PaintQueue};
 use crate::world::Palette;
 use bevy::{light::NotShadowCaster, platform::collections::HashMap, prelude::*};
@@ -22,12 +25,13 @@ impl Plugin for UnitsPlugin {
         app.add_message::<Blast>()
             .add_message::<DirectHit>()
             .insert_resource(UnitRng(SmallRng::seed_from_u64(155)))
-            .init_resource::<Stats>()
+            .insert_resource(Stats { vehicle_advance: f32::MIN, max_advance: if diorama() == Diorama::Robotyne { f32::MIN } else { 0.0 }, ..default() })
             .init_resource::<Radio>()
+            .init_resource::<ColumnOrder>()
             .add_systems(Startup, (setup_models, lay_minefields, spawn_old_wrecks).chain().after(crate::world::spawn_belts))
             .add_systems(
                 Update,
-                (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, crew_bailout, move_soldiers, animate_legs, fly_debris, drop_riders)
+                (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, crew_bailout, move_soldiers, board_vehicles, animate_legs, fly_debris, drop_riders)
                     .chain()
                     .run_if(crate::running)
                     .in_set(crate::Step::Units),
@@ -56,20 +60,68 @@ pub enum VKind {
     Bmp2,
     /// MT-LB
     Mtlb,
+    /// Leopard 2A6 (the 33rd Brigade's, on 8 June)
+    Leo2a6,
+    /// Leopard 2R mine-clearing tank (Finnish, a full-width plow)
+    Leo2r,
+    /// Wisent 1 engineer vehicle (Leopard 1 hull, dozer-plow, crane)
+    Wisent,
+    /// BMR-2 mine-clearing vehicle (T-55 hull, KMT-7 rollers)
+    Bmr2,
+    /// M2A2 ODS Bradley
+    Bradley,
 }
 
 impl VKind {
     pub fn is_tank(self) -> bool {
+        matches!(self, VKind::T80 | VKind::T72 | VKind::Leo2a6)
+    }
+    /// T-72/T-80 carousel autoloaders: when the charges go, the turret goes up.
+    pub fn carousel(self) -> bool {
         matches!(self, VKind::T80 | VKind::T72)
     }
-    fn crew(self) -> u32 {
-        if self == VKind::Mtlb { 2 } else { 3 }
+    /// Built for crew survival (blow-out panels, spall liners, escape hatches and ramps): most crews get out.
+    pub fn western(self) -> bool {
+        matches!(self, VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bradley)
     }
-    fn troops(self) -> u32 {
+    /// Mine-clearing vehicles: no gun worth firing, a plow or rollers in front.
+    pub fn breacher(self) -> bool {
+        matches!(self, VKind::Leo2r | VKind::Wisent | VKind::Bmr2)
+    }
+    fn crew(self) -> u32 {
         match self {
-            VKind::T80 | VKind::T72 => 0,
-            VKind::Bmp1 | VKind::Bmp2 => 6,
+            VKind::Mtlb | VKind::Bmr2 => 2,
+            VKind::Leo2a6 => 4,
+            _ => 3,
+        }
+    }
+    pub fn troops(self) -> u32 {
+        match self {
+            VKind::T80 | VKind::T72 | VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0,
+            VKind::Bmp1 | VKind::Bmp2 | VKind::Bradley => 6,
             VKind::Mtlb => 8,
+        }
+    }
+    /// Chance a mine under a track destroys the vehicle outright, rather than only tearing off the track.
+    fn mine_kill(self, stacked: bool) -> f64 {
+        let base = match self {
+            VKind::T80 | VKind::T72 => 0.3,
+            VKind::Leo2a6 => 0.1,
+            VKind::Bradley => 0.25,
+            VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0.12,
+            _ => 0.5,
+        };
+        if stacked { (base + 0.3f64).min(0.8) } else { base }
+    }
+    /// Chance a guided missile destroys rather than disables.
+    fn hit_kill(self) -> f64 {
+        match self {
+            // Kontakt-1 on the glacis and turret front saves some; side and top hits mostly don't.
+            VKind::T80 | VKind::T72 => 0.72,
+            VKind::Leo2a6 => 0.3,
+            VKind::Bradley => 0.55,
+            VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0.5,
+            _ => 0.92,
         }
     }
     /// Everyone aboard: crew and dismounts.
@@ -77,7 +129,14 @@ impl VKind {
         self.crew() + self.troops()
     }
     fn speed(self) -> f32 {
-        if self.is_tank() { 5.2 } else { 5.8 }
+        match self {
+            // A plow digging in moves at a walking pace.
+            VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 2.4,
+            VKind::Leo2a6 => 5.4,
+            VKind::Bradley => 6.0,
+            _ if self.is_tank() => 5.2,
+            _ => 5.8,
+        }
     }
 }
 
@@ -149,6 +208,10 @@ pub struct Vehicle {
     /// After a hit or a mine: how fast it grinds to a halt, and how it slews round the dead track.
     pub coast_decel: f32,
     pub slew: f32,
+    /// Sent back in for the men: it stops at the wrecks, waits for them to climb on, and comes out again.
+    pub rescue: bool,
+    /// Smoke grenades fired (once).
+    pub smoked: bool,
 }
 
 #[derive(Component)]
@@ -164,6 +227,8 @@ pub enum SState {
     Prone,
     Flee,
     DugIn,
+    /// Hit, alive, unable to walk: crawling towards the nearest vehicle or back, until someone carries him out.
+    Wounded,
 }
 
 #[derive(Component)]
@@ -190,21 +255,35 @@ pub struct Debris {
 
 #[derive(Resource, Default)]
 pub struct Stats {
+    /// The attackers' men sent forward, those who came back, and their dead.
     pub sent: u32,
     pub returned: u32,
-    pub ru_dead: u32,
+    pub attacker_dead: u32,
     pub vehicles_committed: u32,
     pub destroyed: u32,
     pub abandoned: u32,
     pub withdrawn: u32,
-    pub ua_losses: u32,
+    /// The defenders' losses: men in the positions, and their vehicles.
+    pub defender_losses: u32,
+    pub defender_vehicles: u32,
+    /// Men picked up in the field by a vehicle and carried out.
+    pub picked_up: u32,
+    /// The attackers' dead by what killed them (for the development log).
+    pub deaths: Vec<(&'static str, u32)>,
+    /// Robotyne: losses in our own overwatch positions, not among the men sent forward.
+    pub overwatch_losses: u32,
+    /// The attackers' wounded, and how many of them were carried or crawled out.
+    pub wounded: u32,
+    pub wounded_out: u32,
     pub turret_tosses: u32,
     pub mine_hits: u32,
     pub atgm_kills: u32,
     pub artillery_kills: u32,
-    /// Russians alive at or past the first belt (a foothold).
+    /// Attackers alive at or past the defenders' forward line (a foothold).
     pub foothold: u32,
+    /// The furthest any attacker on foot got, and any vehicle, as z along the direction of attack.
     pub max_advance: f32,
+    pub vehicle_advance: f32,
     /// By column (index 0 unused: columns count from 1).
     pub per_wave: Vec<WaveTally>,
 }
@@ -217,12 +296,29 @@ pub struct WaveTally {
 }
 
 impl Stats {
+    pub fn died(&mut self, why: &'static str, n: u32) {
+        match self.deaths.iter_mut().find(|(w, _)| *w == why) {
+            Some((_, k)) => *k += n,
+            None => self.deaths.push((why, n)),
+        }
+    }
+
     pub fn wave(&mut self, w: u32) -> &mut WaveTally {
         if self.per_wave.len() <= w as usize {
             self.per_wave.resize(w as usize + 1, WaveTally::default());
         }
         &mut self.per_wave[w as usize]
     }
+}
+
+/// The player's order to the attacking column (Robotyne): push on down the lanes, hold where you are, or pull
+/// back to the start line, picking up the men on the way.
+#[derive(Resource, Default, Clone, Copy, PartialEq, Eq, Debug)]
+pub enum ColumnOrder {
+    #[default]
+    Push,
+    Hold,
+    PullBack,
 }
 
 #[derive(Resource, Default)]
@@ -263,6 +359,8 @@ pub struct Models {
     pub raam: Handle<Mesh>,
     pub missile: Handle<Mesh>,
     pub ua_tank: (Handle<Mesh>, Handle<Mesh>, Vec3),
+    /// A lane marker: a stake with an orange flag, which the Leopard 2R drops along the lane it clears.
+    pub marker: Handle<Mesh>,
 }
 
 impl Models {
@@ -282,6 +380,10 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
     // Slight per-type colour variation, and mud on the lower hull.
     let paint = |k: VKind| {
         let v = 1.0 + (k as u32 as f32 - 2.0) * 0.03;
+        if k.western() || k == VKind::Bmr2 {
+            let v = 1.0 + (k as u32 as f32 - 7.0) * 0.025;
+            return [WEST_GREEN[0] * v, WEST_GREEN[1] * v, WEST_GREEN[2] * v];
+        }
         [RU_GREEN[0] * v, RU_GREEN[1] * v, RU_GREEN[2] * v * 0.98]
     };
     let hull = |meshes: &mut Assets<Mesh>, mut m: meshes::MeshBuilder| {
@@ -295,8 +397,13 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
             VKind::Bmp1 => meshes::bmp(paint(k), false),
             VKind::Bmp2 => meshes::bmp(paint(k), true),
             VKind::Mtlb => meshes::mtlb(paint(k)),
+            VKind::Leo2a6 => meshes::leopard2a6(paint(k)),
+            VKind::Leo2r => meshes::leopard2r(paint(k)),
+            VKind::Wisent => meshes::wisent(paint(k)),
+            VKind::Bmr2 => meshes::bmr2(paint(k)),
+            VKind::Bradley => meshes::bradley(paint(k)),
         };
-        let plow_hull = k.is_tank().then(|| hull(&mut meshes, meshes::tank(paint(k), true, false).hull));
+        let plow_hull = k.carousel().then(|| hull(&mut meshes, meshes::tank(paint(k), true, false).hull));
         vehicles.insert(k, VehicleMeshes { hull: hull(&mut meshes, m.hull), plow_hull, turret: meshes.add(m.turret.build()), turret_at: m.turret_at });
     }
     let ua = meshes::tank(UA_GREEN, false, true);
@@ -305,13 +412,20 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
         let f = meshes::figure(coat, trousers, helmet, Some(tape));
         (FigureMeshes { body: meshes.add(f.body.build()), leg: meshes.add(f.leg.build()), fallen: meshes.add(meshes::fallen(coat, trousers).build()) }, f.hip)
     };
-    let (ru, hip) = figure([0.36, 0.37, 0.31], [0.33, 0.34, 0.29], [0.3, 0.32, 0.26], [0.8, 0.3, 0.25]);
-    let (ua, _) = figure([0.34, 0.36, 0.27], [0.30, 0.32, 0.24], [0.28, 0.31, 0.22], [0.85, 0.8, 0.3]);
+    let ((ru, hip), (ua, _)) = if diorama().summer() {
+        // Summer: no coats. Russian flora pattern, greyish; Ukrainian multicam-like, browner; tape on the arms.
+        (figure([0.40, 0.42, 0.33], [0.36, 0.38, 0.30], [0.33, 0.35, 0.28], [0.8, 0.3, 0.25]), figure([0.45, 0.43, 0.32], [0.40, 0.38, 0.29], [0.36, 0.36, 0.27], [0.85, 0.8, 0.3]))
+    } else {
+        (figure([0.36, 0.37, 0.31], [0.33, 0.34, 0.29], [0.3, 0.32, 0.26], [0.8, 0.3, 0.25]), figure([0.34, 0.36, 0.27], [0.30, 0.32, 0.24], [0.28, 0.31, 0.22], [0.85, 0.8, 0.3]))
+    };
     let mut raam = meshes::MeshBuilder::new();
     raam.cylinder(Vec3::ZERO, Vec3::Y * 0.12, 0.08, 6, [0.22, 0.24, 0.17]);
     let mut missile = meshes::MeshBuilder::new();
     missile.cylinder(Vec3::new(0.0, 0.0, 0.6), Vec3::new(0.0, 0.0, -1.2), 0.07, 6, [0.3, 0.32, 0.25]);
-    commands.insert_resource(Models { vehicles, ru, ua, hip, raam: meshes.add(raam.build()), missile: meshes.add(missile.build()), ua_tank });
+    let mut marker = meshes::MeshBuilder::new();
+    marker.cylinder(Vec3::ZERO, Vec3::Y * 1.3, 0.025, 4, [0.3, 0.3, 0.28]);
+    marker.boxc(Vec3::new(0.12, 1.2, 0.0), Vec3::new(0.24, 0.16, 0.01), [0.95, 0.45, 0.1]);
+    commands.insert_resource(Models { vehicles, ru, ua, hip, raam: meshes.add(raam.build()), missile: meshes.add(missile.build()), ua_tank, marker: meshes.add(marker.build()) });
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -322,6 +436,16 @@ pub struct Mine {
     pub pos: Vec2,
     pub live: bool,
     pub entity: Option<Entity>,
+    /// Two anti-tank mines one on the other: no plow or roller survives it.
+    pub stacked: bool,
+    /// Anti-personnel: goes off under a foot, not under a track (a track sets it off harmlessly).
+    pub ap: bool,
+}
+
+impl Mine {
+    pub fn at(pos: Vec2) -> Self {
+        Self { pos, live: true, entity: None, stacked: false, ap: false }
+    }
 }
 
 #[derive(Resource, Default)]
@@ -367,7 +491,7 @@ fn lay_minefields(mut commands: Commands) {
             let s = rng.random_range(f.s0..f.s1);
             let lat = sign(&mut rng) * rng.random_range(f.inner..f.outer);
             let p = road.point(s) + road.normal(s) * lat;
-            mf.add(Mine { pos: p, live: true, entity: None });
+            mf.add(Mine::at(p));
         }
     }
     for (line, width) in &lay.field_mines {
@@ -379,10 +503,21 @@ fn lay_minefields(mut commands: Commands) {
             if lay.roads.iter().any(|r| r.line.project(p).0 < 7.0) {
                 continue;
             }
-            mf.add(Mine { pos: p, live: true, entity: None });
+            mf.add(Mine::at(p));
         }
     }
-    info!("minefields: {} TM-62", mf.mines.len());
+    for b in &lay.barriers {
+        let area = 2.0 * geo::HALF_X * (b.z1 - b.z0);
+        for _ in 0..(area * b.at) as usize {
+            let p = Vec2::new(rng.random_range(-geo::HALF_X..geo::HALF_X), rng.random_range(b.z0..b.z1));
+            mf.add(Mine { stacked: rng.random_bool(b.stacked as f64), ..Mine::at(p) });
+        }
+        for _ in 0..(area * b.ap) as usize {
+            let p = Vec2::new(rng.random_range(-geo::HALF_X..geo::HALF_X), rng.random_range(b.z0..b.z1));
+            mf.add(Mine { ap: true, ..Mine::at(p) });
+        }
+    }
+    info!("minefields: {} mines", mf.mines.len());
     commands.insert_resource(mf);
 }
 
@@ -399,6 +534,7 @@ fn ground_rotation(p: Vec2, yaw: f32) -> Quat {
 }
 
 pub struct VehicleSpec {
+    pub side: Side,
     pub kind: VKind,
     pub route: usize,
     pub s: f32,
@@ -407,12 +543,18 @@ pub struct VehicleSpec {
     pub idx: u32,
     pub plow: bool,
     pub smoke: bool,
+    pub rescue: bool,
 }
 
 pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette, v: VehicleSpec) -> Entity {
     let route = &geo::layout().routes[v.route].line;
     let p = route.point(v.s) + route.normal(v.s) * v.lat;
     let yaw = vehicle_yaw(route.tangent(v.s));
+    spawn_vehicle_at(commands, models, palette, v, p, yaw)
+}
+
+/// A vehicle placed by hand rather than on a route (a dug-in tank).
+pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Palette, v: VehicleSpec, p: Vec2, yaw: f32) -> Entity {
     let m = models.vehicle(v.kind);
     let plow_hull = m.plow_hull.as_ref().filter(|_| v.plow);
     let plow = plow_hull.is_some();
@@ -423,7 +565,7 @@ pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette
         Transform::from_translation(geo::ground(p)).with_rotation(ground_rotation(p, yaw)),
         Vehicle {
             kind: v.kind,
-            side: Side::Ru,
+            side: v.side,
             state: VState::Advancing,
             route: v.route,
             s: v.s,
@@ -452,18 +594,21 @@ pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette
             roll_v: 0.0,
             coast_decel: 3.0,
             slew: 0.0,
+            rescue: v.rescue,
+            smoked: false,
         },
     ));
     e.add_child(turret);
     // Desant: the section rides on the roof, not inside (dossier footage, and every Vuhledar video). Mines and
-    // RPGs taught both armies that the hull is the worst place to be.
-    let riders = v.kind.troops().min(6);
+    // RPGs taught both armies that the hull is the worst place to be. A Bradley's squad rides inside, behind
+    // the ramp; the rescue Bradleys go in empty.
+    let riders = if v.side == Side::Ru { v.kind.troops().min(6) } else { 0 };
     let roof = m.turret_at.y;
     for k in 0..riders {
         let side = if k % 2 == 0 { -0.55 } else { 0.55 };
         let z = 0.4 + (k / 2) as f32 * 0.85;
         e.with_child((
-            Mesh3d(models.figure(Side::Ru).body.clone()),
+            Mesh3d(models.figure(v.side).body.clone()),
             MeshMaterial3d(palette.vertex.clone()),
             Transform::from_xyz(side, roof - 0.85, z).with_rotation(Quat::from_rotation_y(side.signum() * 1.2 + k as f32 * 0.3)),
             NotShadowCaster,
@@ -482,7 +627,10 @@ pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette
 fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
     // The fields already hold the earlier assaults' wrecks (24 Jan – 4 Feb): BMPs and tanks, burned out, with
     // their turrets beside them. Nobody has come for them.
-    let kinds = [VKind::Bmp2, VKind::T80, VKind::Bmp1, VKind::Bmp2, VKind::T72, VKind::Mtlb, VKind::Bmp1, VKind::T80];
+    let kinds = match diorama() {
+        Diorama::Vuhledar => [VKind::Bmp2, VKind::T80, VKind::Bmp1, VKind::Bmp2, VKind::T72, VKind::Mtlb, VKind::Bmp1, VKind::T80],
+        Diorama::Robotyne => [VKind::T72, VKind::Bmp2, VKind::Mtlb, VKind::T72, VKind::Bmp2, VKind::Mtlb, VKind::T72, VKind::Bmp2],
+    };
     for (i, (p, yaw)) in geo::layout().old_wrecks.iter().enumerate() {
         let k = kinds[i % kinds.len()];
         let toss = k.is_tank() && i % 2 == 1;
@@ -576,18 +724,21 @@ fn drive_vehicles(
     palette: Res<Palette>,
     cam: Single<&GlobalTransform, With<MainCamera>>,
     mut levels: ResMut<audio::AmbienceLevels>,
+    (order, mut radio, mut smoke): (Res<ColumnOrder>, ResMut<Radio>, ResMut<fx::Smoke>),
     mut q: Query<(Entity, &mut Vehicle, &mut Transform), Without<Turret>>,
     mut turrets: Query<&mut Transform, With<Turret>>,
 ) {
     let dt = crate::sim_dt(&time);
+    let now = time.elapsed_secs_f64();
     let lay = geo::layout();
+    let attacker = diorama().attacker();
     let snaps: Vec<Snap> = q.iter().map(|(e, v, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing }).collect();
     let cam_pos = cam.translation();
     let mut nearest_engine = f32::MAX;
     let rng = &mut rng.0;
 
     for (e, mut v, mut tf) in &mut q {
-        if v.side != Side::Ru || !v.state.mobile() {
+        if v.side != attacker || !v.state.mobile() {
             continue;
         }
         let route: &Polyline = &lay.routes[v.route].line;
@@ -611,6 +762,27 @@ fn drive_vehicles(
         }
 
         let mut want_speed = v.kind.speed();
+        // A breacher drives with its plow up until the minefield, then digs in at a walking pace.
+        if v.kind.breacher() && !lay.barriers.iter().any(|b| (b.z0 - 60.0..b.z1).contains(&tf.translation.z)) {
+            want_speed = 4.6;
+        }
+        // The player's order to the column (Robotyne): hold everyone where they are, or bring them all back.
+        if v.state != VState::Withdrawing && !v.rescue {
+            match *order {
+                ColumnOrder::PullBack => start_withdrawal(&mut v, rng),
+                ColumnOrder::Hold if matches!(v.state, VState::Advancing | VState::Halted | VState::Deploying) => {
+                    want_speed = 0.0;
+                }
+                _ => {}
+            }
+        }
+        // A rescue vehicle stops short of the first wreck on its track, puts down smoke and waits for the men.
+        if v.rescue && v.state == VState::Advancing && blocker.is_some_and(|b| !b.state.mobile() && (b.s - v.s).abs() < 70.0) {
+            v.state = VState::Overwatch;
+            v.timer = 0.0;
+            pop_smoke(&mut commands, &mut fx, &mut fxr.0, &mut smoke, &mut v, &tf, now);
+            radio.say(now, "Bradley at the wrecks. Ramp down. Get on, get on!");
+        }
         match v.state {
             VState::Advancing | VState::Halted => {
                 if let Some(b) = blocker {
@@ -638,6 +810,12 @@ fn drive_vehicles(
                     }
                 } else if v.state == VState::Halted {
                     v.state = VState::Advancing;
+                }
+                // Stuck in the minefield under fire, a Bradley drops its ramp and the squad goes on foot.
+                if v.side == Side::Ua && v.state == VState::Halted && v.troops > 0 && v.timer > 3.5 && v.panic > 0.3 {
+                    v.state = VState::Dismounting;
+                    v.timer = 0.0;
+                    want_speed = 0.0;
                 }
                 if v.state == VState::Advancing && v.s >= deploy_s {
                     v.state = VState::Deploying;
@@ -673,14 +851,28 @@ fn drive_vehicles(
                     let pos = tf.translation.xz();
                     for k in 0..v.troops {
                         let at = pos + back + Vec2::new(rng.random_range(-2.0..2.0), rng.random_range(-2.0..2.0));
-                        let goal = obj + Vec2::new(rng.random_range(-120.0..120.0), rng.random_range(-20.0..20.0)) + Vec2::X * (k as f32 - 3.0) * 6.0;
-                        spawn_soldier(&mut commands, &models, &palette, Side::Ru, at, goal, route.point(0.0), rng);
+                        let goal = if v.side == Side::Ua {
+                            // The 47th's squads go forward a bound into cover, not across a kilometre of open ground:
+                            // a hundred-odd metres, then down, then back to the vehicles.
+                            pos + route.tangent(v.s) * rng.random_range(80.0..160.0) + route.normal(v.s) * (k as f32 - 3.0) * 7.0
+                        } else {
+                            obj + Vec2::new(rng.random_range(-120.0..120.0), rng.random_range(-20.0..20.0)) + Vec2::X * (k as f32 - 3.0) * 6.0
+                        };
+                        spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, route.point(0.0), rng);
                     }
                     v.troops = 0;
                 }
                 if v.timer > 8.0 {
                     v.state = VState::Overwatch;
                     v.timer = 0.0;
+                }
+            }
+            VState::Overwatch if v.rescue => {
+                want_speed = 0.0;
+                // Wait for the men to climb on: until full, or until staying any longer is death too.
+                if v.troops >= 7 || v.timer > 110.0 || (v.panic > 0.95 && v.timer > 45.0) {
+                    start_withdrawal(&mut v, rng);
+                    radio.say(now, format!("Bradley coming out with {} aboard.", v.troops));
                 }
             }
             VState::Overwatch => {
@@ -740,6 +932,17 @@ fn drive_vehicles(
         if v.travelled > 2.0 {
             v.travelled = 0.0;
             paint.push(Paint::Track { at: p, dir: heading, gauge: 2.8 });
+            // The plow turns the ground over: the lane shows from the air as a raw brown strip.
+            if v.plow {
+                paint.push(Paint::Plow { at: p, dir: heading });
+                // The 2R marks the lane's edges as it goes, so the vehicles behind can keep to it.
+                if v.kind == VKind::Leo2r && ((v.s / 2.0) as u32).is_multiple_of(20) && lay.barriers.iter().any(|b| (b.z0..b.z1).contains(&p.y)) {
+                    for side in [-1.0f32, 1.0] {
+                        let at = p + route.normal(v.s) * side * 2.6;
+                        commands.spawn((Mesh3d(models.marker.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)), NotShadowCaster));
+                    }
+                }
+            }
             if v.speed > 2.0 && rng.random_bool(0.5) {
                 fx::spray(&mut commands, &mut fx, &mut fxr.0, geo::ground(p) + Vec3::new(0.0, 0.0, 0.0) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
             }
@@ -747,6 +950,7 @@ fn drive_vehicles(
         if v.speed > 0.5 {
             nearest_engine = nearest_engine.min(cam_pos.distance(tf.translation));
         }
+        stats.vehicle_advance = stats.vehicle_advance.max(p.y * lay.advance);
 
         // Turret: track the aim point.
         if let Some(aim) = v.aim {
@@ -776,7 +980,7 @@ fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, mut q: Query<(&mut Vehi
     let dt = crate::sim_dt(&time);
     let lay = geo::layout();
     for (mut v, mut tf) in &mut q {
-        if v.state.mobile() || v.side != Side::Ru {
+        if v.state.mobile() {
             continue;
         }
         let moving = v.speed > 0.02;
@@ -824,6 +1028,25 @@ pub fn wrap(a: f32) -> f32 {
     a
 }
 
+/// Smoke grenades: a white wall in front of the vehicle within seconds, which hides it from the ATGM teams'
+/// sights, and from the drone overhead.
+pub fn pop_smoke(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, smoke: &mut fx::Smoke, v: &mut Vehicle, tf: &Transform, now: f64) {
+    if v.smoked {
+        return;
+    }
+    v.smoked = true;
+    let fwd = (tf.rotation * Vec3::NEG_Z).xz().normalize_or_zero();
+    for k in 0..8 {
+        let a = (k as f32 - 3.5) * 0.28;
+        let dir = Vec2::from_angle(a).rotate(fwd);
+        let at = tf.translation + Vec3::new(dir.x, 0.0, dir.y) * 2.0 + Vec3::Y * 2.2;
+        for _ in 0..3 {
+            fx::spawn(commands, fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: at, vel: Vec3::new(dir.x, 0.35, dir.y) * rng.random_range(14.0..22.0), life: rng.random_range(50.0..80.0), size0: 2.0, size1: rng.random_range(18.0..30.0), alpha: 0.75, drag: 0.9, ..default() });
+        }
+    }
+    smoke.add(tf.translation.xz() + fwd * 22.0, 28.0, now + 60.0);
+}
+
 fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
     v.state = VState::Withdrawing;
     v.reversing = true;
@@ -860,6 +1083,9 @@ fn check_mines(
         let right = Vec2::new(-fwd.y, fwd.x);
         for i in mf.near(p, 6.0) {
             let m = mf.mines[i];
+            if m.ap {
+                continue;
+            }
             let d = m.pos - p;
             let (f, x) = (d.dot(fwd), d.dot(right));
             // The plow's teeth turn mines out of the ground ahead of the tracks; now and then one goes off.
@@ -868,10 +1094,22 @@ fn check_mines(
                 if let Some(ent) = m.entity {
                     commands.entity(ent).despawn();
                 }
-                if rng.0.random_bool(0.12) {
+                // A stacked pair wrecks the plow or rollers outright (a 47th T-64 commander: rollers survive "up to
+                // four explosions", but stacked mines destroyed one after a single blast).
+                if rng.0.random_bool(if m.stacked { 0.45 } else { 0.12 }) {
                     detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
                     v.plow = false;
-                    radio.say(now, "Mine under the plow. The lead tank's plow is gone, it keeps going.");
+                    if m.stacked && rng.0.random_bool(0.5) {
+                        v.immobilise(rng.0.random_range(3.0..5.0), rng.0.random_range(-0.3..0.3));
+                        v.pitch_v += rng.0.random_range(2.0..3.0);
+                        stats.mine_hits += 1;
+                        radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
+                    } else {
+                        radio.say(now, match diorama() {
+                            Diorama::Vuhledar => "Mine under the plow. The lead tank's plow is gone, it keeps going.",
+                            Diorama::Robotyne => "Mine under the plow. Plow's gone. The rest of the lane is not cleared.",
+                        });
+                    }
                 }
                 continue;
             }
@@ -883,7 +1121,7 @@ fn check_mines(
                 detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
                 stats.mine_hits += 1;
                 // TM-62 under a track: the track and road wheels are gone. Often more.
-                let kill = rng.0.random_bool(if v.kind.is_tank() { 0.3 } else { 0.5 });
+                let kill = rng.0.random_bool(v.kind.mine_kill(m.stacked));
                 // The track is off on that side: it lurches, slews round the dead side and grinds to a stop.
                 v.immobilise(rng.0.random_range(4.0..6.5), x.signum() * -rng.0.random_range(0.35..0.8));
                 v.pitch_v += rng.0.random_range(1.8..3.0);
@@ -892,12 +1130,20 @@ fn check_mines(
                     v.state = VState::Destroyed;
                     commands.trigger(Wrecked { vehicle: _e, cause: Cause::Mine });
                 }
-                let lines = [
-                    "Mine! He went off the road. That one's done.",
-                    "Another one on the shoulder. Tracks off.",
-                    "He drove right past the last wreck, same line. Mine.",
-                    "Boom. Mine. He's not moving.",
-                ];
+                let lines = match diorama() {
+                    Diorama::Vuhledar => [
+                        "Mine! He went off the road. That one's done.",
+                        "Another one on the shoulder. Tracks off.",
+                        "He drove right past the last wreck, same line. Mine.",
+                        "Boom. Mine. He's not moving.",
+                    ],
+                    Diorama::Robotyne => [
+                        "Mine! Left track gone. He's stuck in the lane.",
+                        "He went round the Leopard. Off the lane. Mine.",
+                        "Another one. They're everywhere off the plowed strip.",
+                        "Mine. Crew's alive, they're getting out.",
+                    ],
+                };
                 if rng.0.random_bool(0.6) {
                     radio.say(now, lines[rng.0.random_range(0..lines.len())]);
                 }
@@ -953,16 +1199,31 @@ pub fn on_wrecked(
     v.pitch_v -= rng.random_range(0.8..1.6);
     v.state = VState::Destroyed;
     mat.0 = palette.charred.clone();
-    stats.destroyed += 1;
-    stats.wave(v.wave).destroyed += 1;
+    let attacker = v.side == diorama().attacker();
+    if attacker {
+        stats.destroyed += 1;
+        stats.wave(v.wave).destroyed += 1;
+    } else {
+        stats.defender_vehicles += 1;
+    }
     match ev.cause {
         Cause::Atgm => stats.atgm_kills += 1,
         Cause::Artillery | Cause::Himars | Cause::TankGun => stats.artillery_kills += 1,
         _ => {}
     }
-    // Most of those inside do not get out.
-    let dead = v.crew.min(rng.random_range(1..=v.crew.max(1))) + (v.troops as f32 * rng.random_range(0.4..0.9)) as u32;
-    stats.ru_dead += dead;
+    // Most of those inside do not get out. In a Leopard or a Bradley most do: the hatches, the ramp, the
+    // ammunition behind blow-out panels (dossier c09 §6: "most crews escaped through open hatches and ramps").
+    let dead = if v.kind.western() {
+        rng.random_range(0..=1).min(v.crew) + (v.troops as f32 * rng.random_range(0.0..0.3)) as u32
+    } else {
+        v.crew.min(rng.random_range(1..=v.crew.max(1))) + (v.troops as f32 * rng.random_range(0.4..0.9)) as u32
+    };
+    if attacker {
+        stats.attacker_dead += dead;
+        stats.died("in vehicles", dead);
+    } else {
+        stats.defender_losses += dead;
+    }
     v.crew -= v.crew.min(dead);
     v.troops = v.troops.saturating_sub(dead);
     let p = tf.translation;
@@ -970,15 +1231,14 @@ pub fn on_wrecked(
     // Men riding on top are thrown into the snow.
     for k in 0..dead.min(5) {
         let at = p.xz() + Vec2::from_angle(rng.random_range(0.0..std::f32::consts::TAU)) * rng.random_range(3.0..9.0);
-        commands.spawn((Mesh3d(models.figure(Side::Ru).fallen.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(Quat::from_rotation_y(k as f32 * 1.9)), NotShadowCaster));
+        commands.spawn((Mesh3d(models.figure(v.side).fallen.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(Quat::from_rotation_y(k as f32 * 1.9)), NotShadowCaster));
     }
     fx::explosion(&mut commands, &mut fx, rng, p + Vec3::Y, 1.4, false);
     sound.at(p, Sfx::BlastNear, 1.3);
     commands.entity(ev.vehicle).insert(Emitter::new(EmitterKind::WreckFire, 5.0, rng.random_range(150.0..320.0), Vec3::Y * 1.5));
     if let Ok((mut tm, tgt)) = turrets.get_mut(v.turret) {
         tm.0 = palette.charred.clone();
-        // T-72/T-80 carousel autoloaders: when the charges go, the turret goes up.
-        if v.kind.is_tank() && rng.random_bool(0.4) {
+        if v.kind.carousel() && rng.random_bool(0.4) {
             stats.turret_tosses += 1;
             let world = tgt.compute_transform();
             commands.entity(v.turret).remove::<ChildOf>().insert((
@@ -1049,9 +1309,23 @@ fn resolve_blasts(
                 }
                 continue;
             }
-            let prone = if s.state == SState::Prone || s.state == SState::DugIn { 0.4 } else { 1.0 };
+            // Flat in the snow a man is a little safer; flat in June grass and old craters, much safer.
+            let flat = if s.side == Side::Ua { 0.2 } else { 0.4 };
+            let prone = if matches!(s.state, SState::Prone | SState::DugIn | SState::Wounded) { flat } else { 1.0 };
             let p_kill = (1.0 - d / (b.radius * 3.0)).powf(1.5) * prone;
             if rng.random_bool(p_kill.clamp(0.0, 1.0) as f64) {
+                // In Robotyne most men hit are wounded, not killed: they lie in the grass until someone brings
+                // them out (dossier c09 §6: the 47th's losses that day were counted in single figures dead).
+                if s.side == Side::Ua && rng.random_bool(if s.state == SState::Wounded { 0.5 } else { 0.75 }) {
+                    s.state = SState::Wounded;
+                    stats.wounded += 1;
+                    continue;
+                }
+                stats.died(match b.cause {
+                    Cause::Mine => "mines",
+                    Cause::Atgm | Cause::TankGun => "direct fire",
+                    _ => "shells",
+                }, (s.side == diorama().attacker()) as u32);
                 kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, rng);
             } else {
                 s.fear += 1.0;
@@ -1065,10 +1339,10 @@ pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette,
     let mesh = models.figure(s.side).fallen.clone();
     let p = tf.translation.xz();
     commands.spawn((Mesh3d(mesh), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(p)).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..std::f32::consts::TAU))), NotShadowCaster));
-    if s.side == Side::Ru {
-        stats.ru_dead += 1;
+    if s.side == diorama().attacker() {
+        stats.attacker_dead += 1;
     } else {
-        stats.ua_losses += 1;
+        stats.defender_losses += 1;
     }
 }
 
@@ -1078,9 +1352,7 @@ fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit
         if !v.state.alive() {
             continue;
         }
-        // Kontakt-1 on the glacis and turret front saves some; side and top hits mostly don't.
-        let p_kill = if v.kind.is_tank() { 0.72 } else { 0.92 };
-        if rng.0.random_bool(p_kill) {
+        if rng.0.random_bool(v.kind.hit_kill()) {
             commands.trigger(Wrecked { vehicle: h.target, cause: h.cause });
         } else {
             v.immobilise(3.5, rng.0.random_range(-0.3..0.3));
@@ -1108,21 +1380,29 @@ fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng
         }
         let route = &lay.routes[v.route];
         let p = tf.translation.xz();
-        let home = route.line.point(0.0);
+        // Attackers run back down their track; defenders back behind their own line.
+        let attacker = v.side == diorama().attacker();
+        let home = if attacker { route.line.point(0.0) } else { p + Vec2::new(0.0, 600.0 * lay.advance) };
+        // Some dismounts go forward anyway (fewer of the 47th's: they had been told the infantry comes back).
+        let p_forward = if v.side == Side::Ru { 0.4 } else { 0.15 };
         for k in 0..(v.crew + v.troops) {
             let at = p + Vec2::from_angle(k as f32 * 1.3) * 3.5;
             // Crew run back. Some dismounts go forward anyway; most go to ground or back.
-            let forward = k >= v.crew && rng.0.random_bool(0.4);
+            let forward = attacker && k >= v.crew && rng.0.random_bool(p_forward);
             let goal = if forward { route.objective + Vec2::new(rng.0.random_range(-100.0..100.0), 0.0) } else { home };
-            let e = spawn_soldier(&mut commands, &models, &palette, Side::Ru, at, goal, home, &mut rng.0);
+            let e = spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, home, &mut rng.0);
             if !forward {
                 commands.entity(e).insert(Fleeing);
             }
         }
         if v.state == VState::Immobilized {
             v.state = VState::Abandoned;
-            stats.abandoned += 1;
-            stats.wave(v.wave).abandoned += 1;
+            if attacker {
+                stats.abandoned += 1;
+                stats.wave(v.wave).abandoned += 1;
+            } else {
+                stats.defender_vehicles += 1;
+            }
         }
         v.crew = 0;
         v.troops = 0;
@@ -1141,18 +1421,29 @@ fn move_soldiers(
     mut rng: ResMut<UnitRng>,
     mut stats: ResMut<Stats>,
     mut paint: ResMut<PaintQueue>,
+    mut mines: FootMines,
+    order: Res<ColumnOrder>,
     wrecks: Query<(&Vehicle, &Transform), Without<Soldier>>,
     mut q: Query<(Entity, &mut Soldier, &mut Transform, Option<&Fleeing>)>,
 ) {
     let dt = crate::sim_dt(&time);
     let rng = &mut rng.0;
+    let lay = geo::layout();
+    let attacker = diorama().attacker();
     let wreck_pos: Vec<Vec2> = wrecks.iter().filter(|(v, _)| !v.state.mobile()).map(|(_, t)| t.translation.xz()).collect();
+    // Bradleys waiting for men: whoever is falling back runs for the nearest one.
+    let pickups: Vec<Vec2> = wrecks
+        .iter()
+        .filter(|(v, _)| v.kind == VKind::Bradley && v.side == attacker && v.state.mobile() && v.troops < 7 && (v.rescue || v.state == VState::Overwatch))
+        .map(|(_, t)| t.translation.xz())
+        .collect();
     let mut foothold = 0;
     for (e, mut s, mut tf, fleeing) in &mut q {
-        if s.side != Side::Ru {
+        if s.side != attacker {
             continue;
         }
-        if fleeing.is_some() && s.state == SState::Advance {
+        // Ordered back, everyone on foot falls back too, to the vehicles or the start line.
+        if (fleeing.is_some() && s.state == SState::Advance) || (*order == ColumnOrder::PullBack && !matches!(s.state, SState::Flee | SState::Wounded)) {
             s.state = SState::Flee;
         }
         s.fear = (s.fear - dt * 0.15).max(0.0);
@@ -1177,7 +1468,9 @@ fn move_soldiers(
                     s.timer = 0.0;
                     // "They'd come in groups of five. We'd kill four, one would stay and dig in."
                     let near_wreck = wreck_pos.iter().any(|w| w.distance(p) < 35.0);
-                    s.state = if s.fear > 2.2 && near_wreck && rng.random_bool(0.5) {
+                    s.state = if s.side == Side::Ua && (fleeing.is_some() || *order == ColumnOrder::PullBack) {
+                        SState::Flee
+                    } else if s.fear > 2.2 && near_wreck && rng.random_bool(0.5) {
                         SState::DugIn
                     } else if s.fear > 2.6 && rng.random_bool(0.5) {
                         SState::Flee
@@ -1188,10 +1481,27 @@ fn move_soldiers(
                 }
             }
             SState::Flee => {
-                target = s.home;
+                target = pickups.iter().copied().filter(|b| b.distance(p) < 160.0).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))).unwrap_or(s.home);
                 speed = s.speed * 1.2;
+                // Falling back under shellfire, the 47th's men drop flat when it lands close, then go on.
+                if s.side == Side::Ua && s.fear > 1.2 {
+                    s.state = SState::Prone;
+                    s.timer = 0.0;
+                    s.fear *= 0.5;
+                    speed = 0.0;
+                }
                 if p.distance(s.home) < 25.0 || !geo::in_bounds(p) {
                     stats.returned += 1;
+                    commands.entity(e).despawn();
+                    continue;
+                }
+            }
+            SState::Wounded => {
+                target = pickups.iter().copied().filter(|b| b.distance(p) < 220.0).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))).unwrap_or(s.home);
+                speed = 0.6;
+                if p.distance(s.home) < 25.0 {
+                    stats.returned += 1;
+                    stats.wounded_out += 1;
                     commands.entity(e).despawn();
                     continue;
                 }
@@ -1205,21 +1515,82 @@ fn move_soldiers(
             let np = p + step;
             tf.translation = geo::ground(np);
             tf.rotation = Quat::from_rotation_y(vehicle_yaw(step));
+            if s.state == SState::Wounded {
+                // Crawling: flat on the ground, head first.
+                tf.translation.y += 0.25;
+                tf.rotation *= Quat::from_rotation_x(-1.45);
+            }
             s.phase += speed * dt * 3.2;
             if rng.random_bool((dt * 0.6) as f64) {
                 paint.push(Paint::Footprints { at: np });
             }
+            mines.step(&mut commands, np);
         } else {
             // Prone or dug in: lie flat.
             tf.translation = geo::ground(p) + Vec3::Y * if s.state == SState::DugIn { -0.6 } else { -0.75 };
         }
-        // A foothold: Russians alive at the first tree line or past it.
-        if matches!(s.state, SState::DugIn | SState::Prone | SState::Advance) && p.y < -560.0 {
+        // A foothold: attackers alive at the defenders' forward line or past it.
+        if matches!(s.state, SState::DugIn | SState::Prone | SState::Advance) && (p.y - lay.foothold_z) * lay.advance > 0.0 {
             foothold += 1;
         }
-        stats.max_advance = stats.max_advance.max(-p.y);
+        stats.max_advance = stats.max_advance.max(p.y * lay.advance);
     }
     stats.foothold = foothold;
+}
+
+/// Anti-personnel mines among the anti-tank ones, and what a soldier's step needs to set one off.
+#[derive(bevy::ecs::system::SystemParam)]
+struct FootMines<'w, 's> {
+    mf: ResMut<'w, Minefield>,
+    fx: ResMut<'w, FxAssets>,
+    fxr: ResMut<'w, FxRng>,
+    sound: Sound<'w, 's>,
+    blasts: MessageWriter<'w, Blast>,
+}
+
+impl FootMines<'_, '_> {
+    /// A foot comes down at `p`: if it finds an anti-personnel mine, the mine goes off.
+    fn step(&mut self, commands: &mut Commands, p: Vec2) {
+        let mf = &mut self.mf;
+        let Some(i) = mf.near(p, 0.6).into_iter().find(|&i| mf.mines[i].ap && mf.mines[i].pos.distance(p) < 0.45) else { return };
+        mf.mines[i].live = false;
+        let at = geo::ground(p);
+        fx::explosion(commands, &mut self.fx, &mut self.fxr.0, at, 0.35, true);
+        self.sound.at(at, Sfx::MineBlast, 0.5);
+        self.blasts.write(Blast { at, radius: 2.5, cause: Cause::Mine });
+    }
+}
+
+/// Men in the field climb onto a Bradley that has stopped near them, or is backing out slowly: the squad it
+/// dropped, a crew whose vehicle burned, anyone. "A Bradley crew pops smoke and covers the dismounts as they
+/// climb onto it" (dossier c09 §6).
+fn board_vehicles(mut commands: Commands, mut stats: ResMut<Stats>, mut vehicles: Query<(&mut Vehicle, &Transform)>, soldiers: Query<(Entity, &Soldier, &Transform)>) {
+    let mut taken: Vec<Entity> = Vec::new();
+    for (mut v, tf) in &mut vehicles {
+        if v.kind != VKind::Bradley || !v.state.mobile() || v.speed > 2.0 || v.state == VState::Dismounting || v.troops >= 7 {
+            continue;
+        }
+        // A squad that has just got out does not get straight back in, unless the vehicle is leaving.
+        if !(v.rescue || v.state == VState::Withdrawing || v.state == VState::Overwatch) {
+            continue;
+        }
+        let p = tf.translation.xz();
+        for (e, s, st) in &soldiers {
+            if s.side != v.side || taken.contains(&e) || v.troops >= 7 {
+                continue;
+            }
+            let fleeing = matches!(s.state, SState::Flee | SState::Prone | SState::Wounded);
+            if fleeing && st.translation.xz().distance(p) < 14.0 {
+                taken.push(e);
+                commands.entity(e).despawn();
+                v.troops += 1;
+                stats.picked_up += 1;
+                if s.state == SState::Wounded {
+                    stats.wounded_out += 1;
+                }
+            }
+        }
+    }
 }
 
 fn animate_legs(soldiers: Query<(&Soldier, &Children)>, mut legs: Query<(&Leg, &mut Transform)>) {

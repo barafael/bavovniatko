@@ -1,6 +1,7 @@
 #!/bin/sh
 # Film the showcase: a directed tour of the day at 1920x1080 with its sound, rebuilt offline.
-#   scripts/showcase.sh <out.mp4>
+#   scripts/showcase.sh <out.mp4>                          Vuhledar
+#   VUHLEDAR_DIORAMA=robotyne scripts/showcase.sh <out.mp4>  Mala Tokmachka
 # Headless and silent while it runs. Needs ffmpeg, ImageMagick and python3 with numpy.
 set -e
 cd "$(dirname "$0")/.."
@@ -10,8 +11,10 @@ cargo build -q --release
 VUHLEDAR_HEADLESS=1 VUHLEDAR_SKIP_BRIEFING=1 VUHLEDAR_NO_BATTERY=1 VUHLEDAR_RES=1920x1080 VUHLEDAR_SHOWCASE=$work \
   timeout 3000 ./target/release/vuhledar 2>&1 | grep -E 'panicked|ERROR' -A3 | grep -v rodio | head -5 || true
 lead=3
+place='VUHLEDAR'; date='6 FEBRUARY 2023'
+if [ "${VUHLEDAR_DIORAMA:-}" = robotyne ]; then place='SOUTH OF MALA TOKMACHKA'; date='8 JUNE 2023'; fi
 magick -size 1920x1080 xc:black -font DejaVu-Sans -fill '#e8e8ea' -gravity center \
-  -pointsize 64 -annotate +0-60 'VUHLEDAR' -pointsize 34 -annotate +0+20 '6 FEBRUARY 2023' \
+  -pointsize 64 -annotate +0-60 "$place" -pointsize 34 -annotate +0+20 "$date" \
   -fill '#9a9ca0' -pointsize 22 -annotate +0+90 'bavovniatko: a diorama of the Russo-Ukrainian war' "$work/title.png"
 python3 scripts/showcase_mix.py "$work" "$work/sound.wav" $lead
 ffmpeg -loglevel error -y \
