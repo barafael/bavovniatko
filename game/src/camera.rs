@@ -1,12 +1,14 @@
-//! Two ways of seeing the field.
+//! Three ways of seeing the field.
 //!
 //! - **The drone** (default): a Mavic/Matrice-class quadcopter hovering behind the Ukrainian lines, the way most
 //!   of the world saw Vuhledar, as grey, grainy video with a crosshair and telemetry. Its battery drains.
 //! - **The OP**: the observer on the roof of a nine-storey block at the town's southern edge, with binoculars.
 //!   Closer to the noise, and inside the TOS-1A's target area.
+//! - **The tree line**: eye level behind an ATGM team's launcher, and through its sight.
 
-use crate::dev_env::dev;
+use crate::dev::dev;
 use crate::geo;
+use crate::units::{SState, Side, Soldier, Vehicle, vehicle_yaw};
 use crate::world::ObservationPost;
 use bevy::{
     camera::{Exposure, ShadowLodOrigin},
@@ -32,11 +34,12 @@ impl Plugin for CameraPlugin {
             .init_resource::<Shake>()
             .add_systems(Startup, spawn_camera)
             .add_systems(Startup, spawn_launcher.after(spawn_camera))
-            .add_systems(Update, (switch_view, drone_control, op_control, ground_control, apply_view, update_feed, cursor_grab, show_launcher).chain());
+            .add_systems(Update, (switch_view, drone_control, op_control, ground_control, apply_view, update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
     }
 }
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default, strum::EnumString)]
+#[strum(serialize_all = "lowercase")]
 pub enum Mode {
     #[default]
     Drone,
@@ -130,6 +133,48 @@ impl View {
     pub const GROUND_FOV: f32 = 0.95;
     /// Magnification of the ATGM sight.
     pub const SIGHT_ZOOM: f32 = 10.0;
+}
+
+/// Yaw and pitch that look along `d` (yaw 0 faces -Z).
+pub fn look_angles(d: Vec3) -> (f32, f32) {
+    (f32::atan2(-d.x, -d.z), f32::atan2(d.y, d.xz().length()))
+}
+
+/// What a camera follows: a point, a vehicle of the column, or the infantry (`VUHLEDAR_LOOK`, the showcase).
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum Target {
+    /// A point on the ground (x, z).
+    Point(Vec2),
+    /// The Russian vehicle with this column index, in the earliest wave that has one.
+    Vehicle(u32),
+    /// The middle of the Russian infantry still advancing within 1.4 km.
+    Men,
+}
+
+impl std::str::FromStr for Target {
+    type Err = std::num::ParseIntError;
+
+    /// `men`, or a column index.
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s == "men" { Ok(Target::Men) } else { s.parse().map(Target::Vehicle) }
+    }
+}
+
+impl Target {
+    pub fn locate(self, near: Vec3, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) -> Option<Vec3> {
+        match self {
+            Target::Point(p) => Some(geo::ground(p)),
+            Target::Vehicle(idx) => vehicles.iter().filter(|(v, _)| v.idx == idx && v.side == Side::Ru).min_by_key(|(v, _)| v.wave).map(|(_, t)| t.translation),
+            Target::Men => {
+                let pts: Vec<Vec3> = men
+                    .iter()
+                    .filter(|(s, t)| s.side == Side::Ru && s.state != SState::Flee && t.translation.distance(near) < 1400.0)
+                    .map(|(_, t)| t.translation)
+                    .collect();
+                (!pts.is_empty()).then(|| pts.iter().copied().sum::<Vec3>() / pts.len() as f32)
+            }
+        }
+    }
 }
 
 /// Camera shake and white-out from nearby blasts; decays on its own.
@@ -257,7 +302,7 @@ pub fn enter_ground(view: &mut View, team: Entity, pos: Vec2) {
     // Face the nearest road's kill zone.
     let kz = geo::layout().routes.iter().map(|r| r.line.point(r.deploy_s)).min_by(|a, b| a.distance(at).total_cmp(&b.distance(at))).unwrap_or(at + Vec2::Y);
     let d = kz - at;
-    view.ground_yaw = f32::atan2(-d.x, -d.y);
+    view.ground_yaw = vehicle_yaw(d);
     view.ground_pitch = -0.01;
     view.sight = false;
     view.lock = None;
@@ -370,7 +415,7 @@ fn op_control(
 
 fn ground_control(
     time: Res<Time>,
-    vehicles: Query<(Entity, &crate::units::Vehicle, &Transform)>,
+    vehicles: Query<(Entity, &Vehicle, &Transform)>,
     buttons: Res<ButtonInput<MouseButton>>,
     motion: Res<AccumulatedMouseMotion>,
     mut view: ResMut<View>,
@@ -380,7 +425,7 @@ fn ground_control(
         return;
     }
     // Mouse look is direct here (the cursor is captured); the right button brings the eye to the sight.
-    if !dev().ground_view() {
+    if dev().view != Some(Mode::Ground) {
         view.sight = buttons.pressed(MouseButton::Right);
     }
     let k = 0.0022 / view.zoom();
@@ -392,7 +437,7 @@ fn ground_control(
     let fwd = *gt.forward();
     let on = vehicles
         .iter()
-        .filter(|(_, v, _)| v.side == crate::units::Side::Ru && v.state.alive())
+        .filter(|(_, v, _)| v.side == Side::Ru && v.state.alive())
         .map(|(e, _, t)| (e, (t.translation + Vec3::Y * 1.2 - gt.translation).normalize().dot(fwd), t.translation.distance(gt.translation)))
         .filter(|(_, c, _)| *c > (0.007f32).cos())
         .max_by(|a, b| a.1.total_cmp(&b.1));

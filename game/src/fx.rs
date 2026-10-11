@@ -4,6 +4,7 @@
 use crate::camera::MainCamera;
 use bevy::{asset::RenderAssetUsages, light::NotShadowCaster, prelude::*, render::render_resource::{Extent3d, TextureDimension, TextureFormat}};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
+use strum::VariantArray;
 
 pub struct FxPlugin;
 
@@ -12,7 +13,7 @@ impl Plugin for FxPlugin {
         app.insert_resource(FxRng(SmallRng::seed_from_u64(20230206)))
             .insert_resource(Wind(Vec3::new(3.5, 0.0, -1.2)))
             .add_systems(Startup, setup_fx)
-            .add_systems(Update, (update_particles, update_emitters, update_flashes));
+            .add_systems(Update, (update_particles, update_emitters, update_flashes).chain().in_set(crate::Step::Effects));
     }
 }
 
@@ -23,7 +24,7 @@ pub struct FxRng(pub SmallRng);
 #[derive(Resource)]
 pub struct Wind(pub Vec3);
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::VariantArray)]
 pub enum Kind {
     BlackSmoke,
     GreySmoke,
@@ -36,7 +37,6 @@ pub enum Kind {
     Spark,
 }
 
-const KINDS: [Kind; 9] = [Kind::BlackSmoke, Kind::GreySmoke, Kind::WhiteSmoke, Kind::Dirt, Kind::Snow, Kind::Fire, Kind::Flash, Kind::Tracer, Kind::Spark];
 const STEPS: usize = 8;
 
 #[derive(Resource)]
@@ -50,7 +50,7 @@ pub struct FxAssets {
 
 impl FxAssets {
     fn mat(&self, k: Kind, alpha: f32) -> Handle<StandardMaterial> {
-        let ki = KINDS.iter().position(|x| *x == k).unwrap();
+        let ki = k as usize;
         let ai = ((alpha.clamp(0.0, 1.0) * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
         self.mats[ki * STEPS + ai].clone()
     }
@@ -74,20 +74,20 @@ fn puff_texture() -> Image {
 fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>) {
     let tex = images.add(puff_texture());
     let mut mats = Vec::new();
-    for k in KINDS {
+    for &k in Kind::VARIANTS {
         for a in 0..STEPS {
             let alpha = (a as f32 + 1.0) / STEPS as f32;
-            let (rgb, emissive, lit): ([f32; 3], f32, bool) = match k {
-                // Unlit, pre-shaded for an overcast sky: billboards lit by a low sun look wrong from behind.
-                Kind::BlackSmoke => ([0.035, 0.032, 0.03], 0.0, false),
-                Kind::GreySmoke => ([0.30, 0.30, 0.30], 0.0, false),
-                Kind::WhiteSmoke => ([0.62, 0.63, 0.64], 0.0, false),
-                Kind::Dirt => ([0.13, 0.11, 0.09], 0.0, false),
-                Kind::Snow => ([0.70, 0.71, 0.73], 0.0, false),
-                Kind::Fire => ([1.0, 0.55, 0.15], 6.0, false),
-                Kind::Flash => ([1.0, 0.85, 0.6], 30.0, false),
-                Kind::Tracer => ([1.0, 0.7, 0.3], 20.0, false),
-                Kind::Spark => ([1.0, 0.6, 0.2], 12.0, false),
+            // Unlit, pre-shaded for an overcast sky: billboards lit by a low sun look wrong from behind.
+            let (rgb, emissive): ([f32; 3], f32) = match k {
+                Kind::BlackSmoke => ([0.035, 0.032, 0.03], 0.0),
+                Kind::GreySmoke => ([0.30, 0.30, 0.30], 0.0),
+                Kind::WhiteSmoke => ([0.62, 0.63, 0.64], 0.0),
+                Kind::Dirt => ([0.13, 0.11, 0.09], 0.0),
+                Kind::Snow => ([0.70, 0.71, 0.73], 0.0),
+                Kind::Fire => ([1.0, 0.55, 0.15], 6.0),
+                Kind::Flash => ([1.0, 0.85, 0.6], 30.0),
+                Kind::Tracer => ([1.0, 0.7, 0.3], 20.0),
+                Kind::Spark => ([1.0, 0.6, 0.2], 12.0),
             };
             let c = Color::srgba(rgb[0], rgb[1], rgb[2], alpha);
             mats.push(materials.add(StandardMaterial {
@@ -95,7 +95,7 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
                 base_color_texture: Some(tex.clone()),
                 emissive: if emissive > 0.0 { LinearRgba::from(Color::srgb(rgb[0], rgb[1], rgb[2])) * emissive * alpha } else { LinearRgba::BLACK },
                 alpha_mode: if emissive > 0.0 { AlphaMode::Add } else { AlphaMode::Blend },
-                unlit: !lit,
+                unlit: true,
                 double_sided: true,
                 cull_mode: None,
                 perceptual_roughness: 1.0,
@@ -171,7 +171,7 @@ fn update_particles(
     cam: Single<&GlobalTransform, With<MainCamera>>,
     mut q: Query<(Entity, &mut Particle, &mut Transform, &mut MeshMaterial3d<StandardMaterial>)>,
 ) {
-    let dt = time.delta_secs().min(0.05);
+    let dt = crate::sim_dt(&time);
     let cam_pos = cam.translation();
     let cam_rot = cam.compute_transform().rotation;
     let mut alive = 0;
@@ -221,6 +221,13 @@ pub struct Emitter {
     pub offset: Vec3,
 }
 
+impl Emitter {
+    /// `rate` puffs a second for `secs` seconds, from `offset` in the owner's frame.
+    pub fn new(kind: EmitterKind, rate: f32, secs: f32, offset: Vec3) -> Self {
+        Self { kind, rate, timer: 0.0, remaining: secs, offset }
+    }
+}
+
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum EmitterKind {
     WreckFire,
@@ -236,7 +243,7 @@ fn update_emitters(
     mut rng: ResMut<FxRng>,
     mut q: Query<(Entity, &mut Emitter, &GlobalTransform)>,
 ) {
-    let dt = time.delta_secs().min(0.05);
+    let dt = crate::sim_dt(&time);
     let load = fx.count as f32 / MAX_PARTICLES as f32;
     for (e, mut em, gt) in &mut q {
         em.remaining -= dt;

@@ -4,7 +4,7 @@
 //! exhaust smoke, poor reaction to mines. Drivers who panic leave the road onto the mined shoulders, and the
 //! wrecks block the road for the next column, which comes down the same road anyway.
 
-use crate::audio::{self, Pending, Sfx};
+use crate::audio::{self, Sfx, Sound};
 use crate::camera::MainCamera;
 use crate::fx::{self, Emitter, EmitterKind, FxAssets, FxRng};
 use crate::geo::{self, Polyline};
@@ -13,6 +13,7 @@ use crate::terrain::{Paint, PaintQueue};
 use crate::world::Palette;
 use bevy::{light::NotShadowCaster, platform::collections::HashMap, prelude::*};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
+use strum::VariantArray;
 
 pub struct UnitsPlugin;
 
@@ -28,7 +29,8 @@ impl Plugin for UnitsPlugin {
                 Update,
                 (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, crew_bailout, move_soldiers, animate_legs, fly_debris, drop_riders)
                     .chain()
-                    .run_if(crate::running),
+                    .run_if(crate::running)
+                    .in_set(crate::Step::Units),
             );
     }
 }
@@ -42,7 +44,7 @@ pub enum Side {
     Ua,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, strum::VariantArray)]
 pub enum VKind {
     /// T-80BV
     T80,
@@ -70,6 +72,10 @@ impl VKind {
             VKind::Mtlb => 8,
         }
     }
+    /// Everyone aboard: crew and dismounts.
+    pub fn men(self) -> u32 {
+        self.crew() + self.troops()
+    }
     fn speed(self) -> f32 {
         if self.is_tank() { 5.2 } else { 5.8 }
     }
@@ -86,6 +92,16 @@ pub enum VState {
     Immobilized,
     Destroyed,
     Abandoned,
+}
+
+impl Vehicle {
+    /// Knocked out of action but not destroyed: it coasts to a stop at `decel`, slewing at `slew`.
+    fn immobilise(&mut self, decel: f32, slew: f32) {
+        self.state = VState::Immobilized;
+        self.coast_decel = decel;
+        self.slew = slew;
+        self.timer = 0.0;
+    }
 }
 
 impl VState {
@@ -189,13 +205,21 @@ pub struct Stats {
     /// Russians alive at or past the first belt (a foothold).
     pub foothold: u32,
     pub max_advance: f32,
-    pub per_wave: Vec<(u32, u32, u32)>,
+    /// By column (index 0 unused: columns count from 1).
+    pub per_wave: Vec<WaveTally>,
+}
+
+#[derive(Clone, Copy, Default)]
+pub struct WaveTally {
+    pub vehicles: u32,
+    pub destroyed: u32,
+    pub abandoned: u32,
 }
 
 impl Stats {
-    pub fn wave(&mut self, w: u32) -> &mut (u32, u32, u32) {
-        while self.per_wave.len() <= w as usize {
-            self.per_wave.push((0, 0, 0));
+    pub fn wave(&mut self, w: u32) -> &mut WaveTally {
+        if self.per_wave.len() <= w as usize {
+            self.per_wave.resize(w as usize + 1, WaveTally::default());
         }
         &mut self.per_wave[w as usize]
     }
@@ -215,73 +239,79 @@ impl Radio {
     }
 }
 
+/// One kind of Russian vehicle: its hull (and plow-tank hull), its turret and where the turret sits.
+pub struct VehicleMeshes {
+    pub hull: Handle<Mesh>,
+    pub plow_hull: Option<Handle<Mesh>>,
+    pub turret: Handle<Mesh>,
+    pub turret_at: Vec3,
+}
+
+/// One side's soldiers: standing body, a leg (mirrored for the other), and lying dead.
+pub struct FigureMeshes {
+    pub body: Handle<Mesh>,
+    pub leg: Handle<Mesh>,
+    pub fallen: Handle<Mesh>,
+}
+
 #[derive(Resource)]
 pub struct Models {
-    pub hulls: HashMap<(u8, bool), Handle<Mesh>>,
-    pub turrets: HashMap<u8, Handle<Mesh>>,
-    pub turret_at: HashMap<u8, Vec3>,
-    pub ru_body: Handle<Mesh>,
-    pub ru_leg: Handle<Mesh>,
-    pub ru_fallen: Handle<Mesh>,
-    pub ua_body: Handle<Mesh>,
-    pub ua_leg: Handle<Mesh>,
-    pub ua_fallen: Handle<Mesh>,
+    pub vehicles: HashMap<VKind, VehicleMeshes>,
+    ru: FigureMeshes,
+    ua: FigureMeshes,
     pub hip: Vec3,
     pub raam: Handle<Mesh>,
     pub missile: Handle<Mesh>,
     pub ua_tank: (Handle<Mesh>, Handle<Mesh>, Vec3),
 }
 
-fn kid(k: VKind) -> u8 {
-    k as u8
+impl Models {
+    pub fn vehicle(&self, k: VKind) -> &VehicleMeshes {
+        &self.vehicles[&k]
+    }
+
+    pub fn figure(&self, side: Side) -> &FigureMeshes {
+        match side {
+            Side::Ru => &self.ru,
+            Side::Ua => &self.ua,
+        }
+    }
 }
 
 pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
-    let mut hulls = HashMap::new();
-    let mut turrets = HashMap::new();
-    let mut turret_at = HashMap::new();
-    let ru = |k: u32| {
-        // Slight per-type colour variation and mud on the lower hull.
-        let base = RU_GREEN;
-        let v = 1.0 + (k as f32 - 2.0) * 0.03;
-        [base[0] * v, base[1] * v, base[2] * v * 0.98]
+    // Slight per-type colour variation, and mud on the lower hull.
+    let paint = |k: VKind| {
+        let v = 1.0 + (k as u32 as f32 - 2.0) * 0.03;
+        [RU_GREEN[0] * v, RU_GREEN[1] * v, RU_GREEN[2] * v * 0.98]
     };
-    for (k, plow) in [(VKind::T80, false), (VKind::T80, true), (VKind::T72, false), (VKind::T72, true), (VKind::Bmp1, false), (VKind::Bmp2, false), (VKind::Mtlb, false)] {
+    let hull = |meshes: &mut Assets<Mesh>, mut m: meshes::MeshBuilder| {
+        m.tint([MUD[0] / 0.33, MUD[1] / 0.29, MUD[2] / 0.24].map(|x: f32| 0.9 + 0.1 * x));
+        meshes.add(m.build())
+    };
+    let mut vehicles = HashMap::new();
+    for &k in VKind::VARIANTS {
         let m = match k {
-            VKind::T80 | VKind::T72 => meshes::tank(ru(kid(k) as u32), plow, false),
-            VKind::Bmp1 => meshes::bmp(ru(2), false),
-            VKind::Bmp2 => meshes::bmp(ru(3), true),
-            VKind::Mtlb => meshes::mtlb(ru(4)),
+            VKind::T80 | VKind::T72 => meshes::tank(paint(k), false, false),
+            VKind::Bmp1 => meshes::bmp(paint(k), false),
+            VKind::Bmp2 => meshes::bmp(paint(k), true),
+            VKind::Mtlb => meshes::mtlb(paint(k)),
         };
-        let mut hull = m.hull;
-        hull.tint([MUD[0] / 0.33, MUD[1] / 0.29, MUD[2] / 0.24].map(|x: f32| 0.9 + 0.1 * x));
-        hulls.insert((kid(k), plow), meshes.add(hull.build()));
-        turrets.entry(kid(k)).or_insert_with(|| meshes.add(m.turret.build()));
-        turret_at.insert(kid(k), m.turret_at);
+        let plow_hull = k.is_tank().then(|| hull(&mut meshes, meshes::tank(paint(k), true, false).hull));
+        vehicles.insert(k, VehicleMeshes { hull: hull(&mut meshes, m.hull), plow_hull, turret: meshes.add(m.turret.build()), turret_at: m.turret_at });
     }
     let ua = meshes::tank(UA_GREEN, false, true);
     let ua_tank = (meshes.add(ua.hull.build()), meshes.add(ua.turret.build()), ua.turret_at);
-    let ru_fig = meshes::figure([0.36, 0.37, 0.31], [0.33, 0.34, 0.29], [0.3, 0.32, 0.26], Some([0.8, 0.3, 0.25]));
-    let ua_fig = meshes::figure([0.34, 0.36, 0.27], [0.30, 0.32, 0.24], [0.28, 0.31, 0.22], Some([0.85, 0.8, 0.3]));
+    let mut figure = |coat, trousers, helmet, tape| {
+        let f = meshes::figure(coat, trousers, helmet, Some(tape));
+        (FigureMeshes { body: meshes.add(f.body.build()), leg: meshes.add(f.leg.build()), fallen: meshes.add(meshes::fallen(coat, trousers).build()) }, f.hip)
+    };
+    let (ru, hip) = figure([0.36, 0.37, 0.31], [0.33, 0.34, 0.29], [0.3, 0.32, 0.26], [0.8, 0.3, 0.25]);
+    let (ua, _) = figure([0.34, 0.36, 0.27], [0.30, 0.32, 0.24], [0.28, 0.31, 0.22], [0.85, 0.8, 0.3]);
     let mut raam = meshes::MeshBuilder::new();
     raam.cylinder(Vec3::ZERO, Vec3::Y * 0.12, 0.08, 6, [0.22, 0.24, 0.17]);
     let mut missile = meshes::MeshBuilder::new();
     missile.cylinder(Vec3::new(0.0, 0.0, 0.6), Vec3::new(0.0, 0.0, -1.2), 0.07, 6, [0.3, 0.32, 0.25]);
-    commands.insert_resource(Models {
-        hulls,
-        turrets,
-        turret_at,
-        ru_body: meshes.add(ru_fig.body.build()),
-        ru_leg: meshes.add(ru_fig.leg.build()),
-        ru_fallen: meshes.add(meshes::fallen([0.36, 0.37, 0.31], [0.33, 0.34, 0.29]).build()),
-        ua_body: meshes.add(ua_fig.body.build()),
-        ua_leg: meshes.add(ua_fig.leg.build()),
-        ua_fallen: meshes.add(meshes::fallen([0.34, 0.36, 0.27], [0.30, 0.32, 0.24]).build()),
-        hip: ru_fig.hip,
-        raam: meshes.add(raam.build()),
-        missile: meshes.add(missile.build()),
-        ua_tank,
-    });
+    commands.insert_resource(Models { vehicles, ru, ua, hip, raam: meshes.add(raam.build()), missile: meshes.add(missile.build()), ua_tank });
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -335,8 +365,7 @@ fn lay_minefields(mut commands: Commands) {
         let n = (area * f.density) as usize;
         for _ in 0..n {
             let s = rng.random_range(f.s0..f.s1);
-            let side = if rng.random_bool(0.5) { 1.0 } else { -1.0 };
-            let lat = side * rng.random_range(f.inner..f.outer);
+            let lat = sign(&mut rng) * rng.random_range(f.inner..f.outer);
             let p = road.point(s) + road.normal(s) * lat;
             mf.add(Mine { pos: p, live: true, entity: None });
         }
@@ -384,17 +413,12 @@ pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette
     let route = &geo::layout().routes[v.route].line;
     let p = route.point(v.s) + route.normal(v.s) * v.lat;
     let yaw = vehicle_yaw(route.tangent(v.s));
-    let plow = v.plow && v.kind.is_tank();
-    let turret = commands
-        .spawn((
-            Mesh3d(models.turrets[&kid(v.kind)].clone()),
-            MeshMaterial3d(palette.vertex.clone()),
-            Transform::from_translation(models.turret_at[&kid(v.kind)]),
-            Turret,
-        ))
-        .id();
+    let m = models.vehicle(v.kind);
+    let plow_hull = m.plow_hull.as_ref().filter(|_| v.plow);
+    let plow = plow_hull.is_some();
+    let turret = commands.spawn((Mesh3d(m.turret.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(m.turret_at), Turret)).id();
     let mut e = commands.spawn((
-        Mesh3d(models.hulls[&(kid(v.kind), plow)].clone()),
+        Mesh3d(plow_hull.unwrap_or(&m.hull).clone()),
         MeshMaterial3d(palette.vertex.clone()),
         Transform::from_translation(geo::ground(p)).with_rotation(ground_rotation(p, yaw)),
         Vehicle {
@@ -434,12 +458,12 @@ pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette
     // Desant: the section rides on the roof, not inside (dossier footage, and every Vuhledar video). Mines and
     // RPGs taught both armies that the hull is the worst place to be.
     let riders = v.kind.troops().min(6);
-    let roof = models.turret_at[&kid(v.kind)].y;
+    let roof = m.turret_at.y;
     for k in 0..riders {
         let side = if k % 2 == 0 { -0.55 } else { 0.55 };
         let z = 0.4 + (k / 2) as f32 * 0.85;
         e.with_child((
-            Mesh3d(models.ru_body.clone()),
+            Mesh3d(models.figure(Side::Ru).body.clone()),
             MeshMaterial3d(palette.vertex.clone()),
             Transform::from_xyz(side, roof - 0.85, z).with_rotation(Quat::from_rotation_y(side.signum() * 1.2 + k as f32 * 0.3)),
             NotShadowCaster,
@@ -448,9 +472,9 @@ pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette
     }
     if v.smoke {
         // TDA: diesel injected into the exhaust, a white wall that drifts with the wind.
-        e.insert(Emitter { kind: EmitterKind::SmokeScreen, rate: 2.5, timer: 0.0, remaining: 240.0, offset: Vec3::new(0.0, 1.2, 3.6) });
+        e.insert(Emitter::new(EmitterKind::SmokeScreen, 2.5, 240.0, Vec3::new(0.0, 1.2, 3.6)));
     } else {
-        e.insert(Emitter { kind: EmitterKind::Exhaust, rate: 3.0, timer: 0.0, remaining: 1.0e6, offset: Vec3::new(0.6, 1.3, 3.4) });
+        e.insert(Emitter::new(EmitterKind::Exhaust, 3.0, 1.0e6, Vec3::new(0.6, 1.3, 3.4)));
     }
     e.id()
 }
@@ -462,29 +486,27 @@ fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>, palette: Res<Pa
     for (i, (p, yaw)) in geo::layout().old_wrecks.iter().enumerate() {
         let k = kinds[i % kinds.len()];
         let toss = k.is_tank() && i % 2 == 1;
+        let m = models.vehicle(k);
         let mut e = commands.spawn((
-            Mesh3d(models.hulls[&(kid(k), false)].clone()),
+            Mesh3d(m.hull.clone()),
             MeshMaterial3d(palette.charred.clone()),
             Transform::from_translation(geo::ground(*p) - Vec3::Y * 0.15).with_rotation(ground_rotation(*p, *yaw)),
         ));
         if !toss {
-            e.with_child((Mesh3d(models.turrets[&kid(k)].clone()), MeshMaterial3d(palette.charred.clone()), Transform::from_translation(models.turret_at[&kid(k)]).with_rotation(Quat::from_rotation_y(i as f32))));
+            e.with_child((Mesh3d(m.turret.clone()), MeshMaterial3d(palette.charred.clone()), Transform::from_translation(m.turret_at).with_rotation(Quat::from_rotation_y(i as f32))));
         }
         if i % 3 == 0 {
-            e.insert(Emitter { kind: EmitterKind::Smoulder, rate: 0.5, timer: 0.0, remaining: 1.0e5, offset: Vec3::Y });
+            e.insert(Emitter::new(EmitterKind::Smoulder, 0.5, 1.0e5, Vec3::Y));
         }
         if toss {
             let tp = *p + Vec2::from_angle(i as f32 * 1.7) * 14.0;
-            commands.spawn((Mesh3d(models.turrets[&kid(k)].clone()), MeshMaterial3d(palette.charred.clone()), Transform::from_translation(geo::ground(tp) + Vec3::Y * 0.3).with_rotation(Quat::from_euler(EulerRot::XYZ, 2.6, i as f32, 0.3))));
+            commands.spawn((Mesh3d(m.turret.clone()), MeshMaterial3d(palette.charred.clone()), Transform::from_translation(geo::ground(tp) + Vec3::Y * 0.3).with_rotation(Quat::from_euler(EulerRot::XYZ, 2.6, i as f32, 0.3))));
         }
     }
 }
 
 pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette, side: Side, at: Vec2, goal: Vec2, home: Vec2, rng: &mut SmallRng) -> Entity {
-    let (body, leg) = match side {
-        Side::Ru => (models.ru_body.clone(), models.ru_leg.clone()),
-        Side::Ua => (models.ua_body.clone(), models.ua_leg.clone()),
-    };
+    let (body, leg) = (models.figure(side).body.clone(), models.figure(side).leg.clone());
     let hip = models.hip;
     let l0 = commands.spawn((Mesh3d(leg.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(hip), Leg(0.0), NotShadowCaster)).id();
     let l1 = commands.spawn((Mesh3d(leg), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(hip * Vec3::new(-1.0, 1.0, 1.0)), Leg(std::f32::consts::PI), NotShadowCaster)).id();
@@ -557,7 +579,7 @@ fn drive_vehicles(
     mut q: Query<(Entity, &mut Vehicle, &mut Transform), Without<Turret>>,
     mut turrets: Query<&mut Transform, With<Turret>>,
 ) {
-    let dt = time.delta_secs().min(0.05);
+    let dt = crate::sim_dt(&time);
     let lay = geo::layout();
     let snaps: Vec<Snap> = q.iter().map(|(e, v, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing }).collect();
     let cam_pos = cam.translation();
@@ -606,8 +628,7 @@ fn drive_vehicles(
                         }
                         if v.timer > rng.random_range(4.0..14.0) * (1.0 - v.panic * 0.7) {
                             if rng.random_bool(0.75) {
-                                let side = if rng.random_bool(0.5) { 1.0 } else { -1.0 };
-                                v.target_lat = b.lat + side * rng.random_range(8.0..18.0);
+                                v.target_lat = b.lat + sign(rng) * rng.random_range(8.0..18.0);
                                 v.state = VState::Advancing;
                             } else if rng.random_bool(0.3) {
                                 start_withdrawal(&mut v, rng);
@@ -627,7 +648,7 @@ fn drive_vehicles(
                 // Panic: a hit nearby, and a mobilised driver yanks the tiller.
                 if v.panic > 0.55 && rng.random_bool((dt * 0.12) as f64) {
                     if rng.random_bool(0.55) {
-                        v.target_lat = v.lat + if rng.random_bool(0.5) { 1.0 } else { -1.0 } * rng.random_range(8.0..25.0);
+                        v.target_lat = v.lat + sign(rng) * rng.random_range(8.0..25.0);
                     } else {
                         start_withdrawal(&mut v, rng);
                     }
@@ -649,7 +670,7 @@ fn drive_vehicles(
                     // The ramp drops; the section runs for the tree line.
                     let obj = lay.routes[v.route].objective;
                     let back = route.tangent(v.s) * -6.0;
-                    let pos = Vec2::new(tf.translation.x, tf.translation.z);
+                    let pos = tf.translation.xz();
                     for k in 0..v.troops {
                         let at = pos + back + Vec2::new(rng.random_range(-2.0..2.0), rng.random_range(-2.0..2.0));
                         let goal = obj + Vec2::new(rng.random_range(-120.0..120.0), rng.random_range(-20.0..20.0)) + Vec2::X * (k as f32 - 3.0) * 6.0;
@@ -706,7 +727,7 @@ fn drive_vehicles(
         let dyaw = wrap(want_yaw - v.yaw).clamp(-0.45 * dt, 0.45 * dt);
         v.yaw = wrap(v.yaw + dyaw);
         let yaw = v.yaw;
-        let old = Vec2::new(tf.translation.x, tf.translation.z);
+        let old = tf.translation.xz();
         tf.translation = geo::ground(p) + Vec3::Y * 0.05;
         // Suspension: nose down under braking, squat under power, roll in turns, pitching over the ruts.
         let accel = (v.speed - prev_speed) / dt.max(1e-4) * if v.reversing { -1.0 } else { 1.0 };
@@ -752,7 +773,7 @@ fn suspension(v: &mut Vehicle, pitch_target: f32, roll_target: f32, dt: f32) {
 
 /// Vehicles knocked out or immobilised while moving coast to a stop, slewing; then the hull settles.
 fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, mut q: Query<(&mut Vehicle, &mut Transform)>) {
-    let dt = time.delta_secs().min(0.05);
+    let dt = crate::sim_dt(&time);
     let lay = geo::layout();
     for (mut v, mut tf) in &mut q {
         if v.state.mobile() || v.side != Side::Ru {
@@ -769,7 +790,7 @@ fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, mut q: Query<(&mut Vehi
             let yaw = v.yaw + v.slew * dt * (v.speed / 3.0).min(1.0);
             v.yaw = wrap(yaw);
             let dir = Vec2::new(-v.yaw.sin(), -v.yaw.cos()) * if v.reversing { -1.0 } else { 1.0 };
-            let p = Vec2::new(tf.translation.x, tf.translation.z) + dir * v.speed * dt;
+            let p = tf.translation.xz() + dir * v.speed * dt;
             tf.translation = geo::ground(p) + Vec3::Y * 0.05;
             // Keep route coordinates current so the vehicles behind see where the wreck actually is.
             let route = &lay.routes[v.route].line;
@@ -783,9 +804,14 @@ fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, mut q: Query<(&mut Vehi
         }
         let accel = (v.speed - prev) / dt.max(1e-4);
         suspension(&mut v, accel * 0.022, 0.0, dt);
-        let p = Vec2::new(tf.translation.x, tf.translation.z);
+        let p = tf.translation.xz();
         tf.rotation = ground_rotation(p, v.yaw) * Quat::from_rotation_x(v.pitch) * Quat::from_rotation_z(v.roll);
     }
+}
+
+/// +1 or -1, evenly.
+pub fn sign(rng: &mut SmallRng) -> f32 {
+    if rng.random_bool(0.5) { 1.0 } else { -1.0 }
 }
 
 pub fn wrap(a: f32) -> f32 {
@@ -802,7 +828,7 @@ fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
     v.state = VState::Withdrawing;
     v.reversing = true;
     // Turning a tank round on a narrow road means a pivot onto the shoulder.
-    v.target_lat = v.lat + if rng.random_bool(0.5) { 1.0 } else { -1.0 } * rng.random_range(3.0..12.0);
+    v.target_lat = v.lat + sign(rng) * rng.random_range(3.0..12.0);
     v.timer = 0.0;
 }
 
@@ -818,10 +844,9 @@ fn check_mines(
     mut paint: ResMut<PaintQueue>,
     mut stats: ResMut<Stats>,
     mut radio: ResMut<Radio>,
-    mut pending: ResMut<Pending>,
+    mut sound: Sound,
     mut blasts: MessageWriter<Blast>,
     mut rng: ResMut<UnitRng>,
-    cam: Single<&GlobalTransform, With<MainCamera>>,
     mut q: Query<(Entity, &mut Vehicle, &Transform)>,
 ) {
     let now = time.elapsed_secs_f64();
@@ -829,9 +854,9 @@ fn check_mines(
         if !v.state.mobile() || v.speed < 0.2 {
             continue;
         }
-        let p = Vec2::new(tf.translation.x, tf.translation.z);
+        let p = tf.translation.xz();
         let fwd3 = tf.rotation * Vec3::NEG_Z;
-        let fwd = Vec2::new(fwd3.x, fwd3.z).normalize_or_zero();
+        let fwd = fwd3.xz().normalize_or_zero();
         let right = Vec2::new(-fwd.y, fwd.x);
         for i in mf.near(p, 6.0) {
             let m = mf.mines[i];
@@ -844,7 +869,7 @@ fn check_mines(
                     commands.entity(ent).despawn();
                 }
                 if rng.0.random_bool(0.12) {
-                    detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut pending, &mut blasts, now, cam.translation(), m.pos);
+                    detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
                     v.plow = false;
                     radio.say(now, "Mine under the plow. The lead tank's plow is gone, it keeps going.");
                 }
@@ -855,17 +880,14 @@ fn check_mines(
                 if let Some(ent) = m.entity {
                     commands.entity(ent).despawn();
                 }
-                detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut pending, &mut blasts, now, cam.translation(), m.pos);
+                detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
                 stats.mine_hits += 1;
                 // TM-62 under a track: the track and road wheels are gone. Often more.
                 let kill = rng.0.random_bool(if v.kind.is_tank() { 0.3 } else { 0.5 });
-                v.state = VState::Immobilized;
                 // The track is off on that side: it lurches, slews round the dead side and grinds to a stop.
-                v.coast_decel = rng.0.random_range(4.0..6.5);
-                v.slew = x.signum() * -rng.0.random_range(0.35..0.8);
+                v.immobilise(rng.0.random_range(4.0..6.5), x.signum() * -rng.0.random_range(0.35..0.8));
                 v.pitch_v += rng.0.random_range(1.8..3.0);
                 v.roll_v += x.signum() * rng.0.random_range(1.5..2.5);
-                v.timer = 0.0;
                 if kill {
                     v.state = VState::Destroyed;
                     commands.trigger(Wrecked { vehicle: _e, cause: Cause::Mine });
@@ -885,11 +907,11 @@ fn check_mines(
     }
 }
 
-fn detonate(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, paint: &mut PaintQueue, pending: &mut Pending, blasts: &mut MessageWriter<Blast>, now: f64, listener: Vec3, at: Vec2) {
+fn detonate(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, paint: &mut PaintQueue, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, at: Vec2) {
     let p = geo::ground(at);
     fx::explosion(commands, fx, rng, p, 1.1, true);
     paint.push(Paint::Crater { at, radius: 2.0, seed: rng.random() });
-    audio::play_at(pending, now, listener, p, Sfx::MineBlast, 1.0);
+    sound.at(p, Sfx::MineBlast, 1.0);
     blasts.write(Blast { at: p, radius: 6.0, cause: Cause::Mine });
 }
 
@@ -910,9 +932,8 @@ pub fn on_wrecked(
     mut fxr: ResMut<FxRng>,
     mut stats: ResMut<Stats>,
     mut radio: ResMut<Radio>,
-    mut pending: ResMut<Pending>,
+    mut sound: Sound,
     mut paint: ResMut<PaintQueue>,
-    cam: Single<&GlobalTransform, With<MainCamera>>,
     mut q: Query<(&mut Vehicle, &Transform, &mut MeshMaterial3d<StandardMaterial>), Without<Turret>>,
     mut turrets: Query<(&mut MeshMaterial3d<StandardMaterial>, &GlobalTransform), With<Turret>>,
 ) {
@@ -933,7 +954,7 @@ pub fn on_wrecked(
     v.state = VState::Destroyed;
     mat.0 = palette.charred.clone();
     stats.destroyed += 1;
-    stats.wave(v.wave).1 += 1;
+    stats.wave(v.wave).destroyed += 1;
     match ev.cause {
         Cause::Atgm => stats.atgm_kills += 1,
         Cause::Artillery | Cause::Himars | Cause::TankGun => stats.artillery_kills += 1,
@@ -945,15 +966,15 @@ pub fn on_wrecked(
     v.crew -= v.crew.min(dead);
     v.troops = v.troops.saturating_sub(dead);
     let p = tf.translation;
-    paint.push(Paint::Scorch { at: Vec2::new(p.x, p.z), radius: 9.0 });
+    paint.push(Paint::Scorch { at: p.xz(), radius: 9.0 });
     // Men riding on top are thrown into the snow.
     for k in 0..dead.min(5) {
-        let at = Vec2::new(p.x, p.z) + Vec2::from_angle(rng.random_range(0.0..std::f32::consts::TAU)) * rng.random_range(3.0..9.0);
-        commands.spawn((Mesh3d(models.ru_fallen.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(Quat::from_rotation_y(k as f32 * 1.9)), NotShadowCaster));
+        let at = p.xz() + Vec2::from_angle(rng.random_range(0.0..std::f32::consts::TAU)) * rng.random_range(3.0..9.0);
+        commands.spawn((Mesh3d(models.figure(Side::Ru).fallen.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(Quat::from_rotation_y(k as f32 * 1.9)), NotShadowCaster));
     }
     fx::explosion(&mut commands, &mut fx, rng, p + Vec3::Y, 1.4, false);
-    audio::play_at(&mut pending, now, cam.translation(), p, Sfx::BlastNear, 1.3);
-    commands.entity(ev.vehicle).insert(Emitter { kind: EmitterKind::WreckFire, rate: 5.0, timer: 0.0, remaining: rng.random_range(150.0..320.0), offset: Vec3::Y * 1.5 });
+    sound.at(p, Sfx::BlastNear, 1.3);
+    commands.entity(ev.vehicle).insert(Emitter::new(EmitterKind::WreckFire, 5.0, rng.random_range(150.0..320.0), Vec3::Y * 1.5));
     if let Ok((mut tm, tgt)) = turrets.get_mut(v.turret) {
         tm.0 = palette.charred.clone();
         // T-72/T-80 carousel autoloaders: when the charges go, the turret goes up.
@@ -964,7 +985,7 @@ pub fn on_wrecked(
                 Transform::from_translation(world.translation).with_rotation(world.rotation),
                 Debris { vel: Vec3::new(rng.random_range(-6.0..6.0), rng.random_range(18.0..32.0), rng.random_range(-6.0..6.0)), spin: Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(-2.0..2.0), rng.random_range(-3.0..3.0)) },
             ));
-            audio::play_at(&mut pending, now, cam.translation(), p, Sfx::CookOff, 1.4);
+            sound.at(p, Sfx::CookOff, 1.4);
             fx::flash(&mut commands, p + Vec3::Y * 4.0, 1.5e8, 300.0, 1.2);
             for _ in 0..14 {
                 fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::Fire, pos: p + Vec3::Y * 2.0, vel: Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(10.0..30.0), rng.random_range(-3.0..3.0)), life: rng.random_range(0.6..1.4), size0: 3.0, size1: 7.0, alpha: 1.0, drag: 1.5, ..default() });
@@ -991,12 +1012,12 @@ fn resolve_blasts(
 ) {
     let rng = &mut rng.0;
     for b in blasts.read() {
-        let bp = Vec2::new(b.at.x, b.at.z);
+        let bp = b.at.xz();
         for (e, mut v, tf) in &mut vehicles {
             if !v.state.alive() {
                 continue;
             }
-            let d = bp.distance(Vec2::new(tf.translation.x, tf.translation.z));
+            let d = bp.distance(tf.translation.xz());
             match b.cause {
                 Cause::Mine => {
                     // The mine's own vehicle is handled where it went off.
@@ -1009,11 +1030,8 @@ fn resolve_blasts(
                     } else if d < dmg_r {
                         v.panic = (v.panic + 0.5).min(1.0);
                         if v.state.mobile() && rng.random_bool(0.25) {
-                            v.state = VState::Immobilized;
-                            v.coast_decel = 4.0;
-                            v.slew = rng.random_range(-0.4..0.4);
+                            v.immobilise(4.0, rng.random_range(-0.4..0.4));
                             v.roll_v += rng.random_range(-1.5..1.5);
-                            v.timer = 0.0;
                         }
                     }
                 }
@@ -1024,7 +1042,7 @@ fn resolve_blasts(
             }
         }
         for (e, mut s, tf) in &mut soldiers {
-            let d = bp.distance(Vec2::new(tf.translation.x, tf.translation.z));
+            let d = bp.distance(tf.translation.xz());
             if d > b.radius * 3.0 {
                 if d < 120.0 {
                     s.fear += 0.3;
@@ -1044,8 +1062,8 @@ fn resolve_blasts(
 
 pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette, stats: &mut Stats, e: Entity, s: &Soldier, tf: &Transform, rng: &mut SmallRng) {
     commands.entity(e).despawn();
-    let mesh = if s.side == Side::Ru { models.ru_fallen.clone() } else { models.ua_fallen.clone() };
-    let p = Vec2::new(tf.translation.x, tf.translation.z);
+    let mesh = models.figure(s.side).fallen.clone();
+    let p = tf.translation.xz();
     commands.spawn((Mesh3d(mesh), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(p)).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..std::f32::consts::TAU))), NotShadowCaster));
     if s.side == Side::Ru {
         stats.ru_dead += 1;
@@ -1065,21 +1083,18 @@ fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit
         if rng.0.random_bool(p_kill) {
             commands.trigger(Wrecked { vehicle: h.target, cause: h.cause });
         } else {
-            v.state = VState::Immobilized;
-            v.coast_decel = 3.5;
-            v.slew = rng.0.random_range(-0.3..0.3);
+            v.immobilise(3.5, rng.0.random_range(-0.3..0.3));
             v.pitch_v -= 1.2;
-            v.timer = 0.0;
             v.panic = 1.0;
         }
     }
 }
 
 /// Crews of immobilised vehicles get out after a while; dismounts from wrecks, if any live, too.
-fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng>, mut stats: ResMut<Stats>, models: Res<Models>, palette: Res<Palette>, mut q: Query<(&mut Vehicle, &Transform, &mut MeshMaterial3d<StandardMaterial>)>) {
+fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng>, mut stats: ResMut<Stats>, models: Res<Models>, palette: Res<Palette>, mut q: Query<(&mut Vehicle, &Transform)>) {
     let dt = time.delta_secs();
     let lay = geo::layout();
-    for (mut v, tf, _mat) in &mut q {
+    for (mut v, tf) in &mut q {
         let out = match v.state {
             VState::Immobilized => {
                 v.timer += dt;
@@ -1092,7 +1107,7 @@ fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng
             continue;
         }
         let route = &lay.routes[v.route];
-        let p = Vec2::new(tf.translation.x, tf.translation.z);
+        let p = tf.translation.xz();
         let home = route.line.point(0.0);
         for k in 0..(v.crew + v.troops) {
             let at = p + Vec2::from_angle(k as f32 * 1.3) * 3.5;
@@ -1107,7 +1122,7 @@ fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng
         if v.state == VState::Immobilized {
             v.state = VState::Abandoned;
             stats.abandoned += 1;
-            stats.wave(v.wave).2 += 1;
+            stats.wave(v.wave).abandoned += 1;
         }
         v.crew = 0;
         v.troops = 0;
@@ -1129,9 +1144,9 @@ fn move_soldiers(
     wrecks: Query<(&Vehicle, &Transform), Without<Soldier>>,
     mut q: Query<(Entity, &mut Soldier, &mut Transform, Option<&Fleeing>)>,
 ) {
-    let dt = time.delta_secs().min(0.05);
+    let dt = crate::sim_dt(&time);
     let rng = &mut rng.0;
-    let wreck_pos: Vec<Vec2> = wrecks.iter().filter(|(v, _)| !v.state.mobile()).map(|(_, t)| Vec2::new(t.translation.x, t.translation.z)).collect();
+    let wreck_pos: Vec<Vec2> = wrecks.iter().filter(|(v, _)| !v.state.mobile()).map(|(_, t)| t.translation.xz()).collect();
     let mut foothold = 0;
     for (e, mut s, mut tf, fleeing) in &mut q {
         if s.side != Side::Ru {
@@ -1142,7 +1157,7 @@ fn move_soldiers(
         }
         s.fear = (s.fear - dt * 0.15).max(0.0);
         s.timer += dt;
-        let p = Vec2::new(tf.translation.x, tf.translation.z);
+        let p = tf.translation.xz();
         let mut speed = 0.0;
         let mut target = p;
         match s.state {
@@ -1220,7 +1235,7 @@ fn animate_legs(soldiers: Query<(&Soldier, &Children)>, mut legs: Query<(&Leg, &
 }
 
 fn fly_debris(mut commands: Commands, time: Res<Time>, mut q: Query<(Entity, &mut Debris, &mut Transform)>) {
-    let dt = time.delta_secs().min(0.05);
+    let dt = crate::sim_dt(&time);
     for (e, mut d, mut tf) in &mut q {
         d.vel.y -= 9.81 * dt;
         tf.translation += d.vel * dt;

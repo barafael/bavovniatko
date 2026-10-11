@@ -39,6 +39,7 @@ the binary runs from anywhere.
 | Ctrl+click | HIMARS (two missions all day) |
 | Space | ATGM teams: AUTO (wait until the column commits), HOLD, or FREE |
 | 1, 2, Tab | the drone, or the observer on the roof of a nine-storey block |
+| 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
 | P, `[`, `]` | pause, slow down, speed up |
 | F12 | screenshot |
 
@@ -54,8 +55,9 @@ the binary runs from anywhere.
 | `src/fire.rs` | Ukrainian positions and ATGM teams, artillery, RAAM, HIMARS, the Russian return fire |
 | `src/director.rs` | the day's script: the columns, the infantry, barrages, TOS-1A, the clock |
 | `src/fx.rs`, `src/audio.rs` | particles and light, synthesised sound (delayed by distance at 343 m/s) |
-| `src/camera.rs`, `src/shaders/feed.wgsl` | the drone and the OP, and the video-feed post-process |
+| `src/camera.rs`, `src/shaders/feed.wgsl` | the drone, the OP and the tree line, and the video-feed post-process |
 | `src/hud.rs` | telemetry, radio net, fire control, briefing, debrief |
+| `src/dev.rs`, `src/showcase.rs` | the `VUHLEDAR_*` development switches, and the filmed showcase tour |
 | `devlog/` | the screenshot and video history of development (local only, not in git) |
 
 ## Development
@@ -71,6 +73,11 @@ scripts/record.sh <name> "<x,z,agl,yaw,pitch,fov>" <from-s> <secs> "note" [vehic
 runs on a fixed step while filming, logs every sound it plays, and `scripts/showcase_mix.py` rebuilds the
 soundtrack offline. It takes about ten minutes, with no window or speakers, and the day is deterministic, so
 every run films the same tour.
+
+That determinism is also the regression test: `scripts/same-day.sh before` and, after a change,
+`scripts/same-day.sh after before` films the day fast (headless, tiny frames) and compares the sound log, the film
+segments and the minute-by-minute tally. A refactor should leave all three byte for byte the same. It holds
+because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`.
 
 `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle, and `VUHLEDAR_SPEED`
 scales game time. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and

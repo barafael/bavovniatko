@@ -18,8 +18,8 @@ impl Plugin for DirectorPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(Script::new())
             .insert_resource(DirRng(SmallRng::seed_from_u64(6)))
-            .add_systems(Update, (run_script, russian_artillery, check_end).chain().run_if(crate::running))
-            .add_systems(Update, time_controls);
+            .add_systems(Update, (run_script, russian_artillery, check_end).chain().run_if(crate::running).in_set(crate::Step::Script))
+            .add_systems(Update, time_controls.in_set(crate::Step::Control).after(crate::dev::DevSystems));
     }
 }
 
@@ -56,7 +56,8 @@ pub struct Script {
     pub t: f32,
     pub wave: u32,
     pub banner: Option<(String, f32)>,
-    infantry: Vec<(f32, usize, u32, u32)>,
+    /// Infantry groups waiting for their time: (game time, route, men).
+    infantry: Vec<(f32, usize, u32)>,
     next_barrage: f32,
 }
 
@@ -105,7 +106,7 @@ fn run_script(
     mut stats: ResMut<Stats>,
     mut fc: ResMut<FireControl>,
     mut view: ResMut<crate::camera::View>,
-    mut pending: ResMut<audio::Pending>,
+    mut sound: audio::Sound,
     op: Option<Res<crate::world::ObservationPost>>,
     models: Res<Models>,
     palette: Res<Palette>,
@@ -122,43 +123,39 @@ fn run_script(
     }
     let rng = &mut rng.0;
     let lay = geo::layout();
-    let mut new_banner = None;
-    let mut new_infantry = Vec::new();
-    let mut new_wave = script.wave;
-    for beat in script.beats.iter_mut() {
+    let Script { beats, wave, banner, infantry, .. } = &mut *script;
+    for beat in beats.iter_mut() {
         if beat.done || t < beat.at {
             continue;
         }
         beat.done = true;
         match &beat.act {
             Act::Column { route, kinds, plow, smoke, start, label } => {
-                new_wave += 1;
+                *wave += 1;
                 let n = kinds.len();
                 for (i, k) in kinds.iter().enumerate() {
                     // Single file, about 42 m apart, the lead furthest up the road.
                     let s = start + (n - 1 - i) as f32 * 42.0 + 10.0;
-                    units::spawn_vehicle(&mut commands, &models, &palette, VehicleSpec { kind: *k, route: *route, s, lat: 0.0, wave: new_wave, idx: i as u32, plow: *plow && i == 0, smoke: i < *smoke });
+                    units::spawn_vehicle(&mut commands, &models, &palette, VehicleSpec { kind: *k, route: *route, s, lat: 0.0, wave: *wave, idx: i as u32, plow: *plow && i == 0, smoke: i < *smoke });
                     stats.vehicles_committed += 1;
-                    stats.wave(new_wave).0 += 1;
-                    stats.sent += if k.is_tank() { 3 } else if *k == Mtlb { 10 } else { 9 };
+                    stats.wave(*wave).vehicles += 1;
+                    stats.sent += k.men();
                 }
-                new_banner = Some((label.to_string(), 7.0));
-                audio::play_now(&mut pending, now, audio::Sfx::Radio, 0.3);
+                *banner = Some((label.to_string(), 7.0));
+                sound.now(audio::Sfx::Radio, 0.3);
             }
             Act::Infantry { route, groups, size, every, label } => {
-                for g in 0..*groups {
-                    new_infantry.push((t + g as f32 * every, *route, *size, g));
-                }
+                infantry.extend((0..*groups).map(|g| (t + g as f32 * every, *route, *size)));
                 if !label.is_empty() {
-                    new_banner = Some((label.to_string(), 7.0));
+                    *banner = Some((label.to_string(), 7.0));
                 }
             }
             Act::Tos { label } => {
                 // Twenty-four rockets rippling onto the southern blocks: the observers' building is the target.
                 let aim = op.as_ref().map(|o| o.building).unwrap_or(Vec2::new(-300.0, -1225.0)) + Vec2::new(rng.random_range(-250.0..250.0), rng.random_range(30.0..110.0));
-                fc.missions.push(Mission { target: aim, kind: ShellKind::Tos, rounds: 24, sigma: 75.0, interval: 0.3, next: now + 3.0, flight: 12.0, player: false });
+                fc.missions.push(Mission { target: aim, kind: ShellKind::Tos, rounds: 24, sigma: 75.0, interval: 0.3, next: now + 3.0, flight: 12.0, player: false, by: Side::Ru });
                 radio.say(now, "TOS! Solntsepyok on the town! Get down!");
-                new_banner = Some((label.to_string(), 4.0));
+                *banner = Some((label.to_string(), 4.0));
             }
             Act::Say(s) => radio.say(now, *s),
             Act::Jam(j) => {
@@ -167,18 +164,10 @@ fn run_script(
             }
         }
     }
-    script.wave = new_wave;
-    if new_banner.is_some() {
-        script.banner = new_banner;
-    }
-    script.infantry.extend(new_infantry);
     // Release infantry groups as their time comes: they walk from the start line straight across the field.
-    let mut keep = Vec::new();
-    for (at, route, size, g) in std::mem::take(&mut script.infantry) {
-        if t < at {
-            keep.push((at, route, size, g));
-            continue;
-        }
+    let (due, waiting) = std::mem::take(infantry).into_iter().partition::<Vec<_>, _>(|g| t >= g.0);
+    *infantry = waiting;
+    for (_, route, size) in due {
         let r = &lay.routes[route];
         // They come out of the middle tree line, about a kilometre from the Ukrainian positions.
         let s0 = (r.deploy_s - rng.random_range(450.0..650.0)).max(0.0);
@@ -190,7 +179,6 @@ fn run_script(
         }
         stats.sent += size;
     }
-    script.infantry = keep;
 }
 
 /// Russian artillery works the tree lines and the town all day: 152 mm barrages every minute or so.
@@ -207,7 +195,7 @@ fn russian_artillery(time: Res<Time>, mut script: ResMut<Script>, mut fc: ResMut
     } else {
         Vec2::new(rng.random_range(-1800.0..1500.0), if rng.random_bool(0.5) { -660.0 } else { rng.random_range(-1400.0..-1150.0) })
     };
-    fc.missions.push(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 45.0, interval: 2.0, next: now, flight: 20.0, player: false });
+    fc.missions.push(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 45.0, interval: 2.0, next: now, flight: 20.0, player: false, by: Side::Ru });
 }
 
 fn check_end(script: Res<Script>, stats: Res<Stats>, vehicles: Query<&units::Vehicle>, soldiers: Query<&units::Soldier>, mut next: ResMut<NextState<Phase>>) {

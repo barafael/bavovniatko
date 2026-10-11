@@ -1,5 +1,6 @@
 //! Set dressing: the shelterbelts, the town's ruined panel blocks, the dachas, the power line, and the sky.
 
+use crate::dev::DayDebug;
 use crate::geo::{self, CHUNK, CHUNKS_X, HALF_X, HALF_Z, hash01};
 use crate::meshes::{self, MeshBuilder};
 use bevy::{
@@ -18,7 +19,7 @@ impl Plugin for WorldPlugin {
             .insert_resource(GlobalAmbientLight { color: Color::srgb(0.80, 0.86, 1.0), brightness: 450.0, ..default() })
             .insert_resource(bevy::light::DirectionalLightShadowMap { size: 4096 })
             .add_systems(Startup, (spawn_light, spawn_belts, spawn_town.after(spawn_belts)))
-            .add_systems(Update, daylight);
+            .add_systems(Update, daylight.in_set(crate::Step::Effects));
     }
 }
 
@@ -429,8 +430,8 @@ fn daylight(
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut last: Local<Option<Color>>,
 ) {
-    let dbg = crate::dev_env::dev().daydbg.as_deref().unwrap_or_default();
-    if dbg == "off" {
+    let dbg = crate::dev::dev().daydbg;
+    if dbg == Some(DayDebug::Off) {
         return;
     }
     let minutes = crate::director::DAY_START_MIN + script.t * crate::director::COMPRESSION;
@@ -448,7 +449,7 @@ fn daylight(
         // A clear, frosty day (the 6 February footage shows hard sun): strong direct light, a cold blue sky fill.
         l.illuminance = 15000.0 * (0.8 + 0.2 * day) * light;
         let dir = Vec3::new(azim.sin() * elev.cos(), elev.sin().max(0.08), azim.cos() * elev.cos());
-        if dbg != "nosun" {
+        if dbg != Some(DayDebug::NoSun) {
             *tf = Transform::from_translation(dir).looking_at(Vec3::ZERO, Vec3::Y);
         }
         l.color = Color::srgb(1.0, 0.9 + 0.08 * day, 0.8 + 0.15 * day);

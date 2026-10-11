@@ -174,11 +174,7 @@ pub struct Belt {
     pub gaps: Vec<(f32, f32)>,
 }
 
-#[derive(Clone, Copy, Debug)]
-pub struct Rect {
-    pub min: Vec2,
-    pub max: Vec2,
-}
+pub use bevy::math::Rect;
 
 /// An approach route: the polyline the columns drive, where they deploy, and where their troops go.
 #[derive(Clone, Debug)]
@@ -309,9 +305,9 @@ fn build_layout() -> Layout {
 
     let routes = vec![
         // 0: the dacha road
-        Route { line: Polyline::new(road_a.pts.clone()), deploy_s: road_a.project(v(1010.0, -300.0)).1, objective: v(800.0, -760.0) },
+        Route { line: road_a.clone(), deploy_s: road_a.project(v(1010.0, -300.0)).1, objective: v(800.0, -760.0) },
         // 1: the Pavlivka road
-        Route { line: Polyline::new(road_b.pts.clone()), deploy_s: road_b.project(v(-830.0, -200.0)).1, objective: v(-700.0, -760.0) },
+        Route { line: road_b.clone(), deploy_s: road_b.project(v(-830.0, -200.0)).1, objective: v(-700.0, -760.0) },
     ];
 
     // Shoulder minefields on both approach roads, from the middle belt to the town edge, plus a stretch further

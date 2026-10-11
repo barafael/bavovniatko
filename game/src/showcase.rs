@@ -5,22 +5,22 @@
 //! `<dir>/f00000.png`…, `<dir>/segments.txt` maps game time to video time, and the audio module logs every sound
 //! it plays to `<dir>/audio.log`, so `scripts/showcase.py` can rebuild the soundtrack offline.
 
-use crate::camera::{Mode, View};
+use crate::camera::{Mode, Target, View, look_angles};
 use crate::fire::Strike;
-use crate::units::{Side, SState, Soldier, Vehicle};
+use crate::units::{Soldier, Vehicle};
 use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};
-use std::{io::Write, time::Duration};
+use std::{io::Write, sync::LazyLock, time::Duration};
 
 pub struct ShowcasePlugin;
 
 impl Plugin for ShowcasePlugin {
     fn build(&self, app: &mut App) {
-        if let Some(dir) = crate::dev_env::dev().showcase.clone() {
+        if let Some(dir) = crate::dev::dev().showcase.clone() {
             std::fs::create_dir_all(&dir).ok();
             app.insert_resource(Tour { dir, shot: 0, frame: 0, video_t: 0.0, aim: None, fired: Vec::new(), shot_frames: 0 })
                 .insert_resource(TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(STEP_SKIP)))
-                .add_systems(Update, direct);
+                .add_systems(Update, direct.in_set(crate::Step::Control).before(crate::dev::DevSystems));
         }
     }
 }
@@ -30,13 +30,15 @@ const STEP_SKIP: f64 = 1.0 / 20.0;
 
 #[derive(Clone, Copy)]
 enum Aim {
-    Point(Vec2),
-    Vehicle(u32),
-    Men,
+    /// The drone, following a target.
+    Drone(Target),
     /// The OP looking at a point (x, z) on the ground.
     #[expect(dead_code, reason = "no shot in the current tour looks through the OP, but the camera supports it")]
-    OpAt(Vec2),
+    Op(Vec2),
 }
+
+use Aim::Drone;
+use Target::{Men, Point, Vehicle as Column};
 
 struct Shot {
     from: f32,
@@ -49,6 +51,9 @@ struct Shot {
     fire: &'static [(f32, Strike)],
     debrief: bool,
 }
+
+/// The tour, shot by shot.
+static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(shots);
 
 fn shots() -> Vec<Shot> {
     let s = |from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim, fov: (f32, f32)| Shot {
@@ -63,21 +68,21 @@ fn shots() -> Vec<Shot> {
     };
     vec![
         // Dawn over the January wrecks on the dacha road, before the first column.
-        s(4.0, 6.0, (1150.0, 200.0, 70.0), (1220.0, 300.0, 60.0), Aim::Point(Vec2::new(1440.0, 530.0)), (26.0, 20.0)),
+        s(4.0, 6.0, (1150.0, 200.0, 70.0), (1220.0, 300.0, 60.0), Drone(Point(Vec2::new(1440.0, 530.0))), (26.0, 20.0)),
         // The 155th's column in single file behind its smoke screen.
-        s(22.0, 8.0, (1000.0, -250.0, 170.0), (1000.0, -250.0, 170.0), Aim::Vehicle(3), (16.0, 11.0)),
+        s(22.0, 8.0, (1000.0, -250.0, 170.0), (1000.0, -250.0, 170.0), Drone(Column(3)), (16.0, 11.0)),
         // From behind the tree line: the ATGM teams open up.
-        s(68.0, 9.0, (1500.0, -300.0, 90.0), (1490.0, -320.0, 90.0), Aim::Vehicle(0), (22.0, 16.0)),
+        s(68.0, 9.0, (1500.0, -300.0, 90.0), (1490.0, -320.0, 90.0), Drone(Column(0)), (22.0, 16.0)),
         // The kill zone: mines, wrecks, crews in the snow, a fire mission landing among them.
-        Shot { fire: &[(80.0, Strike::He), (90.0, Strike::He)], ..s(97.0, 10.0, (750.0, -500.0, 120.0), (760.0, -480.0, 120.0), Aim::Vehicle(2), (5.0, 4.2)) },
+        Shot { fire: &[(80.0, Strike::He), (90.0, Strike::He)], ..s(97.0, 10.0, (750.0, -500.0, 120.0), (760.0, -480.0, 120.0), Drone(Column(2)), (5.0, 4.2)) },
         // The TOS-1A salvo landing on the town's southern blocks.
-        s(164.0, 8.0, (250.0, -760.0, 140.0), (230.0, -780.0, 140.0), Aim::Point(Vec2::new(-290.0, -1150.0)), (34.0, 30.0)),
+        s(164.0, 8.0, (250.0, -760.0, 140.0), (230.0, -780.0, 140.0), Drone(Point(Vec2::new(-290.0, -1150.0))), (34.0, 30.0)),
         // Afternoon: infantry on foot across the field, the battalion mortars working over them.
-        s(1186.0, 7.0, (-640.0, -760.0, 90.0), (-630.0, -740.0, 90.0), Aim::Men, (7.0, 5.5)),
+        s(1186.0, 7.0, (-640.0, -760.0, 90.0), (-630.0, -740.0, 90.0), Drone(Men), (7.0, 5.5)),
         // Dusk over the dacha road: everything that came down it today is still there.
-        s(1470.0, 4.0, (950.0, -820.0, 200.0), (980.0, -800.0, 200.0), Aim::Point(Vec2::new(1130.0, -80.0)), (34.0, 30.0)),
+        s(1470.0, 4.0, (950.0, -820.0, 200.0), (980.0, -800.0, 200.0), Drone(Point(Vec2::new(1130.0, -80.0))), (34.0, 30.0)),
         // The debrief.
-        Shot { debrief: true, ..s(1474.0, 4.0, (980.0, -800.0, 200.0), (980.0, -800.0, 200.0), Aim::Point(Vec2::new(1130.0, -80.0)), (30.0, 30.0)) },
+        Shot { debrief: true, ..s(1474.0, 4.0, (980.0, -800.0, 200.0), (980.0, -800.0, 200.0), Drone(Point(Vec2::new(1130.0, -80.0))), (30.0, 30.0)) },
     ]
 }
 
@@ -108,8 +113,7 @@ fn direct(
     men: Query<(&Soldier, &Transform)>,
     mut exit: MessageWriter<AppExit>,
 ) {
-    let list = shots();
-    let Some(shot) = list.get(tour.shot) else {
+    let Some(shot) = SHOTS.get(tour.shot) else {
         exit.write(AppExit::Success);
         return;
     };
@@ -119,15 +123,7 @@ fn direct(
     for (k, &(at, kind)) in shot.fire.iter().enumerate() {
         if t >= at && !tour.fired.contains(&(si, k)) {
             tour.fired.push((si, k));
-            let me = Vec2::new(view.drone_pos.x, view.drone_pos.z);
-            if let Some((_, tf)) = vehicles
-                .iter()
-                .filter(|(v, _)| v.state.alive() && !matches!(v.state, crate::units::VState::Advancing))
-                .min_by(|a, b| Vec2::new(a.1.translation.x, a.1.translation.z).distance(me).total_cmp(&Vec2::new(b.1.translation.x, b.1.translation.z).distance(me)))
-            {
-                let target = Vec2::new(tf.translation.x, tf.translation.z);
-                fc.missions.push(kind.mission(target, 12.0, time.elapsed_secs_f64(), true));
-            }
+            kind.on_nearest_stalled(&mut fc, &vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
         }
     }
     if t < shot.from {
@@ -166,39 +162,25 @@ fn direct(
 fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: Option<&ObservationPost>, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) {
     let ease = k * k * (3.0 - 2.0 * k);
     let fov = (shot.fov.0 + (shot.fov.1 - shot.fov.0) * ease).to_radians();
-    if let Aim::OpAt(p) = shot.aim {
-        view.mode = Mode::Op;
-        view.op_fov = fov;
-        if let Some(op) = op {
-            let d = crate::geo::ground(p) - op.eye;
-            view.op_yaw = f32::atan2(-d.x, -d.z);
-            view.op_pitch = f32::atan2(d.y, Vec2::new(d.x, d.z).length());
+    let target = match shot.aim {
+        Aim::Op(p) => {
+            view.mode = Mode::Op;
+            view.op_fov = fov;
+            if let Some(op) = op {
+                (view.op_yaw, view.op_pitch) = look_angles(crate::geo::ground(p) - op.eye);
+            }
+            return;
         }
-        return;
-    }
+        Aim::Drone(target) => target,
+    };
     view.mode = Mode::Drone;
     view.drone_fov = fov;
     let p = shot.pos0.lerp(shot.pos1, ease);
     view.drone_pos = Vec3::new(p.x, crate::geo::height(p.x, p.y) + p.z, p.y);
-    let target = match shot.aim {
-        Aim::Point(q) => Some(crate::geo::ground(q)),
-        Aim::Vehicle(idx) => vehicles.iter().filter(|(v, _)| v.idx == idx && v.side == Side::Ru).min_by_key(|(v, _)| v.wave).map(|(_, t)| t.translation),
-        Aim::Men => {
-            let pts: Vec<Vec3> = men
-                .iter()
-                .filter(|(s, t)| s.side == Side::Ru && s.state != SState::Flee && t.translation.distance(view.drone_pos) < 1400.0)
-                .map(|(_, t)| t.translation)
-                .collect();
-            (!pts.is_empty()).then(|| pts.iter().copied().sum::<Vec3>() / pts.len() as f32)
-        }
-        Aim::OpAt(_) => None,
-    };
-    let Some(target) = target else { return };
+    let Some(target) = target.locate(view.drone_pos, vehicles, men) else { return };
     let a = aim.get_or_insert(target);
     *a = a.lerp(target, 0.06);
-    let d = *a - view.drone_pos;
-    view.drone_yaw = f32::atan2(-d.x, -d.z);
-    view.gimbal = f32::atan2(d.y, Vec2::new(d.x, d.z).length());
+    (view.drone_yaw, view.gimbal) = look_angles(*a - view.drone_pos);
 }
 
 pub fn append(path: &str, line: &str) {

@@ -14,10 +14,10 @@ pub struct HudPlugin;
 impl Plugin for HudPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, spawn_hud)
-            .add_systems(Update, (update_hud, briefing_input))
+            .add_systems(Update, (update_hud, briefing_input).chain().in_set(crate::Step::Screen))
             .add_systems(OnEnter(Phase::Playing), hide_briefing)
             .add_systems(OnEnter(Phase::Debrief), show_debrief)
-            .add_systems(Update, debrief_input.run_if(in_state(Phase::Debrief)));
+            .add_systems(Update, debrief_input.run_if(in_state(Phase::Debrief)).in_set(crate::Step::Screen).after(briefing_input));
     }
 }
 
@@ -53,7 +53,7 @@ fn text(s: &str, size: f32, color: Color) -> (Text, TextFont, TextColor) {
 
 fn spawn_hud(mut commands: Commands) {
     // Larger offscreen renders (the showcase films at 1080p) scale the interface with them.
-    if let Some((_, h)) = crate::dev_env::dev().res {
+    if let Some((_, h)) = crate::dev::dev().res {
         commands.insert_resource(UiScale(1.35 * h as f32 / 900.0));
     }
     let abs = |top: Option<f32>, bottom: Option<f32>, left: Option<f32>, right: Option<f32>| Node {
@@ -116,7 +116,8 @@ The roads are left clear. The fields beside them are mined. ATGM teams wait in t
 The day will run whether or not you do anything. What you do matters at the margin.\n\n\
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.\n\
 Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.\n\
-Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / rooftop observer.  P: pause.  [ ]: time.\n\n\
+Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / rooftop observer.  P: pause.  [ ]: time.\n\
+3: into a tree line with an ATGM team (again for the next).  Right button: the sight.  Left click: launch.\n\n\
 Press Enter.";
     commands
         .spawn((
@@ -138,7 +139,7 @@ Press Enter.";
 }
 
 fn briefing_input(keys: Res<ButtonInput<KeyCode>>, phase: Res<State<Phase>>, mut next: ResMut<NextState<Phase>>) {
-    if *phase.get() == Phase::Briefing && (keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::NumpadEnter) || crate::dev_env::dev().skip_briefing) {
+    if *phase.get() == Phase::Briefing && (keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::NumpadEnter) || crate::dev::dev().skip_briefing) {
         next.set(Phase::Playing);
     }
 }
@@ -176,7 +177,7 @@ fn update_hud(
     }
     let now = time.elapsed_secs_f64();
     let rec = script.t as u32;
-    let p2 = Vec2::new(view.drone_pos.x, view.drone_pos.z);
+    let p2 = view.drone_pos.xz();
     let (lat, lon) = geo::latlon(p2);
     let agl = view.drone_pos.y - geo::height(p2.x, p2.y);
     let home = Vec2::new(-400.0, -1300.0);
@@ -271,7 +272,7 @@ fn show_debrief(stats: Res<Stats>, fc: Res<FireControl>, mut root: Query<&mut No
     };
     let mut waves = String::new();
     for (i, w) in stats.per_wave.iter().enumerate().skip(1) {
-        waves.push_str(&format!("   column {}: {} vehicles, {} destroyed, {} abandoned\n", i, w.0, w.1, w.2));
+        waves.push_str(&format!("   column {}: {} vehicles, {} destroyed, {} abandoned\n", i, w.vehicles, w.destroyed, w.abandoned));
     }
     **t = Text::new(format!(
         "THE DAY\n\n\
