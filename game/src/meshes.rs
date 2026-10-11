@@ -225,6 +225,19 @@ pub struct VehicleModel {
     pub turret_at: Vec3,
 }
 
+/// KMT-7 mine plow: two toothed blades ahead of the tracks, on arms from the hull's nose.
+pub fn kmt7() -> MeshBuilder {
+    let mut h = MeshBuilder::new();
+    for side in [-1.0f32, 1.0] {
+        h.boxc(Vec3::new(side * 1.38, 0.25, -4.25), Vec3::new(0.85, 0.35, 0.25), STEEL);
+        for t in 0..4 {
+            h.boxc(Vec3::new(side * 1.38 + (t as f32 - 1.5) * 0.2, 0.08, -4.45), Vec3::new(0.06, 0.2, 0.35), STEEL);
+        }
+        h.boxc(Vec3::new(side * 1.1, 0.75, -3.75), Vec3::new(0.12, 0.12, 0.9), STEEL);
+    }
+    h
+}
+
 /// T-80BV / T-72B3 family (and, recoloured, the Ukrainian T-64BV).
 pub fn tank(body: Rgb, plow: bool, ukrainian: bool) -> VehicleModel {
     let mut h = MeshBuilder::new();
@@ -246,14 +259,7 @@ pub fn tank(body: Rgb, plow: bool, ukrainian: bool) -> VehicleModel {
         h.boxc(Vec3::new(0.0, 1.1, 3.5), Vec3::new(2.0, 0.5, 0.2), [0.25, 0.26, 0.2]);
     }
     if plow {
-        // KMT-7 mine plow: two toothed blades ahead of the tracks.
-        for side in [-1.0f32, 1.0] {
-            h.boxc(Vec3::new(side * 1.38, 0.25, -4.25), Vec3::new(0.85, 0.35, 0.25), STEEL);
-            for t in 0..4 {
-                h.boxc(Vec3::new(side * 1.38 + (t as f32 - 1.5) * 0.2, 0.08, -4.45), Vec3::new(0.06, 0.2, 0.35), STEEL);
-            }
-            h.boxc(Vec3::new(side * 1.1, 0.75, -3.75), Vec3::new(0.12, 0.12, 0.9), STEEL);
-        }
+        h.append(&kmt7(), Transform::IDENTITY);
     }
 
     let mut t = MeshBuilder::new();
@@ -530,6 +536,13 @@ fn full_plow(h: &mut MeshBuilder, z: f32, width: f32) {
     }
 }
 
+/// The full-width plow on its own, for a hull that comes from elsewhere.
+pub fn full_plow_only(z: f32, width: f32) -> MeshBuilder {
+    let mut h = MeshBuilder::new();
+    full_plow(&mut h, z, width);
+    h
+}
+
 /// Leopard 2R: a 2A4 hull with a fixed armoured superstructure instead of a turret, a full-width plow and
 /// the lane-marking rack (all six Finnish vehicles went to Ukraine).
 pub fn leopard2r(body: Rgb) -> VehicleModel {
@@ -560,13 +573,9 @@ pub fn wisent(body: Rgb) -> VehicleModel {
     VehicleModel { hull: h, turret: t, turret_at: Vec3::new(0.0, 1.55, -0.3) }
 }
 
-/// BMR-2: a T-55 hull with its turret gone, an armoured cab, a heavy machine gun, and KMT-7 rollers ahead.
-pub fn bmr2(body: Rgb) -> VehicleModel {
+/// KMT-5-style mine rollers: a set of heavy discs ahead of each track on a frame.
+pub fn kmt_rollers() -> MeshBuilder {
     let mut h = MeshBuilder::new();
-    running_gear(&mut h, 3.0, 1.35, 5, 0.4, false, body);
-    let prof = [Vec2::new(3.1, 0.5), Vec2::new(3.1, 1.45), Vec2::new(-2.2, 1.5), Vec2::new(-3.25, 1.0), Vec2::new(-3.05, 0.5)];
-    h.extrude_x(&prof, 1.05, Vec3::ZERO, body);
-    // The rollers: a set of heavy discs ahead of each track on a frame.
     for side in [-1.0f32, 1.0] {
         for k in 0..3 {
             h.cylinder(Vec3::new(side * 1.35 - 0.3 + k as f32 * 0.22, 0.42, -4.7), Vec3::new(0.12, 0.0, 0.0), 0.42, 10, STEEL);
@@ -574,6 +583,16 @@ pub fn bmr2(body: Rgb) -> VehicleModel {
         h.boxc(Vec3::new(side * 1.2, 0.75, -3.85), Vec3::new(0.14, 0.14, 1.5), STEEL);
     }
     h.boxc(Vec3::new(0.0, 0.75, -4.7), Vec3::new(2.5, 0.12, 0.12), STEEL);
+    h
+}
+
+/// BMR-2: a T-55 hull with its turret gone, an armoured cab, a heavy machine gun, and KMT-7 rollers ahead.
+pub fn bmr2(body: Rgb) -> VehicleModel {
+    let mut h = MeshBuilder::new();
+    running_gear(&mut h, 3.0, 1.35, 5, 0.4, false, body);
+    let prof = [Vec2::new(3.1, 0.5), Vec2::new(3.1, 1.45), Vec2::new(-2.2, 1.5), Vec2::new(-3.25, 1.0), Vec2::new(-3.05, 0.5)];
+    h.extrude_x(&prof, 1.05, Vec3::ZERO, body);
+    h.append(&kmt_rollers(), Transform::IDENTITY);
     let mut t = MeshBuilder::new();
     t.frustum(Vec3::ZERO, Vec3::new(0.0, 0.55, 0.0), 0.75, 0.6, 8, body, true);
     t.cylinder(Vec3::new(0.0, 0.62, -0.2), Vec3::new(0.0, 0.0, -1.4), 0.03, 5, STEEL);

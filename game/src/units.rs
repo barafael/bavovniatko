@@ -13,6 +13,7 @@ use crate::fx::{self, Emitter, EmitterKind, FxAssets, FxRng};
 use crate::geo::{self, Polyline};
 use crate::meshes::{self, MUD, RU_GREEN, UA_GREEN, WEST_GREEN};
 use crate::terrain::{Paint, PaintQueue};
+use crate::baked::{self, Part};
 use crate::world::Palette;
 use bevy::{light::NotShadowCaster, platform::collections::HashMap, prelude::*};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -191,6 +192,8 @@ pub struct Vehicle {
     pub fire_timer: f32,
     pub panic: f32,
     pub turret: Entity,
+    /// The gun's muzzle in the turret's frame.
+    pub muzzle: Vec3,
     pub turret_yaw: f32,
     pub aim: Option<Vec2>,
     pub travelled: f32,
@@ -335,12 +338,53 @@ impl Radio {
     }
 }
 
-/// One kind of Russian vehicle: its hull (and plow-tank hull), its turret and where the turret sits.
+/// One kind of vehicle: its hull (and plow-tank hull), its turret, where the turret sits and where its gun ends.
 pub struct VehicleMeshes {
-    pub hull: Handle<Mesh>,
-    pub plow_hull: Option<Handle<Mesh>>,
-    pub turret: Handle<Mesh>,
+    pub hull: Vec<Part>,
+    pub plow_hull: Option<Vec<Part>>,
+    pub turret: Vec<Part>,
     pub turret_at: Vec3,
+    /// In the turret's frame.
+    pub muzzle: Vec3,
+}
+
+/// A mesh worn by a vehicle, holding the material it takes when the vehicle burns.
+#[derive(Component)]
+pub struct Skin(pub Handle<StandardMaterial>);
+
+/// The first of a model's meshes, worn by the entity itself (as every model was one mesh before the baked ones,
+/// and the day's order of play hangs on which entities carry a mesh: see `Step` in main.rs).
+pub fn skin(parts: &[Part]) -> (Mesh3d, MeshMaterial3d<StandardMaterial>) {
+    (Mesh3d(parts[0].mesh.clone()), MeshMaterial3d(parts[0].material.clone()))
+}
+
+/// ...burned out.
+pub fn burnt(parts: &[Part]) -> (Mesh3d, MeshMaterial3d<StandardMaterial>) {
+    (Mesh3d(parts[0].mesh.clone()), MeshMaterial3d(parts[0].charred.clone()))
+}
+
+/// The rest of a model's meshes, as children that remember how they burn.
+pub fn dress(e: &mut EntityCommands, parts: &[Part]) {
+    for p in &parts[1..] {
+        e.with_child((Mesh3d(p.mesh.clone()), MeshMaterial3d(p.material.clone()), Skin(p.charred.clone())));
+    }
+}
+
+/// ...burned out from the start.
+pub fn dress_charred(e: &mut EntityCommands, parts: &[Part]) {
+    for p in &parts[1..] {
+        e.with_child((Mesh3d(p.mesh.clone()), MeshMaterial3d(p.charred.clone())));
+    }
+}
+
+/// Sets a burning vehicle's (or turret's) meshes to their charred materials: its own, and its dressed children's.
+pub fn char_skins(e: Entity, own: &mut MeshMaterial3d<StandardMaterial>, parts: &[Part], children: &Query<&Children>, skins: &mut Query<(&Skin, &mut MeshMaterial3d<StandardMaterial>), Without<Vehicle>>) {
+    own.0 = parts[0].charred.clone();
+    for c in children.get(e).into_iter().flatten() {
+        if let Ok((skin, mut mat)) = skins.get_mut(*c) {
+            mat.0 = skin.0.clone();
+        }
+    }
 }
 
 /// One side's soldiers: standing body, a leg (mirrored for the other), and lying dead.
@@ -358,7 +402,7 @@ pub struct Models {
     pub hip: Vec3,
     pub raam: Handle<Mesh>,
     pub missile: Handle<Mesh>,
-    pub ua_tank: (Handle<Mesh>, Handle<Mesh>, Vec3),
+    pub ua_tank: VehicleMeshes,
     /// A lane marker: a stake with an orange flag, which the Leopard 2R drops along the lane it clears.
     pub marker: Handle<Mesh>,
 }
@@ -376,7 +420,7 @@ impl Models {
     }
 }
 
-pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
+pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>, palette: Res<Palette>) {
     // Slight per-type colour variation, and mud on the lower hull.
     let paint = |k: VKind| {
         let v = 1.0 + (k as u32 as f32 - 2.0) * 0.03;
@@ -386,11 +430,14 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
         }
         [RU_GREEN[0] * v, RU_GREEN[1] * v, RU_GREEN[2] * v * 0.98]
     };
-    let hull = |meshes: &mut Assets<Mesh>, mut m: meshes::MeshBuilder| {
-        m.tint([MUD[0] / 0.33, MUD[1] / 0.29, MUD[2] / 0.24].map(|x: f32| 0.9 + 0.1 * x));
-        meshes.add(m.build())
+    let built = |meshes: &mut Assets<Mesh>, m: meshes::MeshBuilder, mud: bool| {
+        let mut m = m;
+        if mud {
+            m.tint([MUD[0] / 0.33, MUD[1] / 0.29, MUD[2] / 0.24].map(|x: f32| 0.9 + 0.1 * x));
+        }
+        vec![Part { mesh: meshes.add(m.build()), material: palette.vertex.clone(), charred: palette.charred.clone() }]
     };
-    let mut vehicles = HashMap::new();
+    let mut procedural = HashMap::new();
     for &k in VKind::VARIANTS {
         let m = match k {
             VKind::T80 | VKind::T72 => meshes::tank(paint(k), false, false),
@@ -403,11 +450,65 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>) {
             VKind::Bmr2 => meshes::bmr2(paint(k)),
             VKind::Bradley => meshes::bradley(paint(k)),
         };
-        let plow_hull = k.carousel().then(|| hull(&mut meshes, meshes::tank(paint(k), true, false).hull));
-        vehicles.insert(k, VehicleMeshes { hull: hull(&mut meshes, m.hull), plow_hull, turret: meshes.add(m.turret.build()), turret_at: m.turret_at });
+        let plow_hull = k.carousel().then(|| built(&mut meshes, meshes::tank(paint(k), true, false).hull, true));
+        procedural.insert(k, VehicleMeshes { hull: built(&mut meshes, m.hull, true), plow_hull, turret: built(&mut meshes, m.turret, false), turret_at: m.turret_at, muzzle: Vec3::new(0.0, 0.38, -6.2) });
     }
     let ua = meshes::tank(UA_GREEN, false, true);
-    let ua_tank = (meshes.add(ua.hull.build()), meshes.add(ua.turret.build()), ua.turret_at);
+    let mut ua_tank = VehicleMeshes { hull: built(&mut meshes, ua.hull, false), plow_hull: None, turret: built(&mut meshes, ua.turret, false), turret_at: ua.turret_at, muzzle: Vec3::new(0.0, 0.38, -6.2) };
+    // The real models, where they have been baked (tools/bake). Their paint is in the textures; this only
+    // weathers it. The Leopard 2R keeps its hand-built superstructure on the 2A4 hull, and the plow tanks their
+    // hand-built KMT-7.
+    let weathered = Color::srgb(0.93, 0.9, 0.84);
+    let mut baked: HashMap<&str, baked::Baked> = HashMap::new();
+    for id in ["t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley"] {
+        if let Some(b) = baked::load(id, weathered, &mut meshes, &mut images, &mut materials) {
+            baked.insert(id, b);
+        }
+    }
+    let mut vehicles = HashMap::new();
+    for &k in VKind::VARIANTS {
+        let mut m = procedural.remove(&k).unwrap();
+        // The model whose hull it takes, and whether its turret comes too. The Leopard 2R and the Wisent (a
+        // Leopard 1 hull, near enough a 2A4's) and the BMR-2 (a T-55's, here a T-64's) keep their hand-built tops.
+        let (id, own_turret) = match k {
+            VKind::T80 => ("t80", true),
+            VKind::T72 => ("t72", true),
+            VKind::Bmp1 => ("bmp1", true),
+            VKind::Bmp2 => ("bmp2", true),
+            VKind::Mtlb => ("mtlb", true),
+            VKind::Leo2a6 => ("leo2a6", true),
+            VKind::Leo2r | VKind::Wisent => ("leo2r", false),
+            VKind::Bmr2 => ("t64", false),
+            VKind::Bradley => ("bradley", true),
+        };
+        if let Some(b) = baked.get(id) {
+            if own_turret {
+                m.turret = b.turret.clone();
+                m.turret_at = b.turret_at;
+                m.muzzle = b.muzzle;
+            } else {
+                // The hand-built top sits on the model's deck.
+                m.turret_at.y = b.hull_hi.y.min(m.turret_at.y);
+            }
+            let extra = match k {
+                VKind::Leo2r => built(&mut meshes, meshes::full_plow_only(-4.4, 4.2), false),
+                VKind::Wisent => built(&mut meshes, meshes::full_plow_only(-4.1, 3.8), false),
+                VKind::Bmr2 => built(&mut meshes, meshes::kmt_rollers(), false),
+                _ => vec![],
+            };
+            if k.carousel() {
+                m.plow_hull = Some(b.hull.iter().cloned().chain(built(&mut meshes, meshes::kmt7(), false)).collect());
+            }
+            m.hull = b.hull.iter().cloned().chain(extra).collect();
+        }
+        vehicles.insert(k, m);
+    }
+    if let Some(b) = baked.get("t64") {
+        ua_tank = VehicleMeshes { hull: b.hull.clone(), plow_hull: None, turret: b.turret.clone(), turret_at: b.turret_at, muzzle: b.muzzle };
+    }
+    let mut baked_ids: Vec<&str> = baked.keys().copied().collect();
+    baked_ids.sort();
+    info!("vehicle models baked from real ones: {baked_ids:?}");
     let mut figure = |coat, trousers, helmet, tape| {
         let f = meshes::figure(coat, trousers, helmet, Some(tape));
         (FigureMeshes { body: meshes.add(f.body.build()), leg: meshes.add(f.leg.build()), fallen: meshes.add(meshes::fallen(coat, trousers).build()) }, f.hip)
@@ -559,10 +660,12 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
     let m = models.vehicle(v.kind);
     let plow_hull = m.plow_hull.as_ref().filter(|_| v.plow);
     let plow = plow_hull.is_some();
-    let turret = commands.spawn((Mesh3d(m.turret.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(m.turret_at), Turret)).id();
+    let hull = plow_hull.unwrap_or(&m.hull);
+    let mut t = commands.spawn((skin(&m.turret), Transform::from_translation(m.turret_at), Turret));
+    dress(&mut t, &m.turret);
+    let turret = t.id();
     let mut e = commands.spawn((
-        Mesh3d(plow_hull.unwrap_or(&m.hull).clone()),
-        MeshMaterial3d(palette.vertex.clone()),
+        skin(hull),
         Transform::from_translation(geo::ground(p)).with_rotation(ground_rotation(p, yaw)),
         Vehicle {
             kind: v.kind,
@@ -582,6 +685,7 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
             fire_timer: 8.0 + v.idx as f32 * 2.3,
             panic: 0.0,
             turret,
+            muzzle: m.muzzle,
             turret_yaw: 0.0,
             aim: None,
             travelled: 0.0,
@@ -600,6 +704,7 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
         },
     ));
     e.add_child(turret);
+    dress(&mut e, hull);
     // Desant: the section rides on the roof, not inside (dossier footage, and every Vuhledar video). Mines and
     // RPGs taught both armies that the hull is the worst place to be. A Bradley's squad rides inside, behind
     // the ramp; the rescue Bradleys go in empty.
@@ -625,7 +730,7 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
     e.id()
 }
 
-fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
+fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>) {
     // The fields already hold the earlier assaults' wrecks (24 Jan – 4 Feb): BMPs and tanks, burned out, with
     // their turrets beside them. Nobody has come for them.
     let kinds = match diorama() {
@@ -636,20 +741,18 @@ fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>, palette: Res<Pa
         let k = kinds[i % kinds.len()];
         let toss = k.is_tank() && i % 2 == 1;
         let m = models.vehicle(k);
-        let mut e = commands.spawn((
-            Mesh3d(m.hull.clone()),
-            MeshMaterial3d(palette.charred.clone()),
-            Transform::from_translation(geo::ground(*p) - Vec3::Y * 0.15).with_rotation(ground_rotation(*p, *yaw)),
-        ));
+        let mut e = commands.spawn((burnt(&m.hull), Transform::from_translation(geo::ground(*p) - Vec3::Y * 0.15).with_rotation(ground_rotation(*p, *yaw))));
         if !toss {
-            e.with_child((Mesh3d(m.turret.clone()), MeshMaterial3d(palette.charred.clone()), Transform::from_translation(m.turret_at).with_rotation(Quat::from_rotation_y(i as f32))));
+            e.with_children(|c| dress_charred(&mut c.spawn((burnt(&m.turret), Transform::from_translation(m.turret_at).with_rotation(Quat::from_rotation_y(i as f32)))), &m.turret));
         }
+        dress_charred(&mut e, &m.hull);
         if i % 3 == 0 {
             e.insert(Emitter::new(EmitterKind::Smoulder, 0.5, 1.0e5, Vec3::Y));
         }
         if toss {
             let tp = *p + Vec2::from_angle(i as f32 * 1.7) * 14.0;
-            commands.spawn((Mesh3d(m.turret.clone()), MeshMaterial3d(palette.charred.clone()), Transform::from_translation(geo::ground(tp) + Vec3::Y * 0.3).with_rotation(Quat::from_euler(EulerRot::XYZ, 2.6, i as f32, 0.3))));
+            let mut t = commands.spawn((burnt(&m.turret), Transform::from_translation(geo::ground(tp) + Vec3::Y * 0.3).with_rotation(Quat::from_euler(EulerRot::XYZ, 2.6, i as f32, 0.3))));
+            dress_charred(&mut t, &m.turret);
         }
     }
 }
@@ -1186,7 +1289,9 @@ pub fn on_wrecked(
     mut sound: Sound,
     mut paint: ResMut<PaintQueue>,
     mut q: Query<(&mut Vehicle, &Transform, &mut MeshMaterial3d<StandardMaterial>), Without<Turret>>,
-    mut turrets: Query<(&mut MeshMaterial3d<StandardMaterial>, &GlobalTransform), With<Turret>>,
+    mut turrets: Query<(&mut MeshMaterial3d<StandardMaterial>, &GlobalTransform), (With<Turret>, Without<Skin>)>,
+    children: Query<&Children>,
+    mut skins: Query<(&Skin, &mut MeshMaterial3d<StandardMaterial>), Without<Vehicle>>,
 ) {
     let Ok((mut v, tf, mut mat)) = q.get_mut(ev.vehicle) else { return };
     if v.wrecked {
@@ -1203,7 +1308,8 @@ pub fn on_wrecked(
     }
     v.pitch_v -= rng.random_range(0.8..1.6);
     v.state = VState::Destroyed;
-    mat.0 = palette.charred.clone();
+    let m = models.vehicle(v.kind);
+    char_skins(ev.vehicle, &mut mat, if v.plow { m.plow_hull.as_ref().unwrap_or(&m.hull) } else { &m.hull }, &children, &mut skins);
     let attacker = v.side == diorama().attacker();
     if attacker {
         stats.destroyed += 1;
@@ -1242,7 +1348,7 @@ pub fn on_wrecked(
     sound.at(p, Sfx::BlastNear, 1.3);
     commands.entity(ev.vehicle).insert(Emitter::new(EmitterKind::WreckFire, 5.0, rng.random_range(150.0..320.0), Vec3::Y * 1.5));
     if let Ok((mut tm, tgt)) = turrets.get_mut(v.turret) {
-        tm.0 = palette.charred.clone();
+        char_skins(v.turret, &mut tm, &m.turret, &children, &mut skins);
         if v.kind.carousel() && rng.random_bool(0.4) {
             stats.turret_tosses += 1;
             let world = tgt.compute_transform();

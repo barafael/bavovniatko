@@ -270,14 +270,10 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
     // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
     let hide = Vec2::new(-150.0, -1150.0);
     let yaw = units::vehicle_yaw(Vec2::new(0.2, 1.0));
-    commands
-        .spawn((
-            Mesh3d(models.ua_tank.0.clone()),
-            MeshMaterial3d(palette.vertex.clone()),
-            Transform::from_translation(geo::ground(hide)).with_rotation(Quat::from_rotation_y(yaw)),
-            UaTank { timer: 20.0 },
-        ))
-        .with_child((Mesh3d(models.ua_tank.1.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(models.ua_tank.2)));
+    let m = &models.ua_tank;
+    let mut e = commands.spawn((units::skin(&m.hull), Transform::from_translation(geo::ground(hide)).with_rotation(Quat::from_rotation_y(yaw)), UaTank { timer: 20.0 }));
+    e.with_children(|c| units::dress(&mut c.spawn((units::skin(&m.turret), Transform::from_translation(m.turret_at))), &m.turret));
+    units::dress(&mut e, &m.hull);
 }
 
 fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, mut order: ResMut<ColumnOrder>, time: Res<Time>, mut radio: ResMut<Radio>) {
@@ -866,7 +862,7 @@ fn vehicle_fire(
         }
         let from2 = tf.translation.xz();
         let aim = v.aim.unwrap();
-        let muzzle = turrets.get(v.turret).map(|t| t.transform_point(Vec3::new(0.0, 0.38, -6.2))).unwrap_or(tf.translation + Vec3::Y * 2.0);
+        let muzzle = turrets.get(v.turret).map(|t| t.transform_point(v.muzzle)).unwrap_or(tf.translation + Vec3::Y * 2.0);
         let dir = (geo::ground(aim) - muzzle).normalize();
         if v.kind.is_tank() {
             v.fire_timer = rng.random_range(14.0..26.0);
@@ -935,7 +931,7 @@ fn defender_tank(
         return;
     }
     v.fire_timer = rng.random_range(16.0..28.0);
-    let muzzle = turrets.get(v.turret).map(|t| t.transform_point(Vec3::new(0.0, 0.38, -6.2))).unwrap_or(tf.translation + Vec3::Y * 2.0);
+    let muzzle = turrets.get(v.turret).map(|t| t.transform_point(v.muzzle)).unwrap_or(tf.translation + Vec3::Y * 2.0);
     let aim = geo::ground(tp) + Vec3::Y * 1.2;
     fx::muzzle(commands, fx, rng, muzzle, (aim - muzzle).normalize(), true);
     sound.at(muzzle, Sfx::TankGun, 1.0);

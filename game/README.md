@@ -44,9 +44,24 @@ cd game
 cargo run --release
 ```
 
-You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. Everything is generated in code:
-terrain, ground textures, trees, buildings, vehicles, people and sound. The two WGSL shaders are embedded, so
-the binary runs from anywhere.
+You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. Everything else is generated in code:
+terrain, ground textures, trees, buildings, people and sound. The two WGSL shaders are embedded.
+
+The vehicles and the Ka-52 are real 3D models: the freely licensed ones catalogued in
+[`research/assets/`](../research/assets/README.md), baked into `assets/vehicles/*.veh` (credits in
+[`assets/vehicles/CREDITS.md`](assets/vehicles/CREDITS.md)). The game looks for that folder next to the binary and
+then in this source tree. Without it, every vehicle is built in code as before. The Wisent and the BMR-2 have no model of their own: they sit on the Leopard 2A4's and the T-64's
+hulls, with their tops, plows and rollers still built in code.
+
+To rebake after changing a model or its spec, download the models (`research/assets/fetch.py`) and run:
+
+```sh
+cd tools/bake && cargo run --release            # all of them; or name some: -- t72 bmp2
+```
+
+`tools/bake/src/spec.rs` says which model becomes which vehicle: how to turn it to face -Z, its units and real
+length, and which of its pieces make up the turret (by node, or by a ring above the deck). `BAKE_PIECES=<y>` lists
+the pieces that reach above a height, to write a ring from.
 
 ## Controls
 
@@ -73,6 +88,7 @@ the binary runs from anywhere.
 | `src/terrain.rs` | chunked ground with a painted 1 m/texel texture; craters, scorch and tracks are stamped in live |
 | `src/world.rs` | shelterbelts, panel blocks, dachas, the power line, light, the steppe beyond |
 | `src/meshes.rs` | the procedural modelling kit: T-80BV, T-72B3, T-64BV, BMP-1/2, MT-LB, Leopard 2A6 and 2R, Wisent, BMR-2, Bradley, Ka-52, soldiers, buildings |
+| `src/baked.rs`, `tools/bake/` | the real vehicle models: the loader for the baked `.veh` files, and the tool that bakes them |
 | `src/units.rs` | vehicles, soldiers, mines, damage, wrecks, turret tosses |
 | `src/fire.rs` | positions and ATGM teams on both sides, artillery, RAAM, smoke, HIMARS, the vehicles' guns |
 | `src/director.rs` | the day's script: the columns, the infantry, barrages, TOS-1A, the clock |
@@ -104,7 +120,8 @@ That determinism is also the regression test: `scripts/same-day.sh before` and, 
 segments and the minute-by-minute tally. A refactor should leave all three byte for byte the same. It holds
 because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`.
 
-`VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle, and `VUHLEDAR_SPEED`
+`VUHLEDAR_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
+turned) burned out, to look the models over. `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle, and `VUHLEDAR_SPEED`
 scales game time. `VUHLEDAR_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
 (headless, it also lifts the frame cap), and `VUHLEDAR_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
 picture out, so a slow frame can be charged to what makes it slow before anything is rewritten.

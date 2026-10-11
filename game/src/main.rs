@@ -5,6 +5,7 @@
 //! the player, a Ukrainian drone operator and fire controller, matters at the margin.
 
 mod audio;
+mod baked;
 mod camera;
 mod dev;
 mod diorama;

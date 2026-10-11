@@ -7,7 +7,7 @@ license = "MIT OR Apache-2.0"
 publish = false
 
 [dependencies]
-bevy = { version = "=0.19.1", features = ["wayland"] }
+bevy = { version = "=0.19.1", features = ["wayland", "jpeg"] }
 rand = { version = "0.9", features = ["small_rng"] }
 strum = { version = "0.28.0", features = ["derive"] }
 # The ground chunks as PNGs (the version Bevy's own image loading uses).

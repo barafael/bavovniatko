@@ -72,6 +72,8 @@ pub struct DevEnv {
     /// A directory of ground chunk PNGs: read at start if complete, written after painting if not.
     pub ground: Option<String>,
     pub log_stats: bool,
+    /// Park every vehicle model in a row here (x, z, heading in degrees), live and burned out, to look them over.
+    pub lineup: Option<[f32; 3]>,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
 }
@@ -127,6 +129,7 @@ impl DevEnv {
             off: var("VUHLEDAR_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
             ground: var("VUHLEDAR_GROUND"),
             log_stats: var("VUHLEDAR_LOG_STATS").is_some(),
+            lineup: var("VUHLEDAR_LINEUP").and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok()),
             light: var("VUHLEDAR_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
                 .unwrap_or([1.0, 1.0, 0.0]),
@@ -145,12 +148,44 @@ pub struct DevPlugin;
 
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
+        app.add_systems(Startup, lineup.after(crate::units::setup_models));
         app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, scripted_fire, frame_times, env_ground).chain().in_set(crate::Step::Control).in_set(DevSystems));
     }
 }
 
 #[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub struct DevSystems;
+
+/// `VUHLEDAR_LINEUP="x,z,heading"`: every vehicle model side by side, 10 m apart, and behind them the same burned
+/// out, turrets turned a little so the split shows.
+fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
+    use crate::units::{VKind, VehicleMeshes, burnt, dress, dress_charred, skin};
+    use strum::VariantArray;
+    let Some([x, z, heading]) = dev().lineup else { return };
+    let rot = Quat::from_rotation_y(heading.to_radians());
+    let across = rot * Vec3::X;
+    let back = rot * Vec3::Z;
+    let ka52 = crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials).map(|b| VehicleMeshes { hull: b.hull, plow_hull: None, turret: b.turret, turret_at: b.turret_at, muzzle: b.muzzle });
+    let all: Vec<&VehicleMeshes> = VKind::VARIANTS.iter().map(|k| models.vehicle(*k)).chain([&models.ua_tank]).chain(ka52.as_ref()).collect();
+    for (i, m) in all.into_iter().enumerate() {
+        for row in 0..2 {
+            let at = Vec3::new(x, 0.0, z) + across * (i as f32 * 10.0) + back * (row as f32 * 14.0);
+            let at = crate::geo::ground(at.xz());
+            let at = Transform::from_translation(at).with_rotation(rot);
+            let turret = Transform::from_translation(m.turret_at).with_rotation(Quat::from_rotation_y(row as f32 * 0.5));
+            if row == 0 {
+                let hull = m.plow_hull.as_ref().unwrap_or(&m.hull);
+                let mut e = commands.spawn((skin(hull), at));
+                dress(&mut e, hull);
+                e.with_children(|c| dress(&mut c.spawn((skin(&m.turret), turret)), &m.turret));
+            } else {
+                let mut e = commands.spawn((burnt(&m.hull), at));
+                dress_charred(&mut e, &m.hull);
+                e.with_children(|c| dress_charred(&mut c.spawn((burnt(&m.turret), turret)), &m.turret));
+            }
+        }
+    }
+}
 
 fn shot_of(target: Option<&HeadlessTarget>) -> Screenshot {
     match target {

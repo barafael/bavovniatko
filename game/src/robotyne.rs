@@ -11,6 +11,7 @@
 //! north (about 70 m) to the crest in the south (about 110 m), and the fields between are a grid of tree lines.
 
 use crate::camera::MainCamera;
+use crate::baked::Part;
 use crate::fire::Missile;
 use crate::fx::{self, FxAssets, FxRng};
 use crate::geo::{self, Barrier, Belt, HALF_X, Layout, Polyline, Rect, Road, RoadKind, Route, fbm, smoothstep, v};
@@ -170,7 +171,7 @@ impl Plugin for RobotynePlugin {
 /// The observers' water tower, by the farm on the N08.
 const TOWER: Vec2 = Vec2::new(-1150.0, -1470.0);
 
-pub fn spawn_set(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>) {
+pub fn spawn_set(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>) {
     let solid = materials.add(StandardMaterial { perceptual_roughness: 0.95, ..default() });
     let mut set = MeshBuilder::new();
     // The kolkhoz by the highway: long sheds, two of them roofless, a row of silos, and the water tower.
@@ -220,8 +221,15 @@ pub fn spawn_set(mut commands: Commands, palette: Res<Palette>, mut meshes: ResM
     commands.spawn((Mesh3d(meshes.add(set.build())), MeshMaterial3d(solid)));
     commands.insert_resource(ObservationPost { eye: g + Vec3::new(0.0, 18.4, 2.7), building: TOWER });
 
-    let (body, rotor) = meshes::ka52();
-    commands.insert_resource(HeliModels { body: meshes.add(body.build()), rotor: meshes.add(rotor.build()), material: palette.vertex.clone() });
+    let heli = match crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials) {
+        Some(b) => HeliModels { body: b.hull, rotor: b.turret, rotor_at: b.turret_at },
+        None => {
+            let (body, rotor) = meshes::ka52();
+            let part = |m: Handle<Mesh>| vec![Part { mesh: m, material: palette.vertex.clone(), charred: palette.charred.clone() }];
+            HeliModels { body: part(meshes.add(body.build())), rotor: part(meshes.add(rotor.build())), rotor_at: Vec3::new(0.0, 2.6, -0.4) }
+        }
+    };
+    commands.insert_resource(heli);
 }
 
 /// The 291st's T-72B3s, dug in hull-down on the crest behind the trench, facing north.
@@ -241,9 +249,9 @@ pub fn spawn_dug_in(commands: &mut Commands, models: &Models, palette: &Palette)
 
 #[derive(Resource)]
 pub struct HeliModels {
-    body: Handle<Mesh>,
-    rotor: Handle<Mesh>,
-    material: Handle<StandardMaterial>,
+    body: Vec<Part>,
+    rotor: Vec<Part>,
+    rotor_at: Vec3,
 }
 
 #[derive(Resource)]
@@ -263,14 +271,13 @@ struct Rotor;
 
 pub fn spawn_helicopter(commands: &mut Commands, h: &HeliModels, at: Vec2) {
     let phase = (at.x * 0.013).sin() * 3.0;
-    commands
-        .spawn((
-            Mesh3d(h.body.clone()),
-            MeshMaterial3d(h.material.clone()),
-            Transform::from_translation(geo::ground(at) + Vec3::Y * 20.0),
-            Helicopter { home: at, timer: 10.0 + phase.abs() * 3.0, shots: 6, age: 0.0, phase },
-        ))
-        .with_child((Mesh3d(h.rotor.clone()), MeshMaterial3d(h.material.clone()), Transform::from_xyz(0.0, 2.6, -0.4), Rotor));
+    let mut e = commands.spawn((
+        crate::units::skin(&h.body),
+        Transform::from_translation(geo::ground(at) + Vec3::Y * 20.0),
+        Helicopter { home: at, timer: 10.0 + phase.abs() * 3.0, shots: 6, age: 0.0, phase },
+    ));
+    e.with_children(|c| crate::units::dress(&mut c.spawn((crate::units::skin(&h.rotor), Transform::from_translation(h.rotor_at), Rotor)), &h.rotor));
+    crate::units::dress(&mut e, &h.body);
 }
 
 #[allow(clippy::too_many_arguments)]
