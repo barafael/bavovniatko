@@ -462,7 +462,7 @@ fn ground_control(
 fn apply_view(
     time: Res<Time>,
     view: Res<View>,
-    op: Option<Res<ObservationPost>>,
+    op: Res<ObservationPost>,
     mut shake: ResMut<Shake>,
     camera: Single<(&mut Transform, &mut Projection), With<MainCamera>>,
 ) {
@@ -479,7 +479,7 @@ fn apply_view(
             (view.drone_pos, rot, view.drone_fov)
         }
         Mode::Op => {
-            let eye = op.map(|o| o.eye).unwrap_or(Vec3::new(-300.0, 215.0, -1230.0));
+            let eye = op.eye;
             // Hand-held binoculars: breathing sway, worse when zoomed in.
             let z = view.zoom();
             let sway = Vec2::new((t * 0.9).sin() + 0.5 * (t * 2.3).sin(), (t * 1.1).cos() + 0.4 * (t * 2.9).sin()) * 0.0015 * z.min(6.0);

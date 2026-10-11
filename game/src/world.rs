@@ -306,6 +306,11 @@ fn facade_texture(seed: u32) -> Image {
     img
 }
 
+/// The z of each row of panel blocks on the ridge, the southern (front) row first.
+const TOWN_ROWS: [f32; 5] = [-1225.0, -1330.0, -1450.0, -1580.0, -1700.0];
+
+/// Where the observers watch from: the roof of the town's front-row block at Vuhledar, the water tower south of
+/// Mala Tokmachka. Each diorama's set inserts it at startup, so it is always there once the day runs.
 #[derive(Resource)]
 pub struct ObservationPost {
     pub eye: Vec3,
@@ -321,10 +326,9 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
     let mut cards_for_town = MeshBuilder::new();
 
     // Rows of 5- and 9-storey blocks on the ridge. The southern row, facing the fields, took the worst of it.
-    let mut op_eye = Vec3::ZERO;
-    let mut op_building = Vec2::ZERO;
+    let mut op = None;
     let mut id = 0u32;
-    for (ri, z) in [-1225.0f32, -1330.0, -1450.0, -1580.0, -1700.0].into_iter().enumerate() {
+    for (ri, z) in TOWN_ROWS.into_iter().enumerate() {
         let mut x = lay.town.min.x + 120.0;
         while x < lay.town.max.x - 60.0 {
             id += 1;
@@ -352,16 +356,12 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
             commands.spawn((Mesh3d(meshes.add(body.build())), MeshMaterial3d(solid.clone()), xf));
             if is_op {
                 // At the southern parapet, between the roof housings of the first two sections.
-                op_eye = Vec3::new(x + 3.0, ground_y - 0.5 + 9.0 * 2.8 + 1.6, z + 3.9);
-                op_building = Vec2::new(cx, z);
+                op = Some((Vec3::new(x + 3.0, ground_y - 0.5 + 9.0 * 2.8 + 1.6, z + 3.9), Vec2::new(cx, z)));
             }
             x += len + 30.0 + hash01(id, 6) * 40.0;
         }
     }
-    if op_eye == Vec3::ZERO {
-        op_eye = Vec3::new(-300.0, geo::height(-300.0, -1225.0) + 27.0, -1230.0);
-        op_building = Vec2::new(-300.0, -1225.0);
-    }
+    let (op_eye, op_building) = op.expect("a front-row block spans the observers' x");
     info!("OP at {op_eye:?}");
     commands.insert_resource(ObservationPost { eye: op_eye, building: op_building });
 
@@ -390,8 +390,7 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
     let mut cars = MeshBuilder::new();
     for k in 0..1400u32 {
         let x = lay.town.min.x + 60.0 + hash01(k, 81) * (lay.town.max.x - lay.town.min.x - 120.0);
-        let rows = [-1225.0f32, -1330.0, -1450.0, -1580.0, -1700.0];
-        let row = rows[(hash01(k, 82) * 5.0) as usize % 5];
+        let row = TOWN_ROWS[(hash01(k, 82) * 5.0) as usize % 5];
         let z = row + if hash01(k, 83) < 0.5 { 1.0 } else { -1.0 } * (14.0 + hash01(k, 84) * 30.0);
         if z < -HALF_Z + 20.0 {
             continue;

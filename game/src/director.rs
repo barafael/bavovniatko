@@ -151,7 +151,7 @@ fn run_script(
     mut fc: ResMut<FireControl>,
     mut view: ResMut<crate::camera::View>,
     mut sound: audio::Sound,
-    op: Option<Res<crate::world::ObservationPost>>,
+    op: Res<crate::world::ObservationPost>,
     models: Res<Models>,
     palette: Res<Palette>,
     (mut order, helis): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>),
@@ -200,7 +200,7 @@ fn run_script(
             }
             Act::Tos { label } => {
                 // Twenty-four rockets rippling onto the southern blocks: the observers' building is the target.
-                let aim = op.as_ref().map(|o| o.building).unwrap_or(Vec2::new(-300.0, -1225.0)) + Vec2::new(rng.random_range(-250.0..250.0), rng.random_range(30.0..110.0));
+                let aim = op.building + Vec2::new(rng.random_range(-250.0..250.0), rng.random_range(30.0..110.0));
                 fc.missions.push(Mission { target: aim, kind: ShellKind::Tos, rounds: 24, sigma: 75.0, interval: 0.3, next: now + 3.0, flight: 12.0, player: false, by: Side::Ru });
                 radio.say(now, "TOS! Solntsepyok on the town! Get down!");
                 *banner = Some((label.to_string(), 4.0));
@@ -302,7 +302,7 @@ fn russian_artillery(
     let target = if !live.is_empty() && rng.random_bool(0.6) {
         live[rng.random_range(0..live.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0))
     } else {
-        Vec2::new(rng.random_range(-1800.0..1500.0), if rng.random_bool(0.5) { -660.0 } else { rng.random_range(-1400.0..-1150.0) })
+        Vec2::new(rng.random_range(-1800.0..1500.0), if rng.random_bool(0.5) { geo::layout().defence_z } else { rng.random_range(-1400.0..-1150.0) })
     };
     fc.missions.push(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 45.0, interval: 2.0, next: now, flight: 20.0, player: false, by: Side::Ru });
 }

@@ -464,8 +464,10 @@ impl Minefield {
         self.grid.entry(c).or_default().push(i);
     }
 
-    pub fn near(&self, p: Vec2, r: f32) -> Vec<usize> {
-        let mut out = Vec::new();
+    /// The live mines in the grid cells within `r` of `p`, into `out`, which is cleared first so a caller can keep
+    /// one buffer across calls.
+    pub fn near_into(&self, p: Vec2, r: f32, out: &mut Vec<usize>) {
+        out.clear();
         let (x0, x1) = (((p.x - r) / MINE_CELL).floor() as i32, ((p.x + r) / MINE_CELL).floor() as i32);
         let (z0, z1) = (((p.y - r) / MINE_CELL).floor() as i32, ((p.y + r) / MINE_CELL).floor() as i32);
         for cz in z0..=z1 {
@@ -475,7 +477,6 @@ impl Minefield {
                 }
             }
         }
-        out
     }
 }
 
@@ -727,12 +728,14 @@ fn drive_vehicles(
     (order, mut radio, mut smoke): (Res<ColumnOrder>, ResMut<Radio>, ResMut<fx::Smoke>),
     mut q: Query<(Entity, &mut Vehicle, &mut Transform), Without<Turret>>,
     mut turrets: Query<&mut Transform, With<Turret>>,
+    mut snaps: Local<Vec<Snap>>,
 ) {
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     let lay = geo::layout();
     let attacker = diorama().attacker();
-    let snaps: Vec<Snap> = q.iter().map(|(e, v, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing }).collect();
+    snaps.clear();
+    snaps.extend(q.iter().map(|(e, v, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing }));
     let cam_pos = cam.translation();
     let mut nearest_engine = f32::MAX;
     let rng = &mut rng.0;
@@ -750,7 +753,7 @@ fn drive_vehicles(
         // Who is ahead of me in my lane?
         let dir = if v.reversing { -1.0 } else { 1.0 };
         let mut blocker: Option<Snap> = None;
-        for o in &snaps {
+        for o in snaps.iter() {
             if o.e == e || o.route != v.route {
                 continue;
             }
@@ -1071,6 +1074,7 @@ fn check_mines(
     mut blasts: MessageWriter<Blast>,
     mut rng: ResMut<UnitRng>,
     mut q: Query<(Entity, &mut Vehicle, &Transform)>,
+    mut near: Local<Vec<usize>>,
 ) {
     let now = time.elapsed_secs_f64();
     for (_e, mut v, tf) in &mut q {
@@ -1081,7 +1085,8 @@ fn check_mines(
         let fwd3 = tf.rotation * Vec3::NEG_Z;
         let fwd = fwd3.xz().normalize_or_zero();
         let right = Vec2::new(-fwd.y, fwd.x);
-        for i in mf.near(p, 6.0) {
+        mf.near_into(p, 6.0, &mut near);
+        for &i in near.iter() {
             let m = mf.mines[i];
             if m.ap {
                 continue;
@@ -1546,13 +1551,15 @@ struct FootMines<'w, 's> {
     fxr: ResMut<'w, FxRng>,
     sound: Sound<'w, 's>,
     blasts: MessageWriter<'w, Blast>,
+    near: Local<'s, Vec<usize>>,
 }
 
 impl FootMines<'_, '_> {
     /// A foot comes down at `p`: if it finds an anti-personnel mine, the mine goes off.
     fn step(&mut self, commands: &mut Commands, p: Vec2) {
         let mf = &mut self.mf;
-        let Some(i) = mf.near(p, 0.6).into_iter().find(|&i| mf.mines[i].ap && mf.mines[i].pos.distance(p) < 0.45) else { return };
+        mf.near_into(p, 0.6, &mut self.near);
+        let Some(i) = self.near.iter().copied().find(|&i| mf.mines[i].ap && mf.mines[i].pos.distance(p) < 0.45) else { return };
         mf.mines[i].live = false;
         let at = geo::ground(p);
         fx::explosion(commands, &mut self.fx, &mut self.fxr.0, at, 0.35, true);

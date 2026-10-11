@@ -124,7 +124,7 @@ fn direct(
     time: Res<Time>,
     script: Res<crate::director::Script>,
     target: Option<Res<crate::camera::HeadlessTarget>>,
-    op: Option<Res<ObservationPost>>,
+    op: Res<ObservationPost>,
     mut view: ResMut<View>,
     mut next_phase: ResMut<NextState<crate::Phase>>,
     mut fc: ResMut<crate::fire::FireControl>,
@@ -150,7 +150,7 @@ fn direct(
         let step = if shot.from - t > 1.0 { STEP_SKIP } else { STEP_FILM };
         *strategy = TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step));
         tour.aim = None;
-        place_camera(&mut view, shot, 0.0, &mut tour.aim, op.as_deref(), &vehicles, &men);
+        place_camera(&mut view, shot, 0.0, &mut tour.aim, &op, &vehicles, &men);
         return;
     }
     *strategy = TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(STEP_FILM));
@@ -159,7 +159,7 @@ fn direct(
     if shot.debrief {
         next_phase.set(crate::Phase::Debrief);
     }
-    place_camera(&mut view, shot, k, &mut tour.aim, op.as_deref(), &vehicles, &men);
+    place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men);
     if tour.shot_frames == 0 {
         // Segment start: video time, game (virtual) time, length.
         let line = format!("{:.4} {:.4} {:.4}\n", tour.video_t, time.elapsed_secs_f64(), shot.secs);
@@ -178,16 +178,14 @@ fn direct(
     }
 }
 
-fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: Option<&ObservationPost>, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) {
+fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: &ObservationPost, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) {
     let ease = k * k * (3.0 - 2.0 * k);
     let fov = (shot.fov.0 + (shot.fov.1 - shot.fov.0) * ease).to_radians();
     let target = match shot.aim {
         Aim::Op(p) => {
             view.mode = Mode::Op;
             view.op_fov = fov;
-            if let Some(op) = op {
-                (view.op_yaw, view.op_pitch) = look_angles(crate::geo::ground(p) - op.eye);
-            }
+            (view.op_yaw, view.op_pitch) = look_angles(crate::geo::ground(p) - op.eye);
             return;
         }
         Aim::Drone(target) => target,

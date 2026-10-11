@@ -481,7 +481,7 @@ fn land_shells(
     mut shake: ResMut<Shake>,
     mut view: ResMut<View>,
     mut radio: ResMut<Radio>,
-    op: Option<Res<ObservationPost>>,
+    op: Res<ObservationPost>,
     (models, palette, mut stats, mut smoke): (Res<Models>, Res<Palette>, ResMut<Stats>, ResMut<fx::Smoke>),
     mut positions: Query<&mut Post>,
     mut q: Query<(Entity, &mut Shell)>,
@@ -584,7 +584,6 @@ fn land_shells(
             }
         }
         if s.by == Side::Ru
-            && let Some(op) = op.as_ref()
             && view.op_alive
             && op.building.distance(s.at) < if s.kind == ShellKind::Tos { 40.0 } else { 15.0 }
             && rng.random_bool(0.04)
@@ -621,13 +620,11 @@ fn atgm_teams(
     let now = time.elapsed_secs_f64();
     let lay = geo::layout();
     let attacker = diorama().attacker();
-    // Is any column committed: its lead vehicle past the deploy point, or stopped in the kill zone?
-    let committed: Vec<usize> = (0..lay.routes.len())
-        .filter(|&r| vehicles.iter().any(|(_, v, _)| v.side == attacker && v.route == r && v.state.alive() && v.s > lay.routes[r].deploy_s - 350.0))
-        .collect();
-    // Attacking, the overwatch fires once our column is out in the field, to cover it, not before.
-    let column_out = vehicles.iter().any(|(_, v, t)| v.side == attacker && v.state.alive() && t.translation.z * lay.advance > -450.0);
-    let targeted: Vec<Entity> = missiles.iter().map(|m| m.target).collect();
+    // The picture a team fires on, looked at only once some team is ready to fire: which columns are committed
+    // (the lead vehicle past the deploy point, or stopped in the kill zone), whether our own column is out in the
+    // field (attacking, the overwatch covers it once it is, not before), and which vehicles already have a missile
+    // on the way.
+    let mut picture: Option<(Vec<usize>, bool, Vec<Entity>)> = None;
     for (team, mut pos) in &mut teams {
         let Some(weapon) = pos.weapon else { continue };
         // Reloading goes on whoever is at the launcher, the AI or the player.
@@ -638,6 +635,13 @@ fn atgm_teams(
         if pos.reload > 0.0 {
             continue;
         }
+        let (committed, column_out, targeted) = &*picture.get_or_insert_with(|| {
+            let committed = (0..lay.routes.len())
+                .filter(|&r| vehicles.iter().any(|(_, v, _)| v.side == attacker && v.route == r && v.state.alive() && v.s > lay.routes[r].deploy_s - 350.0))
+                .collect();
+            let column_out = vehicles.iter().any(|(_, v, t)| v.side == attacker && v.state.alive() && t.translation.z * lay.advance > -450.0);
+            (committed, column_out, missiles.iter().map(|m| m.target).collect())
+        });
         let range = weapon.range();
         let mut best: Option<(Entity, f32, Vec3)> = None;
         for (e, v, tf) in &vehicles {
@@ -651,7 +655,7 @@ fn atgm_teams(
                     AtgmMode::Free => d < range,
                     AtgmMode::Hold => d < 400.0,
                     // Defending, wait for the column to commit; attacking, cover it whenever there is something to hit.
-                    AtgmMode::Auto => d < range.min(2500.0) && (pos.side == attacker && column_out || pos.side != attacker && committed.contains(&v.route) || d < 700.0),
+                    AtgmMode::Auto => d < range.min(2500.0) && (pos.side == attacker && *column_out || pos.side != attacker && committed.contains(&v.route) || d < 700.0),
                 }
             } else {
                 // The Russian teams on the crest let the column come into the minefield, then fire on anything
@@ -828,10 +832,7 @@ fn vehicle_fire(
     let now = time.elapsed_secs_f64();
     let rng = &mut fxr.0;
     let attacker = diorama().attacker();
-    let line_z = match diorama() {
-        Diorama::Vuhledar => -660.0,
-        Diorama::Robotyne => crate::robotyne::TRENCH_Z,
-    };
+    let line_z = geo::layout().defence_z;
     let live: Vec<Vec2> = positions.iter().filter(|p| p.strength > 0 && p.side != attacker).map(|p| p.pos).collect();
     let tree_line = |rng: &mut SmallRng, from: Vec2| -> Vec2 {
         // Fire at a known position if one is near, else into the nearest tree line ahead.
@@ -952,28 +953,49 @@ fn defender_tank(
 /// The brigade's pre-registered fires: when a column stalls on a known point, the guns fire on their own.
 /// At Vuhledar the 72nd's guns; south of Mala Tokmachka the Russian guns, cued by their drones, which do not see
 /// through smoke.
-fn pre_registered_fires(time: Res<Time>, mut fc: ResMut<FireControl>, mut radio: ResMut<Radio>, smoke: Res<fx::Smoke>, mut last: Local<Vec<f64>>, vehicles: Query<(&Vehicle, &Transform)>, soldiers: Query<(&Soldier, &Transform)>) {
+fn pre_registered_fires(
+    time: Res<Time>,
+    mut fc: ResMut<FireControl>,
+    mut radio: ResMut<Radio>,
+    smoke: Res<fx::Smoke>,
+    mut last: Local<Vec<f64>>,
+    // Where the attackers' stalled vehicles and their men in the open are, gathered once a frame when a point is ready.
+    mut seen: Local<(Vec<Vec2>, Vec<Vec2>)>,
+    vehicles: Query<(&Vehicle, &Transform)>,
+    soldiers: Query<(&Soldier, &Transform)>,
+) {
     let now = time.elapsed_secs_f64();
     let trps = &geo::layout().trps;
     let (attacker, defender) = (diorama().attacker(), diorama().defender());
     last.resize(trps.len(), -1000.0);
+    let (stalled_at, men_at) = &mut *seen;
+    let mut gathered = false;
     for (i, trp) in trps.iter().enumerate() {
         let (every, rounds) = if diorama() == Diorama::Robotyne { (90.0, 4) } else { (50.0, 6) };
         if now - last[i] < every || fc.brigade_shells < rounds {
             continue;
         }
-        // Stalled: knocked out, dismounting or firing from the spot, or halted behind a blockage for a while.
-        let stalled = vehicles
-            .iter()
-            .filter(|(v, t)| {
-                v.side == attacker
-                    && !smoke.covers(t.translation.xz(), now)
-                    && v.state.alive()
-                    && (matches!(v.state, VState::Immobilized | VState::Dismounting | VState::Overwatch) || (v.state == VState::Halted && v.timer > 6.0))
-                    && t.translation.xz().distance(*trp) < 140.0
-            })
-            .count();
-        let men = soldiers.iter().filter(|(s, t)| s.side == attacker && t.translation.xz().distance(*trp) < 140.0 && !smoke.covers(t.translation.xz(), now)).count();
+        if !gathered {
+            gathered = true;
+            // Stalled: knocked out, dismounting or firing from the spot, or halted behind a blockage for a while.
+            // The guns' spotters do not see through smoke.
+            stalled_at.clear();
+            stalled_at.extend(
+                vehicles
+                    .iter()
+                    .filter(|(v, t)| {
+                        v.side == attacker
+                            && !smoke.covers(t.translation.xz(), now)
+                            && v.state.alive()
+                            && (matches!(v.state, VState::Immobilized | VState::Dismounting | VState::Overwatch) || (v.state == VState::Halted && v.timer > 6.0))
+                    })
+                    .map(|(_, t)| t.translation.xz()),
+            );
+            men_at.clear();
+            men_at.extend(soldiers.iter().filter(|(s, t)| s.side == attacker && !smoke.covers(t.translation.xz(), now)).map(|(_, t)| t.translation.xz()));
+        }
+        let stalled = stalled_at.iter().filter(|p| p.distance(*trp) < 140.0).count();
+        let men = men_at.iter().filter(|p| p.distance(*trp) < 140.0).count();
         if stalled >= 1 || men >= 6 {
             last[i] = now;
             fc.brigade_shells -= rounds;

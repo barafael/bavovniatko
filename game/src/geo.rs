@@ -239,6 +239,8 @@ pub struct Layout {
     pub advance: f32,
     /// The defenders' forward line (z): attackers alive at or past it hold a foothold.
     pub foothold_z: f32,
+    /// The defenders' main line (z), the tree line or trench the attackers' guns work over.
+    pub defence_z: f32,
     /// The drone's base, and the z beyond which it flies into the enemy's jamming.
     pub home: Vec2,
     pub jam_z: f32,
@@ -269,6 +271,9 @@ fn river_z(x: f32) -> f32 {
     1480.0 + 55.0 * (x / 410.0).sin() + 28.0 * (x / 160.0 + 1.3).sin()
 }
 
+/// The first shelterbelt in front of the town, the 72nd's forward tree line.
+const FIRST_BELT_Z: f32 = -660.0;
+
 fn build_layout() -> Layout {
     let river = Polyline::new((0..=96).map(|i| {
         let x = -HALF_X - 50.0 + i as f32 * (2.0 * HALF_X + 100.0) / 96.0;
@@ -298,7 +303,7 @@ fn build_layout() -> Layout {
 
     // Shelterbelts: field blocks about 0.55 × 1.2 km (research/06 §8).
     let mut belts = Vec::new();
-    for (i, z) in [-660.0f32, -110.0, 440.0, 990.0].into_iter().enumerate() {
+    for (i, z) in [FIRST_BELT_Z, -110.0, 440.0, 990.0].into_iter().enumerate() {
         let wob = |x: f32| z + 6.0 * (x / 300.0 + i as f32).sin();
         let line = Polyline::new((0..=40).map(|k| {
             let x = -HALF_X + 40.0 + k as f32 * (2.0 * HALF_X - 80.0) / 40.0;
@@ -379,6 +384,7 @@ fn build_layout() -> Layout {
         old_wrecks,
         advance: -1.0,
         foothold_z: -560.0,
+        defence_z: FIRST_BELT_Z,
         home: v(-400.0, -1300.0),
         jam_z: -100.0,
         mortar_band: (-900.0, 700.0),

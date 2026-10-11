@@ -142,6 +142,7 @@ pub fn build_layout() -> Layout {
         old_wrecks,
         advance: 1.0,
         foothold_z: TRENCH_Z - 40.0,
+        defence_z: TRENCH_Z,
         home: v(-200.0, -1600.0),
         jam_z: 100.0,
         mortar_band: (-600.0, TRENCH_Z),

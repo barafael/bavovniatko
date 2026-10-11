@@ -293,7 +293,8 @@ fn show_debrief(stats: Res<Stats>, fc: Res<FireControl>, positions: Query<&Post>
             for (i, w) in stats.per_wave.iter().enumerate().skip(1) {
                 waves.push_str(&format!("   column {}: {} vehicles, {} destroyed, {} abandoned\n", i, w.vehicles, w.destroyed, w.abandoned));
             }
-            let closest = (1130.0 - stats.max_advance).max(0.0);
+            // How close they came to the town's southern edge.
+            let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
             format!(
                 "THE DAY\n\n\
 Russian vehicles committed  {}\n{}\
