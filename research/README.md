@@ -38,6 +38,7 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
 | — | [contradictions.md](contradictions.md) | Every pair of claims that cannot both be true as stated, with claimants, sources and the explanation (generated) |
 | — | [sources.yaml](sources.yaml) | The deduplicated index of every source (generated from the knowledge base) |
 | — | `sources/NN-*.yaml`, `sources/chapters/*.yaml` | The sources cited by each topic file and chapter dossier (generated) |
+| — | [assets/](assets/) | **3D-asset catalogue** for the game's equipment: hand-written (not generated, not in the KB) — verified freely-licensed models of tanks, IFVs, artillery, aircraft, drones, ships, trucks and cars, with licence and provenance warnings |
 
 Every topic file has the same skeleton: overview → per-era notes → catalogue/figures tables →
 "Russia's side as reported" (00–05) → **Game/sim relevance** → Terms → Open questions/gaps → Sources.

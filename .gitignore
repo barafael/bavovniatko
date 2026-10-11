@@ -5,6 +5,10 @@ db/.venv/
 __pycache__/
 # user-local resume note
 claude-resume
+# downloaded reference footage (temporary, for review only — not part of the KB)
+research/footage-ref/
+# downloaded 3D asset files (reference only; the catalogue in research/assets/ is links-only)
+research/assets/files/
 # derived staging artefacts (regenerate with the tools)
 db/staging/relations/batches/
 db/staging/relations/candidates.jsonl
