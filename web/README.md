@@ -9,7 +9,8 @@ db/dump/*.jsonl ──db/tools/webexport.py──▶ crates/app/public/data/   t
 web/kb/functions.surql, gallery.surql ──┘                             the fn:: query library and example queries
 crates/kbcore    database core: open, load the manifest, seal read-only, query → JSON (native + wasm)
 crates/worker    Web Worker hosting kbcore; JSON messages to and from the app
-crates/app       Leptos UI (client-side): notebook, chapters, map, arms race, numbers, disputes, claim pages
+crates/app       Leptos UI (client-side): front page, search, notebook, dossiers, map, arms race, numbers,
+                disputes, questions, claim graph, claim pages
 bridge/          npm package bundling CodeMirror 6 + @surrealdb/codemirror and MapLibre GL → crates/app/bridge/
 crates/kbcheck   native check: loads the dataset exactly as the browser does, runs the gallery and write probes
 ```
@@ -32,6 +33,10 @@ working.
 
 All views are hash routes, so every state is a shareable link.
 
+- **Front page** (`#/`): what the base holds — counts from `fn::stats()`, the routes in, the strongest
+  disagreements, the eras and the topic surveys.
+- **Search** (`#/search?q=…`): BM25 over the claim text, debounced, query in the URL, each hit with the sources
+  behind it.
 - **Notebook** (`#/notebook?q=…`): a SurrealQL editor with highlighting and autocomplete, and an example
   gallery. Results show as tables or JSON. Record ids and claim keys link to their views, also inside lists and
   nested objects. An object `{id, name}` (or `title`, `label`, `text`) shows as a link with that name, so queries
@@ -47,9 +52,27 @@ All views are hash routes, so every state is a shareable link.
   claim, plus who claims what and how the disagreement is explained.
 - **Claim pages** (`#/claim/claim:…`): claimants, sources with quotes, what the claim is about, its numbers, and a
   relation graph.
-- **Record pages** (`#/record/system:zhdun`): every other record (systems, actors, sources, events, works, kinds,
+- **Open questions** (`#/questions`): the gaps the base records and has not closed, filterable by topic and word.
+- **Claim graph** (`#/graph/claim:…?hops=2`): claims and the relations between them, one to three steps out from a
+  seed record. See below.
+- **Record pages** (`#/record/system:zhdun`): every other record (systems, actors, sources, events, kinds,
   relation edges) with its fields, what counters it and what it counters, its parts, a kind's members, and the
   claims about it, asserted by it or citing it (`fn::record`).
+
+### Why the graph is seeded
+
+There is no view of all the claims at once. 70% of the 10,000+ claims have no relation to any other claim, so the
+whole set is a field of singletons around a few dense clusters — a picture of nothing. Instead `#/graph/<seed>`
+starts at one record and walks out `?hops=` (1–3, clamped), following relations in order of strength.
+
+Any record can be a seed: a claim seeds itself; a place, topic, system, metric or actor seeds the claims that point
+at it (`fn::seed_claims`). Extracted duplicates are excluded — two records saying the same thing is an artefact of
+the extraction, not an argument, and they are 30% of all edges. `fn::canonical` still folds them on the claim pages.
+
+The layout is about forty lines of Fruchterman–Reingold in `graph.rs` and the result is plain SVG, so no
+JavaScript graph library is pulled in and the sizes recorded below do not move. `fn::edges_from` does one bulk pass
+per relation table (`WHERE in IN $c` / `WHERE out IN $c`) rather than calling `fn::relations` per claim: the first
+form cost 9.8 s for a place with 226 claims, the second is 24 ms and does not care how many seeds it is given.
 
 ## Building
 
@@ -109,6 +132,14 @@ ready in 11.5 s, so it doesn't pay off. A first visit downloads about 10 MB gzip
 
 Query timings are mostly 1–250 ms. One trap: correlated subqueries (`… WHERE x = $parent.id`) do not use indexes.
 A `GROUP BY` is usually orders of magnitude faster.
+
+A second trap, which cost a whole round of debugging: `type::table($r)` returns a **table**, not a string, so
+`IF type::table($r) = "topic" THEN …` is silently false forever. Cast it: `LET $t = <string>type::table($r);`.
+Related: `array::append(a, b)` takes `(array, value)`, so nesting arrays gives you `[[], []]` — use
+`array::flatten([$e1, $e2])`. Both are commented in `functions.surql`.
+
+SurrealQL 3.3 also rejects two things this project used to write: `<-supports<-` does not parse (use
+`array::len(<-cites) > 0`) and the `=~` regex operator does not parse (use `string::starts_with`).
 
 ## Licences
 

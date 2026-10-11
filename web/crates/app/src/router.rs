@@ -1,13 +1,20 @@
 //! Hash routes, so every view is a shareable link and the site works as plain static files:
-//! `#/notebook?q=…`, `#/claim/claim:…`, `#/disputes`, `#/map[/place:…|/topic:…]`, `#/arms`,
-//! `#/series[/metric:…]`, `#/dossiers[/topic:…]` (or the older `#/chapters`), `#/about`. The older `#q=…` opens the notebook.
+//! `#/`, `#/notebook?q=…`, `#/search?q=…`, `#/questions`, `#/claim/claim:…`, `#/disputes`,
+//! `#/graph/claim:…?hops=2`, `#/map[/place:…|/topic:…]`, `#/arms`, `#/series[/metric:…]`,
+//! `#/dossiers[/topic:…]` (or the older `#/chapters`), `#/about`. The older `#q=…` opens the notebook.
+//!
+//! `hops` is the graph's step count, 1–3 (`MAX_HOPS` in graph.rs); it clamps into range when parsed.
 
 use leptos::prelude::*;
 use wasm_bindgen::prelude::*;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Route {
+    Home,
     Notebook(Option<String>),
+    Search(String),
+    Questions,
+    Graph(Option<String>, i32),
     Claim(String),
     Record(String),
     Disputes,
@@ -16,6 +23,11 @@ pub enum Route {
     Series(Option<String>),
     Chapters(Option<String>),
     About,
+}
+
+/// The step count from a route's query string, clamped to the range the graph view walks.
+fn hops(query: &str) -> i32 {
+    query.strip_prefix("hops=").and_then(|h| h.parse().ok()).unwrap_or(2).clamp(1, 3)
 }
 
 fn decode(s: &str) -> String {
@@ -36,6 +48,10 @@ pub fn parse(hash: &str) -> Route {
     let (page, arg) = path.split_once('/').map(|(p, a)| (p, Some(decode(a)))).unwrap_or((path, None));
     let arg = arg.filter(|a| !a.is_empty());
     match page {
+        "" => Route::Home,
+        "search" => Route::Search(query.strip_prefix("q=").map(decode).unwrap_or_default()),
+        "questions" => Route::Questions,
+        "graph" => Route::Graph(arg, hops(query)),
         "claim" => arg.map(Route::Claim).unwrap_or(Route::Notebook(None)),
         "record" => arg.map(Route::Record).unwrap_or(Route::Notebook(None)),
         "disputes" => Route::Disputes,
@@ -54,8 +70,14 @@ pub fn href(r: &Route) -> String {
         None => format!("#/{p}"),
     };
     match r {
+        Route::Home => "#/".into(),
         Route::Notebook(None) => "#/notebook".into(),
         Route::Notebook(Some(q)) => format!("#/notebook?q={}", encode(q)),
+        Route::Search(q) if q.is_empty() => "#/search".into(),
+        Route::Search(q) => format!("#/search?q={}", encode(q)),
+        Route::Questions => "#/questions".into(),
+        Route::Graph(None, h) => format!("#/graph?hops={h}"),
+        Route::Graph(Some(a), h) => format!("#/graph/{}?hops={h}", encode(a)),
         Route::Claim(id) => format!("#/claim/{}", encode(id)),
         Route::Record(id) => format!("#/record/{}", encode(id)),
         Route::Disputes => "#/disputes".into(),
@@ -105,7 +127,9 @@ pub fn replace(r: &Route) {
 pub fn record_route(table: &str, rid: &str) -> Route {
     match table {
         "claim" => Route::Claim(rid.into()),
-        "place" | "topic" => if table == "topic" && is_chapter(rid) { Route::Chapters(Some(rid.into())) } else { Route::Map(Some(rid.into())) },
+        // A topic's own page is its dossier if it has one, and the map view (which filters by topic) otherwise.
+        "topic" if is_chapter(rid) => Route::Chapters(Some(rid.into())),
+        "place" | "topic" => Route::Map(Some(rid.into())),
         "metric" => Route::Series(Some(rid.into())),
         _ => Route::Record(rid.into()),
     }

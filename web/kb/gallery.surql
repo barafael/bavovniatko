@@ -50,6 +50,27 @@ fn::search("glide bomb Kharkiv");
 -- One claim with its sources, claimants and relations
 fn::claim(claim:c00_0063_04);
 
+-- Any record with everything pointing at it: claims about it, claims it asserts, claims citing it, its parts
+fn::record(system:zhdun);
+
+-- Every claim-to-claim relation of one claim, in both directions, as raw rows
+fn::relations(claim:c07_0029_12);
+
+-- The canonical claim behind a chain of extracted duplicates
+fn::canonical(claim:cc15_0022_15);
+
+-- The claims within two steps of one claim, as the edges between them (what the graph view draws)
+fn::graph([claim:c07_0029_12], 2);
+
+-- The claims a place sits at the centre of, which seed the graph view
+fn::seed_claims(place:avdiivka);
+
+-- Counts for the front page
+fn::stats();
+
+-- Every claim about any place inside an oblast
+fn::claims_in_region(place:kursk_oblast);
+
 -- The strongest contradictions between claimants, with how they are explained
 SELECT strength, in.{id, text} AS a, in->asserted_by->actor.{id, name: labels.en} AS a_by, out.{id, text} AS b,
        out->asserted_by->actor.{id, name: labels.en} AS b_by, resolution
