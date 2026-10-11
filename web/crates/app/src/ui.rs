@@ -191,6 +191,16 @@ pub fn strs(v: &Value) -> Vec<String> {
     }
 }
 
+/// The placeholder while a query runs.
+pub fn loading() -> AnyView {
+    view! { <div class="placeholder">"Loading …"</div> }.into_any()
+}
+
+/// The placeholder while the browser database is still loading.
+pub fn waiting_for_db() -> AnyView {
+    view! { <div class="placeholder">"The knowledge base is loading in your browser (about 10 seconds) …"</div> }.into_any()
+}
+
 pub fn error_box(e: String) -> AnyView {
     view! { <div class="error">{e}</div> }.into_any()
 }
@@ -201,8 +211,8 @@ pub type Rows = Option<Option<Result<Vec<Value>, String>>>;
 /// The view of a query's rows once they are in; until then, what is happening.
 pub fn on_rows(rows: Rows, f: impl FnOnce(Vec<Value>) -> AnyView) -> AnyView {
     match rows {
-        None => view! { <div class="placeholder">"Loading …"</div> }.into_any(),
-        Some(None) => view! { <div class="placeholder">"The knowledge base is loading in your browser (about 10 seconds) …"</div> }.into_any(),
+        None => loading(),
+        Some(None) => waiting_for_db(),
         Some(Some(Err(e))) => error_box(e),
         Some(Some(Ok(rows))) => f(rows),
     }

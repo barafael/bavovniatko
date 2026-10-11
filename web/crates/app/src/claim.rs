@@ -13,7 +13,7 @@ use crate::ui::{GREY, error_box, fmt_time, group_by, key_of, list, on_rows, rid_
 #[derive(Clone, Copy, PartialEq, Eq, Deserialize, IntoStaticStr, VariantArray)]
 #[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
-enum Relation {
+pub enum Relation {
     Supports,
     Weakens,
     Contradicts,
@@ -23,7 +23,7 @@ enum Relation {
 }
 
 impl Relation {
-    fn color(self) -> &'static str {
+    pub fn color(self) -> &'static str {
         match self {
             Relation::Supports => "#2e8540",
             Relation::Weakens => "#d97706",
@@ -47,6 +47,11 @@ impl Relation {
             (Relation::Duplicates, Dir::From) => "Duplicated by".into(),
         }
     }
+}
+
+/// A relation's colour by name; grey for anything unknown.
+pub fn relation_color(rel: &str) -> &'static str {
+    Relation::VARIANTS.iter().find(|r| <&str>::from(**r) == rel).map_or(GREY, |r| r.color())
 }
 
 /// Whether the edge leaves this claim (`to` the other) or arrives at it (`from` the other).

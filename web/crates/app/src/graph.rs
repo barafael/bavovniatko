@@ -7,7 +7,9 @@ use std::collections::HashMap;
 use leptos::prelude::*;
 use serde_json::Value;
 
-use crate::claim::{RELATIONS, relation_color};
+use strum::VariantArray;
+
+use crate::claim::{Relation, relation_color};
 use crate::kb::Kb;
 use crate::router::{Route, go, href};
 use crate::ui::{claim_key, error_box, loading, rows_resource, waiting_for_db};
@@ -357,14 +359,14 @@ fn picture(nodes: Vec<Node>, links: Vec<Link>, extra: usize) -> AnyView {
     let mut nodes = nodes;
     layout(&mut nodes, &links);
     // Relation counts for the legend, in the claim page's order.
-    let mut legend: Vec<(String, usize)> = RELATIONS.iter().map(|(rel, _, _)| (rel.to_string(), 0)).collect();
+    let mut legend: Vec<(String, usize)> = Relation::VARIANTS.iter().map(|r| (<&str>::from(*r).to_string(), 0)).collect();
     for l in &links {
         if let Some((_, n)) = legend.iter_mut().find(|(rel, _)| rel == &l.rel) {
             *n += 1;
         }
     }
     legend.retain(|(_, n)| *n > 0);
-    legend.sort_by_key(|(rel, _)| RELATIONS.iter().position(|(r, _, _)| r == rel).unwrap_or(99));
+    legend.sort_by_key(|(rel, _)| Relation::VARIANTS.iter().position(|r| <&str>::from(*r) == rel).unwrap_or(99));
 
     view! {
         <div class="graph-body">
