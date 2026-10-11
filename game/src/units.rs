@@ -215,6 +215,17 @@ pub struct Vehicle {
     pub rescue: bool,
     /// Smoke grenades fired (once).
     pub smoked: bool,
+    /// This driver's own pace, as a fraction of the kind's speed: a column is never one speed.
+    pub pace: f32,
+    /// How many seconds behind the truth this driver's idea of the vehicle ahead runs.
+    pub lag: f32,
+    /// The speed of the vehicle ahead, as the driver has caught up with it.
+    pub lead_speed: f32,
+    /// Metres driven in all (`travelled` is the paint odometer, reset every 2 m).
+    pub odometer: f32,
+    /// A halt planned on the approach: at this odometer reading, for this many seconds (a driver who has lost
+    /// the one ahead in the exhaust smoke, or waits for an order).
+    pub halt_at: Option<(f32, f32)>,
 }
 
 #[derive(Component)]
@@ -651,6 +662,11 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
             slew: 0.0,
             rescue: v.rescue,
             smoked: false,
+            pace: 0.9 + 0.2 * geo::hash01(v.wave * 100 + v.idx, 23),
+            lag: 1.0 + 2.0 * geo::hash01(v.wave * 100 + v.idx, 24),
+            lead_speed: 0.0,
+            odometer: 0.0,
+            halt_at: (geo::hash01(v.wave * 100 + v.idx, 25) < 0.1).then(|| (100.0 + 500.0 * geo::hash01(v.wave * 100 + v.idx, 26), 5.0 + 15.0 * geo::hash01(v.wave * 100 + v.idx, 27))),
         },
     ));
     e.add_child(turret);
@@ -764,6 +780,23 @@ struct Snap {
     state: VState,
     speed: f32,
     reversing: bool,
+    pos: Vec2,
+}
+
+/// How fast the ground lets a tracked vehicle go, as a fraction of its road speed: the road itself, the plowed
+/// lane, a field under thin snow or in June's dry stubble, a turn off the road, a shell crater under a track.
+fn going(p: Vec2, lat: f32, lay: &geo::Layout, craters: &crate::terrain::Craters, turning: bool) -> f32 {
+    if craters.near(p, 4.0) {
+        return 0.3;
+    }
+    if lay.roads.iter().any(|r| r.line.project(p).0 < r.width * 0.5 + 1.0) {
+        return 1.0;
+    }
+    if lat.abs() < 3.0 && lay.barriers.iter().any(|b| (b.z0..b.z1).contains(&p.y)) {
+        return 0.85;
+    }
+    let field = if diorama().summer() { 0.8 } else { 0.6 };
+    if turning { field * 0.8 } else { field }
 }
 
 fn drive_vehicles(
@@ -788,7 +821,7 @@ fn drive_vehicles(
     let lay = geo::layout();
     let attacker = diorama().attacker();
     snaps.clear();
-    snaps.extend(q.iter().map(|(e, v, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing }));
+    snaps.extend(q.iter().map(|(e, v, t)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing, pos: t.translation.xz() }));
     let cam_pos = cam.translation();
     let mut nearest_engine = f32::MAX;
     let rng = &mut rng.0;
@@ -817,10 +850,13 @@ fn drive_vehicles(
             }
         }
 
-        let mut want_speed = v.kind.speed();
+        let mut want_speed = v.kind.speed() * v.pace;
         // A breacher drives with its plow up until the minefield, then digs in at a walking pace.
         if v.kind.breacher() && !lay.barriers.iter().any(|b| (b.z0 - 60.0..b.z1).contains(&tf.translation.z)) {
-            want_speed = 4.6;
+            want_speed = 4.6 * v.pace;
+        }
+        if blocker.is_none() {
+            v.lead_speed = want_speed;
         }
         // The player's order to the column (Robotyne): hold everyone where they are, or bring them all back.
         if v.state != VState::Withdrawing && !v.rescue {
@@ -845,7 +881,9 @@ fn drive_vehicles(
                     let gap = (b.s - v.s).abs();
                     let b_moving = b.state.mobile() && b.speed > 0.5 && b.reversing == v.reversing && b.state != VState::Halted;
                     if b_moving {
-                        want_speed = want_speed.min(b.speed * (gap / 40.0).clamp(0.0, 1.2));
+                        // The driver answers the vehicle ahead a second or three late: the column breathes.
+                        v.lead_speed += (b.speed - v.lead_speed) * (dt / v.lag).min(1.0);
+                        want_speed = want_speed.min(v.lead_speed * (gap / 40.0).clamp(0.0, 1.2));
                         v.state = VState::Advancing;
                     } else if gap < 45.0 {
                         // The road is blocked by a wreck or a stalled vehicle. Wait, or go round it through the field.
@@ -865,7 +903,21 @@ fn drive_vehicles(
                         }
                     }
                 } else if v.state == VState::Halted {
-                    v.state = VState::Advancing;
+                    // A planned halt holds for its time; any other halt ends when the road ahead is clear.
+                    if v.halt_at.is_some_and(|(_, secs)| v.timer < secs) {
+                        want_speed = 0.0;
+                    } else {
+                        v.halt_at = None;
+                        v.state = VState::Advancing;
+                    }
+                }
+                if let Some((at, secs)) = v.halt_at
+                    && v.state == VState::Advancing
+                    && v.odometer > at
+                {
+                    v.state = VState::Halted;
+                    v.timer = 0.0;
+                    v.halt_at = Some((f32::MAX, secs));
                 }
                 // Stuck in the minefield under fire, a Bradley drops its ramp and the squad goes on foot.
                 if v.side == Side::Ua && v.state == VState::Halted && v.troops > 0 && v.timer > 3.5 && v.panic > 0.3 {
@@ -947,7 +999,7 @@ fn drive_vehicles(
                     commands.entity(e).despawn();
                     continue;
                 }
-                want_speed = v.kind.speed() * 1.1;
+                want_speed = v.kind.speed() * 1.1 * v.pace;
                 if let Some(b) = blocker
                     && !b.state.mobile()
                     && (b.s - v.s).abs() < 25.0
@@ -958,12 +1010,45 @@ fn drive_vehicles(
             _ => {}
         }
 
+        // The ground: a road, a plowed lane, a field under snow, a turn off the road, a crater under a track.
+        let me = tf.translation.xz();
+        let turning = (v.target_lat - v.lat).abs() > 1.0;
+        let going = going(me, v.lat, lay, &paint.craters, turning);
+        want_speed *= going;
+        // Steel does not pass through steel: a hull within a length ahead stops this one, and a hull beside it
+        // stops the sideways move towards it, whatever lane either is in.
+        let fwd2 = Vec2::new(-v.yaw.sin(), -v.yaw.cos()) * dir;
+        let right2 = Vec2::new(-fwd2.y, fwd2.x);
+        let side_move = route.normal(v.s) * (v.target_lat - v.lat).signum();
+        let (mut blocked_ahead, mut blocked_beside) = (false, false);
+        let mut push = Vec2::ZERO;
+        for o in snaps.iter() {
+            if o.e == e {
+                continue;
+            }
+            let d = o.pos - me;
+            let (along, across) = (d.dot(fwd2), d.dot(right2));
+            blocked_ahead |= (0.0..7.5).contains(&along) && across.abs() < 3.6;
+            blocked_beside |= turning && d.length() < 5.5 && d.dot(side_move) > 0.0;
+            // Two hulls that have slid into each other sideways (where neither test looks) work apart.
+            if d.length() < 5.0 {
+                push -= d.normalize_or(route.normal(v.s)) * (5.0 - d.length());
+            }
+        }
+        if blocked_ahead {
+            want_speed = 0.0;
+        }
+        if push != Vec2::ZERO {
+            let step = push.clamp_length_max(1.5 * dt);
+            v.s = (v.s + step.dot(route.tangent(v.s))).clamp(0.0, route.length());
+            v.lat += step.dot(route.normal(v.s));
+        }
         // Move in route coordinates. A tank accelerates at about 1 m/s² and brakes at about 2; it brakes hard only
         // when something is right in front of it.
-        let hard = blocker.is_some_and(|b| (b.s - v.s).abs() < 22.0) || v.panic > 0.7;
+        let hard = blocked_ahead || blocker.is_some_and(|b| (b.s - v.s).abs() < 22.0) || v.panic > 0.7;
         let prev_speed = v.speed;
         v.speed += (want_speed - v.speed).clamp(-if hard { 3.5 } else { 1.8 } * dt, 1.1 * dt);
-        let lat_rate = (v.target_lat - v.lat).clamp(-2.5, 2.5);
+        let lat_rate = if blocked_beside { 0.0 } else { (v.target_lat - v.lat).clamp(-2.5, 2.5) };
         let ds = v.speed * dt * if v.reversing { -1.0 } else { 1.0 };
         v.s = (v.s + ds).clamp(0.0, route.length());
         v.lat += lat_rate * dt * (v.speed / 4.0).clamp(0.2, 1.0);
@@ -977,14 +1062,16 @@ fn drive_vehicles(
         let yaw = v.yaw;
         let old = tf.translation.xz();
         tf.translation = geo::ground(p) + Vec3::Y * 0.05;
-        // Suspension: nose down under braking, squat under power, roll in turns, pitching over the ruts.
+        // Suspension: nose down under braking, squat under power, roll in turns, pitching over the ruts, and
+        // worse the worse the going.
         let accel = (v.speed - prev_speed) / dt.max(1e-4) * if v.reversing { -1.0 } else { 1.0 };
-        let rough = geo::value_noise(v.s * 0.35, v.idx as f32 * 3.1, 77) * 0.03 * (v.speed / 5.0);
+        let rough = geo::value_noise(v.s * 0.35, v.idx as f32 * 3.1, 77) * 0.03 * (v.speed / 5.0) * (1.0 + 2.0 * (1.0 - going));
         let roll_target = -dyaw / dt.max(1e-4) * v.speed * 0.012;
         suspension(&mut v, accel * 0.022 + rough, roll_target, dt);
         tf.rotation = ground_rotation(p, yaw) * Quat::from_rotation_x(v.pitch) * Quat::from_rotation_z(v.roll);
         let moved = old.distance(p);
         v.travelled += moved;
+        v.odometer += moved;
         if v.travelled > 2.0 {
             v.travelled = 0.0;
             paint.push(Paint::Track { at: p, dir: heading, gauge: 2.8 });
@@ -999,7 +1086,8 @@ fn drive_vehicles(
                     }
                 }
             }
-            if v.speed > 2.0 && rng.random_bool(0.5) {
+            // Hard going throws more: the tracks dig.
+            if v.speed > 2.0 && rng.random_bool((0.5 / going.max(0.4)).min(1.0) as f64) {
                 fx::spray(&mut commands, &mut fx, &mut fxr.0, geo::ground(p) + Vec3::new(0.0, 0.0, 0.0) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
             }
         }
@@ -1032,12 +1120,22 @@ fn suspension(v: &mut Vehicle, pitch_target: f32, roll_target: f32, dt: f32) {
 }
 
 /// Vehicles knocked out or immobilised while moving coast to a stop, slewing; then the hull settles.
-fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, mut q: Query<(&mut Vehicle, &mut Transform)>) {
+fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, mut q: Query<(Entity, &mut Vehicle, &mut Transform)>, mut hulls: Local<Vec<(Entity, Vec2)>>) {
     let dt = crate::sim_dt(&time);
     let lay = geo::layout();
-    for (mut v, mut tf) in &mut q {
+    hulls.clear();
+    hulls.extend(q.iter().map(|(e, _, t)| (e, t.translation.xz())));
+    for (e, mut v, mut tf) in &mut q {
         if v.state.mobile() {
             continue;
+        }
+        // A rolling wreck stops against the next hull instead of sliding into it.
+        if v.speed > 0.02 {
+            let dir = Vec2::new(-v.yaw.sin(), -v.yaw.cos()) * if v.reversing { -1.0 } else { 1.0 };
+            let me = tf.translation.xz();
+            if hulls.iter().any(|(o, p)| *o != e && { let d = *p - me; d.dot(dir) > 0.0 && d.length() < 6.0 }) {
+                v.speed = 0.0;
+            }
         }
         let moving = v.speed > 0.02;
         if !moving && v.pitch.abs() < 1e-4 && v.pitch_v.abs() < 1e-4 && v.roll.abs() < 1e-4 && v.roll_v.abs() < 1e-4 {

@@ -178,9 +178,16 @@ fn run_script(
             Act::Column { route, kinds, plow, smoke, start, label, rescue } => {
                 *wave += 1;
                 let n = kinds.len();
+                // Single file, the lead furthest up the road, 30–60 m between vehicles: no two drivers keep the
+                // same distance.
+                let mut at = *start + 10.0;
+                let mut places = vec![0.0f32; n];
+                for i in (0..n).rev() {
+                    places[i] = at;
+                    at += 30.0 + geo::hash01(*wave * 100 + i as u32, 21) * 30.0;
+                }
                 for (i, k) in kinds.iter().enumerate() {
-                    // Single file, about 42 m apart, the lead furthest up the road.
-                    let s = start + (n - 1 - i) as f32 * 42.0 + 10.0;
+                    let s = places[i];
                     // The plow leads; a roller vehicle or a second plow behind it keeps its own.
                     let plow = *plow && (i == 0 || k.breacher());
                     let side = diorama().attacker();

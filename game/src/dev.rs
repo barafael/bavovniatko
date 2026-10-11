@@ -3,7 +3,7 @@
 
 use crate::camera::{HeadlessTarget, Mode, Target, View, look_angles};
 use crate::fire::{Atgm, FireControl, Strike, Post};
-use crate::units::{Radio, Side, Soldier, Stats, Vehicle};
+use crate::units::{Radio, Side, Soldier, Stats, VState, Vehicle};
 use bevy::{diagnostic::DiagnosticsStore, prelude::*, render::view::screenshot::{Screenshot, save_to_disk}};
 use std::{str::FromStr, sync::OnceLock};
 
@@ -66,6 +66,8 @@ pub struct DevEnv {
     pub rec_secs: f32,
     /// Scripted fire missions: game time and strike.
     pub fire: Vec<(f32, Strike)>,
+    /// Scripted drone flight: legs of game time with what the sticks do (see `camera::Stick::scripted`).
+    pub fly: Vec<(f32, f32, String)>,
     /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
     pub diag: bool,
     pub off: Vec<Part>,
@@ -102,6 +104,19 @@ impl DevEnv {
                     .collect()
             })
             .unwrap_or_default();
+        // `VUHLEDAR_FLY="3-9:w+,9-12:q,12-20:nz"`: from 3 to 9 s fly forward in sport mode, then turn left, then tilt
+        // the gimbal down while zooming in.
+        let fly = var("VUHLEDAR_FLY")
+            .map(|plan| {
+                plan.split(',')
+                    .filter_map(|leg| {
+                        let (span, spec) = leg.split_once(':')?;
+                        let (from, to) = span.split_once('-')?;
+                        Some((from.trim().parse().ok()?, to.trim().parse().ok()?, spec.trim().to_string()))
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
         Self {
             headless: var("VUHLEDAR_HEADLESS").is_some(),
             res: var("VUHLEDAR_RES").and_then(|r| {
@@ -125,6 +140,7 @@ impl DevEnv {
             rec_from: parse("VUHLEDAR_REC_FROM").unwrap_or(5.0),
             rec_secs: parse("VUHLEDAR_REC_SECS").unwrap_or(10.0),
             fire,
+            fly,
             diag: var("VUHLEDAR_DIAG").is_some(),
             off: var("VUHLEDAR_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
             ground: var("VUHLEDAR_GROUND"),
@@ -314,13 +330,17 @@ fn log_stats(
     if !dev().log_stats {
         return;
     }
-    let pos: Vec<Vec2> = vehicles.iter().filter(|(v, _)| v.side == crate::diorama::diorama().attacker()).map(|(_, t)| t.translation.xz()).collect();
+    let pos: Vec<(Vec2, VState)> = vehicles.iter().filter(|(v, _)| v.side == crate::diorama::diorama().attacker()).map(|(v, t)| (t.translation.xz(), v.state)).collect();
     let (mut through, mut touching) = (0, 0);
+    let mut closest = (f32::MAX, VState::Advancing, VState::Advancing);
     for i in 0..pos.len() {
         for j in i + 1..pos.len() {
-            let d = pos[i].distance(pos[j]);
+            let d = pos[i].0.distance(pos[j].0);
             through += (d < 4.0) as u32;
             touching += (d < 6.5) as u32;
+            if d < closest.0 {
+                closest = (d, pos[i].1, pos[j].1);
+            }
         }
     }
     overlap.0 += 1;
@@ -334,9 +354,9 @@ fn log_stats(
     let moving = vehicles.iter().filter(|(v, _)| v.state.mobile()).count();
     let men = soldiers.iter().filter(|s| s.side == crate::diorama::diorama().attacker()).count();
     info!(
-        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={} overlap_frames={}/{} max_pairs={} touching_frames={}",
+        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={} overlap_frames={}/{} max_pairs={} touching_frames={} closest={:.1}m({:?},{:?})",
         script.t, crate::director::clock_text(script.t), stats.vehicles_committed, stats.destroyed, stats.abandoned, stats.withdrawn, moving, men, stats.sent, stats.returned, stats.attacker_dead, stats.foothold, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, fc.shells, fc.brigade_shells, stats.defender_losses,
-        overlap.1, overlap.0, overlap.2, overlap.3
+        overlap.1, overlap.0, overlap.2, overlap.3, closest.0, closest.1, closest.2
     );
     *overlap = (0, 0, 0, 0);
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {

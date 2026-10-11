@@ -315,6 +315,23 @@ in the tally. The day's tally must stay in band (24–30 of 33 knocked out at Vu
 
 **Cost.** 6–8 h.
 
+**Done (2026-10-11).** Spacing 30–60 m per vehicle, pace ±10%, a 1–3 s following lag, one driver in ten
+planning a 5–20 s halt on the approach; going by ground (road 1.0, plowed lane 0.85, snow field 0.6, June field
+0.8, a turn off the road ×0.8, a crater within 4 m 0.3), which also drives the suspension noise and the track
+spray; a crater register on the paint queue; a hull-ahead stop, a hull-beside stop for sideways moves, a
+push-apart for hulls that have slid into each other, and wrecks that stop against the next hull. Measured on the
+fixed step (now with the baked vehicle models):
+
+| | Vuhledar | Robotyne |
+|---|---|---|
+| frames with two hulls closer than 4 m | 0 (was 74) | 10 (was 26; and 11,762 before the push-apart, a withdrawing and an advancing hull locked together) |
+| frames with two hulls closer than 6.5 m | 7,751, wrecks side by side at 5.4–6.7 m (was 26,902) | 12,475, the same |
+| the day | 28 of 33 left in the fields, 3 withdrew; 320 sent, 55 back | 19 of 24 stopped, 5 back; 176 sent, 92 back |
+
+Baselines `target/same-day/a2-vuh` and `a2-rob`; clips `20261011-2112-a-killzone.mp4` and
+`20261011-2119-a-rob-lane.mp4`. Left for package D: the Robotyne dead (38 of 176) sit above the dossier's single
+figures; the fates and the bail-out will move it.
+
 ### B. The ground's resolution (**look**) — observation 2
 
 **Now.** 1 m texels, linear-filtered, 256² per chunk. The patchy-snow mask was *painted* into the texels, so
