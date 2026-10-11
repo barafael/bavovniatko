@@ -30,7 +30,7 @@ So as of 14ce119 nothing below is blocked on anyone, and `game/src` is free to e
 | 2 W10 colours | done | every chart, legend and map colour is a stylesheet variable; checked in light and dark screenshots |
 | 3 W6 map | done | no long tasks on the slider (one 59 ms stall before) |
 | 4 D2 write path | done | `kb.Writer`; a second `load.py all` is byte-identical; three publisher actors that were written twice per run are written once |
-| 5 G0 render costs | measured | the frame is CPU-bound; the ground as a shadow caster is half of it (see step 5) |
+| 5 G0 render costs | measured, acted on | the frame was CPU-bound and the ground as a shadow caster half of it; the ground now only receives shadows, and the frame is 7.5 / 8.9 ms instead of 15.5 / 15.3 (see step 5) |
 | 7 G6 HUD text | done | `set_if_neq` on the six texts; `same-day.sh` byte-identical against a worktree build of HEAD |
 
 **What the table rewrite taught.** The first "after" benchmark was misread twice. A `>=` inside a `view!`
@@ -119,6 +119,11 @@ mode, charts, legends and map points have the wrong colours.
 - **Not part of this step:** converging on one hash function. That rewrites every record's `ext._hash` once,
   and creates one audit revision per record. If it is ever wanted, it becomes its own migration with its own
   commit message.
+  - Why it will be wanted: the 131 actors that are both publishers (`import_base`, hashed by `content_hash`)
+    and registry entries (`load.py`, hashed by its `h`) are rewritten by whichever tool runs second, every time,
+    because each sees the other's hash as a change. Harmless (same content, new `prov.at`), but it is 131 writes
+    per run and the reason the three re-spelled publishers only reach the dump when `import_base` next runs.
+    The migration is: `load_entities` adopts `content_hash` for actors, one run rewrites them, done.
 - **Check:**
   - `dump.py export` is byte-identical before and after a full `load.py all`.
   - A second `load.py all` reports everything unchanged.
@@ -159,11 +164,12 @@ anything for speed.
   All GPU passes together take about 6 ms, so the frame is CPU-bound, and more than half of it goes to the 252
   ground chunks under the two shadow cascades: without either, the frame is 7 ms. MSAA costs a millisecond; the
   trees and the feed nothing measurable. The ranked list is therefore one item long: **the ground as a shadow
-  caster**. Marking the chunks `NotShadowCaster` (what `VUHLEDAR_OFF=groundshadow` does) gives back 6–7 of
-  those milliseconds; the ground still receives the shadows of trees, buildings and vehicles, and only loses the
-  shadow one hill throws on the next, which the drone's and the OP's views barely show (`target/plan/g0b/*.png`).
-  Making that the default is a one-line decision for whoever takes the terrain step (6); it is not taken here,
-  because it changes the picture.
+  caster**. Marking the chunks `NotShadowCaster` gives back 6–7 of those milliseconds; the ground still receives
+  the shadows of trees, buildings and vehicles, and only loses the shadow one hill throws on the next. Decided
+  and done the same day, after a look from both observation posts at low sun with the ground casting or only
+  receiving (`game/devlog/shots/20261011-173*-ground-*.jpg`: no visible difference): every chunk is
+  `NotShadowCaster`, `same-day.sh` is unchanged, and the frame is **7.5 ms** on Vuhledar and **8.9 ms** on
+  Robotyne.
 
 ### 6. Game: terrain start-up and memory (G8). With the persistence milestone, together with `bavovniatko-0f`.
 Robotyne adds a seasonal palette, ploughed fields and trenches to `terrain.rs`, and `next.md` wants the chunk
@@ -200,17 +206,24 @@ frame whether or not they changed.
 - **Check:** `same-day.sh` stays identical; frame time from step 5 before and after.
 - **Size:** two hours.
 
-### 8. Not now
-- **Particles (G7).** No measured cost at today's counts. Revisit if step 5 or Robotyne's dust shows particles
-  in the frame. The test is a stress scene at `MAX_PARTICLES` (9,000).
-  - If needed: keep the `fx` API, move the particles into one buffer per `Kind` (a dynamic mesh of camera-facing
-    quads, depth-sorted on the CPU, alpha in the vertex colour) instead of one entity each.
-- **Disputes filter (W8).** No long tasks at 215 rows. Revisit past about 1,000 disputes.
-- **Topic kind in the vocabulary (W9).**
-  - Add `kind: topic | chapter | vignette` to `vocab/topics.yaml` and the `topic` table, and export it, so
-    `router.rs`, `chapters.rs` and `map.rs` stop guessing from the first letter of the code.
-  - It is a schema change (a migration, a new field in the dump), so do it with the next migration rather than
-    on its own.
+### 8. Not now: three notes, decided 2026-10-11
+- **Particles (G7): no cost to remove.** At the busiest minute of either diorama (2,750 particles, 4,000
+  entities) the particle update is 0.3 ms and the frame is the same with or without them (step 5). The rewrite
+  that was on the table, one buffer per `Kind` (a dynamic mesh of camera-facing quads, depth-sorted on the CPU,
+  alpha in the vertex colour) instead of one entity each, keeps the `fx` API and is a day's work; it earns its
+  place only if a stress scene at `MAX_PARTICLES` (9,000) shows particles in the frame, which no day so far
+  does. Until then, not touched.
+- **Disputes filter (W8): fast at this size.** 215 disputes, no long task while typing. The filter is a plain
+  scan of the rows per keystroke; it stays plain until there are about 1,000 disputes, when debouncing the input
+  and keeping a lower-cased copy of the searched text per row would be the first two things to do. Not before.
+- **Topic kind in the vocabulary (W9): with the next migration.** `router.rs`, `chapters.rs` and `map.rs` tell
+  a dossier from a topic by the first letter of its code (`c…`, `v…`). It works and is in one place each. The
+  honest fix is `kind: topic | chapter | vignette` in `vocab/topics.yaml` and the `topic` table, exported with
+  the dataset, which is a schema migration and a dump change; it rides with the next migration rather than
+  making one of its own.
+- **The table under 100 ms: not worth it.** Reaching it needs row virtualisation (render only the rows in the
+  scroll port, measure their heights as they appear); the 2,000-row result is a stress test, not a use, and the
+  batched table already keeps the page answering. Decided not to.
 
 ## How each step is checked
 

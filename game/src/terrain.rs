@@ -439,15 +439,16 @@ fn spawn_terrain(
             if crate::dev::off(crate::dev::Part::Terrain) {
                 continue;        // the ground still shapes everything; only its picture is left out
             }
-            let mut chunk = commands.spawn((
+            commands.spawn((
                 Mesh3d(meshes.add(mesh)),
                 MeshMaterial3d(materials.add(ExtendedMaterial { base: StandardMaterial { base_color_texture: Some(handle), ..mat_template.clone() }, extension: detail.clone() })),
                 Transform::IDENTITY,
                 Name::new(format!("ground {cx},{cz}")),
+                // The ground receives every shadow but casts none: the 252 chunks under the sun's two cascades were
+                // half the frame (design/rewrites.md, step 5), and the shadow one hill throws on the next is not
+                // visible from the drone or the OP.
+                bevy::light::NotShadowCaster,
             ));
-            if crate::dev::off(crate::dev::Part::GroundShadow) {
-                chunk.insert(bevy::light::NotShadowCaster);
-            }
         }
     }
     commands.insert_resource(Ground { images: handles });

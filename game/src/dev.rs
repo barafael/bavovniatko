@@ -29,8 +29,6 @@ pub enum Part {
     Trees,
     /// The ground chunks.
     Terrain,
-    /// The ground as a shadow caster (it still receives them).
-    GroundShadow,
 }
 
 /// Whether `VUHLEDAR_OFF` leaves this part out.
