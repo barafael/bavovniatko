@@ -299,18 +299,46 @@ fn record(
     *n += 1;
 }
 
-/// `VUHLEDAR_LOG_STATS=1`: print the tally once a game minute.
-fn log_stats(script: Res<crate::director::Script>, stats: Res<Stats>, fc: Res<FireControl>, order: Res<crate::units::ColumnOrder>, soldiers: Query<&Soldier>, vehicles: Query<&Vehicle>, mut last: Local<u32>) {
-    if !dev().log_stats || script.t as u32 / 60 == *last {
+/// `VUHLEDAR_LOG_STATS=1`: print the tally once a game minute, with how often two hulls overlapped since the
+/// last line (hull centres closer than 4 m: certainly through each other; closer than 6.5 m: touching or nearly).
+fn log_stats(
+    script: Res<crate::director::Script>,
+    stats: Res<Stats>,
+    fc: Res<FireControl>,
+    order: Res<crate::units::ColumnOrder>,
+    soldiers: Query<&Soldier>,
+    vehicles: Query<(&Vehicle, &Transform)>,
+    mut last: Local<u32>,
+    mut overlap: Local<(u32, u32, u32, u32)>,
+) {
+    if !dev().log_stats {
+        return;
+    }
+    let pos: Vec<Vec2> = vehicles.iter().filter(|(v, _)| v.side == crate::diorama::diorama().attacker()).map(|(_, t)| t.translation.xz()).collect();
+    let (mut through, mut touching) = (0, 0);
+    for i in 0..pos.len() {
+        for j in i + 1..pos.len() {
+            let d = pos[i].distance(pos[j]);
+            through += (d < 4.0) as u32;
+            touching += (d < 6.5) as u32;
+        }
+    }
+    overlap.0 += 1;
+    overlap.1 += (through > 0) as u32;
+    overlap.2 = overlap.2.max(through);
+    overlap.3 += (touching > 0) as u32;
+    if script.t as u32 / 60 == *last {
         return;
     }
     *last = script.t as u32 / 60;
-    let moving = vehicles.iter().filter(|v| v.state.mobile()).count();
+    let moving = vehicles.iter().filter(|(v, _)| v.state.mobile()).count();
     let men = soldiers.iter().filter(|s| s.side == crate::diorama::diorama().attacker()).count();
     info!(
-        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={}",
-        script.t, crate::director::clock_text(script.t), stats.vehicles_committed, stats.destroyed, stats.abandoned, stats.withdrawn, moving, men, stats.sent, stats.returned, stats.attacker_dead, stats.foothold, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, fc.shells, fc.brigade_shells, stats.defender_losses
+        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={} overlap_frames={}/{} max_pairs={} touching_frames={}",
+        script.t, crate::director::clock_text(script.t), stats.vehicles_committed, stats.destroyed, stats.abandoned, stats.withdrawn, moving, men, stats.sent, stats.returned, stats.attacker_dead, stats.foothold, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, fc.shells, fc.brigade_shells, stats.defender_losses,
+        overlap.1, overlap.0, overlap.2, overlap.3
     );
+    *overlap = (0, 0, 0, 0);
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
         info!("     picked_up={} ru_vehicles={} vehicle_advance={:.0} foot_advance={:.0} order={:?} overwatch_lost={} wounded={}/{} deaths={:?}", stats.picked_up, stats.defender_vehicles, stats.vehicle_advance.max(-9999.0), stats.max_advance.max(-9999.0), *order, stats.overwatch_losses, stats.wounded_out, stats.wounded, stats.deaths);
     }
