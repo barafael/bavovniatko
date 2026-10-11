@@ -355,13 +355,13 @@ sight shot. `same-day.sh` identical (the texels still carry the same paint event
 
 **Cost.** 6 h.
 
-**In progress (2026-10-11, late).** Written and compiled, not yet looked at: the paint widens the snow–earth
-transition to a gradient a few metres wide (`base_colour`), and the ground shader samples the texel through a
-world-space jitter of up to 0.35 m, re-cuts the ragged patch edge below the texel from two octaves of noise
-where the texel says the cover is partial (full snow, full earth, craters, scorch and tracks pass through
-unchanged), and adds a quarter-metre crust. The shots `b-snow-squares`, `b-killzone-x13` and `b-ground-view`
-were queued when the session ended: look at them against `20261011-2005-snow-squares.jpg` before committing
-`src/terrain.rs` and `src/shaders/ground.wgsl`, which are left uncommitted in the tree.
+**Done (2026-10-12).** The paint widens the snow–earth transition to a gradient a few metres wide
+(`base_colour`), and the ground shader samples the texel through a world-space jitter of up to 0.35 m, re-cuts
+the ragged patch edge below the texel from two octaves of noise where the texel says the cover is partial (full
+snow, full earth, craters, scorch and tracks pass through unchanged), and adds a quarter-metre crust. The first
+build drew no ground at all: `patch` is a reserved word in WGSL, the same trap the devlog recorded on the first
+day. Shots `b-snow-squares-2` (against `20261011-2005-snow-squares.jpg`: the staircase edges are gone),
+`b-killzone-x13-2`, `b-ground-view-2`. Sim-neutral by construction (no random draws touched).
 
 ### C. Smoke, fire and the TOS (**look**) — observations 3, 5, 14, and the toss blast of 6
 

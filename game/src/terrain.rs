@@ -324,9 +324,10 @@ fn base_colour(x: f32, z: f32) -> Px {
     let fine = fbm(x / 5.0, z / 5.0, 3, 4);
     // More exposed earth in the fought-over ground south of the first tree line.
     let churn = 0.18 * (1.0 - ((z + 700.0) / 250.0).clamp(0.0, 1.0)).max(0.0) - 0.12 * ((z + 650.0) / 900.0).clamp(0.0, 1.0);
-    // Mostly white; small, sharp-edged dark patches where the thresholded noise dips.
+    // Mostly white; small dark patches where the noise dips. The texel holds how much snow lies here as a
+    // gradient a few metres wide; the ground shader cuts the patch's ragged edge below the texel from that.
     let v = 0.62 + broad * 0.45 + fine * 0.5 - churn * 1.2;
-    let cover = ((v - 0.18) / 0.14).clamp(0.0, 1.0);
+    let cover = ((v - 0.12) / 0.30).clamp(0.0, 1.0);
     let earth = mix([0.27, 0.25, 0.22], [0.44, 0.42, 0.39], value_noise(x / 4.0, z / 4.0, 12) * 0.5 + 0.5);
     let mut col = mix(earth, SNOW, cover);
     let n = value_noise(x / 3.0, z / 3.0, 9) * 0.02;
