@@ -107,5 +107,7 @@ because every game system runs in one fixed order each frame (`Step` in `src/mai
 `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle, and `VUHLEDAR_SPEED`
 scales game time. `VUHLEDAR_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
 (headless, it also lifts the frame cap), and `VUHLEDAR_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
-picture out, so a slow frame can be charged to what makes it slow before anything is rewritten. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
+picture out, so a slow frame can be charged to what makes it slow before anything is rewritten.
+`VUHLEDAR_GROUND=<dir>` reads the 252 ground chunks from that directory's PNGs if they are all there, and
+writes them there after painting if not: the ground as a persisted day will keep it. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
 `devlog/videos.md`. The history is part of the development.

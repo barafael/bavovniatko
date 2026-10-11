@@ -31,6 +31,7 @@ So as of 14ce119 nothing below is blocked on anyone, and `game/src` is free to e
 | 3 W6 map | done | no long tasks on the slider (one 59 ms stall before) |
 | 4 D2 write path | done | `kb.Writer`; a second `load.py all` is byte-identical; three publisher actors that were written twice per run are written once |
 | 5 G0 render costs | measured, acted on | the frame was CPU-bound and the ground as a shadow caster half of it; the ground now only receives shadows, and the frame is 7.5 / 8.9 ms instead of 15.5 / 15.3 (see step 5) |
+| 6 G8 terrain | done | painted straight into the chunks, meshes from a height grid on all cores: 2.8 s → 0.53 s; chunks save and load as PNGs; the picture within 0.35/255 (see step 6) |
 | 7 G6 HUD text | done | `set_if_neq` on the six texts; `same-day.sh` byte-identical against a worktree build of HEAD |
 
 **What the table rewrite taught.** The first "after" benchmark was misread twice. A `>=` inside a `view!`
@@ -171,7 +172,7 @@ anything for speed.
   `NotShadowCaster`, `same-day.sh` is unchanged, and the frame is **7.5 ms** on Vuhledar and **8.9 ms** on
   Robotyne.
 
-### 6. Game: terrain start-up and memory (G8). With the persistence milestone, together with `bavovniatko-0f`.
+### 6. Game: terrain start-up and memory (G8). Done.
 Robotyne adds a seasonal palette, ploughed fields and trenches to `terrain.rs`, and `next.md` wants the chunk
 images saved and loaded. So this step reshapes the terrain to fit both, rather than only speeding it up.
 1. **Heights once per chunk.**
@@ -196,6 +197,29 @@ images saved and loaded. So this step reshapes the terrain to fit both, rather t
 - **Check:** `scripts/same-day.sh` shows the simulation unchanged (terrain is presentation only); the image diff
   for colours; start-up time and memory before and after.
 - **Size:** two to three days.
+- **Result** (the same day, about three hours):
+  1. Heights come from a 67×67 grid per chunk, normals from its central differences (a 4 m step instead of
+     the 1.5 m one), the meshes built on all cores: 1.84 s → 17 ms. Together with the painting, the ground's
+     start-up went from 2.8 s to **0.53 s**.
+  2. There is no float canvas: the base ground is painted per chunk on all cores, and one `disc()` (the chunks
+     a disc overlaps, with the texels of each) serves every stamp at start and every paint during the day;
+     `apply_paint` lost its own copy of that loop. Colours are quantised at each stamp, and the texels'
+     world positions are their centres everywhere (the start-up stamps used the corner). The 252 chunks differ
+     from the old build's by a mean of **0.35/255**, the furrow codes on no texel at all, the worst chunk
+     (2.0/255, a belt beside a road) indistinguishable side by side; the worst single texels are crater
+     speckle whose hash cell moved with the half-texel shift. (`target/plan/chunkdiff.py` against a worktree
+     build of the old code with a raw dump patched in.)
+  3. `VUHLEDAR_GROUND=<dir>` reads the chunks from PNGs if they are all there (135 ms) and writes them after
+     painting if not; `Ground::save` is what the persistence milestone calls at dusk. Loaded and painted
+     grounds render the same.
+  4. Not done: the frame is the same before and after (old 5.7 / 5.2 ms, new 6.0 / 5.5 ms, Vuhledar /
+     Robotyne, back to back on a quiet machine; the 7.5 / 8.9 ms above were taken while other builds ran),
+     so a whole-chunk re-upload per paint has nothing left to recover; not measured separately.
+  - **Memory: the estimate was wrong.** Peak RSS went from 557 to 541 MB, not down by 200: the old float
+    canvas was freed before the peak, which is set later, by the asset upload and the driver. Finding what
+    the 540 MB are is a separate question, if it is ever one.
+  - `same-day.sh` is identical; Robotyne's trenches and craters are as they were
+    (`game/devlog/shots/20261011-1848-g8-rob-trenches.jpg`).
 
 ### 7. Game: HUD text (G6). Done.
 Building the strings costs 0.03–0.05 ms per frame. The real cost is Bevy re-laying out six text blocks every
@@ -239,5 +263,5 @@ frame whether or not they changed.
 | when | steps | who |
 |---|---|---|
 | done 2026-10-11 | 1 (W7), 2 (W10), 3 (W6), 4 (D2), 5 (G0), 7 (G6) | this session |
-| with the persistence milestone of `next.md` | 6 (G8) | together with `bavovniatko-0f` |
+| done 2026-10-11, later the same day | 6 (G8) | this session; the persistence milestone gets the ground's save and load for free |
 | when measurements say so | particles, disputes, topic kind | — |

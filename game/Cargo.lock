@@ -5261,6 +5261,7 @@ name = "vuhledar"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "image",
  "rand 0.9.5",
  "strum",
 ]

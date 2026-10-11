@@ -69,6 +69,8 @@ pub struct DevEnv {
     /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
     pub diag: bool,
     pub off: Vec<Part>,
+    /// A directory of ground chunk PNGs: read at start if complete, written after painting if not.
+    pub ground: Option<String>,
     pub log_stats: bool,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
@@ -123,6 +125,7 @@ impl DevEnv {
             fire,
             diag: var("VUHLEDAR_DIAG").is_some(),
             off: var("VUHLEDAR_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
+            ground: var("VUHLEDAR_GROUND"),
             log_stats: var("VUHLEDAR_LOG_STATS").is_some(),
             light: var("VUHLEDAR_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
