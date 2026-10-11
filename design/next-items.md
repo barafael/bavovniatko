@@ -406,6 +406,11 @@ emitter programme (package C):
 8. A rotating turret only on a *live* tank with damaged sensors (a rare fate for a hit that disables: the turret
    slews slowly and aimlessly until the crew bails), never on a burning or dead hull: that is what the footage
    shows.
+8b. *Pivoting on the dead track.* A mobility-killed tank whose crew is alive and fighting turns on the spot round
+   the dead side, slowly (10–15°/s), to put its glacis towards the nearest known Ukrainian position, and keeps
+   firing from there; if its turret is jammed it lays the gun by turning the hull. The crew bails only when the
+   next hit comes or after a few minutes. It makes the immobilised tank a thing that still fights, which the
+   kill zone needs.
 9. Fate weights to start from (then tuned to the band): Vuhledar's Russian column, of the vehicles hit, about
    35% immobilised intact and later re-struck, 20% engine fire, 25% torch with delayed cook-off (half of those
    throw the turret after 20 s–5 min), 10% instant brew-up with toss, 10% withdraw damaged. Robotyne's Bradleys
@@ -499,7 +504,8 @@ line; sound ignores jamming.
    the map thumbnail, the compass rose with VS, ALT, ASL, D, speed, wind and gimbal tilt, a thin crosshair. The
    drone is a Mavic 3T: no rangefinder, so range comes from the map and pins (an honest limit the player feels).
    The OSD never breaks up (the controller draws it over the video), which is the detail that sells the EW.
-5. *The picture and the detection overlay* (**sim**: it feeds fire control). §2.6 says AI boxes on a Mavic feed
+5. *The picture and the detection overlay* (**later**, with the campaign's spot and confirm tasks; the design
+   stays here). §2.6 says AI boxes on a Mavic feed
    are a 2024 thing; what a 2023 operator had was PinPoints and the command post's Delta marks. So the overlay is
    the *picture*, not a detector: a `Detection` per attacking vehicle in the frame accumulates sight time (faster
    when zoomed and close, none under smoke or behind an occluder from package F); after 2–6 s a thin white box
@@ -519,22 +525,25 @@ line; sound ignores jamming.
 **Prove.** An EW clip with the drone crossing the jam line; an OSD screenshot beside the reference layout; a
 detection clip. `same-day.sh` identical for 1–4; a new baseline for 5.
 
-**Cost.** 19–24 h in all (pipeline 5, EW 5, OSD 4, picture 6, sights 3).
+**Cost.** 13–18 h now (pipeline 5, EW 5, OSD 4, sights 3); the picture (6 h) later.
 
 ### H. The sky (**look**) — observation 17
 
 **Now.** A clear colour and distance fog.
 
-**Build.** A sky dome mesh with an unlit procedural shader: a stratus deck (cover, base height, lumpiness from
+**Build.** First the clock: Kyiv time (§2.7, decision 6), the sun an hour earlier in `world.rs`, the day's
+start and the banners with it, a note in the dossier. Then a sky dome mesh with an unlit procedural shader: a stratus deck (cover, base height, lumpiness from
 fbm, drift with the wind), a soft sun disc that shows through thin high cloud and vanishes under a deck, horizon
 haze matched to the fog, and the deck's underside lit from the sun's side. Parameters per day from the weather
 table in §2.1 (6 Feb: 100% low grey deck, base 300 m, the drone just under it; 8 Jun: a cirrus veil, hazy orange
 sunrise, broken altocumulus by afternoon) and for the campaign days of next.md. `bevy_weather` exists for 0.19
 with raymarched clouds, but a dome is enough for a grey deck and costs nothing per pixel.
 
-**Prove.** Dawn, noon and dusk shots from the drone and the OP for both days. `same-day.sh` identical.
+**Prove.** Dawn, noon and dusk shots from the drone and the OP for both days, under both February presets, and
+the choice between them made from the pictures. `same-day.sh` identical for the sky; the clock change is a
+**sim** change (the banners' times, the light) and gets a baseline.
 
-**Cost.** 6 h.
+**Cost.** 7 h.
 
 ### I. Trees and vegetation (**look**, asset seam) — observation 7
 
@@ -542,8 +551,8 @@ with raymarched clouds, but a dome is enough for a grey deck and costs nothing p
 scrub cards; from the trench it is a palisade of identical cutouts, uniform in height, with no undergrowth, and
 the field in front is a flat plane.
 
-**Decision.** The tree *look* waits for the assets. What is done now is what the assets will need anyway and
-what no asset fixes:
+**Decision.** The basics now, so the belts read right from the trench; the tree *look* itself waits for the
+assets. What is done now is what the assets will need anyway and what no asset fixes:
 1. *The seam.* A `Flora` kit: species × season × damage state → mesh handles (trunk, crown, LOD), and a scatter
    that places instances along the belts with the density, rows, gaps, scrub and shattered trunks it has today.
    The procedural cards are the placeholder kit; a glTF kit plugs in without touching the scatter.
@@ -556,9 +565,16 @@ what no asset fixes:
 4. *Shadow.* The belt casts a shadow band on the field in low sun (today crowns are `NotShadowCaster`); test the
    cost of letting the trunks cast and the crowns not.
 
+5. *Documented for later* (with the assets or after): proper crowns with depth (several card layers at
+   different radii, a dark core, lit rims), a wind sway vertex shader on the cards, species variety (ash, locust,
+   wild apricot, the oaks of the older belts) and their winter silhouettes, shelled trees as split trunks with
+   hanging crowns, a litter of broken branches in the belt, the belt's own ground (leaf litter, snow drifts on the
+   lee side, the ditch along the field edge), summer undergrowth and nettles at the trench, and LOD ranges so a
+   belt at 2 km is a band of colour and at 20 m a thicket.
+
 **Prove.** The two ground-view shots retaken.
 
-**Cost.** 5 h now; the look lands with the assets.
+**Cost.** 8 h now; the look lands with the assets.
 
 ### J. Ukrainian names and voice (**look**) — observation 16
 
@@ -586,8 +602,10 @@ what no asset fixes:
 2. The day's own account as aligned tables (Bevy UI grid): the columns one per row with their vehicles,
    destroyed, abandoned; the men; the cost; the stock left. Numbers right-aligned.
 3. The closing lines about what came after stay, without a heading, set apart by space.
-4. **Tabs**, with keys: *The day* (default), *The field* (a drone pass or the wreck map, later), and *Sources*.
-   See the decision in §5 before building the third.
+4. **Sources**, beneath the account, as a table: source, date, what it says about the day; each row a link that
+   opens in the browser on click (Bevy UI has no hyperlinks: a button that runs `xdg-open`, with a platform
+   fallback). No casualty figures from the record set against the day's own numbers: the sources say where the
+   day came from, the ledger what it cost.
 5. R and Esc as now.
 
 **Prove.** Debrief screenshots for both dioramas at 1600×900 and 1920×1080.
@@ -625,37 +643,38 @@ then the look packages against a fixed day.
 | 5 | C smoke and the TOS | the long look package, against the now-stable day | the smoke sheet, the TOS from the drone |
 | 6 | B ground | independent, quick | the low pass before and after |
 | 7 | H sky | independent, quick | dawn, noon, dusk on both days |
-| 8 | G feed: pipeline, EW, OSD; then the picture | the pipeline underlies the OSD and the picture | the jam-line clip, the OSD still |
+| 8 | G feed: pipeline, EW, OSD, sights | the pipeline underlies the OSD; the picture waits for the campaign | the jam-line clip, the OSD still |
 | 9 | J names and voice | strings; best done once the radio lines of A–G exist | the net in two registers |
 | 10 | K debrief | last, on the final numbers | both debriefs |
-| 11 | I trees: the seam now, the look with the assets | waits for the assets | the two ground views |
+| 11 | I trees: the seam and the basics now, the look with the assets | the look waits for the assets | the two ground views |
 | 12 | L top attack | after D (it is a fate) | a Javelin dive clip |
 
-Total: about 90–110 hours. Steps 1–4 (the sim) about 30 h; 5–8 (the look) about 45 h; 9–12 about 25 h.
+Total: about 85–105 hours. Steps 1–4 (the sim) about 30 h; 5–8 (the look) about 40 h; 9–12 about 25 h.
 
 Every step ends as before: shots and clips archived in `devlog/`, `same-day.sh` run (identical for the look
 steps, a new named baseline for the sim steps), the tally checked against the band, a commit.
 
 ---
 
-## 5. Decisions needed
+## 5. Decisions (taken 2026-10-11)
 
-1. **Sources in the debrief.** next.md says the record never appears in the interface and the debrief speaks only
-   in the day's own terms; the new note asks for a Sources tab. Proposed: the ledger stays the day's own account
-   with no citations, and a *Sources* tab behind a key lists, as a table, what the explorer holds for that day
-   (source, date, what it says), reachable but not shown. That keeps both.
-2. **Register in the HUD.** Cyrillic first everywhere, or Latin first in the counters? Proposed as in §2.4: world
-   text Cyrillic first, bookkeeping Latin first.
-3. **The detection subgame now or later.** It is the first of next.md's "picture" tasks; it changes fire control
-   (AUTO acts on confirmed detections). Proposed: build the overlay now (G.5) and keep AUTO's current behaviour
-   until the campaign's spot/confirm tasks arrive, so the day's tally does not move twice.
-4. **Trees before the assets.** How far to go: the seam and the composition only (proposed), or also a better
-   procedural placeholder?
-5. **The 6 February sky.** The overcast of the real date, or the hard sun of the week's footage? Proposed: the
-   diorama keeps the hard sun (the footage look) as a named weather preset, and the campaign day table picks
-   per day; both exist once H is done.
-6. **The February clock.** §2.7: sunrise at Vuhledar on 6 February was 06:51 Kyiv time, and the dossier's 07:50
-   is Moscow time. The game's clock, banners ("07:45 The 155th attacks") and sun follow the dossier. Proposed: the
-   diorama shows Kyiv time (the 72nd's clock), the sun is moved an hour earlier in `world.rs`, the banners and
-   the day's start shift with it, and the dossier gets a note; the claim graph is checked for which clock its
-   timeline claims use before anything is changed in `db/`.
+1. **Sources in the debrief.** They stay, and get clickable links (a click opens the URL in the browser). What
+   goes: any comparison of the record's casualty figures with the day's own numbers. The ledger is the day's
+   account; the sources beneath it are where it came from, not a scoreboard. Package K builds it that way.
+2. **Register in the HUD.** Latin first everywhere the player reads fast: "Vuhledar (Вугледар)". In-world text
+   (radio captions, map labels) Cyrillic first.
+3. **The detection overlay** comes later, with the campaign's spot and confirm tasks. Package G keeps the feed
+   pipeline, the EW ladder, the OSD and the sights; the picture model is built only as far as line of sight
+   (package F) needs it.
+4. **Trees before the assets.** The easy basics now (package I.2–I.4: density and two storeys, height variation,
+   the foot strip and the trench foreground, trunk shadows) so the belts read right from the trench; the rest is
+   documented in package I for when the assets come.
+5. **The 6 February sky.** Package H builds both presets (the overcast of the date and the hard sun of the
+   footage), takes the same shots under each, and the choice is made from the pictures.
+6. **The clock moves to Kyiv time.** Sunrise 06:51, sunset 16:38 at Vuhledar on 6 February; the sun, the day's
+   start, the banners and the clock text shift an hour earlier; the dossier gets a note that its February times
+   are Moscow time, and the claim graph is checked for which clock its timeline claims use.
+7. **The font** is embedded (Fira Mono, OFL).
+8. **A mobility-killed tank with a live crew can still pivot.** With one track gone it can turn on the spot
+   round the dead side: to put its frontal armour towards the ATGM teams, or when the turret no longer traverses
+   to lay the gun by turning the hull. Added to package D as a fate.
