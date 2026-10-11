@@ -5,37 +5,19 @@ use std::cell::RefCell;
 use std::collections::{BTreeSet, HashMap};
 
 use futures::channel::oneshot;
+pub use kbcore::{QueryResult, StatementResult};
+use kbcore::{Manifest, Progress, Reply, Request};
 use leptos::prelude::*;
-use serde::Deserialize;
-use serde_json::{Value, json};
+use serde_json::Value;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{MessageEvent, Worker};
 
-#[derive(Debug, Clone, Deserialize)]
-pub struct StatementResult {
-    pub result: Value,
-    pub error: Option<String>,
-}
-
-#[derive(Debug, Clone, Deserialize)]
-pub struct QueryResult {
-    pub ms: f64,
-    pub statements: Vec<StatementResult>,
-    pub error: Option<String>,
-}
-
-impl QueryResult {
-    fn failed(e: impl Into<String>) -> Self {
-        QueryResult { ms: 0.0, statements: vec![], error: Some(e.into()) }
-    }
-}
-
 #[derive(Debug, Clone, PartialEq)]
 pub enum Status {
-    Loading { file: String, done: u64, total: u64, ms: f64 },
-    Ready { version: String, ms: f64, rows: u64, attribution: String },
+    Loading(Progress),
+    Ready { manifest: Manifest, ms: f64 },
     Failed(String),
 }
 
@@ -66,7 +48,7 @@ thread_local! {
 impl Kb {
     pub fn start() -> Kb {
         let kb = Kb {
-            status: RwSignal::new(Status::Loading { file: "manifest.json".into(), done: 0, total: 1, ms: 0.0 }),
+            status: RwSignal::new(Status::Loading(Progress { file: "manifest.json".into(), done_bytes: 0, total_bytes: 1, ms: 0.0 })),
             tables: RwSignal::new(BTreeSet::new()),
         };
         // Trunk builds the worker crate as `kbworker`; kbworker_loader.js starts it. The build id is passed on as
@@ -75,38 +57,22 @@ impl Kb {
         let worker = Worker::new(&format!("./kbworker_loader.js?v={BUILD}")).expect("start the database worker");
         let onmessage = Closure::<dyn FnMut(MessageEvent)>::new(move |ev: MessageEvent| {
             let Some(text) = ev.data().as_string() else { return };
-            let Ok(msg) = serde_json::from_str::<Value>(&text) else { return };
-            match msg["type"].as_str() {
-                Some("progress") => {
-                    let p = &msg["progress"];
-                    kb.status.set(Status::Loading {
-                        file: p["file"].as_str().unwrap_or_default().into(),
-                        done: p["done_bytes"].as_u64().unwrap_or(0),
-                        total: p["total_bytes"].as_u64().unwrap_or(1).max(1),
-                        ms: p["ms"].as_f64().unwrap_or(0.0),
-                    });
+            let reply = match serde_json::from_str::<Reply>(&text) {
+                Ok(reply) => reply,
+                Err(e) => return kb.status.set(Status::Failed(format!("bad reply from the database worker: {e}"))),
+            };
+            match reply {
+                Reply::Progress(p) => kb.status.set(Status::Loading(p)),
+                Reply::Ready { manifest, ms } => {
+                    kb.tables.set(manifest.counts.keys().cloned().collect());
+                    kb.status.set(Status::Ready { manifest, ms });
                 }
-                Some("ready") => {
-                    let m = &msg["manifest"];
-                    let counts = m["counts"].as_object().cloned().unwrap_or_default();
-                    kb.tables.set(counts.keys().cloned().collect());
-                    kb.status.set(Status::Ready {
-                        version: m["version"].as_str().unwrap_or_default().into(),
-                        ms: msg["ms"].as_f64().unwrap_or(0.0),
-                        rows: counts.values().filter_map(|v| v.as_u64()).sum(),
-                        attribution: m["attribution"].as_str().unwrap_or_default().into(),
-                    });
-                }
-                Some("failed") => kb.status.set(Status::Failed(msg["error"].as_str().unwrap_or("unknown error").into())),
-                Some("result") => {
-                    let id = msg["id"].as_u64().unwrap_or(0);
-                    let result = serde_json::from_value(msg["result"].clone())
-                        .unwrap_or_else(|e| QueryResult::failed(format!("bad reply: {e}")));
+                Reply::Failed { error } => kb.status.set(Status::Failed(error)),
+                Reply::Result { id, result } => {
                     if let Some(tx) = INNER.with(|i| i.borrow_mut().as_mut().and_then(|i| i.pending.remove(&id))) {
                         let _ = tx.send(result);
                     }
                 }
-                _ => {}
             }
         });
         worker.set_onmessage(Some(onmessage.as_ref().unchecked_ref()));
@@ -127,7 +93,7 @@ impl Kb {
             inner.next_id += 1;
             let (tx, rx) = oneshot::channel();
             inner.pending.insert(id, tx);
-            let msg = json!({"id": id, "op": "query", "q": q}).to_string();
+            let msg = serde_json::to_string(&Request { id, query: q }).ok()?;
             inner.worker.post_message(&JsValue::from_str(&msg)).ok()?;
             Some(rx)
         });
@@ -139,15 +105,7 @@ impl Kb {
 
     /// Run a query and return its last statement's rows (an error if any statement failed).
     pub async fn rows(&self, q: impl Into<String>) -> Result<Vec<Value>, String> {
-        let r = self.query(q.into()).await;
-        if let Some(e) = r.error.clone().or_else(|| r.statements.iter().find_map(|s| s.error.clone())) {
-            return Err(e);
-        }
-        Ok(match r.statements.into_iter().last().map(|s| s.result) {
-            Some(Value::Array(a)) => a,
-            Some(Value::Null) | None => vec![],
-            Some(v) => vec![v],
-        })
+        self.query(q.into()).await.into_rows()
     }
 
     /// A record id in a result ("claim:c00_0063_04", "source:⟨…⟩") if the string is one.

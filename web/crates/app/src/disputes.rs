@@ -4,8 +4,7 @@
 use leptos::prelude::*;
 use serde_json::Value;
 
-use crate::router::{Route, href};
-use crate::ui::{error_box, loading, rid_link, rows_resource, strs, waiting_for_db};
+use crate::ui::{claim_link, key_of, ok_rows, on_rows, rid_link, rows_resource, strs, text};
 
 /// Each contradiction with both ends mapped to their canonical claim (extracted copies are collapsed in Rust).
 const QUERY: &str = "SELECT strength, state, rationale, resolution,
@@ -19,7 +18,7 @@ const QUERY: &str = "SELECT strength, state, rationale, resolution,
 fn collapse(rows: Vec<Value>) -> Vec<(Value, usize)> {
     let mut out: Vec<(Value, usize)> = vec![];
     for r in rows {
-        let (a, b) = (r["a"].as_str().unwrap_or_default().to_string(), r["b"].as_str().unwrap_or_default().to_string());
+        let (a, b) = (text(&r["a"]), text(&r["b"]));
         if a == b {
             continue;
         }
@@ -48,20 +47,16 @@ pub fn Disputes() -> impl IntoView {
             <div class="filters">
                 <select on:change=move |ev| topic.set(event_target_value(&ev))>
                     <option value="">"All topics and dossiers"</option>
-                    {move || data.get().flatten().and_then(|r| r.ok()).map(|rows| {
+                    {move || ok_rows(data.get()).map(|rows| {
                         let mut ts: Vec<String> = rows.iter().flat_map(|r| [strs(&r["a_topics"]), strs(&r["b_topics"])].concat()).collect();
                         ts.sort();
                         ts.dedup();
-                        ts.into_iter().map(|t| view! { <option value=t.clone()>{t.replace("topic:", "")}</option> }).collect_view()
+                        ts.into_iter().map(|t| view! { <option value=t.clone()>{key_of(&t).to_string()}</option> }).collect_view()
                     })}
                 </select>
                 <input type="search" placeholder="Filter by words …" on:input=move |ev| words.set(event_target_value(&ev)) />
             </div>
-            {move || match data.get() {
-                None => loading(),
-                Some(None) => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) => {
+            {move || on_rows(data.get(), |rows| {
                     let t = topic.get();
                     let w = words.get().to_lowercase();
                     let shown: Vec<(Value, usize)> = collapse(rows).into_iter().filter(|(r, _)| {
@@ -73,19 +68,18 @@ pub fn Disputes() -> impl IntoView {
                         <p class="muted">{format!("{n} distinct contradictions (copies of the same claims collapsed)")}</p>
                         <div class="disputes">{shown.into_iter().take(300).map(|(r, copies)| view! { <Dispute r=r copies=copies /> }).collect_view()}</div>
                     }.into_any()
-                }
-            }}
+            })}
         </article>
     }
 }
 
 #[component]
 fn Dispute(r: Value, copies: usize) -> impl IntoView {
-    let side = |text: &str, id: &str, by: &Value| {
+    let side = |id: &Value, label: &Value, by: &Value| {
         let by = strs(by);
         view! {
             <div class="side">
-                <a href=href(&Route::Claim(id.to_string()))>{text.to_string()}</a>
+                {claim_link(id, label)}
                 <div class="muted small">{if by.is_empty() { "stated by its sources".to_string() } else { by.join(", ") }}</div>
             </div>
         }
@@ -95,13 +89,13 @@ fn Dispute(r: Value, copies: usize) -> impl IntoView {
             <div class="dispute-head">
                 <span class="strength" title="strength of the contradiction">{format!("{:.1}", r["strength"].as_f64().unwrap_or(0.0))}</span>
                 {r["state"].as_str().map(|s| view! { <span class=format!("badge {s}")>{s.to_string()}</span> })}
-                {strs(&r["a_topics"]).into_iter().map(|t| view! { <span class="chip">{rid_link(&t, Some(t.replace("topic:", "")))}</span> }).collect_view()}
+                {strs(&r["a_topics"]).into_iter().map(|t| view! { <span class="chip">{rid_link(&t, Some(key_of(&t).to_string()))}</span> }).collect_view()}
                 {(copies > 1).then(|| view! { <span class="muted small">{format!("recorded {copies} times")}</span> })}
             </div>
             <div class="sides">
-                {side(r["a_text"].as_str().unwrap_or_default(), r["a"].as_str().unwrap_or_default(), &r["a_by"])}
+                {side(&r["a"], &r["a_text"], &r["a_by"])}
                 <div class="versus">"vs"</div>
-                {side(r["b_text"].as_str().unwrap_or_default(), r["b"].as_str().unwrap_or_default(), &r["b_by"])}
+                {side(&r["b"], &r["b_text"], &r["b_by"])}
             </div>
             {r["resolution"].as_str().map(|t| view! { <div class="resolution">{format!("Explanation: {t}")}</div> })}
             {r["rationale"].as_str().map(|t| view! { <div class="muted small">{t.to_string()}</div> })}

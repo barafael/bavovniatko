@@ -6,9 +6,15 @@ edition.workspace = true
 license.workspace = true
 publish.workspace = true
 
+[features]
+# The SurrealDB engine. Without it, kbcore is only the worker protocol (what the app needs).
+default = ["engine"]
+engine = ["dep:surrealdb", "dep:web-time", "dep:getrandom", "dep:thiserror"]
+
 [dependencies]
-surrealdb.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-web-time.workspace = true
-getrandom = { version = "0.3", features = ["wasm_js"] }
+surrealdb = { workspace = true, optional = true }
+web-time = { workspace = true, optional = true }
+getrandom = { version = "0.3", features = ["wasm_js"], optional = true }
+thiserror = { workspace = true, optional = true }

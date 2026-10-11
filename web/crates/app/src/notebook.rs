@@ -64,7 +64,7 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
             return;
         }
         let on_change = Closure::<dyn FnMut(String)>::new(move |s: String| code.set(s));
-        let on_run = Closure::<dyn FnMut()>::new(move || run());
+        let on_run = Closure::<dyn FnMut()>::new(run);
         let ed = Editor::new(&el, &code.get_untracked(), on_change.as_ref(), on_run.as_ref());
         on_change.forget();
         on_run.forget();
@@ -118,10 +118,10 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
                         </button>
                         <button on:click=move |_| {
                             set_hash_query(&code.get_untracked());
-                            if let Some(w) = web_sys::window() {
-                                if let Ok(href) = w.location().href() {
-                                    let _ = w.navigator().clipboard().write_text(&href);
-                                }
+                            if let Some(w) = web_sys::window()
+                                && let Ok(href) = w.location().href()
+                            {
+                                let _ = w.navigator().clipboard().write_text(&href);
                             }
                         }>"Copy link"</button>
                         <span class="hint">"SurrealQL · read-only · "<code>"fn::"</code>" helpers in the examples"</span>

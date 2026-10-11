@@ -9,22 +9,19 @@ use wasm_bindgen::prelude::*;
 use crate::bridge::GeoMap;
 use crate::kb::Kb;
 use crate::router::{Route, href};
-use crate::ui::{fmt_time, rows_resource};
+use crate::ui::{MONTHS, claim_link, fmt_time, key_of, list, rows_resource, text, ymd};
 
 /// Month index 0 = Jan 2022.
-const MONTHS: i32 = 12 * 5;
-const MONTH_NAMES: [&str; 12] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTH_COUNT: i32 = 12 * 5;
 
 fn month_label(i: i32) -> String {
-    format!("{} {}", MONTH_NAMES[(i % 12) as usize], 2022 + i / 12)
+    format!("{} {}", MONTHS[(i % 12) as usize], 2022 + i / 12)
 }
 
 /// "2024-08-06T…" → month index.
 fn month_of(v: &Value) -> Option<i32> {
-    let s = v.as_str()?;
-    let y: i32 = s.get(0..4)?.parse().ok()?;
-    let m: i32 = s.get(5..7)?.parse().ok()?;
-    Some((y - 2022) * 12 + m - 1)
+    let (y, m, _) = ymd(v).filter(|(_, m, _)| *m > 0)?;
+    Some((y - 2022) * 12 + m as i32 - 1)
 }
 
 const PLACES: &str = "SELECT id, labels.en AS label, kind, centroid, (<-about<-claim.time.from) AS times FROM place
@@ -50,7 +47,7 @@ fn bbox_of(points: &[(f64, f64)]) -> Option<(f64, f64, f64, f64)> {
 pub fn MapPage(focus: Option<String>) -> impl IntoView {
     let kb = expect_context::<Kb>();
     let from = RwSignal::new(0);
-    let to = RwSignal::new(MONTHS - 1);
+    let to = RwSignal::new(MONTH_COUNT - 1);
     let undated = RwSignal::new(true);
     let selected: RwSignal<Option<String>> = RwSignal::new(focus.clone().filter(|f| f.starts_with("place:")));
     let chapter = focus.clone().filter(|f| f.starts_with("topic:"));
@@ -70,10 +67,10 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
             return;
         }
         let on_click = Closure::<dyn FnMut(String)>::new(move |props: String| {
-            if let Ok(p) = serde_json::from_str::<Value>(&props) {
-                if let Some(id) = p["id"].as_str() {
-                    selected.set(Some(id.to_string()));
-                }
+            if let Ok(p) = serde_json::from_str::<Value>(&props)
+                && let Some(id) = p["id"].as_str()
+            {
+                selected.set(Some(id.to_string()));
             }
         });
         map.set_value(Some(GeoMap::new(&el, on_click.as_ref())));
@@ -93,9 +90,9 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
         let mut feats = vec![];
         let mut hl_points = vec![];
         for r in &rows {
-            let times = match &r["times"] { Value::Array(a) => a.clone(), _ => vec![] };
+            let times = list(&r["times"]);
             let n = times.iter().filter(|t| match month_of(t) { Some(m) => m >= lo && m <= hi, None => und }).count();
-            let id = r["id"].as_str().unwrap_or_default().to_string();
+            let id = text(&r["id"]);
             let is_hl = highlight.contains(&id);
             if n == 0 && !is_hl && sel.as_deref() != Some(id.as_str()) {
                 continue;
@@ -148,14 +145,14 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
         <div class="map-page">
             <div class="map-controls">
                 <label>"From " <strong>{move || month_label(from.get())}</strong>
-                    <input type="range" min="0" max=MONTHS - 1 prop:value=move || from.get()
+                    <input type="range" min="0" max=MONTH_COUNT - 1 prop:value=move || from.get()
                         on:input=move |ev| { let v: i32 = event_target_value(&ev).parse().unwrap_or(0); from.set(v.min(to.get_untracked())); } /></label>
                 <label>"to " <strong>{move || month_label(to.get())}</strong>
-                    <input type="range" min="0" max=MONTHS - 1 prop:value=move || to.get()
+                    <input type="range" min="0" max=MONTH_COUNT - 1 prop:value=move || to.get()
                         on:input=move |ev| { let v: i32 = event_target_value(&ev).parse().unwrap_or(0); to.set(v.max(from.get_untracked())); } /></label>
                 <label><input type="checkbox" prop:checked=move || undated.get() on:change=move |ev| undated.set(event_target_checked(&ev)) />
                     " include undated claims"</label>
-                {chapter.clone().map(|t| view! { <span class="chip">{format!("highlighting dossier {}", t.replace("topic:", ""))}</span> })}
+                {chapter.clone().map(|t| view! { <span class="chip">{format!("highlighting dossier {}", key_of(&t))}</span> })}
                 <span class="muted small">"Circle size: claims about the place in the range. Purple boxes: terrain sample areas."</span>
             </div>
             <div class="map-body">
@@ -168,14 +165,13 @@ pub fn MapPage(focus: Option<String>) -> impl IntoView {
                             let shown: Vec<Value> = rows.into_iter().filter(|r| match month_of(&r["t"]) {
                                 Some(m) => m >= lo && m <= hi, None => und }).collect();
                             view! {
-                                <h2>{id.replace("place:", "").replace('_', " ")}</h2>
+                                <h2>{key_of(&id).replace('_', " ")}</h2>
                                 <p class="muted small">{format!("{} claims in range", shown.len())} " · "
                                     <a href=href(&Route::Notebook(Some(format!("fn::place_history({id});"))))>"open in notebook"</a></p>
                                 <ul class="history">{shown.into_iter().map(|r| view! {
                                     <li>
                                         <span class="when">{fmt_time(&json!({"from": r["t"], "precision": r["precision"]}))}</span>
-                                        <a href=href(&Route::Claim(r["id"].as_str().unwrap_or_default().to_string()))>
-                                            {r["text"].as_str().unwrap_or_default().to_string()}</a>
+                                        {claim_link(&r["id"], &r["text"])}
                                     </li>
                                 }).collect_view()}</ul>
                             }.into_any()

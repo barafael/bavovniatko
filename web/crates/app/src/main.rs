@@ -19,6 +19,7 @@ mod ui;
 use leptos::prelude::*;
 
 use kb::{Kb, Status};
+use kbcore::Progress;
 use router::{Route, Router, href};
 
 fn main() {
@@ -80,8 +81,8 @@ fn App() -> impl IntoView {
 fn LoadStatus() -> impl IntoView {
     let kb = expect_context::<Kb>();
     move || match kb.status.get() {
-        Status::Loading { file, done, total, ms } => {
-            let pct = (done as f64 / total as f64 * 100.0).round();
+        Status::Loading(Progress { file, done_bytes, total_bytes, ms }) => {
+            let pct = (done_bytes as f64 / total_bytes.max(1) as f64 * 100.0).round();
             view! {
                 <div class="status loading" title=format!("{file} · {:.1} s", ms / 1000.0)>
                     <span>{format!("Loading the knowledge base … {pct}%")}</span>
@@ -89,9 +90,9 @@ fn LoadStatus() -> impl IntoView {
                 </div>
             }.into_any()
         }
-        Status::Ready { version, ms, rows, .. } => view! {
-            <div class="status ready" title=format!("dataset {version}")>
-                {format!("{rows} records · ready in {:.1} s", ms / 1000.0)}
+        Status::Ready { manifest, ms } => view! {
+            <div class="status ready" title=format!("dataset {}", manifest.version)>
+                {format!("{} records · ready in {:.1} s", manifest.rows(), ms / 1000.0)}
             </div>
         }.into_any(),
         Status::Failed(e) => view! { <div class="status failed">{format!("Loading failed: {e}")}</div> }.into_any(),
@@ -102,7 +103,7 @@ fn LoadStatus() -> impl IntoView {
 fn About() -> impl IntoView {
     let kb = expect_context::<Kb>();
     let attribution = move || match kb.status.get() {
-        Status::Ready { attribution, .. } => attribution,
+        Status::Ready { manifest, .. } => manifest.attribution,
         _ => String::new(),
     };
     view! {

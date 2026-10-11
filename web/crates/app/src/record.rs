@@ -9,7 +9,7 @@ use serde_json::{Value, json};
 
 use crate::results::cell;
 use crate::router::{Route, href};
-use crate::ui::{claim_key, error_box, fmt_date, fmt_time, kind_label, loading, rid_link, rows_resource, waiting_for_db};
+use crate::ui::{Precision, claim_key, claim_link, error_box, fmt_date, fmt_time, kind_label, list, on_rows, rid_link, rows_resource, text};
 
 /// Fields the page shows elsewhere (the title) or that mean nothing to a reader.
 const HIDDEN: &[&str] = &["id", "labels", "ext", "geometry", "legacy_ids", "created_at", "updated_at", "published_raw"];
@@ -21,15 +21,10 @@ const CLAIMS_SHOWN: usize = 100;
 pub fn RecordPage(id: String) -> impl IntoView {
     let q = format!("fn::record({id})");
     let data = rows_resource(move || Some(q.clone()));
-    move || match data.get() {
-        None => loading(),
-        Some(None) => waiting_for_db(),
-        Some(Some(Err(e))) => error_box(e),
-        Some(Some(Ok(rows))) => match rows.into_iter().next() {
-            Some(v) if v["record"].is_object() => view! { <RecordView data=v /> }.into_any(),
-            _ => error_box("No such record.".into()),
-        },
-    }
+    move || on_rows(data.get(), |rows| match rows.into_iter().next() {
+        Some(v) if v["record"].is_object() => view! { <RecordView data=v /> }.into_any(),
+        _ => error_box("No such record.".into()),
+    })
 }
 
 /// What a record is called (its English label, title or term, else its key or id), and the field that said so.
@@ -37,7 +32,7 @@ fn title_of(r: &Value) -> (String, Option<&'static str>) {
     let field = |f: &str| if f == "labels" { r["labels"]["en"].as_str() } else { r[f].as_str() };
     match TITLE_FIELDS.iter().find_map(|f| field(f).map(|t| (t.to_string(), Some(*f)))) {
         Some(t) => t,
-        None => (r["id"].as_str().unwrap_or_default().to_string(), None),
+        None => (text(&r["id"]), None),
     }
 }
 
@@ -66,7 +61,7 @@ fn value(v: &Value, names: &HashMap<String, String>) -> AnyView {
 #[component]
 fn RecordView(data: Value) -> impl IntoView {
     let r = &data["record"];
-    let id = r["id"].as_str().unwrap_or_default().to_string();
+    let id = text(&r["id"]);
     let table = id.split(':').next().unwrap_or_default().to_string();
     let (title, title_field) = title_of(r);
     let kind = r["kind"].as_str().filter(|k| k.starts_with("kind:")).map(String::from);
@@ -74,7 +69,7 @@ fn RecordView(data: Value) -> impl IntoView {
         .filter(|(k, v)| !HIDDEN.contains(&k.as_str()) && k.as_str() != "kind" && Some(k.as_str()) != title_field && !is_empty(v))
         .map(|(k, v)| (k.clone(), v.clone()))
         .collect();
-    let list = |k: &str| match &data[k] { Value::Array(a) => a.clone(), _ => vec![] };
+    let list = |k: &str| list(&data[k]);
     let names: HashMap<String, String> = list("names").iter()
         .filter_map(|n| Some((n["id"].as_str()?.to_string(), n["name"].as_str()?.to_string())))
         .collect();
@@ -122,14 +117,14 @@ fn counter_panel(title: &'static str, rows: Vec<Value>) -> Option<impl IntoView>
             <ul class="plain counters">{rows.into_iter().map(|c| {
                 let sys = &c["system"];
                 let meta: Vec<String> = [
-                    c["since"].as_str().map(|_| format!("since {}", fmt_date(&c["since"], Some("month")))),
+                    c["since"].as_str().map(|_| format!("since {}", fmt_date(&c["since"], Some(Precision::Month)))),
                     c["lag_days"].as_i64().map(|d| format!("lag {d} days")),
                 ].into_iter().flatten().collect();
                 let evidence: Vec<String> = c["evidence"].as_array().into_iter().flatten()
                     .filter_map(|e| e.as_str().map(String::from)).collect();
                 view! {
                     <li>
-                        <strong>{rid_link(sys["id"].as_str().unwrap_or_default(), sys["name"].as_str().map(String::from))}</strong>
+                        <strong>{rid_link(&text(&sys["id"]), sys["name"].as_str().map(String::from))}</strong>
                         {(!meta.is_empty()).then(|| view! { <span class="muted small">{format!(" · {}", meta.join(" · "))}</span> })}
                         {c["effect"].as_str().map(|e| view! { <p class="small">{e.to_string()}</p> })}
                         {c["rationale"].as_str().map(|r| view! { <p class="muted small">{r.to_string()}</p> })}
@@ -150,7 +145,7 @@ fn link_panel(title: &'static str, rows: Vec<Value>) -> Option<impl IntoView> {
         <section class="panel">
             <h2>{title}<span class="muted small">{format!(" {}", rows.len())}</span></h2>
             <ul class="plain">{rows.into_iter().map(|p| view! {
-                <li>{rid_link(p["id"].as_str().unwrap_or_default(), p["name"].as_str().map(String::from))}</li>
+                <li>{rid_link(&text(&p["id"]), p["name"].as_str().map(String::from))}</li>
             }).collect_view()}</ul>
         </section>
     })
@@ -167,8 +162,7 @@ fn claims_panel(title: &'static str, rows: Vec<Value>) -> Option<impl IntoView> 
             <ul class="history compact">{move || rows.with_value(|rows| rows.iter().take(if all.get() { total } else { CLAIMS_SHOWN }).map(|c| view! {
                 <li>
                     <span class="when">{fmt_time(&json!({"from": c["t"], "precision": c["precision"]}))}</span>
-                    <a href=href(&Route::Claim(c["id"].as_str().unwrap_or_default().to_string()))>
-                        {c["text"].as_str().unwrap_or_default().to_string()}</a>
+                    {claim_link(&c["id"], &c["text"])}
                     {c["role"].as_str().map(|r| view! { <span class="muted small">{r.to_string()}</span> })}
                     {c["quote"].as_str().map(|q| view! { <blockquote>{q.to_string()}</blockquote> })}
                 </li>

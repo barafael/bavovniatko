@@ -1,18 +1,14 @@
 //! The knowledge-base Web Worker. It loads the dataset (`data/manifest.json` and the files it lists) into
 //! in-memory SurrealDB, seals it read-only, then answers queries. All messages are JSON strings:
 //!
-//! - app → worker: `{"id": 1, "op": "query", "q": "SELECT …"}`
-//! - worker → app: `{"type": "progress", …}`, `{"type": "ready", "manifest": …, "ms": …}`,
-//!   `{"type": "failed", "error": …}` and `{"type": "result", "id": 1, "result": QueryResult}`
+//! a [`Request`] in, a [`Reply`] out (see kbcore).
 
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
 
 use js_sys::Promise;
-use kbcore::{Kb, Manifest, Source};
-use serde::Deserialize;
-use serde_json::json;
+use kbcore::{Kb, Manifest, QueryResult, Reply, Request, Source};
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::{JsFuture, spawn_local};
@@ -26,8 +22,9 @@ fn scope() -> DedicatedWorkerGlobalScope {
     js_sys::global().unchecked_into()
 }
 
-fn post(v: serde_json::Value) {
-    let _ = scope().post_message(&JsValue::from_str(&v.to_string()));
+fn post(reply: &Reply) {
+    let json = serde_json::to_string(reply).expect("replies serialise");
+    let _ = scope().post_message(&JsValue::from_str(&json));
 }
 
 /// Fetches dataset files relative to the worker script. Once the manifest is in, every file it lists is
@@ -69,31 +66,23 @@ impl Source for Fetcher {
     }
 }
 
-#[derive(Deserialize)]
-struct Request {
-    id: u64,
-    op: String,
-    #[serde(default)]
-    q: String,
-}
-
 async fn boot() {
     let t0 = js_sys::Date::now();
     let query = scope().location().search();
     let fetcher = Fetcher { base: "data/".into(), query, pending: RefCell::new(HashMap::new()) };
     let result = async {
         let mut kb = Kb::open().await?;
-        let manifest = kb.load(&fetcher, |p| post(json!({"type": "progress", "progress": p}))).await?;
+        let manifest = kb.load(&fetcher, |p| post(&Reply::Progress(p))).await?;
         kb.seal().await?;
-        Ok::<_, String>((kb, manifest))
+        Ok::<_, kbcore::Error>((kb, manifest))
     }
     .await;
     match result {
         Ok((kb, manifest)) => {
             KB.with(|k| *k.borrow_mut() = Some(Rc::new(kb)));
-            post(json!({"type": "ready", "manifest": manifest, "ms": js_sys::Date::now() - t0}));
+            post(&Reply::Ready { manifest, ms: js_sys::Date::now() - t0 });
         }
-        Err(e) => post(json!({"type": "failed", "error": e})),
+        Err(e) => post(&Reply::Failed { error: e.to_string() }),
     }
 }
 
@@ -103,13 +92,11 @@ fn main() {
         let Some(text) = ev.data().as_string() else { return };
         let Ok(req) = serde_json::from_str::<Request>(&text) else { return };
         spawn_local(async move {
-            let kb = KB.with(|k| k.borrow().clone());
-            let result = match (req.op.as_str(), kb) {
-                ("query", Some(kb)) => serde_json::to_value(kb.query(&req.q).await).unwrap(),
-                ("query", None) => json!({"ms": 0, "statements": [], "error": "the database is still loading"}),
-                (op, _) => json!({"ms": 0, "statements": [], "error": format!("unknown op {op}")}),
+            let result = match KB.with(|k| k.borrow().clone()) {
+                Some(kb) => kb.query(&req.query).await,
+                None => QueryResult::loading(),
             };
-            post(json!({"type": "result", "id": req.id, "result": result}));
+            post(&Reply::Result { id: req.id, result });
         });
     });
     scope().set_onmessage(Some(onmessage.as_ref().unchecked_ref()));

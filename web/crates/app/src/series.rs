@@ -5,27 +5,18 @@ use leptos::prelude::*;
 use serde_json::Value;
 
 use crate::router::{Route, go, href};
-use crate::ui::{error_box, fmt_date, loading, rows_resource, strs, waiting_for_db};
+use crate::ui::{GREY, Side, claim_link, fmt_date, key_of, ok_rows, on_rows, rows_resource, strs, text, ymd};
 
 const METRICS: &str = "SELECT metric AS id, metric.labels.en AS label, count() AS n FROM observation
     WHERE time != NONE GROUP BY id, label ORDER BY n DESC";
 
-fn side_color(side: Option<&str>) -> &'static str {
-    match side {
-        Some("ua") => "#0057b7",
-        Some("ru") => "#c1121f",
-        Some("western") => "#2e8540",
-        Some("international") => "#7b2cbf",
-        _ => "#6b7280",
-    }
+fn side_color(v: &Value) -> &'static str {
+    Side::parse(v).map_or(GREY, Side::color)
 }
 
 fn day_index(v: &Value) -> Option<f64> {
-    let s = v.as_str()?;
-    let y: f64 = s.get(0..4)?.parse().ok()?;
-    let m: f64 = s.get(5..7)?.parse().ok()?;
-    let d: f64 = s.get(8..10)?.parse().ok()?;
-    Some(y * 365.25 + (m - 1.0) * 30.44 + d)
+    let (y, m, d) = ymd(v)?;
+    Some(y as f64 * 365.25 + (m.max(1) - 1) as f64 * 30.44 + d.max(1) as f64)
 }
 
 #[component]
@@ -43,8 +34,8 @@ pub fn SeriesPage(metric: Option<String>) -> impl IntoView {
                side by side; click a point for its claim."</p>
             <div class="filters">
                 <select on:change=move |ev| go(Route::Series(Some(event_target_value(&ev))))>
-                    {move || metrics.get().flatten().and_then(|r| r.ok()).map(|rows| rows.into_iter().filter(|m| m["n"].as_u64().unwrap_or(0) >= 3).map(|m| {
-                        let id = m["id"].as_str().unwrap_or_default().to_string();
+                    {move || ok_rows(metrics.get()).map(|rows| rows.into_iter().filter(|m| m["n"].as_u64().unwrap_or(0) >= 3).map(|m| {
+                        let id = text(&m["id"]);
                         let sel = id == chosen2;
                         view! { <option value=id.clone() selected=sel>
                             {format!("{} ({})", m["label"].as_str().unwrap_or(&id), m["n"])}</option> }
@@ -52,14 +43,10 @@ pub fn SeriesPage(metric: Option<String>) -> impl IntoView {
                 </select>
                 <a href=href(&Route::Notebook(Some(format!("fn::series({chosen});"))))>"open in notebook"</a>
             </div>
-            {move || match points.get() {
-                None => loading(),
-                Some(None) => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) => {
+            {move || on_rows(points.get(), |rows| {
                     let mut units: Vec<(String, usize)> = vec![];
                     for r in &rows {
-                        let u = r["unit"].as_str().unwrap_or_default().to_string();
+                        let u = text(&r["unit"]);
                         match units.iter_mut().find(|x| x.0 == u) { Some(x) => x.1 += 1, None => units.push((u, 1)) }
                     }
                     units.sort_by_key(|u| std::cmp::Reverse(u.1));
@@ -70,26 +57,24 @@ pub fn SeriesPage(metric: Option<String>) -> impl IntoView {
                             <div class="lane-filter">{units.iter().map(|(u, n)| {
                                 let u2 = u.clone();
                                 view! { <button class:active={u == &current} on:click=move |_| unit.set(Some(u2.clone()))>
-                                    {format!("{} ({n})", u.replace("unit:", ""))}</button> }
+                                    {format!("{} ({n})", key_of(u))}</button> }
                             }).collect_view()}</div>
                         })}
-                        <div class="chart-wrap"><Chart points=pts.clone() unit=current.replace("unit:", "") /></div>
-                        <div class="legend">{[("ua", "Ukraine"), ("ru", "Russia"), ("western", "Western"), ("", "unspecified")].into_iter().map(|(s, l)| view! {
-                            <span><i style=format!("background:{}", side_color(Some(s)))></i>{l}</span>
-                        }).collect_view()}</div>
+                        <div class="chart-wrap"><Chart points=pts.clone() unit=key_of(&current).to_string() /></div>
+                        <div class="legend">{[(Side::Ua, "Ukraine"), (Side::Ru, "Russia"), (Side::Western, "Western"), (Side::International, "international"), (Side::Other, "unspecified")]
+                            .into_iter().map(|(s, l)| view! { <span><i style=format!("background:{}", s.color())></i>{l}</span> }).collect_view()}</div>
                         <table class="obs">
                             <thead><tr><th>"when"</th><th>"value"</th><th>"side"</th><th>"claimants"</th><th>"claim"</th></tr></thead>
                             <tbody>{pts.into_iter().map(|p| view! { <tr>
                                 <td>{fmt_date(&p["t"], None)}</td>
                                 <td class="num">{p["value_text"].as_str().map(String::from).unwrap_or_else(|| p["value"].to_string())}</td>
-                                <td>{p["side"].as_str().unwrap_or_default().to_string()}</td>
+                                <td>{text(&p["side"])}</td>
                                 <td>{strs(&p["claimants"]).join(", ")}</td>
-                                <td><a href=href(&Route::Claim(p["id"].as_str().unwrap_or_default().to_string()))>{p["claim"].as_str().unwrap_or_default().to_string()}</a></td>
+                                <td>{claim_link(&p["id"], &p["claim"])}</td>
                             </tr> }).collect_view()}</tbody>
                         </table>
                     }.into_any()
-                }
-            }}
+            })}
         </article>
     }
 }
@@ -129,11 +114,11 @@ fn Chart(points: Vec<Value>, unit: String) -> impl IntoView {
             <text x=w - r y=h - 4.0 class="tick" text-anchor="end">{format!("unit: {unit}")}</text>
             {points.into_iter().filter_map(|p| {
                 let x = sx(day_index(&p["t"])?);
-                let color = side_color(p["side"].as_str());
+                let color = side_color(&p["side"]);
                 let title = format!("{} · {} · {}", fmt_date(&p["t"], None),
                     p["value_text"].as_str().map(String::from).unwrap_or_else(|| p["value"].to_string()),
                     strs(&p["claimants"]).join(", "));
-                let id = p["id"].as_str().unwrap_or_default().to_string();
+                let id = text(&p["id"]);
                 let range = match (p["low"].as_f64(), p["high"].as_f64()) {
                     (Some(lo), Some(hi)) => Some((sy(lo), sy(hi))),
                     _ => None,

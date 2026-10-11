@@ -2,9 +2,78 @@
 
 use leptos::prelude::*;
 use serde_json::Value;
+use strum::{EnumString, IntoStaticStr};
 
 use crate::kb::Kb;
-use crate::router::{href, record_route};
+use crate::router::{Route, href, record_route};
+
+pub const GREY: &str = "#6b7280";
+
+/// Whose side a claimant or a number is on (`side` in the schema).
+#[derive(Clone, Copy, PartialEq, Eq, EnumString, IntoStaticStr)]
+#[strum(serialize_all = "lowercase")]
+pub enum Side {
+    Ua,
+    Ru,
+    Western,
+    International,
+    Other,
+}
+
+impl Side {
+    pub fn parse(v: &Value) -> Option<Side> {
+        v.as_str()?.parse().ok()
+    }
+
+    pub fn color(self) -> &'static str {
+        match self {
+            Side::Ua => "#0057b7",
+            Side::Ru => "#c1121f",
+            Side::Western => "#2e8540",
+            Side::International => "#7b2cbf",
+            Side::Other => GREY,
+        }
+    }
+}
+
+/// How precisely a time is known (`time.precision` in the schema).
+#[derive(Clone, Copy, PartialEq, Eq, EnumString)]
+#[strum(serialize_all = "lowercase")]
+pub enum Precision {
+    Day,
+    Month,
+    Quarter,
+    Year,
+}
+
+pub const MONTHS: [&str; 12] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/// "2024-08-06T…" → (2024, 8, 6); the month and day are 0 when absent.
+pub fn ymd(v: &Value) -> Option<(i32, usize, usize)> {
+    let s = v.as_str()?;
+    let part = |from: usize| s.get(from..from + 2).and_then(|p| p.parse().ok()).unwrap_or(0);
+    Some((s.get(0..4)?.parse().ok()?, part(5), part(8)))
+}
+
+/// A record id's key: "topic:c08" → "c08" (the whole string if it has no table).
+pub fn key_of(rid: &str) -> &str {
+    rid.split_once(':').map_or(rid, |(_, k)| k)
+}
+
+/// A string field as an owned string ("" when absent).
+pub fn text(v: &Value) -> String {
+    v.as_str().unwrap_or_default().to_string()
+}
+
+/// An array field's items (none when absent).
+pub fn list(v: &Value) -> Vec<Value> {
+    v.as_array().cloned().unwrap_or_default()
+}
+
+/// A link to a claim's page.
+pub fn claim_link(id: &Value, label: &Value) -> impl IntoView + use<> {
+    view! { <a href=href(&Route::Claim(text(id)))>{text(label)}</a> }
+}
 
 /// A link to a record's view ("claim:…" → claim page, "place:…" → map, …); plain text if not a record id.
 pub fn rid_link(rid: &str, label: Option<String>) -> AnyView {
@@ -43,20 +112,16 @@ pub fn claim_key(id: &str) -> String {
     id.strip_prefix("claim:c").unwrap_or(id).replace('_', "-")
 }
 
-/// "2024-08-06T00:00:00Z" with precision "month" → "Aug 2024".
-pub fn fmt_date(v: &Value, precision: Option<&str>) -> String {
-    let Some(s) = v.as_str() else { return String::new() };
-    let (y, rest) = s.split_at(4.min(s.len()));
-    let m: usize = rest.get(1..3).and_then(|m| m.parse().ok()).unwrap_or(0);
-    let d: usize = rest.get(4..6).and_then(|d| d.parse().ok()).unwrap_or(0);
-    const MONTHS: [&str; 12] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/// "2024-08-06T00:00:00Z" with precision month → "Aug 2024".
+pub fn fmt_date(v: &Value, precision: Option<Precision>) -> String {
+    let Some((y, m, d)) = ymd(v) else { return text(v) };
     let mon = MONTHS.get(m.wrapping_sub(1)).copied().unwrap_or("");
     match precision {
-        Some("year") => y.to_string(),
-        Some("quarter") => format!("Q{} {y}", (m + 2) / 3),
-        Some("month") => format!("{mon} {y}"),
+        Some(Precision::Year) => y.to_string(),
+        Some(Precision::Quarter) => format!("Q{} {y}", m.div_ceil(3)),
+        Some(Precision::Month) => format!("{mon} {y}"),
         _ if d > 0 => format!("{d} {mon} {y}"),
-        _ => s.to_string(),
+        _ => text(v),
     }
 }
 
@@ -65,7 +130,7 @@ pub fn fmt_time(t: &Value) -> String {
     if t.is_null() {
         return String::new();
     }
-    let p = t["precision"].as_str();
+    let p = t["precision"].as_str().and_then(|p| p.parse().ok());
     let from = fmt_date(&t["from"], p);
     match t.get("to").filter(|v| !v.is_null()) {
         Some(to) if fmt_date(to, p) != from => format!("{from} – {}", fmt_date(to, p)),
@@ -88,16 +153,26 @@ pub fn strs(v: &Value) -> Vec<String> {
     }
 }
 
-pub fn loading() -> AnyView {
-    view! { <div class="placeholder">"Loading …"</div> }.into_any()
-}
-
-pub fn waiting_for_db() -> AnyView {
-    view! { <div class="placeholder">"The knowledge base is loading in your browser (about 10 seconds) …"</div> }.into_any()
-}
-
 pub fn error_box(e: String) -> AnyView {
     view! { <div class="error">{e}</div> }.into_any()
+}
+
+/// A query's rows: `None` until the query has run, `Some(None)` while the database is still loading.
+pub type Rows = Option<Option<Result<Vec<Value>, String>>>;
+
+/// The view of a query's rows once they are in; until then, what is happening.
+pub fn on_rows(rows: Rows, f: impl FnOnce(Vec<Value>) -> AnyView) -> AnyView {
+    match rows {
+        None => view! { <div class="placeholder">"Loading …"</div> }.into_any(),
+        Some(None) => view! { <div class="placeholder">"The knowledge base is loading in your browser (about 10 seconds) …"</div> }.into_any(),
+        Some(Some(Err(e))) => error_box(e),
+        Some(Some(Ok(rows))) => f(rows),
+    }
+}
+
+/// The rows, if they are in.
+pub fn ok_rows(rows: Rows) -> Option<Vec<Value>> {
+    rows.flatten().and_then(Result::ok)
 }
 
 /// Run a query once the database is ready; re-runs when `query` changes.

@@ -19,5 +19,8 @@
   "devDependencies": {
     "esbuild": "^0.28.2"
   },
-  "license": "MIT OR Apache-2.0"
+  "license": "MIT OR Apache-2.0",
+  "allowScripts": {
+    "esbuild": false
+  }
 }

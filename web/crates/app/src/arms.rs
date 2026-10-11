@@ -6,7 +6,7 @@ use leptos::prelude::*;
 use serde_json::Value;
 
 use crate::router::{Route, href};
-use crate::ui::{error_box, fmt_time, kind_label, loading, rid_link, rows_resource, strs, waiting_for_db};
+use crate::ui::{fmt_time, kind_label, on_rows, rid_link, rows_resource, strs, text, ymd};
 
 const QUERY: &str = "SELECT id, in AS counter, in.labels.en AS counter_name, out AS measure, out.labels.en AS measure_name,
     out.kind AS kind, first_observed, lag_days, effect, rationale, evidence
@@ -20,11 +20,8 @@ const LANE_GAP: f64 = 26.0;
 const LEFT: f64 = 150.0;
 
 fn months(v: &Value) -> Option<f64> {
-    let s = v.as_str()?;
-    let y: i32 = s.get(0..4)?.parse().ok()?;
-    let m: f64 = s.get(5..7)?.parse().ok()?;
-    let d: f64 = s.get(8..10).and_then(|d| d.parse().ok()).unwrap_or(1.0);
-    Some(((y - START_YEAR) * 12) as f64 + m - 1.0 + (d - 1.0) / 30.0)
+    let (y, m, d) = ymd(v)?;
+    Some(((y - START_YEAR) * 12) as f64 + (m.max(1) - 1) as f64 + (d.max(1) - 1) as f64 / 30.0)
 }
 
 struct Bar {
@@ -84,11 +81,7 @@ pub fn Arms() -> impl IntoView {
             <h1>"The arms race"</h1>
             <p class="lede">"Measure and countermeasure: each bar runs from a measure being countered to the counter's first
                observation (the reported lag), in lanes by the kind of measure. Hover for names; click for the evidence."</p>
-            {move || match data.get() {
-                None => loading(),
-                Some(None) => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) => {
+            {move || on_rows(data.get(), |rows| {
                     let mut kinds: Vec<(String, usize)> = vec![];
                     for r in &rows {
                         let k = kind_label(&r["kind"]);
@@ -122,8 +115,8 @@ pub fn Arms() -> impl IntoView {
                                 {bars.into_iter().map(|b| {
                                     let y = tops.get(&b.lane).copied().unwrap_or(0.0) + b.row as f64 * ROW_PX;
                                     let title = format!("{} counters {} · {}{}",
-                                        b.item["counter_name"].as_str().unwrap_or_default(),
-                                        b.item["measure_name"].as_str().unwrap_or_default(),
+                                        text(&b.item["counter_name"]),
+                                        text(&b.item["measure_name"]),
                                         fmt_time(&b.item["first_observed"]),
                                         b.item["lag_days"].as_f64().map(|l| format!(" · lag {l:.0} days")).unwrap_or_default());
                                     let item = b.item.clone();
@@ -139,11 +132,10 @@ pub fn Arms() -> impl IntoView {
                             </svg>
                         </div>
                     }.into_any()
-                }
-            }}
+            })}
             {move || selected.get().map(|s| {
-                let counter = s["counter"].as_str().unwrap_or_default().to_string();
-                let measure = s["measure"].as_str().unwrap_or_default().to_string();
+                let counter = text(&s["counter"]);
+                let measure = text(&s["measure"]);
                 view! {
                     <section class="panel selected">
                         <h2>{rid_link(&counter, s["counter_name"].as_str().map(String::from))}" counters "

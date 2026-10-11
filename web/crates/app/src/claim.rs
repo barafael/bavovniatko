@@ -2,58 +2,89 @@
 //! claim graph (an ego graph of supports, weakens, contradicts, refines, supersedes, duplicates).
 
 use leptos::prelude::*;
+use serde::Deserialize;
 use serde_json::Value;
+use strum::{IntoStaticStr, VariantArray};
 
 use crate::router::{Route, go, href};
-use crate::ui::{error_box, fmt_time, loading, rid_link, rows_resource, strs, waiting_for_db};
+use crate::ui::{GREY, error_box, fmt_time, key_of, list, on_rows, rid_link, rows_resource, strs, text};
 
-pub const RELATIONS: &[(&str, &str, &str)] = &[
-    // (relation, colour, phrase from this claim's point of view: "to" / "from")
-    ("supports", "#2e8540", "supports"),
-    ("weakens", "#d97706", "weakens"),
-    ("contradicts", "#c1121f", "contradicts"),
-    ("refines", "#0057b7", "refines"),
-    ("supersedes", "#7b2cbf", "supersedes"),
-    ("duplicates", "#6b7280", "duplicates"),
-];
-
-pub fn relation_color(rel: &str) -> &'static str {
-    RELATIONS.iter().find(|r| r.0 == rel).map_or("#6b7280", |r| r.1)
+/// The claim-to-claim edges (one table each in the schema).
+#[derive(Clone, Copy, PartialEq, Eq, Deserialize, IntoStaticStr, VariantArray)]
+#[serde(rename_all = "lowercase")]
+#[strum(serialize_all = "lowercase")]
+enum Relation {
+    Supports,
+    Weakens,
+    Contradicts,
+    Refines,
+    Supersedes,
+    Duplicates,
 }
 
-fn phrase(rel: &str, dir: &str) -> String {
-    match (rel, dir) {
-        ("contradicts", _) => "Contradicted by / contradicts".into(),
-        (r, "to") => format!("This claim {r}"),
-        ("supports", _) => "Supported by".into(),
-        ("weakens", _) => "Weakened by".into(),
-        ("refines", _) => "Refined by".into(),
-        ("supersedes", _) => "Superseded by".into(),
-        ("duplicates", _) => "Duplicated by".into(),
-        (r, _) => r.to_string(),
+impl Relation {
+    fn color(self) -> &'static str {
+        match self {
+            Relation::Supports => "#2e8540",
+            Relation::Weakens => "#d97706",
+            Relation::Contradicts => "#c1121f",
+            Relation::Refines => "#0057b7",
+            Relation::Supersedes => "#7b2cbf",
+            Relation::Duplicates => GREY,
+        }
     }
+
+    /// The relation from this claim's point of view, as a heading.
+    fn phrase(self, dir: Dir) -> String {
+        let name: &str = self.into();
+        match (self, dir) {
+            (Relation::Contradicts, _) => "Contradicted by / contradicts".into(),
+            (_, Dir::To) => format!("This claim {name}"),
+            (Relation::Supports, Dir::From) => "Supported by".into(),
+            (Relation::Weakens, Dir::From) => "Weakened by".into(),
+            (Relation::Refines, Dir::From) => "Refined by".into(),
+            (Relation::Supersedes, Dir::From) => "Superseded by".into(),
+            (Relation::Duplicates, Dir::From) => "Duplicated by".into(),
+        }
+    }
+}
+
+/// Whether the edge leaves this claim (`to` the other) or arrives at it (`from` the other).
+#[derive(Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "lowercase")]
+enum Dir {
+    To,
+    From,
+}
+
+/// One of `fn::claim(…).relations`.
+#[derive(Clone, Deserialize)]
+struct Link {
+    other: String,
+    rel: Relation,
+    dir: Dir,
+    text: Option<String>,
+    strength: Option<f64>,
+    independent: Option<bool>,
+    rationale: Option<String>,
+    resolution: Option<String>,
 }
 
 #[component]
 pub fn ClaimPage(id: String) -> impl IntoView {
     let q = format!("fn::claim({id})");
     let data = rows_resource(move || Some(q.clone()));
-    move || match data.get() {
-        None => loading(),
-        Some(None) => waiting_for_db(),
-        Some(Some(Err(e))) => error_box(e),
-        Some(Some(Ok(rows))) => match rows.into_iter().next() {
-            Some(v) if !v["claim"].is_null() => view! { <ClaimView data=v /> }.into_any(),
-            _ => error_box("No such claim.".into()),
-        },
-    }
+    move || on_rows(data.get(), |rows| match rows.into_iter().next() {
+        Some(v) if !v["claim"].is_null() => view! { <ClaimView data=v /> }.into_any(),
+        _ => error_box("No such claim.".into()),
+    })
 }
 
 #[component]
 fn ClaimView(data: Value) -> impl IntoView {
     let c = &data["claim"];
-    let id = c["id"].as_str().unwrap_or_default().to_string();
-    let canonical = data["canonical"].as_str().unwrap_or_default().to_string();
+    let id = text(&c["id"]);
+    let canonical = text(&data["canonical"]);
     let outcome = c["ext"]["outcome"].as_bool().unwrap_or(false);
     let badges: Vec<(String, String)> = [
         ("kind", c["kind"].as_str().map(String::from)),
@@ -64,11 +95,11 @@ fn ClaimView(data: Value) -> impl IntoView {
     let eras = strs(&c["eras"]);
     let topics = strs(&c["topics"]);
     let anchor = c["anchor"].clone();
-    let relations = match &data["relations"] { Value::Array(a) => a.clone(), _ => vec![] };
-    let sources = match &data["sources"] { Value::Array(a) => a.clone(), _ => vec![] };
-    let claimants = match &data["claimants"] { Value::Array(a) => a.clone(), _ => vec![] };
-    let about = match &data["about"] { Value::Array(a) => a.clone(), _ => vec![] };
-    let observations = match &data["observations"] { Value::Array(a) => a.clone(), _ => vec![] };
+    let relations: Vec<Link> = list(&data["relations"]).into_iter().filter_map(|r| serde_json::from_value(r).ok()).collect();
+    let sources = list(&data["sources"]);
+    let claimants = list(&data["claimants"]);
+    let about = list(&data["about"]);
+    let observations = list(&data["observations"]);
 
     view! {
         <article class="claim-page">
@@ -78,12 +109,12 @@ fn ClaimView(data: Value) -> impl IntoView {
                     {outcome.then(|| view! { <span class="badge outcome" title="This claim describes the historical outcome of a dossier's episode">"outcome"</span> })}
                     {(!time.is_empty()).then(|| view! { <span class="when">{time.clone()}</span> })}
                 </div>
-                <p class="claim-text">{c["text"].as_str().unwrap_or_default().to_string()}</p>
+                <p class="claim-text">{text(&c["text"])}</p>
                 {c["confidence_note"].as_str().map(|n| view! { <p class="note">{n.to_string()}</p> })}
                 <div class="meta">
                     <span class="rid-label">{id.clone()}</span>
-                    {eras.into_iter().map(|e| view! { <span class="chip">{e.replace("era:", "")}</span> }).collect_view()}
-                    {topics.into_iter().map(|t| view! { <span class="chip">{rid_link(&t, Some(t.replace("topic:", "")))}</span> }).collect_view()}
+                    {eras.into_iter().map(|e| view! { <span class="chip">{key_of(&e).to_string()}</span> }).collect_view()}
+                    {topics.into_iter().map(|t| view! { <span class="chip">{rid_link(&t, Some(key_of(&t).to_string()))}</span> }).collect_view()}
                     {anchor["file"].as_str().map(|f| view! { <span class="from">"from "
                         <a href=format!("https://github.com/barafael/bavovniatko/blob/main/{f}")>"the research text"</a>
                         {format!(", {}", anchor["section"].as_str().unwrap_or_default())}</span> })}
@@ -107,9 +138,8 @@ fn ClaimView(data: Value) -> impl IntoView {
                     }}
                     <h2>"About"</h2>
                     <ul class="plain">{about.into_iter().map(|a| {
-                        let t = a["target"].as_str().unwrap_or_default().to_string();
                         let name = a["name"].as_str().map(String::from);
-                        view! { <li>{rid_link(&t, name)}{a["role"].as_str().map(|r| view! { <span class="muted">{format!(" · {r}")}</span> })}</li> }
+                        view! { <li>{rid_link(&text(&a["target"]), name)}{a["role"].as_str().map(|r| view! { <span class="muted">{format!(" · {r}")}</span> })}</li> }
                     }).collect_view()}</ul>
                     {(!observations.is_empty()).then(|| view! {
                         <h2>"Numbers"</h2>
@@ -120,13 +150,13 @@ fn ClaimView(data: Value) -> impl IntoView {
                                     (v, _, _) if !v.is_null() => v.to_string(),
                                     (_, l, h) => format!("{l}–{h}"),
                                 });
-                                let m = o["metric"].as_str().unwrap_or_default().to_string();
+                                let m = text(&o["metric"]);
                                 view! { <tr>
                                     <td>{rid_link(&m, Some(o["metric_label"].as_str().map(String::from)
-                                        .unwrap_or_else(|| m.replace("metric:", "").replace('_', " "))))}</td>
+                                        .unwrap_or_else(|| key_of(&m).replace('_', " "))))}</td>
                                     <td class="num">{value}</td>
-                                    <td>{o["unit"].as_str().unwrap_or_default().replace("unit:", "")}</td>
-                                    <td>{o["side"].as_str().unwrap_or_default().to_string()}</td>
+                                    <td>{key_of(o["unit"].as_str().unwrap_or_default()).to_string()}</td>
+                                    <td>{text(&o["side"])}</td>
                                     <td>{fmt_time(&o["time"])}</td>
                                 </tr> }
                             }).collect_view()}</tbody>
@@ -138,7 +168,7 @@ fn ClaimView(data: Value) -> impl IntoView {
                     <ol class="sources">{sources.into_iter().map(|s| view! {
                         <li>
                             <a href=s["url"].as_str().unwrap_or("#").to_string() target="_blank" rel="noopener noreferrer">
-                                {s["title"].as_str().unwrap_or_default().to_string()}</a>
+                                {text(&s["title"])}</a>
                             <div class="muted small">
                                 {[s["publisher"].as_str(), s["published"].as_str(), s["origin"].as_str()].into_iter().flatten()
                                     .map(String::from).collect::<Vec<_>>().join(" · ")}
@@ -167,60 +197,55 @@ fn ClaimView(data: Value) -> impl IntoView {
 
 /// The claim in the middle, its related claims around it, coloured by relation.
 #[component]
-fn EgoGraph(relations: Vec<Value>) -> impl IntoView {
+fn EgoGraph(relations: Vec<Link>) -> impl IntoView {
     let n = relations.len().min(40);
     let (w, h, r) = (560.0_f64, 340.0_f64, 140.0_f64);
     let (cx, cy) = (w / 2.0, h / 2.0);
-    let nodes: Vec<_> = relations.iter().take(n).enumerate().map(|(i, rel)| {
+    let nodes: Vec<_> = relations.into_iter().take(n).enumerate().map(|(i, l)| {
         let a = (i as f64 / n as f64) * std::f64::consts::TAU - std::f64::consts::FRAC_PI_2;
-        let (x, y) = (cx + r * 1.7 * a.cos(), cy + r * a.sin());
-        let other = rel["other"].as_str().unwrap_or_default().to_string();
-        let kind = rel["rel"].as_str().unwrap_or_default().to_string();
-        let title = format!("{} — {}", phrase(&kind, rel["dir"].as_str().unwrap_or_default()), rel["text"].as_str().unwrap_or_default());
-        (x, y, other, kind, title, rel["strength"].as_f64().unwrap_or(0.5))
+        let title = format!("{} — {}", l.rel.phrase(l.dir), l.text.as_deref().unwrap_or_default());
+        (cx + r * 1.7 * a.cos(), cy + r * a.sin(), l, title)
     }).collect();
     view! {
         <svg class="ego" viewBox=format!("0 0 {w} {h}") role="img" aria-label="Claim relation graph">
-            {nodes.iter().map(|(x, y, _, kind, _, s)| view! {
-                <line x1=cx y1=cy x2=*x y2=*y stroke=relation_color(kind) stroke-width=1.0 + 3.0 * s stroke-opacity="0.7" />
+            {nodes.iter().map(|(x, y, l, _)| view! {
+                <line x1=cx y1=cy x2=*x y2=*y stroke=l.rel.color() stroke-width=1.0 + 3.0 * l.strength.unwrap_or(0.5) stroke-opacity="0.7" />
             }).collect_view()}
             <circle cx=cx cy=cy r="16" class="ego-center" />
-            {nodes.into_iter().map(|(x, y, other, kind, title, _)| view! {
-                <circle class="node" cx=x cy=y r="9" fill=relation_color(&kind)
-                    on:click=move |_| go(Route::Claim(other.clone()))><title>{title}</title></circle>
+            {nodes.into_iter().map(|(x, y, l, title)| view! {
+                <circle class="node" cx=x cy=y r="9" fill=l.rel.color()
+                    on:click=move |_| go(Route::Claim(l.other.clone()))><title>{title}</title></circle>
             }).collect_view()}
         </svg>
-        <div class="legend">{RELATIONS.iter().map(|(r, c, _)| view! {
-            <span><i style=format!("background:{c}")></i>{r.to_string()}</span>
+        <div class="legend">{Relation::VARIANTS.iter().map(|r| view! {
+            <span><i style=format!("background:{}", r.color())></i>{<&str>::from(r)}</span>
         }).collect_view()}</div>
     }
 }
 
 #[component]
-fn RelationList(relations: Vec<Value>) -> impl IntoView {
-    let mut groups: Vec<(String, Vec<Value>)> = vec![];
-    for r in relations {
-        let key = phrase(r["rel"].as_str().unwrap_or_default(), r["dir"].as_str().unwrap_or_default());
+fn RelationList(relations: Vec<Link>) -> impl IntoView {
+    let mut groups: Vec<(String, Vec<Link>)> = vec![];
+    for l in relations {
+        let key = l.rel.phrase(l.dir);
         match groups.iter_mut().find(|g| g.0 == key) {
-            Some(g) => g.1.push(r),
-            None => groups.push((key, vec![r])),
+            Some(g) => g.1.push(l),
+            None => groups.push((key, vec![l])),
         }
     }
     view! {
         <div class="relations">{groups.into_iter().map(|(title, items)| view! {
             <h3>{title}</h3>
-            <ul class="rel-list">{items.into_iter().map(|r| {
-                let other = r["other"].as_str().unwrap_or_default().to_string();
-                let kind = r["rel"].as_str().unwrap_or_default().to_string();
-                view! { <li style=format!("border-left-color:{}", relation_color(&kind))>
-                    <a href=href(&Route::Claim(other.clone()))>{r["text"].as_str().unwrap_or_default().to_string()}</a>
+            <ul class="rel-list">{items.into_iter().map(|l| view! {
+                <li style=format!("border-left-color:{}", l.rel.color())>
+                    <a href=href(&Route::Claim(l.other))>{l.text}</a>
                     <div class="muted small">
-                        {format!("strength {:.1}", r["strength"].as_f64().unwrap_or(0.0))}
-                        {(r["independent"].as_bool() == Some(true)).then_some(" · independent")}
-                        {r["rationale"].as_str().map(|t| format!(" · {t}"))}
+                        {format!("strength {:.1}", l.strength.unwrap_or(0.0))}
+                        {(l.independent == Some(true)).then_some(" · independent")}
+                        {l.rationale.map(|t| format!(" · {t}"))}
                     </div>
-                    {r["resolution"].as_str().map(|t| view! { <div class="resolution">{format!("Explanation: {t}")}</div> })}
-                </li> }
+                    {l.resolution.map(|t| view! { <div class="resolution">{format!("Explanation: {t}")}</div> })}
+                </li>
             }).collect_view()}</ul>
         }).collect_view()}</div>
     }

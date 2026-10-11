@@ -5,7 +5,7 @@ use leptos::prelude::*;
 use serde_json::{Value, json};
 
 use crate::router::{Route, href};
-use crate::ui::{error_box, fmt_time, loading, rows_resource, strs, waiting_for_db};
+use crate::ui::{claim_link, fmt_time, ok_rows, on_rows, rows_resource, strs, text};
 
 const LIST: &str = "LET $out = (SELECT topics[0] AS t, count() AS n FROM claim WHERE ext.outcome = true GROUP BY t);
     LET $all = (SELECT topics[0] AS t, count() AS n FROM claim GROUP BY t);
@@ -25,21 +25,16 @@ pub fn Chapters(topic: Option<String>) -> impl IntoView {
         <div class="chapters">
             <details class="chapter-list side-list" open=crate::ui::wide_screen()>
                 <summary>"Dossiers"</summary>
-                {move || match list.get() {
-                    None => loading(),
-                    Some(None) => waiting_for_db(),
-                    Some(Some(Err(e))) => error_box(e),
-                    Some(Some(Ok(rows))) => view! { <ol>{rows.into_iter().map(|r| {
-                        let id = r["id"].as_str().unwrap_or_default().to_string();
-                        let active = current.as_deref() == Some(id.as_str());
-                        view! { <li class:active=active>
-                            <a href=href(&Route::Chapters(Some(id.clone())))>
-                                <span class="code">{r["code"].as_str().unwrap_or_default().to_string()}</span>
-                                {title(&r["title"])}</a>
-                            <span class="muted small">{format!("{} claims · {} outcome", r["claims"], r["outcome"])}</span>
-                        </li> }
-                    }).collect_view()}</ol> }.into_any(),
-                }}
+                {move || on_rows(list.get(), |rows| view! { <ol>{rows.into_iter().map(|r| {
+                    let id = text(&r["id"]);
+                    let active = current.as_deref() == Some(id.as_str());
+                    view! { <li class:active=active>
+                        <a href=href(&Route::Chapters(Some(id)))>
+                            <span class="code">{text(&r["code"])}</span>
+                            {title(&r["title"])}</a>
+                        <span class="muted small">{format!("{} claims · {} outcome", r["claims"], r["outcome"])}</span>
+                    </li> }
+                }).collect_view()}</ol> }.into_any())}
             </details>
             <section class="chapter-body">
                 {match topic {
@@ -67,10 +62,10 @@ fn Chapter(topic: String) -> impl IntoView {
     let topic_map = topic.clone();
     let topic_nb = topic.clone();
     view! {
-        {move || head.get().flatten().and_then(|r| r.ok()).and_then(|r| r.into_iter().next()).map(|h| view! {
+        {move || ok_rows(head.get()).and_then(|r| r.into_iter().next()).map(|h| view! {
             <h1>{title(&h["title"])}</h1>
             <p class="muted small">
-                <a href=format!("https://github.com/barafael/bavovniatko/blob/main/{}", h["file"].as_str().unwrap_or_default())>
+                <a href=format!("https://github.com/barafael/bavovniatko/blob/main/{}", text(&h["file"]))>
                     "Read the full dossier text"</a>
             </p>
         })}
@@ -81,33 +76,25 @@ fn Chapter(topic: String) -> impl IntoView {
         <div class="chapter-cols">
         <section class="panel">
             <h2>"Historical outcome"</h2>
-            {move || match outcome.get() {
-                None => loading(),
-                Some(None) => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) if rows.is_empty() => view! { <p class="muted">"No outcome claims flagged."</p> }.into_any(),
-                Some(Some(Ok(rows))) => view! { <ul class="history">{rows.into_iter().map(|r| view! {
-                    <li><span class="when">{fmt_time(&r["time"])}</span>
-                        <a href=href(&Route::Claim(r["id"].as_str().unwrap_or_default().to_string()))>{r["text"].as_str().unwrap_or_default().to_string()}</a></li>
-                }).collect_view()}</ul> }.into_any(),
-            }}
+            {move || on_rows(outcome.get(), |rows| if rows.is_empty() {
+                view! { <p class="muted">"No outcome claims flagged."</p> }.into_any()
+            } else {
+                view! { <ul class="history">{rows.into_iter().map(|r| view! {
+                    <li><span class="when">{fmt_time(&r["time"])}</span>{claim_link(&r["id"], &r["text"])}</li>
+                }).collect_view()}</ul> }.into_any()
+            })}
         </section>
         <section class="panel">
             <h2>"Timeline: dated claims in order"</h2>
-            {move || match timeline.get() {
-                None => loading(),
-                Some(None) => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) => view! { <ul class="history script">{rows.into_iter().map(|r| {
-                    let when = fmt_time(&json!({"from": r["t"], "to": r["t_to"], "precision": r["precision"]}));
-                    let outcome = r["outcome"].as_bool().unwrap_or(false);
-                    view! { <li class:outcome=outcome>
-                        <span class="when">{when}</span>
-                        <a href=href(&Route::Claim(r["id"].as_str().unwrap_or_default().to_string()))>{r["text"].as_str().unwrap_or_default().to_string()}</a>
-                        {(!strs(&r["claimants"]).is_empty()).then(|| view! { <span class="muted small">{format!(" — {}", strs(&r["claimants"]).join(", "))}</span> })}
-                    </li> }
-                }).collect_view()}</ul> }.into_any(),
-            }}
+            {move || on_rows(timeline.get(), |rows| view! { <ul class="history script">{rows.into_iter().map(|r| {
+                let when = fmt_time(&json!({"from": r["t"], "to": r["t_to"], "precision": r["precision"]}));
+                let claimants = strs(&r["claimants"]);
+                view! { <li class:outcome=r["outcome"].as_bool().unwrap_or(false)>
+                    <span class="when">{when}</span>
+                    {claim_link(&r["id"], &r["text"])}
+                    {(!claimants.is_empty()).then(|| view! { <span class="muted small">{format!(" — {}", claimants.join(", "))}</span> })}
+                </li> }
+            }).collect_view()}</ul> }.into_any())}
         </section>
         </div>
     }
