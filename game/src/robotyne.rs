@@ -33,8 +33,10 @@ fn n08_z(x: f32) -> f32 {
 }
 
 pub fn height(x: f32, z: f32) -> f32 {
-    // The long open slope up from the Kinska valley to the crest: the attackers climb under observation.
-    let mut h = 68.0 + 42.0 * smoothstep(-2000.0, 1000.0, z);
+    // The long open slope up from the Kinska valley to the crest: the attackers climb under observation, so
+    // the slope is concave to the crest (no dead ground below it), and levels off behind the trench.
+    let t = ((z + 2000.0) / 2700.0).clamp(0.0, 1.0);
+    let mut h = 68.0 + 42.0 * t.powf(1.6);
     h += 4.0 * (-((z - 850.0) / 320.0).powi(2)).exp();
     // Long low swells, and a little roughness.
     h += fbm(x / 1200.0, z / 1200.0, 3, 17) * 4.5;
@@ -102,15 +104,17 @@ pub fn build_layout() -> Layout {
     ];
 
     let ua_positions = vec![
-        // ATGM teams in the forward tree line, watching the crest 1.6 km away.
-        v(-860.0, UA_LINE_Z + 4.0), v(260.0, UA_LINE_Z + 5.0), v(1150.0, UA_LINE_Z + 3.0),
+        // ATGM teams in the forward tree line, at the heads of the two tracks (where the belts' gaps let them see
+        // up the lanes) and between, watching the crest 1.6 km away.
+        v(-520.0, UA_LINE_Z + 4.0), v(640.0, UA_LINE_Z + 5.0), v(260.0, UA_LINE_Z + 3.0),
         // Riflemen covering the start line.
         v(-180.0, UA_LINE_Z + 5.0), v(-1350.0, UA_LINE_Z + 4.0),
     ];
     let ru_positions = vec![
-        // The 291st's first line: platoon positions along the crest trench, Kornet teams covering the tracks.
-        v(-1500.0, TRENCH_Z), v(-930.0, TRENCH_Z - 2.0), v(-380.0, TRENCH_Z), v(180.0, TRENCH_Z - 3.0),
-        v(780.0, TRENCH_Z), v(1350.0, TRENCH_Z - 1.0), v(1900.0, TRENCH_Z),
+        // The 291st's first line: platoon positions along the crest trench, Kornet teams at the heads of the
+        // tracks, looking straight down them through the belts' gaps.
+        v(-1500.0, TRENCH_Z), v(-930.0, TRENCH_Z - 2.0), v(-468.0, TRENCH_Z), v(180.0, TRENCH_Z - 3.0),
+        v(666.0, TRENCH_Z), v(1350.0, TRENCH_Z - 1.0), v(1900.0, TRENCH_Z),
     ];
     // The Russian guns have every lane registered: where the tracks cross the minefields.
     let trps = vec![

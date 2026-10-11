@@ -526,6 +526,25 @@ x = 560 position. The tally will move a little (fewer launches); band check.
 
 **Cost.** 4–5 h.
 
+**Done (2026-10-11).** `geo::line_of_sight`: the belts as occluders (a crossing outside the gaps blocks, unless
+it is within 20 m of either end: a man looks out of his own belt, and a hull at a belt's near edge is seen
+against it), and the ground sampled every 25 m between an eye at 1.5 m and a turret roof at 2 m. Used by the
+ATGM teams (cached half a second per team and target; the refusals are counted as `hidden` in the stats line),
+by the riflemen (the nearest man they can see) and by the dug-in tanks (they track the nearest, fire only at one
+they can see). A probe test, `sight_down_the_lanes`, prints how much of each route each post sees.
+
+What it showed. At Vuhledar the first-belt teams see the field between the first and second belts and the
+road through the gaps, which is where the kill zone is: launches went from 21 to 30 over the day. At Robotyne
+the Kornets went blind: the slope was an S-curve whose convex shoulder below the crest made dead ground, and the
+crest posts sat 110 m off the lanes, so their lines of fire crossed the field belts away from the gaps. So the
+slope is now concave to the crest (the attackers "climb under observation", as the layout always said), the
+Kornet posts and the 47th's ATGM posts moved to the lane heads, and a track's gap through a belt is 18 m wider
+than the track. Launches at Robotyne: 15 before line of sight, 3 with it, 8 with those fixes; what is still
+hidden is real: a vehicle that has pulled off the lane is behind the field belt from the crest. The diorama pick
+now ignores flag-like arguments (a test harness passes its own). Measured (`target/same-day/f4-vuh`, `f4-rob`):
+Vuhledar 29 of 33 left in the fields, 60 of 320 back; Robotyne 20 of 24 stopped (7 burned, 13 abandoned), 105
+of 176 back, 36 dead.
+
 ### G. The feed: EW, the OSD, the picture (**look**, with one **sim** part) — observations 4, 9, 18, 19
 
 **Now.** The feed shader does row tearing, block freeze and chroma shift; jamming is a scalar; the OSD is a text

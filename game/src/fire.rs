@@ -611,11 +611,24 @@ fn atgm_teams(
     mut teams: Query<(Entity, &mut Post)>,
     view: Res<View>,
     smoke: Res<fx::Smoke>,
+    mut stats: ResMut<Stats>,
+    mut seen: Local<bevy::platform::collections::HashMap<(Entity, Entity), (f64, bool)>>,
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
     let lay = geo::layout();
     let attacker = diorama().attacker();
+    // Whether a team can see a vehicle holds for half a second at a time.
+    let mut visible = |team: Entity, e: Entity, from: Vec2, to: Vec2| -> bool {
+        match seen.get(&(team, e)) {
+            Some(&(at, v)) if now - at < 0.5 => v,
+            _ => {
+                let v = geo::line_of_sight(from, to);
+                seen.insert((team, e), (now, v));
+                v
+            }
+        }
+    };
     // The picture a team fires on, looked at only once some team is ready to fire: which columns are committed
     // (the lead vehicle past the deploy point, or stopped in the kill zone), whether our own column is out in the
     // field (attacking, the overwatch covers it once it is, not before), and which vehicles already have a missile
@@ -658,8 +671,12 @@ fn atgm_teams(
                 // in it, stopped ones first (the scoring below).
                 d < 2200.0 && (vp.y - lay.foothold_z) * lay.advance > -1050.0
             };
-            // They cannot shoot what the smoke hides.
+            // They cannot shoot what the smoke hides, nor what a belt or a crest hides.
             if !allowed || smoke.blocks(pos.pos, vp, now) {
+                continue;
+            }
+            if !visible(team, e, pos.pos, vp) {
+                stats.hidden += 1;
                 continue;
             }
             // Prefer tanks, then moving vehicles, then the nearest.
@@ -778,17 +795,14 @@ fn small_arms(
         }
         pos.fire_timer = rng.random_range(1.5..3.5);
         let from = geo::ground(pos.pos) + Vec3::Y * 0.8;
-        let mut target: Option<(Entity, f32, Vec3)> = None;
-        for (e, s, tf) in &soldiers {
-            if s.side == pos.side || dead.contains(&e) {
-                continue;
-            }
-            let d = tf.translation.xz().distance(pos.pos);
-            if d < 750.0 && target.is_none_or(|t| d < t.1) {
-                target = Some((e, d, tf.translation));
-            }
-        }
-        let Some((e, d, tp)) = target else { continue };
+        // The nearest man within rifle range that a belt or a crest does not hide.
+        let mut near: Vec<(Entity, f32, Vec3)> = soldiers
+            .iter()
+            .filter(|(e, s, tf)| s.side != pos.side && !dead.contains(e) && tf.translation.xz().distance(pos.pos) < 750.0)
+            .map(|(e, _, tf)| (e, tf.translation.xz().distance(pos.pos), tf.translation))
+            .collect();
+        near.sort_by(|a, b| a.1.total_cmp(&b.1));
+        let Some(&(e, d, tp)) = near.iter().find(|(_, _, tp)| geo::line_of_sight(pos.pos, tp.xz())) else { continue };
         for k in 0..5 {
             let spread = Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(0.0..1.5), rng.random_range(-3.0..3.0)) * (d / 300.0);
             if k % 2 == 0 {
@@ -921,15 +935,17 @@ fn defender_tank(
 ) {
     v.fire_timer -= dt;
     let from = tf.translation.xz();
-    let target = exposed
-        .iter()
-        .filter(|(_, p)| p.distance(from) < 2000.0 && p.y > -400.0 && !smoke.blocks(from, *p, now))
-        .min_by(|a, b| a.1.distance(from).total_cmp(&b.1.distance(from)));
-    let Some(&(target, tp)) = target else { return };
+    let candidates = || exposed.iter().filter(|(_, p)| p.distance(from) < 2000.0 && p.y > -400.0 && !smoke.blocks(from, *p, now));
+    let Some(&(_, tp)) = candidates().min_by(|a, b| a.1.distance(from).total_cmp(&b.1.distance(from))) else { return };
     v.aim = Some(tp);
     if v.fire_timer > 0.0 {
         return;
     }
+    // The shot goes to the nearest one the crest does not hide; if none, look again in a few seconds.
+    let Some(&(target, tp)) = candidates().filter(|(_, p)| geo::line_of_sight(from, *p)).min_by(|a, b| a.1.distance(from).total_cmp(&b.1.distance(from))) else {
+        v.fire_timer = 3.0;
+        return;
+    };
     v.fire_timer = rng.random_range(16.0..28.0);
     let muzzle = turrets.get(v.turret).map(|t| t.transform_point(v.muzzle)).unwrap_or(tf.translation + Vec3::Y * 2.0);
     let aim = geo::ground(tp) + Vec3::Y * 1.2;

@@ -20,7 +20,8 @@ static DIORAMA: OnceLock<Diorama> = OnceLock::new();
 /// The diorama this run plays, fixed at startup.
 pub fn diorama() -> Diorama {
     *DIORAMA.get_or_init(|| {
-        let pick = std::env::args().nth(1).or_else(|| std::env::var("VUHLEDAR_DIORAMA").ok());
+        // The first argument names it unless that is a flag (a test harness passes its own).
+        let pick = std::env::args().nth(1).filter(|a| !a.starts_with('-')).or_else(|| std::env::var("VUHLEDAR_DIORAMA").ok());
         pick.and_then(|s| s.trim().parse().ok()).unwrap_or(Diorama::Vuhledar)
     })
 }

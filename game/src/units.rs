@@ -323,6 +323,8 @@ pub struct Stats {
     pub wounded: u32,
     pub wounded_out: u32,
     pub turret_tosses: u32,
+    /// Shots the ATGM teams did not take because a belt or a crest hid the target.
+    pub hidden: u32,
     pub mine_hits: u32,
     pub atgm_kills: u32,
     pub artillery_kills: u32,

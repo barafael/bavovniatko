@@ -354,9 +354,9 @@ fn log_stats(
     let moving = vehicles.iter().filter(|(v, _)| v.state.mobile()).count();
     let men = soldiers.iter().filter(|s| s.side == crate::diorama::diorama().attacker()).count();
     info!(
-        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={} overlap_frames={}/{} max_pairs={} touching_frames={} closest={:.1}m({:?},{:?})",
+        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={} hidden={} overlap_frames={}/{} max_pairs={} touching_frames={} closest={:.1}m({:?},{:?})",
         script.t, crate::director::clock_text(script.t), stats.vehicles_committed, stats.destroyed, stats.abandoned, stats.withdrawn, moving, men, stats.sent, stats.returned, stats.attacker_dead, stats.foothold, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, fc.shells, fc.brigade_shells, stats.defender_losses,
-        overlap.1, overlap.0, overlap.2, overlap.3, closest.0, closest.1, closest.2
+        stats.hidden, overlap.1, overlap.0, overlap.2, overlap.3, closest.0, closest.1, closest.2
     );
     *overlap = (0, 0, 0, 0);
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {

@@ -399,7 +399,9 @@ pub fn cut_gaps(belts: &mut [Belt], roads: &[Road]) {
         for k in 0..=n {
             let s = k as f32 * 8.0;
             let p = belt.line.point(s);
-            let near_road = roads.iter().any(|r| r.line.project(p).0 < r.width * 0.5 + 9.0);
+            // Vehicles turning through a belt have worn the gap wider than the road; a farm track crosses where
+            // the belt was left open for it.
+            let near_road = roads.iter().any(|r| r.line.project(p).0 < r.width * 0.5 + if r.kind == RoadKind::Track { 18.0 } else { 12.0 });
             let natural = value_noise(s / 90.0, bi as f32 * 7.0, 99) > 0.62;
             let gap = near_road || natural;
             match (gap, in_gap) {
@@ -488,6 +490,51 @@ pub fn raycast(origin: Vec3, dir: Vec3, max: f32) -> Option<Vec3> {
     None
 }
 
+/// Where the segments `a`–`b` and `c`–`d` cross, as the fraction along `a`–`b`.
+fn crossing(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> Option<f32> {
+    let (r, s) = (b - a, d - c);
+    let denom = r.perp_dot(s);
+    if denom.abs() < 1e-6 {
+        return None;
+    }
+    let t = (c - a).perp_dot(s) / denom;
+    let u = (c - a).perp_dot(r) / denom;
+    ((0.0..=1.0).contains(&t) && (0.0..=1.0).contains(&u)).then_some(t)
+}
+
+/// Can a man at `a`, eye at a parapet 1.5 m up, see a hull at `b` (its turret roof, 2 m up)? A shelterbelt
+/// between them hides it (outside its gaps), unless he stands at that belt's near edge and looks out of it, or
+/// the hull stands at its edge in front of it; and the ground hides it where a crest rises between.
+pub fn line_of_sight(a: Vec2, b: Vec2) -> bool {
+    let len = a.distance(b);
+    for belt in &layout().belts {
+        let pts = &belt.line.pts;
+        for i in 0..pts.len() - 1 {
+            let Some(t) = crossing(a, b, pts[i], pts[i + 1]) else { continue };
+            // Standing in the belt (within 20 m of where the line meets it): looking out, not through. And a
+            // hull at a belt's near edge is seen against the trees, not through them.
+            if t * len < 20.0 || (1.0 - t) * len < 20.0 {
+                continue;
+            }
+            let s = belt.line.cum[i] + pts[i].distance(pts[i + 1]) * ((a + (b - a) * t) - pts[i]).length() / pts[i].distance(pts[i + 1]).max(1e-3);
+            if belt.gaps.iter().any(|&(g0, g1)| s > g0 && s < g1) {
+                continue;
+            }
+            return false;
+        }
+    }
+    let (ha, hb) = (height(a.x, a.y) + 1.5, height(b.x, b.y) + 2.0);
+    let n = (len / 25.0).ceil().max(1.0) as usize;
+    for i in 1..n {
+        let f = i as f32 / n as f32;
+        let p = a.lerp(b, f);
+        if height(p.x, p.y) > ha + (hb - ha) * f + 0.3 {
+            return false;
+        }
+    }
+    true
+}
+
 /// Map position to WGS84. Vuhledar is anchored on the town node (47.7810 N, 37.2461 E) at (-900, -1500);
 /// Robotyne's box on the fields about 4 km south of Mala Tokmachka (47.4967 N, 35.8968 E at the origin).
 pub fn latlon(p: Vec2) -> (f64, f64) {
@@ -498,4 +545,26 @@ pub fn latlon(p: Vec2) -> (f64, f64) {
     let lat = lat0 - (p.y as f64 - z0) / 111_200.0;
     let lon = lon0 + (p.x as f64 - x0) / m_per_lon;
     (lat, lon)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// How much of each route each ATGM position can see (`VUHLEDAR_DIORAMA` picks the layout).
+    #[test]
+    fn sight_down_the_lanes() {
+        let lay = layout();
+        for (side, posts) in [("UA", &lay.ua_positions), ("RU", &lay.ru_positions)] {
+            for p in posts {
+                let mut line = format!("{side} post ({:>6.0},{:>5.0}):", p.x, p.y);
+                for r in &lay.routes {
+                    let n = 40;
+                    let seen = (0..n).filter(|&k| line_of_sight(*p, r.line.point(r.line.length() * k as f32 / n as f32))).count();
+                    line += &format!("  route {:>2}/{n}", seen);
+                }
+                println!("{line}");
+            }
+        }
+    }
 }
