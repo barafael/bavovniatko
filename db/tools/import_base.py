@@ -17,17 +17,14 @@ import datetime as dt
 import hashlib
 import json
 import re
-import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
-import mdparse  # noqa: E402
+import kb
+import mdparse
 
-VOCAB = kb.DB_DIR / "vocab"
 UTC = dt.timezone.utc
 RUN = "import_base@" + dt.datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
 NOW = dt.datetime.now(UTC)
@@ -133,11 +130,10 @@ class Writer:
 # --- vocab ----------------------------------------------------------------------------------------
 
 def load_vocab(w: Writer):
-    for domain, slugs in yaml.safe_load((VOCAB / "kinds.yaml").read_text()).items():
+    for domain, slugs in kb.vocab("kinds").items():
         for s in slugs:
             w.put(kb.rid("kind", [domain, s]), {"labels": labels(s.replace("_", " ").capitalize())})
-    eras = yaml.safe_load((VOCAB / "eras.yaml").read_text())
-    for e in sorted(eras, key=lambda e: "parent" in e):          # parents first
+    for e in sorted(kb.vocab("eras"), key=lambda e: "parent" in e):          # parents first
         t = {"from": d(e["from"]), "precision": e["precision"]}
         if e.get("to"):
             t["to"] = d(e["to"])
@@ -145,10 +141,9 @@ def load_vocab(w: Writer):
         if e.get("parent"):
             rec["parent"] = kb.rid("era", e["parent"])
         w.put(kb.rid("era", e["id"]), rec)
-    for t in yaml.safe_load((VOCAB / "topics.yaml").read_text()):
+    for t in kb.vocab("topics"):
         w.put(kb.rid("topic", t["id"]), {"code": t["code"], "labels": labels(t["en"]), "file": t["file"]})
-    units = yaml.safe_load((VOCAB / "units.yaml").read_text())
-    for u in sorted(units, key=lambda u: "base" in u):
+    for u in sorted(kb.vocab("units"), key=lambda u: "base" in u):
         rec = {"symbol": u["symbol"], "labels": labels(u["symbol"] or u["id"]), "dimension": u["dimension"]}
         if u.get("base"):
             rec["base"], rec["to_base"] = kb.rid("unit", u["base"]), float(u["to_base"])
@@ -246,7 +241,7 @@ def load_terms(w: Writer):
         if b.role != "table":
             continue
         group = b.section
-        header, rows = mdparse.table_rows(b)
+        _, rows = mdparse.table_rows(b)
         for cells in rows:
             if len(cells) < 3:
                 continue

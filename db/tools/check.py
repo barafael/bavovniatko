@@ -7,10 +7,8 @@ with a `-- severity: error|warn` header. Exit code 1 if any error-level check ha
 import argparse
 import re
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
+import kb
 
 
 def main() -> int:

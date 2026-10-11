@@ -6,7 +6,7 @@
   load.py metrics                  db/vocab/metrics.yaml -> metric
   load.py claims [--topic NN]      db/staging/claims/*.jsonl -> claim, cites, asserted_by, about,
                                    observation, includes, counters
-  load.py all                      the three above, in order
+  load.py all                      all four, in order
 
 Claims keep ids derived from their staging local_id (claim:c03_0004_01). A claim whose content hash
 is unchanged is skipped; a changed claim is updated and its outgoing edges and observations rebuilt,
@@ -16,26 +16,22 @@ so re-running is safe. Every staged name must resolve through the entity registr
 from __future__ import annotations
 
 import argparse
-import calendar
 import datetime as dt
 import hashlib
 import json
 import re
 import sys
 from collections import Counter
-from pathlib import Path
 
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import entities as ent  # noqa: E402
-import kb  # noqa: E402
-import mdparse  # noqa: E402
+import entities as ent
+import kb
+import mdparse
 
 UTC = dt.timezone.utc
 NOW = dt.datetime.now(UTC)
 RUN = "load@" + NOW.strftime("%Y%m%dT%H%M%SZ")
-VOCAB = kb.DB_DIR / "vocab"
 OSM_LICENCE = "ODbL 1.0, © OpenStreetMap contributors"
 
 
@@ -163,12 +159,7 @@ def bbox_polygon(b):
 
 def load_entities(conn) -> Counter:
     reg = ent.load_registry()
-    geo = {}
-    if ent.GEOCODE.exists():
-        for l in ent.GEOCODE.read_text().splitlines():
-            if l.strip():
-                r = json.loads(l)
-                geo[r["id"]] = r
+    geo = ent.geocode_cache()
     have = {kb.rid_str(r["id"]): r.get("h") for t in ("place", "event", "system", "actor", "work")
             for r in kb.one(conn, f"SELECT id, ext._hash AS h FROM {t}")}
     stats = Counter()
@@ -293,14 +284,14 @@ def merge_staged_sources(conn, files) -> tuple[list[dict], Counter]:
 
 def metric_aliases() -> dict[str, str]:
     """Proposed metric slug -> canonical slug (db/vocab/metric_aliases.yaml)."""
-    p = VOCAB / "metric_aliases.yaml"
+    p = kb.VOCAB / "metric_aliases.yaml"
     return (yaml.safe_load(p.read_text()) or {}) if p.exists() else {}
 
 
 def load_metrics(conn) -> Counter:
     stats = Counter()
-    units = {u["id"]: u for u in yaml.safe_load((VOCAB / "units.yaml").read_text())}
-    for slug, (label, dim, unit) in yaml.safe_load((VOCAB / "metrics.yaml").read_text()).items():
+    units = {u["id"]: u for u in kb.vocab("units")}
+    for slug, (label, dim, unit) in kb.vocab("metrics").items():
         if unit not in units:
             raise SystemExit(f"metric {slug}: unknown unit {unit}")
         kb.run(conn, "UPSERT $id MERGE $d", {"id": kb.rid("metric", slug), "d": {
@@ -313,7 +304,7 @@ def load_metrics(conn) -> Counter:
 
 def load_claims(conn, topics: list[str] | None) -> Counter:
     res = ent.resolver()
-    metrics = set(yaml.safe_load((VOCAB / "metrics.yaml").read_text()))
+    metrics = set(kb.vocab("metrics"))
     malias = metric_aliases()
     legacy = {lid: r["id"] for r in kb.one(conn, "SELECT id, legacy_ids FROM source") for lid in r["legacy_ids"]}
     passages = {r["key"]: r["id"] for r in kb.one(conn, "SELECT id, key FROM passage")}
@@ -371,7 +362,7 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
             if a:
                 d = {"role": c.get("role", "claimant")}
                 if c.get("said_at"):
-                    d["said_at"] = ptime({"from": c["said_at"], "precision": "day" if c["said_at"].count("-") == 2 else "month"})
+                    d["said_at"] = ptime({"from": c["said_at"], "precision": kb.Precision.of(c["said_at"])})
                 edges.append(("asserted_by", rec_id(a), d))
         for m in r.get("mentions", []):
             if m["type"] == "metric":

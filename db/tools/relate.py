@@ -28,19 +28,19 @@ import math
 import re
 import sys
 from collections import Counter, defaultdict
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
+import kb
 
 REL = kb.DB_DIR / "staging" / "relations"
-RELATIONS = ["supports", "weakens", "contradicts", "refines", "supersedes", "duplicates"]
+RELATIONS = list(kb.Relation)
 # war-wide series: two observations are comparable without sharing a subject entity
 GLOBAL_METRICS = {"kab_launches", "shahed_launches", "jet_geran_launches", "territory_change_net", "territory_gained",
                   "territory_occupied", "territory_occupied_share", "grey_zone_area", "ballistic_missile_launches",
                   "casualties_killed", "casualties_total", "recruitment", "mobilisation", "awol_cases", "ugv_missions",
                   "kill_zone_depth", "fire_ratio", "artillery_rounds_fired", "aid_value", "casualties_per_km2"}
 UTC = dt.timezone.utc
+# how far a period reaches past its start, by precision
+PAD_DAYS = {kb.Precision.DAY: 1, kb.Precision.MONTH: 31, kb.Precision.QUARTER: 92, kb.Precision.YEAR: 366}
 
 
 def claims(conn) -> dict[str, dict]:
@@ -67,11 +67,11 @@ def interval(o) -> tuple[float, float] | None:
     if v is None:
         return None
     q = o.get("qualifier")
-    if q == "approx":
+    if q == kb.Qualifier.APPROX:
         return v * 0.85 * f, v * 1.15 * f
-    if q == "at_least":
+    if q == kb.Qualifier.AT_LEAST:
         return v * f, math.inf
-    if q == "at_most":
+    if q == kb.Qualifier.AT_MOST:
         return -math.inf, v * f
     return v * f, v * f
 
@@ -86,7 +86,7 @@ def span(t) -> tuple[dt.datetime, dt.datetime] | None:
         return None
     a = t["from"]
     b = t.get("to") or a
-    pad = {"day": 1, "month": 31, "quarter": 92, "year": 366}[t["precision"]]
+    pad = PAD_DAYS[t["precision"]]
     return a, b + dt.timedelta(days=pad)
 
 
@@ -113,12 +113,7 @@ def pair_id(a: str, b: str) -> str:
 
 
 def judged_pairs() -> set[str]:
-    out = set()
-    for f in (REL / "judged").glob("*.jsonl") if (REL / "judged").exists() else []:
-        for line in f.read_text().splitlines():
-            if line.strip():
-                out.add(json.loads(line)["pair"])
-    return out
+    return {j["pair"] for f in (REL / "judged").glob("*.jsonl") for j in kb.jsonl(f)}
 
 
 def cmd_candidates(max_per_claim: int, only: list[str] | None = None, skip_judged: bool = False):
@@ -225,7 +220,7 @@ def cmd_candidates(max_per_claim: int, only: list[str] | None = None, skip_judge
 
 
 def cmd_batches(size: int, start: int = 0):
-    rows = [json.loads(l) for l in (REL / "candidates.jsonl").read_text().splitlines() if l.strip()]
+    rows = kb.jsonl(REL / "candidates.jsonl")
     bdir = REL / "batches"
     bdir.mkdir(parents=True, exist_ok=True)
     for f in bdir.glob("b*.jsonl"):
@@ -249,7 +244,7 @@ def cmd_validate(names: list[str]) -> int:
     errs = 0
     for name in names:
         bf, jf = REL / "batches" / f"{name}.jsonl", REL / "judged" / f"{name}.jsonl"
-        pairs = {json.loads(l)["pair"]: json.loads(l) for l in bf.read_text().splitlines() if l.strip()}
+        pairs = {j["pair"]: j for j in kb.jsonl(bf)}
         if not jf.exists():
             print(f"{name}: not judged yet"); errs += 1; continue
         seen = set()
@@ -281,8 +276,6 @@ def cmd_validate(names: list[str]) -> int:
         missing = set(pairs) - seen
         if missing:
             print(f"{name}: {len(missing)} pairs not judged"); errs += 1
-        elif not any(True for _ in []):
-            pass
     print("OK" if not errs else f"{errs} problems")
     return 1 if errs else 0
 
@@ -297,10 +290,7 @@ def cmd_load():
         for r in kb.one(conn, f"SELECT in, out, strength, rationale FROM {rel}"):
             existing[(rel, kb.rid_str(r["in"]), kb.rid_str(r["out"]))] = r
     for f in sorted((REL / "judged").glob("b*.jsonl")):
-        for line in f.read_text().splitlines():
-            if not line.strip():
-                continue
-            j = json.loads(line)
+        for j in kb.jsonl(f):
             rel = j.get("relation")
             if rel == "none":
                 stats["none"] += 1

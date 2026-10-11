@@ -22,10 +22,10 @@ import tempfile
 import uuid
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
-from surrealdb import RecordID  # noqa: E402
-from surrealdb.data.types.geometry import Geometry, GeometryCollection  # noqa: E402
+from surrealdb import RecordID
+from surrealdb.data.types.geometry import Geometry, GeometryCollection
+
+import kb
 
 DUMP = kb.DB_DIR / "dump"
 SKIP_TABLES = {"migration"}
@@ -108,7 +108,7 @@ def export(conn, out: Path) -> dict[str, int]:
         elif path.exists():
             path.unlink()
         counts[t] = len(lines)
-    for stale in set(p.stem for p in out.glob("*.jsonl")) - set(tables):
+    for stale in {p.stem for p in out.glob("*.jsonl")} - set(tables):
         (out / f"{stale}.jsonl").unlink()
     return counts
 
@@ -119,7 +119,7 @@ def restore(conn, src: Path):
     order = [t for t in ORDER if t in files] + sorted(t for t in files if t not in ORDER and t not in relations) \
         + sorted(t for t in files if t in relations)
     for t in order:
-        rows = [dec(json.loads(l)) for l in files[t].read_text().splitlines() if l.strip()]
+        rows = [dec(r) for r in kb.jsonl(files[t])]
         for i in range(0, len(rows), 200):
             chunk = rows[i:i + 200]
             if t in relations:

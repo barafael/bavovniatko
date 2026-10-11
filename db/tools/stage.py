@@ -11,6 +11,7 @@ Every line is one JSON object with "type": "claim" or "counter". See db/staging/
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import re
 import sys
@@ -20,24 +21,22 @@ from pathlib import Path
 import jsonschema
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
-import mdparse  # noqa: E402
+import kb
+import mdparse
 
-VOCAB = kb.DB_DIR / "vocab"
 STAGING = kb.DB_DIR / "staging"
 CLAIMS = STAGING / "claims"
 
-KINDS = yaml.safe_load((VOCAB / "kinds.yaml").read_text())
-UNITS = [u["id"] for u in yaml.safe_load((VOCAB / "units.yaml").read_text())]
-METRICS = yaml.safe_load((VOCAB / "metrics.yaml").read_text())
-ERAS = [e["id"] for e in yaml.safe_load((VOCAB / "eras.yaml").read_text())]
-SIDES = ["ua", "ru", "western", "international", "other"]
+KINDS = kb.vocab("kinds")
+UNITS = [u["id"] for u in kb.vocab("units")]
+METRICS = kb.vocab("metrics")
+ERAS = [e["id"] for e in kb.vocab("eras")]
 DATE = r"^\d{4}(-\d{2}(-\d{2})?)?$"
+LOCAL_ID = rf"^{kb.CODE}-\d{{4}}-\d{{2,3}}$"
 
 TIME = {"type": "object", "additionalProperties": False, "required": ["from", "precision"],
         "properties": {"from": {"type": "string", "pattern": DATE}, "to": {"type": "string", "pattern": DATE},
-                       "precision": {"enum": ["day", "month", "quarter", "year"]}}}
+                       "precision": {"enum": list(kb.Precision)}}}
 MENTION_TYPES = ["place", "event", "system", "actor", "metric", "work"]
 
 
@@ -47,8 +46,8 @@ def schema() -> dict:
         "required": ["type", "local_id", "passage", "text", "kind", "epistemic", "cites"],
         "properties": {
             "type": {"const": "claim"},
-            "local_id": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)-\d{4}-\d{2,3}$"},
-            "passage": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)/\d{4}$"},
+            "local_id": {"type": "string", "pattern": LOCAL_ID},
+            "passage": {"type": "string", "pattern": rf"^{kb.CODE}/\d{{4}}$"},
             "text": {"type": "string", "minLength": 8, "maxLength": 800},
             "kind": {"enum": ["fact", "figure", "event", "assessment", "forecast", "definition"]},
             "epistemic": {"enum": ["observed", "reported", "claimed", "estimated", "derived", "computed"]},
@@ -57,7 +56,7 @@ def schema() -> dict:
                 "type": "object", "additionalProperties": False, "required": ["name", "kind"],
                 "properties": {"name": {"type": "string", "minLength": 2},
                                "kind": {"enum": KINDS["actor"]},
-                               "side": {"enum": SIDES},
+                               "side": {"enum": list(kb.Side)},
                                "role": {"enum": ["claimant", "estimator", "reporter", "analyst"]},
                                "said_at": {"type": "string", "pattern": DATE}}}},
             "cites": {"type": "array", "minItems": 1, "items": {
@@ -67,7 +66,7 @@ def schema() -> dict:
                                "support": {"enum": ["direct", "secondary", "background"]}}}},
             "time": TIME,
             "eras": {"type": "array", "items": {"enum": ERAS}, "uniqueItems": True},
-            "sides": {"type": "array", "items": {"enum": ["ua", "ru", "western", "other"]}, "uniqueItems": True},
+            "sides": {"type": "array", "items": {"enum": kb.OBSERVATION_SIDES}, "uniqueItems": True},
             "mentions": {"type": "array", "items": {
                 "type": "object", "additionalProperties": False, "required": ["name", "type"],
                 "properties": {"name": {"type": "string", "minLength": 2}, "type": {"enum": MENTION_TYPES},
@@ -81,11 +80,11 @@ def schema() -> dict:
                                    "properties": {"label": {"type": "string"}, "dimension": {"type": "string"}}},
                     "value": {"type": "number"}, "low": {"type": "number"}, "high": {"type": "number"},
                     "value_text": {"type": "string", "minLength": 1},
-                    "qualifier": {"enum": ["exact", "approx", "at_least", "at_most", "range"]},
+                    "qualifier": {"enum": list(kb.Qualifier)},
                     "unit": {"enum": UNITS},
-                    "time": TIME, "side": {"enum": ["ua", "ru", "western", "other"]},
+                    "time": TIME, "side": {"enum": kb.OBSERVATION_SIDES},
                     "place": {"type": "string"}, "subject": {"type": "string"},
-                    "method": {"enum": ["reported", "estimated", "derived", "computed"]},
+                    "method": {"enum": list(kb.ObsMethod)},
                     "note": {"type": "string"}}}},
             "notes": {"type": "string"},
         },
@@ -95,28 +94,23 @@ def schema() -> dict:
         "required": ["type", "local_id", "counter", "measure", "rationale", "evidence"],
         "properties": {
             "type": {"const": "counter"},
-            "local_id": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)-x\d{2,3}$"},
+            "local_id": {"type": "string", "pattern": rf"^{kb.CODE}-x\d{{2,3}}$"},
             "counter": {"type": "string"}, "counter_kind": {"enum": KINDS["system"]},
             "measure": {"type": "string"}, "measure_kind": {"enum": KINDS["system"]},
             "first_observed": TIME, "lag_days": {"type": "integer", "minimum": 0},
             "effect": {"type": "string"}, "rationale": {"type": "string"},
-            "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": r"^(?:\d\d|[cv]\d\d)-\d{4}-\d{2,3}$"}},
+            "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": LOCAL_ID}},
         },
     }
     return {"$schema": "https://json-schema.org/draft/2020-12/schema", "title": "bavovniatko staging record",
             "oneOf": [claim, counter]}
 
 
-_VALIDATOR = None
-
-
+@functools.cache
 def validator():
-    global _VALIDATOR
-    if _VALIDATOR is None:
-        s = schema()
-        _VALIDATOR = {"claim": jsonschema.Draft202012Validator(s["oneOf"][0]),
-                      "counter": jsonschema.Draft202012Validator(s["oneOf"][1])}
-    return _VALIDATOR
+    s = schema()
+    return {"claim": jsonschema.Draft202012Validator(s["oneOf"][0]),
+            "counter": jsonschema.Draft202012Validator(s["oneOf"][1])}
 
 
 def topic_file(nn: str) -> Path:
@@ -132,7 +126,7 @@ def source_ids() -> dict[str, str]:
         for r in kb.one(kb.connect(), "SELECT id, legacy_ids FROM source"):
             for a in [r["id"].id, *(r.get("legacy_ids") or [])]:
                 ids[a] = r["id"].id
-    except Exception:
+    except Exception:  # noqa: BLE001 - no database to hand: fall back to the source files
         for f in [kb.RESEARCH / "sources.yaml", *sorted((kb.RESEARCH / "sources").rglob("*.yaml"))]:
             for e in yaml.safe_load(f.read_text()) or []:
                 for a in [e["id"], *(e.get("aliases") or [])]:
@@ -176,7 +170,7 @@ def errors_for(rec: dict, nn: str, passages: set[str], srcs: dict[str, str]) -> 
 
 def load_staged(nn: str) -> list[dict]:
     p = CLAIMS / f"{nn}.jsonl"
-    return [json.loads(l) for l in p.read_text().splitlines() if l.strip()] if p.exists() else []
+    return kb.jsonl(p) if p.exists() else []
 
 
 def cmd_worksheet(nn: str, out: str | None):
@@ -221,8 +215,7 @@ def cmd_append(nn: str, src: str):
             have.add(rec["local_id"])
     CLAIMS.mkdir(parents=True, exist_ok=True)
     with open(CLAIMS / f"{nn}.jsonl", "a") as fh:
-        for l in ok:
-            fh.write(l + "\n")
+        fh.writelines(l + "\n" for l in ok)
     print(f"appended {len(ok)}, rejected {bad} (rejected lines were NOT written; fix and re-append them)")
     return 1 if bad else 0
 

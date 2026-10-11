@@ -29,19 +29,19 @@ DROP_EXT = {"topic_tags", "document", "publisher_raw", "date_raw"}
 LITERAL_FIELDS = {"url", "file", "key", "code", "id", "local_id", "osm", "alt_urls", "geocode_query"}
 
 GAME = re.compile(r"\b(game|games|gameplay|in-game|gamif\w*|player|players|diorama|dioramas|win conditions?|"
-                  r"win bands?|wargam\w*|playable|chapter|chapters)\b", re.I)
+                  r"win bands?|wargam\w*|playable|chapter|chapters)\b", re.IGNORECASE)
 # Genuine facts about the war that use these words; they stay.
 WHITELIST = re.compile(r"(war ?games?\b|wargam(es?|ing)\b(?=.{0,80}(counteroffensive|Zaporizhzhia|Ukrain|2022|2023))|"
-                       r"(?<=the )game DCS World|DCS World game|long game)", re.I)
+                       r"(?<=the )game DCS World|DCS World game|long game)", re.IGNORECASE)
 # Design talk that marks a claim as being about the game itself.
 DESIGN = re.compile(r"\b((in|for|into|to) (the|a|our) game|game[- ]ready|game assets|game HUD|ship\w* (it |them )?"
-                    r"(in|with) the game|commercial game|playable|win bands?|win conditions?|in-game|player)\b", re.I)
+                    r"(in|with) the game|commercial game|playable|win bands?|win conditions?|in-game|player)\b", re.IGNORECASE)
 
 RENAMES = [
     (re.compile(r"\bgame map\b"), "map"), (re.compile(r"\bGame map\b"), "Map"),
-    (re.compile(r"\bThe diorama: ", re.I), ""),                        # section "3. The diorama: geography, …"
-    (re.compile(r"\bplayable (area|box|map box|map)\b", re.I), r"map \1"),
-    (re.compile(r"\bmap map box\b", re.I), "map box"),
+    (re.compile(r"\bThe diorama: ", re.IGNORECASE), ""),  # section "3. The diorama: geography, …"
+    (re.compile(r"\bplayable (area|box|map box|map)\b", re.IGNORECASE), r"map \1"),
+    (re.compile(r"\bmap map box\b", re.IGNORECASE), "map box"),
     (re.compile(r"\ba win band\b"), "an outcome range"), (re.compile(r"\bwin bands?\b"), "outcome range"),
     (re.compile(r"\bWin bands?\b"), "Outcome range"),
     (re.compile(r"\bdioramas\b"), "dossier areas"), (re.compile(r"\bDioramas\b"), "Dossier areas"),
@@ -119,13 +119,13 @@ def strings(v, path=()):
         yield path, v
 
 
-def rewrite(v, field=None):
+def rewrite(v):
     if isinstance(v, dict):
         if any(k.startswith("$") for k in v):
             return v
-        return {k: (x if k in LITERAL_FIELDS else rewrite(x, k)) for k, x in v.items()}
+        return {k: (x if k in LITERAL_FIELDS else rewrite(x)) for k, x in v.items()}
     if isinstance(v, list):
-        return [rewrite(x, field) for x in v]
+        return [rewrite(x) for x in v]
     if isinstance(v, str):
         return rename(v)
     return v
@@ -145,7 +145,7 @@ def live_topic_refs(row) -> set:
 
 
 def is_game_section(section: str) -> bool:
-    return bool(re.search(r"game|sim relevance|design lessons|prior[- ]art", section or "", re.I))
+    return bool(re.search(r"game|sim relevance|design lessons|prior[- ]art", section or "", re.IGNORECASE))
 
 
 ENTITY_TABLES = {"actor", "system", "work", "event", "place", "source", "media", "term", "metric", "kind", "unit",

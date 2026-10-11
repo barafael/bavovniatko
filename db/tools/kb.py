@@ -5,24 +5,98 @@ Everything that talks to the database goes through `connect()` and `run()`:
 - `run()` executes one or more statements and raises on the first ERR status
 - `geom()` turns GeoJSON dicts into the SDK geometry classes SurrealDB accepts
 - `rid()` builds record ids, including array ids such as kind:["place","settlement"]
+- the enums mirror the schema's closed string sets, so code compares against names rather than literals
 """
 from __future__ import annotations
 
+import json
 import os
 import re
+from enum import StrEnum
+from functools import cache
 from pathlib import Path
 from typing import Any
 
 import surrealdb.data.cbor as _cbor
+import yaml
 from surrealdb import RecordID, Surreal
 from surrealdb.data.types.geometry import (
-    GeometryCollection, GeometryLine, GeometryMultiLine, GeometryMultiPoint,
-    GeometryMultiPolygon, GeometryPoint, GeometryPolygon,
+    GeometryCollection,
+    GeometryLine,
+    GeometryMultiLine,
+    GeometryMultiPoint,
+    GeometryMultiPolygon,
+    GeometryPoint,
+    GeometryPolygon,
 )
 
 DB_DIR = Path(__file__).resolve().parent.parent
 REPO = DB_DIR.parent
 RESEARCH = REPO / "research"
+VOCAB = DB_DIR / "vocab"
+
+
+class Precision(StrEnum):
+    """How precisely a time is known (every `time`-shaped field)."""
+    DAY = "day"
+    MONTH = "month"
+    QUARTER = "quarter"
+    YEAR = "year"
+
+    @staticmethod
+    def of(date: str) -> Precision:
+        """'2025' -> year, '2025-06' -> month, '2025-06-01' -> day."""
+        return (Precision.YEAR, Precision.MONTH, Precision.DAY)[str(date).count("-")]
+
+
+class Side(StrEnum):
+    """Whose side an actor is on (observations allow all but INTERNATIONAL)."""
+    UA = "ua"
+    RU = "ru"
+    WESTERN = "western"
+    INTERNATIONAL = "international"
+    OTHER = "other"
+
+
+OBSERVATION_SIDES = [Side.UA, Side.RU, Side.WESTERN, Side.OTHER]
+
+
+class Qualifier(StrEnum):
+    """How an observation's value is meant (observation.qualifier)."""
+    EXACT = "exact"
+    APPROX = "approx"
+    AT_LEAST = "at_least"
+    AT_MOST = "at_most"
+    RANGE = "range"
+
+
+class ObsMethod(StrEnum):
+    """Where an observation's value comes from (observation.method)."""
+    REPORTED = "reported"
+    ESTIMATED = "estimated"
+    DERIVED = "derived"
+    COMPUTED = "computed"
+
+
+class Relation(StrEnum):
+    """The claim-to-claim edge tables."""
+    SUPPORTS = "supports"
+    WEAKENS = "weakens"
+    CONTRADICTS = "contradicts"
+    REFINES = "refines"
+    SUPERSEDES = "supersedes"
+    DUPLICATES = "duplicates"
+
+
+@cache
+def vocab(name: str) -> Any:
+    """A controlled vocabulary, db/vocab/<name>.yaml."""
+    return yaml.safe_load((VOCAB / f"{name}.yaml").read_text())
+
+
+def jsonl(path: Path) -> list[dict]:
+    """The records of a JSON-lines file (blank lines skipped)."""
+    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
 
 # SurrealDB 3 encodes the `set` type as CBOR tag 56, which SDK 2.0.0 cannot decode yet.
 _TAG_SET = 56

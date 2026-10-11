@@ -27,9 +27,8 @@ from pathlib import Path
 
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
-from load import claim_rid, ptime, rec_id  # noqa: E402
+import kb
+from load import claim_rid, ptime, rec_id
 
 UTC = dt.timezone.utc
 NOW = dt.datetime.now(UTC)
@@ -37,7 +36,7 @@ STAGE = kb.DB_DIR / "staging" / "sim"
 OUT = kb.REPO / "game-data"
 SCHEMA_VERSION = 1
 
-# metric -> (series description, preferred claimant order). Values are converted to the metric's default unit.
+# metric -> series description. Values are converted to the metric's default unit.
 SERIES = {
     "kab_launches": "Russian guided glide bombs (KAB) dropped per month",
     "shahed_launches": "Shahed/Geran one-way attack drones launched per month",
@@ -51,7 +50,8 @@ SERIES = {
     "artillery_rounds_fired": "Artillery rounds fired per day",
     "ballistic_missile_launches": "Russian ballistic missile launches per month",
 }
-METHOD_RANK = {"computed": 0, "reported": 1, "estimated": 2, "derived": 3}
+# which observation to prefer when several give a value: computed beats reported beats estimates
+METHOD_RANK = {kb.ObsMethod.COMPUTED: 0, kb.ObsMethod.REPORTED: 1, kb.ObsMethod.ESTIMATED: 2, kb.ObsMethod.DERIVED: 3}
 
 
 def prov(method="rule", input_=None):
@@ -124,7 +124,7 @@ def cmd_load(conn):
                  "prov": prov("agent", rel)}
             if r.get("first_available"):
                 fa = str(r["first_available"])
-                d["first_available"] = ptime({"from": fa, "precision": {1: "year", 2: "month", 3: "day"}[fa.count("-") + 1]})
+                d["first_available"] = ptime({"from": fa, "precision": kb.Precision.of(fa)})
             for k in ("quantity_note", "notes"):
                 if r.get(k):
                     d[k] = r[k]
@@ -166,7 +166,7 @@ def cmd_check(conn) -> int:
             w = f"{f.name} loadouts[{i}]"
             if r.get("availability") not in ("none", "prototype", "scarce", "limited", "common", "abundant"):
                 errs.append(f"{w}: availability")
-            if r.get("side") not in ("ua", "ru"):
+            if r.get("side") not in (kb.Side.UA, kb.Side.RU):
                 errs.append(f"{w}: side")
             for rid in (kb.rid("era", r.get("era", "?")), rec_id(r.get("system", "system:?"))):
                 if not exists(rid):

@@ -23,6 +23,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import io
 import json
 import mimetypes
 import os
@@ -34,17 +35,15 @@ import threading
 import time
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import quote, urlparse
-
-import io
 
 import requests
 from warcio.statusandheaders import StatusAndHeaders
 from warcio.warcwriter import WARCWriter
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
+import kb
 
 ROOT = Path(os.environ.get("BAVOVNIATKO_ARCHIVE", Path.home() / "bavovniatko-archive"))
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
@@ -74,13 +73,17 @@ def now() -> dt.datetime:
     return dt.datetime.now(dt.timezone.utc)
 
 
+@contextmanager
 def polite(host: str):
-    lock = _host_locks[host]
-    lock.acquire()
-    wait = MIN_GAP - (time.monotonic() - _host_last.get(host, 0))
-    if wait > 0:
-        time.sleep(wait)
-    return lock
+    """One request at a time per host, at least MIN_GAP seconds apart."""
+    with _host_locks[host]:
+        wait = MIN_GAP - (time.monotonic() - _host_last.get(host, 0))
+        if wait > 0:
+            time.sleep(wait)
+        try:
+            yield
+        finally:
+            _host_last[host] = time.monotonic()
 
 
 def ext_for(mime: str | None, url: str) -> str:
@@ -103,50 +106,37 @@ def store(body: bytes, mime: str | None, url: str) -> tuple[str, str]:
 
 
 def get(session: requests.Session, url: str) -> requests.Response:
-    host = urlparse(url).netloc
-    lock = polite(host)
-    try:
+    with polite(urlparse(url).netloc):
         r = session.get(url, timeout=TIMEOUT, allow_redirects=True, stream=True,
                         headers={"User-Agent": UA, "Accept": "*/*", "Accept-Language": "en;q=0.9"})
         body = r.raw.read(MAX_BYTES + 1, decode_content=True)
-        r._content = body[:MAX_BYTES]
-        r._content_consumed = True
-        return r
-    finally:
-        _host_last[host] = time.monotonic()
-        lock.release()
+    r._content = body[:MAX_BYTES]
+    r._content_consumed = True
+    return r
 
 
 def wayback_latest(session: requests.Session, url: str) -> str | None:
     try:
-        lock = polite("archive.org")
-        try:
+        with polite("archive.org"):
             r = session.get(f"https://archive.org/wayback/available?url={quote(url, safe='')}", timeout=TIMEOUT,
                             headers={"User-Agent": UA})
-        finally:
-            _host_last["archive.org"] = time.monotonic()
-            lock.release()
         snap = r.json().get("archived_snapshots", {}).get("closest", {})
         if snap.get("available") and snap.get("url"):
             ts = snap.get("timestamp", "")
             # id_ = the original bytes without the Wayback toolbar
             return f"https://web.archive.org/web/{ts}id_/{url}"
-    except Exception:
+    except (requests.RequestException, ValueError):
         return None
     return None
 
 
 def wayback_submit(session: requests.Session, url: str) -> str | None:
     try:
-        lock = polite("web.archive.org")
-        try:
+        with polite("web.archive.org"):
             r = session.get(f"https://web.archive.org/save/{url}", timeout=120, headers={"User-Agent": UA})
-        finally:
-            _host_last["web.archive.org"] = time.monotonic()
-            lock.release()
         loc = r.headers.get("Content-Location") or ""
         return f"https://web.archive.org{loc}" if loc.startswith("/web/") else (r.url if "/web/" in r.url else None)
-    except Exception:
+    except (requests.RequestException, ValueError):
         return None
 
 
@@ -172,7 +162,7 @@ def fetch_one(target, url: str, warc_path: Path, opts) -> dict:
                 snap["error"] = f"truncated at {MAX_BYTES} bytes"
         else:
             snap["error"] = f"HTTP {r.status_code}"
-    except Exception as e:  # network errors are data, not crashes
+    except Exception as e:  # noqa: BLE001 - network errors are data, not crashes
         snap["error"] = f"{type(e).__name__}: {e}"[:500]
     if opts.wayback_submit:
         wb = wayback_submit(session, url)
@@ -182,7 +172,7 @@ def fetch_one(target, url: str, warc_path: Path, opts) -> dict:
         vdir = ROOT / "video"
         vdir.mkdir(parents=True, exist_ok=True)
         res = subprocess.run(["yt-dlp", "--no-progress", "-o", str(vdir / "%(id)s.%(ext)s"), "--print", "after_move:filepath", url],
-                             capture_output=True, text=True, timeout=3600)
+                             capture_output=True, text=True, timeout=3600, check=False)
         if res.returncode == 0 and res.stdout.strip():
             vp = Path(res.stdout.strip().splitlines()[-1])
             sha, rel = store(vp.read_bytes(), mimetypes.guess_type(vp.name)[0], vp.name)
@@ -199,9 +189,7 @@ def cmd_fetch(opts):
     tables = [opts.table] if opts.table else ["source", "media"]
     todo = []
     for t in tables:
-        rows = kb.one(conn, f"""SELECT id, url, alt_urls,
-                (SELECT VALUE ok FROM snapshot WHERE target = $parent.id) AS oks FROM {t}""") if t == "source" else \
-            kb.one(conn, f"SELECT id, url, [] AS alt_urls, (SELECT VALUE ok FROM snapshot WHERE target = $parent.id) AS oks FROM {t}")
+        rows = kb.one(conn, f"SELECT id, url, (SELECT VALUE ok FROM snapshot WHERE target = $parent.id) AS oks FROM {t}")
         for r in rows:
             oks = r.get("oks") or []
             if any(oks) or (oks and not opts.retry_failed):
@@ -210,32 +198,31 @@ def cmd_fetch(opts):
     if opts.limit:
         todo = todo[: opts.limit]
     print(f"archive: {ROOT}\nfetching {len(todo)} URLs (run {run})")
-    # one WARC per worker thread avoids interleaved writes
+    # one WARC for the run; _warc_lock keeps the worker threads' records from interleaving
     results = Counter()
     lock = threading.Lock()
     global _warc_writer
     warc_path = ROOT / "warc" / f"{run}.warc.gz"
-    warc_fh = open(warc_path, "ab")
-    _warc_writer = WARCWriter(warc_fh, gzip=True)
+    with open(warc_path, "ab") as warc_fh:
+        _warc_writer = WARCWriter(warc_fh, gzip=True)
 
-    def work(item):
-        target, url = item
-        snap = fetch_one(target, url, warc_path, opts)
-        with lock:
-            kb.run(conn, "CREATE snapshot CONTENT $s", {"s": snap})
-        with _log_lock, open(ROOT / "log.jsonl", "a") as fh:
-            fh.write(json.dumps({k: (kb.rid_str(v) if hasattr(v, "table_name") else str(v) if isinstance(v, dt.datetime) else v)
-                                 for k, v in snap.items()}, ensure_ascii=False) + "\n")
-        return snap
+        def work(item):
+            target, url = item
+            snap = fetch_one(target, url, warc_path, opts)
+            with lock:
+                kb.run(conn, "CREATE snapshot CONTENT $s", {"s": snap})
+            with _log_lock, open(ROOT / "log.jsonl", "a") as fh:
+                fh.write(json.dumps({k: (kb.rid_str(v) if hasattr(v, "table_name") else str(v) if isinstance(v, dt.datetime) else v)
+                                     for k, v in snap.items()}, ensure_ascii=False) + "\n")
+            return snap
 
-    with ThreadPoolExecutor(max_workers=opts.workers) as ex:
-        for i, fut in enumerate(as_completed([ex.submit(work, x) for x in todo]), 1):
-            s = fut.result()
-            results["ok" if s["ok"] else "failed"] += 1
-            results[f"via:{s.get('via', '-')}"] += 1
-            if i % 25 == 0 or i == len(todo):
-                print(f"  {i}/{len(todo)} {dict(results)}", flush=True)
-    warc_fh.close()
+        with ThreadPoolExecutor(max_workers=opts.workers) as ex:
+            for i, fut in enumerate(as_completed([ex.submit(work, x) for x in todo]), 1):
+                s = fut.result()
+                results["ok" if s["ok"] else "failed"] += 1
+                results[f"via:{s.get('via', '-')}"] += 1
+                if i % 25 == 0 or i == len(todo):
+                    print(f"  {i}/{len(todo)} {dict(results)}", flush=True)
 
 
 def cmd_verify(_opts) -> int:

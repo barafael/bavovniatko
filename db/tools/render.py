@@ -18,8 +18,7 @@ from pathlib import Path
 
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
+import kb
 
 GENERATED = "<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->"
 YAML_HEADER = ("# Source index for bavovniatko research, generated from the knowledge base by db/tools/render.py.\n"
@@ -99,12 +98,12 @@ def render_contradictions(conn) -> str:
     for r in rows:
         by_topic.setdefault(r.get("topic") or "?", []).append(r)
     out = [GENERATED, "", "# Contradictions", "",
-           "Pairs of claims that cannot both be true as stated, judged from rule-based candidates "
-           "(db/tools/relate.py) and stored as `contradicts` edges. *Explained* means the difference has a "
-           "stated cause (method, scope, date); *open* means it is unresolved. Claim ids resolve in the "
-           "knowledge base; source ids in [sources.yaml](sources.yaml).", "",
-           f"{len(rows)} distinct contradictions (duplicate claims collapsed): {sum(1 for r in rows if r.get('state') == 'explained')} explained, "
-           f"{sum(1 for r in rows if r.get('state') != 'explained')} open.", ""]
+           ("Pairs of claims that cannot both be true as stated, judged from rule-based candidates "
+            "(db/tools/relate.py) and stored as `contradicts` edges. *Explained* means the difference has a "
+            "stated cause (method, scope, date); *open* means it is unresolved. Claim ids resolve in the "
+            "knowledge base; source ids in [sources.yaml](sources.yaml)."), "",
+           (f"{len(rows)} distinct contradictions (duplicate claims collapsed): {sum(1 for r in rows if r.get('state') == 'explained')} explained, "
+            f"{sum(1 for r in rows if r.get('state') != 'explained')} open."), ""]
     fmt_src = lambda xs: ", ".join(f"`{x.id}`" for x in (xs or [])[:3])
     fmt_who = lambda xs: "; ".join(xs or []) or "—"
     for code, items in sorted(by_topic.items()):

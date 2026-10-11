@@ -32,15 +32,13 @@ import re
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
 REPO = Path(__file__).resolve().parents[2]
 DUMP = REPO / "db" / "dump"
 SCHEMA = REPO / "db" / "schema"
 WEBKB = REPO / "web" / "kb"
 OUT = REPO / "web" / "crates" / "app" / "public" / "data"
 
-import webscrub  # noqa: E402
+import webscrub
 
 # The private archive (snapshot, revision), bookkeeping (migration) and the game-only tables (see webscrub.py).
 EXCLUDE = {"snapshot", "revision", "migration"} | webscrub.DROP_TABLES
@@ -174,7 +172,7 @@ def functions() -> list[dict]:
     if not path.exists():
         return []
     out = []
-    for m in re.finditer(r"((?:^--[^\n]*\n)*)DEFINE FUNCTION (fn::\w+)\(([^)]*)\)", path.read_text(), flags=re.M):
+    for m in re.finditer(r"((?:^--[^\n]*\n)*)DEFINE FUNCTION (fn::\w+)\(([^)]*)\)", path.read_text(), flags=re.MULTILINE):
         doc = " ".join(l[2:].strip() for l in m.group(1).splitlines()).strip()
         out.append({"name": m.group(2), "params": m.group(3).strip(), "doc": doc})
     return out
@@ -204,16 +202,16 @@ def gallery() -> list[dict]:
 
     md = (REPO / "db" / "queries.md").read_text()
     section = "Examples"
-    for part in re.split(r"(^## .*$)", md, flags=re.M):
+    for part in re.split(r"(^## .*$)", md, flags=re.MULTILINE):
         if part.startswith("## "):
             section = part[3:].strip()
             continue
-        for block in re.findall(r"```surql\n(.*?)```", part, flags=re.S):
+        for block in re.findall(r"```surql\n(.*?)```", part, flags=re.DOTALL):
             add_block(section, block)
     extra = WEBKB / "gallery.surql"
     if extra.exists():
         section = "Explorer"
-        for part in re.split(r"(^-- ## .*$)", extra.read_text(), flags=re.M):
+        for part in re.split(r"(^-- ## .*$)", extra.read_text(), flags=re.MULTILINE):
             if part.startswith("-- ## "):
                 section = part[6:].strip()
             elif part.strip():

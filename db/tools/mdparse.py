@@ -126,10 +126,10 @@ def table_rows(block: Block) -> tuple[list[str], list[list[str]]]:
     return (rows[0] if rows else []), rows[1:]
 
 
-_DESIGN = re.compile(r"^\d+\.\s*game\W+(and\W+)?sim\w*\s+relevance", re.I)
-_QUESTION = re.compile(r"^\d+\.\s*open questions", re.I)
-_SKIP = re.compile(r"^\d+\.\s*(sources|terms)\b", re.I)
-_MEDIA = re.compile(r"^\d+\.\s*media\b", re.I)
+_DESIGN = re.compile(r"^\d+\.\s*game\W+(and\W+)?sim\w*\s+relevance", re.IGNORECASE)
+_QUESTION = re.compile(r"^\d+\.\s*open questions", re.IGNORECASE)
+_SKIP = re.compile(r"^\d+\.\s*(sources|terms)\b", re.IGNORECASE)
+_MEDIA = re.compile(r"^\d+\.\s*media\b", re.IGNORECASE)
 
 
 def meta_section(top: str) -> str | None:

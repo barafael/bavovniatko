@@ -7,14 +7,12 @@ Statements that could write (CREATE, UPDATE, UPSERT, DELETE, RELATE, INSERT, DEF
 import json
 import re
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
-from dump import enc  # noqa: E402
+import kb
+from dump import enc
 
 q = " ".join(sys.argv[1:]) or sys.stdin.read()
-if re.search(r"\b(CREATE|UPDATE|UPSERT|DELETE|RELATE|INSERT|DEFINE|REMOVE|ALTER|KILL|LIVE|BEGIN|COMMIT)\b", q, re.I):
+if re.search(r"\b(CREATE|UPDATE|UPSERT|DELETE|RELATE|INSERT|DEFINE|REMOVE|ALTER|KILL|LIVE|BEGIN|COMMIT)\b", q, re.IGNORECASE):
     sys.exit("q.py is read-only; use the loaders to write")
 
 

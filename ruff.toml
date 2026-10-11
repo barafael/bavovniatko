@@ -1,0 +1,2 @@
+# The db/tools scripts import each other (kb, mdparse, …) as top-level modules.
+src = ["db/tools"]

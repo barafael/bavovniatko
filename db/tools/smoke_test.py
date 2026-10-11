@@ -9,10 +9,8 @@ Exit code 0 = all checks passed. The test database is removed afterwards.
 import datetime as dt
 import sys
 import uuid
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
+import kb
 
 NS, DB = "test", f"smoke_{uuid.uuid4().hex[:8]}"
 NOW = dt.datetime.now(dt.timezone.utc)

@@ -21,13 +21,11 @@ import sys
 import time
 import unicodedata
 from collections import Counter, defaultdict
-from pathlib import Path
 
 import requests
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import kb  # noqa: E402
+import kb
 
 STAGING = kb.DB_DIR / "staging"
 ENT_DIR = STAGING / "entities"
@@ -46,9 +44,8 @@ def norm(name: str) -> str:
 
 def staged():
     for f in sorted((STAGING / "claims").glob("*.jsonl")):
-        for line in f.read_text().splitlines():
-            if line.strip():
-                yield f.stem, json.loads(line)
+        for r in kb.jsonl(f):
+            yield f.stem, r
 
 
 def mentions():
@@ -173,7 +170,7 @@ def photon(q: str) -> dict | None:
                                                                      "lang": "en"},
                          headers={"User-Agent": UA}, timeout=30)
         feats = r.json().get("features", []) if r.ok else []
-    except Exception:
+    except (requests.RequestException, ValueError):
         return None
     time.sleep(1.1)
     # if the query names an oblast/region, insist the hit lies in it (Photon happily returns same-named villages elsewhere)
@@ -191,13 +188,13 @@ def photon(q: str) -> dict | None:
             "category": pr.get("osm_key"), "type": pr.get("osm_value"), "geojson": {"type": "Point", "coordinates": [lon, lat]}}
 
 
+def geocode_cache() -> dict[str, dict]:
+    """The geocoder's results so far, by entity id (later lines win)."""
+    return {r["id"]: r for r in kb.jsonl(GEOCODE)} if GEOCODE.exists() else {}
+
+
 def cmd_geocode(limit: int | None, retry_failed: bool = False):
-    cache = {}
-    if GEOCODE.exists():
-        for l in GEOCODE.read_text().splitlines():
-            if l.strip():
-                r = json.loads(l)
-                cache[r["id"]] = r
+    cache = geocode_cache()
     done = {i for i, r in cache.items() if r.get("found") or not retry_failed}
     todo = [e for e in load_registry() if e["type"] == "place" and not e.get("geometry") and e["id"] not in done
             and e.get("kind") not in ("sample_box", "front_sector", "axis") and not e.get("no_geocode")]
@@ -213,7 +210,7 @@ def cmd_geocode(limit: int | None, retry_failed: bool = False):
                 try:
                     r = requests.get("https://nominatim.openstreetmap.org/search", params=params, headers={"User-Agent": UA}, timeout=30)
                     hits = r.json() if r.ok else []
-                except Exception as ex:
+                except (requests.RequestException, ValueError) as ex:
                     print("  error", e["id"], ex)
                 time.sleep(1.1)
                 if hits:
