@@ -126,8 +126,24 @@ impl Craters {
 
     /// Is a crater centre within `r` of `p`? (`r` at most a cell.)
     pub fn near(&self, p: Vec2, r: f32) -> bool {
+        self.nearest(p, r).is_some()
+    }
+
+    /// The nearest crater centre within `r` of `p`, if any (`r` at most a cell).
+    pub fn nearest(&self, p: Vec2, r: f32) -> Option<Vec2> {
         let (cx, cz) = ((p.x / Self::CELL).floor() as i32, (p.y / Self::CELL).floor() as i32);
-        (-1..=1).any(|dz| (-1..=1).any(|dx| self.grid.get(&(cx + dx, cz + dz)).is_some_and(|v| v.iter().any(|c| c.distance(p) < r))))
+        let mut best: Option<(f32, Vec2)> = None;
+        for dz in -1..=1 {
+            for dx in -1..=1 {
+                for c in self.grid.get(&(cx + dx, cz + dz)).into_iter().flatten() {
+                    let d = c.distance(p);
+                    if d < r && best.is_none_or(|b| d < b.0) {
+                        best = Some((d, *c));
+                    }
+                }
+            }
+        }
+        best.map(|b| b.1)
     }
 }
 

@@ -253,7 +253,7 @@ fn run_script(
         for k in 0..size {
             let at = start + Vec2::new(k as f32 * 4.0, rng.random_range(-3.0..3.0));
             let goal = r.objective + Vec2::new(rng.random_range(-150.0..150.0), rng.random_range(-10.0..10.0));
-            units::spawn_soldier(&mut commands, &models, &palette, Side::Ru, at, goal, r.line.point(0.0), rng);
+            units::spawn_soldier(&mut commands, &models, &palette, Side::Ru, at, goal, r.line.point(0.0), 0.0, None, rng);
         }
         stats.sent += size;
     }

@@ -801,7 +801,7 @@ fn small_arms(
         let p_kill = (0.42 * (1.0 - d / 800.0) * prone * (pos.strength as f32 / 6.0).sqrt()).clamp(0.02, 0.6);
         if rng.random_bool(p_kill as f64) {
             stats.died("rifles", (s.side == diorama().attacker()) as u32);
-            units::kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, rng);
+            units::kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, None, rng);
             dead.push(e);
         } else {
             s.fear += 0.7;

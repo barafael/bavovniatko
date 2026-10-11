@@ -491,6 +491,19 @@ the same goal; a killed man becomes a fallen mesh on the spot.
 thrown) are the seam, so define them as an enum the animation reads, and let the procedural figure's leg swing
 read it today.
 
+**Done (2026-10-11).** Men climb out one at a time, 0.5–3 s apart, from the hatches on either side, once the
+crew's plan says so (5–15 s after a hit, 20–60 s after a mine; the vehicle counts as abandoned when the first
+man leaves). Each has a sprint of 10–25 s at 2.2× his walking pace, then a jog at 1.3×, and a first leg to
+cover: the nearest crater within 15 m, the lee of a wreck within 60 m, or the tree line within 150 m, chosen at
+random among those so that no two run the same way, or else 20–40 m away and 40 m to either side; he goes flat
+in it for 2–6 s, then runs for the nearest Bradley or home. A burst within 30 m puts a running man on his face
+for a moment; within 10 m it stuns him for 5–20 s; within 4 m (5 m of a cook-off) it kills him and throws the
+body 1–10 m, tumbling, and the body lies where it lands. Riders on a hull that brews up are flung at 5–9 m/s,
+on one that burns they tip off. Dismounting squads sprint for 6–12 s. Fleeing Russians who go prone get up and
+keep fleeing (they used to resume the advance). Measured (`target/same-day/e-vuh`, `e-rob`): Vuhledar 25 of 33
+left in the fields, 73 of 320 back; Robotyne 22 of 24 stopped (10 burned, 12 abandoned), 113 of 176 back, 28
+dead. Clips `20261011-2157-e-bailout.mp4`, `20261011-2205-e-infantry.mp4`.
+
 ### F. Line of sight for the teams (**sim**) — observation 8
 
 **Now.** ATGM teams, rifles and dug-in tanks fire on distance and smoke alone; a Stugna at x = 560 was seen

@@ -253,6 +253,8 @@ pub struct Vehicle {
     pub ghost: f32,
     /// A live crew on a dead track, turning the hull to face the enemy with the glacis (or to lay a jammed gun).
     pub pivot: bool,
+    /// Seconds until the next man climbs out of a knocked-out vehicle.
+    pub exit_timer: f32,
 }
 
 #[derive(Component)]
@@ -282,6 +284,10 @@ pub struct Soldier {
     pub fear: f32,
     pub timer: f32,
     pub phase: f32,
+    /// Seconds of sprint left: a man who has just got out of a vehicle runs flat out for a while, then jogs.
+    pub sprint: f32,
+    /// The first place he runs to, before anywhere else: the nearest crater, wreck or tree line.
+    pub leg: Option<Vec2>,
 }
 
 #[derive(Component)]
@@ -704,6 +710,7 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
             bail_at: 20.0,
             ghost: 0.0,
             pivot: false,
+            exit_timer: 0.0,
         },
     ));
     e.add_child(turret);
@@ -760,7 +767,7 @@ fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>) {
     }
 }
 
-pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette, side: Side, at: Vec2, goal: Vec2, home: Vec2, rng: &mut SmallRng) -> Entity {
+pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette, side: Side, at: Vec2, goal: Vec2, home: Vec2, sprint: f32, cover: Option<Vec2>, rng: &mut SmallRng) -> Entity {
     let (body, leg) = (models.figure(side).body.clone(), models.figure(side).leg.clone());
     let hip = models.hip;
     let l0 = commands.spawn((Mesh3d(leg.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(hip), Leg(0.0), NotShadowCaster)).id();
@@ -769,7 +776,7 @@ pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette
         Mesh3d(body),
         MeshMaterial3d(palette.vertex.clone()),
         Transform::from_translation(geo::ground(at)),
-        Soldier { side, state: SState::Advance, goal, home, speed: rng.random_range(1.5..2.3), fear: 0.0, timer: 0.0, phase: rng.random_range(0.0..6.0) },
+        Soldier { side, state: SState::Advance, goal, home, speed: rng.random_range(1.5..2.3), fear: 0.0, timer: 0.0, phase: rng.random_range(0.0..6.0), sprint, leg: cover },
         NotShadowCaster,
     ));
     e.add_children(&[l0, l1]);
@@ -1041,7 +1048,7 @@ fn drive_vehicles(
                         } else {
                             obj + Vec2::new(rng.random_range(-120.0..120.0), rng.random_range(-20.0..20.0)) + Vec2::X * (k as f32 - 3.0) * 6.0
                         };
-                        spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, route.point(0.0), rng);
+                        spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, route.point(0.0), rng.random_range(6.0..12.0), None, rng);
                     }
                     v.troops = 0;
                 }
@@ -1595,10 +1602,11 @@ pub fn on_wrecked(
     v.troops = v.troops.saturating_sub(dead);
     let p = tf.translation;
     paint.push(Paint::Scorch { at: p.xz(), radius: 9.0 });
-    // Men riding on top are thrown into the snow.
-    for k in 0..dead.min(5) {
-        let at = p.xz() + Vec2::from_angle(rng.random_range(0.0..std::f32::consts::TAU)) * rng.random_range(3.0..9.0);
-        commands.spawn((Mesh3d(models.figure(v.side).fallen.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(Quat::from_rotation_y(k as f32 * 1.9)), NotShadowCaster));
+    // Men riding on top are thrown off: a brew-up flings them, a fire tips them into the snow.
+    for _ in 0..dead.min(5) {
+        let a = rng.random_range(0.0..std::f32::consts::TAU);
+        let speed = if ev.how == Kill::BrewUp { rng.random_range(5.0..9.0) } else { rng.random_range(1.5..3.0) };
+        throw_body(&mut commands, &models, &palette, v.side, p + Vec3::Y * 2.2, Vec3::new(a.cos() * speed, rng.random_range(2.0..5.0), a.sin() * speed), rng);
     }
     let turret = turrets.get_mut(v.turret).ok().map(|(mut tm, tgt)| {
         char_skins(v.turret, &mut tm, &m.turret, &children, &mut skins);
@@ -1729,10 +1737,16 @@ fn resolve_blasts(
             }
         }
         for (e, mut s, tf) in &mut soldiers {
-            let d = bp.distance(tf.translation.xz());
+            let sp = tf.translation.xz();
+            let d = bp.distance(sp);
             if d > b.radius * 3.0 {
                 if d < 120.0 {
                     s.fear += 0.3;
+                }
+                // A burst within thirty metres puts a man on his face for a moment.
+                if d < 30.0 && matches!(s.state, SState::Advance | SState::Flee) {
+                    s.state = SState::Prone;
+                    s.timer = 4.0;
                 }
                 continue;
             }
@@ -1754,19 +1768,48 @@ fn resolve_blasts(
                     Cause::CookOff => "cook-offs",
                     _ => "shells",
                 }, (s.side == diorama().attacker()) as u32);
-                kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, rng);
+                // Inside four metres (five of a cook-off) the blast throws the body a few metres; a man killed
+                // further out by a fragment drops where he is.
+                let throw_r = if b.cause == Cause::CookOff { 5.0 } else { 4.0 };
+                let throw = (d < throw_r && b.radius > 3.0).then(|| {
+                    let away = (sp - bp).normalize_or(Vec2::from_angle(rng.random_range(0.0..std::f32::consts::TAU)));
+                    let speed = rng.random_range(3.0..10.0) * (1.0 - d / throw_r).max(0.3);
+                    Vec3::new(away.x * speed, rng.random_range(2.0..5.0), away.y * speed)
+                });
+                kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, throw, rng);
             } else {
                 s.fear += 1.0;
+                // Knocked flat and stunned, five to twenty seconds, when it lands within ten metres.
+                if d < 10.0 && b.radius > 3.0 && matches!(s.state, SState::Advance | SState::Flee) {
+                    s.state = SState::Prone;
+                    s.timer = -rng.random_range(5.0..20.0);
+                }
             }
         }
     }
 }
 
-pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette, stats: &mut Stats, e: Entity, s: &Soldier, tf: &Transform, rng: &mut SmallRng) {
+/// A body thrown by a blast: it tumbles through the air and lies where it lands.
+pub fn throw_body(commands: &mut Commands, models: &Models, palette: &Palette, side: Side, from: Vec3, vel: Vec3, rng: &mut SmallRng) {
+    commands.spawn((
+        Mesh3d(models.figure(side).fallen.clone()),
+        MeshMaterial3d(palette.vertex.clone()),
+        Transform::from_translation(from).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..std::f32::consts::TAU))),
+        Debris { vel, spin: Vec3::new(0.0, rng.random_range(-4.0..4.0), 0.0) },
+        NotShadowCaster,
+    ));
+}
+
+/// A man killed where he stands, or thrown (`throw`: the blast's push on him) a few metres and left there.
+pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette, stats: &mut Stats, e: Entity, s: &Soldier, tf: &Transform, throw: Option<Vec3>, rng: &mut SmallRng) {
     commands.entity(e).despawn();
-    let mesh = models.figure(s.side).fallen.clone();
     let p = tf.translation.xz();
-    commands.spawn((Mesh3d(mesh), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(p)).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..std::f32::consts::TAU))), NotShadowCaster));
+    if let Some(vel) = throw {
+        throw_body(commands, models, palette, s.side, geo::ground(p) + Vec3::Y * 0.8, vel, rng);
+    } else {
+        let mesh = models.figure(s.side).fallen.clone();
+        commands.spawn((Mesh3d(mesh), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(p)).with_rotation(Quat::from_rotation_y(rng.random_range(0.0..std::f32::consts::TAU))), NotShadowCaster));
+    }
     if s.side == diorama().attacker() {
         stats.attacker_dead += 1;
     } else {
@@ -1798,38 +1841,82 @@ fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit
     }
 }
 
-/// Crews of immobilised vehicles get out after a while; dismounts from wrecks, if any live, too.
-fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng>, mut stats: ResMut<Stats>, models: Res<Models>, palette: Res<Palette>, mut q: Query<(&mut Vehicle, &Transform)>) {
+/// Where a man who has just got out runs first: the nearest crater, wreck or tree line within reach, chosen
+/// among them so that no two men run the same way; or nowhere in particular, but off to one side.
+fn cover_near(p: Vec2, home: Vec2, craters: &crate::terrain::Craters, hulls: &[Vec2], rng: &mut SmallRng) -> Vec2 {
+    let mut spots: Vec<Vec2> = Vec::new();
+    if let Some(c) = craters.nearest(p, 15.0) {
+        spots.push(c);
+    }
+    if let Some(h) = hulls.iter().filter(|h| h.distance(p) > 6.0 && h.distance(p) < 60.0).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))) {
+        // Behind the hull, away from the enemy's line.
+        spots.push(*h + (home - *h).normalize_or_zero() * 5.0);
+    }
+    if let Some((d, s, belt)) = geo::layout().belts.iter().map(|b| { let (d, s) = b.line.project(p); (d, s, b) }).min_by(|a, b| a.0.total_cmp(&b.0))
+        && d < 150.0
+    {
+        spots.push(belt.line.point(s));
+    }
+    if spots.is_empty() {
+        // Away from here, spread out, then home.
+        let dir = (home - p).normalize_or_zero();
+        let side = Vec2::new(-dir.y, dir.x);
+        p + dir * rng.random_range(20.0..40.0) + side * rng.random_range(-40.0..40.0)
+    } else {
+        spots[rng.random_range(0..spots.len())] + Vec2::new(rng.random_range(-2.0..2.0), rng.random_range(-2.0..2.0))
+    }
+}
+
+/// Crews of knocked-out vehicles get out one at a time, out of the hatches on either side, once the crew's plan
+/// says so (`bail_at`); dismounts from wrecks, if any live, too. A fit crew is out in seconds; a concussed one
+/// takes a minute. Each man sprints for the nearest cover before he thinks of the way home.
+fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng>, mut stats: ResMut<Stats>, models: Res<Models>, palette: Res<Palette>, paint: Res<PaintQueue>, mut q: Query<(&mut Vehicle, &Transform)>, mut hulls: Local<Vec<Vec2>>) {
     let dt = time.delta_secs();
     let lay = geo::layout();
+    hulls.clear();
+    hulls.extend(q.iter().filter(|(v, _)| !v.state.mobile()).map(|(_, t)| t.translation.xz()));
     for (mut v, tf) in &mut q {
-        let out = match v.state {
-            VState::Immobilized => {
-                v.timer += dt;
-                v.timer > v.bail_at
-            }
-            VState::Destroyed => v.crew + v.troops > 0,
-            _ => false,
-        };
-        if !out {
+        if v.crew + v.troops == 0 {
             continue;
         }
+        match v.state {
+            VState::Immobilized => {
+                v.timer += dt;
+                if v.timer <= v.bail_at {
+                    continue;
+                }
+            }
+            VState::Destroyed | VState::Abandoned => {}
+            _ => continue,
+        }
+        v.exit_timer -= dt;
+        if v.exit_timer > 0.0 {
+            continue;
+        }
+        v.exit_timer = rng.0.random_range(0.5..3.0);
         let route = &lay.routes[v.route];
         let p = tf.translation.xz();
+        let fwd = (tf.rotation * Vec3::NEG_Z).xz().normalize_or_zero();
+        let right = Vec2::new(-fwd.y, fwd.x);
         // Attackers run back down their track; defenders back behind their own line.
         let attacker = v.side == diorama().attacker();
         let home = if attacker { route.line.point(0.0) } else { p + Vec2::new(0.0, 600.0 * lay.advance) };
-        // Some dismounts go forward anyway (fewer of the 47th's: they had been told the infantry comes back).
+        // The crew leaves first. Some dismounts go forward anyway (fewer of the 47th's: they had been told the
+        // infantry comes back); the rest go for cover, then back.
+        let is_crew = v.crew > 0;
         let p_forward = if v.side == Side::Ru { 0.4 } else { 0.15 };
-        for k in 0..(v.crew + v.troops) {
-            let at = p + Vec2::from_angle(k as f32 * 1.3) * 3.5;
-            // Crew run back. Some dismounts go forward anyway; most go to ground or back.
-            let forward = attacker && k >= v.crew && rng.0.random_bool(p_forward);
-            let goal = if forward { route.objective + Vec2::new(rng.0.random_range(-100.0..100.0), 0.0) } else { home };
-            let e = spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, home, &mut rng.0);
-            if !forward {
-                commands.entity(e).insert(Fleeing);
-            }
+        let forward = attacker && !is_crew && rng.0.random_bool(p_forward);
+        let at = p + right * sign(&mut rng.0) * 2.2 + fwd * rng.0.random_range(-1.5..1.5);
+        let goal = if forward { route.objective + Vec2::new(rng.0.random_range(-100.0..100.0), 0.0) } else { home };
+        let leg = (!forward).then(|| cover_near(at, home, &paint.craters, &hulls, &mut rng.0));
+        let e = spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, home, rng.0.random_range(10.0..25.0), leg, &mut rng.0);
+        if !forward {
+            commands.entity(e).insert(Fleeing);
+        }
+        if is_crew {
+            v.crew -= 1;
+        } else {
+            v.troops -= 1;
         }
         if v.state == VState::Immobilized {
             v.state = VState::Abandoned;
@@ -1840,8 +1927,6 @@ fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng
                 stats.defender_vehicles += 1;
             }
         }
-        v.crew = 0;
-        v.troops = 0;
     }
 }
 
@@ -1884,6 +1969,7 @@ fn move_soldiers(
         }
         s.fear = (s.fear - dt * 0.15).max(0.0);
         s.timer += dt;
+        s.sprint = (s.sprint - dt).max(0.0);
         let p = tf.translation.xz();
         let mut speed = 0.0;
         let mut target = p;
@@ -1904,7 +1990,7 @@ fn move_soldiers(
                     s.timer = 0.0;
                     // "They'd come in groups of five. We'd kill four, one would stay and dig in."
                     let near_wreck = wreck_pos.iter().any(|w| w.distance(p) < 35.0);
-                    s.state = if s.side == Side::Ua && (fleeing.is_some() || *order == ColumnOrder::PullBack) {
+                    s.state = if fleeing.is_some() || (s.side == Side::Ua && *order == ColumnOrder::PullBack) {
                         SState::Flee
                     } else if s.fear > 2.2 && near_wreck && rng.random_bool(0.5) {
                         SState::DugIn
@@ -1917,8 +2003,17 @@ fn move_soldiers(
                 }
             }
             SState::Flee => {
-                target = pickups.iter().copied().filter(|b| b.distance(p) < 160.0).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))).unwrap_or(s.home);
-                speed = s.speed * 1.2;
+                // First to cover, and down in it for a moment; then the nearest Bradley or home.
+                if let Some(leg) = s.leg
+                    && p.distance(leg) < 3.0
+                {
+                    s.leg = None;
+                    s.state = SState::Prone;
+                    s.timer = rng.random_range(2.0..6.0);
+                }
+                target = s.leg.unwrap_or_else(|| pickups.iter().copied().filter(|b| b.distance(p) < 160.0).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))).unwrap_or(s.home));
+                // Flat out while the sprint lasts, a jog after.
+                speed = s.speed * if s.sprint > 0.0 { 2.2 } else { 1.3 };
                 // Falling back under shellfire, the 47th's men drop flat when it lands close, then go on.
                 if s.side == Side::Ua && s.fear > 1.2 {
                     s.state = SState::Prone;
