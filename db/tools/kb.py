@@ -6,15 +6,18 @@ Everything that talks to the database goes through `connect()` and `run()`:
 - `geom()` turns GeoJSON dicts into the SDK geometry classes SurrealDB accepts
 - `rid()` builds record ids, including array ids such as kind:["place","settlement"]
 - `prov()`, `time_of()` and `plain()` give every tool the same provenance, time and JSON shapes
+- `Writer` is the one write path for loaders: it skips records whose content hash (ext._hash) has not changed
 - the enums mirror the schema's closed string sets, so code compares against names rather than literals
 """
 from __future__ import annotations
 
 import datetime as dt
 import decimal
+import hashlib
 import json
 import os
 import re
+from collections import Counter
 from enum import StrEnum
 from functools import cache
 from pathlib import Path
@@ -287,6 +290,57 @@ def plain(v, *, rid=rid_str, dt_=iso_z, drop=()):
     if hasattr(v, "to_string") or type(v).__name__ == "Duration":
         return str(v)
     return v
+
+
+def content_hash(data: dict) -> str:
+    """The hash `Writer` keeps in ext._hash: the record without its provenance, as sorted JSON."""
+    body = {k: v for k, v in data.items() if k != "prov"}
+    as_json = lambda o: plain(o, dt_=dt.datetime.isoformat)
+    return hashlib.sha256(json.dumps(body, sort_keys=True, default=as_json).encode()).hexdigest()[:16]
+
+
+class Writer:
+    """Writes records, skipping the ones whose content has not changed since the last run, so re-running a loader
+    is safe and the audit trail stays meaningful. The content hash of every record written lives in ext._hash.
+
+    `put` upserts a record (MERGE, never CONTENT: an actor is shared between the imported sources and the curated
+    registry, so no loader may wipe fields it does not own). A loader that writes a record its own way, as load.py
+    writes a claim in one transaction with its edges, asks `changed` first and reports with `wrote`. A loader whose
+    stored hashes were made another way passes its own `h`, so its re-runs keep recognising them."""
+
+    def __init__(self, conn: Surreal):
+        self.conn = conn
+        self.hashes: dict[str, dict[str, str | None]] = {}     # table -> record id -> its stored hash
+        self.stats = Counter()
+
+    def existing(self, table: str) -> dict[str, str | None]:
+        if table not in self.hashes:
+            rows = one(self.conn, f"SELECT id, ext._hash AS h FROM {table}")
+            self.hashes[table] = {rid_str(r["id"]): r.get("h") for r in rows}
+        return self.hashes[table]
+
+    def changed(self, rid: RecordID, h: str) -> bool:
+        """Whether the stored record's hash differs from `h`; counts the record as unchanged when it does not."""
+        if self.existing(rid.table_name).get(rid_str(rid)) == h:
+            self.stats[f"{rid.table_name}:unchanged"] += 1
+            return False
+        return True
+
+    def wrote(self, rid: RecordID, h: str):
+        """Record that the caller has written `rid` with content hash `h`."""
+        ex, key = self.existing(rid.table_name), rid_str(rid)
+        self.stats[f"{rid.table_name}:{'updated' if key in ex else 'created'}"] += 1
+        ex[key] = h
+
+    def put(self, rid: RecordID, data: dict, h: str | None = None) -> bool:
+        """Upsert the record unless it is unchanged; returns whether it was written."""
+        h = h or content_hash(data)
+        if not self.changed(rid, h):
+            return False
+        data = {**data, "ext": {**(data.get("ext") or {}), "_hash": h}}
+        run(self.conn, "UPSERT $id MERGE $data", {"id": rid, "data": data})
+        self.wrote(rid, h)
+        return True
 
 
 def schema_files(root: Path | None = None) -> list[Path]:

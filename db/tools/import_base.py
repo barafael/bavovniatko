@@ -15,7 +15,6 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
-import json
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -57,43 +56,7 @@ def labels(en: str, **kw) -> dict:
     return out
 
 
-def content_hash(obj) -> str:
-    body = {k: v for k, v in obj.items() if k not in ("prov",)}
-    plain = lambda o: kb.plain(o, dt_=dt.datetime.isoformat)
-    return hashlib.sha256(json.dumps(body, sort_keys=True, default=plain).encode()).hexdigest()[:16]
-
-
-class Writer:
-    """Upsert records, skipping unchanged ones (content hash kept in ext._hash)."""
-
-    def __init__(self, conn):
-        self.conn = conn
-        self.cache: dict[str, dict] = {}
-        self.stats = Counter()
-
-    def existing(self, table: str) -> dict:
-        if table not in self.cache:
-            rows = kb.one(self.conn, f"SELECT id, ext._hash AS h FROM {table}")
-            self.cache[table] = {kb.rid_str(r["id"]): r.get("h") for r in rows}
-        return self.cache[table]
-
-    def put(self, rid, data: dict):
-        table = rid.table_name
-        data = dict(data)
-        h = content_hash(data)
-        ext = dict(data.pop("ext", {}) or {})
-        ext["_hash"] = h
-        data["ext"] = ext
-        ex = self.existing(table)
-        key = kb.rid_str(rid)
-        if ex.get(key) == h:
-            self.stats[f"{table}:unchanged"] += 1
-            return
-        # MERGE, not CONTENT: records such as actors are shared with the curated entity registry (load.py),
-        # so an import must never wipe fields it does not own
-        kb.run(self.conn, "UPSERT $id MERGE $data", {"id": rid, "data": data})
-        self.stats[f"{table}:{'updated' if key in ex else 'created'}"] += 1
-        ex[key] = h
+Writer = kb.Writer
 
 
 # --- vocab ----------------------------------------------------------------------------------------
@@ -142,30 +105,35 @@ def load_sources(w: Writer, paths: list[Path] | None = None) -> dict[str, str]:
     merged = []
     for pth in paths or [kb.RESEARCH / "sources.yaml"]:
         merged += yaml.safe_load(pth.read_text()) or []
+    # Publishers by actor slug: two spellings of one name ("Censor.NET", "Censor.net") are one actor, named by
+    # the spelling seen last, the others among its aliases.
     pubs: dict[str, dict] = {}
     people: dict[str, str] = {}
     pub_types: dict[str, Counter] = defaultdict(Counter)
     pub_origin: dict[str, Counter] = defaultdict(Counter)
     for s in merged:
         c = canon_publisher(s["publisher"])
-        pub_types[c][s["type"]] += 1
-        pub_origin[c][s["origin"]] += 1
-        pubs.setdefault(c, {"raw": set()})["raw"].add(str(s["publisher"]))
+        sl = kb.slug(c)
+        pub_types[sl][s["type"]] += 1
+        pub_origin[sl][s["origin"]] += 1
+        p = pubs.setdefault(sl, {"raw": set()})
+        p["name"] = c
+        p["raw"].add(str(s["publisher"]))
         s.setdefault("_input", "research/sources.yaml")
         for a in s.get("authors") or []:
             people[kb.slug(a)] = a
     known = {kb.rid_str(r) for r in kb.one(w.conn, "SELECT VALUE id FROM actor")}
-    pub_slugs = {kb.slug(p) for p in pubs}
-    for name, info in pubs.items():
-        if kb.rid_str(kb.rid("actor", kb.slug(name))) in known and paths:
+    for sl, info in pubs.items():
+        if kb.rid_str(kb.rid("actor", sl)) in known and paths:
             continue                                   # existing actors belong to the curated registry; don't re-guess them
-        kind = ACTOR_KIND_FOR_SOURCE.get(pub_types[name].most_common(1)[0][0], "organisation")
-        side = SIDE_FOR_ORIGIN[pub_origin[name].most_common(1)[0][0]]
-        w.put(kb.rid("actor", kb.slug(name)), {
+        name = info["name"]
+        kind = ACTOR_KIND_FOR_SOURCE.get(pub_types[sl].most_common(1)[0][0], "organisation")
+        side = SIDE_FOR_ORIGIN[pub_origin[sl].most_common(1)[0][0]]
+        w.put(kb.rid("actor", sl), {
             "labels": labels(name), "aliases": sorted(info["raw"] - {name}),
             "kind": kb.rid("kind", ["actor", kind]), "side": side, "prov": prov("research/sources.yaml")})
     for sl, name in people.items():
-        if kb.slug(name) in pub_slugs:
+        if sl in pubs:
             continue                                            # an "author" that is really the organisation
         if kb.rid_str(kb.rid("actor", sl)) in known and paths:
             continue
@@ -296,7 +264,7 @@ def main():
     ap.add_argument("--only", choices=["vocab", "sources", "terms", "documents"], action="append")
     args = ap.parse_args()
     parts = args.only or ["vocab", "sources", "terms", "documents"]
-    w = Writer(kb.connect())
+    w = kb.Writer(kb.connect())
     legacy = {}
     if "vocab" in parts:
         load_vocab(w)

@@ -54,6 +54,8 @@ def lbl(e: dict) -> dict:
 
 
 def h(obj) -> str:
+    """This loader's content hash. It differs from kb.content_hash (it hashes more than the record), and every
+    entity and claim in the base carries one, so it stays: changing it would rewrite them all once."""
     return hashlib.sha256(json.dumps(obj, sort_keys=True, default=str).encode()).hexdigest()[:16]
 
 
@@ -122,12 +124,9 @@ def bbox_polygon(b):
     return {"type": "Polygon", "coordinates": [[[w, s], [e, s], [e, n], [w, n], [w, s]]]}
 
 
-def load_entities(conn) -> Counter:
+def load_entities(w: kb.Writer):
     reg = ent.load_registry()
     geo = ent.geocode_cache()
-    have = {kb.rid_str(r["id"]): r.get("h") for t in ("place", "event", "system", "actor", "work")
-            for r in kb.one(conn, f"SELECT id, ext._hash AS h FROM {t}")}
-    stats = Counter()
     # parents first so `parent` references resolve on insert order irrelevant (plain record fields)
     for e in reg:
         rid = kb.rid_of(e["id"])
@@ -167,16 +166,9 @@ def load_entities(conn) -> Counter:
         unset_geo = table == "place" and "geometry" not in data and gc is not None and not gc.get("found") \
             if table == "place" else False
         hh = h({k: v for k, v in data.items() if k != "prov"} | {"g": repr(data.get("geometry")), "u": unset_geo})
-        if have.get(e["id"]) == hh:
-            stats[f"{table}:unchanged"] += 1
-            continue
-        data["ext"] = {"_hash": hh}
-        # MERGE keeps fields set elsewhere (e.g. publisher actors from import_base)
-        kb.run(conn, "UPSERT $id MERGE $d", {"id": rid, "d": data})
-        if unset_geo:      # a geocode overridden as wrong: remove the stale geometry rather than keep a bad location
-            kb.run(conn, "UPDATE $id UNSET geometry, centroid, geometry_source, geometry_licence, external_ids.osm", {"id": rid})
-        stats[f"{table}:{'updated' if e['id'] in have else 'created'}"] += 1
-    return stats
+        if w.put(rid, data, hh) and unset_geo:
+            # a geocode overridden as wrong: remove the stale geometry rather than keep a bad location
+            kb.run(w.conn, "UPDATE $id UNSET geometry, centroid, geometry_source, geometry_licence, external_ids.osm", {"id": rid})
 
 
 def _norm_url(u: str) -> str:
@@ -254,21 +246,19 @@ def metric_aliases() -> dict[str, str]:
     return (yaml.safe_load(p.read_text()) or {}) if p.exists() else {}
 
 
-def load_metrics(conn) -> Counter:
-    stats = Counter()
-    units = {u["id"]: u for u in kb.vocab("units")}
+def load_metrics(w: kb.Writer):
+    units = {u["id"] for u in kb.vocab("units")}
     for slug, (label, dim, unit) in kb.vocab("metrics").items():
         if unit not in units:
             raise SystemExit(f"metric {slug}: unknown unit {unit}")
-        kb.run(conn, "UPSERT $id MERGE $d", {"id": kb.rid("metric", slug), "d": {
-            "labels": {"en": label}, "description": label, "dimension": dim, "default_unit": kb.rid("unit", unit)}})
-        stats["metric:upserted"] += 1
-    return stats
+        w.put(kb.rid("metric", slug), {"labels": {"en": label}, "description": label, "dimension": dim,
+                                       "default_unit": kb.rid("unit", unit)})
 
 
 # --- claims ----------------------------------------------------------------------------------------
 
-def load_claims(conn, topics: list[str] | None) -> Counter:
+def load_claims(w: kb.Writer, topics: list[str] | None) -> Counter:
+    conn = w.conn
     res = ent.resolver()
     metrics = set(kb.vocab("metrics"))
     malias = metric_aliases()
@@ -277,7 +267,6 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
     passages = {r["key"]: r["id"] for r in rows}
     sections = {r["key"]: r["section"] for r in rows}
     files = {r["code"]: r["file"] for r in kb.one(conn, "SELECT code, file FROM topic")}
-    have = {r["key"]: r.get("h") for r in kb.one(conn, "SELECT key, ext._hash AS h FROM claim")}
     stats, problems = Counter(), []
     counters = []
 
@@ -368,8 +357,7 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
             obs.append((kb.rid("observation", f"{cid.id}_{i:02d}"), od))
         hh = h({"d": {k: v for k, v in data.items() if k != "prov"}, "e": edges,
                 "o": [{k: v for k, v in x[1].items() if k != "prov"} for x in obs]} | {"p": r["passage"]})
-        if have.get(lid) == hh:
-            stats["claim:unchanged"] += 1
+        if not w.changed(cid, hh):
             continue
         data["ext"] = {"_hash": hh, **extra}
         q = ["UPSERT $cid CONTENT $data;",
@@ -394,7 +382,7 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
         except kb.KBError as ex:
             problems.append(f"{lid}: {ex}")
             continue
-        stats[f"claim:{'updated' if lid in have else 'created'}"] += 1
+        w.wrote(cid, hh)
         stats["observation:written"] += len(obs)
 
     links = {(kb.rid_str(c["in"]), kb.rid_str(c["out"])): c for c in kb.one(conn, "SELECT id, in, out, evidence FROM counters")}
@@ -439,29 +427,28 @@ def main():
     ap.add_argument("what", choices=["sources", "entities", "metrics", "claims", "all"])
     ap.add_argument("--topic", action="append")
     args = ap.parse_args()
-    conn = kb.connect()
+    w = kb.Writer(kb.connect())
     stats = Counter()
     if args.what in ("sources", "all"):
         # new sources for research intake; the initial corpus came from research/sources.yaml via import_base
         import import_base
         files = sorted((kb.DB_DIR / "staging" / "sources").glob("*.yaml"))
         if files:
-            merged, report = merge_staged_sources(conn, files)
+            merged, report = merge_staged_sources(w.conn, files)
             tmp = kb.DB_DIR / "staging" / "sources" / ".merged.yaml.tmp"
             tmp.write_text(yaml.safe_dump(merged, sort_keys=False, allow_unicode=True))
             try:
-                w = import_base.Writer(conn)
                 import_base.load_sources(w, [tmp])
-                stats.update(w.stats)
             finally:
                 tmp.unlink()
             stats.update(report)
     if args.what in ("metrics", "all"):
-        stats += load_metrics(conn)
+        load_metrics(w)
     if args.what in ("entities", "all"):
-        stats += load_entities(conn)
+        load_entities(w)
     if args.what in ("claims", "all"):
-        stats += load_claims(conn, args.topic)
+        stats += load_claims(w, args.topic)
+    stats += w.stats
     for k, v in sorted(stats.items()):
         print(f"{k:28} {v}")
     sys.exit(1 if stats.get("problems") else 0)
