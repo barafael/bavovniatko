@@ -12,29 +12,22 @@ use crate::units::{SState, Side, Soldier, Vehicle, vehicle_yaw};
 use crate::world::ObservationPost;
 use bevy::{
     camera::{Exposure, ShadowLodOrigin},
-    core_pipeline::{
-        fullscreen_material::{FullscreenMaterial, FullscreenMaterialPlugin},
-        tonemapping::{Tonemapping, tonemapping},
-        Core3dSystems,
-    },
-    ecs::{schedule::ScheduleConfigs, system::BoxedSystem},
+    core_pipeline::tonemapping::Tonemapping,
     input::mouse::{AccumulatedMouseMotion, AccumulatedMouseScroll},
     pbr::{DistanceFog, FogFalloff},
     prelude::*,
-    render::{extract_component::ExtractComponent, render_resource::ShaderType, view::Msaa},
-    shader::ShaderRef,
+    render::{render_resource::ShaderType, view::Msaa},
 };
 
 pub struct CameraPlugin;
 
 impl Plugin for CameraPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(FullscreenMaterialPlugin::<FeedEffect>::default())
-            .init_resource::<View>()
+        app.init_resource::<View>()
             .init_resource::<Shake>()
             .add_systems(Startup, spawn_camera)
             .add_systems(Startup, spawn_launcher.after(spawn_camera))
-            .add_systems(Update, (switch_view, drone_control, op_control, ground_control, apply_view, update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
+            .add_systems(Update, (switch_view, drone_control, op_control, ground_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
     }
 }
 
@@ -83,6 +76,25 @@ pub struct View {
     pub ground_range: Option<f32>,
     /// Javelin: the vehicle the seeker is tracking and for how long (it locks after 2.5 s).
     pub lock: Option<(Entity, f32)>,
+    /// The control link (the video link is the feed's own): up, and for how long it has been down.
+    pub control: bool,
+    pub lost_for: f32,
+    /// The drone flying itself home after six seconds without control; it stays on that course until cancelled.
+    pub rth: Option<Rth>,
+    /// The satellite fix, 1 clean, and the error it puts on the position readout.
+    pub gnss: f32,
+    pub gnss_error: Vec2,
+    /// The last direction it was flying, to back down when the link goes.
+    track: Vec3,
+}
+
+/// The return-to-home sequence of a DJI drone without its controller: brake and hover, back 50 m along the
+/// track it came on, then straight home at the return height, and hover there.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum Rth {
+    Brake(f32),
+    Back { from: Vec3 },
+    Home,
 }
 
 impl Default for View {
@@ -120,6 +132,12 @@ impl Default for View {
             sight: false,
             ground_range: None,
             lock: None,
+            control: true,
+            lost_for: 0.0,
+            rth: None,
+            gnss: 1.0,
+            gnss_error: Vec2::ZERO,
+            track: Vec3::NEG_Z,
         }
     }
 }
@@ -193,7 +211,7 @@ pub struct Shake {
 #[derive(Component)]
 pub struct MainCamera;
 
-/// Which look the post-process gives the picture (matched by value in feed.wgsl).
+/// Which look the feed shader gives the picture (matched by value in feed.wgsl).
 #[repr(u32)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum FeedMode {
@@ -205,9 +223,12 @@ pub enum FeedMode {
     Eye = 2,
     /// Through the ATGM sight.
     Sight = 3,
+    /// The picture as rendered (`VUHLEDAR_OFF=feed`).
+    Raw = 4,
 }
 
-#[derive(Component, ExtractComponent, Clone, Copy, ShaderType, Default)]
+/// What the feed shader is told each frame (see feed.rs).
+#[derive(Clone, Copy, ShaderType, Default, Debug)]
 pub struct FeedEffect {
     pub time: f32,
     /// A [`FeedMode`].
@@ -220,26 +241,17 @@ pub struct FeedEffect {
     pub down: f32,
     /// How much colour the drone camera keeps: the February snow came through nearly grey, June stays green.
     pub saturation: f32,
+    /// The link's bit rate, 1 clean: lower is softer, blockier.
+    pub bitrate: f32,
 }
 
-impl FullscreenMaterial for FeedEffect {
-    fn fragment_shader() -> ShaderRef {
-        "embedded://vuhledar/shaders/feed.wgsl".into()
-    }
-
-    // After tonemapping, so grain and compression live in display space like a real video feed.
-    fn schedule_configs(system: ScheduleConfigs<BoxedSystem>) -> ScheduleConfigs<BoxedSystem> {
-        system.in_set(Core3dSystems::PostProcess).after(tonemapping)
-    }
-}
-
-/// The offscreen image the camera renders into when running headless.
+/// The offscreen image the finished picture lands in when running headless (feed.rs makes it).
 #[derive(Resource)]
 pub struct HeadlessTarget(pub Handle<Image>);
 
-fn spawn_camera(mut commands: Commands, mut view: ResMut<View>, mut images: ResMut<Assets<Image>>) {
+pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
     view.drone_pos.y = geo::height(view.drone_pos.x, view.drone_pos.z) + View::DRONE_AGL;
-    let mut cam = commands.spawn((
+    commands.spawn((
         Camera3d::default(),
         MainCamera,
         Projection::Perspective(PerspectiveProjection { fov: view.drone_fov, near: 0.5, far: 12_000.0, ..default() }),
@@ -253,21 +265,10 @@ fn spawn_camera(mut commands: Commands, mut view: ResMut<View>, mut images: ResM
             directional_light_exponent: 12.0,
             falloff: FogFalloff::from_visibility_colors(3000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77)),
         },
-        IsDefaultUiCamera,
-        // Point-light shadows are detailed around the drone (headless, no camera renders to a window).
+        // Point-light shadows are detailed around the drone (no camera renders to a window: feed.rs shows the
+        // picture).
         ShadowLodOrigin,
     ));
-    if !dev::off(dev::Part::Feed) {
-        cam.insert(FeedEffect { grain: 1.0, zoom: 1.0, saturation: if crate::diorama::diorama().summer() { 0.68 } else { 0.45 }, ..default() });
-    }
-    if dev().headless {
-        let (w, h) = dev().res.unwrap_or((1600, 900));
-        let mut img = Image::new_target_texture(w, h, bevy::render::render_resource::TextureFormat::Rgba8UnormSrgb, None);
-        img.texture_descriptor.usage |= bevy::render::render_resource::TextureUsages::COPY_SRC;
-        let h = images.add(img);
-        cam.insert(bevy::camera::RenderTarget::Image(h.clone().into()));
-        commands.insert_resource(HeadlessTarget(h));
-    }
 }
 
 fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::Post)>) {
@@ -396,12 +397,28 @@ fn drone_control(
     } else {
         view.feed_down -= dt;
     }
-    view.jamming = (view.jamming - dt * 0.1).max(0.0);
+    // Their EW, once it has found the link, holds it for a while.
+    view.jamming = (view.jamming - dt * 0.03).max(0.0);
     let t = time.elapsed_secs();
+    // Two links (design/next-items.md §2.6): the video is the feed's own; the control link fails in spells past
+    // the heavier jamming, and after six seconds without it the drone flies itself home and stays on that
+    // course until the operator cancels it (H) with the link back. The satellite fix walks under jamming, and
+    // the position readout with it.
+    let jam = view.jamming;
+    view.control = jam < 0.55 || geo::value_noise(t * 0.7, 9.0, 65) > (jam - 0.35) * 1.4;
+    view.lost_for = if view.control { 0.0 } else { view.lost_for + dt };
+    if view.lost_for > 6.0 && view.rth.is_none() && view.feed_down <= 0.0 {
+        view.rth = Some(Rth::Brake(1.5));
+    }
+    if view.feed_down > 0.0 || (keys.just_pressed(KeyCode::KeyH) && view.control) {
+        view.rth = None;
+    }
+    view.gnss = 1.0 - (jam * 1.4 - 0.2).clamp(0.0, 1.0);
+    view.gnss_error = Vec2::new(geo::fbm(t * 0.3, 4.0, 2, 66), geo::fbm(t * 0.3 + 9.0, 5.0, 2, 67)) * 120.0 * (1.0 - view.gnss);
     // Gusts: the position hold fights a wind that comes and goes. Mostly a few m/s, now and then a shove.
     let gust = Vec3::new(geo::fbm(t * 0.21, 1.3, 3, 61), 0.0, geo::fbm(t * 0.21 + 40.0, 7.1, 3, 62)) * 2.2
         * (1.0 + 2.5 * (geo::value_noise(t * 0.07, 3.3, 63) - 0.35).max(0.0));
-    if view.mode != Mode::Drone || dev().showcase.is_some() {
+    if (view.mode != Mode::Drone && view.rth.is_none()) || dev().showcase.is_some() {
         return;
     }
     let stick = Stick::scripted(script.t, dt).unwrap_or_else(|| Stick::read(&keys, &buttons, &motion, &scroll, &view));
@@ -410,13 +427,36 @@ fn drone_control(
     let yaw = view.drone_yaw;
     let fwd = Vec3::new(-yaw.sin(), 0.0, -yaw.cos());
     let right = Vec3::new(yaw.cos(), 0.0, -yaw.sin());
-    let desired = (fwd * stick.fwd + right * stick.right).normalize_or_zero() * max_speed;
     let horizontal = Vec3::new(view.drone_vel.x, 0.0, view.drone_vel.z);
+    if horizontal.length() > 1.0 {
+        view.track = horizontal.normalize();
+    }
+    let ground_here = geo::height(view.drone_pos.x, view.drone_pos.z);
+    // Where the drone wants to go: the sticks, or its own way home.
+    let (desired, climb_cmd) = match view.rth {
+        None => ((fwd * stick.fwd + right * stick.right).normalize_or_zero() * max_speed, stick.climb * if stick.sport { 6.0 } else { 3.0 }),
+        Some(Rth::Brake(left)) => {
+            view.rth = Some(if left > dt { Rth::Brake(left - dt) } else { Rth::Back { from: view.drone_pos } });
+            (Vec3::ZERO, 0.0)
+        }
+        Some(Rth::Back { from }) => {
+            if from.distance(view.drone_pos) > 50.0 {
+                view.rth = Some(Rth::Home);
+            }
+            (-view.track * 5.0, 0.0)
+        }
+        Some(Rth::Home) => {
+            let home = geo::layout().home;
+            let to = home - view.drone_pos.xz();
+            let agl = view.drone_pos.y - ground_here;
+            let climb = (120.0 - agl).clamp(-3.0, 3.0);
+            (if to.length() > 20.0 { Vec3::new(to.x, 0.0, to.y).normalize() * 10.0 } else { Vec3::ZERO }, climb)
+        }
+    };
     // The flight controller only half-cancels the gust before it is felt.
     let accel = ((desired - horizontal) * 1.3 - gust * 0.35).clamp_length_max(max_accel);
     let mut vel = horizontal + accel * dt;
     // Vertical: climb or sink towards the commanded rate, gently.
-    let climb_cmd = stick.climb * if stick.sport { 6.0 } else { 3.0 };
     view.climb += (climb_cmd - view.climb).clamp(-2.0 * dt, 2.0 * dt);
     vel.y = view.climb;
     view.drone_vel = vel;
@@ -426,8 +466,9 @@ fn drone_control(
     view.drone_pos.x = view.drone_pos.x.clamp(-geo::HALF_X + 50.0, geo::HALF_X - 50.0);
     view.drone_pos.z = view.drone_pos.z.clamp(-geo::HALF_Z + 50.0, 1400.0);
     let jam_z = geo::layout().jam_z;
+    // Past the jam line the link degrades as the drone closes on their emitters, then falls off a cliff.
     if view.drone_pos.z > jam_z {
-        view.jamming = (view.jamming + dt * 0.05 * ((view.drone_pos.z - jam_z) / 500.0)).min(1.0);
+        view.jamming = (view.jamming + dt * 0.2 * ((view.drone_pos.z - jam_z) / 500.0)).min(1.0);
     }
     let ground = geo::height(view.drone_pos.x, view.drone_pos.z);
     view.drone_pos.y = view.drone_pos.y.clamp(ground + 25.0, ground + 700.0);
@@ -566,21 +607,6 @@ fn apply_view(
     }
     shake.trauma = (shake.trauma - dt * 0.9).max(0.0);
     shake.flash = (shake.flash - dt * 2.5).max(0.0);
-}
-
-fn update_feed(time: Res<Time>, view: Res<View>, shake: Res<Shake>, mut fx: Single<&mut FeedEffect>) {
-    fx.time = time.elapsed_secs() % 1000.0;
-    fx.mode = match view.mode {
-        Mode::Drone => FeedMode::Drone,
-        Mode::Op => FeedMode::Binoculars,
-        Mode::Ground if view.sight => FeedMode::Sight,
-        Mode::Ground => FeedMode::Eye,
-    } as u32;
-    fx.grain = match view.mode { Mode::Drone => 1.0, Mode::Op => 0.45, Mode::Ground => 0.3 };
-    fx.glitch = if view.mode == Mode::Drone { view.jamming.max(if view.battery < 0.08 { 0.3 } else { 0.0 }) } else { 0.0 };
-    fx.flash = shake.flash * if view.mode == Mode::Ground { 0.35 } else { 1.0 };
-    fx.zoom = view.zoom();
-    fx.down = if view.mode == Mode::Drone && view.feed_down > 0.0 { 1.0 } else { 0.0 };
 }
 
 /// Ray from the cursor into the terrain.

@@ -9,6 +9,7 @@ mod baked;
 mod camera;
 mod dev;
 mod diorama;
+mod feed;
 mod director;
 mod fire;
 mod fx;
@@ -17,7 +18,9 @@ mod hud;
 mod meshes;
 mod robotyne;
 mod showcase;
+mod sky;
 mod terrain;
+mod text;
 mod units;
 mod world;
 
@@ -59,10 +62,12 @@ fn main() {
     // The two shaders live in the binary, so the game runs from anywhere with no asset folder.
     bevy::asset::embedded_asset!(app, "shaders/feed.wgsl");
     bevy::asset::embedded_asset!(app, "shaders/ground.wgsl");
+    bevy::asset::embedded_asset!(app, "shaders/sky.wgsl");
+    bevy::asset::embedded_asset!(app, "fonts/LiberationMono-Regular.ttf");
     app.configure_sets(Update, (Step::Control, Step::Camera, Step::Script, Step::Fire, Step::Units, Step::Effects, Step::Screen).chain())
         .init_state::<Phase>()
         .init_resource::<audio::AmbienceLevels>()
-        .add_plugins((terrain::TerrainPlugin, world::WorldPlugin, camera::CameraPlugin, fx::FxPlugin, audio::AudioPlugin))
+        .add_plugins((terrain::TerrainPlugin, world::WorldPlugin, sky::SkyPlugin, camera::CameraPlugin, feed::FeedPlugin, fx::FxPlugin, audio::AudioPlugin))
         .add_plugins((units::UnitsPlugin, fire::FirePlugin, director::DirectorPlugin, hud::HudPlugin))
         .add_observer(units::on_wrecked)
         .add_systems(Update, drone_view_audio.in_set(Step::Camera))

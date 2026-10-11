@@ -462,8 +462,9 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
     commands.spawn((Mesh3d(meshes.add(poles.build())), MeshMaterial3d(solid.clone())));
 }
 
-/// The light over the day: grey dawn at 07:40, a flat overcast noon, and dusk closing in after 16:00, when the
-/// burning wrecks start to show. Early February at 47.8 N: sunrise about 07:50, sunset about 17:40 (ERA5/dossier).
+/// The light over the day: grey dawn at 06:40, a flat overcast noon, and dusk closing in after 15:00, when the
+/// burning wrecks start to show. Early February at 47.8 N: sunrise 06:51, sunset 16:38 Kyiv time (the dossier's
+/// 07:50–17:40 is Moscow time, the clock of occupied Donetsk).
 fn daylight(
     script: Res<crate::director::Script>,
     mut sun: Query<(&mut DirectionalLight, &mut Transform)>,
@@ -472,6 +473,7 @@ fn daylight(
     mut fog: Query<&mut bevy::pbr::DistanceFog>,
     skirt: Option<Res<Skirt>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
+    mut sky_dome: crate::sky::Sky,
     mut last: Local<Option<Color>>,
 ) {
     let dbg = crate::dev::dev().daydbg;
@@ -480,15 +482,18 @@ fn daylight(
     }
     let minutes = crate::director::clock_minutes(script.t);
     let h = minutes / 60.0;
-    // Solar elevation, roughly: 0 at 07:50 and 17:40, 24 degrees at 12:45.
-    let elev_true = (((h - 7.83) / (17.67 - 7.83)) * std::f32::consts::PI).sin().max(0.0) * 24f32.to_radians();
+    let weather = crate::dev::dev().sky.unwrap_or(crate::sky::Weather::Sun);
+    // Solar elevation, roughly: 0 at 06:51 and 16:38, 25 degrees at 11:45.
+    let elev_true = (((h - 6.85) / (16.63 - 6.85)) * std::f32::consts::PI).sin().max(0.0) * 25f32.to_radians();
     // The light never drops below 12 degrees: at grazing incidence the steppe shadows itself into black, and the
     // footage of the day is late-morning light anyway. The true elevation still sets the brightness.
     let elev = elev_true.max(12f32.to_radians());
-    let azim = (h - 12.75) / 5.0 * 1.2; // south-east in the morning, south-west after
+    let azim = (h - 11.75) / 5.0 * 1.2; // south-east in the morning, south-west after
     let day = (elev_true / 24f32.to_radians()).clamp(0.0, 1.0);
     // A camera's auto-exposure flattens the day: twilight over snow still reads light grey, only cooler.
     let light = 0.74 + 0.26 * day.powf(0.5);
+    // Where the sun really is (the light's own direction is floored at 12 degrees).
+    let sun_at = Vec3::new(azim.sin() * elev_true.cos(), elev_true.sin(), azim.cos() * elev_true.cos());
     for (mut l, mut tf) in &mut sun {
         // A clear, frosty day (the 6 February footage shows hard sun): strong direct light, a cold blue sky fill.
         l.illuminance = 15000.0 * (0.8 + 0.2 * day) * light;
@@ -501,6 +506,12 @@ fn daylight(
     ambient.brightness = 450.0 * light;
     let sky = Color::srgb(0.70 * light, 0.75 * light + 0.01, 0.82 * light + 0.04);
     clear.0 = sky;
+    // Under the deck the zenith is a shade darker than the haze; with the sun out it is a cold winter blue.
+    let zenith = match weather {
+        crate::sky::Weather::Overcast => Color::srgb(0.58 * light, 0.62 * light, 0.68 * light),
+        _ => Color::srgb(0.46 * light, 0.56 * light, 0.74 * light),
+    };
+    sky_dome.set(weather, h, zenith, sky, sun_at, Color::srgb(1.0, 0.93, 0.82), 1.6 * day.powf(0.3), 0.6 + 0.4 * day);
     for mut f in &mut fog {
         f.color = sky;
     }

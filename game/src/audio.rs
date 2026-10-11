@@ -78,6 +78,8 @@ pub enum Sfx {
     Whistle,
     CookOff,
     Radio,
+    /// The controller's warning tone.
+    Beep,
 }
 
 #[derive(Resource)]
@@ -87,6 +89,7 @@ pub struct Bank {
     rumble: Handle<Synth>,
     engines: Handle<Synth>,
     rotor: Handle<Synth>,
+    hiss: Handle<Synth>,
 }
 
 impl Bank {
@@ -191,6 +194,17 @@ fn whistle() -> Vec<f32> {
         out.push((phase * std::f32::consts::TAU).sin() * env * 0.3);
     }
     out
+}
+
+/// The controller's two-tone warning.
+fn beep() -> Vec<f32> {
+    let n = len(0.32);
+    (0..n).map(|i| {
+        let t = i as f32 / RATE as f32;
+        let f = if t < 0.16 { 1760.0 } else { 1320.0 };
+        let env = if (t % 0.16) < 0.12 { 1.0 } else { 0.0 };
+        (t * f * std::f32::consts::TAU).sin() * 0.35 * env
+    }).collect()
 }
 
 fn radio(rng: &mut SmallRng) -> Vec<f32> {
@@ -314,8 +328,11 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
         (Sfx::Whistle, add(whistle())),
         (Sfx::CookOff, add(cookoff(&mut rng))),
         (Sfx::Radio, add(radio(&mut rng))),
+        (Sfx::Beep, add(beep())),
     ];
     let wind = add(bed(&mut rng, 24.0, 250.0, 900.0, 0));
+    // The hiss of a starved digital link, under everything when the jamming is on.
+    let hiss = add(bed(&mut rng, 6.0, 2500.0, 6000.0, 0));
     let rumble = add(bed(&mut rng, 40.0, 90.0, 180.0, 9));
     let engines = add(engines(&mut rng));
     let rotor = add(rotor(&mut rng));
@@ -333,8 +350,9 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
         dump("Rumble", &rumble);
         dump("Engines", &engines);
         dump("Rotor", &rotor);
+        dump("Hiss", &hiss);
     }
-    commands.insert_resource(Bank { sounds, wind, rumble, engines, rotor });
+    commands.insert_resource(Bank { sounds, wind, rumble, engines, rotor, hiss });
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -385,9 +403,11 @@ impl Sound<'_, '_> {
     }
 }
 
-fn play_pending(mut commands: Commands, time: Res<Time>, bank: Option<Res<Bank>>, mut pending: ResMut<Pending>, playing: Query<(), With<AudioPlayer<Synth>>>) {
+fn play_pending(mut commands: Commands, time: Res<Time>, bank: Option<Res<Bank>>, levels: Option<Res<AmbienceLevels>>, mut pending: ResMut<Pending>, playing: Query<(), With<AudioPlayer<Synth>>>) {
     let Some(bank) = bank else { return };
     let now = time.elapsed_secs_f64();
+    // While the picture is frozen the world's sound drops out with it; the radio net and the controller stay.
+    let frozen = levels.as_ref().is_some_and(|l| l.frozen);
     let mut busy = playing.iter().count();
     let mut keep = Vec::new();
     for item in pending.queue.drain(..) {
@@ -400,8 +420,8 @@ fn play_pending(mut commands: Commands, time: Res<Time>, bank: Option<Res<Bank>>
         if let Some(dir) = crate::dev::dev().showcase.as_deref() {
             crate::showcase::append(&format!("{dir}/audio.log"), &format!("sfx {:.4} {:?} {:.5} {:.4}\n", now, item.1, item.2.min(1.5), item.3));
         }
-        if busy > 40 {
-            continue; // the mix is saturated; drop the quiet ones
+        if busy > 40 || (frozen && !matches!(item.1, Sfx::Radio | Sfx::Beep)) {
+            continue; // the mix is saturated, or the link is; drop them
         }
         busy += 1;
         commands.spawn((AudioPlayer(bank.get(item.1)), PlaybackSettings::DESPAWN.with_volume(Volume::Linear(item.2.min(1.5))).with_speed(item.3)));
@@ -418,10 +438,12 @@ pub enum AmbienceKind {
     Rumble,
     Engines,
     Rotor,
+    /// The hiss of a jammed link, in the drone view.
+    Hiss,
 }
 
 fn start_ambience(mut commands: Commands, bank: Res<Bank>) {
-    for (h, k, v) in [(bank.wind.clone(), AmbienceKind::Wind, 0.25), (bank.rumble.clone(), AmbienceKind::Rumble, 0.35), (bank.engines.clone(), AmbienceKind::Engines, 0.0), (bank.rotor.clone(), AmbienceKind::Rotor, 0.04)] {
+    for (h, k, v) in [(bank.wind.clone(), AmbienceKind::Wind, 0.25), (bank.rumble.clone(), AmbienceKind::Rumble, 0.35), (bank.engines.clone(), AmbienceKind::Engines, 0.0), (bank.rotor.clone(), AmbienceKind::Rotor, 0.04), (bank.hiss.clone(), AmbienceKind::Hiss, 0.0)] {
         commands.spawn((AudioPlayer(h), PlaybackSettings::LOOP.with_volume(Volume::Linear(v)), Ambience(k)));
     }
 }
@@ -431,6 +453,9 @@ fn start_ambience(mut commands: Commands, bank: Res<Bank>) {
 pub struct AmbienceLevels {
     pub engines: f32,
     pub drone_view: bool,
+    /// The jamming on the drone's link, 0..1, and whether its picture is frozen this frame.
+    pub jam: f32,
+    pub frozen: bool,
 }
 
 fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, mut q: Query<(&Ambience, &mut AudioSink)>) {
@@ -439,11 +464,14 @@ fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, mut q: Que
         crate::showcase::append(&format!("{dir}/audio.log"), &format!("amb {:.4} {:.4} {}\n", time.elapsed_secs_f64(), levels.engines, levels.drone_view as u8));
     }
     for (a, mut sink) in &mut q {
+        // Under jamming the world thins behind a hiss; frozen, it is gone until the picture moves again.
+        let duck = if levels.drone_view { (1.0 - levels.jam * 0.6) * if levels.frozen { 0.15 } else { 1.0 } } else { 1.0 };
         let v = match a.0 {
-            AmbienceKind::Wind => if levels.drone_view { 0.18 } else { 0.3 },
-            AmbienceKind::Rumble => 0.35,
-            AmbienceKind::Engines => levels.engines,
+            AmbienceKind::Wind => (if levels.drone_view { 0.18 } else { 0.3 }) * duck,
+            AmbienceKind::Rumble => 0.35 * duck,
+            AmbienceKind::Engines => levels.engines * duck,
             AmbienceKind::Rotor => if levels.drone_view { 0.05 } else { 0.0 },
+            AmbienceKind::Hiss => if levels.drone_view { levels.jam * 0.25 } else { 0.0 },
         };
         sink.set_volume(Volume::Linear(v));
     }

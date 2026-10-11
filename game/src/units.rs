@@ -370,17 +370,39 @@ pub enum ColumnOrder {
     PullBack,
 }
 
+/// One thing said on the net: in Ukrainian, as it is said, and in English, as the player reads it.
+#[derive(Clone, Debug)]
+pub struct Line {
+    pub uk: String,
+    pub en: String,
+}
+
+impl Line {
+    /// A line the string table knows (`text::uk`); one it does not is said in English alone.
+    pub fn new(en: impl Into<String>) -> Self {
+        let en = en.into();
+        Self { uk: crate::text::uk(&en).to_string(), en }
+    }
+
+    pub fn both(uk: impl Into<String>, en: impl Into<String>) -> Self {
+        Self { uk: uk.into(), en: en.into() }
+    }
+}
+
 #[derive(Resource, Default)]
 pub struct Radio {
-    pub lines: Vec<(f64, String)>,
-    pub new: Vec<String>,
+    pub lines: Vec<(f64, Line)>,
 }
 
 impl Radio {
+    /// Say a line the string table knows (or an English-only one, such as a dev message).
     pub fn say(&mut self, now: f64, s: impl Into<String>) {
-        let s = s.into();
-        self.lines.push((now, s.clone()));
-        self.new.push(s);
+        self.lines.push((now, Line::new(s)));
+    }
+
+    /// Say a line built on the spot, in both tongues.
+    pub fn say2(&mut self, now: f64, uk: impl Into<String>, en: impl Into<String>) {
+        self.lines.push((now, Line::both(uk, en)));
     }
 }
 
@@ -1064,7 +1086,7 @@ fn drive_vehicles(
                 // Wait for the men to climb on: until full, or until staying any longer is death too.
                 if v.troops >= 7 || v.timer > 110.0 || (v.panic > 0.95 && v.timer > 45.0) {
                     start_withdrawal(&mut v, rng);
-                    radio.say(now, format!("Bradley coming out with {} aboard.", v.troops));
+                    radio.say2(now, format!("Бредлі виходить, на борту {}.", v.troops), format!("Bradley coming out with {} aboard.", v.troops));
                 }
             }
             VState::Overwatch => {

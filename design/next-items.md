@@ -630,6 +630,30 @@ detection clip. `same-day.sh` identical for 1–4; a new baseline for 5.
 
 **Cost.** 13–18 h now (pipeline 5, EW 5, OSD 4, sights 3); the picture (6 h) later.
 
+**Done (2026-10-12), parts 1–4.** *The pipeline* (`feed.rs`): the drone's camera renders into an image; a
+flat camera carries the interface and shows that image through the feed shader on a screen-sized quad (a
+`Material2d`; the shader moved off the fullscreen post-process); headless, the flat camera renders into the
+image the screenshots and clips read. So the picture can stop: the 3D camera is simply not rendered while the
+link is frozen, and the quad keeps its last frame. *The ladder:* `bitrate` (1 − jamming) softens and smears the
+picture, widens the macroblocks from 8 to 24 px and flattens colour within them; stale greenish blocks where
+the decoder gave up; freezes of 0.3–2 s rolled every quarter second past 0.3 of jamming, caught up with a jump;
+no snow. Jamming now holds (it decays at 0.03/s, not 0.1) and bites past the jam line (0.2/s per 500 m).
+*Two links:* the control link fails in spells past 0.55 of jamming; six seconds without it and the drone
+brakes, backs 50 m down its track, flies home at 120 m and hovers there until H cancels it with the link back
+(the sticks are dead meanwhile, the gimbal and zoom still answer). The satellite fix falls with the jamming and
+the position readout walks by up to 120 m. *The OSD* (`hud.rs`, `Osd`): the Pilot 2 layout from §2.6 in
+shadowed text: top left the flight mode (N, S, or A when the fix is gone), "In-Flight" and the REC timer, or the
+flashing warning ("Weak signal…", "Strong Interference to Aircraft. Fly with caution", "Signal Lost. Aircraft
+will Return to Home in 6 s", "Returning to Home. Press H to cancel", "NO SIGNAL…"); top right the drones left,
+satellites, the RC and HD link bars, the minutes left and the battery; right edge the zoom and the blinking REC;
+along the bottom heading, ALT, ASL, D, speeds, gimbal and the lat-lon. The old telemetry line stays for the OP
+and the tree line. *Sound under EW:* the drone has no microphone, so what changes is the controller: a two-tone
+warning every two seconds while the link is in trouble, a hiss that rises with the jamming, the world ducked
+behind it and dropped out entirely while the picture is frozen (the radio net and the tone stay); the beeps are
+logged sounds, so `same-day` audio differs from `c2` by exactly them. Clip `20261012-0143-g-jamline-2.mp4`
+(the drone flown south at sport speed across the jam line: soft, then blocks and stale smears, "Signal Lost",
+the return-to-home), shot `g-osd`. The sights (part 6) are not done.
+
 ### H. The sky (**look**) — observation 17
 
 **Now.** A clear colour and distance fog.
@@ -647,6 +671,20 @@ the choice between them made from the pictures. `same-day.sh` identical for the 
 **sim** change (the banners' times, the light) and gets a baseline.
 
 **Cost.** 7 h.
+
+**Done (2026-10-12).** The clock first: Vuhledar runs on Kyiv time (day start 06:40, sunrise 06:51, sunset
+16:38, the sun an hour earlier in `world.rs`, the banners with it). Then `sky.rs` and `sky.wgsl`: a 9 km dome
+that follows the camera, a custom material with a gradient from the horizon's haze (the fog colour) to the
+zenith, a cloud deck projected onto a plane at its base height from four octaves of noise (its cover, its lit
+top towards the sun, its dark underside, a lumpy full deck, drift with the wind), and a sun disc with a glow,
+hidden where the deck is thick and a hazy disc through a veil. Three presets, `Weather`: `Overcast` (the date's
+unbroken stratus at 350 m), `Sun` (the footage week's broken stratocumulus at 1,300 m with the hard sun), `Veil`
+(June's cirrus thinning to broken cloud after 13:00). `VUHLEDAR_SKY=overcast|sun` picks February's. Both
+daylight systems hand the sky its colours, the sun's true direction and the hour each frame. The pictures
+(`sky-sun-*`, `sky-overcast-*`, `sky-june-*` in shots.md) decided it: **the diorama keeps the hard sun** (the
+footage look, the one the shadows were tuned for, and the sky with something in it); the overcast reads as a
+flat grey ceiling and stays available for the record's date and the campaign's day table. Sim-neutral
+(`same-day` audio identical against `c2-vuh`; the tally differs only by the clock text).
 
 ### I. Trees and vegetation (**look**, asset seam) — observation 7
 
@@ -697,6 +735,16 @@ assets. What is done now is what the assets will need anyway and what no asset f
 **Prove.** Screenshots of the HUD, a radio exchange and the debrief; `same-day.sh` identical (strings only).
 
 **Cost.** 6–8 h (the table and the lines are most of it).
+
+**Done (2026-10-12).** Liberation Mono (SIL OFL, `src/fonts/`) is embedded and set on every text: Bevy's own
+subset had no Cyrillic at all. `text.rs` holds the place names (Latin first for the player: "Vuhledar
+(Вугледар)" in the title, the briefing and the ledger's closing lines) and the net's Ukrainian by its English
+gloss: every line the day says, and every caption, is said in Ukrainian with the idiom of §2.4 (пташка,
+коробочка, посадка, прихід, вихід, триста, РЕБ, плюс) and the English sits under it dimmer, 12 px to its 14;
+lines built on the spot (fire missions with their coordinates, the Bradley's count aboard, the reload) are
+built in both. `Radio::say` looks the Ukrainian up; `say2` takes both. The OP's label carries its Ukrainian in
+brackets. Shot `j-net`. Not done: fictional callsigns on the net (Маестро, Беркут, Сокіл, Граніт) and the
+"Я" convention; the debrief's own words (package K).
 
 ### K. The debrief (**look**) — observations 10, 11, 12
 

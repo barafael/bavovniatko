@@ -1,14 +1,11 @@
 // The look of the war as most people saw it: a cheap drone camera's compressed, grainy, washed-out video.
 // Mode 1 is the OP's binoculars instead: cleaner, colder, with a round field of view when zoomed.
 
-#import bevy_core_pipeline::fullscreen_vertex_shader::FullscreenVertexOutput
-
-@group(0) @binding(0) var screen_texture: texture_2d<f32>;
-@group(0) @binding(1) var texture_sampler: sampler;
+#import bevy_sprite::mesh2d_vertex_output::VertexOutput
 
 struct FeedEffect {
     time: f32,
-    // FeedMode: 0 drone, 1 binoculars, 2 eye, 3 sight.
+    // FeedMode: 0 drone, 1 binoculars, 2 eye, 3 sight, 4 raw.
     mode: u32,
     grain: f32,
     glitch: f32,
@@ -16,9 +13,12 @@ struct FeedEffect {
     zoom: f32,
     down: f32,
     saturation: f32,
+    bitrate: f32,
 }
 
-@group(0) @binding(2) var<uniform> fx: FeedEffect;
+@group(2) @binding(0) var<uniform> fx: FeedEffect;
+@group(2) @binding(1) var screen_texture: texture_2d<f32>;
+@group(2) @binding(2) var texture_sampler: sampler;
 
 fn hash(p: vec2<f32>) -> f32 {
     var q = fract(p * vec2<f32>(123.34, 456.21));
@@ -43,43 +43,55 @@ fn luma(c: vec3<f32>) -> f32 {
 }
 
 @fragment
-fn fragment(in: FullscreenVertexOutput) -> @location(0) vec4<f32> {
+fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
     let dims = vec2<f32>(textureDimensions(screen_texture));
     var uv = in.uv;
     let px = 1.0 / dims;
     let frame = floor(fx.time * 24.0);
 
+    if fx.mode == 4u {
+        return textureSample(screen_texture, texture_sampler, uv);
+    }
     if fx.mode == 0u {
         // ---- Drone feed ----
         if fx.down > 0.5 {
             let n = hash(floor(uv * dims / 3.0) + frame);
             return vec4<f32>(vec3<f32>(0.05 + 0.06 * n), 1.0);
         }
-        // Signal breakup: torn rows and blocky smears.
+        // A digital link's ladder (design/next-items.md §2.6): as the bit rate falls the picture goes soft and
+        // smeary, then into macroblocks with stale, greenish blocks where the decoder gave up; no snow, that is
+        // an analog link.
+        let soft = 1.0 - clamp(fx.bitrate, 0.0, 1.0);
         let g = fx.glitch;
+        var stale = 0.0;
         if g > 0.0 {
             let row = floor(uv.y * 48.0);
             let h = hash(vec2<f32>(row, floor(fx.time * 9.0)));
-            if h < g * 0.35 {
-                uv.x += (hash(vec2<f32>(row, frame)) - 0.5) * 0.08 * g;
+            if h < g * 0.2 {
+                uv.x += (hash(vec2<f32>(row, frame)) - 0.5) * 0.05 * g;
             }
-            let block = floor(uv * dims / 24.0);
-            if hash(block + floor(fx.time * 6.0)) < g * 0.12 {
-                uv = (block + 0.5) * 24.0 / dims;
+            let bs = 16.0 + 24.0 * soft;
+            let block = floor(uv * dims / bs);
+            if hash(block + floor(fx.time * 4.0)) < g * 0.1 {
+                uv = (block + 0.5) * bs / dims;
+                stale = 1.0;
             }
         }
-        // Compression: soften, then over-sharpen (the halo look of low-bitrate H.264).
+        // Compression: soften, then over-sharpen (the halo look of low-bitrate H.264), more so as the rate falls.
+        let r = 1.5 + 3.0 * soft;
         let c0 = textureSample(screen_texture, texture_sampler, uv).rgb;
-        let blur = (textureSample(screen_texture, texture_sampler, uv + vec2<f32>(px.x, 0.0) * 1.5).rgb
-            + textureSample(screen_texture, texture_sampler, uv - vec2<f32>(px.x, 0.0) * 1.5).rgb
-            + textureSample(screen_texture, texture_sampler, uv + vec2<f32>(0.0, px.y) * 1.5).rgb
-            + textureSample(screen_texture, texture_sampler, uv - vec2<f32>(0.0, px.y) * 1.5).rgb) * 0.25;
-        var c = mix(blur, c0, 0.55);
-        c = c + (c - blur) * 0.9;
-        // Macroblock quantisation: flatten colour within 8 px blocks a little.
-        let bq = (floor(uv * dims / 8.0) + 0.5) * 8.0 / dims;
+        let blur = (textureSample(screen_texture, texture_sampler, uv + vec2<f32>(px.x, 0.0) * r).rgb
+            + textureSample(screen_texture, texture_sampler, uv - vec2<f32>(px.x, 0.0) * r).rgb
+            + textureSample(screen_texture, texture_sampler, uv + vec2<f32>(0.0, px.y) * r).rgb
+            + textureSample(screen_texture, texture_sampler, uv - vec2<f32>(0.0, px.y) * r).rgb) * 0.25;
+        var c = mix(blur, c0, 0.55 - 0.4 * soft);
+        c = c + (c - blur) * (0.9 - 0.5 * soft);
+        // Macroblock quantisation: flatten colour within blocks, 8 px clean, up to 24 px starved.
+        let mb = 8.0 + 16.0 * soft;
+        let bq = (floor(uv * dims / mb) + 0.5) * mb / dims;
         let cb = textureSample(screen_texture, texture_sampler, bq).rgb;
-        c = mix(c, cb, 0.12);
+        c = mix(c, cb, 0.12 + 0.6 * soft);
+        c = mix(c, vec3<f32>(0.38, 0.5, 0.4) * (0.5 + luma(c)), stale * 0.35);
         // Washed-out, desaturated small-sensor colour with clipped whites.
         let l = luma(c);
         // Washed-out small-sensor colour, hard contrast: snow clips, steel goes near black.

@@ -125,6 +125,7 @@ turned) burned out, to look the models over. `VUHLEDAR_CAM` places the drone, `V
 scales game time. `VUHLEDAR_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
 (headless, it also lifts the frame cap), and `VUHLEDAR_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
 picture out, so a slow frame can be charged to what makes it slow before anything is rewritten.
-`VUHLEDAR_GROUND=<dir>` reads the 252 ground chunks from that directory's PNGs if they are all there, and
+`VUHLEDAR_SKY=overcast` puts the unbroken stratus of the real 6 February over Vuhledar instead of the footage week's
+broken cloud and hard sun (the default). `VUHLEDAR_GROUND=<dir>` reads the 252 ground chunks from that directory's PNGs if they are all there, and
 writes them there after painting if not: the ground as a persisted day will keep it. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
 `devlog/videos.md`. The history is part of the development.

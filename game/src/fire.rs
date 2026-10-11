@@ -12,7 +12,7 @@ use crate::dev::dev;
 use crate::fx::{self, FxAssets, FxRng};
 use crate::geo;
 use crate::terrain::{Paint, PaintQueue};
-use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, Vehicle, VState};
+use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Line, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, Vehicle, VState};
 use crate::world::{ObservationPost, Palette};
 use bevy::{light::NotShadowCaster, prelude::*, window::PrimaryWindow};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -352,7 +352,7 @@ fn player_fire(
         }
         fc.himars -= 1;
         fc.missions.push(Strike::Himars.mission(target, sigma, now, true));
-        radio.say(now, format!("HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
+        radio.say2(now, format!("Хаймарс, дві ракети, {lat:.4} {lon:.4}. Підліт близько хвилини."), format!("HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
     } else if shift && diorama() == Diorama::Robotyne {
         if fc.smoke == 0 {
             radio.say(now, "No more smoke.");
@@ -360,7 +360,7 @@ fn player_fire(
         }
         fc.smoke -= 1;
         fc.missions.push(Strike::Smoke.mission(target, sigma, now, true));
-        radio.say(now, format!("Smoke, {lat:.4} {lon:.4}. Screening. It blinds us too."));
+        radio.say2(now, format!("Дим, {lat:.4} {lon:.4}. Ставимо завісу. Нам теж нічого не видно."), format!("Smoke, {lat:.4} {lon:.4}. Screening. It blinds us too."));
     } else if shift {
         if fc.raam == 0 {
             radio.say(now, "No more RAAM.");
@@ -368,7 +368,7 @@ fn player_fire(
         }
         fc.raam -= 1;
         fc.missions.push(Strike::Raam.mission(target, sigma, now, true));
-        radio.say(now, format!("RAAM, three shells, {lat:.4} {lon:.4}. Mines going down on that lane."));
+        radio.say2(now, format!("РААМ, три снаряди, {lat:.4} {lon:.4}. Мінуємо прохід."), format!("RAAM, three shells, {lat:.4} {lon:.4}. Mines going down on that lane."));
     } else {
         if fc.shells < 4 {
             radio.say(now, "Battery: out of shells. Nothing to send.");
@@ -385,10 +385,10 @@ fn player_fire(
         fc.battery_busy_until = now + 18.0;
         fc.last_call = Some((target, now));
         fc.missions.push(Strike::He.mission(target, sigma, now, true));
-        radio.say(now, format!("Fire mission, {lat:.4} {lon:.4}, four rounds. {}", if adjust { "Adjusting from the last." } else { "Shot, over." }));
+        radio.say2(now, format!("Ціль, {lat:.4} {lon:.4}, чотири снаряди. {}", if adjust { "Коригую від попередньої." } else { "Вихід." }), format!("Fire mission, {lat:.4} {lon:.4}, four rounds. {}", if adjust { "Adjusting from the last." } else { "Shot, over." }));
         if fc.shells <= 32 && !fc.warned_low {
             fc.warned_low = true;
-            radio.say(now, format!("Battery: {} rounds left. That's all we get today.", fc.shells));
+            radio.say2(now, format!("Батарея: лишилось {} снарядів. На сьогодні це все.", fc.shells), format!("Battery: {} rounds left. That's all we get today.", fc.shells));
         }
     }
     sound.now(Sfx::Radio, 0.25);
@@ -568,7 +568,7 @@ fn land_shells(
                 }
                 if pos.side == Side::Ua {
                     if pos.strength == 0 {
-                        radio.say(now, format!("We've lost the position at {:.0}, {:.0}. Nobody answering.", pos.pos.x, pos.pos.y));
+                        radio.say2(now, format!("Втратили позицію на {:.0}, {:.0}. Ніхто не відповідає.", pos.pos.x, pos.pos.y), format!("We've lost the position at {:.0}, {:.0}. Nobody answering.", pos.pos.x, pos.pos.y));
                     } else if rng.random_bool(0.4) {
                         radio.say(now, "Three hundred. Need evacuation from the tree line.");
                     }
@@ -708,7 +708,7 @@ fn atgm_teams(
                 radio.say(now, "ATGM from the crest! Launch, launch!");
             }
         } else if fxr.0.random_bool(0.5) {
-            radio.say(now, format!("{weapon}: launch."));
+            radio.say2(now, format!("{weapon}: пуск."), format!("{weapon}: launch."));
         }
     }
 }
@@ -1011,10 +1011,10 @@ fn pre_registered_fires(
             fc.brigade_shells -= rounds;
             let kind = if defender == Side::Ua { ShellKind::He155 } else { ShellKind::Ru152 };
             fc.missions.push(Mission { target: *trp, kind, rounds, sigma: 35.0, interval: 2.5, next: now + 1.0, flight: 22.0, player: false, by: defender });
-            radio.say(now, match diorama() {
-                Diorama::Vuhledar => format!("Brigade guns: firing on registered point {}.", i + 1),
-                Diorama::Robotyne => "Incoming on the lane! They have it registered. Get out of there!".to_string(),
-            });
+            radio.lines.push((now, match diorama() {
+                Diorama::Vuhledar => Line::both(format!("Бригадна арта: вогонь по пристріляній точці {}.", i + 1), format!("Brigade guns: firing on registered point {}.", i + 1)),
+                Diorama::Robotyne => Line::new("Incoming on the lane! They have it registered. Get out of there!"),
+            }));
         }
     }
 }
@@ -1122,7 +1122,7 @@ fn player_atgm(
         return;
     }
     if pos.reload > 0.0 {
-        radio.say(now, format!("Reloading. {:.0} seconds.", pos.reload.ceil()));
+        radio.say2(now, format!("Перезарядка. {:.0} секунд.", pos.reload.ceil()), format!("Reloading. {:.0} seconds.", pos.reload.ceil()));
         return;
     }
     let locked = view.lock.filter(|(_, t)| *t >= JAVELIN_LOCK).map(|(e, _)| e);
@@ -1154,7 +1154,7 @@ fn player_atgm(
         }
         _ => {
             commands.spawn((missile, Transform::from_translation(from).looking_to(fwd, Vec3::Y), GuidedMissile { travelled: 1.2, speed: 40.0, trail: 0.0, team, eye: gt.translation, dir: fwd }));
-            radio.say(now, format!("{weapon}: launch. Hold it on him."));
+            radio.say2(now, format!("{weapon}: пуск. Тримай його."), format!("{weapon}: launch. Hold it on him."));
         }
     }
 }

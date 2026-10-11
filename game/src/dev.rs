@@ -78,6 +78,8 @@ pub struct DevEnv {
     pub lineup: Option<[f32; 3]>,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
+    /// `VUHLEDAR_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
+    pub sky: Option<crate::sky::Weather>,
 }
 
 fn var(k: &str) -> Option<String> {
@@ -130,6 +132,7 @@ impl DevEnv {
             team: parse("VUHLEDAR_TEAM"),
             auto_atgm: parse("VUHLEDAR_AUTO_ATGM"),
             daydbg: parse("VUHLEDAR_DAYDBG"),
+            sky: parse("VUHLEDAR_SKY"),
             shot: var("VUHLEDAR_SHOT"),
             shot_at: parse("VUHLEDAR_SHOT_AT").unwrap_or(6.0),
             cam,

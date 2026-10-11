@@ -374,6 +374,7 @@ pub fn daylight(
     skirt: Option<Res<Skirt>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut fx_light: ResMut<fx::FxLight>,
+    mut sky_dome: crate::sky::Sky,
     mut last: Local<Option<Color>>,
 ) {
     let dbg = crate::dev::dev().daydbg;
@@ -413,6 +414,14 @@ pub fn daylight(
     let sky = Color::srgb(sky[0], sky[1], sky[2]);
     clear.0 = sky;
     fx_light.0 = 0.4 + 0.6 * s(-4.0, 12.0, elev);
+    // The sky itself: deep blue before dawn, a milky veil by day with the sun a hazy disc through it.
+    let sun_at = {
+        let e = elev.to_radians();
+        Vec3::new(azim.sin() * e.cos(), e.sin(), -azim.cos() * e.cos())
+    };
+    let z = mix3([0.10, 0.14, 0.28], [0.52, 0.60, 0.78], twilight);
+    let z = mix3(z, [0.58, 0.66, 0.80], day);
+    sky_dome.set(crate::sky::Weather::Veil, h, Color::srgb(z[0], z[1], z[2]), sky, sun_at, Color::srgb(1.0, 0.78 + 0.18 * day, 0.55 + 0.35 * day), 2.0 * s(-3.0, 10.0, elev), 0.3 + 0.7 * s(-4.0, 12.0, elev));
     for (mut f, mut ex) in &mut cam {
         f.color = sky;
         // Clearer than February's haze, though the morning was 79% cloud.

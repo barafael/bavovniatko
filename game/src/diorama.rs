@@ -46,10 +46,10 @@ impl Diorama {
         self == Diorama::Robotyne
     }
 
-    pub fn title(self) -> &'static str {
+    pub fn title(self) -> String {
         match self {
-            Diorama::Vuhledar => "Vuhledar, 6 February 2023",
-            Diorama::Robotyne => "Mala Tokmachka, 8 June 2023",
+            Diorama::Vuhledar => format!("{}, 6 February 2023", crate::text::VUHLEDAR.hud()),
+            Diorama::Robotyne => format!("{}, 8 June 2023", crate::text::MALA_TOKMACHKA.hud()),
         }
     }
 
@@ -64,7 +64,8 @@ impl Diorama {
     /// Clock time (minutes after midnight) when the day starts.
     pub fn day_start_min(self) -> f32 {
         match self {
-            Diorama::Vuhledar => 7.0 * 60.0 + 40.0,
+            // Kyiv time (UTC+2 in February): sunrise at Vuhledar was 06:51. The dossier's times are Moscow time.
+            Diorama::Vuhledar => 6.0 * 60.0 + 40.0,
             Diorama::Robotyne => 3.0 * 60.0 + 50.0,
         }
     }

@@ -8,7 +8,7 @@ use crate::geo;
 use crate::diorama::{Diorama, diorama};
 use crate::units::{ColumnOrder, Radio, Side, Stats};
 use crate::Phase;
-use bevy::prelude::*;
+use bevy::{prelude::*, text::FontSource};
 
 pub struct HudPlugin;
 
@@ -24,6 +24,20 @@ impl Plugin for HudPlugin {
 
 #[derive(Component)]
 struct Telemetry;
+/// The drone's own display, as the controller app draws it over the video (design/next-items.md §2.6): the
+/// status bar with its flashing warnings, the link and the fix, the battery, the zoom and the recording, and the
+/// flight readouts round the compass. It never breaks up: the video does, the display does not.
+#[derive(Component, Clone, Copy, PartialEq, Eq)]
+enum Osd {
+    /// Top left: flight mode and status, or the warning.
+    Status,
+    /// Top right: satellites, the signal dots, the battery.
+    Links,
+    /// Right edge: zoom and recording.
+    Camera,
+    /// Bottom centre: heading, altitude, distance, speeds, gimbal.
+    Flight,
+}
 #[derive(Component)]
 struct Tally;
 #[derive(Component)]
@@ -47,12 +61,21 @@ struct DebriefText;
 
 const AMBER: Color = Color::srgb(0.95, 0.85, 0.55);
 const WHITE: Color = Color::srgba(0.95, 0.96, 0.97, 0.92);
+/// The gloss under a Ukrainian line.
+const DIM: Color = Color::srgba(0.80, 0.80, 0.78, 0.70);
 
-fn text(s: &str, size: f32, color: Color) -> (Text, TextFont, TextColor) {
-    (Text::new(s), TextFont { font_size: FontSize::Px(size), ..default() }, TextColor(color))
+fn text(font: &Handle<Font>, s: &str, size: f32, color: Color) -> (Text, TextFont, TextColor) {
+    (Text::new(s), TextFont { font: FontSource::Handle(font.clone()), font_size: FontSize::Px(size), ..default() }, TextColor(color))
 }
 
-fn spawn_hud(mut commands: Commands) {
+/// The interface's font, for text made after start-up.
+#[derive(Resource)]
+struct Fonts(Handle<Font>);
+
+fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
+    let font: Handle<Font> = assets.load(crate::text::FONT);
+    commands.insert_resource(Fonts(font.clone()));
+    let text = |s: &str, size: f32, color: Color| text(&font, s, size, color);
     // Larger offscreen renders (the showcase films at 1080p) scale the interface with them.
     if let Some((_, h)) = crate::dev::dev().res {
         commands.insert_resource(UiScale(1.35 * h as f32 / 900.0));
@@ -66,8 +89,20 @@ fn spawn_hud(mut commands: Commands) {
         ..default()
     };
     commands.spawn((text("", 15.0, WHITE), abs(Some(14.0), None, Some(18.0), None), Telemetry));
-    commands.spawn((text("", 15.0, WHITE), abs(Some(14.0), None, None, Some(18.0)), Tally, TextLayout::justify(Justify::Right)));
-    commands.spawn((text("", 14.0, AMBER), Node { max_width: px(620), ..abs(None, Some(16.0), Some(18.0), None) }, RadioLog));
+    // The drone's display: white with a dark shadow, monospaced, in the corners and along the bottom.
+    let shadow = TextShadow { offset: Vec2::new(1.0, 1.0), color: Color::srgba(0.0, 0.0, 0.0, 0.8) };
+    commands.spawn((text("", 15.0, WHITE), abs(Some(14.0), None, Some(18.0), None), shadow, Osd::Status));
+    commands.spawn((text("", 15.0, WHITE), abs(Some(14.0), None, None, Some(18.0)), shadow, Osd::Links, TextLayout::justify(Justify::Right)));
+    commands.spawn((text("", 16.0, WHITE), Node { top: percent(44), ..abs(None, None, None, Some(18.0)) }, shadow, Osd::Camera, TextLayout::justify(Justify::Right)));
+    commands.spawn((
+        text("", 14.0, WHITE),
+        Node { position_type: PositionType::Absolute, bottom: px(16), width: percent(100), justify_content: JustifyContent::Center, ..default() },
+        shadow,
+        Osd::Flight,
+        TextLayout::justify(Justify::Center),
+    ));
+    commands.spawn((text("", 15.0, WHITE), abs(Some(40.0), None, None, Some(18.0)), Tally, TextLayout::justify(Justify::Right)));
+    commands.spawn((text("", 14.0, AMBER), Node { max_width: px(470), ..abs(None, Some(16.0), Some(18.0), None) }, RadioLog));
     commands.spawn((text("", 14.0, WHITE), abs(None, Some(16.0), None, Some(18.0)), FirePanel, TextLayout::justify(Justify::Right)));
     commands.spawn((
         text("", 26.0, WHITE),
@@ -108,11 +143,11 @@ fn spawn_hud(mut commands: Commands) {
     }
 
     // The briefing.
-    let briefing = if diorama() == Diorama::Robotyne { ROBOTYNE_BRIEFING } else { "VUHLEDAR\n6 FEBRUARY 2023\n\n\
+    let briefing = if diorama() == Diorama::Robotyne { ROBOTYNE_BRIEFING } else { "VUHLEDAR (ВУГЛЕДАР)\n6 FEBRUARY 2023\n\n\
 Vuhledar is a coal-mining town of Soviet apartment blocks on a ridge above open, flat fields.\n\
-Since late October the Pacific Fleet's 155th Naval Infantry Brigade has attacked it, and been cut to pieces.\n\
+Since late October the Pacific Fleet's 155th Naval Infantry Brigade (155-та ОБрМП) has attacked it, and been cut to pieces.\n\
 On 24 January Russia attacked again. Today is the largest assault yet.\n\n\
-You are with the 72nd Mechanised Brigade: a drone operator and a fire controller.\n\
+You are with the 72nd Mechanised Brigade (72-га ОМБр, the Black Zaporozhians): a drone operator and a fire controller.\n\
 The roads are left clear. The fields beside them are mined. ATGM teams wait in the tree lines.\n\
 The day will run whether or not you do anything. What you do matters at the margin.\n\n\
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.\n\
@@ -139,11 +174,11 @@ Press Enter." };
         .with_child((text("", 15.0, WHITE), Node { max_width: px(1100), ..default() }, DebriefText));
 }
 
-const ROBOTYNE_BRIEFING: &str = "SOUTH OF MALA TOKMACHKA\n8 JUNE 2023\n\n\
-South of Orikhiv the steppe climbs towards Tokmak through fields cut by tree lines.\n\
+const ROBOTYNE_BRIEFING: &str = "SOUTH OF MALA TOKMACHKA (МАЛА ТОКМАЧКА)\n8 JUNE 2023\n\n\
+South of Orikhiv (Оріхів) the steppe climbs towards Tokmak (Токмак) through fields cut by tree lines.\n\
 Since the autumn Russia has dug in across it: minefields hundreds of metres deep, a trench on every crest,\n\
 guns registered on every track.\n\n\
-Before dawn the 47th Mechanised Brigade goes forward with its new armour: Leopards and Bradleys,\n\
+Before dawn the 47th Mechanised Brigade (47-ма ОМБр «Маґура») goes forward with its new armour: Leopards and Bradleys,\n\
 mine plows in front. The guns have finished their preparation. The column is late.\n\n\
 You are with the brigade: a drone operator and a fire controller. These are our vehicles, and our men.\n\
 The morning will run whether or not you do anything. What you do decides what it costs.\n\n\
@@ -179,33 +214,26 @@ fn update_hud(
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
         Single<&mut Text, With<Tally>>,
-        Single<&mut Text, With<RadioLog>>,
         Single<&mut Text, With<FirePanel>>,
-        Single<&mut Text, With<Banner>>,
         Single<&mut Text, With<NoSignal>>,
+        Query<(&Osd, &mut Text, &mut Visibility)>,
     )>,
-    mut crosshair: Query<&mut Visibility, (With<Crosshair>, Without<Reticle>)>,
-    mut reticle: Query<&mut Visibility, (With<Reticle>, Without<Crosshair>)>,
+    mut crosshair: Query<&mut Visibility, (With<Crosshair>, Without<Reticle>, Without<Osd>)>,
+    mut reticle: Query<&mut Visibility, (With<Reticle>, Without<Crosshair>, Without<Osd>)>,
     phase: Res<State<Phase>>,
+    mut commands: Commands,
+    net: (Res<Fonts>, Single<Entity, With<RadioLog>>, Single<Entity, With<Banner>>, Local<(String, String)>),
 ) {
+    let (fonts, log_root, banner_root, mut shown) = net;
+    osd_update(&time, &view, &script, &mut texts.p4());
     for mut v in &mut reticle {
         v.set_if_neq(if view.mode == Mode::Ground && view.sight { Visibility::Inherited } else { Visibility::Hidden });
     }
     let now = time.elapsed_secs_f64();
-    let rec = script.t as u32;
-    let p2 = view.drone_pos.xz();
-    let (lat, lon) = geo::latlon(p2);
-    let agl = view.drone_pos.y - geo::height(p2.x, p2.y);
-    let home = geo::layout().home;
     // Each text is written only when it reads differently, so Bevy lays out again only what changed.
     let telemetry = match view.mode {
-        Mode::Drone => Text::new(format!(
-            "REC {:02}:{:02}:{:02}   BAT {:>3.0}%   H {:>3.0} m   D {:.2} km   {:.5} N {:.5} E   x{:.1}{}\nDRONES LEFT {}",
-            rec / 3600, rec / 60 % 60, rec % 60, view.battery * 100.0, agl, p2.distance(home) / 1000.0, lat, lon, view.zoom(),
-            if view.jamming > 0.3 { "   SIGNAL WEAK" } else { "" },
-            view.drones_left
-        )),
-        Mode::Op => Text::new(format!("{}   x{:.1}", if diorama() == Diorama::Robotyne { "OBSERVER, WATER TOWER" } else { "OBSERVATION POST, 9TH FLOOR" }, view.zoom())),
+        Mode::Drone => Text::new(String::new()),
+        Mode::Op => Text::new(format!("{}   x{:.1}", if diorama() == Diorama::Robotyne { "OBSERVER, WATER TOWER (СПОСТЕРІГАЧ, ВОДОНАПІРНА ВЕЖА)" } else { "OBSERVATION POST, 9TH FLOOR (СП, 9-Й ПОВЕРХ)" }, view.zoom())),
         Mode::Ground => {
             let team = view.ground_team.and_then(|e| positions.get(e).ok());
             let (weapon, left) = team.map(|p| (p.weapon, p.atgm)).unwrap_or((None, 0));
@@ -245,14 +273,29 @@ fn update_hud(
             diorama().date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
         ),
     }));
-    let mut log = String::new();
-    for (t, line) in radio.lines.iter().rev().take(7).collect::<Vec<_>>().into_iter().rev() {
+    // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
+    let mut spans: Vec<(String, bool)> = Vec::new();
+    for (t, line) in radio.lines.iter().rev().take(6).collect::<Vec<_>>().into_iter().rev() {
         let age = now - t;
         if age < 50.0 {
-            log.push_str(&format!("[{}] {}\n", director::clock_text((script.t as f64 - age).max(0.0) as f32), line));
+            let clock = director::clock_text((script.t as f64 - age).max(0.0) as f32);
+            if line.uk.is_empty() {
+                spans.push((format!("[{clock}] {}\n", line.en), true));
+            } else {
+                spans.push((format!("[{clock}] {}\n", line.uk), true));
+                spans.push((format!("        {}\n", line.en), false));
+            }
         }
     }
-    texts.p2().set_if_neq(Text::new(log));
+    let key = spans.iter().map(|(s, _)| s.as_str()).collect::<String>();
+    if shown.0 != key {
+        shown.0 = key;
+        commands.entity(*log_root).despawn_children().with_children(|p| {
+            for (s, uk) in &spans {
+                p.spawn((TextSpan::new(s.clone()), TextFont { font: FontSource::Handle(fonts.0.clone()), font_size: FontSize::Px(if *uk { 14.0 } else { 12.0 }), ..default() }, TextColor(if *uk { AMBER } else { DIM })));
+            }
+        });
+    }
     let teams = positions.iter().filter(|p| p.side == Side::Ua && p.atgm > 0 && p.strength >= 2).count();
     let missiles: u32 = positions.iter().filter(|p| p.side == Side::Ua && p.strength >= 2).map(|p| p.atgm).sum();
     let mode = match fc.atgm_mode {
@@ -262,7 +305,7 @@ fn update_hud(
     };
     let speed = vtime.relative_speed();
     let speed_line = if (speed - 1.0).abs() > 0.01 { format!("\ntime x{speed}") } else { String::new() };
-    texts.p3().set_if_neq(Text::new(match diorama() {
+    texts.p2().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar => format!("155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, teams, missiles, mode, speed_line),
         Diorama::Robotyne => {
             let order = match *order {
@@ -273,14 +316,78 @@ fn update_hud(
             format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
         }
     }));
-    texts.p4().set_if_neq(Text::new(script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default()));
-    texts.p5().set_if_neq(Text::new(if view.mode == Mode::Drone && view.feed_down > 0.0 {
+    // The day's caption, the same way: the Ukrainian line over its gloss.
+    let banner = script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default();
+    if shown.1 != banner {
+        shown.1 = banner.clone();
+        let uk = crate::text::uk(&banner);
+        commands.entity(*banner_root).despawn_children().with_children(|p| {
+            if uk.is_empty() {
+                p.spawn((TextSpan::new(banner.clone()), TextFont { font: FontSource::Handle(fonts.0.clone()), font_size: FontSize::Px(26.0), ..default() }, TextColor(WHITE)));
+            } else {
+                p.spawn((TextSpan::new(format!("{uk}\n")), TextFont { font: FontSource::Handle(fonts.0.clone()), font_size: FontSize::Px(26.0), ..default() }, TextColor(WHITE)));
+                p.spawn((TextSpan::new(banner.clone()), TextFont { font: FontSource::Handle(fonts.0.clone()), font_size: FontSize::Px(18.0), ..default() }, TextColor(DIM)));
+            }
+        });
+    }
+    texts.p3().set_if_neq(Text::new(if view.mode == Mode::Drone && view.feed_down > 0.0 {
         format!("NO SIGNAL\nbattery swap, relaunching ({:.0} s)", view.feed_down)
     } else {
         String::new()
     }));
     for mut v in &mut crosshair {
         v.set_if_neq(if view.mode == Mode::Drone && view.feed_down <= 0.0 && *phase.get() == Phase::Playing { Visibility::Inherited } else { Visibility::Hidden });
+    }
+}
+
+/// The drone's display, from what the drone knows: the links, the fix, the battery, the flight.
+fn osd_update(time: &Time, view: &View, script: &Script, osd: &mut Query<(&Osd, &mut Text, &mut Visibility)>) {
+    let on = view.mode == Mode::Drone;
+    let t = time.elapsed_secs();
+    let blink = (t * 2.0) as i32 % 2 == 0;
+    let p2 = view.drone_pos.xz();
+    let home = geo::layout().home;
+    let (lat, lon) = geo::latlon(p2 + view.gnss_error);
+    let agl = view.drone_pos.y - geo::height(p2.x, p2.y);
+    let rec = script.t as u32;
+    // Heading from the yaw (0 faces north, turning left positive).
+    let heading = ((-view.drone_yaw.to_degrees()) % 360.0 + 360.0) % 360.0;
+    let hs = view.drone_vel.xz().length();
+    let jam = view.jamming;
+    for (kind, mut text, mut vis) in osd.iter_mut() {
+        vis.set_if_neq(if on { Visibility::Inherited } else { Visibility::Hidden });
+        if !on {
+            continue;
+        }
+        let s = match kind {
+            Osd::Status => {
+                // The status bar: the mode, or the warning that flashes until it is read.
+                let warn = match (view.rth.is_some(), view.control, view.feed_down > 0.0, jam) {
+                    (_, _, true, _) => "NO SIGNAL. Aircraft returning for a new battery",
+                    (true, _, _, _) => "Returning to Home. Press H to cancel",
+                    (_, false, _, _) => "Signal Lost. Aircraft will Return to Home in 6 s",
+                    (_, _, _, j) if j > 0.6 => "Strong Interference to Aircraft. Fly with caution",
+                    (_, _, _, j) if j > 0.3 => "Weak signal. Adjust antenna or clear obstruction",
+                    _ => "",
+                };
+                let mode = if view.gnss < 0.4 { "A" } else if view.drone_vel.length() > 8.0 { "S" } else { "N" };
+                let state = if agl < 2.0 { "Landed" } else { "In-Flight" };
+                if warn.is_empty() || !blink { format!("<  {mode}  {state}      REC {:02}:{:02}:{:02}", rec / 3600, rec / 60 % 60, rec % 60) } else { format!("<  {mode}  {warn}") }
+            }
+            Osd::Links => {
+                let sats = (26.0 * view.gnss) as u32;
+                let video = if view.feed_down > 0.0 { "x  " } else if jam > 0.85 { "|  " } else if jam > 0.55 { "|| " } else { "|||" };
+                let rc = if view.control { "|||" } else { "x  " };
+                let mins = view.battery * 35.0;
+                format!("DRONES {}   GNSS {sats:>2}   RC {rc}  HD {video}   {:>2}'{:02}\"  {:>3.0}%", view.drones_left, mins.floor(), ((mins.fract()) * 60.0) as u32, view.battery * 100.0)
+            }
+            Osd::Camera => format!("Zoom\n{:.1}x\n\n{} REC", view.zoom(), if blink { "o" } else { " " }),
+            Osd::Flight => format!(
+                "HDG {heading:>3.0}   ALT {agl:>4.0} m   ASL {:>4.0} m   D {:>5.0} m\nHS {hs:>4.1} m/s   VS {:>+4.1} m/s   GIMBAL {:>+3.0}   {lat:.5} N {lon:.5} E",
+                view.drone_pos.y, p2.distance(home), view.drone_vel.y, view.gimbal.to_degrees()
+            ),
+        };
+        text.set_if_neq(Text::new(s));
     }
 }
 
@@ -306,10 +413,10 @@ Men sent forward  {}.  Came back  {}.  Russian dead  {}.\n\
 Closest any Russian got to the town  {:.0} m.  Ukrainian casualties  {}.\n\
 Shells left  {} of 96.\n\n\
 The 155th was rebuilt, and attacked again. Russia kept coming at the town's front for another year and a half.\n\
-Vuhledar fell on 1-2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.\n\n\
+{} fell on 1-2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.\n\n\
 R: the same day again, down the same roads.     Esc: quit.",
                 stats.vehicles_committed, waves, out, stats.destroyed, stats.abandoned, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, stats.turret_tosses,
-                stats.withdrawn, stats.sent, stats.returned, stats.attacker_dead, closest, stats.defender_losses, fc.shells
+                stats.withdrawn, stats.sent, stats.returned, stats.attacker_dead, closest, stats.defender_losses, fc.shells, crate::text::VUHLEDAR.hud()
             )
         }
         Diorama::Robotyne => {
@@ -335,11 +442,11 @@ The furthest vehicle stopped {}. On foot, the furthest anyone got: {}.\n\
 Russian positions on the crest silenced  {} of {}.  Their dug-in tanks knocked out  {} of 2.\n\
 Shells left  {} of 64.  Smoke left  {} of 6.\n\n\
 Within days the armour was stopped, and the brigades went forward on foot instead, a tree line at a time.\n\
-Robotyne, eleven kilometres to the south, was taken in August. Tokmak was not reached.\n\n\
+{}, eleven kilometres to the south, was taken in August. {} was not reached.\n\n\
 R: the same morning again, down the same tracks.     Esc: quit.",
                 stats.vehicles_committed, waves, out, stats.destroyed, stats.abandoned, stats.withdrawn,
                 stats.sent, stats.returned, stats.picked_up, stats.attacker_dead, stats.wounded, stats.wounded_out, lying, stats.overwatch_losses,
-                short(stats.vehicle_advance), short(stats.max_advance), quiet, ru, stats.defender_vehicles, fc.shells, fc.smoke
+                short(stats.vehicle_advance), short(stats.max_advance), quiet, ru, stats.defender_vehicles, fc.shells, fc.smoke, crate::text::ROBOTYNE.hud(), crate::text::TOKMAK.hud()
             )
         }
     });

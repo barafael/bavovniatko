@@ -2,7 +2,7 @@
 //!
 //! Vuhledar, 6 February 2023, the largest mechanised assault (dossier c08 §2, §6 set piece 3): about two
 //! battalions in T-80s and BMPs behind exhaust smoke and a mine plow, then more columns down the same roads, then
-//! the volunteer battalions, then men on foot. Real minutes are compressed: the day runs from 07:40 to dusk in
+//! the volunteer battalions, then men on foot. Real minutes are compressed: the day runs from 06:40 (Kyiv time) to dusk in
 //! about 25.
 //!
 //! Mala Tokmachka, 8 June 2023 (c09 §2, §6 set piece 1, §11 on the date): the guns finish their preparation in
@@ -119,23 +119,23 @@ impl Script {
             vec![
                 b(1.0, Act::Say("Bird up. Visibility good, frost. Watch the dacha road and the Pavlivka road.")),
                 b(6.0, Act::Say("72nd: they're coming again today. Leave the roads clear. Let them in.")),
-                b(14.0, Act::Column { route: 0, kinds: &[T80, T80, Bmp2, Bmp2, T80, Bmp2, Bmp1, Mtlb, Bmp2, T80, Bmp1, Bmp2], plow: true, start: 1150.0, smoke: 3, label: "07:45  The 155th Naval Infantry attacks down the dacha road", rescue: false }),
+                b(14.0, Act::Column { route: 0, kinds: &[T80, T80, Bmp2, Bmp2, T80, Bmp2, Bmp1, Mtlb, Bmp2, T80, Bmp1, Bmp2], plow: true, start: 1150.0, smoke: 3, label: "06:45  The 155th Naval Infantry attacks down the dacha road", rescue: false }),
                 b(20.0, Act::Jam(0.5)),
                 b(22.0, Act::Say("Bird: column on the dacha road. Twelve units, tanks leading, a plow in front. Smoke.")),
                 b(150.0, Act::Tos { label: "TOS-1A on the town" }),
-                b(330.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb], plow: false, start: 500.0, smoke: 1, label: "09:40  A second column. The same road.", rescue: false }),
+                b(330.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb], plow: false, start: 500.0, smoke: 1, label: "08:40  A second column. The same road.", rescue: false }),
                 b(345.0, Act::Say("Second column. Same route. Exactly the same route.")),
-                b(600.0, Act::Column { route: 1, kinds: &[T72, Bmp1, Bmp1, Bmp2, Mtlb, Bmp1, T72, Bmp1], plow: true, start: 650.0, smoke: 2, label: "11:20  The Alga battalion, from Pavlivka", rescue: false }),
+                b(600.0, Act::Column { route: 1, kinds: &[T72, Bmp1, Bmp1, Bmp2, Mtlb, Bmp1, T72, Bmp1], plow: true, start: 650.0, smoke: 2, label: "10:20  The Alga battalion, from Pavlivka", rescue: false }),
                 b(610.0, Act::Jam(0.6)),
                 b(615.0, Act::Say("Bird: Pavlivka road now. Volunteers by the look of it. BMP-1s.")),
                 b(700.0, Act::Tos { label: "TOS-1A again" }),
-                b(900.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, Bmp2, T80, Bmp1], plow: false, start: 550.0, smoke: 0, label: "13:00  Again, the dacha road", rescue: false }),
+                b(900.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, Bmp2, T80, Bmp1], plow: false, start: 550.0, smoke: 0, label: "12:00  Again, the dacha road", rescue: false }),
                 b(915.0, Act::Say("They're driving past their own wrecks from this morning. Same line.")),
-                b(1110.0, Act::Infantry { route: 1, groups: 6, size: 5, every: 14.0, label: "14:20  No more armour. Infantry, on foot." }),
+                b(1110.0, Act::Infantry { route: 1, groups: 6, size: 5, every: 14.0, label: "13:20  No more armour. Infantry, on foot." }),
                 b(1125.0, Act::Infantry { route: 0, groups: 6, size: 5, every: 14.0, label: "" }),
                 b(1140.0, Act::Say("Groups of five. Walking across the open field. Towards the tree line.")),
                 b(1230.0, Act::Tos { label: "TOS-1A" }),
-                b(1300.0, Act::Infantry { route: 1, groups: 4, size: 5, every: 12.0, label: "15:30  More men on foot" }),
+                b(1300.0, Act::Infantry { route: 1, groups: 4, size: 5, every: 12.0, label: "14:30  More men on foot" }),
             ]
         }
     }
