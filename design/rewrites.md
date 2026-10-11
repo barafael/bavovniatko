@@ -22,6 +22,28 @@ Checked with the other sessions before writing this:
 
 So as of 14ce119 nothing below is blocked on anyone, and `game/src` is free to edit.
 
+## What was done (2026-10-11, the same day)
+
+| step | state | result |
+|---|---|---|
+| 1 W7 table | done | one 1.2 s freeze became batches of about 150–250 ms with the page responsive between them; the floor is the browser laying the whole table out again per batch (see below) |
+| 2 W10 colours | done | every chart, legend and map colour is a stylesheet variable; checked in light and dark screenshots |
+| 3 W6 map | done | no long tasks on the slider (one 59 ms stall before) |
+| 4 D2 write path | done | `kb.Writer`; a second `load.py all` is byte-identical; three publisher actors that were written twice per run are written once |
+| 5 G0 render costs | measured | the frame is CPU-bound; the ground as a shadow caster is half of it (see step 5) |
+| 7 G6 HUD text | done | `set_if_neq` on the six texts; `same-day.sh` byte-identical against a worktree build of HEAD |
+
+**What the table rewrite taught.** The first "after" benchmark was misread twice. A `>=` inside a `view!`
+attribute (`hidden=move || shown.get() >= total`) silently ended the `<button>` tag: the attribute became the row
+count, `disabled` vanished, and the click handler's block became a child expression that ran at render, so every
+table grew on its own. Keep comparisons out of `view!` attribute values. Once fixed, three browser experiments
+(DevTools protocol, `game/target/plan/web/table-probe*.py`) showed where a batch's time goes: locking the column
+widths (`table-layout: fixed`) changed nothing, appending a prebuilt fragment instead of node by node changed
+nothing, and even pure DOM cloning costs 50–110 ms per 100 rows, growing with the table. It is the full-table
+layout the browser runs after each batch. `content-visibility: auto` cannot help: size containment is ignored on
+table rows. Under 100 ms per block would need row virtualisation (render only the rows in the scroll port);
+that is the next step if a 2,000-row table ever matters more than the query that produced it.
+
 ## What the measurements say
 
 Measured on 569fa81 (the game) and d41c484 (the explorer), using timers added in a scratch worktree only.
@@ -40,7 +62,7 @@ Measured on 569fa81 (the game) and d41c484 (the explorer), using timers added in
 
 ## The plan, in order
 
-### 1. Explorer: the notebook table (W7). Now, independent of everyone.
+### 1. Explorer: the notebook table (W7). Done.
 The 2.1 s block comes from rendering every row and cell at once.
 - **Do:**
   - Grow the table in batches of 200 rows (append, never re-render what is shown).
@@ -54,8 +76,13 @@ The 2.1 s block comes from rendering every row and cell at once.
 - **Check:** the interaction benchmark (below) before and after. The rendered rows must stay the same: compare
   `innerText` of the table.
 - **Size:** about a day.
+- **Result** (`web/bench.py`, quiet machine): "Show all" was one 1,220 ms block; it is now 17 batches of 100
+  rows a frame apart, the longest 185 ms, so the page answers between them. The first 200 rows render in 270 ms
+  of long tasks (356 before), JSON in 283 (339), back to the table in 93 (140). The target of 100 ms was not
+  reached, for the reason above. The table's text after "Show all" is byte-identical to the old build's (530,647
+  characters, 8,285 links), compared with `game/target/plan/web/table-text.py` on both builds.
 
-### 2. Explorer: colours from the theme (W10). Now.
+### 2. Explorer: colours from the theme (W10). Done.
 This one is a real bug, not just tidying. The stylesheet has dark-mode variants (`--ua: #6aa8ff` and so on), but
 `Side::color`, `Relation::color` and the map's feature colours hard-code the light-mode hex values. So in dark
 mode, charts, legends and map points have the wrong colours.
@@ -66,8 +93,11 @@ mode, charts, legends and map points have the wrong colours.
   - `wide_screen()` becomes `matchMedia("(min-width: 64em)")`, the stylesheet's own breakpoint.
 - **Check:** screenshots of the claim, numbers and map pages in light and dark mode.
 - **Size:** half a day.
+- **Result:** `Side::color` and `Relation::color` return `var(--ua)` and friends (two variables added: `--intl`,
+  `--highlight`); the map's features carry a `role` (place, highlight, selected, area) and the bridge maps roles to
+  the computed variables when a style loads, swapping the base style when the theme changes.
 
-### 3. Explorer: the map Effect (W6). Now.
+### 3. Explorer: the map Effect (W6). Done.
 - **Do:**
   - A `Memo` over the places, keeping each place's sorted month indices, so a slider move counts with a
     binary search instead of re-parsing every date.
@@ -76,8 +106,10 @@ mode, charts, legends and map points have the wrong colours.
   - The areas (the purple boxes) go to MapLibre from their own Effect, once.
 - **Target:** no long tasks while dragging the slider.
 - **Size:** half a day.
+- **Result:** `Place` keeps each place's sorted month indices; a slider move is two `partition_point`s per place;
+  no long tasks on any move.
 
-### 4. Knowledge base: one write path (D2). Now, but without rewriting any record.
+### 4. Knowledge base: one write path (D2). Done.
 `import_base.Writer` and `load.py` both do "hash, compare, UPSERT", with different hash functions.
 - **Do:** move `Writer` into `kb.py`, with the hash function as a parameter. `load_entities`, `load_metrics` and
   `load_claims` use it, each with its current hash, so every stored `ext._hash` stays valid and a re-run
@@ -92,8 +124,14 @@ mode, charts, legends and map points have the wrong colours.
   - A second `load.py all` reports everything unchanged.
   - `smoke_test.py` passes.
 - **Size:** a day.
+- **Result:** all three checks hold on a scratch database restored from the committed dump. Two things found on
+  the way: the metrics never carried a hash (they were upserted on every run; now they get one, so the next
+  `load.py all` rewrites all 404 once and the dump gains their `ext._hash`), and three publishers spelled two ways
+  in `research/sources.yaml` were two writes to one actor per run (grouped by slug now). Also noticed, not
+  touched: the committed dump and `db/staging` disagree on claims `c02-0030-11` and `c14-0027-09`, so every
+  `load.py all` rewrites those two.
 
-### 5. Game: find where the 25 ms goes (new, G0). Now; run it on both dioramas.
+### 5. Game: find where the frame goes (new, G0). Done.
 Nothing in the game logic or the particles explains the frame time, so measure the renderer before rewriting
 anything for speed.
 - **Do:**
@@ -104,6 +142,28 @@ anything for speed.
 - **Out:** a ranked list of render costs, written into this file. Rendering rewrites, if any, are planned from
   that list.
 - **Size:** half a day.
+- **Result: where the frame goes.** Measured headless at 1600×900 with `VUHLEDAR_DIAG=1` (frame times and
+  `RenderDiagnosticsPlugin`'s GPU pass times) and `VUHLEDAR_OFF=…`, 45 s into each diorama, on the integrated
+  Radeon 780M. Two runs: one while other builds loaded the machine, one quiet; they agree.
+
+  | left out | Vuhledar frame | Robotyne frame | main 3D pass on the GPU |
+  |---|---|---|---|
+  | nothing | 15.5 ms | 15.3 ms | 3.9 / 5.2 ms |
+  | the ground as a shadow caster (it still receives them) | **8.8 ms** | **9.4 ms** | 4.6 / 5.3 ms |
+  | the sun's shadow cascades | **6.5 ms** | **7.1 ms** | 2.5 / 3.4 ms |
+  | the ground meshes | **7.3 ms** | **7.1 ms** | 0.6 / 1.6 ms |
+  | MSAA 4× (loaded run) | 16.5 ms | 16.3 ms | 3.5 / 3.7 ms |
+  | the feed post-process (loaded run) | 17.6 ms | 14.2 ms | 4.9 / 5.2 ms |
+  | the trees (loaded run) | 17.9 ms | 14.5 ms | 4.4 / 3.8 ms |
+
+  All GPU passes together take about 6 ms, so the frame is CPU-bound, and more than half of it goes to the 252
+  ground chunks under the two shadow cascades: without either, the frame is 7 ms. MSAA costs a millisecond; the
+  trees and the feed nothing measurable. The ranked list is therefore one item long: **the ground as a shadow
+  caster**. Marking the chunks `NotShadowCaster` (what `VUHLEDAR_OFF=groundshadow` does) gives back 6–7 of
+  those milliseconds; the ground still receives the shadows of trees, buildings and vehicles, and only loses the
+  shadow one hill throws on the next, which the drone's and the OP's views barely show (`target/plan/g0b/*.png`).
+  Making that the default is a one-line decision for whoever takes the terrain step (6); it is not taken here,
+  because it changes the picture.
 
 ### 6. Game: terrain start-up and memory (G8). With the persistence milestone, together with `bavovniatko-0f`.
 Robotyne adds a seasonal palette, ploughed fields and trenches to `terrain.rs`, and `next.md` wants the chunk
@@ -131,7 +191,7 @@ images saved and loaded. So this step reshapes the terrain to fit both, rather t
   for colours; start-up time and memory before and after.
 - **Size:** two to three days.
 
-### 7. Game: HUD text (G6). Now.
+### 7. Game: HUD text (G6). Done.
 Building the strings costs 0.03–0.05 ms per frame. The real cost is Bevy re-laying out six text blocks every
 frame whether or not they changed.
 - **Do:**
@@ -165,7 +225,6 @@ frame whether or not they changed.
 
 | when | steps | who |
 |---|---|---|
-| now | 1 (W7), 2 (W10), 3 (W6), 4 (D2) | any session; none of it touches `game/` |
-| now, since 14ce119 | 5 (G0), then 7 (G6) | whoever takes the game next |
+| done 2026-10-11 | 1 (W7), 2 (W10), 3 (W6), 4 (D2), 5 (G0), 7 (G6) | this session |
 | with the persistence milestone of `next.md` | 6 (G8) | together with `bavovniatko-0f` |
 | when measurements say so | particles, disputes, topic kind | — |
