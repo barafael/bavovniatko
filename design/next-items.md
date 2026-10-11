@@ -439,6 +439,29 @@ abandoned in a single incident").
 
 **Cost.** 10–12 h, entangled with C.
 
+**Done (2026-10-11).** A `Fire` component with three phases (deck fire → torch → smoulder) and a `burn` system:
+a deck fire grows into the hull six times in ten within one to three minutes (then the vehicle becomes a wreck
+with no blast) or dies down; a torch's charges go in 4–10 bursts for a carousel tank (3–6 for a BMP, one vent
+for a Leopard, a crackle for a Bradley, none for an MT-LB), white-yellow propellant jets with sparks, and on a
+carousel tank half the time one burst, 20 s to 5 min in, is the turret toss. `Kill::BrewUp` (the hit reached
+the charges: 40% of ATGM and tank-round kills, 25% of mine kills, never Western) gives the fireball at once,
+with its blast on whoever stands near (`Cause::CookOff`, 8 m). The toss itself: 2–8 m up, one in ten 15–30 m,
+down beside the hull. Kills now include a 15–20% chance of an engine fire instead of a wreck. Mobility kills
+leave the cut track and a road wheel on the ground; the crew's plan is set by the cause (5–15 s to bail after a
+hit, 20–60 s after a mine), a tank crew in three stays and pivots the hull on its dead track to face the nearest
+enemy position for two to five minutes, and one mine kill in fifteen is the ghost: a dead crew and a live engine
+circling for 20–40 s. Abandoned hulls can be re-struck by shells and become wrecks (the ledger moves them from
+abandoned to destroyed). Who dies aboard follows the kill: everyone in a brew-up, a few in a torch, nobody in a
+fire that grew. Flames on a torch are twice as big as before.
+
+Measured (fixed step, `target/same-day/d2-vuh`, `d2-rob`): Vuhledar 30 of 33 left in the fields (20 destroyed,
+10 abandoned), 65 of 320 back; Robotyne 21 of 24 stopped (15 burned, 6 abandoned), 87 of 176 back, 44 dead.
+The runs before the last fix read Robotyne as 8 burned, 9 abandoned, 20 dead: **the day's tally swings widely
+with the random streams**, so a single run is a weak band test. A `VUHLEDAR_SEED` and a few seeds per check is
+the right regression (noted for the campaign's regression day). Clip `20261011-2138-d-fates.mp4`, shot
+`d-torch`. Left for E: the Robotyne dead are still above the dossier's single figures; the bail-out and the
+blast-on-a-body numbers are E's work.
+
 ### E. Infantry: bailing out, running, being thrown (**sim**) — observations 15 and 20
 
 **Now.** Everyone aboard gets out in the same frame at the same spot, walks at 1.5–2.3 m/s (×1.2 fleeing) to

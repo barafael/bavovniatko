@@ -64,6 +64,8 @@ pub enum Kind {
     Dirt,
     Snow,
     Fire,
+    /// Burning propellant: the white-yellow jets and sparks of a cook-off.
+    Propellant,
     Flash,
     Tracer,
     Spark,
@@ -126,6 +128,7 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
                 // In summer the same particles are dust: pale, warm, and visible from kilometres.
                 Kind::Snow => if crate::diorama::diorama().summer() { ([0.60, 0.55, 0.46], 0.0) } else { ([0.70, 0.71, 0.73], 0.0) },
                 Kind::Fire => ([1.0, 0.55, 0.15], 6.0),
+                Kind::Propellant => ([1.0, 0.95, 0.75], 10.0),
                 Kind::Flash => ([1.0, 0.85, 0.6], 30.0),
                 Kind::Tracer => ([1.0, 0.7, 0.3], 20.0),
                 Kind::Spark => ([1.0, 0.6, 0.2], 12.0),
@@ -285,10 +288,13 @@ impl Emitter {
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum EmitterKind {
+    /// The whole vehicle burning: flames twice the hull's height and a sooty column.
     WreckFire,
     Smoulder,
     SmokeScreen,
     Exhaust,
+    /// A fire in the engine bay: white oil and coolant steam, going grey, from the rear deck.
+    EngineSmoke,
 }
 
 fn update_emitters(
@@ -322,9 +328,16 @@ fn update_emitters(
             let jitter = Vec3::new(r.random_range(-1.0..1.0), 0.0, r.random_range(-1.0..1.0));
             match em.kind {
                 EmitterKind::WreckFire => {
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(3.0..6.0), life: r.random_range(45.0..80.0), size0: 2.5, size1: r.random_range(35.0..60.0), alpha: 0.62, drag: 0.15, buoyancy: 0.35, ..default() });
-                    if r.random_bool(0.7) {
-                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 0.8 + Vec3::Y * r.random_range(0.8..2.0), vel: Vec3::Y * r.random_range(1.5..3.5), life: r.random_range(0.4..0.9), size0: r.random_range(1.2..2.4), size1: 0.6, alpha: 0.9, ..default() });
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(3.0..6.0), life: r.random_range(45.0..80.0), size0: 3.0, size1: r.random_range(40.0..65.0), alpha: 0.62, drag: 0.15, buoyancy: 0.4, ..default() });
+                    // Flames big enough to read in daylight: the footage shows a hull as a torch.
+                    if r.random_bool(0.8) {
+                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.2 + Vec3::Y * r.random_range(0.8..2.2), vel: Vec3::Y * r.random_range(2.0..5.0), life: r.random_range(0.5..1.0), size0: r.random_range(2.0..4.0), size1: 1.2, alpha: 0.95, ..default() });
+                    }
+                }
+                EmitterKind::EngineSmoke => {
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::WhiteSmoke, pos: base + jitter * 0.6, vel: Vec3::Y * r.random_range(1.5..3.0), life: r.random_range(12.0..20.0), size0: 1.0, size1: r.random_range(7.0..12.0), alpha: 0.6, drag: 0.3, buoyancy: 0.25, ..default() });
+                    if r.random_bool(0.3) {
+                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 0.4, vel: Vec3::Y * 1.5, life: r.random_range(0.3..0.6), size0: 0.8, size1: 0.4, alpha: 0.9, ..default() });
                     }
                 }
                 EmitterKind::Smoulder => {
@@ -423,6 +436,40 @@ pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng,
         let dir = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.3..1.2), rng.random_range(-1.0..1.0)).normalize();
         spawn(commands, fx, Spawn { kind: Kind::Spark, pos: at + Vec3::Y, vel: dir * rng.random_range(25.0..60.0), life: rng.random_range(0.3..0.8), size0: 0.25, size1: 0.1, alpha: 1.0, drag: 0.5, gravity: 9.8, streak: 6.0, ..default() });
     }
+}
+
+/// Charges cooking off in a burning hull: white-yellow jets of propellant through the hatches and the turret
+/// ring, sparks, a flash. `strength` 1 is a tank's carousel going; a Bradley's rounds are a fraction of it.
+pub fn cookoff(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, at: Vec3, strength: f32) {
+    flash(commands, at + Vec3::Y * 3.0, 5.0e7 * strength, 120.0, 0.4);
+    for _ in 0..(6.0 * strength).ceil() as u32 {
+        spawn(commands, fx, Spawn { kind: Kind::Propellant, pos: at + Vec3::Y * 2.0, vel: Vec3::new(rng.random_range(-2.5..2.5), rng.random_range(12.0..28.0) * strength.sqrt(), rng.random_range(-2.5..2.5)), life: rng.random_range(0.5..1.1), size0: rng.random_range(1.5..2.5), size1: rng.random_range(4.0..7.0) * strength.sqrt(), alpha: 1.0, drag: 1.2, ..default() });
+    }
+    for _ in 0..(15.0 * strength) as u32 {
+        let dir = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.6..1.5), rng.random_range(-1.0..1.0)).normalize();
+        spawn(commands, fx, Spawn { kind: Kind::Spark, pos: at + Vec3::Y * 2.0, vel: dir * rng.random_range(15.0..40.0), life: rng.random_range(0.8..2.5), size0: 0.3, size1: 0.12, alpha: 1.0, drag: 0.4, gravity: 9.8, streak: 5.0, ..default() });
+    }
+    for _ in 0..3 {
+        spawn(commands, fx, Spawn { kind: Kind::WhiteSmoke, pos: at + Vec3::Y * 2.5, vel: Vec3::new(rng.random_range(-2.0..2.0), rng.random_range(4.0..9.0), rng.random_range(-2.0..2.0)), life: rng.random_range(6.0..12.0), size0: 2.0, size1: 12.0, alpha: 0.6, drag: 0.6, buoyancy: 0.5, ..default() });
+    }
+}
+
+/// The ammunition going all at once: an orange-white fireball 15–25 m across for a second, burning charges
+/// raining out to 50 m, and a sooty mushroom that climbs for twenty seconds.
+pub fn fireball(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, at: Vec3) {
+    flash(commands, at + Vec3::Y * 5.0, 2.5e8, 350.0, 0.9);
+    for _ in 0..12 {
+        let d = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.2..1.0), rng.random_range(-1.0..1.0));
+        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 4.0 + d * 3.0, vel: d * rng.random_range(6.0..14.0), life: rng.random_range(0.6..1.1), size0: 8.0, size1: 22.0, alpha: 1.0, drag: 2.0, ..default() });
+    }
+    for _ in 0..40 {
+        let dir = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.4..1.4), rng.random_range(-1.0..1.0)).normalize();
+        spawn(commands, fx, Spawn { kind: Kind::Propellant, pos: at + Vec3::Y * 3.0, vel: dir * rng.random_range(15.0..45.0), life: rng.random_range(1.0..3.0), size0: 0.5, size1: 0.3, alpha: 1.0, drag: 0.3, gravity: 9.8, streak: 5.0, ..default() });
+    }
+    for _ in 0..8 {
+        spawn(commands, fx, Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::Y * 6.0 + Vec3::new(rng.random_range(-3.0..3.0), 0.0, rng.random_range(-3.0..3.0)), vel: Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(6.0..14.0), rng.random_range(-3.0..3.0)), life: rng.random_range(15.0..25.0), size0: 8.0, size1: 45.0, alpha: 0.7, drag: 0.4, buoyancy: 1.2, ..default() });
+    }
+    explosion(commands, fx, rng, at, 1.0, false);
 }
 
 /// Thermobaric: a big orange fireball, then a dense grey-black mushroom.
