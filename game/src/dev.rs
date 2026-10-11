@@ -4,7 +4,7 @@
 use crate::camera::{HeadlessTarget, Mode, Target, View, look_angles};
 use crate::fire::{Atgm, FireControl, Strike, Post};
 use crate::units::{Radio, Side, Soldier, Stats, Vehicle};
-use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}};
+use bevy::{diagnostic::DiagnosticsStore, prelude::*, render::view::screenshot::{Screenshot, save_to_disk}};
 use std::{str::FromStr, sync::OnceLock};
 
 /// `VUHLEDAR_DAYDBG`: daylight debugging.
@@ -15,6 +15,27 @@ pub enum DayDebug {
     Off,
     /// Animate the light but leave the sun where it is.
     NoSun,
+}
+
+/// `VUHLEDAR_OFF`: parts of the picture to leave out, to measure what each costs.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
+#[strum(serialize_all = "lowercase")]
+pub enum Part {
+    /// The sun's shadow cascades.
+    Shadows,
+    Msaa,
+    /// The video-feed post-process.
+    Feed,
+    Trees,
+    /// The ground chunks.
+    Terrain,
+    /// The ground as a shadow caster (it still receives them).
+    GroundShadow,
+}
+
+/// Whether `VUHLEDAR_OFF` leaves this part out.
+pub fn off(part: Part) -> bool {
+    dev().off.contains(&part)
 }
 
 #[derive(Debug, Default)]
@@ -47,7 +68,9 @@ pub struct DevEnv {
     pub rec_secs: f32,
     /// Scripted fire missions: game time and strike.
     pub fire: Vec<(f32, Strike)>,
+    /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
     pub diag: bool,
+    pub off: Vec<Part>,
     pub log_stats: bool,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
@@ -101,6 +124,7 @@ impl DevEnv {
             rec_secs: parse("VUHLEDAR_REC_SECS").unwrap_or(10.0),
             fire,
             diag: var("VUHLEDAR_DIAG").is_some(),
+            off: var("VUHLEDAR_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
             log_stats: var("VUHLEDAR_LOG_STATS").is_some(),
             light: var("VUHLEDAR_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
@@ -269,8 +293,9 @@ fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Re
     }
 }
 
-/// `VUHLEDAR_DIAG=1`: log the mean and worst frame time every ten seconds.
-fn frame_times(time: Res<Time<Real>>, mut acc: Local<(f32, f32, u32, f32)>) {
+/// `VUHLEDAR_DIAG=1`: every ten seconds, log the mean and worst frame time and the GPU time of each render pass
+/// (from `RenderDiagnosticsPlugin`, averaged over its last 120 frames), largest first.
+fn frame_times(time: Res<Time<Real>>, diagnostics: Res<DiagnosticsStore>, mut acc: Local<(f32, f32, u32, f32)>) {
     if !dev().diag {
         return;
     }
@@ -281,6 +306,15 @@ fn frame_times(time: Res<Time<Real>>, mut acc: Local<(f32, f32, u32, f32)>) {
     acc.3 += dt;
     if acc.3 > 10.0 {
         info!("frames: mean {:.1} ms, worst {:.1} ms", acc.0 / acc.2 as f32 * 1000.0, acc.1 * 1000.0);
+        let mut passes: Vec<(&str, f64)> = diagnostics
+            .iter()
+            .filter_map(|d| {
+                let name = d.path().as_str().strip_prefix("render/")?.strip_suffix("/elapsed_gpu")?;
+                Some((name, d.average()?))
+            })
+            .collect();
+        passes.sort_by(|a, b| b.1.total_cmp(&a.1));
+        info!("gpu ms: {}", passes.iter().map(|(name, ms)| format!("{name} {ms:.2}")).collect::<Vec<_>>().join(", "));
         *acc = (0.0, 0.0, 0, 0.0);
     }
 }

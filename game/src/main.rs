@@ -38,8 +38,9 @@ fn main() {
                 .set(AudioPlugin { global_volume: GlobalVolume::new(Volume::SILENT), ..default() })
                 .disable::<WinitPlugin>(),
         );
-        // Filming runs on a fixed game step, so there is no reason to wait for wall-clock frames.
-        let wait = if dev::dev().showcase.is_some() { 0.0 } else { 1.0 / 60.0 };
+        // Filming runs on a fixed game step, and measuring wants every frame the machine can make, so neither
+        // waits for wall-clock frames.
+        let wait = if dev::dev().showcase.is_some() || dev::dev().diag { 0.0 } else { 1.0 / 60.0 };
         app.add_plugins(ScheduleRunnerPlugin::run_loop(std::time::Duration::from_secs_f64(wait)));
     } else {
         app.add_plugins(DefaultPlugins.set(WindowPlugin {
@@ -50,6 +51,9 @@ fn main() {
             }),
             ..default()
         }));
+    }
+    if dev::dev().diag {
+        app.add_plugins(bevy::render::diagnostic::RenderDiagnosticsPlugin);
     }
     // The two shaders live in the binary, so the game runs from anywhere with no asset folder.
     bevy::asset::embedded_asset!(app, "shaders/feed.wgsl");

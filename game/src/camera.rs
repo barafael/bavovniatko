@@ -6,7 +6,7 @@
 //!   Closer to the noise, and inside the TOS-1A's target area.
 //! - **The tree line**: eye level behind an ATGM team's launcher, and through its sight.
 
-use crate::dev::dev;
+use crate::dev::{self, dev};
 use crate::geo;
 use crate::units::{SState, Side, Soldier, Vehicle, vehicle_yaw};
 use crate::world::ObservationPost;
@@ -244,7 +244,7 @@ fn spawn_camera(mut commands: Commands, mut view: ResMut<View>, mut images: ResM
         MainCamera,
         Projection::Perspective(PerspectiveProjection { fov: view.drone_fov, near: 0.5, far: 12_000.0, ..default() }),
         Transform::from_translation(view.drone_pos),
-        Msaa::Sample4,
+        if dev::off(dev::Part::Msaa) { Msaa::Off } else { Msaa::Sample4 },
         Tonemapping::AgX,
         Exposure { ev100: 11.25 },
         DistanceFog {
@@ -253,11 +253,13 @@ fn spawn_camera(mut commands: Commands, mut view: ResMut<View>, mut images: ResM
             directional_light_exponent: 12.0,
             falloff: FogFalloff::from_visibility_colors(3000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77)),
         },
-        FeedEffect { grain: 1.0, zoom: 1.0, saturation: if crate::diorama::diorama().summer() { 0.68 } else { 0.45 }, ..default() },
         IsDefaultUiCamera,
         // Point-light shadows are detailed around the drone (headless, no camera renders to a window).
         ShadowLodOrigin,
     ));
+    if !dev::off(dev::Part::Feed) {
+        cam.insert(FeedEffect { grain: 1.0, zoom: 1.0, saturation: if crate::diorama::diorama().summer() { 0.68 } else { 0.45 }, ..default() });
+    }
     if dev().headless {
         let (w, h) = dev().res.unwrap_or((1600, 900));
         let mut img = Image::new_target_texture(w, h, bevy::render::render_resource::TextureFormat::Rgba8UnormSrgb, None);

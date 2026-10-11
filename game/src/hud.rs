@@ -197,7 +197,8 @@ fn update_hud(
     let (lat, lon) = geo::latlon(p2);
     let agl = view.drone_pos.y - geo::height(p2.x, p2.y);
     let home = geo::layout().home;
-    **texts.p0() = match view.mode {
+    // Each text is written only when it reads differently, so Bevy lays out again only what changed.
+    let telemetry = match view.mode {
         Mode::Drone => Text::new(format!(
             "REC {:02}:{:02}:{:02}   BAT {:>3.0}%   H {:>3.0} m   D {:.2} km   {:.5} N {:.5} E   x{:.1}{}\nDRONES LEFT {}",
             rec / 3600, rec / 60 % 60, rec % 60, view.battery * 100.0, agl, p2.distance(home) / 1000.0, lat, lon, view.zoom(),
@@ -231,9 +232,10 @@ fn update_hud(
             }
         }
     };
+    texts.p0().set_if_neq(telemetry);
     let committed = stats.vehicles_committed;
     let out = stats.destroyed + stats.abandoned;
-    **texts.p1() = Text::new(match diorama() {
+    texts.p1().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar => format!(
             "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}",
             diorama().date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
@@ -242,7 +244,7 @@ fn update_hud(
             "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
             diorama().date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
         ),
-    });
+    }));
     let mut log = String::new();
     for (t, line) in radio.lines.iter().rev().take(7).collect::<Vec<_>>().into_iter().rev() {
         let age = now - t;
@@ -250,7 +252,7 @@ fn update_hud(
             log.push_str(&format!("[{}] {}\n", director::clock_text((script.t as f64 - age).max(0.0) as f32), line));
         }
     }
-    **texts.p2() = Text::new(log);
+    texts.p2().set_if_neq(Text::new(log));
     let teams = positions.iter().filter(|p| p.side == Side::Ua && p.atgm > 0 && p.strength >= 2).count();
     let missiles: u32 = positions.iter().filter(|p| p.side == Side::Ua && p.strength >= 2).map(|p| p.atgm).sum();
     let mode = match fc.atgm_mode {
@@ -260,7 +262,7 @@ fn update_hud(
     };
     let speed = vtime.relative_speed();
     let speed_line = if (speed - 1.0).abs() > 0.01 { format!("\ntime x{speed}") } else { String::new() };
-    **texts.p3() = Text::new(match diorama() {
+    texts.p3().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar => format!("155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, teams, missiles, mode, speed_line),
         Diorama::Robotyne => {
             let order = match *order {
@@ -270,13 +272,13 @@ fn update_hud(
             };
             format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
         }
-    });
-    **texts.p4() = Text::new(script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default());
-    **texts.p5() = Text::new(if view.mode == Mode::Drone && view.feed_down > 0.0 {
+    }));
+    texts.p4().set_if_neq(Text::new(script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default()));
+    texts.p5().set_if_neq(Text::new(if view.mode == Mode::Drone && view.feed_down > 0.0 {
         format!("NO SIGNAL\nbattery swap, relaunching ({:.0} s)", view.feed_down)
     } else {
         String::new()
-    });
+    }));
     for mut v in &mut crosshair {
         v.set_if_neq(if view.mode == Mode::Drone && view.feed_down <= 0.0 && *phase.get() == Phase::Playing { Visibility::Inherited } else { Visibility::Hidden });
     }

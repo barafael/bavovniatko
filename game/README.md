@@ -105,5 +105,7 @@ segments and the minute-by-minute tally. A refactor should leave all three byte 
 because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`.
 
 `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle, and `VUHLEDAR_SPEED`
-scales game time. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
+scales game time. `VUHLEDAR_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
+(headless, it also lifts the frame cap), and `VUHLEDAR_OFF=shadows,msaa,feed,trees,terrain,groundshadow` leaves
+parts of the picture out, so a slow frame can be charged to what makes it slow before anything is rewritten. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
 `devlog/videos.md`. The history is part of the development.

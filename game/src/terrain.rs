@@ -436,12 +436,18 @@ fn spawn_terrain(
                 .with_inserted_attribute(Mesh::ATTRIBUTE_NORMAL, nor)
                 .with_inserted_attribute(Mesh::ATTRIBUTE_UV_0, uv)
                 .with_inserted_indices(Indices::U32(idx));
-            commands.spawn((
+            if crate::dev::off(crate::dev::Part::Terrain) {
+                continue;        // the ground still shapes everything; only its picture is left out
+            }
+            let mut chunk = commands.spawn((
                 Mesh3d(meshes.add(mesh)),
                 MeshMaterial3d(materials.add(ExtendedMaterial { base: StandardMaterial { base_color_texture: Some(handle), ..mat_template.clone() }, extension: detail.clone() })),
                 Transform::IDENTITY,
                 Name::new(format!("ground {cx},{cz}")),
             ));
+            if crate::dev::off(crate::dev::Part::GroundShadow) {
+                chunk.insert(bevy::light::NotShadowCaster);
+            }
         }
     }
     commands.insert_resource(Ground { images: handles });

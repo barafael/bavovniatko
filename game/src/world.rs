@@ -1,6 +1,6 @@
 //! Set dressing: the shelterbelts, the town's ruined panel blocks, the dachas, the power line, and the sky.
 
-use crate::dev::DayDebug;
+use crate::dev::{self, DayDebug};
 use crate::diorama::{Diorama, diorama};
 use crate::geo::{self, CHUNK, CHUNKS_X, HALF_X, HALF_Z, hash01};
 use crate::meshes::{self, MeshBuilder};
@@ -83,7 +83,7 @@ fn spawn_light(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut mat
     spawn_skirt(&mut commands, &mut meshes, &mut materials);
     // An overcast February morning: a weak, low sun from the south-east through high cloud.
     commands.spawn((
-        DirectionalLight { illuminance: 5200.0, shadow_maps_enabled: true, color: Color::srgb(1.0, 0.96, 0.9), shadow_depth_bias: 0.25, shadow_normal_bias: 3.5, ..default() },
+        DirectionalLight { illuminance: 5200.0, shadow_maps_enabled: !dev::off(dev::Part::Shadows), color: Color::srgb(1.0, 0.96, 0.9), shadow_depth_bias: 0.25, shadow_normal_bias: 3.5, ..default() },
         Transform::from_xyz(0.6, 0.45, 0.8).looking_at(Vec3::ZERO, Vec3::Y),
         // Long, hard winter shadows matter at drone range: the first cascade covers the near kilometre.
         CascadeShadowConfigBuilder { num_cascades: 2, first_cascade_far_bound: 900.0, maximum_distance: 2800.0, ..default() }.build(),
@@ -248,6 +248,9 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
         }
     }
     for (t, c) in trunks.into_iter().zip(crowns) {
+        if dev::off(dev::Part::Trees) {
+            break;
+        }
         if !t.is_empty() {
             commands.spawn((Mesh3d(meshes.add(t.build())), MeshMaterial3d(vertex.clone())));
         }
@@ -411,7 +414,9 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
     }
     commands.spawn((Mesh3d(meshes.add(yard.build())), MeshMaterial3d(solid.clone())));
     commands.spawn((Mesh3d(meshes.add(cars.build())), MeshMaterial3d(solid.clone())));
-    commands.spawn((Mesh3d(meshes.add(cards_for_town.build())), MeshMaterial3d(palette.branches.clone()), bevy::light::NotShadowCaster));
+    if !dev::off(dev::Part::Trees) {
+        commands.spawn((Mesh3d(meshes.add(cards_for_town.build())), MeshMaterial3d(palette.branches.clone()), bevy::light::NotShadowCaster));
+    }
 
     // Dachas: garden plots, most houses already wrecked; and the villages down in the valley.
     let mut dachas = MeshBuilder::new();
