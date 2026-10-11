@@ -25,7 +25,7 @@ def main() -> int:
         mark = "ok  " if n == 0 else ("ERR " if sev == "error" else "warn")
         print(f"{mark} {f.stem:30} {n}")
         if n and args.verbose:
-            print("       " + ", ".join(kb.rid_str(r) if hasattr(r, "table_name") else str(r) for r in rows[:10]))
+            print("       " + ", ".join(str(kb.plain(r)) for r in rows[:10]))
         if n and sev == "error":
             errors += 1
     return 1 if errors else 0

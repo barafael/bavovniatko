@@ -6,15 +6,13 @@ conversion, claim↔claim relations and symmetric contradiction traversal, geome
 predicates, full-text search, ON DELETE REJECT, the audit trail, and ENFORCED relations.
 Exit code 0 = all checks passed. The test database is removed afterwards.
 """
-import datetime as dt
 import sys
 import uuid
 
 import kb
 
 NS, DB = "test", f"smoke_{uuid.uuid4().hex[:8]}"
-NOW = dt.datetime.now(dt.timezone.utc)
-PROV = {"by": "smoke_test", "method": "import", "at": NOW}
+PROV = kb.prov("smoke_test", "import")
 failures = []
 
 
@@ -33,15 +31,12 @@ def expect_error(conn, name, q, vars=None):
 
 
 def main():
-    root = kb.connect()
-    kb.run(root, f"DEFINE NAMESPACE IF NOT EXISTS {NS}; USE NS {NS}; DEFINE DATABASE {DB} STRICT;")
+    root = kb.define_db(NS, DB)
     c = kb.connect(NS, DB)
     try:
-        for f in sorted((kb.DB_DIR / "schema").glob("[0-9][0-9][0-9][0-9]_*.surql")):
-            kb.run(c, f.read_text())
-        # applying twice must be a no-op (IF NOT EXISTS everywhere)
-        for f in sorted((kb.DB_DIR / "schema").glob("[0-9][0-9][0-9][0-9]_*.surql")):
-            kb.run(c, f.read_text())
+        for _ in range(2):                   # applying twice must be a no-op (IF NOT EXISTS everywhere)
+            for f in kb.schema_files():
+                kb.run(c, f.read_text())
         check("migrations apply twice", True)
 
         kb.run(c, """

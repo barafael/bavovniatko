@@ -23,7 +23,6 @@ import uuid
 from pathlib import Path
 
 from surrealdb import RecordID
-from surrealdb.data.types.geometry import Geometry, GeometryCollection
 
 import kb
 
@@ -34,32 +33,15 @@ ORDER = ["kind", "era", "topic", "unit", "metric", "actor", "place", "event", "s
          "media", "snapshot", "claim", "observation", "passage", "question", "design_note", "revision"]
 
 
-def geo_json(g) -> dict:
-    name = type(g).__name__
-    if name == "GeometryCollection":
-        return {"type": "GeometryCollection", "geometries": [geo_json(x) for x in g.geometries]}
-    types = {"GeometryPoint": "Point", "GeometryLine": "LineString", "GeometryPolygon": "Polygon",
-             "GeometryMultiPoint": "MultiPoint", "GeometryMultiLine": "MultiLineString",
-             "GeometryMultiPolygon": "MultiPolygon"}
-    return {"type": types[name], "coordinates": g.get_coordinates()}
+def load_order(files, relations) -> list[str]:
+    """Tables in load order: ORDER first, then the rest alphabetically, relations last (both ends must exist)."""
+    return ([t for t in ORDER if t in files] + sorted(t for t in files if t not in ORDER and t not in relations)
+            + sorted(t for t in files if t in relations))
 
 
 def enc(v):
-    if isinstance(v, RecordID):
-        return {"$rid": [v.table_name, enc(v.id)]}
-    if isinstance(v, dt.datetime):
-        return {"$dt": v.astimezone(dt.timezone.utc).isoformat().replace("+00:00", "Z")}
-    if isinstance(v, (Geometry, GeometryCollection)):
-        return {"$geo": geo_json(v)}
-    if isinstance(v, decimal.Decimal):
-        return {"$dec": str(v)}
-    if isinstance(v, dict):
-        return {k: enc(x) for k, x in v.items() if x is not None}
-    if isinstance(v, (list, tuple)):
-        return [enc(x) for x in v]
-    if hasattr(v, "to_string") or type(v).__name__ in ("Datetime", "Duration"):
-        return {"$dt": str(v)} if type(v).__name__ == "Datetime" else str(v)
-    return v
+    """The dump's tagged JSON: record ids as {"$rid": [table, key]} and datetimes as {"$dt": iso}."""
+    return kb.plain(v, rid=lambda r: {"$rid": [r.table_name, enc(r.id)]}, dt_=lambda d: {"$dt": kb.iso_z(d)})
 
 
 def dec(v):
@@ -83,11 +65,11 @@ def schema_info(conn):
     info = kb.one(conn, "INFO FOR DB")
     tables = sorted(t for t in info["tables"] if t not in SKIP_TABLES)
     computed, relations = {}, set()
-    for t in tables:
+    infos = kb.run(conn, "".join(f"INFO FOR TABLE {t};" for t in tables)) if tables else []
+    for t, table_info in zip(tables, infos):
         if re.search(r"TYPE RELATION", info["tables"][t]):
             relations.add(t)
-        fields = kb.one(conn, f"INFO FOR TABLE {t}")["fields"]
-        computed[t] = {f for f, d in fields.items() if " COMPUTED " in d}
+        computed[t] = {f for f, d in table_info["fields"].items() if " COMPUTED " in d}
     return tables, computed, relations
 
 
@@ -116,9 +98,7 @@ def export(conn, out: Path) -> dict[str, int]:
 def restore(conn, src: Path):
     _, _, relations = schema_info(conn)
     files = {p.stem: p for p in src.glob("*.jsonl")}
-    order = [t for t in ORDER if t in files] + sorted(t for t in files if t not in ORDER and t not in relations) \
-        + sorted(t for t in files if t in relations)
-    for t in order:
+    for t in load_order(files, relations):
         rows = [dec(r) for r in kb.jsonl(files[t])]
         for i in range(0, len(rows), 200):
             chunk = rows[i:i + 200]
@@ -127,15 +107,6 @@ def restore(conn, src: Path):
             else:   # CREATE (not INSERT) so explicitly supplied VALUE fields such as updated_at are kept
                 kb.run(conn, "FOR $r IN $rows { CREATE $r.id CONTENT $r; }", {"rows": chunk})
         print(f"restored {t:14} {len(rows)}")
-
-
-def fresh_db(ns: str, db: str):
-    root = kb.connect()
-    kb.run(root, f"DEFINE NAMESPACE IF NOT EXISTS {ns}; USE NS {ns}; DEFINE DATABASE {db} STRICT;")
-    conn = kb.connect(ns, db)
-    for f in sorted((kb.DB_DIR / "schema").glob("[0-9][0-9][0-9][0-9]_*.surql")):
-        kb.run(conn, f.read_text())
-    return root, conn
 
 
 def main():
@@ -150,14 +121,14 @@ def main():
         counts = export(kb.connect(), Path(args.dir))
         print(" ".join(f"{t}={n}" for t, n in counts.items() if n))
     elif args.cmd == "restore":
-        _, conn = fresh_db(args.ns, args.db)
+        _, conn = kb.fresh_db(args.ns, args.db)
         restore(conn, Path(args.dir))
     elif args.cmd == "verify":
         tmp = Path(tempfile.mkdtemp(prefix="kbdump_"))
         a, b = tmp / "a", tmp / "b"
         export(kb.connect(), a)
         name = f"verify_{uuid.uuid4().hex[:8]}"
-        root, conn = fresh_db("test", name)
+        root, conn = kb.fresh_db("test", name)
         try:
             restore(conn, a)
             export(conn, b)

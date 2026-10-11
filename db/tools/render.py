@@ -14,6 +14,7 @@ import datetime as dt
 import difflib
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 import yaml
@@ -35,10 +36,12 @@ def eras(conn) -> dict[str, str]:
 
 
 def render_documents(conn, header: bool) -> dict[Path, str]:
+    by_topic = defaultdict(list)
+    for r in kb.one(conn, "SELECT topic, order, markdown, ext.tight AS tight FROM passage ORDER BY topic, order"):
+        by_topic[r["topic"].id].append(r)
     out = {}
     for tid, t in sorted(topics(conn).items()):
-        rows = kb.one(conn, "SELECT order, markdown, ext.tight AS tight FROM passage WHERE topic = $t ORDER BY order",
-                      {"t": kb.rid("topic", tid)})
+        rows = by_topic.get(tid)
         if not rows:
             continue                                   # a topic whose document has not been imported yet
         parts = []

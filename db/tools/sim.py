@@ -28,10 +28,7 @@ from pathlib import Path
 import yaml
 
 import kb
-from load import claim_rid, ptime, rec_id
 
-UTC = dt.timezone.utc
-NOW = dt.datetime.now(UTC)
 STAGE = kb.DB_DIR / "staging" / "sim"
 OUT = kb.REPO / "game-data"
 SCHEMA_VERSION = 1
@@ -52,13 +49,6 @@ SERIES = {
 }
 # which observation to prefer when several give a value: computed beats reported beats estimates
 METHOD_RANK = {kb.ObsMethod.COMPUTED: 0, kb.ObsMethod.REPORTED: 1, kb.ObsMethod.ESTIMATED: 2, kb.ObsMethod.DERIVED: 3}
-
-
-def prov(method="rule", input_=None):
-    p = {"by": "sim", "method": method, "run": "sim@" + NOW.strftime("%Y%m%dT%H%M%SZ"), "at": NOW}
-    if input_:
-        p["input"] = input_
-    return p
 
 
 def cmd_series(conn):
@@ -100,8 +90,8 @@ def cmd_series(conn):
                 p.pop("_alts", None)
             key = f"{metric}__{side or 'all'}"
             kb.run(conn, "UPSERT type::record('sim_series', $k) CONTENT $d", {"k": key, "d": {
-                "key": key, "metric": kb.rid("metric", metric), "side": side, "unit": rec_id(du), "points": pts,
-                "description": desc, "reviewed": False, "prov": prov(), "ext": {},
+                "key": key, "metric": kb.rid("metric", metric), "side": side, "unit": kb.rid_of(du), "points": pts,
+                "description": desc, "reviewed": False, "prov": kb.prov("sim", "rule"), "ext": {},
                 "method": "one point per period from whole-period observations in the metric's default unit; "
                           "closest to the period median, then computed > reported > estimated > derived, then more sources"}})
             n += 1
@@ -109,7 +99,7 @@ def cmd_series(conn):
 
 
 def local_ids(xs):
-    return [claim_rid(x) if not str(x).startswith("claim:") else rec_id(x) for x in xs or []]
+    return [kb.claim_rid(x) if not str(x).startswith("claim:") else kb.rid_of(x) for x in xs or []]
 
 
 def cmd_load(conn):
@@ -118,13 +108,12 @@ def cmd_load(conn):
         doc = yaml.safe_load(f.read_text()) or {}
         rel = f"db/staging/sim/{f.name}"
         for r in doc.get("loadouts", []):
-            d = {"era": kb.rid("era", r["era"]), "side": r["side"], "system": rec_id(r["system"]),
+            d = {"era": kb.rid("era", r["era"]), "side": r["side"], "system": kb.rid_of(r["system"]),
                  "availability": r["availability"], "derived_from": local_ids(r.get("derived_from")),
                  "method": r.get("method", "agent derivation from claims"), "reviewed": bool(r.get("reviewed", False)),
-                 "prov": prov("agent", rel)}
+                 "prov": kb.prov("sim", "agent", rel)}
             if r.get("first_available"):
-                fa = str(r["first_available"])
-                d["first_available"] = ptime({"from": fa, "precision": kb.Precision.of(fa)})
+                d["first_available"] = kb.time_of(str(r["first_available"]))
             for k in ("quantity_note", "notes"):
                 if r.get(k):
                     d[k] = r[k]
@@ -133,7 +122,7 @@ def cmd_load(conn):
         for r in doc.get("params", []):
             d = {"key": r["key"], "dist": r["dist"], "unit": kb.rid("unit", r["unit"]), "description": r["description"],
                  "derived_from": local_ids(r.get("derived_from")), "method": r.get("method", "agent derivation from claims"),
-                 "reviewed": bool(r.get("reviewed", False)), "prov": prov("agent", rel), "ext": {}}
+                 "reviewed": bool(r.get("reviewed", False)), "prov": kb.prov("sim", "agent", rel), "ext": {}}
             if r.get("era"):
                 d["era"] = kb.rid("era", r["era"])
             if r.get("side"):
@@ -143,9 +132,9 @@ def cmd_load(conn):
         for r in doc.get("terrain", []):
             d = {"key": r["key"], "description": r["description"], "params": r["params"],
                  "derived_from": local_ids(r.get("derived_from")), "method": r.get("method", "agent derivation from claims"),
-                 "reviewed": bool(r.get("reviewed", False)), "prov": prov("agent", rel), "ext": {}}
+                 "reviewed": bool(r.get("reviewed", False)), "prov": kb.prov("sim", "agent", rel), "ext": {}}
             if r.get("place"):
-                d["place"] = rec_id(r["place"])
+                d["place"] = kb.rid_of(r["place"])
             if r.get("attribution"):
                 d["attribution"] = r["attribution"]
             kb.run(conn, "UPSERT type::record('sim_terrain_profile', $k) CONTENT $d", {"k": r["key"], "d": d})
@@ -155,8 +144,7 @@ def cmd_load(conn):
 
 def cmd_check(conn) -> int:
     """Validate db/staging/sim/*.yaml without writing: referenced eras, systems, places, units and claims exist."""
-    errs = []
-    exists = lambda rid: bool(kb.one(conn, "SELECT VALUE id FROM $r", {"r": rid}))
+    errs = []                   # messages, or (record id, message) for a message that applies if the record is missing
     for f in sorted(STAGE.glob("*.yaml")):
         doc = yaml.safe_load(f.read_text()) or {}
         for sec in doc:
@@ -168,50 +156,43 @@ def cmd_check(conn) -> int:
                 errs.append(f"{w}: availability")
             if r.get("side") not in (kb.Side.UA, kb.Side.RU):
                 errs.append(f"{w}: side")
-            for rid in (kb.rid("era", r.get("era", "?")), rec_id(r.get("system", "system:?"))):
-                if not exists(rid):
-                    errs.append(f"{w}: {kb.rid_str(rid)} does not exist")
+            for rid in (kb.rid("era", r.get("era", "?")), kb.rid_of(r.get("system", "system:?"))):
+                errs.append((rid, f"{w}: {kb.rid_str(rid)} does not exist"))
         for i, r in enumerate(doc.get("params", [])):
             w = f"{f.name} params[{i}] {r.get('key')}"
-            if not exists(kb.rid("unit", r.get("unit", "?"))):
-                errs.append(f"{w}: unknown unit {r.get('unit')}")
-            if r.get("era") and not exists(kb.rid("era", r["era"])):
-                errs.append(f"{w}: unknown era")
+            errs.append((kb.rid("unit", r.get("unit", "?")), f"{w}: unknown unit {r.get('unit')}"))
+            if r.get("era"):
+                errs.append((kb.rid("era", r["era"]), f"{w}: unknown era"))
             if (r.get("dist") or {}).get("type") not in ("point", "uniform", "triangular", "normal", "lognormal", "table"):
                 errs.append(f"{w}: dist.type")
         for i, r in enumerate(doc.get("terrain", [])):
-            if r.get("place") and not exists(rec_id(r["place"])):
-                errs.append(f"{f.name} terrain[{i}]: place {r['place']} does not exist")
+            if r.get("place"):
+                errs.append((kb.rid_of(r["place"]), f"{f.name} terrain[{i}]: place {r['place']} does not exist"))
         for sec in ("loadouts", "params", "terrain"):
             for i, r in enumerate(doc.get(sec, [])):
                 if not r.get("derived_from"):
                     errs.append(f"{f.name} {sec}[{i}]: derived_from is required")
                 for cid in local_ids(r.get("derived_from")):
-                    if not exists(cid):
-                        errs.append(f"{f.name} {sec}[{i}]: claim {kb.rid_str(cid)} does not exist")
+                    errs.append((cid, f"{f.name} {sec}[{i}]: claim {kb.rid_str(cid)} does not exist"))
+    refs = {kb.rid_str(e[0]): e[0] for e in errs if isinstance(e, tuple)}
+    have = {kb.rid_str(r) for r in kb.one(conn, "SELECT VALUE id FROM $ids", {"ids": list(refs.values())})} if refs else set()
+    errs = [e if isinstance(e, str) else e[1] for e in errs if isinstance(e, str) or kb.rid_str(e[0]) not in have]
     for e in errs[:60]:
         print("ERROR", e)
     print("OK" if not errs else f"{len(errs)} errors")
     return 1 if errs else 0
 
 
-def plain(v):
-    if hasattr(v, "table_name"):
-        return kb.rid_str(v)
-    if isinstance(v, dt.datetime):
-        return v.date().isoformat() if v.time() == dt.time(0, tzinfo=v.tzinfo) else v.isoformat()
-    if isinstance(v, dict):
-        return {k: plain(x) for k, x in v.items() if x is not None and k not in ("prov", "ext")}
-    if isinstance(v, list):
-        return [plain(x) for x in v]
-    return v
+def day_or_iso(v: dt.datetime) -> str:
+    """Midnight timestamps are dates in the export; anything else keeps its time."""
+    return v.date().isoformat() if v.time() == dt.time(0, tzinfo=v.tzinfo) else v.isoformat()
 
 
 def cmd_export(conn, out: Path):
-    q = lambda s, v=None: plain(kb.one(conn, s, v))
+    q = lambda s, v=None: kb.plain(kb.one(conn, s, v), dt_=day_or_iso, drop=("prov", "ext"))
     data = {
         "schema_version": SCHEMA_VERSION,
-        "generated": NOW.isoformat(),
+        "generated": kb.NOW.isoformat(),
         "eras": q("SELECT id, code, labels.en AS name, time, parent, summary FROM era ORDER BY order"),
         "loadouts": q("SELECT era, side, system, system.labels.en AS system_name, availability, first_available, quantity_note, reviewed, derived_from FROM sim_loadout ORDER BY era, side, system"),
         "params": q("SELECT key, era, side, dist, unit.symbol AS unit, description, reviewed, derived_from FROM sim_param ORDER BY key, era, side"),
@@ -224,7 +205,7 @@ def cmd_export(conn, out: Path):
                     | {p["claim"] for s in data["series"] for p in s["points"]}
                     | {c for r in data["counters"] for c in r.get("evidence") or []})
     src = q("SELECT id, title, url, publisher.labels.en AS publisher FROM source WHERE id IN (SELECT VALUE out FROM cites WHERE in IN $c)",
-            {"c": [rec_id(c) for c in claims]}) if claims else []
+            {"c": [kb.rid_of(c) for c in claims]}) if claims else []
     data["attribution"] = {
         "sources": src,
         "notices": sorted({t["attribution"] for t in data["terrain_profiles"] if t.get("attribution")}
@@ -233,7 +214,7 @@ def cmd_export(conn, out: Path):
     out.mkdir(parents=True, exist_ok=True)
     body = json.dumps(data, ensure_ascii=False, indent=1, sort_keys=False)
     digest = hashlib.sha256(body.encode()).hexdigest()
-    name = f"sim-{NOW:%Y%m%d}.json"
+    name = f"sim-{kb.NOW:%Y%m%d}.json"
     (out / name).write_text(body + "\n")
     (out / "latest.json").write_text(json.dumps({"file": name, "sha256": digest, "schema_version": SCHEMA_VERSION}, indent=1) + "\n")
     print(f"wrote {out / name} ({len(body) / 1e3:.0f} kB; sha256 {digest[:12]}…): "

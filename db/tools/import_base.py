@@ -25,9 +25,7 @@ import yaml
 import kb
 import mdparse
 
-UTC = dt.timezone.utc
-RUN = "import_base@" + dt.datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-NOW = dt.datetime.now(UTC)
+PARTIAL_DATE = re.compile(r"\d{4}(?:-\d{2}){0,2}")
 
 SOURCE_KIND = {"think-tank": "think_tank", "osint-dataset": "osint_dataset"}
 ACTOR_KIND_FOR_SOURCE = {"think-tank": "think_tank", "news": "outlet", "review": "outlet", "official": "government_body",
@@ -42,37 +40,15 @@ PUBLISHER_ALIASES = {
 }
 
 
-def prov(input_: str | None = None) -> dict:
-    p = {"by": "import_base", "method": "import", "run": RUN, "at": NOW}
-    if input_:
-        p["input"] = input_
-    return p
+def prov(input: str) -> dict:
+    return kb.prov("import_base", "import", input)
 
 
 def d(s) -> dt.datetime:
-    if isinstance(s, dt.datetime):
-        return s.astimezone(UTC)
+    """A full date or datetime (date object, or ISO text) -> UTC datetime."""
     if isinstance(s, dt.date):
-        return dt.datetime(s.year, s.month, s.day, tzinfo=UTC)
-    return dt.datetime.fromisoformat(str(s)).replace(tzinfo=UTC)
-
-
-def partial_date(v) -> tuple[dict | None, str | None]:
-    """'2025-06-01' | '2025-06' | 2025 | date | 'unknown' -> (time object, raw)."""
-    if v is None:
-        return None, None
-    raw = str(v)
-    if isinstance(v, dt.date):
-        return {"from": d(v), "precision": "day"}, raw
-    m = re.fullmatch(r"(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?", raw.strip())
-    if not m:
-        return None, raw
-    y, mo, da = int(m[1]), m[2], m[3]
-    if da:
-        return {"from": dt.datetime(y, int(mo), int(da), tzinfo=UTC), "precision": "day"}, raw
-    if mo:
-        return {"from": dt.datetime(y, int(mo), 1, tzinfo=UTC), "precision": "month"}, raw
-    return {"from": dt.datetime(y, 1, 1, tzinfo=UTC), "precision": "year"}, raw
+        return kb.date_of(s)
+    return dt.datetime.fromisoformat(str(s)).replace(tzinfo=kb.UTC)
 
 
 def labels(en: str, **kw) -> dict:
@@ -82,16 +58,9 @@ def labels(en: str, **kw) -> dict:
 
 
 def content_hash(obj) -> str:
-    def default(o):
-        if isinstance(o, dt.datetime):
-            return o.isoformat()
-        if hasattr(o, "table_name"):
-            return kb.rid_str(o)
-        if hasattr(o, "get_coordinates"):
-            return repr(o)
-        return str(o)
     body = {k: v for k, v in obj.items() if k not in ("prov",)}
-    return hashlib.sha256(json.dumps(body, sort_keys=True, default=default).encode()).hexdigest()[:16]
+    plain = lambda o: kb.plain(o, dt_=dt.datetime.isoformat)
+    return hashlib.sha256(json.dumps(body, sort_keys=True, default=plain).encode()).hexdigest()[:16]
 
 
 class Writer:
@@ -134,10 +103,8 @@ def load_vocab(w: Writer):
         for s in slugs:
             w.put(kb.rid("kind", [domain, s]), {"labels": labels(s.replace("_", " ").capitalize())})
     for e in sorted(kb.vocab("eras"), key=lambda e: "parent" in e):          # parents first
-        t = {"from": d(e["from"]), "precision": e["precision"]}
-        if e.get("to"):
-            t["to"] = d(e["to"])
-        rec = {"code": e["code"], "labels": labels(e["en"]), "time": t, "order": e["order"], "summary": e["summary"]}
+        rec = {"code": e["code"], "labels": labels(e["en"]), "time": kb.time_of(e["from"], e.get("to"), e["precision"]),
+               "order": e["order"], "summary": e["summary"]}
         if e.get("parent"):
             rec["parent"] = kb.rid("era", e["parent"])
         w.put(kb.rid("era", e["id"]), rec)
@@ -188,6 +155,7 @@ def load_sources(w: Writer, paths: list[Path] | None = None) -> dict[str, str]:
         for a in s.get("authors") or []:
             people[kb.slug(a)] = a
     known = {kb.rid_str(r) for r in kb.one(w.conn, "SELECT VALUE id FROM actor")}
+    pub_slugs = {kb.slug(p) for p in pubs}
     for name, info in pubs.items():
         if kb.rid_str(kb.rid("actor", kb.slug(name))) in known and paths:
             continue                                   # existing actors belong to the curated registry; don't re-guess them
@@ -197,7 +165,7 @@ def load_sources(w: Writer, paths: list[Path] | None = None) -> dict[str, str]:
             "labels": labels(name), "aliases": sorted(info["raw"] - {name}),
             "kind": kb.rid("kind", ["actor", kind]), "side": side, "prov": prov("research/sources.yaml")})
     for sl, name in people.items():
-        if kb.slug(name) in {kb.slug(p) for p in pubs}:
+        if kb.slug(name) in pub_slugs:
             continue                                            # an "author" that is really the organisation
         if kb.rid_str(kb.rid("actor", sl)) in known and paths:
             continue
@@ -206,7 +174,8 @@ def load_sources(w: Writer, paths: list[Path] | None = None) -> dict[str, str]:
 
     legacy = {}
     for s in merged:
-        pub, raw = partial_date(s.get("published"))
+        raw = None if s.get("published") is None else str(s["published"])
+        pub = kb.time_of(s["published"]) if raw and (isinstance(s["published"], dt.date) or PARTIAL_DATE.fullmatch(raw.strip())) else None
         rec = {
             "title": s["title"], "url": s["url"], "alt_urls": s.get("alt_urls") or [],
             "publisher": kb.rid("actor", kb.slug(canon_publisher(s["publisher"]))),

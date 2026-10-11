@@ -220,17 +220,17 @@ def cmd_append(nn: str, src: str):
     return 1 if bad else 0
 
 
-def cmd_check(nn: str) -> int:
+def cmd_check(nn: str, srcs: dict[str, str]) -> int:
     f = topic_file(nn)
     bl = mdparse.blocks(f)
     passages = {f"{nn}/{b.order:04d}": b for b in bl}
-    srcs = source_ids()
+    keys = set(passages)
     recs = load_staged(nn)
     errs = []
     seen = Counter(r.get("local_id") for r in recs)
     errs += [f"duplicate local_id {k}" for k, v in seen.items() if v > 1]
     for r in recs:
-        errs += [f"{r.get('local_id')}: {e}" for e in errors_for(r, nn, set(passages), srcs)]
+        errs += [f"{r.get('local_id')}: {e}" for e in errors_for(r, nn, keys, srcs)]
     claims = [r for r in recs if r["type"] == "claim"]
     ids = {r["local_id"] for r in claims}
     for r in recs:
@@ -304,7 +304,8 @@ def main():
         sys.exit(cmd_append(args.nn, args.file))
     elif args.cmd == "check":
         nns = [kb.doc_code(p) for p in kb.documents() if (CLAIMS / f"{kb.doc_code(p)}.jsonl").exists()] if args.nn == "all" else [args.nn]
-        sys.exit(max(cmd_check(n) for n in nns))
+        srcs = source_ids()
+        sys.exit(max(cmd_check(n, srcs) for n in nns))
     elif args.cmd == "metrics":
         cmd_metrics()
     elif args.cmd == "schema":

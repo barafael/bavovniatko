@@ -38,7 +38,6 @@ GLOBAL_METRICS = {"kab_launches", "shahed_launches", "jet_geran_launches", "terr
                   "territory_occupied", "territory_occupied_share", "grey_zone_area", "ballistic_missile_launches",
                   "casualties_killed", "casualties_total", "recruitment", "mobilisation", "awol_cases", "ugv_missions",
                   "kill_zone_depth", "fire_ratio", "artillery_rounds_fired", "aid_value", "casualties_per_km2"}
-UTC = dt.timezone.utc
 # how far a period reaches past its start, by precision
 PAD_DAYS = {kb.Precision.DAY: 1, kb.Precision.MONTH: 31, kb.Precision.QUARTER: 92, kb.Precision.YEAR: 366}
 
@@ -136,17 +135,19 @@ def cmd_candidates(max_per_claim: int, only: list[str] | None = None, skip_judge
             c["detail"].append(detail)
 
     # numeric rule: same metric/side/unit, overlapping time, and (war-wide metric or a shared specific subject)
+    about_ids = {cid: {kb.rid_str(e) for e in c.get("about") or []} for cid, c in C.items()}
     subj = {cid: {kb.rid_str(e) for e in c.get("about") or [] if e.table_name in ("system", "event", "place", "work", "actor")}
             for cid, c in C.items()}
     groups = defaultdict(list)
     for o in observations(conn):
+        o["_claim"], o["_span"] = kb.rid_str(o["claim"]), span(o.get("time"))
         groups[(kb.rid_str(o["metric"]), o.get("side"), unit_key(o))].append(o)
     for (metric, side, _), obs in groups.items():
         if metric.endswith("_generic"):
             continue
         for o1, o2 in itertools.combinations(obs, 2):
-            a, b = kb.rid_str(o1["claim"]), kb.rid_str(o2["claim"])
-            if a == b or not similar_span(span(o1.get("time")), span(o2.get("time"))):
+            a, b = o1["_claim"], o2["_claim"]
+            if a == b or not similar_span(o1["_span"], o2["_span"]):
                 continue
             if metric.split(":", 1)[1] not in GLOBAL_METRICS and not (subj.get(a, set()) & subj.get(b, set())):
                 continue
@@ -161,26 +162,27 @@ def cmd_candidates(max_per_claim: int, only: list[str] | None = None, skip_judge
 
     # entity rule (IDF-weighted, rare entities only)
     ent_claims = defaultdict(set)
-    for cid, c in C.items():
-        for e in c.get("about") or []:
-            ent_claims[kb.rid_str(e)].add(cid)
+    for cid, ids in about_ids.items():
+        for e in ids:
+            ent_claims[e].add(cid)
     n = len(C)
     idf = {e: math.log(n / len(cs)) for e, cs in ent_claims.items() if 1 < len(cs) <= 40}
+    rare = set(idf)
+    era_prefixes = {cid: {x.id[:2] for x in c.get("eras") or []} for cid, c in C.items()}   # e6a and e6b are one era
     per_claim = defaultdict(list)
-    for cid, c in C.items():
-        mine = {kb.rid_str(e) for e in c.get("about") or []} & set(idf)
+    for cid in C:
+        mine = about_ids[cid] & rare
         scores = Counter()
         for e in mine:
             for other in ent_claims[e]:
                 if other != cid:
                     scores[other] += idf[e]
         for other, s in scores.items():
-            shared = mine & {kb.rid_str(e) for e in C[other].get("about") or []}
+            shared = mine & about_ids[other]
             if len(shared) < 2:
                 continue
-            e1 = {x.id for x in c.get("eras") or []}
-            e2 = {x.id for x in C[other].get("eras") or []}
-            if e1 and e2 and not ({x[:2] for x in e1} & {x[:2] for x in e2}):
+            e1, e2 = era_prefixes[cid], era_prefixes[other]
+            if e1 and e2 and not (e1 & e2):
                 continue
             per_claim[cid].append((s, other, sorted(shared)))
     for cid, lst in per_claim.items():
@@ -282,7 +284,6 @@ def cmd_validate(names: list[str]) -> int:
 
 def cmd_load():
     conn = kb.connect()
-    now = dt.datetime.now(UTC)
     stats, problems = Counter(), []
     valid = {kb.rid_str(r) for r in kb.one(conn, "SELECT VALUE id FROM claim")}
     existing = {}
@@ -298,10 +299,9 @@ def cmd_load():
             if rel not in RELATIONS or j.get("from") not in valid or j.get("to") not in valid or j["from"] == j["to"]:
                 problems.append(f"{f.stem}/{j.get('pair')}: bad relation/ids {rel} {j.get('from')} {j.get('to')}")
                 continue
-            a, b = (kb.rid(*j["from"].split(":", 1)), kb.rid(*j["to"].split(":", 1)))
+            a, b = kb.rid_of(j["from"]), kb.rid_of(j["to"])
             d = {"strength": float(j.get("strength", 0.5)), "rationale": j.get("rationale", ""),
-                 "method": "agent", "prov": {"by": "relate", "method": "agent", "run": f.stem, "at": now,
-                                              "input": f"db/staging/relations/judged/{f.name}"}}
+                 "method": "agent", "prov": kb.prov("relate", "agent", f"db/staging/relations/judged/{f.name}", run=f.stem)}
             if rel == "contradicts" and j.get("resolution"):
                 d["resolution"] = j["resolution"]
                 d["state"] = "explained"

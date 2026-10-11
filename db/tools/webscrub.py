@@ -221,10 +221,16 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
                     refs(r, used)
         if len(used) == before:
             break
+    rewritten: dict = {}                                # row id -> rewrite(row), once per entity row
+    wordy: dict = {}                                    # row id -> whether its renamed text still talks about the game
     def game_only(r) -> bool:
-        return (rid(r["id"]) not in used and
-                (any(has_game(s) for _, s in strings(rewrite(r))) or rid(r["id"]) in orphans
-                 or bool(dropped_topic_refs(r) and not live_topic_refs(r))))
+        k = rid(r["id"])
+        if k in used:
+            return False
+        if k not in wordy:
+            rewritten[k] = rewrite(r)
+            wordy[k] = any(has_game(s) for _, s in strings(rewritten[k]))
+        return wordy[k] or k in orphans or bool(dropped_topic_refs(r) and not live_topic_refs(r))
     for _ in range(6):                                  # what only the left-out entities used goes too
         before = len(orphans)
         for t, rows in entity_rows.items():
@@ -236,10 +242,10 @@ def scrub(tables: dict[str, list[dict]], relations: set[str]) -> tuple[dict[str,
     for t, rows in entity_rows.items():
         keep = []
         for r in rows:
-            r2 = rewrite(r)
             if t == "media" and str(r.get("ext", {}).get("document", "")).startswith("research/08"):
                 continue
             if not game_only(r) or t in ("era", "unit", "topic"):
+                r2 = rewritten.get(rid(r["id"])) or rewrite(r)
                 for f in ("topics", "found_in"):         # no links to the topics left out
                     if isinstance(r2.get(f), list):
                         r2[f] = [x for x in r2[f] if not (rid(x) and rid(x)[0] == "topic" and rid(x)[1] in DROP_TOPICS)]

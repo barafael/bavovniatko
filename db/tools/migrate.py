@@ -27,9 +27,7 @@ def main() -> int:
     args = ap.parse_args()
 
     e = kb.env()
-    root = kb.connect()
-    kb.run(root, f"DEFINE NAMESPACE IF NOT EXISTS {e['SURREAL_NS']}; USE NS {e['SURREAL_NS']}; "
-                 f"DEFINE DATABASE IF NOT EXISTS {e['SURREAL_DB']} STRICT;")
+    kb.define_db(e["SURREAL_NS"], e["SURREAL_DB"], exists_ok=True)
     conn = kb.connect()
     # the migration table is created by 0001; before that, nothing is applied
     try:
@@ -37,8 +35,7 @@ def main() -> int:
     except kb.KBError:
         applied = {}
 
-    files = sorted((FIXES if args.fixes else SCHEMA).glob("[0-9][0-9][0-9][0-9]_*.surql"))
-    for f in files:
+    for f in kb.schema_files(FIXES if args.fixes else SCHEMA):
         name, sha = ("fix_" if args.fixes else "") + f.stem, hashlib.sha256(f.read_bytes()).hexdigest()
         prev = applied.get(name)
         if args.status:

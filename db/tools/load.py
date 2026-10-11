@@ -16,7 +16,6 @@ so re-running is safe. Every staged name must resolve through the entity registr
 from __future__ import annotations
 
 import argparse
-import datetime as dt
 import hashlib
 import json
 import re
@@ -29,38 +28,8 @@ import entities as ent
 import kb
 import mdparse
 
-UTC = dt.timezone.utc
-NOW = dt.datetime.now(UTC)
-RUN = "load@" + NOW.strftime("%Y%m%dT%H%M%SZ")
+RUN = kb.run_stamp("load")
 OSM_LICENCE = "ODbL 1.0, © OpenStreetMap contributors"
-
-
-def prov(method: str, input_: str | None = None, by: str = "load") -> dict:
-    p = {"by": by, "method": method, "run": RUN, "at": NOW}
-    if input_:
-        p["input"] = input_
-    return p
-
-
-def pdate(s: str) -> dt.datetime:
-    parts = [int(x) for x in s.split("-")]
-    return dt.datetime(parts[0], parts[1] if len(parts) > 1 else 1, parts[2] if len(parts) > 2 else 1, tzinfo=UTC)
-
-
-def ptime(t: dict | None) -> dict | None:
-    """Staging time -> schema time. `to` keeps the start of its last period; precision covers both ends."""
-    if not t:
-        return None
-    out = {"from": pdate(t["from"]), "precision": t["precision"]}
-    if t.get("to"):
-        out["to"] = pdate(t["to"])
-    return out
-
-
-def rec_id(s: str):
-    table, key = s.split(":", 1)
-    return kb.rid(table, key)
-
 
 _GEO = re.compile(r"geo:\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)")
 
@@ -77,10 +46,6 @@ def notes_point(notes: str) -> dict | None:
     if not (-180 <= a <= 180 and -90 <= b <= 90):
         return None
     return {"type": "Point", "coordinates": [a, b]}
-
-
-def claim_rid(local_id: str):
-    return kb.rid("claim", "c" + local_id.replace("-", "_"))
 
 
 def lbl(e: dict) -> dict:
@@ -165,12 +130,13 @@ def load_entities(conn) -> Counter:
     stats = Counter()
     # parents first so `parent` references resolve on insert order irrelevant (plain record fields)
     for e in reg:
-        rid = rec_id(e["id"])
+        rid = kb.rid_of(e["id"])
         table = rid.table_name
         data = {"labels": lbl(e), "aliases": sorted(set(e.get("aliases") or [])),
-                "kind": kb.rid("kind", [table, e["kind"]]), "prov": prov("human" if e.get("curated") else "agent", "db/vocab/entities.yaml")}
+                "kind": kb.rid("kind", [table, e["kind"]]),
+                "prov": kb.prov("load", "human" if e.get("curated") else "agent", "db/vocab/entities.yaml", run=RUN)}
         if e.get("parent"):
-            data["parent"] = rec_id(e["parent"])
+            data["parent"] = kb.rid_of(e["parent"])
         if e.get("note"):
             data["summary" if table in ("event", "system", "work") else "notes"] = e["note"]
         if table == "actor" and e.get("side"):
@@ -307,8 +273,9 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
     metrics = set(kb.vocab("metrics"))
     malias = metric_aliases()
     legacy = {lid: r["id"] for r in kb.one(conn, "SELECT id, legacy_ids FROM source") for lid in r["legacy_ids"]}
-    passages = {r["key"]: r["id"] for r in kb.one(conn, "SELECT id, key FROM passage")}
-    sections = {r["key"]: r["section"] for r in kb.one(conn, "SELECT key, section FROM passage")}
+    rows = kb.one(conn, "SELECT id, key, section FROM passage")
+    passages = {r["key"]: r["id"] for r in rows}
+    sections = {r["key"]: r["section"] for r in rows}
     files = {r["code"]: r["file"] for r in kb.one(conn, "SELECT code, file FROM topic")}
     have = {r["key"]: r.get("h") for r in kb.one(conn, "SELECT key, ext._hash AS h FROM claim")}
     stats, problems = Counter(), []
@@ -330,7 +297,7 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
         if mdparse.meta_section(sections.get(r["passage"], "").split(" / ")[0]):
             stats["claim:skipped_meta_section"] += 1       # design notes/questions are imported separately
             continue
-        cid = claim_rid(lid)
+        cid = kb.claim_rid(lid)
         seq = int(lid.rsplit("-", 1)[1])
         data = {
             "key": lid, "text": r["text"], "kind": r["kind"], "epistemic": r["epistemic"],
@@ -338,10 +305,11 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
             "eras": [kb.rid("era", e) for e in r.get("eras", [])],
             "topics": [kb.rid("topic", kb.topic_key(nn))], "sides": r.get("sides", []),
             "anchor": {"file": files[nn], "section": sections.get(r["passage"], ""), "order": seq, "local_id": lid},
-            "prov": prov("agent", f"db/staging/claims/{nn}.jsonl", by="extraction"),
+            "prov": kb.prov("extraction", "agent", f"db/staging/claims/{nn}.jsonl", run=RUN),
         }
         if r.get("time"):
-            data["time"] = ptime(r["time"])
+            t = r["time"]
+            data["time"] = kb.time_of(t["from"], t.get("to"), t["precision"])
         extra = {}
         if r.get("notes"):
             data["confidence_note"] = r["notes"]
@@ -362,8 +330,8 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
             if a:
                 d = {"role": c.get("role", "claimant")}
                 if c.get("said_at"):
-                    d["said_at"] = ptime({"from": c["said_at"], "precision": kb.Precision.of(c["said_at"])})
-                edges.append(("asserted_by", rec_id(a), d))
+                    d["said_at"] = kb.time_of(c["said_at"])
+                edges.append(("asserted_by", kb.rid_of(a), d))
         for m in r.get("mentions", []):
             if m["type"] == "metric":
                 slug = malias.get(m["name"], m["name"])
@@ -372,7 +340,7 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
                 continue
             e = resolve(m["type"], m["name"])
             if e:
-                edges.append(("about", rec_id(e), {"role": m.get("role", "subject")}))
+                edges.append(("about", kb.rid_of(e), {"role": m.get("role", "subject")}))
         obs = []
         for i, o in enumerate(r.get("observations", [])):
             o = {**o, "metric": malias.get(o["metric"], o["metric"])}
@@ -385,14 +353,15 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
             for k in ("value", "low", "high"):
                 if k in o:
                     od[k] = float(o[k])
-            if o.get("time") or r.get("time"):
-                od["time"] = ptime(o.get("time") or r["time"])
+            t = o.get("time") or r.get("time")
+            if t:
+                od["time"] = kb.time_of(t["from"], t.get("to"), t["precision"])
             if o.get("side"):
                 od["side"] = o["side"]
             if o.get("place"):
                 p = resolve("place", o["place"])
                 if p:
-                    od["place"] = rec_id(p)
+                    od["place"] = kb.rid_of(p)
             note = "; ".join(x for x in (o.get("subject") and f"subject: {o['subject']}", o.get("note")) if x)
             if note:
                 od["note"] = note
@@ -428,29 +397,32 @@ def load_claims(conn, topics: list[str] | None) -> Counter:
         stats[f"claim:{'updated' if lid in have else 'created'}"] += 1
         stats["observation:written"] += len(obs)
 
+    links = {(kb.rid_str(c["in"]), kb.rid_str(c["out"])): c for c in kb.one(conn, "SELECT id, in, out, evidence FROM counters")}
     for nn, r in counters:
         a, b = resolve("system", r["counter"]), resolve("system", r["measure"])
         if not (a and b):
             continue
-        d = {"rationale": r["rationale"], "evidence": [claim_rid(x) for x in r["evidence"]],
-             "prov": prov("agent", f"db/staging/claims/{nn}.jsonl", by="extraction")}
+        d = {"rationale": r["rationale"], "evidence": [kb.claim_rid(x) for x in r["evidence"]],
+             "prov": kb.prov("extraction", "agent", f"db/staging/claims/{nn}.jsonl", run=RUN)}
         if r.get("first_observed"):
-            d["first_observed"] = ptime(r["first_observed"])
+            fo = r["first_observed"]
+            d["first_observed"] = kb.time_of(fo["from"], fo.get("to"), fo["precision"])
         for k in ("lag_days", "effect"):
             if k in r:
                 d[k] = r[k]
         try:
-            existing = kb.one(conn, "SELECT VALUE id FROM counters WHERE in = $a AND out = $b", {"a": rec_id(a), "b": rec_id(b)})
-            if existing:
-                prev = kb.one(conn, "SELECT VALUE evidence FROM ONLY $e", {"e": existing[0]}) or []
+            link = links.get((a, b))
+            if link:
+                prev = link.get("evidence") or []
                 ev = {kb.rid_str(x): x for x in [*prev, *d["evidence"]]}
                 if len(ev) == len(prev):
                     stats["counters:unchanged"] += 1
                     continue
-                kb.run(conn, "UPDATE $e MERGE $d", {"e": existing[0], "d": {"evidence": [ev[k] for k in sorted(ev)]}})
+                link["evidence"] = [ev[k] for k in sorted(ev)]
+                kb.run(conn, "UPDATE $e MERGE $d", {"e": link["id"], "d": {"evidence": link["evidence"]}})
                 stats["counters:merged"] += 1
             else:
-                kb.run(conn, "RELATE $a->counters->$b CONTENT $d", {"a": rec_id(a), "b": rec_id(b), "d": d})
+                links[(a, b)] = kb.one(conn, "RELATE $a->counters->$b CONTENT $d", {"a": kb.rid_of(a), "b": kb.rid_of(b), "d": d})[0]
                 stats["counters:created"] += 1
         except kb.KBError as ex:
             problems.append(f"{r['local_id']}: {ex}")

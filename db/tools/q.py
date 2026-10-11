@@ -9,24 +9,10 @@ import re
 import sys
 
 import kb
-from dump import enc
 
 q = " ".join(sys.argv[1:]) or sys.stdin.read()
 if re.search(r"\b(CREATE|UPDATE|UPSERT|DELETE|RELATE|INSERT|DEFINE|REMOVE|ALTER|KILL|LIVE|BEGIN|COMMIT)\b", q, re.IGNORECASE):
     sys.exit("q.py is read-only; use the loaders to write")
 
 
-def plain(v):
-    v = enc(v)
-    if isinstance(v, dict):
-        if "$rid" in v:
-            return kb.rid_str(kb.rid(v["$rid"][0], v["$rid"][1]))
-        if "$dt" in v:
-            return v["$dt"]
-        return {k: plain(x) for k, x in v.items()}
-    if isinstance(v, list):
-        return [plain(x) for x in v]
-    return v
-
-
-print(json.dumps(plain(kb.one(kb.connect(), q)), ensure_ascii=False, indent=1))
+print(json.dumps(kb.plain(kb.one(kb.connect(), q)), ensure_ascii=False, indent=1))

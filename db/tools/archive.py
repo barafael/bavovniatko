@@ -57,6 +57,14 @@ _host_last: dict[str, float] = {}
 _log_lock = threading.Lock()
 _warc_lock = threading.Lock()
 _warc_writer: WARCWriter | None = None
+_local = threading.local()
+
+
+def session() -> requests.Session:
+    """One requests session per worker thread, reused across its fetches."""
+    if not hasattr(_local, "session"):
+        _local.session = requests.Session()
+    return _local.session
 
 
 def warc_record(r: requests.Response):
@@ -142,14 +150,14 @@ def wayback_submit(session: requests.Session, url: str) -> str | None:
 
 def fetch_one(target, url: str, warc_path: Path, opts) -> dict:
     snap = {"target": target, "url": url, "retrieved_at": now(), "ok": False}
-    session = requests.Session()
+    s = session()
     try:
-        r = get(session, url)
+        r = get(s, url)
         via = "direct"
         if r.status_code in (401, 403, 406, 429) or r.status_code >= 500 or not r.content:
-            wb = wayback_latest(session, url)
+            wb = wayback_latest(s, url)
             if wb:
-                r2 = get(session, wb)
+                r2 = get(s, wb)
                 if r2.ok and r2.content:
                     r, via = r2, "wayback"
         warc_record(r)
@@ -165,7 +173,7 @@ def fetch_one(target, url: str, warc_path: Path, opts) -> dict:
     except Exception as e:  # noqa: BLE001 - network errors are data, not crashes
         snap["error"] = f"{type(e).__name__}: {e}"[:500]
     if opts.wayback_submit:
-        wb = wayback_submit(session, url)
+        wb = wayback_submit(s, url)
         if wb:
             snap["wayback_url"] = wb
     if opts.video and any(h in urlparse(url).netloc for h in VIDEO_HOSTS) and shutil.which("yt-dlp"):
@@ -185,7 +193,7 @@ def cmd_fetch(opts):
     ROOT.mkdir(parents=True, exist_ok=True)
     (ROOT / "warc").mkdir(exist_ok=True)
     conn = kb.connect()
-    run = now().strftime("%Y%m%dT%H%M%SZ")
+    run = now().strftime(kb.STAMP)
     tables = [opts.table] if opts.table else ["source", "media"]
     todo = []
     for t in tables:
@@ -212,8 +220,7 @@ def cmd_fetch(opts):
             with lock:
                 kb.run(conn, "CREATE snapshot CONTENT $s", {"s": snap})
             with _log_lock, open(ROOT / "log.jsonl", "a") as fh:
-                fh.write(json.dumps({k: (kb.rid_str(v) if hasattr(v, "table_name") else str(v) if isinstance(v, dt.datetime) else v)
-                                     for k, v in snap.items()}, ensure_ascii=False) + "\n")
+                fh.write(json.dumps({k: kb.plain(v, dt_=str) for k, v in snap.items()}, ensure_ascii=False) + "\n")
             return snap
 
         with ThreadPoolExecutor(max_workers=opts.workers) as ex:
