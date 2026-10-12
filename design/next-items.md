@@ -652,7 +652,12 @@ warning every two seconds while the link is in trouble, a hiss that rises with t
 behind it and dropped out entirely while the picture is frozen (the radio net and the tone stay); the beeps are
 logged sounds, so `same-day` audio differs from `c2` by exactly them. Clip `20261012-0143-g-jamline-2.mp4`
 (the drone flown south at sport speed across the jam line: soft, then blocks and stale smears, "Signal Lost",
-the return-to-home), shot `g-osd`. The sights (part 6) are not done.
+the return-to-home), shot `g-osd`. *The sights* (part 6): the Stugna-P gunner's view is the panel's 4:3 TV
+picture (black outside the frame, soft, nearly grey, a little noise) with the tracker's gate dots on the vehicle
+the sight holds; the Javelin's is the CLU's black-and-green thermal at 9x in the same frame (the picture has no
+heat, so dark steel and bodies read hot and the snow cold, through a gamma), with the seeker's gate dots
+flashing until the lock and solid after, and the status words (SEEK, LOCKED, NFOV 9x, WHITE HOT) in the corner.
+Shots `g-sight-stugna`, `g-sight-javelin-2`. The eyepiece look is gone: neither weapon is one.
 
 ### H. The sky (**look**) — observation 17
 
@@ -717,6 +722,13 @@ assets. What is done now is what the assets will need anyway and what no asset f
 
 **Cost.** 8 h now; the look lands with the assets.
 
+**Done (2026-10-12), the basics.** A stem every 1.6–3.2 m instead of 2.6–5; no two trees the same height
+(±25%), three in ten leaning; a shrub storey of 1.5–3 m clusters on both edges of every belt; the leaf and twig
+cards resolved by alpha-to-coverage under the multisampling instead of a hard mask; and a parapet in front of
+every Ukrainian ATGM sight (two rows of sandbags, the spoil, a log) so the ground view has something at arm's
+length. The foot strip in the paint and the crown shadows are not done; the rest waits for the assets. Shots
+`i-ground-winter`, `i-ground-summer`.
+
 ### J. Ukrainian names and voice (**look**) — observation 16
 
 **Build.**
@@ -763,6 +775,22 @@ brackets. Shot `j-net`. Not done: fictional callsigns on the net (Маестро
 
 **Cost.** 4–5 h.
 
+**Done (2026-10-12).** The debrief is a laid-out screen: the date with the place as its heading ("6 February
+2023   Vuhledar (Вугледар)") and the clock span under it; the day's own account as rows with the number
+right-aligned, the breakdowns indented and dimmer; the columns as a small table (vehicles, destroyed,
+abandoned); the closing lines about what came after, with no heading; and under "Sources" nine rows for
+Vuhledar and eight for Robotyne (publisher, date, title), each a button that opens the page in the browser
+(`xdg-open`, `open` or `start` by platform). No figure from the record is set against the day's own. Under the
+screen the drone's display is hidden (the update returns early in the debrief), and the body clips at the
+bottom rather than the top if it ever overflows. Two layout faults took three tries (shots `k-debrief-*-2`,
+`-3`, `-4`): a Bevy text node given a width is measured for its height at its min-content width, a word a line,
+so every fixed-width cell stood as tall as its word count and the source rows sat 51 px apart; and an unwrapped
+text ignores its justify. Right-aligned cells are now a fixed-width box with `justify_content: FlexEnd` round a
+content-sized, no-wrap text. The on-foot distance at Robotyne printed `f32::MIN` before anyone had dismounted;
+it says "nowhere yet". `VUHLEDAR_DEBRIEF=1` ends the day as soon as the warp arrives, so a debrief shot takes
+a minute rather than nine. Shots `k-debrief-vuhledar` (the real end of the day), `k-debrief-robotyne`,
+`k-debrief-vuhledar-4`, `k-debrief-robotyne-4`.
+
 ### L. Top attack (**sim**) — observation 21
 
 The research (§2.5) settles it: the Javelin is the only top-attack weapon attested for these two days (the
@@ -777,6 +805,11 @@ cook-off, 40% fire then burn-out, 20% a mobility or firepower kill then abandonm
 higher than the side hit's 0.72.
 
 **Prove.** A Javelin clip from the tree line (the `ground-javelin` camera) and from the drone. **Cost.** 3–4 h.
+
+**Done (2026-10-12).** `Missile.top_attack`: a Javelin (the teams' and the player's) climbs to an apogee of
+60–150 m by range (150 m at 2 km), cruises, and from the last fifth of the way dives straight onto the turret
+roof; a roof hit carries a kill chance 0.2 above the side hit's, capped at 0.95 (`DirectHit.top`). Beam riders
+keep their slight lift. Clip `l-javelin` from the tree line.
 
 ---
 

@@ -49,7 +49,7 @@ fn main() {
     } else {
         app.add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
-                title: diorama::diorama().title().into(),
+                title: diorama::diorama().title(),
                 present_mode: PresentMode::AutoVsync,
                 ..default()
             }),

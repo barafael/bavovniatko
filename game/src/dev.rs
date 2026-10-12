@@ -61,6 +61,8 @@ pub struct DevEnv {
     pub look: Option<Target>,
     pub speed: Option<f32>,
     pub warp_to: Option<f32>,
+    /// Go straight to the debrief once the warp (if any) arrives, to lay the screen out without playing the day.
+    pub debrief: bool,
     pub rec: Option<String>,
     pub rec_from: f32,
     pub rec_secs: f32,
@@ -139,6 +141,7 @@ impl DevEnv {
             look: parse("VUHLEDAR_LOOK"),
             speed: parse("VUHLEDAR_SPEED"),
             warp_to: parse("VUHLEDAR_WARP_TO"),
+            debrief: var("VUHLEDAR_DEBRIEF").is_some(),
             rec: var("VUHLEDAR_REC"),
             rec_from: parse("VUHLEDAR_REC_FROM").unwrap_or(5.0),
             rec_secs: parse("VUHLEDAR_REC_SECS").unwrap_or(10.0),
@@ -168,7 +171,7 @@ pub struct DevPlugin;
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, lineup.after(crate::units::setup_models));
-        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, scripted_fire, frame_times, env_ground).chain().in_set(crate::Step::Control).in_set(DevSystems));
+        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground).chain().in_set(crate::Step::Control).in_set(DevSystems));
     }
 }
 
@@ -248,7 +251,7 @@ fn env_view(mut view: ResMut<View>, mut vtime: ResMut<Time<Virtual>>, mut done: 
     if let Some(v) = dev().cam {
         view.drone_pos = Vec3::new(v[0], crate::geo::height(v[0], v[1]) + v[2], v[1]);
         set_drone_aim(&mut view, v[3].to_radians(), v[4].to_radians());
-        view.drone_fov = v[5].to_radians();
+        view.drone_fov = v[5].max(1.0).to_radians();
         view.fov_target = view.drone_fov;
     }
 }
@@ -282,6 +285,13 @@ fn warp(script: Res<crate::director::Script>, mut vtime: ResMut<Time<Virtual>>, 
     } else {
         vtime.set_relative_speed(1.0);
         *done = true;
+    }
+}
+
+/// `VUHLEDAR_DEBRIEF=1`: end the day as soon as the warp arrives (or at once), so the debrief can be looked at.
+fn env_debrief(script: Res<crate::director::Script>, phase: Res<State<crate::Phase>>, mut next: ResMut<NextState<crate::Phase>>) {
+    if dev().debrief && *phase.get() == crate::Phase::Playing && script.t >= dev().warp_to.unwrap_or(0.0) {
+        next.set(crate::Phase::Debrief);
     }
 }
 
@@ -321,6 +331,7 @@ fn record(
 /// `VUHLEDAR_LOG_STATS=1`: print the tally once a game minute, with how often two hulls overlapped since the
 /// last line (hull centres closer than 4 m: certainly through each other; closer than 6.5 m: touching or nearly).
 fn log_stats(
+    view: Res<View>,
     script: Res<crate::director::Script>,
     stats: Res<Stats>,
     fc: Res<FireControl>,
@@ -357,9 +368,10 @@ fn log_stats(
     let moving = vehicles.iter().filter(|(v, _)| v.state.mobile()).count();
     let men = soldiers.iter().filter(|s| s.side == crate::diorama::diorama().attacker()).count();
     info!(
-        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={} hidden={} overlap_frames={}/{} max_pairs={} touching_frames={} closest={:.1}m({:?},{:?})",
+        "t={:>4.0} {} committed={} destroyed={} abandoned={} withdrawn={} moving={} men_alive={} sent={} back={} dead={} foothold={} mines={} atgm={} art={} shells={} brigade={} ua_losses={} hidden={} overlap_frames={}/{} max_pairs={} touching_frames={} closest={:.1}m({:?},{:?}) view={:?} drone=({:.0},{:.0},{:.0}) yaw={:.2} fov={:.3} jam={:.2} rth={:?}",
         script.t, crate::director::clock_text(script.t), stats.vehicles_committed, stats.destroyed, stats.abandoned, stats.withdrawn, moving, men, stats.sent, stats.returned, stats.attacker_dead, stats.foothold, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, fc.shells, fc.brigade_shells, stats.defender_losses,
-        stats.hidden, overlap.1, overlap.0, overlap.2, overlap.3, closest.0, closest.1, closest.2
+        stats.hidden, overlap.1, overlap.0, overlap.2, overlap.3, closest.0, closest.1, closest.2,
+        view.mode, view.drone_pos.x, view.drone_pos.y, view.drone_pos.z, view.drone_yaw, view.drone_fov, view.jamming, view.rth
     );
     *overlap = (0, 0, 0, 0);
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {

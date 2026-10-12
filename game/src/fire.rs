@@ -224,6 +224,8 @@ pub struct Missile {
     pub trail: f32,
     /// The chance it hits; by default, worse the longer the gunner has to hold the sight on him.
     pub p_hit: Option<f32>,
+    /// A Javelin: it climbs to its apogee, cruises, and dives onto the turret roof.
+    pub top_attack: bool,
 }
 
 #[derive(Component)]
@@ -231,7 +233,7 @@ pub struct UaTank {
     pub timer: f32,
 }
 
-fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
+fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>, mut meshes_res: ResMut<Assets<Mesh>>) {
     let lay = geo::layout();
     use Atgm::*;
     // Positions with a clear view down their road: the Stugnas cover the long shots, the Javelins the close ones.
@@ -262,6 +264,28 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
             Post { side, pos: *p, strength: 6, atgm, reload: 4.0 + i as f32 * 7.0, fire_timer: i as f32, weapon, figures },
             Transform::from_translation(geo::ground(*p)),
         ));
+        // Our ATGM positions get a parapet in front of the sight (where the ground view kneels): two rows of
+        // sandbags, the spoil, a log, so the eye has something at arm's length.
+        if side == Side::Ua && weapon.is_some() {
+            let at = *p + Vec2::new(1.5, 8.5);
+            let kz = lay.routes.iter().map(|r| r.line.point(r.deploy_s)).min_by(|a, b| a.distance(at).total_cmp(&b.distance(at))).unwrap_or(at + Vec2::Y);
+            let d = (kz - at).normalize_or(Vec2::Y);
+            let right = Vec2::new(-d.y, d.x);
+            let mut m = crate::meshes::MeshBuilder::new();
+            let base = geo::ground(at + d * 1.4);
+            for k in 0..8 {
+                let x = (k as f32 - 3.5) * 0.52;
+                let o = right * x;
+                m.cuboid(base + Vec3::new(o.x, 0.14, o.y), Vec3::new(0.26, 0.12, 0.2), Quat::from_rotation_y(d.to_angle() + (k as f32 * 1.7).sin() * 0.15), [0.40, 0.37, 0.30]);
+                if k % 2 == 0 {
+                    m.cuboid(base + Vec3::new(o.x + right.x * 0.26, 0.38, o.y + right.y * 0.26), Vec3::new(0.26, 0.11, 0.2), Quat::from_rotation_y(d.to_angle() + (k as f32).cos() * 0.2), [0.38, 0.35, 0.28]);
+                }
+            }
+            // The spoil thrown up in front, and a log along the lip.
+            m.cuboid(base + d.extend(0.0).xzy() * 0.8 + Vec3::Y * 0.12, Vec3::new(2.6, 0.14, 0.6), Quat::from_rotation_y(d.to_angle()), [0.22, 0.19, 0.16]);
+            m.cylinder(base + Vec3::new(-right.x * 1.6, 0.55, -right.y * 1.6), Vec3::new(right.x * 3.2, 0.0, right.y * 3.2), 0.09, 6, [0.30, 0.26, 0.20]);
+            commands.spawn((Mesh3d(meshes_res.add(m.build())), MeshMaterial3d(palette.vertex.clone()), Transform::default()));
+        }
     }
     if diorama() == Diorama::Robotyne {
         crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
@@ -700,7 +724,7 @@ fn atgm_teams(
             Mesh3d(models.missile.clone()),
             MeshMaterial3d(palette.vertex.clone()),
             Transform::from_translation(from).looking_to(dir, Vec3::Y),
-            Missile { target, launched_at: from, speed, trail: 0.0, p_hit: None },
+            Missile { target, launched_at: from, speed, trail: 0.0, p_hit: None, top_attack: weapon == Atgm::Javelin },
             NotShadowCaster,
         ));
         if pos.side == Side::Ru {
@@ -729,12 +753,27 @@ fn fly_missiles(
             commands.entity(e).despawn();
             continue;
         };
-        let aim = t.translation + Vec3::Y * 1.3;
+        let aim = t.translation + Vec3::Y * if m.top_attack { 2.2 } else { 1.3 };
         let to = aim - tf.translation;
         let d = to.length();
-        // Fly a little high, then down onto the target (wire-guided line of sight, with a gentle arc).
-        let lift = Vec3::Y * (d / 300.0).min(1.0) * 4.0;
-        let dir = (to + lift).normalize();
+        let dir = if m.top_attack {
+            // The Javelin's top attack (§2.5 of design/next-items.md): up to an apogee of 60–150 m by range,
+            // along, then down at 50–70 degrees onto the roof; 10–15 s of flight at 1.5–2 km.
+            let total = m.launched_at.xz().distance(aim.xz()).max(50.0);
+            let f = (1.0 - to.xz().length() / total).clamp(0.0, 1.0);
+            if f > 0.82 {
+                to.normalize()
+            } else {
+                let apogee = (total / 2000.0 * 150.0).clamp(60.0, 150.0);
+                let want_y = m.launched_at.y + apogee * (std::f32::consts::PI * f.min(0.9)).sin().powf(0.6);
+                let flat = Vec3::new(to.x, 0.0, to.z).normalize_or_zero();
+                (flat + Vec3::Y * ((want_y - tf.translation.y) * 0.08).clamp(-1.2, 1.7)).normalize()
+            }
+        } else {
+            // A beam rider flies a little high, then down onto the target.
+            let lift = Vec3::Y * (d / 300.0).min(1.0) * 4.0;
+            (to + lift).normalize()
+        };
         tf.translation += dir * m.speed * dt;
         tf.look_to(dir, Vec3::Y);
         m.trail += dt;
@@ -752,7 +791,7 @@ fn fly_missiles(
             // Long wire-guided shots miss more often: the gunner holds the crosshair for 15-25 s under fire.
             let range = m.launched_at.distance(aim);
             if rng.random_bool(m.p_hit.unwrap_or((0.88 - range / 9000.0).clamp(0.4, 0.88)) as f64) {
-                hits.write(DirectHit { target: m.target, cause: Cause::Atgm });
+                hits.write(DirectHit { target: m.target, cause: Cause::Atgm, top: m.top_attack });
                 fx::explosion(&mut commands, &mut fx, aim, 0.7, false);
             } else {
                 // A miss: it ploughs into the snow beyond.
@@ -951,7 +990,7 @@ fn defender_tank(
     sound.at(muzzle, Sfx::TankGun, 1.0);
     let d = from.distance(tp);
     if rng.random_bool((0.75 - d as f64 / 4000.0).clamp(0.15, 0.7)) {
-        hits.write(DirectHit { target, cause: Cause::TankGun });
+        hits.write(DirectHit { target, cause: Cause::TankGun, top: false });
         fx::explosion(commands, fx, aim, 0.6, false);
         sound.at(aim, Sfx::BlastNear, 0.9);
     } else {
@@ -1149,7 +1188,7 @@ fn player_atgm(
     match (weapon, locked) {
         (Atgm::Javelin, Some(target)) => {
             // Fire and forget: it climbs, then dives onto the roof by itself.
-            commands.spawn((missile, Transform::from_translation(from).looking_to((fwd + Vec3::Y * 0.6).normalize(), Vec3::Y), Missile { target, launched_at: from, speed: weapon.speed(), trail: 0.0, p_hit: None }));
+            commands.spawn((missile, Transform::from_translation(from).looking_to((fwd + Vec3::Y * 0.6).normalize(), Vec3::Y), Missile { target, launched_at: from, speed: weapon.speed(), trail: 0.0, p_hit: None, top_attack: true }));
             radio.say(now, "Javelin away. Get down, move.");
         }
         _ => {
@@ -1217,7 +1256,7 @@ fn fly_guided(
             fx::explosion(&mut commands, &mut fx, p, 0.7, false);
             sound.at(p, Sfx::BlastNear, 1.0);
             if v.state.alive() {
-                hits.write(DirectHit { target, cause: Cause::Atgm });
+                hits.write(DirectHit { target, cause: Cause::Atgm, top: false });
                 radio.say(now, "Hit! He's burning.");
             }
         } else if ground || m.travelled > Atgm::Stugna.range() + 700.0 {

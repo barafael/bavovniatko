@@ -172,9 +172,11 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
     let vertex = materials.add(StandardMaterial { perceptual_roughness: 0.9, ..default() });
     let charred = materials.add(StandardMaterial { base_color: Color::srgb(0.22, 0.2, 0.19), perceptual_roughness: 1.0, ..default() });
     let summer = diorama().summer();
+    // Alpha to coverage: the mask's edge is resolved by the multisampling, so leaves and twigs stop being
+    // hard-edged cut-outs.
     let branches = materials.add(StandardMaterial {
         base_color_texture: Some(images.add(if summer { leaf_texture() } else { branch_texture() })),
-        alpha_mode: AlphaMode::Mask(0.5),
+        alpha_mode: if dev::off(dev::Part::Msaa) { AlphaMode::Mask(0.5) } else { AlphaMode::AlphaToCoverage },
         double_sided: true,
         cull_mode: None,
         perceptual_roughness: 1.0,
@@ -199,7 +201,8 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
         let mut s = 0.0;
         while s < len {
             id += 1;
-            s += 2.6 + hash01(id, 1) * 2.4;
+            // Real belts are thickets: a stem every metre or two.
+            s += 1.6 + hash01(id, 1) * 1.6;
             if belt.gaps.iter().any(|&(a, b)| s > a && s < b) {
                 continue;
             }
@@ -223,7 +226,13 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
                 let shattered = hash01(id, 9) < 0.12 + 0.18 * (bi < 2) as i32 as f32;
                 let k = (hash01(id, 4) * 6.0) as usize % 6;
                 let mut xf = Transform::from_translation(p).with_rotation(Quat::from_rotation_y(hash01(id, 5) * std::f32::consts::TAU));
-                let h = 7.0 + k as f32 * 1.6;
+                // No two trees the same height; some lean.
+                let grow = 0.75 + 0.5 * hash01(id, 16);
+                let h = (7.0 + k as f32 * 1.6) * grow;
+                xf.scale = Vec3::new(1.0, grow, 1.0);
+                if hash01(id, 17) < 0.3 {
+                    xf.rotation *= Quat::from_rotation_z((hash01(id, 18) - 0.5) * 0.12);
+                }
                 if shattered {
                     xf.scale = Vec3::new(1.0, 0.35 + 0.3 * hash01(id, 6), 1.0);
                     xf.rotation *= Quat::from_rotation_z((hash01(id, 7) - 0.5) * 0.5);
@@ -238,12 +247,21 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
                     meshes::crown_cards(&mut crowns[ci], p + Vec3::Y * (h * 0.3), w, ch, hash01(id, 11) * 3.0, c);
                 }
             }
-            // Scrub between the rows.
-            if hash01(id, 12) < if summer { 0.8 } else { 0.45 } {
-                let p2 = belt.line.point(s) + belt.line.normal(s) * ((hash01(id, 13) - 0.5) * belt.width * 1.2);
-                let tone = 0.3 + hash01(id, 14) * 0.1;
-                let c = if summer { [tone * 0.8, tone * 1.05, tone * 0.5] } else { [tone * 1.05, tone, tone * 0.85] };
-                meshes::crown_cards(&mut crowns[chunk_of(p2)], geo::ground(p2) - Vec3::Y * 0.2, 3.0, 2.6, hash01(id, 15) * 3.0, c);
+            // The shrub storey: hawthorn, elder and sloe under and beside the trees, 1.5–3 m, thickest at the
+            // belt's edges where the light is.
+            for side in [-1.0f32, 1.0] {
+                id += 1;
+                if hash01(id, 12) < if summer { 0.85 } else { 0.6 } {
+                    let lat = side * belt.width * (0.3 + 0.35 * hash01(id, 13));
+                    let p2 = belt.line.point(s) + belt.line.normal(s) * lat;
+                    // Not where a position's trench is dug (the eye kneels there).
+                    if geo::layout().ua_positions.iter().chain(&geo::layout().ru_positions).any(|q| q.distance(p2) < 14.0) {
+                        continue;
+                    }
+                    let tone = 0.3 + hash01(id, 14) * 0.1;
+                    let c = if summer { [tone * 0.8, tone * 1.05, tone * 0.5] } else { [tone * 1.05, tone, tone * 0.85] };
+                    meshes::crown_cards(&mut crowns[chunk_of(p2)], geo::ground(p2) - Vec3::Y * 0.2, 2.0 + 1.5 * hash01(id, 19), 1.5 + 1.5 * hash01(id, 20), hash01(id, 15) * 3.0, c);
+                }
             }
         }
     }

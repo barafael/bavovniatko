@@ -345,7 +345,7 @@ fn fly_helicopters(
             Mesh3d(models.missile.clone()),
             MeshMaterial3d(palette.vertex.clone()),
             Transform::from_translation(muzzle).looking_to(fwd, Vec3::Y),
-            Missile { target, launched_at: muzzle, speed: 450.0, trail: 0.0, p_hit: Some(0.62) },
+            Missile { target, launched_at: muzzle, speed: 450.0, trail: 0.0, p_hit: Some(0.62), top_attack: false },
             bevy::light::NotShadowCaster,
         ));
         if rng.random_bool(0.5) {

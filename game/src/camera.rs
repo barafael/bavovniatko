@@ -243,6 +243,8 @@ pub struct FeedEffect {
     pub saturation: f32,
     /// The link's bit rate, 1 clean: lower is softer, blockier.
     pub bitrate: f32,
+    /// Which sight, in mode 3: 0 the Stugna-P panel's TV picture, 1 the Javelin CLU's thermal.
+    pub sight: f32,
 }
 
 /// The offscreen image the finished picture lands in when running headless (feed.rs makes it).

@@ -18,7 +18,7 @@ impl Plugin for HudPlugin {
             .add_systems(Update, (update_hud, briefing_input).chain().in_set(crate::Step::Screen))
             .add_systems(OnEnter(Phase::Playing), hide_briefing)
             .add_systems(OnEnter(Phase::Debrief), show_debrief)
-            .add_systems(Update, debrief_input.run_if(in_state(Phase::Debrief)).in_set(crate::Step::Screen).after(briefing_input));
+            .add_systems(Update, (debrief_input, open_sources).run_if(in_state(Phase::Debrief)).in_set(crate::Step::Screen).after(briefing_input));
     }
 }
 
@@ -52,6 +52,9 @@ struct NoSignal;
 struct Crosshair;
 #[derive(Component)]
 struct Reticle;
+/// The sight's track gate: four corners round the vehicle the seeker holds (flashing until the Javelin locks).
+#[derive(Component)]
+struct Gate(usize);
 #[derive(Component)]
 struct Briefing;
 #[derive(Component)]
@@ -141,6 +144,10 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
         let y = 30.0 + k as f32 * 34.0;
         commands.spawn(line(18.0 - k as f32 * 2.0, 1.5, -(9.0 - k as f32), y));
     }
+    // The track gate's corners, placed each frame round the vehicle the sight holds.
+    for k in 0..4 {
+        commands.spawn((Node { position_type: PositionType::Absolute, width: px(7), height: px(7), ..default() }, BackgroundColor(Color::NONE), Visibility::Hidden, Gate(k)));
+    }
 
     // The briefing.
     let briefing = if diorama() == Diorama::Robotyne { ROBOTYNE_BRIEFING } else { "VUHLEDAR (ВУГЛЕДАР)\n6 FEBRUARY 2023\n\n\
@@ -171,7 +178,7 @@ Press Enter." };
             GlobalZIndex(10),
             Debrief,
         ))
-        .with_child((text("", 15.0, WHITE), Node { max_width: px(1100), ..default() }, DebriefText));
+        .with_child((Node { flex_direction: FlexDirection::Column, max_width: px(1100), width: percent(86), max_height: percent(96), overflow: Overflow::clip(), ..default() }, DebriefText));
 }
 
 const ROBOTYNE_BRIEFING: &str = "SOUTH OF MALA TOKMACHKA (МАЛА ТОКМАЧКА)\n8 JUNE 2023\n\n\
@@ -218,16 +225,51 @@ fn update_hud(
         Single<&mut Text, With<NoSignal>>,
         Query<(&Osd, &mut Text, &mut Visibility)>,
     )>,
-    mut crosshair: Query<&mut Visibility, (With<Crosshair>, Without<Reticle>, Without<Osd>)>,
-    mut reticle: Query<&mut Visibility, (With<Reticle>, Without<Crosshair>, Without<Osd>)>,
+    mut crosshair: Query<&mut Visibility, (With<Crosshair>, Without<Reticle>, Without<Osd>, Without<Gate>)>,
+    mut reticle: Query<&mut Visibility, (With<Reticle>, Without<Crosshair>, Without<Osd>, Without<Gate>)>,
+    sight: (Query<(&Gate, &mut Node, &mut Visibility, &mut BackgroundColor), (Without<Crosshair>, Without<Reticle>, Without<Osd>)>, Single<(&Camera, &GlobalTransform), With<crate::camera::MainCamera>>, Query<&Transform, With<crate::units::Vehicle>>),
     phase: Res<State<Phase>>,
     mut commands: Commands,
     net: (Res<Fonts>, Single<Entity, With<RadioLog>>, Single<Entity, With<Banner>>, Local<(String, String)>),
 ) {
     let (fonts, log_root, banner_root, mut shown) = net;
+    // Under the debrief the display stays as `show_debrief` left it: hidden.
+    if *phase.get() == Phase::Debrief {
+        return;
+    }
     osd_update(&time, &view, &script, &mut texts.p4());
     for mut v in &mut reticle {
         v.set_if_neq(if view.mode == Mode::Ground && view.sight { Visibility::Inherited } else { Visibility::Hidden });
+    }
+    // The gate: the hull's box on the screen, flashing until the seeker has locked (a Stugna's tracker holds at
+    // once), and the corner marks drawn as L-shapes by colour alone.
+    let (mut gate, cam, targets) = sight;
+    let team_weapon = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|p| p.weapon);
+    let held = (view.mode == Mode::Ground && view.sight).then_some(view.lock).flatten();
+    let gate_box = held.and_then(|(e, t)| {
+        let tf = targets.get(e).ok()?;
+        let (c, gt) = *cam;
+        let centre = c.world_to_viewport(gt, tf.translation + Vec3::Y * 1.2).ok()?;
+        let edge = c.world_to_viewport(gt, tf.translation + Vec3::Y * 1.2 + gt.right() * 3.8).ok()?;
+        let half = (edge - centre).length().max(10.0);
+        Some((centre, half, t))
+    });
+    let blink = (time.elapsed_secs() * 4.0) as i32 % 2 == 0;
+    for (g, mut node, mut vis, mut bg) in &mut gate {
+        match gate_box {
+            Some((centre, half, t)) => {
+                let locked = team_weapon != Some(Atgm::Javelin) || t >= JAVELIN_LOCK;
+                vis.set_if_neq(if locked || blink { Visibility::Inherited } else { Visibility::Hidden });
+                let (sx, sy) = ([-1.0, 1.0, -1.0, 1.0][g.0], [-1.0, -1.0, 1.0, 1.0][g.0]);
+                node.left = px(centre.x + sx * half - 3.5);
+                node.top = px(centre.y + sy * half * 0.6 - 3.5);
+                let colour = if team_weapon == Some(Atgm::Javelin) { Color::srgba(0.4, 1.0, 0.5, 0.9) } else { Color::srgba(0.95, 0.95, 0.9, 0.9) };
+                bg.0 = colour;
+            }
+            None => {
+                vis.set_if_neq(Visibility::Hidden);
+            }
+        }
     }
     let now = time.elapsed_secs_f64();
     // Each text is written only when it reads differently, so Bevy lays out again only what changed.
@@ -241,16 +283,17 @@ fn update_hud(
             if view.sight {
                 let how = if weapon == Some(Atgm::Javelin) {
                     match view.lock {
-                        Some((_, t)) if t >= JAVELIN_LOCK => "LOCKED   [LMB] fire and forget".to_string(),
-                        Some((_, t)) => format!("LOCKING {:.0}%   hold the seeker on him", t / JAVELIN_LOCK * 100.0),
-                        None => "no target: put the crosshair on a vehicle".to_string(),
+                        Some((_, t)) if t >= JAVELIN_LOCK => "SEEK   LOCKED   [LMB] fire and forget".to_string(),
+                        Some((_, t)) => format!("SEEK   LOCKING {:.0}%   hold the gates on his hull", t / JAVELIN_LOCK * 100.0),
+                        None => "SEEK   no target: put the crosshair on a vehicle".to_string(),
                     }
                 } else {
                     "[LMB] launch, then hold the crosshair on him until impact".to_string()
                 };
+                let head = if weapon == Some(Atgm::Javelin) { "JAVELIN CLU   NFOV 9x   WHITE HOT".to_string() } else { format!("{name} PANEL   TV x12") };
                 Text::new(format!(
-                    "{} SIGHT x10   RANGE {}   MISSILES {}\n{}",
-                    name,
+                    "{}   RANGE {}   MISSILES {}\n{}",
+                    head,
                     view.ground_range.map(|r| format!("{:.0} m", r)).unwrap_or("----".into()),
                     left,
                     how
@@ -391,65 +434,216 @@ fn osd_update(time: &Time, view: &View, script: &Script, osd: &mut Query<(&Osd, 
     }
 }
 
-fn show_debrief(stats: Res<Stats>, fc: Res<FireControl>, positions: Query<&Post>, soldiers: Query<&crate::units::Soldier>, mut root: Query<&mut Node, With<Debrief>>, mut t: Single<&mut Text, With<DebriefText>>) {
+/// A source the day rests on, shown as a row the player can open.
+struct Source {
+    publisher: &'static str,
+    date: &'static str,
+    title: &'static str,
+    url: &'static str,
+}
+
+const VUHLEDAR_SOURCES: &[Source] = &[
+    Source { publisher: "Institute for the Study of War", date: "9 Feb 2023", title: "Russian Offensive Campaign Assessment", url: "https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-9-2023" },
+    Source { publisher: "Reuters", date: "10 Feb 2023", title: "Russia likely lost dozens of armoured vehicles near Ukraine's Vuhledar: UK", url: "https://www.reuters.com/world/europe/russia-likely-lost-dozens-tanks-failed-attack-vuhledar-uk-2023-02-10/" },
+    Source { publisher: "Politico Europe", date: "12 Feb 2023", title: "Russia may have lost an entire elite brigade near a Donetsk coal-mining town", url: "https://www.politico.eu/article/russia-may-have-lost-an-entire-elite-brigade-near-a-coal-mining-town-in-donbas-ukraine-says/" },
+    Source { publisher: "CNN", date: "13 Feb 2023", title: "'Like turkeys at a shooting range': mauling of Russian forces in Donetsk hotspot", url: "https://www.cnn.com/2023/02/13/europe/russia-ukraine-vuhledar-donetsk-fiasco-intl/index.html" },
+    Source { publisher: "Kyiv Post", date: "14 Feb 2023", title: "Skilled Vuhledar defenses halt major Kremlin attack", url: "https://www.kyivpost.com/post/12165" },
+    Source { publisher: "RFE/RL", date: "17 Feb 2023", title: "What happened in Vuhledar? A battle points to major Russian military problems", url: "https://www.rferl.org/a/ukraine-russia-battle-vuhledar/32276547.html" },
+    Source { publisher: "Novaya Gazeta Europe", date: "16 Mar 2023", title: "UK intelligence on Ukraine's use of RAAM anti-tank mines at Vuhledar", url: "https://novayagazeta.eu/articles/2023/03/16/uk-intel-russia-suffered-heavy-losses-at-vuhledar-due-to-ukraines-use-of-raam-anti-tank-mines-en-news" },
+    Source { publisher: "Butusov Plus", date: "29 Dec 2023", title: "Битва за Вугледар. Розгром батальйону «Алга» (documentary)", url: "https://www.youtube.com/watch?v=xjx2pRiGidk" },
+    Source { publisher: "RUSI", date: "Jul 2024", title: "Preliminary lessons from Ukraine's offensive operations, 2022–23", url: "https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf" },
+];
+
+const ROBOTYNE_SOURCES: &[Source] = &[
+    Source { publisher: "Popular Mechanics", date: "9 Jun 2023", title: "Ukraine's Western armor suffered enormous losses while breaching a minefield", url: "https://www.popularmechanics.com/military/weapons/a44157100/ukraine-suffers-losses-breaching-minefield/" },
+    Source { publisher: "Euromaidan Press", date: "10 Jun 2023", title: "So how many Leopard tanks did Ukraine lose near Mala Tokmachka?", url: "https://euromaidanpress.com/2023/06/10/so-how-many-leopard-tanks-were-lost-in-ukraine/" },
+    Source { publisher: "The Guardian", date: "14 Jun 2023", title: "Ukraine's failed Mala Tokmachka assault lays bare counteroffensive challenges", url: "https://www.theguardian.com/world/2023/jun/14/ukraine-failed-assault-near-mala-tokmachka-raises-counteroffensive-challenges" },
+    Source { publisher: "The War Zone", date: "15 Jun 2023", title: "Ukraine's armor appears to have a Russian attack helicopter problem", url: "https://www.twz.com/ukraines-armor-appears-to-have-a-russian-attack-helicopter-problem" },
+    Source { publisher: "BBC News", date: "27 Jul 2023", title: "Western armour struggles against Russian defences", url: "https://www.bbc.com/news/world-europe-66306150" },
+    Source { publisher: "War on the Rocks", date: "4 Sep 2023", title: "Perseverance and adaptation: Ukraine's counteroffensive at three months", url: "https://warontherocks.com/2023/09/perseverance-and-adaptation-ukraines-counteroffensive-at-three-months/" },
+    Source { publisher: "RUSI", date: "Sep 2023", title: "Stormbreak: fighting through Russian defences in Ukraine's 2023 offensive", url: "https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf" },
+    Source { publisher: "Kyiv Independent", date: "26 Sep 2023", title: "Overcoming setbacks, NATO-trained brigade breaches Surovikin line", url: "https://kyivindependent.com/overcoming-setbacks-nato-trained-brigade-breaches-surovikin-line-in-zaporizhzhia-oblast/" },
+];
+
+/// A row of the sources table: clicking it opens the page.
+#[derive(Component)]
+struct SourceLink(&'static str);
+
+/// The end of the day: its date and clock span as the heading; the day's own account in aligned rows; the
+/// lines about what came after, with no heading; and the sources the day rests on, each a row that opens in the
+/// browser. No figures from the record are set against the day's own: the sources say where the day came from,
+/// the ledger what it cost (design/next-items.md, package K).
+fn show_debrief(
+    mut commands: Commands,
+    fonts: Res<Fonts>,
+    stats: Res<Stats>,
+    fc: Res<FireControl>,
+    script: Res<Script>,
+    positions: Query<&Post>,
+    soldiers: Query<&crate::units::Soldier>,
+    mut root: Query<&mut Node, With<Debrief>>,
+    body: Single<Entity, With<DebriefText>>,
+    mut hud: Query<&mut Visibility, (With<Node>, Without<ChildOf>, Without<Debrief>)>,
+) {
     for mut n in &mut root {
         n.display = Display::Flex;
     }
+    // The drone's display and the sight go away under the screen.
+    for mut v in &mut hud {
+        *v = Visibility::Hidden;
+    }
+    let font = fonts.0.clone();
+    let tf = |size: f32| TextFont { font: FontSource::Handle(font.clone()), font_size: FontSize::Px(size), ..default() };
     let out = stats.destroyed + stats.abandoned;
-    let mut waves = String::new();
-    **t = Text::new(match diorama() {
+    // (label, value) rows, and the columns table: (name, vehicles, destroyed, abandoned).
+    let (heading, span, rows, columns, col_heads, closing, sources, keys): (String, String, Vec<(String, String)>, Vec<(String, [u32; 3])>, [&str; 3], Vec<String>, &[Source], &str) = match diorama() {
         Diorama::Vuhledar => {
-            for (i, w) in stats.per_wave.iter().enumerate().skip(1) {
-                waves.push_str(&format!("   column {}: {} vehicles, {} destroyed, {} abandoned\n", i, w.vehicles, w.destroyed, w.abandoned));
-            }
-            // How close they came to the town's southern edge.
             let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
-            format!(
-                "THE DAY\n\n\
-Russian vehicles committed  {}\n{}\
-Knocked out  {}  ({} destroyed, {} abandoned; {} on mines, {} by ATGM, {} by artillery; {} turrets thrown)\n\
-Withdrew  {}\n\
-Men sent forward  {}.  Came back  {}.  Russian dead  {}.\n\
-Closest any Russian got to the town  {:.0} m.  Ukrainian casualties  {}.\n\
-Shells left  {} of 96.\n\n\
-The 155th was rebuilt, and attacked again. Russia kept coming at the town's front for another year and a half.\n\
-{} fell on 1-2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.\n\n\
-R: the same day again, down the same roads.     Esc: quit.",
-                stats.vehicles_committed, waves, out, stats.destroyed, stats.abandoned, stats.mine_hits, stats.atgm_kills, stats.artillery_kills, stats.turret_tosses,
-                stats.withdrawn, stats.sent, stats.returned, stats.attacker_dead, closest, stats.defender_losses, fc.shells, crate::text::VUHLEDAR.hud()
+            (
+                format!("6 February 2023   {}", crate::text::VUHLEDAR.hud()),
+                format!("06:40 – {}", director::clock_text(script.t)),
+                vec![
+                    ("Russian vehicles committed".into(), stats.vehicles_committed.to_string()),
+                    ("Knocked out".into(), format!("{out}")),
+                    ("    destroyed".into(), stats.destroyed.to_string()),
+                    ("    abandoned".into(), stats.abandoned.to_string()),
+                    ("    on mines".into(), stats.mine_hits.to_string()),
+                    ("    by ATGM".into(), stats.atgm_kills.to_string()),
+                    ("    by artillery".into(), stats.artillery_kills.to_string()),
+                    ("    turrets thrown".into(), stats.turret_tosses.to_string()),
+                    ("Withdrew".into(), stats.withdrawn.to_string()),
+                    ("Men sent forward".into(), stats.sent.to_string()),
+                    ("    came back".into(), stats.returned.to_string()),
+                    ("    Russian dead".into(), stats.attacker_dead.to_string()),
+                    ("Closest any Russian got to the town".into(), format!("{closest:.0} m")),
+                    ("Ukrainian casualties".into(), stats.defender_losses.to_string()),
+                    ("Shells left".into(), format!("{} of 96", fc.shells)),
+                ],
+                stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (format!("column {i}"), [w.vehicles, w.destroyed, w.abandoned])).collect(),
+                ["vehicles", "destroyed", "abandoned"],
+                vec![
+                    "The 155th was rebuilt, and attacked again. Russia kept coming at the town's front for another year and a half.".into(),
+                    format!("{} fell on 1–2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.", crate::text::VUHLEDAR.hud()),
+                ],
+                VUHLEDAR_SOURCES,
+                "R: the same day again, down the same roads.     Esc: quit.",
             )
         }
         Diorama::Robotyne => {
             let names = ["", "the first group", "the second group", "sent back in for the men"];
-            for (i, w) in stats.per_wave.iter().enumerate().skip(1) {
-                let name = names.get(i).copied().unwrap_or("another group");
-                waves.push_str(&format!("   {}: {} vehicles, {} burned, {} left in the field\n", name, w.vehicles, w.destroyed, w.abandoned));
-            }
             let trench = crate::robotyne::TRENCH_Z;
-            let short = |a: f32| if a > trench - 1.0 { "in the trench".to_string() } else { format!("{:.0} m short of the trench", trench - a) };
+            let short = |a: f32| {
+                if a == f32::MIN {
+                    "nowhere yet".to_string()
+                } else if a > trench - 1.0 {
+                    "in the trench".to_string()
+                } else {
+                    format!("{:.0} m short of the trench", trench - a)
+                }
+            };
             let ru = positions.iter().filter(|p| p.side == Side::Ru).count();
             let lying = soldiers.iter().filter(|s| s.side == Side::Ua && s.state == crate::units::SState::Wounded).count();
             let quiet = positions.iter().filter(|p| p.side == Side::Ru && p.strength == 0).count();
-            format!(
-                "THE MORNING\n\n\
-Our vehicles committed  {}\n{}\
-Left in the field  {}:  {} burned out,  {} immobilised and abandoned. The recovery crews will try for those tonight.\n\
-Came back  {}.\n\
-Men sent forward  {}.  Brought out  {}, {} of them picked up in the field by a Bradley.  Killed  {}.\n\
-Wounded  {}:  {} brought out,  {} still lying out there.\n\
-The overwatch in the forward tree line lost  {}.\n\
-The furthest vehicle stopped {}. On foot, the furthest anyone got: {}.\n\
-Russian positions on the crest silenced  {} of {}.  Their dug-in tanks knocked out  {} of 2.\n\
-Shells left  {} of 64.  Smoke left  {} of 6.\n\n\
-Within days the armour was stopped, and the brigades went forward on foot instead, a tree line at a time.\n\
-{}, eleven kilometres to the south, was taken in August. {} was not reached.\n\n\
-R: the same morning again, down the same tracks.     Esc: quit.",
-                stats.vehicles_committed, waves, out, stats.destroyed, stats.abandoned, stats.withdrawn,
-                stats.sent, stats.returned, stats.picked_up, stats.attacker_dead, stats.wounded, stats.wounded_out, lying, stats.overwatch_losses,
-                short(stats.vehicle_advance), short(stats.max_advance), quiet, ru, stats.defender_vehicles, fc.shells, fc.smoke, crate::text::ROBOTYNE.hud(), crate::text::TOKMAK.hud()
+            (
+                format!("8 June 2023   {}", crate::text::MALA_TOKMACHKA.hud()),
+                format!("03:50 – {}", director::clock_text(script.t)),
+                vec![
+                    ("Our vehicles committed".into(), stats.vehicles_committed.to_string()),
+                    ("Left in the field".into(), out.to_string()),
+                    ("    burned out".into(), stats.destroyed.to_string()),
+                    ("    immobilised and abandoned (the recovery crews will try tonight)".into(), stats.abandoned.to_string()),
+                    ("Came back".into(), stats.withdrawn.to_string()),
+                    ("Men sent forward".into(), stats.sent.to_string()),
+                    ("    brought out".into(), stats.returned.to_string()),
+                    ("    of them picked up in the field by a Bradley".into(), stats.picked_up.to_string()),
+                    ("    killed".into(), stats.attacker_dead.to_string()),
+                    ("Wounded".into(), stats.wounded.to_string()),
+                    ("    brought out".into(), stats.wounded_out.to_string()),
+                    ("    still lying out there".into(), lying.to_string()),
+                    ("The overwatch in the forward tree line lost".into(), stats.overwatch_losses.to_string()),
+                    ("The furthest vehicle stopped".into(), short(stats.vehicle_advance)),
+                    ("On foot, the furthest anyone got".into(), short(stats.max_advance)),
+                    ("Russian positions on the crest silenced".into(), format!("{quiet} of {ru}")),
+                    ("Their dug-in tanks knocked out".into(), format!("{} of 2", stats.defender_vehicles)),
+                    ("Shells left".into(), format!("{} of 64", fc.shells)),
+                    ("Smoke left".into(), format!("{} of 6", fc.smoke)),
+                ],
+                stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (names.get(i).copied().unwrap_or("another group").to_string(), [w.vehicles, w.destroyed, w.abandoned])).collect(),
+                ["vehicles", "burned", "left"],
+                vec![
+                    "Within days the armour was stopped, and the brigades went forward on foot instead, a tree line at a time.".into(),
+                    format!("{}, eleven kilometres to the south, was taken in August. {} was not reached.", crate::text::ROBOTYNE.hud(), crate::text::TOKMAK.hud()),
+                ],
+                ROBOTYNE_SOURCES,
+                "R: the same morning again, down the same tracks.     Esc: quit.",
             )
         }
+    };
+    let dim = Color::srgba(0.72, 0.72, 0.70, 0.85);
+    // A text node given a width is measured for its height at its min-content width, a word a line, so a cell of
+    // fixed width must not wrap, or every row with a two-word value stands two lines tall.
+    let nowrap = TextLayout { linebreak: LineBreak::NoWrap, ..default() };
+    let right = |r: &mut ChildSpawnerCommands, s: String, size: f32, colour: Color, width: f32| {
+        r.spawn(Node { width: px(width), justify_content: JustifyContent::FlexEnd, ..default() }).with_child((Text::new(s), tf(size), TextColor(colour), nowrap));
+    };
+    let row = |p: &mut ChildSpawnerCommands, label: &str, value: &str, size: f32, colour: Color| {
+        p.spawn(Node { flex_direction: FlexDirection::Row, column_gap: px(16), ..default() }).with_children(|r| {
+            r.spawn((Text::new(label), tf(size), TextColor(colour), Node { flex_grow: 1.0, ..default() }));
+            right(r, value.to_string(), size, WHITE, 300.0);
+        });
+    };
+    commands.entity(*body).despawn_children().with_children(|p| {
+        p.spawn((Text::new(heading), tf(26.0), TextColor(WHITE)));
+        p.spawn((Text::new(span), tf(15.0), TextColor(dim), Node { margin: UiRect::bottom(px(22)), ..default() }));
+        for (label, value) in &rows {
+            row(p, label, value, 15.0, if label.starts_with(' ') { dim } else { WHITE });
+        }
+        // The columns, as a small table.
+        if !columns.is_empty() {
+            p.spawn(Node { flex_direction: FlexDirection::Row, column_gap: px(16), margin: UiRect::top(px(18)), ..default() }).with_children(|r| {
+                r.spawn((Text::new(""), tf(13.0), Node { flex_grow: 1.0, ..default() }));
+                for h in col_heads {
+                    right(r, h.to_string(), 13.0, dim, 110.0);
+                }
+            });
+            for (name, n) in &columns {
+                p.spawn(Node { flex_direction: FlexDirection::Row, column_gap: px(16), ..default() }).with_children(|r| {
+                    r.spawn((Text::new(name.as_str()), tf(15.0), TextColor(WHITE), Node { flex_grow: 1.0, ..default() }));
+                    for v in n {
+                        right(r, v.to_string(), 15.0, WHITE, 110.0);
+                    }
+                });
+            }
+        }
+        p.spawn(Node { height: px(26), ..default() });
+        for line in &closing {
+            p.spawn((Text::new(line.as_str()), tf(15.0), TextColor(WHITE)));
+        }
+        p.spawn(Node { height: px(26), ..default() });
+        p.spawn((Text::new("Sources"), tf(13.0), TextColor(dim), Node { margin: UiRect::bottom(px(6)), ..default() }));
+        for s in sources {
+            p.spawn((Interaction::None, Node { flex_direction: FlexDirection::Row, column_gap: px(16), padding: UiRect::vertical(px(2)), ..default() }, SourceLink(s.url))).with_children(|r| {
+                r.spawn((Text::new(s.publisher), tf(13.0), TextColor(dim), Node { width: px(250), ..default() }, nowrap));
+                r.spawn((Text::new(s.date), tf(13.0), TextColor(dim), Node { width: px(110), ..default() }, nowrap));
+                r.spawn((Text::new(s.title), tf(13.0), TextColor(AMBER), Node { flex_grow: 1.0, ..default() }));
+            });
+        }
+        p.spawn((Text::new(keys), tf(14.0), TextColor(dim), Node { margin: UiRect::top(px(26)), ..default() }));
     });
+}
+
+/// A click on a source opens it in the browser.
+fn open_sources(links: Query<(&Interaction, &SourceLink), Changed<Interaction>>) {
+    for (i, link) in &links {
+        if *i == Interaction::Pressed {
+            #[cfg(target_os = "linux")]
+            let _ = std::process::Command::new("xdg-open").arg(link.0).spawn();
+            #[cfg(target_os = "macos")]
+            let _ = std::process::Command::new("open").arg(link.0).spawn();
+            #[cfg(target_os = "windows")]
+            let _ = std::process::Command::new("cmd").args(["/C", "start", "", link.0]).spawn();
+        }
+    }
 }
 
 fn debrief_input(keys: Res<ButtonInput<KeyCode>>, mut exit: MessageWriter<AppExit>) {

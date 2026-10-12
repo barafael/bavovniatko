@@ -836,6 +836,8 @@ pub struct Blast {
 pub struct DirectHit {
     pub target: Entity,
     pub cause: Cause,
+    /// Onto the roof, where the armour is thinnest (a Javelin's dive).
+    pub top: bool,
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -1854,7 +1856,8 @@ fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit
         if !v.state.alive() {
             continue;
         }
-        if rng.0.random_bool(v.kind.hit_kill()) {
+        let p_kill = if h.top { (v.kind.hit_kill() + 0.2).min(0.95) } else { v.kind.hit_kill() };
+        if rng.0.random_bool(p_kill) {
             if rng.0.random_bool(0.2) {
                 // A hit on the engine: it crawls on trailing smoke, the crew gets out, and the fire decides.
                 v.immobilise(rng.0.random_range(0.6..1.2), rng.0.random_range(-0.2..0.2));

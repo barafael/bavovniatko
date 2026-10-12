@@ -14,6 +14,7 @@ struct FeedEffect {
     down: f32,
     saturation: f32,
     bitrate: f32,
+    sight: f32,
 }
 
 @group(2) @binding(0) var<uniform> fx: FeedEffect;
@@ -119,13 +120,31 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
         var c = textureSample(screen_texture, texture_sampler, uv).rgb;
         let d = distance(uv, vec2<f32>(0.5));
         if fx.mode == 3u {
-            // Through the sight: a single round eyepiece, slightly cold, a little noise from the optics.
-            let l = luma(c);
-            c = mix(vec3<f32>(l), c, 0.7) * vec3<f32>(0.95, 1.0, 1.03);
-            c = (c - 0.5) * 1.1 + 0.5;
-            c += (hash(uv * dims + frame) - 0.5) * 0.03;
-            let q = (uv - 0.5) * vec2<f32>(dims.x / dims.y, 1.0);
-            c *= 1.0 - smoothstep(0.43, 0.47, length(q));
+            // Neither sight is an eyepiece (design/next-items.md §2.6): the Stugna-P's gunner watches the
+            // panel's low-resolution 4:3 TV picture; the Javelin's CLU shows a black-and-green thermal. Both
+            // sit in a 4:3 frame with black outside it.
+            let aspect = dims.x / dims.y;
+            let fx43 = (uv.x - 0.5) * aspect / (4.0 / 3.0);
+            if abs(fx43) > 0.5 {
+                return vec4<f32>(0.0, 0.0, 0.0, 1.0);
+            }
+            if fx.sight > 0.5 {
+                // The CLU: the scene by its heat, hot light green; our picture has no heat, so dark steel and
+                // bodies (the dark things) read hot and the snow cold; coarse, with the detector's noise.
+                let bq = (floor(uv * dims / 3.0) + 0.5) * 3.0 / dims;
+                let l = pow(luma(textureSample(screen_texture, texture_sampler, bq).rgb), 0.45);
+                let heat = clamp(1.15 - l * 1.3, 0.0, 1.0);
+                c = vec3<f32>(0.10, 0.95, 0.28) * (0.08 + 0.92 * heat * heat);
+                c += (hash(floor(uv * dims / 3.0) + frame) - 0.5) * 0.06;
+            } else {
+                // The panel: a PAL-class picture, soft, nearly grey, a little noise.
+                let bq = (floor(uv * dims / 2.0) + 0.5) * 2.0 / dims;
+                c = textureSample(screen_texture, texture_sampler, bq).rgb;
+                let l = luma(c);
+                c = mix(vec3<f32>(l), c, 0.25) * vec3<f32>(0.97, 1.0, 1.02);
+                c = (c - 0.5) * 1.05 + 0.5;
+                c += (hash(uv * dims + frame) - 0.5) * 0.04;
+            }
         } else {
             c += (hash(uv * dims + frame) - 0.5) * 0.02 * fx.grain;
             c *= 1.0 - smoothstep(0.55, 0.95, d) * 0.35;
