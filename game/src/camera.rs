@@ -78,6 +78,11 @@ pub struct View {
     pub ground_range: Option<f32>,
     /// Javelin: the vehicle the seeker is tracking and for how long (it locks after 2.5 s).
     pub lock: Option<(Entity, f32)>,
+    /// The view was placed by hand this frame (the showcase): the flight controller and the ground view's own
+    /// controls stand down.
+    pub locked: bool,
+    /// The showcase's ground shot fires this frame, beside the mouse and `VUHLEDAR_AUTO_ATGM`.
+    pub launch: bool,
     /// The control link (the video link is the feed's own): up, and for how long it has been down.
     pub control: bool,
     pub lost_for: f32,
@@ -135,6 +140,8 @@ impl Default for View {
             sight: false,
             ground_range: None,
             lock: None,
+            locked: false,
+            launch: false,
             control: true,
             lost_for: 0.0,
             rth: None,
@@ -167,23 +174,35 @@ pub fn look_angles(d: Vec3) -> (f32, f32) {
     (f32::atan2(-d.x, -d.z), f32::atan2(d.y, d.xz().length()))
 }
 
-/// What a camera follows: a point, a vehicle of the column, or the infantry (`VUHLEDAR_LOOK`, the showcase).
+/// What a camera follows: a point, a vehicle of the column, the infantry (`VUHLEDAR_LOOK`, the showcase), one
+/// wave's vehicle by column index, or the attacker's infantry near a point.
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Target {
     /// A point on the ground (x, z).
     Point(Vec2),
-    /// The Russian vehicle with this column index, in the earliest wave that has one.
+    /// The attacker's vehicle with this column index, in the earliest wave that has one.
     Vehicle(u32),
-    /// The middle of the Russian infantry still advancing within 1.4 km.
+    /// That wave's vehicle by column index (`w/i`), where several waves share a road.
+    Wave(u32, u32),
+    /// The middle of the attacker's infantry still advancing within 1.4 km.
     Men,
+    /// The mean of the attacker's infantry on foot within 500 m of a point; the point itself when nobody is
+    /// there, so a shot never holds a stale aim on an empty field.
+    MenNear(Vec2),
 }
 
 impl std::str::FromStr for Target {
     type Err = std::num::ParseIntError;
 
-    /// `men`, or a column index.
+    /// `men`, a column index, or `w/i`.
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "men" { Ok(Target::Men) } else { s.parse().map(Target::Vehicle) }
+        if s == "men" {
+            Ok(Target::Men)
+        } else if let Some((w, i)) = s.split_once('/') {
+            Ok(Target::Wave(w.trim().parse()?, i.trim().parse()?))
+        } else {
+            s.parse().map(Target::Vehicle)
+        }
     }
 }
 
@@ -192,6 +211,7 @@ impl Target {
         match self {
             Target::Point(p) => Some(geo::ground(p)),
             Target::Vehicle(idx) => vehicles.iter().filter(|(v, _)| v.idx == idx && v.side == crate::diorama::diorama().attacker()).min_by_key(|(v, _)| v.wave).map(|(_, t)| t.translation),
+            Target::Wave(wave, idx) => vehicles.iter().filter(|(v, _)| v.side == crate::diorama::diorama().attacker() && v.wave == wave && v.idx == idx).map(|(_, t)| t.translation).next(),
             Target::Men => {
                 let pts: Vec<Vec3> = men
                     .iter()
@@ -199,6 +219,15 @@ impl Target {
                     .map(|(_, t)| t.translation)
                     .collect();
                 (!pts.is_empty()).then(|| pts.iter().copied().sum::<Vec3>() / pts.len() as f32)
+            }
+            Target::MenNear(p) => {
+                let at = geo::ground(p);
+                let pts: Vec<Vec3> = men
+                    .iter()
+                    .filter(|(s, t)| s.side == crate::diorama::diorama().attacker() && s.state != SState::DugIn && t.translation.distance(at) < 500.0)
+                    .map(|(_, t)| t.translation)
+                    .collect();
+                Some(if pts.is_empty() { at } else { pts.iter().copied().sum::<Vec3>() / pts.len() as f32 })
             }
         }
     }
@@ -323,8 +352,24 @@ pub fn enter_ground(view: &mut View, team: Entity, pos: Vec2) {
     view.lock = None;
 }
 
+/// The ground view's gunner tracks the nearest live attacker vehicle within 3.5 km, easing the head onto him
+/// (`VUHLEDAR_VIEW=ground`, and the film's ground shots each frame).
+pub fn track_nearest(view: &mut View, vehicles: &Query<(&Vehicle, &Transform)>) {
+    let eye = view.ground_eye;
+    let Some((_, tf)) = vehicles
+        .iter()
+        .filter(|(v, t)| v.side == crate::diorama::diorama().attacker() && v.state.alive() && t.translation.distance(eye) < 3500.0)
+        .min_by(|a, b| a.1.translation.distance(eye).total_cmp(&b.1.translation.distance(eye)))
+    else {
+        return;
+    };
+    let (yaw, pitch) = look_angles(tf.translation + Vec3::Y * 1.2 - eye);
+    view.ground_yaw += crate::units::wrap(yaw - view.ground_yaw) * 0.3;
+    view.ground_pitch += (pitch - view.ground_pitch) * 0.3;
+}
+
 /// What the operator's hands do this frame: the sticks, the gimbal wheel, the zoom rocker. Read from the keys and
-/// the mouse, or from `VUHLEDAR_FLY` while a scripted leg is running.
+/// the mouse, or from the scripted flight (`VUHLEDAR_FLY`, and the film's flown shots).
 #[derive(Default, Clone, Copy)]
 struct Stick {
     /// Forward and sideways, -1..1.
@@ -344,6 +389,11 @@ struct Stick {
     tilt: f32,
 }
 
+/// A scripted flight the sticks read: legs of game time with what the sticks do. `DevPlugin` fills it from
+/// `VUHLEDAR_FLY`; the film's tour replaces it per flown shot.
+#[derive(Resource, Default, Clone)]
+pub struct Flight(pub Vec<(f32, f32, String)>);
+
 impl Stick {
     fn read(keys: &ButtonInput<KeyCode>, buttons: &ButtonInput<MouseButton>, motion: &AccumulatedMouseMotion, scroll: &AccumulatedMouseScroll, view: &View) -> Self {
         let axis = |a, b| keys.pressed(a) as u8 as f32 - keys.pressed(b) as u8 as f32;
@@ -357,8 +407,8 @@ impl Stick {
 
     /// The scripted leg at game time `t`, if one is running: `w a s d q e r f` as on the keys, `+` sport, `u`/`n` gimbal
     /// up/down, `z`/`x` zoom in/out.
-    fn scripted(t: f32, dt: f32) -> Option<Self> {
-        let (_, _, spec) = dev().fly.iter().find(|(from, to, _)| (*from..*to).contains(&t))?;
+    fn scripted(t: f32, dt: f32, flight: &Flight) -> Option<Self> {
+        let (_, _, spec) = flight.0.iter().find(|(from, to, _)| (*from..*to).contains(&t))?;
         let mut s = Self::default();
         for c in spec.chars() {
             match c {
@@ -389,6 +439,7 @@ fn drone_control(
     motion: Res<AccumulatedMouseMotion>,
     scroll: Res<AccumulatedMouseScroll>,
     script: Res<crate::director::Script>,
+    flight: Res<Flight>,
     mut view: ResMut<View>,
 ) {
     let dt = time.delta_secs();
@@ -423,10 +474,10 @@ fn drone_control(
     // Gusts: the position hold fights a wind that comes and goes. Mostly a few m/s, now and then a shove.
     let gust = Vec3::new(geo::fbm(t * 0.21, 1.3, 3, 61), 0.0, geo::fbm(t * 0.21 + 40.0, 7.1, 3, 62)) * 2.2
         * (1.0 + 2.5 * (geo::value_noise(t * 0.07, 3.3, 63) - 0.35).max(0.0));
-    if (view.mode != Mode::Drone && view.rth.is_none()) || dev().showcase.is_some() {
+    if (view.mode != Mode::Drone && view.rth.is_none()) || view.locked {
         return;
     }
-    let stick = Stick::scripted(script.t, dt).unwrap_or_else(|| Stick::read(&keys, &buttons, &motion, &scroll, &view));
+    let stick = Stick::scripted(script.t, dt, &flight).unwrap_or_else(|| Stick::read(&keys, &buttons, &motion, &scroll, &view));
     // A Mavic-class drone: about 7 m/s for steady filming, 17 m/s in sport mode.
     let (max_speed, max_accel) = if stick.sport { (17.0, 5.0) } else { (7.0, 2.5) };
     let yaw = view.drone_yaw;
@@ -542,8 +593,9 @@ fn ground_control(
     if view.mode != Mode::Ground {
         return;
     }
-    // Mouse look is direct here (the cursor is captured); the right button brings the eye to the sight.
-    if dev().view != Some(Mode::Ground) {
+    // Mouse look is direct here (the cursor is captured); the right button brings the eye to the sight. A view
+    // placed by hand (the showcase's ground shots) keeps its own sight.
+    if dev().view != Some(Mode::Ground) && !view.locked {
         view.sight = buttons.pressed(MouseButton::Right);
     }
     let k = 0.0022 / view.zoom();

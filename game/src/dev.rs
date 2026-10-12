@@ -3,7 +3,7 @@
 
 use crate::camera::{HeadlessTarget, Mode, Target, View, look_angles};
 use crate::fire::{Atgm, FireControl, Strike, Post};
-use crate::units::{Radio, Side, Soldier, Stats, VState, Vehicle};
+use crate::units::{Radio, Soldier, Stats, VState, Vehicle};
 use bevy::{diagnostic::DiagnosticsStore, prelude::*, render::view::screenshot::{Screenshot, save_to_disk}};
 use std::{str::FromStr, sync::OnceLock};
 
@@ -80,8 +80,18 @@ pub struct DevEnv {
     pub lineup: Option<[f32; 3]>,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
-    /// `VUHLEDAR_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
-    pub sky: Option<crate::sky::Weather>,
+/// `VUHLEDAR_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
+pub sky: Option<crate::sky::Weather>,
+    /// `VUHLEDAR_TOUR`: which shot list the showcase films, `film` (design/showcase.md) or the minute tours.
+    pub tour: Option<TourKind>,
+}
+
+/// `VUHLEDAR_TOUR`.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
+#[strum(serialize_all = "lowercase")]
+pub enum TourKind {
+    /// The showcase film's tour, one per diorama.
+    Film,
 }
 
 fn var(k: &str) -> Option<String> {
@@ -155,6 +165,7 @@ impl DevEnv {
             light: var("VUHLEDAR_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
                 .unwrap_or([1.0, 1.0, 0.0]),
+            tour: parse("VUHLEDAR_TOUR"),
         }
     }
 }
@@ -170,7 +181,8 @@ pub struct DevPlugin;
 
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, lineup.after(crate::units::setup_models));
+        app.insert_resource(crate::camera::Flight(dev().fly.clone()))
+            .add_systems(Startup, lineup.after(crate::units::setup_models));
         app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground).chain().in_set(crate::Step::Control).in_set(DevSystems));
     }
 }
@@ -420,7 +432,7 @@ fn frame_times(time: Res<Time<Real>>, diagnostics: Res<DiagnosticsStore>, mut ac
 }
 
 /// `VUHLEDAR_VIEW=ground`: start in the tree line nearest the dacha road with a `VUHLEDAR_TEAM` launcher
-/// (default Stugna-P), sight up, tracking the nearest moving Russian vehicle the way a gunner would.
+/// (default Stugna-P), sight up, tracking the nearest moving attacker vehicle the way a gunner would.
 /// `VUHLEDAR_AUTO_ATGM=<s>` launches then.
 fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
     if dev().view != Some(Mode::Ground) {
@@ -439,17 +451,7 @@ fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&
         *started = true;
     }
     view.sight = true;
-    let eye = view.ground_eye;
-    let Some((_, tf)) = q
-        .iter()
-        .filter(|(v, t)| v.side == Side::Ru && v.state.alive() && t.translation.distance(eye) < 3500.0)
-        .min_by(|a, b| a.1.translation.distance(eye).total_cmp(&b.1.translation.distance(eye)))
-    else {
-        return;
-    };
-    let (yaw, pitch) = look_angles(tf.translation + Vec3::Y * 1.2 - eye);
-    view.ground_yaw += crate::units::wrap(yaw - view.ground_yaw) * 0.3;
-    view.ground_pitch += (pitch - view.ground_pitch) * 0.3;
+    crate::camera::track_nearest(&mut view, &q);
 }
 
 fn key_shot(mut commands: Commands, keys: Res<ButtonInput<KeyCode>>, mut n: Local<u32>) {

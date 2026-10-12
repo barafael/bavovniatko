@@ -9,18 +9,25 @@ use crate::diorama::{Diorama, diorama};
 use crate::units::{ColumnOrder, Radio, Side, Stats};
 use crate::Phase;
 use bevy::{prelude::*, text::FontSource};
+use std::io::Write;
 
 pub struct HudPlugin;
 
 impl Plugin for HudPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, spawn_hud)
-            .add_systems(Update, (update_hud, briefing_input).chain().in_set(crate::Step::Screen))
+        app.init_resource::<HudHidden>()
+            .add_systems(Startup, spawn_hud)
+            .add_systems(Update, (update_hud, briefing_input, hud_switch).chain().in_set(crate::Step::Screen))
             .add_systems(OnEnter(Phase::Playing), hide_briefing)
             .add_systems(OnEnter(Phase::Debrief), show_debrief)
             .add_systems(Update, (debrief_input, open_sources).run_if(in_state(Phase::Debrief)).in_set(crate::Step::Screen).after(briefing_input));
     }
 }
+
+/// The showcase's switch, written each frame: true while a shot is filmed without the interface. While it is
+/// set, every top-level node is hidden; the [`HudKeep`] ones come back with it.
+#[derive(Resource, Default, Clone, Copy, PartialEq)]
+pub struct HudHidden(pub bool);
 
 #[derive(Component)]
 struct Telemetry;
@@ -61,6 +68,10 @@ struct Briefing;
 struct Debrief;
 #[derive(Component)]
 struct DebriefText;
+/// A top-level node the HUD switch brings back when the interface returns (the display re-tunes the rest —
+/// the drone's display, the crosshair, the reticle — itself each frame).
+#[derive(Component)]
+struct HudKeep;
 
 const AMBER: Color = Color::srgb(0.95, 0.85, 0.55);
 const WHITE: Color = Color::srgba(0.95, 0.96, 0.97, 0.92);
@@ -91,7 +102,7 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
         right: right.map(px).unwrap_or(Val::Auto),
         ..default()
     };
-    commands.spawn((text("", 15.0, WHITE), abs(Some(14.0), None, Some(18.0), None), Telemetry));
+    commands.spawn((text("", 15.0, WHITE), abs(Some(14.0), None, Some(18.0), None), Telemetry, HudKeep));
     // The drone's display: white with a dark shadow, monospaced, in the corners and along the bottom.
     let shadow = TextShadow { offset: Vec2::new(1.0, 1.0), color: Color::srgba(0.0, 0.0, 0.0, 0.8) };
     commands.spawn((text("", 15.0, WHITE), abs(Some(14.0), None, Some(18.0), None), shadow, Osd::Status));
@@ -104,14 +115,15 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
         Osd::Flight,
         TextLayout::justify(Justify::Center),
     ));
-    commands.spawn((text("", 15.0, WHITE), abs(Some(40.0), None, None, Some(18.0)), Tally, TextLayout::justify(Justify::Right)));
-    commands.spawn((text("", 14.0, AMBER), Node { max_width: px(470), ..abs(None, Some(16.0), Some(18.0), None) }, RadioLog));
-    commands.spawn((text("", 14.0, WHITE), abs(None, Some(16.0), None, Some(18.0)), FirePanel, TextLayout::justify(Justify::Right)));
+    commands.spawn((text("", 15.0, WHITE), abs(Some(40.0), None, None, Some(18.0)), Tally, TextLayout::justify(Justify::Right), HudKeep));
+    commands.spawn((text("", 14.0, AMBER), Node { max_width: px(470), ..abs(None, Some(16.0), Some(18.0), None) }, RadioLog, HudKeep));
+    commands.spawn((text("", 14.0, WHITE), abs(None, Some(16.0), None, Some(18.0)), FirePanel, TextLayout::justify(Justify::Right), HudKeep));
     commands.spawn((
         text("", 26.0, WHITE),
         Node { position_type: PositionType::Absolute, top: percent(16), width: percent(100), justify_content: JustifyContent::Center, ..default() },
         TextLayout::justify(Justify::Center),
         Banner,
+        HudKeep,
     ));
     commands.spawn((
         text("", 30.0, WHITE),
@@ -204,6 +216,35 @@ fn briefing_input(keys: Res<ButtonInput<KeyCode>>, phase: Res<State<Phase>>, mut
 fn hide_briefing(mut q: Query<&mut Node, With<Briefing>>) {
     for mut n in &mut q {
         n.display = Display::None;
+    }
+}
+
+/// The showcase films some shots with the interface off: while [`HudHidden`] says so, every top-level node is
+/// hidden (as under the debrief); the [`HudKeep`] ones come back with it, after the display has already re-tuned
+/// the rest this frame.
+#[allow(clippy::type_complexity)]
+fn hud_switch(
+    hidden: Res<HudHidden>,
+    phase: Res<State<Phase>>,
+    mut nodes: ParamSet<(
+        Query<&mut Visibility, (With<Node>, Without<ChildOf>, Without<Debrief>)>,
+        Query<&mut Visibility, (With<HudKeep>, Without<ChildOf>, Without<Debrief>)>,
+    )>,
+    mut hid: Local<bool>,
+) {
+    if *phase.get() != Phase::Playing {
+        return;
+    }
+    if hidden.0 {
+        for mut v in &mut nodes.p0() {
+            *v = Visibility::Hidden;
+        }
+        *hid = true;
+    } else if *hid {
+        *hid = false;
+        for mut v in &mut nodes.p1() {
+            *v = Visibility::Visible;
+        }
     }
 }
 
@@ -602,6 +643,17 @@ fn show_debrief(
         }
     };
     let dim = Color::srgba(0.72, 0.72, 0.70, 0.85);
+    // The film's end card reads this: one label and value per row, and the closing lines prefixed `closing\t`.
+    // Written fresh, once, when the screen comes up.
+    if let Some(dir) = crate::dev::dev().showcase.as_deref() {
+        let mut text = rows.iter().map(|(l, v)| format!("{l}\t{v}\n")).collect::<String>();
+        for line in &closing {
+            text.push_str(&format!("closing\t{line}\n"));
+        }
+        if let Ok(mut f) = std::fs::File::create(format!("{dir}/ledger.txt")) {
+            let _ = f.write_all(text.as_bytes());
+        }
+    }
     // A text node given a width is measured for its height at its min-content width, a word a line, so a cell of
     // fixed width must not wrap, or every row with a two-word value stands two lines tall.
     let nowrap = TextLayout { linebreak: LineBreak::NoWrap, ..default() };

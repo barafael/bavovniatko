@@ -1144,7 +1144,7 @@ fn player_atgm(
     mut teams: Query<&mut Post>,
 ) {
     let now = time.elapsed_secs_f64();
-    let scripted = dev().auto_atgm.is_some_and(|t| now >= t && now - time.delta_secs_f64() < t);
+    let scripted = view.launch || dev().auto_atgm.is_some_and(|t| now >= t && now - time.delta_secs_f64() < t);
     let fire = buttons.just_pressed(MouseButton::Left) || scripted;
     if view.mode != Mode::Ground || !fire || !view.sight || !guided.is_empty() {
         return;

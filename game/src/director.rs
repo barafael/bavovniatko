@@ -318,7 +318,11 @@ fn russian_artillery(
 
 fn check_end(script: Res<Script>, stats: Res<Stats>, vehicles: Query<&units::Vehicle>, soldiers: Query<&units::Soldier>, mut next: ResMut<NextState<Phase>>) {
     let attacker = diorama().attacker();
-    let quiet = script.t > 1350.0 && vehicles.iter().filter(|v| v.side == attacker).all(|v| !v.state.mobile()) && soldiers.iter().filter(|s| s.side == attacker && s.state != units::SState::DugIn).count() == 0;
+    // While the showcase films, the quiet exit waits: the tour's own debrief shot ends the day.
+    let quiet = crate::dev::dev().showcase.is_none()
+        && script.t > 1350.0
+        && vehicles.iter().filter(|v| v.side == attacker).all(|v| !v.state.mobile())
+        && soldiers.iter().filter(|s| s.side == attacker && s.state != units::SState::DugIn).count() == 0;
     if script.t > DAY_LENGTH || quiet || stats.foothold > 25 {
         next.set(Phase::Debrief);
     }
