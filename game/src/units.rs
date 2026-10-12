@@ -1559,6 +1559,20 @@ fn toss_turret(commands: &mut Commands, rng: &mut SmallRng, stats: &mut Stats, r
     }
 }
 
+/// A vehicle's turret: the skin that chars as the wreck burns, and where it sits, for when the charges throw it.
+type TurretMats<'w, 's> = Query<
+    'w,
+    's,
+    (&'static mut MeshMaterial3d<StandardMaterial>, &'static GlobalTransform),
+    (With<Turret>, Without<Skin>),
+>;
+
+/// The turret of every vehicle, for charring its skin and throwing it when the charges go.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Turrets<'w, 's> {
+    mats: TurretMats<'w, 's>,
+}
+
 pub fn on_wrecked(
     ev: On<Wrecked>,
     mut commands: Commands,
@@ -1573,7 +1587,7 @@ pub fn on_wrecked(
     mut paint: ResMut<PaintQueue>,
     mut blasts: MessageWriter<Blast>,
     mut q: Query<(&mut Vehicle, &Transform, &mut MeshMaterial3d<StandardMaterial>), Without<Turret>>,
-    mut turrets: Query<(&mut MeshMaterial3d<StandardMaterial>, &GlobalTransform), (With<Turret>, Without<Skin>)>,
+    mut turrets: Turrets,
     children: Query<&Children>,
     mut skins: Query<(&Skin, &mut MeshMaterial3d<StandardMaterial>), Without<Vehicle>>,
 ) {
@@ -1641,7 +1655,7 @@ pub fn on_wrecked(
         let speed = if ev.how == Kill::BrewUp { rng.random_range(5.0..9.0) } else { rng.random_range(1.5..3.0) };
         throw_body(&mut commands, &models, &palette, v.side, p + Vec3::Y * 2.2, Vec3::new(a.cos() * speed, rng.random_range(2.0..5.0), a.sin() * speed), rng);
     }
-    let turret = turrets.get_mut(v.turret).ok().map(|(mut tm, tgt)| {
+    let turret = turrets.mats.get_mut(v.turret).ok().map(|(mut tm, tgt)| {
         char_skins(v.turret, &mut tm, &m.turret, &children, &mut skins);
         *tgt
     });

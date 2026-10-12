@@ -469,6 +469,28 @@ const ROBOTYNE_SOURCES: &[Source] = &[
 #[derive(Component)]
 struct SourceLink(&'static str);
 
+/// Every top-level UI node: no parent, and not the debrief's own.
+type TopLevel<'w, 's> = Query<'w, 's, &'static mut Visibility, (With<Node>, Without<ChildOf>, Without<Debrief>)>;
+
+/// The drone's screen and its overlays: they go under the debrief screen when the day ends.
+#[derive(bevy::ecs::system::SystemParam)]
+struct HudNodes<'w, 's> {
+    nodes: TopLevel<'w, 's>,
+}
+
+/// All the copy the debrief screen is built from: the heading, the clock span, the (label, value) rows, the
+/// per-column table, its three heads, the lines that come after, the sources, and the keys.
+type DebriefCopy = (
+    String,
+    String,
+    Vec<(String, String)>,
+    Vec<(String, [u32; 3])>,
+    [&'static str; 3],
+    Vec<String>,
+    &'static [Source],
+    &'static str,
+);
+
 /// The end of the day: its date and clock span as the heading; the day's own account in aligned rows; the
 /// lines about what came after, with no heading; and the sources the day rests on, each a row that opens in the
 /// browser. No figures from the record are set against the day's own: the sources say where the day came from,
@@ -483,20 +505,20 @@ fn show_debrief(
     soldiers: Query<&crate::units::Soldier>,
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
-    mut hud: Query<&mut Visibility, (With<Node>, Without<ChildOf>, Without<Debrief>)>,
+    mut hud: HudNodes,
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
     }
     // The drone's display and the sight go away under the screen.
-    for mut v in &mut hud {
+    for mut v in &mut hud.nodes {
         *v = Visibility::Hidden;
     }
     let font = fonts.0.clone();
     let tf = |size: f32| TextFont { font: FontSource::Handle(font.clone()), font_size: FontSize::Px(size), ..default() };
     let out = stats.destroyed + stats.abandoned;
     // (label, value) rows, and the columns table: (name, vehicles, destroyed, abandoned).
-    let (heading, span, rows, columns, col_heads, closing, sources, keys): (String, String, Vec<(String, String)>, Vec<(String, [u32; 3])>, [&str; 3], Vec<String>, &[Source], &str) = match diorama() {
+    let (heading, span, rows, columns, col_heads, closing, sources, keys): DebriefCopy = match diorama() {
         Diorama::Vuhledar => {
             let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
             (
