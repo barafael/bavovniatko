@@ -64,8 +64,10 @@ pub struct View {
     pub gimbal_target: f32,
     pub fov_target: f32,
     pub climb: f32,
-    /// Visual attitude disturbance from gusts and manoeuvres (yaw, pitch, roll).
+    /// Visual attitude disturbance from manoeuvres (yaw, pitch, roll).
     pub tilt: Vec3,
+    /// Where the position hold keeps the drone while the sticks are centred.
+    pub hold: Option<Vec2>,
     // Ground view.
     pub ground_team: Option<Entity>,
     pub ground_eye: Vec3,
@@ -125,6 +127,7 @@ impl Default for View {
             fov_target: 52f32.to_radians(),
             climb: 0.0,
             tilt: Vec3::ZERO,
+            hold: None,
             ground_team: None,
             ground_eye: Vec3::ZERO,
             ground_yaw: std::f32::consts::PI,
@@ -455,14 +458,23 @@ fn drone_control(
             (if to.length() > 20.0 { Vec3::new(to.x, 0.0, to.y).normalize() * 10.0 } else { Vec3::ZERO }, climb)
         }
     };
-    // The flight controller only half-cancels the gust before it is felt.
-    let accel = ((desired - horizontal) * 1.3 - gust * 0.35).clamp_length_max(max_accel);
+    let accel = if desired == Vec3::ZERO {
+        // Sticks centred: the position hold brings the aircraft back to where they were released and keeps it
+        // there to within a metre, as a GPS hold does; the gust shoves it about that point, slowly.
+        let here = view.drone_pos.xz();
+        let off = *view.hold.get_or_insert(here) - here;
+        (Vec3::new(off.x, 0.0, off.y) * 0.8 - horizontal * 1.6 - gust * 0.08).clamp_length_max(max_accel)
+    } else {
+        view.hold = None;
+        // Under way, the controller only half-cancels the gust before it is felt.
+        ((desired - horizontal) * 1.3 - gust * 0.35).clamp_length_max(max_accel)
+    };
     let mut vel = horizontal + accel * dt;
     // Vertical: climb or sink towards the commanded rate, gently.
     view.climb += (climb_cmd - view.climb).clamp(-2.0 * dt, 2.0 * dt);
     vel.y = view.climb;
     view.drone_vel = vel;
-    let step = Vec3::new(vel.x + gust.x * 0.25, vel.y, vel.z + gust.z * 0.25) * dt;
+    let step = if view.hold.is_some() { vel } else { Vec3::new(vel.x + gust.x * 0.25, vel.y, vel.z + gust.z * 0.25) } * dt;
     view.drone_pos += step;
     // Keep the drone over Ukrainian-held ground, mostly: it may creep forward, at a price in jamming.
     view.drone_pos.x = view.drone_pos.x.clamp(-geo::HALF_X + 50.0, geo::HALF_X - 50.0);
@@ -488,8 +500,8 @@ fn drone_control(
     }
     let lf = view.drone_fov.ln() + (view.fov_target.ln() - view.drone_fov.ln()) * (1.0 - (-dt * 3.0).exp());
     view.drone_fov = lf.exp();
-    // What the gimbal cannot quite hide: a little lag in the turns, a tremor in the gusts.
-    let target_tilt = Vec3::new(-dyaw.clamp(-0.3, 0.3) * 0.01, accel.dot(fwd) * -0.002, accel.dot(right) * 0.002) + gust * 0.0012;
+    // What the gimbal cannot quite hide: a little lag in the turns and under acceleration. The gusts it hides.
+    let target_tilt = Vec3::new(-dyaw.clamp(-0.3, 0.3) * 0.01, accel.dot(fwd) * -0.001, accel.dot(right) * 0.001);
     let cur = view.tilt;
     view.tilt = cur + (target_tilt - cur) * (1.0 - (-dt * 5.0).exp());
 }
@@ -569,9 +581,9 @@ fn apply_view(
     let dt = time.delta_secs();
     let (pos, rot, fov) = match view.mode {
         Mode::Drone => {
-            // The gimbal steadies most of the airframe's motion; a tremor gets through, worse when zoomed.
-            let z = view.zoom().sqrt();
-            let tremor = Vec3::new((t * 3.1).sin() * 0.0004, (t * 2.7 + 1.0).sin() * 0.0004, (t * 2.3).sin() * 0.0006) * z;
+            // The gimbal steadies the airframe's motion; what gets through is its own small, aimless stabilisation
+            // error, the same angle at any zoom, so it shows only zoomed in: the picture swims, it never rocks.
+            let tremor = Vec3::new(geo::fbm(t * 0.9, 3.0, 2, 71), geo::fbm(t * 0.9, 5.0, 2, 72), geo::fbm(t * 0.9, 9.0, 2, 73)) * 0.00025;
             let tl = view.tilt + tremor;
             let rot = Quat::from_euler(EulerRot::YXZ, view.drone_yaw + tl.x, view.gimbal + tl.y, tl.z);
             (view.drone_pos, rot, view.drone_fov)
