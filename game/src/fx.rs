@@ -184,11 +184,13 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
             let alpha = (a as f32 + 1.0) / STEPS as f32;
             // Unlit, pre-shaded for an overcast sky: billboards lit by a low sun look wrong from behind.
             let (rgb, emissive): ([f32; 3], f32) = match k {
-                Kind::BlackSmoke => ([0.035, 0.032, 0.03], 0.0),
-                Kind::GreySmoke => ([0.30, 0.30, 0.30], 0.0),
+                // The burning-vehicle columns read dark grey in the footage, never pitch black: the drone's
+                // camera lifts them, and stacked puffs crush towards black on their own.
+                Kind::BlackSmoke => ([0.11, 0.105, 0.10], 0.0),
+                Kind::GreySmoke => ([0.38, 0.38, 0.38], 0.0),
                 Kind::WhiteSmoke => ([0.62, 0.63, 0.64], 0.0),
                 Kind::Fog => ([0.68, 0.69, 0.70], 0.0),
-                Kind::Hc => ([0.34, 0.34, 0.35], 0.0),
+                Kind::Hc => ([0.44, 0.44, 0.45], 0.0),
                 Kind::Steam => ([0.84, 0.85, 0.86], 0.0),
                 Kind::Dirt => ([0.13, 0.11, 0.09], 0.0),
                 Kind::Dust => ([0.44, 0.38, 0.28], 0.0),
@@ -442,7 +444,7 @@ fn update_emitters(
             let jitter = Vec3::new(r.random_range(-1.0..1.0), 0.0, r.random_range(-1.0..1.0));
             match em.kind {
                 EmitterKind::WreckFire => {
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(3.0..6.0), life: r.random_range(45.0..80.0), size0: 3.0, size1: r.random_range(40.0..65.0), alpha: 0.62, drag: 0.15, buoyancy: 0.4, ..default() });
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(3.0..6.0), life: r.random_range(45.0..80.0), size0: 3.0, size1: r.random_range(40.0..65.0), alpha: 0.5, drag: 0.15, buoyancy: 0.4, ..default() });
                     // Flames big enough to read in daylight: the footage shows a hull as a torch.
                     if r.random_bool(0.8) {
                         spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.2 + Vec3::Y * r.random_range(0.8..2.2), vel: Vec3::Y * r.random_range(2.0..5.0), life: r.random_range(0.5..1.0), size0: r.random_range(2.0..4.0), size1: 1.2, alpha: 0.95, ..default() });

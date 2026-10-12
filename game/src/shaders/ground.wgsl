@@ -16,10 +16,18 @@ struct GroundDetail {
 
 @group(#{MATERIAL_BIND_GROUP}) @binding(100) var<uniform> ground: GroundDetail;
 
+// An integer lattice hash. The usual float-fract hashes quantise far from the origin (an f32 has seven digits,
+// and the speckle's lattice points reach five), and the ground's speckle went visibly periodic at Mala
+// Tokmachka's coordinates.
 fn hash(p: vec2<f32>) -> f32 {
-    var q = fract(p * vec2<f32>(127.1, 311.7));
-    q += dot(q, q + 19.19);
-    return fract(q.x * q.y);
+    let i = vec2<i32>(floor(p));
+    var x = bitcast<u32>(i.x) ^ (bitcast<u32>(i.y) << 16u) ^ 0x9E3779B9u;
+    x ^= x >> 16u;
+    x *= 0x85EBCA6Bu;
+    x ^= x >> 13u;
+    x *= 0xC2B2AE35u;
+    x ^= x >> 16u;
+    return f32(x & 0xFFFFFFu) / 16777216.0;
 }
 
 fn vnoise(p: vec2<f32>) -> f32 {

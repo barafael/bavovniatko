@@ -16,7 +16,9 @@ pub const CHUNK: f32 = 256.0;
 pub const CHUNKS_X: usize = (2.0 * HALF_X / CHUNK) as usize;
 pub const CHUNKS_Z: usize = (2.0 * HALF_Z / CHUNK) as usize;
 /// Ground texture resolution: one texel per metre.
-pub const TEX_PER_CHUNK: usize = 256;
+/// Ground texels per 256 m chunk: half-metre painting. One metre blurred past the film's close shots (fov 7–9
+/// from 100–200 m), and the painting cost is amortised over every run that reads a saved ground.
+pub const TEX_PER_CHUNK: usize = 512;
 
 // ---------------------------------------------------------------------------------------------------------
 // Cheap deterministic value noise (no allocation, usable from any thread).
