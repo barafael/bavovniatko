@@ -24,7 +24,7 @@ pub struct DirectorPlugin;
 impl Plugin for DirectorPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(Script::new())
-            .insert_resource(DirRng(SmallRng::seed_from_u64(6)))
+            .insert_resource(DirRng(SmallRng::seed_from_u64(crate::dev::seeded(6))))
             .add_systems(Update, (run_script, russian_artillery, check_end).chain().run_if(crate::running).in_set(crate::Step::Script))
             .add_systems(Update, time_controls.in_set(crate::Step::Control).after(crate::dev::DevSystems));
     }
@@ -95,21 +95,21 @@ impl Script {
         vec![
             b(1.0, Act::Say("Bird up. Still dark. Our guns are working the crest.")),
             b(3.0, Act::Prep { missions: 14, over: 70.0 }),
-            b(8.0, Act::Say("47th: the column is late. The guns will be finished before it gets there.")),
-            b(85.0, Act::Say("Guns are done. Nothing on the track yet.")),
+            b(8.0, Act::Say("All, this is Hranit. The column is late. The guns will be finished before it gets there.")),
+            b(85.0, Act::Say("This is Sokil. Guns are done. Nothing on the track yet.")),
             b(110.0, Act::Column { route: 0, kinds: GROUP_1, plow: true, smoke: 0, start: 350.0, label: "04:23  The first group moves off behind the plows. It is getting light.", rescue: false }),
-            b(125.0, Act::Say("First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it.")),
+            b(125.0, Act::Say("This is Sokil. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it.")),
             b(150.0, Act::Jam(0.4)),
             b(330.0, Act::Column { route: 1, kinds: GROUP_2, plow: true, smoke: 0, start: 280.0, label: "05:29  The second group, eleven vehicles, on the eastern track", rescue: false }),
-            b(345.0, Act::Say("Second group moving. Same plan, the other track.")),
+            b(345.0, Act::Say("This is Sokil. Second group moving. Same plan, the other track.")),
             b(430.0, Act::Helicopters(&[(2900.0, 3000.0), (3500.0, 2650.0)])),
             b(436.0, Act::Say("Ka-52s! Two of them, south-east, low over the ridge. Too far for anything we have.")),
             b(640.0, Act::Column { route: 0, kinds: &[Bradley, Bradley, Bradley, Bradley], plow: false, smoke: 0, start: 900.0, label: "07:02  Four Bradleys go back in for the men", rescue: true }),
-            b(652.0, Act::Say("Four Bradleys going back in. Get the infantry onto them.")),
+            b(652.0, Act::Say("All, this is Hranit. Four Bradleys going back in. Get the infantry onto them.")),
             b(770.0, Act::Helicopters(&[(-3100.0, 2900.0), (-2500.0, 3300.0)])),
-            b(776.0, Act::Say("Helicopters again. South-west this time.")),
+            b(776.0, Act::Say("This is Sokil. Helicopters again. South-west this time.")),
             b(1000.0, Act::Order(ColumnOrder::PullBack)),
-            b(1300.0, Act::Say("Quiet on the lanes. Only the smoke.")),
+            b(1300.0, Act::Say("This is Sokil. Quiet on the lanes. Only the smoke.")),
         ]
     }
 
@@ -118,22 +118,22 @@ impl Script {
         {
             vec![
                 b(1.0, Act::Say("Bird up. Visibility good, frost. Watch the dacha road and the Pavlivka road.")),
-                b(6.0, Act::Say("72nd: they're coming again today. Leave the roads clear. Let them in.")),
+                b(6.0, Act::Say("All, this is Hranit. They're coming again today. Leave the roads clear. Let them in.")),
                 b(14.0, Act::Column { route: 0, kinds: &[T80, T80, Bmp2, Bmp2, T80, Bmp2, Bmp1, Mtlb, Bmp2, T80, Bmp1, Bmp2], plow: true, start: 1150.0, smoke: 3, label: "06:45  The 155th Naval Infantry attacks down the dacha road", rescue: false }),
                 b(20.0, Act::Jam(0.5)),
                 b(22.0, Act::Say("Bird: column on the dacha road. Twelve units, tanks leading, a plow in front. Smoke.")),
                 b(150.0, Act::Tos { label: "TOS-1A on the town" }),
                 b(330.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb], plow: false, start: 500.0, smoke: 1, label: "08:40  A second column. The same road.", rescue: false }),
-                b(345.0, Act::Say("Second column. Same route. Exactly the same route.")),
+                b(345.0, Act::Say("This is Sokil. Second column. Same route. Exactly the same route.")),
                 b(600.0, Act::Column { route: 1, kinds: &[T72, Bmp1, Bmp1, Bmp2, Mtlb, Bmp1, T72, Bmp1], plow: true, start: 650.0, smoke: 2, label: "10:20  The Alga battalion, from Pavlivka", rescue: false }),
                 b(610.0, Act::Jam(0.6)),
                 b(615.0, Act::Say("Bird: Pavlivka road now. Volunteers by the look of it. BMP-1s.")),
                 b(700.0, Act::Tos { label: "TOS-1A again" }),
                 b(900.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, Bmp2, T80, Bmp1], plow: false, start: 550.0, smoke: 0, label: "12:00  Again, the dacha road", rescue: false }),
-                b(915.0, Act::Say("They're driving past their own wrecks from this morning. Same line.")),
+                b(915.0, Act::Say("This is Sokil. They're driving past their own wrecks from this morning. Same line.")),
                 b(1110.0, Act::Infantry { route: 1, groups: 6, size: 5, every: 14.0, label: "13:20  No more armour. Infantry, on foot." }),
                 b(1125.0, Act::Infantry { route: 0, groups: 6, size: 5, every: 14.0, label: "" }),
-                b(1140.0, Act::Say("Groups of five. Walking across the open field. Towards the tree line.")),
+                b(1140.0, Act::Say("This is Sokil. Groups of five. Walking across the open field. Towards the tree line.")),
                 b(1230.0, Act::Tos { label: "TOS-1A" }),
                 b(1300.0, Act::Infantry { route: 1, groups: 4, size: 5, every: 12.0, label: "14:30  More men on foot" }),
             ]
@@ -233,7 +233,7 @@ fn run_script(
             Act::Order(o) => {
                 if *order == ColumnOrder::Push {
                     *order = *o;
-                    radio.say(now, "Brigade: that's enough. All callsigns back to the start line. Bring the infantry.");
+                    radio.say(now, "All, this is Hranit. That's enough. All callsigns back to the start line. Bring the infantry.");
                     *banner = Some(("08:50  Everyone back to the start line".to_string(), 7.0));
                 }
             }

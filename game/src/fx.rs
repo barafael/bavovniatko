@@ -13,21 +13,29 @@ pub struct FxPlugin;
 
 impl Plugin for FxPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(FxRng(SmallRng::seed_from_u64(20230206)))
-            .insert_resource(Wind(if crate::diorama::diorama().summer() { Vec3::new(1.6, 0.0, 0.9) } else { Vec3::new(3.5, 0.0, -1.2) }))
+        app.insert_resource(FxRng(SmallRng::seed_from_u64(crate::dev::seeded(20230206))))
+            .insert_resource(Wind(day_wind()))
             .init_resource::<Smoke>()
             .insert_resource(FxLight(1.0))
             .add_systems(Startup, setup_fx)
-            .add_systems(Update, (update_particles, update_emitters, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
+            .add_systems(Update, (update_particles, update_emitters, grass_fires, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
     }
 }
 
 #[derive(Resource)]
 pub struct FxRng(pub SmallRng);
 
-/// Wind drifts every plume the same way: east-north-east at a few m/s (ERA5: up to 26 km/h on 7–8 Feb).
+/// Wind drifts every plume the same way, as the vector it blows towards (north is -z). ERA5 at the dioramas
+/// (design/next-items.md §2.1): on 6 February from the north-east, 4 m/s at dawn and 5.5 by midday, so towards
+/// the south-west; on 8 June from the east at night turning south-east by day, about 2 m/s at dawn, so towards
+/// the west-north-west. It is the look's alone: the gameplay smoke (`Smoke`) does not drift.
 #[derive(Resource)]
 pub struct Wind(pub Vec3);
+
+/// The day's wind (see `Wind`); the ground painter reads it too, for the drifts in the belts' lee.
+pub fn day_wind() -> Vec3 {
+    if crate::diorama::diorama().summer() { Vec3::new(-2.0, 0.0, -0.7) } else { Vec3::new(-3.2, 0.0, 3.2) }
+}
 
 /// Smoke on the ground thick enough to hide a vehicle from a sight: grenades and smoke shells. (The particles are
 /// what you see; this is what a gunner cannot see through.)
@@ -411,6 +419,9 @@ pub enum EmitterKind {
     Hc,
     /// A white-phosphorus wedge or a smoke canister on the ground: a pure white bank that rises a little.
     Wp,
+    /// Fuel burning in a pool on the ground beside a hull: low flames, a thinner black plume, steam off the
+    /// snow it melts.
+    PoolFire,
 }
 
 fn update_emitters(
@@ -477,6 +488,18 @@ fn update_emitters(
                 }
                 EmitterKind::Exhaust => {
                     spawn(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base, vel: Vec3::Y * 1.0, life: 2.5, size0: 0.6, size1: 2.5, alpha: 0.35, ..default() });
+                }
+                EmitterKind::PoolFire => {
+                    // 2–6 m² of diesel: flames 1.5–3 m, licking low over the ground.
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.1 + Vec3::Y * r.random_range(0.3..0.9), vel: Vec3::Y * r.random_range(1.5..3.5), life: r.random_range(0.4..0.8), size0: r.random_range(1.2..2.2), size1: 0.8, alpha: 0.95, ..default() });
+                    if r.random_bool(0.35) {
+                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(2.0..4.0), life: r.random_range(25.0..45.0), size0: 1.5, size1: r.random_range(16.0..26.0), alpha: 0.35, drag: 0.2, buoyancy: 0.3, ..default() });
+                    }
+                    // In the first minutes the snow round it melts and steams.
+                    if !diorama().summer() && em.age() < 180.0 && r.random_bool(0.15) {
+                        let a = r.random_range(0.0..std::f32::consts::TAU);
+                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Steam, pos: base + Vec3::new(a.cos(), 0.2, a.sin()) * 2.2, vel: Vec3::Y * r.random_range(0.4..1.0), life: r.random_range(3.0..6.0), size0: 0.6, size1: 2.5, alpha: 0.4, drag: 0.5, ..default() });
+                    }
                 }
             }
         }
@@ -598,6 +621,132 @@ pub fn cookoff(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, strength: f
         spawn(commands, fx, Spawn { kind: Kind::WhiteSmoke, pos: at + Vec3::Y * 2.5, vel: Vec3::new(rng.random_range(-2.0..2.0), rng.random_range(4.0..9.0), rng.random_range(-2.0..2.0)), life: rng.random_range(6.0..12.0), size0: 2.0, size1: 12.0, alpha: 0.6, drag: 0.6, buoyancy: 0.5, ..default() });
     }
     fx.rng = std::mem::replace(rng, SmallRng::seed_from_u64(0));
+}
+
+/// Reactive armour blocks going off under a hit (§2.3 of design/next-items.md): a chain of two to six bright
+/// white-orange flashes a metre or two across on the hull and turret front (the roof under a top attack), a
+/// pale puff of dust and smoke from each, and the plates flung off. ERA does not burn.
+pub fn era_pops(commands: &mut Commands, fx: &mut FxAssets, hull: &Transform, top: bool) {
+    let mut rng = std::mem::replace(&mut fx.rng, SmallRng::seed_from_u64(0));
+    let rng = &mut rng;
+    let n = rng.random_range(2..=6);
+    for _ in 0..n {
+        // Blocks on the glacis and the turret cheeks (the front is -z in the hull's frame), or on the roof.
+        let local = if top {
+            Vec3::new(rng.random_range(-1.2..1.2), rng.random_range(2.2..2.6), rng.random_range(-1.8..0.6))
+        } else {
+            Vec3::new(rng.random_range(-1.6..1.6), rng.random_range(1.0..2.3), rng.random_range(-3.4..-1.8))
+        };
+        let at = hull.transform_point(local);
+        let out = (at - hull.translation).with_y(0.0).normalize_or_zero() + Vec3::Y * 0.3;
+        flash(commands, at, 2.0e7, 60.0, 0.1);
+        spawn(commands, fx, Spawn { kind: Kind::Flash, pos: at, vel: Vec3::ZERO, life: rng.random_range(0.08..0.16), size0: rng.random_range(2.2..3.4), size1: 1.5, alpha: 1.0, ..default() });
+        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + out * 0.4, vel: out * rng.random_range(5.0..10.0), life: rng.random_range(0.15..0.3), size0: rng.random_range(1.5..2.5), size1: 3.0, alpha: 1.0, drag: 3.0, ..default() });
+        // The block's dust and explosive smoke: a pale puff a few metres across, gone in seconds.
+        for _ in 0..2 {
+            spawn(commands, fx, Spawn { kind: Kind::WhiteSmoke, pos: at + out * 0.6, vel: out * rng.random_range(2.0..5.0) + Vec3::Y * rng.random_range(0.5..2.0), life: rng.random_range(3.0..5.0), size0: 1.5, size1: rng.random_range(4.5..7.0), alpha: 0.7, drag: 0.8, ..default() });
+        }
+        for _ in 0..rng.random_range(1..=3) {
+            let v = (out + Vec3::new(rng.random_range(-0.5..0.5), rng.random_range(0.2..0.9), rng.random_range(-0.5..0.5))) * rng.random_range(6.0..14.0);
+            spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at, vel: v, life: rng.random_range(1.0..1.8), size0: 0.35, size1: 0.3, alpha: 1.0, drag: 0.2, gravity: 9.8, ..default() });
+        }
+    }
+    fx.rng = std::mem::replace(rng, SmallRng::seed_from_u64(0));
+}
+
+/// Fuel from a holed tank burning in a pool beside the hull, one burning hull in three (a fire that grew
+/// quietly, one in eight): flames 1.5–3 m for 10–25 minutes, starting when the fuel has run out. In February
+/// it melts a black ring in the snow; in June it may set the field alight (`GrassFire`).
+pub fn pool_fire(commands: &mut Commands, fx: &mut FxAssets, paint: &mut crate::terrain::PaintQueue, hull: &Transform, violent: bool) {
+    if !fx.rng.random_bool(if violent { 0.35 } else { 0.12 }) {
+        return;
+    }
+    let side = if fx.rng.random_bool(0.5) { 1.0 } else { -1.0 };
+    let local = Vec3::new(side * fx.rng.random_range(2.4..3.6), 0.0, fx.rng.random_range(-1.5..2.5));
+    let at = crate::geo::ground(hull.transform_point(local).xz());
+    let delay = fx.rng.random_range(10.0..60.0);
+    let secs = fx.rng.random_range(600.0..1500.0);
+    commands.spawn((Transform::from_translation(at), Emitter::after(delay, EmitterKind::PoolFire, 3.0, secs, Vec3::ZERO)));
+    info!("pool fire at {:.0},{:.0}", at.x, at.z);
+    paint.push(crate::terrain::Paint::Melt { at: at.xz(), radius: fx.rng.random_range(2.2..3.2) });
+    if diorama().summer() && fx.rng.random_bool(0.6) {
+        let speed = fx.rng.random_range(0.15..0.6);
+        info!("grass fire from {:.0},{:.0}", at.x, at.z);
+        commands.spawn(GrassFire { origin: at.xz(), front: Vec::new(), start_in: delay + fx.rng.random_range(20.0..90.0), speed, secs: fx.rng.random_range(420.0..1100.0), t: 0.0 });
+    }
+}
+
+/// A grass fire walking downwind from a burning pool in June: a low front of flames 0.3–1 m high, advancing at
+/// 0.1–1 m/s and widening as it goes, a pale smoke off it, black stubble behind. Each point of the front goes
+/// out in time, on a road or track, or when the fire has burned its course.
+#[derive(Component)]
+pub struct GrassFire {
+    origin: Vec2,
+    /// The burning points: where each is and how long it has to burn.
+    front: Vec<(Vec2, f32)>,
+    start_in: f32,
+    speed: f32,
+    secs: f32,
+    t: f32,
+}
+
+impl GrassFire {
+    /// The middle of the burning front, once it has caught.
+    pub fn centre(&self) -> Option<Vec2> {
+        (!self.front.is_empty()).then(|| self.front.iter().map(|(p, _)| *p).sum::<Vec2>() / self.front.len() as f32)
+    }
+}
+
+fn grass_fires(mut commands: Commands, time: Res<Time>, wind: Res<Wind>, mut fx: ResMut<FxAssets>, mut paint: ResMut<crate::terrain::PaintQueue>, mut q: Query<(Entity, &mut GrassFire)>) {
+    let dt = crate::sim_dt(&time);
+    let down = wind.0.xz().normalize_or_zero();
+    let across = down.perp();
+    let mut rng = std::mem::replace(&mut fx.rng, SmallRng::seed_from_u64(0));
+    for (e, mut g) in &mut q {
+        if g.start_in > 0.0 {
+            g.start_in -= dt;
+            if g.start_in <= 0.0 {
+                let o = g.origin;
+                g.front = (0..5).map(|k| (o + across * (k as f32 - 2.0) * 1.5, rng.random_range(240.0..900.0))).collect();
+                info!("grass fire caught at {:.0},{:.0} after {:.0} s", o.x, o.y, time.elapsed_secs());
+            }
+            continue;
+        }
+        g.t += dt;
+        let (speed, done) = (g.speed, g.t > g.secs);
+        let n = g.front.len();
+        for i in 0..n {
+            let (p, life) = g.front[i];
+            // Downwind, wavering, the ends of the front fanning out.
+            let fan = (i as f32 - (n as f32 - 1.0) * 0.5) / (n as f32).max(1.0);
+            let step = (down + across * (fan * 0.6 + (value_noise(p.x / 7.0, p.y / 7.0, 91)) * 0.5)) * speed * rng.random_range(0.5..1.5);
+            let q = p + step * dt;
+            let on_road = crate::geo::layout().roads.iter().any(|r| r.line.project(q).0 < r.width * 0.5 + 0.5);
+            g.front[i] = (q, if on_road || done { 0.0 } else { life - dt });
+            if (q / 1.2).floor() != (p / 1.2).floor() {
+                paint.push(crate::terrain::Paint::Scorch { at: q - down * 0.6, radius: 1.4 });
+            }
+            if rng.random_bool((dt * 2.5).min(1.0) as f64) {
+                let at = crate::geo::ground(q);
+                spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 0.3, vel: Vec3::Y * rng.random_range(0.8..2.0), life: rng.random_range(0.3..0.6), size0: rng.random_range(0.6..1.2), size1: 0.4, alpha: 0.9, ..default() });
+                if rng.random_bool(0.5) {
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::WhiteSmoke, pos: at + Vec3::Y * 0.8, vel: Vec3::Y * rng.random_range(1.0..2.0), life: rng.random_range(15.0..30.0), size0: 1.0, size1: rng.random_range(8.0..14.0), alpha: 0.3, drag: 0.4, buoyancy: 0.2, ..default() });
+                }
+            }
+        }
+        // The front widens: now and then a point splits where the grass is thick.
+        if g.front.len() < 14 && rng.random_bool((dt * 0.05).min(1.0) as f64) {
+            let k = rng.random_range(0..g.front.len().max(1));
+            if let Some(&(p, life)) = g.front.get(k) {
+                g.front.push((p + across * rng.random_range(-1.5..1.5), life * rng.random_range(0.6..1.0)));
+            }
+        }
+        g.front.retain(|&(_, life)| life > 0.0);
+        if g.front.is_empty() {
+            commands.entity(e).despawn();
+        }
+    }
+    fx.rng = rng;
 }
 
 /// The ammunition going all at once: an orange-white fireball 15–25 m across for a second, burning charges

@@ -118,10 +118,11 @@ every run films the same tour.
 That determinism is also the regression test: `scripts/same-day.sh before` and, after a change,
 `scripts/same-day.sh after before` films the day fast (headless, tiny frames) and compares the sound log, the film
 segments and the minute-by-minute tally. A refactor should leave all three byte for byte the same. It holds
-because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`.
+because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`. `VUHLEDAR_SEED=<n>` runs the day on other random streams, and `scripts/band.sh [diorama] [seeds]` films it on
+several and lists the final tallies side by side: one run says little about balance, the band of a few does.
 
 `VUHLEDAR_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
-turned) burned out, to look the models over. `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle, and `VUHLEDAR_SPEED`
+turned) burned out, to look the models over. `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `VUHLEDAR_SPEED`
 scales game time. `VUHLEDAR_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
 (headless, it also lifts the frame cap), and `VUHLEDAR_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
 picture out, so a slow frame can be charged to what makes it slow before anything is rewritten.

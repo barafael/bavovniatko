@@ -25,14 +25,15 @@ impl Plugin for UnitsPlugin {
     fn build(&self, app: &mut App) {
         app.add_message::<Blast>()
             .add_message::<DirectHit>()
-            .insert_resource(UnitRng(SmallRng::seed_from_u64(155)))
+            .insert_resource(UnitRng(SmallRng::seed_from_u64(crate::dev::seeded(155))))
             .insert_resource(Stats { vehicle_advance: f32::MIN, max_advance: if diorama() == Diorama::Robotyne { f32::MIN } else { 0.0 }, ..default() })
             .init_resource::<Radio>()
             .init_resource::<ColumnOrder>()
+            .init_resource::<LastHit>()
             .add_systems(Startup, (setup_models, lay_minefields, spawn_old_wrecks).chain().after(crate::world::spawn_belts))
             .add_systems(
                 Update,
-                (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, crew_bailout, burn, move_soldiers, board_vehicles, animate_legs, fly_debris, drop_riders)
+                (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, era_reacts, crew_bailout, burn, move_soldiers, board_vehicles, animate_legs, fly_debris, drop_riders)
                     .chain()
                     .run_if(crate::running)
                     .in_set(crate::Step::Units),
@@ -42,6 +43,10 @@ impl Plugin for UnitsPlugin {
 
 #[derive(Resource)]
 pub struct UnitRng(pub SmallRng);
+
+/// Where the last direct hit landed, for test shots (`VUHLEDAR_LOOK=hit`).
+#[derive(Resource, Default)]
+pub struct LastHit(pub Option<Vec3>);
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum Side {
@@ -76,6 +81,11 @@ pub enum VKind {
 impl VKind {
     pub fn is_tank(self) -> bool {
         matches!(self, VKind::T80 | VKind::T72 | VKind::Leo2a6)
+    }
+    /// Explosive reactive armour on the hull and turret front: Kontakt-1 on the T-80BV, Kontakt-5 on the
+    /// T-72B3, the BRAT tiles on the 47th's Bradleys (M2A2 ODS-SA).
+    pub fn era(self) -> bool {
+        matches!(self, VKind::T80 | VKind::T72 | VKind::Bradley)
     }
     /// T-72/T-80 carousel autoloaders: when the charges go, the turret goes up.
     pub fn carousel(self) -> bool {
@@ -609,7 +619,7 @@ impl Minefield {
 fn lay_minefields(mut commands: Commands) {
     let lay = geo::layout();
     let mut mf = Minefield::default();
-    let mut rng = SmallRng::seed_from_u64(72);
+    let mut rng = SmallRng::seed_from_u64(crate::dev::seeded(72));
     for f in &lay.shoulder_fields {
         let road = &lay.roads[f.road].line;
         let area = (f.s1 - f.s0) * (f.outer - f.inner) * 2.0;
@@ -1677,6 +1687,8 @@ pub fn on_wrecked(
         Kill::Quiet => {}
     }
     commands.entity(ev.vehicle).insert((Fire::torch(rng, ev.cause, v.kind, toss_later, torch_secs), Emitter::new(EmitterKind::WreckFire, 5.0, torch_secs, Vec3::Y * 1.5)));
+    // Fuel running out of a holed tank burns in a pool beside the hull; in June it can set the field alight.
+    fx::pool_fire(&mut commands, &mut fx, &mut paint, tf, ev.how != Kill::Quiet);
 }
 
 /// The fire on a knocked-out vehicle, minute by minute: an engine-bay fire that grows into the hull or dies
@@ -1861,6 +1873,23 @@ pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette,
         stats.attacker_dead += 1;
     } else {
         stats.defender_losses += 1;
+    }
+}
+
+/// Reactive armour going off under a hit: a chain of flashes and grey puffs where the blocks were, and the
+/// plates thrown off. The look of the hit only: the simulation has already decided what the hit did.
+fn era_reacts(mut commands: Commands, mut hits: MessageReader<DirectHit>, mut fx: ResMut<FxAssets>, mut last: ResMut<LastHit>, q: Query<(&Vehicle, &Transform)>) {
+    for h in hits.read() {
+        if let Ok((_, tf)) = q.get(h.target) {
+            last.0 = Some(tf.translation);
+        }
+        if let Ok((v, tf)) = q.get(h.target)
+            && v.kind.era()
+            && h.cause != Cause::TankGun
+        {
+            fx::era_pops(&mut commands, &mut fx, tf, h.top);
+            info!("era pops on {:?} {}/{} at {:.0},{:.0}", v.kind, v.wave, v.idx, tf.translation.x, tf.translation.z);
+        }
     }
 }
 

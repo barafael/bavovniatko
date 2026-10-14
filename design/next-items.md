@@ -62,7 +62,10 @@ that matter are here). Items marked *est.* are the researchers' estimates, not p
 So the Vuhledar day we render (hard low sun, long shadows, after the footage comparison) is the look of the
 second week of February, when the viral clips were shot, not of 6 February itself, which was overcast. Both
 looks are historical; the campaign's day table in next.md can carry both. The current wind vector in `fx.rs`
-is ENE at 3.7 m/s; ERA5 says NE 4–5.5 m/s for Vuhledar, SE 3 m/s for Robotyne (ours is 1.8 m/s).
+is ENE at 3.7 m/s; ERA5 says NE 4–5.5 m/s for Vuhledar, SE 3 m/s for Robotyne (ours is 1.8 m/s). *Corrected
+2026-10-14:* the wind now blows from the north-east at 4.5 m/s on 6 February and from the east-south-east at
+about 2 m/s on the June dawn (`fx::day_wind`); it moves only the look (particles, the sky, the drifts), never the
+gameplay smoke, and both days stayed byte-identical.
 
 ### 2.2 Smoke, by kind (what each is, why it looks as it does)
 
@@ -363,6 +366,14 @@ build drew no ground at all: `patch` is a reserved word in WGSL, the same trap t
 day. Shots `b-snow-squares-2` (against `20261011-2005-snow-squares.jpg`: the staircase edges are gone),
 `b-killzone-x13-2`, `b-ground-view-2`. Sim-neutral by construction (no random draws touched).
 
+**A fix (2026-10-14).** The ground went to half-metre texels in ea975ee by doubling `TEX_PER_CHUNK` alone, but
+the painter still took a metre for a texel in four places (the texel of a world point, the world point of a
+texel, a stamp's radius, the base painter). Every texel now converts through `TEXEL`, and a unit test pins a
+texel to where the chunk's mesh draws it. The bug's look, from the committed binary: `head-verge-compare` (the
+belts' litter bands painted at half scale, a band across open field, none under the trees). The intended before
+shot, `tex-scale-before`, already had the fix (the game crate compiled after the edit), and `tex-scale-check`
+failed (the drone past the jam line).
+
 ### C. Smoke, fire and the TOS (**look**) — observations 3, 5, 14, and the toss blast of 6
 
 **Now.** One puff texture, nine kinds, eight alpha steps, shared materials so everything batches (keep that).
@@ -429,6 +440,27 @@ TOS spread and the grenade cloud are sim inputs); `target/same-day/c2-*` is the 
 Not done from the list: the pool fire beside the hull, the June grass fire, the ERA pops; the chunk-level
 smoke contact sheet.
 
+**Done (2026-10-14), the rest of the fire list.** *Reactive armour* (`fx::era_pops`, `VKind::era`: the T-80BV's
+Kontakt-1, the T-72B3's Kontakt-5, the BRAT tiles of the 47th's Bradleys): under a missile, two to six flashes a
+metre or two across on the glacis and turret cheeks (the roof under a Javelin), a short tongue of flame and a grey
+puff from each, and one to three plates flung off. A look system reads the hit messages after the simulation has
+resolved them. *The pool fire* (`fx::pool_fire`, `EmitterKind::PoolFire`): beside one burning hull in three (one
+in eight for a fire that grew quietly), fuel burns in a pool 2.5–3.5 m off the hull, starting 10–60 s after the
+kill and lasting 10–25 minutes, with flames of 1.5–3 m and a thinner black plume; in February it melts a ring of
+wet black earth with a grey slush rim (`Paint::Melt`) and steams for the first three minutes. *The grass fire*
+(`fx::GrassFire`): in June six pools in ten set the field alight 20–90 s after they start; a front of five
+points walks downwind at 0.15–0.6 m/s, wavering, fanning out and splitting where the grass is thick (up to 14),
+each point a low flame with a pale smoke and a black scorch behind it, going out on a road or track, after 4–15
+minutes, or when the fire has burned its course. All three draw on the effects' own stream, so the day is
+untouched (Vuhledar and Robotyne byte-identical against the committed head). `VUHLEDAR_LOOK=hit|pool|grass` holds
+the drone's gimbal on the hull a missile is flying at, the newest pool or the grass fire's front. Shots `n-pool`
+(a pool burning in its melt ring beside a hull), `n-grass-2` (the grass fire's pale smoke drifting west); clips
+`n-era-2`, `n-grass-2`, and the failed first tries, annotated. In the day the pops vanish inside the warhead's
+blast and the brew-up, so they were filmed on their own: `VUHLEDAR_ERA_AT` sets off the reactive armour of the
+lineup's hulls (`VUHLEDAR_LINEUP`), and clip `n-era-lineup-3` shows one frame of a sharp flash lighting both
+tanks, then pale puffs and plates on the glacis and turret cheeks for a few seconds. The first pops were too
+faint at dawn (`n-era-lineup-2`) and were made brighter, their puffs pale and larger.
+
 ### D. Vehicle fates and mobility kills (**sim**) — observations 6, 14, 20
 
 **Now.** `Wrecked` has one script. Immobilised vehicles coast and slew then sit; destroyed ones burn 150–320 s
@@ -489,7 +521,12 @@ Measured (fixed step, `target/same-day/d2-vuh`, `d2-rob`): Vuhledar 30 of 33 lef
 10 abandoned), 65 of 320 back; Robotyne 21 of 24 stopped (15 burned, 6 abandoned), 87 of 176 back, 44 dead.
 The runs before the last fix read Robotyne as 8 burned, 9 abandoned, 20 dead: **the day's tally swings widely
 with the random streams**, so a single run is a weak band test. A `VUHLEDAR_SEED` and a few seeds per check is
-the right regression (noted for the campaign's regression day). Clip `20261011-2138-d-fates.mp4`, shot
+the right regression (noted for the campaign's regression day). *Built 2026-10-14:* `VUHLEDAR_SEED=<n>` mixes
+a run number into every simulation stream (0 or unset is the day itself), and `scripts/band.sh [diorama]
+[seeds]` films the day on several seeds and lists the final tallies side by side. The first band, on the day as
+it stands after the showcase work: Vuhledar 24–26 of 33 knocked out (14–18 destroyed, 6–12 abandoned), 77–95 of
+320 back, 131–154 dead; Robotyne 21–23 of 24 stopped (6–10 burned, 12–16 abandoned), 97–108 of 176 back, 24–40
+dead (seeds 0–3). Vuhledar now sits at the low edge of its 24–30 band. Clip `20261011-2138-d-fates.mp4`, shot
 `d-torch`. Left for E: the Robotyne dead are still above the dossier's single figures; the bail-out and the
 blast-on-a-body numbers are E's work.
 
@@ -729,6 +766,18 @@ every Ukrainian ATGM sight (two rows of sandbags, the spoil, a log) so the groun
 length. The foot strip in the paint and the crown shadows are not done; the rest waits for the assets. Shots
 `i-ground-winter`, `i-ground-summer`.
 
+**Done (2026-10-14), the foot strip and the shadows.** *The foot strip* (`terrain::belt_feet`): in February the
+belt traps the drifting snow, so a drift of smooth deep snow lies in its lee (south and west of the belts under
+the north-easterly), 10–25 m out with a ragged edge, burying the patches and the furrows, and a thinner one of
+2–4 m along the windward side; in June a verge of tall grass going to straw, mottled with green weeds, 3–7 m on
+both sides. Each texel takes the strongest strip that reaches it and is painted once. The first widths (6–15 m,
+2–5 m) did not read from the drone and were doubled. *The shadows:* the crowns
+cast now as well as the trunks (the shadow pass discards by the same alpha mask), so a belt lays its dappled band
+of shade across the field in the low sun; the opaque pass is unchanged at about 6.6 ms at 1080p over a belt
+(the diagnostics do not time the shadow pass apart). Shots `n-belt-shadow`, `n-drift-lee-2`, `n-verge-3`. Seen on
+the way: from straight above the crowns' crossed cards turn edge-on and nearly vanish (for the assets), and a
+stretch of the belts near Robotyne's start line has almost no trees, in the committed binary too.
+
 ### J. Ukrainian names and voice (**look**) — observation 16
 
 **Build.**
@@ -757,6 +806,13 @@ lines built on the spot (fire missions with their coordinates, the Bradley's cou
 built in both. `Radio::say` looks the Ukrainian up; `say2` takes both. The OP's label carries its Ukrainian in
 brackets. Shot `j-net`. Not done: fictional callsigns on the net (Маестро, Беркут, Сокіл, Граніт) and the
 "Я" convention; the debrief's own words (package K).
+
+**Done (2026-10-14), the callsigns.** The net's stations have them: Маестро (Maestro) the player, Беркут (Berkut)
+the guns, Сокіл (Sokil) the observation post, Граніт (Hranit) the brigade's command post. A call names whom it is
+for and then whose it is ("Маестро, я Беркут. Лишилось 12 снарядів" / "Maestro, this is Berkut. 12 rounds
+left"); a station speaking to everyone opens "Всім, я Граніт"; an alarm is shouted without the formula; the bird's
+crew, being the player's own, needs none. The player's fire missions go to Berkut, the HIMARS request to Hranit,
+the orders to the teams and the column come from Maestro. Shot `n-net-callsigns`.
 
 ### K. The debrief (**look**) — observations 10, 11, 12
 
@@ -857,7 +913,11 @@ steps, a new named baseline for the sim steps), the tally checked against the ba
    footage), takes the same shots under each, and the choice is made from the pictures.
 6. **The clock moves to Kyiv time.** Sunrise 06:51, sunset 16:38 at Vuhledar on 6 February; the sun, the day's
    start, the banners and the clock text shift an hour earlier; the dossier gets a note that its February times
-   are Moscow time, and the claim graph is checked for which clock its timeline claims use.
+   are Moscow time, and the claim graph is checked for which clock its timeline claims use. *Done 2026-10-14:*
+   every sunrise and sunset claim was recomputed; the winter ones for Ukrainian-held places (Vuhledar, Bakhmut,
+   Avdiivka, Pokrovsk, Krynky, Mariupol before 27 March 2022) were on UTC+3 and are corrected in
+   `db/fixes/0005_kyiv_clock.surql` (commit 3ad9738), with the dossiers regenerated. One conclusion flipped: the
+   A-50 kill at 18:45 fits the dusk of the crash videos only on Moscow time.
 7. **The font** is embedded (Fira Mono, OFL).
 8. **A mobility-killed tank with a live crew can still pivot.** With one track gone it can turn on the spot
    round the dead side: to put its frontal armour towards the ATGM teams, or when the turret no longer traverses

@@ -89,6 +89,8 @@ pub enum Paint {
     Footprints { at: Vec2 },
     /// A mine plow's strip of turned earth, with spoil thrown to both sides.
     Plow { at: Vec2, dir: Vec2 },
+    /// Snow melted by a fire on the ground: wet black earth, a grey slush rim. (In June, the grass burned.)
+    Melt { at: Vec2, radius: f32 },
 }
 
 #[derive(Resource, Default)]
@@ -148,6 +150,9 @@ impl Craters {
 }
 
 const W: usize = CHUNKS_X * TEX_PER_CHUNK;
+/// One texel's side in metres. Every conversion between the world and the texture goes through it: the painter
+/// once assumed a metre a texel, and doubling the resolution then painted the map at half scale.
+const TEXEL: f32 = CHUNK / TEX_PER_CHUNK as f32;
 const H: usize = CHUNKS_Z * TEX_PER_CHUNK;
 const CHUNK_BYTES: usize = TEX_PER_CHUNK * TEX_PER_CHUNK * 4;
 
@@ -184,8 +189,14 @@ fn mix(a: Px, b: Px, t: f32) -> Px {
     [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]
 }
 
+/// A world point in texel units (texel `i` covers `i..i+1`).
 fn tex_of(p: Vec2) -> (f32, f32) {
-    (p.x + HALF_X, p.y + HALF_Z)
+    ((p.x + HALF_X) / TEXEL, (p.y + HALF_Z) / TEXEL)
+}
+
+/// The world point at the centre of texel (`xx`, `zz`).
+fn world_of(xx: usize, zz: usize) -> Vec2 {
+    Vec2::new((xx as f32 + 0.5) * TEXEL - HALF_X, (zz as f32 + 0.5) * TEXEL - HALF_Z)
 }
 
 fn to_srgb8(c: Px, code: u8) -> [u8; 4] {
@@ -213,7 +224,7 @@ impl Texels {
     fn each(&self, data: &mut [u8], mut f: impl FnMut(&mut [u8], Vec2, f32)) {
         for zz in self.z0..=self.z1 {
             for xx in self.x0..=self.x1 {
-                let w = Vec2::new(xx as f32 + 0.5 - HALF_X, zz as f32 + 0.5 - HALF_Z);
+                let w = world_of(xx, zz);
                 let d = w.distance(self.at) / self.r;
                 if d > 1.0 {
                     continue;
@@ -253,7 +264,8 @@ fn cover(x0: i64, z0: i64, x1: i64, z1: i64, at: Vec2, r: f32) -> Vec<Texels> {
 /// The texels within `r` metres of `at`, by chunk.
 fn disc(at: Vec2, r: f32) -> Vec<Texels> {
     let (cx, cz) = tex_of(at);
-    cover((cx - r).floor() as i64, (cz - r).floor() as i64, (cx + r).ceil() as i64, (cz + r).ceil() as i64, at, r)
+    let rt = r / TEXEL;
+    cover((cx - rt).floor() as i64, (cz - rt).floor() as i64, (cx + rt).ceil() as i64, (cz + rt).ceil() as i64, at, r)
 }
 
 /// The texels of a world rectangle, by chunk.
@@ -335,6 +347,82 @@ fn base_colour(x: f32, z: f32) -> Px {
     col
 }
 
+/// The strip along a belt's foot. In February the belt traps the drifting snow: a drift of smooth, deep snow
+/// that buries the furrows lies in its lee, 10 to 25 m out with a ragged edge, and a thinner one along the
+/// windward side. In June, a verge of weeds and dry stalks that no plough reaches, 3 to 7 m on both sides.
+/// Each texel takes the strongest strip that reaches it, painted once, so the overlapping slices of the belt
+/// never stack.
+fn belt_feet(chunks: &mut Chunks) {
+    let summer = diorama().summer();
+    let wind = crate::fx::day_wind().xz().normalize_or_zero();
+    let mut amount: std::collections::HashMap<(usize, usize), f32> = std::collections::HashMap::new();
+    for (bi, belt) in geo::layout().belts.iter().enumerate() {
+        let len = belt.line.length();
+        let mut s = 0.0;
+        while s < len {
+            let p = belt.line.point(s);
+            let n = belt.line.normal(s);
+            let tan = belt.line.tangent(s);
+            let half = belt.width * 0.5;
+            // How far each side's strip reaches here, wandering along the belt.
+            let wander = value_noise(s / 40.0, bi as f32 * 7.3, 71) * 0.5 + 0.5;
+            let sides: [(f32, f32); 2] = if summer {
+                let reach = 3.0 + 4.0 * wander;
+                [(1.0, reach), (-1.0, reach)]
+            } else {
+                // The lee is the side the wind blows towards; a belt along the wind has two weak drifts.
+                let lee = n.dot(wind);
+                let side = if lee >= 0.0 { 1.0 } else { -1.0 };
+                let across = lee.abs();
+                [(side, 6.0 + (10.0 + 12.0 * wander) * across), (-side, 2.0 + 2.0 * wander)]
+            };
+            for (side, reach) in sides {
+                let centre = p + n * side * (half + reach * 0.5);
+                let r = reach * 0.5 + 3.5;
+                for t in disc(centre, r) {
+                    for zz in t.z0..=t.z1 {
+                        for xx in t.x0..=t.x1 {
+                            let w = world_of(xx, zz);
+                            // Only this slice of the belt: the next point paints the next slice.
+                            if (w - p).dot(tan).abs() > 1.1 {
+                                continue;
+                            }
+                            let out = (w - p).dot(n) * side - half;
+                            // A ragged outer edge, and the drift's crest a little way out from the trees.
+                            let edge = reach * (0.8 + 0.4 * (value_noise(w.x / 3.0, w.y / 3.0, 72) * 0.5 + 0.5));
+                            let a = geo::smoothstep(-1.5, 0.5, out) * (1.0 - geo::smoothstep(edge * 0.55, edge, out));
+                            if a <= 0.0 {
+                                continue;
+                            }
+                            let o = (zz % TEX_PER_CHUNK) * TEX_PER_CHUNK + xx % TEX_PER_CHUNK;
+                            let e = amount.entry((t.chunk, o)).or_insert(0.0);
+                            *e = e.max(a);
+                        }
+                    }
+                }
+            }
+            s += 2.0;
+        }
+    }
+    for ((chunk, o), a) in amount {
+        let (xx, zz) = ((chunk % CHUNKS_X) * TEX_PER_CHUNK + o % TEX_PER_CHUNK, (chunk / CHUNKS_X) * TEX_PER_CHUNK + o / TEX_PER_CHUNK);
+        let w = world_of(xx, zz);
+        let px = &mut chunks[chunk][o * 4..o * 4 + 4];
+        let c = from_srgb8(px);
+        let fine = value_noise(w.x / 1.5, w.y / 1.5, 73) * 0.5 + 0.5;
+        let (target, k) = if summer {
+            // Tall grass going to straw, green weeds mottled through it: paler and coarser than the field.
+            let mottle = value_noise(w.x / 4.0, w.y / 4.0, 74) * 0.5 + 0.5;
+            (mix(mix([0.60, 0.56, 0.36], [0.50, 0.49, 0.28], fine), [0.38, 0.43, 0.21], mottle * 0.45), 0.85)
+        } else {
+            // Wind-packed drift: whiter and smoother than the field's thin snow.
+            (mix([0.84, 0.86, 0.88], [0.88, 0.90, 0.92], fine), 0.92)
+        };
+        let code = if a > 0.45 { 0 } else { px[3] };
+        px.copy_from_slice(&to_srgb8(mix(c, target, a * k), code));
+    }
+}
+
 /// `f(i)` for every `i` below `n`, on all cores, the results in order.
 fn in_parallel<T: Send>(n: usize, f: impl Fn(usize) -> T + Sync) -> Vec<T> {
     let per = n.div_ceil(std::thread::available_parallelism().map_or(4, |t| t.get()));
@@ -355,7 +443,8 @@ fn base_chunk(chunk: usize) -> Vec<u8> {
     let mut data = Vec::with_capacity(CHUNK_BYTES);
     for row in 0..TEX_PER_CHUNK {
         for col in 0..TEX_PER_CHUNK {
-            let (x, z) = ((cx * TEX_PER_CHUNK + col) as f32 + 0.5 - HALF_X, (cz * TEX_PER_CHUNK + row) as f32 + 0.5 - HALF_Z);
+            let w = world_of(cx * TEX_PER_CHUNK + col, cz * TEX_PER_CHUNK + row);
+            let (x, z) = (w.x, w.y);
             data.extend_from_slice(&to_srgb8(base_colour(x, z), furrow_code(x, z)));
         }
     }
@@ -403,6 +492,8 @@ fn paint() -> Chunks {
             s += 2.5;
         }
     }
+
+    belt_feet(&mut chunks);
 
     // Roads: churned mud on the dirt roads (columns have been using them for weeks), asphalt on the T-0509.
     for road in &lay.roads {
@@ -682,6 +773,7 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
             Paint::Track { at, gauge, .. } => (at, gauge * 0.5 + 0.8),
             Paint::Footprints { at } => (at, 0.8),
             Paint::Plow { at, .. } => (at, 3.2),
+            Paint::Melt { at, radius } => (at, radius * 1.4),
         };
         // Each overlapped chunk is fetched (and so flagged for upload) once per op.
         for t in disc(at, r) {
@@ -704,6 +796,18 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
                     Paint::Footprints { .. } => {
                         if summer { mix(c, [0.52, 0.51, 0.38], 0.12 * (1.0 - d)) } else if c[0] > 0.62 { mix(c, [0.62, 0.60, 0.58], 0.3 * (1.0 - d)) } else { c }
                     }
+                    Paint::Melt { .. } => {
+                        // Inside the radius the ground is bare and wet; past it, a ring of grey slush.
+                        let r = d * 1.4;
+                        let ragged = r + 0.12 * value_noise(w.x / 0.8, w.y / 0.8, seed);
+                        if summer {
+                            mix(c, [0.08, 0.07, 0.06], (1.0 - ragged).clamp(0.0, 1.0) * 1.5)
+                        } else if ragged < 1.0 {
+                            mix(c, [0.10, 0.09, 0.08], 0.9)
+                        } else {
+                            mix(c, [0.45, 0.45, 0.46], (1.4 - ragged).clamp(0.0, 0.4) * 1.5)
+                        }
+                    }
                     Paint::Plow { dir, .. } => {
                         // Turned earth across the plow's width, a ridge of spoil at each edge.
                         let lat = (w - at).perp_dot(dir).abs();
@@ -714,10 +818,36 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
                 let code = match op {
                     Paint::Crater { .. } | Paint::Scorch { .. } if d < 0.7 => 0,
                     Paint::Plow { .. } => 0,
+                    Paint::Melt { .. } if d < 0.8 => 0,
                     _ => px[3],
                 };
                 px.copy_from_slice(&to_srgb8(n, code));
             });
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A texel and the world point the chunk mesh puts it at must agree, whatever the texels per chunk: the
+    /// ground once doubled its resolution and painted the map at half scale.
+    #[test]
+    fn texels_land_where_the_mesh_puts_them() {
+        for (cx, cz, col, row) in [(0, 0, 0, 0), (5, 3, 44, 300), (CHUNKS_X - 1, CHUNKS_Z - 1, TEX_PER_CHUNK - 1, TEX_PER_CHUNK - 1)] {
+            let w = world_of(cx * TEX_PER_CHUNK + col, cz * TEX_PER_CHUNK + row);
+            // The chunk's mesh spans this square, its UV 0..1 over the chunk's texels.
+            let x0 = -HALF_X + cx as f32 * CHUNK;
+            let z0 = -HALF_Z + cz as f32 * CHUNK;
+            let expect = Vec2::new(x0 + (col as f32 + 0.5) * CHUNK / TEX_PER_CHUNK as f32, z0 + (row as f32 + 0.5) * CHUNK / TEX_PER_CHUNK as f32);
+            assert!(w.distance(expect) < 1e-3, "texel ({cx},{cz},{col},{row}) at {w}, mesh puts it at {expect}");
+            let (tx, tz) = tex_of(w);
+            assert_eq!(((tx.floor() as usize), (tz.floor() as usize)), (cx * TEX_PER_CHUNK + col, cz * TEX_PER_CHUNK + row));
+        }
+        // A disc of 3 m covers about 6 texels across at half a metre a texel, not 3.
+        let t: usize = disc(Vec2::ZERO, 3.0).iter().map(|t| (t.x1 - t.x0 + 1) * (t.z1 - t.z0 + 1)).sum();
+        let side = 2.0 * 3.0 / TEXEL;
+        assert!((t as f32) >= side * side * 0.9, "a 3 m disc covers {t} texels");
     }
 }

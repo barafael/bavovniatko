@@ -21,7 +21,7 @@ pub struct FirePlugin;
 
 impl Plugin for FirePlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(FireRng(SmallRng::seed_from_u64(72)))
+        app.insert_resource(FireRng(SmallRng::seed_from_u64(crate::dev::seeded(72))))
             .init_resource::<FireControl>()
             .add_systems(Startup, spawn_positions.after(units::setup_models).after(crate::world::spawn_belts))
             .add_systems(
@@ -309,9 +309,9 @@ fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, m
             ColumnOrder::PullBack => ColumnOrder::Push,
         };
         let line = match *order {
-            ColumnOrder::Push => "All callsigns: push on. Keep to the lane.",
-            ColumnOrder::Hold => "All callsigns: hold where you are. Do not leave the lane.",
-            ColumnOrder::PullBack => "All callsigns: pull back. Back to the start line. Pick up the infantry on the way.",
+            ColumnOrder::Push => "All callsigns, this is Maestro. Push on. Keep to the lane.",
+            ColumnOrder::Hold => "All callsigns, this is Maestro. Hold where you are. Do not leave the lane.",
+            ColumnOrder::PullBack => "All callsigns, this is Maestro. Pull back. Back to the start line. Pick up the infantry on the way.",
         };
         radio.say(time.elapsed_secs_f64(), line);
         return;
@@ -323,9 +323,9 @@ fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, m
             AtgmMode::Free => AtgmMode::Auto,
         };
         let line = match fc.atgm_mode {
-            AtgmMode::Auto => "All teams: wait until the column is committed, then fire.",
-            AtgmMode::Hold => "All teams: hold fire. Let them come.",
-            AtgmMode::Free => "All teams: fire at will.",
+            AtgmMode::Auto => "All teams, this is Maestro. Wait until the column is committed, then fire.",
+            AtgmMode::Hold => "All teams, this is Maestro. Hold fire. Let them come.",
+            AtgmMode::Free => "All teams, this is Maestro. Fire at will.",
         };
         radio.say(time.elapsed_secs_f64(), line);
     }
@@ -371,12 +371,12 @@ fn player_fire(
     let (lat, lon) = geo::latlon(target);
     if ctrl {
         if fc.himars == 0 {
-            radio.say(now, "HIMARS: nothing left for you today.");
+            radio.say(now, "Maestro, this is Hranit. No more HIMARS for you today.");
             return;
         }
         fc.himars -= 1;
         fc.missions.push(Strike::Himars.mission(target, sigma, now, true));
-        radio.say2(now, format!("Хаймарс, дві ракети, {lat:.4} {lon:.4}. Підліт близько хвилини."), format!("HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
+        radio.say2(now, format!("Граніт, я Маестро. Хаймарс, дві ракети, {lat:.4} {lon:.4}. Підліт близько хвилини."), format!("Hranit, this is Maestro. HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
     } else if shift && diorama() == Diorama::Robotyne {
         if fc.smoke == 0 {
             radio.say(now, "No more smoke.");
@@ -384,7 +384,7 @@ fn player_fire(
         }
         fc.smoke -= 1;
         fc.missions.push(Strike::Smoke.mission(target, sigma, now, true));
-        radio.say2(now, format!("Дим, {lat:.4} {lon:.4}. Ставимо завісу. Нам теж нічого не видно."), format!("Smoke, {lat:.4} {lon:.4}. Screening. It blinds us too."));
+        radio.say2(now, format!("Беркут, я Маестро. Дим, {lat:.4} {lon:.4}. Ставимо завісу. Нам теж нічого не видно."), format!("Berkut, this is Maestro. Smoke, {lat:.4} {lon:.4}. Screening. It blinds us too."));
     } else if shift {
         if fc.raam == 0 {
             radio.say(now, "No more RAAM.");
@@ -392,14 +392,14 @@ fn player_fire(
         }
         fc.raam -= 1;
         fc.missions.push(Strike::Raam.mission(target, sigma, now, true));
-        radio.say2(now, format!("РААМ, три снаряди, {lat:.4} {lon:.4}. Мінуємо прохід."), format!("RAAM, three shells, {lat:.4} {lon:.4}. Mines going down on that lane."));
+        radio.say2(now, format!("Беркут, я Маестро. РААМ, три снаряди, {lat:.4} {lon:.4}. Мінуємо прохід."), format!("Berkut, this is Maestro. RAAM, three shells, {lat:.4} {lon:.4}. Mines going down on that lane."));
     } else {
         if fc.shells < 4 {
-            radio.say(now, "Battery: out of shells. Nothing to send.");
+            radio.say(now, "Maestro, this is Berkut. Out of shells. Nothing to send.");
             return;
         }
         if now < fc.battery_busy_until {
-            radio.say(now, "Battery still firing the last mission. Wait.");
+            radio.say(now, "Maestro, this is Berkut. Still firing the last mission. Wait.");
             return;
         }
         // Repeated missions on the same spot get adjusted onto it.
@@ -409,10 +409,10 @@ fn player_fire(
         fc.battery_busy_until = now + 18.0;
         fc.last_call = Some((target, now));
         fc.missions.push(Strike::He.mission(target, sigma, now, true));
-        radio.say2(now, format!("Ціль, {lat:.4} {lon:.4}, чотири снаряди. {}", if adjust { "Коригую від попередньої." } else { "Вихід." }), format!("Fire mission, {lat:.4} {lon:.4}, four rounds. {}", if adjust { "Adjusting from the last." } else { "Shot, over." }));
+        radio.say2(now, format!("Беркут, я Маестро. Ціль, {lat:.4} {lon:.4}, чотири снаряди. {}", if adjust { "Коригую від попередньої." } else { "Вихід." }), format!("Berkut, this is Maestro. Fire mission, {lat:.4} {lon:.4}, four rounds. {}", if adjust { "Adjusting from the last." } else { "Shot, over." }));
         if fc.shells <= 32 && !fc.warned_low {
             fc.warned_low = true;
-            radio.say2(now, format!("Батарея: лишилось {} снарядів. На сьогодні це все.", fc.shells), format!("Battery: {} rounds left. That's all we get today.", fc.shells));
+            radio.say2(now, format!("Маестро, я Беркут. Лишилось {} снарядів. На сьогодні це все.", fc.shells), format!("Maestro, this is Berkut. {} rounds left. That's all we get today.", fc.shells));
         }
     }
     sound.now(Sfx::Radio, 0.25);
@@ -597,7 +597,7 @@ fn land_shells(
                         radio.say(now, "Three hundred. Need evacuation from the tree line.");
                     }
                 } else if pos.strength == 0 {
-                    radio.say(now, "Their position on the crest has gone quiet.");
+                    radio.say(now, "This is Sokil. Their position on the crest has gone quiet.");
                 }
             }
         }
@@ -1051,7 +1051,7 @@ fn pre_registered_fires(
             let kind = if defender == Side::Ua { ShellKind::He155 } else { ShellKind::Ru152 };
             fc.missions.push(Mission { target: *trp, kind, rounds, sigma: 35.0, interval: 2.5, next: now + 1.0, flight: 22.0, player: false, by: defender });
             radio.lines.push((now, match diorama() {
-                Diorama::Vuhledar => Line::both(format!("Бригадна арта: вогонь по пристріляній точці {}.", i + 1), format!("Brigade guns: firing on registered point {}.", i + 1)),
+                Diorama::Vuhledar => Line::both(format!("Я Беркут. Вогонь по пристріляній точці {}.", i + 1), format!("This is Berkut. Firing on registered point {}.", i + 1)),
                 Diorama::Robotyne => Line::new("Incoming on the lane! They have it registered. Get out of there!"),
             }));
         }

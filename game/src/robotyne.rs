@@ -166,7 +166,7 @@ impl Plugin for RobotynePlugin {
         if crate::diorama::diorama() != crate::diorama::Diorama::Robotyne {
             return;
         }
-        app.insert_resource(HeliRng(SmallRng::seed_from_u64(52)))
+        app.insert_resource(HeliRng(SmallRng::seed_from_u64(crate::dev::seeded(52))))
             .add_systems(Update, fly_helicopters.run_if(crate::running).in_set(crate::Step::Fire))
             .add_systems(Update, spin_rotors.in_set(crate::Step::Effects));
     }

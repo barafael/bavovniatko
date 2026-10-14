@@ -61,6 +61,8 @@ pub struct DevEnv {
     pub look: Option<Target>,
     pub speed: Option<f32>,
     pub warp_to: Option<f32>,
+    /// `VUHLEDAR_SEED=<n>`: run the day on other random streams (0, or unset, is the day itself).
+    pub seed: u64,
     /// Go straight to the debrief once the warp (if any) arrives, to lay the screen out without playing the day.
     pub debrief: bool,
     pub rec: Option<String>,
@@ -78,6 +80,8 @@ pub struct DevEnv {
     pub log_stats: bool,
     /// Park every vehicle model in a row here (x, z, heading in degrees), live and burned out, to look them over.
     pub lineup: Option<[f32; 3]>,
+    /// `VUHLEDAR_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
+    pub era_at: Option<f32>,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
 /// `VUHLEDAR_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
@@ -151,6 +155,7 @@ impl DevEnv {
             look: parse("VUHLEDAR_LOOK"),
             speed: parse("VUHLEDAR_SPEED"),
             warp_to: parse("VUHLEDAR_WARP_TO"),
+            seed: parse("VUHLEDAR_SEED").unwrap_or(0),
             debrief: var("VUHLEDAR_DEBRIEF").is_some(),
             rec: var("VUHLEDAR_REC"),
             rec_from: parse("VUHLEDAR_REC_FROM").unwrap_or(5.0),
@@ -161,6 +166,7 @@ impl DevEnv {
             off: var("VUHLEDAR_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
             ground: var("VUHLEDAR_GROUND"),
             log_stats: var("VUHLEDAR_LOG_STATS").is_some(),
+            era_at: parse("VUHLEDAR_ERA_AT"),
             lineup: var("VUHLEDAR_LINEUP").and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok()),
             light: var("VUHLEDAR_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
@@ -173,6 +179,15 @@ impl DevEnv {
 static DEV: OnceLock<DevEnv> = OnceLock::new();
 
 /// The development switches, parsed on first use.
+/// A simulation stream's seed under `VUHLEDAR_SEED`: the stream's own seed for the day itself, mixed with the
+/// run number otherwise, so `scripts/band.sh` can see how far the day's outcome swings with chance alone.
+pub fn seeded(base: u64) -> u64 {
+    match dev().seed {
+        0 => base,
+        s => base ^ s.wrapping_mul(0x9E37_79B9_7F4A_7C15),
+    }
+}
+
 pub fn dev() -> &'static DevEnv {
     DEV.get_or_init(DevEnv::load)
 }
@@ -183,7 +198,7 @@ impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(crate::camera::Flight(dev().fly.clone()))
             .add_systems(Startup, lineup.after(crate::units::setup_models));
-        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground).chain().in_set(crate::Step::Control).in_set(DevSystems));
+        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
     }
 }
 
@@ -218,6 +233,25 @@ fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes:
                 dress_charred(&mut e, &m.hull);
                 e.with_children(|c| dress_charred(&mut c.spawn((burnt(&m.turret), turret)), &m.turret));
             }
+        }
+    }
+}
+
+/// `VUHLEDAR_ERA_AT` with `VUHLEDAR_LINEUP`: the reactive armour of the lineup's T-80, T-72 and Bradley going off
+/// at a chosen moment, to look at the pops on their own (in the day they come with the warhead's blast).
+fn era_test(mut commands: Commands, script: Res<crate::director::Script>, mut fx: ResMut<crate::fx::FxAssets>, mut done: Local<bool>) {
+    use crate::units::VKind;
+    use strum::VariantArray;
+    let (Some(at), Some([x, z, heading])) = (dev().era_at, dev().lineup) else { return };
+    if *done || script.t < at {
+        return;
+    }
+    *done = true;
+    let rot = Quat::from_rotation_y(heading.to_radians());
+    for (i, k) in VKind::VARIANTS.iter().enumerate() {
+        if k.era() {
+            let p = crate::geo::ground((Vec3::new(x, 0.0, z) + rot * Vec3::X * (i as f32 * 10.0)).xz());
+            crate::fx::era_pops(&mut commands, &mut fx, &Transform::from_translation(p).with_rotation(rot), false);
         }
     }
 }
@@ -277,8 +311,31 @@ fn set_drone_aim(view: &mut View, yaw: f32, gimbal: f32) {
 }
 
 /// `VUHLEDAR_LOOK=<idx>|men`: keep the drone's gimbal on that [`Target`].
-fn env_look(mut view: ResMut<View>, vehicles: Query<(&Vehicle, &Transform)>, men: Query<(&Soldier, &Transform)>, mut aim: Local<Option<Vec3>>) {
-    let Some(target) = dev().look.and_then(|t| t.locate(view.drone_pos, &vehicles, &men)) else { return };
+/// What `VUHLEDAR_LOOK=hit|pool|grass` aims at: the last hit, the pool fires, the grass fires, the missiles in the air.
+type FireLooks<'w, 's> = (
+    Res<'w, crate::units::LastHit>,
+    Query<'w, 's, (&'static crate::fx::Emitter, &'static GlobalTransform)>,
+    Query<'w, 's, &'static crate::fx::GrassFire>,
+    Query<'w, 's, &'static crate::fire::Missile>,
+);
+
+fn env_look(
+    mut view: ResMut<View>,
+    vehicles: Query<(&Vehicle, &Transform)>,
+    men: Query<(&Soldier, &Transform)>,
+    fires: FireLooks,
+    mut aim: Local<Option<Vec3>>,
+) {
+    let (hit, pools, grass, missiles) = fires;
+    let located = match dev().look {
+        // The hull the newest missile in the air is flying at, so the shot is on it when it strikes; else the last hit.
+        Some(crate::camera::Target::Hit) => missiles.iter().filter_map(|m| vehicles.get(m.target).ok()).last().map(|(_, t)| t.translation).or(hit.0),
+        Some(crate::camera::Target::Pool) => pools.iter().filter(|(e, _)| e.kind == crate::fx::EmitterKind::PoolFire).last().map(|(_, t)| t.translation()),
+        Some(crate::camera::Target::Grass) => grass.iter().filter_map(|g| g.centre()).last().map(crate::geo::ground),
+        Some(t) => t.locate(view.drone_pos, &vehicles, &men),
+        None => None,
+    };
+    let Some(target) = located else { return };
     // Ease the aim so the gimbal pans smoothly.
     let a = aim.get_or_insert(target);
     *a = a.lerp(target, 0.03);

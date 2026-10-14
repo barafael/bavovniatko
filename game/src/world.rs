@@ -273,7 +273,9 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
             commands.spawn((Mesh3d(meshes.add(t.build())), MeshMaterial3d(vertex.clone())));
         }
         if !c.is_empty() {
-            commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone()), bevy::light::NotShadowCaster));
+            // The crowns cast too (the shadow pass discards by the same mask), so a belt lays its band of shade
+            // across the field in the low sun.
+            commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone())));
         }
     }
 }

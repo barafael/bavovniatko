@@ -189,6 +189,11 @@ pub enum Target {
     /// The mean of the attacker's infantry on foot within 500 m of a point; the point itself when nobody is
     /// there, so a shot never holds a stale aim on an empty field.
     MenNear(Vec2),
+    /// For test shots of the fire looks (`VUHLEDAR_LOOK=hit|pool|grass`): the hull a missile is flying at (or was hit last), the newest
+    /// pool fire, the grass fire's front. Located by `dev::env_look`, which can see them.
+    Hit,
+    Pool,
+    Grass,
 }
 
 impl std::str::FromStr for Target {
@@ -198,6 +203,12 @@ impl std::str::FromStr for Target {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if s == "men" {
             Ok(Target::Men)
+        } else if s == "hit" {
+            Ok(Target::Hit)
+        } else if s == "pool" {
+            Ok(Target::Pool)
+        } else if s == "grass" {
+            Ok(Target::Grass)
         } else if let Some((w, i)) = s.split_once('/') {
             Ok(Target::Wave(w.trim().parse()?, i.trim().parse()?))
         } else {
@@ -229,6 +240,7 @@ impl Target {
                     .collect();
                 Some(if pts.is_empty() { at } else { pts.iter().copied().sum::<Vec3>() / pts.len() as f32 })
             }
+            Target::Hit | Target::Pool | Target::Grass => None,
         }
     }
 }

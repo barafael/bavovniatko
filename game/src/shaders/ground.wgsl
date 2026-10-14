@@ -1,4 +1,4 @@
-// Ground detail below the 1 m texel: the snow's ragged patch edges, furrows and stubble rows showing through
+// Ground detail below the half-metre texel: the snow's ragged patch edges, furrows and stubble rows showing through
 // thin snow, and grain in the snow. The base texture's alpha carries the field's furrow direction (0 = no
 // furrows here). The texture is sampled through a small world-space jitter, so no texel edge is ever straight.
 
