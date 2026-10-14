@@ -182,7 +182,7 @@ Coordinates are OSM settlement nodes and relations, retrieved through the Photon
   - wet weather disadvantaged light FPVs [src:aljazeera-2025-psaropoulos-pokrovsk];
   - up to 10 infiltrators a day got in on sunny days and 30–40 on rainy ones [src:hromadske-2025-butsko-encirclement-myrnohrad].
 - *1–2 December 2025.* Overcast, 4–6 °C, with 7 mm of rain on 2 December [src:open-meteo-2026-era5-pokrovsk-2025-26], during the Russian claim and the turtle-tank assault in fog [src:euromaidanpress-2025-axe-turtle-tanks-myrnohrad].
-- *Light.* Sunset about 16:40 in December, giving about 8.5 hours of daylight [src:open-meteo-2026-era5-pokrovsk-2025-26].
+- *Light.* Sunset about 15:40 (Kyiv time) in December, giving about 8.5 hours of daylight [src:open-meteo-2026-era5-pokrovsk-2025-26].
 - *January 2026.* The fall came in deep cold: −15 °C on 17 and 20 January and −18 °C on 4 February, with a thin snow cover of 3–7 cm [src:open-meteo-2026-era5-pokrovsk-2025-26]. The 7th Corps said the cold caused Russian hypothermia and frostbite losses [src:united24-2026-litnarovych-winter]. Icing hampers fibre-optic FPVs [src:euromaidan-2026-kossov-icy-fibre].
 
 ## 4. Forces

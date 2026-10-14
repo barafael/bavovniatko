@@ -140,11 +140,11 @@ Vuhledar is a coal-mining town of about 14,000 pre-war residents. Its Soviet-era
 - **The railway.** The Donetsk–Volnovakha railway passed near the town [src:kyivpost-2024-kostezh-why-lost]. Holding Vuhledar let Ukraine threaten it [src:cnn-2023-lister-vuhledar-turkeys].
 - **Wider geometry.** Vuhledar is about 24 km from Marinka, Kurakhove and the N15, so even its capture would not have linked up with the Donetsk City axis [src:isw-2023-03-05-roca].
 
-**Weather and light.** ERA5 reanalysis for 47.78 N 37.25 E, local time [src:open-meteo-historical-archive]:
-- **Pavlivka, 28 Oct – 20 Nov 2022.** Mild and wet: highs about 5–14 °C, rain on 30 Oct (6 mm) and 17–19 Nov (31 mm in three days), frequent overcast. Both sides reported mud slowing the assaults [src:isw-2022-11-03-roca] [src:isw-2022-11-07-roca]. Sunset fell from about 17:19 to 16:48.
+**Weather and light.** ERA5 reanalysis for 47.78 N 37.25 E, Kyiv time [src:open-meteo-historical-archive]:
+- **Pavlivka, 28 Oct – 20 Nov 2022.** Mild and wet: highs about 5–14 °C, rain on 30 Oct (6 mm) and 17–19 Nov (31 mm in three days), frequent overcast. Both sides reported mud slowing the assaults [src:isw-2022-11-03-roca] [src:isw-2022-11-07-roca]. Sunset fell from about 17:19 to 15:48 (the clocks went back on 30 Oct).
 - **24–27 Jan 2023.** Frost and clear skies: lows −4.6 to −6.7 °C, cloud from 65% down to 0% on 26 Jan.
 - **28 Jan – 1 Feb.** Light snow (about 4.6 cm in total) under overcast. A Ukrainian officer cited "poor weather" constraining Russian effectiveness [src:isw-2023-01-31-roca].
-- **6–10 Feb.** Hard frost: highs −3.6 to +0.2 °C, lows −6.4 to −11.4 °C, little precipitation. Maximum wind reached about 26 km/h on 7–8 Feb, with cloud 99% on 7 Feb and 36% on 8 Feb. Sunrise was about 07:50 and sunset about 17:40.
+- **6–10 Feb.** Hard frost: highs −3.6 to +0.2 °C, lows −6.4 to −11.4 °C, little precipitation. Maximum wind reached about 26 km/h on 7–8 Feb, with cloud 99% on 7 Feb and 36% on 8 Feb. Sunrise was about 06:50 and sunset about 16:40.
 - **12–18 Feb.** Repeated light snow (about 13 cm in total).
 - **From 19 Feb.** Intermittent thaw (frost returns on 22–24 Feb), with highs of 11–14 °C on 26–27 Feb. March was mostly above freezing, with rain on 7 and 11 Mar.
 - **Light.** The NYT's crew describes an ambush ordered "during the gray pre-dawn" [src:nyt-2023-kramer-epic-tank-battle].
@@ -365,7 +365,7 @@ Links only; nothing downloaded. Social-media posts are given as linked in the ci
 - **Observation as a resource.** High-rise OPs and quadcopters convert the open plain into a fire-control advantage, and losing an OP or a drone should degrade fire accuracy [src:kyivpost-2023-korshak-vuhledar-marines] [src:cnn-2023-lister-vuhledar-turkeys]. Russian TOS-1A and air strikes on the blocks are the counter [src:isw-2023-01-27-roca].
 - **Scarcity.** Shells, RAAM rounds and ATGMs are limited, which is Zaluzhnyi's binding constraint, and HIMARS is a rare high-value call [src:isw-2023-02-11-roca] [src:nyt-2023-kramer-epic-tank-battle]. The player should be tempted to over-spend on the first columns.
 - **Russian AI behaviour.** Columns in single file along known dirt roads, smoke screens, a plow lead and poor reaction to mines. Mobilised crews panic and leave the road [src:forbes-2023-axe-vuhledar-halt] [src:cnn-2023-lister-vuhledar-turkeys] [src:isw-2023-02-13-roca].
-- **Weather and pacing.** The window runs from mud (Nov) through frozen ground (late Jan – mid-Feb, frost to −11 °C) to thaw (late Feb – Mar) [src:open-meteo-historical-archive]. Daylight is about 07:50–17:40 in early February. Reserves arriving in late January are the Ukrainian "save" that ends Russia's window of opportunity [src:isw-2023-02-11-roca].
+- **Weather and pacing.** The window runs from mud (Nov) through frozen ground (late Jan – mid-Feb, frost to −11 °C) to thaw (late Feb – Mar) [src:open-meteo-historical-archive]. Daylight is about 06:50–16:40 in early February. Reserves arriving in late January are the Ukrainian "save" that ends Russia's window of opportunity [src:isw-2023-02-11-roca].
 - **Epilogue framing.** The debrief can show the 2024 fall by envelopment of the flanks (Prechystivka, Vodiane), with glide bombs and an unrotated brigade. The town that columns could not take frontally fell to its flanks [src:kyivpost-2024-kostezh-why-lost] [src:isw-2024-09-30-roca].
 
 ---

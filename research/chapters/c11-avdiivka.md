@@ -179,7 +179,7 @@ Avdiivka is a small industrial city of about 32,000 pre-war residents, under 10 
 - **19–27 Nov.** First snow (about 2 cm on 19 Nov), a frost to −7 °C on 23 Nov, then 25 mm of rain on 25–26 Nov and gusts to 38 km/h on 27 Nov. Barabash spoke of "blowing snow and high winds" [src:kyivpost-2023-korshak-factory-district].
 - **January 2024.** Mostly around or below freezing and overcast, with light snow (sampled 11, 15 and 20 Jan). Kirby expected the frozen ground of late January and February to favour mechanised attack [src:isw-2023-12-21-roca].
 - **5–13 Feb.** Snow on 5 Feb (about 4 cm), then a thaw: 15 mm of rain on 10 Feb and highs of 9–14 °C by 11–14 Feb, under 100% cloud. Fog on 10–11 Feb [src:euromaidanpress-2024-aerial-bombs-encirclement]. Barabash said the ground was too soft for tanks [src:wikipedia-battle-of-avdiivka].
-- **15–17 Feb (the withdrawal).** A dry hard frost returns: lows of −2 to −6 °C, highs of 2–3 °C, mostly overcast. Sunrise about 07:35, sunset about 17:50. The Zenit walk-out was "pitch black" [src:pravda-2024-kyrylenko-last-days-avdiivka]. A Zenit veteran says it was "foggy" at the time evacuation should have happened [src:pravda-2024-kyrylenko-last-days-avdiivka].
+- **15–17 Feb (the withdrawal).** A dry hard frost returns: lows of −2 to −6 °C, highs of 2–3 °C, mostly overcast. Sunrise about 06:35, sunset about 16:50. The Zenit walk-out was "pitch black" [src:pravda-2024-kyrylenko-last-days-avdiivka]. A Zenit veteran says it was "foggy" at the time evacuation should have happened [src:pravda-2024-kyrylenko-last-days-avdiivka].
 
 ---
 

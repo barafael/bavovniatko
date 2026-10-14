@@ -134,7 +134,7 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - *Resolution:* Slivochny Kapriz credits any area where Russian troops were seen; DeepState counts confirmed control.
 - **explained** · strength 0.5 · 6 judged pairs — HUR puts North Korean casualties at more than 7,000 in June 2026, while the NIS and UK put them at about 6,000 over the same period.
   - `04-0033-35` HUR put North Korean casualties at more than 7,000 in June 2026. *(claimant: Defence Intelligence of Ukraine (HUR); `kyivindependent-2026-terajima-nk-hur`)*
-  - `c14-0027-09` In February–June 2026 the NIS and UK put North Korean casualties at about 6,000. *(claimant: National Intelligence Service (South Korea); UK Government; `kyivindependent-2026-terajima-nk-hur`, `osw-2026-wilk-zaporizhzhia`)*
+  - `c14-0027-09` In February–June 2026 the NIS and UK put North Korean casualties at about 6,000. *(claimant: National Intelligence Service (South Korea); UK Government; `osw-2026-wilk-zaporizhzhia`, `kyivindependent-2026-terajima-nk-hur`)*
   - *Resolution:* Different intelligence services with different methods; HUR's figure is the higher and less conservative one.
 - **explained** · strength 0.4 — 17 detachments of about 474 people imply roughly 8,000 Rubikon personnel, well above the ~5,000 in A.
   - `04-0030-37` Tactic "Dedicated deep drone-interdiction unit (Rubikon)" (RU, e8, e9): an elite drone centre of about 5,000 cuts main supply roads and hunts drone crews, free of any duty to support infantry. *(claimant: —; `euromaidan-2025-mukhina-rubikon-izium`)*

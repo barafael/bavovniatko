@@ -175,16 +175,16 @@ The M-14/E-58 lies about 3.6 km south of Krynky by ISW's measure [src:isw-2023-1
 
 **Weather and light.** These are modelled reanalysis values (Open-Meteo), not station readings [src:openmeteo-2026-krynky-weather].
 
-| day / month | min / max °C | notes | sunrise / sunset (local) |
+| day / month | min / max °C | notes | sunrise / sunset (Kyiv time) |
 |---|---|---|---|
 | 17 Oct 2023 (crossings) | 4.7 / 12.9 | dry, gusts 34 km/h | 07:07 / 17:57 |
 | 20 Oct 2023 | 12.8 / 20.7 | gusts 59 km/h | 07:11 / 17:52 |
 | 27 Oct 2023 (35th lands) | 15.0 / 21.8 | dry | 07:21 / 17:40 |
-| 17 Nov 2023 (announcement) | 1.1 / 7.3 | dry | 07:52 / 17:12 |
-| 26–27 Nov 2023 (storm) | 1.5 / 12.0, then −1.7 / 1.8 | 18.7 mm of rain, then about 2.3 cm of snow; gusts 70–74 km/h | 08:04 / 17:04 |
-| 11 Dec 2023 | 2.5 / 4.7 | drizzle | 08:21 / 16:59 |
-| Jan 2024 | mean −2.1 / 5.0 | 25 frost nights; low of −10.7 °C on 13 Jan | about 08:28 / 17:25 mid-month |
-| 20 Feb 2024 (Shoigu claim) | −2.9 / 3.1 | dry | 07:44 / 18:18 |
+| 17 Nov 2023 (announcement) | 1.1 / 7.3 | dry | 06:52 / 16:12 |
+| 26–27 Nov 2023 (storm) | 1.5 / 12.0, then −1.7 / 1.8 | 18.7 mm of rain, then about 2.3 cm of snow; gusts 70–74 km/h | 07:04 / 16:04 |
+| 11 Dec 2023 | 2.5 / 4.7 | drizzle | 07:21 / 15:59 |
+| Jan 2024 | mean −2.1 / 5.0 | 25 frost nights; low of −10.7 °C on 13 Jan | about 07:28 / 16:25 mid-month |
+| 20 Feb 2024 (Shoigu claim) | −2.9 / 3.1 | dry | 06:44 / 17:18 |
 | 16–17 Jul 2024 (withdrawal news) | 27 / 38 | dry heat | 05:10 / 20:36 |
 
 November 2023 was the wettest month, with about 154 mm. The soldiers' own accounts:

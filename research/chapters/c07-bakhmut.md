@@ -209,23 +209,23 @@ Bakhmut was a salt-and-gypsum city of about 70–75,000 people on the Bakhmutka 
 
 **Weather and light.** ERA5 reanalysis for the grid cell at 48.54 N, 38.03 E, local time [src:open-meteo-2026-era5-bakhmut-2022-23]:
 
-| month | mean high / low (°C) | precip. (mm) | frost nights | snow (cm, total) | sunrise–sunset (mid-month) |
+| month | mean high / low (°C) | precip. (mm) | frost nights | snow (cm, total) | sunrise–sunset (mid-month, Kyiv time) |
 |---|---|---|---|---|---|
 | Aug 2022 | 30.4 / 19.5 | 72 | 0 | 0 | 05:20–19:42 |
 | Sep 2022 | 18.9 / 10.5 | 100 | 0 | 0 | 06:04–18:40 |
 | Oct 2022 | 13.6 / 6.6 | 111 | 0 | 0 | 06:47–17:39 |
-| Nov 2022 | 6.9 / 0.9 | 66 | 13 | 2.7 | 07:35–16:48 |
-| Dec 2022 | 2.3 / −2.4 | 42 | 20 | 2.7 | 08:12–16:32 |
-| Jan 2023 | 1.5 / −4.7 (min −16.0) | 19 | 25 | 5.1 | 08:15–16:59 |
-| Feb 2023 | 1.4 / −5.1 | 42 | 26 | 19.9 | 07:36–17:48 |
-| Mar 2023 | 9.5 / 1.2 | 69 | 10 | 28.8 | 06:42–18:32 |
+| Nov 2022 | 6.9 / 0.9 | 66 | 13 | 2.7 | 06:35–15:48 |
+| Dec 2022 | 2.3 / −2.4 | 42 | 20 | 2.7 | 07:12–15:32 |
+| Jan 2023 | 1.5 / −4.7 (min −16.0) | 19 | 25 | 5.1 | 07:15–15:59 |
+| Feb 2023 | 1.4 / −5.1 | 42 | 26 | 19.9 | 06:36–16:48 |
+| Mar 2023 | 9.5 / 1.2 | 69 | 10 | 28.8 | 05:42–17:32 |
 | Apr 2023 | 14.1 / 6.1 | 98 | 0 | 0 | 05:38–19:18 |
 | May 2023 | 19.7 / 9.6 | 124 | 0 | 0 | 04:47–20:01 |
 | Jul 2023 | 26.7 / 16.7 | 110 | 0 | 0 | 04:41–20:25 |
 
 - **Mud season.** The wet autumn (100+ mm a month in September and October) produced the mud of Bakhmut's trench war [src:open-meteo-2026-era5-bakhmut-2022-23].
 - **Key days.**
-  - **20 Dec 2022** (Zelensky's visit): −7.4 to 0.8 °C, dry, 42% cloud, sunset 16:34.
+  - **20 Dec 2022** (Zelensky's visit): −7.4 to 0.8 °C, dry, 42% cloud, sunset 15:34.
   - **10–12 Jan 2023** (fall of Soledar): hard frost, −13.1 to −1.3 °C, winds to about 27 km/h, overcast by 12 Jan.
   - **6–7 Mar 2023** (withdrawal across the Bakhmutka): −5.2 to 5.6 °C, light snow on 7 Mar.
   - **10 May 2023** (the flank counterattack): 5.4–10.5 °C, 95% cloud, light rain.
@@ -398,7 +398,7 @@ Children were evacuated by force from 8 Mar [src:euromaidanpress-2023-midttun-da
 1. **Zelensky in Bakhmut (20 Dec 2022) and the flag in Congress (21 Dec).**
    - **The visit.** On day 300 of the invasion Zelensky goes to "frontline positions of one of the mechanized brigades … on the approaches to the city" and hands out awards [src:president-2022-zelensky-bakhmut-visit-awards]. He leaves before the visit is announced [src:bbc-2022-bachega-zelensky-visits-bakhmut]. The soldiers give him a flag "to pass on" [src:president-2022-address-indomitable-bakhmut].
    - **The flag.** The next day he presents it to Congress: "Let this flag stay with you" [src:pbs-2022-freking-zelensky-dc-visit]. It is a battle flag signed by the defenders [src:bbc-2022-chatterjee-zelensky-visit-russia-reaction].
-   - **Weather.** The visit day is frosty and dry, with sunset at 16:34 [src:open-meteo-2026-era5-bakhmut-2022-23].
+   - **Weather.** The visit day is frosty and dry, with sunset at 15:34 [src:open-meteo-2026-era5-bakhmut-2022-23].
 2. **The salt town (4–16 Jan 2023).**
    - **The streets.** Wagner fights street by street through Soledar. A Wagner fighter is filmed at the Artemsil plant, while a Ukrainian correspondent poses at the salt mine in the north-west [src:isw-2023-01-07-roca].
    - **The fall.** The town falls in hard frost, −13 °C on 10 Jan [src:open-meteo-2026-era5-bakhmut-2022-23].

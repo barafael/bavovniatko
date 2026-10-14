@@ -119,12 +119,12 @@ Inside, the defenders used the plant's Soviet-era tunnels and shelters: about 11
 
 **Weather and light** (Open-Meteo reanalysis, Kyiv local time; Ukraine moved to summer time on 27 Mar) [src:openmeteo-2026-archive-mariupol-2022]:
 
-| day | min/max °C | precip. | sunrise/sunset | note |
+| day | min/max °C | precip. | sunrise/sunset (Kyiv time) | note |
 |---|---|---|---|---|
-| 1–2 Mar | 0/6 | rain, sleet | 07:08/18:15 | encirclement |
-| 9 Mar | −5/3 | light snow | 06:54/18:25 | hospital strike; 21 of 31 March nights below 0 °C, and the city had no heat |
-| 16 Mar | −5/2 | dry, overcast | 06:40/18:35 | theatre strike |
-| 21 Mar | −3/9 | dry | 06:30/18:43 | mission 1: 03:30–07:30, so it returned after first light |
+| 1–2 Mar | 0/6 | rain, sleet | 06:08/17:15 | encirclement |
+| 9 Mar | −5/3 | light snow | 05:54/17:25 | hospital strike; 21 of 31 March nights below 0 °C, and the city had no heat |
+| 16 Mar | −5/2 | dry, overcast | 05:40/17:35 | theatre strike |
+| 21 Mar | −3/9 | dry | 05:30/17:43 | mission 1: 03:30–07:30, so it returned after first light |
 | 28 Mar | −3/7 | dry, windy (30 km/h) | 06:16/18:52 | mission 3: dawn at the coast, sea fog (pilot account) [src:time-2024-spencer-collins-mariupol-helicopters] |
 | 5 Apr | 1/9 | dry | 06:00/19:04 | last mission |
 | 11–13 Apr | 11/21 → 3/7 | rain, then 23 mm with sleet on 13 Apr | 05:45/19:15 | Illich breakout in turning weather |
