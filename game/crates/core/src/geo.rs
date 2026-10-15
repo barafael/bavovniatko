@@ -6,11 +6,8 @@
 //! fields cut by shelterbelts falling 40 m to the river, Pavlivka to the south-west and Mykilske to the
 //! south-east, and the dirt roads the columns drove up.
 
-use crate::diorama::{Diorama, diorama};
 use bevy::math::{Vec2, Vec3};
 use std::sync::OnceLock;
-
-pub mod robotyne;
 
 pub const HALF_X: f32 = 2304.0;
 pub const HALF_Z: f32 = 1792.0;
@@ -156,7 +153,7 @@ impl Polyline {
 // ---------------------------------------------------------------------------------------------------------
 // Layout
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, serde::Deserialize)]
 pub enum RoadKind {
     Asphalt,
     Dirt,
@@ -244,6 +241,10 @@ pub struct Layout {
     pub foothold_z: f32,
     /// The defenders' main line (z), the tree line or trench the attackers' guns work over.
     pub defence_z: f32,
+    /// The defenders' trench, where one is painted across the field.
+    pub trench_z: Option<f32>,
+    /// The attackers' start line, where they leave from a tree line of their own.
+    pub start_z: Option<f32>,
     /// The drone's base, and the z beyond which it flies into the enemy's jamming.
     pub home: Vec2,
     pub jam_z: f32,
@@ -253,145 +254,13 @@ pub struct Layout {
 
 static LAYOUT: OnceLock<Layout> = OnceLock::new();
 
+/// The diorama's layout, built from its file (`crate::data`).
 pub fn layout() -> &'static Layout {
-    LAYOUT.get_or_init(|| match diorama() {
-        Diorama::Vuhledar => build_layout(),
-        Diorama::Robotyne => robotyne::build_layout(),
-    })
+    LAYOUT.get_or_init(|| crate::data::layout(crate::data::data()))
 }
 
 pub fn v(x: f32, z: f32) -> Vec2 {
     Vec2::new(x, z)
-}
-
-/// Arc length where a northbound road first climbs past `z`.
-fn s_at_z(road: &Polyline, z: f32) -> f32 {
-    let n = (road.length() / 4.0) as usize;
-    (0..=n).map(|k| k as f32 * 4.0).find(|&s| road.point(s).y <= z).unwrap_or(0.0)
-}
-
-fn river_z(x: f32) -> f32 {
-    1480.0 + 55.0 * (x / 410.0).sin() + 28.0 * (x / 160.0 + 1.3).sin()
-}
-
-/// The first shelterbelt in front of the town, the 72nd's forward tree line.
-const FIRST_BELT_Z: f32 = -660.0;
-
-fn build_layout() -> Layout {
-    let river = Polyline::new((0..=96).map(|i| {
-        let x = -HALF_X - 50.0 + i as f32 * (2.0 * HALF_X + 100.0) / 96.0;
-        v(x, river_z(x))
-    }).collect());
-
-    // Roads. The T-0509 runs east-west just south of the town; dirt roads climb from the valley villages.
-    let t0509 = Polyline::smoothed(vec![v(-2400.0, -1040.0), v(-1200.0, -1010.0), v(0.0, -990.0), v(1100.0, -1030.0), v(2400.0, -1120.0)], 3);
-    // Route A, "the dacha road": from Mykilske north-west up to the dachas south-east of the town.
-    let road_a = Polyline::smoothed(vec![v(2450.0, 1350.0), v(2050.0, 1180.0), v(1650.0, 820.0), v(1350.0, 420.0), v(1150.0, -40.0), v(960.0, -420.0), v(820.0, -780.0), v(760.0, -1010.0)], 3);
-    // Route B: from Pavlivka north across the Kashlahach, up the slope to the town's southern blocks.
-    let road_b = Polyline::smoothed(vec![v(-1500.0, 1900.0), v(-1350.0, 1480.0), v(-1250.0, 1000.0), v(-1020.0, 520.0), v(-880.0, 20.0), v(-760.0, -480.0), v(-650.0, -1000.0)], 3);
-    // The lateral along the river, Pavlivka to Mykilske (Russian since November).
-    let lateral = Polyline::smoothed(vec![v(-2400.0, 1600.0), v(-1350.0, 1560.0), v(-300.0, 1600.0), v(900.0, 1560.0), v(2000.0, 1420.0), v(2450.0, 1380.0)], 2);
-    // Field tracks along the belts.
-    let track_1 = Polyline::new(vec![v(-1700.0, -110.0), v(1900.0, -110.0)]);
-    let track_2 = Polyline::new(vec![v(-500.0, -1000.0), v(-500.0, 1560.0)]);
-
-    let roads = vec![
-        Road { line: t0509, width: 8.0, kind: RoadKind::Asphalt },
-        Road { line: road_a.clone(), width: 5.0, kind: RoadKind::Dirt },
-        Road { line: road_b.clone(), width: 5.0, kind: RoadKind::Dirt },
-        Road { line: lateral, width: 6.0, kind: RoadKind::Dirt },
-        Road { line: track_1, width: 3.5, kind: RoadKind::Track },
-        Road { line: track_2, width: 3.5, kind: RoadKind::Track },
-    ];
-
-    // Shelterbelts: field blocks about 0.55 × 1.2 km (db/research/06 §8).
-    let mut belts = Vec::new();
-    for (i, z) in [FIRST_BELT_Z, -110.0, 440.0, 990.0].into_iter().enumerate() {
-        let wob = |x: f32| z + 6.0 * (x / 300.0 + i as f32).sin();
-        let line = Polyline::new((0..=40).map(|k| {
-            let x = -HALF_X + 40.0 + k as f32 * (2.0 * HALF_X - 80.0) / 40.0;
-            v(x, wob(x))
-        }).collect());
-        belts.push(Belt { line, width: 14.0 + 4.0 * (i % 2) as f32, gaps: vec![] });
-    }
-    for x in [-1700.0f32, -500.0, 700.0, 1900.0] {
-        let line = Polyline::new(vec![v(x, -950.0), v(x + 15.0, 1380.0)]);
-        belts.push(Belt { line, width: 12.0, gaps: vec![] });
-    }
-    cut_gaps(&mut belts, &roads);
-
-    let routes = vec![
-        // 0: the dacha road
-        Route { line: road_a.clone(), deploy_s: road_a.project(v(1010.0, -300.0)).1, objective: v(800.0, -760.0) },
-        // 1: the Pavlivka road
-        Route { line: road_b.clone(), deploy_s: road_b.project(v(-830.0, -200.0)).1, objective: v(-700.0, -760.0) },
-    ];
-
-    // Shoulder minefields on both approach roads, from the middle belt to the town edge, plus a stretch further
-    // south. Inner edge 5 m off the centreline: the road itself is left clear on purpose.
-    let mut shoulder_fields = Vec::new();
-    for (ri, road) in [(1usize, &road_a), (2usize, &road_b)] {
-        // The kill zone proper: from just south of the middle belt up to the first tree line.
-        let s0 = s_at_z(road, 60.0);
-        let s_end = road.length() - 120.0;
-        shoulder_fields.push(ShoulderField { road: ri, s0, s1: s_end, inner: 5.5, outer: 70.0, density: 1.0 / 55.0 });
-    }
-    // Belts of mines in front of the town edge and the dachas.
-    let field_mines = vec![
-        (Polyline::new(vec![v(-2100.0, -760.0), v(-200.0, -790.0), v(450.0, -820.0), v(1300.0, -760.0)]), 45.0),
-        (Polyline::new(vec![v(200.0, -330.0), v(1600.0, -360.0)]), 35.0),
-    ];
-
-    let ua_positions = vec![
-        // The first belt: ATGM teams, each with a clear line down its road (none behind a north-south belt).
-        v(-930.0, -655.0), v(-560.0, -660.0), v(780.0, -664.0), v(930.0, -658.0),
-        v(-1500.0, -665.0), v(1350.0, -662.0), // flanks
-        v(-760.0, -1060.0), v(250.0, -1100.0), v(820.0, -1060.0), // town edge and dachas
-    ];
-
-    let trps = vec![
-        road_a.point(road_a.project(v(1350.0, 420.0)).1),
-        road_a.point(road_a.project(v(1150.0, -110.0)).1),
-        road_a.point(road_a.project(v(900.0, -560.0)).1),
-        road_b.point(road_b.project(v(-1020.0, 440.0)).1),
-        road_b.point(road_b.project(v(-880.0, -110.0)).1),
-        road_b.point(road_b.project(v(-740.0, -560.0)).1),
-    ];
-
-    let old_wrecks = vec![
-        (road_a.point(road_a.project(v(1420.0, 520.0)).1) + v(14.0, 6.0), 2.1),
-        (road_a.point(road_a.project(v(1250.0, 200.0)).1) + v(-22.0, 3.0), 0.4),
-        (road_a.point(road_a.project(v(1100.0, -90.0)).1) + v(9.0, -4.0), 1.2),
-        (road_a.point(road_a.project(v(1000.0, -300.0)).1) + v(-30.0, 10.0), 2.9),
-        (road_b.point(road_b.project(v(-1100.0, 700.0)).1) + v(-16.0, 0.0), 0.2),
-        (road_b.point(road_b.project(v(-900.0, 80.0)).1) + v(19.0, 0.0), 2.6),
-        (v(-200.0, 150.0), 1.0),
-        (v(400.0, -250.0), 4.0),
-    ];
-
-    Layout {
-        roads,
-        belts,
-        routes,
-        shoulder_fields,
-        field_mines,
-        barriers: Vec::new(),
-        river: Some(river),
-        town: Rect { min: v(-HALF_X, -HALF_Z), max: v(450.0, -1130.0) },
-        dachas: Rect { min: v(480.0, -1250.0), max: v(1250.0, -880.0) },
-        pavlivka: Rect { min: v(-2100.0, 1560.0), max: v(-900.0, HALF_Z) },
-        mykilske: Rect { min: v(1750.0, 1480.0), max: v(HALF_X, HALF_Z) },
-        ua_positions,
-        ru_positions: Vec::new(),
-        trps,
-        old_wrecks,
-        advance: -1.0,
-        foothold_z: -560.0,
-        defence_z: FIRST_BELT_Z,
-        home: v(-400.0, -1300.0),
-        jam_z: -100.0,
-        mortar_band: (-900.0, 700.0),
-    }
 }
 
 /// Cut gaps where roads cross belts, plus a few natural gaps.
@@ -425,34 +294,9 @@ pub fn cut_gaps(belts: &mut [Belt], roads: &[Road]) {
 // ---------------------------------------------------------------------------------------------------------
 // Terrain height
 
-/// Ground height in metres above sea level.
+/// Ground height in metres above sea level: the diorama's height terms (`crate::data`).
 pub fn height(x: f32, z: f32) -> f32 {
-    match diorama() {
-        Diorama::Vuhledar => height_vuhledar(x, z),
-        Diorama::Robotyne => robotyne::height(x, z),
-    }
-}
-
-/// SRTM-like: ~190 m on the town ridge, ~142 m in the valley.
-fn height_vuhledar(x: f32, z: f32) -> f32 {
-    // The ridge: flat on the town plateau, falling to the Kashlahach.
-    let slope = 1.0 - smoothstep(-1350.0, 1550.0, z);
-    let mut h = 146.0 + 42.0 * slope.powf(1.15);
-    // Long, low swells across the plain, and a little roughness.
-    h += fbm(x / 1100.0, z / 1100.0, 3, 7) * 5.0;
-    h += fbm(x / 230.0, z / 230.0, 3, 11) * 0.9;
-    // The river valley.
-    let rz = river_z(x);
-    let d = (z - rz).abs();
-    h -= 7.0 * (-(d / 85.0).powi(2)).exp() + 3.0 * (-(d / 320.0).powi(2)).exp();
-    // A balka (gully) running down from the middle of the field to the river.
-    let gx = 260.0 + 140.0 * ((z + 200.0) / 600.0).sin();
-    if z > -350.0 {
-        let gd = (x - gx).abs();
-        let depth = 5.5 * smoothstep(-350.0, 400.0, z);
-        h -= depth * (-(gd / 45.0).powi(2)).exp();
-    }
-    h
+    crate::data::height(x, z)
 }
 
 pub fn normal(x: f32, z: f32) -> Vec3 {
@@ -541,10 +385,8 @@ pub fn line_of_sight(a: Vec2, b: Vec2) -> bool {
 /// Map position to WGS84. Vuhledar is anchored on the town node (47.7810 N, 37.2461 E) at (-900, -1500);
 /// Robotyne's box on the fields about 4 km south of Mala Tokmachka (47.4967 N, 35.8968 E at the origin).
 pub fn latlon(p: Vec2) -> (f64, f64) {
-    let (lat0, lon0, x0, z0, m_per_lon) = match diorama() {
-        Diorama::Vuhledar => (47.7810, 37.2461, -900.0, -1500.0, 74_740.0),
-        Diorama::Robotyne => (47.4967, 35.8968, 0.0, 0.0, 75_250.0),
-    };
+    let a = crate::data::data().anchor;
+    let (lat0, lon0, x0, z0, m_per_lon) = (a.lat, a.lon, a.x, a.z, a.m_per_lon);
     let lat = lat0 - (p.y as f64 - z0) / 111_200.0;
     let lon = lon0 + (p.x as f64 - x0) / m_per_lon;
     (lat, lon)

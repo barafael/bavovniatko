@@ -350,11 +350,11 @@ fn update_hud(
     texts.p1().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar => format!(
             "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}",
-            diorama().date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
+            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
         ),
         Diorama::Robotyne => format!(
             "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
-            diorama().date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
+            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
         ),
     }));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
@@ -594,7 +594,7 @@ fn show_debrief(
         }
         Diorama::Robotyne => {
             let names = ["", "the first group", "the second group", "sent back in for the men"];
-            let trench = crate::robotyne::TRENCH_Z;
+            let trench = crate::geo::layout().trench_z.expect("Mala Tokmachka has a trench");
             let short = |a: f32| {
                 if a == f32::MIN {
                     "nowhere yet".to_string()

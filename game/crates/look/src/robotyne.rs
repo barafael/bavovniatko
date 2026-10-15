@@ -4,10 +4,9 @@
 
 use crate::meshes::{self, MeshBuilder};
 use crate::world::Skirt;
-use bav_core::geo::robotyne::n08_z;
 use bav_core::geo::{self, smoothstep};
 use bav_sim::player::{MainCamera, ObservationPost};
-use bav_sim::robotyne::{DUG_IN, HeliModels, Rotor};
+use bav_sim::robotyne::{HeliModels, Rotor, dug_in};
 use bevy::{camera::Exposure, pbr::FogFalloff, prelude::*};
 
 pub struct RobotyneLookPlugin;
@@ -47,7 +46,7 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut m
     }
     // Last summer's combine, burned where it stood; a car shot up on the highway.
     set.append(&meshes::combine(), Transform::from_translation(geo::ground(Vec2::new(-860.0, -1180.0))).with_rotation(Quat::from_rotation_y(0.4)));
-    let car = geo::ground(Vec2::new(380.0, n08_z(380.0) + 2.0));
+    let car = geo::ground(Vec2::new(380.0, bav_core::data::curve("n08").at(380.0) + 2.0));
     set.cuboid(car + Vec3::Y * 0.6, Vec3::new(0.85, 0.45, 2.1), Quat::from_rotation_y(1.3), [0.18, 0.16, 0.15]);
     // The power line along the N08, half its poles down.
     let n08 = &geo::layout().roads[0].line;
@@ -67,7 +66,7 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut m
         let at = geo::ground(*p + Vec2::new(5.0, 14.0));
         set.boxc(at + Vec3::Y * 0.2, Vec3::new(5.0, 0.4, 5.0), [0.30, 0.25, 0.19]);
     }
-    for (p, _) in DUG_IN {
+    for (p, _) in dug_in() {
         let at = geo::ground(p - Vec2::new(0.0, 5.0));
         set.extrude_x(&[Vec2::new(-3.0, -0.2), Vec2::new(3.0, -0.2), Vec2::new(0.0, 1.6)], 3.2, at, [0.42, 0.36, 0.27]);
     }

@@ -1,0 +1,107 @@
+// South of Mala Tokmachka, 8 June 2023: the 47th Brigade's breach into the Russian minefields.
+// The history is in db/research/chapters/c09-robotyne.md (§3, §5, §6 set piece 1). The box is the same size as
+// Vuhledar's. +x is east, +z south: the attack climbs from the N08 highway in the north (about 70 m) to the crest
+// in the south (about 110 m), and the fields between are a grid of tree lines. The schema is bav_core::data.
+(
+    place: ("Mala Tokmachka", "Мала Токмачка"),
+    date: "8 June 2023",
+    tally_date: "08 JUN 2023",
+    day_start_min: 230.0,
+    compression: 0.30,
+    attacker: Ua,
+    summer: true,
+    anchor: (lat: 47.4967, lon: 35.8968, x: 0.0, z: 0.0, m_per_lon: 75250.0),
+
+    ground: [
+        // The long open slope up from the Kinska valley to the crest: the attackers climb under observation, so the
+        // slope is concave to the crest (no dead ground below it), and levels off behind the trench.
+        Ramp(base: 68.0, amp: 42.0, power: 1.6, ramp: Rising(-2000.0, 700.0)),
+        RidgeZ(z: 850.0, width: 320.0, amp: 4.0),
+        // Long low swells, and a little roughness.
+        Noise(scale: 1200.0, octaves: 3, seed: 17, amp: 4.5),
+        Noise(scale: 240.0, octaves: 3, seed: 19, amp: 0.8),
+        // A balka running north off the slope on the east side, and a shallower one in the west.
+        Gully(x0: 1350.0, amp: 120.0, period: 500.0, z_offset: 0.0, phase: 0.0, width: 60.0, depth: 8.0, fade: Out(-500.0, 700.0)),
+        Gully(x0: -1400.0, amp: 90.0, period: 380.0, z_offset: 0.0, phase: 1.0, width: 45.0, depth: 4.0, fade: Out(-900.0, -100.0)),
+    ],
+
+    curves: [
+        // The N08 highway, Polohy–Voskresenka, running east-south-east across the north of the box.
+        ("n08", (base: -1380.0, slope: 0.137)),
+    ],
+
+    lines: [
+        ("n08", Sampled(curve: "n08", x0: -2364.0, span: 4728.0, n: 24)),
+        // The two tracks south, each along the east side of a north-south tree line: "a wide muddy track between
+        // hedgerows" (Guardian). Dry on 8 June: dust, not mud.
+        ("west", Smoothed([(-470.0, -1795.0), (-492.0, -1450.0), (-503.0, -1000.0), (-498.0, -500.0), (-494.0, 0.0), (-489.0, 400.0), (-482.0, 700.0), (-470.0, 1000.0)], 3)),
+        ("east", Smoothed([(704.0, -1795.0), (690.0, -1300.0), (676.0, -800.0), (667.0, -300.0), (661.0, 200.0), (656.0, 600.0), (651.0, 720.0), (640.0, 1000.0)], 3)),
+        // Field tracks along the Ukrainian forward tree line and behind the Russian one.
+        ("lateral", Points([(-2350.0, -914.0), (2350.0, -914.0)])),
+        ("rear", Points([(-2350.0, 1000.0), (2350.0, 1000.0)])),
+    ],
+
+    roads: [
+        (line: "n08", width: 9.0, kind: Asphalt),
+        (line: "west", width: 6.0, kind: Dirt),
+        (line: "east", width: 6.0, kind: Dirt),
+        (line: "lateral", width: 3.5, kind: Track),
+        (line: "rear", width: 3.5, kind: Track),
+    ],
+
+    // Shelterbelts: main belts about 0.55 km apart east-west, cross-belts about 1.15 km apart (dossier §3, the OSM
+    // and Sentinel-2 sample box around Robotyne). The second row is the Ukrainian forward tree line; the fifth, on
+    // the crest, is the Russian position: wider, thicker.
+    belts: [
+        Rows(rows: [(-1450.0, 13.0), (-900.0, 17.0), (-350.0, 13.0), (200.0, 17.0), (720.0, 22.0), (1270.0, 17.0)], amp: 7.0, period: 340.0, phase_step: 1.7, x0: -2264.0, span: 4528.0, n: 40),
+        Lines(lines: [((-1650.0, -1700.0), (-1662.0, 1650.0)), ((-520.0, -1700.0), (-532.0, 1650.0)), ((640.0, -1700.0), (628.0, 1650.0)), ((1780.0, -1700.0), (1768.0, 1650.0))], width: 12.0),
+    ],
+
+    // The columns deploy only once through the barrier, at the trench: they never got that far.
+    routes: [
+        (line: "west", deploy: (-485.0, 600.0), objective: (-470.0, 702.0)),
+        (line: "east", deploy: (655.0, 600.0), objective: (650.0, 702.0)),
+    ],
+
+    // The Surovikin line's first belt: a forward field of older and remotely laid mines, then the barrier proper,
+    // about 480 m deep (RUSI: 120 m growing to about 500 m), anti-tank mines stacked two high, anti-personnel mines
+    // among them, across the tracks as well as the fields.
+    barriers: [
+        (z0: -430.0, z1: -250.0, at_per: 260.0, stacked: 0.0, ap_per: 400.0),
+        (z0: 110.0, z1: 590.0, at_per: 95.0, stacked: 0.45, ap_per: 70.0),
+    ],
+
+    ua_positions: [
+        // ATGM teams in the forward tree line, at the heads of the two tracks (where the belts' gaps let them see up
+        // the lanes) and between, watching the crest 1.6 km away.
+        (-520.0, -896.0), (640.0, -895.0), (260.0, -897.0),
+        // Riflemen covering the start line.
+        (-180.0, -895.0), (-1350.0, -896.0),
+    ],
+    ru_positions: [
+        // The 291st's first line: platoon positions along the crest trench, Kornet teams at the heads of the tracks,
+        // looking straight down them through the belts' gaps.
+        (-1500.0, 702.0), (-930.0, 700.0), (-468.0, 702.0), (180.0, 699.0),
+        (666.0, 702.0), (1350.0, 701.0), (1900.0, 702.0),
+    ],
+
+    // The Russian guns have every lane registered: where the tracks cross the minefields.
+    trps: [
+        OnLine("west", (-497.0, -340.0)), OnLine("west", (-492.0, 160.0)), OnLine("west", (-488.0, 420.0)),
+        OnLine("east", (666.0, -340.0)), OnLine("east", (661.0, 160.0)), OnLine("east", (657.0, 420.0)),
+    ],
+
+    // Last year's wrecks, from the Russian advance in 2022, still in the fields.
+    old_wrecks: [(At((-1180.0, -180.0)), 2.4), (At((1480.0, 330.0)), 0.9), (At((150.0, -620.0)), 4.1)],
+
+    advance: 1.0,
+    foothold_z: 662.0,
+    defence_z: 702.0,
+    // The 291st's trench along the northern edge of the crest belt, and the 47th's start line in the forward tree
+    // line, where its ATGM teams overwatch the attack.
+    trench_z: Some(702.0),
+    start_z: Some(-900.0),
+    home: (-200.0, -1600.0),
+    jam_z: 100.0,
+    mortar_band: (-600.0, 702.0),
+)

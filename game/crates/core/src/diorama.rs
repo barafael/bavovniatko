@@ -4,7 +4,7 @@
 
 use std::sync::OnceLock;
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, serde::Deserialize)]
 pub enum Side {
     Ru,
     Ua,
@@ -34,10 +34,7 @@ pub fn diorama() -> Diorama {
 impl Diorama {
     /// Whose columns drive into whose minefields.
     pub fn attacker(self) -> Side {
-        match self {
-            Diorama::Vuhledar => Side::Ru,
-            Diorama::Robotyne => Side::Ua,
-        }
+        crate::data::data().attacker
     }
 
     pub fn defender(self) -> Side {
@@ -48,38 +45,27 @@ impl Diorama {
     }
 
     pub fn summer(self) -> bool {
-        self == Diorama::Robotyne
+        crate::data::data().summer
     }
 
+    /// "Vuhledar (Вугледар), 6 February 2023".
     pub fn title(self) -> String {
-        match self {
-            Diorama::Vuhledar => format!("{}, 6 February 2023", crate::text::VUHLEDAR.hud()),
-            Diorama::Robotyne => format!("{}, 8 June 2023", crate::text::MALA_TOKMACHKA.hud()),
-        }
+        let d = crate::data::data();
+        format!("{} ({}), {}", d.place.0, d.place.1, d.date)
     }
 
     /// The date as the tally shows it.
-    pub fn date(self) -> &'static str {
-        match self {
-            Diorama::Vuhledar => "06 FEB 2023",
-            Diorama::Robotyne => "08 JUN 2023",
-        }
+    pub fn tally_date(self) -> &'static str {
+        &crate::data::data().tally_date
     }
 
     /// Clock time (minutes after midnight) when the day starts.
     pub fn day_start_min(self) -> f32 {
-        match self {
-            // Kyiv time (UTC+2 in February): sunrise at Vuhledar was 06:51. The dossier's times are Moscow time.
-            Diorama::Vuhledar => 6.0 * 60.0 + 40.0,
-            Diorama::Robotyne => 3.0 * 60.0 + 50.0,
-        }
+        crate::data::data().day_start_min
     }
 
     /// Game minutes per real second.
     pub fn compression(self) -> f32 {
-        match self {
-            Diorama::Vuhledar => 0.36,
-            Diorama::Robotyne => 0.30,
-        }
+        crate::data::data().compression
     }
 }

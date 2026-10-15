@@ -8,6 +8,8 @@ publish.workspace = true
 
 [dependencies]
 bevy.workspace = true
+ron.workspace = true
+serde.workspace = true
 strum.workspace = true
 
 [lints]

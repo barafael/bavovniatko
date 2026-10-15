@@ -218,7 +218,7 @@ fn run_script(
                 // The guns walk up and down the crest trench line and the positions behind it.
                 let lay_posts = &lay.ru_positions;
                 for k in 0..*missions {
-                    let base = if k % 2 == 0 && !lay_posts.is_empty() { lay_posts[k as usize % lay_posts.len()] } else { Vec2::new(rng.random_range(-2000.0..2000.0), crate::robotyne::TRENCH_Z + rng.random_range(-10.0..60.0)) };
+                    let base = if k % 2 == 0 && !lay_posts.is_empty() { lay_posts[k as usize % lay_posts.len()] } else { Vec2::new(rng.random_range(-2000.0..2000.0), lay.trench_z.unwrap_or(lay.defence_z) + rng.random_range(-10.0..60.0)) };
                     let at = now + (k as f32 / *missions as f32 * over) as f64;
                     fc.missions.push(Mission { target: base, kind: ShellKind::He155, rounds: 6, sigma: 45.0, interval: 1.6, next: at, flight: 18.0, player: false, by: Side::Ua });
                 }

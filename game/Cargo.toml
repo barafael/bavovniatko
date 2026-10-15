@@ -20,6 +20,9 @@ bav-look = { path = "crates/look" }
 bevy = { version = "=0.19.1", features = ["wayland", "jpeg"] }
 rand = { version = "0.9", features = ["small_rng"] }
 strum = { version = "0.28.0", features = ["derive"] }
+# The dioramas' data files (the versions Bevy already depends on).
+serde = { version = "1", features = ["derive"] }
+ron = "0.12"
 # The ground chunks as PNGs (the version Bevy's own image loading uses).
 image = { version = "0.25", default-features = false, features = ["png"] }
 

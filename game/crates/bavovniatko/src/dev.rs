@@ -314,7 +314,7 @@ fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&
         let want = dev().team.unwrap_or(Atgm::Stugna);
         let kz = match crate::diorama::diorama() {
             crate::diorama::Diorama::Vuhledar => Vec2::new(930.0, -658.0),
-            crate::diorama::Diorama::Robotyne => Vec2::new(-100.0, crate::robotyne::UA_LINE_Z),
+            crate::diorama::Diorama::Robotyne => Vec2::new(-100.0, crate::geo::layout().start_z.expect("Mala Tokmachka has a start line")),
         };
         let Some((e, p)) = teams.iter().filter(|(_, p)| p.atgm > 0 && p.weapon == Some(want)).min_by(|a, b| a.1.pos.distance(kz).total_cmp(&b.1.pos.distance(kz))) else {
             return;

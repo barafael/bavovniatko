@@ -1,0 +1,121 @@
+// Vuhledar, 6 February 2023: Russian columns into the 72nd Brigade's minefields.
+// The history is in db/research/chapters/c08-vuhledar.md. The box compresses the dossier's geography: the town on
+// its ridge in the north (negative z), the fields falling south to the Kashlahach, Pavlivka and Mykilske in the
+// valley. +x is east, +z south; metres. The schema is bav_core::data.
+(
+    place: ("Vuhledar", "Вугледар"),
+    date: "6 February 2023",
+    tally_date: "06 FEB 2023",
+    // Kyiv time (UTC+2 in February): sunrise at Vuhledar was 06:51. The dossier's times are Moscow time.
+    day_start_min: 400.0,
+    compression: 0.36,
+    attacker: Ru,
+    summer: false,
+    anchor: (lat: 47.7810, lon: 37.2461, x: -900.0, z: -1500.0, m_per_lon: 74740.0),
+
+    // SRTM-like: ~190 m on the town ridge, ~142 m in the valley.
+    ground: [
+        // The ridge: flat on the town plateau, falling to the Kashlahach.
+        Ramp(base: 146.0, amp: 42.0, power: 1.15, ramp: Falling(-1350.0, 1550.0)),
+        // Long, low swells across the plain, and a little roughness.
+        Noise(scale: 1100.0, octaves: 3, seed: 7, amp: 5.0),
+        Noise(scale: 230.0, octaves: 3, seed: 11, amp: 0.9),
+        // The river valley.
+        Valley(curve: "river", profile: [(7.0, 85.0), (3.0, 320.0)]),
+        // A balka (gully) running down from the middle of the field to the river.
+        Gully(x0: 260.0, amp: 140.0, period: 600.0, z_offset: -200.0, phase: 0.0, width: 45.0, depth: 5.5, fade: In(-350.0, 400.0)),
+    ],
+
+    curves: [
+        ("river", (base: 1480.0, waves: [(55.0, 410.0, 0.0), (28.0, 160.0, 1.3)])),
+    ],
+
+    lines: [
+        ("river", Sampled(curve: "river", x0: -2354.0, span: 4708.0, n: 96)),
+        // The T-0509 runs east-west just south of the town.
+        ("t0509", Smoothed([(-2400.0, -1040.0), (-1200.0, -1010.0), (0.0, -990.0), (1100.0, -1030.0), (2400.0, -1120.0)], 3)),
+        // Route A, "the dacha road": from Mykilske north-west up to the dachas south-east of the town.
+        ("road_a", Smoothed([(2450.0, 1350.0), (2050.0, 1180.0), (1650.0, 820.0), (1350.0, 420.0), (1150.0, -40.0), (960.0, -420.0), (820.0, -780.0), (760.0, -1010.0)], 3)),
+        // Route B: from Pavlivka north across the Kashlahach, up the slope to the town's southern blocks.
+        ("road_b", Smoothed([(-1500.0, 1900.0), (-1350.0, 1480.0), (-1250.0, 1000.0), (-1020.0, 520.0), (-880.0, 20.0), (-760.0, -480.0), (-650.0, -1000.0)], 3)),
+        // The lateral along the river, Pavlivka to Mykilske (Russian since November).
+        ("lateral", Smoothed([(-2400.0, 1600.0), (-1350.0, 1560.0), (-300.0, 1600.0), (900.0, 1560.0), (2000.0, 1420.0), (2450.0, 1380.0)], 2)),
+        // Field tracks along the belts.
+        ("track_1", Points([(-1700.0, -110.0), (1900.0, -110.0)])),
+        ("track_2", Points([(-500.0, -1000.0), (-500.0, 1560.0)])),
+    ],
+
+    roads: [
+        (line: "t0509", width: 8.0, kind: Asphalt),
+        (line: "road_a", width: 5.0, kind: Dirt),
+        (line: "road_b", width: 5.0, kind: Dirt),
+        (line: "lateral", width: 6.0, kind: Dirt),
+        (line: "track_1", width: 3.5, kind: Track),
+        (line: "track_2", width: 3.5, kind: Track),
+    ],
+
+    // Shelterbelts: field blocks about 0.55 × 1.2 km (db/research/06 §8). The first is the 72nd's forward tree line.
+    belts: [
+        Rows(rows: [(-660.0, 14.0), (-110.0, 18.0), (440.0, 14.0), (990.0, 18.0)], amp: 6.0, period: 300.0, phase_step: 1.0, x0: -2264.0, span: 4528.0, n: 40),
+        Lines(lines: [((-1700.0, -950.0), (-1685.0, 1380.0)), ((-500.0, -950.0), (-485.0, 1380.0)), ((700.0, -950.0), (715.0, 1380.0)), ((1900.0, -950.0), (1915.0, 1380.0))], width: 12.0),
+    ],
+
+    routes: [
+        // 0: the dacha road
+        (line: "road_a", deploy: (1010.0, -300.0), objective: (800.0, -760.0)),
+        // 1: the Pavlivka road
+        (line: "road_b", deploy: (-830.0, -200.0), objective: (-700.0, -760.0)),
+    ],
+
+    // Shoulder minefields on both approach roads, from just south of the middle belt up to the first tree line.
+    // Inner edge 5.5 m off the centreline: the road itself is left clear on purpose.
+    shoulder_fields: [
+        (road: 1, from_z: 60.0, end_margin: 120.0, inner: 5.5, outer: 70.0, per: 55.0),
+        (road: 2, from_z: 60.0, end_margin: 120.0, inner: 5.5, outer: 70.0, per: 55.0),
+    ],
+    // Belts of mines in front of the town edge and the dachas.
+    field_mines: [
+        ([(-2100.0, -760.0), (-200.0, -790.0), (450.0, -820.0), (1300.0, -760.0)], 45.0),
+        ([(200.0, -330.0), (1600.0, -360.0)], 35.0),
+    ],
+
+    river: Some("river"),
+    town: Some(((-2304.0, -1792.0), (450.0, -1130.0))),
+    dachas: Some(((480.0, -1250.0), (1250.0, -880.0))),
+    pavlivka: Some(((-2100.0, 1560.0), (-900.0, 1792.0))),
+    mykilske: Some(((1750.0, 1480.0), (2304.0, 1792.0))),
+
+    ua_positions: [
+        // The first belt: ATGM teams, each with a clear line down its road (none behind a north-south belt).
+        (-930.0, -655.0), (-560.0, -660.0), (780.0, -664.0), (930.0, -658.0),
+        // flanks
+        (-1500.0, -665.0), (1350.0, -662.0),
+        // town edge and dachas
+        (-760.0, -1060.0), (250.0, -1100.0), (820.0, -1060.0),
+    ],
+
+    // Pre-registered artillery target points on the approach roads.
+    trps: [
+        OnLine("road_a", (1350.0, 420.0)), OnLine("road_a", (1150.0, -110.0)), OnLine("road_a", (900.0, -560.0)),
+        OnLine("road_b", (-1020.0, 440.0)), OnLine("road_b", (-880.0, -110.0)), OnLine("road_b", (-740.0, -560.0)),
+    ],
+
+    // Where the January assaults left wrecks: beside the roads, and two out in the fields.
+    old_wrecks: [
+        (OffLine("road_a", (1420.0, 520.0), (14.0, 6.0)), 2.1),
+        (OffLine("road_a", (1250.0, 200.0), (-22.0, 3.0)), 0.4),
+        (OffLine("road_a", (1100.0, -90.0), (9.0, -4.0)), 1.2),
+        (OffLine("road_a", (1000.0, -300.0), (-30.0, 10.0)), 2.9),
+        (OffLine("road_b", (-1100.0, 700.0), (-16.0, 0.0)), 0.2),
+        (OffLine("road_b", (-900.0, 80.0), (19.0, 0.0)), 2.6),
+        (At((-200.0, 150.0)), 1.0),
+        (At((400.0, -250.0)), 4.0),
+    ],
+
+    advance: -1.0,
+    foothold_z: -560.0,
+    defence_z: -660.0,
+    home: (-400.0, -1300.0),
+    jam_z: -100.0,
+    mortar_band: (-900.0, 700.0),
+)

@@ -157,7 +157,7 @@ fn shots_film() -> Vec<Shot> {
             // R2. First light: the first group moves off down the western track; nine vehicles pass under the camera.
             f(132.0, 9.0, (-400.0, -1150.0, 160.0), (-410.0, -1115.0, 160.0), Drone(Column(3)), (14.0, 10.0)),
             // R3. Ground, eye level: the Leopard 2R with its plow passes the overwatch position, the head following.
-            f(152.0, 10.0, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Aim::Ground(Vec2::new(-520.0, crate::robotyne::UA_LINE_Z), false), (54.0, 54.0)),
+            f(152.0, 10.0, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Aim::Ground(Vec2::new(-520.0, crate::geo::layout().start_z.expect("Mala Tokmachka has a start line")), false), (54.0, 54.0)),
             // R4. The plow in the forward minefield: the lane, the first mine (a double, under the plow).
             f(318.0, 12.0, (-420.0, -470.0, 140.0), (-430.0, -440.0, 140.0), Drone(Column(0)), (8.0, 7.0)),
             // R5. The second group, eleven, on the eastern track.

@@ -533,7 +533,7 @@ fn paint() -> Chunks {
                 stamp(chunks, p, 0.8, &|_, _, w| mix([0.15, 0.12, 0.09], [0.22, 0.18, 0.13], value_noise(w.x, w.y, 8) * 0.5 + 0.5));
             }
         };
-        let tz = bav_sim::robotyne::TRENCH_Z;
+        let tz = geo::layout().trench_z.expect("Mala Tokmachka has a trench");
         let mut x = -HALF_X + 30.0;
         let mut side = 1.0;
         while x < HALF_X - 30.0 {
