@@ -10,7 +10,8 @@
 
 Claims keep ids derived from their staging local_id (claim:c03_0004_01). A claim whose content hash
 is unchanged is skipped; a changed claim is updated and its outgoing edges and observations rebuilt,
-so re-running is safe. Every staged name must resolve through the entity registry
+so re-running is safe. Changed claims are committed BATCH at a time, one transaction each; a batch that
+fails is retried claim by claim, so one bad claim neither blocks the others nor goes unreported. Every staged name must resolve through the entity registry
 (see tools/entities.py unmatched); unresolved names abort the load.
 """
 from __future__ import annotations
@@ -29,6 +30,7 @@ import kb
 import mdparse
 
 RUN = kb.run_stamp("load")
+BATCH = 50              # changed claims per transaction: a coarser audit and rollback unit, for far fewer round trips
 OSM_LICENCE = "ODbL 1.0, © OpenStreetMap contributors"
 
 _GEO = re.compile(r"geo:\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)")
@@ -269,6 +271,25 @@ def load_claims(w: kb.Writer, topics: list[str] | None) -> Counter:
     files = {r["code"]: r["file"] for r in kb.one(conn, "SELECT code, file FROM topic")}
     stats, problems = Counter(), []
     counters = []
+    batch: list[tuple] = []         # changed claims waiting to be written: (cid, hash, local id, statements, vars, n obs)
+
+    def commit(claims):
+        q = [st for c in claims for st in c[3]]
+        kb.run(conn, "BEGIN;\n" + "\n".join(q) + "\nCOMMIT;", {k: v for c in claims for k, v in c[4].items()})
+        for cid, hh, _, _, _, n_obs in claims:
+            w.wrote(cid, hh)
+            stats["observation:written"] += n_obs
+
+    def flush():
+        try:
+            commit(batch)
+        except kb.KBError:
+            for c in batch:         # find the claim that failed, and write the rest
+                try:
+                    commit([c])
+                except kb.KBError as ex:
+                    problems.append(f"{c[2]}: {ex}")
+        batch.clear()
 
     def resolve(typ, name):
         rid = res.get((typ, ent.norm(name)))
@@ -357,14 +378,17 @@ def load_claims(w: kb.Writer, topics: list[str] | None) -> Counter:
             obs.append((kb.rid("observation", f"{cid.id}_{i:02d}"), od))
         hh = h({"d": {k: v for k, v in data.items() if k != "prov"}, "e": edges,
                 "o": [{k: v for k, v in x[1].items() if k != "prov"} for x in obs]} | {"p": r["passage"]})
+        if any(c[0] == cid for c in batch):
+            flush()                 # the same claim twice: the second must see the first as written
         if not w.changed(cid, hh):
             continue
         data["ext"] = {"_hash": hh, **extra}
-        q = ["UPSERT $cid CONTENT $data;",
-             "DELETE $cid->cites, $cid->asserted_by, $cid->about, $cid<-includes;",
-             "DELETE observation WHERE claim = $cid;",
-             "RELATE $pid->includes->$cid SET order = $seq;"]
-        vars_ = {"cid": cid, "data": data, "pid": passages[r["passage"]], "seq": seq}
+        n = f"_{len(batch)}"        # the claim's variables carry its place in the batch
+        q = [f"UPSERT $cid{n} CONTENT $data{n};",
+             f"DELETE $cid{n}->cites, $cid{n}->asserted_by, $cid{n}->about, $cid{n}<-includes;",
+             f"DELETE observation WHERE claim = $cid{n};",
+             f"RELATE $pid{n}->includes->$cid{n} SET order = $seq{n};"]
+        vars_ = {f"cid{n}": cid, f"data{n}": data, f"pid{n}": passages[r["passage"]], f"seq{n}": seq}
         # de-duplicate edges per (table, target)
         seen = set()
         for j, (tbl, tgt, d) in enumerate(edges):
@@ -372,18 +396,15 @@ def load_claims(w: kb.Writer, topics: list[str] | None) -> Counter:
                 continue
             seen.add((tbl, kb.rid_str(tgt)))
             d = {**d, "prov": data["prov"]}
-            q.append(f"RELATE $cid->{tbl}->$t{j} CONTENT $d{j};")
-            vars_[f"t{j}"], vars_[f"d{j}"] = tgt, d
+            q.append(f"RELATE $cid{n}->{tbl}->$t{j}{n} CONTENT $d{j}{n};")
+            vars_[f"t{j}{n}"], vars_[f"d{j}{n}"] = tgt, d
         for j, (oid, od) in enumerate(obs):
-            q.append(f"CREATE $o{j} CONTENT $od{j};")
-            vars_[f"o{j}"], vars_[f"od{j}"] = oid, od
-        try:
-            kb.run(conn, "BEGIN;\n" + "\n".join(q) + "\nCOMMIT;", vars_)
-        except kb.KBError as ex:
-            problems.append(f"{lid}: {ex}")
-            continue
-        w.wrote(cid, hh)
-        stats["observation:written"] += len(obs)
+            q.append(f"CREATE $o{j}{n} CONTENT $od{j}{n};")
+            vars_[f"o{j}{n}"], vars_[f"od{j}{n}"] = oid, od
+        batch.append((cid, hh, lid, q, vars_, len(obs)))
+        if len(batch) >= BATCH:
+            flush()
+    flush()
 
     links = {(kb.rid_str(c["in"]), kb.rid_str(c["out"])): c for c in kb.one(conn, "SELECT id, in, out, evidence FROM counters")}
     for nn, r in counters:
