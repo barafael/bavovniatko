@@ -81,7 +81,7 @@ pub struct View {
     /// The view was placed by hand this frame (the showcase): the flight controller and the ground view's own
     /// controls stand down.
     pub locked: bool,
-    /// The showcase's ground shot fires this frame, beside the mouse and `VUHLEDAR_AUTO_ATGM`.
+    /// The showcase's ground shot fires this frame, beside the mouse and `BAV_AUTO_ATGM`.
     pub launch: bool,
     /// The control link (the video link is the feed's own): up, and for how long it has been down.
     pub control: bool,
@@ -174,7 +174,7 @@ pub fn look_angles(d: Vec3) -> (f32, f32) {
     (f32::atan2(-d.x, -d.z), f32::atan2(d.y, d.xz().length()))
 }
 
-/// What a camera follows: a point, a vehicle of the column, the infantry (`VUHLEDAR_LOOK`, the showcase), one
+/// What a camera follows: a point, a vehicle of the column, the infantry (`BAV_LOOK`, the showcase), one
 /// wave's vehicle by column index, or the attacker's infantry near a point.
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Target {
@@ -189,7 +189,7 @@ pub enum Target {
     /// The mean of the attacker's infantry on foot within 500 m of a point; the point itself when nobody is
     /// there, so a shot never holds a stale aim on an empty field.
     MenNear(Vec2),
-    /// For test shots of the fire looks (`VUHLEDAR_LOOK=hit|pool|grass`): the hull a missile is flying at (or was hit last), the newest
+    /// For test shots of the fire looks (`BAV_LOOK=hit|pool|grass`): the hull a missile is flying at (or was hit last), the newest
     /// pool fire, the grass fire's front. Located by `dev::env_look`, which can see them.
     Hit,
     Pool,
@@ -267,7 +267,7 @@ pub enum FeedMode {
     Eye = 2,
     /// Through the ATGM sight.
     Sight = 3,
-    /// The picture as rendered (`VUHLEDAR_OFF=feed`).
+    /// The picture as rendered (`BAV_OFF=feed`).
     Raw = 4,
 }
 
@@ -365,7 +365,7 @@ pub fn enter_ground(view: &mut View, team: Entity, pos: Vec2) {
 }
 
 /// The ground view's gunner tracks the nearest live attacker vehicle within 3.5 km, easing the head onto him
-/// (`VUHLEDAR_VIEW=ground`, and the film's ground shots each frame).
+/// (`BAV_VIEW=ground`, and the film's ground shots each frame).
 pub fn track_nearest(view: &mut View, vehicles: &Query<(&Vehicle, &Transform)>) {
     let eye = view.ground_eye;
     let Some((_, tf)) = vehicles
@@ -381,7 +381,7 @@ pub fn track_nearest(view: &mut View, vehicles: &Query<(&Vehicle, &Transform)>) 
 }
 
 /// What the operator's hands do this frame: the sticks, the gimbal wheel, the zoom rocker. Read from the keys and
-/// the mouse, or from the scripted flight (`VUHLEDAR_FLY`, and the film's flown shots).
+/// the mouse, or from the scripted flight (`BAV_FLY`, and the film's flown shots).
 #[derive(Default, Clone, Copy)]
 struct Stick {
     /// Forward and sideways, -1..1.
@@ -402,7 +402,7 @@ struct Stick {
 }
 
 /// A scripted flight the sticks read: legs of game time with what the sticks do. `DevPlugin` fills it from
-/// `VUHLEDAR_FLY`; the film's tour replaces it per flown shot.
+/// `BAV_FLY`; the film's tour replaces it per flown shot.
 #[derive(Resource, Default, Clone)]
 pub struct Flight(pub Vec<(f32, f32, String)>);
 

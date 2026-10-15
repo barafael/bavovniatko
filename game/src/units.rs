@@ -44,7 +44,7 @@ impl Plugin for UnitsPlugin {
 #[derive(Resource)]
 pub struct UnitRng(pub SmallRng);
 
-/// Where the last direct hit landed, for test shots (`VUHLEDAR_LOOK=hit`).
+/// Where the last direct hit landed, for test shots (`BAV_LOOK=hit`).
 #[derive(Resource, Default)]
 pub struct LastHit(pub Option<Vec3>);
 

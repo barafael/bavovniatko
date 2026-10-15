@@ -1,5 +1,5 @@
 #!/bin/sh
-# How far the day's outcome swings with chance alone: the day run on several random streams (VUHLEDAR_SEED),
+# How far the day's outcome swings with chance alone: the day run on several random streams (BAV_SEED),
 # each to its end, and the final tallies side by side. One run says little; the band of a few is the test a
 # balance change has to pass (the target bands are in design/next-items.md §3 A).
 #   scripts/band.sh [diorama] [seeds...]     default: vuhledar, seeds 0 1 2 3 (0 is the day itself)
@@ -15,8 +15,8 @@ mkdir -p "$out"
 run() {
   dir=$out/seed-$1
   rm -rf "$dir" && mkdir -p "$dir"
-  VUHLEDAR_DIORAMA=$dio VUHLEDAR_SEED=$1 VUHLEDAR_HEADLESS=1 VUHLEDAR_SKIP_BRIEFING=1 VUHLEDAR_NO_BATTERY=1 VUHLEDAR_RES=320x180 \
-    VUHLEDAR_LOG_STATS=1 VUHLEDAR_SHOWCASE="$(realpath "$dir")" timeout 3000 ./target/release/vuhledar 2>&1 \
+  BAV_DIORAMA=$dio BAV_SEED=$1 BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 BAV_RES=320x180 \
+    BAV_LOG_STATS=1 BAV_SHOWCASE="$(realpath "$dir")" timeout 3000 ./target/release/bavovniatko 2>&1 \
     | sed 's/\x1b\[[0-9;]*m//g' | grep -o 't=.*' > "$dir/tally.txt" || true
   rm -f "$dir"/f*.png
 }

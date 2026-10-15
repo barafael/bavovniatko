@@ -23,7 +23,7 @@ pub const TOKMAK: Name = Name { uk: "Токмак", en: "Tokmak" };
 
 /// The interface's face: Liberation Mono (SIL Open Font License, src/fonts/), which has the Ukrainian letters
 /// Bevy's built-in subset lacks, and the signal dots.
-pub const FONT: &str = "embedded://vuhledar/fonts/LiberationMono-Regular.ttf";
+pub const FONT: &str = "embedded://bavovniatko/fonts/LiberationMono-Regular.ttf";
 
 /// The radio net's Ukrainian, by its English gloss. The gloss is what the code says; this is what is said
 /// (the idiom of §2.4: плюс, прийняв, вихід, прихід, мінус, триста, пташка, коробочка, посадка). A line

@@ -286,7 +286,7 @@ match to the vehicle ahead with no reaction lag; the only terrain effect is the 
 Overlap: the blocker test in `drive_vehicles` only sees vehicles within 6 m of the lane you are steering
 *into*, so a vehicle fanning out to a lane 24 m away crosses whatever sits between; `coast` moves a knocked-out
 hull with no test at all; routes 0 and 1 never cross, so that case does not arise. Measured over a whole day with
-a counter now in `dev.rs` (`VUHLEDAR_LOG_STATS` prints it each game minute; the day ran on the fixed 20 Hz step):
+a counter now in `dev.rs` (`BAV_LOG_STATS` prints it each game minute; the day ran on the fixed 20 Hz step):
 
 | | Vuhledar | Robotyne |
 |---|---|---|
@@ -452,12 +452,12 @@ wet black earth with a grey slush rim (`Paint::Melt`) and steams for the first t
 points walks downwind at 0.15–0.6 m/s, wavering, fanning out and splitting where the grass is thick (up to 14),
 each point a low flame with a pale smoke and a black scorch behind it, going out on a road or track, after 4–15
 minutes, or when the fire has burned its course. All three draw on the effects' own stream, so the day is
-untouched (Vuhledar and Robotyne byte-identical against the committed head). `VUHLEDAR_LOOK=hit|pool|grass` holds
+untouched (Vuhledar and Robotyne byte-identical against the committed head). `BAV_LOOK=hit|pool|grass` holds
 the drone's gimbal on the hull a missile is flying at, the newest pool or the grass fire's front. Shots `n-pool`
 (a pool burning in its melt ring beside a hull), `n-grass-2` (the grass fire's pale smoke drifting west); clips
 `n-era-2`, `n-grass-2`, and the failed first tries, annotated. In the day the pops vanish inside the warhead's
-blast and the brew-up, so they were filmed on their own: `VUHLEDAR_ERA_AT` sets off the reactive armour of the
-lineup's hulls (`VUHLEDAR_LINEUP`), and clip `n-era-lineup-3` shows one frame of a sharp flash lighting both
+blast and the brew-up, so they were filmed on their own: `BAV_ERA_AT` sets off the reactive armour of the
+lineup's hulls (`BAV_LINEUP`), and clip `n-era-lineup-3` shows one frame of a sharp flash lighting both
 tanks, then pale puffs and plates on the glacis and turret cheeks for a few seconds. The first pops were too
 faint at dawn (`n-era-lineup-2`) and were made brighter, their puffs pale and larger.
 
@@ -520,8 +520,8 @@ fire that grew. Flames on a torch are twice as big as before.
 Measured (fixed step, `target/same-day/d2-vuh`, `d2-rob`): Vuhledar 30 of 33 left in the fields (20 destroyed,
 10 abandoned), 65 of 320 back; Robotyne 21 of 24 stopped (15 burned, 6 abandoned), 87 of 176 back, 44 dead.
 The runs before the last fix read Robotyne as 8 burned, 9 abandoned, 20 dead: **the day's tally swings widely
-with the random streams**, so a single run is a weak band test. A `VUHLEDAR_SEED` and a few seeds per check is
-the right regression (noted for the campaign's regression day). *Built 2026-10-14:* `VUHLEDAR_SEED=<n>` mixes
+with the random streams**, so a single run is a weak band test. A `BAV_SEED` and a few seeds per check is
+the right regression (noted for the campaign's regression day). *Built 2026-10-14:* `BAV_SEED=<n>` mixes
 a run number into every simulation stream (0 or unset is the day itself), and `scripts/band.sh [diorama]
 [seeds]` films the day on several seeds and lists the final tallies side by side. The first band, on the day as
 it stands after the showcase work: Vuhledar 24–26 of 33 knocked out (14–18 destroyed, 6–12 abandoned), 77–95 of
@@ -721,7 +721,7 @@ zenith, a cloud deck projected onto a plane at its base height from four octaves
 top towards the sun, its dark underside, a lumpy full deck, drift with the wind), and a sun disc with a glow,
 hidden where the deck is thick and a hazy disc through a veil. Three presets, `Weather`: `Overcast` (the date's
 unbroken stratus at 350 m), `Sun` (the footage week's broken stratocumulus at 1,300 m with the hard sun), `Veil`
-(June's cirrus thinning to broken cloud after 13:00). `VUHLEDAR_SKY=overcast|sun` picks February's. Both
+(June's cirrus thinning to broken cloud after 13:00). `BAV_SKY=overcast|sun` picks February's. Both
 daylight systems hand the sky its colours, the sun's true direction and the hour each frame. The pictures
 (`sky-sun-*`, `sky-overcast-*`, `sky-june-*` in shots.md) decided it: **the diorama keeps the hard sun** (the
 footage look, the one the shadows were tuned for, and the sky with something in it); the overcast reads as a
@@ -843,7 +843,7 @@ bottom rather than the top if it ever overflows. Two layout faults took three tr
 so every fixed-width cell stood as tall as its word count and the source rows sat 51 px apart; and an unwrapped
 text ignores its justify. Right-aligned cells are now a fixed-width box with `justify_content: FlexEnd` round a
 content-sized, no-wrap text. The on-foot distance at Robotyne printed `f32::MIN` before anyone had dismounted;
-it says "nowhere yet". `VUHLEDAR_DEBRIEF=1` ends the day as soon as the warp arrives, so a debrief shot takes
+it says "nowhere yet". `BAV_DEBRIEF=1` ends the day as soon as the warp arrives, so a debrief shot takes
 a minute rather than nine. Shots `k-debrief-vuhledar` (the real end of the day), `k-debrief-robotyne`,
 `k-debrief-vuhledar-4`, `k-debrief-robotyne-4`.
 

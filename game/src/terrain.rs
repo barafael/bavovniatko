@@ -3,7 +3,7 @@
 //! and track mark is stamped in afterwards and never cleaned up.
 //!
 //! The ground is 252 chunks of 256×256 texels, painted straight into their 8-bit textures with no larger buffer
-//! in between, at start and during the day alike. `VUHLEDAR_GROUND=<dir>` saves them as one PNG each and reads
+//! in between, at start and during the day alike. `BAV_GROUND=<dir>` saves them as one PNG each and reads
 //! them back on the next run: the shape a persisted day's ground takes (design/next.md).
 
 use crate::dev::dev;
@@ -42,7 +42,7 @@ pub struct GroundDetail {
 
 impl MaterialExtension for GroundDetail {
     fn fragment_shader() -> ShaderRef {
-        "embedded://vuhledar/shaders/ground.wgsl".into()
+        "embedded://bavovniatko/shaders/ground.wgsl".into()
     }
 }
 

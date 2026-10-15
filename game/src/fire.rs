@@ -108,7 +108,7 @@ impl Atgm {
     }
 }
 
-/// What the player can call down (and what the dev scripts can call: `VUHLEDAR_FIRE="100:he,130:raam"`).
+/// What the player can call down (and what the dev scripts can call: `BAV_FIRE="100:he,130:raam"`).
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
 #[strum(ascii_case_insensitive)]
 pub enum Strike {

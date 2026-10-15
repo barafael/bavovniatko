@@ -1,11 +1,11 @@
-//! `VUHLEDAR_SHOWCASE=<dir>`: a directed tour of the day for a showcase video. Headless only.
+//! `BAV_SHOWCASE=<dir>`: a directed tour of the day for a showcase video. Headless only.
 //!
 //! The game runs on a fixed step (1/30 s of game time per rendered frame while filming, 1/20 s while skipping
 //! ahead), so frames and game time stay locked however slowly frames render. Each filmed frame is saved to
 //! `<dir>/f00000.png`…, `<dir>/segments.txt` maps game time to video time, and the audio module logs every sound
 //! it plays to `<dir>/audio.log`, so `scripts/showcase_mix.py` can rebuild the soundtrack offline.
 //!
-//! `VUHLEDAR_TOUR=film` films the showcase film's two tours instead (design/showcase.md): shots typed with
+//! `BAV_TOUR=film` films the showcase film's two tours instead (design/showcase.md): shots typed with
 //! cards before them, the interface switched per shot, two ground shots from an ATGM team, and two flown by the
 //! stick script. Unset, the minute tours film exactly as they always did.
 

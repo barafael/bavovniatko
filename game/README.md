@@ -51,7 +51,7 @@ this README, shown: one minefield from both sides. There is no narrator and no m
 radio net carry it.
 
 It is filmed by the same machinery the game runs on. The binary runs headless on a fixed step with
-`VUHLEDAR_TOUR=film` (which selects the film's shot list in `src/showcase.rs` instead of the one-minute tours),
+`BAV_TOUR=film` (which selects the film's shot list in `src/showcase.rs` instead of the one-minute tours),
 the script places the drone and flies it, cards are hard cuts over black between the shots, and each part's
 soundtrack is rebuilt offline by `scripts/showcase_mix.py`, the parts level-matched within a loudness point.
 The tour is deterministic, so every run films the same film.
@@ -63,7 +63,7 @@ scripts/showcase.sh --scout    # the same at 640x360 with contact sheets, for re
 ```
 
 `--film` takes tens of minutes on the machine (both parts, 1080p); `--scout` a few. The only switches the tour
-reads are `VUHLEDAR_TOUR=film` and `VUHLEDAR_SHOWCASE=<dir>`; the script sets them, so they are rarely typed by
+reads are `BAV_TOUR=film` and `BAV_SHOWCASE=<dir>`; the script sets them, so they are rarely typed by
 hand. The film and its row are recorded in `devlog/videos/` and `devlog/videos.md`.
 
 ## Running
@@ -111,7 +111,7 @@ the pieces that reach above a height, to write a ring from.
 
 | file | contents |
 |---|---|
-| `src/diorama.rs` | which diorama is on the table (first argument or `VUHLEDAR_DIORAMA`), who attacks, the season, the clock |
+| `src/diorama.rs` | which diorama is on the table (first argument or `BAV_DIORAMA`), who attacks, the season, the clock |
 | `src/geo.rs` | the map: terrain height, roads, shelterbelts, minefields, positions, lat/lon (Vuhledar's layout) |
 | `src/robotyne.rs` | Mala Tokmachka: its layout and height, the farm and water tower, dug-in tanks, the Ka-52s, the June light |
 | `src/terrain.rs` | chunked ground with a painted half-metre texture; craters, scorch and tracks are stamped in live |
@@ -124,7 +124,7 @@ the pieces that reach above a height, to write a ring from.
 | `src/fx.rs`, `src/audio.rs` | particles and light, synthesised sound (delayed by distance at 343 m/s) |
 | `src/camera.rs`, `src/shaders/feed.wgsl` | the drone, the OP and the tree line, and the video-feed post-process |
 | `src/hud.rs` | telemetry, radio net, fire control, briefing, debrief |
-| `src/dev.rs`, `src/showcase.rs` | the `VUHLEDAR_*` development switches, and the filmed showcase tour |
+| `src/dev.rs`, `src/showcase.rs` | the `BAV_*` development switches, and the filmed showcase tour |
 | `design/` | the design notes: chapters, campaign, units, the plans and their decisions |
 | `data/` | the game feed exported from the knowledge base (`db/tools/sim.py export`) |
 | `devlog/` | the screenshot and video history of development (local only, not in git) |
@@ -134,12 +134,12 @@ the pieces that reach above a height, to write a ring from.
 Headless runs render offscreen on the GPU, with no window and no sound:
 
 ```sh
-VUHLEDAR_HEADLESS=1 VUHLEDAR_SKIP_BRIEFING=1 VUHLEDAR_SHOT=out.png VUHLEDAR_SHOT_AT=30 cargo run
+BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_SHOT=out.png BAV_SHOT_AT=30 cargo run
 scripts/record.sh <name> "<x,z,agl,yaw,pitch,fov>" <from-s> <secs> "note" [vehicle-idx]
 scripts/shot.sh <name> "<x,z,agl,yaw,pitch,fov>" <game-s> "note" [diorama]
 ```
 
-Angles in `VUHLEDAR_CAM` are degrees; yaw 0 looks north, 180 south.
+Angles in `BAV_CAM` are degrees; yaw 0 looks north, 180 south.
 
 `scripts/showcase.sh <out.mp4>` films a directed one-minute tour of a single day at 1920x1080 with sound (the
 four-minute film of both dioramas is `scripts/showcase.sh --film`, [above](#the-showcase-film)). The game
@@ -150,16 +150,16 @@ every run films the same tour.
 That determinism is also the regression test: `scripts/same-day.sh before` and, after a change,
 `scripts/same-day.sh after before` films the day fast (headless, tiny frames) and compares the sound log, the film
 segments and the minute-by-minute tally. A refactor should leave all three byte for byte the same. It holds
-because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`. `VUHLEDAR_SEED=<n>` runs the day on other random streams, and `scripts/band.sh [diorama] [seeds]` films it on
+because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`. `BAV_SEED=<n>` runs the day on other random streams, and `scripts/band.sh [diorama] [seeds]` films it on
 several and lists the final tallies side by side: one run says little about balance, the band of a few does.
 
-`VUHLEDAR_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
-turned) burned out, to look the models over. `VUHLEDAR_CAM` places the drone, `VUHLEDAR_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `VUHLEDAR_SPEED`
-scales game time. `VUHLEDAR_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
-(headless, it also lifts the frame cap), and `VUHLEDAR_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
+`BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
+turned) burned out, to look the models over. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
+scales game time. `BAV_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
+(headless, it also lifts the frame cap), and `BAV_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
 picture out, so a slow frame can be charged to what makes it slow before anything is rewritten.
-`VUHLEDAR_SKY=overcast` puts the unbroken stratus of the real 6 February over Vuhledar instead of the footage week's
-broken cloud and hard sun (the default). `VUHLEDAR_DEBRIEF=1` ends the day as soon as `VUHLEDAR_WARP_TO` arrives
-(or at once), to look at the debrief without playing the day through. `VUHLEDAR_GROUND=<dir>` reads the 252 ground chunks from that directory's PNGs if they are all there, and
+`BAV_SKY=overcast` puts the unbroken stratus of the real 6 February over Vuhledar instead of the footage week's
+broken cloud and hard sun (the default). `BAV_DEBRIEF=1` ends the day as soon as `BAV_WARP_TO` arrives
+(or at once), to look at the debrief without playing the day through. `BAV_GROUND=<dir>` reads the 252 ground chunks from that directory's PNGs if they are all there, and
 writes them there after painting if not: the ground as a persisted day will keep it. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
 `devlog/videos.md`. The history is part of the development.

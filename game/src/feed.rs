@@ -42,7 +42,7 @@ pub struct FeedMaterial {
 
 impl Material2d for FeedMaterial {
     fn fragment_shader() -> ShaderRef {
-        "embedded://vuhledar/shaders/feed.wgsl".into()
+        "embedded://bavovniatko/shaders/feed.wgsl".into()
     }
 }
 

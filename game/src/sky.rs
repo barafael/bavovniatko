@@ -53,7 +53,7 @@ pub struct SkyMaterial {
 
 impl Material for SkyMaterial {
     fn fragment_shader() -> ShaderRef {
-        "embedded://vuhledar/shaders/sky.wgsl".into()
+        "embedded://bavovniatko/shaders/sky.wgsl".into()
     }
 }
 

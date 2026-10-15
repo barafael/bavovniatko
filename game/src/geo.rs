@@ -552,7 +552,7 @@ pub fn latlon(p: Vec2) -> (f64, f64) {
 mod tests {
     use super::*;
 
-    /// How much of each route each ATGM position can see (`VUHLEDAR_DIORAMA` picks the layout).
+    /// How much of each route each ATGM position can see (`BAV_DIORAMA` picks the layout).
     #[test]
     fn sight_down_the_lanes() {
         let lay = layout();

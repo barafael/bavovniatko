@@ -77,7 +77,7 @@ build takes 6–20 minutes when other sessions load the machine. The rename and 
 
 - **Names:** the binary `bavovniatko` (`cargo run --release -- robotyne`), the crates `bav-*`, the switches
   `BAV_*` (34 of them), and F12 shots as `<diorama>-NNN.png`. Scripts, READMEs, devlog instructions and memories
-  follow. Old `VUHLEDAR_*` names are not kept as aliases.
+  follow. The old `VUHLEDAR_*` names are not kept as aliases.
 - **The crates**, drawn along the line the determinism already follows:
   - `bav-core`: geometry and the terrain height (`geo`), the layout and diorama types, the dev switches, and the
     data-file schema of step 4. No rendering.

@@ -9,8 +9,8 @@ cd "$(dirname "$0")/.."
 cargo build -q --release
 out=target/same-day/$1
 rm -rf "$out" && mkdir -p "$out"
-VUHLEDAR_HEADLESS=1 VUHLEDAR_SKIP_BRIEFING=1 VUHLEDAR_NO_BATTERY=1 VUHLEDAR_RES=320x180 VUHLEDAR_LOG_STATS=1 \
-  VUHLEDAR_SHOWCASE="$(realpath "$out")" timeout 3000 ./target/release/vuhledar 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -o 't=.*' > "$out/tally.txt" || true
+BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 BAV_RES=320x180 BAV_LOG_STATS=1 \
+  BAV_SHOWCASE="$(realpath "$out")" timeout 3000 ./target/release/bavovniatko 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -o 't=.*' > "$out/tally.txt" || true
 rm -f "$out"/f*.png
 echo "$1: $(wc -l < "$out/audio.log") sounds, $(tail -1 "$out/tally.txt")"
 [ -n "$2" ] || exit 0

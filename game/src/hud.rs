@@ -483,7 +483,7 @@ struct Source {
     url: &'static str,
 }
 
-const VUHLEDAR_SOURCES: &[Source] = &[
+const BAV_SOURCES: &[Source] = &[
     Source { publisher: "Institute for the Study of War", date: "9 Feb 2023", title: "Russian Offensive Campaign Assessment", url: "https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-9-2023" },
     Source { publisher: "Reuters", date: "10 Feb 2023", title: "Russia likely lost dozens of armoured vehicles near Ukraine's Vuhledar: UK", url: "https://www.reuters.com/world/europe/russia-likely-lost-dozens-tanks-failed-attack-vuhledar-uk-2023-02-10/" },
     Source { publisher: "Politico Europe", date: "12 Feb 2023", title: "Russia may have lost an entire elite brigade near a Donetsk coal-mining town", url: "https://www.politico.eu/article/russia-may-have-lost-an-entire-elite-brigade-near-a-coal-mining-town-in-donbas-ukraine-says/" },
@@ -588,7 +588,7 @@ fn show_debrief(
                     "The 155th was rebuilt, and attacked again. Russia kept coming at the town's front for another year and a half.".into(),
                     format!("{} fell on 1–2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.", crate::text::VUHLEDAR.hud()),
                 ],
-                VUHLEDAR_SOURCES,
+                BAV_SOURCES,
                 "R: the same day again, down the same roads.     Esc: quit.",
             )
         }
@@ -723,7 +723,7 @@ fn open_sources(links: Query<(&Interaction, &SourceLink), Changed<Interaction>>)
 fn debrief_input(keys: Res<ButtonInput<KeyCode>>, mut exit: MessageWriter<AppExit>) {
     if keys.just_pressed(KeyCode::KeyR) {
         if let Ok(exe) = std::env::current_exe() {
-            let _ = std::process::Command::new(exe).env("VUHLEDAR_SKIP_BRIEFING", "1").spawn();
+            let _ = std::process::Command::new(exe).env("BAV_SKIP_BRIEFING", "1").spawn();
         }
         exit.write(AppExit::Success);
     }

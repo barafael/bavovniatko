@@ -1,7 +1,7 @@
 #!/bin/sh
 # Film the showcase: a directed tour of the day at 1920x1080 with its sound, rebuilt offline.
 #   scripts/showcase.sh <out.mp4>                            Vuhledar
-#   VUHLEDAR_DIORAMA=robotyne scripts/showcase.sh <out.mp4>  Mala Tokmachka
+#   BAV_DIORAMA=robotyne scripts/showcase.sh <out.mp4>  Mala Tokmachka
 #   scripts/showcase.sh --film [out.mp4]                     the film of both dioramas (design/showcase.md)
 #   scripts/showcase.sh --scout [out.mp4]                    the film at 640x360 with contact sheets, for retiming
 # Headless and silent while it runs. Needs ffmpeg, ImageMagick and python3 with numpy.
@@ -16,11 +16,11 @@ out=$(realpath -m "${1:-devlog/videos/showcase.mp4}")
 work=$(mktemp -d "${TMPDIR:-$PWD/target}/filmwork.XXXXXX")
 cargo build -q --release
 if [ -z "$mode" ]; then
-VUHLEDAR_HEADLESS=1 VUHLEDAR_SKIP_BRIEFING=1 VUHLEDAR_NO_BATTERY=1 VUHLEDAR_RES=1920x1080 VUHLEDAR_SHOWCASE=$work \
-  timeout 3000 ./target/release/vuhledar 2>&1 | grep -E 'panicked|ERROR' -A3 | grep -v rodio | head -5 || true
+BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 BAV_RES=1920x1080 BAV_SHOWCASE=$work \
+  timeout 3000 ./target/release/bavovniatko 2>&1 | grep -E 'panicked|ERROR' -A3 | grep -v rodio | head -5 || true
 lead=3
 place='VUHLEDAR'; date='6 FEBRUARY 2023'
-if [ "${VUHLEDAR_DIORAMA:-}" = robotyne ]; then place='SOUTH OF MALA TOKMACHKA'; date='8 JUNE 2023'; fi
+if [ "${BAV_DIORAMA:-}" = robotyne ]; then place='SOUTH OF MALA TOKMACHKA'; date='8 JUNE 2023'; fi
 magick -size 1920x1080 xc:black -font DejaVu-Sans -fill '#e8e8ea' -gravity center \
   -pointsize 64 -annotate +0-60 "$place" -pointsize 34 -annotate +0+20 "$date" \
   -fill '#9a9ca0' -pointsize 22 -annotate +0+90 'bavovniatko: a diorama of the Russo-Ukrainian war' "$work/title.png"
@@ -36,7 +36,7 @@ echo "showcase: $out ($(du -h "$out" | cut -f1))"
 exit 0
 fi
 
-# The film (design/showcase.md): both dioramas with VUHLEDAR_TOUR=film, cards over black between the shots,
+# The film (design/showcase.md): both dioramas with BAV_TOUR=film, cards over black between the shots,
 # each part's sound rebuilt offline, then title, part one, part two and end card concatenated.
 if [ "$mode" = scout ]; then
   out=$(realpath -m "${1:-target/film/$(date +%Y%m%d-%H%M)-scout.mp4}")
@@ -57,9 +57,9 @@ y1=$(python3 -c "print(round(70*$s))"); y2=$(python3 -c "print(round(10*$s))"); 
 for part in vuhledar robotyne; do
   mkdir -p "$work/$part"
   start=$(date +%s)
-  VUHLEDAR_DIORAMA=$part VUHLEDAR_TOUR=film VUHLEDAR_HEADLESS=1 VUHLEDAR_SKIP_BRIEFING=1 VUHLEDAR_NO_BATTERY=1 \
-    VUHLEDAR_RES=$res VUHLEDAR_SHOWCASE="$work/$part" \
-    timeout 4000 ./target/release/vuhledar 2>&1 | grep -E 'panicked|ERROR' -A3 | grep -v rodio | head -5 || true
+  BAV_DIORAMA=$part BAV_TOUR=film BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 \
+    BAV_RES=$res BAV_SHOWCASE="$work/$part" \
+    timeout 4000 ./target/release/bavovniatko 2>&1 | grep -E 'panicked|ERROR' -A3 | grep -v rodio | head -5 || true
   echo "film: $part filmed in $(( ($(date +%s) - start) / 60 )) min at $res"
 done
 

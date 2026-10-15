@@ -148,8 +148,8 @@ anything for speed.
 - **Out:** a ranked list of render costs, written into this file. Rendering rewrites, if any, are planned from
   that list.
 - **Size:** half a day.
-- **Result: where the frame goes.** Measured headless at 1600×900 with `VUHLEDAR_DIAG=1` (frame times and
-  `RenderDiagnosticsPlugin`'s GPU pass times) and `VUHLEDAR_OFF=…`, 45 s into each diorama, on the integrated
+- **Result: where the frame goes.** Measured headless at 1600×900 with `BAV_DIAG=1` (frame times and
+  `RenderDiagnosticsPlugin`'s GPU pass times) and `BAV_OFF=…`, 45 s into each diorama, on the integrated
   Radeon 780M. Two runs: one while other builds loaded the machine, one quiet; they agree.
 
   | left out | Vuhledar frame | Robotyne frame | main 3D pass on the GPU |
@@ -209,7 +209,7 @@ images saved and loaded. So this step reshapes the terrain to fit both, rather t
      (2.0/255, a belt beside a road) indistinguishable side by side; the worst single texels are crater
      speckle whose hash cell moved with the half-texel shift. (`target/plan/chunkdiff.py` against a worktree
      build of the old code with a raw dump patched in.)
-  3. `VUHLEDAR_GROUND=<dir>` reads the chunks from PNGs if they are all there (135 ms) and writes them after
+  3. `BAV_GROUND=<dir>` reads the chunks from PNGs if they are all there (135 ms) and writes them after
      painting if not; `Ground::save` is what the persistence milestone calls at dusk. Loaded and painted
      grounds render the same.
   4. Not done: the frame is the same before and after (old 5.7 / 5.2 ms, new 6.0 / 5.5 ms, Vuhledar /

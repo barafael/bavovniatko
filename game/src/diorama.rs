@@ -1,5 +1,5 @@
 //! Which diorama is on the table: `vuhledar` (the default) or `robotyne`, chosen by the first command-line
-//! argument or `VUHLEDAR_DIORAMA`. The two places share the kit (terrain, vehicles, mines, fire, the drone), and
+//! argument or `BAV_DIORAMA`. The two places share the kit (terrain, vehicles, mines, fire, the drone), and
 //! differ in season, ground, forces, and which way the war is going. The player is Ukrainian in both.
 
 use crate::units::Side;
@@ -21,7 +21,7 @@ static DIORAMA: OnceLock<Diorama> = OnceLock::new();
 pub fn diorama() -> Diorama {
     *DIORAMA.get_or_init(|| {
         // The first argument names it unless that is a flag (a test harness passes its own).
-        let pick = std::env::args().nth(1).filter(|a| !a.starts_with('-')).or_else(|| std::env::var("VUHLEDAR_DIORAMA").ok());
+        let pick = std::env::args().nth(1).filter(|a| !a.starts_with('-')).or_else(|| std::env::var("BAV_DIORAMA").ok());
         pick.and_then(|s| s.trim().parse().ok()).unwrap_or(Diorama::Vuhledar)
     })
 }

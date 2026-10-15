@@ -34,7 +34,7 @@ use bevy::{
 
 fn main() {
     let mut app = App::new();
-    // VUHLEDAR_HEADLESS: no window and no sound; the camera renders offscreen on the GPU (for screenshots).
+    // BAV_HEADLESS: no window and no sound; the camera renders offscreen on the GPU (for screenshots).
     if dev::dev().headless {
         app.add_plugins(
             DefaultPlugins

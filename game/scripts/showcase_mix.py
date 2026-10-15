@@ -3,7 +3,7 @@
 
 Usage: showcase_mix.py [--bed out.wav secs] [--gain-db db] <dir> <out.wav> <lead-in seconds>
 
-<dir> holds what a VUHLEDAR_SHOWCASE run wrote: sfx-*.wav (the synthesised sounds), audio.log (every sound the
+<dir> holds what a BAV_SHOWCASE run wrote: sfx-*.wav (the synthesised sounds), audio.log (every sound the
 game played, and the ambience levels each frame) and segments.txt (video time, game time and length per shot).
 Each shot's sounds are placed at their video time and cut at the shot's end, as an editor would.
 

@@ -115,7 +115,7 @@ so the scout run (verification 1) retimes V4, V5, V7, V8, V9, R4, R8 and the `Me
 ### `src/showcase.rs`
 
 1. **Two tours.** `shots()` becomes `shots_minute()` (today's two lists, untouched) and `shots_film()`;
-   `SHOTS` picks by a new `dev().tour` (`VUHLEDAR_TOUR=film`; unset keeps the minute tours byte for byte, so
+   `SHOTS` picks by a new `dev().tour` (`BAV_TOUR=film`; unset keeps the minute tours byte for byte, so
    `scripts/same-day.sh` baselines stay valid).
 2. **`Shot` fields:** `card: Option<Card { title, line, note, secs }>`, `hud: bool` (default true),
    `fly: &'static [(f32, f32, &'static str)]` (legs relative to `from`), `launch: Option<f32>` (ground shots).
@@ -135,7 +135,7 @@ so the scout run (verification 1) retimes V4, V5, V7, V8, V9, R4, R8 and the `Me
    `camera::track_nearest(view, vehicles)`, which is the tracker now inlined in `env_ground`
    (`src/dev.rs:425`), generalised from `Side::Ru` to `diorama().attacker()`; at `launch` set
    `view.launch = true` once, which `player_atgm` (`src/fire.rs:1148`) takes as a trigger beside the mouse and
-   `VUHLEDAR_AUTO_ATGM`.
+   `BAV_AUTO_ATGM`.
 7. **Flown shots.** At the shot's first filmed frame `place_camera` places once (pos from `pos0`, yaw and
    gimbal from `look_angles`, targets equal to them as `set_drone_aim` does, fov, zero velocity, `hold = None`,
    `locked = false`) and installs the shot's legs offset by `from`; then it touches nothing for the rest of the
@@ -151,7 +151,7 @@ so the scout run (verification 1) retimes V4, V5, V7, V8, V9, R4, R8 and the `Me
   honours it too. `place_camera` sets it for every placed aim.
 - `View.launch: bool` (item 6 above).
 - A `Flight(Vec<(f32, f32, String)>)` resource holds the scripted legs; `DevPlugin` fills it from
-  `VUHLEDAR_FLY`, the tour replaces it per flown shot; `Stick::scripted` reads the resource.
+  `BAV_FLY`, the tour replaces it per flown shot; `Stick::scripted` reads the resource.
 - `Target` gains `Wave(u32, u32)` (that wave's vehicle by column index) and `MenNear(Vec2)` (the mean of the
   attacker's infantry within 500 m of the point, not dug in; the point itself when nobody is there, so a
   shot never holds a stale aim on an empty field, the fault of two earlier Robotyne shots).
@@ -160,15 +160,15 @@ so the scout run (verification 1) retimes V4, V5, V7, V8, V9, R4, R8 and the `Me
 ### `src/director.rs`, `src/hud.rs`, `src/fire.rs`, `src/dev.rs`
 
 The one-line hooks named above: the quiet guard, `ledger.txt` and `HudHidden`, the launch trigger,
-`VUHLEDAR_TOUR` and the `Flight` resource.
+`BAV_TOUR` and the `Flight` resource.
 
 ### `scripts/showcase.sh`
 
-- `scripts/showcase.sh [out]` and `VUHLEDAR_DIORAMA=robotyne scripts/showcase.sh [out]` keep the minute mode
+- `scripts/showcase.sh [out]` and `BAV_DIORAMA=robotyne scripts/showcase.sh [out]` keep the minute mode
   exactly as now.
 - `scripts/showcase.sh --film [out]` (default `devlog/videos/YYYYMMDD-HHMM-film.mp4`) and `--scout` (the same
   at 640x360, fast x264 preset, under `target/film/`):
-  1. build once; run the binary for `vuhledar` then `robotyne` with `VUHLEDAR_TOUR=film` and the usual
+  1. build once; run the binary for `vuhledar` then `robotyne` with `BAV_TOUR=film` and the usual
      headless env into `$work/<part>` (they share the GPU, so one after the other; about 15–18 min per part
      at 1080p, measured on the first scout and written into the header);
   2. cards: one `magick` call per line of `cards.txt` (Liberation Mono from `src/fonts`, 54/30/22 pt, the

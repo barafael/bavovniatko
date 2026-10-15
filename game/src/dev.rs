@@ -1,4 +1,4 @@
-//! Development switches, read from `VUHLEDAR_*` environment variables once at startup (see README.md,
+//! Development switches, read from `BAV_*` environment variables once at startup (see README.md,
 //! "Development"), and the helpers they drive. F12 saves a screenshot.
 
 use crate::camera::{HeadlessTarget, Mode, Target, View, look_angles};
@@ -7,7 +7,7 @@ use crate::units::{Radio, Soldier, Stats, VState, Vehicle};
 use bevy::{diagnostic::DiagnosticsStore, prelude::*, render::view::screenshot::{Screenshot, save_to_disk}};
 use std::{str::FromStr, sync::OnceLock};
 
-/// `VUHLEDAR_DAYDBG`: daylight debugging.
+/// `BAV_DAYDBG`: daylight debugging.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
 #[strum(serialize_all = "lowercase")]
 pub enum DayDebug {
@@ -17,7 +17,7 @@ pub enum DayDebug {
     NoSun,
 }
 
-/// `VUHLEDAR_OFF`: parts of the picture to leave out, to measure what each costs.
+/// `BAV_OFF`: parts of the picture to leave out, to measure what each costs.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
 #[strum(serialize_all = "lowercase")]
 pub enum Part {
@@ -31,7 +31,7 @@ pub enum Part {
     Terrain,
 }
 
-/// Whether `VUHLEDAR_OFF` leaves this part out.
+/// Whether `BAV_OFF` leaves this part out.
 pub fn off(part: Part) -> bool {
     dev().off.contains(&part)
 }
@@ -61,7 +61,7 @@ pub struct DevEnv {
     pub look: Option<Target>,
     pub speed: Option<f32>,
     pub warp_to: Option<f32>,
-    /// `VUHLEDAR_SEED=<n>`: run the day on other random streams (0, or unset, is the day itself).
+    /// `BAV_SEED=<n>`: run the day on other random streams (0, or unset, is the day itself).
     pub seed: u64,
     /// Go straight to the debrief once the warp (if any) arrives, to lay the screen out without playing the day.
     pub debrief: bool,
@@ -80,17 +80,17 @@ pub struct DevEnv {
     pub log_stats: bool,
     /// Park every vehicle model in a row here (x, z, heading in degrees), live and burned out, to look them over.
     pub lineup: Option<[f32; 3]>,
-    /// `VUHLEDAR_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
+    /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
     pub era_at: Option<f32>,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
-/// `VUHLEDAR_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
+/// `BAV_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
 pub sky: Option<crate::sky::Weather>,
-    /// `VUHLEDAR_TOUR`: which shot list the showcase films, `film` (design/showcase.md) or the minute tours.
+    /// `BAV_TOUR`: which shot list the showcase films, `film` (design/showcase.md) or the minute tours.
     pub tour: Option<TourKind>,
 }
 
-/// `VUHLEDAR_TOUR`.
+/// `BAV_TOUR`.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
 #[strum(serialize_all = "lowercase")]
 pub enum TourKind {
@@ -108,11 +108,11 @@ fn parse<T: FromStr>(k: &str) -> Option<T> {
 
 impl DevEnv {
     fn load() -> Self {
-        let cam = var("VUHLEDAR_CAM").and_then(|c| {
+        let cam = var("BAV_CAM").and_then(|c| {
             let v: Vec<f32> = c.split(',').filter_map(|s| s.trim().parse().ok()).collect();
             <[f32; 6]>::try_from(v).ok()
         });
-        let fire = var("VUHLEDAR_FIRE")
+        let fire = var("BAV_FIRE")
             .map(|plan| {
                 plan.split(',')
                     .filter_map(|item| {
@@ -122,9 +122,9 @@ impl DevEnv {
                     .collect()
             })
             .unwrap_or_default();
-        // `VUHLEDAR_FLY="3-9:w+,9-12:q,12-20:nz"`: from 3 to 9 s fly forward in sport mode, then turn left, then tilt
+        // `BAV_FLY="3-9:w+,9-12:q,12-20:nz"`: from 3 to 9 s fly forward in sport mode, then turn left, then tilt
         // the gimbal down while zooming in.
-        let fly = var("VUHLEDAR_FLY")
+        let fly = var("BAV_FLY")
             .map(|plan| {
                 plan.split(',')
                     .filter_map(|leg| {
@@ -136,42 +136,42 @@ impl DevEnv {
             })
             .unwrap_or_default();
         Self {
-            headless: var("VUHLEDAR_HEADLESS").is_some(),
-            res: var("VUHLEDAR_RES").and_then(|r| {
+            headless: var("BAV_HEADLESS").is_some(),
+            res: var("BAV_RES").and_then(|r| {
                 let (w, h) = r.split_once('x')?;
                 Some((w.parse().ok()?, h.parse().ok()?))
             }),
-            skip_briefing: var("VUHLEDAR_SKIP_BRIEFING").is_some(),
-            showcase: var("VUHLEDAR_SHOWCASE"),
-            no_battery: var("VUHLEDAR_NO_BATTERY").is_some(),
-            view: parse("VUHLEDAR_VIEW"),
-            team: parse("VUHLEDAR_TEAM"),
-            auto_atgm: parse("VUHLEDAR_AUTO_ATGM"),
-            daydbg: parse("VUHLEDAR_DAYDBG"),
-            sky: parse("VUHLEDAR_SKY"),
-            shot: var("VUHLEDAR_SHOT"),
-            shot_at: parse("VUHLEDAR_SHOT_AT").unwrap_or(6.0),
+            skip_briefing: var("BAV_SKIP_BRIEFING").is_some(),
+            showcase: var("BAV_SHOWCASE"),
+            no_battery: var("BAV_NO_BATTERY").is_some(),
+            view: parse("BAV_VIEW"),
+            team: parse("BAV_TEAM"),
+            auto_atgm: parse("BAV_AUTO_ATGM"),
+            daydbg: parse("BAV_DAYDBG"),
+            sky: parse("BAV_SKY"),
+            shot: var("BAV_SHOT"),
+            shot_at: parse("BAV_SHOT_AT").unwrap_or(6.0),
             cam,
-            look: parse("VUHLEDAR_LOOK"),
-            speed: parse("VUHLEDAR_SPEED"),
-            warp_to: parse("VUHLEDAR_WARP_TO"),
-            seed: parse("VUHLEDAR_SEED").unwrap_or(0),
-            debrief: var("VUHLEDAR_DEBRIEF").is_some(),
-            rec: var("VUHLEDAR_REC"),
-            rec_from: parse("VUHLEDAR_REC_FROM").unwrap_or(5.0),
-            rec_secs: parse("VUHLEDAR_REC_SECS").unwrap_or(10.0),
+            look: parse("BAV_LOOK"),
+            speed: parse("BAV_SPEED"),
+            warp_to: parse("BAV_WARP_TO"),
+            seed: parse("BAV_SEED").unwrap_or(0),
+            debrief: var("BAV_DEBRIEF").is_some(),
+            rec: var("BAV_REC"),
+            rec_from: parse("BAV_REC_FROM").unwrap_or(5.0),
+            rec_secs: parse("BAV_REC_SECS").unwrap_or(10.0),
             fire,
             fly,
-            diag: var("VUHLEDAR_DIAG").is_some(),
-            off: var("VUHLEDAR_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
-            ground: var("VUHLEDAR_GROUND"),
-            log_stats: var("VUHLEDAR_LOG_STATS").is_some(),
-            era_at: parse("VUHLEDAR_ERA_AT"),
-            lineup: var("VUHLEDAR_LINEUP").and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok()),
-            light: var("VUHLEDAR_LIGHT")
+            diag: var("BAV_DIAG").is_some(),
+            off: var("BAV_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
+            ground: var("BAV_GROUND"),
+            log_stats: var("BAV_LOG_STATS").is_some(),
+            era_at: parse("BAV_ERA_AT"),
+            lineup: var("BAV_LINEUP").and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok()),
+            light: var("BAV_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
                 .unwrap_or([1.0, 1.0, 0.0]),
-            tour: parse("VUHLEDAR_TOUR"),
+            tour: parse("BAV_TOUR"),
         }
     }
 }
@@ -179,7 +179,7 @@ impl DevEnv {
 static DEV: OnceLock<DevEnv> = OnceLock::new();
 
 /// The development switches, parsed on first use.
-/// A simulation stream's seed under `VUHLEDAR_SEED`: the stream's own seed for the day itself, mixed with the
+/// A simulation stream's seed under `BAV_SEED`: the stream's own seed for the day itself, mixed with the
 /// run number otherwise, so `scripts/band.sh` can see how far the day's outcome swings with chance alone.
 pub fn seeded(base: u64) -> u64 {
     match dev().seed {
@@ -205,7 +205,7 @@ impl Plugin for DevPlugin {
 #[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub struct DevSystems;
 
-/// `VUHLEDAR_LINEUP="x,z,heading"`: every vehicle model side by side, 10 m apart, and behind them the same burned
+/// `BAV_LINEUP="x,z,heading"`: every vehicle model side by side, 10 m apart, and behind them the same burned
 /// out, turrets turned a little so the split shows.
 fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
     use crate::units::{VKind, VehicleMeshes, burnt, dress, dress_charred, skin};
@@ -237,7 +237,7 @@ fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes:
     }
 }
 
-/// `VUHLEDAR_ERA_AT` with `VUHLEDAR_LINEUP`: the reactive armour of the lineup's T-80, T-72 and Bradley going off
+/// `BAV_ERA_AT` with `BAV_LINEUP`: the reactive armour of the lineup's T-80, T-72 and Bradley going off
 /// at a chosen moment, to look at the pops on their own (in the day they come with the warhead's blast).
 fn era_test(mut commands: Commands, script: Res<crate::director::Script>, mut fx: ResMut<crate::fx::FxAssets>, mut done: Local<bool>) {
     use crate::units::VKind;
@@ -263,8 +263,8 @@ fn shot_of(target: Option<&HeadlessTarget>) -> Screenshot {
     }
 }
 
-/// `VUHLEDAR_SHOT=<path>`: save a screenshot after `VUHLEDAR_SHOT_AT` seconds (default 6) and exit. With
-/// `VUHLEDAR_WARP_TO`, the seconds count from when the warp arrives, so a shot lands at a chosen game time.
+/// `BAV_SHOT=<path>`: save a screenshot after `BAV_SHOT_AT` seconds (default 6) and exit. With
+/// `BAV_WARP_TO`, the seconds count from when the warp arrives, so a shot lands at a chosen game time.
 fn auto_shot(mut commands: Commands, time: Res<Time<Real>>, script: Res<crate::director::Script>, target: Option<Res<HeadlessTarget>>, mut done: Local<u8>, mut from: Local<Option<f32>>, mut exit: MessageWriter<AppExit>) {
     let Some(path) = dev().shot.clone() else { return };
     let t = time.elapsed_secs();
@@ -281,8 +281,8 @@ fn auto_shot(mut commands: Commands, time: Res<Time<Real>>, script: Res<crate::d
     }
 }
 
-/// `VUHLEDAR_CAM="x,z,agl,yaw,pitch,fov"` places the drone; `VUHLEDAR_VIEW=op` starts on the roof;
-/// `VUHLEDAR_SPEED` scales game time.
+/// `BAV_CAM="x,z,agl,yaw,pitch,fov"` places the drone; `BAV_VIEW=op` starts on the roof;
+/// `BAV_SPEED` scales game time.
 fn env_view(mut view: ResMut<View>, mut vtime: ResMut<Time<Virtual>>, mut done: Local<bool>) {
     if *done {
         return;
@@ -310,8 +310,8 @@ fn set_drone_aim(view: &mut View, yaw: f32, gimbal: f32) {
     view.gimbal_target = gimbal;
 }
 
-/// `VUHLEDAR_LOOK=<idx>|men`: keep the drone's gimbal on that [`Target`].
-/// What `VUHLEDAR_LOOK=hit|pool|grass` aims at: the last hit, the pool fires, the grass fires, the missiles in the air.
+/// `BAV_LOOK=<idx>|men`: keep the drone's gimbal on that [`Target`].
+/// What `BAV_LOOK=hit|pool|grass` aims at: the last hit, the pool fires, the grass fires, the missiles in the air.
 type FireLooks<'w, 's> = (
     Res<'w, crate::units::LastHit>,
     Query<'w, 's, (&'static crate::fx::Emitter, &'static GlobalTransform)>,
@@ -343,7 +343,7 @@ fn env_look(
     set_drone_aim(&mut view, yaw, pitch);
 }
 
-/// `VUHLEDAR_WARP_TO=<game s>`: run at 3x (the most the simulation's step cap allows at 60 fps) until then.
+/// `BAV_WARP_TO=<game s>`: run at 3x (the most the simulation's step cap allows at 60 fps) until then.
 fn warp(script: Res<crate::director::Script>, mut vtime: ResMut<Time<Virtual>>, mut done: Local<bool>) {
     let Some(to) = dev().warp_to else { return };
     if *done {
@@ -357,14 +357,14 @@ fn warp(script: Res<crate::director::Script>, mut vtime: ResMut<Time<Virtual>>, 
     }
 }
 
-/// `VUHLEDAR_DEBRIEF=1`: end the day as soon as the warp arrives (or at once), so the debrief can be looked at.
+/// `BAV_DEBRIEF=1`: end the day as soon as the warp arrives (or at once), so the debrief can be looked at.
 fn env_debrief(script: Res<crate::director::Script>, phase: Res<State<crate::Phase>>, mut next: ResMut<NextState<crate::Phase>>) {
     if dev().debrief && *phase.get() == crate::Phase::Playing && script.t >= dev().warp_to.unwrap_or(0.0) {
         next.set(crate::Phase::Debrief);
     }
 }
 
-/// `VUHLEDAR_REC=<dir>`: from game time `VUHLEDAR_REC_FROM` save `VUHLEDAR_REC_SECS` seconds of frames at 15 fps
+/// `BAV_REC=<dir>`: from game time `BAV_REC_FROM` save `BAV_REC_SECS` seconds of frames at 15 fps
 /// as `<dir>/f00000.png`…, then exit. `scripts/record.sh` encodes them.
 fn record(
     mut commands: Commands,
@@ -397,7 +397,7 @@ fn record(
     *n += 1;
 }
 
-/// `VUHLEDAR_LOG_STATS=1`: print the tally once a game minute, with how often two hulls overlapped since the
+/// `BAV_LOG_STATS=1`: print the tally once a game minute, with how often two hulls overlapped since the
 /// last line (hull centres closer than 4 m: certainly through each other; closer than 6.5 m: touching or nearly).
 fn log_stats(
     view: Res<View>,
@@ -448,7 +448,7 @@ fn log_stats(
     }
 }
 
-/// `VUHLEDAR_FIRE="100:he,130:raam,160:himars"`: at those game seconds, call that strike on the nearest stalled
+/// `BAV_FIRE="100:he,130:raam,160:himars"`: at those game seconds, call that strike on the nearest stalled
 /// Russian vehicle, as a player would from the drone.
 fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Res<View>, mut fc: ResMut<FireControl>, mut radio: ResMut<Radio>, q: Query<(&Vehicle, &Transform)>, mut done: Local<usize>) {
     let plan = &dev().fire;
@@ -462,7 +462,7 @@ fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Re
     }
 }
 
-/// `VUHLEDAR_DIAG=1`: every ten seconds, log the mean and worst frame time and the GPU time of each render pass
+/// `BAV_DIAG=1`: every ten seconds, log the mean and worst frame time and the GPU time of each render pass
 /// (from `RenderDiagnosticsPlugin`, averaged over its last 120 frames), largest first.
 fn frame_times(time: Res<Time<Real>>, diagnostics: Res<DiagnosticsStore>, mut acc: Local<(f32, f32, u32, f32)>) {
     if !dev().diag {
@@ -488,9 +488,9 @@ fn frame_times(time: Res<Time<Real>>, diagnostics: Res<DiagnosticsStore>, mut ac
     }
 }
 
-/// `VUHLEDAR_VIEW=ground`: start in the tree line nearest the dacha road with a `VUHLEDAR_TEAM` launcher
+/// `BAV_VIEW=ground`: start in the tree line nearest the dacha road with a `BAV_TEAM` launcher
 /// (default Stugna-P), sight up, tracking the nearest moving attacker vehicle the way a gunner would.
-/// `VUHLEDAR_AUTO_ATGM=<s>` launches then.
+/// `BAV_AUTO_ATGM=<s>` launches then.
 fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
     if dev().view != Some(Mode::Ground) {
         return;
@@ -514,6 +514,6 @@ fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&
 fn key_shot(mut commands: Commands, keys: Res<ButtonInput<KeyCode>>, mut n: Local<u32>) {
     if keys.just_pressed(KeyCode::F12) {
         *n += 1;
-        commands.spawn(Screenshot::primary_window()).observe(save_to_disk(format!("vuhledar-{:03}.png", *n)));
+        commands.spawn(Screenshot::primary_window()).observe(save_to_disk(format!("{}-{:03}.png", crate::diorama::diorama(), *n)));
     }
 }
