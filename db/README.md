@@ -47,7 +47,7 @@ db/dbctl.sh sql              # interactive SurrealQL shell
 
 - **Vocabularies:**
   - `era`: e1–e9, plus sub-phases e6a/b, e8a/b and e9a/b.
-  - `topic`: t00–t08.
+  - `topic`: t00–t11 (topic files) and the chapter dossiers (c01–c19, v01–v02).
   - `kind`: open vocabularies, with ids like `kind:["place","settlement"]`.
   - `unit`, with conversion to a base unit.
   - `metric`.

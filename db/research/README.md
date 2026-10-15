@@ -11,7 +11,7 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
   Russian capabilities are described only as Ukrainian or Western sources report them. There is no
   Russian state media.
 - **Generated from the knowledge base.** Since 2026-09-30 the SurrealDB claim graph in [`db/`](../README.md)
-  is the source of truth: 10,856 atomic claims with their sources, claimants, eras, places and observations, and
+  is the source of truth: 11,372 atomic claims with their sources, claimants, eras, places and observations, and
   typed relations between them. The topic files, the glossary, the source indexes and
   [contradictions.md](contradictions.md) are regenerated from it by `db/tools/render.py`. Edit the data, not
   the files. This README is still written by hand.
@@ -33,6 +33,8 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
 | 07 | [07-maps-ui-conventions.md](07-maps-ui-conventions.md) | DeepStateMap in depth, other front maps compared, APP-6/2525 symbology, glimpses of Ukrainian military UIs, data access |
 | 08 | [08-prior-art-games.md](08-prior-art-games.md) | Commercial, drone and training-sim, board and professional wargames: what they model and miss, plus ethics |
 | 09 | [09-bevy-rendering.md](09-bevy-rendering.md) | Engine prior art for the game (added 2026-10-10): Bevy 0.19 rendering, terrain, vegetation, water, sky and weather, large maps, cameras and sensor looks, with licences. Game-only, so the public explorer leaves it out |
+| 10 | [10-drones-ua-2023.md](10-drones-ua-2023.md) | The player's drones (added 2026-10-15): which small drones Ukrainian units flew at Vuhledar and in the June 2023 counteroffensive, their parameters, drops and FPV strikes, cueing fires, losses, and what changed by 2024–2025 |
+| 11 | [11-drones-ru-ew-2023.md](11-drones-ru-ew-2023.md) | Theirs (added 2026-10-15): the Russian Orlan/Zala fire loop, Lancet, Russian FPVs and drops, electronic warfare against drones system by system, finding the operator, and the tells before Ka-52 strikes, at Vuhledar and Robotyne |
 | — | [glossary.md](glossary.md) | Frontline slang (transliterated Ukrainian), Russian terms as reported, systems, programmes, terrain and wargaming terms |
 | — | [chapters/](chapters/) | **Chapter dossiers** for the game's dioramas (see [game/design/chapters.md](../../game/design/chapters.md)): the historical outcome to reproduce, a dated timeline, the geography, the forces, set pieces, decision points and media |
 | — | [contradictions.md](contradictions.md) | Every pair of claims that cannot both be true as stated, with claimants, sources and the explanation (generated) |

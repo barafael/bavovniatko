@@ -1,4 +1,6 @@
-# Russian drones and electronic warfare as the Ukrainian player meets them, 2023
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
+# 11 — Russian drones and electronic warfare as the Ukrainian player meets them, 2023
 
 Scope: the Russian reconnaissance drones, loitering munitions, FPVs and electronic warfare (EW) that faced Ukrainian units at Vuhledar (main assault 6 February 2023, 72nd Mechanised Brigade defending) and south of Mala Tokmachka / Robotyne (breach of 7–8 June 2023, 47th Mechanised Brigade attacking), with a short look at 2024–2025.
 
@@ -317,7 +319,7 @@ No fetched source confirms a Lancet kill on a Bradley at Mala Tokmachka or Robot
 
 ## 11. Sources
 
-New (in `db/staging/sources/drones-ru-ew-2023.yaml`):
+New (in `db/staging/sources/11-drones-ru-ew-2023.yaml`):
 - **rferl-2023-lancet-counteroffensive** — Reuters/RFE/RL, Jul 2023: Lancet range, speed, cost, a Ukrainian gunner's account of rising use, interception claims.
 - **kyivpost-2023-tuzov-lancet-overview** — Lancet variants and specs, Orlan repeater, nets and remote detonation.
 - **forbes-2024-hambling-lancet-blast** — LostArmour monthly Lancet counts for 2023; the "~30%" Ukrainian estimate; the ZOMZ hypothesis.

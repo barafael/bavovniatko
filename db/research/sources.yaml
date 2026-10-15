@@ -1,5 +1,28 @@
 # Source index for bavovniatko research, generated from the knowledge base by db/tools/render.py.
 # `aliases` lists other ids used for the same source; `found_in` lists topic files.
+- id: 19fortyfive-2023-buckby-grenade-hatch
+  title: 'Video: Watch Ukraine Use Drone to Drop Grenade Into Russian Tank Hatch'
+  url: https://www.19fortyfive.com/2023/02/video-watch-ukraine-use-drone-to-drop-grenade-into-russian-tank-hatch/
+  publisher: 19FortyFive
+  authors:
+  - Jack Buckby
+  published: '2023-02-16'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - munitions
+  - vuhledar
+  - chapter
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Relays Ukraine Weapons Tracker: an RGD-5 dropped through the driver''s hatch of a Russian T-72B3 near Vuhledar;
+    tank possibly already abandoned.'
 - id: abc-2022-ap-mariupol-rescue-missions
   title: Soldiers describe Ukraine's 'impossible' secret rescue missions in the besieged city of Mariupol
   url: https://www.abc.net.au/news/2022-06-22/ukraine-secret-deadly-rescue-missions-in-besieged-mariupol/101173414
@@ -43,6 +66,27 @@
   - c03-azovstal
   notes: 'Plant about 11 km², 24 km of tunnels; Metinvest: shelters for 4,000 with food, ventilation, water and heat-resistant
     doors; about 2,000 fighters and up to 1,000 civilians (Zelensky).'
+- id: abc-2023-burgess-fpv-racing-drones
+  title: Why Ukraine's kamikaze racing drones are causing a buzz on and off the battlefield
+  url: https://www.abc.net.au/news/2023-04-01/fpv-racing-drone-kamikaze-attacks-ukraine-russia-war/102155702
+  publisher: ABC News (Australia)
+  authors:
+  - Annika Burgess
+  published: '2023-04-01'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - fpv
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Early-2023 FPVs: under 500 g, up to 140 km/h, 5-10 km, RPGs up to 1 kg, under $1,000; January 2023 fundraiser for
+    1,000 FPVs; RAND''s Caves: ''a few hundred'' operators.'
 - id: abc-2025-skinner-spiderweb-satellite
   title: Aftermath of Ukraine drone strike on Russian airfields shown in satellite imagery
   url: https://abcnews.go.com/International/aftermath-ukraine-drone-strike-russian-airfields-shown-satellite/story?id=122514076
@@ -592,6 +636,27 @@
   - c03-azovstal
   notes: 16 Mar strike shortly after 10:00 by two 500 kg bombs (NEW 400–800 kg) from Russian aircraft; at least a dozen killed,
     likely many more.
+- id: ap-2023-army-of-drones-duct-tape
+  title: Ukraine is building an advanced army of drones. For now, pilots improvise with duct tape and bombs
+  url: https://ny1.com/nyc/all-boroughs/ap-top-news/2023/09/25/ukraine-is-building-an-advanced-army-of-drones-for-now-pilots-improvise-with-duct-tape-and-bombs
+  publisher: Associated Press (via Spectrum News NY1)
+  authors: []
+  published: '2023-09-25'
+  accessed: '2026-10-15'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - ew
+  - fpv
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Asgard unit near Andriivka needed three months to learn to evade Russian jammers; pilots switch to a frequency the
+    Russians cannot easily exploit; Russia deploying more handheld jammers.
 - id: ap-2023-blann-prigozhin-20000-dead
   title: Head of Russian private army Wagner says more than 20,000 of his troops died in Bakhmut battle
   url: https://apnews.com/article/russia-ukraine-war-border-raid-4f63ade7fb3899b6fa903b562ada0e2c
@@ -635,6 +700,31 @@
   - c07-bakhmut
   notes: Russian state TV framing of the capture (Channel One 'myth ... crushed', Berlin 1945 comparisons, Russia 1 claims
     road open to Kramatorsk/Dnipro). Russian claims reported, not repeated. Fetched via Wayback.
+- id: armada-2022-withington-master-servant
+  title: Master and Servant
+  url: https://www.armadainternational.com/2022/09/russian-drone-operations/
+  publisher: Armada International
+  authors:
+  - Thomas Withington
+  published: '2022-09-01'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - drones
+  - isr
+  - ew
+  - orlan
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Orlan-10 three-ship formations (master on 930 MHz relays to two servants with optronic and COMINT payloads); part
+    of Leer-3 (one per brigade, believed 30 MHz-3 GHz, cellphone jamming and fake SMS); rounds 'within ten minutes'; suggests
+    jamming the 930 MHz link plus kinetic kill. Analyst piece, open-source specs.
 - id: armada-2025-oliver-berievs
   title: Russia's Berievs Targeted by Ukraine
   url: https://www.armadainternational.com/2025/09/russias-berievs-targeted-by-ukraine-foc/
@@ -657,6 +747,32 @@
   - c12-a50-hunt
   notes: 'Overview of Ukrainian attacks on Beriev types: Machulishchy (2023), the two 2024 shoot-downs, an A-50 hit at Ivanovo-Severny
     in Spiderweb; TANTK in Taganrog 150–160 km from the front, struck Mar 2024 and 11 Dec 2024.'
+- id: armada-2026-remler-segre-video-jamming
+  title: 'The Curran Papers – No. 5: Jamming Uninhabited Aerial Vehicle Video Signals'
+  url: https://www.armadainternational.com/2026/02/the-curran-papers-no-5-jamming-uninhabited-aerial-vehicle-video-signals-electronic-warfare/
+  publisher: Armada International
+  authors:
+  - Benjamin Remler
+  - Julien Segre
+  published: '2026-02-05'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ew
+  - drones
+  - fpv
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Control-link jamming the main anti-FPV vector 2022-2024; dedicated video jamming first in summer 2024, shtory platforms
+    late 2024; geometry of control vs video jamming; FPV bands.
 - id: armaplatform-2025-realistic-combat-drones
   title: Realistic Combat Drones - Arma Reforger Workshop
   url: https://reforger.armaplatform.com/workshop/65AD60E204191D37-RealisticCombatDrones
@@ -880,6 +996,28 @@
   notes: 'Retrospective: fibre drones ranging beyond 30 km, with Birds of Magyar reaching about 40 km. Claims Ukraine lost
     25% more vehicles than Russia in Kursk. By mid-2025, more than 80 Ukrainian fibre systems were approved. Counters: shotguns,
     barriers, radar tripwires, acoustic sensors, AI detection. The author works for a VC firm.'
+- id: autel-evo-ii-dual-640t-specs
+  title: EVO II Dual 640T (product page and specifications)
+  url: https://www.autelrobotics.com/productdetail/evo-ii-dual-640t-drones/
+  publisher: Autel Robotics
+  authors: []
+  published: unknown
+  accessed: '2026-10-15'
+  type: official
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - specs
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Manufacturer specs (V3/V2 page): 38 min flight, 33 min hover, 20 m/s, 10 km transmission, thermal 16x digital zoom,
+    10.7 m/s wind, -10 to 40 C. Peacetime figures.'
 - id: aviationist-2024-durso-magura-mi8
   title: Ukrainian Surface Drone Equipped with R-73 Air-to-Air Missiles Shot Down Russian Mi-8 Helicopter
   url: https://theaviationist.com/2024/12/31/ukrainian-magura-usv-r-73-vs-mi-8-helicopter/
@@ -2280,6 +2418,30 @@
   - c07-bakhmut
   notes: 'Long-form, 45+ interviews: T0504 ''Road of Life'', the ''Nest'', 135th TD Bn last stand, Yabchanka bodycam fight,
     Prigozhin in Artwinery cellars. Has at least one date error (Soledar ''February 13'').'
+- id: c4isrnet-2022-skove-cloak-drones
+  title: How Ukraine learned to cloak its drones from Russian surveillance
+  url: https://www.c4isrnet.com/battlefield-tech/2022/10/17/how-ukraine-learned-to-cloak-its-drones-from-russian-surveillance/
+  publisher: C4ISRNet
+  authors:
+  - Sam Skove
+  published: '2022-10-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - drones
+  - ew
+  - operator-detection
+  found_in:
+  - 10-drones-ua-2023
+  - 11-drones-ru-ew-2023
+  notes: 'AeroScope reads Remote ID to locate pilots; Karlson unit: Russia targets operators in 5-6 minutes; open-source Remote
+    ID-off hack from May 2022, blocked on newer DJI firmware from about June 2022.'
 - id: canadianarmytoday-2026-thatcher-wargaming-modernization
   title: Wargaming modernization
   url: https://canadianarmytoday.com/wargaming-modernization/
@@ -2868,6 +3030,27 @@
   - c09-robotyne
   notes: 'Two US officials: losses of heavy equipment including MRAPs ''significant''; minefields took a heavy toll; not expected
     to affect the wider counteroffensive.'
+- id: cnn-2023-sebastian-ew-push
+  title: Ukraine makes new push to defeat Russia's electronic warfare
+  url: https://abc17news.com/news/national-world/cnn-world/2023/11/28/ukraine-makes-new-push-to-defeat-russias-electronic-warfare/
+  publisher: CNN (syndicated by ABC 17 News)
+  authors:
+  - Clare Sebastian
+  published: '2023-11-28'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - ew
+  - drones
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: CNN original returned HTTP 451; fetched via the syndicated copy. 59th Brigade drone commander's Pole-21 kill near
+    Donetsk and a growing number of Pole-21 strikes since summer 2023; Fedorov on EW fratricide and on drones hunting EW.
 - id: cnn-2023-walsh-mod-convicts-storm
   title: 'Exclusive: Russian convicts say defense ministry is sending them from jail to fight as ''cannon fodder'' in Ukraine'
   url: https://www.cnn.com/2023/02/14/europe/russian-army-prisoners-conscripts-ukraine-intl/index.html
@@ -3687,6 +3870,29 @@
   notes: 'Early Sep 2026: Witkoff and Kushner visited Moscow and Kyiv with a new plan, which Zelensky rejected (with German,
     French and UK representatives present). Russia''s terms are all occupied land plus the rest of Donbas, neutrality and
     demilitarization. Moscow-based correspondent.'
+- id: ctc-2025-hambling-moving-targets
+  title: 'Moving Targets: Implications of the Russo-Ukrainian War for Drone Terrorism'
+  url: https://ctc.westpoint.edu/moving-targets-implications-of-the-russo-ukrainian-war-for-drone-terrorism/
+  publisher: CTC Sentinel (Combating Terrorism Center at West Point)
+  authors:
+  - David Hambling
+  published: 2025-07
+  accessed: '2026-10-15'
+  type: academic
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e8-drone-kill-zone
+  topics:
+  - drones
+  - munitions
+  - fpv
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Drop drones: Mavic with 3D-printed harness, two VOG-17 (350 g each) or one larger grenade; VOG-17''s 6 m radius
+    often fails to incapacitate; FPV payloads RPG-7/RKG-3, ~2 kg typical.'
 - id: deepstate-api-history
   title: DeepStateMap history endpoints (/api/history/public and /api/history/last)
   url: https://deepstatemap.live/api/history/public
@@ -4200,6 +4406,27 @@
   notes: 'Maker page: in AFU service since 2019; up to 5 h, 80 km combat radius, 340 km route, 3,500 m, two jam-resistant
     links, GPS-free mode, 100x day zoom plus thermal. Deviro''s news (28 Jan 2026) says it received the most orders for recon
     fixed-wings in 2025. Maker claims, so medium.'
+- id: devua-2023-brovinska-vampire
+  title: В Україні налагодили серійне виробництво дронів-бомбардувальників Vampire
+  url: https://dev.ua/news/vampire-1681189914
+  publisher: dev.ua
+  authors:
+  - Maria Brovinska
+  published: '2023-04-11'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - heavy-bomber
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Ukrainian-language (no English version). SkyFall Vampire in serial production: up to 15 kg, 10 km radius, 6 km link,
+    37 min, 40-80 km/h, 400 m ceiling, thermal, $10,000. Maker figures.'
 - id: devua-2024-deepstate-makarivka
   title: Could the independent analytical project DeepState be closed? What is currently known about the situation and the
     possible pressure on the team
@@ -4289,6 +4516,27 @@
   - 01-drones-uncrewed
   notes: 'Official description of e-points (ye-baly): confirmed hits uploaded to DELTA earn points that units spend on Brave1
     Market (150+ models, 40+ makers, about 10-day delivery). Over UAH 5bn ordered with e-points since Aug 2025.'
+- id: dji-matrice30-specs
+  title: Matrice 30 Series – Specs
+  url: https://enterprise.dji.com/matrice-30/specs
+  publisher: DJI
+  authors: []
+  published: unknown
+  accessed: '2026-10-15'
+  type: official
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - specs
+  found_in:
+  - 10-drones-ua-2023
+  notes: Read in the German locale. 4,069 g; IP55; 23 m/s; 41 min flight, 36 min hover; 15 km FCC / 8 km CE; zoom 113-405
+    mm eq.; VOx thermal; laser rangefinder 3-1,200 m; 12 m/s wind; -20 to 50 C.
 - id: dji-mavic3-enterprise-specs
   title: DJI Mavic 3 Enterprise Series — Specs
   url: https://enterprise.dji.com/mavic-3-enterprise/specs
@@ -4315,6 +4563,29 @@
     White Hot, Black Hot, Tint, Iron Red, Hot Iron, Arctic, Medical, Fulgurite, Rainbow 1 and Rainbow 2 (translated from 'Weiß
     heiß/Schwarz heiß/Tönung/Eisenrot/...'). A primary source for thermal palette names on a drone family widely used for
     reconnaissance.
+- id: dji-mavic3-specs
+  title: DJI Mavic 3 – Specs
+  url: https://www.dji.com/mavic-3/specs
+  publisher: DJI
+  authors: []
+  published: unknown
+  accessed: '2026-10-15'
+  type: official
+  origin: other
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - specs
+  found_in:
+  - 10-drones-ua-2023
+  notes: Read via Wayback snapshot 20240111 (live page redirects). 895 g; 5/15/21 m/s (C/N/S); 46 min flight, 40 min hover;
+    15 km FCC / 8 km CE, 1.5-3 km in strong interference; tele 162 mm eq., 7-28x digital; 12 m/s wind; -10 to 40 C; 5,000
+    mAh, ~96 min charge.
 - id: dod-2022-04-18-background-briefing
   title: Senior Defense Official Holds a Background Briefing, April 18, 2022
   url: https://www.defense.gov/News/Transcripts/Transcript/Article/3002867/senior-defense-official-holds-a-background-briefing-april-18-2022/
@@ -4382,6 +4653,27 @@
   - v01-brovary-ambush
   notes: Counts 'over 20' tanks and APCs in the clip. Attributes the footage to a TB2 and the ambush to Azov, which other
     sources do not support. Kept to document the misattribution.
+- id: dronedj-2022-singh-fedorov-dji-letter
+  title: Ukrainian minister pens open letter to DJI CEO; see drone maker's response
+  url: https://dronedj.com/2022/03/17/ukraine-dji-letter-drone-products-block-russia/
+  publisher: DroneDJ
+  authors:
+  - Ishveena Singh
+  published: '2022-03-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - drones
+  - aeroscope
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Fedorov's letter (claims Russia uses an extended AeroScope from Syria at up to 50 km) and DJI's statement that AeroScope
+    broadcasting is built in and cannot be turned off.
 - id: dw-2024-first-clash-north-korean
   title: Ukraine reports first clash with North Korean troops
   url: https://www.dw.com/en/ukraine-reports-first-clash-with-north-korean-troops/a-70706179
@@ -4940,6 +5232,27 @@
   - c13-black-sea-drone-war
   notes: 'Olenegorsky Gornyak strike: listing to port and under tow after dawn; Northern Fleet 121st Landing Ship Brigade;
     Russian MoD claimed the attack repelled and imposed a temporary traffic ban on the port.'
+- id: euromaidan-2023-hrudka-r18
+  title: Meet the R18, Ukraine's formidable night strike drone transforming the battlefield
+  url: https://euromaidanpress.com/2023/05/24/meet-the-r18-ukraines-formidable-night-strike-drone-transforming-the-battlefield/
+  publisher: Euromaidan Press
+  authors:
+  - Orysia Hrudka
+  published: '2023-05-24'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - heavy-bomber
+  found_in:
+  - 10-drones-ua-2023
+  notes: R18 at the front since 2019; up to 13 km with explosives; RKG-3/RKG-1600; crews of pilot, navigator and sapper trained
+    in groups of 3-4 crews; claims EW resistance.
 - id: euromaidan-2023-mokri-yaly-dam
   title: Russian forces blow up a dam in Zaporizhzhia Oblast, Ukraine's military spox says
   url: https://euromaidanpress.com/2023/06/11/russian-forces-blow-up-a-dam-in-zaporizhzhia-oblast-ukraines-military-spox-says/
@@ -5137,6 +5450,30 @@
   - c09-robotyne
   notes: Relays DeepStateMap's analysis (afternoon of 7 Jun; two attacks, 9+11 vehicles; irrecoverable losses at least 4 APCs
     and 1 Leopard) and Oryx's 2 Leopards lost as of 9 Jun.
+- id: euromaidan-2023-shandra-robotyne-drones-jamming
+  title: Russian drones, jamming stations stymie Ukrainian advance near Robotyne
+  url: https://euromaidanpress.com/2023/10/11/russian-drones-e-warfare-stymie-ukrainian-advance-near-robotyne/
+  publisher: Euromaidan Press
+  authors:
+  - Alya Shandra
+  published: '2023-10-11'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - ew
+  - robotyne
+  - chapter
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'Interview with a 65th Brigade sergeant near Robotyne: drone-guided Russian artillery the main problem; suitcase-size
+    Russian trench jammers bring Ukrainian drones down ''in scores''; ''many hundreds'' of drones lost in the Robotyne assault
+    per Delta (claim); Russian FPVs rising; reusable drop FPV; Mavics on both sides.'
 - id: euromaidan-2023-shandra-sbu-confirms
   title: Ukraine's Security Service confirms it blew up Crimea Bridge in 2022
   url: https://euromaidanpress.com/2023/07/27/ukraines-security-service-confirms-it-blew-up-crimea-bridge-in-2022/
@@ -5183,6 +5520,29 @@
     drones disabled in some weeks; one major Russian EW vehicle per 10 km; Shipovnik-Aero has about 10 km range, can take
     over drones and geolocate operators for artillery. Pokrova described as a nationwide GNSS spoofer able to deny satellite
     navigation over most of Ukraine.'
+- id: euromaidan-2023-voichuk-fpv-small-drones
+  title: 'Small drones, big impact: Ukraine boosts use of FPV drones on battlefield'
+  url: https://euromaidanpress.com/2023/10/04/small-drones-big-impact-ukraine-boosts-use-of-fpv-drones-on-battlefield/
+  publisher: Euromaidan Press
+  authors:
+  - Iryna Voichuk
+  published: '2023-10-04'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - fpv
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'GeoConfirmed analyst''s count of documented Ukrainian FPV hits: ~10 (Feb 2023), ~50 (Apr), >100 (Jul), >250 (Sep);
+    FPV cost $600-1,000, ~1 kg payload, 1-1.5 months training. Page labelled advertorial (''Industry Focus''); one analyst''s
+    count.'
 - id: euromaidan-2023-wp-analysis
   title: 'Why Ukraine''s counteroffensive failed: WP analysis in 7 minutes'
   url: https://euromaidanpress.com/2023/12/07/why-ukraines-counteroffensive-failed-wp-analysis-in-7-minutes/
@@ -11541,6 +11901,30 @@
   found_in:
   - c15-pokrovsk-myrnohrad
   notes: UA brigades in salient (59th, 68th, 117th TD, 15th NG, 25th AAB). Fetched via web.archive.org.
+- id: forbes-2024-hambling-lancet-blast
+  title: How One Blast Shut Down Production Of Russia's Deadliest Drone
+  url: https://www.forbes.com/sites/davidhambling/2024/02/01/how-one-blast-shut-down-production-of-russias-deadliest-drone/
+  publisher: Forbes
+  authors:
+  - David Hambling
+  published: '2024-02-01'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - lancet
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Fetched via the Wayback Machine (forbes.com blocks scripts). Relays LostArmour monthly Lancet strike-video counts
+    for 2023 (about 25/month early, ~50 Mar-Apr, 135 Jul, 126 Aug, 50s Sep-Oct, 89 Nov, 59 Dec) and a Ukrainian ~30% success
+    estimate; the ZOMZ blast link is speculative by its own account. LostArmour is a Russian site, used only as relayed here.
 - id: forbes-2025-axe-157th-disintegrating
   title: Another Ukrainian Brigade Is Disintegrating As It Deploys To Pokrovsk
   url: https://www.forbes.com/sites/davidaxe/2025/01/27/another-ukrainian-brigade-is-disintegrating-as-it-deploys-to-pokrovsk/
@@ -11834,6 +12218,28 @@
   notes: 'Retired Australian general''s analysis: Russian Starlink use for Shahed range, C2 and UGV logistics. After the cutoff,
     Russian logistics revert to crewed trucks and motorcycles and advances largely stop after 8 Feb (citing ISW). Medium:
     personal analysis blog.'
+- id: gagadget-2022-panasovskiy-mavic3-vog
+  title: 'DJI Mavic 3 and VOG: a serviceman told and showed how they destroy Russian occupants from the air using consumer
+    quadcopters'
+  url: https://gagadget.com/en/143828-dji-mavic-3-and-vog-a-serviceman-told-and-showed-how-they-destroy-russian-occupants-from-the-air-using-consumer-quadcopte/
+  publisher: Gagadget
+  authors:
+  - Maksim Panasovskiy
+  published: '2022-07-06'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - drones
+  - munitions
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'One serviceman''s video: Mavic 3 carries two VOG-17s, 3D-printed light-triggered release, drops from ~60 m with
+    a scout drone; Mavic 3 ~$3,000 in Ukraine. Single anecdote via a tech site.'
 - id: galin-2010-roads
   title: Procedural Generation of Roads
   url: https://doi.org/10.1111/j.1467-8659.2009.01612.x
@@ -12882,6 +13288,53 @@
   - c03-azovstal
   notes: 17 Russian, Chechen and DNR units identified in Mariupol in Mar–Apr 2022 (8th CAA, 150th MRD, 810th Naval Infantry,
     spetsnaz, Rosgvardia, DNR 1st AC) and named commanders incl. Mordvichev.
+- id: ieee-2024-chulilla-hackers-war
+  title: Ukraine Is the First "Hackers' War"
+  url: https://spectrum.ieee.org/ukraine-hackers-war
+  publisher: IEEE Spectrum
+  authors:
+  - Juan Chulilla
+  published: '2024-04-10'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - ew
+  - firmware
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Russian EW first jammed DJI control and video links (OcuSync not built for dense jamming); volunteers closed AeroScope
+    backdoors in firmware; FPV shift by April 2023; 1.2 GHz video, 5 W transmitters, two-way repeaters doubling range.
+- id: ieee-2025-pultarova-killer-drones
+  title: How Ukraine's Killer Drones Are Beating Russian Jamming
+  url: https://spectrum.ieee.org/ukraine-killer-drones
+  publisher: IEEE Spectrum
+  authors:
+  - Tereza Pultarova
+  published: '2025-06-02'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - drones
+  - ew
+  - gnss
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: A drone losing both pilot link and orientation crashes or drifts until its battery dies; spoofing can fake altitude;
+    multi-band hopping and visual navigation as counters. Originally posted 6 April 2025.
 - id: independent-2022-james-convoy-40-miles
   title: 'Ukraine: 40 mile-long Russian convoy heading to Kyiv twice as long as previously thought'
   url: https://www.independent.co.uk/news/world/europe/russia-ukraine-war-kyiv-maxar-b2025365.html
@@ -13054,6 +13507,47 @@
   notes: 'HUR statement: the BTG of the 6th Tank Regiment (Chebarkul), with the 239th Tank Regiment of the 90th Tank Division,
     suffered significant losses, and Col. A. Zakharov was killed. Credits Azov, the 72nd Brigade and National Corps. An official
     claim.'
+- id: interfax-2022-poroshenko-350-autel
+  title: Poroshenko Foundation, NGO Sprava Hromad donate 350 drones from Estonia to AFU
+  url: https://en.interfax.com.ua/news/general/846213.html
+  publisher: Interfax-Ukraine
+  authors: []
+  published: '2022-07-15'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - drones
+  found_in:
+  - 10-drones-ua-2023
+  notes: 50 Autel EVO II 640T Dual (thermal) and 300 EVO Lite+ bought for Ukrainian units; 'in each company... it will correct
+    artillery fire'. Party press release.
+- id: interfax-2024-isw-ew-since-fall-2023
+  title: Russian assaults may be able to achieve more significant and threatening gains, particularly west of Bakhmut, should
+    USA continue to withhold assistance to Ukraine – ISW
+  url: https://en.interfax.com.ua/news/general/980730.html
+  publisher: Interfax-Ukraine
+  authors: []
+  published: '2024-04-16'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - ew
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'Relays ISW citing Ukrainian drone operators (via the Washington Post): Russian EW jamming significantly up since
+    fall 2023; ~100 drones within a 10 km radius; operators targeted with glide bombs and MLRS; one brigade detects 70-90
+    FPVs a day.'
 - id: interfax-2026-kubilius-2m-shells
   title: Europe actively scales up 155mm shell production, continues supplies to Ukraine – EU Commissioner Kubilius
   url: https://en.interfax.com.ua/news/general/1147530.html
@@ -22311,6 +22805,26 @@
   - c07-bakhmut
   notes: 'Artemsil mines: ~200 km tunnels, ~260 m deep, 94% of UA salt; flag over the mine 14 Jan, town lost 2 days later;
     Prigozhin ''underground cities'' vs Artemsil scepticism. Date per Wikipedia citation (page has none).'
+- id: jamestown-2022-lapaiev-ew-hype
+  title: EW Hype? The Reasons Behind the Limited Effectiveness of Russia's Electronic Warfare in Ukraine
+  url: https://jamestown.org/ew-hype-the-reasons-behind-the-limited-effectiveness-of-russias-electronic-warfare-in-ukraine/
+  publisher: Jamestown Foundation (Eurasia Daily Monitor)
+  authors:
+  - Yuri Lapaiev
+  published: '2022-04-11'
+  accessed: '2026-10-15'
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ew
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Early-war judgment that Russian EW had 'few if any recorded successes'; Silok-M1 cuts drone links at 3-4 km; Torn-MDM
+    detects 1.5-3,000 MHz and locates up to 70 km. Counterpoint to the 2023 assessments.
 - id: jamestown-2026-lapaiev-mid-range-drones
   title: Ukrainian Mid-Range Drones Target Russian Logistics
   url: https://jamestown.org/ukrainian-mid-range-drones-target-russian-logistics/
@@ -23506,6 +24020,29 @@
   - c07-bakhmut
   notes: 22 Feb 2023 photo of dozens of Wagner dead 'killed the previous day', 'should have been five times less'; 21 Feb
     'treason' accusation against Gerasimov and Shoigu.
+- id: kyivindependent-2023-query-war-from-above
+  title: 'War from above: A day with drone unit defending Ukraine''s south'
+  url: https://kyivindependent.com/national/war-from-above-drone-battles-in-zaporizhzhia-oblast
+  publisher: Kyiv Independent
+  authors:
+  - Alexander Query
+  published: '2023-03-22'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - zaporizhzhia
+  - attrition
+  found_in:
+  - 10-drones-ua-2023
+  - 11-drones-ru-ew-2023
+  notes: '15-strong volunteer drone unit in Zaporizhzhia Oblast spotting for the 102nd Brigade''s artillery: Mavic then Matrice
+    300; lost 5 Mavic 3s in a week (>$20,000); 3D-printed-fin bombs; Russian EW lands drones and DJI shows take-off point.'
 - id: kyivindependent-2023-soledar-withdrawal-confirmed
   title: Ukraine confirms withdrawal from Soledar, Donetsk Oblast
   url: https://kyivindependent.com/ukraine-confirms-withdrawal-from-soledar-donetsk-oblast/
@@ -26102,6 +26639,26 @@
   notes: 'History of the Ghost of Kyiv myth: DCS World video (25 Feb), Poroshenko''s 2019 photo (26 Feb), SBU ''10 planes''
     (27 Feb), The Times naming Tarabalka (29 Apr), Air Force denial (30 Apr) quoted in full; Ihnat: ''We even played along
     a little bit''. Gives 23 Mar for Tarabalka''s death (others: 13 Mar).'
+- id: kyivpost-2023-afp-bakhmut-commandos
+  title: '''I Feel Good, Because I See the Results of My Work'': Ukrainian Commandos Prepare Bakhmut Skirmish'
+  url: https://www.kyivpost.com/post/14412
+  publisher: Kyiv Post (AFP)
+  authors: []
+  published: '2023-03-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - ew
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'AFP: a Ukrainian drone operator says Russians cut the drone''s link, ''it descends and they fire at it''; 62 drones
+    lost since the invasion.'
 - id: kyivpost-2023-afp-olenivka-not-himars
   title: 'Ukrainian Rockets Not Behind Deadly Olenivka Prison Strike: UN'
   url: https://www.kyivpost.com/post/22335
@@ -26346,6 +26903,31 @@
   found_in:
   - c12-a50-hunt
   notes: 'Oleshchuk: three Su-34 downed at noon on 22 Dec 2023 in the southern sector; Patriot use speculated, not confirmed.'
+- id: kyivpost-2023-tuzov-lancet-overview
+  title: 'Analysis: Russian Lancet Kamikaze Drone in Ukraine: An Overview'
+  url: https://www.kyivpost.com/analysis/23923
+  publisher: Kyiv Post
+  authors:
+  - Bohdan Tuzov
+  published: '2023-11-12'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - lancet
+  - ew
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Lancet-1/3 specs (1/3 kg warheads, 5/12 kg, 40-70 km, ~40 min, 80-110 km/h cruise, ~300 km/h dive, $30-35k); Orlan-10
+    repeater for control range; nets on metal frames, remote detonation on nets, two Lancets defeated by a camouflage net.
+    Speed figures internally inconsistent.
 - id: kyivpost-2023-tuzov-neptune-moskva
   title: How Neptune Hit the Moskva
   url: https://www.kyivpost.com/post/16061
@@ -26484,6 +27066,29 @@
   - c17-kupiansk-pipeline
   notes: 'Pro-Kremlin claims of about 150 troops through a 0.8 m pipe of nearly 2 km into south Avdiivka and Tsarska Okhota;
     torch-cutting video of 25 Jan; Barabash: ''through drainage tunnels you will not organize any serious advance''.'
+- id: kyivpost-2024-korshak-baba-yaga-mothership
+  title: Ukrainian Drone Swarms Controlled by 'Baba Yaga' Robot Aircraft, Russian Sources Claim
+  url: https://www.kyivpost.com/post/28771
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2024-02-29'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - heavy-bomber
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Agricultural octocopters ($20-50k) used as bombers since early in the war; night use and mothership role mostly
+    from Russian state media and milbloggers, unverified by Kyiv Post; Fakty: 15-20 kg to 5-10 km, crew of commander, pilot,
+    bombardier.'
 - id: kyivpost-2024-korshak-krynky-drones
   title: Embattled Marines on Dnipro Bridgehead Gain New Foothold Despite Swarms of Russian Drones
   url: https://www.kyivpost.com/post/29829
@@ -28148,6 +28753,27 @@
     10 documented Flamingo strikes since Aug 2025, salvos of 3-6 every 3-8 weeks, only a few causing serious damage (Skif-M
     Belgorod, Votkinsk, VNIIR-Progress Cheboksary, Titan-Barrikady Volgograd, Kotluban depot). The AI-25 engine supply is
     the bottleneck; long-range strikes fared worse.
+- id: mezha-2022-danylov-r18
+  title: 'R18 octocopter from Aerorozvidka: Ukrainian drone destroying the enemy'
+  url: https://mezha.ua/en/2022/04/26/r18-octocopter-from-aerorozvidka-ukrainian-drone-destroying-the-enemy/
+  publisher: Mezha
+  authors:
+  - Oleg Danylov
+  published: '2022-04-26'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - drones
+  - heavy-bomber
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'R18: 4 km range, ~40 min, 5 kg of free-fall bombs (RKG-3/RKG-1600) dropped from 100-300 m, thermal imager; 1 m accuracy
+    from 300 m with RKG-1600 (claim).'
 - id: mezha-2022-moskva-underwater-heritage
   title: Moskva cruiser has become an object of underwater cultural heritage of Ukraine
   url: https://mezha.ua/en/2022/04/22/moskva-cruiser-has-become-an-object-of-underwater-cultural-heritage-of-ukraine/
@@ -28349,6 +28975,26 @@
   - c03-azovstal
   notes: 'Ukrainian report of the HUR video: 7 flights, 16 Mi-8s, 72 Azov soldiers, two shot down and a rescue helicopter
     lost; flights over 100 km into occupied territory.'
+- id: militarnyi-2022-silok-01-captured
+  title: Transcarpathian brigade captured the Silok-01 EW system
+  url: https://militarnyi.com/en/news/transcarpathian-brigade-captured-the-silok-01-ew-system/
+  publisher: Militarnyi
+  authors: []
+  published: '2022-09-04'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - ew
+  - drones
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 128th Mountain Assault Brigade captures a Silok-01 counter-drone EW system (claimed >4 km) and calls it 'effective
+    only at Russian training grounds'.
 - id: militarnyi-2023-72nd-basurmanin
   title: 72nd Brigade neutralized T-80BV tanks and BMP Basurmanin
   url: https://militarnyi.com/en/news/72nd-brigade-neutralized-t-80bv-tanks-and-bmp-basurmanin/
@@ -28549,6 +29195,29 @@
   - c12-a50-hunt
   notes: 22 Dec 2023 three Su-34 in the south; FighterBomber blamed a Patriot; came after Germany's second Patriot system
     deployed.
+- id: militarnyi-2023-kushnikov-vuhledar-mavic-m30t
+  title: Ukrainian military neutralized enemy's armored vehicles near Vuhledar
+  url: https://militarnyi.com/en/news/ukrainian-military-neutralized-enemy-s-armored-vehicles-near-vuhledar/
+  publisher: Militarnyi
+  authors:
+  - Vadim Kushnikov
+  published: '2023-02-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - vuhledar
+  - artillery
+  - chapter
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Fedorov: a DJI Mavic 3 and a Matrice M30T spotted a Russian convoy near Vuhledar and passed coordinates to artillery
+    (21st Sep. Bn, 55th Arty, 72nd Mech); claims 2 BMP-3, a BTR-82A and a T-80BV hit. Official claim.'
 - id: militarnyi-2023-vuhledar-vehicles
   title: Russian vehicles destroyed in the Vuhledar direction
   url: https://militarnyi.com/en/news/russian-vehicles-destroyed-in-the-vuhledar-direction/
@@ -33205,6 +33874,29 @@
   - c02-snake-island-moskva
   notes: 'HUR claim that only 8 of 40 Russian ''liaison officers'' sent to the island returned alive, and that 10 bodies of
     a Sevastopol-based special unit were evacuated. Low: single-party intelligence claim, unverified.'
+- id: pravda-2022-orlan-stormtroopers
+  title: Stormtroopers show how a proud Russian Orlan flopped on Ukrainian land
+  url: https://www.pravda.com.ua/eng/news/2022/05/2/7343524/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2022-05-02'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - drones
+  - isr
+  - orlan
+  - air-defence
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Orlan-10 up to 5 km, 18 h, 150 km/h, 600 km offline; uses incl. artillery adjustment, radio intelligence, mobile
+    jamming; downed by MANPADS in Zaporizhzhia; 10 Orlans neutralised on 1 May 2022.
 - id: pravda-2022-petrenko-irpin-liberated
   title: 'Irpin Mayor: Irpin liberated from Russian occupation'
   url: https://www.pravda.com.ua/eng/news/2022/03/28/7335265/
@@ -33514,6 +34206,28 @@
   - c07-bakhmut
   notes: 'The 3rd Assault Brigade confirms Prigozhin''s claim that the 72nd Motor Rifle Brigade fled; 64 killed, 87 ''being
     clarified''. Medium: unit claims.'
+- id: pravda-2023-balachuk-8-strike-companies
+  title: 8 more strike drone companies formed in Ukraine
+  url: https://www.pravda.com.ua/eng/news/2023/05/08/7401202/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2023-05-08'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - army-of-drones
+  - organization
+  - fpv
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Fedorov: eight more strike drone companies with pickups and FPV drones, funded via UNITED24 and the state budget.'
 - id: pravda-2023-bridge-attack-sep-claim
   title: Russians claim Ukraine tried to attack Crimean Bridge again
   url: https://www.pravda.com.ua/eng/news/2023/09/2/7418120/
@@ -33642,6 +34356,29 @@
   - c13-black-sea-drone-war
   notes: 'Russian MoD claim (as reported): Ivan Khurs attacked at 05:30 on 24 May 2023 by three USVs, all destroyed, 140 km
     north-east of the Bosphorus, while guarding the TurkStream and Blue Stream pipelines.'
+- id: pravda-2023-khalilov-fpv-negotiating-table
+  title: 'If the UAV situation doesn''t change, we''ll be at the negotiating table within a year: FPV drones and their role
+    in warfare'
+  url: https://www.pravda.com.ua/eng/articles/2023/07/12/7410848/
+  publisher: Ukrainska Pravda
+  authors:
+  - Rustem Khalilov
+  published: '2023-07-12'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - fpv
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Mid-2023 FPV feature: Mavic 3 the most common recon drone; FPV up to 160 km/h, few minutes'' battery, analog video,
+    $300-400 (Vyriy cost $370-380); ''one in five'' hits for a skilled pilot; Berlinska: Ukraine <10,000 quality FPVs/month
+    vs Russia 45-50k.'
 - id: pravda-2023-markus-demotion
   title: Sergeant Major of 47th Brigade asks to be demoted due to disagreement with command
   url: https://www.pravda.com.ua/eng/news/2023/07/11/7410890/
@@ -33770,6 +34507,48 @@
   - c02-snake-island-moskva
   notes: Journalist Yurii Butusov's video of the two RK-360 Neptune launches, from sources close to Luch; Butusov gives the
     launch time as 14:10 on 13 Apr 2022 (UP's own reconstruction says about 16:00).
+- id: pravda-2023-pole21-destroyed
+  title: Ukrainian military commander says Ukraine destroyed crucial Russian electronic countermeasure system
+  url: https://www.pravda.com.ua/eng/news/2023/11/5/7427248/
+  publisher: Ukrainska Pravda
+  authors:
+  - Roman Petrenko
+  published: '2023-11-05'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - ew
+  - gnss
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Tarnavskyi announces a Pole-21 destroyed (method and place not given); Pole-21 creates a dome suppressing GPS/radio-navigation;
+    range 60 km per Russia, over 25 km per Ukrainian intelligence.
+- id: pravda-2023-romanenko-army-of-drones-428
+  title: Ukraine's Army of Drones sets all-time record – Deputy PM
+  url: https://www.pravda.com.ua/eng/news/2023/10/16/7424337/
+  publisher: Ukrainska Pravda
+  authors:
+  - Valentyna Romanenko
+  published: '2023-10-16'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - army-of-drones
+  found_in:
+  - 10-drones-ua-2023
+  notes: Fedorov claims 428 pieces of Russian equipment hit by drones in one week during the Avdiivka offensive. Official
+    claim.
 - id: pravda-2023-romanenko-phosphorus-bakhmut-sof
   title: 'Bakhmut on fire: Russia uses phosphorus bombs en masse – SOF'
   url: https://www.pravda.com.ua/eng/news/2023/05/5/7400917/
@@ -33812,6 +34591,27 @@
   - c09-robotyne
   notes: Sak replaced by Col. Oleksandr Pavlii (per Suspilne); the 47th entered Robotyne on 22 Aug. Title paraphrased from
     the page.
+- id: pravda-2023-shumilin-3-strike-companies
+  title: Ukrainian army forms 3 new strike drone companies
+  url: https://www.pravda.com.ua/eng/news/2023/03/28/7395476/
+  publisher: Ukrainska Pravda
+  authors:
+  - Oleksandr Shumilin
+  published: '2023-03-28'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - army-of-drones
+  - organization
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Fedorov: first three strike drone companies ready, equipped with pickups, Starlink and Ukrainian-made drones.'
 - id: pravda-2023-sof-ambush-t80
   title: 'Successful ambush behind enemy lines: Armed Forces of Ukraine destroy modernised tank and capture Russian marines'
   url: https://www.pravda.com.ua/eng/news/2023/02/3/7387764/
@@ -33833,6 +34633,26 @@
   - c08-vuhledar
   notes: SOF and the 72nd Mech Bde destroy a 155th NIB T-80 that hit a mine before reaching its firing position; two crew
     (the Chertenkov brothers) captured; SOF video.
+- id: pravda-2023-supercam-mykolaiv
+  title: 2 Russian reconnaissance drones downed in Mykolaiv Oblast
+  url: https://www.pravda.com.ua/eng/news/2023/03/20/7394330/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-03-20'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - isr
+  - air-defence
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Two Supercam S350 reconnaissance drones (mapping and target monitoring) downed by Air Command South on 20 Mar 2023.
 - id: pravda-2023-uk-intel-bridge-protection
   title: UK Intelligence explains how Russia tries to protect Crimean bridge from attacks
   url: https://www.pravda.com.ua/eng/news/2023/09/1/7417978/
@@ -33856,6 +34676,26 @@
   - c05-kerch-bridge
   notes: 'UK Defence Intelligence: sunken ships and booms confirmed 29 Aug, vessels 160 m apart at the southern section where
     Sea Baby struck; smoke generators tested 24 May 2023 and used 12 Aug; radar-decoy barges tested Sep 2022; air defence.'
+- id: pravda-2023-ukmod-lancet-step-change
+  title: Russians deploy Lancet drones for strikes on Ukraine's artillery – UK intelligence
+  url: https://www.pravda.com.ua/eng/news/2023/11/1/7426676/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-11-01'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - lancet
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'Relays UK Defence Intelligence: Lancet a ''step change'' for Russian small drones, prominent in counter-battery.
+    The article wrongly says ZALA makes the Orlan-10 (STC does); not used for that point.'
 - id: pravda-2023-wp-carnage-kirby
   title: US fears Ukrainian counteroffensive will become carnage – WP
   url: https://www.pravda.com.ua/eng/news/2023/05/3/7400418/
@@ -36780,6 +37620,28 @@
   - c07-bakhmut
   notes: 'MoD 13 Jan: Soledar captured ''Thursday evening'' (12 Jan), first statement omits Wagner, second credits ''volunteers
     from the Wagner assault detachments''; Prigozhin on attempts to ''steal victory''; Zelensky mockery. Fetched via Wayback.'
+- id: reuters-2023-russia-upper-hand-drones
+  title: Ukrainians worry Russia is getting the upper hand in using drones
+  url: https://www.businessday.co.za/bd/world/europe/2023-11-09-ukrainians-worry-russia-is-getting-the-upper-hand-in-using-drones/
+  publisher: Reuters (via Business Day)
+  authors: []
+  published: '2023-11-09'
+  accessed: '2026-10-15'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - fpv
+  - russia
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'Russian state enterprise planned up to 3,000 FPVs a month from May 2023; a platoon commander near Bakhmut estimates
+    Russian FPVs at about double Ukraine''s (snapshot); Bendett: 2023 critical for Russian FPV scale.'
 - id: reuters-2023-shalal-wagner-30000-casualties
   title: 'White House: Wagner Group has suffered over 30,000 casualties in Ukraine'
   url: https://www.reuters.com/world/europe/white-house-wagner-group-has-suffered-over-30000-casualties-ukraine-2023-02-17/
@@ -36935,6 +37797,28 @@
   - c16-spiderweb
   notes: 'Read via the Wayback Machine (snapshot 2025-06-29). Two US officials: as many as 20 warplanes hit, around 10 destroyed;
     US given no notice; Zelensky said half of 41 cannot be repaired; Kellogg on escalation risk.'
+- id: rferl-2022-aeroscope-aerorozvidka
+  title: 'Drone Wars: Ukraine''s Homegrown Response To ''Deadly'' Chinese Detection Tech'
+  url: https://www.rferl.org/a/drone-detection-war-ukraine-china-russia/31943191.html
+  publisher: RFE/RL
+  authors: []
+  published: '2022-07-14'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - drones
+  - ew
+  - operator-detection
+  found_in:
+  - 10-drones-ua-2023
+  - 11-drones-ru-ew-2023
+  notes: Aerorozvidka specialist confirms Ukrainians targeted and killed via DJI AeroScope; R18 range 4 km, 5 kg, thermal,
+    night use.
 - id: rferl-2022-brovary-tank-convoy
   title: Ukrainian Forces Destroy Russian Tank Convoy Near Kyiv
   url: https://www.rferl.org/a/ukrainian-forces-destroy-russian-tank-convoy-near-kyiv/31746980.html
@@ -37087,6 +37971,26 @@
   - c01-march-on-kyiv
   notes: 'Photo essay: Moshchun liberated 21 Mar, nearly 85% of buildings destroyed. Calls the village ''30 kilometers north
     of the capital'' (the OSM centre is about 23 km from central Kyiv).'
+- id: rferl-2022-rkg3-grenades
+  title: How Ukraine Uses Obsolete Soviet Grenades To Destroy Russian Tanks From Above
+  url: https://www.rferl.org/a/ukraine-cheap-grenades-expensive-tanks/31835434.html
+  publisher: RFE/RL
+  authors: []
+  published: '2022-05-05'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - drones
+  - munitions
+  found_in:
+  - 10-drones-ua-2023
+  notes: Aerorozvidka octocopters drop RKG-3 grenades with 3D-printed fins; copper slug penetrates >20 cm of armour; bomblets
+    cost under $100.
 - id: rferl-2023-bakhmut-bloodiest-infantry-brawl
   title: 'The Battle For Bakhmut: The Bloodiest Infantry Brawl Since World War II'
   url: https://www.rferl.org/a/ukraine-russia-battle-bakhmut-ruins-/32351803.html
@@ -37153,6 +38057,28 @@
   - c08-vuhledar
   notes: Geography (T-0509, 2 km north of Pavlivka, rail threat), Alga battalion losses on 6 Feb, the gap between the Ukrainian
     130/36 claim and observers' 20–40 vehicles.
+- id: rferl-2023-lancet-counteroffensive
+  title: 'Lancet: The Russian Kamikaze Drone Blunting Ukraine''s Counteroffensive'
+  url: https://www.rferl.org/a/lancet-drones-russia-invasion-counteroffensive-kamikaze/32493513.html
+  publisher: RFE/RL (with Reuters)
+  authors: []
+  published: '2023-07-08'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - lancet
+  - robotyne
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: Lancet range (>40 km), ~40 min endurance, ~100 km/h, up to 5 kg warhead, ~$35k (Oryx); Ukrainian gunner says use
+    rose from spring; Sak claims 1-2 shot down a day; netting on both sides; some videos show Lancets finishing off abandoned
+    vehicles.
 - id: rferl-2024-belovodyev-storm-gladiator
   title: 'Storm Gladiator: How Russia Uses Recruited Convicts To Fight In ''Fierce'' Assault Units In Ukraine'
   url: https://www.rferl.org/a/russia-recruited-convicts-fierce-assault-units-storm-gladiator-/32806371.html
@@ -37332,6 +38258,26 @@
   - 06-terrain-geodata
   notes: North of Pokrovsk in May 2026, spring fields and rutted forest roads were still muddy, and as 'the ground hardens
     and foliage expands' soldiers gain cover from drones. Units use quad bikes. The front is a 'kill zone' rather than a line.
+- id: rub-2023-droneid-vulnerabilities
+  title: Security vulnerabilities detected in drones made by DJI
+  url: https://news.rub.de/english/press-releases/2023-03-02-it-security-security-vulnerabilities-detected-drones-made-dji
+  publisher: Ruhr University Bochum
+  authors: []
+  published: '2023-03-02'
+  accessed: '2026-10-15'
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - aeroscope
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'University press release on the NDSS 2023 paper: DJI DroneID broadcasts drone and pilot location unencrypted; 16
+    vulnerabilities across Mini 2, Mavic Air 2, Mavic 2 and Mavic 3. No Ukraine reference.'
 - id: rusi-2022-bronk-russian-air-war
   title: The Russian Air War and Ukrainian Requirements for Air Defence
   url: https://www.rusi.org/explore-our-research/publications/special-resources/russian-air-war-and-ukrainian-requirements-air-defence
@@ -37496,6 +38442,31 @@
   notes: Ukrainian night strikes with converted agricultural drones dropping RPGs (5 UAVs destroyed or badly damaged 7 tanks,
     and all 5 were lost), which worked only when Russian EW lapsed. Russian Lancet plus FPV strikes on lead elements; up to
     25 UAVs watching a unit.
+- id: rusi-2024-bronk-watling-mass-precision-strike
+  title: 'Mass Precision Strike: Designing UAV Complexes for Land Forces'
+  url: https://static.rusi.org/mass-precision-strike-final.pdf
+  publisher: RUSI
+  authors:
+  - Justin Bronk
+  - Jack Watling
+  published: 2024-04
+  accessed: '2026-10-15'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - fpv
+  - ew
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'From 2022-24 Ukrainian fieldwork: FPV with anti-tank grenade $800-1,800, ~1 in 5 reaches target (General Staff data,
+    Nov 2023), teams 500 m apart, range shorter in cold; 2 kg RPG-7 warheads; new control systems peak ~2 weeks, jammed in
+    6-12 weeks (mid-2023); most losses to EW.'
 - id: rusi-2024-watling-offensive-lessons
   title: Preliminary Lessons from Ukraine's Offensive Operations, 2022–23
   url: https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf
@@ -40045,6 +41016,25 @@
   - c05-kerch-bridge
   notes: 'As of 07:00 on 11 Oct: 19 killed, 105 injured; infrastructure hit in 12 regions and Kyiv; 301 settlements still
     without power.'
+- id: ukrinform-2022-72nd-matrice-300
+  title: 72nd Mechanized Brigade gets state-of-the-art reconnaissance drone
+  url: https://www.ukrinform.net/rubric-ato/3550240-72nd-mechanized-brigade-gets-stateoftheart-reconnaissance-drone.html
+  publisher: Ukrinform
+  authors: []
+  published: '2022-08-14'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - drones
+  - vuhledar
+  found_in:
+  - 10-drones-ua-2023
+  notes: Fedorov hands the 72nd Brigade a thermal DJI Matrice 300 for day-and-night watching of positions and vehicle movement.
 - id: ukrinform-2022-azov-atgm-evacuation-vehicle
   title: Azov Regiment shows effects of Russia's ATGM strike on evacuation vehicle
   url: https://ukrinform.net/rubric-ato/3476652-azov-regiment-shows-effects-of-russias-atgm-strike-on-evacuation-vehicle.html
@@ -40229,6 +41219,26 @@
   - c02-snake-island-moskva
   notes: 'Ukrainian Navy statement: the marines and border guards are alive and captive; they repulsed two attacks but ran
     out of ammunition after the lighthouse, towers and antennas were destroyed.'
+- id: ukrinform-2023-300-mavic-3t
+  title: 'Army of Drones: 300 Mavic 3T UAVs delivered to hottest frontline spots in Ukraine'
+  url: https://ukrinform.net/rubric-ato/3689555-army-of-drones-300-mavic-3t-uavs-delivered-to-hottest-frontline-spots-in-ukraine.html
+  publisher: Ukrinform
+  authors: []
+  published: '2023-03-30'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - army-of-drones
+  found_in:
+  - 10-drones-ua-2023
+  notes: '300 thermal Mavic 3T delivered: 160 east, 85 Zaporizhzhia, 55 Kherson; first three UAV strike companies trained;
+    3,201 drones bought in nine months.'
 - id: ukrinform-2023-3rd-assault-700m
   title: Ukraine pushes Russia "another 700 meters" back near Bakhmut - Ground Forces
   url: https://www.ukrinform.net/rubric-ato/3712322-ukraine-clears-another-700-meters-of-russian-troops-near-bakhmut-ground-forces.html
@@ -41187,6 +42197,48 @@
     as 'a mixture of perennial species planted in fields in a few rows'; unclear ownership and land-cadastre registration
     after the kolkhozes were broken up; 2020 dust storms caused 70% loss of winter crops in southern oblasts; goal of reconstructing
     85-86k ha by 2030.
+- id: unherd-2023-brown-vuhledar
+  title: Will Vuhledar be Russia's bloodiest offensive? Away from Bakhmut, Putin faces a mutiny
+  url: https://unherd.com/2023/03/will-vuhledar-be-russias-bloodiest-offensive/
+  publisher: UnHerd
+  authors:
+  - Will Brown
+  published: '2023-03-08'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - vuhledar
+  - chapter
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Reportage near Vuhledar: drone base a mile from the front; 68th Jaegers with handheld drones; marines step behind
+    trees when a grenade drone comes. Opinion-leaning outlet; single reporter visit.'
+- id: unian-2017-orlan-toretsk
+  title: Ukrainian troops shoot down Russian drone in ATO zone
+  url: https://www.unian.info/war/2323611-ukrainian-troops-shoot-down-russian-drone-in-ato-zone.html
+  publisher: UNIAN
+  authors: []
+  published: '2017-12-29'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - drones
+  - isr
+  - orlan
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'Pre-2022 Donbas: Orlan-10s fly in groups of two or three (reconnaissance at 1-1.5 km, EW, relay at 4.5-5 km or higher);
+    used for artillery adjustment. No era code: predates e1 (2014-2022 Donbas war).'
 - id: unian-2022-urbanska-kherson-escape
   title: 'Не з "доброї волі": як довго в Росії готували втечу з Херсона (Not out of ''goodwill'': how long Russia prepared
     its escape from Kherson)'
@@ -41257,6 +42309,29 @@
   notes: 'Ground-level counters from units (93rd Brigade; 21st Unmanned Systems Regiment): nets, which burn, melt and hide
     ''waiting'' drones; heated tungsten wire that snaps fibre; shotgun teams; net guns; switching logistics to daytime and
     foot movement; varied routes. Government-run outlet.'
+- id: united24-2025-daly-starlink-military
+  title: How Starlink Keeps Ukraine's Military Online and Ahead in Battle
+  url: https://united24media.com/war-in-ukraine/how-starlink-keeps-ukraines-military-online-and-ahead-in-battle-6797
+  publisher: UNITED24 Media
+  authors:
+  - Jess Daly
+  published: '2025-03-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e8-drone-kill-zone
+  topics:
+  - drones
+  - starlink
+  - c2
+  found_in:
+  - 10-drones-ua-2023
+  notes: 'Drone-artillery teams rely on Starlink video feeds; Aerorozvidka: a night thermal drone ''must connect through Starlink
+    to the artillery guy''; Delta fuses satellite, sensor, drone and intercept data. Government-run outlet.'
 - id: united24-2025-khomenko-adb-launch
   title: Ukraine Launches Point-Based Rewards for Drone Operators
   url: https://united24media.com/latest-news/ukraines-launches-point-based-rewards-for-drone-operators-8002
@@ -41834,6 +42909,29 @@
   - c05-kerch-bridge
   notes: 'Crimean Wind: 36 boom barges in Oct 2024, most destroyed by storms; 17 back in place by late Jan 2025, tugs bringing
     more since late December.'
+- id: unn-2026-bashynskyi-orlan
+  title: 'UAV "Orlan": characteristics, types, and dangers'
+  url: https://unn.ua/en/news/uav-orlan-characteristics-types-and-dangers
+  publisher: UNN (Ukrainian National News)
+  authors:
+  - Pavlo Bashynskyi
+  published: '2026-09-15'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - isr
+  - orlan
+  found_in:
+  - 11-drones-ru-ew-2023
+  notes: 'Ukrainian explainer: Orlan-10 ceiling 5 km, up to 16 h, 90-150 km/h, 120 km link (600 km with relay), sensors incl.
+    thermal and EW; hard to spot visually and on radar; countered by EW plus fire.'
 - id: usgs-srtmgl1
   title: NASA SRTM Digital Elevation 30m (SRTMGL1 v003)
   url: https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003
@@ -42125,6 +43223,31 @@
   - c01-march-on-kyiv
   notes: Planet Labs imagery of the flooded land north of Kyiv. The Ukrainian ambassador's 26 Feb claim that Russia had destroyed
     a reservoir dam. RAND's Marta Kepe on hydraulic warfare. Read via the Wayback Machine.
+- id: wapo-2023-horton-korolchuk-fpv-intimate
+  title: In Ukraine, explosive DIY drones give an intimate view of killing
+  url: https://www.spokesman.com/stories/2023/oct/05/in-ukraine-explosive-diy-drones-give-an-intimate-v/
+  publisher: The Washington Post (republished by The Spokesman-Review)
+  authors:
+  - Alex Horton
+  - Serhii Korolchuk
+  published: '2023-10-05'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - fpv
+  - robotyne
+  - chapter
+  found_in:
+  - 10-drones-ua-2023
+  notes: '47th Brigade strike drone company near Robotyne (Sep 2023): ~20 FPVs a day, ''three flights, three misses'', ~9-mile
+    range, analog video, wind and jamming; 3rd Assault Bde: four tanks in a day. Original (washingtonpost.com/world/2023/10/04/fpv-drone-ukraine-russia/)
+    is paywalled; read via republication.'
 - id: wapo-2023-khurshudyan-short-of-skilled-troops
   title: Ukraine short of skilled troops and munitions as losses, pessimism grow
   url: https://www.washingtonpost.com/world/2023/03/13/ukraine-casualties-pessimism-ammunition-shortage/

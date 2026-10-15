@@ -244,6 +244,7 @@
   type: actor
   kind: ngo
   en: Aerorozvidka
+  aliases: ["Aerorozvidka officer", "Aerorozvidka specialist"]
   uk: Аеророзвідка
   side: ua
   note: Ukrainian volunteer drone/IT NGO that fielded a drone unit in 2022; co-developed Delta.
@@ -1438,6 +1439,7 @@
   en: ZALA
   aliases:
   - ZALA Aero
+  - "Lancet developers"
   side: ru
   note: Russian drone maker (Lancet), Kalashnikov group.
 - id: actor:gazprom_space_systems
@@ -2071,6 +2073,7 @@
   - Rada defence committee sources
   - Ukrainian official
   - Ukrainian government source
+  - "Ukrainian defence ministry adviser"
   side: ua
   note: generic
 - id: actor:ukrainian_commanders_unnamed
@@ -2105,6 +2108,9 @@
   - border-guard commander
   - Ukrainian mine-action officer
   - Ukrainian command
+  - "3rd Assault Brigade drone chief"
+  - "Ukrainian EW commander"
+  - "head of a Ukrainian aerial-reconnaissance centre"
   side: ua
   note: generic
 - id: actor:ukrainian_soldier_unnamed
@@ -2132,6 +2138,9 @@
   - Ukrainian Leopard crew
   - 24th Brigade artillerymen
   - Ukrainian medics
+  - "68th Jaeger Brigade soldier"
+  - "47th Mechanised Brigade soldier"
+  - "Ukrainian artillery crewman"
   side: ua
   note: generic
 - id: actor:ukrainian_forces_unnamed
@@ -2201,6 +2210,7 @@
   - Russian industry
   - Russian industry sources
   - Russian industry source
+  - "Russian state defence enterprise"
   side: ru
   note: generic
 - id: actor:russian_milbloggers
@@ -2221,6 +2231,7 @@
   - Wagner-linked Telegram channel
   - Lost Armour moderator
   - Russian channels
+  - "pro-Russian channels"
   side: ru
   note: generic
 - id: actor:russian_pows_unnamed
@@ -2278,6 +2289,7 @@
   - US aviation veteran
   - Western experts
   - analyst
+  - "Western analyst"
   side: other
   note: generic
 - id: actor:wikipedia_editors
@@ -2630,6 +2642,7 @@
   type: actor
   kind: military_unit
   en: 128th Mountain Assault Brigade
+  aliases: ["128th Brigade"]
   side: ua
 - id: actor:ua_3rd_tank_brigade
   type: actor
@@ -4789,6 +4802,7 @@
   type: actor
   kind: platform
   en: Lost Armour
+  aliases: ["LostArmour"]
   side: ru
   note: Pro-Russian forum tracking armour losses.
 - id: actor:novaya_gazeta_europe
@@ -5539,6 +5553,7 @@
   - 36th Marine Brigade sources
   - 36th Marine Brigade source
   - Ukrainian blogger
+  - "Ukrainian source (unnamed)"
   side: ua
   note: generic
 - id: actor:russian_soldiers_unnamed
@@ -7866,3 +7881,104 @@
   en: MAIAR
   side: other
   note: Imagery-analysis group cited by ABC News with Janes (2025).
+
+# drones and EW, 2023 (research/10 and 11, 2026-10-15)
+- id: actor:dji
+  type: actor
+  kind: "company"
+  en: "DJI"
+  aliases: ["DJI", "SZ DJI Technology"]
+  side: "other"
+  note: "Chinese maker of the Mavic, Matrice and Mavic 3T drones, and of AeroScope and DroneID."
+- id: actor:armada_international
+  type: actor
+  kind: "outlet"
+  en: "Armada International"
+  aliases: ["Armada"]
+  side: "western"
+  note: "Defence-technology magazine."
+- id: actor:autel_robotics
+  type: actor
+  kind: "company"
+  en: "Autel Robotics"
+  side: "other"
+  note: "Chinese maker of the EVO II drones."
+- id: actor:jamestown_foundation
+  type: actor
+  kind: "think_tank"
+  en: "Jamestown Foundation"
+  aliases: ["Jamestown", "The Jamestown Foundation"]
+  side: "western"
+  note: "US think tank; publishes Eurasia Daily Monitor."
+- id: actor:ruhr_university_bochum
+  type: actor
+  kind: "academic_institution"
+  en: "Ruhr University Bochum"
+  side: "western"
+  note: "German university; with CISPA, published the DJI DroneID analysis in March 2023."
+- id: actor:cispa
+  type: actor
+  kind: "academic_institution"
+  en: "CISPA Helmholtz Center for Information Security"
+  aliases: ["CISPA"]
+  side: "western"
+  note: "German security research centre; co-published the DJI DroneID analysis in March 2023."
+- id: actor:windtalkerx
+  type: actor
+  kind: "company"
+  en: "WindtalkerX"
+  side: "western"
+  note: "Drone-detection company whose detection data CNAS used."
+- id: actor:ukraine_weapons_tracker
+  type: actor
+  kind: "platform"
+  en: "Ukraine Weapons Tracker"
+  side: "other"
+  note: "OSINT account tracking weapons and equipment in the war."
+- id: actor:izvestia
+  type: actor
+  kind: "outlet"
+  en: "Izvestia"
+  side: "ru"
+  note: "Russian daily newspaper, cited only as relayed by Ukrainian or Western outlets."
+- id: actor:fakty
+  type: actor
+  kind: "outlet"
+  en: "Fakty"
+  aliases: ["Fakty ICTV"]
+  side: "ua"
+  note: "Ukrainian news outlet, relayed by Kyiv Post."
+- id: actor:serhiy_leshchenko
+  type: actor
+  kind: "person"
+  en: "Serhiy Leshchenko"
+  uk: "Сергій Лещенко"
+  side: "ua"
+  note: "Adviser to the head of the Office of the President of Ukraine (2023)."
+- id: actor:ua_21st_separate_battalion
+  type: actor
+  kind: "military_unit"
+  en: "21st Separate Battalion"
+  side: "ua"
+  note: "Ukrainian battalion credited by Fedorov, with the 55th Artillery and 72nd Mechanised Brigades, with the Vuhledar convoy strike of Feb 2023."
+- id: actor:ua_asgard
+  type: actor
+  kind: "military_unit"
+  en: "Asgard"
+  aliases: ["Asgard Group", "Asgard unit"]
+  side: "ua"
+  note: "Ukrainian aerial-reconnaissance unit; a pilot near Bakhmut described frequency switching under jamming (AP, 2023)."
+- id: actor:ua_karlson_unit
+  type: actor
+  kind: "military_unit"
+  en: "Karlson unit"
+  aliases: ["Karlson", "Karlson unit spokesman", "Ukrainian air-reconnaissance spokesman", "Ukrainian unit spokesman"]
+  side: "ua"
+  note: "Ukrainian air-reconnaissance unit; its spokesman said in Oct 2022 that Russia could target operators via AeroScope in 'as little as five or six minutes'."
+- id: actor:ukrainian_drone_operators_unnamed
+  type: actor
+  kind: "person"
+  en: "Ukrainian drone operators (unnamed)"
+  aliases: ["Ukrainian drone operators", "Ukrainian drone operator", "Ukrainian FPV operators", "47th Mechanised Brigade FPV crews", "FPV pilot (Ukrainska Pravda)", "Ukrainian drone instructor", "drone instructor"]
+  side: "ua"
+  note: "generic: unnamed Ukrainian drone pilots, crews and instructors quoted by outlets"

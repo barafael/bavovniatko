@@ -1,0 +1,7 @@
+{"pair": "e99680832310", "relation": "none", "rationale": "The R18's grenade types and the claimed RKG-1600 drop accuracy are different assertions."}
+{"pair": "ec2fffef7589", "relation": "duplicates", "from": "claim:cc09_0035_25", "to": "claim:c11_0030_01", "strength": 0.95, "rationale": "The same Lancet-3 attack on an abandoned Leopard 2A6 after 8 June 2023 with an ambiguous result, same source."}
+{"pair": "ede334da1d60", "relation": "duplicates", "from": "claim:cc08_0031_04", "to": "claim:c11_0064_02", "strength": 0.9, "rationale": "The same use of DJI Matrice-class quadcopters and small drop drones at Vuhledar in February 2023, same sources."}
+{"pair": "f0c3ff5b1ac1", "relation": "duplicates", "from": "claim:c11_0064_06", "to": "claim:c02_0010_22", "strength": 0.9, "rationale": "The same three Mavics lost to Russian EW in two weeks near Huliaipole in January 2023, same Euromaidan source."}
+{"pair": "f5a7287b359d", "relation": "none", "rationale": "Service since 2019 and the number of R18 sets in February 2022 are compatible but different facts."}
+{"pair": "f6dee42a2f32", "relation": "refines", "from": "claim:c11_0046_16", "to": "claim:c11_0005_08", "strength": 0.7, "rationale": "Specifies what the platoon jammers and hijacking arrays did and their density, same RUSI report."}
+{"pair": "fba27b405e6e", "relation": "supports", "from": "claim:c10_0022_16", "to": "claim:c10_0022_10", "strength": 0.5, "rationale": "An operator dropping VOG-17s from a Mavic 3 corroborates the Mavic 3 carrying VOG-17s; the sources overlap.", "independent": false}

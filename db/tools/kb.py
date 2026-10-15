@@ -360,7 +360,7 @@ def fresh_db(ns: str, db: str) -> tuple[Surreal, Surreal]:
     return root, conn
 
 
-CODE = r"(?:\d\d|[cv]\d\d)"          # document codes: 00–08 (topic files), cNN (chapters), vNN (vignettes)
+CODE = r"(?:\d\d|[cv]\d\d)"          # document codes: 00–11 (topic files), cNN (chapters), vNN (vignettes)
 
 
 def topic_key(code: str) -> str:
@@ -370,7 +370,7 @@ def topic_key(code: str) -> str:
 
 def documents() -> list[Path]:
     """All knowledge-base documents: research/NN-*.md and research/chapters/[cv]NN-*.md."""
-    return sorted(RESEARCH.glob("0[0-9]-*.md")) + sorted((RESEARCH / "chapters").glob("[cv][0-9][0-9]-*.md"))
+    return sorted(RESEARCH.glob("[0-9][0-9]-*.md")) + sorted((RESEARCH / "chapters").glob("[cv][0-9][0-9]-*.md"))
 
 
 def doc_code(path: Path) -> str:

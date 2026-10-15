@@ -2,7 +2,7 @@
 """Regenerate the research documents from the knowledge base.
 
   render.py --check   compare what would be generated with research/ (the round-trip gate); no writes
-  render.py --write   write research/0*.md, glossary.md, contradictions.md, sources.yaml and sources/NN-*.yaml
+  render.py --write   write research/NN-*.md, glossary.md, contradictions.md, sources.yaml and sources/NN-*.yaml
 
 Documents come from `passage` records (verbatim prose and tables, ordered), the glossary from `term`,
 and the source indexes from `source`. README.md stays hand-written.

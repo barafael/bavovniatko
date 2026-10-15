@@ -5,7 +5,7 @@ Loads, idempotently:
   vocab     kinds, eras (+ sub-phases), topics, units          from db/vocab/*.yaml
   sources   research/sources/*.yaml (merged, aliases kept)     -> source, actor (publishers, authors)
   terms     research/glossary.md tables                        -> term
-  passages  research/0*.md split into blocks                   -> passage
+  passages  research/NN-*.md split into blocks                  -> passage
   meta      "Open questions/gaps" and "Game/sim relevance"     -> question, design_note
 
 Re-running only writes records whose content changed (so the audit trail stays meaningful).

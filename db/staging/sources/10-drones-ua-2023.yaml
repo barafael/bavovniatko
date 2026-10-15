@@ -11,7 +11,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, vuhledar, artillery, chapter]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Fedorov: a DJI Mavic 3 and a Matrice M30T spotted a Russian convoy near Vuhledar and passed coordinates to artillery (21st Sep. Bn, 55th Arty, 72nd Mech); claims 2 BMP-3, a BTR-82A and a T-80BV hit. Official claim."
 - id: ukrinform-2022-72nd-matrice-300
   title: "72nd Mechanized Brigade gets state-of-the-art reconnaissance drone"
@@ -26,7 +26,7 @@
   verified: fetched
   eras: [e2-donbas-artillery]
   topics: [drones, vuhledar]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Fedorov hands the 72nd Brigade a thermal DJI Matrice 300 for day-and-night watching of positions and vehicle movement."
 - id: ukrinform-2023-300-mavic-3t
   title: "Army of Drones: 300 Mavic 3T UAVs delivered to hottest frontline spots in Ukraine"
@@ -41,7 +41,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, army-of-drones]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "300 thermal Mavic 3T delivered: 160 east, 85 Zaporizhzhia, 55 Kherson; first three UAV strike companies trained; 3,201 drones bought in nine months."
 - id: euromaidan-2023-voichuk-fpv-small-drones
   title: "Small drones, big impact: Ukraine boosts use of FPV drones on battlefield"
@@ -56,7 +56,7 @@
   verified: fetched
   eras: [e4-bakhmut, e5-counteroffensive-23]
   topics: [drones, fpv]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "GeoConfirmed analyst's count of documented Ukrainian FPV hits: ~10 (Feb 2023), ~50 (Apr), >100 (Jul), >250 (Sep); FPV cost $600-1,000, ~1 kg payload, 1-1.5 months training. Page labelled advertorial ('Industry Focus'); one analyst's count."
 - id: pravda-2023-khalilov-fpv-negotiating-table
   title: "If the UAV situation doesn't change, we'll be at the negotiating table within a year: FPV drones and their role in warfare"
@@ -71,7 +71,7 @@
   verified: fetched
   eras: [e5-counteroffensive-23]
   topics: [drones, fpv]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Mid-2023 FPV feature: Mavic 3 the most common recon drone; FPV up to 160 km/h, few minutes' battery, analog video, $300-400 (Vyriy cost $370-380); 'one in five' hits for a skilled pilot; Berlinska: Ukraine <10,000 quality FPVs/month vs Russia 45-50k."
 - id: pravda-2023-shumilin-3-strike-companies
   title: "Ukrainian army forms 3 new strike drone companies"
@@ -86,7 +86,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, army-of-drones, organization]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Fedorov: first three strike drone companies ready, equipped with pickups, Starlink and Ukrainian-made drones."
 - id: pravda-2023-balachuk-8-strike-companies
   title: "8 more strike drone companies formed in Ukraine"
@@ -101,7 +101,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, army-of-drones, organization, fpv]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Fedorov: eight more strike drone companies with pickups and FPV drones, funded via UNITED24 and the state budget."
 - id: pravda-2023-romanenko-army-of-drones-428
   title: "Ukraine's Army of Drones sets all-time record – Deputy PM"
@@ -116,7 +116,7 @@
   verified: fetched
   eras: [e6-avdiivka-attrition]
   topics: [drones, army-of-drones]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Fedorov claims 428 pieces of Russian equipment hit by drones in one week during the Avdiivka offensive. Official claim."
 - id: wapo-2023-horton-korolchuk-fpv-intimate
   title: "In Ukraine, explosive DIY drones give an intimate view of killing"
@@ -131,7 +131,7 @@
   verified: fetched
   eras: [e5-counteroffensive-23]
   topics: [drones, fpv, robotyne, chapter]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "47th Brigade strike drone company near Robotyne (Sep 2023): ~20 FPVs a day, 'three flights, three misses', ~9-mile range, analog video, wind and jamming; 3rd Assault Bde: four tanks in a day. Original (washingtonpost.com/world/2023/10/04/fpv-drone-ukraine-russia/) is paywalled; read via republication."
 - id: rusi-2024-bronk-watling-mass-precision-strike
   title: "Mass Precision Strike: Designing UAV Complexes for Land Forces"
@@ -146,7 +146,7 @@
   verified: fetched
   eras: [e5-counteroffensive-23, e6-avdiivka-attrition]
   topics: [drones, fpv, ew]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "From 2022-24 Ukrainian fieldwork: FPV with anti-tank grenade $800-1,800, ~1 in 5 reaches target (General Staff data, Nov 2023), teams 500 m apart, range shorter in cold; 2 kg RPG-7 warheads; new control systems peak ~2 weeks, jammed in 6-12 weeks (mid-2023); most losses to EW."
 - id: mezha-2022-danylov-r18
   title: "R18 octocopter from Aerorozvidka: Ukrainian drone destroying the enemy"
@@ -161,7 +161,7 @@
   verified: fetched
   eras: [e1-invasion]
   topics: [drones, heavy-bomber]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "R18: 4 km range, ~40 min, 5 kg of free-fall bombs (RKG-3/RKG-1600) dropped from 100-300 m, thermal imager; 1 m accuracy from 300 m with RKG-1600 (claim)."
 - id: euromaidan-2023-hrudka-r18
   title: "Meet the R18, Ukraine's formidable night strike drone transforming the battlefield"
@@ -176,7 +176,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, heavy-bomber]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "R18 at the front since 2019; up to 13 km with explosives; RKG-3/RKG-1600; crews of pilot, navigator and sapper trained in groups of 3-4 crews; claims EW resistance."
 - id: kyivpost-2024-korshak-baba-yaga-mothership
   title: "Ukrainian Drone Swarms Controlled by 'Baba Yaga' Robot Aircraft, Russian Sources Claim"
@@ -191,7 +191,7 @@
   verified: fetched
   eras: [e4-bakhmut, e6-avdiivka-attrition]
   topics: [drones, heavy-bomber]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Agricultural octocopters ($20-50k) used as bombers since early in the war; night use and mothership role mostly from Russian state media and milbloggers, unverified by Kyiv Post; Fakty: 15-20 kg to 5-10 km, crew of commander, pilot, bombardier."
 - id: devua-2023-brovinska-vampire
   title: "В Україні налагодили серійне виробництво дронів-бомбардувальників Vampire"
@@ -206,7 +206,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, heavy-bomber]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Ukrainian-language (no English version). SkyFall Vampire in serial production: up to 15 kg, 10 km radius, 6 km link, 37 min, 40-80 km/h, 400 m ceiling, thermal, $10,000. Maker figures."
 - id: rferl-2022-aeroscope-aerorozvidka
   title: "Drone Wars: Ukraine's Homegrown Response To 'Deadly' Chinese Detection Tech"
@@ -221,7 +221,7 @@
   verified: fetched
   eras: [e2-donbas-artillery]
   topics: [drones, ew, operator-detection]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Aerorozvidka specialist confirms Ukrainians targeted and killed via DJI AeroScope; R18 range 4 km, 5 kg, thermal, night use."
 - id: c4isrnet-2022-skove-cloak-drones
   title: "How Ukraine learned to cloak its drones from Russian surveillance"
@@ -236,7 +236,7 @@
   verified: fetched
   eras: [e2-donbas-artillery, e3-counteroffensives-22]
   topics: [drones, ew, operator-detection]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "AeroScope reads Remote ID to locate pilots; Karlson unit: Russia targets operators in 5-6 minutes; open-source Remote ID-off hack from May 2022, blocked on newer DJI firmware from about June 2022."
 - id: kyivindependent-2023-query-war-from-above
   title: "War from above: A day with drone unit defending Ukraine's south"
@@ -251,7 +251,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, zaporizhzhia, attrition]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "15-strong volunteer drone unit in Zaporizhzhia Oblast spotting for the 102nd Brigade's artillery: Mavic then Matrice 300; lost 5 Mavic 3s in a week (>$20,000); 3D-printed-fin bombs; Russian EW lands drones and DJI shows take-off point."
 - id: interfax-2022-poroshenko-350-autel
   title: "Poroshenko Foundation, NGO Sprava Hromad donate 350 drones from Estonia to AFU"
@@ -266,7 +266,7 @@
   verified: fetched
   eras: [e2-donbas-artillery]
   topics: [drones]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "50 Autel EVO II 640T Dual (thermal) and 300 EVO Lite+ bought for Ukrainian units; 'in each company... it will correct artillery fire'. Party press release."
 - id: autel-evo-ii-dual-640t-specs
   title: "EVO II Dual 640T (product page and specifications)"
@@ -281,7 +281,7 @@
   verified: fetched
   eras: [e1-invasion, e4-bakhmut, e5-counteroffensive-23]
   topics: [drones, specs]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Manufacturer specs (V3/V2 page): 38 min flight, 33 min hover, 20 m/s, 10 km transmission, thermal 16x digital zoom, 10.7 m/s wind, -10 to 40 C. Peacetime figures."
 - id: dji-mavic3-specs
   title: "DJI Mavic 3 – Specs"
@@ -296,7 +296,7 @@
   verified: fetched
   eras: [e1-invasion, e4-bakhmut, e5-counteroffensive-23]
   topics: [drones, specs]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Read via Wayback snapshot 20240111 (live page redirects). 895 g; 5/15/21 m/s (C/N/S); 46 min flight, 40 min hover; 15 km FCC / 8 km CE, 1.5-3 km in strong interference; tele 162 mm eq., 7-28x digital; 12 m/s wind; -10 to 40 C; 5,000 mAh, ~96 min charge."
 - id: dji-matrice30-specs
   title: "Matrice 30 Series – Specs"
@@ -311,7 +311,7 @@
   verified: fetched
   eras: [e4-bakhmut, e5-counteroffensive-23]
   topics: [drones, specs]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Read in the German locale. 4,069 g; IP55; 23 m/s; 41 min flight, 36 min hover; 15 km FCC / 8 km CE; zoom 113-405 mm eq.; VOx thermal; laser rangefinder 3-1,200 m; 12 m/s wind; -20 to 50 C."
 - id: ctc-2025-hambling-moving-targets
   title: "Moving Targets: Implications of the Russo-Ukrainian War for Drone Terrorism"
@@ -326,7 +326,7 @@
   verified: fetched
   eras: [e1-invasion, e8-drone-kill-zone]
   topics: [drones, munitions, fpv]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Drop drones: Mavic with 3D-printed harness, two VOG-17 (350 g each) or one larger grenade; VOG-17's 6 m radius often fails to incapacitate; FPV payloads RPG-7/RKG-3, ~2 kg typical."
 - id: gagadget-2022-panasovskiy-mavic3-vog
   title: "DJI Mavic 3 and VOG: a serviceman told and showed how they destroy Russian occupants from the air using consumer quadcopters"
@@ -341,7 +341,7 @@
   verified: fetched
   eras: [e2-donbas-artillery]
   topics: [drones, munitions]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "One serviceman's video: Mavic 3 carries two VOG-17s, 3D-printed light-triggered release, drops from ~60 m with a scout drone; Mavic 3 ~$3,000 in Ukraine. Single anecdote via a tech site."
 - id: 19fortyfive-2023-buckby-grenade-hatch
   title: "Video: Watch Ukraine Use Drone to Drop Grenade Into Russian Tank Hatch"
@@ -356,7 +356,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, munitions, vuhledar, chapter]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Relays Ukraine Weapons Tracker: an RGD-5 dropped through the driver's hatch of a Russian T-72B3 near Vuhledar; tank possibly already abandoned."
 - id: unherd-2023-brown-vuhledar
   title: "Will Vuhledar be Russia's bloodiest offensive? Away from Bakhmut, Putin faces a mutiny"
@@ -371,7 +371,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, vuhledar, chapter]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Reportage near Vuhledar: drone base a mile from the front; 68th Jaegers with handheld drones; marines step behind trees when a grenade drone comes. Opinion-leaning outlet; single reporter visit."
 - id: abc-2023-burgess-fpv-racing-drones
   title: "Why Ukraine's kamikaze racing drones are causing a buzz on and off the battlefield"
@@ -386,7 +386,7 @@
   verified: fetched
   eras: [e4-bakhmut]
   topics: [drones, fpv]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Early-2023 FPVs: under 500 g, up to 140 km/h, 5-10 km, RPGs up to 1 kg, under $1,000; January 2023 fundraiser for 1,000 FPVs; RAND's Caves: 'a few hundred' operators."
 - id: united24-2025-daly-starlink-military
   title: "How Starlink Keeps Ukraine's Military Online and Ahead in Battle"
@@ -401,7 +401,7 @@
   verified: fetched
   eras: [e1-invasion, e8-drone-kill-zone]
   topics: [drones, starlink, c2]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Drone-artillery teams rely on Starlink video feeds; Aerorozvidka: a night thermal drone 'must connect through Starlink to the artillery guy'; Delta fuses satellite, sensor, drone and intercept data. Government-run outlet."
 - id: rferl-2022-rkg3-grenades
   title: "How Ukraine Uses Obsolete Soviet Grenades To Destroy Russian Tanks From Above"
@@ -416,5 +416,5 @@
   verified: fetched
   eras: [e1-invasion]
   topics: [drones, munitions]
-  found_in: [drones-ua-2023]
+  found_in: [10-drones-ua-2023]
   notes: "Aerorozvidka octocopters drop RKG-3 grenades with 3D-printed fins; copper slug penetrates >20 cm of armour; bomblets cost under $100."

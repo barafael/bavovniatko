@@ -1,4 +1,6 @@
-# Ukrainian small drones as the player flies them, 2023
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
+# 10 — Ukrainian small drones as the player flies them, 2023
 
 Scope: the small drones Ukrainian units flew at Vuhledar (main Russian assault 6 February 2023, 72nd Mechanised Brigade defending) and south of Mala Tokmachka / Robotyne (breach of 7–8 June 2023, 47th Mechanised Brigade attacking), with a short look at 2024–2025. This file covers what the drones were, how many there were, how they flew, what they dropped, how they cued fires, and how fast they were lost.
 
@@ -351,7 +353,7 @@ Ukrainian battalions had received Furia, Leleka and PD-1 since 2015, linked to t
 
 ## 11. Sources
 
-New in this file (see `db/staging/sources/drones-ua-2023.yaml`):
+New in this file (see `db/staging/sources/10-drones-ua-2023.yaml`):
 - `militarnyi-2023-kushnikov-vuhledar-mavic-m30t`: Fedorov credits a Mavic 3 and a Matrice M30T with spotting a convoy at Vuhledar (Feb 2023).
 - `ukrinform-2022-72nd-matrice-300`: a thermal Matrice 300 handed to the 72nd (Aug 2022).
 - `ukrinform-2023-300-mavic-3t`: 300 Mavic 3T delivered, 85 to Zaporizhzhia (Mar 2023).

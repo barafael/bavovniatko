@@ -6,7 +6,7 @@
   type: system
   kind: recon_drone
   en: "drones (generic)"
-  aliases: ["drones", "Ukrainian UAVs", "mass Ukrainian UAV use", "Russian drone dominance near Lyman", "drone"]
+  aliases: ["drones", "Ukrainian UAVs", "mass Ukrainian UAV use", "Russian drone dominance near Lyman", "drone", "Ukrainian drones", "uav", "drone ISR feeds"]
   sides: ["ua", "ru"]
   note: "generic"
 
@@ -23,7 +23,7 @@
   kind: ew_system
   en: "electronic warfare (generic)"
   uk: "РЕБ"
-  aliases: ["EW", "electronic warfare", "Russian EW", "Russian jamming", "Ukrainian jamming", "dense Russian EW", "Russian 'hard counters' (EW)", "EW-based protection against drones", "Russian EW (at least one major system per 10 km of front)", "Ukrainian EW emitters", "Ukrainian EW zones", "Russian EW making Ukrainian bomber-drone use 'binary'", "Ukrainian EW", "EW system", "Russian EW jamming", "electronic attack"]
+  aliases: ["EW", "electronic warfare", "Russian EW", "Russian jamming", "Ukrainian jamming", "dense Russian EW", "Russian 'hard counters' (EW)", "EW-based protection against drones", "Russian EW (at least one major system per 10 km of front)", "Ukrainian EW emitters", "Ukrainian EW zones", "Russian EW making Ukrainian bomber-drone use 'binary'", "Ukrainian EW", "EW system", "Russian EW jamming", "electronic attack", "Russian electronic warfare", "Russian EW adaptation to new Ukrainian drone links", "Ukrainian EW stations and firepower", "Ukrainian EW station against spotter drones"]
   sides: ["ua", "ru"]
   note: "generic"
 
@@ -410,7 +410,7 @@
   kind: fpv_drone
   en: "FPV drone"
   uk: "FPV-дрон"
-  aliases: ["FPV drone", "FPV drones", "FPV", "Russian FPV drone", "Ukrainian FPVs against armour", "Ukrainian FPVs against vehicles", "Ukrainian FPVs against tanks", "Russian FPV drones", "FPV quadcopter"]
+  aliases: ["FPV drone", "FPV drones", "FPV", "Russian FPV drone", "Ukrainian FPVs against armour", "Ukrainian FPVs against vehicles", "Ukrainian FPVs against tanks", "Russian FPV drones", "FPV quadcopter", "Ukrainian FPV drones"]
   parent: system:uav_generic
   sides: ["ua", "ru"]
 
@@ -883,7 +883,7 @@
   type: system
   kind: recon_drone
   en: "commercial quadcopter"
-  aliases: ["commercial quadcopter", "recon quadcopter", "recon quadcopters", "consumer drones", "consumer drones flown out to sea"]
+  aliases: ["commercial quadcopter", "recon quadcopter", "recon quadcopters", "consumer drones", "consumer drones flown out to sea", "DJI quadcopters (OcuSync)"]
   parent: system:recon_drone_generic
   sides: ["ua", "ru"]
 
@@ -940,7 +940,7 @@
   type: system
   kind: recon_drone
   en: "Russian fixed-wing ISR drones (Orlan, Zala, Supercam)"
-  aliases: ["Russian Orlan-10/Zala reconnaissance drones", "Russian Orlan/Zala/Supercam reconnaissance drones", "Russian Orlan/Zala reconnaissance orbits", "Orlan-10 / Zala reconnaissance drones"]
+  aliases: ["Russian Orlan-10/Zala reconnaissance drones", "Russian Orlan/Zala/Supercam reconnaissance drones", "Russian Orlan/Zala reconnaissance orbits", "Orlan-10 / Zala reconnaissance drones", "Orlan-10 and Zala reconnaissance drones", "Zala and Orlan spotting for Lancet"]
   parent: system:fixed_wing_isr_drone
   sides: ["ru"]
 
@@ -949,7 +949,7 @@
   kind: recon_drone
   en: "Orlan-10"
   uk: "Орлан-10"
-  aliases: ["Orlan-10", "Russian Orlan-10 reconnaissance drones"]
+  aliases: ["Orlan-10", "Russian Orlan-10 reconnaissance drones", "Orlan-10 three-ship group"]
   parent: system:ru_fixed_wing_isr
   sides: ["ru"]
 
@@ -2821,7 +2821,7 @@
   type: system
   kind: ew_system
   en: "RF jamming of drone control links"
-  aliases: ["RF jamming of drone control links", "RF jamming", "RF jamming (EW)", "RF jamming in the last mile", "Russian jamming of RF FPVs"]
+  aliases: ["RF jamming of drone control links", "RF jamming", "RF jamming (EW)", "RF jamming in the last mile", "Russian jamming of RF FPVs", "Russian jamming of DJI control and video links", "Russian jamming of drone video", "Russian jamming of 5.8 GHz FPV video", "Russian jamming of drone links", "Russian EW against drone links", "enemy jamming of drone links", "detecting and jamming the Orlan-10 master aircraft's 930 MHz link"]
   parent: system:ew_generic
   sides: ["ua", "ru"]
   note: "counter: fibre-optic FPV, AI terminal guidance, frequency hopping"
@@ -2857,7 +2857,7 @@
   type: system
   kind: ew_system
   en: "layered Russian tactical EW"
-  aliases: ["layered Russian tactical EW (Shipovnik-Aero, platoon jammers, hijacking arrays)"]
+  aliases: ["layered Russian tactical EW (Shipovnik-Aero, platoon jammers, hijacking arrays)", "Russian platoon jammers and UAV-hijacking arrays"]
   parent: system:tactical_jammer
   sides: ["ru"]
   note: "composite:"
@@ -2883,7 +2883,7 @@
   kind: ew_system
   en: "trench EW"
   uk: "окопний РЕБ"
-  aliases: ["trench EW", "Russian trench EW domes"]
+  aliases: ["trench EW", "Russian trench EW domes", "Russian trench EW"]
   parent: system:tactical_jammer
   sides: ["ua", "ru"]
 
@@ -3051,7 +3051,7 @@
   kind: ew_system
   en: "R-330Zh Zhitel"
   uk: "Житель"
-  aliases: ["R-330Zh Zhitel", "Russian Zhitel EW platforms", "Big Russian EW platforms (Zhitel) jamming GPS, satcom and GSM"]
+  aliases: ["R-330Zh Zhitel", "Russian Zhitel EW platforms", "Big Russian EW platforms (Zhitel) jamming GPS, satcom and GSM", "large Russian EW platforms (Zhitel, Pole-21)"]
   parent: system:ew_generic
   sides: ["ru"]
 
@@ -3177,7 +3177,7 @@
   type: system
   kind: gnss_countermeasure
   en: "GNSS jamming and spoofing"
-  aliases: ["GNSS jamming", "Russian GNSS jamming", "Russian GNSS jamming and spoofing", "Russian EW (GPS jamming)", "Ukrainian GNSS jamming", "Russian GNSS jamming of JDAM-ER", "Ukrainian GNSS jamming of Gerans", "Ukrainian EW jamming of KAB guidance", "Russian jamming of GMLRS", "GPS jammers", "GPS jamming", "Russian EW and GPS jamming"]
+  aliases: ["GNSS jamming", "Russian GNSS jamming", "Russian GNSS jamming and spoofing", "Russian EW (GPS jamming)", "Ukrainian GNSS jamming", "Russian GNSS jamming of JDAM-ER", "Ukrainian GNSS jamming of Gerans", "Ukrainian EW jamming of KAB guidance", "Russian jamming of GMLRS", "GPS jammers", "GPS jamming", "Russian EW and GPS jamming", "Russian navigational (GNSS) interference"]
   parent: system:ew_generic
   sides: ["ua", "ru"]
 
@@ -3278,7 +3278,7 @@
   type: system
   kind: technique
   en: "frequency diversity and hopping"
-  aliases: ["frequency diversity and hopping", "Russian frequency diversity overwhelming standalone jammers"]
+  aliases: ["frequency diversity and hopping", "Russian frequency diversity overwhelming standalone jammers", "switching to a frequency the Russians cannot easily exploit"]
   sides: ["ua", "ru"]
 
 - id: system:molniya_nonstandard_bands
@@ -3309,7 +3309,7 @@
   type: system
   kind: technique
   en: "anti-emitter strikes"
-  aliases: ["anti-emitter strike", "Ukrainian emitter hunting (strikes on EW platforms)", "Ukrainian counter-battery and anti-emitter strikes on big EW platforms", "Ukrainian targeting of big EW emitters", "deep drone strikes on emitters", "Ukrainian strikes on exposed Russian substitute emitters"]
+  aliases: ["anti-emitter strike", "Ukrainian emitter hunting (strikes on EW platforms)", "Ukrainian counter-battery and anti-emitter strikes on big EW platforms", "Ukrainian targeting of big EW emitters", "deep drone strikes on emitters", "Ukrainian strikes on exposed Russian substitute emitters", "Ukrainian drone strikes on EW emitters"]
   sides: ["ua", "ru"]
   note: "strikes on jammers and other emitters located by ELINT"
 
@@ -3409,7 +3409,7 @@
   type: system
   kind: technique
   en: "drone operators (as targets)"
-  aliases: ["drone operators"]
+  aliases: ["drone operators", "Ukrainian drone teams", "Ukrainian DJI drone operators", "Ukrainian drone operators"]
   sides: ["ua", "ru"]
   note: "drone crews as a target class"
 
@@ -3778,7 +3778,7 @@
   type: system
   kind: communications
   en: "Motorola radio"
-  aliases: ["Motorola radio", "Ukrainian Motorola 256-bit radio traffic", "Ukrainian Motorola radio communications"]
+  aliases: ["Motorola radio", "Ukrainian Motorola 256-bit radio traffic", "Ukrainian Motorola radio communications", "Ukrainian Motorola radios"]
   sides: ["ua"]
 
 - id: system:ru_tactical_radio
@@ -6302,7 +6302,7 @@
   type: system
   kind: sensor
   en: "direction-finding"
-  aliases: ["direction-finding", "SIGINT direction-finding"]
+  aliases: ["direction-finding", "SIGINT direction-finding", "EW direction-finding of drone operators"]
   sides: ["ua", "ru"]
 
 - id: system:harpoon
@@ -7368,7 +7368,7 @@
   type: system
   kind: bomber_drone
   en: "R18"
-  aliases: ["R18", "R18 octocopter"]
+  aliases: ["R18", "R18 octocopter", "non-DJI drones (Aerorozvidka R18)"]
   parent: system:heavy_bomber_drone
   sides: ["ua"]
   note: "Aerorozvidka octocopter bomber"
@@ -8306,7 +8306,7 @@
   type: system
   kind: munition
   en: "drone drop"
-  aliases: ["drone drop", "drone drops"]
+  aliases: ["drone drop", "drone drops", "drone grenade drop"]
   parent: system:bomber_drone
   sides: ["ua", "ru"]
   note: "munitions or supplies dropped from a drone"
@@ -9013,3 +9013,217 @@
   parent: system:fpv_drone
   sides: [ua]
   note: "The ~$2,000 dinner-plate quadcopter launched from cabin roofs on 1 Jun 2025 (117 built for the strike; Wikipedia calls it 'Osa'). Do NOT add the bare alias 'Osa': it maps to system:osa (9K33 Osa SAM)."
+
+# drones and EW, 2023 (research/10 and 11, 2026-10-15)
+- id: system:dji_mavic_3
+  type: system
+  kind: "recon_drone"
+  en: "DJI Mavic 3"
+  aliases: ["DJI Mavic 3", "Mavic 3", "mavik"]
+  parent: "system:dji_mavic"
+  sides: ["ua", "ru"]
+  note: "Consumer quadcopter; the most common reconnaissance drone on both sides in 2022–2023."
+- id: system:dji_matrice_30
+  type: system
+  kind: "recon_drone"
+  en: "DJI Matrice 30"
+  aliases: ["DJI Matrice 30", "Matrice 30", "M30"]
+  parent: "system:dji_matrice"
+  sides: ["ua"]
+- id: system:dji_matrice_30t
+  type: system
+  kind: "recon_drone"
+  en: "DJI Matrice 30T"
+  aliases: ["DJI Matrice 30T", "Matrice 30T", "Matrice M30T", "M30T"]
+  parent: "system:dji_matrice_30"
+  sides: ["ua"]
+  note: "Thermal version of the Matrice 30."
+- id: system:dji_matrice_300
+  type: system
+  kind: "recon_drone"
+  en: "DJI Matrice 300"
+  aliases: ["DJI Matrice 300", "Matrice 300", "M300"]
+  parent: "system:dji_matrice"
+  sides: ["ua"]
+- id: system:autel_evo_ii_dual_640t
+  type: system
+  kind: "recon_drone"
+  en: "Autel EVO II Dual 640T"
+  aliases: ["Autel EVO II Dual 640T", "EVO II Dual 640T"]
+  parent: "system:autel"
+  sides: ["ua"]
+  note: "Thermal quadcopter."
+- id: system:dji_aeroscope
+  type: system
+  kind: "sensor"
+  en: "DJI AeroScope"
+  aliases: ["AeroScope", "DJI AeroScope", "AeroScope and DroneID operator location"]
+  sides: ["ru", "ua"]
+  note: "DJI's drone-detection system: reads DJI drones' broadcast identity and locates drone and pilot."
+- id: system:dji_droneid
+  type: system
+  kind: "communications"
+  en: "DJI DroneID"
+  aliases: ["DroneID", "DJI DroneID"]
+  sides: ["ua", "ru"]
+  note: "DJI's identity broadcast, carrying the drone's and pilot's positions; found unencrypted in March 2023."
+- id: system:remote_id
+  type: system
+  kind: "communications"
+  en: "Remote ID"
+  aliases: ["Remote ID", "DJI Remote ID"]
+  sides: ["ua", "ru"]
+  note: "Drone identification broadcast; DJI implemented it as DroneID."
+- id: system:ciajeepdoors
+  type: system
+  kind: "c2_software"
+  en: "CIAJeepDoors (DJI Remote ID switch-off)"
+  aliases: ["CIAJeepDoors", "CIAJeepDoors Remote ID switch-off", "DJI Remote ID disabling software"]
+  sides: ["ua"]
+  note: "Program loaded via a USB box from May 2022 that switched DJI Remote ID off without overwriting firmware."
+- id: system:dji_remote_id_lock
+  type: system
+  kind: "c2_software"
+  en: "DJI firmware with Remote ID locked on"
+  aliases: ["DJI firmware with Remote ID locked on", "DJI firmware"]
+  sides: ["ua", "ru"]
+  note: "DJI firmware from about June 2022 that blocked switching Remote ID off."
+- id: system:patched_dji_firmware
+  type: system
+  kind: "c2_software"
+  en: "patched DJI firmware"
+  aliases: ["patched DJI firmware"]
+  sides: ["ua"]
+  note: "Modified DJI firmware closing the backdoors that let AeroScope track drones."
+- id: system:ocusync
+  type: system
+  kind: "communications"
+  en: "DJI OcuSync"
+  aliases: ["OcuSync", "DJI OcuSync"]
+  sides: ["ua", "ru"]
+  note: "DJI's control and video link; 'not built for dense jamming'."
+- id: system:analogue_fpv_video
+  type: system
+  kind: "communications"
+  en: "analogue FPV video link"
+  aliases: ["analog FPV video link", "analogue FPV video", "analog video"]
+  sides: ["ua", "ru"]
+  note: "Harder to jam than digital video but unencrypted."
+- id: system:fpv_video_1_2ghz
+  type: system
+  kind: "technique"
+  en: "FPV video on 1.2 GHz"
+  aliases: ["FPV video on 1.2 GHz"]
+  parent: "system:frequency_hopping_diversity"
+  sides: ["ua"]
+  note: "Moving FPV video off the jammed 5.8 GHz band."
+- id: system:high_power_vtx_repeaters
+  type: system
+  kind: "communications"
+  en: "higher-power video transmitters and repeaters"
+  aliases: ["higher-power video transmitters and two-way repeaters"]
+  sides: ["ua"]
+  note: "Stronger drone video transmitters and two-way repeaters to burn through jamming."
+- id: system:emission_silent_flight
+  type: system
+  kind: "technique"
+  en: "terrain-shielded, emission-silent drone flight"
+  aliases: ["terrain-shielded pre-programmed flight and emission-silent missions"]
+  sides: ["ua"]
+  note: "Pre-programmed flight shielded by terrain, without transmitting, to avoid EW and detection."
+- id: system:ew_gap_flying
+  type: system
+  kind: "technique"
+  en: "flying in EW gaps"
+  aliases: ["flying only in EW gaps and frequent frequency changes"]
+  sides: ["ua"]
+  note: "Flying where and when the jamming lapses, and changing frequencies often."
+- id: system:close_range_drone_use
+  type: system
+  kind: "technique"
+  en: "close-range drone use near own antennas"
+  aliases: ["close-range drone use near own antennas"]
+  sides: ["ua", "ru"]
+  note: "Drones closer to their control antennas than to enemy jammers stay usable."
+- id: system:cover_from_drone_drops
+  type: system
+  kind: "technique"
+  en: "taking cover from drone drops"
+  aliases: ["stepping behind a tree"]
+  sides: ["ru", "ua"]
+  note: "Infantry stepping behind cover to shelter from small drone-dropped grenades."
+- id: system:ua_drone_links
+  type: system
+  kind: "communications"
+  en: "Ukrainian drone control and navigation links"
+  aliases: ["new Ukrainian drone control or navigation system"]
+  sides: ["ua"]
+  note: "New control, video or navigation links fielded on Ukrainian drones, typically jammed within weeks."
+- id: system:lancet_1
+  type: system
+  kind: "loitering_munition"
+  en: "Lancet-1"
+  aliases: ["Lancet-1"]
+  parent: "system:lancet"
+  sides: ["ru"]
+  note: "Smaller Lancet with a warhead of about 1 kg."
+- id: system:lancet_3_remote_warhead
+  type: system
+  kind: "loitering_munition"
+  en: "Lancet-3 with remotely triggered warhead"
+  aliases: ["Lancet-3 remotely triggered warhead"]
+  parent: "system:lancet_3"
+  sides: ["ru"]
+  note: "Lancet-3 variant whose warhead can be triggered remotely, against nets."
+- id: system:silok
+  type: system
+  kind: "ew_system"
+  en: "Silok"
+  aliases: ["Silok", "Silok-01", "Silok-M1", "Silok-01 / Silok-M1"]
+  parent: "system:ew_generic"
+  sides: ["ru"]
+  note: "Russian counter-drone EW system: detects drones, fixes their coordinates and cuts their links."
+- id: system:mi_17
+  type: system
+  kind: "helicopter"
+  en: "Mi-17"
+  aliases: ["Mi-17"]
+  parent: "system:mi_8"
+  sides: ["ru"]
+  note: "Export designation of the Mi-8MT family; RUSI reported Mi-17s with EW suites in 2023."
+- id: system:vog_17
+  type: system
+  kind: "munition"
+  en: "VOG-17"
+  aliases: ["VOG-17"]
+  sides: ["ua", "ru"]
+  note: "30 mm grenade, commonly dropped from small drones."
+- id: system:rgd_5
+  type: system
+  kind: "munition"
+  en: "RGD-5"
+  aliases: ["RGD-5"]
+  sides: ["ua", "ru"]
+  note: "Hand grenade, dropped from drones."
+- id: system:rkg_3
+  type: system
+  kind: "munition"
+  en: "RKG-3"
+  aliases: ["RKG-3"]
+  sides: ["ua", "ru"]
+  note: "Anti-tank hand grenade, dropped from bomber drones."
+- id: system:rkg_1600
+  type: system
+  kind: "munition"
+  en: "RKG-1600"
+  aliases: ["RKG-1600"]
+  sides: ["ua"]
+  note: "Ukrainian anti-tank grenade for drone drops."
+- id: system:improvised_drone_bomb
+  type: system
+  kind: "munition"
+  en: "improvised drone bomb"
+  aliases: ["improvised drone bomb"]
+  parent: "system:drone_drop"
+  sides: ["ua", "ru"]
+  note: "Handmade drop munitions, e.g. with 3D-printed fins."

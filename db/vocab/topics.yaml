@@ -8,6 +8,8 @@
 - {id: t07, code: "07", file: research/07-maps-ui-conventions.md,   en: "Maps & UI conventions"}
 - {id: t08, code: "08", file: research/08-prior-art-games.md,       en: "Prior-art games & wargames"}
 - {id: t09, code: "09", file: research/09-bevy-rendering.md,        en: "Bevy rendering & simulation prior art"}
+- {id: t10, code: "10", file: research/10-drones-ua-2023.md,        en: "Drones in the player's hands, 2023"}
+- {id: t11, code: "11", file: research/11-drones-ru-ew-2023.md,     en: "Russian drones and EW against them, 2023"}
 # chapter dossiers (research/chapters/), see game/design/chapters.md
 - {id: c02, code: c02, file: research/chapters/c02-snake-island-moskva.md,   en: "Chapter: Snake Island → the Moskva"}
 - {id: c03, code: c03, file: research/chapters/c03-azovstal.md,               en: "Chapter: Azovstal"}

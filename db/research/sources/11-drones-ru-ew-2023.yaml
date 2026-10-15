@@ -1,0 +1,522 @@
+# Sources cited in research/11-drones-ru-ew-2023.md, generated from the knowledge base by db/tools/render.py.
+- id: ap-2023-army-of-drones-duct-tape
+  title: Ukraine is building an advanced army of drones. For now, pilots improvise with duct tape and bombs
+  url: https://ny1.com/nyc/all-boroughs/ap-top-news/2023/09/25/ukraine-is-building-an-advanced-army-of-drones-for-now-pilots-improvise-with-duct-tape-and-bombs
+  publisher: Associated Press (via Spectrum News NY1)
+  authors: []
+  published: '2023-09-25'
+  accessed: '2026-10-15'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - ew
+  - fpv
+  notes: Asgard unit near Andriivka needed three months to learn to evade Russian jammers; pilots switch to a frequency the
+    Russians cannot easily exploit; Russia deploying more handheld jammers.
+- id: armada-2022-withington-master-servant
+  title: Master and Servant
+  url: https://www.armadainternational.com/2022/09/russian-drone-operations/
+  publisher: Armada International
+  authors:
+  - Thomas Withington
+  published: '2022-09-01'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - drones
+  - isr
+  - ew
+  - orlan
+  notes: Orlan-10 three-ship formations (master on 930 MHz relays to two servants with optronic and COMINT payloads); part
+    of Leer-3 (one per brigade, believed 30 MHz-3 GHz, cellphone jamming and fake SMS); rounds 'within ten minutes'; suggests
+    jamming the 930 MHz link plus kinetic kill. Analyst piece, open-source specs.
+- id: armada-2026-remler-segre-video-jamming
+  title: 'The Curran Papers – No. 5: Jamming Uninhabited Aerial Vehicle Video Signals'
+  url: https://www.armadainternational.com/2026/02/the-curran-papers-no-5-jamming-uninhabited-aerial-vehicle-video-signals-electronic-warfare/
+  publisher: Armada International
+  authors:
+  - Benjamin Remler
+  - Julien Segre
+  published: '2026-02-05'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ew
+  - drones
+  - fpv
+  notes: Control-link jamming the main anti-FPV vector 2022-2024; dedicated video jamming first in summer 2024, shtory platforms
+    late 2024; geometry of control vs video jamming; FPV bands.
+- id: c4isrnet-2022-skove-cloak-drones
+  title: How Ukraine learned to cloak its drones from Russian surveillance
+  url: https://www.c4isrnet.com/battlefield-tech/2022/10/17/how-ukraine-learned-to-cloak-its-drones-from-russian-surveillance/
+  publisher: C4ISRNet
+  authors:
+  - Sam Skove
+  published: '2022-10-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  - e3-counteroffensives-22
+  topics:
+  - drones
+  - ew
+  - operator-detection
+  notes: 'AeroScope reads Remote ID to locate pilots; Karlson unit: Russia targets operators in 5-6 minutes; open-source Remote
+    ID-off hack from May 2022, blocked on newer DJI firmware from about June 2022.'
+- id: cnn-2023-sebastian-ew-push
+  title: Ukraine makes new push to defeat Russia's electronic warfare
+  url: https://abc17news.com/news/national-world/cnn-world/2023/11/28/ukraine-makes-new-push-to-defeat-russias-electronic-warfare/
+  publisher: CNN (syndicated by ABC 17 News)
+  authors:
+  - Clare Sebastian
+  published: '2023-11-28'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - ew
+  - drones
+  notes: CNN original returned HTTP 451; fetched via the syndicated copy. 59th Brigade drone commander's Pole-21 kill near
+    Donetsk and a growing number of Pole-21 strikes since summer 2023; Fedorov on EW fratricide and on drones hunting EW.
+- id: dronedj-2022-singh-fedorov-dji-letter
+  title: Ukrainian minister pens open letter to DJI CEO; see drone maker's response
+  url: https://dronedj.com/2022/03/17/ukraine-dji-letter-drone-products-block-russia/
+  publisher: DroneDJ
+  authors:
+  - Ishveena Singh
+  published: '2022-03-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - drones
+  - aeroscope
+  notes: Fedorov's letter (claims Russia uses an extended AeroScope from Syria at up to 50 km) and DJI's statement that AeroScope
+    broadcasting is built in and cannot be turned off.
+- id: euromaidan-2023-shandra-robotyne-drones-jamming
+  title: Russian drones, jamming stations stymie Ukrainian advance near Robotyne
+  url: https://euromaidanpress.com/2023/10/11/russian-drones-e-warfare-stymie-ukrainian-advance-near-robotyne/
+  publisher: Euromaidan Press
+  authors:
+  - Alya Shandra
+  published: '2023-10-11'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - ew
+  - robotyne
+  - chapter
+  notes: 'Interview with a 65th Brigade sergeant near Robotyne: drone-guided Russian artillery the main problem; suitcase-size
+    Russian trench jammers bring Ukrainian drones down ''in scores''; ''many hundreds'' of drones lost in the Robotyne assault
+    per Delta (claim); Russian FPVs rising; reusable drop FPV; Mavics on both sides.'
+- id: forbes-2024-hambling-lancet-blast
+  title: How One Blast Shut Down Production Of Russia's Deadliest Drone
+  url: https://www.forbes.com/sites/davidhambling/2024/02/01/how-one-blast-shut-down-production-of-russias-deadliest-drone/
+  publisher: Forbes
+  authors:
+  - David Hambling
+  published: '2024-02-01'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - lancet
+  notes: Fetched via the Wayback Machine (forbes.com blocks scripts). Relays LostArmour monthly Lancet strike-video counts
+    for 2023 (about 25/month early, ~50 Mar-Apr, 135 Jul, 126 Aug, 50s Sep-Oct, 89 Nov, 59 Dec) and a Ukrainian ~30% success
+    estimate; the ZOMZ blast link is speculative by its own account. LostArmour is a Russian site, used only as relayed here.
+- id: ieee-2024-chulilla-hackers-war
+  title: Ukraine Is the First "Hackers' War"
+  url: https://spectrum.ieee.org/ukraine-hackers-war
+  publisher: IEEE Spectrum
+  authors:
+  - Juan Chulilla
+  published: '2024-04-10'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - ew
+  - firmware
+  notes: Russian EW first jammed DJI control and video links (OcuSync not built for dense jamming); volunteers closed AeroScope
+    backdoors in firmware; FPV shift by April 2023; 1.2 GHz video, 5 W transmitters, two-way repeaters doubling range.
+- id: ieee-2025-pultarova-killer-drones
+  title: How Ukraine's Killer Drones Are Beating Russian Jamming
+  url: https://spectrum.ieee.org/ukraine-killer-drones
+  publisher: IEEE Spectrum
+  authors:
+  - Tereza Pultarova
+  published: '2025-06-02'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - drones
+  - ew
+  - gnss
+  notes: A drone losing both pilot link and orientation crashes or drifts until its battery dies; spoofing can fake altitude;
+    multi-band hopping and visual navigation as counters. Originally posted 6 April 2025.
+- id: interfax-2024-isw-ew-since-fall-2023
+  title: Russian assaults may be able to achieve more significant and threatening gains, particularly west of Bakhmut, should
+    USA continue to withhold assistance to Ukraine – ISW
+  url: https://en.interfax.com.ua/news/general/980730.html
+  publisher: Interfax-Ukraine
+  authors: []
+  published: '2024-04-16'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - ew
+  notes: 'Relays ISW citing Ukrainian drone operators (via the Washington Post): Russian EW jamming significantly up since
+    fall 2023; ~100 drones within a 10 km radius; operators targeted with glide bombs and MLRS; one brigade detects 70-90
+    FPVs a day.'
+- id: jamestown-2022-lapaiev-ew-hype
+  title: EW Hype? The Reasons Behind the Limited Effectiveness of Russia's Electronic Warfare in Ukraine
+  url: https://jamestown.org/ew-hype-the-reasons-behind-the-limited-effectiveness-of-russias-electronic-warfare-in-ukraine/
+  publisher: Jamestown Foundation (Eurasia Daily Monitor)
+  authors:
+  - Yuri Lapaiev
+  published: '2022-04-11'
+  accessed: '2026-10-15'
+  type: think-tank
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  topics:
+  - ew
+  notes: Early-war judgment that Russian EW had 'few if any recorded successes'; Silok-M1 cuts drone links at 3-4 km; Torn-MDM
+    detects 1.5-3,000 MHz and locates up to 70 km. Counterpoint to the 2023 assessments.
+- id: kyivindependent-2023-query-war-from-above
+  title: 'War from above: A day with drone unit defending Ukraine''s south'
+  url: https://kyivindependent.com/national/war-from-above-drone-battles-in-zaporizhzhia-oblast
+  publisher: Kyiv Independent
+  authors:
+  - Alexander Query
+  published: '2023-03-22'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - zaporizhzhia
+  - attrition
+  notes: '15-strong volunteer drone unit in Zaporizhzhia Oblast spotting for the 102nd Brigade''s artillery: Mavic then Matrice
+    300; lost 5 Mavic 3s in a week (>$20,000); 3D-printed-fin bombs; Russian EW lands drones and DJI shows take-off point.'
+- id: kyivpost-2023-afp-bakhmut-commandos
+  title: '''I Feel Good, Because I See the Results of My Work'': Ukrainian Commandos Prepare Bakhmut Skirmish'
+  url: https://www.kyivpost.com/post/14412
+  publisher: Kyiv Post (AFP)
+  authors: []
+  published: '2023-03-17'
+  accessed: '2026-10-15'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - ew
+  notes: 'AFP: a Ukrainian drone operator says Russians cut the drone''s link, ''it descends and they fire at it''; 62 drones
+    lost since the invasion.'
+- id: kyivpost-2023-tuzov-lancet-overview
+  title: 'Analysis: Russian Lancet Kamikaze Drone in Ukraine: An Overview'
+  url: https://www.kyivpost.com/analysis/23923
+  publisher: Kyiv Post
+  authors:
+  - Bohdan Tuzov
+  published: '2023-11-12'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - lancet
+  - ew
+  notes: Lancet-1/3 specs (1/3 kg warheads, 5/12 kg, 40-70 km, ~40 min, 80-110 km/h cruise, ~300 km/h dive, $30-35k); Orlan-10
+    repeater for control range; nets on metal frames, remote detonation on nets, two Lancets defeated by a camouflage net.
+    Speed figures internally inconsistent.
+- id: militarnyi-2022-silok-01-captured
+  title: Transcarpathian brigade captured the Silok-01 EW system
+  url: https://militarnyi.com/en/news/transcarpathian-brigade-captured-the-silok-01-ew-system/
+  publisher: Militarnyi
+  authors: []
+  published: '2022-09-04'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - ew
+  - drones
+  notes: 128th Mountain Assault Brigade captures a Silok-01 counter-drone EW system (claimed >4 km) and calls it 'effective
+    only at Russian training grounds'.
+- id: pravda-2022-orlan-stormtroopers
+  title: Stormtroopers show how a proud Russian Orlan flopped on Ukrainian land
+  url: https://www.pravda.com.ua/eng/news/2022/05/2/7343524/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2022-05-02'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e2-donbas-artillery
+  topics:
+  - drones
+  - isr
+  - orlan
+  - air-defence
+  notes: Orlan-10 up to 5 km, 18 h, 150 km/h, 600 km offline; uses incl. artillery adjustment, radio intelligence, mobile
+    jamming; downed by MANPADS in Zaporizhzhia; 10 Orlans neutralised on 1 May 2022.
+- id: pravda-2023-pole21-destroyed
+  title: Ukrainian military commander says Ukraine destroyed crucial Russian electronic countermeasure system
+  url: https://www.pravda.com.ua/eng/news/2023/11/5/7427248/
+  publisher: Ukrainska Pravda
+  authors:
+  - Roman Petrenko
+  published: '2023-11-05'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - ew
+  - gnss
+  notes: Tarnavskyi announces a Pole-21 destroyed (method and place not given); Pole-21 creates a dome suppressing GPS/radio-navigation;
+    range 60 km per Russia, over 25 km per Ukrainian intelligence.
+- id: pravda-2023-supercam-mykolaiv
+  title: 2 Russian reconnaissance drones downed in Mykolaiv Oblast
+  url: https://www.pravda.com.ua/eng/news/2023/03/20/7394330/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-03-20'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - isr
+  - air-defence
+  notes: Two Supercam S350 reconnaissance drones (mapping and target monitoring) downed by Air Command South on 20 Mar 2023.
+- id: pravda-2023-ukmod-lancet-step-change
+  title: Russians deploy Lancet drones for strikes on Ukraine's artillery – UK intelligence
+  url: https://www.pravda.com.ua/eng/news/2023/11/1/7426676/
+  publisher: Ukrainska Pravda
+  authors: []
+  published: '2023-11-01'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - lancet
+  notes: 'Relays UK Defence Intelligence: Lancet a ''step change'' for Russian small drones, prominent in counter-battery.
+    The article wrongly says ZALA makes the Orlan-10 (STC does); not used for that point.'
+- id: reuters-2023-russia-upper-hand-drones
+  title: Ukrainians worry Russia is getting the upper hand in using drones
+  url: https://www.businessday.co.za/bd/world/europe/2023-11-09-ukrainians-worry-russia-is-getting-the-upper-hand-in-using-drones/
+  publisher: Reuters (via Business Day)
+  authors: []
+  published: '2023-11-09'
+  accessed: '2026-10-15'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - drones
+  - fpv
+  - russia
+  notes: 'Russian state enterprise planned up to 3,000 FPVs a month from May 2023; a platoon commander near Bakhmut estimates
+    Russian FPVs at about double Ukraine''s (snapshot); Bendett: 2023 critical for Russian FPV scale.'
+- id: rferl-2022-aeroscope-aerorozvidka
+  title: 'Drone Wars: Ukraine''s Homegrown Response To ''Deadly'' Chinese Detection Tech'
+  url: https://www.rferl.org/a/drone-detection-war-ukraine-china-russia/31943191.html
+  publisher: RFE/RL
+  authors: []
+  published: '2022-07-14'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e2-donbas-artillery
+  topics:
+  - drones
+  - ew
+  - operator-detection
+  notes: Aerorozvidka specialist confirms Ukrainians targeted and killed via DJI AeroScope; R18 range 4 km, 5 kg, thermal,
+    night use.
+- id: rferl-2023-lancet-counteroffensive
+  title: 'Lancet: The Russian Kamikaze Drone Blunting Ukraine''s Counteroffensive'
+  url: https://www.rferl.org/a/lancet-drones-russia-invasion-counteroffensive-kamikaze/32493513.html
+  publisher: RFE/RL (with Reuters)
+  authors: []
+  published: '2023-07-08'
+  accessed: '2026-10-15'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - lancet
+  - robotyne
+  notes: Lancet range (>40 km), ~40 min endurance, ~100 km/h, up to 5 kg warhead, ~$35k (Oryx); Ukrainian gunner says use
+    rose from spring; Sak claims 1-2 shot down a day; netting on both sides; some videos show Lancets finishing off abandoned
+    vehicles.
+- id: rub-2023-droneid-vulnerabilities
+  title: Security vulnerabilities detected in drones made by DJI
+  url: https://news.rub.de/english/press-releases/2023-03-02-it-security-security-vulnerabilities-detected-drones-made-dji
+  publisher: Ruhr University Bochum
+  authors: []
+  published: '2023-03-02'
+  accessed: '2026-10-15'
+  type: academic
+  origin: international
+  reliability: high
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - drones
+  - aeroscope
+  notes: 'University press release on the NDSS 2023 paper: DJI DroneID broadcasts drone and pilot location unencrypted; 16
+    vulnerabilities across Mini 2, Mavic Air 2, Mavic 2 and Mavic 3. No Ukraine reference.'
+- id: unian-2017-orlan-toretsk
+  title: Ukrainian troops shoot down Russian drone in ATO zone
+  url: https://www.unian.info/war/2323611-ukrainian-troops-shoot-down-russian-drone-in-ato-zone.html
+  publisher: UNIAN
+  authors: []
+  published: '2017-12-29'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: []
+  topics:
+  - drones
+  - isr
+  - orlan
+  notes: 'Pre-2022 Donbas: Orlan-10s fly in groups of two or three (reconnaissance at 1-1.5 km, EW, relay at 4.5-5 km or higher);
+    used for artillery adjustment. No era code: predates e1 (2014-2022 Donbas war).'
+- id: unn-2026-bashynskyi-orlan
+  title: 'UAV "Orlan": characteristics, types, and dangers'
+  url: https://unn.ua/en/news/uav-orlan-characteristics-types-and-dangers
+  publisher: UNN (Ukrainian National News)
+  authors:
+  - Pavlo Bashynskyi
+  published: '2026-09-15'
+  accessed: '2026-10-15'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e1-invasion
+  - e5-counteroffensive-23
+  topics:
+  - drones
+  - isr
+  - orlan
+  notes: 'Ukrainian explainer: Orlan-10 ceiling 5 km, up to 16 h, 90-150 km/h, 120 km link (600 km with relay), sensors incl.
+    thermal and EW; hard to spot visually and on radar; countered by EW plus fire.'

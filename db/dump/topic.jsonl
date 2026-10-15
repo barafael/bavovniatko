@@ -8,6 +8,8 @@
 {"code":"07","ext":{"_hash":"5db7187338af66d2"},"file":"research/07-maps-ui-conventions.md","id":{"$rid":["topic","t07"]},"labels":{"en":"Maps & UI conventions"}}
 {"code":"08","ext":{"_hash":"b1909c92591c63cb"},"file":"research/08-prior-art-games.md","id":{"$rid":["topic","t08"]},"labels":{"en":"Prior-art games & wargames"}}
 {"code":"09","ext":{"_hash":"664663cb4fcc78ae"},"file":"research/09-bevy-rendering.md","id":{"$rid":["topic","t09"]},"labels":{"en":"Bevy rendering & simulation prior art"}}
+{"code":"10","ext":{"_hash":"550c1028df4a487e"},"file":"research/10-drones-ua-2023.md","id":{"$rid":["topic","t10"]},"labels":{"en":"Drones in the player's hands, 2023"}}
+{"code":"11","ext":{"_hash":"c122f16dfd8a231c"},"file":"research/11-drones-ru-ew-2023.md","id":{"$rid":["topic","t11"]},"labels":{"en":"Russian drones and EW against them, 2023"}}
 {"code":"c01","ext":{"_hash":"4c08840d6d346878"},"file":"research/chapters/c01-march-on-kyiv.md","id":{"$rid":["topic","c01"]},"labels":{"en":"Chapter: The march on Kyiv"}}
 {"code":"c02","ext":{"_hash":"f61201e6a68e2d2d"},"file":"research/chapters/c02-snake-island-moskva.md","id":{"$rid":["topic","c02"]},"labels":{"en":"Chapter: Snake Island → the Moskva"}}
 {"code":"c03","ext":{"_hash":"edc3ea712170bb52"},"file":"research/chapters/c03-azovstal.md","id":{"$rid":["topic","c03"]},"labels":{"en":"Chapter: Azovstal"}}

@@ -8872,3 +8872,26 @@
   parent: place:lyman_salient
   note: "Distance from the Russian line at its 2026 peak to Sviatohirsk (observation place), not a location."
   no_geocode: true
+
+# drones and EW, 2023 (research/10 and 11, 2026-10-15)
+- id: place:zagorsk_optical_plant
+  type: place
+  kind: "facility"
+  en: "Zagorsk Optical-Mechanical Plant"
+  aliases: ["Zagorsk optical plant"]
+  note: "Optics plant in Sergiyev Posad; explosion on 9 Aug 2023."
+  geocode_query: "Zagorsk Optical-Mechanical Plant, Sergiyev Posad, Moscow Oblast, Russia"
+  countrycodes: "ru"
+- id: place:syria
+  type: place
+  kind: "country"
+  en: "Syria"
+  geocode_query: "Syria"
+  countrycodes: "sy"
+- id: place:eastern_front_ukraine
+  type: place
+  kind: "front_sector"
+  en: "eastern front (Ukraine)"
+  aliases: ["east", "the east"]
+  note: "Notional: the eastern directions as a delivery destination, not a located place."
+  no_geocode: true

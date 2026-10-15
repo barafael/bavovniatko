@@ -4,7 +4,7 @@
 
 Pairs of claims that cannot both be true as stated, judged from rule-based candidates (db/tools/relate.py) and stored as `contradicts` edges. *Explained* means the difference has a stated cause (method, scope, date); *open* means it is unresolved. Claim ids resolve in the knowledge base; source ids in [sources.yaml](sources.yaml).
 
-138 distinct contradictions (duplicate claims collapsed): 138 explained, 0 open.
+143 distinct contradictions (duplicate claims collapsed): 143 explained, 0 open.
 
 ## 00 Timeline & eras
 
@@ -83,6 +83,10 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - `01-0029-46` Ukraine claims Operation Spiderweb used 117 drones, hit 41 aircraft and caused about $7bn in damage. *(claimant: Security Service of Ukraine (SBU); `kyivindependent-2025-york-spiderweb`)*
   - `c16-0026-13` Butusov says 150 drones were smuggled into Russia for Operation Spiderweb and 116 launched. *(claimant: Yurii Butusov; `texty-2025-butusov-pavutyna-preparation`)*
   - *Resolution:* Minor count difference; one drone may have been used but not launched, or sources count differently.
+- **explained** · strength 0.4 — Two unit costs for the Vampire heavy bomber, about $8,500 and $10,000.
+  - `01-0027-28` The Vampire heavy bomber costs about $8,500. *(claimant: —; `euromaidan-2026-axe-bomber-drones`)*
+  - `10-0032-19` The Vampire hexacopter cost $10,000 in 2023. *(claimant: —; `devua-2023-brovinska-vampire`)*
+  - *Resolution:* The manufacturer's price and a 2023 reported figure may differ by time, configuration (batteries, payload kit) or what is included.
 
 ## 02 EW & countermeasures
 
@@ -253,6 +257,25 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - `07-0028-18` Computed from DeepStateMap versions, in March 2025 (e7/e8) Russia gained 142 km² and Ukraine recaptured 11 km² (gross), a net Russian change of +134 km²; the grey zone was 775 km² at the end of the period. *(claimant: —; `deepstate-api-history`)*
   - `07-0028-41` The UK Ministry of Defence put Russia's territorial gain in March 2025 at 143 km². *(claimant: UK Ministry of Defence; `euromaidan-2025-shandra-gains-plummet`)*
   - *Resolution:* Different assessors with different mapping methods; the gap is small.
+
+## 10 Drones in the player's hands, 2023
+
+- **explained** · strength 0.5 — The R18's range is given as 4 km by Mezha and RFE/RL but up to 13 km by Euromaidan Press.
+  - `10-0032-06` Mezha and RFE/RL give the R18's range as 4 km. *(claimant: —; `rferl-2022-aeroscope-aerorozvidka`, `mezha-2022-danylov-r18`)*
+  - `10-0032-07` Euromaidan Press gives the R18's range as up to 13 km with explosives. *(claimant: —; `euromaidan-2023-hrudka-r18`)*
+  - *Resolution:* The figures probably measure different things (practical combat radius vs maximum range with a lighter load) or different versions of the R18.
+- **explained** · strength 0.5 — FPV payload of up to about 1 kg vs CNAS's 3–5 lb (1.4–2.3 kg) for 2023.
+  - `10-0035-10` ABC and Euromaidan Press put FPV payload at up to about 1 kg. *(claimant: —; `abc-2023-burgess-fpv-racing-drones`, `euromaidan-2023-voichuk-fpv-small-drones`)*
+  - `10-0035-11` CNAS put FPV payload at 3–5 lb. *(claimant: CNAS; `cnas-2024-pettyjohn-evolution`)*
+  - *Resolution:* Payload depends on frame size and the munition; the outlets probably describe different classes of FPV.
+- **explained** · strength 0.4 — Anecdotal 2023 FPV hit rates of one in five (one in three for the speaker) vs half the time.
+  - `10-0047-01` A Ukrainian FPV pilot said in 2023 "you're a skilled pilot if one out of five hits", and claimed one in three himself (anecdotal). *(claimant: Ukrainian drone operators (unnamed); `pravda-2023-khalilov-fpv-negotiating-table`)*
+  - `10-0047-03` Ukrainian operators told CNAS their FPVs hit half the time (anecdotal). *(claimant: Ukrainian drone operators (unnamed); `cnas-2024-pettyjohn-evolution`)*
+  - *Resolution:* Both are self-reported anecdotes from different operators and units; skill, target type and EW conditions vary widely.
+- **explained** · strength 0.4 — Non-overlapping 2023 FPV unit costs: $300–400 vs $600–1,000.
+  - `10-0035-14` Ukrainska Pravda put an FPV's cost at $300–400. *(claimant: —; `pravda-2023-khalilov-fpv-negotiating-table`)*
+  - `10-0035-16` Euromaidan Press put an FPV's cost at $600–1,000. *(claimant: —; `euromaidan-2023-voichuk-fpv-small-drones`)*
+  - *Resolution:* Different outlets likely priced different builds (frame, camera, video link) and whether the warhead or radio is included.
 
 ## c01 Chapter: The march on Kyiv
 
