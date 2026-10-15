@@ -11,6 +11,7 @@ use bevy::{
     render::render_resource::{AsBindGroup, ShaderType},
     shader::ShaderRef,
 };
+pub use bav_core::vocab::Weather;
 
 pub struct SkyPlugin;
 
@@ -54,33 +55,6 @@ pub struct SkyMaterial {
 impl Material for SkyMaterial {
     fn fragment_shader() -> ShaderRef {
         "embedded://bavovniatko/shaders/sky.wgsl".into()
-    }
-}
-
-/// The weather over a day: which deck, how high, whether the sun shows.
-#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
-#[strum(serialize_all = "lowercase")]
-pub enum Weather {
-    /// 6 February 2023 as ERA5 has it: an unbroken low stratus deck, base 300–500 m, no sun.
-    Overcast,
-    /// The week's footage (8–11 February): broken stratocumulus and a hard low sun.
-    Sun,
-    /// 8 June 2023: a cirrus veil the sun shows through, thinning to broken cloud by afternoon.
-    Veil,
-}
-
-impl Weather {
-    /// (cover, base height, underside darkness, veil) at this hour.
-    pub fn cloud(self, hour: f32) -> Vec4 {
-        match self {
-            Weather::Overcast => Vec4::new(1.0, 350.0, 0.82, 0.0),
-            Weather::Sun => Vec4::new(0.35, 1300.0, 0.78, 0.05),
-            // The veil holds until early afternoon, then breaks into altocumulus with blue between.
-            Weather::Veil => {
-                let breaking = ((hour - 13.0) / 5.0).clamp(0.0, 1.0);
-                Vec4::new(0.95 - 0.4 * breaking, 2500.0 + 2000.0 * breaking, 0.85, 1.0 - 0.7 * breaking)
-            }
-        }
     }
 }
 

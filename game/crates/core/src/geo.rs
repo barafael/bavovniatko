@@ -10,6 +10,8 @@ use crate::diorama::{Diorama, diorama};
 use bevy::math::{Vec2, Vec3};
 use std::sync::OnceLock;
 
+pub mod robotyne;
+
 pub const HALF_X: f32 = 2304.0;
 pub const HALF_Z: f32 = 1792.0;
 pub const CHUNK: f32 = 256.0;
@@ -254,7 +256,7 @@ static LAYOUT: OnceLock<Layout> = OnceLock::new();
 pub fn layout() -> &'static Layout {
     LAYOUT.get_or_init(|| match diorama() {
         Diorama::Vuhledar => build_layout(),
-        Diorama::Robotyne => crate::robotyne::build_layout(),
+        Diorama::Robotyne => robotyne::build_layout(),
     })
 }
 
@@ -427,7 +429,7 @@ pub fn cut_gaps(belts: &mut [Belt], roads: &[Road]) {
 pub fn height(x: f32, z: f32) -> f32 {
     match diorama() {
         Diorama::Vuhledar => height_vuhledar(x, z),
-        Diorama::Robotyne => crate::robotyne::height(x, z),
+        Diorama::Robotyne => robotyne::height(x, z),
     }
 }
 

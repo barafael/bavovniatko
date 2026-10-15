@@ -18,6 +18,7 @@ use bevy::{
     prelude::*,
     render::{render_resource::ShaderType, view::Msaa},
 };
+pub use bav_core::vocab::{Mode, Target};
 
 pub struct CameraPlugin;
 
@@ -29,16 +30,6 @@ impl Plugin for CameraPlugin {
             .add_systems(Startup, spawn_launcher.after(spawn_camera))
             .add_systems(Update, (switch_view, drone_control, op_control, ground_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
     }
-}
-
-#[derive(Clone, Copy, PartialEq, Eq, Debug, Default, strum::EnumString)]
-#[strum(serialize_all = "lowercase")]
-pub enum Mode {
-    #[default]
-    Drone,
-    Op,
-    /// Eye level at the south edge of a tree line, behind an ATGM launcher.
-    Ground,
 }
 
 #[derive(Resource)]
@@ -174,51 +165,13 @@ pub fn look_angles(d: Vec3) -> (f32, f32) {
     (f32::atan2(-d.x, -d.z), f32::atan2(d.y, d.xz().length()))
 }
 
-/// What a camera follows: a point, a vehicle of the column, the infantry (`BAV_LOOK`, the showcase), one
-/// wave's vehicle by column index, or the attacker's infantry near a point.
-#[derive(Clone, Copy, PartialEq, Debug)]
-pub enum Target {
-    /// A point on the ground (x, z).
-    Point(Vec2),
-    /// The attacker's vehicle with this column index, in the earliest wave that has one.
-    Vehicle(u32),
-    /// That wave's vehicle by column index (`w/i`), where several waves share a road.
-    Wave(u32, u32),
-    /// The middle of the attacker's infantry still advancing within 1.4 km.
-    Men,
-    /// The mean of the attacker's infantry on foot within 500 m of a point; the point itself when nobody is
-    /// there, so a shot never holds a stale aim on an empty field.
-    MenNear(Vec2),
-    /// For test shots of the fire looks (`BAV_LOOK=hit|pool|grass`): the hull a missile is flying at (or was hit last), the newest
-    /// pool fire, the grass fire's front. Located by `dev::env_look`, which can see them.
-    Hit,
-    Pool,
-    Grass,
+/// Where a [`Target`] is now: the world as the camera sees it.
+pub trait Locate {
+    fn locate(self, near: Vec3, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) -> Option<Vec3>;
 }
 
-impl std::str::FromStr for Target {
-    type Err = std::num::ParseIntError;
-
-    /// `men`, a column index, or `w/i`.
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "men" {
-            Ok(Target::Men)
-        } else if s == "hit" {
-            Ok(Target::Hit)
-        } else if s == "pool" {
-            Ok(Target::Pool)
-        } else if s == "grass" {
-            Ok(Target::Grass)
-        } else if let Some((w, i)) = s.split_once('/') {
-            Ok(Target::Wave(w.trim().parse()?, i.trim().parse()?))
-        } else {
-            s.parse().map(Target::Vehicle)
-        }
-    }
-}
-
-impl Target {
-    pub fn locate(self, near: Vec3, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) -> Option<Vec3> {
+impl Locate for Target {
+    fn locate(self, near: Vec3, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) -> Option<Vec3> {
         match self {
             Target::Point(p) => Some(geo::ground(p)),
             Target::Vehicle(idx) => vehicles.iter().filter(|(v, _)| v.idx == idx && v.side == crate::diorama::diorama().attacker()).min_by_key(|(v, _)| v.wave).map(|(_, t)| t.translation),

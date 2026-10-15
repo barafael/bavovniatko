@@ -2,8 +2,13 @@
 //! argument or `BAV_DIORAMA`. The two places share the kit (terrain, vehicles, mines, fire, the drone), and
 //! differ in season, ground, forces, and which way the war is going. The player is Ukrainian in both.
 
-use crate::units::Side;
 use std::sync::OnceLock;
+
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum Side {
+    Ru,
+    Ua,
+}
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString, strum::Display)]
 #[strum(serialize_all = "lowercase", ascii_case_insensitive)]

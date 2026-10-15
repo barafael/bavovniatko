@@ -9,8 +9,8 @@
 //! cards before them, the interface switched per shot, two ground shots from an ATGM team, and two flown by the
 //! stick script. Unset, the minute tours film exactly as they always did.
 
-use crate::camera::{Flight, Mode, Target, View, enter_ground, look_angles, track_nearest};
-use crate::fire::{Post, Strike};
+use crate::camera::{Flight, Locate, Mode, Target, View, enter_ground, look_angles, track_nearest};
+use crate::fire::{Post, Strike, StrikeMission};
 use crate::units::{Soldier, Vehicle};
 use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};

@@ -48,11 +48,7 @@ pub struct UnitRng(pub SmallRng);
 #[derive(Resource, Default)]
 pub struct LastHit(pub Option<Vec3>);
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum Side {
-    Ru,
-    Ua,
-}
+pub use bav_core::diorama::Side;
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, strum::VariantArray)]
 pub enum VKind {

@@ -1,17 +1,28 @@
-[package]
-name = "bavovniatko"
+# The game's workspace. The crates are layered: bav-core (geometry, layouts, the dioramas, words, the frame's
+# order) under the game. tools/bake is a separate workspace of its own.
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+default-members = ["crates/bavovniatko"]
+exclude = ["tools/bake"]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
-description = "Vuhledar, 6 February 2023: the first diorama of bavovniatko"
 license = "MIT OR Apache-2.0"
 publish = false
 
-[dependencies]
+[workspace.dependencies]
+bav-core = { path = "crates/core" }
 bevy = { version = "=0.19.1", features = ["wayland", "jpeg"] }
 rand = { version = "0.9", features = ["small_rng"] }
 strum = { version = "0.28.0", features = ["derive"] }
 # The ground chunks as PNGs (the version Bevy's own image loading uses).
 image = { version = "0.25", default-features = false, features = ["png"] }
+
+# Bevy systems and spawn helpers take many parameters by design.
+[workspace.lints.clippy]
+too_many_arguments = "allow"
 
 # Fast iteration: optimise dependencies even in dev builds.
 [profile.dev]
@@ -20,10 +31,15 @@ opt-level = 1
 [profile.dev.package."*"]
 opt-level = 3
 
+# What ships, and what the same-day and the showcase film: one codegen unit and thin LTO.
 [profile.release]
 codegen-units = 1
 lto = "thin"
 
-# Bevy systems and spawn helpers take many parameters by design.
-[lints.clippy]
-too_many_arguments = "allow"
+# Test shots, clips and balance runs: release speed at a fraction of the build time. Not for same-day or the
+# film, which compare against release builds.
+[profile.fast]
+inherits = "release"
+codegen-units = 16
+lto = false
+incremental = true

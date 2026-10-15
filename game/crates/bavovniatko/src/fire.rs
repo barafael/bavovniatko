@@ -16,6 +16,7 @@ use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Line, Mine, Minef
 use crate::world::{ObservationPost, Palette};
 use bevy::{light::NotShadowCaster, prelude::*, window::PrimaryWindow};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
+pub use bav_core::vocab::{Atgm, Strike};
 
 pub struct FirePlugin;
 
@@ -62,69 +63,15 @@ pub enum ShellKind {
     Smoke,
 }
 
-/// The ATGMs in the tree lines: Javelin and Stugna-P on the Ukrainian side (dossier c08 §4), Kornet on the
-/// Russian (c09 §5).
-#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::Display, strum::EnumString)]
-#[strum(ascii_case_insensitive)]
-pub enum Atgm {
-    /// Ukrainian, wire-guided (semi-automatic command to line of sight): the gunner holds the sight on the target.
-    #[strum(to_string = "Stugna-P", serialize = "stugna")]
-    Stugna,
-    /// American, fire-and-forget: the seeker locks, the missile climbs and dives onto the roof.
-    Javelin,
-    /// Russian, laser beam-riding, long-range.
-    Kornet,
+/// A [`Strike`] as the guns fire it.
+pub trait StrikeMission: Sized {
+    fn mission(self, target: Vec2, sigma: f32, now: f64, player: bool) -> Mission;
+    fn on_nearest_stalled(self, fc: &mut FireControl, vehicles: &Query<(&Vehicle, &Transform)>, from: Vec2, now: f64) -> Option<Vec2>;
 }
 
-impl Atgm {
-    pub fn range(self) -> f32 {
-        match self {
-            Atgm::Stugna => 4500.0,
-            Atgm::Javelin => 2500.0,
-            Atgm::Kornet => 5500.0,
-        }
-    }
-    pub fn reload(self) -> f32 {
-        match self {
-            Atgm::Stugna => 40.0,
-            Atgm::Javelin => 25.0,
-            Atgm::Kornet => 35.0,
-        }
-    }
-    pub fn speed(self) -> f32 {
-        match self {
-            Atgm::Stugna => 190.0,
-            Atgm::Javelin => 140.0,
-            Atgm::Kornet => 250.0,
-        }
-    }
-    /// Missiles carried by a team.
-    pub fn load(self) -> u32 {
-        match self {
-            Atgm::Stugna => 6,
-            Atgm::Javelin => 4,
-            Atgm::Kornet => 4,
-        }
-    }
-}
-
-/// What the player can call down (and what the dev scripts can call: `BAV_FIRE="100:he,130:raam"`).
-#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
-#[strum(ascii_case_insensitive)]
-pub enum Strike {
-    /// 155 mm high explosive, four rounds.
-    He,
-    /// Remote anti-armour mines scattered onto a lane, three shells.
-    Raam,
-    /// Two guided rockets.
-    Himars,
-    /// Smoke shells: a screen on the ground that hides vehicles from the guns' and the ATGMs' sights.
-    Smoke,
-}
-
-impl Strike {
+impl StrikeMission for Strike {
     /// The one place a fire mission is built: rounds, spacing, flight time and dispersion for each kind.
-    pub fn mission(self, target: Vec2, sigma: f32, now: f64, player: bool) -> Mission {
+    fn mission(self, target: Vec2, sigma: f32, now: f64, player: bool) -> Mission {
         let (kind, rounds, interval, flight, sigma, delay) = match self {
             Strike::He => (ShellKind::He155, 4, 3.5, 24.0, sigma, 2.0),
             Strike::Raam => (ShellKind::Raam, 3, 5.0, 28.0, sigma * 1.2, 3.0),
@@ -136,7 +83,7 @@ impl Strike {
 
     /// Call this strike on the stalled Russian vehicle nearest `from`, as a player would from the drone (the dev
     /// scripts and the showcase do). Returns where it was called.
-    pub fn on_nearest_stalled(self, fc: &mut FireControl, vehicles: &Query<(&Vehicle, &Transform)>, from: Vec2, now: f64) -> Option<Vec2> {
+    fn on_nearest_stalled(self, fc: &mut FireControl, vehicles: &Query<(&Vehicle, &Transform)>, from: Vec2, now: f64) -> Option<Vec2> {
         let target = vehicles
             .iter()
             .filter(|(v, _)| v.state.alive() && v.state != VState::Advancing)

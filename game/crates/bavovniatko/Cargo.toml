@@ -1,0 +1,17 @@
+[package]
+name = "bavovniatko"
+description = "The dioramas of bavovniatko: Vuhledar, 6 February 2023, and Mala Tokmachka, 8 June 2023"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+bav-core.workspace = true
+bevy.workspace = true
+rand.workspace = true
+strum.workspace = true
+image.workspace = true
+
+[lints]
+workspace = true

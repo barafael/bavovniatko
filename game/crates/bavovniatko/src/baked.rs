@@ -33,7 +33,7 @@ fn file(id: &str) -> &'static [u8] {
     macro_rules! veh {
         ($($id:literal),*) => {
             match id {
-                $($id => include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/assets/vehicles/", $id, ".veh")),)*
+                $($id => include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/../../assets/vehicles/", $id, ".veh")),)*
                 _ => panic!("no baked vehicle {id}"),
             }
         };
