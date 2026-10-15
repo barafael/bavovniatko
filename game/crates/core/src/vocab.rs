@@ -23,10 +23,10 @@ pub enum Target {
     Vehicle(u32),
     /// That wave's vehicle by column index (`w/i`), where several waves share a road.
     Wave(u32, u32),
-    /// The middle of the attacker's infantry still advancing within 1.4 km.
+    /// The densest group of the attacker's infantry still advancing within 1.4 km.
     Men,
-    /// The mean of the attacker's infantry on foot within 500 m of a point; the point itself when nobody is
-    /// there, so a shot never holds a stale aim on an empty field.
+    /// The densest group of the attacker's infantry on foot within 500 m of a point; the point itself when nobody
+    /// is there, so a shot never holds a stale aim on an empty field.
     MenNear(Vec2),
     /// For test shots of the fire looks (`BAV_LOOK=hit|pool|grass`): the hull a missile is flying at (or was hit last), the newest
     /// pool fire, the grass fire's front. Located by `dev::env_look`, which can see them.

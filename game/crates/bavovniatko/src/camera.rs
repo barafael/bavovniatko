@@ -38,6 +38,15 @@ pub fn look_angles(d: Vec3) -> (f32, f32) {
     (f32::atan2(-d.x, -d.z), f32::atan2(d.y, d.xz().length()))
 }
 
+/// The middle of the densest group among these men: the one with the most others within 60 m, and those
+/// others. The mean of everyone often lands on empty field between groups.
+fn densest(pts: &[Vec3]) -> Option<Vec3> {
+    const NEAR: f32 = 60.0;
+    let best = pts.iter().max_by_key(|p| pts.iter().filter(|q| q.xz().distance(p.xz()) < NEAR).count())?;
+    let group: Vec<Vec3> = pts.iter().copied().filter(|q| q.xz().distance(best.xz()) < NEAR).collect();
+    Some(group.iter().copied().sum::<Vec3>() / group.len() as f32)
+}
+
 /// Where a [`Target`] is now: the world as the camera sees it.
 pub trait Locate {
     fn locate(self, near: Vec3, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) -> Option<Vec3>;
@@ -55,7 +64,7 @@ impl Locate for Target {
                     .filter(|(s, t)| s.side == crate::diorama::diorama().attacker() && s.state != SState::Flee && t.translation.distance(near) < 1400.0)
                     .map(|(_, t)| t.translation)
                     .collect();
-                (!pts.is_empty()).then(|| pts.iter().copied().sum::<Vec3>() / pts.len() as f32)
+                densest(&pts)
             }
             Target::MenNear(p) => {
                 let at = geo::ground(p);
@@ -64,7 +73,7 @@ impl Locate for Target {
                     .filter(|(s, t)| s.side == crate::diorama::diorama().attacker() && s.state != SState::DugIn && t.translation.distance(at) < 500.0)
                     .map(|(_, t)| t.translation)
                     .collect();
-                Some(if pts.is_empty() { at } else { pts.iter().copied().sum::<Vec3>() / pts.len() as f32 })
+                Some(densest(&pts).unwrap_or(at))
             }
             Target::Hit | Target::Pool | Target::Grass => None,
         }

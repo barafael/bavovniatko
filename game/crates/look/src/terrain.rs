@@ -573,14 +573,32 @@ fn crater_colour(d: f32, c: Px, w: Vec2, centre: Vec2, seed: u32) -> Px {
     }
 }
 
+/// A crater a year old in June, grown over. The dip holds the rain longer, so its weeds come up lusher and darker
+/// than the field, with bare earth where they have not closed; the rim of thrown earth dries first and shows as
+/// straw; the clods are long gone. How far each has healed back to the field varies.
+fn summer_old_crater(d: f32, field: Px, w: Vec2, centre: Vec2, seed: u32) -> Px {
+    let ang = (w - centre).to_angle();
+    let d = d * (1.0 + 0.25 * value_noise(ang * 2.0 + (seed % 997) as f32, 0.5, 72));
+    if d >= 0.75 {
+        return field;
+    }
+    let heal = 0.3 + 0.4 * geo::hash01(seed, 81);
+    let n = value_noise(w.x * 0.9, w.y * 0.9, seed % 977) * 0.5 + 0.5;
+    let scar = if d < 0.5 {
+        if n < 0.3 * (1.0 - heal) { SUMMER.earth } else { mix([0.21, 0.28, 0.12], [0.29, 0.33, 0.16], n) }
+    } else {
+        mix([0.56, 0.50, 0.34], SUMMER.earth, n * 0.4)
+    };
+    mix(scar, field, heal + (1.0 - heal) * geo::smoothstep(0.55, 0.75, d))
+}
+
 /// An old crater: its core and rim wipe the furrows; under its thrown earth they stay.
 fn crater(chunks: &mut Chunks, at: Vec2, radius: f32, seed: u32) {
     let summer = diorama().summer();
     for t in disc(at, radius * 3.2) {
         t.each(&mut chunks[t.chunk], |px, w, d| {
-            let c = crater_colour(d, from_srgb8(px), w, at, seed);
-            // In June last year's craters are half grown over.
-            let c = if summer { mix(c, from_srgb8(px), 0.45) } else { c };
+            let field = from_srgb8(px);
+            let c = if summer { summer_old_crater(d, field, w, at, seed) } else { crater_colour(d, field, w, at, seed) };
             px.copy_from_slice(&to_srgb8(c, if d < 0.75 { 0 } else { furrow_code(w.x, w.y) }));
         });
     }

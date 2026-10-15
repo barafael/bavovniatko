@@ -634,6 +634,7 @@ fn atgm_teams(
         fx.muzzle(from, dir, false);
         fx.backblast(from, dir);
         sound.at(from, Sfx::AtgmLaunch, 0.9);
+        info!("atgm launch: {weapon} from the post at {:.0},{:.0}, {} men", pos.pos.x, pos.pos.y, pos.strength);
         let speed = weapon.speed();
         commands.spawn((
             Mesh3d(models.missile.clone()),

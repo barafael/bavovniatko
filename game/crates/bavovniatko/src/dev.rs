@@ -268,10 +268,18 @@ fn log_stats(
 fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Res<View>, mut fc: ResMut<FireControl>, mut radio: ResMut<Radio>, q: Query<(&Vehicle, &Transform)>, mut done: Local<usize>) {
     let plan = &dev().fire;
     while *done < plan.len() && script.t >= plan[*done].0 {
-        let strike = plan[*done].1;
+        let (_, strike, point) = plan[*done];
         *done += 1;
         let now = time.elapsed_secs_f64();
-        if let Some(at) = strike.on_nearest_stalled(&mut fc, &q, view.drone_pos.xz(), now) {
+        let called = match point {
+            Some((x, z)) => {
+                let at = Vec2::new(x, z);
+                fc.missions.push(strike.mission(at, 12.0, now, true));
+                Some(at)
+            }
+            None => strike.on_nearest_stalled(&mut fc, &q, view.drone_pos.xz(), now),
+        };
+        if let Some(at) = called {
             radio.say(now, format!("(scripted) {strike:?} on {:.0}, {:.0}", at.x, at.y));
         }
     }

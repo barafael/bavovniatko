@@ -66,8 +66,9 @@ pub struct DevEnv {
     pub rec: Option<String>,
     pub rec_from: f32,
     pub rec_secs: f32,
-    /// Scripted fire missions: game time and strike.
-    pub fire: Vec<(f32, Strike)>,
+    /// Scripted fire missions: game time, strike, and where (`BAV_FIRE="100:he,130:raam,200:he@-468;702"`: at a
+    /// point, or else on the stalled vehicle nearest the drone).
+    pub fire: Vec<(f32, Strike, Option<(f32, f32)>)>,
     /// Scripted drone flight: legs of game time with what the sticks do (see `camera::Stick::scripted`).
     pub fly: Vec<(f32, f32, String)>,
     /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
@@ -78,6 +79,8 @@ pub struct DevEnv {
     pub log_stats: bool,
     /// Park every vehicle model in a row here (x, z, heading in degrees), live and burned out, to look them over.
     pub lineup: Option<[f32; 3]>,
+    /// `BAV_EVAC=<seconds>`: answer every call for evacuation after this delay, as a player would (balance runs).
+    pub evac: Option<f32>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
     pub era_at: Option<f32>,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
@@ -115,7 +118,14 @@ impl DevEnv {
                 plan.split(',')
                     .filter_map(|item| {
                         let (t, k) = item.split_once(':')?;
-                        Some((t.trim().parse().ok()?, k.trim().parse().ok()?))
+                        let (k, at) = match k.split_once('@') {
+                            Some((k, at)) => {
+                                let (x, z) = at.split_once(';')?;
+                                (k, Some((x.trim().parse().ok()?, z.trim().parse().ok()?)))
+                            }
+                            None => (k, None),
+                        };
+                        Some((t.trim().parse().ok()?, k.trim().parse().ok()?, at))
                     })
                     .collect()
             })
@@ -165,6 +175,7 @@ impl DevEnv {
             ground: var("BAV_GROUND"),
             log_stats: var("BAV_LOG_STATS").is_some(),
             era_at: parse("BAV_ERA_AT"),
+            evac: parse("BAV_EVAC"),
             lineup: var("BAV_LINEUP").and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok()),
             light: var("BAV_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())
