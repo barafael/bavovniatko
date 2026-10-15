@@ -35,6 +35,8 @@ pub struct DioramaData {
     pub compression: f32,
     pub attacker: Side,
     pub summer: bool,
+    /// The net's callsigns, in English and Ukrainian (`crate::text::fill`).
+    pub callsigns: Callsigns,
     /// The map's anchor: the latitude and longitude at (x, z), and metres per degree of longitude there.
     pub anchor: Anchor,
     /// The ground's height above sea level: these terms, summed in order.
@@ -86,6 +88,15 @@ pub struct DioramaData {
     pub home: P,
     pub jam_z: f32,
     pub mortar_band: (f32, f32),
+}
+
+/// Who is who on the net: the player, the guns, the observation post, the brigade's command post.
+#[derive(Deserialize, Debug)]
+pub struct Callsigns {
+    pub player: (String, String),
+    pub guns: (String, String),
+    pub op: (String, String),
+    pub command: (String, String),
 }
 
 #[derive(Deserialize, Debug, Clone, Copy)]

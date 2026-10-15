@@ -11,6 +11,8 @@
     compression: 0.36,
     attacker: Ru,
     summer: false,
+    // Fictional, as game/design/next.md decided: the player, the guns, the observers on the roof, the command post.
+    callsigns: (player: ("Maestro", "Маестро"), guns: ("Berkut", "Беркут"), op: ("Sokil", "Сокіл"), command: ("Hranit", "Граніт")),
     anchor: (lat: 47.7810, lon: 37.2461, x: -900.0, z: -1500.0, m_per_lon: 74740.0),
 
     // SRTM-like: ~190 m on the town ridge, ~142 m in the valley.
@@ -136,22 +138,22 @@
     // the volunteer battalions, then men on foot. The day runs from 06:40 (Kyiv time) to dusk in about 25 minutes.
     script: [
         (1.0, Say("Bird up. Visibility good, frost. Watch the dacha road and the Pavlivka road.")),
-        (6.0, Say("All, this is Hranit. They're coming again today. Leave the roads clear. Let them in.")),
+        (6.0, Say("All, this is {command}. They're coming again today. Leave the roads clear. Let them in.")),
         (14.0, Column(route: 0, kinds: [T80, T80, Bmp2, Bmp2, T80, Bmp2, Bmp1, Mtlb, Bmp2, T80, Bmp1, Bmp2], plow: true, start: 1150.0, smoke: 3, label: "06:45  The 155th Naval Infantry attacks down the dacha road")),
         (20.0, Jam(0.5)),
         (22.0, Say("Bird: column on the dacha road. Twelve units, tanks leading, a plow in front. Smoke.")),
         (150.0, Tos(label: "TOS-1A on the town")),
         (330.0, Column(route: 0, kinds: [T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb], plow: false, start: 500.0, smoke: 1, label: "08:40  A second column. The same road.")),
-        (345.0, Say("This is Sokil. Second column. Same route. Exactly the same route.")),
+        (345.0, Say("This is {op}. Second column. Same route. Exactly the same route.")),
         (600.0, Column(route: 1, kinds: [T72, Bmp1, Bmp1, Bmp2, Mtlb, Bmp1, T72, Bmp1], plow: true, start: 650.0, smoke: 2, label: "10:20  The Alga battalion, from Pavlivka")),
         (610.0, Jam(0.6)),
         (615.0, Say("Bird: Pavlivka road now. Volunteers by the look of it. BMP-1s.")),
         (700.0, Tos(label: "TOS-1A again")),
         (900.0, Column(route: 0, kinds: [T80, Bmp2, Bmp2, Bmp2, T80, Bmp1], plow: false, start: 550.0, smoke: 0, label: "12:00  Again, the dacha road")),
-        (915.0, Say("This is Sokil. They're driving past their own wrecks from this morning. Same line.")),
+        (915.0, Say("This is {op}. They're driving past their own wrecks from this morning. Same line.")),
         (1110.0, Infantry(route: 1, groups: 6, size: 5, every: 14.0, label: "13:20  No more armour. Infantry, on foot.")),
         (1125.0, Infantry(route: 0, groups: 6, size: 5, every: 14.0)),
-        (1140.0, Say("This is Sokil. Groups of five. Walking across the open field. Towards the tree line.")),
+        (1140.0, Say("This is {op}. Groups of five. Walking across the open field. Towards the tree line.")),
         (1230.0, Tos(label: "TOS-1A")),
         (1300.0, Infantry(route: 1, groups: 4, size: 5, every: 12.0, label: "14:30  More men on foot")),
     ],

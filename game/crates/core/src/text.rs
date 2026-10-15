@@ -28,49 +28,50 @@ pub const FONT: &str = "embedded://bavovniatko/fonts/LiberationMono-Regular.ttf"
 /// The radio net's Ukrainian, by its English gloss. The gloss is what the code says; this is what is said
 /// (the idiom of §2.4: плюс, прийняв, вихід, прихід, мінус, триста, пташка, коробочка, посадка). A line
 /// without a Ukrainian here is shown in English alone. The net's stations have callsigns, fictional as
-/// design/next.md decided: Маестро (Maestro) is the player, Беркут (Berkut) the guns, Сокіл (Sokil) the
-/// observation post, Граніт (Hranit) the brigade's command post. A call names whom it is for, then "я" and
-/// whose it is ("Маестро, я Беркут"); an alarm is shouted without the formula, and the bird's crew, being
-/// the player's own, needs none.
+/// design/next.md decided, and each diorama's file names its own (`callsigns`): the player (`{player}`), the
+/// guns (`{guns}`), the observation post (`{op}`) and the brigade's command post (`{command}`). At Vuhledar
+/// they are Маестро, Беркут, Сокіл and Граніт; south of Mala Tokmachka Сапсан, Грім, Журавель and Скеля. A
+/// call names whom it is for, then "я" and whose it is ("{player}, я {guns}"); an alarm is shouted without the
+/// formula, and the bird's crew, being the player's own, needs none. [`net`] fills the callsigns in.
 pub fn uk(en: &str) -> &'static str {
     match en {
         // The day at Vuhledar
         "Bird up. Visibility good, frost. Watch the dacha road and the Pavlivka road." => "Пташка в повітрі. Видимість добра, мороз. Дивимось дачну дорогу і дорогу на Павлівку.",
-        "All, this is Hranit. They're coming again today. Leave the roads clear. Let them in." => "Всім, я Граніт. Сьогодні знову підуть. Дороги не чіпати. Пускаємо їх.",
+        "All, this is {command}. They're coming again today. Leave the roads clear. Let them in." => "Всім, я {command}. Сьогодні знову підуть. Дороги не чіпати. Пускаємо їх.",
         "Bird: column on the dacha road. Twelve units, tanks leading, a plow in front. Smoke." => "Пташка: колона на дачній дорозі. Дванадцять коробочок, танки попереду, перший з тралом. Димлять.",
-        "This is Sokil. Second column. Same route. Exactly the same route." => "Я Сокіл. Друга колона. Той самий маршрут. Точно той самий.",
+        "This is {op}. Second column. Same route. Exactly the same route." => "Я {op}. Друга колона. Той самий маршрут. Точно той самий.",
         "Bird: Pavlivka road now. Volunteers by the look of it. BMP-1s." => "Пташка: тепер дорога на Павлівку. Схоже, добровольці. БМП-1.",
-        "This is Sokil. They're driving past their own wrecks from this morning. Same line." => "Я Сокіл. Їдуть повз свої ж ранкові підбиті. Тією ж лінією.",
-        "This is Sokil. Groups of five. Walking across the open field. Towards the tree line." => "Я Сокіл. По п'ятеро. Йдуть відкритим полем. На посадку.",
+        "This is {op}. They're driving past their own wrecks from this morning. Same line." => "Я {op}. Їдуть повз свої ж ранкові підбиті. Тією ж лінією.",
+        "This is {op}. Groups of five. Walking across the open field. Towards the tree line." => "Я {op}. По п'ятеро. Йдуть відкритим полем. На посадку.",
         "TOS! Solntsepyok on the town! Get down!" => "ТОС! Сонцепьок по місту! Всі вниз!",
         "Bird: interference. Their EW is up." => "Пташка: перешкоди. Їхній РЕБ працює.",
         // The morning south of Mala Tokmachka
         "Bird up. Still dark. Our guns are working the crest." => "Пташка в повітрі. Ще темно. Наша арта працює по гребеню.",
-        "All, this is Hranit. The column is late. The guns will be finished before it gets there." => "Всім, я Граніт. Колона запізнюється. Арта закінчить раніше, ніж вони дійдуть.",
-        "This is Sokil. Guns are done. Nothing on the track yet." => "Я Сокіл. Арта відпрацювала. На дорозі поки нікого.",
-        "This is Sokil. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it." => "Я Сокіл. Перша група на західній дорозі. Дев'ять машин. Попереду Леопард з тралом, за ним катки.",
-        "This is Sokil. Second group moving. Same plan, the other track." => "Я Сокіл. Друга група пішла. Той самий план, інша дорога.",
+        "All, this is {command}. The column is late. The guns will be finished before it gets there." => "Всім, я {command}. Колона запізнюється. Арта закінчить раніше, ніж вони дійдуть.",
+        "This is {op}. Guns are done. Nothing on the track yet." => "Я {op}. Арта відпрацювала. На дорозі поки нікого.",
+        "This is {op}. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it." => "Я {op}. Перша група на західній дорозі. Дев'ять машин. Попереду Леопард з тралом, за ним катки.",
+        "This is {op}. Second group moving. Same plan, the other track." => "Я {op}. Друга група пішла. Той самий план, інша дорога.",
         "Ka-52s! Two of them, south-east, low over the ridge. Too far for anything we have." => "Ка-52! Два, південний схід, низько над гребенем. Задалеко для всього, що маємо.",
-        "All, this is Hranit. Four Bradleys going back in. Get the infantry onto them." => "Всім, я Граніт. Чотири Бредлі йдуть назад по людей. Саджайте піхоту.",
-        "This is Sokil. Helicopters again. South-west this time." => "Я Сокіл. Знову вертольоти. Цього разу південний захід.",
-        "This is Sokil. Quiet on the lanes. Only the smoke." => "Я Сокіл. На проходах тихо. Тільки дим.",
-        "All, this is Hranit. That's enough. All callsigns back to the start line. Bring the infantry." => "Всім, я Граніт. Досить. Всі позивні — назад на вихідну. Піхоту забрати.",
+        "All, this is {command}. Four Bradleys going back in. Get the infantry onto them." => "Всім, я {command}. Чотири Бредлі йдуть назад по людей. Саджайте піхоту.",
+        "This is {op}. Helicopters again. South-west this time." => "Я {op}. Знову вертольоти. Цього разу південний захід.",
+        "This is {op}. Quiet on the lanes. Only the smoke." => "Я {op}. На проходах тихо. Тільки дим.",
+        "All, this is {command}. That's enough. All callsigns back to the start line. Bring the infantry." => "Всім, я {command}. Досить. Всі позивні — назад на вихідну. Піхоту забрати.",
         "Launch from the helicopter! Missile inbound!" => "Пуск з вертольота! Ракета йде!",
         // Orders
-        "All teams, this is Maestro. Wait until the column is committed, then fire." => "Всім розрахункам, я Маестро. Чекати, поки колона втягнеться, тоді вогонь.",
-        "All teams, this is Maestro. Hold fire. Let them come." => "Всім розрахункам, я Маестро. Вогонь не відкривати. Нехай ідуть.",
-        "All teams, this is Maestro. Fire at will." => "Всім розрахункам, я Маестро. Вогонь по готовності.",
-        "All callsigns, this is Maestro. Push on. Keep to the lane." => "Всім позивним, я Маестро. Вперед. Тримайтесь проходу.",
-        "All callsigns, this is Maestro. Hold where you are. Do not leave the lane." => "Всім позивним, я Маестро. Стояти на місці. З проходу не виходити.",
-        "All callsigns, this is Maestro. Pull back. Back to the start line. Pick up the infantry on the way." => "Всім позивним, я Маестро. Відхід. На вихідну. По дорозі забрати піхоту.",
+        "All teams, this is {player}. Wait until the column is committed, then fire." => "Всім розрахункам, я {player}. Чекати, поки колона втягнеться, тоді вогонь.",
+        "All teams, this is {player}. Hold fire. Let them come." => "Всім розрахункам, я {player}. Вогонь не відкривати. Нехай ідуть.",
+        "All teams, this is {player}. Fire at will." => "Всім розрахункам, я {player}. Вогонь по готовності.",
+        "All callsigns, this is {player}. Push on. Keep to the lane." => "Всім позивним, я {player}. Вперед. Тримайтесь проходу.",
+        "All callsigns, this is {player}. Hold where you are. Do not leave the lane." => "Всім позивним, я {player}. Стояти на місці. З проходу не виходити.",
+        "All callsigns, this is {player}. Pull back. Back to the start line. Pick up the infantry on the way." => "Всім позивним, я {player}. Відхід. На вихідну. По дорозі забрати піхоту.",
         // The guns
-        "Maestro, this is Hranit. No more HIMARS for you today." => "Маестро, я Граніт. Хаймарсів на сьогодні для вас більше нема.",
+        "{player}, this is {command}. No more HIMARS for you today." => "{player}, я {command}. Хаймарсів на сьогодні для вас більше нема.",
         "No more smoke." => "Диму більше немає.",
         "No more RAAM." => "РААМ більше немає.",
-        "Maestro, this is Berkut. Out of shells. Nothing to send." => "Маестро, я Беркут. Снарядів нема. Нічим працювати.",
-        "Maestro, this is Berkut. Still firing the last mission. Wait." => "Маестро, я Беркут. Ще відпрацьовуємо попередню. Чекай.",
+        "{player}, this is {guns}. Out of shells. Nothing to send." => "{player}, я {guns}. Снарядів нема. Нічим працювати.",
+        "{player}, this is {guns}. Still firing the last mission. Wait." => "{player}, я {guns}. Ще відпрацьовуємо попередню. Чекай.",
         "Three hundred. Need evacuation from the tree line." => "Триста. Потрібна евакуація з посадки.",
-        "This is Sokil. Their position on the crest has gone quiet." => "Я Сокіл. Їхня позиція на гребені замовкла.",
+        "This is {op}. Their position on the crest has gone quiet." => "Я {op}. Їхня позиція на гребені замовкла.",
         "The OP on the roof is gone. TOS took the building. No eyes from the high-rise." => "СП на даху нема. ТОС накрив будинок. З висотки очей немає.",
         "The water tower is down. No eyes from the farm." => "Вежа впала. З ферми очей немає.",
         "ATGM from the crest! Launch, launch!" => "ПТРК з гребеня! Пуск, пуск!",
@@ -111,5 +112,38 @@ pub fn uk(en: &str) -> &'static str {
         "07:02  Four Bradleys go back in for the men" => "07:02  Чотири Бредлі йдуть назад по людей",
         "08:50  Everyone back to the start line" => "08:50  Всі назад на вихідну",
         _ => "",
+    }
+}
+
+/// Fill a line's callsigns (`{player}`, `{guns}`, `{op}`, `{command}`) from the diorama's roster, in Ukrainian
+/// or in English.
+pub fn fill(line: &str, ukrainian: bool) -> String {
+    if !line.contains('{') {
+        return line.to_string();
+    }
+    let c = &crate::data::data().callsigns;
+    let pick = |n: &(String, String)| if ukrainian { n.1.clone() } else { n.0.clone() };
+    line.replace("{player}", &pick(&c.player)).replace("{guns}", &pick(&c.guns)).replace("{op}", &pick(&c.op)).replace("{command}", &pick(&c.command))
+}
+
+/// A line of the net from its English template: (Ukrainian, English), callsigns filled in. The Ukrainian is
+/// empty where the table has none.
+pub fn net(template: &str) -> (String, String) {
+    let uk = uk(template);
+    (if uk.is_empty() { String::new() } else { fill(uk, true) }, fill(template, false))
+}
+
+#[cfg(test)]
+mod tests {
+    /// Vuhledar's net reads as it did before its callsigns came from the file (the default diorama).
+    #[test]
+    fn the_net_fills_its_callsigns() {
+        if crate::diorama::diorama() != crate::diorama::Diorama::Vuhledar {
+            return;
+        }
+        let (uk, en) = super::net("{player}, this is {guns}. Out of shells. Nothing to send.");
+        assert_eq!(en, "Maestro, this is Berkut. Out of shells. Nothing to send.");
+        assert_eq!(uk, "Маестро, я Беркут. Снарядів нема. Нічим працювати.");
+        assert_eq!(super::net("A line the table does not know."), (String::new(), "A line the table does not know.".to_string()));
     }
 }

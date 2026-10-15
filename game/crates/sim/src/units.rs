@@ -382,12 +382,13 @@ pub struct Line {
 impl Line {
     /// A line the string table knows (`text::uk`); one it does not is said in English alone.
     pub fn new(en: impl Into<String>) -> Self {
-        let en = en.into();
-        Self { uk: crate::text::uk(&en).to_string(), en }
+        let (uk, en) = crate::text::net(&en.into());
+        Self { uk, en }
     }
 
+    /// Both tongues given; their callsigns (`{player}`, `{guns}`, ...) are filled in.
     pub fn both(uk: impl Into<String>, en: impl Into<String>) -> Self {
-        Self { uk: uk.into(), en: en.into() }
+        Self { uk: crate::text::fill(&uk.into(), true), en: crate::text::fill(&en.into(), false) }
     }
 }
 

@@ -178,7 +178,7 @@ fn run_script(
             Act::Order(o) => {
                 if *order == ColumnOrder::Push {
                     *order = *o;
-                    radio.say(now, "All, this is Hranit. That's enough. All callsigns back to the start line. Bring the infantry.");
+                    radio.say(now, "All, this is {command}. That's enough. All callsigns back to the start line. Bring the infantry.");
                     *banner = Some(("08:50  Everyone back to the start line".to_string(), 7.0));
                 }
             }
