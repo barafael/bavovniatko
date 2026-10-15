@@ -8,7 +8,7 @@ publish.workspace = true
 
 [dependencies]
 leptos = { version = "0.8.22", features = ["csr"] }
-kbcore.workspace = true
+kbcore = { workspace = true, features = ["web"] }
 strum.workspace = true
 serde.workspace = true
 serde_json.workspace = true
@@ -17,4 +17,4 @@ js-sys.workspace = true
 console_error_panic_hook = "0.1"
 wasm-bindgen-futures.workspace = true
 futures = "0.3"
-web-sys = { workspace = true, features = ["Worker", "WorkerOptions", "WorkerType", "MessageEvent", "Window", "Location", "History", "HtmlTextAreaElement", "KeyboardEvent", "Response", "Navigator", "Clipboard", "MediaQueryList"] }
+web-sys = { workspace = true, features = ["Worker", "WorkerOptions", "WorkerType", "MessageEvent", "Window", "Location", "History", "HtmlTextAreaElement", "KeyboardEvent", "Navigator", "Clipboard", "MediaQueryList"] }

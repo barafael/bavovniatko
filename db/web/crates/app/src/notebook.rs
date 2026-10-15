@@ -7,7 +7,7 @@ use serde::Deserialize;
 use wasm_bindgen::prelude::*;
 
 use crate::bridge::Editor;
-use crate::kb::{BUILD, Kb, QueryResult, fetch_text};
+use crate::kb::{Kb, QueryResult, data_url, fetch_text};
 use crate::results::{ClaimSources, Results, claim_ids, fetch_sources};
 use crate::router::{self, Route};
 use crate::ui::group_by;
@@ -78,7 +78,7 @@ pub fn Notebook(initial: Option<String>) -> impl IntoView {
     on_cleanup(move || editor.with_value(|e| if let Some(e) = e { e.destroy() }));
 
     let gallery = LocalResource::new(|| async {
-        fetch_text(&format!("data/gallery.json?v={BUILD}")).await.ok()
+        fetch_text(&data_url("gallery.json")).await.ok()
             .and_then(|t| serde_json::from_str::<Vec<GalleryItem>>(&t).ok())
             .unwrap_or_default()
     });

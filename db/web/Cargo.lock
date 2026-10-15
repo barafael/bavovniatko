@@ -2206,10 +2206,14 @@ name = "kbcore"
 version = "0.1.0"
 dependencies = [
  "getrandom 0.3.4",
+ "js-sys",
  "serde",
  "serde_json",
  "surrealdb",
  "thiserror 2.0.21",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
  "web-time",
 ]
 

@@ -8,11 +8,12 @@ use std::collections::HashMap;
 use std::rc::Rc;
 
 use js_sys::Promise;
+use kbcore::web::response_text;
 use kbcore::{Kb, Manifest, QueryResult, Reply, Request, Source};
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
-use wasm_bindgen_futures::{JsFuture, spawn_local};
-use web_sys::{DedicatedWorkerGlobalScope, MessageEvent, Response};
+use wasm_bindgen_futures::spawn_local;
+use web_sys::{DedicatedWorkerGlobalScope, MessageEvent};
 
 thread_local! {
     static KB: RefCell<Option<Rc<Kb>>> = const { RefCell::new(None) };
@@ -40,15 +41,6 @@ impl Fetcher {
     fn start(&self, path: &str) -> Promise {
         scope().fetch_with_str(&format!("{}{}{}", self.base, path, self.query))
     }
-}
-
-async fn response_text(p: Promise, path: &str) -> Result<String, String> {
-    let resp: Response = JsFuture::from(p).await.map_err(|e| format!("{path}: {e:?}"))?.unchecked_into();
-    if !resp.ok() {
-        return Err(format!("{path}: HTTP {}", resp.status()));
-    }
-    let text = JsFuture::from(resp.text().map_err(|e| format!("{e:?}"))?).await.map_err(|e| format!("{e:?}"))?;
-    text.as_string().ok_or_else(|| format!("{path}: not text"))
 }
 
 impl Source for Fetcher {

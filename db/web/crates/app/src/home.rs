@@ -3,7 +3,7 @@
 use leptos::prelude::*;
 
 use crate::router::{Route, go, href};
-use crate::ui::{error_box, loading, rid_link, rows_resource, waiting_for_db};
+use crate::ui::{on_rows, rid_link, rows_resource};
 
 const ERAS: &str = "SELECT id, code, labels.en AS title, from, to, summary,
     (SELECT VALUE count() FROM claim WHERE eras CONTAINS $parent.id) AS claims
@@ -53,11 +53,7 @@ pub fn Home() -> impl IntoView {
                 </div>
             </header>
 
-            {move || match stats.get() {
-                None => loading(),
-                Some(None) => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) => match rows.into_iter().next() {
+            {move || on_rows(stats.get(), |rows| match rows.into_iter().next() {
                     None => view! { <p class="placeholder">"The knowledge base is still loading."</p> }.into_any(),
                     Some(s) => {
                         let n = |k: &str| s[k].as_u64().unwrap_or(0).to_string();
@@ -103,11 +99,7 @@ pub fn Home() -> impl IntoView {
 
                                 <section class="panel">
                                     <h2>"The strongest disagreements"</h2>
-                                    {move || match disputes.get() {
-                                        None => loading(),
-                                        Some(None) => waiting_for_db(),
-                                        Some(Some(Err(e))) => error_box(e),
-                                        Some(Some(Ok(rows))) => view! {
+                                    {move || on_rows(disputes.get(), |rows| view! {
                                             <ul class="plain">{rows.into_iter().map(|r| view! {
                                                 <li class="mini-dispute">
                                                     <a href=href(&Route::Claim(r["a"].as_str().unwrap_or_default().to_string()))>
@@ -118,18 +110,14 @@ pub fn Home() -> impl IntoView {
                                                 </li>
                                             }).collect_view()}</ul>
                                             <p class="muted small"><a href=href(&Route::Disputes)>"all disputes"</a></p>
-                                        }.into_any(),
-                                    }}
+                                        }.into_any()
+                                    )}
                                 </section>
                             </div>
 
                             <section class="panel">
                                 <h2>"Eras"</h2>
-                                {move || match eras.get() {
-                                    None => loading(),
-                                    Some(None) => waiting_for_db(),
-                                    Some(Some(Err(e))) => error_box(e),
-                                    Some(Some(Ok(rows))) => view! {
+                                {move || on_rows(eras.get(), |rows| view! {
                                         <ol class="eras">{rows.into_iter().map(|r| {
                                             let year = r["from"].as_str().and_then(|s| s.get(0..4)).unwrap_or("").to_string();
                                             let summary = r["summary"].as_str().unwrap_or_default().to_string();
@@ -141,18 +129,14 @@ pub fn Home() -> impl IntoView {
                                                 {(!summary.is_empty()).then(|| view! { <div class="muted small">{summary}</div> })}
                                             </li> }
                                         }).collect_view()}</ol>
-                                    }.into_any(),
-                                }}
+                                    }.into_any()
+                                )}
                             </section>
 
                             <section class="panel">
                                 <h2>"The research base"</h2>
                                 <p class="muted small">"The nine topic surveys, each a cited account of one part of the war, and the 21 dossiers built from them:"</p>
-                                {move || match topics.get() {
-                                    None => loading(),
-                                    Some(None) => waiting_for_db(),
-                                    Some(Some(Err(e))) => error_box(e),
-                                    Some(Some(Ok(rows))) => view! {
+                                {move || on_rows(topics.get(), |rows| view! {
                                         <ul class="plain topics">{rows.into_iter().map(|r| {
                                             let file = r["file"].as_str().unwrap_or_default().to_string();
                                             let title = r["title"].as_str().unwrap_or_default().trim_start_matches("Topic: ").to_string();
@@ -165,13 +149,12 @@ pub fn Home() -> impl IntoView {
                                         }).collect_view()}</ul>
                                         <p class="muted small"><a href=href(&Route::Questions)>"what is still open"</a>
                                             {" · "}<a href=href(&Route::About)>"how it was built and how to read it"</a></p>
-                                    }.into_any(),
-                                }}
+                                    }.into_any()
+                                )}
                             </section>
                         }.into_any()
                     }
-                },
-            }}
+                })}
         </article>
     }
 }

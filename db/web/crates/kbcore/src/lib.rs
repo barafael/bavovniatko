@@ -2,7 +2,8 @@
 //!
 //! Without features this crate is only the protocol between the app and the worker: the dataset manifest,
 //! loading progress, query results, and the messages themselves ([`Request`], [`Reply`]). The `engine` feature
-//! adds [`Kb`], the knowledge base itself (see `engine.rs`).
+//! adds [`Kb`], the knowledge base itself (see `engine.rs`), and the `web` feature the browser fetch both the app
+//! and the worker use (see `web.rs`).
 
 use std::collections::BTreeMap;
 
@@ -13,6 +14,8 @@ use serde_json::Value;
 mod engine;
 #[cfg(feature = "engine")]
 pub use engine::{Error, Kb, Source};
+#[cfg(feature = "web")]
+pub mod web;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FileEntry {

@@ -6,7 +6,7 @@ use serde_json::json;
 use std::collections::BTreeMap;
 
 use crate::bridge;
-use crate::kb::fetch_text;
+use crate::kb::{data_url, fetch_text};
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Field {
@@ -45,7 +45,7 @@ const KEYWORDS: &[&str] = &[
 
 /// Fetch schema.json and hand the editor its autocomplete words.
 pub async fn load() -> Option<Schema> {
-    let schema: Schema = serde_json::from_str(&fetch_text(&format!("data/schema.json?v={}", crate::kb::BUILD)).await.ok()?).ok()?;
+    let schema: Schema = serde_json::from_str(&fetch_text(&data_url("schema.json")).await.ok()?).ok()?;
     let mut words = vec![];
     for (name, t) in &schema.tables {
         words.push(json!({"label": name, "type": "class", "detail": "table", "info": t.comment}));

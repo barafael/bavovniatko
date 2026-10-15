@@ -14,7 +14,7 @@ use serde_json::{Map, Value};
 
 use crate::kb::{Kb, QueryResult, StatementResult};
 use crate::router::{Route, href};
-use crate::ui::{LABEL_FIELDS, claim_key, claim_of_key, label_of, rid_link_with, text};
+use crate::ui::{LABEL_FIELDS, claim_key, claim_of_key, key_link, label_of, rid_link_with, text};
 
 /// Sources of the claims in a result: claim id → [(title, url)].
 #[derive(Clone, Default)]
@@ -217,7 +217,7 @@ fn Table(rows: Arc<[Value]>) -> impl IntoView {
             let v = if objects { r.get(c).unwrap_or(&NULL) } else { r };
             let content = match (c.as_str(), claim) {
                 ("sources", Some(id)) if with_sources => source_links(sources.0.get(id)),
-                ("key", Some(id)) => view! { <a class="rid" href=href(&Route::Claim(id.to_string()))>{text(v)}</a> }.into_any(),
+                ("key", Some(id)) => key_link(id.to_string(), text(v)).into_any(),
                 _ => cell_at(&kb, v, 0),
             };
             view! { <td data-label=c.clone()>{content}</td> }
@@ -317,7 +317,7 @@ fn cell_at(kb: &Kb, v: &Value, depth: usize) -> AnyView {
             <a href=s.clone() target="_blank" rel="noopener noreferrer">{short(s, 80)}</a>
         }.into_any(),
         Value::String(s) => match claim_of_key(s) {
-            Some(id) => view! { <a class="rid" href=href(&Route::Claim(id))>{s.clone()}</a> }.into_any(),
+            Some(id) => key_link(id, s.clone()).into_any(),
             None => marked(&short(s, CELL_CHARS)),
         },
         Value::Array(a) if a.iter().all(|x| !x.is_array() && !x.is_object()) => {

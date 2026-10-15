@@ -11,7 +11,7 @@ use wasm_bindgen::JsCast;
 use crate::kb::{Kb, Status};
 use crate::results::{ClaimSources, fetch_sources};
 use crate::router::{Route, href, replace};
-use crate::ui::{error_box, fmt_date, loading, waiting_for_db};
+use crate::ui::{RowsResource, RowsState, error_box, fmt_date, key_link, loading, waiting_for_db};
 
 /// A signal that follows `source`, but only settles `DELAY` ms after it last changed, so typing doesn't run a query
 /// per keystroke.
@@ -55,8 +55,8 @@ pub fn Search(initial: String) -> impl IntoView {
         }
     });
 
-    // The hits and their sources: `None` until there is a query and the database is ready.
-    let results = LocalResource::new(move || {
+    // The hits and their sources: `NoDb` until there is a query and the database is ready.
+    let results = RowsResource::new(move || {
         let terms = terms.get();
         let ready = matches!(kb.status.get(), Status::Ready { .. });
         async move {
@@ -85,18 +85,18 @@ pub fn Search(initial: String) -> impl IntoView {
                     prop:value=move || q.get() on:input=move |ev| q.set(event_target_value(&ev)) />
             </div>
             <p class="muted">{move || match results.get() {
-                Some(Some(Ok((rows, _)))) => format!("{} matches for “{}”", rows.len(), terms.get().trim()),
-                Some(Some(Err(_))) => String::new(),
+                RowsState::Ready((rows, _)) => format!("{} matches for “{}”", rows.len(), terms.get().trim()),
+                RowsState::Failed(_) => String::new(),
                 _ if terms.get().trim().len() >= 2 => format!("Searching for “{}” …", terms.get().trim()),
                 _ => String::new(),
             }}</p>
             {move || match results.get() {
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok((rows, sources)))) => {
+                RowsState::Failed(e) => error_box(e),
+                RowsState::Ready((rows, sources)) => {
                     let hits = rows.into_iter().map(|r| view! { <Hit r=r sources=sources.clone() /> }).collect_view();
                     view! { <ul class="hits">{hits}</ul> }.into_any()
                 }
-                Some(None) if terms.get().trim().len() >= 2 => {
+                RowsState::NoDb if terms.get().trim().len() >= 2 => {
                     if kb.is_ready() { loading() } else { waiting_for_db() }
                 }
                 _ => view! {
@@ -123,7 +123,7 @@ fn Hit(r: Value, sources: ClaimSources) -> impl IntoView {
     view! {
         <li class="hit">
             <div class="hit-head">
-                <a class="rid" href=href(&Route::Claim(id.clone()))>{key.clone()}</a>
+                {key_link(id.clone(), key.clone())}
                 {t.map(|d| view! { <span class="muted small">{fmt_date(&Value::String(d), None)}</span> }).into_any()}
                 <a class="muted small" href=href(&Route::Graph(Some(id.clone()), 2))>"its graph"</a>
                 <a class="muted small" href=href(&Route::Notebook(Some(format!("fn::claim({id});"))))>"notebook"</a>

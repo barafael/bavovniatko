@@ -9,10 +9,11 @@ use serde_json::{Value, json};
 
 use crate::results::cell;
 use crate::router::{Route, href};
-use crate::ui::{Precision, claim_key, claim_link, error_box, fmt_date, fmt_when, kind_label, list, on_rows, rid_link, rows_resource, text};
+use crate::ui::{Precision, claim_key, claim_link, error_box, fmt_date, fmt_when, key_link, kind_label, list, on_rows, rid_link, rows_resource, text};
 
-/// Fields the page shows elsewhere (the title) or that mean nothing to a reader.
-const HIDDEN: &[&str] = &["id", "labels", "ext", "geometry", "legacy_ids", "created_at", "updated_at", "published_raw"];
+/// Fields the page shows elsewhere (the title) or that mean nothing to a reader. Bookkeeping such as `prov`,
+/// `created_at`, `updated_at` and `legacy_ids` never reaches the browser: db/tools/webexport.py and webscrub.py drop it.
+const HIDDEN: &[&str] = &["id", "labels", "ext", "geometry", "published_raw"];
 /// The fields a record's title can come from, in order of preference (then its id).
 const TITLE_FIELDS: &[&str] = &["labels", "title", "display", "term", "key"];
 const CLAIMS_SHOWN: usize = 100;
@@ -130,7 +131,7 @@ fn counter_panel(title: &'static str, rows: Vec<Value>) -> Option<impl IntoView>
                         {c["rationale"].as_str().map(|r| view! { <p class="muted small">{r.to_string()}</p> })}
                         {(!evidence.is_empty()).then(|| view! {
                             <p class="small">"evidence: "{evidence.into_iter().map(|e| view! {
-                                <a class="rid" href=href(&Route::Claim(e.clone()))>{claim_key(&e)}</a>" "
+                                {key_link(e.clone(), claim_key(&e))}" "
                             }).collect_view()}</p>
                         })}
                     </li>

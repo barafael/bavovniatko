@@ -102,6 +102,11 @@ pub fn claim_link(id: &Value, label: &Value) -> impl IntoView + use<> {
     view! { <a href=href(&Route::Claim(text(id)))>{text(label)}</a> }
 }
 
+/// A claim's id as a link to its page, shown as `text` (its key, usually) in the record-id style.
+pub fn key_link(id: String, text: String) -> impl IntoView + use<> {
+    view! { <a class="rid" href=href(&Route::Claim(id))>{text}</a> }
+}
+
 /// A link to a record's view ("claim:…" → claim page, "place:…" → map, …); plain text if not a record id.
 pub fn rid_link(rid: &str, label: Option<String>) -> AnyView {
     rid_link_with(&expect_context::<Kb>(), rid, label)
@@ -211,28 +216,83 @@ pub fn error_box(e: String) -> AnyView {
     view! { <div class="error">{e}</div> }.into_any()
 }
 
-/// A query's rows: `None` until the query has run, `Some(None)` while the database is still loading.
-pub type Rows = Option<Option<Result<Vec<Value>, String>>>;
+/// Where a query's rows are: a query's rows by default, or whatever else a page fetches with them.
+#[derive(Clone, Debug, PartialEq)]
+pub enum RowsState<T = Vec<Value>> {
+    /// The query has not answered yet.
+    Loading,
+    /// The browser database is still loading (or there is nothing to ask yet), so the query did not run.
+    NoDb,
+    Failed(String),
+    Ready(T),
+}
+
+impl<T> From<Option<Result<T, String>>> for RowsState<T> {
+    /// A fetch's answer: `None` when it did not run.
+    fn from(answer: Option<Result<T, String>>) -> Self {
+        match answer {
+            None => RowsState::NoDb,
+            Some(Err(e)) => RowsState::Failed(e),
+            Some(Ok(rows)) => RowsState::Ready(rows),
+        }
+    }
+}
+
+/// A query's rows as a resource, seen as a [`RowsState`]: `Loading` until the fetch has answered.
+pub struct RowsResource<T: 'static = Vec<Value>>(LocalResource<RowsState<T>>);
+
+impl<T> Clone for RowsResource<T> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+
+impl<T> Copy for RowsResource<T> {}
+
+impl<T: Clone + 'static> RowsResource<T> {
+    /// Re-runs `fetch` whenever a signal it reads before its first `.await` changes; it answers `None` when it
+    /// has nothing to run.
+    pub fn new<F: Future<Output = Option<Result<T, String>>> + 'static>(fetch: impl Fn() -> F + 'static) -> Self {
+        RowsResource(LocalResource::new(move || {
+            let answer = fetch();
+            async move { RowsState::from(answer.await) }
+        }))
+    }
+
+    pub fn get(&self) -> RowsState<T> {
+        self.0.get().unwrap_or(RowsState::Loading)
+    }
+
+    pub fn with<R>(&self, f: impl FnOnce(&RowsState<T>) -> R) -> R {
+        self.0.with(|state| match state {
+            Some(state) => f(state),
+            None => f(&RowsState::Loading),
+        })
+    }
+}
 
 /// The view of a query's rows once they are in; until then, what is happening.
-pub fn on_rows(rows: Rows, f: impl FnOnce(Vec<Value>) -> AnyView) -> AnyView {
+pub fn on_rows(rows: RowsState, f: impl FnOnce(Vec<Value>) -> AnyView) -> AnyView {
     match rows {
-        None => loading(),
-        Some(None) => waiting_for_db(),
-        Some(Some(Err(e))) => error_box(e),
-        Some(Some(Ok(rows))) => f(rows),
+        RowsState::Loading => loading(),
+        RowsState::NoDb => waiting_for_db(),
+        RowsState::Failed(e) => error_box(e),
+        RowsState::Ready(rows) => f(rows),
     }
 }
 
 /// The rows, if they are in.
-pub fn ok_rows(rows: Rows) -> Option<Vec<Value>> {
-    rows.flatten().and_then(Result::ok)
+pub fn ok_rows(rows: RowsState) -> Option<Vec<Value>> {
+    match rows {
+        RowsState::Ready(rows) => Some(rows),
+        _ => None,
+    }
 }
 
 /// Run a query once the database is ready; re-runs when `query` changes.
-pub fn rows_resource(query: impl Fn() -> Option<String> + 'static) -> LocalResource<Option<Result<Vec<Value>, String>>> {
+pub fn rows_resource(query: impl Fn() -> Option<String> + 'static) -> RowsResource {
     let kb = expect_context::<Kb>();
-    LocalResource::new(move || {
+    RowsResource::new(move || {
         let ready = kb.is_ready();
         let q = query();
         async move {
@@ -251,6 +311,9 @@ pub fn wide_screen() -> bool {
 }
 
 /// The rows of a query, borrowed, if they are in.
-pub fn rows_in(rows: &Rows) -> Option<&[Value]> {
-    rows.as_ref()?.as_ref()?.as_deref().ok()
+pub fn rows_in(rows: &RowsState) -> Option<&[Value]> {
+    match rows {
+        RowsState::Ready(rows) => Some(rows),
+        _ => None,
+    }
 }

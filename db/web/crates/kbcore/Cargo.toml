@@ -10,6 +10,8 @@ publish.workspace = true
 # The SurrealDB engine. Without it, kbcore is only the worker protocol (what the app needs).
 default = ["engine"]
 engine = ["dep:surrealdb", "dep:web-time", "dep:getrandom", "dep:thiserror"]
+# Fetching text in the browser (wasm32), for the app and the worker.
+web = ["dep:js-sys", "dep:wasm-bindgen", "dep:wasm-bindgen-futures", "dep:web-sys"]
 
 [dependencies]
 serde.workspace = true
@@ -18,3 +20,7 @@ surrealdb = { workspace = true, optional = true }
 web-time = { workspace = true, optional = true }
 getrandom = { version = "0.3", features = ["wasm_js"], optional = true }
 thiserror = { workspace = true, optional = true }
+js-sys = { workspace = true, optional = true }
+wasm-bindgen = { workspace = true, optional = true }
+wasm-bindgen-futures = { workspace = true, optional = true }
+web-sys = { workspace = true, features = ["Response"], optional = true }

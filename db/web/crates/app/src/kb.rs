@@ -11,7 +11,6 @@ use leptos::prelude::*;
 use serde_json::Value;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
-use wasm_bindgen_futures::JsFuture;
 use web_sys::{MessageEvent, Worker};
 
 #[derive(Debug, Clone, PartialEq)]
@@ -119,14 +118,14 @@ impl Kb {
     }
 }
 
+/// A dataset file's URL relative to the page, with the build id as its cache key: "schema.json" →
+/// "data/schema.json?v=…".
+pub fn data_url(path: &str) -> String {
+    format!("data/{path}?v={BUILD}")
+}
+
 /// Fetch a text file relative to the page.
 pub async fn fetch_text(url: &str) -> Result<String, String> {
     let window = web_sys::window().ok_or("no window")?;
-    let resp: web_sys::Response = JsFuture::from(window.fetch_with_str(url)).await
-        .map_err(|e| format!("{e:?}"))?.unchecked_into();
-    if !resp.ok() {
-        return Err(format!("{url}: HTTP {}", resp.status()));
-    }
-    let text = JsFuture::from(resp.text().map_err(|e| format!("{e:?}"))?).await.map_err(|e| format!("{e:?}"))?;
-    text.as_string().ok_or_else(|| "not text".into())
+    kbcore::web::response_text(window.fetch_with_str(url), url).await
 }

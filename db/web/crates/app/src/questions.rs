@@ -5,7 +5,7 @@ use leptos::prelude::*;
 use serde_json::Value;
 
 use crate::router::{Route, href};
-use crate::ui::{error_box, loading, rid_link, rows_resource, strs, waiting_for_db};
+use crate::ui::{ok_rows, on_rows, rid_link, rows_resource, strs};
 
 const QUERY: &str = "SELECT id, key, text, status, topics, eras, anchor.file AS file, anchor.section AS section
     FROM question ORDER BY key";
@@ -27,7 +27,7 @@ pub fn Questions() -> impl IntoView {
                     <option value="">"All dossiers and topic surveys"</option>
                     <option value="topic:c">"Dossiers only"</option>
                     <option value="topic:t">"Topic surveys only"</option>
-                    {move || data.get().flatten().and_then(|r| r.ok()).map(|rows| {
+                    {move || ok_rows(data.get()).map(|rows| {
                         let mut seen: Vec<(String, usize)> = vec![];
                         for r in &rows {
                             for t in strs(&r["topics"]) {
@@ -51,11 +51,7 @@ pub fn Questions() -> impl IntoView {
                     on:change=move |ev| open.set(event_target_checked(&ev)) />
                     " open only"</label>
             </div>
-            {move || match data.get() {
-                None => loading(),
-                Some(None) => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) => {
+            {move || on_rows(data.get(), |rows| {
                     let (t, w) = (topic.get(), words.get().to_lowercase());
                     let mut topics: Vec<String> = rows.iter().flat_map(|r| strs(&r["topics"])).collect();
                     topics.sort();
@@ -74,8 +70,7 @@ pub fn Questions() -> impl IntoView {
                         <p class="muted">{format!("{total} of {} questions, over {} topics", rows.len(), topics.len())}</p>
                         <ul class="questions">{shown.into_iter().map(|r| view! { <Question r=r.clone() /> }).collect_view()}</ul>
                     }.into_any()
-                }
-            }}
+                })}
         </article>
     }
 }

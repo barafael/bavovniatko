@@ -10,9 +10,8 @@ use serde_json::Value;
 use strum::VariantArray;
 
 use crate::claim::{Relation, relation_color};
-use crate::kb::Kb;
 use crate::router::{Route, go, href};
-use crate::ui::{claim_key, error_box, loading, rows_resource, waiting_for_db};
+use crate::ui::{RowsState, claim_key, error_box, loading, on_rows, rows_resource, waiting_for_db};
 
 /// How many claims to draw at most. Past this the picture stops helping.
 const MAX_NODES: usize = 90;
@@ -144,9 +143,9 @@ pub fn Graph(seed: Option<String>, hops: i32) -> impl IntoView {
             {move || match seed.clone() {
                 None => view! { <GraphIntro /> }.into_any(),
                 Some(s) => match (head.get(), claims.get()) {
-                    (None, _) | (_, None) => loading(),
-                    (Some(Some(Err(e))), _) | (_, Some(Some(Err(e)))) => error_box(e),
-                    (Some(Some(Ok(h))), Some(Some(Ok(c)))) => {
+                    (RowsState::Loading, _) | (_, RowsState::Loading) => loading(),
+                    (RowsState::Failed(e), _) | (_, RowsState::Failed(e)) => error_box(e),
+                    (RowsState::Ready(h), RowsState::Ready(c)) => {
                         match h.into_iter().next() {
                             Some(row) if row["id"].is_string() => view! {
                                 <GraphBody head=row hops=hops seed=s claims=c />
@@ -231,25 +230,14 @@ fn GraphBody(head: Value, hops: i32, seed: String, claims: Vec<Value>) -> impl I
                 {" · "}<a href=href(&Route::Graph(Some(seed.clone()), (hops % 3) + 1))>
                     {if hops == 3 { "back to 1 step" } else { "one step further" }}</a>
             </div>
-            {move || match edges.get() {
-                None => loading(),
-                Some(None) if !kb_ready() => waiting_for_db(),
-                Some(Some(Err(e))) => error_box(e),
-                Some(Some(Ok(rows))) => {
-                    // fn::graph returns one object: {edges, claims}.
-                    let row = rows.first().cloned().unwrap_or_default();
-                    let (nodes, links, extra) = build(&rows_of(&row, "edges"), &rows_of(&row, "claims"), &claims, hops);
-                    picture(nodes, links, extra)
-                }
-                _ => waiting_for_db(),
-            }}
+            {move || on_rows(edges.get(), |rows| {
+                // fn::graph returns one object: {edges, claims}.
+                let row = rows.first().cloned().unwrap_or_default();
+                let (nodes, links, extra) = build(&rows_of(&row, "edges"), &rows_of(&row, "claims"), &claims, hops);
+                picture(nodes, links, extra)
+            })}
         </>
     }
-}
-
-/// Whether the browser database has finished loading, for the placeholder text.
-fn kb_ready() -> bool {
-    expect_context::<Kb>().is_ready()
 }
 
 /// One of fn::graph's two result arrays. A function returning an object comes back as a single row, so its arrays are
