@@ -11,6 +11,8 @@ pub enum Mode {
     Op,
     /// Eye level at the south edge of a tree line, behind an ATGM launcher.
     Ground,
+    /// Through an FPV's goggles, flying it.
+    Fpv,
 }
 
 /// What a camera follows: a point, a vehicle of the column, the infantry (`BAV_LOOK`, the showcase), one

@@ -131,6 +131,7 @@ impl View {
             Mode::Drone => 52f32.to_radians() / self.drone_fov,
             Mode::Op => 55f32.to_radians() / self.op_fov,
             Mode::Ground => if self.sight { Self::SIGHT_ZOOM } else { 1.0 },
+            Mode::Fpv => 1.0,
         }
     }
 
@@ -159,4 +160,44 @@ pub fn cursor_ground(window: &Window, camera: &Camera, cam_tf: &GlobalTransform)
     let cursor = window.cursor_position()?;
     let ray = camera.viewport_to_world(cam_tf, cursor).ok()?;
     geo::raycast(ray.origin, *ray.direction, 9000.0)
+}
+
+/// The player's FPV: flown by hand through its goggles (the game's camera), struck by the battle where it meets a
+/// hull or the ground. The camera flies it in `Step::Camera`; `drones` resolves where it hits.
+#[derive(Resource, Default)]
+pub struct Fpv {
+    /// Left for the day.
+    pub left: u32,
+    pub flying: bool,
+    pub pos: Vec3,
+    pub vel: Vec3,
+    /// Its attitude: heading (0 north, left positive), nose (down negative), bank.
+    pub yaw: f32,
+    pub pitch: f32,
+    pub roll: f32,
+    /// Where the pilot is pointing it (the mouse), and the throttle, 0..1.
+    pub aim_yaw: f32,
+    pub aim_pitch: f32,
+    pub throttle: f32,
+    /// Seconds of battery left.
+    pub battery: f32,
+    /// The analogue video's quality, 1 clean; and whether the control link holds.
+    pub signal: f32,
+    pub control: bool,
+    /// Seconds the control link has been out: the receiver holds the last command for a moment, then the
+    /// failsafe cuts the motors.
+    pub lost_for: f32,
+    /// Seconds since it went in (or was lost): the goggles show static, then the view goes back to the drone.
+    pub gone: f32,
+}
+
+/// Where the drone team works from, whether the enemy has found it, and whether it is on the move.
+#[derive(Resource)]
+pub struct Operator {
+    pub pos: Vec2,
+    /// When the ranging round came in, if they have been found.
+    pub found: Option<f64>,
+    /// On the move until then: the feed is down.
+    pub moving_until: f64,
+    pub moves: u32,
 }

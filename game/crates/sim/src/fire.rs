@@ -258,7 +258,7 @@ fn observed_sigma(view: &View, target: Vec2) -> f32 {
             let d = view.drone_pos.xz().distance(target);
             if view.feed_down > 0.0 { 40.0 } else { 9.0 + d * 0.006 }
         }
-        Mode::Op | Mode::Ground => match diorama() {
+        Mode::Op | Mode::Ground | Mode::Fpv => match diorama() {
             Diorama::Vuhledar => 14.0 + 0.004 * (target.y + 1200.0).abs(),
             Diorama::Robotyne => 14.0 + 0.004 * target.distance(geo::layout().home),
         },

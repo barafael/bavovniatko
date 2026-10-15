@@ -10,7 +10,7 @@ use crate::dev::{self, dev};
 use crate::geo;
 use crate::units::{SState, Side, Soldier, Vehicle, vehicle_yaw};
 pub use bav_look::feed::{FeedSetup, HeadlessTarget};
-pub use bav_sim::player::{MainCamera, ObservationPost, Rth, Shake, View};
+pub use bav_sim::player::{Fpv, MainCamera, ObservationPost, Operator, Rth, Shake, View};
 use bevy::{
     camera::{Exposure, ShadowLodOrigin},
     core_pipeline::tonemapping::Tonemapping,
@@ -29,7 +29,7 @@ impl Plugin for CameraPlugin {
             .init_resource::<Shake>()
             .add_systems(Startup, spawn_camera.before(FeedSetup))
             .add_systems(Startup, spawn_launcher.after(spawn_camera))
-            .add_systems(Update, (switch_view, drone_control, op_control, ground_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
+            .add_systems(Update, (switch_view, drone_control, fpv_control, op_control, ground_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
     }
 }
 
@@ -104,6 +104,10 @@ pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
 }
 
 fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::Post)>) {
+    // In the goggles the pilot cannot look anywhere else until the FPV is gone.
+    if view.mode == Mode::Fpv {
+        return;
+    }
     if keys.just_pressed(KeyCode::Digit1) {
         view.mode = Mode::Drone;
     }
@@ -355,6 +359,99 @@ fn drone_control(
     view.tilt = cur + (target_tilt - cur) * (1.0 - (-dt * 5.0).exp());
 }
 
+/// Fly the FPV: it goes where it is pointed. The mouse points it (and turns it); W/S are the throttle; A/D bank it
+/// sideways, and it levels itself when let go. Its analogue video thins with range and behind the ground; near
+/// their jammers the control link drops out in spells, and without it the drone falls. `BAV_FPV` flies it by
+/// itself at the vehicle nearest a point.
+#[allow(clippy::too_many_arguments)]
+fn fpv_control(
+    time: Res<Time>,
+    keys: Res<ButtonInput<KeyCode>>,
+    motion: Res<AccumulatedMouseMotion>,
+    mut fpv: ResMut<Fpv>,
+    mut view: ResMut<View>,
+    op: Res<Operator>,
+    vehicles: Query<(&Vehicle, &Transform)>,
+) {
+    let dt = time.delta_secs();
+    if !fpv.flying {
+        // After it goes in: static in the goggles for a moment, then back to the drone.
+        if view.mode == Mode::Fpv {
+            fpv.gone += dt;
+            if fpv.gone > 1.6 {
+                view.mode = Mode::Drone;
+            }
+        }
+        return;
+    }
+    let t = time.elapsed_secs();
+    let p = fpv.pos;
+    let lay = geo::layout();
+    // The video: 5.8 GHz analogue, good to a few kilometres in the open, thin behind a crest.
+    let eye = geo::ground(op.pos) + Vec3::Y * 3.0;
+    let seen = {
+        let n = (eye.distance(p) / 20.0).ceil().max(1.0) as usize;
+        (1..n).all(|i| {
+            let q = eye.lerp(p, i as f32 / n as f32);
+            geo::height(q.x, q.z) < q.y
+        })
+    };
+    let range = 1.0 - geo::smoothstep(2500.0, 5000.0, eye.xz().distance(p.xz()));
+    fpv.signal = (range * if seen { 1.0 } else { 0.4 }).clamp(0.0, 1.0);
+    // The control link: their jammers sit past the jam line; in 2023 they took the control, not the video.
+    let jam = ((p.z - lay.jam_z) / 600.0).clamp(0.0, 1.0);
+    fpv.battery -= dt;
+    // At the crest the link is gone about a third of the time, in spells.
+    fpv.control = fpv.battery > 0.0 && (jam < 0.2 || geo::value_noise(t * 1.3, 4.0, 91) > -1.0 + 0.72 * jam);
+    fpv.lost_for = if fpv.control { 0.0 } else { fpv.lost_for + dt };
+    let mut bank = 0.0;
+    if fpv.control {
+        if let Some((_, (x, z))) = dev().fpv {
+            // The test pilot: at the vehicle nearest the point, full throttle.
+            let at = Vec2::new(x, z);
+            if let Some((_, tf)) = vehicles.iter().filter(|(v, _)| v.side == Side::Ru && v.state.alive()).min_by(|a, b| a.1.translation.xz().distance(at).total_cmp(&b.1.translation.xz().distance(at))) {
+                // At height until close, then the dive: low, a link dropout is the ground.
+                let close = tf.translation.xz().distance(p.xz()) < 300.0;
+                let (yaw, pitch) = look_angles(tf.translation + Vec3::Y * if close { 2.4 } else { 40.0 } - p);
+                fpv.aim_yaw = yaw;
+                fpv.aim_pitch = pitch.clamp(-1.4, 0.5);
+                fpv.throttle = 1.0;
+            }
+        } else {
+            let axis = |a, b| keys.pressed(a) as u8 as f32 - keys.pressed(b) as u8 as f32;
+            fpv.aim_yaw -= motion.delta.x * 0.003 + axis(KeyCode::KeyE, KeyCode::KeyQ) * dt * 1.5;
+            fpv.aim_pitch = (fpv.aim_pitch - motion.delta.y * 0.003).clamp(-1.4, 0.5);
+            fpv.throttle = (fpv.throttle + axis(KeyCode::KeyW, KeyCode::KeyS) * dt * 0.7).clamp(0.0, 1.0);
+            bank = axis(KeyCode::KeyD, KeyCode::KeyA);
+        }
+    }
+    // The airframe follows where it is pointed, as fast as it can turn; it banks into turns and levels itself.
+    let dyaw = crate::units::wrap(fpv.aim_yaw - fpv.yaw);
+    fpv.yaw += dyaw.clamp(-2.5 * dt, 2.5 * dt);
+    let dp = fpv.aim_pitch - fpv.pitch;
+    fpv.pitch += dp.clamp(-2.0 * dt, 2.0 * dt);
+    let roll_target = (-dyaw * 0.8).clamp(-0.6, 0.6) - bank * 0.5;
+    fpv.roll += (roll_target - fpv.roll) * (1.0 - (-dt * 6.0).exp());
+    let fwd = Vec3::new(-fpv.yaw.sin() * fpv.pitch.cos(), fpv.pitch.sin(), -fpv.yaw.cos() * fpv.pitch.cos());
+    let right = Vec3::new(fpv.yaw.cos(), 0.0, -fpv.yaw.sin());
+    if fpv.lost_for < 0.8 {
+        // (A short dropout: the receiver holds the last command.) 8 m/s idling forward, about 40 at full throttle, faster in a dive.
+        let speed = 8.0 + 32.0 * fpv.throttle + (-fpv.pitch).max(0.0) * 12.0;
+        let want = fwd * speed + right * bank * 6.0;
+        let dv = want - fpv.vel;
+        fpv.vel += dv.clamp_length_max(14.0 * dt);
+    } else {
+        // No link for long enough: the failsafe cuts the motors and it falls.
+        fpv.throttle = 0.0;
+        fpv.vel.y -= 9.81 * dt;
+        fpv.vel *= 1.0 - 0.2 * dt;
+    }
+    let v = fpv.vel;
+    fpv.pos += v * dt;
+    fpv.pos.x = fpv.pos.x.clamp(-geo::HALF_X + 20.0, geo::HALF_X - 20.0);
+    fpv.pos.z = fpv.pos.z.clamp(-geo::HALF_Z + 20.0, geo::HALF_Z - 20.0);
+}
+
 fn op_control(
     keys: Res<ButtonInput<KeyCode>>,
     buttons: Res<ButtonInput<MouseButton>>,
@@ -422,6 +519,7 @@ fn ground_control(
 fn apply_view(
     time: Res<Time>,
     view: Res<View>,
+    fpv: Res<Fpv>,
     op: Res<ObservationPost>,
     mut shake: ResMut<Shake>,
     camera: Single<(&mut Transform, &mut Projection), With<MainCamera>>,
@@ -446,6 +544,12 @@ fn apply_view(
             let rot = Quat::from_euler(EulerRot::YXZ, view.op_yaw + sway.x / z, view.op_pitch + sway.y / z, 0.0);
             (eye, rot, view.op_fov)
         }
+        Mode::Fpv => {
+            // Strapped to a small, stiff frame: the motors' buzz shakes the picture a little.
+            let buzz = Vec2::new((t * 47.0).sin() + (t * 71.0).sin(), (t * 53.0).cos() + (t * 83.0).sin()) * 0.0012 * (0.3 + fpv.throttle);
+            let rot = Quat::from_euler(EulerRot::YXZ, fpv.yaw + buzz.x, fpv.pitch + buzz.y, fpv.roll);
+            (fpv.pos, rot, 1.3)
+        }
         Mode::Ground => {
             // Kneeling, breathing; the sight on its tripod is steadier, but the gunner's hands are not.
             let breath = (t * 1.4).sin();
@@ -461,13 +565,13 @@ fn apply_view(
     };
     // Shake from nearby blasts.
     let tr = shake.trauma * shake.trauma;
-    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground => 0.35, Mode::Drone => 0.25 };
+    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground => 0.35, Mode::Drone | Mode::Fpv => 0.25 };
     let rjit = Quat::from_euler(EulerRot::YXZ, (t * 37.0).sin() * tr * 0.02, (t * 43.0).sin() * tr * 0.02, (t * 29.0).sin() * tr * 0.03);
     tf.translation = pos + jitter;
     tf.rotation = rot * rjit;
     if let Projection::Perspective(p) = proj.as_mut() {
         p.fov = fov;
-        p.near = if view.mode == Mode::Ground { 0.1 } else { 0.5 };
+        p.near = if matches!(view.mode, Mode::Ground | Mode::Fpv) { 0.1 } else { 0.5 };
     }
     shake.trauma = (shake.trauma - dt * 0.9).max(0.0);
     shake.flash = (shake.flash - dt * 2.5).max(0.0);
@@ -512,7 +616,7 @@ fn cursor_grab(view: Res<View>, mut last: Local<Option<Mode>>, mut cursor: Query
     }
     *last = Some(view.mode);
     for mut c in &mut cursor {
-        let grab = view.mode == Mode::Ground;
+        let grab = matches!(view.mode, Mode::Ground | Mode::Fpv);
         c.grab_mode = if grab { bevy::window::CursorGrabMode::Locked } else { bevy::window::CursorGrabMode::None };
         c.visible = !grab;
     }

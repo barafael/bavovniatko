@@ -34,7 +34,7 @@ This round leaves the knowledge base's content alone, apart from its tidy-up. It
 | 4. Dioramas as data | done for the ground, layout, place and clock (4a), forces and script (4b), and the net's callsigns, Robotyne's now its own (4c); the film's shots stay in code until the demos (step T) need them | 00858f0, dd72647, 4d72abf |
 | 5. Quick fixes | done: densest-group aim, summer craters, the Kornet test (fire did not suppress), then suppression: a post under fire keeps its ATGM team down 20–60 s; three missions now keep the crest's Kornet down from 286 s to 427 s | e023554, 7e32b4c |
 | 6. Evacuation on request | done: Alt+click or V sends one of four Bradleys; wounded call for help; men falling back drag the wounded; behind the start line counts as out | 7e32b4c |
-| 7. Drones | research done and loaded (topics 10 and 11, 516 claims); the build waits on the owner's calls | 6b05516, 3899789 |
+| 7. Drones | research done and loaded (topics 10 and 11, 516 claims). The owner's calls (2026-10-15): no strike drones at Vuhledar; one FPV mission at Mala Tokmachka to introduce the mechanism; self-levelling flight with the mouse (acro maybe later); moving the team costs time, and at Mala Tokmachka it is hard to find. Built: the FPV (`bav_sim::drones`, camera `fpv_control`, the analogue feed), the drone team found and moved. Their drones (Orlans, Lancets, EW as a field) still to come | 6b05516, 3899789, and the drones commit |
 | 8. Sound | done: an ERA crack, our and their guns' reports from kilometres back, rocket ripples, the Vikhr launch; beds for the nearest fire and the nearest Ka-52; the wind bed follows the day's wind, the engines' pitch the nearest vehicle's speed. The older sounds are sample-identical and the day is unchanged | fd28911 |
 | 9. Story planning | done: `arcs.md` | 8aec1bb |
 
@@ -46,6 +46,7 @@ moved), suppression, and the evacuation, which are measured with `band.sh` inste
 |---|---|---|---|---|
 | Vuhledar, with suppression | 25–30 of 33 (24–26 before; the band is 24–30) | 44–82 of 320 | 135–172 | — |
 | Robotyne, hands-off (no scripted rescue now) | 16–18 of 20 | 66–107 of 140 | 23–46 | 10–17 of 43–57 |
+| Vuhledar, with the drone team findable (hands-off: nobody moves it) | 25–31 of 33; found about twice a day | 43–82 of 320 | 132–177 | — |
 | Robotyne, every call answered after 30 s (`BAV_EVAC=30`) | 20–23 of 24 | 103–121 of 152 | 30–47 | 9–21 of 48–74 |
 
 Before this round Robotyne's day sent four Bradleys at a fixed minute (24 vehicles, 97–108 back of 176). Now the

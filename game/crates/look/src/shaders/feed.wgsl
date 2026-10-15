@@ -115,6 +115,45 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
         return vec4<f32>(clamp(c, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0);
     }
 
+    if fx.mode == 5u {
+        // ---- An FPV's analogue goggles: wide, warm, soft, and snow when the signal thins ----
+        let g = clamp(fx.glitch, 0.0, 1.0);
+        if fx.down > 0.5 {
+            let n = hash(floor(uv * dims / 2.0) + vec2<f32>(frame * 1.37, frame * 2.11));
+            return vec4<f32>(vec3<f32>(0.25 + 0.5 * n), 1.0);
+        }
+        // Lost sync: lines slip sideways, and now and then the whole frame rolls.
+        let line = floor(uv.y * dims.y / 2.0);
+        if hash(vec2<f32>(line, frame)) < g * g * 0.5 {
+            uv.x += (hash(vec2<f32>(line + 7.0, frame)) - 0.5) * 0.08 * g;
+        }
+        if hash(vec2<f32>(frame, 3.0)) < max(g - 0.6, 0.0) * 0.4 {
+            uv.y = fract(uv.y + hash(vec2<f32>(frame, 5.0)) * 0.3);
+        }
+        // A wide lens: a little barrel.
+        let cuv = uv - 0.5;
+        let suv = 0.5 + cuv * (1.0 - 0.08 * dot(cuv, cuv));
+        var c = textureSample(screen_texture, texture_sampler, suv).rgb;
+        let b = textureSample(screen_texture, texture_sampler, suv + vec2<f32>(px.x * 2.0, 0.0)).rgb;
+        c = mix(c, b, 0.4);
+        // Small-camera colour: warm, saturated, crushed.
+        c = (c - 0.5) * 1.25 + 0.5;
+        c = c * vec3<f32>(1.06, 1.0, 0.9);
+        // Snow: coloured noise, growing as the signal fails; a dropout now and then.
+        let q = floor(uv * dims) + vec2<f32>(frame * 1.37, frame * 2.11);
+        let n = vec3<f32>(hash(q), hash(q + 17.0), hash(q + 31.0));
+        c = mix(c, n, 0.05 + 0.75 * g * g);
+        if hash(vec2<f32>(frame, 11.0)) < max(g - 0.75, 0.0) {
+            c = n * 0.8;
+        }
+        // Scanlines, and a vignette.
+        c *= 0.92 + 0.08 * sin(uv.y * dims.y * 1.6);
+        let d = distance(uv, vec2<f32>(0.5));
+        c *= 1.0 - smoothstep(0.4, 0.8, d) * 0.5;
+        c += vec3<f32>(fx.flash) * 0.7;
+        return vec4<f32>(clamp(c, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0);
+    }
+
     // ---- Ground: the naked eye (2) and the ATGM sight (3) ----
     if fx.mode >= 2u {
         var c = textureSample(screen_texture, texture_sampler, uv).rgb;

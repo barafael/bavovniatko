@@ -17,9 +17,13 @@ impl Plugin for EvacPlugin {
         app.add_message::<EvacRequest>()
             .insert_resource(Evacuation::new())
             .add_systems(Update, evac_input.in_set(crate::Step::Control).after(crate::dev::DevSystems))
-            .add_systems(Update, (answer_requests, call_for_evacuation).chain().run_if(crate::running).in_set(crate::Step::Script).after(crate::director::DirectorSystems));
+            .add_systems(Update, (answer_requests, call_for_evacuation).chain().run_if(crate::running).in_set(crate::Step::Script).in_set(EvacSystems).after(crate::director::DirectorSystems));
     }
 }
+
+/// The evacuation's systems, for what has to run after them in `Step::Script`.
+#[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub struct EvacSystems;
 
 /// The diorama's evacuation vehicles (`evacuation` in its file).
 #[derive(serde::Deserialize, Debug, Clone, Copy)]

@@ -79,6 +79,10 @@ pub struct DevEnv {
     pub log_stats: bool,
     /// Park every vehicle model in a row here (x, z, heading in degrees), live and burned out, to look them over.
     pub lineup: Option<[f32; 3]>,
+    /// `BAV_OPERATOR=off`: the enemy never finds the drone team (the showcase film, whose shots need the feed).
+    pub operator_off: bool,
+    /// `BAV_FPV="<game s>:<x>;<z>"`: launch the FPV then and fly it by itself at the vehicle nearest that point.
+    pub fpv: Option<(f32, (f32, f32))>,
     /// `BAV_EVAC=<seconds>`: answer every call for evacuation after this delay, as a player would (balance runs).
     pub evac: Option<f32>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
@@ -179,6 +183,12 @@ impl DevEnv {
             log_stats: var("BAV_LOG_STATS").is_some(),
             era_at: parse("BAV_ERA_AT"),
             evac: parse("BAV_EVAC"),
+            operator_off: var("BAV_OPERATOR").is_some_and(|v| v == "off"),
+            fpv: var("BAV_FPV").and_then(|s| {
+                let (t, at) = s.split_once(':')?;
+                let (x, z) = at.split_once(';')?;
+                Some((t.trim().parse().ok()?, (x.trim().parse().ok()?, z.trim().parse().ok()?)))
+            }),
             lineup: var("BAV_LINEUP").and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok()),
             light: var("BAV_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())

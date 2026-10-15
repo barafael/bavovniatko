@@ -28,6 +28,12 @@ pub struct SimData {
     /// The vehicles the player can send in for the wounded (none: nothing gets there by day).
     #[serde(default)]
     pub evacuation: Option<crate::evac::EvacSpec>,
+    /// Where the drone team flies from, and how often an hour (of the day's clock) the enemy finds it while a drone
+    /// is up: often in early 2023, when DJI's AeroScope gave the pilot away; rarely south of Mala Tokmachka.
+    pub operator: OperatorSpec,
+    /// The strike drones the player has (none: the drone is eyes only).
+    #[serde(default)]
+    pub fpv: Option<FpvSpec>,
     /// The day: at each game second, what happens.
     pub script: Vec<(f32, Act)>,
 }
@@ -44,6 +50,19 @@ pub struct Stock {
     pub brigade_shells: u32,
     /// The battalion's 120 mm mortars, which work over infantry in the open on their own.
     pub mortar_bombs: u32,
+}
+
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub struct OperatorSpec {
+    pub pos: (f32, f32),
+    pub found_per_hour: f32,
+}
+
+/// FPVs: how many for the day, and how long one flies (s).
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub struct FpvSpec {
+    pub count: u32,
+    pub endurance: f32,
 }
 
 static DATA: OnceLock<SimData> = OnceLock::new();

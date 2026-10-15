@@ -132,6 +132,9 @@
     wanderer: Some(((-150.0, -1150.0), (0.2, 1.0))),
     old_wreck_kinds: [Bmp2, T80, Bmp1, Bmp2, T72, Mtlb, Bmp1, T80],
     registered_fire: (50.0, 6),
+    // The drone team on the town's southern edge. In February 2023 DJI's AeroScope gave a pilot away and fire
+    // followed within minutes (db/research/11 §6), so a team that stays put is found a few times a day.
+    operator: (pos: (-300.0, -1240.0), found_per_hour: 0.35),
 
     // Vuhledar, 6 February 2023, the largest mechanised assault (dossier c08 §2, §6 set piece 3): about two
     // battalions in T-80s and BMPs behind exhaust smoke and a mine plow, then more columns down the same roads, then

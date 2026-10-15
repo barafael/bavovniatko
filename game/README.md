@@ -102,6 +102,8 @@ the pieces that reach above a height, to write a ring from.
 | Shift+click | Vuhledar: RAAM, scattering mines onto a lane. Mala Tokmachka: smoke |
 | Ctrl+click | HIMARS (two missions all day at Vuhledar, one at Mala Tokmachka) |
 | Alt+click, V | Mala Tokmachka: send a Bradley for the wounded at the cursor, or (V) where the last call for evacuation came from; four for the day. At Vuhledar nothing gets down to the tree line by day |
+| 4 | Mala Tokmachka: fly the FPV (one for the morning). The mouse points it and it goes where it points; W/S throttle, A/D bank, and it levels itself. Its analogue picture thins with range and behind the ground; near their jammers the control link drops out in spells |
+| M | move the drone team once the enemy has found it (a ranging round lands close): the feed is down while it moves. A team that stays is hit and loses a drone. Vuhledar's team is found a few times a day; Mala Tokmachka's rarely |
 | Space | Vuhledar: ATGM teams AUTO (wait until the column commits), HOLD, or FREE. Mala Tokmachka: the column PUSH ON, HOLD, or PULL BACK (picking up the infantry) |
 | 1, 2, Tab | the drone, or the observer (a nine-storey roof; a water tower by the N08) |
 | 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
@@ -159,6 +161,8 @@ several and lists the final tallies side by side: one run says little about bala
 `BAND_TAG=<name>` keeps a variant's runs apart, with its switches in the environment: `BAND_TAG=evac BAV_EVAC=30
 scripts/band.sh robotyne` answers every call for evacuation after 30 s, as a player would. `BAV_FIRE="260:he@-468;702"`
 calls a 155 mm mission on a point at game second 260 (or, without `@`, on the stalled vehicle nearest the drone).
+`BAV_FPV="300:-150;724"` launches the FPV at game second 300 and flies it by itself at the enemy vehicle nearest
+that point (at height, then the dive). `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
 
 `BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
 turned) burned out, to look the models over. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`

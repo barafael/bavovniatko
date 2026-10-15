@@ -16,7 +16,7 @@ out=$(realpath -m "${1:-devlog/videos/showcase.mp4}")
 work=$(mktemp -d "${TMPDIR:-$PWD/target}/filmwork.XXXXXX")
 cargo build -q --release
 if [ -z "$mode" ]; then
-BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 BAV_RES=1920x1080 BAV_SHOWCASE=$work \
+BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 BAV_OPERATOR=off BAV_RES=1920x1080 BAV_SHOWCASE=$work \
   timeout 3000 ./target/release/bavovniatko 2>&1 | grep -E 'panicked|ERROR' -A3 | grep -v rodio | head -5 || true
 lead=3
 place='VUHLEDAR'; date='6 FEBRUARY 2023'
@@ -57,7 +57,7 @@ y1=$(python3 -c "print(round(70*$s))"); y2=$(python3 -c "print(round(10*$s))"); 
 for part in vuhledar robotyne; do
   mkdir -p "$work/$part"
   start=$(date +%s)
-  BAV_DIORAMA=$part BAV_TOUR=film BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 \
+  BAV_DIORAMA=$part BAV_TOUR=film BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 BAV_OPERATOR=off \
     BAV_RES=$res BAV_SHOWCASE="$work/$part" \
     timeout 4000 ./target/release/bavovniatko 2>&1 | grep -E 'panicked|ERROR' -A3 | grep -v rodio | head -5 || true
   echo "film: $part filmed in $(( ($(date +%s) - start) / 60 )) min at $res"

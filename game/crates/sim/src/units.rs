@@ -331,6 +331,9 @@ pub struct Stats {
     pub hidden: u32,
     pub mine_hits: u32,
     pub atgm_kills: u32,
+    /// The player's FPVs that went in, and the vehicles they killed.
+    pub fpv_strikes: u32,
+    pub fpv_kills: u32,
     pub artillery_kills: u32,
     /// Attackers alive at or past the defenders' forward line (a foothold).
     pub foothold: u32,
@@ -776,6 +779,8 @@ pub enum Cause {
     Thermobaric,
     /// A wreck's ammunition going: it hurts whoever is near it.
     CookOff,
+    /// The player's FPV going in.
+    Fpv,
 }
 
 /// An explosion that hurts whatever is near it.
@@ -1593,6 +1598,7 @@ pub fn on_wrecked(
     }
     match ev.cause {
         Cause::Atgm => stats.atgm_kills += 1,
+        Cause::Fpv => stats.fpv_kills += 1,
         Cause::Artillery | Cause::Himars | Cause::TankGun => stats.artillery_kills += 1,
         _ => {}
     }

@@ -172,6 +172,7 @@ The day will run whether or not you do anything. What you do matters at the marg
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.\n\
 Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.\n\
 Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / rooftop observer.  P: pause.  [ ]: time.\n\
+M: move the drone team when they find you (the feed is down while it moves).\n\
 3: into a tree line with an ATGM team (again for the next).  Right button: the sight.  Left click: launch.\n\n\
 Press Enter." };
     commands
@@ -205,6 +206,7 @@ Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F
 Left click: 155 mm fire mission (4 rounds).  Shift+click: smoke.  Ctrl+click: HIMARS.\n\
 Space: the column PUSH ON / HOLD / PULL BACK.  1/2 or Tab: drone / the water tower.  P: pause.  [ ]: time.\n\
 Alt+click: send a Bradley for the wounded there (four for the day).  V: answer the last call for evacuation.\n\
+4: fly the FPV (one today): mouse points it, W/S throttle, A/D bank.  M: move the drone team if they find you.\n\
 3: into the forward tree line with an ATGM team.  Right button: the sight.  Left click: launch.\n\n\
 Press Enter.";
 
@@ -258,7 +260,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    order: Res<ColumnOrder>,
+    (order, fpv_res, op_res): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>),
     positions: Query<&Post>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -274,6 +276,7 @@ fn update_hud(
     mut commands: Commands,
     net: (Res<Fonts>, Single<Entity, With<RadioLog>>, Single<Entity, With<Banner>>, Local<(String, String)>),
 ) {
+    let team = (&*fpv_res, &*op_res);
     let (fonts, log_root, banner_root, mut shown) = net;
     // Under the debrief the display stays as `show_debrief` left it: hidden.
     if *phase.get() == Phase::Debrief {
@@ -317,6 +320,19 @@ fn update_hud(
     // Each text is written only when it reads differently, so Bevy lays out again only what changed.
     let telemetry = match view.mode {
         Mode::Drone => Text::new(String::new()),
+        Mode::Fpv => {
+            let (fpv, op) = (&team.0, &team.1);
+            let bars = ["     ", "|    ", "||   ", "|||  ", "|||| ", "|||||"][(fpv.signal * 5.0).round().clamp(0.0, 5.0) as usize];
+            let agl = fpv.pos.y - geo::height(fpv.pos.x, fpv.pos.z);
+            Text::new(format!(
+                "FPV   VID {bars}  RC {}   BAT {:>3.0}%   ALT {:>4.0} m   {:>3.0} km/h   {:.2} km\nMouse: point it.  W/S: throttle.  A/D: bank.  It goes where it is pointed.",
+                if fpv.control { "OK " } else { "-- " },
+                (fpv.battery / bav_sim::data::sim_data().fpv.map_or(1.0, |f| f.endurance) * 100.0).max(0.0),
+                agl,
+                fpv.vel.length() * 3.6,
+                op.pos.distance(fpv.pos.xz()) / 1000.0
+            ))
+        }
         Mode::Op => Text::new(format!("{}   x{:.1}", if diorama() == Diorama::Robotyne { "OBSERVER, WATER TOWER (СПОСТЕРІГАЧ, ВОДОНАПІРНА ВЕЖА)" } else { "OBSERVATION POST, 9TH FLOOR (СП, 9-Й ПОВЕРХ)" }, view.zoom())),
         Mode::Ground => {
             let team = view.ground_team.and_then(|e| positions.get(e).ok());
@@ -415,7 +431,12 @@ fn update_hud(
             }
         });
     }
-    texts.p3().set_if_neq(Text::new(if view.mode == Mode::Drone && view.feed_down > 0.0 {
+    let moving = now < team.1.moving_until;
+    texts.p3().set_if_neq(Text::new(if view.mode == Mode::Fpv && !team.0.flying {
+        "NO SIGNAL".to_string()
+    } else if view.mode == Mode::Drone && moving {
+        format!("NO SIGNAL\nthe team is moving ({:.0} s)", team.1.moving_until - now)
+    } else if view.mode == Mode::Drone && view.feed_down > 0.0 {
         format!("NO SIGNAL\nbattery swap, relaunching ({:.0} s)", view.feed_down)
     } else {
         String::new()

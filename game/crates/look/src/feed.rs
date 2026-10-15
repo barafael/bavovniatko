@@ -39,6 +39,8 @@ pub enum FeedMode {
     Sight = 3,
     /// The picture as rendered (`BAV_OFF=feed`).
     Raw = 4,
+    /// An FPV's analogue goggles.
+    Fpv = 5,
 }
 
 /// What the feed shader is told each frame.
@@ -166,6 +168,7 @@ fn resize(mut resized: MessageReader<WindowResized>, window: Option<Single<&Wind
 pub fn update_feed(
     time: Res<Time>,
     view: Res<View>,
+    fpv: Res<bav_sim::player::Fpv>,
     shake: Res<Shake>,
     mut link: ResMut<Link>,
     mut levels: ResMut<crate::audio::AmbienceLevels>,
@@ -187,9 +190,10 @@ pub fn update_feed(
         Mode::Op => FeedMode::Binoculars,
         Mode::Ground if view.sight => FeedMode::Sight,
         Mode::Ground => FeedMode::Eye,
+        Mode::Fpv => FeedMode::Fpv,
     } as u32;
     fx.grain = match view.mode {
-        Mode::Drone => 1.0,
+        Mode::Drone | Mode::Fpv => 1.0,
         Mode::Op => 0.45,
         Mode::Ground => 0.3,
     };
@@ -216,4 +220,10 @@ pub fn update_feed(
     fx.flash = shake.flash * if view.mode == Mode::Ground { 0.35 } else { 1.0 };
     fx.zoom = view.zoom();
     fx.down = if view.mode == Mode::Drone && view.feed_down > 0.0 { 1.0 } else { 0.0 };
+    if view.mode == Mode::Fpv {
+        // Analogue: the picture thins into snow as the signal goes; gone, it is all snow.
+        fx.glitch = 1.0 - fpv.signal + if fpv.control { 0.0 } else { 0.15 };
+        fx.down = if fpv.flying { 0.0 } else { 1.0 };
+        cam.is_active = fpv.flying;
+    }
 }

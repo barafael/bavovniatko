@@ -120,6 +120,11 @@
     dug_in: [((-150.0, 724.0), 0.15), ((1050.0, 720.0), -0.1)],
     old_wreck_kinds: [T72, Bmp2, Mtlb, T72, Bmp2, Mtlb, T72, Bmp2],
     registered_fire: (90.0, 4),
+    // The drone team behind the start line; south of Mala Tokmachka it is hard to find.
+    operator: (pos: (-300.0, -960.0), found_per_hour: 0.05),
+    // One strike drone for the morning: FPVs were still scarce on this front in June 2023 (db/research/10 §3);
+    // a few minutes in the air.
+    fpv: Some((count: 1, endurance: 300.0)),
     // Four Bradleys held back at the start line for the wounded, sent one at a time where the player asks.
     evacuation: Some((kind: Bradley, vehicles: 4, start: 900.0)),
 
