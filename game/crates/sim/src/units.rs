@@ -797,6 +797,9 @@ pub struct Blast {
 pub struct DirectHit {
     pub target: Entity,
     pub cause: Cause,
+    /// For the hit feed: what hit, and from where.
+    pub weapon: &'static str,
+    pub from: &'static str,
     /// Onto the roof, where the armour is thinnest (a Javelin's dive).
     pub top: bool,
 }
@@ -1307,6 +1310,7 @@ fn check_mines(
     mut radio: ResMut<Radio>,
     mut sound: Sound,
     mut blasts: MessageWriter<Blast>,
+    mut log: ResMut<crate::hits::HitLog>,
     mut rng: ResMut<UnitRng>,
     mut q: Query<(Entity, &mut Vehicle, &Transform)>,
     mut near: Local<Vec<usize>>,
@@ -1344,6 +1348,7 @@ fn check_mines(
                         v.crew_plan(&mut rng.0, Cause::Mine);
                         v.pitch_v += rng.0.random_range(2.0..3.0);
                         stats.mine_hits += 1;
+                        log.open(now, "a double mine", "", _e, &v, "under the plow: plow gone, stopped");
                         radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
                     } else {
                         radio.say(now, match diorama() {
@@ -1363,6 +1368,7 @@ fn check_mines(
                 stats.mine_hits += 1;
                 // TM-62 under a track: the track and road wheels are gone. Often more.
                 let kill = rng.0.random_bool(v.kind.mine_kill(m.stacked));
+                log.open(now, if m.stacked { "a double mine" } else { "a mine" }, "", _e, &v, if kill { "under the track: destroyed" } else { "under the track: track off, stopped" });
                 // The track is off on that side: it lurches, yaws round the dead side and grinds to a stop within
                 // a length or two; the cut track lies out behind it, a road wheel beside it.
                 v.immobilise(rng.0.random_range(2.0..3.5), x.signum() * -rng.0.random_range(0.35..0.8));
@@ -1562,12 +1568,28 @@ pub fn on_wrecked(
     mut turrets: Turrets,
     children: Query<&Children>,
     mut skins: Query<(&Skin, &mut MeshMaterial3d<StandardMaterial>), Without<Vehicle>>,
+    mut log: ResMut<crate::hits::HitLog>,
 ) {
     let Ok((mut v, tf, mut mat)) = q.get_mut(ev.vehicle) else { return };
     if v.wrecked {
         return;
     }
     v.wrecked = true;
+    let now = time.elapsed_secs_f64();
+    if !log.add(now, ev.vehicle, crate::hits::fate(ev.how)) {
+        let weapon = match ev.cause {
+            Cause::Mine => "a mine",
+            Cause::Artillery if v.side == Side::Ru => "our guns",
+            Cause::Artillery => "their guns",
+            Cause::Himars => "HIMARS",
+            Cause::Thermobaric => "TOS-1A",
+            Cause::CookOff => "a burning wreck's ammunition",
+            Cause::TankGun => "a tank gun",
+            Cause::Atgm => "an ATGM",
+            Cause::Fpv => "an FPV",
+        };
+        log.open(now, weapon, "", ev.vehicle, &v, format!("destroyed{}", crate::hits::fate(ev.how)));
+    }
     // An abandoned hull that burns now is no longer "abandoned" in the ledger.
     if v.state == VState::Abandoned {
         if v.side == diorama().attacker() {
@@ -1857,23 +1879,28 @@ fn era_reacts(mut hits: MessageReader<DirectHit>, mut sound: Sound, mut fx: ResM
     }
 }
 
-fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit>, mut rng: ResMut<UnitRng>, mut q: Query<&mut Vehicle>) {
+fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<crate::hits::HitLog>, mut hits: MessageReader<DirectHit>, mut rng: ResMut<UnitRng>, mut q: Query<&mut Vehicle>) {
+    let now = time.elapsed_secs_f64();
     for h in hits.read() {
         let Ok(mut v) = q.get_mut(h.target) else { continue };
         if !v.state.alive() {
             continue;
         }
         let p_kill = if h.top { (v.kind.hit_kill() + 0.2).min(0.95) } else { v.kind.hit_kill() };
+        let how = format!("{}{}", if h.top { "from above: " } else { "" }, if v.kind.era() && h.cause != Cause::TankGun { "reactive armour went; " } else { "" });
         if rng.0.random_bool(p_kill) {
             if rng.0.random_bool(0.2) {
+                log.open(now, h.weapon, h.from, h.target, &v, format!("{how}into the engine: on fire, crawling, crew getting out"));
                 // A hit on the engine: it crawls on trailing smoke, the crew gets out, and the fire decides.
                 v.immobilise(rng.0.random_range(0.6..1.2), rng.0.random_range(-0.2..0.2));
                 v.crew_plan(&mut rng.0, h.cause);
                 commands.entity(h.target).insert((Fire::deck(&mut rng.0, h.cause, v.kind), Emitter::new(EmitterKind::EngineSmoke, 4.0, 400.0, Vec3::new(0.0, 1.5, 2.2))));
             } else {
+                log.open(now, h.weapon, h.from, h.target, &v, format!("{how}penetrated"));
                 commands.trigger(Wrecked { vehicle: h.target, cause: h.cause, how: kill_how(v.kind, h.cause, &mut rng.0) });
             }
         } else {
+            log.open(now, h.weapon, h.from, h.target, &v, format!("{how}did not get through: stopped, crew shaken"));
             v.immobilise(3.5, rng.0.random_range(-0.3..0.3));
             v.crew_plan(&mut rng.0, h.cause);
             v.pitch_v -= 1.2;

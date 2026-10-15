@@ -73,6 +73,15 @@ pub enum Atgm {
 }
 
 impl Atgm {
+    /// As the hit feed names it.
+    pub fn name(self) -> &'static str {
+        match self {
+            Atgm::Stugna => "Stugna-P",
+            Atgm::Javelin => "Javelin",
+            Atgm::Kornet => "Kornet",
+        }
+    }
+
     pub fn range(self) -> f32 {
         match self {
             Atgm::Stugna => 4500.0,

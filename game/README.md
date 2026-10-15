@@ -110,6 +110,9 @@ the pieces that reach above a height, to write a ring from.
 | P, `[`, `]` | pause, slow down, speed up |
 | F12 | screenshot |
 
+On the right, under the tally, the hit feed recounts the last hits: what hit, from where, at what, and what it did
+(our hits in white, hits on our vehicles in amber), for 45 seconds each.
+
 ## Layout
 
 The game is a Cargo workspace of four crates, layered so the battle cannot reach the picture:

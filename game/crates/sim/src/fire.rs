@@ -172,6 +172,9 @@ pub struct Missile {
     pub p_hit: Option<f32>,
     /// A Javelin: it climbs to its apogee, cruises, and dives onto the turret roof.
     pub top_attack: bool,
+    /// For the hit feed: what it is, and from where.
+    pub weapon: &'static str,
+    pub from: &'static str,
 }
 
 #[derive(Component)]
@@ -659,7 +662,20 @@ fn atgm_teams(
             Mesh3d(models.missile.clone()),
             MeshMaterial3d(palette.vertex.clone()),
             Transform::from_translation(from).looking_to(dir, Vec3::Y),
-            Missile { target, launched_at: from, speed, trail: 0.0, p_hit: None, top_attack: weapon == Atgm::Javelin },
+            Missile {
+                target,
+                launched_at: from,
+                speed,
+                trail: 0.0,
+                p_hit: None,
+                top_attack: weapon == Atgm::Javelin,
+                weapon: weapon.name(),
+                from: match (pos.side, diorama()) {
+                    (Side::Ru, _) => "the crest",
+                    (Side::Ua, Diorama::Vuhledar) => "the first tree line",
+                    (Side::Ua, Diorama::Robotyne) => "the forward tree line",
+                },
+            },
             NotShadowCaster,
         ));
         if pos.side == Side::Ru {
@@ -679,12 +695,14 @@ fn fly_missiles(
     mut fxr: ResMut<FxRng>,
     mut hits: MessageWriter<DirectHit>,
     mut paint: ResMut<PaintQueue>,
-    targets: Query<&Transform, (With<Vehicle>, Without<Missile>)>,
+    mut log: ResMut<crate::hits::HitLog>,
+    targets: Query<(&Transform, &Vehicle), Without<Missile>>,
     mut q: Query<(Entity, &mut Missile, &mut Transform)>,
 ) {
     let dt = crate::sim_dt(&time);
+    let now = time.elapsed_secs_f64();
     for (e, mut m, mut tf) in &mut q {
-        let Ok(t) = targets.get(m.target) else {
+        let Ok((t, tv)) = targets.get(m.target) else {
             commands.entity(e).despawn();
             continue;
         };
@@ -726,10 +744,11 @@ fn fly_missiles(
             // Long wire-guided shots miss more often: the gunner holds the crosshair for 15-25 s under fire.
             let range = m.launched_at.distance(aim);
             if rng.random_bool(m.p_hit.unwrap_or((0.88 - range / 9000.0).clamp(0.4, 0.88)) as f64) {
-                hits.write(DirectHit { target: m.target, cause: Cause::Atgm, top: m.top_attack });
+                hits.write(DirectHit { target: m.target, cause: Cause::Atgm, top: m.top_attack, weapon: m.weapon, from: m.from });
                 fx.explosion(aim, 0.7, false);
             } else {
                 // A miss: it ploughs into the snow beyond.
+                log.open(now, m.weapon, m.from, m.target, tv, "missed: into the ground beyond");
                 let miss = aim.xz() + gauss2(rng) * 12.0;
                 fx.explosion(geo::ground(miss), 0.6, true);
                 paint.push(Paint::Crater { at: miss, radius: 1.2, seed: rng.random() });
@@ -924,7 +943,7 @@ fn defender_tank(
     sound.at(muzzle, Sfx::TankGun, 1.0);
     let d = from.distance(tp);
     if rng.random_bool((0.75 - d as f64 / 4000.0).clamp(0.15, 0.7)) {
-        hits.write(DirectHit { target, cause: Cause::TankGun, top: false });
+        hits.write(DirectHit { target, cause: Cause::TankGun, top: false, weapon: "125 mm", from: "a dug-in T-72" });
         fx.explosion(aim, 0.6, false);
         sound.at(aim, Sfx::BlastNear, 0.9);
     } else {
@@ -1122,7 +1141,7 @@ fn player_atgm(
     match (weapon, locked) {
         (Atgm::Javelin, Some(target)) => {
             // Fire and forget: it climbs, then dives onto the roof by itself.
-            commands.spawn((missile, Transform::from_translation(from).looking_to((fwd + Vec3::Y * 0.6).normalize(), Vec3::Y), Missile { target, launched_at: from, speed: weapon.speed(), trail: 0.0, p_hit: None, top_attack: true }));
+            commands.spawn((missile, Transform::from_translation(from).looking_to((fwd + Vec3::Y * 0.6).normalize(), Vec3::Y), Missile { target, launched_at: from, speed: weapon.speed(), trail: 0.0, p_hit: None, top_attack: true, weapon: weapon.name(), from: "your team" }));
             radio.say(now, "Javelin away. Get down, move.");
         }
         _ => {
@@ -1190,7 +1209,7 @@ fn fly_guided(
             fx.explosion(p, 0.7, false);
             sound.at(p, Sfx::BlastNear, 1.0);
             if v.state.alive() {
-                hits.write(DirectHit { target, cause: Cause::Atgm, top: false });
+                hits.write(DirectHit { target, cause: Cause::Atgm, top: false, weapon: "Stugna-P", from: "your team" });
                 radio.say(now, "Hit! He's burning.");
             }
         } else if ground || m.travelled > Atgm::Stugna.range() + 700.0 {

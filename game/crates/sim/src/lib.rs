@@ -13,6 +13,7 @@ pub mod drones;
 pub mod evac;
 pub mod fire;
 pub mod fx;
+pub mod hits;
 pub mod paint;
 pub mod player;
 pub mod robotyne;
@@ -34,6 +35,7 @@ impl Plugin for SimPlugin {
             .init_resource::<fx::FxQueue>()
             .init_resource::<paint::PaintQueue>()
             .init_resource::<sound::Pending>()
-            .init_resource::<sound::AmbienceLevels>();
+            .init_resource::<sound::AmbienceLevels>()
+            .init_resource::<hits::HitLog>();
     }
 }

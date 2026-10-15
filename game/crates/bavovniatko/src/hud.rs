@@ -17,7 +17,7 @@ impl Plugin for HudPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<HudHidden>()
             .add_systems(Startup, spawn_hud)
-            .add_systems(Update, (update_hud, briefing_input, hud_switch).chain().in_set(crate::Step::Screen))
+            .add_systems(Update, (update_hud, update_hit_feed, briefing_input, hud_switch).chain().in_set(crate::Step::Screen))
             .add_systems(OnEnter(Phase::Playing), hide_briefing)
             .add_systems(OnEnter(Phase::Debrief), show_debrief)
             .add_systems(Update, (debrief_input, open_sources).run_if(in_state(Phase::Debrief)).in_set(crate::Step::Screen).after(briefing_input));
@@ -49,6 +49,9 @@ enum Osd {
 struct Tally;
 #[derive(Component)]
 struct RadioLog;
+/// The hit feed: the last hits, on the right under the tally.
+#[derive(Component)]
+struct HitFeed;
 #[derive(Component)]
 struct FirePanel;
 #[derive(Component)]
@@ -117,6 +120,7 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
     ));
     commands.spawn((text("", 15.0, WHITE), abs(Some(40.0), None, None, Some(18.0)), Tally, TextLayout::justify(Justify::Right), HudKeep));
     commands.spawn((text("", 14.0, AMBER), Node { max_width: px(470), ..abs(None, Some(16.0), Some(18.0), None) }, RadioLog, HudKeep));
+    commands.spawn((text("", 13.0, WHITE), Node { max_width: px(470), ..abs(Some(150.0), None, None, Some(18.0)) }, TextLayout::justify(Justify::Right), HitFeed, HudKeep));
     commands.spawn((text("", 14.0, WHITE), abs(None, Some(16.0), None, Some(18.0)), FirePanel, TextLayout::justify(Justify::Right), HudKeep));
     commands.spawn((
         text("", 26.0, WHITE),
@@ -753,5 +757,28 @@ fn debrief_input(keys: Res<ButtonInput<KeyCode>>, mut exit: MessageWriter<AppExi
     }
     if keys.just_pressed(KeyCode::Escape) {
         exit.write(AppExit::Success);
+    }
+}
+
+/// The hit feed: the last five hits within 45 s, newest first. What hit, from where, at what, and what it did;
+/// our hits in white, theirs on our vehicles in amber.
+fn update_hit_feed(mut commands: Commands, time: Res<Time>, script: Res<Script>, log: Res<bav_sim::hits::HitLog>, fonts: Res<Fonts>, root: Single<Entity, With<HitFeed>>, mut shown: Local<String>) {
+    let now = time.elapsed_secs_f64();
+    let mut spans: Vec<(String, Color, f32)> = Vec::new();
+    for h in log.entries.iter().rev().filter(|h| now - h.at < 45.0).take(5) {
+        let clock = director::clock_text((script.t - (now - h.at) as f32).max(0.0));
+        let from = if h.from.is_empty() { String::new() } else { format!(" from {}", h.from) };
+        let colour = if h.side == Side::Ua { AMBER } else { WHITE };
+        spans.push((format!("{clock}  {}{} → {}\n", h.weapon, from, h.target_name), colour, 13.0));
+        spans.push((format!("{}\n\n", h.result), DIM, 12.0));
+    }
+    let key = spans.iter().map(|(s, _, _)| s.as_str()).collect::<String>();
+    if *shown != key {
+        *shown = key;
+        commands.entity(*root).despawn_children().with_children(|p| {
+            for (s, colour, size) in &spans {
+                p.spawn((TextSpan::new(s.clone()), TextFont { font: FontSource::Handle(fonts.0.clone()), font_size: FontSize::Px(*size), ..default() }, TextColor(*colour)));
+            }
+        });
     }
 }

@@ -203,7 +203,7 @@ fn fpv_strikes(
     match hull {
         Some((e, v, t)) => {
             let top = p.y > t.translation.y + 1.6;
-            hits.write(DirectHit { target: e, cause: Cause::Fpv, top });
+            hits.write(DirectHit { target: e, cause: Cause::Fpv, top, weapon: "FPV", from: "your drone team" });
             info!("fpv: in on {:?} {}/{} at {:.0},{:.0}, {}, at {now:.0} s", v.kind, v.wave, v.idx, t.translation.x, t.translation.z, if top { "from above" } else { "from the side" });
             radio.say2(now, "Є влучання. Відео пропало.", "Hit. Video's gone.");
         }
