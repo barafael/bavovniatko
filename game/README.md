@@ -51,7 +51,7 @@ this README, shown: one minefield from both sides. There is no narrator and no m
 radio net carry it.
 
 It is filmed by the same machinery the game runs on. The binary runs headless on a fixed step with
-`BAV_TOUR=film` (which selects the film's shot list in `src/showcase.rs` instead of the one-minute tours),
+`BAV_TOUR=film` (which selects the film's shot list in `crates/bavovniatko/src/showcase.rs` instead of the one-minute tours),
 the script places the drone and flies it, cards are hard cuts over black between the shots, and each part's
 soundtrack is rebuilt offline by `scripts/showcase_mix.py`, the parts level-matched within a loudness point.
 The tour is deterministic, so every run films the same film.
@@ -109,29 +109,32 @@ the pieces that reach above a height, to write a ring from.
 
 ## Layout
 
-| file | contents |
+The game is a Cargo workspace of four crates, layered so the battle cannot reach the picture:
+
+| crate | path | contents |
+|---|---|---|
+| `bav-core` | `crates/core/` | what every part shares: the ground's geometry and both layouts (`geo.rs`, `geo/robotyne.rs`), which diorama is on the table and the sides (`diorama.rs`), the words in two registers (`text.rs`), the frame's `Step` order and the startup sets (`schedule.rs`), the `BAV_*` switches (`dev.rs`) and the small vocabulary they name (`vocab.rs`) |
+| `bav-sim` | `crates/sim/` | the battle, deterministic: vehicles, soldiers, mines, damage and wrecks (`units.rs`), positions, ATGM teams, artillery, RAAM, smoke and HIMARS (`fire.rs`), the day's script (`director.rs`), the Ka-52s and the dug-in tanks (`robotyne.rs`), the player's drone and posts (`player.rs`), and the queues it fills for the picture and the sound (`fx.rs`, `paint.rs`, `sound.rs`) |
+| `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`), Mala Tokmachka's set and light (`robotyne.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
+| `bavovniatko` | `crates/bavovniatko/` | the game: the app (`main.rs`), the drone, OP and tree-line views and their controls (`camera.rs`), the HUD, briefing and debrief (`hud.rs`), the development systems (`dev.rs`) and the filmed showcase (`showcase.rs`) |
+
+`bav-sim` does not depend on `bav-look`. The battle spawns its entities with model handles the look builds at
+startup, and asks for effects, ground marks and sounds through queues the look plays later in the frame. So
+nothing the picture does (its particles, its random stream) can change how a day goes.
+
+| path | contents |
 |---|---|
-| `src/diorama.rs` | which diorama is on the table (first argument or `BAV_DIORAMA`), who attacks, the season, the clock |
-| `src/geo.rs` | the map: terrain height, roads, shelterbelts, minefields, positions, lat/lon (Vuhledar's layout) |
-| `src/robotyne.rs` | Mala Tokmachka: its layout and height, the farm and water tower, dug-in tanks, the Ka-52s, the June light |
-| `src/terrain.rs` | chunked ground with a painted half-metre texture; craters, scorch and tracks are stamped in live |
-| `src/world.rs` | shelterbelts, panel blocks, dachas, the power line, light, the steppe beyond |
-| `src/meshes.rs` | the procedural modelling kit: soldiers, buildings, trees, the plows and rollers, the tops of the Leopard 2R, Wisent and BMR-2 |
-| `src/baked.rs`, `tools/bake/` | the real vehicle models: the loader for the baked `.veh` files, and the tool that bakes them |
-| `src/units.rs` | vehicles, soldiers, mines, damage, wrecks, turret tosses |
-| `src/fire.rs` | positions and ATGM teams on both sides, artillery, RAAM, smoke, HIMARS, the vehicles' guns |
-| `src/director.rs` | the day's script: the columns, the infantry, barrages, TOS-1A, the clock |
-| `src/fx.rs`, `src/audio.rs` | particles and light, synthesised sound (delayed by distance at 343 m/s) |
-| `src/camera.rs`, `src/shaders/feed.wgsl` | the drone, the OP and the tree line, and the video-feed post-process |
-| `src/hud.rs` | telemetry, radio net, fire control, briefing, debrief |
-| `src/dev.rs`, `src/showcase.rs` | the `BAV_*` development switches, and the filmed showcase tour |
-| `design/` | the design notes: chapters, campaign, units, the plans and their decisions |
+| `design/` | the design notes: chapters, campaign, units, the plans and their decisions (the current one is [`roadmap.md`](design/roadmap.md)) |
 | `data/` | the game feed exported from the knowledge base (`db/tools/sim.py export`) |
+| `assets/vehicles/`, `tools/bake/` | the baked vehicle models, and the tool that bakes them (a workspace of its own) |
+| `scripts/` | headless shots and clips, the showcase film, the same-day and balance checks |
 | `devlog/` | the screenshot and video history of development (local only, not in git) |
 
 ## Development
 
-Headless runs render offscreen on the GPU, with no window and no sound:
+Headless runs render offscreen on the GPU, with no window and no sound. `shot.sh`, `record.sh` and `band.sh` build
+with the `fast` profile (release without LTO, incremental): a fraction of a release build's time. `same-day.sh`
+and the showcase stay on release.
 
 ```sh
 BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_SHOT=out.png BAV_SHOT_AT=30 cargo run
@@ -150,7 +153,7 @@ every run films the same tour.
 That determinism is also the regression test: `scripts/same-day.sh before` and, after a change,
 `scripts/same-day.sh after before` films the day fast (headless, tiny frames) and compares the sound log, the film
 segments and the minute-by-minute tally. A refactor should leave all three byte for byte the same. It holds
-because every game system runs in one fixed order each frame (`Step` in `src/main.rs`): give a new system a `Step`. `BAV_SEED=<n>` runs the day on other random streams, and `scripts/band.sh [diorama] [seeds]` films it on
+because every game system runs in one fixed order each frame (`Step` in `crates/core/src/schedule.rs`): give a new system a `Step`. `BAV_SEED=<n>` runs the day on other random streams, and `scripts/band.sh [diorama] [seeds]` films it on
 several and lists the final tallies side by side: one run says little about balance, the band of a few does.
 
 `BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets

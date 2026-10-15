@@ -8,6 +8,8 @@ publish.workspace = true
 
 [dependencies]
 bav-core.workspace = true
+bav-sim.workspace = true
+bav-look.workspace = true
 bevy.workspace = true
 rand.workspace = true
 strum.workspace = true

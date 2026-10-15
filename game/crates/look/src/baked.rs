@@ -9,13 +9,7 @@ use bevy::image::{CompressedImageFormats, ImageAddressMode, ImageFilterMode, Ima
 use bevy::mesh::{Indices, PrimitiveTopology};
 use bevy::prelude::*;
 
-/// One mesh of a baked model with its material, and the material it takes when the vehicle burns.
-#[derive(Clone)]
-pub struct Part {
-    pub mesh: Handle<Mesh>,
-    pub material: Handle<StandardMaterial>,
-    pub charred: Handle<StandardMaterial>,
-}
+pub use bav_sim::units::Part;
 
 pub struct Baked {
     pub hull: Vec<Part>,

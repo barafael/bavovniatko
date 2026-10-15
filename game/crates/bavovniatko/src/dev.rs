@@ -15,7 +15,7 @@ pub struct DevPlugin;
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(crate::camera::Flight(dev().fly.clone()))
-            .add_systems(Startup, lineup.after(crate::units::setup_models));
+            .add_systems(Startup, lineup.after(crate::Setup::Kit));
         app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
     }
 }

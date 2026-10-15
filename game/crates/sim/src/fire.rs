@@ -5,15 +5,17 @@
 //! column, the fields are mined, ATGM teams in the tree lines open fire, drivers swerve off the cleared line,
 //! and the guns registered on the lanes work over the stalled column and the crews climbing out.
 
-use crate::audio::{Sfx, Sound};
+use crate::sound::{Sfx, Sound};
 use crate::diorama::{Diorama, diorama};
-use crate::camera::{self, MainCamera, Mode, Shake, View};
+use crate::player::{self, MainCamera, Shake, View};
+use bav_core::vocab::Mode;
 use crate::dev::dev;
-use crate::fx::{self, FxAssets, FxRng};
+use crate::fx::{self, FxQueue, FxRng};
 use crate::geo;
-use crate::terrain::{Paint, PaintQueue};
+use crate::paint::{Paint, PaintQueue};
 use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Line, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, Vehicle, VState};
-use crate::world::{ObservationPost, Palette};
+use crate::player::ObservationPost;
+use crate::units::Palette;
 use bevy::{light::NotShadowCaster, prelude::*, window::PrimaryWindow};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 pub use bav_core::vocab::{Atgm, Strike};
@@ -24,7 +26,7 @@ impl Plugin for FirePlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(FireRng(SmallRng::seed_from_u64(crate::dev::seeded(72))))
             .init_resource::<FireControl>()
-            .add_systems(Startup, spawn_positions.after(units::setup_models).after(crate::world::spawn_belts))
+            .add_systems(Startup, spawn_positions.in_set(crate::schedule::Setup::Field))
             .add_systems(
                 Update,
                 (player_fire, player_atgm, fly_guided, run_missions, land_shells, atgm_teams, fly_missiles, small_arms, vehicle_fire, pre_registered_fires, ua_tank, mortars)
@@ -180,7 +182,7 @@ pub struct UaTank {
     pub timer: f32,
 }
 
-fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>, mut meshes_res: ResMut<Assets<Mesh>>) {
+fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
     let lay = geo::layout();
     use Atgm::*;
     // Positions with a clear view down their road: the Stugnas cover the long shots, the Javelins the close ones.
@@ -211,28 +213,6 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
             Post { side, pos: *p, strength: 6, atgm, reload: 4.0 + i as f32 * 7.0, fire_timer: i as f32, weapon, figures },
             Transform::from_translation(geo::ground(*p)),
         ));
-        // Our ATGM positions get a parapet in front of the sight (where the ground view kneels): two rows of
-        // sandbags, the spoil, a log, so the eye has something at arm's length.
-        if side == Side::Ua && weapon.is_some() {
-            let at = *p + Vec2::new(1.5, 8.5);
-            let kz = lay.routes.iter().map(|r| r.line.point(r.deploy_s)).min_by(|a, b| a.distance(at).total_cmp(&b.distance(at))).unwrap_or(at + Vec2::Y);
-            let d = (kz - at).normalize_or(Vec2::Y);
-            let right = Vec2::new(-d.y, d.x);
-            let mut m = crate::meshes::MeshBuilder::new();
-            let base = geo::ground(at + d * 1.4);
-            for k in 0..8 {
-                let x = (k as f32 - 3.5) * 0.52;
-                let o = right * x;
-                m.cuboid(base + Vec3::new(o.x, 0.14, o.y), Vec3::new(0.26, 0.12, 0.2), Quat::from_rotation_y(d.to_angle() + (k as f32 * 1.7).sin() * 0.15), [0.40, 0.37, 0.30]);
-                if k % 2 == 0 {
-                    m.cuboid(base + Vec3::new(o.x + right.x * 0.26, 0.38, o.y + right.y * 0.26), Vec3::new(0.26, 0.11, 0.2), Quat::from_rotation_y(d.to_angle() + (k as f32).cos() * 0.2), [0.38, 0.35, 0.28]);
-                }
-            }
-            // The spoil thrown up in front, and a log along the lip.
-            m.cuboid(base + d.extend(0.0).xzy() * 0.8 + Vec3::Y * 0.12, Vec3::new(2.6, 0.14, 0.6), Quat::from_rotation_y(d.to_angle()), [0.22, 0.19, 0.16]);
-            m.cylinder(base + Vec3::new(-right.x * 1.6, 0.55, -right.y * 1.6), Vec3::new(right.x * 3.2, 0.0, right.y * 3.2), 0.09, 6, [0.30, 0.26, 0.20]);
-            commands.spawn((Mesh3d(meshes_res.add(m.build())), MeshMaterial3d(palette.vertex.clone()), Transform::default()));
-        }
     }
     if diorama() == Diorama::Robotyne {
         crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
@@ -310,7 +290,7 @@ fn player_fire(
         return;
     }
     let now = time.elapsed_secs_f64();
-    let Some(hit) = camera::cursor_ground(&window, cam.0, cam.1) else { return };
+    let Some(hit) = player::cursor_ground(&window, cam.0, cam.1) else { return };
     let target = hit.xz();
     let sigma = observed_sigma(&view, target);
     let shift = keys.pressed(KeyCode::ShiftLeft) || keys.pressed(KeyCode::ShiftRight);
@@ -377,7 +357,7 @@ fn aim_gizmo(
     if view.mode == Mode::Ground {
         return;
     }
-    if let Some(hit) = camera::cursor_ground(&window, cam.0, cam.1) {
+    if let Some(hit) = player::cursor_ground(&window, cam.0, cam.1) {
         let t = hit.xz();
         let sigma = observed_sigma(&view, t);
         let color = if keys.pressed(KeyCode::ControlLeft) {
@@ -440,7 +420,7 @@ pub fn gauss(rng: &mut SmallRng) -> f32 {
 fn land_shells(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut paint: ResMut<PaintQueue>,
     mut sound: Sound,
@@ -483,7 +463,7 @@ fn land_shells(
         match s.kind {
             ShellKind::Raam => {
                 // The base ejects nine mines over the lane; they lie on the snow, visible from the drone.
-                fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::GreySmoke, pos: p + Vec3::Y * 60.0, vel: Vec3::Y * -2.0, life: 4.0, size0: 3.0, size1: 8.0, alpha: 0.5, ..default() });
+                fx.spawn(fx::Spawn { kind: fx::Kind::GreySmoke, pos: p + Vec3::Y * 60.0, vel: Vec3::Y * -2.0, life: 4.0, size0: 3.0, size1: 8.0, alpha: 0.5, ..default() });
                 sound.at(p + Vec3::Y * 60.0, sfx, 0.4);
                 for _ in 0..9 {
                     let mp = s.at + gauss2(rng) * 22.0;
@@ -497,15 +477,15 @@ fn land_shells(
             ShellKind::Smoke => {
                 // White phosphorus, bursting overhead.
                 sound.at(p + Vec3::Y * 80.0, sfx, 0.4);
-                fx::phosphorus(&mut commands, &mut fx, p);
+                fx.phosphorus(p);
                 smoke.add(s.at, 45.0, now + 100.0);
                 continue;
             }
-            ShellKind::Tos => fx::thermobaric(&mut commands, &mut fx, p),
+            ShellKind::Tos => fx.thermobaric(p),
             ShellKind::Cannon30 => {
-                fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::Dirt, pos: p, vel: Vec3::Y * 6.0, life: 0.8, size0: 0.5, size1: 2.0, alpha: 0.8, gravity: 9.0, ..default() });
+                fx.spawn(fx::Spawn { kind: fx::Kind::Dirt, pos: p, vel: Vec3::Y * 6.0, life: 0.8, size0: 0.5, size1: 2.0, alpha: 0.8, gravity: 9.0, ..default() });
             }
-            _ => fx::explosion(&mut commands, &mut fx, p, size, true),
+            _ => fx.explosion(p, size, true),
         }
         if crater > 0.0 {
             paint.push(Paint::Crater { at: s.at, radius: crater * rng.random_range(0.8..1.2), seed: rng.random() });
@@ -569,7 +549,7 @@ fn atgm_teams(
     mut commands: Commands,
     time: Res<Time>,
     fc: Res<FireControl>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut sound: Sound,
     mut radio: ResMut<Radio>,
@@ -663,8 +643,8 @@ fn atgm_teams(
         pos.reload = weapon.reload();
         let from = geo::ground(pos.pos) + Vec3::Y * 1.2;
         let dir = (tp - from).normalize();
-        fx::muzzle(&mut commands, &mut fx, from, dir, false);
-        fx::backblast(&mut commands, &mut fx, from, dir);
+        fx.muzzle(from, dir, false);
+        fx.backblast(from, dir);
         sound.at(from, Sfx::AtgmLaunch, 0.9);
         let speed = weapon.speed();
         commands.spawn((
@@ -687,7 +667,7 @@ fn atgm_teams(
 fn fly_missiles(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut hits: MessageWriter<DirectHit>,
     mut paint: ResMut<PaintQueue>,
@@ -728,8 +708,8 @@ fn fly_missiles(
         // missile is a dot (a beam rider has no wire and no trail).
         if m.trail > 0.03 && m.launched_at.distance(tf.translation) < m.speed * 2.5 {
             m.trail = 0.0;
-            fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation, vel: Vec3::Y * 0.3, life: 4.0, size0: 0.3, size1: 1.8, alpha: 0.5, drag: 0.5, ..default() });
-            fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::Flash, pos: tf.translation, vel: Vec3::ZERO, life: 0.05, size0: 0.8, size1: 0.6, alpha: 1.0, ..default() });
+            fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation, vel: Vec3::Y * 0.3, life: 4.0, size0: 0.3, size1: 1.8, alpha: 0.5, drag: 0.5, ..default() });
+            fx.spawn(fx::Spawn { kind: fx::Kind::Flash, pos: tf.translation, vel: Vec3::ZERO, life: 0.05, size0: 0.8, size1: 0.6, alpha: 1.0, ..default() });
         }
         // Within this frame's flight of the target counts as arrival: no flying through it at low frame rates.
         if d < 3.0 + m.speed * dt {
@@ -739,11 +719,11 @@ fn fly_missiles(
             let range = m.launched_at.distance(aim);
             if rng.random_bool(m.p_hit.unwrap_or((0.88 - range / 9000.0).clamp(0.4, 0.88)) as f64) {
                 hits.write(DirectHit { target: m.target, cause: Cause::Atgm, top: m.top_attack });
-                fx::explosion(&mut commands, &mut fx, aim, 0.7, false);
+                fx.explosion(aim, 0.7, false);
             } else {
                 // A miss: it ploughs into the snow beyond.
                 let miss = aim.xz() + gauss2(rng) * 12.0;
-                fx::explosion(&mut commands, &mut fx, geo::ground(miss), 0.6, true);
+                fx.explosion(geo::ground(miss), 0.6, true);
                 paint.push(Paint::Crater { at: miss, radius: 1.2, seed: rng.random() });
             }
         }
@@ -757,7 +737,7 @@ fn fly_missiles(
 fn small_arms(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut stats: ResMut<Stats>,
     mut sound: Sound,
@@ -790,7 +770,7 @@ fn small_arms(
         for k in 0..5 {
             let spread = Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(0.0..1.5), rng.random_range(-3.0..3.0)) * (d / 300.0);
             if k % 2 == 0 {
-                fx::tracer(&mut commands, &mut fx, from, tp + spread, 700.0, pos.side);
+                fx.tracer(from, tp + spread, 700.0, pos.side);
             }
         }
         sound.at(from, Sfx::MachineGun, 0.5);
@@ -812,7 +792,7 @@ fn small_arms(
 fn vehicle_fire(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut sound: Sound,
     mut hits: MessageWriter<DirectHit>,
@@ -843,7 +823,7 @@ fn vehicle_fire(
     for (_, mut v, tf) in &mut vehicles {
         if v.side != attacker {
             if v.state.alive() && v.crew > 0 && v.kind.is_tank() {
-                defender_tank(&mut commands, &mut fx, rng, &mut sound, &mut hits, &smoke, &turrets, &mut v, tf, &exposed, dt, now);
+                defender_tank(&mut fx, rng, &mut sound, &mut hits, &smoke, &turrets, &mut v, tf, &exposed, dt, now);
             }
             continue;
         }
@@ -864,7 +844,7 @@ fn vehicle_fire(
         let dir = (geo::ground(aim) - muzzle).normalize();
         if v.kind.is_tank() {
             v.fire_timer = rng.random_range(14.0..26.0);
-            fx::muzzle(&mut commands, &mut fx, muzzle, dir, true);
+            fx.muzzle(muzzle, dir, true);
             sound.at(muzzle, Sfx::TankGun, 1.0);
             let d = from2.distance(aim);
             commands.spawn(Shell { at: aim + gauss2(rng) * (8.0 + d * 0.01), kind: ShellKind::TankHe, land: now + d as f64 / 900.0, whistled: true, by: v.side });
@@ -873,11 +853,11 @@ fn vehicle_fire(
             for k in 0..6 {
                 let hit = aim + gauss2(rng) * 12.0;
                 if k % 2 == 0 {
-                    fx::tracer(&mut commands, &mut fx, muzzle, geo::ground(hit) + Vec3::Y, 900.0, v.side);
+                    fx.tracer(muzzle, geo::ground(hit) + Vec3::Y, 900.0, v.side);
                 }
                 commands.spawn(Shell { at: hit, kind: ShellKind::Cannon30, land: now + 1.5 + k as f64 * 0.18, whistled: true, by: v.side });
             }
-            fx::muzzle(&mut commands, &mut fx, muzzle, dir, false);
+            fx.muzzle(muzzle, dir, false);
             sound.at(muzzle, Sfx::Cannon30, 0.8);
         }
         if rng.random_bool(0.3) {
@@ -894,7 +874,7 @@ fn vehicle_fire(
             n += 1;
             let from = tf.translation + Vec3::Y * 0.4;
             let to = geo::ground(tree_line(rng, from.xz())) + Vec3::Y * 2.0;
-            fx::tracer(&mut commands, &mut fx, from, to, 700.0, s.side);
+            fx.tracer(from, to, 700.0, s.side);
             sound.at(from, Sfx::MachineGun, 0.3);
         }
     }
@@ -904,8 +884,7 @@ fn vehicle_fire(
 /// at it with the main gun. A hit at two kilometres is a matter of luck and of how still the target is.
 #[allow(clippy::too_many_arguments)]
 fn defender_tank(
-    commands: &mut Commands,
-    fx: &mut FxAssets,
+    fx: &mut FxQueue,
     rng: &mut SmallRng,
     sound: &mut Sound,
     hits: &mut MessageWriter<DirectHit>,
@@ -933,16 +912,16 @@ fn defender_tank(
     v.fire_timer = rng.random_range(16.0..28.0);
     let muzzle = turrets.get(v.turret).map(|t| t.transform_point(v.muzzle)).unwrap_or(tf.translation + Vec3::Y * 2.0);
     let aim = geo::ground(tp) + Vec3::Y * 1.2;
-    fx::muzzle(commands, fx, muzzle, (aim - muzzle).normalize(), true);
+    fx.muzzle(muzzle, (aim - muzzle).normalize(), true);
     sound.at(muzzle, Sfx::TankGun, 1.0);
     let d = from.distance(tp);
     if rng.random_bool((0.75 - d as f64 / 4000.0).clamp(0.15, 0.7)) {
         hits.write(DirectHit { target, cause: Cause::TankGun, top: false });
-        fx::explosion(commands, fx, aim, 0.6, false);
+        fx.explosion(aim, 0.6, false);
         sound.at(aim, Sfx::BlastNear, 0.9);
     } else {
         let miss = tp + gauss2(rng) * 14.0;
-        fx::explosion(commands, fx, geo::ground(miss), 0.5, true);
+        fx.explosion(geo::ground(miss), 0.5, true);
     }
 }
 
@@ -1006,7 +985,7 @@ fn pre_registered_fires(
 }
 
 /// The Wanderer: the T-64 crew in the hide fires on stalled columns at long range, on a drone pilot's word.
-fn ua_tank(mut commands: Commands, time: Res<Time>, mut fx: ResMut<FxAssets>, mut fxr: ResMut<FxRng>, mut sound: Sound, vehicles: Query<(&Vehicle, &Transform)>, mut q: Query<(&mut UaTank, &Transform)>) {
+fn ua_tank(mut commands: Commands, time: Res<Time>, mut fx: ResMut<FxQueue>, mut fxr: ResMut<FxRng>, mut sound: Sound, vehicles: Query<(&Vehicle, &Transform)>, mut q: Query<(&mut UaTank, &Transform)>) {
     let now = time.elapsed_secs_f64();
     let rng = &mut fxr.0;
     for (mut t, tf) in &mut q {
@@ -1022,7 +1001,7 @@ fn ua_tank(mut commands: Commands, time: Res<Time>, mut fx: ResMut<FxAssets>, mu
         }
         let aim = targets[rng.random_range(0..targets.len())];
         let muzzle = tf.translation + Vec3::Y * 1.9 + (tf.rotation * Vec3::NEG_Z) * 5.0;
-        fx::muzzle(&mut commands, &mut fx, muzzle, (geo::ground(aim) - muzzle).normalize(), true);
+        fx.muzzle(muzzle, (geo::ground(aim) - muzzle).normalize(), true);
         sound.at(muzzle, Sfx::TankGun, 1.2);
         let d = from.distance(aim);
         commands.spawn(Shell { at: aim + gauss2(rng) * (6.0 + d * 0.006), kind: ShellKind::TankHe, land: now + d as f64 / 850.0, whistled: true, by: Side::Ua });
@@ -1080,7 +1059,7 @@ fn player_atgm(
     time: Res<Time>,
     buttons: Res<ButtonInput<MouseButton>>,
     mut view: ResMut<View>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut sound: Sound,
     mut radio: ResMut<Radio>,
@@ -1124,10 +1103,10 @@ fn player_atgm(
     let fwd = *gt.forward();
     let from = gt.translation + fwd * 1.6 + Vec3::Y * 0.1;
     let rng = &mut fxr.0;
-    fx::flash(&mut commands, from, 1.5e6, 30.0, 0.08);
+    fx.flash(from, 1.5e6, 30.0, 0.08);
     // The launch blows snow and smoke back over the position: for a moment the gunner is half blind.
     for _ in 0..14 {
-        fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: from + Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(-0.5..0.5), rng.random_range(-1.0..1.0)), vel: -fwd * rng.random_range(2.0..8.0) + Vec3::Y * rng.random_range(0.2..1.5), life: rng.random_range(3.0..6.0), size0: 1.2, size1: 6.0, alpha: 0.5, drag: 1.2, ..default() });
+        fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: from + Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(-0.5..0.5), rng.random_range(-1.0..1.0)), vel: -fwd * rng.random_range(2.0..8.0) + Vec3::Y * rng.random_range(0.2..1.5), life: rng.random_range(3.0..6.0), size0: 1.2, size1: 6.0, alpha: 0.5, drag: 1.2, ..default() });
     }
     sound.now(Sfx::AtgmLaunch, 1.3);
     shake.trauma = (shake.trauma + 0.35).min(1.0);
@@ -1156,7 +1135,7 @@ fn fly_guided(
     mut commands: Commands,
     time: Res<Time>,
     view: Res<View>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut hits: MessageWriter<DirectHit>,
     mut paint: ResMut<PaintQueue>,
@@ -1190,8 +1169,8 @@ fn fly_guided(
         let rng = &mut fxr.0;
         if m.trail > 0.025 && m.travelled < 450.0 {
             m.trail = 0.0;
-            fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation, vel: Vec3::Y * 0.3, life: 4.0, size0: 0.3, size1: 2.0, alpha: 0.5, drag: 0.5, ..default() });
-            fx::spawn(&mut commands, &mut fx, fx::Spawn { kind: fx::Kind::Flash, pos: tf.translation - dir * 0.6, vel: Vec3::ZERO, life: 0.04, size0: 0.9, size1: 0.6, alpha: 1.0, ..default() });
+            fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation, vel: Vec3::Y * 0.3, life: 4.0, size0: 0.3, size1: 2.0, alpha: 0.5, drag: 0.5, ..default() });
+            fx.spawn(fx::Spawn { kind: fx::Kind::Flash, pos: tf.translation - dir * 0.6, vel: Vec3::ZERO, life: 0.04, size0: 0.9, size1: 0.6, alpha: 1.0, ..default() });
         }
         let p = tf.translation;
         // Test the whole path flown this frame, so a fast missile cannot pass through a hull between samples.
@@ -1200,7 +1179,7 @@ fn fly_guided(
         let ground = m.travelled > 40.0 && p.y < geo::height(p.x, p.z) + 0.15;
         if let Some((target, v, _)) = hit {
             commands.entity(e).despawn();
-            fx::explosion(&mut commands, &mut fx, p, 0.7, false);
+            fx.explosion(p, 0.7, false);
             sound.at(p, Sfx::BlastNear, 1.0);
             if v.state.alive() {
                 hits.write(DirectHit { target, cause: Cause::Atgm, top: false });
@@ -1209,7 +1188,7 @@ fn fly_guided(
         } else if ground || m.travelled > Atgm::Stugna.range() + 700.0 {
             commands.entity(e).despawn();
             if ground {
-                fx::explosion(&mut commands, &mut fx, p, 0.6, true);
+                fx.explosion(p, 0.6, true);
                 paint.push(Paint::Crater { at: p.xz(), radius: 1.2, seed: rng.random() });
                 sound.at(p, Sfx::BlastNear, 0.8);
                 radio.say(now, "Miss. Into the ground.");

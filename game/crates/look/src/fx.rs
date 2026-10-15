@@ -1,10 +1,13 @@
 //! Particles, flashes, fire and smoke. A small CPU particle system: camera-facing quads that share a handful of
-//! materials (one per kind × alpha step), so everything batches.
+//! materials (one per kind × alpha step), so everything batches. What the battle asks for arrives on
+//! `bav_sim::fx::FxQueue` and is played first thing in `Step::Effects`, in the order it was asked, from this
+//! module's own random stream.
 
-use crate::camera::MainCamera;
-use crate::diorama::diorama;
-use crate::geo::{fbm, value_noise};
-use crate::units::Side;
+use bav_core::diorama::{Side, diorama};
+use bav_core::geo::{fbm, value_noise};
+pub use bav_sim::fx::{Emitter, EmitterKind, FxCall, FxQueue, Kind, Spawn, Wind};
+use bav_sim::paint::PaintQueue;
+use bav_sim::player::MainCamera;
 use bevy::{asset::RenderAssetUsages, light::NotShadowCaster, mesh::{Indices, PrimitiveTopology}, prelude::*, render::render_resource::{Extent3d, TextureDimension, TextureFormat}};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use strum::VariantArray;
@@ -13,112 +16,31 @@ pub struct FxPlugin;
 
 impl Plugin for FxPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(FxRng(SmallRng::seed_from_u64(crate::dev::seeded(20230206))))
-            .insert_resource(Wind(day_wind()))
-            .init_resource::<Smoke>()
-            .insert_resource(FxLight(1.0))
+        app.insert_resource(FxLight(1.0))
             .add_systems(Startup, setup_fx)
-            .add_systems(Update, (update_particles, update_emitters, grass_fires, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
+            .add_systems(Update, (play_requests, update_particles, update_emitters, grass_fires, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
     }
 }
 
-#[derive(Resource)]
-pub struct FxRng(pub SmallRng);
-
-/// Wind drifts every plume the same way, as the vector it blows towards (north is -z). ERA5 at the dioramas
-/// (design/next-items.md §2.1): on 6 February from the north-east, 4 m/s at dawn and 5.5 by midday, so towards
-/// the south-west; on 8 June from the east at night turning south-east by day, about 2 m/s at dawn, so towards
-/// the west-north-west. It is the look's alone: the gameplay smoke (`Smoke`) does not drift.
-#[derive(Resource)]
-pub struct Wind(pub Vec3);
-
-/// The day's wind (see `Wind`); the ground painter reads it too, for the drifts in the belts' lee.
-pub fn day_wind() -> Vec3 {
-    if crate::diorama::diorama().summer() { Vec3::new(-2.0, 0.0, -0.7) } else { Vec3::new(-3.2, 0.0, 3.2) }
-}
-
-/// Smoke on the ground thick enough to hide a vehicle from a sight: grenades and smoke shells. (The particles are
-/// what you see; this is what a gunner cannot see through.)
-#[derive(Resource, Default)]
-pub struct Smoke {
-    clouds: Vec<(Vec2, f32, f64)>,
-}
-
-impl Smoke {
-    pub fn add(&mut self, at: Vec2, radius: f32, until: f64) {
-        self.clouds.push((at, radius, until));
-    }
-
-    /// Does smoke lie across the line from `a` to `b` at game time `now`?
-    pub fn blocks(&self, a: Vec2, b: Vec2, now: f64) -> bool {
-        self.clouds.iter().any(|&(c, r, until)| {
-            if now > until {
-                return false;
-            }
-            let ab = b - a;
-            let t = if ab.length_squared() > 0.0 { ((c - a).dot(ab) / ab.length_squared()).clamp(0.0, 1.0) } else { 0.0 };
-            (a + ab * t).distance(c) < r
-        })
-    }
-
-    /// Is `p` inside smoke?
-    pub fn covers(&self, p: Vec2, now: f64) -> bool {
-        self.blocks(p, p, now)
+/// How fully and how soon the wind carries this kind: fog and grenade smoke go with it at once, hot smoke
+/// rises first and bends over, dust and clods barely feel it.
+fn wind_of(kind: Kind) -> (f32, f32) {
+    match kind {
+        Kind::Fog | Kind::Hc | Kind::Steam | Kind::WhiteSmoke => (1.0, 2.0),
+        Kind::BlackSmoke | Kind::GreySmoke => (0.9, 0.5),
+        Kind::Snow | Kind::Dust => (0.6, 1.0),
+        Kind::Dirt => (0.3, 1.0),
+        _ => (0.0, 0.0),
     }
 }
 
-/// What a particle is made of: each kind has its colour, and in [`update_particles`] its own way of moving with
-/// the wind (§2.2 of design/next-items.md: hot smoke rises before it bends; dust stays low; fog goes as a sheet).
-#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::VariantArray)]
-pub enum Kind {
-    /// Diesel, rubber and oil burning: jet-black, oily, strongly buoyant.
-    BlackSmoke,
-    GreySmoke,
-    WhiteSmoke,
-    /// A diesel-into-the-exhaust screen: a milky fog that neither rises nor sinks, moving with the wind as a sheet.
-    Fog,
-    /// Smoke-grenade smoke: grey-black, hugging the ground, fattening in humid air.
-    Hc,
-    /// Pure white: coolant steam, white phosphorus.
-    Steam,
-    /// Frozen earth: dark clods and the column of a winter burst.
-    Dirt,
-    /// Dry summer earth: the khaki column and the hanging haze of a June burst.
-    Dust,
-    /// Lifted snow (in summer, the pale dust a track throws).
-    Snow,
-    Fire,
-    /// Burning propellant: the white-yellow jets and sparks of a cook-off.
-    Propellant,
-    Flash,
-    /// A Ukrainian tracer (strontium red).
-    Tracer,
-    /// A Russian tracer (barium green).
-    TracerGreen,
-    Spark,
-}
-
-impl Kind {
-    /// How fully and how soon the wind carries this kind: fog and grenade smoke go with it at once, hot smoke
-    /// rises first and bends over, dust and clods barely feel it.
-    fn wind(self) -> (f32, f32) {
-        match self {
-            Kind::Fog | Kind::Hc | Kind::Steam | Kind::WhiteSmoke => (1.0, 2.0),
-            Kind::BlackSmoke | Kind::GreySmoke => (0.9, 0.5),
-            Kind::Snow | Kind::Dust => (0.6, 1.0),
-            Kind::Dirt => (0.3, 1.0),
-            _ => (0.0, 0.0),
-        }
-    }
-
-    /// How much the air's eddies wobble it.
-    fn turbulence(self) -> f32 {
-        match self {
-            Kind::BlackSmoke | Kind::GreySmoke | Kind::WhiteSmoke | Kind::Steam => 1.0,
-            Kind::Fog | Kind::Hc => 0.5,
-            Kind::Snow | Kind::Dust => 0.4,
-            _ => 0.0,
-        }
+/// How much the air's eddies wobble it.
+fn turbulence_of(kind: Kind) -> f32 {
+    match kind {
+        Kind::BlackSmoke | Kind::GreySmoke | Kind::WhiteSmoke | Kind::Steam => 1.0,
+        Kind::Fog | Kind::Hc => 0.5,
+        Kind::Snow | Kind::Dust => 0.4,
+        _ => 0.0,
     }
 }
 
@@ -259,26 +181,6 @@ pub struct Particle {
 
 pub const MAX_PARTICLES: usize = 9000;
 
-pub struct Spawn {
-    pub kind: Kind,
-    pub pos: Vec3,
-    pub vel: Vec3,
-    pub life: f32,
-    pub size0: f32,
-    pub size1: f32,
-    pub alpha: f32,
-    pub drag: f32,
-    pub gravity: f32,
-    pub buoyancy: f32,
-    pub streak: f32,
-}
-
-impl Default for Spawn {
-    fn default() -> Self {
-        Self { kind: Kind::GreySmoke, pos: Vec3::ZERO, vel: Vec3::ZERO, life: 3.0, size0: 1.0, size1: 3.0, alpha: 0.8, drag: 0.5, gravity: 0.0, buoyancy: 0.0, streak: 0.0 }
-    }
-}
-
 pub fn spawn(commands: &mut Commands, fx: &mut FxAssets, s: Spawn) {
     if fx.count >= MAX_PARTICLES {
         return;
@@ -323,14 +225,14 @@ fn update_particles(
         }
         alive += 1;
         let k = p.age / p.life;
-        let (wind_k, wind_rate) = p.kind.wind();
+        let (wind_k, wind_rate) = wind_of(p.kind);
         let windward = wind.0 * gust * wind_k * (1.0 - (-p.age * wind_rate).exp());
         // Hot smoke rises, then its heat is spent and it goes with the wind (a plume's bend-over).
         let buoyancy = p.buoyancy * (-p.age / 20.0).exp();
         let vel = p.vel;
         p.vel = vel * (1.0 - p.drag * dt).max(0.0) + Vec3::Y * (buoyancy - p.gravity) * dt;
         // The air's eddies: a slow field each particle samples at its own place, so plumes writhe.
-        let turb = p.kind.turbulence();
+        let turb = turbulence_of(p.kind);
         let eddy = if turb > 0.0 {
             let (x, z) = (tf.translation.x * 0.04 + p.eddy, tf.translation.z * 0.04);
             Vec3::new(value_noise(x + t * 0.25, z, 71) - 0.5, (value_noise(x, z + t * 0.2, 72) - 0.5) * 0.6, value_noise(x - t * 0.25, z + 50.0, 73) - 0.5) * 1.4 * turb
@@ -376,52 +278,26 @@ fn light_particles(light: Res<FxLight>, fx: Res<FxAssets>, mut materials: ResMut
     }
 }
 
-/// A long-lived source: a burning wreck's fire and smoke column, a vehicle's exhaust smoke screen.
-#[derive(Component)]
-pub struct Emitter {
-    pub kind: EmitterKind,
-    pub rate: f32,
-    /// Seconds to the next puff; set it ahead to delay the first.
-    pub timer: f32,
-    pub remaining: f32,
-    pub secs: f32,
-    pub offset: Vec3,
-}
-
-impl Emitter {
-    /// `rate` puffs a second for `secs` seconds, from `offset` in the owner's frame.
-    pub fn new(kind: EmitterKind, rate: f32, secs: f32, offset: Vec3) -> Self {
-        Self { kind, rate, timer: 0.0, remaining: secs, secs, offset }
+/// Play the battle's requests of this frame, in the order it made them.
+fn play_requests(mut commands: Commands, mut fx: ResMut<FxAssets>, mut queue: ResMut<FxQueue>, mut paint: ResMut<PaintQueue>) {
+    for call in queue.0.drain(..) {
+        let (c, f) = (&mut commands, &mut *fx);
+        match call {
+            FxCall::Spawn(s) => spawn(c, f, s),
+            FxCall::Flash { pos, intensity, range, life } => flash(c, pos, intensity, range, life),
+            FxCall::Explosion { at, size, ground } => explosion(c, f, at, size, ground),
+            FxCall::Cookoff { at, strength } => cookoff(c, f, at, strength),
+            FxCall::EraPops { hull, top } => era_pops(c, f, &hull, top),
+            FxCall::PoolFire { hull, violent } => pool_fire(c, f, &mut paint, &hull, violent),
+            FxCall::Fireball { at } => fireball(c, f, at),
+            FxCall::Thermobaric { at } => thermobaric(c, f, at),
+            FxCall::Muzzle { at, dir, big } => muzzle(c, f, at, dir, big),
+            FxCall::Backblast { from, dir } => backblast(c, f, from, dir),
+            FxCall::Phosphorus { at } => phosphorus(c, f, at),
+            FxCall::Tracer { from, to, speed, side } => tracer(c, f, from, to, speed, side),
+            FxCall::Spray { at, vel } => spray(c, f, at, vel),
+        }
     }
-
-    /// The same, starting after `delay` seconds.
-    pub fn after(delay: f32, kind: EmitterKind, rate: f32, secs: f32, offset: Vec3) -> Self {
-        Self { timer: delay, remaining: secs + delay, ..Self::new(kind, rate, secs, offset) }
-    }
-
-    /// Seconds since it started.
-    fn age(&self) -> f32 {
-        self.secs - self.remaining
-    }
-}
-
-#[derive(Clone, Copy, PartialEq, Eq)]
-pub enum EmitterKind {
-    /// The whole vehicle burning: flames twice the hull's height and a sooty column.
-    WreckFire,
-    Smoulder,
-    /// Diesel injected into the exhaust: a milky fog pouring out low behind a moving vehicle.
-    SmokeScreen,
-    Exhaust,
-    /// A fire in the engine bay: white oil and coolant steam, going grey, from the rear deck.
-    EngineSmoke,
-    /// A smoke grenade burning on the ground: grey-black puffs that merge into a low wall.
-    Hc,
-    /// A white-phosphorus wedge or a smoke canister on the ground: a pure white bank that rises a little.
-    Wp,
-    /// Fuel burning in a pool on the ground beside a hull: low flames, a thinner black plume, steam off the
-    /// snow it melts.
-    PoolFire,
 }
 
 fn update_emitters(
@@ -657,7 +533,7 @@ pub fn era_pops(commands: &mut Commands, fx: &mut FxAssets, hull: &Transform, to
 /// Fuel from a holed tank burning in a pool beside the hull, one burning hull in three (a fire that grew
 /// quietly, one in eight): flames 1.5–3 m for 10–25 minutes, starting when the fuel has run out. In February
 /// it melts a black ring in the snow; in June it may set the field alight (`GrassFire`).
-pub fn pool_fire(commands: &mut Commands, fx: &mut FxAssets, paint: &mut crate::terrain::PaintQueue, hull: &Transform, violent: bool) {
+pub fn pool_fire(commands: &mut Commands, fx: &mut FxAssets, paint: &mut PaintQueue, hull: &Transform, violent: bool) {
     if !fx.rng.random_bool(if violent { 0.35 } else { 0.12 }) {
         return;
     }
@@ -697,7 +573,7 @@ impl GrassFire {
     }
 }
 
-fn grass_fires(mut commands: Commands, time: Res<Time>, wind: Res<Wind>, mut fx: ResMut<FxAssets>, mut paint: ResMut<crate::terrain::PaintQueue>, mut q: Query<(Entity, &mut GrassFire)>) {
+fn grass_fires(mut commands: Commands, time: Res<Time>, wind: Res<Wind>, mut fx: ResMut<FxAssets>, mut paint: ResMut<PaintQueue>, mut q: Query<(Entity, &mut GrassFire)>) {
     let dt = crate::sim_dt(&time);
     let down = wind.0.xz().normalize_or_zero();
     let across = down.perp();

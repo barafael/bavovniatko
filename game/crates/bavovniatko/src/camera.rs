@@ -9,14 +9,15 @@
 use crate::dev::{self, dev};
 use crate::geo;
 use crate::units::{SState, Side, Soldier, Vehicle, vehicle_yaw};
-use crate::world::ObservationPost;
+pub use bav_look::feed::{FeedSetup, HeadlessTarget};
+pub use bav_sim::player::{MainCamera, ObservationPost, Rth, Shake, View};
 use bevy::{
     camera::{Exposure, ShadowLodOrigin},
     core_pipeline::tonemapping::Tonemapping,
     input::mouse::{AccumulatedMouseMotion, AccumulatedMouseScroll},
     pbr::{DistanceFog, FogFalloff},
     prelude::*,
-    render::{render_resource::ShaderType, view::Msaa},
+    render::view::Msaa,
 };
 pub use bav_core::vocab::{Mode, Target};
 
@@ -26,138 +27,10 @@ impl Plugin for CameraPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<View>()
             .init_resource::<Shake>()
-            .add_systems(Startup, spawn_camera)
+            .add_systems(Startup, spawn_camera.before(FeedSetup))
             .add_systems(Startup, spawn_launcher.after(spawn_camera))
             .add_systems(Update, (switch_view, drone_control, op_control, ground_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
     }
-}
-
-#[derive(Resource)]
-pub struct View {
-    pub mode: Mode,
-    pub drone_pos: Vec3,
-    pub drone_yaw: f32,
-    pub gimbal: f32,
-    pub drone_fov: f32,
-    pub op_yaw: f32,
-    pub op_pitch: f32,
-    pub op_fov: f32,
-    pub battery: f32,
-    /// Seconds the feed is down (drone lost or swapping battery).
-    pub feed_down: f32,
-    pub drones_left: u32,
-    /// Signal degradation from Russian EW, 0..1.
-    pub jamming: f32,
-    pub op_alive: bool,
-    // Drone flight state: it is an aircraft, not a camera rig.
-    pub drone_vel: Vec3,
-    pub yaw_target: f32,
-    pub gimbal_target: f32,
-    pub fov_target: f32,
-    pub climb: f32,
-    /// Visual attitude disturbance from manoeuvres (yaw, pitch, roll).
-    pub tilt: Vec3,
-    /// Where the position hold keeps the drone while the sticks are centred.
-    pub hold: Option<Vec2>,
-    // Ground view.
-    pub ground_team: Option<Entity>,
-    pub ground_eye: Vec3,
-    pub ground_yaw: f32,
-    pub ground_pitch: f32,
-    pub sight: bool,
-    /// Range to whatever the sight's crosshair is on.
-    pub ground_range: Option<f32>,
-    /// Javelin: the vehicle the seeker is tracking and for how long (it locks after 2.5 s).
-    pub lock: Option<(Entity, f32)>,
-    /// The view was placed by hand this frame (the showcase): the flight controller and the ground view's own
-    /// controls stand down.
-    pub locked: bool,
-    /// The showcase's ground shot fires this frame, beside the mouse and `BAV_AUTO_ATGM`.
-    pub launch: bool,
-    /// The control link (the video link is the feed's own): up, and for how long it has been down.
-    pub control: bool,
-    pub lost_for: f32,
-    /// The drone flying itself home after six seconds without control; it stays on that course until cancelled.
-    pub rth: Option<Rth>,
-    /// The satellite fix, 1 clean, and the error it puts on the position readout.
-    pub gnss: f32,
-    pub gnss_error: Vec2,
-    /// The last direction it was flying, to back down when the link goes.
-    track: Vec3,
-}
-
-/// The return-to-home sequence of a DJI drone without its controller: brake and hover, back 50 m along the
-/// track it came on, then straight home at the return height, and hover there.
-#[derive(Clone, Copy, PartialEq, Debug)]
-pub enum Rth {
-    Brake(f32),
-    Back { from: Vec3 },
-    Home,
-}
-
-impl Default for View {
-    fn default() -> Self {
-        // At Vuhledar over the town looking south across the fields; at Mala Tokmachka over the forward tree
-        // line, looking south up the slope to the crest.
-        let drone_pos = match crate::diorama::diorama() {
-            crate::diorama::Diorama::Vuhledar => Vec3::new(150.0, 0.0, -700.0),
-            crate::diorama::Diorama::Robotyne => Vec3::new(80.0, 0.0, -1150.0),
-        };
-        Self {
-            mode: Mode::Drone,
-            drone_pos,
-            drone_yaw: std::f32::consts::PI,
-            gimbal: -0.62,
-            drone_fov: 52f32.to_radians(),
-            op_yaw: 3.6,
-            op_pitch: -0.07,
-            op_fov: 55f32.to_radians(),
-            battery: 1.0,
-            feed_down: 0.0,
-            drones_left: 3,
-            jamming: 0.0,
-            op_alive: true,
-            drone_vel: Vec3::ZERO,
-            yaw_target: std::f32::consts::PI,
-            gimbal_target: -0.62,
-            fov_target: 52f32.to_radians(),
-            climb: 0.0,
-            tilt: Vec3::ZERO,
-            hold: None,
-            ground_team: None,
-            ground_eye: Vec3::ZERO,
-            ground_yaw: std::f32::consts::PI,
-            ground_pitch: 0.0,
-            sight: false,
-            ground_range: None,
-            lock: None,
-            locked: false,
-            launch: false,
-            control: true,
-            lost_for: 0.0,
-            rth: None,
-            gnss: 1.0,
-            gnss_error: Vec2::ZERO,
-            track: Vec3::NEG_Z,
-        }
-    }
-}
-
-impl View {
-    /// Height above ground the drone holds.
-    pub const DRONE_AGL: f32 = 190.0;
-
-    pub fn zoom(&self) -> f32 {
-        match self.mode {
-            Mode::Drone => 52f32.to_radians() / self.drone_fov,
-            Mode::Op => 55f32.to_radians() / self.op_fov,
-            Mode::Ground => if self.sight { Self::SIGHT_ZOOM } else { 1.0 },
-        }
-    }
-
-    pub const GROUND_FOV: f32 = 0.95;
-    /// Magnification of the ATGM sight.
-    pub const SIGHT_ZOOM: f32 = 10.0;
 }
 
 /// Yaw and pitch that look along `d` (yaw 0 faces -Z).
@@ -198,55 +71,6 @@ impl Locate for Target {
     }
 }
 
-/// Camera shake and white-out from nearby blasts; decays on its own.
-#[derive(Resource, Default)]
-pub struct Shake {
-    pub trauma: f32,
-    pub flash: f32,
-}
-
-#[derive(Component)]
-pub struct MainCamera;
-
-/// Which look the feed shader gives the picture (matched by value in feed.wgsl).
-#[repr(u32)]
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum FeedMode {
-    /// The drone's compressed video.
-    Drone = 0,
-    /// The OP's binoculars.
-    Binoculars = 1,
-    /// The naked eye in the tree line.
-    Eye = 2,
-    /// Through the ATGM sight.
-    Sight = 3,
-    /// The picture as rendered (`BAV_OFF=feed`).
-    Raw = 4,
-}
-
-/// What the feed shader is told each frame (see feed.rs).
-#[derive(Clone, Copy, ShaderType, Default, Debug)]
-pub struct FeedEffect {
-    pub time: f32,
-    /// A [`FeedMode`].
-    pub mode: u32,
-    pub grain: f32,
-    /// Signal breakup, 0..1.
-    pub glitch: f32,
-    pub flash: f32,
-    pub zoom: f32,
-    pub down: f32,
-    /// How much colour the drone camera keeps: the February snow came through nearly grey, June stays green.
-    pub saturation: f32,
-    /// The link's bit rate, 1 clean: lower is softer, blockier.
-    pub bitrate: f32,
-    /// Which sight, in mode 3: 0 the Stugna-P panel's TV picture, 1 the Javelin CLU's thermal.
-    pub sight: f32,
-}
-
-/// The offscreen image the finished picture lands in when running headless (feed.rs makes it).
-#[derive(Resource)]
-pub struct HeadlessTarget(pub Handle<Image>);
 
 pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
     view.drone_pos.y = geo::height(view.drone_pos.x, view.drone_pos.z) + View::DRONE_AGL;
@@ -264,7 +88,7 @@ pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
             directional_light_exponent: 12.0,
             falloff: FogFalloff::from_visibility_colors(3000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77)),
         },
-        // Point-light shadows are detailed around the drone (no camera renders to a window: feed.rs shows the
+        // Point-light shadows are detailed around the drone (no camera renders to a window: bav_look::feed shows the
         // picture).
         ShadowLodOrigin,
     ));
@@ -638,13 +462,6 @@ fn apply_view(
     }
     shake.trauma = (shake.trauma - dt * 0.9).max(0.0);
     shake.flash = (shake.flash - dt * 2.5).max(0.0);
-}
-
-/// Ray from the cursor into the terrain.
-pub fn cursor_ground(window: &Window, camera: &Camera, cam_tf: &GlobalTransform) -> Option<Vec3> {
-    let cursor = window.cursor_position()?;
-    let ray = camera.viewport_to_world(cam_tf, cursor).ok()?;
-    geo::raycast(ray.origin, *ray.direction, 9000.0)
 }
 
 /// The launcher on its tripod in front of the eye in the ground view: a Stugna-P tube and its sight box.

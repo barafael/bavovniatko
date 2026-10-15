@@ -1,0 +1,18 @@
+[package]
+name = "bav-look"
+description = "The picture and the sound: ground, sky, trees and towns, particles and fire, the video feed, the models, and the synthesised sound. It reads the battle and never changes it"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+bav-core.workspace = true
+bav-sim.workspace = true
+bevy.workspace = true
+rand.workspace = true
+strum.workspace = true
+image.workspace = true
+
+[lints]
+workspace = true

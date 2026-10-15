@@ -376,10 +376,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "bav-look"
+version = "0.1.0"
+dependencies = [
+ "bav-core",
+ "bav-sim",
+ "bevy",
+ "image",
+ "rand 0.9.5",
+ "strum",
+]
+
+[[package]]
+name = "bav-sim"
+version = "0.1.0"
+dependencies = [
+ "bav-core",
+ "bevy",
+ "rand 0.9.5",
+ "strum",
+]
+
+[[package]]
 name = "bavovniatko"
 version = "0.1.0"
 dependencies = [
  "bav-core",
+ "bav-look",
+ "bav-sim",
  "bevy",
  "image",
  "rand 0.9.5",

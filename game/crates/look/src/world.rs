@@ -1,5 +1,6 @@
 //! Set dressing: the shelterbelts, the town's ruined panel blocks, the dachas, the power line, and the sky.
 
+use bav_core::schedule::Setup;
 use crate::dev::{self, DayDebug};
 use crate::diorama::{Diorama, diorama};
 use crate::geo::{self, CHUNK, CHUNKS_X, HALF_X, HALF_Z, hash01};
@@ -19,7 +20,7 @@ impl Plugin for WorldPlugin {
         app.insert_resource(ClearColor(Color::srgb(0.70, 0.72, 0.74)))
             .insert_resource(GlobalAmbientLight { color: Color::srgb(0.80, 0.86, 1.0), brightness: 450.0, ..default() })
             .insert_resource(bevy::light::DirectionalLightShadowMap { size: 4096 })
-            .add_systems(Startup, (spawn_light, spawn_belts));
+            .add_systems(Startup, (spawn_light, spawn_belts.in_set(Setup::Kit), crate::models::setup_models.after(spawn_belts).in_set(Setup::Kit), parapets.in_set(Setup::Dress)));
         match diorama() {
             Diorama::Vuhledar => {
                 app.add_systems(Startup, spawn_town.after(spawn_belts)).add_systems(Update, daylight.in_set(crate::Step::Effects));
@@ -31,13 +32,8 @@ impl Plugin for WorldPlugin {
     }
 }
 
-/// Shared materials for vertex-coloured models.
-#[derive(Resource, Clone)]
-pub struct Palette {
-    pub vertex: Handle<StandardMaterial>,
-    pub charred: Handle<StandardMaterial>,
-    pub branches: Handle<StandardMaterial>,
-}
+pub use bav_sim::player::ObservationPost;
+pub use bav_sim::units::Palette;
 
 #[derive(Resource)]
 pub struct Skirt(pub Handle<StandardMaterial>);
@@ -332,14 +328,6 @@ fn facade_texture(seed: u32) -> Image {
 /// The z of each row of panel blocks on the ridge, the southern (front) row first.
 const TOWN_ROWS: [f32; 5] = [-1225.0, -1330.0, -1450.0, -1580.0, -1700.0];
 
-/// Where the observers watch from: the roof of the town's front-row block at Vuhledar, the water tower south of
-/// Mala Tokmachka. Each diorama's set inserts it at startup, so it is always there once the day runs.
-#[derive(Resource)]
-pub struct ObservationPost {
-    pub eye: Vec3,
-    pub building: Vec2,
-}
-
 fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
     let facades: Vec<Handle<StandardMaterial>> = (0..3)
         .map(|k| materials.add(StandardMaterial { base_color_texture: Some(images.add(facade_texture(k + 1))), perceptual_roughness: 0.95, ..default() }))
@@ -540,5 +528,35 @@ fn daylight(
     if changed && let Some(sk) = skirt.as_ref() && let Some(mut m) = materials.get_mut(&sk.0) {
         m.base_color = sky;
         *last = Some(sky);
+    }
+}
+
+/// Our ATGM positions get a parapet in front of the sight (where the ground view kneels): two rows of sandbags,
+/// the spoil, a log, so the eye has something at arm's length. Laid once the battle has placed its posts.
+pub fn parapets(mut commands: Commands, palette: Res<Palette>, mut meshes_res: ResMut<Assets<Mesh>>, posts: Query<&bav_sim::fire::Post>) {
+    let lay = geo::layout();
+    for post in &posts {
+        if post.side != bav_core::diorama::Side::Ua || post.weapon.is_none() {
+            continue;
+        }
+        let p = &post.pos;
+        let at = *p + Vec2::new(1.5, 8.5);
+        let kz = lay.routes.iter().map(|r| r.line.point(r.deploy_s)).min_by(|a, b| a.distance(at).total_cmp(&b.distance(at))).unwrap_or(at + Vec2::Y);
+        let d = (kz - at).normalize_or(Vec2::Y);
+        let right = Vec2::new(-d.y, d.x);
+        let mut m = crate::meshes::MeshBuilder::new();
+        let base = geo::ground(at + d * 1.4);
+        for k in 0..8 {
+            let x = (k as f32 - 3.5) * 0.52;
+            let o = right * x;
+            m.cuboid(base + Vec3::new(o.x, 0.14, o.y), Vec3::new(0.26, 0.12, 0.2), Quat::from_rotation_y(d.to_angle() + (k as f32 * 1.7).sin() * 0.15), [0.40, 0.37, 0.30]);
+            if k % 2 == 0 {
+                m.cuboid(base + Vec3::new(o.x + right.x * 0.26, 0.38, o.y + right.y * 0.26), Vec3::new(0.26, 0.11, 0.2), Quat::from_rotation_y(d.to_angle() + (k as f32).cos() * 0.2), [0.38, 0.35, 0.28]);
+            }
+        }
+        // The spoil thrown up in front, and a log along the lip.
+        m.cuboid(base + d.extend(0.0).xzy() * 0.8 + Vec3::Y * 0.12, Vec3::new(2.6, 0.14, 0.6), Quat::from_rotation_y(d.to_angle()), [0.22, 0.19, 0.16]);
+        m.cylinder(base + Vec3::new(-right.x * 1.6, 0.55, -right.y * 1.6), Vec3::new(right.x * 3.2, 0.0, right.y * 3.2), 0.09, 6, [0.30, 0.26, 0.20]);
+        commands.spawn((Mesh3d(meshes_res.add(m.build())), MeshMaterial3d(palette.vertex.clone()), Transform::default()));
     }
 }

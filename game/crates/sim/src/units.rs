@@ -6,18 +6,14 @@
 //! do it (dossier c08 §5); south of Mala Tokmachka the 47th Brigade's do (c09 §5), in better vehicles, and most of
 //! their crews get out.
 
-use crate::audio::{self, Sfx, Sound};
+use crate::sound::{Sfx, Sound};
 use crate::diorama::{Diorama, diorama};
-use crate::camera::MainCamera;
-use crate::fx::{self, Emitter, EmitterKind, FxAssets, FxRng};
+use crate::player::MainCamera;
+use crate::fx::{self, Emitter, EmitterKind, FxQueue, FxRng};
 use crate::geo::{self, Polyline};
-use crate::meshes::{self, WEST_GREEN};
-use crate::terrain::{Paint, PaintQueue};
-use crate::baked::{self, Part};
-use crate::world::Palette;
+use crate::paint::{Paint, PaintQueue};
 use bevy::{light::NotShadowCaster, platform::collections::HashMap, prelude::*};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
-use strum::VariantArray;
 
 pub struct UnitsPlugin;
 
@@ -30,7 +26,7 @@ impl Plugin for UnitsPlugin {
             .init_resource::<Radio>()
             .init_resource::<ColumnOrder>()
             .init_resource::<LastHit>()
-            .add_systems(Startup, (setup_models, lay_minefields, spawn_old_wrecks).chain().after(crate::world::spawn_belts))
+            .add_systems(Startup, (lay_minefields, spawn_old_wrecks).chain().in_set(crate::schedule::Setup::Field))
             .add_systems(
                 Update,
                 (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, era_reacts, crew_bailout, burn, move_soldiers, board_vehicles, animate_legs, fly_debris, drop_riders)
@@ -413,6 +409,22 @@ impl Radio {
 }
 
 /// One kind of vehicle: its hull (and plow-tank hull), its turret, where the turret sits and where its gun ends.
+/// One mesh of a baked model with its material, and the material it takes when the vehicle burns.
+#[derive(Clone)]
+pub struct Part {
+    pub mesh: Handle<Mesh>,
+    pub material: Handle<StandardMaterial>,
+    pub charred: Handle<StandardMaterial>,
+}
+
+/// Shared materials for vertex-coloured models.
+#[derive(Resource, Clone)]
+pub struct Palette {
+    pub vertex: Handle<StandardMaterial>,
+    pub charred: Handle<StandardMaterial>,
+    pub branches: Handle<StandardMaterial>,
+}
+
 pub struct VehicleMeshes {
     pub hull: Vec<Part>,
     pub plow_hull: Option<Vec<Part>>,
@@ -427,7 +439,7 @@ pub struct VehicleMeshes {
 pub struct Skin(pub Handle<StandardMaterial>);
 
 /// The first of a model's meshes, worn by the entity itself (as every model was one mesh before the baked ones,
-/// and the day's order of play hangs on which entities carry a mesh: see `Step` in main.rs).
+/// and the day's order of play hangs on which entities carry a mesh: see `bav_core::schedule::Step`).
 pub fn skin(parts: &[Part]) -> (Mesh3d, MeshMaterial3d<StandardMaterial>) {
     (Mesh3d(parts[0].mesh.clone()), MeshMaterial3d(parts[0].material.clone()))
 }
@@ -471,8 +483,8 @@ pub struct FigureMeshes {
 #[derive(Resource)]
 pub struct Models {
     pub vehicles: HashMap<VKind, VehicleMeshes>,
-    ru: FigureMeshes,
-    ua: FigureMeshes,
+    pub ru: FigureMeshes,
+    pub ua: FigureMeshes,
     pub hip: Vec3,
     pub raam: Handle<Mesh>,
     pub missile: Handle<Mesh>,
@@ -497,68 +509,6 @@ impl Models {
     }
 }
 
-pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>, palette: Res<Palette>) {
-    // The real models (tools/bake). Their paint is in the textures; this only weathers it.
-    let weathered = Color::srgb(0.93, 0.9, 0.84);
-    let baked: HashMap<&str, baked::Baked> = baked::IDS.iter().map(|&id| (id, baked::load(id, weathered, &mut meshes, &mut images, &mut materials))).collect();
-    let hand = |meshes: &mut Assets<Mesh>, m: meshes::MeshBuilder| vec![Part { mesh: meshes.add(m.build()), material: palette.vertex.clone(), charred: palette.charred.clone() }];
-    let mut vehicles = HashMap::new();
-    for &k in VKind::VARIANTS {
-        // The model whose hull it takes, and the hand-built top for those without a model of their own: the
-        // Leopard 2R and the Wisent (a Leopard 1 hull, near enough a 2A4's), and the BMR-2 (a T-55's, here a T-64's).
-        let (id, top) = match k {
-            VKind::T80 => ("t80", None),
-            VKind::T72 => ("t72", None),
-            VKind::Bmp1 => ("bmp1", None),
-            VKind::Bmp2 => ("bmp2", None),
-            VKind::Mtlb => ("mtlb", None),
-            VKind::Leo2a6 => ("leo2a6", None),
-            VKind::Leo2r => ("leo2r", Some(meshes::leopard2r_top(WEST_GREEN))),
-            VKind::Wisent => ("leo2r", Some(meshes::wisent_top(WEST_GREEN))),
-            VKind::Bmr2 => ("t64", Some(meshes::bmr2_top(WEST_GREEN))),
-            VKind::Bradley => ("bradley", None),
-        };
-        let b = &baked[id];
-        let (turret, turret_at, muzzle) = match top {
-            Some((t, at)) => (hand(&mut meshes, t), at, Vec3::new(0.0, 0.6, -1.6)),
-            None => (b.turret.clone(), b.turret_at, b.muzzle),
-        };
-        let extra = match k {
-            VKind::Leo2r => hand(&mut meshes, meshes::full_plow(-4.4, 4.2)),
-            VKind::Wisent => hand(&mut meshes, meshes::full_plow(-4.1, 3.8)),
-            VKind::Bmr2 => hand(&mut meshes, meshes::kmt_rollers()),
-            _ => vec![],
-        };
-        // The carousel tanks may carry a KMT-7 at the head of a column.
-        let plow_hull = k.carousel().then(|| b.hull.iter().cloned().chain(hand(&mut meshes, meshes::kmt7())).collect());
-        let hull = b.hull.iter().cloned().chain(extra).collect();
-        vehicles.insert(k, VehicleMeshes { hull, plow_hull, turret, turret_at, muzzle });
-    }
-    let t64 = &baked["t64"];
-    let ua_tank = VehicleMeshes { hull: t64.hull.clone(), plow_hull: None, turret: t64.turret.clone(), turret_at: t64.turret_at, muzzle: t64.muzzle };
-    let mut figure = |coat, trousers, helmet, tape| {
-        let f = meshes::figure(coat, trousers, helmet, Some(tape));
-        (FigureMeshes { body: meshes.add(f.body.build()), leg: meshes.add(f.leg.build()), fallen: meshes.add(meshes::fallen(coat, trousers).build()) }, f.hip)
-    };
-    let ((ru, hip), (ua, _)) = if diorama().summer() {
-        // Summer: no coats. Russian flora pattern, greyish; Ukrainian multicam-like, browner; tape on the arms.
-        (figure([0.40, 0.42, 0.33], [0.36, 0.38, 0.30], [0.33, 0.35, 0.28], [0.8, 0.3, 0.25]), figure([0.45, 0.43, 0.32], [0.40, 0.38, 0.29], [0.36, 0.36, 0.27], [0.85, 0.8, 0.3]))
-    } else {
-        (figure([0.36, 0.37, 0.31], [0.33, 0.34, 0.29], [0.3, 0.32, 0.26], [0.8, 0.3, 0.25]), figure([0.34, 0.36, 0.27], [0.30, 0.32, 0.24], [0.28, 0.31, 0.22], [0.85, 0.8, 0.3]))
-    };
-    let mut raam = meshes::MeshBuilder::new();
-    raam.cylinder(Vec3::ZERO, Vec3::Y * 0.12, 0.08, 6, [0.22, 0.24, 0.17]);
-    let mut missile = meshes::MeshBuilder::new();
-    missile.cylinder(Vec3::new(0.0, 0.0, 0.6), Vec3::new(0.0, 0.0, -1.2), 0.07, 6, [0.3, 0.32, 0.25]);
-    let mut marker = meshes::MeshBuilder::new();
-    marker.cylinder(Vec3::ZERO, Vec3::Y * 1.3, 0.025, 4, [0.3, 0.3, 0.28]);
-    marker.boxc(Vec3::new(0.12, 1.2, 0.0), Vec3::new(0.24, 0.16, 0.01), [0.95, 0.45, 0.1]);
-    let mut strip = meshes::MeshBuilder::new();
-    strip.boxc(Vec3::new(0.0, 0.05, 0.0), Vec3::new(0.55, 0.1, 5.5), [0.12, 0.12, 0.11]);
-    let mut wheel = meshes::MeshBuilder::new();
-    wheel.cylinder(Vec3::new(-0.1, 0.37, 0.0), Vec3::new(0.2, 0.0, 0.0), 0.37, 10, [0.16, 0.16, 0.15]);
-    commands.insert_resource(Models { vehicles, ru, ua, hip, raam: meshes.add(raam.build()), missile: meshes.add(missile.build()), ua_tank, marker: meshes.add(marker.build()), track_strip: meshes.add(strip.build()), road_wheel: meshes.add(wheel.build()) });
-}
 
 // ---------------------------------------------------------------------------------------------------------
 // Mines
@@ -863,7 +813,7 @@ struct Snap {
 
 /// How fast the ground lets a tracked vehicle go, as a fraction of its road speed: the road itself, the plowed
 /// lane, a field under thin snow or in June's dry stubble, a turn off the road, a shell crater under a track.
-fn going(p: Vec2, lat: f32, lay: &geo::Layout, craters: &crate::terrain::Craters, turning: bool) -> f32 {
+fn going(p: Vec2, lat: f32, lay: &geo::Layout, craters: &crate::paint::Craters, turning: bool) -> f32 {
     if craters.near(p, 4.0) {
         return 0.3;
     }
@@ -882,13 +832,13 @@ fn drive_vehicles(
     time: Res<Time>,
     mut rng: ResMut<UnitRng>,
     mut fxr: ResMut<FxRng>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut paint: ResMut<PaintQueue>,
     mut stats: ResMut<Stats>,
     models: Res<Models>,
     palette: Res<Palette>,
     cam: Single<&GlobalTransform, With<MainCamera>>,
-    mut levels: ResMut<audio::AmbienceLevels>,
+    mut levels: ResMut<crate::sound::AmbienceLevels>,
     (order, mut radio, mut smoke): (Res<ColumnOrder>, ResMut<Radio>, ResMut<fx::Smoke>),
     mut q: Query<(Entity, &mut Vehicle, &mut Transform), Without<Turret>>,
     mut turrets: Query<&mut Transform, With<Turret>>,
@@ -1175,7 +1125,7 @@ fn drive_vehicles(
             }
             // Hard going throws more: the tracks dig.
             if v.speed > 2.0 && rng.random_bool((0.5 / going.max(0.4)).min(1.0) as f64) {
-                fx::spray(&mut commands, &mut fx, geo::ground(p) + Vec3::new(0.0, 0.0, 0.0) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
+                fx.spray(geo::ground(p) + Vec3::new(0.0, 0.0, 0.0) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
             }
         }
         if v.speed > 0.5 {
@@ -1295,7 +1245,7 @@ pub fn wrap(a: f32) -> f32 {
 /// minute, which hides the vehicle from the ATGM teams' sights, and from the drone overhead. The Soviet 902
 /// "Tucha" dischargers make grey-black HC smoke for two minutes and more; a Bradley's are white phosphorus,
 /// a near-instant dense white burst that is gone in half a minute.
-pub fn pop_smoke(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, smoke: &mut fx::Smoke, v: &mut Vehicle, tf: &Transform, now: f64) {
+pub fn pop_smoke(commands: &mut Commands, fx: &mut FxQueue, rng: &mut SmallRng, smoke: &mut fx::Smoke, v: &mut Vehicle, tf: &Transform, now: f64) {
     if v.smoked {
         return;
     }
@@ -1310,7 +1260,7 @@ pub fn pop_smoke(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng,
         let secs = rng.random_range(2.0..2.8);
         let land = tf.translation.xz() + dir * range;
         let vel = Vec3::new(dir.x * range / secs, 0.5 * 9.8 * secs, dir.y * range / secs);
-        fx::spawn(commands, fx, fx::Spawn { kind: fx::Kind::GreySmoke, pos: from, vel, life: secs, size0: 0.6, size1: 0.8, alpha: 0.9, drag: 0.0, gravity: 9.8, streak: 5.0, ..default() });
+        fx.spawn(fx::Spawn { kind: fx::Kind::GreySmoke, pos: from, vel, life: secs, size0: 0.6, size1: 0.8, alpha: 0.9, drag: 0.0, gravity: 9.8, streak: 5.0, ..default() });
         let (kind, rate, burn) = if v.side == Side::Ua { (EmitterKind::Wp, 1.5, rng.random_range(18.0..30.0)) } else { (EmitterKind::Hc, 0.8, rng.random_range(90.0..150.0)) };
         commands.spawn((Transform::from_translation(geo::ground(land)), Emitter::after(secs, kind, rate, burn, Vec3::Y * 0.3)));
     }
@@ -1334,7 +1284,7 @@ fn check_mines(
     models: Res<Models>,
     palette: Res<Palette>,
     mut mf: ResMut<Minefield>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut paint: ResMut<PaintQueue>,
     mut stats: ResMut<Stats>,
@@ -1371,7 +1321,7 @@ fn check_mines(
                 // A stacked pair wrecks the plow or rollers outright (a 47th T-64 commander: rollers survive "up to
                 // four explosions", but stacked mines destroyed one after a single blast).
                 if rng.0.random_bool(if m.stacked { 0.45 } else { 0.12 }) {
-                    detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
+                    detonate(&mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
                     v.plow = false;
                     if m.stacked && rng.0.random_bool(0.5) {
                         v.immobilise(rng.0.random_range(3.0..5.0), rng.0.random_range(-0.3..0.3));
@@ -1393,7 +1343,7 @@ fn check_mines(
                 if let Some(ent) = m.entity {
                     commands.entity(ent).despawn();
                 }
-                detonate(&mut commands, &mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
+                detonate(&mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
                 stats.mine_hits += 1;
                 // TM-62 under a track: the track and road wheels are gone. Often more.
                 let kill = rng.0.random_bool(v.kind.mine_kill(m.stacked));
@@ -1442,9 +1392,9 @@ fn check_mines(
     }
 }
 
-fn detonate(commands: &mut Commands, fx: &mut FxAssets, rng: &mut SmallRng, paint: &mut PaintQueue, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, at: Vec2) {
+fn detonate(fx: &mut FxQueue, rng: &mut SmallRng, paint: &mut PaintQueue, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, at: Vec2) {
     let p = geo::ground(at);
-    fx::explosion(commands, fx, p, 1.1, true);
+    fx.explosion(p, 1.1, true);
     paint.push(Paint::Crater { at, radius: 2.0, seed: rng.random() });
     sound.at(p, Sfx::MineBlast, 1.0);
     blasts.write(Blast { at: p, radius: 6.0, cause: Cause::Mine });
@@ -1542,8 +1492,8 @@ fn burst_strength(kind: VKind) -> f32 {
 }
 
 /// The charges go all at once: the fireball, its sound, and the blast on whoever stands near.
-fn cook_off_blast(commands: &mut Commands, fx: &mut FxAssets, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, p: Vec3) {
-    fx::fireball(commands, fx, p);
+fn cook_off_blast(fx: &mut FxQueue, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, p: Vec3) {
+    fx.fireball(p);
     sound.at(p, Sfx::CookOff, 1.4);
     blasts.write(Blast { at: p, radius: 8.0, cause: Cause::CookOff });
 }
@@ -1585,7 +1535,7 @@ pub fn on_wrecked(
     time: Res<Time>,
     palette: Res<Palette>,
     models: Res<Models>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut stats: ResMut<Stats>,
     mut radio: ResMut<Radio>,
@@ -1669,7 +1619,7 @@ pub fn on_wrecked(
     let toss_later = ev.how != Kill::BrewUp && v.kind.carousel() && rng.random_bool(0.5);
     match ev.how {
         Kill::BrewUp => {
-            cook_off_blast(&mut commands, &mut fx, &mut sound, &mut blasts, p);
+            cook_off_blast(&mut fx, &mut sound, &mut blasts, p);
             if v.kind.carousel()
                 && let Some(t) = turret.as_ref()
             {
@@ -1677,14 +1627,14 @@ pub fn on_wrecked(
             }
         }
         Kill::Torch => {
-            fx::explosion(&mut commands, &mut fx, p + Vec3::Y, 0.9, false);
+            fx.explosion(p + Vec3::Y, 0.9, false);
             sound.at(p, Sfx::BlastNear, 1.0);
         }
         Kill::Quiet => {}
     }
     commands.entity(ev.vehicle).insert((Fire::torch(rng, ev.cause, v.kind, toss_later, torch_secs), Emitter::new(EmitterKind::WreckFire, 5.0, torch_secs, Vec3::Y * 1.5)));
     // Fuel running out of a holed tank burns in a pool beside the hull; in June it can set the field alight.
-    fx::pool_fire(&mut commands, &mut fx, &mut paint, tf, ev.how != Kill::Quiet);
+    fx.pool_fire(tf, ev.how != Kill::Quiet);
 }
 
 /// The fire on a knocked-out vehicle, minute by minute: an engine-bay fire that grows into the hull or dies
@@ -1692,7 +1642,7 @@ pub fn on_wrecked(
 fn burn(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxAssets>,
+    mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut sound: Sound,
     mut stats: ResMut<Stats>,
@@ -1726,13 +1676,13 @@ fn burn(
                     f.next_burst = f.t + rng.random_range(8.0..90.0);
                     if toss {
                         f.toss_at = None;
-                        cook_off_blast(&mut commands, &mut fx, &mut sound, &mut blasts, p);
+                        cook_off_blast(&mut fx, &mut sound, &mut blasts, p);
                         if let Ok(t) = turrets.get(v.turret) {
                             toss_turret(&mut commands, rng, &mut stats, &mut radio, v, t, now);
                         }
                     } else {
                         let s = burst_strength(v.kind);
-                        fx::cookoff(&mut commands, &mut fx, p, s);
+                        fx.cookoff(p, s);
                         sound.at(p, Sfx::CookOff, 0.4 + 0.5 * s);
                     }
                 }
@@ -1874,7 +1824,7 @@ pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette,
 
 /// Reactive armour going off under a hit: a chain of flashes and grey puffs where the blocks were, and the
 /// plates thrown off. The look of the hit only: the simulation has already decided what the hit did.
-fn era_reacts(mut commands: Commands, mut hits: MessageReader<DirectHit>, mut fx: ResMut<FxAssets>, mut last: ResMut<LastHit>, q: Query<(&Vehicle, &Transform)>) {
+fn era_reacts(mut hits: MessageReader<DirectHit>, mut fx: ResMut<FxQueue>, mut last: ResMut<LastHit>, q: Query<(&Vehicle, &Transform)>) {
     for h in hits.read() {
         if let Ok((_, tf)) = q.get(h.target) {
             last.0 = Some(tf.translation);
@@ -1883,7 +1833,7 @@ fn era_reacts(mut commands: Commands, mut hits: MessageReader<DirectHit>, mut fx
             && v.kind.era()
             && h.cause != Cause::TankGun
         {
-            fx::era_pops(&mut commands, &mut fx, tf, h.top);
+            fx.era_pops(tf, h.top);
             info!("era pops on {:?} {}/{} at {:.0},{:.0}", v.kind, v.wave, v.idx, tf.translation.x, tf.translation.z);
         }
     }
@@ -1916,7 +1866,7 @@ fn resolve_direct_hits(mut commands: Commands, mut hits: MessageReader<DirectHit
 
 /// Where a man who has just got out runs first: the nearest crater, wreck or tree line within reach, chosen
 /// among them so that no two men run the same way; or nowhere in particular, but off to one side.
-fn cover_near(p: Vec2, home: Vec2, craters: &crate::terrain::Craters, hulls: &[Vec2], rng: &mut SmallRng) -> Vec2 {
+fn cover_near(p: Vec2, home: Vec2, craters: &crate::paint::Craters, hulls: &[Vec2], rng: &mut SmallRng) -> Vec2 {
     let mut spots: Vec<Vec2> = Vec::new();
     if let Some(c) = craters.nearest(p, 15.0) {
         spots.push(c);
@@ -2128,7 +2078,7 @@ fn move_soldiers(
             if rng.random_bool((dt * 0.6) as f64) {
                 paint.push(Paint::Footprints { at: np });
             }
-            mines.step(&mut commands, np);
+            mines.step(np);
         } else {
             // Prone or dug in: lie flat.
             tf.translation = geo::ground(p) + Vec3::Y * if s.state == SState::DugIn { -0.6 } else { -0.75 };
@@ -2146,7 +2096,7 @@ fn move_soldiers(
 #[derive(bevy::ecs::system::SystemParam)]
 struct FootMines<'w, 's> {
     mf: ResMut<'w, Minefield>,
-    fx: ResMut<'w, FxAssets>,
+    fx: ResMut<'w, FxQueue>,
     sound: Sound<'w, 's>,
     blasts: MessageWriter<'w, Blast>,
     near: Local<'s, Vec<usize>>,
@@ -2154,13 +2104,13 @@ struct FootMines<'w, 's> {
 
 impl FootMines<'_, '_> {
     /// A foot comes down at `p`: if it finds an anti-personnel mine, the mine goes off.
-    fn step(&mut self, commands: &mut Commands, p: Vec2) {
+    fn step(&mut self, p: Vec2) {
         let mf = &mut self.mf;
         mf.near_into(p, 0.6, &mut self.near);
         let Some(i) = self.near.iter().copied().find(|&i| mf.mines[i].ap && mf.mines[i].pos.distance(p) < 0.45) else { return };
         mf.mines[i].live = false;
         let at = geo::ground(p);
-        fx::explosion(commands, &mut self.fx, at, 0.35, true);
+        self.fx.explosion(at, 0.35, true);
         self.sound.at(at, Sfx::MineBlast, 0.5);
         self.blasts.write(Blast { at, radius: 2.5, cause: Cause::Mine });
     }

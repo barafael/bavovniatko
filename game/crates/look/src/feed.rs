@@ -4,7 +4,9 @@
 //! does (design/next-items.md §2.6), while the interface stays crisp: the controller draws that, the video does
 //! not carry it.
 
-use crate::camera::{FeedEffect, FeedMode, HeadlessTarget, MainCamera, Mode, Shake, View};
+use bav_core::vocab::Mode;
+use bav_sim::player::{MainCamera, Shake, View};
+use bevy::render::render_resource::ShaderType;
 use crate::dev::{self, dev};
 use bevy::{
     camera::{RenderTarget, visibility::RenderLayers},
@@ -19,13 +21,57 @@ use bevy::{
 };
 use rand::Rng;
 
+/// The feed's startup: after the game has spawned its camera.
+#[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub struct FeedSetup;
+
+/// Which look the feed shader gives the picture (matched by value in feed.wgsl).
+#[repr(u32)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum FeedMode {
+    /// The drone's compressed video.
+    Drone = 0,
+    /// The OP's binoculars.
+    Binoculars = 1,
+    /// The naked eye in the tree line.
+    Eye = 2,
+    /// Through the ATGM sight.
+    Sight = 3,
+    /// The picture as rendered (`BAV_OFF=feed`).
+    Raw = 4,
+}
+
+/// What the feed shader is told each frame.
+#[derive(Clone, Copy, ShaderType, Default, Debug)]
+pub struct FeedEffect {
+    pub time: f32,
+    /// A [`FeedMode`].
+    pub mode: u32,
+    pub grain: f32,
+    /// Signal breakup, 0..1.
+    pub glitch: f32,
+    pub flash: f32,
+    pub zoom: f32,
+    pub down: f32,
+    /// How much colour the drone camera keeps: the February snow came through nearly grey, June stays green.
+    pub saturation: f32,
+    /// The link's bit rate, 1 clean: lower is softer, blockier.
+    pub bitrate: f32,
+    /// Which sight, in mode 3: 0 the Stugna-P panel's TV picture, 1 the Javelin CLU's thermal.
+    pub sight: f32,
+}
+
+/// The offscreen image the finished picture lands in when running headless (made at the feed's setup).
+#[derive(Resource)]
+pub struct HeadlessTarget(pub Handle<Image>);
+
 pub struct FeedPlugin;
 
 impl Plugin for FeedPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(Material2dPlugin::<FeedMaterial>::default())
             .init_resource::<Link>()
-            .add_systems(Startup, setup.after(crate::camera::spawn_camera))
+            .add_systems(Startup, setup.in_set(FeedSetup))
             .add_systems(Update, resize.in_set(crate::Step::Control));
     }
 }
@@ -42,7 +88,7 @@ pub struct FeedMaterial {
 
 impl Material2d for FeedMaterial {
     fn fragment_shader() -> ShaderRef {
-        "embedded://bavovniatko/shaders/feed.wgsl".into()
+        "embedded://bav_look/shaders/feed.wgsl".into()
     }
 }
 

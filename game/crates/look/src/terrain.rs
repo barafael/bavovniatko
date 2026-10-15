@@ -1,8 +1,8 @@
-//! The ground: chunked terrain meshes carrying a painted ground texture (one texel per metre). The texture is
+//! The ground: chunked terrain meshes carrying a painted ground texture (two texels per metre). The texture is
 //! the battle's memory. Roads, furrows under thin snow and belts are painted at start; every crater, scorch
-//! and track mark is stamped in afterwards and never cleaned up.
+//! and track mark the battle queues (`bav_sim::paint`) is stamped in afterwards and never cleaned up.
 //!
-//! The ground is 252 chunks of 256×256 texels, painted straight into their 8-bit textures with no larger buffer
+//! The ground is 252 chunks of 512×512 texels, painted straight into their 8-bit textures with no larger buffer
 //! in between, at start and during the day alike. `BAV_GROUND=<dir>` saves them as one PNG each and reads
 //! them back on the next run: the shape a persisted day's ground takes (design/next.md).
 
@@ -18,6 +18,7 @@ use bevy::{
     render::render_resource::{AsBindGroup, Extent3d, TextureDimension, TextureFormat},
     shader::ShaderRef,
 };
+pub use bav_sim::paint::{Craters, Paint, PaintQueue};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
@@ -26,7 +27,6 @@ pub struct TerrainPlugin;
 impl Plugin for TerrainPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(MaterialPlugin::<GroundMaterial>::default())
-            .init_resource::<PaintQueue>()
             .add_systems(Startup, spawn_terrain)
             .add_systems(PostUpdate, apply_paint);
     }
@@ -42,7 +42,7 @@ pub struct GroundDetail {
 
 impl MaterialExtension for GroundDetail {
     fn fragment_shader() -> ShaderRef {
-        "embedded://bavovniatko/shaders/ground.wgsl".into()
+        "embedded://bav_look/shaders/ground.wgsl".into()
     }
 }
 
@@ -79,74 +79,6 @@ fn load(dir: &Path) -> Option<Chunks> {
             (image.width() as usize == TEX_PER_CHUNK && image.height() as usize == TEX_PER_CHUNK).then(|| image.into_raw())
         })
         .collect()
-}
-
-#[derive(Clone, Copy)]
-pub enum Paint {
-    Crater { at: Vec2, radius: f32, seed: u32 },
-    Scorch { at: Vec2, radius: f32 },
-    Track { at: Vec2, dir: Vec2, gauge: f32 },
-    Footprints { at: Vec2 },
-    /// A mine plow's strip of turned earth, with spoil thrown to both sides.
-    Plow { at: Vec2, dir: Vec2 },
-    /// Snow melted by a fire on the ground: wet black earth, a grey slush rim. (In June, the grass burned.)
-    Melt { at: Vec2, radius: f32 },
-}
-
-#[derive(Resource, Default)]
-pub struct PaintQueue {
-    pub ops: Vec<Paint>,
-    timer: f32,
-    /// Every crater deep enough to slow a track, kept for the drivers.
-    pub craters: Craters,
-}
-
-impl PaintQueue {
-    pub fn push(&mut self, p: Paint) {
-        if let Paint::Crater { at, radius, .. } = p
-            && radius >= 1.5
-        {
-            self.craters.add(at);
-        }
-        self.ops.push(p);
-    }
-}
-
-/// Where shells have cratered the ground (centres, on a coarse grid), so a vehicle driving into one slows down.
-#[derive(Default)]
-pub struct Craters {
-    grid: std::collections::HashMap<(i32, i32), Vec<Vec2>>,
-}
-
-impl Craters {
-    const CELL: f32 = 16.0;
-
-    fn add(&mut self, at: Vec2) {
-        let c = ((at.x / Self::CELL).floor() as i32, (at.y / Self::CELL).floor() as i32);
-        self.grid.entry(c).or_default().push(at);
-    }
-
-    /// Is a crater centre within `r` of `p`? (`r` at most a cell.)
-    pub fn near(&self, p: Vec2, r: f32) -> bool {
-        self.nearest(p, r).is_some()
-    }
-
-    /// The nearest crater centre within `r` of `p`, if any (`r` at most a cell).
-    pub fn nearest(&self, p: Vec2, r: f32) -> Option<Vec2> {
-        let (cx, cz) = ((p.x / Self::CELL).floor() as i32, (p.y / Self::CELL).floor() as i32);
-        let mut best: Option<(f32, Vec2)> = None;
-        for dz in -1..=1 {
-            for dx in -1..=1 {
-                for c in self.grid.get(&(cx + dx, cz + dz)).into_iter().flatten() {
-                    let d = c.distance(p);
-                    if d < r && best.is_none_or(|b| d < b.0) {
-                        best = Some((d, *c));
-                    }
-                }
-            }
-        }
-        best.map(|b| b.1)
-    }
 }
 
 const W: usize = CHUNKS_X * TEX_PER_CHUNK;
@@ -354,7 +286,7 @@ fn base_colour(x: f32, z: f32) -> Px {
 /// never stack.
 fn belt_feet(chunks: &mut Chunks) {
     let summer = diorama().summer();
-    let wind = crate::fx::day_wind().xz().normalize_or_zero();
+    let wind = bav_sim::fx::day_wind().xz().normalize_or_zero();
     let mut amount: std::collections::HashMap<(usize, usize), f32> = std::collections::HashMap::new();
     for (bi, belt) in geo::layout().belts.iter().enumerate() {
         let len = belt.line.length();
@@ -601,7 +533,7 @@ fn paint() -> Chunks {
                 stamp(chunks, p, 0.8, &|_, _, w| mix([0.15, 0.12, 0.09], [0.22, 0.18, 0.13], value_noise(w.x, w.y, 8) * 0.5 + 0.5));
             }
         };
-        let tz = crate::robotyne::TRENCH_Z;
+        let tz = bav_sim::robotyne::TRENCH_Z;
         let mut x = -HALF_X + 30.0;
         let mut side = 1.0;
         while x < HALF_X - 30.0 {

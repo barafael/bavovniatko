@@ -16,6 +16,15 @@ pub enum Step {
     Screen,
 }
 
+/// Startup in three parts: the picture's kit (the palette, the shelterbelts, the models), then the field the
+/// battle lays out with it (minefields, wrecks, posts), then what the picture dresses that field with.
+#[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub enum Setup {
+    Kit,
+    Field,
+    Dress,
+}
+
 #[derive(States, Default, Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum Phase {
     #[default]

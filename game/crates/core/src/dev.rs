@@ -193,3 +193,11 @@ pub fn dev() -> &'static DevEnv {
 /// The development systems run as one set in `Step::Control`; the showcase steers before them, the keys after.
 #[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub struct DevSystems;
+
+/// Append a line to a file, creating it: the showcase's sound log and segments, written as the day runs.
+pub fn append(path: &str, line: &str) {
+    use std::io::Write;
+    if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open(path) {
+        let _ = f.write_all(line.as_bytes());
+    }
+}

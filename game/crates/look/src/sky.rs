@@ -3,7 +3,7 @@
 //! frame; the weather of the day is a preset (design/next-items.md §2.1): the unbroken low stratus of
 //! 6 February 2023 as ERA5 has it, the broken cloud and hard sun of the week's footage, and June's cirrus veil.
 
-use crate::camera::MainCamera;
+use bav_sim::player::MainCamera;
 use bevy::{
     light::NotShadowCaster,
     pbr::{Material, MaterialPlugin},
@@ -54,7 +54,7 @@ pub struct SkyMaterial {
 
 impl Material for SkyMaterial {
     fn fragment_shader() -> ShaderRef {
-        "embedded://bavovniatko/shaders/sky.wgsl".into()
+        "embedded://bav_look/shaders/sky.wgsl".into()
     }
 }
 
@@ -79,7 +79,7 @@ pub struct Sky<'w, 's> {
     materials: ResMut<'w, Assets<SkyMaterial>>,
     dome: Query<'w, 's, &'static MeshMaterial3d<SkyMaterial>, With<SkyDome>>,
     time: Res<'w, Time>,
-    wind: Res<'w, crate::fx::Wind>,
+    wind: Res<'w, bav_sim::fx::Wind>,
 }
 
 impl Sky<'_, '_> {

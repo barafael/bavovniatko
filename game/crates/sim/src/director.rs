@@ -14,8 +14,8 @@ use crate::diorama::{Diorama, diorama};
 use crate::fire::{FireControl, Mission, ShellKind};
 use crate::geo;
 use crate::units::{self, ColumnOrder, Models, Radio, SState, Side, Stats, VKind, VState, VehicleSpec};
-use crate::world::Palette;
-use crate::{Phase, audio};
+use crate::units::Palette;
+use crate::{Phase, sound as audio};
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 
@@ -149,9 +149,9 @@ fn run_script(
     mut radio: ResMut<Radio>,
     mut stats: ResMut<Stats>,
     mut fc: ResMut<FireControl>,
-    mut view: ResMut<crate::camera::View>,
+    mut view: ResMut<crate::player::View>,
     mut sound: audio::Sound,
-    op: Res<crate::world::ObservationPost>,
+    op: Res<crate::player::ObservationPost>,
     models: Res<Models>,
     palette: Res<Palette>,
     (mut order, helis): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>),
