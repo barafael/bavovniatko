@@ -45,24 +45,26 @@ pub fn clock_text(t: f32) -> String {
     format!("{:02}:{:02}", (m / 60.0) as u32, (m % 60.0) as u32)
 }
 
-enum Act {
+/// One thing the day's script does (written in the diorama's file).
+#[derive(serde::Deserialize, Debug)]
+pub enum Act {
     /// A column of the attacking side down a route, single file; `start` is where its tail spawns.
-    Column { route: usize, kinds: &'static [VKind], plow: bool, smoke: usize, start: f32, label: &'static str, rescue: bool },
+    Column { route: usize, kinds: Vec<VKind>, plow: bool, smoke: usize, start: f32, label: String, #[serde(default)] rescue: bool },
     /// The attacker's artillery preparation on the defenders' line: so many missions over so many seconds.
     Prep { missions: u32, over: f32 },
     /// A pair of Ka-52s arrives on station at these points, beyond reach.
-    Helicopters(&'static [(f32, f32)]),
+    Helicopters(Vec<(f32, f32)>),
     /// An order to the column, if the player has not already given it.
     Order(ColumnOrder),
-    Infantry { route: usize, groups: u32, size: u32, every: f32, label: &'static str },
-    Tos { label: &'static str },
-    Say(&'static str),
+    Infantry { route: usize, groups: u32, size: u32, every: f32, #[serde(default)] label: String },
+    Tos { label: String },
+    Say(String),
     Jam(f32),
 }
 
 struct Beat {
     at: f32,
-    act: Act,
+    act: &'static Act,
     done: bool,
 }
 
@@ -77,67 +79,10 @@ pub struct Script {
     next_barrage: f32,
 }
 
-use VKind::*;
-
 impl Script {
     fn new() -> Self {
-        let beats = match diorama() {
-            Diorama::Vuhledar => Self::vuhledar(),
-            Diorama::Robotyne => Self::robotyne(),
-        };
+        let beats = crate::data::sim_data().script.iter().map(|(at, act)| Beat { at: *at, act, done: false }).collect();
         Self { beats, t: 0.0, wave: 0, banner: None, infantry: Vec::new(), next_barrage: 40.0 }
-    }
-
-    fn robotyne() -> Vec<Beat> {
-        let b = |at: f32, act: Act| Beat { at, act, done: false };
-        const GROUP_1: &[VKind] = &[Leo2r, Bmr2, Leo2a6, Bradley, Bradley, Bradley, Bradley, Bradley, Bradley];
-        const GROUP_2: &[VKind] = &[Leo2r, Wisent, Leo2a6, Bradley, Bradley, Bradley, Bradley, Leo2a6, Bradley, Bradley, Bradley];
-        vec![
-            b(1.0, Act::Say("Bird up. Still dark. Our guns are working the crest.")),
-            b(3.0, Act::Prep { missions: 14, over: 70.0 }),
-            b(8.0, Act::Say("All, this is Hranit. The column is late. The guns will be finished before it gets there.")),
-            b(85.0, Act::Say("This is Sokil. Guns are done. Nothing on the track yet.")),
-            b(110.0, Act::Column { route: 0, kinds: GROUP_1, plow: true, smoke: 0, start: 350.0, label: "04:23  The first group moves off behind the plows. It is getting light.", rescue: false }),
-            b(125.0, Act::Say("This is Sokil. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it.")),
-            b(150.0, Act::Jam(0.4)),
-            b(330.0, Act::Column { route: 1, kinds: GROUP_2, plow: true, smoke: 0, start: 280.0, label: "05:29  The second group, eleven vehicles, on the eastern track", rescue: false }),
-            b(345.0, Act::Say("This is Sokil. Second group moving. Same plan, the other track.")),
-            b(430.0, Act::Helicopters(&[(2900.0, 3000.0), (3500.0, 2650.0)])),
-            b(436.0, Act::Say("Ka-52s! Two of them, south-east, low over the ridge. Too far for anything we have.")),
-            b(640.0, Act::Column { route: 0, kinds: &[Bradley, Bradley, Bradley, Bradley], plow: false, smoke: 0, start: 900.0, label: "07:02  Four Bradleys go back in for the men", rescue: true }),
-            b(652.0, Act::Say("All, this is Hranit. Four Bradleys going back in. Get the infantry onto them.")),
-            b(770.0, Act::Helicopters(&[(-3100.0, 2900.0), (-2500.0, 3300.0)])),
-            b(776.0, Act::Say("This is Sokil. Helicopters again. South-west this time.")),
-            b(1000.0, Act::Order(ColumnOrder::PullBack)),
-            b(1300.0, Act::Say("This is Sokil. Quiet on the lanes. Only the smoke.")),
-        ]
-    }
-
-    fn vuhledar() -> Vec<Beat> {
-        let b = |at: f32, act: Act| Beat { at, act, done: false };
-        {
-            vec![
-                b(1.0, Act::Say("Bird up. Visibility good, frost. Watch the dacha road and the Pavlivka road.")),
-                b(6.0, Act::Say("All, this is Hranit. They're coming again today. Leave the roads clear. Let them in.")),
-                b(14.0, Act::Column { route: 0, kinds: &[T80, T80, Bmp2, Bmp2, T80, Bmp2, Bmp1, Mtlb, Bmp2, T80, Bmp1, Bmp2], plow: true, start: 1150.0, smoke: 3, label: "06:45  The 155th Naval Infantry attacks down the dacha road", rescue: false }),
-                b(20.0, Act::Jam(0.5)),
-                b(22.0, Act::Say("Bird: column on the dacha road. Twelve units, tanks leading, a plow in front. Smoke.")),
-                b(150.0, Act::Tos { label: "TOS-1A on the town" }),
-                b(330.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb], plow: false, start: 500.0, smoke: 1, label: "08:40  A second column. The same road.", rescue: false }),
-                b(345.0, Act::Say("This is Sokil. Second column. Same route. Exactly the same route.")),
-                b(600.0, Act::Column { route: 1, kinds: &[T72, Bmp1, Bmp1, Bmp2, Mtlb, Bmp1, T72, Bmp1], plow: true, start: 650.0, smoke: 2, label: "10:20  The Alga battalion, from Pavlivka", rescue: false }),
-                b(610.0, Act::Jam(0.6)),
-                b(615.0, Act::Say("Bird: Pavlivka road now. Volunteers by the look of it. BMP-1s.")),
-                b(700.0, Act::Tos { label: "TOS-1A again" }),
-                b(900.0, Act::Column { route: 0, kinds: &[T80, Bmp2, Bmp2, Bmp2, T80, Bmp1], plow: false, start: 550.0, smoke: 0, label: "12:00  Again, the dacha road", rescue: false }),
-                b(915.0, Act::Say("This is Sokil. They're driving past their own wrecks from this morning. Same line.")),
-                b(1110.0, Act::Infantry { route: 1, groups: 6, size: 5, every: 14.0, label: "13:20  No more armour. Infantry, on foot." }),
-                b(1125.0, Act::Infantry { route: 0, groups: 6, size: 5, every: 14.0, label: "" }),
-                b(1140.0, Act::Say("This is Sokil. Groups of five. Walking across the open field. Towards the tree line.")),
-                b(1230.0, Act::Tos { label: "TOS-1A" }),
-                b(1300.0, Act::Infantry { route: 1, groups: 4, size: 5, every: 12.0, label: "14:30  More men on foot" }),
-            ]
-        }
     }
 }
 
@@ -174,7 +119,7 @@ fn run_script(
             continue;
         }
         beat.done = true;
-        match &beat.act {
+        match beat.act {
             Act::Column { route, kinds, plow, smoke, start, label, rescue } => {
                 *wave += 1;
                 let n = kinds.len();
@@ -225,7 +170,7 @@ fn run_script(
             }
             Act::Helicopters(at) => {
                 if let Some(h) = helis.as_ref() {
-                    for p in at.iter() {
+                    for p in at {
                         crate::robotyne::spawn_helicopter(&mut commands, h, Vec2::new(p.0, p.1));
                     }
                 }
@@ -237,7 +182,7 @@ fn run_script(
                     *banner = Some(("08:50  Everyone back to the start line".to_string(), 7.0));
                 }
             }
-            Act::Say(s) => radio.say(now, *s),
+            Act::Say(s) => radio.say(now, s.as_str()),
             Act::Jam(j) => {
                 view.jamming = (view.jamming + j).min(1.0);
                 radio.say(now, "Bird: interference. Their EW is up.");

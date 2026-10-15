@@ -58,7 +58,7 @@ impl std::str::FromStr for Target {
 
 /// The ATGMs in the tree lines: Javelin and Stugna-P on the Ukrainian side (dossier c08 §4), Kornet on the
 /// Russian (c09 §5).
-#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::Display, strum::EnumString)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::Display, strum::EnumString, serde::Deserialize)]
 #[strum(ascii_case_insensitive)]
 pub enum Atgm {
     /// Ukrainian, wire-guided (semi-automatic command to line of sight): the gunner holds the sight on the target.

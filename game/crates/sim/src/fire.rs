@@ -132,13 +132,8 @@ impl Default for FireControl {
     fn default() -> Self {
         // Zaluzhnyi: artillery ammunition is the binding constraint. ~6,000 RAAM shells reached Ukraine in late
         // 2022, but a battery on one morning gets a handful of missions.
-        let d = Self { shells: 96, raam: 4, himars: 2, smoke: 0, brigade_shells: 140, mortar_bombs: 160, missions: Vec::new(), atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false };
-        match diorama() {
-            Diorama::Vuhledar => d,
-            // June 2023: at most about 55 guns on the whole axis (RUSI), so a battery's morning for the breach; the
-            // Russian guns had 35 days of ammunition at the gun line.
-            Diorama::Robotyne => Self { shells: 64, raam: 0, himars: 1, smoke: 6, brigade_shells: 600, mortar_bombs: 80, ..d },
-        }
+        let s = crate::data::sim_data().stock;
+        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, missions: Vec::new(), atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false }
     }
 }
 
@@ -184,13 +179,8 @@ pub struct UaTank {
 
 fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
     let lay = geo::layout();
-    use Atgm::*;
-    // Positions with a clear view down their road: the Stugnas cover the long shots, the Javelins the close ones.
-    let (ua, ru): (&[Option<Atgm>], &[Option<Atgm>]) = match diorama() {
-        Diorama::Vuhledar => (&[Some(Stugna), Some(Javelin), Some(Javelin), Some(Stugna), Some(Stugna), Some(Javelin), None, None, None], &[]),
-        // The 47th's overwatch in the forward tree line; the 291st's Kornets on the crest, covering both tracks.
-        Diorama::Robotyne => (&[Some(Stugna), Some(Stugna), Some(Javelin), None, None], &[None, Some(Kornet), Some(Kornet), None, Some(Kornet), None, None]),
-    };
+    let d = crate::data::sim_data();
+    let (ua, ru) = (&d.ua_weapons, &d.ru_weapons);
     let posts = lay.ua_positions.iter().zip(ua).map(|(p, w)| (Side::Ua, p, *w)).chain(lay.ru_positions.iter().zip(ru).map(|(p, w)| (Side::Ru, p, *w)));
     for (i, (side, p, weapon)) in posts.enumerate() {
         let atgm = weapon.map_or(0, Atgm::load);
@@ -214,13 +204,11 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
             Transform::from_translation(geo::ground(*p)),
         ));
     }
-    if diorama() == Diorama::Robotyne {
-        crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
-        return;
-    }
+    crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
     // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
-    let hide = Vec2::new(-150.0, -1150.0);
-    let yaw = units::vehicle_yaw(Vec2::new(0.2, 1.0));
+    let Some(((hx, hz), (fx, fz))) = d.wanderer else { return };
+    let hide = Vec2::new(hx, hz);
+    let yaw = units::vehicle_yaw(Vec2::new(fx, fz));
     let m = &models.ua_tank;
     let mut e = commands.spawn((units::skin(&m.hull), Transform::from_translation(geo::ground(hide)).with_rotation(Quat::from_rotation_y(yaw)), UaTank { timer: 20.0 }));
     e.with_children(|c| units::dress(&mut c.spawn((units::skin(&m.turret), Transform::from_translation(m.turret_at))), &m.turret));
@@ -946,7 +934,7 @@ fn pre_registered_fires(
     let (stalled_at, men_at) = &mut *seen;
     let mut gathered = false;
     for (i, trp) in trps.iter().enumerate() {
-        let (every, rounds) = if diorama() == Diorama::Robotyne { (90.0, 4) } else { (50.0, 6) };
+        let (every, rounds) = crate::data::sim_data().registered_fire;
         if now - last[i] < every || fc.brigade_shells < rounds {
             continue;
         }

@@ -6,7 +6,7 @@ use crate::meshes::{self, MeshBuilder};
 use crate::world::Skirt;
 use bav_core::geo::{self, smoothstep};
 use bav_sim::player::{MainCamera, ObservationPost};
-use bav_sim::robotyne::{HeliModels, Rotor, dug_in};
+use bav_sim::robotyne::{HeliModels, Rotor};
 use bevy::{camera::Exposure, pbr::FogFalloff, prelude::*};
 
 pub struct RobotyneLookPlugin;
@@ -66,7 +66,8 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut m
         let at = geo::ground(*p + Vec2::new(5.0, 14.0));
         set.boxc(at + Vec3::Y * 0.2, Vec3::new(5.0, 0.4, 5.0), [0.30, 0.25, 0.19]);
     }
-    for (p, _) in dug_in() {
+    for &((x, z), _) in &bav_sim::data::sim_data().dug_in {
+        let p = Vec2::new(x, z);
         let at = geo::ground(p - Vec2::new(0.0, 5.0));
         set.extrude_x(&[Vec2::new(-3.0, -0.2), Vec2::new(3.0, -0.2), Vec2::new(0.0, 1.6)], 3.2, at, [0.42, 0.36, 0.27]);
     }

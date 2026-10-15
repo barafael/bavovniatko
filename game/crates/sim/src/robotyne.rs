@@ -28,14 +28,10 @@ impl Plugin for RobotynePlugin {
     }
 }
 
-/// The 291st's T-72B3s, dug in hull-down on the crest behind the trench, facing north.
-pub fn dug_in() -> [(Vec2, f32); 2] {
-    let trench = geo::layout().trench_z.expect("Mala Tokmachka has a trench");
-    [(Vec2::new(-150.0, trench + 22.0), 0.15), (Vec2::new(1050.0, trench + 18.0), -0.1)]
-}
-
+/// Tanks dug in hull-down on the defenders' line (the 291st's T-72B3s behind the crest trench), facing north.
 pub fn spawn_dug_in(commands: &mut Commands, models: &Models, palette: &Palette) {
-    for (k, (p, yaw)) in dug_in().into_iter().enumerate() {
+    for (k, &((x, z), yaw)) in crate::data::sim_data().dug_in.iter().enumerate() {
+        let p = Vec2::new(x, z);
         let spec = VehicleSpec { side: Side::Ru, kind: VKind::T72, route: 0, s: 0.0, lat: 0.0, wave: 0, idx: 100 + k as u32, plow: false, smoke: false, rescue: false };
         let e = crate::units::spawn_vehicle_at(commands, models, palette, spec, p, yaw);
         commands.entity(e).insert(Transform::from_translation(geo::ground(p) - Vec3::Y * 1.1).with_rotation(Quat::from_rotation_y(yaw)));

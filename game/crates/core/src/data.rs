@@ -226,27 +226,37 @@ fn builtin(d: Diorama) -> (&'static str, &'static str) {
     }
 }
 
-/// Parse a diorama file; the error names the file, line and column.
-pub fn parse(name: &str, text: &str) -> Result<DioramaData, String> {
-    ron::from_str(text).map_err(|e| format!("{name}: {e}"))
+static SOURCE: OnceLock<(String, String)> = OnceLock::new();
+
+/// The file of the diorama on the table: its name (or path) and its text. Each crate reads its own part of it:
+/// this module the place and the layout, `bav_sim` the forces and the day's script.
+pub fn source() -> (&'static str, &'static str) {
+    let (name, text) = SOURCE.get_or_init(|| {
+        let (name, text) = builtin(diorama());
+        match std::env::var("BAV_DATA").ok().filter(|d| !d.is_empty()) {
+            Some(dir) => {
+                let path = std::path::Path::new(&dir).join(name);
+                let text = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+                (path.display().to_string(), text)
+            }
+            None => (name.to_string(), text.to_string()),
+        }
+    });
+    (name, text)
+}
+
+/// Parse this crate's or another's part of the diorama's file; a file that does not parse stops the game with
+/// the file, line and column.
+pub fn read<T: serde::de::DeserializeOwned>() -> T {
+    let (name, text) = source();
+    ron::from_str(text).unwrap_or_else(|e| panic!("{name}: {e}"))
 }
 
 static DATA: OnceLock<DioramaData> = OnceLock::new();
 
 /// The diorama on the table, as its file describes it.
 pub fn data() -> &'static DioramaData {
-    DATA.get_or_init(|| {
-        let (name, text) = builtin(diorama());
-        let parsed = match std::env::var("BAV_DATA").ok().filter(|d| !d.is_empty()) {
-            Some(dir) => {
-                let path = std::path::Path::new(&dir).join(name);
-                let text = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
-                parse(&path.display().to_string(), &text)
-            }
-            None => parse(name, text),
-        };
-        parsed.unwrap_or_else(|e| panic!("{e}"))
-    })
+    DATA.get_or_init(read)
 }
 
 /// A named curve of the diorama on the table.

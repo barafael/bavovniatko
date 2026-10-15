@@ -104,4 +104,41 @@
     home: (-200.0, -1600.0),
     jam_z: 100.0,
     mortar_band: (-600.0, 702.0),
+
+    // ---- The battle's part (bav_sim::data) ----
+
+    // June 2023: at most about 55 guns on the whole axis (RUSI), so a battery's morning for the breach; the Russian
+    // guns had 35 days of ammunition at the gun line.
+    stock: (shells: 64, raam: 0, himars: 1, smoke: 6, brigade_shells: 600, mortar_bombs: 80),
+    // The 47th's overwatch in the forward tree line; the 291st's Kornets on the crest, covering both tracks.
+    ua_weapons: [Some(Stugna), Some(Stugna), Some(Javelin), None, None],
+    ru_weapons: [None, Some(Kornet), Some(Kornet), None, Some(Kornet), None, None],
+    // The 291st's T-72B3s, dug in hull-down on the crest behind the trench, facing north.
+    dug_in: [((-150.0, 724.0), 0.15), ((1050.0, 720.0), -0.1)],
+    old_wreck_kinds: [T72, Bmp2, Mtlb, T72, Bmp2, Mtlb, T72, Bmp2],
+    registered_fire: (90.0, 4),
+
+    // Mala Tokmachka, 8 June 2023 (c09 §2, §6 set piece 1, §11 on the date): the guns finish their preparation in
+    // the dark; the column is late and moves off at first light; nine vehicles behind a Leopard 2R and a BMR-2 on the
+    // western track, eleven on the eastern; Ka-52s from beyond reach; four Bradleys back in for the men; and in the
+    // end, everyone back to the start line. 03:50 to late morning in about 25 minutes.
+    script: [
+        (1.0, Say("Bird up. Still dark. Our guns are working the crest.")),
+        (3.0, Prep(missions: 14, over: 70.0)),
+        (8.0, Say("All, this is Hranit. The column is late. The guns will be finished before it gets there.")),
+        (85.0, Say("This is Sokil. Guns are done. Nothing on the track yet.")),
+        (110.0, Column(route: 0, kinds: [Leo2r, Bmr2, Leo2a6, Bradley, Bradley, Bradley, Bradley, Bradley, Bradley], plow: true, smoke: 0, start: 350.0, label: "04:23  The first group moves off behind the plows. It is getting light.")),
+        (125.0, Say("This is Sokil. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it.")),
+        (150.0, Jam(0.4)),
+        (330.0, Column(route: 1, kinds: [Leo2r, Wisent, Leo2a6, Bradley, Bradley, Bradley, Bradley, Leo2a6, Bradley, Bradley, Bradley], plow: true, smoke: 0, start: 280.0, label: "05:29  The second group, eleven vehicles, on the eastern track")),
+        (345.0, Say("This is Sokil. Second group moving. Same plan, the other track.")),
+        (430.0, Helicopters([(2900.0, 3000.0), (3500.0, 2650.0)])),
+        (436.0, Say("Ka-52s! Two of them, south-east, low over the ridge. Too far for anything we have.")),
+        (640.0, Column(route: 0, kinds: [Bradley, Bradley, Bradley, Bradley], plow: false, smoke: 0, start: 900.0, label: "07:02  Four Bradleys go back in for the men", rescue: true)),
+        (652.0, Say("All, this is Hranit. Four Bradleys going back in. Get the infantry onto them.")),
+        (770.0, Helicopters([(-3100.0, 2900.0), (-2500.0, 3300.0)])),
+        (776.0, Say("This is Sokil. Helicopters again. South-west this time.")),
+        (1000.0, Order(PullBack)),
+        (1300.0, Say("This is Sokil. Quiet on the lanes. Only the smoke.")),
+    ],
 )

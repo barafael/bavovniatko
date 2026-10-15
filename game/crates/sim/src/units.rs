@@ -46,7 +46,7 @@ pub struct LastHit(pub Option<Vec3>);
 
 pub use bav_core::diorama::Side;
 
-#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, strum::VariantArray)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, strum::VariantArray, serde::Deserialize)]
 pub enum VKind {
     /// T-80BV
     T80,
@@ -364,7 +364,7 @@ impl Stats {
 
 /// The player's order to the attacking column (Robotyne): push on down the lanes, hold where you are, or pull
 /// back to the start line, picking up the men on the way.
-#[derive(Resource, Default, Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Resource, Default, Clone, Copy, PartialEq, Eq, Debug, serde::Deserialize)]
 pub enum ColumnOrder {
     #[default]
     Push,
@@ -723,10 +723,7 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
 fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>) {
     // The fields already hold the earlier assaults' wrecks (24 Jan – 4 Feb): BMPs and tanks, burned out, with
     // their turrets beside them. Nobody has come for them.
-    let kinds = match diorama() {
-        Diorama::Vuhledar => [VKind::Bmp2, VKind::T80, VKind::Bmp1, VKind::Bmp2, VKind::T72, VKind::Mtlb, VKind::Bmp1, VKind::T80],
-        Diorama::Robotyne => [VKind::T72, VKind::Bmp2, VKind::Mtlb, VKind::T72, VKind::Bmp2, VKind::Mtlb, VKind::T72, VKind::Bmp2],
-    };
+    let kinds = &crate::data::sim_data().old_wreck_kinds;
     for (i, (p, yaw)) in geo::layout().old_wrecks.iter().enumerate() {
         let k = kinds[i % kinds.len()];
         let toss = k.is_tank() && i % 2 == 1;
