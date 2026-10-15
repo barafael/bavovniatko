@@ -5,7 +5,7 @@
 use crate::player::MainCamera;
 use bevy::{ecs::system::SystemParam, prelude::*};
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::VariantArray)]
 pub enum Sfx {
     BlastNear,
     BlastFar,

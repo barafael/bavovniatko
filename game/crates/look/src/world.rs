@@ -6,11 +6,9 @@ use crate::diorama::{Diorama, diorama};
 use crate::geo::{self, CHUNK, CHUNKS_X, HALF_X, HALF_Z, hash01};
 use crate::meshes::{self, MeshBuilder};
 use bevy::{
-    asset::RenderAssetUsages,
-    image::{ImageAddressMode, ImageSampler, ImageSamplerDescriptor},
+    image::{ImageAddressMode, ImageSamplerDescriptor},
     light::CascadeShadowConfigBuilder,
     prelude::*,
-    render::render_resource::{Extent3d, TextureDimension, TextureFormat},
 };
 
 pub struct WorldPlugin;
@@ -108,9 +106,7 @@ fn leaf_texture() -> Image {
     for v in a {
         data.extend_from_slice(&[255, 255, 255, v]);
     }
-    let mut img = Image::new(Extent3d { width: N as u32, height: N as u32, depth_or_array_layers: 1 }, TextureDimension::D2, data, TextureFormat::Rgba8UnormSrgb, RenderAssetUsages::default());
-    img.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor::linear());
-    img
+    meshes::rgba8_image(N, N, data, ImageSamplerDescriptor::linear())
 }
 
 /// Bare winter branches: recursive strokes into an alpha mask.
@@ -153,15 +149,7 @@ fn branch_texture() -> Image {
     for v in a {
         data.extend_from_slice(&[255, 255, 255, v]);
     }
-    let mut img = Image::new(
-        Extent3d { width: N as u32, height: N as u32, depth_or_array_layers: 1 },
-        TextureDimension::D2,
-        data,
-        TextureFormat::Rgba8UnormSrgb,
-        RenderAssetUsages::default(),
-    );
-    img.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor::linear());
-    img
+    meshes::rgba8_image(N, N, data, ImageSamplerDescriptor::linear())
 }
 
 pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
@@ -316,13 +304,7 @@ fn facade_texture(seed: u32) -> Image {
             d[o + 3] = 255;
         }
     }
-    let mut img = Image::new(Extent3d { width: W as u32, height: H as u32, depth_or_array_layers: 1 }, TextureDimension::D2, d, TextureFormat::Rgba8UnormSrgb, RenderAssetUsages::default());
-    img.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor {
-        address_mode_u: ImageAddressMode::Repeat,
-        address_mode_v: ImageAddressMode::Repeat,
-        ..ImageSamplerDescriptor::linear()
-    });
-    img
+    meshes::rgba8_image(W, H, d, ImageSamplerDescriptor { address_mode_u: ImageAddressMode::Repeat, address_mode_v: ImageAddressMode::Repeat, ..ImageSamplerDescriptor::linear() })
 }
 
 /// The z of each row of panel blocks on the ridge, the southern (front) row first.

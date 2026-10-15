@@ -11,11 +11,11 @@ use crate::diorama::{Diorama, diorama};
 use crate::geo::{self, CHUNK, CHUNKS_X, CHUNKS_Z, HALF_X, HALF_Z, RoadKind, TEX_PER_CHUNK, fbm, value_noise};
 use bevy::{
     asset::RenderAssetUsages,
-    image::{ImageSampler, ImageSamplerDescriptor},
+    image::ImageSamplerDescriptor,
     mesh::{Indices, PrimitiveTopology},
     pbr::{ExtendedMaterial, MaterialExtension},
     prelude::*,
-    render::render_resource::{AsBindGroup, Extent3d, TextureDimension, TextureFormat},
+    render::render_resource::AsBindGroup,
     shader::ShaderRef,
 };
 pub use bav_sim::paint::{Craters, Paint, PaintQueue};
@@ -651,15 +651,7 @@ fn spawn_terrain(
     let detail = GroundDetail { params: Vec4::new(1.0, 1.0, if diorama().summer() { 1.0 } else { 0.0 }, 0.0) };
     let mut handles = Vec::with_capacity(CHUNKS_X * CHUNKS_Z);
     for (chunk, (data, mesh)) in chunks.into_iter().zip(chunk_meshes).enumerate() {
-        let mut image = Image::new(
-            Extent3d { width: TEX_PER_CHUNK as u32, height: TEX_PER_CHUNK as u32, depth_or_array_layers: 1 },
-            TextureDimension::D2,
-            data,
-            TextureFormat::Rgba8UnormSrgb,
-            RenderAssetUsages::default(),
-        );
-        image.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor::linear());
-        let handle = images.add(image);
+        let handle = images.add(crate::meshes::rgba8_image(TEX_PER_CHUNK, TEX_PER_CHUNK, data, ImageSamplerDescriptor::linear()));
         handles.push(handle.clone());
         if crate::dev::off(crate::dev::Part::Terrain) {
             continue; // the ground still shapes everything; only its picture is left out

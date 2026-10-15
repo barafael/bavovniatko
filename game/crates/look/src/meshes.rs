@@ -3,9 +3,18 @@
 
 use bevy::{
     asset::RenderAssetUsages,
+    image::{ImageSampler, ImageSamplerDescriptor},
     mesh::{Indices, PrimitiveTopology},
     prelude::*,
+    render::render_resource::{Extent3d, TextureDimension, TextureFormat},
 };
+
+/// An sRGB RGBA8 texture of `w`×`h` from its bytes, sampled as `sampler` says.
+pub fn rgba8_image(w: usize, h: usize, data: Vec<u8>, sampler: ImageSamplerDescriptor) -> Image {
+    let mut img = Image::new(Extent3d { width: w as u32, height: h as u32, depth_or_array_layers: 1 }, TextureDimension::D2, data, TextureFormat::Rgba8UnormSrgb, RenderAssetUsages::default());
+    img.sampler = ImageSampler::Descriptor(sampler);
+    img
+}
 
 #[derive(Default)]
 pub struct MeshBuilder {

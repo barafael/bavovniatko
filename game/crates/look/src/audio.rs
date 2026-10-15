@@ -9,6 +9,7 @@ use bevy::{
     reflect::TypePath,
 };
 use rand::{Rng, SeedableRng, rngs::SmallRng};
+use strum::VariantArray;
 use std::{sync::Arc, time::Duration};
 
 pub struct AudioPlugin;
@@ -66,7 +67,8 @@ impl Decodable for Synth {
 
 #[derive(Resource)]
 pub struct Bank {
-    sounds: Vec<(Sfx, Handle<Synth>)>,
+    /// One per [`Sfx`], in its order.
+    sounds: Vec<Handle<Synth>>,
     wind: Handle<Synth>,
     rumble: Handle<Synth>,
     engines: Handle<Synth>,
@@ -76,7 +78,7 @@ pub struct Bank {
 
 impl Bank {
     fn get(&self, s: Sfx) -> Handle<Synth> {
-        self.sounds.iter().find(|(k, _)| *k == s).unwrap().1.clone()
+        self.sounds[s as usize].clone()
     }
 }
 
@@ -139,12 +141,7 @@ fn burst(rng: &mut SmallRng, shots: u32, interval: f32, bright: f32) -> Vec<f32>
     let mut out = vec![0.0; n];
     for s in 0..shots {
         let start = len(s as f32 * interval + rng.random_range(0.0..interval * 0.15));
-        let shot = blast(rng, 0.35, bright, 0.2);
-        for (i, x) in shot.iter().enumerate() {
-            if start + i < n {
-                out[start + i] += x * 0.7;
-            }
-        }
+        mix_in(&mut out, start, &blast(rng, 0.35, bright, 0.2), 0.7);
     }
     normalize(out, 0.9)
 }
@@ -217,6 +214,13 @@ fn cookoff(rng: &mut SmallRng) -> Vec<f32> {
     normalize(out, 0.95)
 }
 
+/// Add `src` into `out` from sample `at`, scaled by `gain`; what runs past the end is cut.
+fn mix_in(out: &mut [f32], at: usize, src: &[f32], gain: f32) {
+    for (o, x) in out.iter_mut().skip(at).zip(src) {
+        *o += x * gain;
+    }
+}
+
 /// A seamless loop of noise shaped by a low-pass that wanders: wind, distant war, engines, a drone's whine.
 fn bed(rng: &mut SmallRng, secs: f32, f0: f32, f1: f32, booms: u32) -> Vec<f32> {
     let n = len(secs);
@@ -232,11 +236,7 @@ fn bed(rng: &mut SmallRng, secs: f32, f0: f32, f1: f32, booms: u32) -> Vec<f32> 
         let at = len(rng.random_range(0.0..secs - 4.0));
         let b = blast(rng, 3.5, 160.0, 1.0);
         let g = rng.random_range(0.15..0.6);
-        for (i, x) in b.iter().enumerate() {
-            if at + i < n {
-                out[at + i] += x * g;
-            }
-        }
+        mix_in(&mut out, at, &b, g);
     }
     // Crossfade the ends so the loop has no seam.
     let fade = len(0.5);
@@ -297,21 +297,25 @@ fn write_wav(path: &str, samples: &[f32]) {
 fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let mut rng = SmallRng::seed_from_u64(0x2023_0206);
     let mut add = |v: Vec<f32>| assets.add(Synth { samples: Arc::new(v) });
-    let sounds = vec![
-        (Sfx::BlastNear, add(blast(&mut rng, 3.0, 2600.0, 1.0))),
-        (Sfx::BlastFar, add(blast(&mut rng, 3.5, 300.0, 1.0))),
-        // Thermobaric: deep, long, no crack; the salvo's thuds overlap into one roll.
-        (Sfx::Thermobaric, add(blast(&mut rng, 7.0, 350.0, 1.8))),
-        (Sfx::MineBlast, add(blast(&mut rng, 2.5, 1800.0, 1.2))),
-        (Sfx::TankGun, add(blast(&mut rng, 2.0, 3500.0, 0.9))),
-        (Sfx::Cannon30, add(burst(&mut rng, 6, 0.18, 2800.0))),
-        (Sfx::MachineGun, add(burst(&mut rng, 12, 0.085, 4000.0))),
-        (Sfx::AtgmLaunch, add(whoosh(&mut rng))),
-        (Sfx::Whistle, add(whistle())),
-        (Sfx::CookOff, add(cookoff(&mut rng))),
-        (Sfx::Radio, add(radio(&mut rng))),
-        (Sfx::Beep, add(beep())),
-    ];
+    // In `Sfx`'s order, which `Bank::get` indexes by (and the synthesis draws from `rng` in this order).
+    let sounds: Vec<Handle<Synth>> = Sfx::VARIANTS
+        .iter()
+        .map(|k| match k {
+            Sfx::BlastNear => add(blast(&mut rng, 3.0, 2600.0, 1.0)),
+            Sfx::BlastFar => add(blast(&mut rng, 3.5, 300.0, 1.0)),
+            // Thermobaric: deep, long, no crack; the salvo's thuds overlap into one roll.
+            Sfx::Thermobaric => add(blast(&mut rng, 7.0, 350.0, 1.8)),
+            Sfx::MineBlast => add(blast(&mut rng, 2.5, 1800.0, 1.2)),
+            Sfx::TankGun => add(blast(&mut rng, 2.0, 3500.0, 0.9)),
+            Sfx::Cannon30 => add(burst(&mut rng, 6, 0.18, 2800.0)),
+            Sfx::MachineGun => add(burst(&mut rng, 12, 0.085, 4000.0)),
+            Sfx::AtgmLaunch => add(whoosh(&mut rng)),
+            Sfx::Whistle => add(whistle()),
+            Sfx::CookOff => add(cookoff(&mut rng)),
+            Sfx::Radio => add(radio(&mut rng)),
+            Sfx::Beep => add(beep()),
+        })
+        .collect();
     let wind = add(bed(&mut rng, 24.0, 250.0, 900.0, 0));
     // The hiss of a starved digital link, under everything when the jamming is on.
     let hiss = add(bed(&mut rng, 6.0, 2500.0, 6000.0, 0));
@@ -325,7 +329,7 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
                 write_wav(&format!("{dir}/sfx-{name}.wav"), &a.samples);
             }
         };
-        for (k, h) in &sounds {
+        for (k, h) in Sfx::VARIANTS.iter().zip(&sounds) {
             dump(&format!("{k:?}"), h);
         }
         dump("Wind", &wind);
