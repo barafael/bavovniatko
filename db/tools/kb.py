@@ -37,7 +37,9 @@ from surrealdb.data.types.geometry import (
     GeometryPolygon,
 )
 
-DB_DIR = Path(__file__).resolve().parent.parent
+import ids
+from ids import DB_DIR, schema_files
+
 REPO = DB_DIR.parent
 # Paths stored in records (`anchor.file`, `prov.input`, `topic.file`, …) are relative to db/: "research/03-fires-air.md".
 RESEARCH = DB_DIR / "research"
@@ -194,9 +196,6 @@ def one(conn: Surreal, query: str, vars: dict[str, Any] | None = None) -> Any:
     return run(conn, query, vars)[-1]
 
 
-_SAFE_ID = re.compile(r"^[A-Za-z0-9_]+$")
-
-
 def rid(table: str, key: Any) -> RecordID:
     return RecordID(table, key)
 
@@ -216,7 +215,7 @@ def rid_str(r: RecordID) -> str:
     """Stable textual form, used in dumps and generated markdown."""
     k = r.id
     if isinstance(k, str):
-        return f"{r.table_name}:{k}" if _SAFE_ID.match(k) else f"{r.table_name}:⟨{k}⟩"
+        return f"{r.table_name}:{ids.key_text(k)}"
     if isinstance(k, list):
         return f"{r.table_name}:[" + ", ".join(f'"{x}"' if isinstance(x, str) else str(x) for x in k) + "]"
     return f"{r.table_name}:{k}"
@@ -342,11 +341,6 @@ class Writer:
         run(self.conn, "UPSERT $id MERGE $data", {"id": rid, "data": data})
         self.wrote(rid, h)
         return True
-
-
-def schema_files(root: Path | None = None) -> list[Path]:
-    """The ordered migrations db/schema/NNNN_*.surql (or another directory in the same layout, e.g. db/fixes)."""
-    return sorted((root or DB_DIR / "schema").glob("[0-9][0-9][0-9][0-9]_*.surql"))
 
 
 def define_db(ns: str, db: str, *, exists_ok: bool = False) -> Surreal:

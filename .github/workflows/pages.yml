@@ -5,7 +5,7 @@ name: Explorer on GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ["db/web/**", "LICENSE*", "db/dump/**", "db/schema/**", "db/queries.md", "db/tools/webexport.py", ".github/workflows/pages.yml"]
+    paths: ["db/web/**", "LICENSE*", "db/dump/**", "db/schema/**", "db/queries.md", "db/tools/webexport.py", "db/tools/webscrub.py", "db/tools/ids.py", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:

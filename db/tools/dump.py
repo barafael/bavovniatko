@@ -24,21 +24,11 @@ from pathlib import Path
 
 from surrealdb import RecordID
 
+import ids
 import kb
 
 DUMP = kb.DB_DIR / "dump"
 SKIP_TABLES = {"migration"}
-# load order: vocabularies, entities, claims & meta, audit, then relations (both ends must exist)
-ORDER = ["kind", "era", "topic", "unit", "metric", "actor", "place", "event", "system", "work", "source", "term",
-         "media", "snapshot", "claim", "observation", "passage", "question", "design_note", "revision"]
-
-
-def load_order(files, relations) -> list[str]:
-    """Tables in load order: ORDER first, then the rest alphabetically, relations last (both ends must exist)."""
-    return ([t for t in ORDER if t in files] + sorted(t for t in files if t not in ORDER and t not in relations)
-            + sorted(t for t in files if t in relations))
-
-
 def enc(v):
     """The dump's tagged JSON: record ids as {"$rid": [table, key]} and datetimes as {"$dt": iso}."""
     return kb.plain(v, rid=lambda r: {"$rid": [r.table_name, enc(r.id)]}, dt_=lambda d: {"$dt": kb.iso_z(d)})
@@ -98,7 +88,7 @@ def export(conn, out: Path) -> dict[str, int]:
 def restore(conn, src: Path):
     _, _, relations = schema_info(conn)
     files = {p.stem: p for p in src.glob("*.jsonl")}
-    for t in load_order(files, relations):
+    for t in ids.load_order(files, relations):
         rows = [dec(r) for r in kb.jsonl(files[t])]
         for i in range(0, len(rows), 200):
             chunk = rows[i:i + 200]
