@@ -91,7 +91,7 @@ impl VKind {
     pub fn breacher(self) -> bool {
         matches!(self, VKind::Leo2r | VKind::Wisent | VKind::Bmr2)
     }
-    fn crew(self) -> u32 {
+    pub fn crew(self) -> u32 {
         match self {
             VKind::Mtlb | VKind::Bmr2 => 2,
             VKind::Leo2a6 => 4,
@@ -290,6 +290,8 @@ pub struct Soldier {
     pub sprint: f32,
     /// The first place he runs to, before anywhere else: the nearest crater, wreck or tree line.
     pub leg: Option<Vec2>,
+    /// The wounded man he is dragging back with him.
+    pub carrying: Option<Entity>,
 }
 
 #[derive(Component)]
@@ -754,7 +756,7 @@ pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette
         Mesh3d(body),
         MeshMaterial3d(palette.vertex.clone()),
         Transform::from_translation(geo::ground(at)),
-        Soldier { side, state: SState::Advance, goal, home, speed: rng.random_range(1.5..2.3), fear: 0.0, timer: 0.0, phase: rng.random_range(0.0..6.0), sprint, leg: cover },
+        Soldier { side, state: SState::Advance, goal, home, speed: rng.random_range(1.5..2.3), fear: 0.0, timer: 0.0, phase: rng.random_range(0.0..6.0), sprint, leg: cover, carrying: None },
         NotShadowCaster,
     ));
     e.add_children(&[l0, l1]);
@@ -838,7 +840,7 @@ fn drive_vehicles(
     cam: Single<&GlobalTransform, With<MainCamera>>,
     mut levels: ResMut<crate::sound::AmbienceLevels>,
     (order, mut radio, mut smoke): (Res<ColumnOrder>, ResMut<Radio>, ResMut<fx::Smoke>),
-    mut q: Query<(Entity, &mut Vehicle, &mut Transform), Without<Turret>>,
+    mut q: Query<(Entity, &mut Vehicle, &mut Transform, Option<&crate::evac::EvacTarget>), Without<Turret>>,
     mut turrets: Query<&mut Transform, With<Turret>>,
     mut snaps: Local<Vec<Snap>>,
 ) {
@@ -847,12 +849,12 @@ fn drive_vehicles(
     let lay = geo::layout();
     let attacker = diorama().attacker();
     snaps.clear();
-    snaps.extend(q.iter().map(|(e, v, t)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing, pos: t.translation.xz() }));
+    snaps.extend(q.iter().map(|(e, v, t, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing, pos: t.translation.xz() }));
     let cam_pos = cam.translation();
     let mut nearest_engine = f32::MAX;
     let rng = &mut rng.0;
 
-    for (e, mut v, mut tf) in &mut q {
+    for (e, mut v, mut tf, evac_at) in &mut q {
         if v.side != attacker || !v.state.mobile() {
             continue;
         }
@@ -921,12 +923,14 @@ fn drive_vehicles(
                 _ => {}
             }
         }
-        // A rescue vehicle stops short of the first wreck on its track, puts down smoke and waits for the men.
-        if v.rescue && v.state == VState::Advancing && blocker.is_some_and(|b| !b.state.mobile() && (b.s - v.s).abs() < 70.0) {
+        // A rescue vehicle stops short of the first wreck on its track, or where it was sent, puts down smoke and
+        // waits for the men.
+        if v.rescue && v.state == VState::Advancing && (blocker.is_some_and(|b| !b.state.mobile() && (b.s - v.s).abs() < 70.0) || evac_at.is_some_and(|t| v.s >= t.0)) {
             v.state = VState::Overwatch;
             v.timer = 0.0;
             pop_smoke(&mut commands, &mut fx, &mut fxr.0, &mut smoke, &mut v, &tf, now);
             radio.say(now, "Bradley at the wrecks. Ramp down. Get on, get on!");
+            info!("rescue: Bradley {}/{} stopped at {:.0},{:.0}, at {now:.0} s", v.wave, v.idx, tf.translation.x, tf.translation.z);
         }
         match v.state {
             VState::Advancing | VState::Halted => {
@@ -1039,10 +1043,13 @@ fn drive_vehicles(
             }
             VState::Overwatch if v.rescue => {
                 want_speed = 0.0;
-                // Wait for the men to climb on: until full, or until staying any longer is death too.
-                if v.troops >= 7 || v.timer > 110.0 || (v.panic > 0.95 && v.timer > 45.0) {
+                // Wait for the men to climb on: until full, or until staying any longer is death too. One the player
+                // sent waits longer: the wounded it came for are crawling to it.
+                let wait = if evac_at.is_some() { 240.0 } else { 110.0 };
+                if v.troops >= 7 || v.timer > wait || (v.panic > 0.95 && v.timer > 45.0) {
                     start_withdrawal(&mut v, rng);
                     radio.say2(now, format!("Бредлі виходить, на борту {}.", v.troops), format!("Bradley coming out with {} aboard.", v.troops));
+                    info!("rescue: Bradley {}/{} coming out with {} aboard after {:.0} s, at {now:.0} s", v.wave, v.idx, v.troops, v.timer);
                 }
             }
             VState::Overwatch => {
@@ -1980,6 +1987,12 @@ fn move_soldiers(
         .map(|(_, t)| t.translation.xz())
         .collect();
     let mut foothold = 0;
+    // Back is home, or behind the attackers' own start line where there is one: the tree line with the medics.
+    let safe = |p: Vec2, home: Vec2| p.distance(home) < 25.0 || lay.start_z.is_some_and(|z| (p.y - z) * lay.advance < 0.0);
+    // Men falling back drag a wounded man with them: who is lying where, and who is being dragged already.
+    let lying: Vec<(Entity, Vec2)> = q.iter().filter(|(_, s, _, _)| s.state == SState::Wounded && s.side == attacker).map(|(e, _, t, _)| (e, t.translation.xz())).collect();
+    let mut carried: Vec<Entity> = q.iter().filter_map(|(_, s, _, _)| s.carrying).filter(|c| lying.iter().any(|(w, _)| w == c)).collect();
+    let mut dragged_to: Vec<(Entity, Vec3, Quat)> = Vec::new();
     for (e, mut s, mut tf, fleeing) in &mut q {
         if s.side != attacker {
             continue;
@@ -2035,6 +2048,27 @@ fn move_soldiers(
                 target = s.leg.unwrap_or_else(|| pickups.iter().copied().filter(|b| b.distance(p) < 160.0).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))).unwrap_or(s.home));
                 // Flat out while the sprint lasts, a jog after.
                 speed = s.speed * if s.sprint > 0.0 { 2.2 } else { 1.3 };
+                // A wounded man nearby is not left: he goes to him, then drags him back, both slow, both in the open.
+                if s.carrying.is_some_and(|c| !lying.iter().any(|(w, _)| *w == c)) {
+                    s.carrying = None;
+                }
+                if s.carrying.is_none()
+                    && s.leg.is_none()
+                    && let Some(&(w, _)) = lying.iter().filter(|(w, wp)| !carried.contains(w) && wp.distance(p) < 30.0).min_by(|a, b| a.1.distance(p).total_cmp(&b.1.distance(p)))
+                {
+                    s.carrying = Some(w);
+                    carried.push(w);
+                    debug!("drag: a man falling back goes for a wounded man at {:.0},{:.0}", p.x, p.y);
+                }
+                if let Some(c) = s.carrying
+                    && let Some(&(_, wp)) = lying.iter().find(|(w, _)| *w == c)
+                {
+                    if wp.distance(p) > 2.5 {
+                        target = wp;
+                    } else {
+                        speed = 0.9;
+                    }
+                }
                 // Falling back under shellfire, the 47th's men drop flat when it lands close, then go on.
                 if s.side == Side::Ua && s.fear > 1.2 {
                     s.state = SState::Prone;
@@ -2042,7 +2076,7 @@ fn move_soldiers(
                     s.fear *= 0.5;
                     speed = 0.0;
                 }
-                if p.distance(s.home) < 25.0 || !geo::in_bounds(p) {
+                if safe(p, s.home) || !geo::in_bounds(p) {
                     stats.returned += 1;
                     commands.entity(e).despawn();
                     continue;
@@ -2050,8 +2084,9 @@ fn move_soldiers(
             }
             SState::Wounded => {
                 target = pickups.iter().copied().filter(|b| b.distance(p) < 220.0).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))).unwrap_or(s.home);
-                speed = 0.6;
-                if p.distance(s.home) < 25.0 {
+                // Being dragged, he goes where the man dragging him goes (placed after this loop).
+                speed = if carried.contains(&e) { 0.0 } else { 0.6 };
+                if safe(p, s.home) {
                     stats.returned += 1;
                     stats.wounded_out += 1;
                     commands.entity(e).despawn();
@@ -2073,11 +2108,18 @@ fn move_soldiers(
                 tf.rotation *= Quat::from_rotation_x(-1.45);
             }
             s.phase += speed * dt * 3.2;
+            if let Some(w) = s.carrying
+                && lying.iter().any(|(lw, wp)| *lw == w && wp.distance(p) <= 2.5)
+            {
+                // A metre behind, on his back.
+                let back = geo::ground(np - step.normalize_or_zero() * 1.0) + Vec3::Y * 0.25;
+                dragged_to.push((w, back, Quat::from_rotation_y(vehicle_yaw(step)) * Quat::from_rotation_x(-1.45)));
+            }
             if rng.random_bool((dt * 0.6) as f64) {
                 paint.push(Paint::Footprints { at: np });
             }
             mines.step(np);
-        } else {
+        } else if !(s.state == SState::Wounded && carried.contains(&e)) {
             // Prone or dug in: lie flat.
             tf.translation = geo::ground(p) + Vec3::Y * if s.state == SState::DugIn { -0.6 } else { -0.75 };
         }
@@ -2088,6 +2130,12 @@ fn move_soldiers(
         stats.max_advance = stats.max_advance.max(p.y * lay.advance);
     }
     stats.foothold = foothold;
+    for (w, at, rot) in dragged_to {
+        if let Ok((_, _, mut tf, _)) = q.get_mut(w) {
+            tf.translation = at;
+            tf.rotation = rot;
+        }
+    }
 }
 
 /// Anti-personnel mines among the anti-tank ones, and what a soldier's step needs to set one off.
@@ -2128,7 +2176,9 @@ fn board_vehicles(mut commands: Commands, mut stats: ResMut<Stats>, mut vehicles
             continue;
         }
         let p = tf.translation.xz();
-        for (e, s, st) in &soldiers {
+        // The wounded first, then whoever else is falling back.
+        let order = soldiers.iter().filter(|(_, s, _)| s.state == SState::Wounded).chain(soldiers.iter().filter(|(_, s, _)| s.state != SState::Wounded));
+        for (e, s, st) in order {
             if s.side != v.side || taken.contains(&e) || v.troops >= 7 {
                 continue;
             }

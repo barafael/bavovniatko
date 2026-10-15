@@ -52,7 +52,6 @@ pub fn uk(en: &str) -> &'static str {
         "This is {op}. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it." => "Я {op}. Перша група на західній дорозі. Дев'ять машин. Попереду Леопард з тралом, за ним катки.",
         "This is {op}. Second group moving. Same plan, the other track." => "Я {op}. Друга група пішла. Той самий план, інша дорога.",
         "Ka-52s! Two of them, south-east, low over the ridge. Too far for anything we have." => "Ка-52! Два, південний схід, низько над гребенем. Задалеко для всього, що маємо.",
-        "All, this is {command}. Four Bradleys going back in. Get the infantry onto them." => "Всім, я {command}. Чотири Бредлі йдуть назад по людей. Саджайте піхоту.",
         "This is {op}. Helicopters again. South-west this time." => "Я {op}. Знову вертольоти. Цього разу південний захід.",
         "This is {op}. Quiet on the lanes. Only the smoke." => "Я {op}. На проходах тихо. Тільки дим.",
         "All, this is {command}. That's enough. All callsigns back to the start line. Bring the infantry." => "Всім, я {command}. Досить. Всі позивні — назад на вихідну. Піхоту забрати.",
@@ -109,7 +108,6 @@ pub fn uk(en: &str) -> &'static str {
         "TOS-1A" => "ТОС-1А",
         "04:23  The first group moves off behind the plows. It is getting light." => "04:23  Перша група рушає за тралами. Світає.",
         "05:29  The second group, eleven vehicles, on the eastern track" => "05:29  Друга група, одинадцять машин, на східній дорозі",
-        "07:02  Four Bradleys go back in for the men" => "07:02  Чотири Бредлі йдуть назад по людей",
         "08:50  Everyone back to the start line" => "08:50  Всі назад на вихідну",
         _ => "",
     }

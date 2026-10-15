@@ -120,11 +120,14 @@
     dug_in: [((-150.0, 724.0), 0.15), ((1050.0, 720.0), -0.1)],
     old_wreck_kinds: [T72, Bmp2, Mtlb, T72, Bmp2, Mtlb, T72, Bmp2],
     registered_fire: (90.0, 4),
+    // Four Bradleys held back at the start line for the wounded, sent one at a time where the player asks.
+    evacuation: Some((kind: Bradley, vehicles: 4, start: 900.0)),
 
     // Mala Tokmachka, 8 June 2023 (c09 §2, §6 set piece 1, §11 on the date): the guns finish their preparation in
     // the dark; the column is late and moves off at first light; nine vehicles behind a Leopard 2R and a BMR-2 on the
     // western track, eleven on the eastern; Ka-52s from beyond reach; four Bradleys back in for the men; and in the
-    // end, everyone back to the start line. 03:50 to late morning in about 25 minutes.
+    // end, everyone back to the start line. 03:50 to late morning in about 25 minutes. That morning four Bradleys
+    // went back in for the men; here they go when the player sends them (`evacuation`), not on the clock.
     script: [
         (1.0, Say("Bird up. Still dark. Our guns are working the crest.")),
         (3.0, Prep(missions: 14, over: 70.0)),
@@ -137,8 +140,6 @@
         (345.0, Say("This is {op}. Second group moving. Same plan, the other track.")),
         (430.0, Helicopters([(2900.0, 3000.0), (3500.0, 2650.0)])),
         (436.0, Say("Ka-52s! Two of them, south-east, low over the ridge. Too far for anything we have.")),
-        (640.0, Column(route: 0, kinds: [Bradley, Bradley, Bradley, Bradley], plow: false, smoke: 0, start: 900.0, label: "07:02  Four Bradleys go back in for the men", rescue: true)),
-        (652.0, Say("All, this is {command}. Four Bradleys going back in. Get the infantry onto them.")),
         (770.0, Helicopters([(-3100.0, 2900.0), (-2500.0, 3300.0)])),
         (776.0, Say("This is {op}. Helicopters again. South-west this time.")),
         (1000.0, Order(PullBack)),

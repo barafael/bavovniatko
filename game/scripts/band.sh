@@ -10,14 +10,16 @@ dio=${1:-vuhledar}
 [ $# -gt 0 ] && shift
 seeds=${*:-0 1 2 3}
 cargo build -q --profile fast
-out=target/band/$dio
+# BAND_TAG=<name> keeps a variant apart (target/band/<diorama>-<name>); the switches it varies go in the environment.
+out=target/band/$dio${BAND_TAG:+-$BAND_TAG}
 mkdir -p "$out"
 run() {
   dir=$out/seed-$1
   rm -rf "$dir" && mkdir -p "$dir"
   BAV_DIORAMA=$dio BAV_SEED=$1 BAV_HEADLESS=1 BAV_SKIP_BRIEFING=1 BAV_NO_BATTERY=1 BAV_RES=320x180 \
     BAV_LOG_STATS=1 BAV_SHOWCASE="$(realpath "$dir")" timeout 3000 ./target/fast/bavovniatko 2>&1 \
-    | sed 's/\x1b\[[0-9;]*m//g' | grep -o 't=.*' > "$dir/tally.txt" || true
+    | sed 's/\x1b\[[0-9;]*m//g' > "$dir/out.txt" || true
+  grep -o 't=.*' "$dir/out.txt" > "$dir/tally.txt" || true
   rm -f "$dir"/f*.png
 }
 n=0
@@ -28,5 +30,5 @@ for s in $seeds; do
 done
 wait
 for s in $seeds; do
-  echo "$dio seed $s: $(grep committed= "$out/seed-$s/tally.txt" | tail -1 | sed 's/ overlap_frames.*//; s/ hidden=[0-9]*//')"
+  echo "$dio seed $s: $(grep committed= "$out/seed-$s/tally.txt" | tail -1 | sed 's/ overlap_frames.*//; s/ hidden=[0-9]*//') $(grep -o 'wounded=[0-9/]*' "$out/seed-$s/tally.txt" | tail -1)"
 done

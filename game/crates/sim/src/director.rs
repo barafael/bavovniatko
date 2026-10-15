@@ -21,11 +21,15 @@ use rand::{Rng, SeedableRng, rngs::SmallRng};
 
 pub struct DirectorPlugin;
 
+/// The script's systems, for what has to run after them in `Step::Script`.
+#[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub struct DirectorSystems;
+
 impl Plugin for DirectorPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(Script::new())
             .insert_resource(DirRng(SmallRng::seed_from_u64(crate::dev::seeded(6))))
-            .add_systems(Update, (run_script, russian_artillery, check_end).chain().run_if(crate::running).in_set(crate::Step::Script))
+            .add_systems(Update, (run_script, russian_artillery, check_end).chain().run_if(crate::running).in_set(crate::Step::Script).in_set(DirectorSystems))
             .add_systems(Update, time_controls.in_set(crate::Step::Control).after(crate::dev::DevSystems));
     }
 }

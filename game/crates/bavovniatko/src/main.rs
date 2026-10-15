@@ -59,7 +59,7 @@ fn main() {
         .add_plugins((units::UnitsPlugin, fire::FirePlugin, director::DirectorPlugin, hud::HudPlugin))
         .add_observer(units::on_wrecked)
         .add_systems(Update, drone_view_audio.in_set(Step::Camera))
-        .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin, robotyne::RobotynePlugin, bav_look::robotyne::RobotyneLookPlugin))
+        .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin, robotyne::RobotynePlugin, bav_look::robotyne::RobotyneLookPlugin, bav_sim::evac::EvacPlugin))
         .run();
 }
 

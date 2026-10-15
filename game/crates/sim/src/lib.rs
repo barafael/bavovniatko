@@ -9,6 +9,7 @@ pub use bav_core::{dev, diorama, geo, schedule, text, vocab};
 
 pub mod data;
 pub mod director;
+pub mod evac;
 pub mod fire;
 pub mod fx;
 pub mod paint;

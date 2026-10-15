@@ -24,6 +24,34 @@ This round leaves the knowledge base's content alone, apart from its tidy-up. It
 | 7 | No spoken Ukrainian yet. Sound: whatever is easy now. |
 | 8 | Not now: demos per dossier, the Framework 13 pass, waiting-on-assets items. |
 
+## Progress (2026-10-15)
+
+| step | state | commits |
+|---|---|---|
+| 1. Two halves, READMEs | done; records keep `research/…` paths, read relative to `db/` | 0e11056, 840f97d |
+| 2. Names, crates, fast profile | done: `bav-core`, `bav-sim`, `bav-look`, `bavovniatko`; the battle cannot reach the picture; G18 helpers | f632e26, c3fae27, e09a00c, 4086fe5 |
+| 3. Knowledge-base leftovers | done, except `kind_label` (the dataset's labels are capitalised) and one titled link | f21290e, 690afa1, 089f347, a7b9b26 |
+| 4. Dioramas as data | done for the ground, layout, place and clock (4a), forces and script (4b), and the net's callsigns, Robotyne's now its own (4c); the film's shots stay in code until the demos (step T) need them | 00858f0, dd72647, 4d72abf |
+| 5. Quick fixes | done: densest-group aim, summer craters, the Kornet test (fire did not suppress), then suppression: a post under fire keeps its ATGM team down 20–60 s; three missions now keep the crest's Kornet down from 286 s to 427 s | e023554, and the evacuation commit |
+| 6. Evacuation on request | done: Alt+click or V sends one of four Bradleys; wounded call for help; men falling back drag the wounded; behind the start line counts as out | the evacuation commit |
+| 7. Drones | research done and loaded (topics 10 and 11, 516 claims); the build waits on the owner's calls | 6b05516, 3899789 |
+| 8. Sound | not started | |
+| 9. Story planning | done: `arcs.md` | 8aec1bb |
+
+Every step that touched the game replayed both days byte-identically against the last session's runs, except
+where a change meant to change the day: the camera's new aim (the battle identical, only the filmed drone's yaw
+moved), suppression, and the evacuation, which are measured with `band.sh` instead (fast profile, seeds 0–3):
+
+| run | vehicles lost (burned + abandoned) | men back | dead | wounded out |
+|---|---|---|---|---|
+| Vuhledar, with suppression | 25–30 of 33 (24–26 before; the band is 24–30) | 44–82 of 320 | 135–172 | — |
+| Robotyne, hands-off (no scripted rescue now) | 16–18 of 20 | 66–107 of 140 | 23–46 | 10–17 of 43–57 |
+| Robotyne, every call answered after 30 s (`BAV_EVAC=30`) | 20–23 of 24 | 103–121 of 152 | 30–47 | 9–21 of 48–74 |
+
+Before this round Robotyne's day sent four Bradleys at a fixed minute (24 vehicles, 97–108 back of 176). Now the
+hands-off day sends none, and the player's Bradleys each bring out about seven, the wounded first, when they get
+through; some burn on the way in, as they did on the day.
+
 ## 1. The repo in two halves
 
 ```

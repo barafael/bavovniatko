@@ -149,6 +149,8 @@ pub struct Post {
     /// None: riflemen only.
     pub weapon: Option<Atgm>,
     pub figures: Vec<Entity>,
+    /// Down in the trench under fire until this game time: its ATGM team does not fire.
+    pub suppressed_until: f64,
 }
 
 #[derive(Component)]
@@ -200,7 +202,7 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
             figures.push(e);
         }
         commands.spawn((
-            Post { side, pos: *p, strength: 6, atgm, reload: 4.0 + i as f32 * 7.0, fire_timer: i as f32, weapon, figures },
+            Post { side, pos: *p, strength: 6, atgm, reload: 4.0 + i as f32 * 7.0, fire_timer: i as f32, weapon, figures, suppressed_until: 0.0 },
             Transform::from_translation(geo::ground(*p)),
         ));
     }
@@ -274,7 +276,8 @@ fn player_fire(
     mut radio: ResMut<Radio>,
     mut sound: Sound,
 ) {
-    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground {
+    // Alt+click asks for an evacuation instead (`evac`).
+    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) {
         return;
     }
     let now = time.elapsed_secs_f64();
@@ -489,12 +492,16 @@ fn land_shells(
             }
         }
         blasts.write(Blast { at: p, radius, cause });
-        // Fire on the tree lines and trenches hurts the men in them.
+        // Fire on the tree lines and trenches hurts the men in them, and puts the rest down in the trench for a
+        // while, longer the closer it lands: a team under fire does not stand up to guide a missile.
         for mut pos in &mut positions {
             if pos.side == s.by {
                 continue;
             }
             let d = pos.pos.distance(s.at);
+            if d < radius * 3.0 {
+                pos.suppressed_until = pos.suppressed_until.max(now + (20.0 + 40.0 * (1.0 - d / (radius * 3.0))) as f64);
+            }
             if pos.strength > 0 && d < radius * 1.6 && rng.random_bool((0.5 * (1.0 - d / (radius * 1.6))) as f64) {
                 pos.strength -= 1;
                 if pos.side == diorama().defender() {
@@ -575,7 +582,7 @@ fn atgm_teams(
         let Some(weapon) = pos.weapon else { continue };
         // Reloading goes on whoever is at the launcher, the AI or the player.
         pos.reload = (pos.reload - dt).max(0.0);
-        if pos.atgm == 0 || pos.strength < 2 || (view.mode == Mode::Ground && view.ground_team == Some(team)) {
+        if pos.atgm == 0 || pos.strength < 2 || now < pos.suppressed_until || (view.mode == Mode::Ground && view.ground_team == Some(team)) {
             continue;
         }
         if pos.reload > 0.0 {
@@ -634,7 +641,7 @@ fn atgm_teams(
         fx.muzzle(from, dir, false);
         fx.backblast(from, dir);
         sound.at(from, Sfx::AtgmLaunch, 0.9);
-        info!("atgm launch: {weapon} from the post at {:.0},{:.0}, {} men", pos.pos.x, pos.pos.y, pos.strength);
+        info!("atgm launch: {weapon} from the post at {:.0},{:.0}, {} men, at {now:.0} s", pos.pos.x, pos.pos.y, pos.strength);
         let speed = weapon.speed();
         commands.spawn((
             Mesh3d(models.missile.clone()),

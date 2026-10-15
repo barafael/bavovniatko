@@ -204,6 +204,7 @@ The morning will run whether or not you do anything. What you do decides what it
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.\n\
 Left click: 155 mm fire mission (4 rounds).  Shift+click: smoke.  Ctrl+click: HIMARS.\n\
 Space: the column PUSH ON / HOLD / PULL BACK.  1/2 or Tab: drone / the water tower.  P: pause.  [ ]: time.\n\
+Alt+click: send a Bradley for the wounded there (four for the day).  V: answer the last call for evacuation.\n\
 3: into the forward tree line with an ATGM team.  Right button: the sight.  Left click: launch.\n\n\
 Press Enter.";
 
@@ -544,6 +545,7 @@ fn show_debrief(
     script: Res<Script>,
     positions: Query<&Post>,
     soldiers: Query<&crate::units::Soldier>,
+    evac: Res<bav_sim::evac::Evacuation>,
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
@@ -593,7 +595,7 @@ fn show_debrief(
             )
         }
         Diorama::Robotyne => {
-            let names = ["", "the first group", "the second group", "sent back in for the men"];
+            let names = ["", "the first group", "the second group", "sent in for the wounded"];
             let trench = crate::geo::layout().trench_z.expect("Mala Tokmachka has a trench");
             let short = |a: f32| {
                 if a == f32::MIN {
@@ -623,6 +625,7 @@ fn show_debrief(
                     ("Wounded".into(), stats.wounded.to_string()),
                     ("    brought out".into(), stats.wounded_out.to_string()),
                     ("    still lying out there".into(), lying.to_string()),
+                    ("Bradleys you sent in for them".into(), format!("{} of {}", evac.sent, evac.sent + evac.left)),
                     ("The overwatch in the forward tree line lost".into(), stats.overwatch_losses.to_string()),
                     ("The furthest vehicle stopped".into(), short(stats.vehicle_advance)),
                     ("On foot, the furthest anyone got".into(), short(stats.max_advance)),

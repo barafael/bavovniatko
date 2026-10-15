@@ -25,6 +25,9 @@ pub struct SimData {
     pub old_wreck_kinds: Vec<VKind>,
     /// The defending brigade's guns on their registered points: every so many seconds, so many rounds.
     pub registered_fire: (f64, u32),
+    /// The vehicles the player can send in for the wounded (none: nothing gets there by day).
+    #[serde(default)]
+    pub evacuation: Option<crate::evac::EvacSpec>,
     /// The day: at each game second, what happens.
     pub script: Vec<(f32, Act)>,
 }

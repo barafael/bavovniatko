@@ -68,7 +68,7 @@ pub struct DevEnv {
     pub rec_secs: f32,
     /// Scripted fire missions: game time, strike, and where (`BAV_FIRE="100:he,130:raam,200:he@-468;702"`: at a
     /// point, or else on the stalled vehicle nearest the drone).
-    pub fire: Vec<(f32, Strike, Option<(f32, f32)>)>,
+    pub fire: Vec<ScriptedFire>,
     /// Scripted drone flight: legs of game time with what the sticks do (see `camera::Stick::scripted`).
     pub fly: Vec<(f32, f32, String)>,
     /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
@@ -90,6 +90,9 @@ pub struct DevEnv {
     /// `BAV_TOUR`: which shot list the showcase films, `film` (design/showcase.md) or the minute tours.
     pub tour: Option<TourKind>,
 }
+
+/// A scripted fire mission: game time, strike, and the point it is called on (or none: the nearest stalled vehicle).
+pub type ScriptedFire = (f32, Strike, Option<(f32, f32)>);
 
 /// `BAV_TOUR`.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]

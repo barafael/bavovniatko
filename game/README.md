@@ -101,6 +101,7 @@ the pieces that reach above a height, to write a ring from.
 | left click | 155 mm fire mission, 4 rounds (a drone over the target tightens the sheaf) |
 | Shift+click | Vuhledar: RAAM, scattering mines onto a lane. Mala Tokmachka: smoke |
 | Ctrl+click | HIMARS (two missions all day at Vuhledar, one at Mala Tokmachka) |
+| Alt+click, V | Mala Tokmachka: send a Bradley for the wounded at the cursor, or (V) where the last call for evacuation came from; four for the day. At Vuhledar nothing gets down to the tree line by day |
 | Space | Vuhledar: ATGM teams AUTO (wait until the column commits), HOLD, or FREE. Mala Tokmachka: the column PUSH ON, HOLD, or PULL BACK (picking up the infantry) |
 | 1, 2, Tab | the drone, or the observer (a nine-storey roof; a water tower by the N08) |
 | 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
@@ -155,6 +156,9 @@ That determinism is also the regression test: `scripts/same-day.sh before` and, 
 segments and the minute-by-minute tally. A refactor should leave all three byte for byte the same. It holds
 because every game system runs in one fixed order each frame (`Step` in `crates/core/src/schedule.rs`): give a new system a `Step`. `BAV_SEED=<n>` runs the day on other random streams, and `scripts/band.sh [diorama] [seeds]` films it on
 several and lists the final tallies side by side: one run says little about balance, the band of a few does.
+`BAND_TAG=<name>` keeps a variant's runs apart, with its switches in the environment: `BAND_TAG=evac BAV_EVAC=30
+scripts/band.sh robotyne` answers every call for evacuation after 30 s, as a player would. `BAV_FIRE="260:he@-468;702"`
+calls a 155 mm mission on a point at game second 260 (or, without `@`, on the stalled vehicle nearest the drone).
 
 `BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
 turned) burned out, to look the models over. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
