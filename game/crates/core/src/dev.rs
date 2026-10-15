@@ -29,6 +29,25 @@ pub enum Part {
     Terrain,
 }
 
+/// `BAV_AA`: how the 3D picture's edges are smoothed.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default, strum::EnumString)]
+#[strum(serialize_all = "lowercase")]
+pub enum Aa {
+    /// Four samples a pixel: smoother tree cards (alpha-to-coverage), 1.5-2.5 ms more on the 780M at 2560x1600.
+    Msaa4,
+    /// Two samples a pixel: the feed's grain hides the difference from four.
+    #[default]
+    Msaa2,
+    /// A post pass over the finished picture; the cards fall back to a hard alpha mask.
+    Smaa,
+    Off,
+}
+
+/// The anti-aliasing in use (`BAV_OFF=msaa` is `off`).
+pub fn aa() -> Aa {
+    if off(Part::Msaa) { Aa::Off } else { dev().aa.unwrap_or_default() }
+}
+
 /// Whether `BAV_OFF` leaves this part out.
 pub fn off(part: Part) -> bool {
     dev().off.contains(&part)
@@ -40,6 +59,13 @@ pub struct DevEnv {
     pub headless: bool,
     /// Offscreen render size.
     pub res: Option<(u32, u32)>,
+    /// `BAV_SCALE`: the 3D picture's size against the screen's (0.25..1); unset, it is capped near 1920x1200.
+    pub scale: Option<f32>,
+    /// `BAV_SHADOW_MAP`: each sun cascade's shadow map size in texels (default 2048).
+    pub shadow_map: Option<u32>,
+    pub aa: Option<Aa>,
+    /// `BAV_CASCADES="<n>,<first far bound m>"`: the sun's shadow cascades (default 3, 450).
+    pub cascades: Option<(usize, f32)>,
     pub skip_briefing: bool,
     /// Film the showcase tour into this directory.
     pub showcase: Option<String>,
@@ -155,6 +181,13 @@ impl DevEnv {
             res: var("BAV_RES").and_then(|r| {
                 let (w, h) = r.split_once('x')?;
                 Some((w.parse().ok()?, h.parse().ok()?))
+            }),
+            scale: parse("BAV_SCALE"),
+            shadow_map: parse("BAV_SHADOW_MAP"),
+            aa: parse("BAV_AA"),
+            cascades: var("BAV_CASCADES").and_then(|c| {
+                let (n, f) = c.split_once(',')?;
+                Some((n.trim().parse().ok()?, f.trim().parse().ok()?))
             }),
             skip_briefing: var("BAV_SKIP_BRIEFING").is_some(),
             showcase: var("BAV_SHOWCASE"),

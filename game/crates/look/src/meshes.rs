@@ -16,6 +16,63 @@ pub fn rgba8_image(w: usize, h: usize, data: Vec<u8>, sampler: ImageSamplerDescr
     img
 }
 
+/// The mip chain of a square RGBA8 image, level 0 first and each next level a 2×2 box average of the last, down
+/// to 1×1: what the GPU samples far away instead of the full image (no shimmer, and far cheaper to read).
+pub fn with_mips(n: usize, mut data: Vec<u8>) -> (Vec<u8>, u32) {
+    let mut levels = 1u32;
+    let (mut size, mut at) = (n, 0usize);
+    while size > 1 {
+        let half = size / 2;
+        let mut next = vec![0u8; half * half * 4];
+        for y in 0..half {
+            for x in 0..half {
+                for c in 0..4 {
+                    let px = |dx: usize, dy: usize| data[at + ((2 * y + dy) * size + 2 * x + dx) * 4 + c] as u32;
+                    next[(y * half + x) * 4 + c] = ((px(0, 0) + px(1, 0) + px(0, 1) + px(1, 1) + 2) / 4) as u8;
+                }
+            }
+        }
+        at += size * size * 4;
+        data.extend_from_slice(&next);
+        size = half;
+        levels += 1;
+    }
+    (data, levels)
+}
+
+/// Rebuild the mip levels of a square RGBA8 image whose level 0 has changed (`data` holds the whole chain).
+pub fn refresh_mips(n: usize, data: &mut [u8]) {
+    let (mut size, mut at) = (n, 0usize);
+    while size > 1 {
+        let half = size / 2;
+        let next_at = at + size * size * 4;
+        for y in 0..half {
+            for x in 0..half {
+                for c in 0..4 {
+                    let px = |dx: usize, dy: usize| data[at + ((2 * y + dy) * size + 2 * x + dx) * 4 + c] as u32;
+                    let v = ((px(0, 0) + px(1, 0) + px(0, 1) + px(1, 1) + 2) / 4) as u8;
+                    data[next_at + (y * half + x) * 4 + c] = v;
+                }
+            }
+        }
+        at = next_at;
+        size = half;
+    }
+}
+
+/// A square RGBA8 texture with its full mip chain, sampled trilinearly as `sampler` says (its mipmap filter is
+/// set to linear). `srgb`: colour (the ground) or plain data (noise).
+pub fn rgba8_mipped(n: usize, data: Vec<u8>, sampler: ImageSamplerDescriptor, srgb: bool) -> Image {
+    let format = if srgb { TextureFormat::Rgba8UnormSrgb } else { TextureFormat::Rgba8Unorm };
+    // Made from level 0 (the size Image::new checks), then given the whole chain.
+    let mut img = Image::new(Extent3d { width: n as u32, height: n as u32, depth_or_array_layers: 1 }, TextureDimension::D2, data[..n * n * 4].to_vec(), format, RenderAssetUsages::default());
+    let (data, levels) = with_mips(n, data);
+    img.data = Some(data);
+    img.texture_descriptor.mip_level_count = levels;
+    img.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor { mipmap_filter: bevy::image::ImageFilterMode::Linear, ..sampler });
+    img
+}
+
 #[derive(Default)]
 pub struct MeshBuilder {
     pos: Vec<[f32; 3]>,

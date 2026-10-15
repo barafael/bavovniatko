@@ -113,7 +113,8 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
     commands.spawn((text("", 16.0, WHITE), Node { top: percent(44), ..abs(None, None, None, Some(18.0)) }, shadow, Osd::Camera, TextLayout::justify(Justify::Right)));
     commands.spawn((
         text("", 14.0, WHITE),
-        Node { position_type: PositionType::Absolute, bottom: px(16), width: percent(100), justify_content: JustifyContent::Center, ..default() },
+        // Above the corner panels' three lines: the fire panel's column order is long enough to reach the middle.
+        Node { position_type: PositionType::Absolute, bottom: px(74), width: percent(100), justify_content: JustifyContent::Center, ..default() },
         shadow,
         Osd::Flight,
         TextLayout::justify(Justify::Center),

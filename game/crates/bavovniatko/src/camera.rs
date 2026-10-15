@@ -83,12 +83,16 @@ impl Locate for Target {
 
 pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
     view.drone_pos.y = geo::height(view.drone_pos.x, view.drone_pos.z) + View::DRONE_AGL;
-    commands.spawn((
+    let cam = commands.spawn((
         Camera3d::default(),
         MainCamera,
         Projection::Perspective(PerspectiveProjection { fov: view.drone_fov, near: 0.5, far: 12_000.0, ..default() }),
         Transform::from_translation(view.drone_pos),
-        if dev::off(dev::Part::Msaa) { Msaa::Off } else { Msaa::Sample4 },
+        match dev::aa() {
+            dev::Aa::Msaa4 => Msaa::Sample4,
+            dev::Aa::Msaa2 => Msaa::Sample2,
+            dev::Aa::Smaa | dev::Aa::Off => Msaa::Off,
+        },
         Tonemapping::AgX,
         Exposure { ev100: 11.25 },
         DistanceFog {
@@ -100,7 +104,13 @@ pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
         // Point-light shadows are detailed around the drone (no camera renders to a window: bav_look::feed shows the
         // picture).
         ShadowLodOrigin,
-    ));
+        // The cheapest shadow filter (one hardware 2×2 comparison): the soft ones cost the ground's every pixel
+        // several shadow-map reads, and the feed's softening hides the difference.
+        bevy::light::ShadowFilteringMethod::Hardware2x2,
+    )).id();
+    if dev::aa() == dev::Aa::Smaa {
+        commands.entity(cam).insert(bevy::anti_alias::smaa::Smaa::default());
+    }
 }
 
 fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::Post)>) {

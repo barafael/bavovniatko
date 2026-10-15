@@ -38,6 +38,11 @@ pub struct GroundDetail {
     /// x: furrow strength, y: snow grain strength.
     #[uniform(100)]
     params: Vec4,
+    /// The detail's noise: a tiling lattice of random values in four independent channels, read filtered (value
+    /// noise for the price of a texture read, where the shader used to hash every lattice point it needed).
+    #[texture(101)]
+    #[sampler(102)]
+    noise: Handle<Image>,
 }
 
 impl MaterialExtension for GroundDetail {
@@ -59,9 +64,12 @@ impl Ground {
     pub fn save(&self, images: &Assets<Image>, dir: &Path) -> Result<(), String> {
         std::fs::create_dir_all(dir).map_err(|e| e.to_string())?;
         for (i, handle) in self.images.iter().enumerate() {
-            let image = images.get(handle).ok_or("a ground chunk is not loaded")?.clone();
-            let image = image.try_into_dynamic().map_err(|e| e.to_string())?;
-            image.save(chunk_path(dir, i)).map_err(|e| e.to_string())?;
+            // Level 0 of the chain: the mips are rebuilt on load.
+            let image = images.get(handle).ok_or("a ground chunk is not loaded")?;
+            let data = image.data.as_ref().ok_or("a ground chunk has no data")?;
+            let n = TEX_PER_CHUNK as u32;
+            let level0 = image::RgbaImage::from_raw(n, n, data[..TEX_PER_CHUNK * TEX_PER_CHUNK * 4].to_vec()).ok_or("a ground chunk is the wrong size")?;
+            level0.save(chunk_path(dir, i)).map_err(|e| e.to_string())?;
         }
         Ok(())
     }
@@ -666,10 +674,11 @@ fn spawn_terrain(
     info!("ground: {} in {:.0} ms, meshes in {:.0} ms", if from_file { "loaded" } else { "painted" }, (t1 - t0).as_secs_f32() * 1000.0, t1.elapsed().as_secs_f32() * 1000.0);
 
     let mat_template = StandardMaterial { perceptual_roughness: 0.93, reflectance: 0.3, ..default() };
-    let detail = GroundDetail { params: Vec4::new(1.0, 1.0, if diorama().summer() { 1.0 } else { 0.0 }, 0.0) };
+    let noise = images.add(noise_texture());
+    let detail = GroundDetail { params: Vec4::new(1.0, 1.0, if diorama().summer() { 1.0 } else { 0.0 }, 0.0), noise };
     let mut handles = Vec::with_capacity(CHUNKS_X * CHUNKS_Z);
     for (chunk, (data, mesh)) in chunks.into_iter().zip(chunk_meshes).enumerate() {
-        let handle = images.add(crate::meshes::rgba8_image(TEX_PER_CHUNK, TEX_PER_CHUNK, data, ImageSamplerDescriptor::linear()));
+        let handle = images.add(crate::meshes::rgba8_mipped(TEX_PER_CHUNK, data, ImageSamplerDescriptor::linear(), true));
         handles.push(handle.clone());
         if crate::dev::off(crate::dev::Part::Terrain) {
             continue; // the ground still shapes everything; only its picture is left out
@@ -704,6 +713,7 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
     }
     queue.timer = 0.2;
     let ops = std::mem::take(&mut queue.ops);
+    let mut touched: Vec<usize> = Vec::new();
     let mut seed = 1000u32;
     let pal = pal();
     let summer = diorama().summer();
@@ -719,6 +729,9 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
         };
         // Each overlapped chunk is fetched (and so flagged for upload) once per op.
         for t in disc(at, r) {
+            if !touched.contains(&t.chunk) {
+                touched.push(t.chunk);
+            }
             let Some(mut img) = images.get_mut(&ground.images[t.chunk]) else { continue };
             let Some(data) = img.data.as_mut() else { continue };
             t.each(data, |px, w, d| {
@@ -767,6 +780,26 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
             });
         }
     }
+    // The far view reads the mips: rebuild them for every chunk painted.
+    for chunk in touched {
+        if let Some(mut img) = images.get_mut(&ground.images[chunk])
+            && let Some(data) = img.data.as_mut()
+        {
+            crate::meshes::refresh_mips(TEX_PER_CHUNK, data);
+        }
+    }
+}
+
+/// The ground detail's noise: 256×256 random bytes in each of four channels, tiling, with its mips (far away the
+/// noise averages out to grey instead of aliasing).
+fn noise_texture() -> Image {
+    const N: usize = 256;
+    let mut data = Vec::with_capacity(N * N * 4);
+    for i in 0..(N * N * 4) as u32 {
+        data.push((geo::hash01(i, 0x6e01) * 255.0).round() as u8);
+    }
+    let sampler = ImageSamplerDescriptor { address_mode_u: bevy::image::ImageAddressMode::Repeat, address_mode_v: bevy::image::ImageAddressMode::Repeat, ..ImageSamplerDescriptor::linear() };
+    crate::meshes::rgba8_mipped(N, data, sampler, false)
 }
 
 #[cfg(test)]

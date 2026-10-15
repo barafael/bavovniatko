@@ -17,7 +17,7 @@ impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(ClearColor(Color::srgb(0.70, 0.72, 0.74)))
             .insert_resource(GlobalAmbientLight { color: Color::srgb(0.80, 0.86, 1.0), brightness: 450.0, ..default() })
-            .insert_resource(bevy::light::DirectionalLightShadowMap { size: 4096 })
+            .insert_resource(bevy::light::DirectionalLightShadowMap { size: dev::dev().shadow_map.unwrap_or(2048) as usize })
             .add_systems(Startup, (spawn_light, spawn_belts.in_set(Setup::Kit), crate::models::setup_models.after(spawn_belts).in_set(Setup::Kit), parapets.in_set(Setup::Dress)));
         match diorama() {
             Diorama::Vuhledar => {
@@ -79,8 +79,13 @@ fn spawn_light(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut mat
     commands.spawn((
         DirectionalLight { illuminance: 5200.0, shadow_maps_enabled: !dev::off(dev::Part::Shadows), color: Color::srgb(1.0, 0.96, 0.9), shadow_depth_bias: 0.25, shadow_normal_bias: 3.5, ..default() },
         Transform::from_xyz(0.6, 0.45, 0.8).looking_at(Vec3::ZERO, Vec3::Y),
-        // Long, hard winter shadows matter at drone range: the first cascade covers the near kilometre.
-        CascadeShadowConfigBuilder { num_cascades: 2, first_cascade_far_bound: 900.0, maximum_distance: 2800.0, ..default() }.build(),
+        // Long, hard winter shadows matter at drone range. Three 2048 maps, the first over the near 450 m, keep
+        // the tree belts' streaks of shade as sharp as two 4096 maps over 900 m did, for 2-3 ms less a frame on
+        // the 780M (game/design/perf.md).
+        {
+            let (num_cascades, first_cascade_far_bound) = dev::dev().cascades.unwrap_or((3, 450.0));
+            CascadeShadowConfigBuilder { num_cascades, first_cascade_far_bound, maximum_distance: 2800.0, ..default() }.build()
+        },
     ));
 }
 
@@ -160,7 +165,7 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
     // hard-edged cut-outs.
     let branches = materials.add(StandardMaterial {
         base_color_texture: Some(images.add(if summer { leaf_texture() } else { branch_texture() })),
-        alpha_mode: if dev::off(dev::Part::Msaa) { AlphaMode::Mask(0.5) } else { AlphaMode::AlphaToCoverage },
+        alpha_mode: if matches!(dev::aa(), dev::Aa::Msaa4 | dev::Aa::Msaa2) { AlphaMode::AlphaToCoverage } else { AlphaMode::Mask(0.5) },
         double_sided: true,
         cull_mode: None,
         perceptual_roughness: 1.0,

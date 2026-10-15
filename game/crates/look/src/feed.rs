@@ -9,7 +9,7 @@ use bav_sim::player::{MainCamera, Shake, View};
 use bevy::render::render_resource::ShaderType;
 use crate::dev::{self, dev};
 use bevy::{
-    camera::{RenderTarget, visibility::RenderLayers},
+    camera::{ImageRenderTarget, RenderTarget, visibility::RenderLayers},
     prelude::*,
     render::{
         render_resource::{AsBindGroup, TextureFormat, TextureUsages},
@@ -114,6 +114,18 @@ fn target(w: u32, h: u32) -> Image {
     Image::new_target_texture(w.max(1), h.max(1), TextureFormat::Rgba8UnormSrgb, None)
 }
 
+/// The 3D picture's most pixels: an integrated GPU fills about this many in time, so a larger screen gets a
+/// smaller picture, scaled up by the feed pass (the interface stays sharp).
+const PICTURE_PIXELS: f32 = 1920.0 * 1200.0;
+
+/// The 3D picture for a screen of `pw` x `ph` physical and `lw` logical pixels wide: its size, and the scale
+/// factor that keeps its logical size the window's, so the cursor and the HUD's markers land where they are seen.
+fn picture(pw: u32, ph: u32, lw: f32) -> (u32, u32, f32) {
+    let s = dev().scale.unwrap_or_else(|| (PICTURE_PIXELS / (pw * ph).max(1) as f32).sqrt()).clamp(0.25, 1.0);
+    let (w, h) = (((pw as f32 * s).round() as u32).max(1), ((ph as f32 * s).round() as u32).max(1));
+    (w, h, w as f32 / lw.max(1.0))
+}
+
 fn setup(
     mut commands: Commands,
     cam: Single<Entity, With<MainCamera>>,
@@ -129,9 +141,11 @@ fn setup(
             (w, h, w as f32, h as f32)
         }
     };
-    let feed = images.add(target(pw, ph));
+    let (w, h, scale_factor) = picture(pw, ph, lw);
+    info!("feed: the 3D picture is {w}x{h} on a {pw}x{ph} screen");
+    let feed = images.add(target(w, h));
     // The drone's camera paints the picture; the flat camera shows it and carries the interface.
-    commands.entity(*cam).remove::<IsDefaultUiCamera>().insert(RenderTarget::Image(feed.clone().into()));
+    commands.entity(*cam).remove::<IsDefaultUiCamera>().insert(RenderTarget::Image(ImageRenderTarget { handle: feed.clone(), scale_factor }));
     let mut flat = commands.spawn((Camera2d, Camera { order: 1, clear_color: ClearColorConfig::Custom(Color::BLACK), ..default() }, IsDefaultUiCamera, RenderLayers::layer(1), Msaa::Off));
     if dev().headless {
         let mut img = target(pw, ph);
@@ -146,16 +160,27 @@ fn setup(
 }
 
 /// The window changed size: the picture and the quad follow it.
-fn resize(mut resized: MessageReader<WindowResized>, window: Option<Single<&Window, With<PrimaryWindow>>>, feed: Option<Res<FeedImage>>, mut images: ResMut<Assets<Image>>, mut meshes: ResMut<Assets<Mesh>>, screen: Option<Single<&Mesh2d, With<Screen>>>) {
+fn resize(
+    mut resized: MessageReader<WindowResized>,
+    window: Option<Single<&Window, With<PrimaryWindow>>>,
+    feed: Option<Res<FeedImage>>,
+    mut images: ResMut<Assets<Image>>,
+    mut meshes: ResMut<Assets<Mesh>>,
+    screen: Option<Single<&Mesh2d, With<Screen>>>,
+    mut cam: Query<&mut RenderTarget, With<MainCamera>>,
+) {
     if resized.read().last().is_none() {
         return;
     }
     let (Some(window), Some(feed), Some(screen)) = (window, feed, screen) else { return };
-    let (pw, ph) = (window.physical_width(), window.physical_height());
+    let (w, h, scale_factor) = picture(window.physical_width(), window.physical_height(), window.width());
     if let Some(mut img) = images.get_mut(&feed.0)
-        && (img.width() != pw || img.height() != ph)
+        && (img.width() != w || img.height() != h)
     {
-        *img = target(pw, ph);
+        *img = target(w, h);
+    }
+    for mut t in &mut cam {
+        *t = RenderTarget::Image(ImageRenderTarget { handle: feed.0.clone(), scale_factor });
     }
     if let Some(mut mesh) = meshes.get_mut(&screen.0) {
         *mesh = Rectangle::new(window.width(), window.height()).into();

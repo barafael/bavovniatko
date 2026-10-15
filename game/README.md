@@ -73,7 +73,8 @@ cd game
 cargo run --release
 ```
 
-You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. Everything else is generated in code:
+You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. An integrated one will do: on a Radeon
+780M at 2560x1600 a frame takes about 10 ms. Everything else is generated in code:
 terrain, ground textures, trees, buildings, people and sound. The two WGSL shaders are embedded.
 
 The vehicles and the Ka-52 are real 3D models: the freely licensed ones catalogued in
@@ -171,7 +172,10 @@ that point (at height, then the dive). `BAV_OPERATOR=off` keeps the drone team f
 turned) burned out, to look the models over. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
 scales game time. `BAV_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
 (headless, it also lifts the frame cap), and `BAV_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
-picture out, so a slow frame can be charged to what makes it slow before anything is rewritten.
+picture out, so a slow frame can be charged to what makes it slow before anything is rewritten. The picture's
+cost has four knobs, with defaults measured for the 780M at 2560x1600 (`design/perf.md`): `BAV_SCALE` (the 3D
+picture's size against the screen's; by default it is capped near 1920x1200 and the feed pass scales it up),
+`BAV_AA=msaa2|msaa4|smaa|off`, `BAV_SHADOW_MAP=<texels>` (2048) and `BAV_CASCADES=<n>,<first m>` (3, 450).
 `BAV_SKY=overcast` puts the unbroken stratus of the real 6 February over Vuhledar instead of the footage week's
 broken cloud and hard sun (the default). `BAV_DEBRIEF=1` ends the day as soon as `BAV_WARP_TO` arrives
 (or at once), to look at the debrief without playing the day through. `BAV_GROUND=<dir>` reads the 252 ground chunks from that directory's PNGs if they are all there, and
