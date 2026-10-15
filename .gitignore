@@ -6,20 +6,18 @@ __pycache__/
 # user-local resume note
 claude-resume
 # downloaded reference footage (temporary, for review only — not part of the KB)
-research/footage-ref/
-# downloaded 3D asset files (reference only; the catalogue in research/assets/ is links-only)
-research/assets/files/
+db/research/footage-ref/
+# downloaded 3D asset files (reference only; the catalogue in db/research/assets/ is links-only)
+db/research/assets/files/
 # derived staging artefacts (regenerate with the tools)
 db/staging/relations/batches/
 db/staging/relations/candidates.jsonl
 db/staging/entities/proposed.yaml
 db/staging/metrics_proposed.yaml
-# web explorer build outputs (regenerate with web/build.sh)
-web/target/
-web/bridge/node_modules/
-web/crates/app/bridge/
-web/crates/app/dist/
-web/crates/app/public/data/
-web/crates/app/public/licenses/
-# Local notes on pending and leftover work: kept out of git.
-pending/
+# web explorer build outputs (regenerate with db/web/build.sh)
+db/web/target/
+db/web/bridge/node_modules/
+db/web/crates/app/bridge/
+db/web/crates/app/dist/
+db/web/crates/app/public/data/
+db/web/crates/app/public/licenses/
