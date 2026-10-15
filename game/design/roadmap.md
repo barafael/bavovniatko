@@ -32,10 +32,10 @@ This round leaves the knowledge base's content alone, apart from its tidy-up. It
 | 2. Names, crates, fast profile | done: `bav-core`, `bav-sim`, `bav-look`, `bavovniatko`; the battle cannot reach the picture; G18 helpers | f632e26, c3fae27, e09a00c, 4086fe5 |
 | 3. Knowledge-base leftovers | done, except `kind_label` (the dataset's labels are capitalised) and one titled link | f21290e, 690afa1, 089f347, a7b9b26 |
 | 4. Dioramas as data | done for the ground, layout, place and clock (4a), forces and script (4b), and the net's callsigns, Robotyne's now its own (4c); the film's shots stay in code until the demos (step T) need them | 00858f0, dd72647, 4d72abf |
-| 5. Quick fixes | done: densest-group aim, summer craters, the Kornet test (fire did not suppress), then suppression: a post under fire keeps its ATGM team down 20–60 s; three missions now keep the crest's Kornet down from 286 s to 427 s | e023554, and the evacuation commit |
-| 6. Evacuation on request | done: Alt+click or V sends one of four Bradleys; wounded call for help; men falling back drag the wounded; behind the start line counts as out | the evacuation commit |
+| 5. Quick fixes | done: densest-group aim, summer craters, the Kornet test (fire did not suppress), then suppression: a post under fire keeps its ATGM team down 20–60 s; three missions now keep the crest's Kornet down from 286 s to 427 s | e023554, 7e32b4c |
+| 6. Evacuation on request | done: Alt+click or V sends one of four Bradleys; wounded call for help; men falling back drag the wounded; behind the start line counts as out | 7e32b4c |
 | 7. Drones | research done and loaded (topics 10 and 11, 516 claims); the build waits on the owner's calls | 6b05516, 3899789 |
-| 8. Sound | done: an ERA crack, our and their guns' reports from kilometres back, rocket ripples, the Vikhr launch; beds for the nearest fire and the nearest Ka-52; the wind bed follows the day's wind, the engines' pitch the nearest vehicle's speed. The older sounds are sample-identical and the day is unchanged | the sound commit |
+| 8. Sound | done: an ERA crack, our and their guns' reports from kilometres back, rocket ripples, the Vikhr launch; beds for the nearest fire and the nearest Ka-52; the wind bed follows the day's wind, the engines' pitch the nearest vehicle's speed. The older sounds are sample-identical and the day is unchanged | fd28911 |
 | 9. Story planning | done: `arcs.md` | 8aec1bb |
 
 Every step that touched the game replayed both days byte-identically against the last session's runs, except
