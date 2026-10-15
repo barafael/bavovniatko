@@ -38,7 +38,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          workspaces: web -> target
+          workspaces: db/web -> target
           cache-targets: true
 
       - uses: actions/setup-node@v7
@@ -60,7 +60,7 @@ jobs:
         run: PUBLIC_URL="${{ steps.pages.outputs.base_path }}/" db/web/build.sh
 
       - name: Check the dataset and the read-only guarantees
-        working-directory: web
+        working-directory: db/web
         run: cargo run --release -p kbcheck
 
       - uses: actions/upload-pages-artifact@v5
