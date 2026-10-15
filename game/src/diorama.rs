@@ -8,10 +8,10 @@ use std::sync::OnceLock;
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString, strum::Display)]
 #[strum(serialize_all = "lowercase", ascii_case_insensitive)]
 pub enum Diorama {
-    /// 6 February 2023: Russian columns into the 72nd Brigade's minefields (research/chapters/c08-vuhledar.md).
+    /// 6 February 2023: Russian columns into the 72nd Brigade's minefields (db/research/chapters/c08-vuhledar.md).
     Vuhledar,
     /// 8 June 2023: the 47th Brigade's breach south of Mala Tokmachka, into the Russian minefields
-    /// (research/chapters/c09-robotyne.md §6, set piece 1).
+    /// (db/research/chapters/c09-robotyne.md §6, set piece 1).
     Robotyne,
 }
 

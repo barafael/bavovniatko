@@ -2,16 +2,16 @@
 
 The **code** in this repository is dual-licensed under the MIT licence ([LICENSE-MIT](LICENSE-MIT)) or the Apache
 License 2.0 ([LICENSE-APACHE](LICENSE-APACHE)), at your option. That covers `db/tools/`, `db/schema/`, `db/checks/`,
-`db/fixes/`, `db/dbctl.sh`, `web/` and the other scripts.
+`db/fixes/`, `db/dbctl.sh`, `db/web/` and the other scripts.
 
 The **content and data** are licensed under the
 [Creative Commons Attribution 4.0 International licence (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode),
 **except for the parts listed below**. Content and data means:
 
-- the research texts (`research/`), the design documents (`design/`) and the briefs in `db/staging/`;
+- the research texts (`db/research/`), the design documents (`game/design/`) and the briefs in `db/staging/`;
 - the knowledge base: the claims, their relations, observations and entities in `db/dump/`, `db/staging/` and
   `db/vocab/`;
-- the game feed (`game-data/`) and the explorer's generated dataset.
+- the game feed (`game/data/`) and the explorer's generated dataset.
 
 Copyright © 2026 Rafael Bachmann. To attribute, write: *"bavovniatko knowledge base, CC BY 4.0,
 https://github.com/barafael/bavovniatko"*. If you used OpenStreetMap-derived data, add the attribution in section 1.
@@ -69,5 +69,5 @@ reviews. Always check the cited sources before relying on a claim.
 ## Third-party software
 
 The explorer website bundles third-party software under its own licences, listed on its *About* page and in
-`licenses/` on the site (generated at build time by `web/notices.py`). This includes SurrealDB, which is licensed
+`licenses/` on the site (generated at build time by `db/web/notices.py`). This includes SurrealDB, which is licensed
 under the **Business Source License 1.1**, not an open-source licence.

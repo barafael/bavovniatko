@@ -5,7 +5,7 @@ Sketchfab's public API); **T-64/T-72-focused sweep added 2026-10-11** — licenc
 export re-verified for every new row via an authenticated API pass. The war's most common tanks
 are no longer missing, see §1. It is deliberately **outside the knowledge base**: nothing here is in `db/`,
 `sources.yaml` or the topic files. Per repo policy this file is **links only**; if we ever mirror
-downloads, they go to `research/assets/files/` (gitignored).
+downloads, they go to `db/research/assets/files/` (gitignored).
 
 What's inside: online, downloadable, freely-licensed 3D models of the equipment of this war — tanks,
 IFVs, artillery, MLRS, air defence, glide weapons, aircraft, drones, ships, trucks, cars, boats — for

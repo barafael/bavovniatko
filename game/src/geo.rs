@@ -1,7 +1,7 @@
 //! The diorama's ground truth: terrain height, roads, shelterbelts, minefields and places.
 //!
 //! World units are metres. +X is east, +Z is south (so the town on its ridge lies at negative Z and the
-//! Kashlahach valley at positive Z). The layout compresses the dossier geography (research/chapters/
+//! Kashlahach valley at positive Z). The layout compresses the dossier geography (db/research/chapters/
 //! c08-vuhledar.md §3) into a 4.6 × 3.6 km box: Vuhledar's southern blocks on the ridge in the north, open
 //! fields cut by shelterbelts falling 40 m to the river, Pavlivka to the south-west and Mykilske to the
 //! south-east, and the dirt roads the columns drove up.
@@ -302,7 +302,7 @@ fn build_layout() -> Layout {
         Road { line: track_2, width: 3.5, kind: RoadKind::Track },
     ];
 
-    // Shelterbelts: field blocks about 0.55 × 1.2 km (research/06 §8).
+    // Shelterbelts: field blocks about 0.55 × 1.2 km (db/research/06 §8).
     let mut belts = Vec::new();
     for (i, z) in [FIRST_BELT_Z, -110.0, 440.0, 990.0].into_iter().enumerate() {
         let wob = |x: f32| z + 6.0 * (x / 300.0 + i as f32).sin();

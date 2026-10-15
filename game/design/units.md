@@ -12,8 +12,8 @@ the chapters where it appears. Machine-readable companions:
 
 Entries marked ✚ were registry gaps, merged on 2026-10-10. Every unit now has a canonical id in the registry.
 
-**Sources.** `game-data/sim-20260930.json` (558 era loadouts, 581 systems), `db/vocab/entities/`
-(system + actor registries), and the chapter dossiers in `research/chapters/`.
+**Sources.** `game/data/sim-20260930.json` (558 era loadouts, 581 systems), `db/vocab/entities/`
+(system + actor registries), and the chapter dossiers in `db/research/chapters/`.
 
 c07 (Bakhmut), c09 (Robotyne), c14 (Kursk) and c15 (Pokrovsk–Myrnohrad) were rebuilt on 2026-10-10 from
 the systems their dossier claims are `about` in the knowledge base, filtered to depictable hardware.

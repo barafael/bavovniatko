@@ -2,10 +2,10 @@
 """How long the explorer blocks the browser: long tasks (main-thread blocks over 50 ms) per interaction, in
 headless Chromium over its debugging protocol. Serves crates/app/dist itself, so build first (build.sh).
 
-  db/.venv/bin/python web/bench.py            (needs the `websockets` package, which db/.venv has)
+  db/.venv/bin/python db/web/bench.py           (needs the `websockets` package, which db/.venv has)
 
 Measures the map's date slider, the disputes filter, and the notebook with a 2,000-claim result: run, "Show all",
-JSON and back. design/rewrites.md keeps the numbers before and after each rewrite."""
+JSON and back. game/design/rewrites.md keeps the numbers before and after each rewrite."""
 import asyncio
 import json
 import subprocess

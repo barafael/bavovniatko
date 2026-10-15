@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build the dataset for the browser explorer (web/) from the committed dump. No database connection needed.
+"""Build the dataset for the browser explorer (db/web/) from the committed dump. No database connection needed.
 
-  webexport.py [--out web/crates/app/public/data]   write the dataset
+  webexport.py [--out db/web/crates/app/public/data]   write the dataset
   webexport.py --check                               build in memory and compare with what is on disk
 
 The browser runs SurrealDB 3.3 in memory (WebAssembly) and loads this on every visit, so the dataset is shaped for
-load speed (see web/README.md):
+load speed (see db/web/README.md):
 - **schema.surql:** the tables, analyzers and COMPUTED fields only. Tables are SCHEMALESS, since the data was
   validated on the way in, and their permissions are `select` only: visitors query as a guest, so every write is a
   no-op.
@@ -13,10 +13,10 @@ load speed (see web/README.md):
   then claims, then relations. Fields the explorer doesn't need are dropped: `prov`, `created_at`, `updated_at`,
   and `ext._*` import hashes.
 - **indexes.surql:** every index, built after the data (much faster than indexing row by row).
-- **functions.surql:** the `fn::` query library (from web/kb/functions.surql).
+- **functions.surql:** the `fn::` query library (from db/web/kb/functions.surql).
 - **schema.json:** tables, fields, types and comments, for the schema browser and autocomplete (visitors can't
   run `INFO FOR DB`).
-- **gallery.json:** example queries (db/queries.md plus web/kb/gallery.surql).
+- **gallery.json:** example queries (db/queries.md plus db/web/kb/gallery.surql).
 - **manifest.json:** the file list with sizes and hashes, row counts, and the dataset version.
 
 The private archive tables (`snapshot`, `revision`) and `migration` are left out. **webscrub.py** then takes the
@@ -35,8 +35,8 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 DUMP = REPO / "db" / "dump"
 SCHEMA = REPO / "db" / "schema"
-WEBKB = REPO / "web" / "kb"
-OUT = REPO / "web" / "crates" / "app" / "public" / "data"
+WEBKB = REPO / "db" / "web" / "kb"
+OUT = REPO / "db" / "web" / "crates" / "app" / "public" / "data"
 
 import webscrub
 
@@ -181,7 +181,7 @@ def functions() -> list[dict]:
 # --- gallery -------------------------------------------------------------------------------------------------------
 
 def gallery() -> list[dict]:
-    """Example queries: db/queries.md (## sections, ```surql blocks, `-- comment` titles) and web/kb/gallery.surql."""
+    """Example queries: db/queries.md (## sections, ```surql blocks, `-- comment` titles) and db/web/kb/gallery.surql."""
     items = []
 
     def add_block(section: str, block: str):

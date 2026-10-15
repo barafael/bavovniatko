@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write the explorer's third-party licence notices into crates/app/public/licenses/ (copied into the site).
 
-  web/notices.py     run by web/build.sh after the bridge is bundled and before Trunk builds the site
+  db/web/notices.py  run by db/web/build.sh after the bridge is bundled and before Trunk builds the site
 
 - **THIRD-PARTY-NOTICES.txt:** every Rust crate linked into the two wasm binaries (kbapp and kbworker: normal
   dependencies for wasm32, without proc-macros or build scripts) and every npm package esbuild bundled (from its
@@ -22,7 +22,7 @@ BRIDGE = WEB / "bridge"
 METAFILE = WEB / "crates" / "app" / "bridge" / "meta.json"
 ROOTS = {"kbapp", "kbworker"}
 LICENSE_NAMES = ("LICENSE", "LICENCE", "COPYING", "NOTICE", "UNLICENSE", "COPYRIGHT")
-REPO = WEB.parent
+REPO = WEB.parent.parent
 # npm packages that declare no licence in package.json; their GitHub repository (surrealdb/codemirror) is Apache-2.0.
 NPM_LICENSE = {"@surrealdb/codemirror": "Apache-2.0", "@surrealdb/lezer": "Apache-2.0"}
 MIT_TEMPLATE = (REPO / "LICENSE-MIT").read_text().split("\n", 3)[3]   # the MIT text without our copyright line
@@ -108,7 +108,7 @@ def surrealdb_licence(rust: list[dict]) -> str:
             for f in p["files"]:
                 if f.name.upper().startswith("LICENSE"):
                     return f.read_text(errors="replace")
-    sys.exit("surrealdb-core's LICENSE not found; run `cargo fetch` in web/ first")
+    sys.exit("surrealdb-core's LICENSE not found; run `cargo fetch` in db/web/ first")
 
 
 def main() -> int:

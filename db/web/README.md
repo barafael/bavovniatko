@@ -6,7 +6,7 @@ on every visit (about 10 s). There is no server, and the database is read-only.
 
 ```
 db/dump/*.jsonl ──db/tools/webexport.py──▶ crates/app/public/data/   the dataset (SurrealQL files + manifest)
-web/kb/functions.surql, gallery.surql ──┘                             the fn:: query library and example queries
+kb/functions.surql, gallery.surql ──┘                                 the fn:: query library and example queries
 crates/kbcore    database core: open, load the manifest, seal read-only, query → JSON (native + wasm)
 crates/worker    Web Worker hosting kbcore; JSON messages to and from the app
 crates/app       Leptos UI (client-side): front page, search, notebook, dossiers, map, arms race, numbers,
@@ -81,18 +81,18 @@ Python 3. `rust-toolchain.toml` pins stable, because surrealdb 3.3's `diskann` d
 current nightly.
 
 ```sh
-web/build.sh                          # production build → web/crates/app/dist (static files)
-PUBLIC_URL=/bavovniatko/ web/build.sh # when served from a sub-path (e.g. GitHub Pages)
+db/web/build.sh                          # production build → db/web/crates/app/dist (static files)
+PUBLIC_URL=/bavovniatko/ db/web/build.sh # when served from a sub-path (e.g. GitHub Pages)
 ```
 
 To develop:
 
 ```sh
-python3 db/tools/webexport.py         # after any change to db/dump or web/kb
-(cd web/bridge && npm install && npm run build)
-(cd web/crates/app && trunk serve --release)       # http://127.0.0.1:8770
-cargo run --release -p kbcheck        # in web/: load natively, run every gallery query and the write probes
-db/.venv/bin/python web/bench.py      # how long each interaction blocks the browser (long tasks), on the built site
+python3 db/tools/webexport.py         # after any change to db/dump or db/web/kb
+(cd db/web/bridge && npm install && npm run build)
+(cd db/web/crates/app && trunk serve --release)       # http://127.0.0.1:8770
+cargo run --release -p kbcheck        # in db/web/: load natively, run every gallery query and the write probes
+db/.venv/bin/python db/web/bench.py   # how long each interaction blocks the browser (long tasks), on the built site
 ```
 
 `webexport.py --check` reports whether the dataset on disk is current. The release profile skips LTO so builds
@@ -146,7 +146,7 @@ SurrealQL 3.3 also rejects two things this project used to write: `<-supports<-`
 
 - The explorer's code is MIT OR Apache-2.0, and its data CC BY 4.0, with OSM geometry under ODbL (see
   `LICENSE-CONTENT.md` at the repository root).
-- `web/notices.py`, run by `build.sh`, writes the third-party notices into the site's `licenses/`:
+- `notices.py`, run by `build.sh`, writes the third-party notices into the site's `licenses/`:
   - **THIRD-PARTY-NOTICES.txt:** every Rust crate linked into the wasm and every npm package esbuild bundled,
     with licence texts. Packages that publish no licence file get the standard text of their declared licence.
   - **SurrealDB-BSL-1.1.txt:** SurrealDB's Business Source License, which must be displayed with every copy. It is

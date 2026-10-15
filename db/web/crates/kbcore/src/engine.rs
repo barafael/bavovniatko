@@ -1,7 +1,7 @@
 //! The knowledge base runs as SurrealDB 3.3 in memory. [`Kb::open`] starts it with root authentication, then
 //! [`Kb::load`] runs the dataset from `db/tools/webexport.py` as root. [`Kb::seal`] then drops to an anonymous
 //! guest session for good. Every table only grants `select`, so visitors' writes are no-ops and schema changes
-//! are refused (see web/README.md).
+//! are refused (see db/web/README.md).
 
 use std::time::Duration;
 

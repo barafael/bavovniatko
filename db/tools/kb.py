@@ -39,7 +39,8 @@ from surrealdb.data.types.geometry import (
 
 DB_DIR = Path(__file__).resolve().parent.parent
 REPO = DB_DIR.parent
-RESEARCH = REPO / "research"
+# Paths stored in records (`anchor.file`, `prov.input`, `topic.file`, …) are relative to db/: "research/03-fires-air.md".
+RESEARCH = DB_DIR / "research"
 VOCAB = DB_DIR / "vocab"
 UTC = dt.timezone.utc
 NOW = dt.datetime.now(UTC)                 # one timestamp per process: every record a run writes carries it

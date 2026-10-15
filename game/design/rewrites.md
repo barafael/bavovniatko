@@ -77,7 +77,7 @@ The 2.1 s block comes from rendering every row and cell at once.
 - **Check:** the interaction benchmark (below) before and after. The rendered rows must stay the same: compare
   `innerText` of the table.
 - **Size:** about a day.
-- **Result** (`web/bench.py`, quiet machine): "Show all" was one 1,220 ms block; it is now 17 batches of 100
+- **Result** (`db/web/bench.py`, quiet machine): "Show all" was one 1,220 ms block; it is now 17 batches of 100
   rows a frame apart, the longest 185 ms, so the page answers between them. The first 200 rows render in 270 ms
   of long tasks (356 before), JSON in 283 (339), back to the table in 93 (140). The target of 100 ms was not
   reached, for the reason above. The table's text after "Show all" is byte-identical to the old build's (530,647
@@ -133,7 +133,7 @@ mode, charts, legends and map points have the wrong colours.
 - **Result:** all three checks hold on a scratch database restored from the committed dump. Two things found on
   the way: the metrics never carried a hash (they were upserted on every run; now they get one, so the next
   `load.py all` rewrites all 404 once and the dump gains their `ext._hash`), and three publishers spelled two ways
-  in `research/sources.yaml` were two writes to one actor per run (grouped by slug now). Also noticed, not
+  in `db/research/sources.yaml` were two writes to one actor per run (grouped by slug now). Also noticed, not
   touched: the committed dump and `db/staging` disagree on claims `c02-0030-11` and `c14-0027-09`, so every
   `load.py all` rewrites those two.
 

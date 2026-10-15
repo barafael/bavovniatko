@@ -336,7 +336,7 @@ The `sim_*` tables are *derived and reviewed*, never hand-typed. Each row carrie
 | `sim_series` | Time series: KABs/month, Shaheds, territory km²/month |
 | `sim_terrain_profile` | Belt spacing, orientation and width distributions, field sizes and road densities per sample box (06) |
 
-`export_sim.py` writes a versioned, checksummed `game-data/sim-YYYYMMDD.json` for Bevy to load, as JSON or RON.
+`export_sim.py` writes a versioned, checksummed `game/data/sim-YYYYMMDD.json` for Bevy to load, as JSON or RON.
 Embedding SurrealDB in the game is possible later, after the licence check.
 
 ## Layout

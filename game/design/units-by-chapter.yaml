@@ -7,7 +7,7 @@
 # c07 Bakhmut, c09 Robotyne, c14 Kursk and c15 Pokrovsk were rebuilt on 2026-10-10 from the knowledge
 # base: every `system` that a claim of the chapter's topic is `about`, minus techniques, software,
 # programmes and satellites, with roles taken from those claims. Entries marked `basis: era` are not
-# named in the dossier and come from the era loadouts in game-data/sim-20260930.json.
+# named in the dossier and come from the era loadouts in game/data/sim-20260930.json.
 # Written 2026-10-02.
 
 - chapter: c01

@@ -3,7 +3,7 @@
 
   sim.py series              rule-built time series from observations -> sim_series
   sim.py load                agent-derived rows in db/staging/sim/*.yaml -> sim_loadout, sim_param, sim_terrain_profile
-  sim.py export [--out DIR]  game-data/sim-YYYYMMDD.json (+ latest.json): eras, loadouts, params, series,
+  sim.py export [--out DIR]  game/data/sim-YYYYMMDD.json (+ latest.json): eras, loadouts, params, series,
                              terrain profiles, the measure/countermeasure graph and source attribution
 
 Everything carries `derived_from` claims; the export lists the sources behind them for attribution.
@@ -30,7 +30,7 @@ import yaml
 import kb
 
 STAGE = kb.DB_DIR / "staging" / "sim"
-OUT = kb.REPO / "game-data"
+OUT = kb.REPO / "game" / "data"
 SCHEMA_VERSION = 1
 
 # metric -> series description. Values are converted to the metric's default unit.
@@ -209,7 +209,7 @@ def cmd_export(conn, out: Path):
     data["attribution"] = {
         "sources": src,
         "notices": sorted({t["attribution"] for t in data["terrain_profiles"] if t.get("attribution")}
-                          | {"Derived from the bavovniatko research base; see research/ and db/ for claims and sources."}),
+                          | {"Derived from the bavovniatko research base; see db/ (its research/ and the claim graph) for claims and sources."}),
     }
     out.mkdir(parents=True, exist_ok=True)
     body = json.dumps(data, ensure_ascii=False, indent=1, sort_keys=False)

@@ -1,6 +1,6 @@
 //! Vuhledar, 6 February 2023: the first diorama of bavovniatko.
 //!
-//! The history is in research/chapters/c08-vuhledar.md. Russian columns drive the same dirt roads into the
+//! The history is in db/research/chapters/c08-vuhledar.md. Russian columns drive the same dirt roads into the
 //! 72nd Brigade's minefields, ATGM teams in the tree lines and drone-spotted artillery. The world runs by itself;
 //! the player, a Ukrainian drone operator and fire controller, matters at the margin.
 

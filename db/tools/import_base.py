@@ -235,7 +235,7 @@ def load_documents(w: Writer, legacy: dict[str, str]):
     for f in kb.documents():
         code = kb.doc_code(f)
         topic = kb.rid("topic", kb.topic_key(code))
-        rel = str(f.relative_to(kb.REPO))
+        rel = str(f.relative_to(kb.DB_DIR))
         for b in mdparse.blocks(f):
             for sid in mdparse.src_ids(b.text):
                 if sid not in legacy:

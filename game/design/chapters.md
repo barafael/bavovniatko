@@ -23,7 +23,7 @@ for a chapter: a tank duel, an ambush. They can sit between chapters or inside o
 
 Chapters are in chronological order. **Bold** marks a chapter picked by the user; *italics* mark a proposal.
 Coverage counts claims in the knowledge base (`db/`). **dossier** means a chapter dossier exists in
-`research/chapters/`, with an outcome, a dated timeline, the geography, the forces, set pieces and decision
+`db/research/chapters/`, with an outcome, a dated timeline, the geography, the forces, set pieces and decision
 points, extracted into claims. Chapters marked good rely on the topic files and will get dossiers later.
 
 | # | chapter | era | window | diorama and set piece | player's lever | historical outcome to reproduce | coverage |
@@ -51,10 +51,10 @@ points, extracted into claims. Chapters marked good rely on the topic files and 
 **Vignettes** (proposed):
 - **The Brovary ambush** (9–10 Mar 2022): the 6th Tank Regiment's column ambushed on the M01 at Skybyn by the
   72nd Mechanised Brigade (artillery). About 19 vehicles were knocked out; no source links Aerorozvidka to this
-  ambush. A set piece inside chapter 1. Dossier: `research/chapters/v01-brovary-ambush.md`.
+  ambush. A set piece inside chapter 1. Dossier: `db/research/chapters/v01-brovary-ambush.md`.
 - **Bradley vs T-90M near Stepove** (11–12 Jan 2024): two Bradleys of the 47th Brigade mission-kill a T-90M with
   25 mm fire, and an FPV drone finishes it. A tank-duel vignette inside Avdiivka. Dossier:
-  `research/chapters/v02-stepove-bradley.md`.
+  `db/research/chapters/v02-stepove-bradley.md`.
 - **The Leopard column at Mala Tokmachka** (Jun 2023): Western armour stalls in a minefield. A set piece inside
   Robotyne.
 - **The air war over Kyiv** (Feb – Mar 2022): low-level sorties, SAM ambushes, and the "Ghost of Kyiv" as a morale
@@ -90,7 +90,7 @@ It is the war's purest covert operation, so it plays as two very different halve
 
 ## Research status
 
-All 19 chapters and both vignettes have dossiers in `research/chapters/` (2026-10-02). Each dossier's §1 states
+All 19 chapters and both vignettes have dossiers in `db/research/chapters/` (2026-10-02). Each dossier's §1 states
 the outcome to reproduce, and its claims carry an `OUTCOME` flag in the knowledge base.
 
 Corrections from the research:

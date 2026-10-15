@@ -1,7 +1,7 @@
 # Chapter research: brief
 
 Each game chapter is a **diorama**: one bounded historical episode that runs by itself if the player does nothing,
-and is won by reaching **the outcome that actually happened** (see `design/chapters.md`). A chapter dossier
+and is won by reaching **the outcome that actually happened** (see `game/design/chapters.md`). A chapter dossier
 collects what the designers need to script that: the true outcome, a dated timeline, the geography, the forces,
 the set pieces and the real decision points. Every statement must be cited.
 
@@ -103,7 +103,7 @@ cd /home/rafael/bavovniatko && db/.venv/bin/python - <slug> <<'EOF'
 import sys, re, yaml, json, subprocess
 s = sys.argv[1]
 mine = {e['id'] for e in yaml.safe_load(open(f'db/staging/sources/{s}.yaml'))}
-cited = set(c.strip() for m in re.findall(r'\[src:([^\]]+)\]', open(f'research/chapters/{s}.md').read()) for c in re.split(r'[,;]\s*(?:src:)?', m) if c.strip())
+cited = set(c.strip() for m in re.findall(r'\[src:([^\]]+)\]', open(f'db/research/chapters/{s}.md').read()) for c in re.split(r'[,;]\s*(?:src:)?', m) if c.strip())
 q = "SELECT VALUE legacy_ids FROM source"
 kb = {i for l in json.loads(subprocess.run(['db/.venv/bin/python','db/tools/q.py',q],capture_output=True,text=True).stdout) for i in l}
 print('unresolved:', sorted(cited - mine - kb)); print('uncited new:', sorted(mine - cited)); print('dup of kb:', sorted(mine & kb))

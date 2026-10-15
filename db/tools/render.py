@@ -52,7 +52,7 @@ def render_documents(conn, header: bool) -> dict[Path, str]:
         text = "".join(parts) + "\n"
         if header:
             text = GENERATED + "\n\n" + text
-        out[kb.REPO / t["file"]] = text
+        out[kb.DB_DIR / t["file"]] = text
     return out
 
 
@@ -186,7 +186,7 @@ def check(conn) -> int:
         cur = normalise_md(path.read_text())
         ok = normalise_md(text) == cur
         bad += not ok
-        print(f"{'ok  ' if ok else 'DIFF'} {path.relative_to(kb.REPO)}")
+        print(f"{'ok  ' if ok else 'DIFF'} {path.relative_to(kb.DB_DIR)}")
         if not ok:
             sys.stdout.writelines(list(difflib.unified_diff(cur.splitlines(1), normalise_md(text).splitlines(1), "current", "generated"))[:30])
     # sources: semantic comparison (ids, urls, titles); per-topic files by id set
@@ -218,7 +218,7 @@ def main():
         if not path.exists() or path.read_text() != text:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
-            print("wrote", path.relative_to(kb.REPO))
+            print("wrote", path.relative_to(kb.DB_DIR))
 
 
 if __name__ == "__main__":

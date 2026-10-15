@@ -1,6 +1,6 @@
 # Vehicle models
 
-Baked by `game/tools/bake` from the models in `research/assets/` (see its README for
+Baked by `game/tools/bake` from the models in `db/research/assets/` (see its README for
 the provenance checks). Each is used under its licence; the bake rescales, splits, simplifies and
 re-encodes it, and changes nothing else.
 

@@ -16,12 +16,12 @@ researched, and the work is grouped into twelve packages below, ordered.*
 | # | observation (abridged) | what we found | package |
 |---|---|---|---|
 | 1 | Columns: equal spacing and speed; driving is hard, the terrain is terrible | Spacing is a constant 42 m, speed a constant per kind, no terrain or driver variation (`director.rs` Column, `units.rs` drive_vehicles) | A |
-| 2 | Ground resolution too low, squares visible | 1 m texels, linear-filtered; painted earth patches have texel-square edges ([shot](../game/devlog/shots/20261011-2005-snow-squares.jpg)) | B |
+| 2 | Ground resolution too low, squares visible | 1 m texels, linear-filtered; painted earth patches have texel-square edges ([shot](../devlog/shots/20261011-2005-snow-squares.jpg)) | B |
 | 3 | Smoke needs variation in colour, shape, dispersion, kind; one wind | 9 particle kinds × 8 alpha steps, one 64² puff texture, no rotation, one wind vector, wind only on buoyant and white kinds (`fx.rs`) | C |
 | 4 | EW interference: find references, imitate | Row tearing, block freeze, chroma shift in `feed.wgsl`; nothing of a digital link's real failure modes | G |
-| 5 | TOS explosion looks wrong | `fx::thermobaric` is 18 short fire quads plus black smoke plus a size-1.6 HE blast; from the drone it reads as pale artillery puffs ([shot](../game/devlog/shots/20261011-2005-tos-from-drone.jpg)) | C |
+| 5 | TOS explosion looks wrong | `fx::thermobaric` is 18 short fire quads plus black smoke plus a size-1.6 HE blast; from the drone it reads as pale artillery puffs ([shot](../devlog/shots/20261011-2005-tos-from-drone.jpg)) | C |
 | 6 | Turret tosses good; add variation and other deaths (fire, broken down with a rotating turret, mobility kills; a track-less tank keeps rolling, can circle); toss blast should be big | One path: `on_wrecked` chars, burns, 40% toss; immobilise = coast and slew; no fate variety (`units.rs`) | D |
-| 7 | Trees and vegetation not good from ground level; take Stugna shots | Winter: three rows of uniform branch cards, a palisade ([shot](../game/devlog/shots/20261011-2003-ground-trees-winter.jpg)); summer: hard-alpha leaf blobs ([shot](../game/devlog/shots/20261011-2004-ground-trees-summer.jpg)) | I |
+| 7 | Trees and vegetation not good from ground level; take Stugna shots | Winter: three rows of uniform branch cards, a palisade ([shot](../devlog/shots/20261011-2003-ground-trees-winter.jpg)); summer: hard-alpha leaf blobs ([shot](../devlog/shots/20261011-2004-ground-trees-summer.jpg)) | I |
 | 8 | Infantry aim through obstacles | No line of sight anywhere in `fire.rs`: teams, rifles and tanks fire on distance and smoke alone | F |
 | 9 | EW should apply to sound too | Sound is unaffected by jamming (`audio.rs`, `camera.rs` update_feed) | G |
 | 10 | "THE DAY" heading should be a date; align as tabular data | One text blob with hand-spaced columns (`hud.rs` show_debrief) | K |

@@ -10,7 +10,7 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
   in English are preferred and paired with Western analysis and OSINT. Places use Ukrainian spellings.
   Russian capabilities are described only as Ukrainian or Western sources report them. There is no
   Russian state media.
-- **Generated from the knowledge base.** Since 2026-09-30 the SurrealDB claim graph in [`db/`](../db/README.md)
+- **Generated from the knowledge base.** Since 2026-09-30 the SurrealDB claim graph in [`db/`](../README.md)
   is the source of truth: 10,856 atomic claims with their sources, claimants, eras, places and observations, and
   typed relations between them. The topic files, the glossary, the source indexes and
   [contradictions.md](contradictions.md) are regenerated from it by `db/tools/render.py`. Edit the data, not
@@ -34,7 +34,7 @@ is always the Ukrainian side. It is the research phase: collected sources, not g
 | 08 | [08-prior-art-games.md](08-prior-art-games.md) | Commercial, drone and training-sim, board and professional wargames: what they model and miss, plus ethics |
 | 09 | [09-bevy-rendering.md](09-bevy-rendering.md) | Engine prior art for the game (added 2026-10-10): Bevy 0.19 rendering, terrain, vegetation, water, sky and weather, large maps, cameras and sensor looks, with licences. Game-only, so the public explorer leaves it out |
 | — | [glossary.md](glossary.md) | Frontline slang (transliterated Ukrainian), Russian terms as reported, systems, programmes, terrain and wargaming terms |
-| — | [chapters/](chapters/) | **Chapter dossiers** for the game's dioramas (see [design/chapters.md](../design/chapters.md)): the historical outcome to reproduce, a dated timeline, the geography, the forces, set pieces, decision points and media |
+| — | [chapters/](chapters/) | **Chapter dossiers** for the game's dioramas (see [game/design/chapters.md](../../game/design/chapters.md)): the historical outcome to reproduce, a dated timeline, the geography, the forces, set pieces, decision points and media |
 | — | [contradictions.md](contradictions.md) | Every pair of claims that cannot both be true as stated, with claimants, sources and the explanation (generated) |
 | — | [sources.yaml](sources.yaml) | The deduplicated index of every source (generated from the knowledge base) |
 | — | `sources/NN-*.yaml`, `sources/chapters/*.yaml` | The sources cited by each topic file and chapter dossier (generated) |

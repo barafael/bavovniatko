@@ -37,7 +37,7 @@ struct Inner {
     pending: HashMap<u64, oneshot::Sender<QueryResult>>,
 }
 
-/// Set by web/build.sh (git commit and dataset version); "dev" for local builds.
+/// Set by db/web/build.sh (git commit and dataset version); "dev" for local builds.
 pub const BUILD: &str = match option_env!("BAV_BUILD") {
     Some(b) => b,
     None => "dev",

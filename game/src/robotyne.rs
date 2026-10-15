@@ -1,6 +1,6 @@
 //! Mala Tokmachka, 8 June 2023: the second diorama. Robotyne is Vuhledar from the other side.
 //!
-//! The history is in research/chapters/c09-robotyne.md (§3, §5, §6 set piece 1). Before dawn the 47th Mechanised
+//! The history is in db/research/chapters/c09-robotyne.md (§3, §5, §6 set piece 1). Before dawn the 47th Mechanised
 //! Brigade goes south behind Leopard 2R and BMR-2 mine-clearing vehicles, in two groups of nine and eleven, up a
 //! long open slope towards the 291st Regiment's first line on the crest. The barrier minefields are hundreds of
 //! metres deep, with anti-tank mines stacked two high; the lanes are too shallow, the columns stack up on them,

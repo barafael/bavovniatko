@@ -1,4 +1,4 @@
-//! Bindings to the JavaScript bridge (web/bridge, bundled into crates/app/bridge/bridge.js and loaded by index.html
+//! Bindings to the JavaScript bridge (db/web/bridge, bundled into crates/app/bridge/bridge.js and loaded by index.html
 //! before the app as the global `bavBridge`): the SurrealQL editor (CodeMirror 6 + @surrealdb/codemirror) and the
 //! map (MapLibre GL on OpenFreeMap tiles).
 

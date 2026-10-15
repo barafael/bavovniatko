@@ -8923,7 +8923,7 @@
   aliases: ["Russian vehicle logistics into Lyman"]
   sides: ["ru"]
 
-# --- Units inventory gaps (design/units.md, 2026-10-10) ---------------------------------------
+# --- Units inventory gaps (game/design/units.md, 2026-10-10) ---------------------------------------
 - id: system:t_80u
   type: system
   kind: armour

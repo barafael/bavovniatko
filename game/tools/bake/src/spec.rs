@@ -16,7 +16,7 @@ pub enum Pick {
 pub struct Spec {
     /// The game's name for it: `assets/vehicles/<id>.veh`.
     pub id: &'static str,
-    /// Under `research/assets/files/`.
+    /// Under `db/research/assets/files/`.
     pub dir: &'static str,
     pub z_up: bool,
     /// Degrees about +Y that bring the front to -Z.

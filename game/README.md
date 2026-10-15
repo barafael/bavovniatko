@@ -1,10 +1,16 @@
-# Vuhledar and Mala Tokmachka
+# The game
 
-The playable dioramas of bavovniatko, built in Bevy 0.19. There are two, one minefield seen from both sides:
+The playable dioramas of bavovniatko, built in Bevy 0.19. Each is one bounded historical episode that runs by
+itself; the design is in [`design/`](design/) (the principles in [`chapters.md`](design/chapters.md), the
+campaign in [`campaign.md`](design/campaign.md), the work in progress in [`roadmap.md`](design/roadmap.md)). There
+are two so far, one minefield seen from both sides:
 
 - **Vuhledar, 6 February 2023** (`cargo run --release`): Russian columns into the 72nd Brigade's kill zone.
 - **Mala Tokmachka, 8 June 2023** (`cargo run --release -- robotyne`): the 47th Brigade's breach into the Russian
   minefields, the first day of the Robotyne chapter.
+
+To watch rather than play, `scripts/showcase.sh --film` produces a four-minute film of both, directed from
+`design/showcase.md` ([below](#the-showcase-film)).
 
 ## Vuhledar
 
@@ -12,8 +18,8 @@ Russian armoured columns drive the same dirt roads, day after day, into the 72nd
 The roads are left clear and the fields beside them are mined. ATGM teams wait in the tree lines, and artillery
 is cued by drones. You see it the way most of the world did: through a Ukrainian drone's grey, grainy video feed.
 
-The history is in [`research/chapters/c08-vuhledar.md`](../research/chapters/c08-vuhledar.md). The design
-principles are in [`design/chapters.md`](../design/chapters.md):
+The history is in [`db/research/chapters/c08-vuhledar.md`](../db/research/chapters/c08-vuhledar.md). The design
+principles are in [`design/chapters.md`](design/chapters.md):
 
 - **The diorama runs by itself.** The day plays out whether or not you do anything.
 - **You matter at the margin.** You are a drone operator and fire controller: you spot, call 155 mm, RAAM and
@@ -32,10 +38,33 @@ minefields are hundreds of metres deep, with anti-tank mines stacked two high, a
 the Russian guns. Kornets, dug-in tanks and Ka-52s firing from beyond reach do the rest. Four Bradleys go back
 in for the men.
 
-The history is in [`research/chapters/c09-robotyne.md`](../research/chapters/c09-robotyne.md) (§3, §5, set
+The history is in [`db/research/chapters/c09-robotyne.md`](../db/research/chapters/c09-robotyne.md) (§3, §5, set
 piece 1). The outcome is fixed: the breach fails. What is yours is the cost: how many crews and infantry come
 back. You have a battery with 64 rounds, six smoke missions (smoke hides the column from the Kornets and the
 Russian guns, and from your own drone), one HIMARS mission, and the order to the column.
+
+## The showcase film
+
+[`design/showcase.md`](design/showcase.md) is one film of both dioramas, about four minutes: a title,
+Vuhledar, an intertitle, Mala Tokmachka, and an end card built from the two days' ledgers. It is the thesis of
+this README, shown: one minefield from both sides. There is no narrator and no music — cards and the in-game
+radio net carry it.
+
+It is filmed by the same machinery the game runs on. The binary runs headless on a fixed step with
+`VUHLEDAR_TOUR=film` (which selects the film's shot list in `src/showcase.rs` instead of the one-minute tours),
+the script places the drone and flies it, cards are hard cuts over black between the shots, and each part's
+soundtrack is rebuilt offline by `scripts/showcase_mix.py`, the parts level-matched within a loudness point.
+The tour is deterministic, so every run films the same film.
+
+```sh
+cd game
+scripts/showcase.sh --film     # the film, 1920x1080, into devlog/videos/
+scripts/showcase.sh --scout    # the same at 640x360 with contact sheets, for retiming
+```
+
+`--film` takes tens of minutes on the machine (both parts, 1080p); `--scout` a few. The only switches the tour
+reads are `VUHLEDAR_TOUR=film` and `VUHLEDAR_SHOWCASE=<dir>`; the script sets them, so they are rarely typed by
+hand. The film and its row are recorded in `devlog/videos/` and `devlog/videos.md`.
 
 ## Running
 
@@ -48,12 +77,12 @@ You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. Everyth
 terrain, ground textures, trees, buildings, people and sound. The two WGSL shaders are embedded.
 
 The vehicles and the Ka-52 are real 3D models: the freely licensed ones catalogued in
-[`research/assets/`](../research/assets/README.md), baked into `assets/vehicles/*.veh` (credits in
+[`db/research/assets/`](../db/research/assets/README.md), baked into `assets/vehicles/*.veh` (credits in
 [`assets/vehicles/CREDITS.md`](assets/vehicles/CREDITS.md)) and built into the binary. The Leopard 2R, the Wisent
 and the BMR-2 have no model of their own: they sit on the Leopard 2A4's and the T-64's hulls, with their tops,
 plows and rollers built in code.
 
-To rebake after changing a model or its spec, download the models (`research/assets/fetch.py`) and run:
+To rebake after changing a model or its spec, download the models (`db/research/assets/fetch.py`) and run:
 
 ```sh
 cd tools/bake && cargo run --release            # all of them; or name some: -- t72 bmp2
@@ -85,7 +114,7 @@ the pieces that reach above a height, to write a ring from.
 | `src/diorama.rs` | which diorama is on the table (first argument or `VUHLEDAR_DIORAMA`), who attacks, the season, the clock |
 | `src/geo.rs` | the map: terrain height, roads, shelterbelts, minefields, positions, lat/lon (Vuhledar's layout) |
 | `src/robotyne.rs` | Mala Tokmachka: its layout and height, the farm and water tower, dug-in tanks, the Ka-52s, the June light |
-| `src/terrain.rs` | chunked ground with a painted 1 m/texel texture; craters, scorch and tracks are stamped in live |
+| `src/terrain.rs` | chunked ground with a painted half-metre texture; craters, scorch and tracks are stamped in live |
 | `src/world.rs` | shelterbelts, panel blocks, dachas, the power line, light, the steppe beyond |
 | `src/meshes.rs` | the procedural modelling kit: soldiers, buildings, trees, the plows and rollers, the tops of the Leopard 2R, Wisent and BMR-2 |
 | `src/baked.rs`, `tools/bake/` | the real vehicle models: the loader for the baked `.veh` files, and the tool that bakes them |
@@ -96,6 +125,8 @@ the pieces that reach above a height, to write a ring from.
 | `src/camera.rs`, `src/shaders/feed.wgsl` | the drone, the OP and the tree line, and the video-feed post-process |
 | `src/hud.rs` | telemetry, radio net, fire control, briefing, debrief |
 | `src/dev.rs`, `src/showcase.rs` | the `VUHLEDAR_*` development switches, and the filmed showcase tour |
+| `design/` | the design notes: chapters, campaign, units, the plans and their decisions |
+| `data/` | the game feed exported from the knowledge base (`db/tools/sim.py export`) |
 | `devlog/` | the screenshot and video history of development (local only, not in git) |
 
 ## Development
@@ -110,7 +141,8 @@ scripts/shot.sh <name> "<x,z,agl,yaw,pitch,fov>" <game-s> "note" [diorama]
 
 Angles in `VUHLEDAR_CAM` are degrees; yaw 0 looks north, 180 south.
 
-`scripts/showcase.sh <out.mp4>` films a directed one-minute tour of the day at 1920x1080 with sound. The game
+`scripts/showcase.sh <out.mp4>` films a directed one-minute tour of a single day at 1920x1080 with sound (the
+four-minute film of both dioramas is `scripts/showcase.sh --film`, [above](#the-showcase-film)). The game
 runs on a fixed step while filming, logs every sound it plays, and `scripts/showcase_mix.py` rebuilds the
 soundtrack offline. It takes about ten minutes, with no window or speakers, and the day is deterministic, so
 every run films the same tour.

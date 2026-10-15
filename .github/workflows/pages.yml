@@ -1,11 +1,11 @@
-# Build the knowledge-base explorer (web/) and publish it to GitHub Pages.
-# The dataset is built from the committed dump (db/dump/), so no database is needed. See web/README.md.
+# Build the knowledge-base explorer (db/web/) and publish it to GitHub Pages.
+# The dataset is built from the committed dump (db/dump/), so no database is needed. See db/web/README.md.
 name: Explorer on GitHub Pages
 
 on:
   push:
     branches: [main]
-    paths: ["web/**", "LICENSE*", "db/dump/**", "db/schema/**", "db/queries.md", "db/tools/webexport.py", ".github/workflows/pages.yml"]
+    paths: ["db/web/**", "LICENSE*", "db/dump/**", "db/schema/**", "db/queries.md", "db/tools/webexport.py", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: web/bridge/package-lock.json
+          cache-dependency-path: db/web/bridge/package-lock.json
 
       - name: Trunk and wasm-opt
         run: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Build
         # configure-pages gives e.g. "/bavovniatko"; Trunk wants a trailing slash.
-        run: PUBLIC_URL="${{ steps.pages.outputs.base_path }}/" web/build.sh
+        run: PUBLIC_URL="${{ steps.pages.outputs.base_path }}/" db/web/build.sh
 
       - name: Check the dataset and the read-only guarantees
         working-directory: web
@@ -65,7 +65,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: web/crates/app/dist
+          path: db/web/crates/app/dist
 
   deploy:
     needs: build

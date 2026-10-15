@@ -1,4 +1,4 @@
-//! Bakes the downloaded vehicle models (`research/assets/files/`, see `research/assets/README.md`) into the
+//! Bakes the downloaded vehicle models (`db/research/assets/files/`, see `db/research/assets/README.md`) into the
 //! game's `.veh` files in `game/assets/vehicles/`.
 //!
 //! Every model arrives in its own units, axes and pieces. The bake puts it in the game's frame (metres, +Y up,
@@ -45,7 +45,7 @@ const TURRET: u8 = 1;
 
 fn main() {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../..");
-    let src = root.join("research/assets/files");
+    let src = root.join("db/research/assets/files");
     let out = root.join("game/assets/vehicles");
     std::fs::create_dir_all(&out).unwrap();
     let only: Vec<String> = std::env::args().skip(1).collect();
@@ -56,7 +56,7 @@ fn main() {
         }
         let dir = src.join(s.dir);
         if !dir.join("scene.gltf").exists() {
-            eprintln!("{}: {} is missing (run research/assets/fetch.py)", s.id, s.dir);
+            eprintln!("{}: {} is missing (run db/research/assets/fetch.py)", s.id, s.dir);
             continue;
         }
         bake(s, &dir, &out.join(format!("{}.veh", s.id)));
@@ -64,7 +64,7 @@ fn main() {
     }
     if only.is_empty() {
         let mut f = std::fs::File::create(out.join("CREDITS.md")).unwrap();
-        writeln!(f, "# Vehicle models\n\nBaked by `game/tools/bake` from the models in `research/assets/` (see its README for\nthe provenance checks). Each is used under its licence; the bake rescales, splits, simplifies and\nre-encodes it, and changes nothing else.\n").unwrap();
+        writeln!(f, "# Vehicle models\n\nBaked by `game/tools/bake` from the models in `db/research/assets/` (see its README for\nthe provenance checks). Each is used under its licence; the bake rescales, splits, simplifies and\nre-encodes it, and changes nothing else.\n").unwrap();
         for (id, a) in credits {
             writeln!(f, "- `{id}.veh`: {a}").unwrap();
         }

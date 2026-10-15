@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Build the explorer as static files in web/crates/app/dist (see README.md).
-#   web/build.sh              production build (LTO, wasm-opt)
-#   PUBLIC_URL=/repo/ web/build.sh   when the site is served from a sub-path
+# Build the explorer as static files in db/web/crates/app/dist (see README.md).
+#   db/web/build.sh              production build (LTO, wasm-opt)
+#   PUBLIC_URL=/repo/ db/web/build.sh   when the site is served from a sub-path
 set -euo pipefail
 cd "$(dirname "$0")"
 
-python3 ../db/tools/webexport.py                       # the dataset, from db/dump/
+python3 ../tools/webexport.py                       # the dataset, from db/dump/
 (cd bridge && npm ci --no-audit --no-fund && npm run build)
 python3 notices.py                                     # third-party licence notices, incl. SurrealDB's BSL
 # A build id for cache-busting the files Trunk doesn't hash (the worker, its wasm, the dataset).
