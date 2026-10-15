@@ -852,6 +852,7 @@ fn drive_vehicles(
     snaps.extend(q.iter().map(|(e, v, t, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing, pos: t.translation.xz() }));
     let cam_pos = cam.translation();
     let mut nearest_engine = f32::MAX;
+    let mut nearest_speed = 0.0;
     let rng = &mut rng.0;
 
     for (e, mut v, mut tf, evac_at) in &mut q {
@@ -1134,7 +1135,11 @@ fn drive_vehicles(
             }
         }
         if v.speed > 0.5 {
-            nearest_engine = nearest_engine.min(cam_pos.distance(tf.translation));
+            let d = cam_pos.distance(tf.translation);
+            if d < nearest_engine {
+                nearest_engine = d;
+                nearest_speed = v.speed;
+            }
         }
         stats.vehicle_advance = stats.vehicle_advance.max(p.y * lay.advance);
 
@@ -1149,6 +1154,7 @@ fn drive_vehicles(
             }
         }
     }
+    levels.engine_speed = nearest_speed;
     levels.engines = if nearest_engine < f32::MAX { (0.6 * 120.0 / (120.0 + nearest_engine)).min(0.5) } else { 0.0 };
 }
 
@@ -1829,7 +1835,7 @@ pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette,
 
 /// Reactive armour going off under a hit: a chain of flashes and grey puffs where the blocks were, and the
 /// plates thrown off. The look of the hit only: the simulation has already decided what the hit did.
-fn era_reacts(mut hits: MessageReader<DirectHit>, mut fx: ResMut<FxQueue>, mut last: ResMut<LastHit>, q: Query<(&Vehicle, &Transform)>) {
+fn era_reacts(mut hits: MessageReader<DirectHit>, mut sound: Sound, mut fx: ResMut<FxQueue>, mut last: ResMut<LastHit>, q: Query<(&Vehicle, &Transform)>) {
     for h in hits.read() {
         if let Ok((_, tf)) = q.get(h.target) {
             last.0 = Some(tf.translation);
@@ -1839,6 +1845,7 @@ fn era_reacts(mut hits: MessageReader<DirectHit>, mut fx: ResMut<FxQueue>, mut l
             && h.cause != Cause::TankGun
         {
             fx.era_pops(tf, h.top);
+            sound.at(tf.translation, Sfx::EraCrack, 1.2);
             info!("era pops on {:?} {}/{} at {:.0},{:.0}", v.kind, v.wave, v.idx, tf.translation.x, tf.translation.z);
         }
     }

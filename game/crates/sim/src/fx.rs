@@ -170,6 +170,8 @@ pub enum FxCall {
     Phosphorus { at: Vec3 },
     Tracer { from: Vec3, to: Vec3, speed: f32, side: Side },
     Spray { at: Vec3, vel: Vec3 },
+    /// A sound that belongs with an effect, heard as `sound::Sound::at` would make it.
+    Sound { at: Vec3, sfx: crate::sound::Sfx, loudness: f32 },
 }
 
 /// The frame's requests of the effects, in the order the battle made them.
@@ -218,5 +220,8 @@ impl FxQueue {
     }
     pub fn spray(&mut self, at: Vec3, vel: Vec3) {
         self.0.push(FxCall::Spray { at, vel });
+    }
+    pub fn sound(&mut self, at: Vec3, sfx: crate::sound::Sfx, loudness: f32) {
+        self.0.push(FxCall::Sound { at, sfx, loudness });
     }
 }

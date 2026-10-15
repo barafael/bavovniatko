@@ -136,6 +136,8 @@ fn fly_helicopters(
         let fwd = tf.rotation * Vec3::NEG_Z;
         let muzzle = p + fwd * 3.0 - Vec3::Y * 0.6;
         fx.flash(muzzle, 4.0e6, 80.0, 0.15);
+        // Heard through the effects' queue: a sound parameter here would change this system's place in the frame.
+        fx.sound(muzzle, crate::sound::Sfx::VikhrLaunch, 1.5);
         for _ in 0..6 {
             fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: muzzle, vel: -fwd * fxr.0.random_range(3.0..9.0), life: 6.0, size0: 1.5, size1: 8.0, alpha: 0.5, drag: 1.0, ..default() });
         }

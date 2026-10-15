@@ -20,6 +20,14 @@ pub enum Sfx {
     Radio,
     /// The controller's warning tone.
     Beep,
+    /// Reactive armour blocks going off: a hard, bright crack.
+    EraCrack,
+    /// A gun battery firing, heard from kilometres off: the report that comes before (or after) its shells land.
+    GunReport,
+    /// Rockets leaving their launcher one after another.
+    Ripple,
+    /// A Ka-52's Vikhr leaving the rail.
+    VikhrLaunch,
 }
 
 #[derive(Resource, Default)]
@@ -72,6 +80,8 @@ impl Sound<'_, '_> {
 #[derive(Resource, Default)]
 pub struct AmbienceLevels {
     pub engines: f32,
+    /// The nearest moving vehicle's speed (m/s): the engine note rises with it.
+    pub engine_speed: f32,
     pub drone_view: bool,
     /// The jamming on the drone's link, 0..1, and whether its picture is frozen this frame.
     pub jam: f32,

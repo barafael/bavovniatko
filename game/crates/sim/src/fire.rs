@@ -376,7 +376,7 @@ fn aim_gizmo(
 // ---------------------------------------------------------------------------------------------------------
 // Shells
 
-fn run_missions(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireControl>, mut rng: ResMut<FireRng>) {
+fn run_missions(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireControl>, mut rng: ResMut<FireRng>, mut sound: Sound) {
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
     let mut done = Vec::new();
@@ -387,6 +387,18 @@ fn run_missions(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireCont
             // A rocket salvo spreads along its line of fire (north–south here) twice as far as across it.
             let off = gauss2(rng) * if m.kind == ShellKind::Tos { Vec2::new(m.sigma * 0.5, m.sigma) } else { Vec2::splat(m.sigma) };
             commands.spawn(Shell { at: m.target + off, kind: m.kind, land: now + m.flight as f64 * rng.random_range(0.95..1.05), whistled: false, by: m.by });
+            // The guns are heard from where they stand, kilometres back: ours north of the field, theirs south;
+            // mortars closer. Rocket launchers ripple.
+            let (back, sfx, loud) = match m.kind {
+                ShellKind::Mortar120 => (2500.0, Sfx::GunReport, 12.0),
+                ShellKind::Himars => (9000.0, Sfx::Ripple, 60.0),
+                ShellKind::Tos => (4000.0, Sfx::Ripple, 30.0),
+                _ => (7000.0, Sfx::GunReport, 40.0),
+            };
+            if sfx == Sfx::GunReport || m.kind == ShellKind::Himars || m.rounds % 6 == 0 {
+                let z = if m.by == Side::Ua { -back } else { back };
+                sound.at(Vec3::new(m.target.x * 0.3, 150.0, z), sfx, loud);
+            }
         }
         if m.rounds == 0 {
             done.push(i);

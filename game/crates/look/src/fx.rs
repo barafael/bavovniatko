@@ -279,7 +279,7 @@ fn light_particles(light: Res<FxLight>, fx: Res<FxAssets>, mut materials: ResMut
 }
 
 /// Play the battle's requests of this frame, in the order it made them.
-fn play_requests(mut commands: Commands, mut fx: ResMut<FxAssets>, mut queue: ResMut<FxQueue>, mut paint: ResMut<PaintQueue>) {
+fn play_requests(mut commands: Commands, mut fx: ResMut<FxAssets>, mut queue: ResMut<FxQueue>, mut paint: ResMut<PaintQueue>, mut sound: bav_sim::sound::Sound) {
     for call in queue.0.drain(..) {
         let (c, f) = (&mut commands, &mut *fx);
         match call {
@@ -296,6 +296,7 @@ fn play_requests(mut commands: Commands, mut fx: ResMut<FxAssets>, mut queue: Re
             FxCall::Phosphorus { at } => phosphorus(c, f, at),
             FxCall::Tracer { from, to, speed, side } => tracer(c, f, from, to, speed, side),
             FxCall::Spray { at, vel } => spray(c, f, at, vel),
+            FxCall::Sound { at, sfx, loudness } => sound.at(at, sfx, loudness),
         }
     }
 }

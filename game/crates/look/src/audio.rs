@@ -18,7 +18,8 @@ impl Plugin for AudioPlugin {
     fn build(&self, app: &mut App) {
         app.add_audio_source::<Synth>()
             .add_systems(Startup, (build_bank, start_ambience).chain())
-            .add_systems(Update, (play_pending, ambience_mix).chain().in_set(crate::Step::Effects));
+            .init_resource::<NearSources>()
+            .add_systems(Update, (play_pending, near_sources, ambience_mix).chain().in_set(crate::Step::Effects));
     }
 }
 
@@ -74,6 +75,8 @@ pub struct Bank {
     engines: Handle<Synth>,
     rotor: Handle<Synth>,
     hiss: Handle<Synth>,
+    fire: Handle<Synth>,
+    heli: Handle<Synth>,
 }
 
 impl Bank {
@@ -273,6 +276,45 @@ fn rotor(_rng: &mut SmallRng) -> Vec<f32> {
     }).collect()
 }
 
+/// Rockets leaving the rails one after another: six whooshes over three seconds.
+fn ripple(rng: &mut SmallRng) -> Vec<f32> {
+    let mut out = vec![0.0; len(5.5)];
+    for k in 0..6 {
+        let at = len(k as f32 * 0.5 + rng.random_range(0.0..0.12));
+        mix_in(&mut out, at, &whoosh(rng), 0.6);
+    }
+    normalize(out, 0.9)
+}
+
+/// A vehicle burning, close: a low roar with the snap and pop of things catching (a seamless loop).
+fn crackle(rng: &mut SmallRng) -> Vec<f32> {
+    let mut out = bed(rng, 6.0, 220.0, 520.0, 0);
+    let n = out.len();
+    for _ in 0..140 {
+        let at = rng.random_range(0..n - 2000);
+        let g = rng.random_range(0.2..0.9);
+        let mut lp = Lp::new(rng.random_range(1500.0..5000.0));
+        for i in 0..rng.random_range(120..900) {
+            out[at + i] += lp.run(rng.random_range(-1.0f32..1.0)) * g * (-(i as f32) / 200.0).exp();
+        }
+    }
+    normalize(out, 0.7)
+}
+
+/// A Ka-52's two rotors, far off: low noise beaten by the blade slap (a seamless loop of whole beats).
+fn heli(rng: &mut SmallRng) -> Vec<f32> {
+    let n = len(4.0);
+    let mut lp = Lp::new(320.0);
+    let mut out = Vec::with_capacity(n);
+    for i in 0..n {
+        let t = i as f32 / RATE as f32;
+        // 13 slaps a second for 4 s: whole beats, so the loop has no seam.
+        let slap = (t * 13.0 * std::f32::consts::TAU).cos().max(0.0).powi(6);
+        out.push(lp.run(rng.random_range(-1.0f32..1.0)) * (0.5 + 2.5 * slap));
+    }
+    normalize(out, 0.7)
+}
+
 fn write_wav(path: &str, samples: &[f32]) {
     let mut b = Vec::with_capacity(44 + samples.len() * 2);
     let data = (samples.len() * 2) as u32;
@@ -296,6 +338,8 @@ fn write_wav(path: &str, samples: &[f32]) {
 
 fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let mut rng = SmallRng::seed_from_u64(0x2023_0206);
+    // Sounds added later draw from a stream of their own, so the older ones stay the same, sample for sample.
+    let mut rng2 = SmallRng::seed_from_u64(0x2023_0608);
     let mut add = |v: Vec<f32>| assets.add(Synth { samples: Arc::new(v) });
     // In `Sfx`'s order, which `Bank::get` indexes by (and the synthesis draws from `rng` in this order).
     let sounds: Vec<Handle<Synth>> = Sfx::VARIANTS
@@ -314,6 +358,10 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
             Sfx::CookOff => add(cookoff(&mut rng)),
             Sfx::Radio => add(radio(&mut rng)),
             Sfx::Beep => add(beep()),
+            Sfx::EraCrack => add(blast(&mut rng2, 0.5, 6000.0, 0.1)),
+            Sfx::GunReport => add(blast(&mut rng2, 2.6, 240.0, 1.4)),
+            Sfx::Ripple => add(ripple(&mut rng2)),
+            Sfx::VikhrLaunch => add(whoosh(&mut rng2)),
         })
         .collect();
     let wind = add(bed(&mut rng, 24.0, 250.0, 900.0, 0));
@@ -322,6 +370,8 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let rumble = add(bed(&mut rng, 40.0, 90.0, 180.0, 9));
     let engines = add(engines(&mut rng));
     let rotor = add(rotor(&mut rng));
+    let fire = add(crackle(&mut rng2));
+    let heli = add(heli(&mut rng2));
     if let Some(dir) = crate::dev::dev().showcase.as_deref() {
         // The showcase rebuilds the soundtrack offline from these.
         let dump = |name: &str, h: &Handle<Synth>| {
@@ -337,8 +387,10 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
         dump("Engines", &engines);
         dump("Rotor", &rotor);
         dump("Hiss", &hiss);
+        dump("Fire", &fire);
+        dump("Heli", &heli);
     }
-    commands.insert_resource(Bank { sounds, wind, rumble, engines, rotor, hiss });
+    commands.insert_resource(Bank { sounds, wind, rumble, engines, rotor, hiss, fire, heli });
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -381,15 +433,46 @@ pub enum AmbienceKind {
     Rotor,
     /// The hiss of a jammed link, in the drone view.
     Hiss,
+    /// The nearest burning vehicle or fire on the ground.
+    Fire,
+    /// The nearest Ka-52.
+    Heli,
+}
+
+/// How loud the nearest fire and the nearest helicopter are at the camera, 0..1.
+#[derive(Resource, Default)]
+pub struct NearSources {
+    pub fire: f32,
+    pub heli: f32,
+}
+
+fn near_sources(
+    mut near: ResMut<NearSources>,
+    cam: Single<&GlobalTransform, With<bav_sim::player::MainCamera>>,
+    emitters: Query<(&bav_sim::fx::Emitter, &GlobalTransform)>,
+    grass: Query<&crate::fx::GrassFire>,
+    helis: Query<&GlobalTransform, With<bav_sim::robotyne::Helicopter>>,
+) {
+    use bav_sim::fx::EmitterKind;
+    let at = cam.translation();
+    let fires = emitters
+        .iter()
+        .filter(|(e, _)| matches!(e.kind, EmitterKind::WreckFire | EmitterKind::PoolFire | EmitterKind::EngineSmoke))
+        .map(|(_, t)| t.translation().distance(at))
+        .chain(grass.iter().filter_map(|g| g.centre()).map(|c| crate::geo::ground(c).distance(at)));
+    let d = fires.fold(f32::MAX, f32::min);
+    near.fire = if d < f32::MAX { (60.0 / (60.0 + d)).powf(1.3).min(1.0) } else { 0.0 };
+    let h = helis.iter().map(|t| t.translation().distance(at)).fold(f32::MAX, f32::min);
+    near.heli = if h < f32::MAX { (400.0 / (400.0 + h)).powf(1.1).min(1.0) } else { 0.0 };
 }
 
 fn start_ambience(mut commands: Commands, bank: Res<Bank>) {
-    for (h, k, v) in [(bank.wind.clone(), AmbienceKind::Wind, 0.25), (bank.rumble.clone(), AmbienceKind::Rumble, 0.35), (bank.engines.clone(), AmbienceKind::Engines, 0.0), (bank.rotor.clone(), AmbienceKind::Rotor, 0.04), (bank.hiss.clone(), AmbienceKind::Hiss, 0.0)] {
+    for (h, k, v) in [(bank.wind.clone(), AmbienceKind::Wind, 0.25), (bank.rumble.clone(), AmbienceKind::Rumble, 0.35), (bank.engines.clone(), AmbienceKind::Engines, 0.0), (bank.rotor.clone(), AmbienceKind::Rotor, 0.04), (bank.hiss.clone(), AmbienceKind::Hiss, 0.0), (bank.fire.clone(), AmbienceKind::Fire, 0.0), (bank.heli.clone(), AmbienceKind::Heli, 0.0)] {
         commands.spawn((AudioPlayer(h), PlaybackSettings::LOOP.with_volume(Volume::Linear(v)), Ambience(k)));
     }
 }
 
-fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, mut q: Query<(&Ambience, &mut AudioSink)>) {
+fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, near: Res<NearSources>, wind: Res<bav_sim::fx::Wind>, mut q: Query<(&Ambience, &mut AudioSink)>) {
     let Some(levels) = levels else { return };
     if let Some(dir) = crate::dev::dev().showcase.as_deref() {
         bav_core::dev::append(&format!("{dir}/audio.log"), &format!("amb {:.4} {:.4} {}\n", time.elapsed_secs_f64(), levels.engines, levels.drone_view as u8));
@@ -398,12 +481,19 @@ fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, mut q: Que
         // Under jamming the world thins behind a hiss; frozen, it is gone until the picture moves again.
         let duck = if levels.drone_view { (1.0 - levels.jam * 0.6) * if levels.frozen { 0.15 } else { 1.0 } } else { 1.0 };
         let v = match a.0 {
-            AmbienceKind::Wind => (if levels.drone_view { 0.18 } else { 0.3 }) * duck,
+            // The day's wind: February's 4–5 m/s at full strength, June's 2 m/s quieter.
+            AmbienceKind::Wind => (if levels.drone_view { 0.18 } else { 0.3 }) * (wind.0.length() / 4.5).clamp(0.6, 1.4) * duck,
             AmbienceKind::Rumble => 0.35 * duck,
             AmbienceKind::Engines => levels.engines * duck,
             AmbienceKind::Rotor => if levels.drone_view { 0.05 } else { 0.0 },
             AmbienceKind::Hiss => if levels.drone_view { levels.jam * 0.25 } else { 0.0 },
+            AmbienceKind::Fire => near.fire * 0.6 * duck,
+            AmbienceKind::Heli => near.heli * 0.5 * duck,
         };
+        if a.0 == AmbienceKind::Engines {
+            // The note rises with the nearest vehicle's speed.
+            sink.set_speed(0.85 + 0.03 * levels.engine_speed.min(10.0));
+        }
         sink.set_volume(Volume::Linear(v));
     }
 }
