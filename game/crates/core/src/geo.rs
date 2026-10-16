@@ -362,7 +362,7 @@ pub fn raycast(origin: Vec3, dir: Vec3, max: f32) -> Option<Vec3> {
 }
 
 /// Where the segments `a`–`b` and `c`–`d` cross, as the fraction along `a`–`b`.
-fn crossing(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> Option<f32> {
+pub fn crossing(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> Option<f32> {
     let (r, s) = (b - a, d - c);
     let denom = r.perp_dot(s);
     if denom.abs() < 1e-6 {

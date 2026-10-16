@@ -61,8 +61,8 @@ pub struct Entry<K> {
     pub available: u32,
 }
 
-/// A pick: so many of an entry, or one unit at a position (an index into the layout's player positions or, for a
-/// tank, into the hides).
+/// A pick: so many of an entry, or one unit at a position (an index into the field's positions,
+/// `bav_core::field`: the diorama's own posts first, then its hides, then the tree lines and ruins).
 #[derive(Deserialize, Debug, Clone)]
 pub struct Pick {
     pub id: String,
@@ -182,10 +182,10 @@ fn parse(spec: &str) -> Result<Vec<Pick>, String> {
 /// that need a place given one (and no place given twice), and the whole within the points.
 pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
     let d = crate::data::sim_data();
-    let lay = bav_core::geo::layout();
+    let positions = &bav_core::field::field().positions;
     let mut a = Allotment { points: d.allotment.points, ..Default::default() };
-    let mut posts: Vec<Option<Option<Atgm>>> = vec![None; lay.ua_positions.len()];
-    let mut hides: Vec<bool> = vec![false; d.hides.len()];
+    // What stands at each position: a post (with its weapon) or a tank.
+    let mut held: Vec<Option<UnitKind>> = vec![None; positions.len()];
     let mut taken: std::collections::HashMap<&str, u32> = Default::default();
     for p in picks {
         let n = taken.entry(p.id.as_str()).or_default();
@@ -196,21 +196,21 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
             }
             a.spent += u.cost * p.count;
             match u.what {
-                UnitKind::Post(weapon) => {
+                UnitKind::Post(_) | UnitKind::Hide => {
                     let at = p.at.ok_or_else(|| format!("{} needs a position (@n)", p.id))?;
-                    let slot = posts.get_mut(at).ok_or_else(|| format!("{}@{at}: there are {} positions", p.id, lay.ua_positions.len()))?;
-                    if slot.is_some() {
+                    let pos = positions.get(at).ok_or_else(|| format!("{}@{at}: there are {} positions", p.id, positions.len()))?;
+                    let (kind, side) = (pos.kind.name().0, pos.ground);
+                    if side != bav_core::field::Ground::Ours {
+                        return Err(format!("{}@{at}: the {kind} at {:.0},{:.0} is not on our side of the grey zone", p.id, pos.at.x, pos.at.y));
+                    }
+                    let fits = if matches!(u.what, UnitKind::Hide) { pos.kind.holds_vehicles() } else { pos.kind.holds_men() };
+                    if !fits {
+                        return Err(format!("{}@{at}: a {kind} does not hold it", p.id));
+                    }
+                    if held[at].is_some() {
                         return Err(format!("position {at} given twice"));
                     }
-                    *slot = Some(weapon);
-                }
-                UnitKind::Hide => {
-                    let at = p.at.ok_or_else(|| format!("{} needs a hide (@n)", p.id))?;
-                    let slot = hides.get_mut(at).ok_or_else(|| format!("{}@{at}: there are {} hides", p.id, d.hides.len()))?;
-                    if *slot {
-                        return Err(format!("hide {at} given twice"));
-                    }
-                    *slot = true;
+                    held[at] = Some(u.what);
                 }
                 UnitKind::Vehicle(kind) => match a.vehicles.iter_mut().find(|(k, _)| *k == kind) {
                     Some((_, c)) => *c += p.count,
@@ -240,8 +240,14 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
     if a.spent > a.points {
         return Err(format!("{} points, of {}", a.spent, a.points));
     }
-    // In the layout's order, as the posts always were: their order sets their reload and fire timers.
-    a.posts = posts.iter().zip(&lay.ua_positions).filter_map(|(w, p)| w.map(|w| (*p, w))).collect();
-    a.hides = hides.iter().zip(&d.hides).filter(|(t, _)| **t).map(|(_, &((x, z), (fx, fz)))| (Vec2::new(x, z), Vec2::new(fx, fz))).collect();
+    // In the positions' order, which for the Record's posts is the layout's, as it always was: their order sets their
+    // reload and fire timers.
+    for (h, pos) in held.iter().zip(positions) {
+        match h {
+            Some(UnitKind::Post(weapon)) => a.posts.push((pos.at, *weapon)),
+            Some(UnitKind::Hide) => a.hides.push((pos.at, pos.facing)),
+            _ => {}
+        }
+    }
     Ok(a)
 }

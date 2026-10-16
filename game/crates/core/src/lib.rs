@@ -5,6 +5,7 @@
 pub mod data;
 pub mod dev;
 pub mod diorama;
+pub mod field;
 pub mod geo;
 pub mod schedule;
 pub mod text;

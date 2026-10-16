@@ -361,7 +361,9 @@ fn drone_control(
         view.jamming = (view.jamming + dt * 0.25).min(field);
     }
     let ground = geo::height(view.drone_pos.x, view.drone_pos.z);
-    view.drone_pos.y = view.drone_pos.y.clamp(ground + 25.0, ground + 700.0);
+    // The field overlay (`BAV_FIELD`) wants the whole box in one look: the ceiling lifts for it.
+    let ceiling = if dev().field { 6000.0 } else { 700.0 };
+    view.drone_pos.y = view.drone_pos.y.clamp(ground + 25.0, ground + ceiling);
     // Yaw and gimbal slew towards their targets, slower the further in the zoom is (as the DJI app does, and as the
     // mouse already did); the zoom motor takes its time.
     let gain = dt / view.zoom();

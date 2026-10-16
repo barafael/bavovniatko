@@ -71,6 +71,14 @@ pub struct DioramaData {
     pub ua_positions: Vec<P>,
     #[serde(default)]
     pub ru_positions: Vec<P>,
+    /// Hides for a Ukrainian tank firing on coordinates from a drone pilot: where, and which way it faces.
+    #[serde(default)]
+    pub hides: Vec<(P, P)>,
+    /// Where the player's columns come in (design/command.md): a name in English and Ukrainian, and the place.
+    #[serde(default)]
+    pub road_heads: Vec<RoadHeadSpec>,
+    /// The grey zone, from this z to that (the enemy is to +z): nothing of ours is placed in it or beyond.
+    pub grey_zone: (f32, f32),
     #[serde(default)]
     pub trps: Vec<PointSpec>,
     #[serde(default)]
@@ -88,6 +96,12 @@ pub struct DioramaData {
     pub home: P,
     pub jam_z: f32,
     pub mortar_band: (f32, f32),
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct RoadHeadSpec {
+    pub name: (String, String),
+    pub at: P,
 }
 
 /// Who is who on the net: the player, the guns, the observation post, the brigade's command post.

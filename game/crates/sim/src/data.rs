@@ -19,9 +19,6 @@ pub struct SimData {
     /// The weapon at each of the enemy's positions, in the layout's order (none: riflemen only).
     #[serde(default)]
     pub ru_weapons: Vec<Option<Atgm>>,
-    /// Hides for a Ukrainian tank firing on coordinates from a drone pilot: where, and which way it faces.
-    #[serde(default)]
-    pub hides: Vec<((f32, f32), (f32, f32))>,
     /// Tanks dug in hull-down on the defenders' line: where, and which way they face.
     #[serde(default)]
     pub dug_in: Vec<((f32, f32), f32)>,

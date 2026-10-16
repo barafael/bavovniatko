@@ -17,6 +17,71 @@ impl Plugin for DevPlugin {
         app.insert_resource(crate::camera::Flight(dev().fly.clone()))
             .add_systems(Startup, lineup.after(crate::Setup::Kit));
         app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
+        if dev().field {
+            app.add_systems(Startup, field_overlay_setup).add_systems(Update, field_overlay.in_set(crate::Step::Screen));
+        }
+    }
+}
+
+/// `BAV_FIELD=1`: the overlay's lines a little thicker than the gizmos' default, so they read from the drone.
+fn field_overlay_setup(mut store: ResMut<GizmoConfigStore>) {
+    let (config, _) = store.config_mut::<DefaultGizmoConfigGroup>();
+    config.line.width = 3.0;
+    let f = bav_core::field::field();
+    let ours = f.positions.iter().filter(|p| p.ground == bav_core::field::Ground::Ours).count();
+    info!("field: {} positions ({ours} ours), {} road heads, {} route nodes, grey zone z {:.0}..{:.0}", f.positions.len(), f.road_heads.len(), f.graph.nodes.len(), f.grey.0, f.grey.1);
+    // The positions by number, for `BAV_ALLOT` (`stugna@37`) until the map table exists.
+    for (i, p) in f.positions.iter().enumerate() {
+        info!("field: position {i}: {} ({}) at {:.0},{:.0}, {:?}", p.kind.name().0, p.kind.name().1, p.at.x, p.at.y, p.ground);
+    }
+}
+
+/// `BAV_FIELD=1`: the field as the map table will know it, drawn over the picture: each position a ring (green ours,
+/// yellow in the grey zone, red theirs; hides and ruins larger) with a tick the way it faces; the road heads, blue;
+/// the grey zone's edges; and the tracked routes from each road head to every other position of ours.
+fn field_overlay(mut gizmos: Gizmos) {
+    use bav_core::field::{Ground, Mover, PositionKind, field};
+    let f = field();
+    let lift = |p: Vec2| crate::geo::ground(p) + Vec3::Y * 2.0;
+    let flat = |p: Vec2| Isometry3d::new(lift(p), Quat::from_rotation_x(std::f32::consts::FRAC_PI_2));
+    // A line that follows the ground.
+    let on_ground = |a: Vec2, b: Vec2, c: Color, gizmos: &mut Gizmos| {
+        let n = (a.distance(b) / 20.0).ceil().max(1.0) as usize;
+        gizmos.linestrip((0..=n).map(|i| lift(a.lerp(b, i as f32 / n as f32))), c);
+    };
+    for p in &f.positions {
+        let c = match p.ground {
+            Ground::Ours => Color::srgb(0.3, 1.0, 0.4),
+            Ground::Grey => Color::srgb(1.0, 0.9, 0.2),
+            Ground::Theirs => Color::srgb(1.0, 0.25, 0.2),
+        };
+        let r = match p.kind {
+            PositionKind::Hide => 16.0,
+            PositionKind::Ruin | PositionKind::Trench => 12.0,
+            PositionKind::Treeline => 8.0,
+        };
+        gizmos.circle(flat(p.at), r, c);
+        if p.kind == PositionKind::Trench || p.kind == PositionKind::Hide {
+            gizmos.circle(flat(p.at), r * 0.6, c);
+        }
+        on_ground(p.at, p.at + p.facing * 25.0, c, &mut gizmos);
+    }
+    for h in &f.road_heads {
+        gizmos.circle(flat(h.at), 40.0, Color::srgb(0.3, 0.5, 1.0));
+        gizmos.circle(flat(h.at), 25.0, Color::srgb(0.3, 0.5, 1.0));
+    }
+    for z in [f.grey.0, f.grey.1] {
+        on_ground(Vec2::new(-crate::geo::HALF_X, z), Vec2::new(crate::geo::HALF_X, z), Color::srgb(1.0, 0.9, 0.2), &mut gizmos);
+    }
+    let colours = [Color::srgb(0.2, 0.9, 1.0), Color::srgb(1.0, 0.4, 1.0), Color::srgb(1.0, 1.0, 1.0)];
+    for (h, _) in f.road_heads.iter().enumerate() {
+        for p in f.positions.iter().filter(|p| p.ground == Ground::Ours).step_by(2) {
+            if let Some(path) = f.path(h, Mover::Tracked, p.at) {
+                for w in path.pts.windows(2) {
+                    on_ground(w[0], w[1], colours[h % colours.len()], &mut gizmos);
+                }
+            }
+        }
     }
 }
 

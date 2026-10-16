@@ -90,7 +90,13 @@ side is an Allotment (наряд сил) of Units and Support chosen from what w
 points. Until the map table exists, `BAV_PLAY=command` with `BAV_ALLOT="stugna@0,javelin@3,t64@1,155*8,himars*3"`
 (a unit at a position, or so many of an item; the ids are the diorama file's `catalog` and `support`) sets it;
 without `BAV_ALLOT`, Command plays the Record's allotment. An allotment over the points, with more of a unit than
-there were, or with a position given twice, stops the game with the reason.
+there were, or with a position given twice, stops the game with the reason. A unit's position is a number from
+the field (`crates/core/src/field.rs`): the diorama's own posts first, then its tank hides, then every tree line's
+edge and the ruins of the town's edge; a post goes where men can hold it, a tank in a hide or a tree line, and
+nothing on the enemy's side of the grey zone. `BAV_FIELD=1` lists the positions by number in the log and draws the
+field over the picture: the positions (green ours, yellow in the grey zone, red theirs), the road heads, the grey
+zone's edges and the tracked routes from each road head; it lifts the drone's 700 m ceiling, so
+`BAV_CAM="0,0,3200,0,-90,70"` shows the whole box.
 
 You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. An integrated one will do: on a Radeon
 780M at 2560x1600 a frame takes about 10 ms. Everything else is generated in code:

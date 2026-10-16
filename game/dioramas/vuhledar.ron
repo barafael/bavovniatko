@@ -96,6 +96,15 @@
         (-760.0, -1060.0), (250.0, -1100.0), (820.0, -1060.0),
     ],
 
+    // The map table's (design/command.md). Ours is the town and the first tree line: nothing of the 72nd is placed
+    // south of just in front of it; the Russians come up from the valley, theirs from the middle of the slope down.
+    grey_zone: (-600.0, 600.0),
+    // Where the 72nd's columns come in: the T-0509 from the west and from the east, behind the town.
+    road_heads: [
+        (name: ("T-0509, west", "Т-0509, захід"), at: (-2290.0, -1035.0)),
+        (name: ("T-0509, east", "Т-0509, схід"), at: (2290.0, -1110.0)),
+    ],
+
     // Pre-registered artillery target points on the approach roads.
     trps: [
         OnLine("road_a", (1350.0, 420.0)), OnLine("road_a", (1150.0, -110.0)), OnLine("road_a", (900.0, -560.0)),
@@ -149,7 +158,7 @@
             (id: "stugna", at: Some(0)), (id: "javelin", at: Some(1)), (id: "javelin", at: Some(2)), (id: "stugna", at: Some(3)),
             (id: "stugna", at: Some(4)), (id: "javelin", at: Some(5)), (id: "rifles", at: Some(6)), (id: "rifles", at: Some(7)),
             (id: "rifles", at: Some(8)),
-            (id: "t64", at: Some(0)),
+            (id: "t64", at: Some(9)),
             (id: "155", count: 6), (id: "raam", count: 4), (id: "himars", count: 2), (id: "brigade", count: 7), (id: "mortar", count: 8),
         ],
     ),

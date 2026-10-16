@@ -151,3 +151,18 @@ stream, so same-day style checks still work per seed):
   against the script's columns at start.
 - `BAV_ALLOT` gives Command its picks until the map table exists.
 - The Record is unchanged: `scripts/same-day.sh` gives the same sound log, segments and tally for both days.
+
+### Phase 2, positions and routes (2026-10-17)
+- `bav_core::field`: the Positions (trench: the diorama's own posts; hide; tree line: every 80 m along each belt's
+  enemy-facing edge outside its gaps, and both edges of the north-south belts; ruin: every 220 m along the town's
+  and the dachas' edges), each with the way it faces and whose ground it is on; the Road heads and the Grey zone
+  from the diorama's file (`road_heads`, `grey_zone`; the tank `hides` moved there from the battle's part). Vuhledar
+  has 235 positions, 76 of them ours.
+- The Route graph: the roads and tracks every 40 m, junctions where two roads meet, and a 100 m field grid; a
+  stretch crossing a tree line outside its gaps, or the river away from a road, is for men on foot only. Costs
+  by Mover (tracked, wheeled, on foot) and going (road, track, field); a Dijkstra tree per road head and mover,
+  built once; `Field::path` gives a smoothed polyline from a road head to any place, the shape `drive_vehicles`
+  already follows.
+- The Allotment places units by position number: men where men can hold it, a tank in a hide or a tree line,
+  nothing beyond our side of the grey zone. The Record's posts keep their numbers (its T-64 is now `@9`).
+- `BAV_FIELD=1`: the overlay and the numbered list. The Record is unchanged (same-day: same on both days).

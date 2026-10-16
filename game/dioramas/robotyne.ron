@@ -88,6 +88,16 @@
         (666.0, 702.0), (1350.0, 701.0), (1900.0, 702.0),
     ],
 
+    // The map table's (design/command.md). Ours runs to the start line in the forward tree line; the grey zone is
+    // the slope and its minefields, theirs the crest from just before the trench.
+    grey_zone: (-800.0, 600.0),
+    // Where the 47th's columns come in: down the two tracks from the N08, and the N08 itself from the west.
+    road_heads: [
+        (name: ("Western track", "Західна дорога"), at: (-470.0, -1785.0)),
+        (name: ("Eastern track", "Східна дорога"), at: (704.0, -1785.0)),
+        (name: ("N08, west", "Н08, захід"), at: (-2350.0, -1700.0)),
+    ],
+
     // The Russian guns have every lane registered: where the tracks cross the minefields.
     trps: [
         OnLine("west", (-497.0, -340.0)), OnLine("west", (-492.0, 160.0)), OnLine("west", (-488.0, 420.0)),
