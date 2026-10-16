@@ -285,19 +285,38 @@ fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Re
     }
 }
 
-/// `BAV_DIAG=1`: every ten seconds, log the mean and worst frame time and the GPU time of each render pass
-/// (from `RenderDiagnosticsPlugin`, averaged over its last 120 frames), largest first.
-fn frame_times(time: Res<Time<Real>>, diagnostics: Res<DiagnosticsStore>, mut acc: Local<(f32, f32, u32, f32)>) {
+/// Every entity, those with a mesh, and the particles.
+type Counts<'w, 's> = (Query<'w, 's, ()>, Query<'w, 's, (), With<Mesh3d>>, Query<'w, 's, (), With<crate::fx::Particle>>);
+
+/// `BAV_DIAG=1`: every ten seconds, log the mean and worst frame time, the GPU time of each render pass (from
+/// `RenderDiagnosticsPlugin`, averaged over its last 120 frames), largest first, and how many entities, meshes
+/// and particles there are. A frame over 25 ms is logged on its own with the game time, to find what made it.
+fn frame_times(
+    time: Res<Time<Real>>,
+    script: Res<crate::director::Script>,
+    diagnostics: Res<DiagnosticsStore>,
+    counts: Counts,
+    mut acc: Local<(f32, f32, u32, f32)>,
+    mut cpu_was: Local<f64>,
+) {
     if !dev().diag {
         return;
     }
     let dt = time.delta_secs();
+    if dt > 0.025 && dev().warp_to.is_none_or(|w| script.t >= w) {
+        info!("hitch: {:.1} ms at {:.1} s", dt * 1000.0, script.t);
+    }
     acc.0 += dt;
     acc.1 = acc.1.max(dt);
     acc.2 += 1;
     acc.3 += dt;
     if acc.3 > 10.0 {
-        info!("frames: mean {:.1} ms, worst {:.1} ms", acc.0 / acc.2 as f32 * 1000.0, acc.1 * 1000.0);
+        // The process's CPU time over the window, all threads: the work a frame costs, which other load on the
+        // machine stretches far less than the wall clock.
+        let cpu = cpu_secs();
+        let per_frame = (cpu - *cpu_was) / acc.2 as f64 * 1000.0;
+        *cpu_was = cpu;
+        info!("frames: mean {:.1} ms, worst {:.1} ms, cpu {per_frame:.2} ms", acc.0 / acc.2 as f32 * 1000.0, acc.1 * 1000.0);
         let mut passes: Vec<(&str, f64)> = diagnostics
             .iter()
             .filter_map(|d| {
@@ -307,8 +326,19 @@ fn frame_times(time: Res<Time<Real>>, diagnostics: Res<DiagnosticsStore>, mut ac
             .collect();
         passes.sort_by(|a, b| b.1.total_cmp(&a.1));
         info!("gpu ms: {}", passes.iter().map(|(name, ms)| format!("{name} {ms:.2}")).collect::<Vec<_>>().join(", "));
+        info!("entities {}, meshes {}, particles {}", counts.0.iter().len(), counts.1.iter().len(), counts.2.iter().len());
         *acc = (0.0, 0.0, 0, 0.0);
     }
+}
+
+/// User plus system CPU seconds this process has used, from `/proc/self/stat` (0 where there is none).
+fn cpu_secs() -> f64 {
+    let Ok(stat) = std::fs::read_to_string("/proc/self/stat") else { return 0.0 };
+    let Some((_, rest)) = stat.rsplit_once(')') else { return 0.0 };
+    let f: Vec<&str> = rest.split_whitespace().collect();
+    // After the command name: state is field 3, utime 14 and stime 15 (1-based), in clock ticks of 1/100 s.
+    let tick = |i: usize| f.get(i - 3).and_then(|v| v.parse::<f64>().ok()).unwrap_or(0.0);
+    (tick(14) + tick(15)) / 100.0
 }
 
 /// `BAV_VIEW=ground`: start in the tree line nearest the dacha road with a `BAV_TEAM` launcher

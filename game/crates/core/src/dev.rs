@@ -27,6 +27,12 @@ pub enum Part {
     Trees,
     /// The ground chunks.
     Terrain,
+    /// Smoke, dust, fire and sparks.
+    Particles,
+    /// The vehicles' shadows (they still receive the sun's).
+    Vshadows,
+    /// The tree crowns' shadows.
+    Treeshadows,
 }
 
 /// `BAV_AA`: how the 3D picture's edges are smoothed.

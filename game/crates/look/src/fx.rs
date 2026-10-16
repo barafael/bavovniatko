@@ -182,7 +182,7 @@ pub struct Particle {
 pub const MAX_PARTICLES: usize = 9000;
 
 pub fn spawn(commands: &mut Commands, fx: &mut FxAssets, s: Spawn) {
-    if fx.count >= MAX_PARTICLES {
+    if fx.count >= MAX_PARTICLES || crate::dev::off(crate::dev::Part::Particles) {
         return;
     }
     fx.count += 1;
@@ -216,14 +216,14 @@ fn update_particles(
     let cam_rot = cam.compute_transform().rotation;
     // The wind comes and goes: a gust envelope shared by every plume (the drone feels the same one).
     let gust = 0.75 + 0.5 * value_noise(t * 0.07, 3.3, 63) + 0.3 * (value_noise(t * 0.5, 9.1, 64) - 0.5);
-    let mut alive = 0;
-    for (e, mut p, mut tf, mut mat) in &mut q {
+    let assets: &FxAssets = &fx;
+    // Thousands of particles: moved across the task pool, then the spent ones despawned in the query's order, so
+    // the entities freed (and so the ids the battle's next spawns get) do not depend on thread timing.
+    q.par_iter_mut().for_each(|(_, mut p, mut tf, mut mat)| {
         p.age += dt;
         if p.age >= p.life {
-            commands.entity(e).despawn();
-            continue;
+            return;
         }
-        alive += 1;
         let k = p.age / p.life;
         let (wind_k, wind_rate) = wind_of(p.kind);
         let windward = wind.0 * gust * wind_k * (1.0 - (-p.age * wind_rate).exp());
@@ -246,7 +246,7 @@ fn update_particles(
         let step = ((a * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
         if step != p.step {
             p.step = step;
-            mat.0 = fx.mat(p.kind, a);
+            mat.0 = assets.mat(p.kind, a);
         }
         if p.streak > 0.0 && p.vel.length_squared() > 1.0 {
             // Stretched along the motion, facing the camera as best it can.
@@ -259,6 +259,14 @@ fn update_particles(
         } else {
             tf.rotation = cam_rot * Quat::from_rotation_z(p.spin + p.age * p.spin_rate);
             tf.scale = Vec3::new(size * p.mirror, size, 1.0);
+        }
+    });
+    let mut alive = 0;
+    for (e, p, _, _) in &q {
+        if p.age >= p.life {
+            commands.entity(e).despawn();
+        } else {
+            alive += 1;
         }
     }
     fx.count = alive;

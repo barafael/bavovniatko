@@ -13,8 +13,21 @@ use bevy::{
 
 pub struct WorldPlugin;
 
+/// A vehicle's meshes (hull, dressed parts, turret) that still cast a shadow.
+type CastingVehicleMeshes = (Or<(With<bav_sim::units::Vehicle>, With<bav_sim::units::Skin>, With<bav_sim::units::Turret>)>, Without<bevy::light::NotShadowCaster>);
+
+/// `BAV_OFF=vshadows`: the vehicles cast no shadows, to measure what their models cost in the sun's cascades.
+fn no_vehicle_shadows(mut commands: Commands, q: Query<Entity, CastingVehicleMeshes>) {
+    for e in &q {
+        commands.entity(e).insert(bevy::light::NotShadowCaster);
+    }
+}
+
 impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
+        if dev::off(dev::Part::Vshadows) {
+            app.add_systems(Update, no_vehicle_shadows);
+        }
         app.insert_resource(ClearColor(Color::srgb(0.70, 0.72, 0.74)))
             .insert_resource(GlobalAmbientLight { color: Color::srgb(0.80, 0.86, 1.0), brightness: 450.0, ..default() })
             .insert_resource(bevy::light::DirectionalLightShadowMap { size: dev::dev().shadow_map.unwrap_or(2048) as usize })
@@ -264,7 +277,10 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
         if !c.is_empty() {
             // The crowns cast too (the shadow pass discards by the same mask), so a belt lays its band of shade
             // across the field in the low sun.
-            commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone())));
+            let mut crown = commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone())));
+            if dev::off(dev::Part::Treeshadows) {
+                crown.insert(bevy::light::NotShadowCaster);
+            }
         }
     }
 }

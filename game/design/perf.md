@@ -64,10 +64,48 @@ extract between them:
   - 15 queue submits a frame, 1.7 ms;
   - the prepare and queue systems, about 7 ms.
 
+## The second round (2026-10-16)
+
+With the machine quiet (load 2), the defaults at 2560x1600 run at **7.7 ms** in both dioramas. At that size:
+- Halving the 3D picture gives 6.4 ms.
+- Halving it and leaving the shadows out gives 3.9 ms.
+
+So the sun's cascades are still the largest part, and the CPU floor is under 4 ms. Bevy's diagnostics do not time
+the shadow pass; this split is the only measure of it.
+
+Some measures and fixes:
+- **Hitches.** `BAV_DIAG` now logs every frame over 25 ms with its game time. The 15–20 ms worst frames were
+  rare. The 60–90 ms ones came at the end of the run, from saving the screenshot, not from the day.
+- **CPU time per frame.** `BAV_DIAG` also logs the process's own CPU time per frame, all threads, from
+  `/proc/self/stat`. Other sessions' builds stretch the wall clock (load 20 doubled the frame), but this barely.
+- **Interleaved runs.** Under load, single runs could not tell variants apart. The variants below ran
+  interleaved, three rounds, each over 30 ten-second windows (medians). Vuhledar at 2560x1600, load about 20:
+
+| variant | frame | CPU, all threads | GPU 3D pass |
+|---|---|---|---|
+| defaults | 14.6 ms | 33.0 ms | 7.13 ms |
+| `BAV_OFF=vshadows` (vehicles cast no shadow) | 14.9 | 30.9 | 7.09 |
+| `BAV_OFF=particles` (2,200 particles at this moment) | 14.4 | 27.1 | 7.13 |
+| without gamepads, animation and UI widget plugins | 14.8 | 30.2 | 7.00 |
+| `BAV_OFF=trees` | **13.4** | 26.1 | **6.02** |
+
+What this settles:
+- **The vehicles' 30,000-triangle models** cost nothing measurable in the cascades. Low-poly shadow stand-ins
+  would not pay; they were not built.
+- **Dropping unused default plugins** gains nothing. That was tried and left out. `GltfPlugin` and the picking
+  plugins cannot go anyway: PBR and the UI need their resources.
+- **The particles** are about 6 ms of CPU a frame across threads. That does not show while the GPU is the
+  limit, but it does when the CPU is (1080p, quiet machine). They now move across the task pool and are
+  despawned afterwards in the query's order, so the ids the battle's later spawns get do not depend on thread
+  timing.
+- **Standing soldiers' legs** are no longer rewritten every frame, which sent every man through transform
+  propagation.
+- **The tree belts** are the one measurable lever left: about 1.1 ms of GPU and 1.2 ms of frame here. That is the
+  alpha-tested cards in the main pass and in the three cascades.
+
 ## Next levers, not pulled yet
 
-- **The CPU, now the limit at 1080p.** Fewer entities: the 9000-particle cap; tree belts merged into fewer meshes
-  where they are not already. Also drop Bevy plugins the game never uses (picking, `ui_widgets`).
+- **The tree belts' cards.** Coarser crowns far off (a `VisibilityRange` LOD), or crowns that cast only into
+  the near cascade.
 - **The feed camera's 2D pass** at full resolution, about 0.6 ms at 2560x1600.
-- **Worst frames** of 15–20 ms remain: spawn bursts (shell fans, cook-offs) and ground painting. They want a
-  frame-time trace of their own.
+- **Worst frames.** Rare ones of 15–20 ms remain; the hitch log names their game time for a trace of their own.

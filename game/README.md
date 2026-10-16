@@ -174,8 +174,8 @@ that point (at height, then the dive). `BAV_OPERATOR=off` keeps the drone team f
 
 `BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
 turned) burned out, to look the models over. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
-scales game time. `BAV_DIAG=1` logs the frame time and the GPU time of every render pass every ten seconds
-(headless, it also lifts the frame cap), and `BAV_OFF=shadows,msaa,feed,trees,terrain` leaves parts of the
+scales game time. `BAV_DIAG=1` logs the frame time, the CPU time a frame took across threads, the GPU time of every render pass and the entity counts every ten seconds, and any frame over 25 ms on its own
+(headless, it also lifts the frame cap), and `BAV_OFF=shadows,msaa,feed,trees,terrain,particles,vshadows,treeshadows` leaves parts of the
 picture out, so a slow frame can be charged to what makes it slow before anything is rewritten. The picture's
 cost has four knobs, with defaults measured for the 780M at 2560x1600 (`design/perf.md`): `BAV_SCALE` (the 3D
 picture's size against the screen's; by default it is capped near 1920x1200 and the feed pass scales it up),

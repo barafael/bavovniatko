@@ -2242,7 +2242,12 @@ fn animate_legs(soldiers: Query<(&Soldier, &Children)>, mut legs: Query<(&Leg, &
         for c in children.iter() {
             if let Ok((leg, mut tf)) = legs.get_mut(c) {
                 let a = if moving { (s.phase + leg.0).sin() * 0.6 } else { 0.0 };
-                tf.rotation = Quat::from_rotation_x(a);
+                // Standing legs stay as they are: a write would send every man's legs through transform
+                // propagation and extraction each frame.
+                let r = Quat::from_rotation_x(a);
+                if tf.rotation != r {
+                    tf.rotation = r;
+                }
             }
         }
     }
