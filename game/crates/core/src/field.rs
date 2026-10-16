@@ -76,14 +76,12 @@ pub struct RoadHead {
 /// What moves along a route, and so what a stretch of it costs.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Hash)]
 pub enum Mover {
-    Tracked,
-    Wheeled,
-    Foot,
+    Tracked = 0,
+    Wheeled = 1,
+    Foot = 2,
 }
 
 impl Mover {
-    pub const ALL: [Mover; 3] = [Mover::Tracked, Mover::Wheeled, Mover::Foot];
-
     /// How fast it goes on this kind of ground, against a road: a stretch's cost is its length over this.
     fn pace(self, class: Class) -> f32 {
         match (self, class) {
@@ -118,8 +116,9 @@ pub struct Edge {
 pub struct Graph {
     pub nodes: Vec<Vec2>,
     pub edges: Vec<Vec<Edge>>,
-    /// The field grid's spacing and size, to find the node nearest a point.
-    grid: (f32, usize, usize),
+    /// The field grid: its size, and where its nodes start (the road nodes come first).
+    nx: usize,
+    nz: usize,
     grid_start: usize,
 }
 
@@ -130,32 +129,40 @@ pub struct Tree {
     pub root: usize,
 }
 
+/// The field: what the Allotment places on and the map table shows. Cheap; the routes are `routes()`.
 pub struct Field {
     pub positions: Vec<Position>,
     pub road_heads: Vec<RoadHead>,
     /// The grey zone: from this z to that one (the enemy is to +z on both days).
     pub grey: (f32, f32),
+}
+
+/// The ways across the field: the graph, and for each road head a shortest-way tree per mover, each worked out the
+/// first time it is asked for.
+pub struct Routes {
     pub graph: Graph,
-    /// For each road head, in order, a tree per mover (`Mover::ALL`'s order).
-    pub trees: Vec<Vec<Tree>>,
+    trees: Vec<[OnceLock<Tree>; 3]>,
 }
 
 static FIELD: OnceLock<Field> = OnceLock::new();
+static ROUTES: OnceLock<Routes> = OnceLock::new();
 
 /// The diorama's field, built the first time it is asked for.
 pub fn field() -> &'static Field {
     FIELD.get_or_init(build)
 }
 
-impl Field {
-    pub fn ground_at(&self, p: Vec2) -> Ground {
-        ground_at(self.grey, p)
-    }
+/// The route graph, built the first time a route is asked for (the overlay, Command's columns): never in the Record.
+pub fn routes() -> &'static Routes {
+    ROUTES.get_or_init(|| Routes { graph: Graph::build(geo::layout()), trees: field().road_heads.iter().map(|_| Default::default()).collect() })
+}
 
+impl Routes {
     /// The way from a road head to a place for a mover: the road head, the graph's nodes, the place; `None` where the
     /// graph does not reach.
     pub fn path(&self, head: usize, mover: Mover, to: Vec2) -> Option<Polyline> {
-        let tree = &self.trees.get(head)?[Mover::ALL.iter().position(|m| *m == mover)?];
+        let from = field().road_heads.get(head)?.at;
+        let tree = self.trees.get(head)?[mover as usize].get_or_init(|| self.graph.tree(from, mover));
         let end = self.graph.nearest(to, mover, tree)?;
         let mut pts = vec![to];
         let mut n = end;
@@ -167,7 +174,7 @@ impl Field {
             }
         }
         pts.push(self.graph.nodes[tree.root]);
-        pts.push(self.road_heads[head].at);
+        pts.push(from);
         pts.reverse();
         pts.dedup_by(|a, b| a.distance(*b) < 1.0);
         Some(Polyline::smoothed(pts, 2))
@@ -198,19 +205,18 @@ fn build() -> Field {
     for &((x, z), (fx, fz)) in &d.hides {
         push(PositionKind::Hide, Vec2::new(x, z), Vec2::new(fx, fz).normalize_or(Vec2::Y), &mut positions);
     }
-    // Tree lines: every 80 m along each belt, outside its gaps and clear of the posts, on the edge that faces the
-    // enemy (+z); a belt running north-south gives both its edges, facing east and west, for the flanks.
+    // Tree lines: every 80 m along each belt, outside its gaps (and 15 m clear of them) and clear of the posts, on the
+    // edge that faces the enemy (+z); a belt running north-south gives both its edges, facing east and west, for the
+    // flanks.
     for belt in &lay.belts {
         let len = belt.line.length();
         let mut s = 40.0;
         while s < len - 40.0 {
-            let in_gap = belt.gaps.iter().any(|&(g0, g1)| s > g0 - 15.0 && s < g1 + 15.0);
             let p = belt.line.point(s);
             let n = belt.line.normal(s);
-            if !in_gap && geo::in_bounds(p) {
-                let sides: &[f32] = if n.y.abs() > 0.5 { &[1.0] } else { &[1.0, -1.0] };
-                for &k in sides {
-                    let out = if n.y.abs() > 0.5 { n * n.y.signum() } else { n * k };
+            if !belt.in_gap(s, -15.0) && geo::in_bounds(p) {
+                let outs: &[Vec2] = if n.y.abs() > 0.5 { &[n * n.y.signum()] } else { &[n, -n] };
+                for &out in outs {
                     let at = p + out * (belt.width * 0.5 + 3.0);
                     if positions.iter().all(|q| q.at.distance(at) > 45.0) {
                         push(PositionKind::Treeline, at, out, &mut positions);
@@ -234,20 +240,31 @@ fn build() -> Field {
             x += 220.0;
         }
     }
-    let road_heads: Vec<RoadHead> = d.road_heads.iter().map(|h| RoadHead { name: h.name.clone(), at: Vec2::new(h.at.0, h.at.1) }).collect();
-    let graph = Graph::build(lay);
-    let trees = road_heads.iter().map(|h| Mover::ALL.iter().map(|&m| graph.tree(h.at, m)).collect()).collect();
-    Field { positions, road_heads, grey, graph, trees }
+    let road_heads = d.road_heads.iter().map(|h| RoadHead { name: h.name.clone(), at: Vec2::new(h.at.0, h.at.1) }).collect();
+    Field { positions, road_heads, grey }
 }
 
 const GRID: f32 = 100.0;
 
+/// A stretch both ways.
+fn link(edges: &mut [Vec<Edge>], a: usize, b: usize, class: Class, len: f32, foot_only: bool) {
+    edges[a].push(Edge { to: b, class, len, foot_only });
+    edges[b].push(Edge { to: a, class, len, foot_only });
+}
+
 impl Graph {
+    /// The grid cell a place is in (its south-west corner node).
+    fn cell(p: Vec2) -> (i32, i32) {
+        (((p.x + geo::HALF_X) / GRID - 0.5).floor() as i32, ((p.y + geo::HALF_Z) / GRID - 0.5).floor() as i32)
+    }
+
+    /// The grid node at (i, j), if it is on the grid.
+    fn grid_node(&self, i: i32, j: i32) -> Option<usize> {
+        (i >= 0 && j >= 0 && (i as usize) < self.nx && (j as usize) < self.nz).then(|| self.grid_start + j as usize * self.nx + i as usize)
+    }
+
     fn build(lay: &geo::Layout) -> Graph {
-        let (nx, nz) = ((2.0 * geo::HALF_X / GRID) as usize, (2.0 * geo::HALF_Z / GRID) as usize);
-        let mut nodes = Vec::new();
-        let mut edges: Vec<Vec<Edge>> = Vec::new();
-        let grid_at = |i: usize, j: usize| Vec2::new(-geo::HALF_X + GRID * (i as f32 + 0.5), -geo::HALF_Z + GRID * (j as f32 + 0.5));
+        let mut g = Graph { nodes: Vec::new(), edges: Vec::new(), nx: (2.0 * geo::HALF_X / GRID) as usize, nz: (2.0 * geo::HALF_Z / GRID) as usize, grid_start: 0 };
         // The roads and tracks, resampled every 40 m.
         let mut road_nodes: Vec<(usize, usize)> = Vec::new(); // (road, node)
         for (ri, road) in lay.roads.iter().enumerate() {
@@ -261,14 +278,12 @@ impl Graph {
                     last = None;
                     continue;
                 }
-                let id = nodes.len();
-                nodes.push(p);
-                edges.push(Vec::new());
+                let id = g.nodes.len();
+                g.nodes.push(p);
+                g.edges.push(Vec::new());
                 road_nodes.push((ri, id));
                 if let Some(prev) = last {
-                    let len = nodes[prev].distance(p);
-                    edges[prev].push(Edge { to: id, class, len, foot_only: false });
-                    edges[id].push(Edge { to: prev, class, len, foot_only: false });
+                    link(&mut g.edges, prev, id, class, g.nodes[prev].distance(p), false);
                 }
                 last = Some(id);
             }
@@ -277,54 +292,40 @@ impl Graph {
         for a in 0..road_nodes.len() {
             for b in a + 1..road_nodes.len() {
                 let ((ra, na), (rb, nb)) = (road_nodes[a], road_nodes[b]);
-                let len = nodes[na].distance(nodes[nb]);
+                let len = g.nodes[na].distance(g.nodes[nb]);
                 if ra != rb && len < 30.0 {
-                    edges[na].push(Edge { to: nb, class: Class::Road, len, foot_only: false });
-                    edges[nb].push(Edge { to: na, class: Class::Road, len, foot_only: false });
+                    link(&mut g.edges, na, nb, Class::Road, len, false);
                 }
             }
         }
         // The field grid, eight ways from each node.
-        let grid_start = nodes.len();
-        for j in 0..nz {
-            for i in 0..nx {
-                nodes.push(grid_at(i, j));
-                edges.push(Vec::new());
+        g.grid_start = g.nodes.len();
+        for j in 0..g.nz {
+            for i in 0..g.nx {
+                g.nodes.push(Vec2::new(-geo::HALF_X + GRID * (i as f32 + 0.5), -geo::HALF_Z + GRID * (j as f32 + 0.5)));
+                g.edges.push(Vec::new());
             }
         }
-        let id = |i: usize, j: usize| grid_start + j * nx + i;
-        for j in 0..nz {
-            for i in 0..nx {
-                for (di, dj) in [(1i32, 0i32), (0, 1), (1, 1), (1, -1)] {
-                    let (ii, jj) = (i as i32 + di, j as i32 + dj);
-                    if ii < 0 || jj < 0 || ii >= nx as i32 || jj >= nz as i32 {
-                        continue;
-                    }
-                    let (a, b) = (id(i, j), id(ii as usize, jj as usize));
-                    let foot_only = blocked(lay, nodes[a], nodes[b]);
-                    let len = nodes[a].distance(nodes[b]);
-                    edges[a].push(Edge { to: b, class: Class::Field, len, foot_only });
-                    edges[b].push(Edge { to: a, class: Class::Field, len, foot_only });
+        for j in 0..g.nz as i32 {
+            for i in 0..g.nx as i32 {
+                for (di, dj) in [(1, 0), (0, 1), (1, 1), (1, -1)] {
+                    let (Some(a), Some(b)) = (g.grid_node(i, j), g.grid_node(i + di, j + dj)) else { continue };
+                    let (pa, pb) = (g.nodes[a], g.nodes[b]);
+                    link(&mut g.edges, a, b, Class::Field, pa.distance(pb), blocked(lay, pa, pb));
                 }
             }
         }
         // Each road node off onto the field, to the grid nodes round it.
         for &(_, n) in &road_nodes {
-            let p = nodes[n];
-            let (i, j) = (((p.x + geo::HALF_X) / GRID - 0.5).floor() as i32, ((p.y + geo::HALF_Z) / GRID - 0.5).floor() as i32);
+            let p = g.nodes[n];
+            let (i, j) = Graph::cell(p);
             for (di, dj) in [(0, 0), (1, 0), (0, 1), (1, 1)] {
-                let (ii, jj) = (i + di, j + dj);
-                if ii < 0 || jj < 0 || ii >= nx as i32 || jj >= nz as i32 {
-                    continue;
-                }
-                let g = id(ii as usize, jj as usize);
-                let foot_only = blocked(lay, p, nodes[g]);
-                let len = p.distance(nodes[g]);
-                edges[n].push(Edge { to: g, class: Class::Field, len, foot_only });
-                edges[g].push(Edge { to: n, class: Class::Field, len, foot_only });
+                let Some(c) = g.grid_node(i + di, j + dj) else { continue };
+                let q = g.nodes[c];
+                link(&mut g.edges, n, c, Class::Field, p.distance(q), blocked(lay, p, q));
             }
         }
-        Graph { nodes, edges, grid: (GRID, nx, nz), grid_start }
+        g
     }
 
     /// The cheapest ways from the node nearest a place, for a mover (Dijkstra).
@@ -359,48 +360,22 @@ impl Graph {
     /// The node a mover would make for to reach a place: of the grid nodes round it (and any road node within
     /// 60 m), the reachable one that brings it there cheapest.
     fn nearest(&self, to: Vec2, mover: Mover, tree: &Tree) -> Option<usize> {
-        let (g, nx, nz) = self.grid;
-        let (i, j) = (((to.x + geo::HALF_X) / g - 0.5).floor() as i32, ((to.y + geo::HALF_Z) / g - 0.5).floor() as i32);
         let lay = geo::layout();
-        let mut best: Option<(f32, usize)> = None;
-        let consider = |n: usize, best: &mut Option<(f32, usize)>| {
-            if !tree.cost[n].is_finite() || (mover != Mover::Foot && blocked(lay, self.nodes[n], to)) {
-                return;
-            }
-            let c = tree.cost[n] + self.nodes[n].distance(to) / mover.pace(Class::Field);
-            if best.is_none_or(|(b, _)| c < b) {
-                *best = Some((c, n));
-            }
-        };
-        for (di, dj) in [(0, 0), (1, 0), (0, 1), (1, 1), (-1, 0), (0, -1), (-1, -1), (1, -1), (-1, 1)] {
-            let (ii, jj) = (i + di, j + dj);
-            if ii >= 0 && jj >= 0 && (ii as usize) < nx && (jj as usize) < nz {
-                consider(self.grid_start + jj as usize * nx + ii as usize, &mut best);
-            }
-        }
-        for n in 0..self.grid_start {
-            if self.nodes[n].distance(to) < 60.0 {
-                consider(n, &mut best);
-            }
-        }
-        best.map(|(_, n)| n)
+        let (i, j) = Graph::cell(to);
+        let grid = (-1..=1).flat_map(|di| (-1..=1).filter_map(move |dj| self.grid_node(i + di, j + dj)));
+        let roads = (0..self.grid_start).filter(|&n| self.nodes[n].distance(to) < 60.0);
+        grid.chain(roads)
+            .filter(|&n| tree.cost[n].is_finite() && (mover == Mover::Foot || !blocked(lay, self.nodes[n], to)))
+            .map(|n| (tree.cost[n] + self.nodes[n].distance(to) / mover.pace(Class::Field), n))
+            .min_by(|a, b| a.0.total_cmp(&b.0))
+            .map(|(_, n)| n)
     }
 }
 
 /// Whether a vehicle cannot cross from `a` to `b`: a tree line in the way outside its gaps, or the river away from a
 /// road (the roads cross it on bridges and fords).
 fn blocked(lay: &geo::Layout, a: Vec2, b: Vec2) -> bool {
-    let through_belt = lay.belts.iter().any(|belt| {
-        belt.line.pts.windows(2).enumerate().any(|(i, w)| {
-            geo::crossing(a, b, w[0], w[1]).is_some_and(|t| {
-                let at = a + (b - a) * t;
-                let s = belt.line.cum[i] + w[0].distance(at);
-                !belt.gaps.iter().any(|&(g0, g1)| s > g0 && s < g1)
-            })
-        })
-    });
-    let across_river = lay.river.as_ref().is_some_and(|r| r.pts.windows(2).any(|w| geo::crossing(a, b, w[0], w[1]).is_some()));
-    through_belt || across_river
+    lay.belts.iter().any(|belt| belt.crossings(a, b).any(|(_, gap)| !gap)) || lay.river.as_ref().is_some_and(|r| r.crosses(a, b))
 }
 
 #[derive(PartialEq)]

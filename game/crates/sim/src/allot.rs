@@ -12,7 +12,7 @@ use crate::units::VKind;
 use bav_core::{diorama::Play, vocab::Atgm};
 use bevy::math::Vec2;
 use serde::Deserialize;
-use std::sync::OnceLock;
+use std::{collections::HashMap, sync::OnceLock};
 
 /// A Unit: something on the map, placed or sent.
 #[derive(Deserialize, Debug, Clone, Copy, PartialEq)]
@@ -106,7 +106,7 @@ pub struct Allotment {
     /// Tanks in their hides: where, and which way they face.
     pub hides: Vec<(Vec2, Vec2)>,
     /// The vehicles for the columns, by kind.
-    pub vehicles: Vec<(VKind, u32)>,
+    pub vehicles: HashMap<VKind, u32>,
     pub stock: Stock,
     pub fpvs: u32,
     /// Vehicles held back for the wounded.
@@ -122,13 +122,13 @@ static ALLOTMENT: OnceLock<Allotment> = OnceLock::new();
 pub fn allotment() -> &'static Allotment {
     ALLOTMENT.get_or_init(|| {
         let d = crate::data::sim_data();
-        let record = build(&d.allotment.record).unwrap_or_else(|e| panic!("{} record allotment: {e}", bav_core::diorama::diorama()));
+        let place = bav_core::diorama::diorama();
+        let record = build(&d.allotment.record).unwrap_or_else(|e| panic!("{place} record allotment: {e}"));
         check_record(&record);
-        let picks = match (bav_core::diorama::play(), bav_core::dev::dev().allot.as_deref()) {
-            (Play::Command, Some(spec)) => parse(spec).unwrap_or_else(|e| panic!("BAV_ALLOT: {e}")),
-            _ => d.allotment.record.clone(),
+        let a = match (bav_core::diorama::play(), bav_core::dev::dev().allot.as_deref()) {
+            (Play::Command, Some(spec)) => parse(spec).and_then(|picks| build(&picks)).unwrap_or_else(|e| panic!("{place} allotment (BAV_ALLOT): {e}")),
+            _ => record,
         };
-        let a = build(&picks).unwrap_or_else(|e| panic!("{} allotment: {e}", bav_core::diorama::diorama()));
         bevy::log::info!("allotment ({}): {} of {} points, {} posts, {} hides, {:?}", bav_core::diorama::play(), a.spent, a.points, a.posts.len(), a.hides.len(), a.stock);
         a
     })
@@ -138,26 +138,17 @@ pub fn allotment() -> &'static Allotment {
 /// allots (a file whose two halves disagree stops here, not in a day that quietly differs).
 fn check_record(record: &Allotment) {
     let d = crate::data::sim_data();
-    let ours = bav_core::diorama::diorama().attacker() == bav_core::diorama::Side::Ua;
-    let mut scripted: Vec<(VKind, u32)> = Vec::new();
-    for (_, act) in &d.script {
-        if let crate::director::Act::Column { kinds, rescue: false, .. } = act
-            && ours
-        {
-            for k in kinds {
-                match scripted.iter_mut().find(|(s, _)| s == k) {
-                    Some((_, c)) => *c += 1,
-                    None => scripted.push((*k, 1)),
+    let mut scripted: HashMap<VKind, u32> = HashMap::new();
+    if bav_core::diorama::diorama().attacker() == bav_core::diorama::Side::Ua {
+        for (_, act) in &d.script {
+            if let crate::director::Act::Column { kinds, rescue: false, .. } = act {
+                for k in kinds {
+                    *scripted.entry(*k).or_default() += 1;
                 }
             }
         }
     }
-    let sorted = |v: &[(VKind, u32)]| {
-        let mut v: Vec<String> = v.iter().map(|(k, c)| format!("{k:?} {c}")).collect();
-        v.sort();
-        v
-    };
-    assert_eq!(sorted(&record.vehicles), sorted(&scripted), "the record allotment's vehicles are not the script's columns");
+    assert_eq!(record.vehicles, scripted, "the record allotment's vehicles are not the script's columns");
 }
 
 /// `stugna@0,javelin@3,155*6,himars*2`: an id, then `@position` or `*count`.
@@ -186,21 +177,28 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
     let mut a = Allotment { points: d.allotment.points, ..Default::default() };
     // What stands at each position: a post (with its weapon) or a tank.
     let mut held: Vec<Option<UnitKind>> = vec![None; positions.len()];
-    let mut taken: std::collections::HashMap<&str, u32> = Default::default();
+    let mut taken: HashMap<&str, u32> = HashMap::new();
     for p in picks {
+        let unit = d.catalog.iter().find(|u| u.id == p.id);
+        let support = d.support.iter().find(|s| s.id == p.id);
+        let (cost, available) = match (unit, support) {
+            (Some(u), _) => (u.cost, u.available),
+            (_, Some(s)) => (s.cost, s.available),
+            _ => return Err(format!("no {} in the catalog", p.id)),
+        };
         let n = taken.entry(p.id.as_str()).or_default();
         *n += p.count;
-        if let Some(u) = d.catalog.iter().find(|u| u.id == p.id) {
-            if *n > u.available {
-                return Err(format!("{} of {}, but there were {}", n, p.id, u.available));
-            }
-            a.spent += u.cost * p.count;
+        if *n > available {
+            return Err(format!("{} of {}, but there were {}", n, p.id, available));
+        }
+        a.spent += cost * p.count;
+        if let Some(u) = unit {
             match u.what {
                 UnitKind::Post(_) | UnitKind::Hide => {
                     let at = p.at.ok_or_else(|| format!("{} needs a position (@n)", p.id))?;
                     let pos = positions.get(at).ok_or_else(|| format!("{}@{at}: there are {} positions", p.id, positions.len()))?;
-                    let (kind, side) = (pos.kind.name().0, pos.ground);
-                    if side != bav_core::field::Ground::Ours {
+                    let kind = pos.kind.name().0;
+                    if pos.ground != bav_core::field::Ground::Ours {
                         return Err(format!("{}@{at}: the {kind} at {:.0},{:.0} is not on our side of the grey zone", p.id, pos.at.x, pos.at.y));
                     }
                     let fits = if matches!(u.what, UnitKind::Hide) { pos.kind.holds_vehicles() } else { pos.kind.holds_men() };
@@ -212,17 +210,10 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                     }
                     held[at] = Some(u.what);
                 }
-                UnitKind::Vehicle(kind) => match a.vehicles.iter_mut().find(|(k, _)| *k == kind) {
-                    Some((_, c)) => *c += p.count,
-                    None => a.vehicles.push((kind, p.count)),
-                },
+                UnitKind::Vehicle(kind) => *a.vehicles.entry(kind).or_default() += p.count,
                 UnitKind::Evacuation => a.evacuation += p.count,
             }
-        } else if let Some(s) = d.support.iter().find(|s| s.id == p.id) {
-            if *n > s.available {
-                return Err(format!("{} of {}, but there were {}", n, p.id, s.available));
-            }
-            a.spent += s.cost * p.count;
+        } else if let Some(s) = support {
             let st = &mut a.stock;
             match s.what {
                 SupportKind::Shells(r) => st.shells += r * p.count,
@@ -233,8 +224,6 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                 SupportKind::Mortar(r) => st.mortar_bombs += r * p.count,
                 SupportKind::Fpv => a.fpvs += p.count,
             }
-        } else {
-            return Err(format!("no {} in the catalog", p.id));
         }
     }
     if a.spent > a.points {

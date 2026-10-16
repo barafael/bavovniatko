@@ -87,9 +87,9 @@ cargo run --release
 The day plays as the Record (Літопис): the forces, the stock and the script as the archive has them. Command
 (Командування, [`design/command.md`](design/command.md), in the making) is the other way to play it: the player's
 side is an Allotment (наряд сил) of Units and Support chosen from what was there that day, under a limit of
-points. Until the map table exists, `BAV_PLAY=command` with `BAV_ALLOT="stugna@0,javelin@3,t64@1,155*8,himars*3"`
-(a unit at a position, or so many of an item; the ids are the diorama file's `catalog` and `support`) sets it;
-without `BAV_ALLOT`, Command plays the Record's allotment. An allotment over the points, with more of a unit than
+points. Until the map table exists, `BAV_ALLOT="stugna@0,javelin@3,t64@9,155*8,himars*3"` (a unit at a position, or
+so many of an item; the ids are the diorama file's `catalog` and `support`) plays Command with those picks;
+`BAV_PLAY=command` without it plays Command with the Record's allotment. An allotment over the points, with more of a unit than
 there were, or with a position given twice, stops the game with the reason. A unit's position is a number from
 the field (`crates/core/src/field.rs`): the diorama's own posts first, then its tank hides, then every tree line's
 edge and the ruins of the town's edge; a post goes where men can hold it, a tank in a hide or a tree line, and

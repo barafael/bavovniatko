@@ -431,7 +431,8 @@ fn fpv_control(
     fpv.lost_for = if fpv.control { 0.0 } else { fpv.lost_for + dt };
     let mut bank = 0.0;
     if fpv.control {
-        if let Some(at) = fpv.auto.or(dev().fpv.map(|(_, (x, z))| Vec2::new(x, z))) {
+        if let Some((_, (x, z))) = dev().fpv {
+            let at = Vec2::new(x, z);
             // The test pilot: at the vehicle nearest the point, full throttle.
             if let Some((_, tf)) = vehicles.iter().filter(|(v, _)| v.side == Side::Ru && v.state.alive()).min_by(|a, b| a.1.translation.xz().distance(at).total_cmp(&b.1.translation.xz().distance(at))) {
                 // At height until close, then the dive, steep enough to come in over a dug-in tank's berm: low, a

@@ -35,9 +35,13 @@ pub enum Play {
 
 static PLAY: OnceLock<Play> = OnceLock::new();
 
-/// How this run plays the day, fixed at startup: `BAV_PLAY=record|command` (the Record by default).
+/// How this run plays the day, fixed at startup: `BAV_PLAY=record|command`; unset, Command when `BAV_ALLOT` gives its
+/// picks, else the Record.
 pub fn play() -> Play {
-    *PLAY.get_or_init(|| std::env::var("BAV_PLAY").ok().and_then(|s| s.trim().parse().ok()).unwrap_or_default())
+    *PLAY.get_or_init(|| {
+        let allotted = std::env::var_os("BAV_ALLOT").is_some_and(|v| !v.is_empty());
+        std::env::var("BAV_PLAY").ok().and_then(|s| s.trim().parse().ok()).unwrap_or(if allotted { Play::Command } else { Play::Record })
+    })
 }
 
 static DIORAMA: OnceLock<Diorama> = OnceLock::new();

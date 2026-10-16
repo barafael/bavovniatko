@@ -189,8 +189,6 @@ pub struct Fpv {
     pub lost_for: f32,
     /// Seconds since it went in (or was lost): the goggles show static, then the view goes back to the drone.
     pub gone: f32,
-    /// Flown by itself at the enemy vehicle nearest this point (`BAV_FPV`, the trailer).
-    pub auto: Option<Vec2>,
 }
 
 /// Where the drone team works from, whether the enemy has found it, and whether it is on the move.

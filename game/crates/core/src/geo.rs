@@ -115,6 +115,11 @@ impl Polyline {
         self.pts[i].lerp(self.pts[i + 1], t)
     }
 
+    /// Whether the segment `a`–`b` crosses the line.
+    pub fn crosses(&self, a: Vec2, b: Vec2) -> bool {
+        self.pts.windows(2).any(|w| crossing(a, b, w[0], w[1]).is_some())
+    }
+
     pub fn tangent(&self, s: f32) -> Vec2 {
         let i = self.segment_at(s);
         (self.pts[i + 1] - self.pts[i]).normalize_or_zero()
@@ -197,6 +202,23 @@ pub struct Belt {
     pub width: f32,
     /// Arc-length intervals with no trees (road crossings, old gaps).
     pub gaps: Vec<(f32, f32)>,
+}
+
+impl Belt {
+    /// Whether the arc length `s` falls in a gap, the gap narrowed by `margin` at each end (widened, if negative).
+    pub fn in_gap(&self, s: f32, margin: f32) -> bool {
+        self.gaps.iter().any(|&(g0, g1)| s > g0 + margin && s < g1 - margin)
+    }
+
+    /// Where the segment `a`–`b` crosses the belt's line: the fraction along `a`–`b`, and whether it crosses in a gap.
+    pub fn crossings(&self, a: Vec2, b: Vec2) -> impl Iterator<Item = (f32, bool)> + '_ {
+        let pts = &self.line.pts;
+        (0..pts.len() - 1).filter_map(move |i| {
+            let t = crossing(a, b, pts[i], pts[i + 1])?;
+            let s = self.line.cum[i] + pts[i].distance(pts[i + 1]) * ((a + (b - a) * t) - pts[i]).length() / pts[i].distance(pts[i + 1]).max(1e-3);
+            Some((t, self.in_gap(s, 0.0)))
+        })
+    }
 }
 
 pub use bevy::math::Rect;
@@ -362,7 +384,7 @@ pub fn raycast(origin: Vec3, dir: Vec3, max: f32) -> Option<Vec3> {
 }
 
 /// Where the segments `a`–`b` and `c`–`d` cross, as the fraction along `a`–`b`.
-pub fn crossing(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> Option<f32> {
+fn crossing(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> Option<f32> {
     let (r, s) = (b - a, d - c);
     let denom = r.perp_dot(s);
     if denom.abs() < 1e-6 {
@@ -379,16 +401,10 @@ pub fn crossing(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> Option<f32> {
 pub fn line_of_sight(a: Vec2, b: Vec2) -> bool {
     let len = a.distance(b);
     for belt in &layout().belts {
-        let pts = &belt.line.pts;
-        for i in 0..pts.len() - 1 {
-            let Some(t) = crossing(a, b, pts[i], pts[i + 1]) else { continue };
+        for (t, gap) in belt.crossings(a, b) {
             // Standing in the belt (within 20 m of where the line meets it): looking out, not through. And a
             // hull at a belt's near edge is seen against the trees, not through them.
-            if t * len < 20.0 || (1.0 - t) * len < 20.0 {
-                continue;
-            }
-            let s = belt.line.cum[i] + pts[i].distance(pts[i + 1]) * ((a + (b - a) * t) - pts[i]).length() / pts[i].distance(pts[i + 1]).max(1e-3);
-            if belt.gaps.iter().any(|&(g0, g1)| s > g0 && s < g1) {
+            if t * len < 20.0 || (1.0 - t) * len < 20.0 || gap {
                 continue;
             }
             return false;

@@ -18,9 +18,9 @@ cargo xtask trailer --scout    # 640x360 with a contact sheet, into devlog/film/
 
 1. **The day.** What the player does is fixed per day (`reel::DAYS`): fire missions on points (155 mm on the
    columns, RAAM and HIMARS at Vuhledar; the jammer and HIMARS on a dug-in tank south of Mala Tokmachka), the
-   FPV launched at the western dug-in T-72, and the Bradleys sent for the wounded half a minute after each call (`BAV_EVAC=30`). The reel tour (`BAV_TOUR=reel`, `BAV_REEL=<file>`) makes them in every run;
-   it skips between shots on its filming step and calls nothing on the camera's position, so the day does not
-   depend on the shots, and every run is the same day.
+   FPV launched at the western dug-in T-72, and the Bradleys sent for the wounded half a minute after each call (`BAV_EVAC=30`), given to every run as `BAV_FIRE` and `BAV_FPV`. The reel tour (`BAV_TOUR=reel`,
+   `BAV_REEL=<file>`, its shots only) skips between shots on its filming step and calls nothing on the camera's
+   position, so the day does not depend on the shots, and every run is the same day.
 2. **The events pass.** Each day runs once, filming nothing, at 320x180, both days at once. The tour logs every
    blast (cause, place, radius) and every hit on a vehicle (weapon, place) to `events.txt`.
 3. **The moments.** Every heavy event is the heart of a candidate, the events within 4 s and 150 m its body,
@@ -35,7 +35,7 @@ cargo xtask trailer --scout    # 640x360 with a contact sheet, into devlog/film/
    a speck on the horizon, ten seconds of nothing.)
 4. **The runs.** Moments that overlap in time cannot be filmed in one run; first fit in time order shares them
    among as few runs as it takes. Each run's sound is rebuilt from its log and levelled to -18 LUFS, and each
-   moment is cut out of its run.
+   moment is encoded straight from its run's frames and its slice of the sound.
 5. **The cut.** Each day's moments in an order of their own, not the battle's: the second best opens, then from
    the least up, the best last; the FPV's dive closes Mala Tokmachka.
 

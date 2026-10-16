@@ -4,7 +4,7 @@
 pub use bav_core::dev::*;
 use crate::camera::{HeadlessTarget, View, look_angles};
 use crate::fire::{FireControl, Post};
-use crate::units::{Radio, Soldier, Stats, VState, Vehicle};
+use crate::units::{Soldier, Stats, VState, Vehicle};
 use bav_core::vocab::{Atgm, Mode};
 use crate::camera::Locate;
 use crate::fire::StrikeMission;
@@ -23,36 +23,43 @@ impl Plugin for DevPlugin {
     }
 }
 
-/// `BAV_FIELD=1`: the overlay's lines a little thicker than the gizmos' default, so they read from the drone.
-fn field_overlay_setup(mut store: ResMut<GizmoConfigStore>) {
+/// `BAV_FIELD=1`: the field drawn over the picture, worked out once: ground-following line strips, and flat rings.
+#[derive(Resource, Default)]
+struct FieldLines {
+    strips: Vec<(Vec<Vec3>, Color)>,
+    rings: Vec<(Vec3, f32, Color)>,
+}
+
+/// `BAV_FIELD=1`: the field as the map table will know it. Each position a ring (green ours, yellow in the grey
+/// zone, red theirs; hides and ruins larger, trenches and hides doubled) with a tick the way it faces; the road heads,
+/// blue; the grey zone's edges; and the tracked routes from each road head to every other position of ours. The
+/// positions are listed by number in the log, for `BAV_ALLOT` (`stugna@37`) until the map table exists.
+fn field_overlay_setup(mut commands: Commands, mut store: ResMut<GizmoConfigStore>) {
+    use bav_core::field::{Ground, Mover, PositionKind, field, routes};
     let (config, _) = store.config_mut::<DefaultGizmoConfigGroup>();
     config.line.width = 3.0;
-    let f = bav_core::field::field();
-    let ours = f.positions.iter().filter(|p| p.ground == bav_core::field::Ground::Ours).count();
-    info!("field: {} positions ({ours} ours), {} road heads, {} route nodes, grey zone z {:.0}..{:.0}", f.positions.len(), f.road_heads.len(), f.graph.nodes.len(), f.grey.0, f.grey.1);
-    // The positions by number, for `BAV_ALLOT` (`stugna@37`) until the map table exists.
+    let f = field();
+    let ours = f.positions.iter().filter(|p| p.ground == Ground::Ours).count();
+    info!("field: {} positions ({ours} ours), {} road heads, {} route nodes, grey zone z {:.0}..{:.0}", f.positions.len(), f.road_heads.len(), routes().graph.nodes.len(), f.grey.0, f.grey.1);
     for (i, p) in f.positions.iter().enumerate() {
         info!("field: position {i}: {} ({}) at {:.0},{:.0}, {:?}", p.kind.name().0, p.kind.name().1, p.at.x, p.at.y, p.ground);
     }
-}
-
-/// `BAV_FIELD=1`: the field as the map table will know it, drawn over the picture: each position a ring (green ours,
-/// yellow in the grey zone, red theirs; hides and ruins larger) with a tick the way it faces; the road heads, blue;
-/// the grey zone's edges; and the tracked routes from each road head to every other position of ours.
-fn field_overlay(mut gizmos: Gizmos) {
-    use bav_core::field::{Ground, Mover, PositionKind, field};
-    let f = field();
     let lift = |p: Vec2| crate::geo::ground(p) + Vec3::Y * 2.0;
-    let flat = |p: Vec2| Isometry3d::new(lift(p), Quat::from_rotation_x(std::f32::consts::FRAC_PI_2));
-    // A line that follows the ground.
-    let on_ground = |a: Vec2, b: Vec2, c: Color, gizmos: &mut Gizmos| {
-        let n = (a.distance(b) / 20.0).ceil().max(1.0) as usize;
-        gizmos.linestrip((0..=n).map(|i| lift(a.lerp(b, i as f32 / n as f32))), c);
+    // A strip that follows the ground, a point every 20 m.
+    let on_ground = |pts: &[Vec2]| -> Vec<Vec3> {
+        let mut out = vec![lift(pts[0])];
+        for w in pts.windows(2) {
+            let n = (w[0].distance(w[1]) / 20.0).ceil().max(1.0) as usize;
+            out.extend((1..=n).map(|i| lift(w[0].lerp(w[1], i as f32 / n as f32))));
+        }
+        out
     };
+    let mut lines = FieldLines::default();
+    let yellow = Color::srgb(1.0, 0.9, 0.2);
     for p in &f.positions {
         let c = match p.ground {
             Ground::Ours => Color::srgb(0.3, 1.0, 0.4),
-            Ground::Grey => Color::srgb(1.0, 0.9, 0.2),
+            Ground::Grey => yellow,
             Ground::Theirs => Color::srgb(1.0, 0.25, 0.2),
         };
         let r = match p.kind {
@@ -60,28 +67,38 @@ fn field_overlay(mut gizmos: Gizmos) {
             PositionKind::Ruin | PositionKind::Trench => 12.0,
             PositionKind::Treeline => 8.0,
         };
-        gizmos.circle(flat(p.at), r, c);
-        if p.kind == PositionKind::Trench || p.kind == PositionKind::Hide {
-            gizmos.circle(flat(p.at), r * 0.6, c);
+        lines.rings.push((lift(p.at), r, c));
+        if matches!(p.kind, PositionKind::Trench | PositionKind::Hide) {
+            lines.rings.push((lift(p.at), r * 0.6, c));
         }
-        on_ground(p.at, p.at + p.facing * 25.0, c, &mut gizmos);
+        lines.strips.push((on_ground(&[p.at, p.at + p.facing * 25.0]), c));
     }
     for h in &f.road_heads {
-        gizmos.circle(flat(h.at), 40.0, Color::srgb(0.3, 0.5, 1.0));
-        gizmos.circle(flat(h.at), 25.0, Color::srgb(0.3, 0.5, 1.0));
+        for r in [40.0, 25.0] {
+            lines.rings.push((lift(h.at), r, Color::srgb(0.3, 0.5, 1.0)));
+        }
     }
     for z in [f.grey.0, f.grey.1] {
-        on_ground(Vec2::new(-crate::geo::HALF_X, z), Vec2::new(crate::geo::HALF_X, z), Color::srgb(1.0, 0.9, 0.2), &mut gizmos);
+        lines.strips.push((on_ground(&[Vec2::new(-crate::geo::HALF_X, z), Vec2::new(crate::geo::HALF_X, z)]), yellow));
     }
     let colours = [Color::srgb(0.2, 0.9, 1.0), Color::srgb(1.0, 0.4, 1.0), Color::srgb(1.0, 1.0, 1.0)];
-    for (h, _) in f.road_heads.iter().enumerate() {
+    for h in 0..f.road_heads.len() {
         for p in f.positions.iter().filter(|p| p.ground == Ground::Ours).step_by(2) {
-            if let Some(path) = f.path(h, Mover::Tracked, p.at) {
-                for w in path.pts.windows(2) {
-                    on_ground(w[0], w[1], colours[h % colours.len()], &mut gizmos);
-                }
+            if let Some(path) = routes().path(h, Mover::Tracked, p.at) {
+                lines.strips.push((on_ground(&path.pts), colours[h % colours.len()]));
             }
         }
+    }
+    commands.insert_resource(lines);
+}
+
+fn field_overlay(mut gizmos: Gizmos, lines: Res<FieldLines>) {
+    let flat = Quat::from_rotation_x(std::f32::consts::FRAC_PI_2);
+    for (pts, c) in &lines.strips {
+        gizmos.linestrip(pts.iter().copied(), *c);
+    }
+    for &(at, r, c) in &lines.rings {
+        gizmos.circle(Isometry3d::new(at, flat), r, c);
     }
 }
 
@@ -344,7 +361,7 @@ fn log_stats(
 
 /// `BAV_FIRE="100:he,130:raam,160:himars"`: at those game seconds, call that strike on the nearest stalled
 /// Russian vehicle, as a player would from the drone.
-fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Res<View>, mut fc: ResMut<FireControl>, mut radio: ResMut<Radio>, q: Query<(&Vehicle, &Transform)>, mut done: Local<usize>) {
+fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Res<View>, mut fc: ResMut<FireControl>, q: Query<(&Vehicle, &Transform)>, mut done: Local<usize>) {
     let plan = &dev().fire;
     while *done < plan.len() && script.t >= plan[*done].0 {
         let (_, strike, point) = plan[*done];
@@ -359,7 +376,7 @@ fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Re
             None => strike.on_nearest_stalled(&mut fc, &q, view.drone_pos.xz(), now),
         };
         if let Some(at) = called {
-            radio.say(now, format!("(scripted) {strike:?} on {:.0}, {:.0}", at.x, at.y));
+            info!("scripted: {strike:?} on {:.0},{:.0}, at game {:.0} s", at.x, at.y, script.t);
         }
     }
 }

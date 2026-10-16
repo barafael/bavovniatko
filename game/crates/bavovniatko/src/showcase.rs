@@ -11,8 +11,7 @@
 
 use crate::camera::{Flight, Locate, Mode, Target, View, enter_ground, look_angles, track_nearest};
 use crate::fire::{Post, Strike, StrikeMission};
-use crate::units::Radio;
-use bav_sim::player::{Fpv, Operator};
+use bav_sim::player::Fpv;
 use crate::units::{Soldier, Vehicle};
 use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};
@@ -29,7 +28,7 @@ impl Plugin for ShowcasePlugin {
             app.insert_resource(Tour { dir, shot: 0, frame: 0, video_t: 0.0, aim: None, fired: Vec::new(), shot_frames: 0, ground: None })
                 .insert_resource(TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step_skip())))
                 .add_systems(Update, direct.in_set(crate::Step::Control).before(crate::dev::DevSystems));
-            if crate::dev::dev().tour == Some(crate::dev::TourKind::Reel) {
+            if is_reel() {
                 app.add_systems(Update, log_events.in_set(crate::Step::Screen));
             }
         }
@@ -42,7 +41,11 @@ const STEP_SKIP: f64 = 1.0 / 20.0;
 /// The step between shots. The reel skips on the filming step: the battle is integrated on its steps, so a coarser
 /// skip would make the day depend on the shot list, and every retimed shot would change what it films.
 fn step_skip() -> f64 {
-    if matches!(crate::dev::dev().tour, Some(crate::dev::TourKind::Reel)) { STEP_FILM } else { STEP_SKIP }
+    if is_reel() { STEP_FILM } else { STEP_SKIP }
+}
+
+fn is_reel() -> bool {
+    crate::dev::dev().tour == Some(crate::dev::TourKind::Reel)
 }
 
 #[derive(Clone, Copy)]
@@ -80,8 +83,6 @@ struct Shot {
     fov: (f32, f32),
     /// Fire missions to call (game time, strike) before or during the shot, on the nearest stalled vehicle.
     fire: &'static [(f32, Strike)],
-    /// Fire missions called on a point (game time, strike, (x, z)): a jammer, a trench, a lane.
-    fire_at: &'static [(f32, Strike, (f32, f32))],
     debrief: bool,
     /// A card over black before the shot; its frames are reserved, its time goes in the segment's front.
     card: Option<Card>,
@@ -102,7 +103,6 @@ fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim
         aim,
         fov,
         fire: &[],
-        fire_at: &[],
         debrief: false,
         card: None,
         hud: true,
@@ -115,7 +115,7 @@ fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim
 static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(|| {
     match crate::dev::dev().tour {
         Some(crate::dev::TourKind::Film) => shots_film(),
-        Some(crate::dev::TourKind::Reel) => reel::load().shots,
+        Some(crate::dev::TourKind::Reel) => reel::load(),
         None => shots_minute(),
     }
 });
@@ -286,30 +286,11 @@ fn direct(
     mut flight: ResMut<Flight>,
     mut hud: ResMut<crate::hud::HudHidden>,
     (vehicles, men): (Query<(&Vehicle, &Transform)>, Query<(&Soldier, &Transform)>),
-    (mut fpv, operator, mut radio): (ResMut<Fpv>, Res<Operator>, ResMut<Radio>),
+    fpv: Res<Fpv>,
     teams: Query<(Entity, &Post)>,
     mut exit: MessageWriter<AppExit>,
 ) {
     let t = script.t;
-    // The reel's interventions are the day's, whatever is being filmed: every run makes them at their times.
-    if crate::dev::dev().tour == Some(crate::dev::TourKind::Reel) {
-        let now = time.elapsed_secs_f64();
-        for (k, &(at, kind, p)) in reel::PLAN.fires.iter().enumerate() {
-            if t >= at && !tour.fired.contains(&(usize::MAX, k)) {
-                tour.fired.push((usize::MAX, k));
-                fc.missions.push(kind.mission(p, 12.0, now, true));
-                info!("showcase: {kind:?} called on {:.0},{:.0}, at game {t:.0} s", p.x, p.y);
-            }
-        }
-        if let Some((at, p)) = reel::PLAN.fpv
-            && t >= at
-            && !tour.fired.contains(&(usize::MAX, usize::MAX))
-        {
-            tour.fired.push((usize::MAX, usize::MAX));
-            fpv.auto = Some(p);
-            bav_sim::drones::launch_fpv(&mut fpv, &mut view, &operator, &mut radio, now);
-        }
-    }
     let Some(shot) = SHOTS.get(tour.shot) else {
         exit.write(AppExit::Success);
         return;
@@ -322,13 +303,6 @@ fn direct(
             tour.fired.push((si, k));
             let at = kind.on_nearest_stalled(&mut fc, &vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
             info!("showcase: {kind:?} called on {at:?}, at game {t:.0} s");
-        }
-    }
-    for (k, &(at, kind, (x, z))) in shot.fire_at.iter().enumerate() {
-        if t >= at && !tour.fired.contains(&(si, 100 + k)) {
-            tour.fired.push((si, 100 + k));
-            fc.missions.push(kind.mission(Vec2::new(x, z), 12.0, time.elapsed_secs_f64(), true));
-            info!("showcase: {kind:?} called on {x:.0},{z:.0}, at game {t:.0} s");
         }
     }
     // A ground shot enters its team's tree line on the shot's first frame, and during the skip, so the camera
@@ -475,15 +449,21 @@ fn log_events(
     log: Res<bav_sim::hits::HitLog>,
     places: Query<&Transform>,
     mut last: Local<f64>,
+    mut file: Local<Option<std::io::BufWriter<std::fs::File>>>,
 ) {
-    let path = format!("{}/events.txt", tour.dir);
+    if file.is_none() {
+        *file = std::fs::File::create(format!("{}/events.txt", tour.dir)).ok().map(std::io::BufWriter::new);
+    }
+    let Some(out) = file.as_mut() else { return };
     let t = script.t;
     for b in blasts.read() {
-        append(&path, &format!("{t:.2} blast {:?} {:.0} {:.0} {:.1}\n", b.cause, b.at.x, b.at.z, b.radius));
+        let _ = writeln!(out, "{t:.2} blast {:?} {:.0} {:.0} {:.1}", b.cause, b.at.x, b.at.z, b.radius);
     }
     for h in log.entries.iter().filter(|h| h.at > *last) {
         let Ok(tf) = places.get(h.target) else { continue };
-        append(&path, &format!("{t:.2} hit {} {:.0} {:.0} {:?}\n", h.weapon.replace(' ', "_"), tf.translation.x, tf.translation.z, h.side));
+        let _ = writeln!(out, "{t:.2} hit {} {:.0} {:.0} {:?}", h.weapon.replace(' ', "_"), tf.translation.x, tf.translation.z, h.side);
     }
     *last = log.entries.iter().map(|h| h.at).fold(*last, f64::max);
+    // A frame's lines at once: the run can end on any frame.
+    let _ = out.flush();
 }

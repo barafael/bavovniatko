@@ -126,6 +126,8 @@ pub struct FireControl {
     pub battery_busy_until: f64,
     pub last_call: Option<(Vec2, f64)>,
     pub warned_low: bool,
+    /// What the day started with (the Allotment's), for the debrief.
+    pub start: crate::allot::Stock,
 }
 
 impl Default for FireControl {
@@ -133,7 +135,7 @@ impl Default for FireControl {
         // Zaluzhnyi: artillery ammunition is the binding constraint. ~6,000 RAAM shells reached Ukraine in late
         // 2022, but a battery on one morning gets a handful of missions.
         let s = crate::allot::allotment().stock;
-        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, missions: Vec::new(), atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false }
+        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, missions: Vec::new(), atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
     }
 }
 
