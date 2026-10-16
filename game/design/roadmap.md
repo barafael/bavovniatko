@@ -124,7 +124,7 @@ build takes 6–20 minutes when other sessions load the machine. The rename and 
   spawns trails. The split turns those calls into messages that `bav-look` handles in a later `Step`. The order
   of sounds in `audio.log` must not change, which is what `same-day.sh` checks.
 - **A fast profile:** `[profile.fast]` inherits release with `lto = false`, `codegen-units = 16` and incremental
-  builds. It is used by `shot.sh`, `record.sh` and `band.sh`; `same-day.sh` and `showcase.sh` stay on release.
+  builds. It is used by `shot.sh`, `record.sh` and `band.sh`; `same-day.sh` and the xtask's films stay on release.
   With the crates split, a look edit no longer recompiles the sim.
 - Small items: `log_stats` prints `f32::MIN` before anything moves; clippy stays clean on the whole workspace.
 - Proof: both same-days byte-identical after every stage (rename, then each crate extracted).

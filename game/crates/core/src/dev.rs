@@ -75,6 +75,8 @@ pub struct DevEnv {
     pub skip_briefing: bool,
     /// `BAV_SETTINGS=open`: start with the settings overlay open (for shots of it).
     pub settings_open: bool,
+    /// `BAV_REEL=<file>`: the reel tour's shot list (`BAV_TOUR=reel`).
+    pub reel: Option<String>,
     /// Film the showcase tour into this directory.
     pub showcase: Option<String>,
     pub no_battery: bool,
@@ -129,8 +131,8 @@ pub struct DevEnv {
     pub light: [f32; 3],
     /// `BAV_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
     pub sky: Option<Weather>,
-    /// `BAV_TOUR`: which shot list the showcase films, `film` (design/showcase.md), `trailer` (design/trailer.md) or
-    /// the minute tours.
+    /// `BAV_TOUR`: which shot list the showcase films, `film` (design/showcase.md), `reel` (the trailer's,
+    /// design/trailer.md) or the minute tours.
     pub tour: Option<TourKind>,
 }
 
@@ -143,8 +145,9 @@ pub type ScriptedFire = (f32, Strike, Option<(f32, f32)>);
 pub enum TourKind {
     /// The showcase film's tour, one per diorama.
     Film,
-    /// The trailer's tour (design/trailer.md): the film's day, and everything the dioramas can show.
-    Trailer,
+    /// The action reel's: shots and interventions read from `BAV_REEL`, written by `cargo xtask trailer` from an
+    /// events pass over the same day (design/trailer.md).
+    Reel,
 }
 
 fn var(k: &str) -> Option<String> {
@@ -206,6 +209,7 @@ impl DevEnv {
             }),
             skip_briefing: var("BAV_SKIP_BRIEFING").is_some(),
             settings_open: var("BAV_SETTINGS").as_deref() == Some("open"),
+            reel: var("BAV_REEL"),
             showcase: var("BAV_SHOWCASE"),
             no_battery: var("BAV_NO_BATTERY").is_some(),
             view: parse("BAV_VIEW"),

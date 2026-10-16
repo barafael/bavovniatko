@@ -3,7 +3,7 @@
 //! The game runs on a fixed step (1/30 s of game time per rendered frame while filming, 1/20 s while skipping
 //! ahead), so frames and game time stay locked however slowly frames render. Each filmed frame is saved to
 //! `<dir>/f00000.png`…, `<dir>/segments.txt` maps game time to video time, and the audio module logs every sound
-//! it plays to `<dir>/audio.log`, so `scripts/showcase_mix.py` can rebuild the soundtrack offline.
+//! it plays to `<dir>/audio.log`, so the xtask (`xtask/src/mix.rs`) can rebuild the soundtrack offline.
 //!
 //! `BAV_TOUR=film` films the showcase film's two tours instead (design/showcase.md): shots typed with
 //! cards before them, the interface switched per shot, two ground shots from an ATGM team, and two flown by the
@@ -18,7 +18,7 @@ use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};
 use std::{io::Write, sync::LazyLock, time::Duration};
 
-mod trailer;
+mod reel;
 
 pub struct ShowcasePlugin;
 
@@ -29,6 +29,9 @@ impl Plugin for ShowcasePlugin {
             app.insert_resource(Tour { dir, shot: 0, frame: 0, video_t: 0.0, aim: None, fired: Vec::new(), shot_frames: 0, ground: None })
                 .insert_resource(TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step_skip())))
                 .add_systems(Update, direct.in_set(crate::Step::Control).before(crate::dev::DevSystems));
+            if crate::dev::dev().tour == Some(crate::dev::TourKind::Reel) {
+                app.add_systems(Update, log_events.in_set(crate::Step::Screen));
+            }
         }
     }
 }
@@ -36,10 +39,10 @@ impl Plugin for ShowcasePlugin {
 const STEP_FILM: f64 = 1.0 / 30.0;
 const STEP_SKIP: f64 = 1.0 / 20.0;
 
-/// The step between shots. The trailer skips on the filming step: the battle is integrated on its steps, so a
-/// coarser skip would make the day depend on the shot list, and every retimed shot would change what it films.
+/// The step between shots. The reel skips on the filming step: the battle is integrated on its steps, so a coarser
+/// skip would make the day depend on the shot list, and every retimed shot would change what it films.
 fn step_skip() -> f64 {
-    if crate::dev::dev().tour == Some(crate::dev::TourKind::Trailer) { STEP_FILM } else { STEP_SKIP }
+    if matches!(crate::dev::dev().tour, Some(crate::dev::TourKind::Reel)) { STEP_FILM } else { STEP_SKIP }
 }
 
 #[derive(Clone, Copy)]
@@ -51,10 +54,10 @@ enum Aim {
     /// The drone placed once at its first filmed frame, then flown by the shot's stick script.
     Fly(Target),
     /// The OP looking at a point (x, z) on the ground.
+    #[expect(dead_code, reason = "the film's R9 may yet become the water tower; the camera supports it")]
     Op(Vec2),
-    /// Through the FPV's goggles, launched at the shot's first filmed frame if it is not already up, and flown by
-    /// itself at the enemy vehicle nearest the point. The view is left to it.
-    Fpv(Vec2),
+    /// Through the FPV's goggles if it is up (the reel launches it on its own schedule); the view is left to it.
+    Goggles,
 }
 
 use Aim::Drone;
@@ -112,7 +115,7 @@ fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim
 static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(|| {
     match crate::dev::dev().tour {
         Some(crate::dev::TourKind::Film) => shots_film(),
-        Some(crate::dev::TourKind::Trailer) => trailer::shots(),
+        Some(crate::dev::TourKind::Reel) => reel::load().shots,
         None => shots_minute(),
     }
 });
@@ -287,11 +290,30 @@ fn direct(
     teams: Query<(Entity, &Post)>,
     mut exit: MessageWriter<AppExit>,
 ) {
+    let t = script.t;
+    // The reel's interventions are the day's, whatever is being filmed: every run makes them at their times.
+    if crate::dev::dev().tour == Some(crate::dev::TourKind::Reel) {
+        let now = time.elapsed_secs_f64();
+        for (k, &(at, kind, p)) in reel::PLAN.fires.iter().enumerate() {
+            if t >= at && !tour.fired.contains(&(usize::MAX, k)) {
+                tour.fired.push((usize::MAX, k));
+                fc.missions.push(kind.mission(p, 12.0, now, true));
+                info!("showcase: {kind:?} called on {:.0},{:.0}, at game {t:.0} s", p.x, p.y);
+            }
+        }
+        if let Some((at, p)) = reel::PLAN.fpv
+            && t >= at
+            && !tour.fired.contains(&(usize::MAX, usize::MAX))
+        {
+            tour.fired.push((usize::MAX, usize::MAX));
+            fpv.auto = Some(p);
+            bav_sim::drones::launch_fpv(&mut fpv, &mut view, &operator, &mut radio, now);
+        }
+    }
     let Some(shot) = SHOTS.get(tour.shot) else {
         exit.write(AppExit::Success);
         return;
     };
-    let t = script.t;
     let si = tour.shot;
     hud.set_if_neq(crate::hud::HudHidden(!shot.hud));
     // Fire missions for this shot, called at their own times (possibly before the shot starts).
@@ -339,11 +361,10 @@ fn direct(
         if tour.shot_frames == 0 {
             place_fly(&mut view, shot, &mut flight, &vehicles, &men);
         }
-    } else if let Aim::Fpv(at) = shot.aim {
+    } else if let Aim::Goggles = shot.aim {
         view.locked = false;
-        if tour.shot_frames == 0 && !fpv.flying {
-            fpv.auto = Some(at);
-            bav_sim::drones::launch_fpv(&mut fpv, &mut view, &operator, &mut radio, time.elapsed_secs_f64());
+        if fpv.flying {
+            view.mode = crate::camera::Mode::Fpv;
         }
     } else {
         place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men);
@@ -398,7 +419,7 @@ fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op
         // The ground view was placed by `enter_ground`; the gunner's head tracks.
         Aim::Ground(..) => return,
         // The FPV flies itself; the drone waits where the last shot left it.
-        Aim::Fpv(_) => {
+        Aim::Goggles => {
             view.locked = false;
             return;
         }
@@ -442,4 +463,27 @@ pub fn append(path: &str, line: &str) {
     if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open(path) {
         let _ = f.write_all(line.as_bytes());
     }
+}
+
+/// The reel's events, for `cargo xtask trailer` to find the action in: every blast and every hit on a vehicle,
+/// with the game time, where, and how big, one a line in `<dir>/events.txt`:
+/// `<game s> blast <cause> <x> <z> <radius>` and `<game s> hit <weapon> <x> <z> <side>`.
+fn log_events(
+    tour: Res<Tour>,
+    script: Res<crate::director::Script>,
+    mut blasts: MessageReader<crate::units::Blast>,
+    log: Res<bav_sim::hits::HitLog>,
+    places: Query<&Transform>,
+    mut last: Local<f64>,
+) {
+    let path = format!("{}/events.txt", tour.dir);
+    let t = script.t;
+    for b in blasts.read() {
+        append(&path, &format!("{t:.2} blast {:?} {:.0} {:.0} {:.1}\n", b.cause, b.at.x, b.at.z, b.radius));
+    }
+    for h in log.entries.iter().filter(|h| h.at > *last) {
+        let Ok(tf) = places.get(h.target) else { continue };
+        append(&path, &format!("{t:.2} hit {} {:.0} {:.0} {:?}\n", h.weapon.replace(' ', "_"), tf.translation.x, tf.translation.z, h.side));
+    }
+    *last = log.entries.iter().map(|h| h.at).fold(*last, f64::max);
 }

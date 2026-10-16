@@ -1,46 +1,43 @@
-# The trailer: both dioramas in five minutes (2026-10-16)
+# The trailer: the action of both dioramas (2026-10-16)
 
-The owner asked for a trailer of the two dioramas: about five minutes, everything the game can show now, cinematic,
-at a resolution fit for a demo. It is the showcase film ([`showcase.md`](showcase.md)) grown by what the dioramas
-gained since 2026-10-12: the observer's roof, RAAM and HIMARS at Vuhledar; their EW as a field (a jammer's mast
-and lamp, one shelled out, the GNSS tell before the Ka-52s), the FPV flown through its goggles and the Bradleys
-sent for the wounded south of Mala Tokmachka; and the hit feed on every operator's shot.
+The owner asked for a trailer of the two dioramas: everything the game can show, cinematic, at a resolution fit
+for a demo. The first cut (about 5:20, a shot list timed by hand like the showcase film's) was half empty: the
+day moved under its shots every time the battle changed, and the quiet shots of wrecks and observers' posts ran
+long. The owner's note: just the action, but more of it; the order of the battle's events does not matter.
 
-The film's decisions hold: one minefield seen from both sides, Vuhledar then Mala Tokmachka; cards and the radio
-net, no narrator and no music; English cards with the Ukrainian place names; the interface off for the atmosphere
-shots; the ledgers on the end card. So do its rules for every shot (250–600 m off, 100–200 m up, gimbal 45–70°
-down, fov 7–14°, the horizon out of frame, cards as hard cuts).
+So the battle picks the shots. The trailer is an action reel, about two and a quarter minutes: a title, a card and
+the action of Vuhledar, a card and the action of Mala Tokmachka, an end card. No narrator and no music; the
+radio net, the hit feed and the sound of the guns carry it.
 
 ```sh
-scripts/trailer.sh             # 1920x1080, x264 crf 24, into devlog/videos/
-scripts/trailer.sh --scout     # 640x360 with contact sheets, into devlog/film/
+cargo xtask trailer            # 1920x1080, x264 crf 24, into devlog/videos/
+cargo xtask trailer --scout    # 640x360 with a contact sheet, into devlog/film/
 ```
 
-`trailer.sh` sets up the numpy venv the mixer needs, films through `showcase.sh --trailer`, and then checks the
-game's logs for the moments the shots wait for (the jammer shelled out, the first Bradley stopping, the FPV's hit):
-each is `ok`, `MOVED` (with where it went) or `MISSING`. The day is deterministic, so a warning means a change to
-the battle moved it, and the shot in `trailer.rs` wants retiming: scout, read the sheets and the warning, move the
-shot. Each part's sound is measured and mixed again to -18 LUFS, so the parts stay level whatever the day does.
+## How it is made (`xtask/src/reel.rs`, `crates/bavovniatko/src/showcase/reel.rs`)
 
-`BAV_TOUR=trailer` selects the shot lists in `crates/bavovniatko/src/showcase/trailer.rs`. Two kinds of shot
-are new to it: `Aim::Fpv(point)` launches the FPV at the shot's first frame (if it is not already up) and lets
-it fly itself at the enemy vehicle nearest the point (`Fpv::auto`, which `BAV_FPV` sets too), the view left to
-it; and `fire_at`, a mission called on a point rather than on the nearest stalled vehicle (the jammer, the RAAM
-lane). The Mala Tokmachka part runs with `BAV_EVAC=30`: the Bradleys go only when sent, and the trailer sends
-them as a player would.
+1. **The day.** What the player does is fixed per day (`reel::DAYS`): fire missions on points (155 mm on the
+   columns, RAAM and HIMARS at Vuhledar; the jammer and HIMARS on a dug-in tank south of Mala Tokmachka), the
+   FPV launched at the western dug-in T-72, and the Bradleys sent for the wounded half a minute after each call (`BAV_EVAC=30`). The reel tour (`BAV_TOUR=reel`, `BAV_REEL=<file>`) makes them in every run;
+   it skips between shots on its filming step and calls nothing on the camera's position, so the day does not
+   depend on the shots, and every run is the same day.
+2. **The events pass.** Each day runs once, filming nothing, at 320x180, both days at once. The tour logs every
+   blast (cause, place, radius) and every hit on a vehicle (weapon, place) to `events.txt`.
+3. **The moments.** Every heavy event is the heart of a candidate, the events within 4 s and 150 m its body,
+   weighted: a vehicle hit or a mine strike 6, the FPV 9, HIMARS 5, a cook-off 4, a TOS rocket 1.6, a shell 0.7,
+   the tanks' own gunfire (thousands of small splashes) next to nothing. Only a vehicle hit, HIMARS, a cook-off,
+   the FPV or a TOS salvo of four or more is a heart: in the first scout, shells on open ground and on the crest
+   trench made half the moments, and nothing showed in them. The twelve best of each day that are not the same
+   scene as a better one (within 14 s and 280 m) are filmed: the drone about 130 m off and 240 m up, the gimbal
+   some 60 degrees down (at 46 the tree lines hid the vehicles along the tracks), from one of eight sides in turn, pushing in a little, the field of view holding the
+   moment's spread; from 1.8 s before its first blast to 2.4 s after its last, 4 to 5.5 s. Besides them, the
+   FPV's last ten seconds through its goggles. (A Stugna-P launch through the gunner's sight was tried: the hit is
+   a speck on the horizon, ten seconds of nothing.)
+4. **The runs.** Moments that overlap in time cannot be filmed in one run; first fit in time order shares them
+   among as few runs as it takes. Each run's sound is rebuilt from its log and levelled to -18 LUFS, and each
+   moment is cut out of its run.
+5. **The cut.** Each day's moments in an order of their own, not the battle's: the second best opens, then from
+   the least up, the best last; the FPV's dive closes Mala Tokmachka.
 
-## The cut (about 5:20)
-
-Title 5 s; Vuhledar about 160 s with its cards; Mala Tokmachka about 150 s with the intertitle; end card 10 s.
-
-What the scouts taught: a shot's missions are called only while it is the next shot, so a mission must be
-timed after the shot before it ends; the second column at Vuhledar is slow (its lead near 1250,160 at 580 s);
-from close in over Mala Tokmachka's burning vehicles the drone sees only smoke; and the FPV's autopilot came
-in short into a dug-in tank's berm or long past it until its dive started at three times its height. And the
-tour skipped between shots on a coarser step than it films on, so every change to the shot list changed the
-day: the trailer skips on the filming step, and a scout now films the same day as the full run.
-
-| part | shots |
-|---|---|
-| Вугледар | dawn over the January wrecks · the column behind its smoke · the Stugna-P sight and launch · the kill zone wide · close, 155 mm landing · TOS-1A on the town · *08:40* the second column past the wrecks · RAAM onto its lane · HIMARS on its stalled tail · the lead onto the scattered mines · *10:20* Alga on the Pavlivka road · the observers' roof · flown over the third column · *13:20* infantry under the mortars · late afternoon · the ledger |
-| Мала Токмачка | a jammer's lamp behind the crest, in the dark · first light, the first group · eye level at the start line · the plow in the forward minefield · 155 mm on the jammer, then the GNSS tell · *05:29* the second group · under the Ka-52s · *06:22* a Bradley for the wounded · *06:47* the FPV out over the column, and the dive · *08:50* the pull-back from the water tower · the wrecks still smoking · the ledger |
+The events passes' logs and events are kept in `devlog/film/reel-events-*.{log,txt}`, the runs' logs in
+`devlog/film/reel-<day>-<run>.log`.

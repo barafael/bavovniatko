@@ -9,7 +9,7 @@ are two so far, one minefield seen from both sides:
 - **Mala Tokmachka, 8 June 2023** (`cargo run --release -- robotyne`): the 47th Brigade's breach into the Russian
   minefields, the first day of the Robotyne chapter.
 
-To watch rather than play, `scripts/showcase.sh --film` produces a four-minute film of both, directed from
+To watch rather than play, `cargo xtask film` produces a four-minute film of both, directed from
 `design/showcase.md` ([below](#the-showcase-film)).
 
 ## Vuhledar
@@ -57,20 +57,21 @@ radio net carry it.
 It is filmed by the same machinery the game runs on. The binary runs headless on a fixed step with
 `BAV_TOUR=film` (which selects the film's shot list in `crates/bavovniatko/src/showcase.rs` instead of the one-minute tours),
 the script places the drone and flies it, cards are hard cuts over black between the shots, and each part's
-soundtrack is rebuilt offline by `scripts/showcase_mix.py`, the parts level-matched within a loudness point.
+soundtrack is rebuilt offline from the game's log of every sound it played (`xtask/src/mix.rs`), each part
+levelled to -18 LUFS. The tasks are an xtask (`xtask/`): plain Rust, with ffmpeg, ffprobe and ImageMagick on the
+path.
 The tour is deterministic, so every run films the same film.
 
 ```sh
 cd game
-scripts/showcase.sh --film     # the film, 1920x1080, into devlog/videos/
-scripts/showcase.sh --scout    # the same at 640x360 with contact sheets, for retiming
+cargo xtask film               # the film, 1920x1080, into devlog/videos/
+cargo xtask film --scout       # the same at 640x360 with contact sheets, into devlog/film/, for retiming
 ```
 
-The trailer ([`design/trailer.md`](design/trailer.md)) is the same film grown to about five minutes with
-everything the dioramas show now: the observers' posts, RAAM and HIMARS, their jammers and one shelled out, the
-FPV through its goggles, and the Bradleys sent for the wounded. `scripts/trailer.sh` records it at 1920x1080
-into `devlog/videos/` (`--scout`: 640x360 with contact sheets, into `devlog/film/`), and then checks the game's
-logs for the moments its shots are timed on: a change to the battle that moves one is reported, not filmed past.
+The trailer ([`design/trailer.md`](design/trailer.md)) is the action of both days, about two and a half
+minutes, and the battle picks its shots: `cargo xtask trailer` runs each day once logging every blast and hit,
+frames the best moments, films them in as many runs as it takes, and cuts them together (`--scout`: 640x360 with
+a contact sheet, into `devlog/film/`).
 
 `--film` takes tens of minutes on the machine (both parts, 1080p); `--scout` a few. The only switches the tour
 reads are `BAV_TOUR=film` and `BAV_SHOWCASE=<dir>`; the script sets them, so they are rarely typed by
@@ -162,10 +163,10 @@ scripts/shot.sh <name> "<x,z,agl,yaw,pitch,fov>" <game-s> "note" [diorama]
 
 Angles in `BAV_CAM` are degrees; yaw 0 looks north, 180 south.
 
-`scripts/showcase.sh <out.mp4>` films a directed one-minute tour of a single day at 1920x1080 with sound (the
-four-minute film of both dioramas is `scripts/showcase.sh --film`, [above](#the-showcase-film)). The game
-runs on a fixed step while filming, logs every sound it plays, and `scripts/showcase_mix.py` rebuilds the
-soundtrack offline. It takes about ten minutes, with no window or speakers, and the day is deterministic, so
+`cargo xtask tour [robotyne] [out.mp4]` films a directed one-minute tour of a single day at 1920x1080 with sound
+(the four-minute film of both dioramas is `cargo xtask film`, [above](#the-showcase-film)). The game
+runs on a fixed step while filming, logs every sound it plays, and the xtask rebuilds the soundtrack offline
+(`cargo xtask mix <dir> <out.wav>` does it again for a kept work dir). It takes about ten minutes, with no window or speakers, and the day is deterministic, so
 every run films the same tour.
 
 That determinism is also the regression test: `scripts/same-day.sh before` and, after a change,
