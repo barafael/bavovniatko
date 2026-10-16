@@ -132,7 +132,7 @@ impl Default for FireControl {
     fn default() -> Self {
         // Zaluzhnyi: artillery ammunition is the binding constraint. ~6,000 RAAM shells reached Ukraine in late
         // 2022, but a battery on one morning gets a handful of missions.
-        let s = crate::data::sim_data().stock;
+        let s = crate::allot::allotment().stock;
         Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, missions: Vec::new(), atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false }
     }
 }
@@ -185,8 +185,9 @@ pub struct UaTank {
 fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
     let lay = geo::layout();
     let d = crate::data::sim_data();
-    let (ua, ru) = (&d.ua_weapons, &d.ru_weapons);
-    let posts = lay.ua_positions.iter().zip(ua).map(|(p, w)| (Side::Ua, p, *w)).chain(lay.ru_positions.iter().zip(ru).map(|(p, w)| (Side::Ru, p, *w)));
+    // Ours as allotted, theirs as the day had them.
+    let ours = &crate::allot::allotment().posts;
+    let posts = ours.iter().map(|(p, w)| (Side::Ua, p, *w)).chain(lay.ru_positions.iter().zip(&d.ru_weapons).map(|(p, w)| (Side::Ru, p, *w)));
     for (i, (side, p, weapon)) in posts.enumerate() {
         let atgm = weapon.map_or(0, Atgm::load);
         let mut figures = Vec::new();
@@ -210,14 +211,15 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
         ));
     }
     crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
-    // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
-    let Some(((hx, hz), (fx, fz))) = d.wanderer else { return };
-    let hide = Vec2::new(hx, hz);
-    let yaw = units::vehicle_yaw(Vec2::new(fx, fz));
-    let m = &models.ua_tank;
-    let mut e = commands.spawn((units::skin(&m.hull), Transform::from_translation(geo::ground(hide)).with_rotation(Quat::from_rotation_y(yaw)), UaTank { timer: 20.0 }));
-    e.with_children(|c| units::dress(&mut c.spawn((units::skin(&m.turret), Transform::from_translation(m.turret_at))), &m.turret));
-    units::dress(&mut e, &m.hull);
+    // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot; as many as
+    // were allotted.
+    for &(hide, facing) in &crate::allot::allotment().hides {
+        let yaw = units::vehicle_yaw(facing);
+        let m = &models.ua_tank;
+        let mut e = commands.spawn((units::skin(&m.hull), Transform::from_translation(geo::ground(hide)).with_rotation(Quat::from_rotation_y(yaw)), UaTank { timer: 20.0 }));
+        e.with_children(|c| units::dress(&mut c.spawn((units::skin(&m.turret), Transform::from_translation(m.turret_at))), &m.turret));
+        units::dress(&mut e, &m.hull);
+    }
 }
 
 fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, mut order: ResMut<ColumnOrder>, time: Res<Time>, mut radio: ResMut<Radio>) {

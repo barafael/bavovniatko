@@ -1,5 +1,6 @@
 //! The battle's part of a diorama's file (`game/dioramas/<name>.ron`, read by `bav_core::data`): what each side
-//! brings to the day and the day's script. The script runs whether or not the player does anything.
+//! brings to the day and the day's script. The script runs whether or not the player does anything. The player's
+//! side is an Allotment (`allot`): the file's catalog and support, and the day's own picks (the Record).
 
 use crate::director::Act;
 use crate::units::VKind;
@@ -9,15 +10,18 @@ use std::sync::OnceLock;
 
 #[derive(Deserialize, Debug)]
 pub struct SimData {
-    /// What the player's fires have for the day.
-    pub stock: Stock,
-    /// The weapon at each position, in the layout's order (none: riflemen only).
-    pub ua_weapons: Vec<Option<Atgm>>,
+    /// The Units the player's side could have had that day (design/command.md).
+    pub catalog: Vec<crate::allot::Entry<crate::allot::UnitKind>>,
+    /// The Support: fires and strike drones, called rather than placed.
+    pub support: Vec<crate::allot::Entry<crate::allot::SupportKind>>,
+    /// The points, the Supply, and the day's own Allotment (the Record).
+    pub allotment: crate::allot::AllotmentSpec,
+    /// The weapon at each of the enemy's positions, in the layout's order (none: riflemen only).
     #[serde(default)]
     pub ru_weapons: Vec<Option<Atgm>>,
-    /// A Ukrainian tank in a hide, firing on coordinates from a drone pilot: where, and which way it faces.
+    /// Hides for a Ukrainian tank firing on coordinates from a drone pilot: where, and which way it faces.
     #[serde(default)]
-    pub wanderer: Option<((f32, f32), (f32, f32))>,
+    pub hides: Vec<((f32, f32), (f32, f32))>,
     /// Tanks dug in hull-down on the defenders' line: where, and which way they face.
     #[serde(default)]
     pub dug_in: Vec<((f32, f32), f32)>,
@@ -25,7 +29,8 @@ pub struct SimData {
     pub old_wreck_kinds: Vec<VKind>,
     /// The defending brigade's guns on their registered points: every so many seconds, so many rounds.
     pub registered_fire: (f64, u32),
-    /// The vehicles the player can send in for the wounded (none: nothing gets there by day).
+    /// The vehicles that can go in for the wounded: what kind, from where (how many is the Allotment's; none:
+    /// nothing gets there by day).
     #[serde(default)]
     pub evacuation: Option<crate::evac::EvacSpec>,
     /// Where the drone team flies from, and how often an hour (of the day's clock) the enemy finds it while a drone
@@ -34,25 +39,11 @@ pub struct SimData {
     /// Their EW: jammers on their line, the rear ramp, the Ka-52 tell (none: only the scripted bursts).
     #[serde(default)]
     pub ew: Option<crate::ew::EwSpec>,
-    /// The strike drones the player has (none: the drone is eyes only).
+    /// The strike drones of the day (how many is the Allotment's; none: the drone is eyes only).
     #[serde(default)]
     pub fpv: Option<FpvSpec>,
     /// The day: at each game second, what happens.
     pub script: Vec<(f32, Act)>,
-}
-
-/// The player's fires for the day, and the defending brigade's own.
-#[derive(Deserialize, Debug, Clone, Copy)]
-pub struct Stock {
-    /// 155 mm rounds for the player's missions.
-    pub shells: u32,
-    pub raam: u32,
-    pub himars: u32,
-    pub smoke: u32,
-    /// The defending brigade's guns, which fire on their registered points by themselves.
-    pub brigade_shells: u32,
-    /// The battalion's 120 mm mortars, which work over infantry in the open on their own.
-    pub mortar_bombs: u32,
 }
 
 #[derive(Deserialize, Debug, Clone, Copy)]
@@ -61,10 +52,9 @@ pub struct OperatorSpec {
     pub found_per_hour: f32,
 }
 
-/// FPVs: how many for the day, and how long one flies (s).
+/// FPVs: how long one flies (s).
 #[derive(Deserialize, Debug, Clone, Copy)]
 pub struct FpvSpec {
-    pub count: u32,
     pub endurance: f32,
 }
 

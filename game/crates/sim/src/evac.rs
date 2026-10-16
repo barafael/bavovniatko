@@ -29,8 +29,6 @@ pub struct EvacSystems;
 #[derive(serde::Deserialize, Debug, Clone, Copy)]
 pub struct EvacSpec {
     pub kind: VKind,
-    /// How many there are for the day.
-    pub vehicles: u32,
     /// Where on a track they set off from (arc length along it).
     pub start: f32,
 }
@@ -64,7 +62,7 @@ impl Evacuation {
     fn new() -> Self {
         let d = crate::data::sim_data();
         let columns = d.script.iter().filter(|(_, a)| matches!(a, crate::director::Act::Column { .. })).count() as u32;
-        Self { left: d.evacuation.map_or(0, |e| e.vehicles), last_call: None, auto: Vec::new(), wave: columns + 1, sent: 0, next_check: 20.0 }
+        Self { left: crate::allot::allotment().evacuation, last_call: None, auto: Vec::new(), wave: columns + 1, sent: 0, next_check: 20.0 }
     }
 }
 

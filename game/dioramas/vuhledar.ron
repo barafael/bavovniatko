@@ -123,13 +123,39 @@
 
     // ---- The battle's part (bav_sim::data) ----
 
-    // Zaluzhnyi: artillery ammunition is the binding constraint. About 6,000 RAAM shells reached Ukraine in late
-    // 2022, but a battery on one morning gets a handful of missions.
-    stock: (shells: 96, raam: 4, himars: 2, smoke: 0, brigade_shells: 140, mortar_bombs: 160),
-    // Positions with a clear view down their road: the Stugnas cover the long shots, the Javelins the close ones.
-    ua_weapons: [Some(Stugna), Some(Javelin), Some(Javelin), Some(Stugna), Some(Stugna), Some(Javelin), None, None, None],
-    // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
-    wanderer: Some(((-150.0, -1150.0), (0.2, 1.0))),
+    // The 72nd's side as Units and Support (design/command.md): what the brigade had in this sector that week,
+    // with what it cost to have it in allotment points. Zaluzhnyi: artillery ammunition is the binding constraint.
+    // About 6,000 RAAM shells reached Ukraine in late 2022, but a battery on one morning gets a handful of missions.
+    catalog: [
+        (id: "stugna", name: ("Stugna-P team", "Розрахунок «Стугни-П»"), what: Post(Some(Stugna)), cost: 8, supply: 5, available: 5),
+        (id: "javelin", name: ("Javelin team", "Розрахунок «Джавеліна»"), what: Post(Some(Javelin)), cost: 9, supply: 5, available: 4),
+        (id: "rifles", name: ("Rifle section", "Стрілецьке відділення"), what: Post(None), cost: 3, supply: 2, available: 9),
+        // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
+        (id: "t64", name: ("T-64BV in a hide", "Т-64БВ у капонірі"), what: Hide, cost: 10, supply: 6, available: 2),
+    ],
+    support: [
+        (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 10),
+        (id: "raam", name: ("RAAM mission", "Дистанційне мінування (RAAM)"), what: Raam, cost: 3, available: 6),
+        (id: "himars", name: ("HIMARS mission", "Удар HIMARS"), what: Himars, cost: 8, available: 3),
+        (id: "brigade", name: ("Brigade guns, 20 rounds", "Бригадна артилерія, 20 пострілів"), what: Brigade(20), cost: 2, available: 10),
+        (id: "mortar", name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"), what: Mortar(20), cost: 1, available: 10),
+    ],
+    // The Record: positions with a clear view down their road, the Stugnas for the long shots and the Javelins for
+    // the close ones; the Wanderer in its hide; 96 rounds for the player's battery, four RAAM and two HIMARS missions,
+    // the brigade's guns on their points, the battalion's mortars. 144 of 150 points.
+    allotment: (
+        points: 150,
+        record: [
+            (id: "stugna", at: Some(0)), (id: "javelin", at: Some(1)), (id: "javelin", at: Some(2)), (id: "stugna", at: Some(3)),
+            (id: "stugna", at: Some(4)), (id: "javelin", at: Some(5)), (id: "rifles", at: Some(6)), (id: "rifles", at: Some(7)),
+            (id: "rifles", at: Some(8)),
+            (id: "t64", at: Some(0)),
+            (id: "155", count: 6), (id: "raam", count: 4), (id: "himars", count: 2), (id: "brigade", count: 7), (id: "mortar", count: 8),
+        ],
+    ),
+    // Hides on the town's northern edge for a tank firing on coordinates: the Wanderer's, and one west of it,
+    // between the town-edge posts.
+    hides: [((-150.0, -1150.0), (0.2, 1.0)), ((-450.0, -1120.0), (0.1, 1.0))],
     old_wreck_kinds: [Bmp2, T80, Bmp1, Bmp2, T72, Mtlb, Bmp1, T80],
     registered_fire: (50.0, 6),
     // Their EW: no source places their jammers at Vuhledar itself (db/research/11 §7); two by the villages in the

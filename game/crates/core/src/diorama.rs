@@ -20,6 +20,26 @@ pub enum Diorama {
     Robotyne,
 }
 
+/// How the day is played (design/command.md).
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default, strum::EnumString, strum::Display)]
+#[strum(serialize_all = "lowercase", ascii_case_insensitive)]
+pub enum Play {
+    /// The Record (Літопис): the day as it was. The forces, the stock and the script are the archive's; the player
+    /// matters at the margin.
+    #[default]
+    Record,
+    /// Command (Командування): the player's side is the player's Allotment (наряд сил), chosen from what was there
+    /// that day under its points.
+    Command,
+}
+
+static PLAY: OnceLock<Play> = OnceLock::new();
+
+/// How this run plays the day, fixed at startup: `BAV_PLAY=record|command` (the Record by default).
+pub fn play() -> Play {
+    *PLAY.get_or_init(|| std::env::var("BAV_PLAY").ok().and_then(|s| s.trim().parse().ok()).unwrap_or_default())
+}
+
 static DIORAMA: OnceLock<Diorama> = OnceLock::new();
 
 /// The diorama this run plays, fixed at startup.

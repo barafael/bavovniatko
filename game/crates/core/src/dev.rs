@@ -77,6 +77,8 @@ pub struct DevEnv {
     pub settings_open: bool,
     /// `BAV_REEL=<file>`: the reel tour's shot list (`BAV_TOUR=reel`).
     pub reel: Option<String>,
+    /// `BAV_ALLOT=<picks>`: Command's Allotment until the map table exists (`bav_sim::allot`).
+    pub allot: Option<String>,
     /// Film the showcase tour into this directory.
     pub showcase: Option<String>,
     pub no_battery: bool,
@@ -210,6 +212,7 @@ impl DevEnv {
             skip_briefing: var("BAV_SKIP_BRIEFING").is_some(),
             settings_open: var("BAV_SETTINGS").as_deref() == Some("open"),
             reel: var("BAV_REEL"),
+            allot: var("BAV_ALLOT"),
             showcase: var("BAV_SHOWCASE"),
             no_battery: var("BAV_NO_BATTERY").is_some(),
             view: parse("BAV_VIEW"),

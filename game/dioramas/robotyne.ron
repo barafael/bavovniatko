@@ -110,11 +110,43 @@
 
     // ---- The battle's part (bav_sim::data) ----
 
-    // June 2023: at most about 55 guns on the whole axis (RUSI), so a battery's morning for the breach; the Russian
-    // guns had 35 days of ammunition at the gun line.
-    stock: (shells: 64, raam: 0, himars: 1, smoke: 6, brigade_shells: 600, mortar_bombs: 80),
-    // The 47th's overwatch in the forward tree line; the 291st's Kornets on the crest, covering both tracks.
-    ua_weapons: [Some(Stugna), Some(Stugna), Some(Javelin), None, None],
+    // The 47th's side as Units and Support (design/command.md): what the brigade had for the breach, with the 33rd's
+    // Leopard 2A6s, and what it cost in allotment points. June 2023: at most about 55 guns on the whole axis (RUSI),
+    // so a battery's morning for the breach; the Russian guns had 35 days of ammunition at the gun line.
+    catalog: [
+        (id: "stugna", name: ("Stugna-P team", "Розрахунок «Стугни-П»"), what: Post(Some(Stugna)), cost: 8, supply: 5, available: 4),
+        (id: "javelin", name: ("Javelin team", "Розрахунок «Джавеліна»"), what: Post(Some(Javelin)), cost: 9, supply: 5, available: 3),
+        (id: "rifles", name: ("Rifle section", "Стрілецьке відділення"), what: Post(None), cost: 3, supply: 2, available: 5),
+        (id: "leo2r", name: ("Leopard 2R mine plow", "Leopard 2R з тралом"), what: Vehicle(Leo2r), cost: 12, supply: 8, available: 3),
+        (id: "bmr2", name: ("BMR-2 mine clearer", "БМР-2"), what: Vehicle(Bmr2), cost: 8, supply: 5, available: 2),
+        (id: "wisent", name: ("Wisent 1 engineer tank", "Wisent 1"), what: Vehicle(Wisent), cost: 10, supply: 6, available: 1),
+        (id: "leo2a6", name: ("Leopard 2A6", "Leopard 2A6"), what: Vehicle(Leo2a6), cost: 12, supply: 8, available: 4),
+        (id: "bradley", name: ("M2A2 Bradley, with its squad", "M2A2 Bradley з десантом"), what: Vehicle(Bradley), cost: 6, supply: 4, available: 20),
+        (id: "evac", name: ("Bradley for the wounded", "Бредлі на евакуацію"), what: Evacuation, cost: 5, supply: 4, available: 6),
+    ],
+    support: [
+        (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 8),
+        (id: "himars", name: ("HIMARS mission", "Удар HIMARS"), what: Himars, cost: 8, available: 2),
+        (id: "smoke", name: ("Smoke mission", "Димова завіса"), what: Smoke, cost: 1, available: 10),
+        (id: "brigade", name: ("Brigade guns, 20 rounds", "Бригадна артилерія, 20 пострілів"), what: Brigade(20), cost: 2, available: 40),
+        (id: "mortar", name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"), what: Mortar(20), cost: 1, available: 8),
+        // FPVs were still scarce on this front in June 2023 (db/research/10 §3); a few minutes in the air.
+        (id: "fpv", name: ("FPV strike drone", "FPV-дрон"), what: Fpv, cost: 3, available: 3),
+    ],
+    // The Record: the overwatch in the forward tree line; the breach's twenty vehicles (the script's two groups);
+    // four Bradleys held back at the start line for the wounded; 64 rounds, one HIMARS and six smoke missions for the
+    // player's battery, the brigade's guns, the mortars, and one strike drone. 304 of 310 points.
+    allotment: (
+        points: 310,
+        record: [
+            (id: "stugna", at: Some(0)), (id: "stugna", at: Some(1)), (id: "javelin", at: Some(2)), (id: "rifles", at: Some(3)),
+            (id: "rifles", at: Some(4)),
+            (id: "leo2r", count: 2), (id: "bmr2"), (id: "wisent"), (id: "leo2a6", count: 3), (id: "bradley", count: 13),
+            (id: "evac", count: 4),
+            (id: "155", count: 4), (id: "himars"), (id: "smoke", count: 6), (id: "brigade", count: 30), (id: "mortar", count: 4), (id: "fpv"),
+        ],
+    ),
+    // The 291st's Kornets on the crest, covering both tracks.
     ru_weapons: [None, Some(Kornet), Some(Kornet), None, Some(Kornet), None, None],
     // The 291st's T-72B3s, dug in hull-down on the crest behind the trench, facing north.
     dug_in: [((-150.0, 724.0), 0.15), ((1050.0, 720.0), -0.1)],
@@ -125,11 +157,10 @@
     // Their EW (db/research/11 §5): platoon jammers in the second line behind the crest, each switched on and off, the heavier emitters
     // further back felt past the jam line; and GNSS jamming lifted about a minute before each Ka-52 run.
     ew: Some((jammers: [(-1100.0, 950.0), (-350.0, 950.0), (400.0, 950.0), (1150.0, 950.0)], radius: 1100.0, depth: 700.0, ka52_tell: true)),
-    // One strike drone for the morning: FPVs were still scarce on this front in June 2023 (db/research/10 §3);
-    // a few minutes in the air.
-    fpv: Some((count: 1, endurance: 300.0)),
-    // Four Bradleys held back at the start line for the wounded, sent one at a time where the player asks.
-    evacuation: Some((kind: Bradley, vehicles: 4, start: 900.0)),
+    // A strike drone flies a few minutes.
+    fpv: Some((endurance: 300.0)),
+    // The Bradleys held back at the start line for the wounded, sent one at a time where the player asks.
+    evacuation: Some((kind: Bradley, start: 900.0)),
 
     // Mala Tokmachka, 8 June 2023 (c09 §2, §6 set piece 1, §11 on the date): the guns finish their preparation in
     // the dark; the column is late and moves off at first light; nine vehicles behind a Leopard 2R and a BMR-2 on the
