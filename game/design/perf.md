@@ -103,9 +103,34 @@ What this settles:
 - **The tree belts** are the one measurable lever left: about 1.1 ms of GPU and 1.2 ms of frame here. That is the
   alpha-tested cards in the main pass and in the three cascades.
 
+### Where the trees' cost lies
+
+Interleaved again, two rounds, both dioramas (medians of 20 windows, load 10-13):
+
+| variant | Robotyne frame | GPU 3D pass | Vuhledar frame | GPU 3D pass |
+|---|---|---|---|---|
+| defaults | 11.6 ms | 5.16 ms | 13.35 ms | 6.70 ms |
+| `BAV_OFF=treeshadows` (crowns cast none) | 8.8 | 4.31 | 11.65 | 6.29 |
+| `BAV_OFF=trees` | 8.0 | 3.79 | 9.75 | 5.14 |
+
+Most of the belts' cost is their crowns' shadows: alpha-tested cards drawn into three cascades.
+
+**Tried and dropped: shrubs casting no shadow.** The shrub storey is about a third of the crown cards, and its
+shade falls inside the belt's own. So it got a mesh of its own that cast none, and side by side the band of shade
+looked the same. But three interleaved rounds (30 windows each, alternating which went first) showed no gain:
+
+| | Robotyne | Vuhledar |
+|---|---|---|
+| frame, before | 9.8 ms | 10.4 ms |
+| frame, after | 10.4 ms | 11.2 ms |
+
+The cost is in the trees' cards, not the shrubs'; the extra mesh per chunk may even have cost a little. The change
+was reverted.
+
 ## Next levers, not pulled yet
 
-- **The tree belts' cards.** Coarser crowns far off (a `VisibilityRange` LOD), or crowns that cast only into
-  the near cascade.
+- **The crowns' shadows.** These are a look decision, not a free win:
+  - two crossed shadow cards a tree instead of three, on a render layer only the sun sees;
+  - no crown shadows at all as a lower quality setting.
 - **The feed camera's 2D pass** at full resolution, about 0.6 ms at 2560x1600.
 - **Worst frames.** Rare ones of 15–20 ms remain; the hitch log names their game time for a trace of their own.
