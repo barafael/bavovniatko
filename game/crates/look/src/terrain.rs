@@ -160,12 +160,15 @@ struct Pal {
     core: Px,
     clod: Px,
     throw: Px,
-    track: Px,
+    /// A track's rut on its first pass, where many have passed (or one skidded), and the ground between the ruts.
+    rut: Px,
+    churned: Px,
+    between: Px,
     plow: Px,
 }
 
-const WINTER: Pal = Pal { earth: EARTH, dark_earth: DARK_EARTH, core: [0.12, 0.10, 0.09], clod: [0.16, 0.13, 0.11], throw: [0.48, 0.43, 0.38], track: [0.55, 0.52, 0.48], plow: [0.30, 0.26, 0.22] };
-const SUMMER: Pal = Pal { earth: [0.50, 0.43, 0.33], dark_earth: [0.30, 0.25, 0.19], core: [0.20, 0.16, 0.12], clod: [0.31, 0.26, 0.20], throw: [0.58, 0.52, 0.42], track: [0.46, 0.44, 0.32], plow: [0.44, 0.36, 0.26] };
+const WINTER: Pal = Pal { earth: EARTH, dark_earth: DARK_EARTH, core: [0.12, 0.10, 0.09], clod: [0.16, 0.13, 0.11], throw: [0.48, 0.43, 0.38], rut: [0.36, 0.33, 0.30], churned: [0.21, 0.18, 0.15], between: [0.66, 0.64, 0.61], plow: [0.30, 0.26, 0.22] };
+const SUMMER: Pal = Pal { earth: [0.50, 0.43, 0.33], dark_earth: [0.30, 0.25, 0.19], core: [0.20, 0.16, 0.12], clod: [0.31, 0.26, 0.20], throw: [0.58, 0.52, 0.42], rut: [0.53, 0.48, 0.35], churned: [0.42, 0.35, 0.26], between: [0.55, 0.53, 0.39], plow: [0.44, 0.36, 0.26] };
 
 fn pal() -> &'static Pal {
     if diorama().summer() { &SUMMER } else { &WINTER }
@@ -463,10 +466,15 @@ fn paint() -> Chunks {
         s += 3.0;
     }
 
-    // Shelterbelts: leaf litter, scrub and trampled snow under the trees.
+    // Shelterbelts: leaf litter, scrub and trampled snow under the trees. Not in the belts' gaps, which are field
+    // (they read as a black strip with no trees over it).
     for belt in &lay.belts {
         let mut s = 0.0;
         while s < belt.line.length() {
+            if belt.gaps.iter().any(|&(a, b)| s > a + 4.0 && s < b - 4.0) {
+                s += 2.5;
+                continue;
+            }
             let p = belt.line.point(s);
             let r = belt.width * 0.65;
             let summer = diorama().summer();
@@ -763,7 +771,7 @@ fn spawn_terrain(
 }
 
 /// Apply queued paint at most a few times a second, re-uploading only the chunks that changed.
-fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Res<Ground>>, mut images: ResMut<Assets<Image>>) {
+fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Res<Ground>>, mut images: ResMut<Assets<Image>>, mut trails: Local<Vec<Trail>>) {
     let Some(ground) = ground else { return };
     queue.timer -= time.delta_secs();
     if queue.ops.is_empty() || queue.timer > 0.0 {
@@ -775,12 +783,18 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
     let mut seed = 1000u32;
     let pal = pal();
     let summer = diorama().summer();
+    let now = time.elapsed_secs();
+    trails.retain(|t| now - t.at_time < 20.0);
     for op in ops {
         seed = seed.wrapping_add(7919);
+        if let Paint::Track { at, dir, gauge, tread, churn } = op {
+            lay_track(&mut images, &ground, &mut touched, &mut trails, now, at, dir, gauge, tread, churn, seed);
+            continue;
+        }
         let (at, r) = match op {
             Paint::Crater { at, radius, .. } => (at, radius * 3.2),
             Paint::Scorch { at, radius } => (at, radius),
-            Paint::Track { at, gauge, .. } => (at, gauge * 0.5 + 0.8),
+            Paint::Track { .. } => unreachable!(),
             Paint::Footprints { at } => (at, 0.8),
             Paint::Plow { at, .. } => (at, 3.2),
             Paint::Melt { at, radius } => (at, radius * 1.4),
@@ -797,15 +811,7 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
                 let n = match op {
                     Paint::Crater { at, seed: s, .. } => crater_colour(d, c, w, at, s),
                     Paint::Scorch { .. } => mix(c, [0.10, 0.09, 0.08], (1.0 - d) * 0.8 * (0.6 + 0.4 * value_noise(w.x / 2.0, w.y / 2.0, seed))),
-                    Paint::Track { dir, gauge, .. } => {
-                        // Tracks compact the snow to a fixed tone; they never darken what is already darker.
-                        // In June they crush the grass flat and grind the dust: a fixed tone either way.
-                        let lat = (w - at).perp_dot(dir).abs();
-                        let on_track = ((lat - gauge * 0.5).abs() < 0.5) as i32 as f32;
-                        let track = pal.track;
-                        let lum = |p: Px| p[0] * 0.3 + p[1] * 0.59 + p[2] * 0.11;
-                        if summer || lum(c) > lum(track) { mix(c, track, on_track * 0.6) } else { c }
-                    }
+                    Paint::Track { .. } => c,
                     Paint::Footprints { .. } => {
                         if summer { mix(c, [0.52, 0.51, 0.38], 0.12 * (1.0 - d)) } else if c[0] > 0.62 { mix(c, [0.62, 0.60, 0.58], 0.3 * (1.0 - d)) } else { c }
                     }
@@ -845,6 +851,103 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
         {
             crate::meshes::refresh_mips(TEX_PER_CHUNK, data);
         }
+    }
+}
+
+/// Where a hull's last track mark ended (and when), so that the next one carries its ruts on from there.
+struct Trail {
+    at: Vec2,
+    dir: Vec2,
+    gauge: f32,
+    at_time: f32,
+}
+
+/// A tracked hull's last stretch: two ruts from where its previous mark ended to `at`, bending with it, so a
+/// trail is continuous however the hull turned. A first pass presses a rut a little wider than the tread, darker
+/// than the snow and paler than the grass; every hull that follows, and every skid, digs it deeper towards
+/// churned earth, and a hard turn or a skid throws clods out to the sides. The ground between the ruts is
+/// dirtied a little, and the ruts flatten the furrows.
+#[allow(clippy::too_many_arguments)]
+fn lay_track(images: &mut Assets<Image>, ground: &Ground, touched: &mut Vec<usize>, trails: &mut Vec<Trail>, now: f32, at: Vec2, dir: Vec2, gauge: f32, tread: f32, churn: f32, seed: u32) {
+    let dir = dir.normalize_or_zero();
+    if dir == Vec2::ZERO {
+        return;
+    }
+    // This hull's trail: the head about two metres behind, facing the same way, on the same tracks.
+    let mut best: Option<(usize, f32)> = None;
+    for (i, t) in trails.iter().enumerate() {
+        let d = at - t.at;
+        let len = d.length();
+        if !(0.3..4.5).contains(&len) || (t.gauge - gauge).abs() > 0.01 || t.dir.dot(dir) < 0.6 || d.dot(dir) < 0.6 * len {
+            continue;
+        }
+        let score = (len - 2.1).abs();
+        if best.is_none_or(|b| score < b.1) {
+            best = Some((i, score));
+        }
+    }
+    let head = Trail { at, dir, gauge, at_time: now };
+    let (from, from_dir) = match best {
+        Some((i, _)) => {
+            let t = std::mem::replace(&mut trails[i], head);
+            (t.at, t.dir)
+        }
+        None => {
+            trails.push(head);
+            (at - dir * 2.0, dir)
+        }
+    };
+    // A turn is a skid as much as braking is.
+    let turn = from_dir.perp_dot(dir).atan2(from_dir.dot(dir)).abs();
+    let churn = churn.max((turn / 0.25).min(1.0));
+    let half = tread * 0.5 + 0.1 + churn * 0.2;
+    let ruts = [-1.0f32, 1.0].map(|s| (from + from_dir.perp() * s * gauge * 0.5, at + dir.perp() * s * gauge * 0.5));
+    let reach = gauge * 0.5 + half + 1.0;
+    let (lo, hi) = (tex_of(from.min(at) - Vec2::splat(reach)), tex_of(from.max(at) + Vec2::splat(reach)));
+    let pal = pal();
+    let dist2 = |a: Px, b: Px| (a[0] - b[0]).powi(2) + (a[1] - b[1]).powi(2) + (a[2] - b[2]).powi(2);
+    let deepen = 0.22 + 0.5 * churn;
+    for t in cover(lo.0.floor() as i64, lo.1.floor() as i64, hi.0.ceil() as i64, hi.1.ceil() as i64, at, f32::INFINITY) {
+        if !touched.contains(&t.chunk) {
+            touched.push(t.chunk);
+        }
+        let Some(mut img) = images.get_mut(&ground.images[t.chunk]) else { continue };
+        let Some(data) = img.data.as_mut() else { continue };
+        t.each(data, |px, w, _| {
+            // Along this stretch only (half-open, so where two stretches meet nothing is painted twice).
+            let mid = at - from;
+            let s = (w - from).dot(mid) / mid.length_squared().max(1e-6);
+            if !(0.0..1.0).contains(&s) {
+                return;
+            }
+            // How much of the texel each rut covers, by its distance from the rut's centre line, and how far
+            // outside the ruts it lies.
+            let (mut rut, mut outside) = (0.0f32, f32::MAX);
+            for (a, b) in ruts {
+                let ab = b - a;
+                let s = ((w - a).dot(ab) / ab.length_squared().max(1e-6)).clamp(0.0, 1.0);
+                let d = (w - (a + ab * s)).length();
+                rut = rut.max(((half - d) / TEXEL + 0.5).clamp(0.0, 1.0));
+                outside = outside.min(d - half);
+            }
+            let between = ((gauge * 0.5 - half - (w - (from + mid * s)).length()) / TEXEL + 0.5).clamp(0.0, 1.0);
+            let c = from_srgb8(px);
+            let mut n = c;
+            if rut > 0.0 {
+                // The first pass presses its tone in; ground already nearer churned than that only deepens.
+                if dist2(c, pal.churned) > dist2(pal.rut, pal.churned) {
+                    n = mix(n, pal.rut, rut * 0.9);
+                }
+                n = mix(n, pal.churned, rut * deepen);
+            } else if between > 0.0 && dist2(c, pal.churned) > dist2(pal.between, pal.churned) {
+                n = mix(n, pal.between, between * 0.3);
+            }
+            if churn > 0.15 && outside > 0.0 && outside < 1.0 && value_noise(w.x * 2.2, w.y * 2.2, seed) > 0.3 {
+                n = mix(n, pal.churned, 0.55 * churn * (1.0 - outside));
+            }
+            let code = if rut > 0.5 { 0 } else { px[3] };
+            px.copy_from_slice(&to_srgb8(n, code));
+        });
     }
 }
 

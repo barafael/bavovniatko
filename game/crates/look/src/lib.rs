@@ -15,6 +15,7 @@ pub mod models;
 pub mod robotyne;
 pub mod sky;
 pub mod terrain;
+pub mod trees;
 pub mod world;
 
 use bevy::prelude::*;
@@ -27,5 +28,6 @@ impl Plugin for ShadersPlugin {
         bevy::asset::embedded_asset!(app, "shaders/feed.wgsl");
         bevy::asset::embedded_asset!(app, "shaders/ground.wgsl");
         bevy::asset::embedded_asset!(app, "shaders/sky.wgsl");
+        bevy::asset::embedded_asset!(app, "shaders/vehicle.wgsl");
     }
 }

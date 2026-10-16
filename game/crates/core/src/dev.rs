@@ -120,11 +120,15 @@ pub struct DevEnv {
     pub evac: Option<f32>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
     pub era_at: Option<f32>,
+    /// `BAV_LINEUP_FIRE=1` with `BAV_LINEUP`: the burned-out row burns, a hull in flames, a smoulder and a pool of
+    /// diesel in turn, to look at the fires and their smoke side by side.
+    pub lineup_fire: bool,
     /// Light tuning without a rebuild: multipliers for the sun and the ambient light, and an exposure offset.
     pub light: [f32; 3],
     /// `BAV_SKY`: the February weather, `overcast` (the date's) or `sun` (the footage's).
     pub sky: Option<Weather>,
-    /// `BAV_TOUR`: which shot list the showcase films, `film` (design/showcase.md) or the minute tours.
+    /// `BAV_TOUR`: which shot list the showcase films, `film` (design/showcase.md), `trailer` (design/trailer.md) or
+    /// the minute tours.
     pub tour: Option<TourKind>,
 }
 
@@ -137,6 +141,8 @@ pub type ScriptedFire = (f32, Strike, Option<(f32, f32)>);
 pub enum TourKind {
     /// The showcase film's tour, one per diorama.
     Film,
+    /// The trailer's tour (design/trailer.md): the film's day, and everything the dioramas can show.
+    Trailer,
 }
 
 fn var(k: &str) -> Option<String> {
@@ -222,6 +228,7 @@ impl DevEnv {
             ground: var("BAV_GROUND"),
             log_stats: var("BAV_LOG_STATS").is_some(),
             era_at: parse("BAV_ERA_AT"),
+            lineup_fire: var("BAV_LINEUP_FIRE").is_some(),
             evac: parse("BAV_EVAC"),
             operator_off: var("BAV_OPERATOR").is_some_and(|v| v == "off"),
             fpv: var("BAV_FPV").and_then(|s| {

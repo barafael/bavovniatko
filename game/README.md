@@ -66,6 +66,12 @@ scripts/showcase.sh --film     # the film, 1920x1080, into devlog/videos/
 scripts/showcase.sh --scout    # the same at 640x360 with contact sheets, for retiming
 ```
 
+The trailer ([`design/trailer.md`](design/trailer.md)) is the same film grown to about five minutes with
+everything the dioramas show now: the observers' posts, RAAM and HIMARS, their jammers and one shelled out, the
+FPV through its goggles, and the Bradleys sent for the wounded. `scripts/trailer.sh` records it at 1920x1080
+into `devlog/videos/` (`--scout`: 640x360 with contact sheets, into `devlog/film/`), and then checks the game's
+logs for the moments its shots are timed on: a change to the battle that moves one is reported, not filmed past.
+
 `--film` takes tens of minutes on the machine (both parts, 1080p); `--scout` a few. The only switches the tour
 reads are `BAV_TOUR=film` and `BAV_SHOWCASE=<dir>`; the script sets them, so they are rarely typed by
 hand. The film and its row are recorded in `devlog/videos/` and `devlog/videos.md`.
@@ -126,7 +132,7 @@ The game is a Cargo workspace of four crates, layered so the battle cannot reach
 |---|---|---|
 | `bav-core` | `crates/core/` | what every part shares: the ground's geometry and both layouts (`geo.rs`, `geo/robotyne.rs`), which diorama is on the table and the sides (`diorama.rs`), the words in two registers (`text.rs`), the frame's `Step` order and the startup sets (`schedule.rs`), the `BAV_*` switches (`dev.rs`) and the small vocabulary they name (`vocab.rs`) |
 | `bav-sim` | `crates/sim/` | the battle, deterministic: vehicles, soldiers, mines, damage and wrecks (`units.rs`), positions, ATGM teams, artillery, RAAM, smoke and HIMARS (`fire.rs`), the day's script (`director.rs`), the Ka-52s and the dug-in tanks (`robotyne.rs`), the player's drone and posts (`player.rs`), and the queues it fills for the picture and the sound (`fx.rs`, `paint.rs`, `sound.rs`) |
-| `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`), Mala Tokmachka's set and light (`robotyne.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
+| `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`), the belts' trees (`trees.rs`), Mala Tokmachka's set and light (`robotyne.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
 | `bavovniatko` | `crates/bavovniatko/` | the game: the app (`main.rs`), the drone, OP and tree-line views and their controls (`camera.rs`), the HUD, briefing and debrief (`hud.rs`), the development systems (`dev.rs`) and the filmed showcase (`showcase.rs`) |
 
 `bav-sim` does not depend on `bav-look`. The battle spawns its entities with model handles the look builds at
@@ -173,7 +179,7 @@ calls a 155 mm mission on a point at game second 260 (or, without `@`, on the st
 that point (at height, then the dive). `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
 
 `BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
-turned) burned out, to look the models over. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
+turned) burned out, to look the models over; with `BAV_LINEUP_FIRE=1` the burned-out row burns (a hull in flames, a smoulder and a pool of diesel in turn), to look at the fires and their smoke side by side. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
 scales game time. `BAV_DIAG=1` logs the frame time, the CPU time a frame took across threads, the GPU time of every render pass and the entity counts every ten seconds, and any frame over 25 ms on its own
 (headless, it also lifts the frame cap), and `BAV_OFF=shadows,msaa,feed,trees,terrain,particles,vshadows,shade` leaves parts of the
 picture out, so a slow frame can be charged to what makes it slow before anything is rewritten. The tree belts cast no

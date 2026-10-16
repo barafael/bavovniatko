@@ -3,13 +3,20 @@
 //! A `.veh` file is a hull and a turret (or a helicopter's rotors), each a few meshes, one per material, already in
 //! the game's frame: metres, the front towards -Z, the tracks on y = 0, and the turret's parts relative to its
 //! ring. They are built into the binary, so it runs from anywhere.
+//!
+//! The models' own textures are dark and clean, and from 600 m they were dark blobs on a dark road. They are worn
+//! here as the panel lines under a livery the vehicle shader (`shaders/vehicle.wgsl`) paints in the hull's frame:
+//! each side's camouflage for the season, mud thrown up the lower hull, decks pale with dust or frost, and for
+//! a wreck, rust, ash and soot.
 
 use bevy::asset::RenderAssetUsages;
 use bevy::image::{CompressedImageFormats, ImageAddressMode, ImageFilterMode, ImageSampler, ImageSamplerDescriptor, ImageType};
 use bevy::mesh::{Indices, PrimitiveTopology};
+use bevy::pbr::ExtendedMaterial;
+use bevy::platform::collections::HashMap;
 use bevy::prelude::*;
 
-pub use bav_sim::units::Part;
+pub use bav_sim::units::{Livery, Part, VehicleMaterial};
 
 pub struct Baked {
     pub hull: Vec<Part>,
@@ -18,7 +25,13 @@ pub struct Baked {
     pub turret_at: Vec3,
     /// The gun's muzzle in the turret frame.
     pub muzzle: Vec3,
+    /// The hull's half width and its height, for painting what is built on it.
+    pub half_width: f32,
+    pub deck: f32,
 }
+
+/// A material's live and burned-out versions.
+pub type Pair = (Handle<VehicleMaterial>, Handle<VehicleMaterial>);
 
 /// Every baked model, by the name `tools/bake` gives it.
 pub const IDS: [&str; 10] = ["t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley", "ka52"];
@@ -60,32 +73,51 @@ impl Reader<'_> {
     }
 }
 
-/// Builds the meshes and materials of a baked model. `paint` multiplies every colour (weathering).
-pub fn load(id: &str, paint: Color, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>) -> Baked {
+/// Builds the meshes and materials of a baked model, painted in `livery`'s scheme (the frame and what each
+/// material is are filled in here).
+pub fn load(id: &str, livery: Livery, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<VehicleMaterial>) -> Baked {
     let mut r = Reader { b: file(id), at: 0 };
     assert_eq!(r.bytes(4), b"VEH1", "{id}.veh: not a baked vehicle");
-    let (turret_at, muzzle, _hull_lo, _hull_hi) = (r.v3(), r.v3(), r.v3(), r.v3());
-    let paint = paint.to_linear();
-    let mut mats = Vec::new();
+    let (turret_at, muzzle, hull_lo, hull_hi) = (r.v3(), r.v3(), r.v3(), r.v3());
+    let half_width = hull_hi.x.max(-hull_lo.x);
+    // Each material as read; a part's first wearing makes it a hull's or a turret's pair (live, charred), since
+    // the turret's frame sits on its ring and the shader paints by height in the hull's.
+    let mut stock = Vec::new();
     for _ in 0..r.u32() {
         let c = LinearRgba::new(r.f32(), r.f32(), r.f32(), r.f32());
         let alpha = r.u8();
         let cutoff = r.f32();
         let double_sided = r.u8() != 0;
         let levels = r.u32();
-        let texture = (levels > 0).then(|| images.add(mip_chain(&mut r, levels)));
-        let base_color = Color::LinearRgba(LinearRgba::new(c.red * paint.red, c.green * paint.green, c.blue * paint.blue, c.alpha));
+        let (texture, mean) = match levels {
+            0 => (None, LinearRgba::WHITE),
+            _ => {
+                let (image, mean) = mip_chain(&mut r, levels);
+                (Some(images.add(image)), mean)
+            }
+        };
         let alpha_mode = match alpha {
             0 => AlphaMode::Opaque,
             1 => AlphaMode::Mask(cutoff),
             _ => AlphaMode::Blend,
         };
+        // What the material is, by its mean colour: paint, the dark steel and rubber of the running gear and the
+        // guns, or what keeps its own colour (lamps, glass, markings).
+        let m = LinearRgba::new(c.red * mean.red, c.green * mean.green, c.blue * mean.blue, 1.0);
+        let lum = 0.2126 * m.red + 0.7152 * m.green + 0.0722 * m.blue;
+        let vivid = m.red > 3.0 * m.green.max(0.002) || m.blue > 1.6 * m.green.max(0.002);
+        let class = if alpha == 2 || vivid {
+            2.0
+        } else if lum < 0.012 {
+            1.0
+        } else {
+            0.0
+        };
         let cull_mode = if double_sided { None } else { Some(bevy::render::render_resource::Face::Back) };
-        let live = StandardMaterial { base_color, base_color_texture: texture.clone(), alpha_mode, double_sided, cull_mode, perceptual_roughness: 0.85, ..default() };
-        // Burned out: the paint gone to rust and soot, the texture's panel lines still there.
-        let charred = StandardMaterial { base_color: Color::srgb(0.3, 0.26, 0.23), perceptual_roughness: 1.0, ..live.clone() };
-        mats.push((materials.add(live), materials.add(charred)));
+        let base = StandardMaterial { base_color: Color::LinearRgba(c), base_color_texture: texture, alpha_mode, double_sided, cull_mode, perceptual_roughness: 0.6, ..default() };
+        stock.push((base, Vec4::new(class, if levels > 0 { lum.max(1e-3) } else { 0.0 }, 0.0, 0.0)));
     }
+    let mut made: HashMap<(usize, u8), Pair> = HashMap::new();
     let (mut hull, mut turret) = (Vec::new(), Vec::new());
     for _ in 0..r.u32() {
         let role = r.u8();
@@ -104,7 +136,15 @@ pub fn load(id: &str, paint: Color, meshes: &mut Assets<Mesh>, images: &mut Asse
             .with_inserted_attribute(Mesh::ATTRIBUTE_NORMAL, nrm)
             .with_inserted_attribute(Mesh::ATTRIBUTE_UV_0, uv)
             .with_inserted_indices(Indices::U32(idx));
-        let part = Part { mesh: meshes.add(mesh), material: mats[m].0.clone(), charred: mats[m].1.clone() };
+        let (material, charred) = made
+            .entry((m, role))
+            .or_insert_with(|| {
+                let (base, stuff) = &stock[m];
+                let lift = if role == 0 { 0.0 } else { turret_at.y };
+                pair(materials, base.clone(), &livery, Vec4::new(half_width, hull_hi.y, lift, 0.0), *stuff)
+            })
+            .clone();
+        let part = Part { mesh: meshes.add(mesh), material, charred };
         if role == 0 { hull.push(part) } else { turret.push(part) }
     }
     if turret.is_empty() {
@@ -117,11 +157,21 @@ pub fn load(id: &str, paint: Color, meshes: &mut Assets<Mesh>, images: &mut Asse
             .with_inserted_indices(Indices::U32(vec![0, 1, 2]));
         turret.push(Part { mesh: meshes.add(empty), material: hull[0].material.clone(), charred: hull[0].charred.clone() });
     }
-    Baked { hull, turret, turret_at, muzzle }
+    Baked { hull, turret, turret_at, muzzle, half_width, deck: hull_hi.y }
 }
 
-/// A texture and its mip levels, each stored encoded, smallest last.
-fn mip_chain(r: &mut Reader, levels: u32) -> Image {
+/// A material's live and burned-out versions: the same texture (its panel lines stay), painted by the scheme or
+/// by the fire.
+pub fn pair(materials: &mut Assets<VehicleMaterial>, base: StandardMaterial, livery: &Livery, frame: Vec4, stuff: Vec4) -> Pair {
+    let live = Livery { frame, stuff, ..livery.clone() };
+    let charred = Livery { frame: frame.with_w(1.0), ..live.clone() };
+    let charred_base = StandardMaterial { perceptual_roughness: 0.95, ..base.clone() };
+    (materials.add(ExtendedMaterial { base, extension: live }), materials.add(ExtendedMaterial { base: charred_base, extension: charred }))
+}
+
+/// A texture and its mip levels, each stored encoded, smallest last; and its mean colour (the last level's),
+/// linear.
+fn mip_chain(r: &mut Reader, levels: u32) -> (Image, LinearRgba) {
     let mut image: Option<Image> = None;
     let mut data = Vec::new();
     for _ in 0..levels {
@@ -132,6 +182,8 @@ fn mip_chain(r: &mut Reader, levels: u32) -> Image {
         image.get_or_insert(level);
     }
     let mut image = image.unwrap();
+    let last = &data[data.len().saturating_sub(4)..];
+    let mean = Color::srgb_u8(last[0], last[1], last[2]).to_linear();
     image.data = Some(data);
     image.texture_descriptor.mip_level_count = levels;
     image.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor {
@@ -143,5 +195,5 @@ fn mip_chain(r: &mut Reader, levels: u32) -> Image {
         anisotropy_clamp: 8,
         ..default()
     });
-    image
+    (image, mean)
 }

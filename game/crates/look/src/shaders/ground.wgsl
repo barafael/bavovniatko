@@ -1,6 +1,9 @@
-// Ground detail below the half-metre texel: the snow's ragged patch edges, furrows and stubble rows showing through
-// thin snow, and grain in the snow. The base texture's alpha carries the field's furrow direction (0 = no
-// furrows here). The texture is sampled through a small world-space jitter, so no texel edge is ever straight.
+// Ground detail below the half-metre texel, where the zoomed drone sees a pixel cover a hand's width: the snow's
+// ragged patch edges, furrows and stubble rows showing through thin snow, wind ripples and crust on the snow and
+// frozen clods on the bare earth; in June, grass in tufts and clumps, and clods where it is bare. Which applies is
+// read from the painted texel itself, so the detail follows the paint (a crater's earth gets clods, its grassy
+// rim gets tufts). The base texture's alpha carries the field's furrow direction (0 = no furrows here). The
+// texture is sampled through a small world-space jitter, so no texel edge is ever straight.
 
 #import bevy_pbr::{
     mesh_view_bindings::{fog, lights, view},
@@ -52,6 +55,20 @@ fn fbm2b(p: vec2<f32>, lod: f32) -> f32 {
     return (vn(p, lod).b - 0.5) * 0.65 + (vn(p * 2.3 + 11.0, lod + 1.2).a - 0.5) * 0.35;
 }
 
+// A point turned by `a` radians: each detail layer reads the noise along its own axes and at its own scale, so
+// the 256-point lattice's repeat (32 m at the finest scale) never lines up into a visible tiling.
+fn turn(p: vec2<f32>, a: f32) -> vec2<f32> {
+    let c = cos(a);
+    let s = sin(a);
+    return vec2<f32>(c * p.x - s * p.y, s * p.x + c * p.y);
+}
+
+// Noise at `per_m` lattice points a metre along turned axes, all four channels, -0.5..0.5; fading to 0 where a
+// pixel spans more than a lattice step.
+fn detail(w: vec2<f32>, per_m: f32, a: f32, fw: f32) -> vec4<f32> {
+    return vn(turn(w, a) * per_m + vec2<f32>(a * 37.0, a * 53.0), lod_at(fw, per_m)) - 0.5;
+}
+
 // The occluder map covers the diorama (terrain::occluder_map): r whether a crown stands within 100 m, g and b the
 // canopy's underside and top, a its density.
 const HALF: vec2<f32> = vec2<f32>(2304.0, 1792.0);
@@ -64,7 +81,9 @@ fn occ(q: vec2<f32>) -> vec4<f32> {
 // How much of the sun reaches this point past the tree belts: away from them (most of the field) one read says
 // so; near them, walk the map towards the sun in twelve growing steps (out to about 90 m, a crown's shadow at the
 // lowest sun) and take out what each crown in the way blocks. The walk starts at a different fraction of a step
-// on every pixel, so the shade's edge comes out soft and grainy, as the feed shows it, rather than banded.
+// from place to place on the ground, so the shade's edge comes out soft and mottled rather than banded. The
+// fraction is fixed to the ground, not to the screen: drawn from the pixel, it made a grain that boiled whenever
+// the picture moved by a fraction of a pixel, which the gimbal's tremor always does.
 fn sun_open(p: vec3<f32>, to_sun: vec3<f32>, jitter: f32) -> f32 {
     let flat = length(to_sun.xz);
     if flat < 0.01 || occ(p.xz).r < 0.01 {
@@ -96,7 +115,10 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
     var jittered = in;
     let near_tex = 1.0 - smoothstep(0.3, 1.2, fw);
     let lj = lod_at(fw, 0.9);
-    let jitter = vec2<f32>(fbm2(w * 0.9, lj), fbm2b(w * 0.9, lj)) * 0.7 * near_tex / 256.0;
+    // Two scales of wander: the broad one bends a texel's edge, the fine one frays it, so a texel-sized speck of
+    // paint (a thrown clod, a scrap of snow) comes out as a ragged blob rather than a square.
+    let fine = detail(w, 3.3, 0.7, fw);
+    let jitter = (vec2<f32>(fbm2(w * 0.9, lj), fbm2b(w * 0.9, lj)) * 0.7 + fine.xy * 0.7 + detail(w, 8.9, 2.4, fw).zw * 0.3) * near_tex / 256.0;
     jittered.uv = in.uv + jitter;
     var pbr_input = pbr_input_from_standard_material(jittered, is_front);
     let base = pbr_input.material.base_color;
@@ -118,11 +140,22 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
             c = mix(c, vec3<f32>(0.15, 0.21, 0.07), (ridge * 0.22 + plant * 0.25) * fade * ground.params.x);
             c = mix(c, c * 0.9, 1.0 - fade);
         }
-        let fg = fw;
-        let near = 1.0 - smoothstep(0.1, 0.5, fg);
+        // Below the half-metre texel: grass in clumps and tufts, their sunlit tips straw-yellow and their hearts
+        // dark green, and where the ground is bare (a track, a crater's earth, the churned strip) clods and
+        // cracks instead. Which of the two is read from the texel's own colour, so the detail follows the paint.
+        let green = clamp((c.g - max(c.r, c.b * 1.3)) * 9.0, 0.0, 1.0);
         let clump = (vn(w * 1.3, lod_at(fw, 1.3)).r - 0.5) * 0.18 + (vn(w * 0.31 + 7.0, lod_at(fw, 0.31)).g - 0.5) * 0.12;
-        let blade = (lattice(w * 5.0).a - 0.5) * 0.09 * near;
-        c = c * (1.0 + (clump * mix(0.5, 1.0, near) + blade) * ground.params.y);
+        let tuft = detail(w, 3.7, 1.3, fw);
+        let blade = detail(w, 9.1, 2.9, fw);
+        let grass = tuft.r * 0.55 + blade.g * 0.45;
+        // Tips and hearts: a warmer, paler tint where the tuft stands up, a deeper green in the hollows.
+        let tip = clamp(tuft.b * 2.0 + blade.a, -1.0, 1.0);
+        let tint = mix(vec3<f32>(0.88, 1.0, 1.1), vec3<f32>(1.12, 1.04, 0.74), tip * 0.5 + 0.5);
+        let clod = detail(w, 4.4, 0.4, fw);
+        let earth = clod.r * 0.6 + clod.g * 0.4 + blade.b * 0.25;
+        let fine_k = mix(earth * 0.5, grass * 0.75, green);
+        c = c * (1.0 + (clump + fine_k) * ground.params.y);
+        c = mix(c, c * tint, green * ground.params.y);
     } else {
         // The snow's patches below the texel: where the texel says the cover is partial, cut the earth and the
         // snow apart along a ragged world-space edge, keeping the texel's mean. Full snow and full earth, and
@@ -130,7 +163,7 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
         let lum0 = dot(c, vec3<f32>(0.3, 0.59, 0.11));
         let cover = smoothstep(0.30, 0.72, lum0);
         let partial = cover * (1.0 - cover) * 4.0;
-        let grain = fbm2(w * 0.55, lod_at(fw, 0.55)) + fbm2b(w * 2.1, lod_at(fw, 2.1)) * 0.5;
+        let grain = fbm2(w * 0.55, lod_at(fw, 0.55)) + fbm2b(w * 2.1, lod_at(fw, 2.1)) * 0.5 + fine.z * 0.5;
         let cut = smoothstep(-0.12, 0.12, grain + (cover - 0.5) * 0.6);
         let m = (cut - cover) * partial * near_tex;
         c = mix(c * vec3<f32>(0.62, 0.58, 0.52), min(c * 1.18, vec3<f32>(0.95)), 0.5 + 0.5 * m);
@@ -156,12 +189,20 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
             // At distance, the rows average out into a slightly darker field.
             c = mix(c, c * (1.0 - 0.18 * mix(0.3, 1.0, thin)), 1.0 - fade);
         }
-        // Wind-packed grain in the snow, and clods and crust at a quarter metre.
-        let fg = fw;
-        let close = 1.0 - smoothstep(0.1, 0.4, fg);
-        let g = (lattice(w * 3.0).g - 0.5) * 0.05 * close * ground.params.y;
-        let crust = (vn(w * 4.0, lod_at(fw, 4.0)).b - 0.5) * 0.06 * close;
-        c = c * (1.0 + g + crust);
+        // Below the texel: on the snow, the wind's work (ripples across the wind a few hand-widths apart, wandering,
+        // and a crust that is glazed in patches); on the bare earth, frozen clods and ruts with frost in their
+        // hollows. Which is read from the texel's own brightness, so it follows the snow's patches and the paint.
+        let lum1 = dot(c, vec3<f32>(0.3, 0.59, 0.11));
+        let snow = smoothstep(0.42, 0.66, lum1);
+        let warp = detail(w, 0.8, 2.2, fw);
+        let along = dot(turn(w, 0.45), vec2<f32>(1.0, 0.0)) * 2.4 + warp.r * 5.0;
+        let ripple = sin(along * 6.2832) * (1.0 - smoothstep(0.02, 0.08, fw)) * (0.5 + warp.g);
+        let crust = detail(w, 1.6, 1.1, fw);
+        let grain2 = detail(w, 7.7, 3.3, fw);
+        let on_snow = ripple * 0.035 + crust.b * 0.1 + grain2.r * 0.07;
+        let clod = detail(w, 4.4, 0.4, fw);
+        let on_earth = (clod.r * 0.6 + grain2.g * 0.4) * 0.42 + max(clod.a, 0.0) * 0.25;
+        c = c * (1.0 + mix(on_earth, on_snow, snow) * ground.params.y);
     }
     pbr_input.material.base_color = vec4<f32>(c, 1.0);
     pbr_input.material.base_color = alpha_discard(pbr_input.material, pbr_input.material.base_color);
@@ -175,7 +216,8 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
         let to_sun = lights.directional_lights[0].direction_to_light.xyz;
         let ndl = max(dot(pbr_input.N, to_sun), 0.0);
         if ndl > 0.0 {
-            let open = sun_open(in.world_position.xyz, to_sun, lattice(in.position.xy).a);
+            let wj = detail(w, 0.9, 0.3, fw).a * 2.2 + detail(w, 4.3, 1.9, fw).b * 1.6;
+            let open = sun_open(in.world_position.xyz, to_sun, clamp(0.5 + wj, 0.0, 1.0));
             if ground.params.w > 1.5 {
                 out.color = vec4<f32>(vec3<f32>(open), 1.0);
                 return out;

@@ -10,8 +10,8 @@ dio=${1:-vuhledar}
 [ $# -gt 0 ] && shift
 seeds=${*:-0 1 2 3}
 cargo build -q --profile fast
-# BAND_TAG=<name> keeps a variant apart (target/band/<diorama>-<name>); the switches it varies go in the environment.
-out=target/band/$dio${BAND_TAG:+-$BAND_TAG}
+# BAND_TAG=<name> keeps a variant apart (devlog/band/<diorama>-<name>); the switches it varies go in the environment.
+out=devlog/band/$dio${BAND_TAG:+-$BAND_TAG}
 mkdir -p "$out"
 run() {
   dir=$out/seed-$1

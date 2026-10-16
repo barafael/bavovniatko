@@ -99,14 +99,17 @@ pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
             color: Color::srgb(0.70, 0.72, 0.75),
             directional_light_color: Color::srgba(1.0, 0.95, 0.85, 0.15),
             directional_light_exponent: 12.0,
-            falloff: FogFalloff::from_visibility_colors(3000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77)),
+            // A frosty, clear morning ("visibility good"): the haze takes the far belts and the horizon, not the
+            // field a drone works at a kilometre or so.
+            falloff: FogFalloff::from_visibility_colors(6000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77)),
         },
         // Point-light shadows are detailed around the drone (no camera renders to a window: bav_look::feed shows the
         // picture).
         ShadowLodOrigin,
-        // The cheapest shadow filter (one hardware 2×2 comparison): the soft ones cost the ground's every pixel
-        // several shadow-map reads, and the feed's softening hides the difference.
-        bevy::light::ShadowFilteringMethod::Hardware2x2,
+        // A soft shadow filter. The hardware 2×2 comparison was the cheapest, but zoomed in, a shadow texel is several
+        // pixels across and its stair-stepped edge showed, and crawled whenever the sun or the gimbal moved. This one
+        // reads a few more texels a pixel for an edge with no steps in it.
+        bevy::light::ShadowFilteringMethod::Gaussian,
     )).id();
     if dev::aa() == dev::Aa::Smaa {
         commands.entity(cam).insert(bevy::anti_alias::smaa::Smaa::default());
@@ -192,6 +195,8 @@ struct Stick {
     climb: f32,
     /// Sport mode (shift).
     sport: bool,
+    /// Cine mode, slow and smooth for filming (the film's flown shots only).
+    cine: bool,
     /// Gimbal tilt rate, -1..1 (up positive).
     gimbal: f32,
     /// Zoom, in wheel notches (in positive).
@@ -217,7 +222,7 @@ impl Stick {
         s
     }
 
-    /// The scripted leg at game time `t`, if one is running: `w a s d q e r f` as on the keys, `+` sport, `u`/`n` gimbal
+    /// The scripted leg at game time `t`, if one is running: `w a s d q e r f` as on the keys, `+` sport, `-` cine, `u`/`n` gimbal
     /// up/down, `z`/`x` zoom in/out.
     fn scripted(t: f32, dt: f32, flight: &Flight) -> Option<Self> {
         let (_, _, spec) = flight.0.iter().find(|(from, to, _)| (*from..*to).contains(&t))?;
@@ -233,6 +238,7 @@ impl Stick {
                 'r' => s.climb += 1.0,
                 'f' => s.climb -= 1.0,
                 '+' => s.sport = true,
+                '-' => s.cine = true,
                 'u' => s.gimbal += 1.0,
                 'n' => s.gimbal -= 1.0,
                 'z' => s.zoom += 4.0 * dt,
@@ -293,8 +299,8 @@ fn drone_control(
         return;
     }
     let stick = Stick::scripted(script.t, dt, &flight).unwrap_or_else(|| Stick::read(&keys, &buttons, &motion, &scroll, &view));
-    // A Mavic-class drone: about 7 m/s for steady filming, 17 m/s in sport mode.
-    let (max_speed, max_accel) = if stick.sport { (17.0, 5.0) } else { (7.0, 2.5) };
+    // A Mavic 3: 15 m/s in its normal mode, 21 in sport, and a gentle 7 in cine for steady filming.
+    let (max_speed, max_accel) = if stick.sport { (21.0, 6.0) } else if stick.cine { (7.0, 2.5) } else { (15.0, 4.0) };
     let yaw = view.drone_yaw;
     let fwd = Vec3::new(-yaw.sin(), 0.0, -yaw.cos());
     let right = Vec3::new(yaw.cos(), 0.0, -yaw.sin());
@@ -305,7 +311,7 @@ fn drone_control(
     let ground_here = geo::height(view.drone_pos.x, view.drone_pos.z);
     // Where the drone wants to go: the sticks, or its own way home.
     let (desired, climb_cmd) = match view.rth {
-        None => ((fwd * stick.fwd + right * stick.right).normalize_or_zero() * max_speed, stick.climb * if stick.sport { 6.0 } else { 3.0 }),
+        None => ((fwd * stick.fwd + right * stick.right).normalize_or_zero() * max_speed, stick.climb * if stick.sport { 8.0 } else if stick.cine { 3.0 } else { 5.0 }),
         Some(Rth::Brake(left)) => {
             view.rth = Some(if left > dt { Rth::Brake(left - dt) } else { Rth::Back { from: view.drone_pos } });
             (Vec3::ZERO, 0.0)
@@ -324,9 +330,12 @@ fn drone_control(
             (if to.length() > 20.0 { Vec3::new(to.x, 0.0, to.y).normalize() * 10.0 } else { Vec3::ZERO }, climb)
         }
     };
-    let accel = if desired == Vec3::ZERO {
-        // Sticks centred: the position hold brings the aircraft back to where they were released and keeps it
-        // there to within a metre, as a GPS hold does; the gust shoves it about that point, slowly.
+    let accel = if desired == Vec3::ZERO && view.hold.is_none() && horizontal.length() > 1.0 {
+        // Sticks centred at speed: it brakes hard to a stop first, and holds where it stopped.
+        (-horizontal * 1.6 - gust * 0.08).clamp_length_max(6.0)
+    } else if desired == Vec3::ZERO {
+        // Sticks centred: the position hold brings the aircraft back to where it stopped and keeps it there to
+        // within a metre, as a GPS hold does; the gust shoves it about that point, slowly.
         let here = view.drone_pos.xz();
         let off = *view.hold.get_or_insert(here) - here;
         (Vec3::new(off.x, 0.0, off.y) * 0.8 - horizontal * 1.6 - gust * 0.08).clamp_length_max(max_accel)
@@ -420,12 +429,12 @@ fn fpv_control(
     fpv.lost_for = if fpv.control { 0.0 } else { fpv.lost_for + dt };
     let mut bank = 0.0;
     if fpv.control {
-        if let Some((_, (x, z))) = dev().fpv {
+        if let Some(at) = fpv.auto.or(dev().fpv.map(|(_, (x, z))| Vec2::new(x, z))) {
             // The test pilot: at the vehicle nearest the point, full throttle.
-            let at = Vec2::new(x, z);
             if let Some((_, tf)) = vehicles.iter().filter(|(v, _)| v.side == Side::Ru && v.state.alive()).min_by(|a, b| a.1.translation.xz().distance(at).total_cmp(&b.1.translation.xz().distance(at))) {
-                // At height until close, then the dive: low, a link dropout is the ground.
-                let close = tf.translation.xz().distance(p.xz()) < 300.0;
+                // At height until close, then the dive, steep enough to come in over a dug-in tank's berm: low, a
+                // link dropout is the ground. Along the dive the range stays under three times the height, so it holds.
+                let close = tf.translation.xz().distance(p.xz()) < 3.0 * (p.y - tf.translation.y).max(10.0) + 1.0;
                 let (yaw, pitch) = look_angles(tf.translation + Vec3::Y * if close { 2.4 } else { 40.0 } - p);
                 fpv.aim_yaw = yaw;
                 fpv.aim_pitch = pitch.clamp(-1.4, 0.5);
@@ -449,11 +458,12 @@ fn fpv_control(
     let fwd = Vec3::new(-fpv.yaw.sin() * fpv.pitch.cos(), fpv.pitch.sin(), -fpv.yaw.cos() * fpv.pitch.cos());
     let right = Vec3::new(fpv.yaw.cos(), 0.0, -fpv.yaw.sin());
     if fpv.lost_for < 0.8 {
-        // (A short dropout: the receiver holds the last command.) 8 m/s idling forward, about 40 at full throttle, faster in a dive.
-        let speed = 8.0 + 32.0 * fpv.throttle + (-fpv.pitch).max(0.0) * 12.0;
-        let want = fwd * speed + right * bank * 6.0;
+        // (A short dropout: the receiver holds the last command.) A 7-inch quad with an RPG warhead slung under
+        // it is no racer: 5 m/s idling forward, cruising at 15–25, about 28 flat out, a little more in a dive.
+        let speed = 5.0 + 23.0 * fpv.throttle + (-fpv.pitch).max(0.0) * 5.0;
+        let want = fwd * speed + right * bank * 5.0;
         let dv = want - fpv.vel;
-        fpv.vel += dv.clamp_length_max(14.0 * dt);
+        fpv.vel += dv.clamp_length_max(10.0 * dt);
     } else {
         // No link for long enough: the failsafe cuts the motors and it falls.
         fpv.throttle = 0.0;

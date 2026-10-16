@@ -2,6 +2,7 @@
 db/data/
 db/.env
 db/.venv/
+game/.venv/
 __pycache__/
 # user-local resume note
 claude-resume

@@ -5,15 +5,39 @@
 use crate::baked;
 use crate::meshes::{self, WEST_GREEN};
 use bav_core::diorama::diorama;
-use bav_sim::units::{FigureMeshes, Models, Palette, Part, VKind, VehicleMeshes};
+use bav_sim::units::{FigureMeshes, Livery, Models, Part, VKind, VehicleMaterial, VehicleMeshes};
 use bevy::{platform::collections::HashMap, prelude::*};
 use strum::VariantArray;
 
-pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>, palette: Res<Palette>) {
-    // The real models (tools/bake). Their paint is in the textures; this only weathers it.
-    let weathered = Color::srgb(0.93, 0.9, 0.84);
-    let baked: HashMap<&str, baked::Baked> = baked::IDS.iter().map(|&id| (id, baked::load(id, weathered, &mut meshes, &mut images, &mut materials))).collect();
-    let hand = |meshes: &mut Assets<Mesh>, m: meshes::MeshBuilder| vec![Part { mesh: meshes.add(m.build()), material: palette.vertex.clone(), charred: palette.charred.clone() }];
+/// Each model's paint, by the side that drove it and the season. Vuhledar, February: the Russian 4BO green gone
+/// dull, mud-caked, with what is left of a winter whitewash; the 72nd Brigade's T-64s plain green. Mala
+/// Tokmachka, June: the Leopards and Bradleys in NATO three-tone under the steppe's dust, the BMR-2 green.
+pub fn livery(id: &str) -> Livery {
+    let summer = diorama().summer();
+    let seed = baked::IDS.iter().position(|&i| i == id).unwrap_or(0) as f32 * 7.31;
+    let (scheme, whitewash) = match id {
+        "t80" | "t72" | "bmp1" | "bmp2" | "mtlb" => (0.0, if summer { 0.0 } else { 0.7 }),
+        "leo2a6" | "leo2r" | "bradley" => (1.0, 0.0),
+        "t64" => (2.0, 0.0),
+        _ => (3.0, 0.0),
+    };
+    Livery { scheme: Vec4::new(scheme, whitewash, summer as u32 as f32, seed), ..default() }
+}
+
+pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<VehicleMaterial>>) {
+    // The real models (tools/bake), painted over by the vehicle shader.
+    let baked: HashMap<&str, baked::Baked> = baked::IDS.iter().map(|&id| (id, baked::load(id, livery(id), &mut meshes, &mut images, &mut materials))).collect();
+    // What is built in code on a model's hull wears its colours as vertex colours, under the same livery.
+    let vertex = StandardMaterial { perceptual_roughness: 0.6, ..default() };
+    let mut hand_paint: HashMap<(&str, u32), baked::Pair> = HashMap::new();
+    let mut hand = |meshes: &mut Assets<Mesh>, id: &'static str, lift: f32, m: meshes::MeshBuilder| {
+        let b = &baked[id];
+        let (material, charred) = hand_paint
+            .entry((id, lift.to_bits()))
+            .or_insert_with(|| baked::pair(&mut materials, vertex.clone(), &livery(id), Vec4::new(b.half_width, b.deck, lift, 0.0), Vec4::new(0.0, 0.0, 1.0, 0.0)))
+            .clone();
+        vec![Part { mesh: meshes.add(m.build()), material, charred }]
+    };
     let mut vehicles = HashMap::new();
     for &k in VKind::VARIANTS {
         // The model whose hull it takes, and the hand-built top for those without a model of their own: the
@@ -30,19 +54,20 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mu
             VKind::Bmr2 => ("t64", Some(meshes::bmr2_top(WEST_GREEN))),
             VKind::Bradley => ("bradley", None),
         };
-        let b = &baked[id];
         let (turret, turret_at, muzzle) = match top {
-            Some((t, at)) => (hand(&mut meshes, t), at, Vec3::new(0.0, 0.6, -1.6)),
-            None => (b.turret.clone(), b.turret_at, b.muzzle),
+            Some((t, at)) => (hand(&mut meshes, id, at.y, t), at, Vec3::new(0.0, 0.6, -1.6)),
+            None => (baked[id].turret.clone(), baked[id].turret_at, baked[id].muzzle),
         };
         let extra = match k {
-            VKind::Leo2r => hand(&mut meshes, meshes::full_plow(-4.4, 4.2)),
-            VKind::Wisent => hand(&mut meshes, meshes::full_plow(-4.1, 3.8)),
-            VKind::Bmr2 => hand(&mut meshes, meshes::kmt_rollers()),
+            VKind::Leo2r => hand(&mut meshes, id, 0.0, meshes::full_plow(-4.4, 4.2)),
+            VKind::Wisent => hand(&mut meshes, id, 0.0, meshes::full_plow(-4.1, 3.8)),
+            VKind::Bmr2 => hand(&mut meshes, id, 0.0, meshes::kmt_rollers()),
             _ => vec![],
         };
         // The carousel tanks may carry a KMT-7 at the head of a column.
-        let plow_hull = k.carousel().then(|| b.hull.iter().cloned().chain(hand(&mut meshes, meshes::kmt7())).collect());
+        let plow = k.carousel().then(|| hand(&mut meshes, id, 0.0, meshes::kmt7()));
+        let b = &baked[id];
+        let plow_hull = plow.map(|p| b.hull.iter().cloned().chain(p).collect());
         let hull = b.hull.iter().cloned().chain(extra).collect();
         vehicles.insert(k, VehicleMeshes { hull, plow_hull, turret, turret_at, muzzle });
     }

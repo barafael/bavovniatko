@@ -1,4 +1,5 @@
-// The look of the war as most people saw it: a cheap drone camera's compressed, grainy, washed-out video.
+// The look of the war as most people saw it: a small drone camera's compressed, slightly soft, washed video,
+// which the jammed link degrades from there.
 // Mode 1 is the OP's binoculars instead: cleaner, colder, with a round field of view when zoomed.
 
 #import bevy_sprite::mesh2d_vertex_output::VertexOutput
@@ -78,39 +79,44 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
                 stale = 1.0;
             }
         }
-        // Compression: soften, then over-sharpen (the halo look of low-bitrate H.264), more so as the rate falls.
-        let r = 1.5 + 3.0 * soft;
+        // Compression: on a clean link a little soft with the camera's own light sharpening; as the rate falls,
+        // softer, then over-sharpened (the halo look of low-bitrate H.264).
+        let r = 1.0 + 3.5 * soft;
         let c0 = textureSample(screen_texture, texture_sampler, uv).rgb;
         let blur = (textureSample(screen_texture, texture_sampler, uv + vec2<f32>(px.x, 0.0) * r).rgb
             + textureSample(screen_texture, texture_sampler, uv - vec2<f32>(px.x, 0.0) * r).rgb
             + textureSample(screen_texture, texture_sampler, uv + vec2<f32>(0.0, px.y) * r).rgb
             + textureSample(screen_texture, texture_sampler, uv - vec2<f32>(0.0, px.y) * r).rgb) * 0.25;
-        var c = mix(blur, c0, 0.55 - 0.4 * soft);
-        c = c + (c - blur) * (0.9 - 0.5 * soft);
-        // Macroblock quantisation: flatten colour within blocks, 8 px clean, up to 24 px starved.
+        var c = mix(blur, c0, 0.8 - 0.65 * soft);
+        c = c + (c - blur) * (0.3 + 0.1 * soft);
+        // Macroblock quantisation: flatten colour within blocks, 8 px and barely there clean, up to 24 px starved.
         let mb = 8.0 + 16.0 * soft;
         let bq = (floor(uv * dims / mb) + 0.5) * mb / dims;
         let cb = textureSample(screen_texture, texture_sampler, bq).rgb;
-        c = mix(c, cb, 0.12 + 0.6 * soft);
+        c = mix(c, cb, 0.04 + 0.68 * soft);
         c = mix(c, vec3<f32>(0.38, 0.5, 0.4) * (0.5 + luma(c)), stale * 0.35);
-        // Washed-out, desaturated small-sensor colour with clipped whites.
+        // A small sensor's colour: a little washed, the shadows lifted rather than crushed (the camera's auto
+        // exposure and tone curve keep a dark hull readable against the field), the whites rolling off before
+        // they clip. A starved link loses the shadows again.
         let l = luma(c);
-        // Washed-out small-sensor colour, hard contrast: snow clips, steel goes near black.
         c = mix(vec3<f32>(l), c, fx.saturation);
-        c = (c - 0.5) * 1.18 + 0.52;
-        c = clamp(c, vec3<f32>(0.03), vec3<f32>(0.96));
-        c = c * vec3<f32>(0.97, 1.0, 1.02);
+        c = max(c, vec3<f32>(0.0));
+        c = pow(c, vec3<f32>(0.9 + 0.1 * soft));
+        c = (c - 0.5) * (1.07 + 0.1 * soft) + 0.5;
+        c = 0.025 + c * 0.95;
+        c = min(c, vec3<f32>(0.97));
+        c = c * vec3<f32>(0.98, 1.0, 1.015);
         // Chroma shift under jamming.
         if g > 0.0 {
             let r = textureSample(screen_texture, texture_sampler, uv + vec2<f32>(px.x * 4.0 * g, 0.0)).r;
             c.r = mix(c.r, r, g);
         }
-        // Grain, re-rolled every frame, stronger in the shadows.
+        // Sensor noise, re-rolled every frame, stronger in the shadows and as the link starves.
         let n = grain_at(floor(uv * dims), frame) - 0.5;
-        c += n * (0.035 + 0.035 * (1.0 - l)) * fx.grain;
-        // Lens vignette.
+        c += n * (0.012 + 0.018 * (1.0 - l) + 0.04 * soft) * fx.grain;
+        // Lens vignette: a zoom camera's is faint.
         let d = distance(uv, vec2<f32>(0.5));
-        c *= 1.0 - smoothstep(0.45, 0.85, d) * 0.45;
+        c *= 1.0 - smoothstep(0.55, 0.9, d) * 0.18;
         c += vec3<f32>(fx.flash) * 0.7;
         return vec4<f32>(clamp(c, vec3<f32>(0.0), vec3<f32>(1.0)), 1.0);
     }
@@ -136,13 +142,13 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
         var c = textureSample(screen_texture, texture_sampler, suv).rgb;
         let b = textureSample(screen_texture, texture_sampler, suv + vec2<f32>(px.x * 2.0, 0.0)).rgb;
         c = mix(c, b, 0.4);
-        // Small-camera colour: warm, saturated, crushed.
-        c = (c - 0.5) * 1.25 + 0.5;
+        // Small-camera colour: warm, saturated, contrasty.
+        c = (c - 0.5) * 1.15 + 0.5;
         c = c * vec3<f32>(1.06, 1.0, 0.9);
         // Snow: coloured noise, growing as the signal fails; a dropout now and then.
         let q = floor(uv * dims) + vec2<f32>(frame * 1.37, frame * 2.11);
         let n = vec3<f32>(hash(q), hash(q + 17.0), hash(q + 31.0));
-        c = mix(c, n, 0.05 + 0.75 * g * g);
+        c = mix(c, n, 0.03 + 0.77 * g * g);
         if hash(vec2<f32>(frame, 11.0)) < max(g - 0.75, 0.0) {
             c = n * 0.8;
         }
@@ -195,7 +201,7 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
     // ---- OP binoculars ----
     var c = textureSample(screen_texture, texture_sampler, uv).rgb;
     let l = luma(c);
-    c = mix(vec3<f32>(l), c, 0.6) * vec3<f32>(0.96, 0.99, 1.04);
+    c = mix(vec3<f32>(l), c, 0.8) * vec3<f32>(0.97, 0.99, 1.03);
     c += (hash(uv * dims + frame) - 0.5) * 0.035 * fx.grain;
     // Round field of view once the binoculars come up.
     let aspect = dims.x / dims.y;

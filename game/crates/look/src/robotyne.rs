@@ -23,7 +23,7 @@ impl Plugin for RobotyneLookPlugin {
 /// The observers' water tower, by the farm on the N08.
 const TOWER: Vec2 = Vec2::new(-1150.0, -1470.0);
 
-pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>) {
+pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>, mut paint: ResMut<Assets<crate::baked::VehicleMaterial>>) {
     let solid = materials.add(StandardMaterial { perceptual_roughness: 0.95, ..default() });
     let mut set = MeshBuilder::new();
     // The kolkhoz by the highway: long sheds, two of them roofless, a row of silos, and the water tower.
@@ -74,7 +74,7 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut m
     commands.spawn((Mesh3d(meshes.add(set.build())), MeshMaterial3d(solid)));
     commands.insert_resource(ObservationPost { eye: g + Vec3::new(0.0, 18.4, 2.7), building: TOWER });
 
-    let b = crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials);
+    let b = crate::baked::load("ka52", crate::models::livery("ka52"), &mut meshes, &mut images, &mut paint);
     let heli = HeliModels { body: b.hull, rotor: b.turret, rotor_at: b.turret_at };
     commands.insert_resource(heli);
 }
@@ -116,15 +116,20 @@ pub fn daylight(
     let day = s(0.0, 30.0, elev);
     let dawn = s(-5.0, 2.0, elev) * (1.0 - s(4.0, 16.0, elev));
     let mix3 = |a: [f32; 3], b: [f32; 3], t: f32| [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
-    let e = elev.max(10.0).to_radians();
     let [k_sun, k_amb, ev_off] = crate::dev::dev().light;
     let up = s(-1.0, 7.0, elev);
+    // The direction the light comes from moves in the sun's steps (`world::SUN_STEP_MIN`): shadows of things
+    // standing still hold still.
+    let hs = crate::world::sun_hours(crate::director::clock_minutes(script.t));
+    let e = (top * (std::f32::consts::PI * (hs - rise) / (set - rise)).sin()).max(10.0).to_radians();
+    let azim_step = (53.0 + (hs - rise) / (noon - rise) * 127.0).to_radians();
     for (mut l, mut tf) in &mut sun {
         // Before sunrise the light is the glow of the sky in the north-east: weak, blue, soft.
         l.illuminance = (14000.0 * up * (0.6 + 0.4 * day) + 2500.0 * (1.0 - up) * (0.4 + 0.6 * twilight)) * k_sun;
-        let dir = Vec3::new(azim.sin() * e.cos(), e.sin(), -azim.cos() * e.cos());
-        if dbg != Some(crate::dev::DayDebug::NoSun) {
-            *tf = Transform::from_translation(dir).looking_at(Vec3::ZERO, Vec3::Y);
+        let dir = Vec3::new(azim_step.sin() * e.cos(), e.sin(), -azim_step.cos() * e.cos());
+        let to = Transform::from_translation(dir).looking_at(Vec3::ZERO, Vec3::Y);
+        if dbg != Some(crate::dev::DayDebug::NoSun) && tf.rotation != to.rotation {
+            *tf = to;
         }
         let warm = [1.0, 0.62 + 0.33 * s(2.0, 20.0, elev), 0.38 + 0.52 * s(2.0, 25.0, elev)];
         let c = mix3([0.55, 0.65, 1.0], warm, up);
@@ -149,8 +154,8 @@ pub fn daylight(
     sky_dome.set(crate::sky::Weather::Veil, h, Color::srgb(z[0], z[1], z[2]), sky, sun_at, Color::srgb(1.0, 0.78 + 0.18 * day, 0.55 + 0.35 * day), 2.0 * s(-3.0, 10.0, elev), 0.3 + 0.7 * s(-4.0, 12.0, elev));
     for (mut f, mut ex) in &mut cam {
         f.color = sky;
-        // Clearer than February's haze, though the morning was 79% cloud.
-        f.falloff = FogFalloff::from_visibility_colors(4300.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77));
+        // Clearer than February's haze, though the morning was 79% cloud: the cloud was high, the air dry.
+        f.falloff = FogFalloff::from_visibility_colors(8000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77));
         // The haze towards the sun glows at dawn.
         f.directional_light_color = Color::srgba(1.0, 0.62, 0.36, 0.15 + 0.45 * dawn);
         // A camera's exposure follows the light: the blue hour reads dark, but not black.

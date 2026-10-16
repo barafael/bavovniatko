@@ -22,14 +22,14 @@ impl Plugin for DevPlugin {
 
 /// `BAV_LINEUP="x,z,heading"`: every vehicle model side by side, 10 m apart, and behind them the same burned
 /// out, turrets turned a little so the split shows.
-fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
+fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<crate::baked::VehicleMaterial>>) {
     use crate::units::{VKind, VehicleMeshes, burnt, dress, dress_charred, skin};
     use strum::VariantArray;
     let Some([x, z, heading]) = dev().lineup else { return };
     let rot = Quat::from_rotation_y(heading.to_radians());
     let across = rot * Vec3::X;
     let back = rot * Vec3::Z;
-    let b = crate::baked::load("ka52", Color::WHITE, &mut meshes, &mut images, &mut materials);
+    let b = crate::baked::load("ka52", bav_look::models::livery("ka52"), &mut meshes, &mut images, &mut materials);
     let ka52 = VehicleMeshes { hull: b.hull, plow_hull: None, turret: b.turret, turret_at: b.turret_at, muzzle: b.muzzle };
     let all: Vec<&VehicleMeshes> = VKind::VARIANTS.iter().map(|k| models.vehicle(*k)).chain([&models.ua_tank, &ka52]).collect();
     for (i, m) in all.into_iter().enumerate() {
@@ -47,6 +47,20 @@ fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes:
                 let mut e = commands.spawn((burnt(&m.hull), at));
                 dress_charred(&mut e, &m.hull);
                 e.with_children(|c| dress_charred(&mut c.spawn((burnt(&m.turret), turret)), &m.turret));
+                if dev().lineup_fire {
+                    use crate::fx::{Emitter, EmitterKind};
+                    match i % 3 {
+                        0 => {
+                            e.insert(Emitter::new(EmitterKind::WreckFire, 5.0, 1.0e5, Vec3::Y * 1.5));
+                        }
+                        1 => {
+                            e.insert(Emitter::new(EmitterKind::Smoulder, 1.2, 1.0e3, Vec3::Y));
+                        }
+                        _ => {
+                            commands.spawn((Transform::from_translation(at.transform_point(Vec3::X * 3.5)), Emitter::new(EmitterKind::PoolFire, 7.0, 1.0e5, Vec3::ZERO)));
+                        }
+                    }
+                }
             }
         }
     }

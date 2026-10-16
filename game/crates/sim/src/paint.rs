@@ -7,7 +7,9 @@ use bevy::prelude::*;
 pub enum Paint {
     Crater { at: Vec2, radius: f32, seed: u32 },
     Scorch { at: Vec2, radius: f32 },
-    Track { at: Vec2, dir: Vec2, gauge: f32 },
+    /// A tracked hull's last two metres: its tracks' centres `gauge` apart, each `tread` wide, and how hard they
+    /// skidded and dug in (0 rolling straight, 1 turning or braking as hard as it can).
+    Track { at: Vec2, dir: Vec2, gauge: f32, tread: f32, churn: f32 },
     Footprints { at: Vec2 },
     /// A mine plow's strip of turned earth, with spoil thrown to both sides.
     Plow { at: Vec2, dir: Vec2 },

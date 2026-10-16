@@ -133,10 +133,34 @@ impl Polyline {
         (d * side, s)
     }
 
+    /// `lateral`, searching only the stretch within `window` of the arc length `near`: a vehicle that knows
+    /// roughly where it is on its route, so a bend that doubles back cannot claim it.
+    pub fn lateral_near(&self, p: Vec2, near: f32, window: f32) -> (f32, f32) {
+        let (d, s) = self.project_in(p, self.segment_at(near - window), self.segment_at(near + window));
+        let side = (p - self.point(s)).dot(self.normal(s)).signum();
+        (d * side, s)
+    }
+
+    /// The point at arc length `s`, carried on straight past either end.
+    pub fn point_beyond(&self, s: f32) -> Vec2 {
+        let len = self.length();
+        if s < 0.0 {
+            self.point(0.0) + self.tangent(0.0) * s
+        } else if s > len {
+            self.point(len) + self.tangent(len) * (s - len)
+        } else {
+            self.point(s)
+        }
+    }
+
     /// Distance from `p` to the polyline, and the arc length of the closest point.
     pub fn project(&self, p: Vec2) -> (f32, f32) {
+        self.project_in(p, 0, self.pts.len() - 2)
+    }
+
+    fn project_in(&self, p: Vec2, first: usize, last: usize) -> (f32, f32) {
         let mut best = (f32::MAX, 0.0);
-        for i in 0..self.pts.len() - 1 {
+        for i in first..=last {
             let (a, b) = (self.pts[i], self.pts[i + 1]);
             let ab = b - a;
             let len2 = ab.length_squared();

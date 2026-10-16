@@ -18,7 +18,7 @@ impl Plugin for FxPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(FxLight(1.0))
             .add_systems(Startup, setup_fx)
-            .add_systems(Update, (play_requests, update_particles, update_emitters, grass_fires, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
+            .add_systems(Update, (play_requests, update_particles, update_emitters, fire_glow, grass_fires, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
     }
 }
 
@@ -46,6 +46,54 @@ fn turbulence_of(kind: Kind) -> f32 {
 
 const STEPS: usize = 8;
 
+/// A burning hull's smoke is not one colour: soot-black over the fire, greying as it rises and spreads, brownish
+/// off a smouldering wreck. The burning kinds come in this many shades from soot to pale grey...
+const SHADES: usize = 6;
+/// ...each neutral or brownish.
+const HUES: usize = 2;
+/// How far past white a flame's colour goes (see `setup_fx`).
+const FLAME: f32 = 2.2;
+
+/// Whether a kind takes its colour from the smoke ramp (shade and hue) rather than one colour of its own.
+fn ramped(k: Kind) -> bool {
+    matches!(k, Kind::BlackSmoke | Kind::GreySmoke)
+}
+
+/// The smoke ramp's colour: `shade` 0 is the soot over a fuel fire, the last a sunlit grey-white veil.
+fn shade_rgb(shade: usize, hue: usize) -> [f32; 3] {
+    let t = shade as f32 / (SHADES - 1) as f32;
+    let (a, b) = if hue == 0 { ([0.10, 0.097, 0.094], [0.60, 0.60, 0.61]) } else { ([0.13, 0.105, 0.08], [0.62, 0.57, 0.49]) };
+    [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]
+}
+
+/// Where a puff sits on the smoke ramp: its hue, and its shade at birth and at death (smoke greys as it ages).
+#[derive(Clone, Copy, Default)]
+pub struct Tone {
+    pub hue: u8,
+    pub from: f32,
+    pub to: f32,
+}
+
+impl Tone {
+    /// A kind's own tone, for puffs nobody chose one for: the old fixed colours, greying a little with age.
+    fn of(k: Kind) -> Self {
+        match k {
+            Kind::BlackSmoke => Tone { hue: 0, from: 0.4, to: 2.2 },
+            Kind::GreySmoke => Tone { hue: 0, from: 3.0, to: 4.0 },
+            _ => Tone::default(),
+        }
+    }
+
+    /// Which of its kind's tones a puff shows at life fraction `k` (always 0 off the ramp).
+    fn at(&self, kind: Kind, k: f32) -> usize {
+        if !ramped(kind) {
+            return 0;
+        }
+        let shade = (self.from + (self.to - self.from) * k).round().clamp(0.0, (SHADES - 1) as f32) as usize;
+        self.hue.min(HUES as u8 - 1) as usize * SHADES + shade
+    }
+}
+
 /// How bright the scene is lit, for the unlit particles (1 in daylight). Smoke that ignores the light glows white
 /// in the blue hour; this dims it with everything else.
 #[derive(Resource)]
@@ -58,6 +106,8 @@ pub struct FxAssets {
     /// Four puff shapes, one per quadrant of the atlas, so no two puffs are the same stamp.
     quads: [Handle<Mesh>; 4],
     mats: Vec<Handle<StandardMaterial>>,
+    /// Where each kind's materials start in `mats` (a tone's alpha steps follow one another).
+    first: Vec<usize>,
     /// Each non-emissive material's own colour, to scale by [`FxLight`].
     base: Vec<Option<Color>>,
     pub crater_flash: Handle<StandardMaterial>,
@@ -66,10 +116,9 @@ pub struct FxAssets {
 }
 
 impl FxAssets {
-    fn mat(&self, k: Kind, alpha: f32) -> Handle<StandardMaterial> {
-        let ki = k as usize;
+    fn mat(&self, k: Kind, tone: usize, alpha: f32) -> Handle<StandardMaterial> {
         let ai = ((alpha.clamp(0.0, 1.0) * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
-        self.mats[ki * STEPS + ai].clone()
+        self.mats[self.first[k as usize] + tone * STEPS + ai].clone()
     }
 }
 
@@ -109,50 +158,64 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
     let tex = images.add(puff_texture());
     let mut mats = Vec::new();
     let mut base = Vec::new();
+    let mut first = Vec::new();
     for &k in Kind::VARIANTS {
-        for a in 0..STEPS {
-            let alpha = (a as f32 + 1.0) / STEPS as f32;
-            // Unlit, pre-shaded for an overcast sky: billboards lit by a low sun look wrong from behind.
-            let (rgb, emissive): ([f32; 3], f32) = match k {
-                // The burning-vehicle columns read dark grey in the footage, never pitch black: the drone's
-                // camera lifts them, and stacked puffs crush towards black on their own.
-                Kind::BlackSmoke => ([0.11, 0.105, 0.10], 0.0),
-                Kind::GreySmoke => ([0.38, 0.38, 0.38], 0.0),
-                Kind::WhiteSmoke => ([0.62, 0.63, 0.64], 0.0),
-                Kind::Fog => ([0.68, 0.69, 0.70], 0.0),
-                Kind::Hc => ([0.44, 0.44, 0.45], 0.0),
-                Kind::Steam => ([0.84, 0.85, 0.86], 0.0),
-                Kind::Dirt => ([0.13, 0.11, 0.09], 0.0),
-                Kind::Dust => ([0.44, 0.38, 0.28], 0.0),
-                // In summer the same particles are dust: pale, warm, and visible from kilometres.
-                Kind::Snow => if crate::diorama::diorama().summer() { ([0.60, 0.55, 0.46], 0.0) } else { ([0.70, 0.71, 0.73], 0.0) },
-                Kind::Fire => ([1.0, 0.55, 0.15], 6.0),
-                Kind::Propellant => ([1.0, 0.95, 0.75], 10.0),
-                Kind::Flash => ([1.0, 0.85, 0.6], 30.0),
-                Kind::Tracer => ([1.0, 0.45, 0.3], 20.0),
-                Kind::TracerGreen => ([0.55, 1.0, 0.45], 20.0),
-                Kind::Spark => ([1.0, 0.6, 0.2], 12.0),
-            };
-            let c = Color::srgba(rgb[0], rgb[1], rgb[2], alpha);
-            base.push((emissive == 0.0).then_some(c));
-            mats.push(materials.add(StandardMaterial {
-                base_color: c,
-                base_color_texture: Some(tex.clone()),
-                emissive: if emissive > 0.0 { LinearRgba::from(Color::srgb(rgb[0], rgb[1], rgb[2])) * emissive * alpha } else { LinearRgba::BLACK },
-                alpha_mode: if emissive > 0.0 { AlphaMode::Add } else { AlphaMode::Blend },
-                unlit: true,
-                double_sided: true,
-                cull_mode: None,
-                perceptual_roughness: 1.0,
-                fog_enabled: true,
-                ..default()
-            }));
+        first.push(mats.len());
+        let tones = if ramped(k) { SHADES * HUES } else { 1 };
+        for tone in 0..tones {
+            for a in 0..STEPS {
+                let alpha = (a as f32 + 1.0) / STEPS as f32;
+                // Unlit, pre-shaded for an overcast sky: billboards lit by a low sun look wrong from behind.
+                let (rgb, emissive): ([f32; 3], f32) = match k {
+                    // The burning-vehicle columns read dark grey in the footage, black only right over the fire:
+                    // the drone's camera lifts them, and stacked puffs crush towards black on their own.
+                    Kind::BlackSmoke | Kind::GreySmoke => (shade_rgb(tone % SHADES, tone / SHADES), 0.0),
+                    Kind::WhiteSmoke => ([0.66, 0.67, 0.68], 0.0),
+                    Kind::Fog => ([0.70, 0.71, 0.72], 0.0),
+                    // Zinc-chloride smoke is grey-white, not black: it hides by its thickness.
+                    Kind::Hc => ([0.66, 0.66, 0.67], 0.0),
+                    Kind::Steam => ([0.84, 0.85, 0.86], 0.0),
+                    Kind::Dirt => ([0.13, 0.11, 0.09], 0.0),
+                    Kind::Dust => ([0.44, 0.38, 0.28], 0.0),
+                    // In summer the same particles are dust: pale, warm, and visible from kilometres.
+                    Kind::Snow => if crate::diorama::diorama().summer() { ([0.60, 0.55, 0.46], 0.0) } else { ([0.70, 0.71, 0.73], 0.0) },
+                    // Deep orange: the tone mapper bleaches bright flame towards yellow on its own.
+                    Kind::Fire => ([1.0, 0.5, 0.12], 6.0),
+                    Kind::Propellant => ([1.0, 0.95, 0.75], 10.0),
+                    Kind::Flash => ([1.0, 0.85, 0.6], 30.0),
+                    Kind::Tracer => ([1.0, 0.45, 0.3], 20.0),
+                    Kind::TracerGreen => ([0.55, 1.0, 0.45], 20.0),
+                    Kind::Spark => ([1.0, 0.6, 0.2], 12.0),
+                };
+                let c = Color::srgba(rgb[0], rgb[1], rgb[2], alpha);
+                base.push((emissive == 0.0).then_some(c));
+                // An unlit material draws its base colour alone (the emissive is the lit path's), so a flame's
+                // brightness has to be in its colour: past 1, so the tone mapper keeps it bright, and blended
+                // rather than added, so it stays orange over snow instead of washing out to white.
+                let (color, alpha_mode) = match k {
+                    Kind::Fire => (Color::LinearRgba((LinearRgba::from(Color::srgb(rgb[0], rgb[1], rgb[2])) * FLAME).with_alpha(alpha)), AlphaMode::Blend),
+                    _ if emissive > 0.0 => (c, AlphaMode::Add),
+                    _ => (c, AlphaMode::Blend),
+                };
+                mats.push(materials.add(StandardMaterial {
+                    base_color: color,
+                    base_color_texture: Some(tex.clone()),
+                    emissive: if emissive > 0.0 { LinearRgba::from(Color::srgb(rgb[0], rgb[1], rgb[2])) * emissive * alpha } else { LinearRgba::BLACK },
+                    alpha_mode,
+                    unlit: true,
+                    double_sided: true,
+                    cull_mode: None,
+                    perceptual_roughness: 1.0,
+                    fog_enabled: true,
+                    ..default()
+                }));
+            }
         }
     }
     let quads = [meshes.add(quad(0)), meshes.add(quad(1)), meshes.add(quad(2)), meshes.add(quad(3))];
     let sphere = meshes.add(Sphere::new(1.0).mesh().ico(2).unwrap());
     let crater_flash = materials.add(StandardMaterial { base_color: Color::srgb(1.0, 0.8, 0.5), emissive: LinearRgba::rgb(40.0, 22.0, 8.0), unlit: true, ..default() });
-    commands.insert_resource(FxAssets { rng: SmallRng::seed_from_u64(0x2023_0206), quads, mats, base, crater_flash, sphere, count: 0 });
+    commands.insert_resource(FxAssets { rng: SmallRng::seed_from_u64(0x2023_0206), quads, mats, first, base, crater_flash, sphere, count: 0 });
 }
 
 #[derive(Component)]
@@ -167,6 +230,8 @@ pub struct Particle {
     drag: f32,
     gravity: f32,
     buoyancy: f32,
+    /// Its colour on the smoke ramp, and the material it shows now (tone and alpha step together).
+    tone: Tone,
     step: usize,
     /// Stretch along velocity (tracers, sparks).
     streak: f32,
@@ -182,6 +247,12 @@ pub struct Particle {
 pub const MAX_PARTICLES: usize = 9000;
 
 pub fn spawn(commands: &mut Commands, fx: &mut FxAssets, s: Spawn) {
+    let tone = Tone::of(s.kind);
+    spawn_toned(commands, fx, s, tone);
+}
+
+/// A puff of the burning kinds' smoke in a colour of its own.
+pub fn spawn_toned(commands: &mut Commands, fx: &mut FxAssets, s: Spawn, tone: Tone) {
     if fx.count >= MAX_PARTICLES || crate::dev::off(crate::dev::Part::Particles) {
         return;
     }
@@ -194,10 +265,10 @@ pub fn spawn(commands: &mut Commands, fx: &mut FxAssets, s: Spawn) {
     };
     commands.spawn((
         Mesh3d(fx.quads[shape].clone()),
-        MeshMaterial3d(fx.mat(s.kind, s.alpha)),
+        MeshMaterial3d(fx.mat(s.kind, tone.at(s.kind, 0.0), s.alpha)),
         Transform::from_translation(s.pos).with_scale(Vec3::splat(s.size0)),
         NotShadowCaster,
-        Particle { kind: s.kind, vel: s.vel, age: 0.0, life: s.life, size0: s.size0, size1: s.size1, alpha: s.alpha, drag: s.drag, gravity: s.gravity, buoyancy: s.buoyancy, step: usize::MAX, streak: s.streak, spin, spin_rate, mirror, eddy },
+        Particle { kind: s.kind, vel: s.vel, age: 0.0, life: s.life, size0: s.size0, size1: s.size1, alpha: s.alpha, drag: s.drag, gravity: s.gravity, buoyancy: s.buoyancy, tone, step: usize::MAX, streak: s.streak, spin, spin_rate, mirror, eddy },
     ));
 }
 
@@ -243,10 +314,11 @@ fn update_particles(
         let size = p.size0 + (p.size1 - p.size0) * (1.0 - (1.0 - k) * (1.0 - k));
         // Fade in fast; fade out slowly, so old smoke thins into a wide veil rather than vanishing.
         let a = p.alpha * (k / 0.05).min(1.0) * (1.0 - k).powf(1.8) * (1.0 - 0.45 * k);
-        let step = ((a * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
+        let tone = p.tone.at(p.kind, k);
+        let step = tone * STEPS + ((a * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
         if step != p.step {
             p.step = step;
-            mat.0 = assets.mat(p.kind, a);
+            mat.0 = assets.mat(p.kind, tone, a);
         }
         if p.streak > 0.0 && p.vel.length_squared() > 1.0 {
             // Stretched along the motion, facing the camera as best it can.
@@ -326,13 +398,21 @@ fn update_emitters(
                 em.kind = EmitterKind::Smoulder;
                 em.rate = 1.2;
                 em.remaining = 900.0;
+                em.secs = 900.0;
             } else {
                 commands.entity(e).remove::<Emitter>();
                 continue;
             }
         }
         em.timer -= dt;
-        let rate = em.rate * (1.0 - load * 0.8);
+        let pl = Plume::of(e);
+        // How far through its burning it is, and its breath: a fire flares and slackens over the minutes.
+        let done = (em.age() / em.secs.max(1.0)).clamp(0.0, 1.0);
+        let breath = 0.8 + 0.3 * value_noise(em.age() * 0.05 + pl.seed, pl.seed, 95);
+        let rate = match em.kind {
+            EmitterKind::WreckFire | EmitterKind::Smoulder | EmitterKind::EngineSmoke => em.rate * pl.rate * breath,
+            _ => em.rate,
+        } * (1.0 - load * 0.8);
         while em.timer <= 0.0 {
             em.timer += 1.0 / rate.max(0.05);
             let r = &mut rng;
@@ -340,26 +420,35 @@ fn update_emitters(
             let jitter = Vec3::new(r.random_range(-1.0..1.0), 0.0, r.random_range(-1.0..1.0));
             match em.kind {
                 EmitterKind::WreckFire => {
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(3.0..6.0), life: r.random_range(45.0..80.0), size0: 3.0, size1: r.random_range(40.0..65.0), alpha: 0.5, drag: 0.15, buoyancy: 0.4, ..default() });
+                    // Soot-black over the fire, greying as it climbs and as the fire burns down; how black, how
+                    // thick and how wide is the hull's own (what burns in it, how the hatches are open).
+                    let from = 2.4 * (1.0 - pl.soot) + 1.2 * done;
+                    let tone = Tone { hue: pl.brown as u8, from, to: from + 2.6 };
+                    let fierce = 1.0 - 0.45 * done;
+                    spawn_toned(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 2.5, vel: Vec3::Y * r.random_range(3.0..6.0) * (0.7 + 0.3 * fierce), life: r.random_range(35.0..60.0), size0: 2.5 * pl.size, size1: r.random_range(28.0..46.0) * pl.size, alpha: 0.5 * pl.alpha * breath * fierce, drag: 0.15, buoyancy: 0.4, ..default() }, tone);
                     // Flames big enough to read in daylight: the footage shows a hull as a torch.
-                    if r.random_bool(0.8) {
-                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.2 + Vec3::Y * r.random_range(0.8..2.2), vel: Vec3::Y * r.random_range(2.0..5.0), life: r.random_range(0.5..1.0), size0: r.random_range(2.0..4.0), size1: 1.2, alpha: 0.95, ..default() });
+                    for _ in 0..if r.random_bool(0.5 * fierce as f64) { 2 } else { 1 } {
+                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.2 + Vec3::Y * r.random_range(0.6..2.0), vel: Vec3::Y * r.random_range(2.0..5.0), life: r.random_range(0.5..1.0), size0: r.random_range(3.0..5.0) * (0.6 + 0.4 * fierce), size1: 1.2, alpha: 0.95, ..default() });
                     }
                 }
                 EmitterKind::EngineSmoke => {
                     // White steam first, grey as the oil takes, black once the fuel and rubber are in it.
-                    let kind = match em.age() {
-                        a if a < 45.0 => Kind::Steam,
-                        a if a < 120.0 => Kind::GreySmoke,
-                        _ => Kind::BlackSmoke,
+                    let (kind, tone) = match em.age() {
+                        a if a < 45.0 => (Kind::Steam, Tone::default()),
+                        a if a < 120.0 => (Kind::GreySmoke, Tone { hue: pl.brown as u8, from: 3.0, to: 5.0 }),
+                        _ => (Kind::BlackSmoke, Tone { hue: pl.brown as u8, from: 1.2 * (1.0 - pl.soot) + 0.6, to: 3.5 }),
                     };
-                    spawn(&mut commands, &mut fx, Spawn { kind, pos: base + jitter * 0.6, vel: Vec3::Y * r.random_range(1.5..3.0), life: r.random_range(12.0..20.0), size0: 1.0, size1: r.random_range(7.0..12.0), alpha: 0.6, drag: 0.3, buoyancy: 0.25, ..default() });
-                    if r.random_bool(0.3) {
-                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 0.4, vel: Vec3::Y * 1.5, life: r.random_range(0.3..0.6), size0: 0.8, size1: 0.4, alpha: 0.9, ..default() });
+                    spawn_toned(&mut commands, &mut fx, Spawn { kind, pos: base + jitter * 0.6, vel: Vec3::Y * r.random_range(1.5..3.0), life: r.random_range(12.0..20.0), size0: 1.0, size1: r.random_range(7.0..12.0) * pl.size, alpha: 0.5 * pl.alpha, drag: 0.3, buoyancy: 0.25, ..default() }, tone);
+                    if r.random_bool(0.4) {
+                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 0.4, vel: Vec3::Y * 1.5, life: r.random_range(0.3..0.6), size0: 1.0, size1: 0.5, alpha: 0.9, ..default() });
                     }
                 }
                 EmitterKind::Smoulder => {
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base + jitter + Vec3::Y, vel: Vec3::Y * r.random_range(1.0..2.5), life: r.random_range(30.0..50.0), size0: 1.5, size1: r.random_range(15.0..28.0), alpha: 0.45, drag: 0.2, buoyancy: 0.2, ..default() });
+                    // A burnt-out hull breathes a thin grey or brownish smoke that thins over the next quarter
+                    // hour; the ones burnt out before the day began only wisp.
+                    let left = if em.secs > 5000.0 { 0.5 } else { 1.0 - 0.7 * done };
+                    let tone = Tone { hue: (pl.brown || pl.soot < 0.45) as u8, from: 2.6 + 0.8 * done, to: 5.0 };
+                    spawn_toned(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base + jitter + Vec3::Y, vel: Vec3::Y * r.random_range(1.0..2.5), life: r.random_range(25.0..45.0), size0: 1.5, size1: r.random_range(10.0..20.0) * pl.size, alpha: 0.3 * pl.alpha * left, drag: 0.2, buoyancy: 0.2, ..default() }, tone);
                 }
                 EmitterKind::SmokeScreen => {
                     // A fog, not a fire: it neither rises nor sinks, and the wind lays it out as a ribbon.
@@ -375,10 +464,11 @@ fn update_emitters(
                     spawn(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base, vel: Vec3::Y * 1.0, life: 2.5, size0: 0.6, size1: 2.5, alpha: 0.35, ..default() });
                 }
                 EmitterKind::PoolFire => {
-                    // 2–6 m² of diesel: flames 1.5–3 m, licking low over the ground.
-                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.1 + Vec3::Y * r.random_range(0.3..0.9), vel: Vec3::Y * r.random_range(1.5..3.5), life: r.random_range(0.4..0.8), size0: r.random_range(1.2..2.2), size1: 0.8, alpha: 0.95, ..default() });
-                    if r.random_bool(0.35) {
-                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 1.5, vel: Vec3::Y * r.random_range(2.0..4.0), life: r.random_range(25.0..45.0), size0: 1.5, size1: r.random_range(16.0..26.0), alpha: 0.35, drag: 0.2, buoyancy: 0.3, ..default() });
+                    // 2–6 m² of diesel: flames 1.5–3 m, licking low over the ground, a sheet of them flickering.
+                    spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.4 + Vec3::Y * r.random_range(0.4..1.0), vel: Vec3::Y * r.random_range(1.5..3.5), life: r.random_range(0.45..0.9), size0: r.random_range(2.0..3.2), size1: 1.0, alpha: 0.95, ..default() });
+                    if r.random_bool(0.2) {
+                        let tone = Tone { hue: pl.brown as u8, from: 0.3, to: 3.2 };
+                        spawn_toned(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 2.5, vel: Vec3::Y * r.random_range(2.0..4.0), life: r.random_range(25.0..40.0), size0: 1.5, size1: r.random_range(14.0..24.0) * pl.size, alpha: 0.3 * pl.alpha, drag: 0.2, buoyancy: 0.3, ..default() }, tone);
                     }
                     // In the first minutes the snow round it melts and steams.
                     if !diorama().summer() && em.age() < 180.0 && r.random_bool(0.15) {
@@ -390,6 +480,79 @@ fn update_emitters(
         }
     }
     fx.rng = rng;
+}
+
+/// What sets one fire's smoke apart from the next: drawn from its emitter's entity, so it holds for the fire's
+/// life and takes nothing from a random stream.
+struct Plume {
+    /// How sooty, 0..1: a fuel and rubber fire's black against a hull that burns grey.
+    soot: f32,
+    brown: bool,
+    rate: f32,
+    size: f32,
+    alpha: f32,
+    seed: f32,
+}
+
+impl Plume {
+    fn of(e: Entity) -> Self {
+        let b = e.to_bits();
+        let i = (b as u32) ^ ((b >> 32) as u32).wrapping_mul(0x9e37_79b9);
+        let h = |s| bav_core::geo::hash01(i, s);
+        Plume { soot: h(81), brown: h(82) < 0.35, rate: 0.6 + 0.6 * h(83), size: 0.7 + 0.55 * h(84), alpha: 0.45 + 0.65 * h(85), seed: h(86) * 100.0 }
+    }
+}
+
+/// The light a fire throws round itself: the ground and the hull glow orange under a burning wreck or a pool of
+/// diesel, flickering. One light per fire, kept apart from the burning entity (whose components are the battle's).
+#[derive(Component)]
+struct Glow {
+    of: Entity,
+}
+
+fn fire_glow(
+    mut commands: Commands,
+    time: Res<Time>,
+    fires: Query<(Entity, &Emitter, &GlobalTransform)>,
+    mut glows: Query<(Entity, &Glow, &mut PointLight, &mut Transform)>,
+    mut lit: Local<Vec<Entity>>,
+) {
+    let t = time.elapsed_secs();
+    // The lights already burning: follow their fire, flicker, and go out with it.
+    for (e, g, mut light, mut tf) in &mut glows {
+        let Ok((_, em, gt)) = fires.get(g.of) else {
+            commands.entity(e).despawn();
+            lit.retain(|&f| f != g.of);
+            continue;
+        };
+        let (full, up) = match em.kind {
+            EmitterKind::WreckFire => (1.2e6 * (1.0 - 0.45 * (em.age() / em.secs.max(1.0)).clamp(0.0, 1.0)), 5.0),
+            EmitterKind::PoolFire if em.age() >= 0.0 => (1.0e6, 3.0),
+            EmitterKind::EngineSmoke if em.age() >= 120.0 => (3.0e5, 4.0),
+            _ => {
+                commands.entity(e).despawn();
+                lit.retain(|&f| f != g.of);
+                continue;
+            }
+        };
+        let s = Plume::of(g.of).seed;
+        let flicker = 0.72 + 0.18 * value_noise(t * 7.0 + s, s, 96) + 0.1 * value_noise(t * 17.0, s, 97);
+        light.intensity = full * flicker;
+        tf.translation = gt.translation() + Vec3::Y * up + Vec3::new(value_noise(t * 3.0, s, 98), 0.0, value_noise(t * 3.0, s, 99)) * 0.4;
+    }
+    for (e, em, gt) in &fires {
+        let burning = match em.kind {
+            EmitterKind::WreckFire => true,
+            EmitterKind::PoolFire => em.age() >= 0.0,
+            EmitterKind::EngineSmoke => em.age() >= 120.0,
+            _ => false,
+        };
+        if burning && !lit.contains(&e) {
+            lit.push(e);
+            let range = if em.kind == EmitterKind::WreckFire { 30.0 } else { 20.0 };
+            commands.spawn((PointLight { intensity: 0.0, range, color: Color::srgb(1.0, 0.55, 0.22), shadow_maps_enabled: false, ..default() }, Transform::from_translation(gt.translation()), Glow { of: e }));
+        }
+    }
 }
 
 /// A short point light for blasts and muzzle flashes.
@@ -551,7 +714,7 @@ pub fn pool_fire(commands: &mut Commands, fx: &mut FxAssets, paint: &mut PaintQu
     let at = crate::geo::ground(hull.transform_point(local).xz());
     let delay = fx.rng.random_range(10.0..60.0);
     let secs = fx.rng.random_range(600.0..1500.0);
-    commands.spawn((Transform::from_translation(at), Emitter::after(delay, EmitterKind::PoolFire, 3.0, secs, Vec3::ZERO)));
+    commands.spawn((Transform::from_translation(at), Emitter::after(delay, EmitterKind::PoolFire, 7.0, secs, Vec3::ZERO)));
     info!("pool fire at {:.0},{:.0}", at.x, at.z);
     paint.push(crate::terrain::Paint::Melt { at: at.xz(), radius: fx.rng.random_range(2.2..3.2) });
     if diorama().summer() && fx.rng.random_bool(0.6) {
@@ -611,9 +774,9 @@ fn grass_fires(mut commands: Commands, time: Res<Time>, wind: Res<Wind>, mut fx:
             if (q / 1.2).floor() != (p / 1.2).floor() {
                 paint.push(crate::terrain::Paint::Scorch { at: q - down * 0.6, radius: 1.4 });
             }
-            if rng.random_bool((dt * 2.5).min(1.0) as f64) {
+            if rng.random_bool((dt * 4.0).min(1.0) as f64) {
                 let at = crate::geo::ground(q);
-                spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 0.3, vel: Vec3::Y * rng.random_range(0.8..2.0), life: rng.random_range(0.3..0.6), size0: rng.random_range(0.6..1.2), size1: 0.4, alpha: 0.9, ..default() });
+                spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 0.3, vel: Vec3::Y * rng.random_range(0.8..2.0), life: rng.random_range(0.35..0.7), size0: rng.random_range(0.8..1.6), size1: 0.5, alpha: 0.95, ..default() });
                 if rng.random_bool(0.5) {
                     spawn(&mut commands, &mut fx, Spawn { kind: Kind::WhiteSmoke, pos: at + Vec3::Y * 0.8, vel: Vec3::Y * rng.random_range(1.0..2.0), life: rng.random_range(15.0..30.0), size0: 1.0, size1: rng.random_range(8.0..14.0), alpha: 0.3, drag: 0.4, buoyancy: 0.2, ..default() });
                 }

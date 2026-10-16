@@ -121,6 +121,21 @@ impl MeshBuilder {
         }
     }
 
+    /// A flat polygon with a normal of its own at each corner (a card standing in for something rounder).
+    pub fn poly_uv_normals(&mut self, pts: &[Vec3], uvs: &[Vec2], normals: &[Vec3], c: Rgb) {
+        let base = self.pos.len() as u32;
+        let col = lin(c);
+        for ((p, uv), n) in pts.iter().zip(uvs).zip(normals) {
+            self.pos.push(p.to_array());
+            self.nor.push(n.to_array());
+            self.col.push(col);
+            self.uv.push(uv.to_array());
+        }
+        for i in 1..pts.len() as u32 - 1 {
+            self.idx.extend_from_slice(&[base, base + i, base + i + 1]);
+        }
+    }
+
     pub fn quad(&mut self, a: Vec3, b: Vec3, c: Vec3, d: Vec3, col: Rgb) {
         self.poly(&[a, b, c, d], col);
     }
@@ -379,17 +394,6 @@ pub fn trunk(h: f32, r: f32) -> MeshBuilder {
     let mut m = MeshBuilder::new();
     m.frustum(Vec3::ZERO, Vec3::new(0.0, h * 0.75, 0.0), r, r * 0.35, 5, [0.30, 0.27, 0.24], false);
     m
-}
-
-/// Three crossed vertical cards carrying the branch texture.
-pub fn crown_cards(m: &mut MeshBuilder, at: Vec3, w: f32, h: f32, yaw: f32, c: Rgb) {
-    for k in 0..3 {
-        let a = yaw + k as f32 * std::f32::consts::PI / 3.0;
-        let d = Vec3::new(a.cos(), 0.0, a.sin()) * (w * 0.5);
-        let (p0, p1) = (at - d, at + d);
-        let up = Vec3::Y * h;
-        m.poly_uv(&[p0, p1, p1 + up, p0 + up], &[Vec2::new(0.0, 1.0), Vec2::new(1.0, 1.0), Vec2::new(1.0, 0.0), Vec2::new(0.0, 0.0)], c);
-    }
 }
 
 /// A concrete power-line pole, maybe leaning.

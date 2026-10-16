@@ -63,7 +63,7 @@ pub enum Kind {
     WhiteSmoke,
     /// A diesel-into-the-exhaust screen: a milky fog that neither rises nor sinks, moving with the wind as a sheet.
     Fog,
-    /// Smoke-grenade smoke: grey-black, hugging the ground, fattening in humid air.
+    /// Smoke-grenade smoke: grey-white, hugging the ground, fattening in humid air.
     Hc,
     /// Pure white: coolant steam, white phosphorus.
     Steam,
@@ -145,7 +145,7 @@ pub enum EmitterKind {
     Exhaust,
     /// A fire in the engine bay: white oil and coolant steam, going grey, from the rear deck.
     EngineSmoke,
-    /// A smoke grenade burning on the ground: grey-black puffs that merge into a low wall.
+    /// A smoke grenade burning on the ground: grey-white puffs that merge into a low wall.
     Hc,
     /// A white-phosphorus wedge or a smoke canister on the ground: a pure white bank that rises a little.
     Wp,

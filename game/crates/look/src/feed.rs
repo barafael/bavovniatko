@@ -55,7 +55,7 @@ pub struct FeedEffect {
     pub flash: f32,
     pub zoom: f32,
     pub down: f32,
-    /// How much colour the drone camera keeps: the February snow came through nearly grey, June stays green.
+    /// How much colour the drone camera keeps: the February snow came through pale and cold, June greener.
     pub saturation: f32,
     /// The link's bit rate, 1 clean: lower is softer, blockier.
     pub bitrate: f32,
@@ -154,7 +154,7 @@ fn setup(
         flat.insert(RenderTarget::Image(fin.clone().into()));
         commands.insert_resource(HeadlessTarget(fin));
     }
-    let fx = FeedEffect { grain: 1.0, zoom: 1.0, bitrate: 1.0, saturation: if crate::diorama::diorama().summer() { 0.68 } else { 0.45 }, ..default() };
+    let fx = FeedEffect { grain: 1.0, zoom: 1.0, bitrate: 1.0, saturation: if crate::diorama::diorama().summer() { 0.88 } else { 0.72 }, ..default() };
     commands.spawn((Mesh2d(meshes.add(Rectangle::new(lw, lh))), MeshMaterial2d(materials.add(FeedMaterial { fx, image: feed.clone() })), Transform::default(), RenderLayers::layer(1), Screen));
     commands.insert_resource(FeedImage(feed));
 }

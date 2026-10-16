@@ -11,10 +11,14 @@
 
 use crate::camera::{Flight, Locate, Mode, Target, View, enter_ground, look_angles, track_nearest};
 use crate::fire::{Post, Strike, StrikeMission};
+use crate::units::Radio;
+use bav_sim::player::{Fpv, Operator};
 use crate::units::{Soldier, Vehicle};
 use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};
 use std::{io::Write, sync::LazyLock, time::Duration};
+
+mod trailer;
 
 pub struct ShowcasePlugin;
 
@@ -23,7 +27,7 @@ impl Plugin for ShowcasePlugin {
         if let Some(dir) = crate::dev::dev().showcase.clone() {
             std::fs::create_dir_all(&dir).ok();
             app.insert_resource(Tour { dir, shot: 0, frame: 0, video_t: 0.0, aim: None, fired: Vec::new(), shot_frames: 0, ground: None })
-                .insert_resource(TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(STEP_SKIP)))
+                .insert_resource(TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step_skip())))
                 .add_systems(Update, direct.in_set(crate::Step::Control).before(crate::dev::DevSystems));
         }
     }
@@ -31,6 +35,12 @@ impl Plugin for ShowcasePlugin {
 
 const STEP_FILM: f64 = 1.0 / 30.0;
 const STEP_SKIP: f64 = 1.0 / 20.0;
+
+/// The step between shots. The trailer skips on the filming step: the battle is integrated on its steps, so a
+/// coarser skip would make the day depend on the shot list, and every retimed shot would change what it films.
+fn step_skip() -> f64 {
+    if crate::dev::dev().tour == Some(crate::dev::TourKind::Trailer) { STEP_FILM } else { STEP_SKIP }
+}
 
 #[derive(Clone, Copy)]
 enum Aim {
@@ -41,8 +51,10 @@ enum Aim {
     /// The drone placed once at its first filmed frame, then flown by the shot's stick script.
     Fly(Target),
     /// The OP looking at a point (x, z) on the ground.
-    #[expect(dead_code, reason = "the film's R9 may yet become the water tower; the camera supports it")]
     Op(Vec2),
+    /// Through the FPV's goggles, launched at the shot's first filmed frame if it is not already up, and flown by
+    /// itself at the enemy vehicle nearest the point. The view is left to it.
+    Fpv(Vec2),
 }
 
 use Aim::Drone;
@@ -65,6 +77,8 @@ struct Shot {
     fov: (f32, f32),
     /// Fire missions to call (game time, strike) before or during the shot, on the nearest stalled vehicle.
     fire: &'static [(f32, Strike)],
+    /// Fire missions called on a point (game time, strike, (x, z)): a jammer, a trench, a lane.
+    fire_at: &'static [(f32, Strike, (f32, f32))],
     debrief: bool,
     /// A card over black before the shot; its frames are reserved, its time goes in the segment's front.
     card: Option<Card>,
@@ -85,6 +99,7 @@ fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim
         aim,
         fov,
         fire: &[],
+        fire_at: &[],
         debrief: false,
         card: None,
         hud: true,
@@ -95,7 +110,11 @@ fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim
 
 /// The tour, shot by shot: the minute tours, or the film's.
 static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(|| {
-    if crate::dev::dev().tour == Some(crate::dev::TourKind::Film) { shots_film() } else { shots_minute() }
+    match crate::dev::dev().tour {
+        Some(crate::dev::TourKind::Film) => shots_film(),
+        Some(crate::dev::TourKind::Trailer) => trailer::shots(),
+        None => shots_minute(),
+    }
 });
 
 fn shots_minute() -> Vec<Shot> {
@@ -174,7 +193,7 @@ fn shots_film() -> Vec<Shot> {
             Shot {
                 card: Some(card("07:02", "Four Bradleys go back in for the men.", "", 2.5)),
                 fire: &[(646.0, Strike::Smoke)],
-                fly: &[(0.0, 14.0, "w")],
+                fly: &[(0.0, 14.0, "w-")],
                 ..f(668.0, 14.0, (-497.0, -780.0, 120.0), (0.0, 0.0, 0.0), Aim::Fly(Wave(3, 0)), (12.0, 12.0))
             },
             // R9. Walking back: the men go down the slope past the wrecks. The owner's option: the water tower.
@@ -264,6 +283,7 @@ fn direct(
     mut flight: ResMut<Flight>,
     mut hud: ResMut<crate::hud::HudHidden>,
     (vehicles, men): (Query<(&Vehicle, &Transform)>, Query<(&Soldier, &Transform)>),
+    (mut fpv, operator, mut radio): (ResMut<Fpv>, Res<Operator>, ResMut<Radio>),
     teams: Query<(Entity, &Post)>,
     mut exit: MessageWriter<AppExit>,
 ) {
@@ -278,7 +298,15 @@ fn direct(
     for (k, &(at, kind)) in shot.fire.iter().enumerate() {
         if t >= at && !tour.fired.contains(&(si, k)) {
             tour.fired.push((si, k));
-            kind.on_nearest_stalled(&mut fc, &vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
+            let at = kind.on_nearest_stalled(&mut fc, &vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
+            info!("showcase: {kind:?} called on {at:?}, at game {t:.0} s");
+        }
+    }
+    for (k, &(at, kind, (x, z))) in shot.fire_at.iter().enumerate() {
+        if t >= at && !tour.fired.contains(&(si, 100 + k)) {
+            tour.fired.push((si, 100 + k));
+            fc.missions.push(kind.mission(Vec2::new(x, z), 12.0, time.elapsed_secs_f64(), true));
+            info!("showcase: {kind:?} called on {x:.0},{z:.0}, at game {t:.0} s");
         }
     }
     // A ground shot enters its team's tree line on the shot's first frame, and during the skip, so the camera
@@ -293,7 +321,7 @@ fn direct(
     }
     if t < shot.from {
         // Skip ahead, unfilmed. Slow to the filming step just before the shot so it starts on time.
-        let step = if shot.from - t > 1.0 { STEP_SKIP } else { STEP_FILM };
+        let step = if shot.from - t > 1.0 { step_skip() } else { STEP_FILM };
         *strategy = TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step));
         tour.aim = None;
         place_camera(&mut view, shot, 0.0, &mut tour.aim, &op, &vehicles, &men);
@@ -310,6 +338,12 @@ fn direct(
     if let Aim::Fly(_) = shot.aim {
         if tour.shot_frames == 0 {
             place_fly(&mut view, shot, &mut flight, &vehicles, &men);
+        }
+    } else if let Aim::Fpv(at) = shot.aim {
+        view.locked = false;
+        if tour.shot_frames == 0 && !fpv.flying {
+            fpv.auto = Some(at);
+            bav_sim::drones::launch_fpv(&mut fpv, &mut view, &operator, &mut radio, time.elapsed_secs_f64());
         }
     } else {
         place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men);
@@ -363,6 +397,11 @@ fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op
         }
         // The ground view was placed by `enter_ground`; the gunner's head tracks.
         Aim::Ground(..) => return,
+        // The FPV flies itself; the drone waits where the last shot left it.
+        Aim::Fpv(_) => {
+            view.locked = false;
+            return;
+        }
         Aim::Drone(target) | Aim::Fly(target) => target,
     };
     view.mode = Mode::Drone;

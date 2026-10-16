@@ -160,6 +160,34 @@ measured 1.7–2.8 ms; on a quiet machine the net gain is about 0.4 ms. The look
 PNGs). The key hashes the painting's code and the diorama's file. Loaded across the cores it takes 64 ms instead
 of 2.7 s of painting, so a start is about half as long. Seed 0 of both days replays identically from the cache.
 
+## The picture up close (2026-10-16)
+
+Zoomed in, the ground was soft and blocky, the belts a wall of identical dark cards, and the shadows of things
+standing still crawled. What changed, and what it costs:
+
+- **Ground detail.** The ground shader adds grass tufts, clods, wind ripples and crust below the half-metre
+  texel, read from the texel's own colour, and frays every texel's edge with a finer jitter. Nine more filtered
+  noise reads a pixel, which cost nothing measurable.
+- **The trees.** One atlas drawn at start (`trees.rs`): five kinds of belt tree, a broken one and two shrubs. In
+  June a crown is five leafy patches facing their own ways; in February crossed cards of bare limbs. The mips
+  distribute alpha, so crowns neither thin out nor sparkle far away. The crowns no longer read the shadow maps.
+- **Shadows.** The sun moves in steps of two clock minutes instead of every frame. The baked shade's dither is
+  fixed to the ground instead of the screen. The filter is `Gaussian`, not `Hardware2x2`.
+
+On the 8060S at 2560x1600, interleaved, medians of three windows (the 780M will be about three times these):
+
+| | Robotyne frame | GPU 3D pass | Vuhledar frame | GPU 3D pass |
+|---|---|---|---|---|
+| before | 2.6 ms | 0.77 ms | 2.6 ms | 0.76 ms |
+| after | 2.85 | 1.00 | 2.8 | 0.90 |
+| after, `Hardware2x2` and no leaf transmission | 2.5 | 0.75 | | |
+| `BAV_OFF=trees`, before / after | 2.45 / 2.55 | 0.40 / 0.59 | | |
+
+Most of the cost is the soft filter on the ground, about 0.2 ms here. A crown that read the cascades cost as
+much again, which is why they no longer do. Going back to `Hardware2x2` is a one-line change in `camera.rs` if
+the 780M needs it; the sun's steps and the fixed dither keep shadows still without it, but zoomed in, a shadow
+texel's stair steps show.
+
 ## Next levers, not pulled yet
 
 - **Shade on what stands in the belts.** The men and vehicles there could read the same map.

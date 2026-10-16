@@ -5,6 +5,7 @@ use crate::dev::{self, DayDebug};
 use crate::diorama::{Diorama, diorama};
 use crate::geo::{self, CHUNK, CHUNKS_X, HALF_X, HALF_Z, hash01};
 use crate::meshes::{self, MeshBuilder};
+use crate::trees::Kind;
 use bevy::{
     image::{ImageAddressMode, ImageSamplerDescriptor},
     light::CascadeShadowConfigBuilder,
@@ -28,7 +29,8 @@ impl Plugin for WorldPlugin {
         if dev::off(dev::Part::Vshadows) {
             app.add_systems(Update, no_vehicle_shadows);
         }
-        app.insert_resource(ClearColor(Color::srgb(0.70, 0.72, 0.74)))
+        app.add_plugins(MaterialPlugin::<crate::baked::VehicleMaterial>::default())
+            .insert_resource(ClearColor(Color::srgb(0.70, 0.72, 0.74)))
             .insert_resource(GlobalAmbientLight { color: Color::srgb(0.80, 0.86, 1.0), brightness: 450.0, ..default() })
             .insert_resource(bevy::light::DirectionalLightShadowMap { size: dev::dev().shadow_map.unwrap_or(2048) as usize })
             .add_systems(Startup, (spawn_light, spawn_belts.in_set(Setup::Kit), crate::models::setup_models.after(spawn_belts).in_set(Setup::Kit), parapets.in_set(Setup::Dress)));
@@ -102,86 +104,22 @@ fn spawn_light(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut mat
     ));
 }
 
-/// A summer crown: clusters of leaves inside a ragged rounded silhouette, as an alpha mask.
-fn leaf_texture() -> Image {
-    const N: usize = 256;
-    let mut a = vec![0u8; N * N];
-    for y in 0..N {
-        for x in 0..N {
-            let p = Vec2::new(x as f32 / N as f32 * 2.0 - 1.0, 1.0 - y as f32 / N as f32 * 2.0);
-            // A crown on a short bare trunk: the silhouette is an egg over the lower fifth.
-            let crown = Vec2::new(p.x / 0.95, (p.y - 0.25) / 0.78).length();
-            let edge = geo::fbm(p.x * 3.0, p.y * 3.0, 3, 41) * 0.28;
-            let clusters = geo::value_noise(p.x * 14.0, p.y * 14.0, 42) * 0.5 + 0.5;
-            let leaf = crown + edge < 1.0 && clusters > 0.3 + 0.35 * crown;
-            let trunk = p.y < -0.5 && p.x.abs() < 0.035 + (p.y + 1.0) * 0.01;
-            if leaf || trunk {
-                a[y * N + x] = 255;
-            }
-        }
-    }
-    let mut data = Vec::with_capacity(N * N * 4);
-    for v in a {
-        data.extend_from_slice(&[255, 255, 255, v]);
-    }
-    meshes::rgba8_image(N, N, data, ImageSamplerDescriptor::linear())
-}
-
-/// Bare winter branches: recursive strokes into an alpha mask.
-fn branch_texture() -> Image {
-    const N: usize = 256;
-    let mut a = vec![0u8; N * N];
-    fn stroke(a: &mut [u8], p: Vec2, dir: Vec2, len: f32, w: f32, depth: u32, seed: u32) {
-        let steps = (len * 2.0) as i32;
-        let mut q = p;
-        for _ in 0..steps {
-            q += dir * 0.5;
-            let r = w.max(0.6);
-            let (x0, x1) = ((q.x - r) as i32, (q.x + r) as i32 + 1);
-            let (y0, y1) = ((q.y - r) as i32, (q.y + r) as i32 + 1);
-            for y in y0.max(0)..y1.min(N as i32) {
-                for x in x0.max(0)..x1.min(N as i32) {
-                    if Vec2::new(x as f32, y as f32).distance(q) <= r {
-                        a[y as usize * N + x as usize] = 255;
-                    }
-                }
-            }
-        }
-        if depth == 0 {
-            return;
-        }
-        let kids = 2 + (hash01(seed, 3) * 2.0) as u32;
-        for k in 0..kids {
-            let t = 0.35 + 0.6 * hash01(seed * 7 + k, 4);
-            let start = p + dir * len * t;
-            let ang = (hash01(seed * 11 + k, 5) - 0.5) * 1.6;
-            let nd = Vec2::from_angle(ang).rotate(dir).normalize();
-            stroke(a, start, nd, len * (0.45 + 0.25 * hash01(seed + k, 6)), w * 0.62, depth - 1, seed * 5 + k + 1);
-        }
-    }
-    for t in 0..3 {
-        let x = 100.0 + t as f32 * 28.0;
-        stroke(&mut a, Vec2::new(x, N as f32 - 1.0), Vec2::new((t as f32 - 1.0) * 0.15, -1.0).normalize(), 120.0, 3.2, 5, t + 1);
-    }
-    let mut data = Vec::with_capacity(N * N * 4);
-    for v in a {
-        data.extend_from_slice(&[255, 255, 255, v]);
-    }
-    meshes::rgba8_image(N, N, data, ImageSamplerDescriptor::linear())
-}
-
 pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
     let vertex = materials.add(StandardMaterial { perceptual_roughness: 0.9, ..default() });
     let charred = materials.add(StandardMaterial { base_color: Color::srgb(0.22, 0.2, 0.19), perceptual_roughness: 1.0, ..default() });
     let summer = diorama().summer();
     // Alpha to coverage: the mask's edge is resolved by the multisampling, so leaves and twigs stop being
-    // hard-edged cut-outs.
+    // hard-edged cut-outs. Both faces drawn, but not double-sided in the lighting: a card's back keeps the normals
+    // of the crown it stands in for (trees::crown) instead of turning dark.
     let branches = materials.add(StandardMaterial {
-        base_color_texture: Some(images.add(if summer { leaf_texture() } else { branch_texture() })),
+        base_color_texture: Some(images.add(crate::trees::atlas(summer))),
         alpha_mode: if matches!(dev::aa(), dev::Aa::Msaa4 | dev::Aa::Msaa2) { AlphaMode::AlphaToCoverage } else { AlphaMode::Mask(0.5) },
-        double_sided: true,
+        double_sided: false,
         cull_mode: None,
         perceptual_roughness: 1.0,
+        reflectance: 0.2,
+        // June's leaves let the sun through: a crown lit from behind glows a little instead of going black.
+        diffuse_transmission: if summer { 0.3 } else { 0.0 },
         ..default()
     });
     commands.insert_resource(Palette { vertex: vertex.clone(), charred, branches: branches.clone() });
@@ -195,17 +133,17 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
         let cz = ((p.y + HALF_Z) / CHUNK).clamp(0.0, geo::CHUNKS_Z as f32 - 1.0) as usize;
         cz * CHUNKS_X + cx
     };
-    let trunk_meshes: Vec<MeshBuilder> = (0..TRUNKS).map(|k| meshes::trunk(7.0 + k as f32 * 1.6, 0.14 + k as f32 * 0.03)).collect();
+    let trunk_meshes: Vec<MeshBuilder> = (0..TRUNKS).map(|k| meshes::trunk(TRUNK_H, 0.14 + k as f32 * 0.03)).collect();
     let plants = belt_plants();
     for t in &plants.trees {
         let ci = chunk_of(t.xf.translation.xz());
         trunks[ci].append(&trunk_meshes[t.trunk], t.xf);
         if let Some(c) = &t.crown {
-            meshes::crown_cards(&mut crowns[ci], c.at, c.w, c.h, c.yaw, c.colour);
+            c.cards(&mut crowns[ci]);
         }
     }
     for c in &plants.shrubs {
-        meshes::crown_cards(&mut crowns[chunk_of(c.at.xz())], c.at, c.w, c.h, c.yaw, c.colour);
+        c.cards(&mut crowns[chunk_of(c.at.xz())]);
     }
     for (t, c) in trunks.into_iter().zip(crowns) {
         if dev::off(dev::Part::Trees) {
@@ -217,22 +155,34 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
         if !t.is_empty() {
             commands.spawn((Mesh3d(meshes.add(t.build())), MeshMaterial3d(vertex.clone()), bevy::light::NotShadowCaster));
         }
+        // Nor do the crowns read the cascades: nothing that casts into them stands over a belt, and the soft shadow
+        // filter's reads on every leaf cost more than the ground's (design/perf.md).
         if !c.is_empty() {
-            commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone()), bevy::light::NotShadowCaster));
+            commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone()), bevy::light::NotShadowCaster, bevy::light::NotShadowReceiver));
         }
     }
 }
 
-/// How many trunk shapes the belts draw from.
+/// How many trunk shapes the belts draw from (by girth), and the height each is made at (a tree scales its own).
 const TRUNKS: usize = 6;
+const TRUNK_H: f32 = 10.0;
 
-/// A crown (or a shrub) as crossed cards: the centre of their foot, width, height, turn and colour.
+/// A crown (or a shrub) as cards (`trees::crown`): its kind, the centre of its foot, width, height, turn, which
+/// way its picture faces, and its tint.
 pub struct Crown {
+    pub kind: Kind,
     pub at: Vec3,
     pub w: f32,
     pub h: f32,
     pub yaw: f32,
+    pub flip: bool,
     pub colour: meshes::Rgb,
+}
+
+impl Crown {
+    fn cards(&self, m: &mut MeshBuilder) {
+        crate::trees::crown(m, self.kind, self.at, self.w, self.h, self.yaw, self.flip, self.colour);
+    }
 }
 
 /// A belt tree: which trunk, how it stands, and its crown (none when shelling has split it).
@@ -248,18 +198,60 @@ pub struct BeltPlants {
     pub shrubs: Vec<Crown>,
 }
 
+/// A belt tree's kind from a uniform draw: mostly black locust, the shelterbelt tree of the steppe, then elm and
+/// ash, with poplar and walnut here and there.
+fn tree_kind(u: f32) -> Kind {
+    match u {
+        u if u < 0.38 => Kind::Robinia,
+        u if u < 0.6 => Kind::Elm,
+        u if u < 0.78 => Kind::Ash,
+        u if u < 0.9 => Kind::Poplar,
+        _ => Kind::Walnut,
+    }
+}
+
+/// A kind's height range in metres, how far up its stem the crown starts (a share of the height), and its tint
+/// in June and in February.
+fn kind_look(kind: Kind) -> ((f32, f32), f32, meshes::Rgb, meshes::Rgb) {
+    match kind {
+        // Locust: light, yellowish, an open crown; dark furrowed bark.
+        Kind::Robinia => ((9.0, 15.0), 0.3, [0.66, 0.74, 0.38], [0.46, 0.43, 0.40]),
+        Kind::Elm => ((10.0, 16.0), 0.28, [0.50, 0.63, 0.32], [0.51, 0.47, 0.44]),
+        // Ash: a cooler green, smooth grey bark.
+        Kind::Ash => ((12.0, 18.0), 0.35, [0.54, 0.66, 0.42], [0.57, 0.56, 0.54]),
+        // Poplar: silvery, and pale and grey-green in winter.
+        Kind::Poplar => ((17.0, 24.0), 0.12, [0.60, 0.68, 0.50], [0.63, 0.63, 0.57]),
+        Kind::Walnut => ((8.0, 13.0), 0.25, [0.47, 0.60, 0.30], [0.55, 0.52, 0.48]),
+        // A shell-broken tree's leaves are wilting.
+        Kind::Broken => ((6.0, 11.0), 0.25, [0.64, 0.60, 0.40], [0.53, 0.49, 0.46]),
+        Kind::Shrub => ((1.5, 3.5), 0.0, [0.52, 0.63, 0.33], [0.54, 0.48, 0.46]),
+        Kind::Thicket => ((2.0, 4.5), 0.0, [0.60, 0.68, 0.38], [0.51, 0.44, 0.41]),
+    }
+}
+
 /// Where the belts' trees and shrubs stand, and how each looks: the same every run (hashes of their order).
+///
+/// A belt of the south is a few rows of mixed trees, planted together and grown apart: stretches where one kind
+/// took over (a run of locust, a line of poplars), a canopy that rises and falls, gaps where trees died or were cut,
+/// suckers and shrubs crowding the sunny margins. Near the front the shelling has broken it up: stretches down to a
+/// few stems, split trunks, crowns half dead.
 pub fn belt_plants() -> BeltPlants {
     let summer = diorama().summer();
     let mut plants = BeltPlants { trees: Vec::new(), shrubs: Vec::new() };
     let mut id = 0u32;
     for (bi, belt) in geo::layout().belts.iter().enumerate() {
         let len = belt.line.length();
+        let front = bi < 2;
         let mut s = 0.0;
+        let (mut stretch_end, mut lead) = (0.0, Kind::Robinia);
         while s < len {
             id += 1;
-            // Real belts are thickets: a stem every metre or two.
-            s += 1.6 + hash01(id, 1) * 1.6;
+            // A stem every two and a half to five metres in each row; the crowns close over the rows.
+            s += 2.6 + hash01(id, 1) * 2.4;
+            if s > stretch_end {
+                lead = tree_kind(hash01(id, 40));
+                stretch_end = s + 25.0 + 70.0 * hash01(id, 41);
+            }
             if belt.gaps.iter().any(|&(a, b)| s > a && s < b) {
                 continue;
             }
@@ -269,54 +261,70 @@ pub fn belt_plants() -> BeltPlants {
             if hash01(id, 31) > (edge / 450.0).clamp(0.0, 1.0) {
                 continue;
             }
+            // Broken stretches, where the belt is down to a few stems: more of them near the front.
+            let broken = geo::value_noise(s / 35.0, bi as f32 * 3.1, 61) * 0.5 + 0.5;
+            let thin = if front { geo::smoothstep(0.5, 0.75, broken) * 0.7 } else { geo::smoothstep(0.62, 0.82, broken) * 0.45 };
+            // The canopy's line rises and falls along the belt.
+            let swell = 0.85 + 0.3 * (geo::value_noise(s / 45.0, bi as f32 * 5.7, 62) * 0.5 + 0.5);
             let rows = 3;
             for row in 0..rows {
                 id += 1;
-                if hash01(id, 2) < 0.18 {
-                    continue; // dead gaps, shell-split trunks
+                if hash01(id, 2) < 0.12 + thin {
+                    continue; // dead gaps
                 }
-                let lat = (row as f32 - (rows - 1) as f32 * 0.5) * belt.width / rows as f32 + (hash01(id, 3) - 0.5) * 2.5;
+                let lat = (row as f32 - (rows - 1) as f32 * 0.5) * belt.width / rows as f32 + (hash01(id, 3) - 0.5) * 3.0;
                 let p2 = belt.line.point(s) + belt.line.normal(s) * lat;
                 let p = geo::ground(p2) - Vec3::Y * 0.2;
+                let kind = if hash01(id, 21) < 0.7 { lead } else { tree_kind(hash01(id, 22)) };
                 // Shelling has split and thinned the belts closest to the fighting.
-                let shattered = hash01(id, 9) < 0.12 + 0.18 * (bi < 2) as i32 as f32;
+                let hit = hash01(id, 9) < 0.06 + 0.14 * front as i32 as f32 + thin * 0.3;
+                let snag = hit && hash01(id, 23) < 0.5;
+                let kind = if hit && !snag { Kind::Broken } else { kind };
+                let ((h0, h1), base, june, february) = kind_look(kind);
+                // The outer rows a little lower than the middle one: the belt's section is a ridge.
+                let h = (h0 + (h1 - h0) * hash01(id, 16)) * swell * if row == 1 { 1.0 } else { 0.88 };
                 let k = (hash01(id, 4) * TRUNKS as f32) as usize % TRUNKS;
                 let mut xf = Transform::from_translation(p).with_rotation(Quat::from_rotation_y(hash01(id, 5) * std::f32::consts::TAU));
-                // No two trees the same height; some lean.
-                let grow = 0.75 + 0.5 * hash01(id, 16);
-                let h = (7.0 + k as f32 * 1.6) * grow;
-                xf.scale = Vec3::new(1.0, grow, 1.0);
+                xf.scale = Vec3::new(1.0, h / TRUNK_H, 1.0);
                 if hash01(id, 17) < 0.3 {
                     xf.rotation *= Quat::from_rotation_z((hash01(id, 18) - 0.5) * 0.12);
                 }
-                if shattered {
-                    xf.scale = Vec3::new(1.0, 0.35 + 0.3 * hash01(id, 6), 1.0);
+                if snag {
+                    xf.scale = Vec3::new(1.0, (0.3 + 0.35 * hash01(id, 6)) * h / TRUNK_H, 1.0);
                     xf.rotation *= Quat::from_rotation_z((hash01(id, 7) - 0.5) * 0.5);
                 }
-                let crown = (!shattered).then(|| {
-                    let w = 6.0 + hash01(id, 8) * 4.5;
-                    let tone = 0.2 + hash01(id, 10) * 0.1;
-                    // In June: dense green, locust and ash and wild apricot, a little dusty.
-                    let colour = if summer { [tone * 0.95, tone * 1.3 + 0.03, tone * 0.62] } else { [tone, tone * 0.93, tone * 0.86] };
-                    let (w, ch) = if summer { (w * 1.15, h * 0.85) } else { (w, h * 0.78) };
-                    Crown { at: p + Vec3::Y * (h * 0.3), w, h: ch, yaw: hash01(id, 11) * 3.0, colour }
+                // The outer rows keep their low limbs in the light: the belt's flank is leaves down to the shrubs.
+                let base = if row == 1 { base } else { base * 0.55 };
+                let crown = (!snag).then(|| {
+                    let ch = h * (1.0 - base);
+                    let w = ch * kind.aspect() * (0.85 + 0.3 * hash01(id, 8));
+                    // Each tree's own shade of its kind's green (or grey): lighter, darker, yellower, bluer.
+                    let tone = 0.86 + 0.28 * hash01(id, 10);
+                    let hue = (hash01(id, 12) - 0.5) * 0.1;
+                    let c = if summer { june } else { february };
+                    let colour = [c[0] * tone * (1.0 + hue), c[1] * tone, c[2] * tone * (1.0 - hue)];
+                    Crown { kind, at: p + Vec3::Y * (h * base), w, h: ch, yaw: hash01(id, 11) * 3.0, flip: hash01(id, 13) < 0.5, colour }
                 });
                 plants.trees.push(BeltTree { trunk: k, xf, crown });
             }
-            // The shrub storey: hawthorn, elder and sloe under and beside the trees, 1.5–3 m, thickest at the
-            // belt's edges where the light is.
+            // The shrub storey: hawthorn, elder and sloe, and the locust's suckers, 1.5–4.5 m, thickest at the
+            // belt's margins where the light is, spilling a few metres into the field.
             for side in [-1.0f32, 1.0] {
                 id += 1;
-                if hash01(id, 12) < if summer { 0.85 } else { 0.6 } {
-                    let lat = side * belt.width * (0.3 + 0.35 * hash01(id, 13));
+                if hash01(id, 12) < if summer { 0.75 } else { 0.55 } {
+                    let lat = side * (belt.width * 0.15 + (belt.width * 0.4 + 3.0) * hash01(id, 13));
                     let p2 = belt.line.point(s) + belt.line.normal(s) * lat;
                     // Not where a position's trench is dug (the eye kneels there).
                     if geo::layout().ua_positions.iter().chain(&geo::layout().ru_positions).any(|q| q.distance(p2) < 14.0) {
                         continue;
                     }
-                    let tone = 0.3 + hash01(id, 14) * 0.1;
-                    let colour = if summer { [tone * 0.8, tone * 1.05, tone * 0.5] } else { [tone * 1.05, tone, tone * 0.85] };
-                    plants.shrubs.push(Crown { at: geo::ground(p2) - Vec3::Y * 0.2, w: 2.0 + 1.5 * hash01(id, 19), h: 1.5 + 1.5 * hash01(id, 20), yaw: hash01(id, 15) * 3.0, colour });
+                    let kind = if hash01(id, 24) < 0.6 { Kind::Shrub } else { Kind::Thicket };
+                    let ((h0, h1), _, june, february) = kind_look(kind);
+                    let h = h0 + (h1 - h0) * hash01(id, 20);
+                    let tone = 0.85 + 0.3 * hash01(id, 14);
+                    let c = if summer { june } else { february };
+                    let w = h * kind.aspect() * (0.8 + 0.4 * hash01(id, 19));
+                    plants.shrubs.push(Crown { kind, at: geo::ground(p2) - Vec3::Y * 0.2, w, h, yaw: hash01(id, 15) * 3.0, flip: hash01(id, 25) < 0.5, colour: c.map(|v| v * tone) });
                 }
             }
         }
@@ -457,15 +465,18 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
             cars.cuboid(p + Vec3::Y * 1.2 + rot * Vec3::new(0.0, 0.0, 0.2), Vec3::new(0.75, 0.3, 1.0), rot, [c[0] * 0.8, c[1] * 0.8, c[2] * 0.8]);
         } else {
             let h = 6.0 + hash01(k, 87) * 7.0;
-            let tone = 0.22 + hash01(k, 88) * 0.08;
+            let tone = 0.38 + hash01(k, 88) * 0.1;
             yard.append(&meshes::trunk(h, 0.15 + hash01(k, 89) * 0.1), Transform::from_translation(p));
-            meshes::crown_cards(&mut cards_for_town, p + Vec3::Y * h * 0.3, 5.0 + hash01(k, 90) * 4.0, h * 0.8, hash01(k, 98) * 3.0, [tone, tone * 0.94, tone * 0.88]);
+            // Courtyard trees: lime, birch, poplar, the odd walnut.
+            let kind = [Kind::Elm, Kind::Ash, Kind::Poplar, Kind::Walnut][(hash01(k, 99) * 4.0) as usize % 4];
+            let ch = h * 0.75;
+            crate::trees::crown(&mut cards_for_town, kind, p + Vec3::Y * h * 0.25, ch * kind.aspect() * (0.85 + 0.3 * hash01(k, 90)), ch, hash01(k, 98) * 3.0, k % 2 == 0, [tone, tone * 0.95, tone * 0.9]);
         }
     }
     commands.spawn((Mesh3d(meshes.add(yard.build())), MeshMaterial3d(solid.clone())));
     commands.spawn((Mesh3d(meshes.add(cars.build())), MeshMaterial3d(solid.clone())));
     if !dev::off(dev::Part::Trees) {
-        commands.spawn((Mesh3d(meshes.add(cards_for_town.build())), MeshMaterial3d(palette.branches.clone()), bevy::light::NotShadowCaster));
+        commands.spawn((Mesh3d(meshes.add(cards_for_town.build())), MeshMaterial3d(palette.branches.clone()), bevy::light::NotShadowCaster, bevy::light::NotShadowReceiver));
     }
 
     // Dachas: garden plots, most houses already wrecked; and the villages down in the valley.
@@ -512,6 +523,18 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
     commands.spawn((Mesh3d(meshes.add(poles.build())), MeshMaterial3d(solid.clone())));
 }
 
+/// How far the clock moves between the sun's steps, in minutes. The light's direction does not follow the clock
+/// smoothly: every new direction rasterises every shadow afresh against a turned grid of shadow texels, and a sun
+/// that turned a little every frame made the shadows of things standing still crawl and shimmer at their edges.
+/// So it holds still and steps: half a degree every two minutes of the clock (seven seconds of play), which moves
+/// a long winter shadow's tip a hand's width at a time.
+pub const SUN_STEP_MIN: f32 = 2.0;
+
+/// The clock, in hours, that the sun's direction is set from: `minutes` held to the last step.
+pub fn sun_hours(minutes: f32) -> f32 {
+    (minutes / SUN_STEP_MIN).floor() * SUN_STEP_MIN / 60.0
+}
+
 /// The light over the day: grey dawn at 06:40, a flat overcast noon, and dusk closing in after 15:00, when the
 /// burning wrecks start to show. Early February at 47.8 N: sunrise 06:51, sunset 16:38 Kyiv time (the dossier's
 /// 07:50–17:40 is Moscow time, the clock of occupied Donetsk).
@@ -537,19 +560,24 @@ fn daylight(
     let elev_true = (((h - 6.85) / (16.63 - 6.85)) * std::f32::consts::PI).sin().max(0.0) * 25f32.to_radians();
     // The light never drops below 12 degrees: at grazing incidence the steppe shadows itself into black, and the
     // footage of the day is late-morning light anyway. The true elevation still sets the brightness.
-    let elev = elev_true.max(12f32.to_radians());
     let azim = (h - 11.75) / 5.0 * 1.2; // south-east in the morning, south-west after
     let day = (elev_true / 24f32.to_radians()).clamp(0.0, 1.0);
     // A camera's auto-exposure flattens the day: twilight over snow still reads light grey, only cooler.
     let light = 0.74 + 0.26 * day.powf(0.5);
     // Where the sun really is (the light's own direction is floored at 12 degrees).
     let sun_at = Vec3::new(azim.sin() * elev_true.cos(), elev_true.sin(), azim.cos() * elev_true.cos());
+    // The direction the light comes from, in the sun's steps (see `SUN_STEP_MIN`).
+    let hs = sun_hours(minutes);
+    let elev_step = ((((hs - 6.85) / (16.63 - 6.85)) * std::f32::consts::PI).sin().max(0.0) * 25f32.to_radians()).max(12f32.to_radians());
+    let azim_step = (hs - 11.75) / 5.0 * 1.2;
     for (mut l, mut tf) in &mut sun {
         // A clear, frosty day (the 6 February footage shows hard sun): strong direct light, a cold blue sky fill.
         l.illuminance = 15000.0 * (0.8 + 0.2 * day) * light;
-        let dir = Vec3::new(azim.sin() * elev.cos(), elev.sin().max(0.08), azim.cos() * elev.cos());
-        if dbg != Some(DayDebug::NoSun) {
-            *tf = Transform::from_translation(dir).looking_at(Vec3::ZERO, Vec3::Y);
+        let dir = Vec3::new(azim_step.sin() * elev_step.cos(), elev_step.sin().max(0.08), azim_step.cos() * elev_step.cos());
+        let to = Transform::from_translation(dir).looking_at(Vec3::ZERO, Vec3::Y);
+        // Only on a step: rewriting the same transform would still mark the light changed.
+        if dbg != Some(DayDebug::NoSun) && tf.rotation != to.rotation {
+            *tf = to;
         }
         l.color = Color::srgb(1.0, 0.9 + 0.08 * day, 0.8 + 0.15 * day);
     }
