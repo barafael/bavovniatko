@@ -384,6 +384,7 @@ dependencies = [
  "bav-core",
  "bav-sim",
  "bevy",
+ "half",
  "image",
  "rand 0.9.5",
  "strum",

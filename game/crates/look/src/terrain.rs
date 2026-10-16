@@ -43,6 +43,10 @@ pub struct GroundDetail {
     #[texture(101)]
     #[sampler(102)]
     noise: Handle<Image>,
+    /// What stands between the ground and the sun, baked at start (see `occluder_map`).
+    #[texture(103)]
+    #[sampler(104)]
+    occluders: Handle<Image>,
 }
 
 impl MaterialExtension for GroundDetail {
@@ -59,34 +63,77 @@ pub struct Ground {
     images: Vec<Handle<Image>>,
 }
 
-impl Ground {
-    /// Each chunk's texture as `<dir>/ground-<cx>-<cz>.png`.
-    pub fn save(&self, images: &Assets<Image>, dir: &Path) -> Result<(), String> {
-        std::fs::create_dir_all(dir).map_err(|e| e.to_string())?;
-        for (i, handle) in self.images.iter().enumerate() {
-            // Level 0 of the chain: the mips are rebuilt on load.
-            let image = images.get(handle).ok_or("a ground chunk is not loaded")?;
-            let data = image.data.as_ref().ok_or("a ground chunk has no data")?;
-            let n = TEX_PER_CHUNK as u32;
-            let level0 = image::RgbaImage::from_raw(n, n, data[..TEX_PER_CHUNK * TEX_PER_CHUNK * 4].to_vec()).ok_or("a ground chunk is the wrong size")?;
-            level0.save(chunk_path(dir, i)).map_err(|e| e.to_string())?;
-        }
-        Ok(())
-    }
-}
-
+/// Each chunk's texture as `<dir>/ground-<cx>-<cz>.png`.
 fn chunk_path(dir: &Path, i: usize) -> PathBuf {
     dir.join(format!("ground-{}-{}.png", i % CHUNKS_X, i / CHUNKS_X))
 }
 
-/// The chunks `Ground::save` wrote, if all of them are there.
+/// The chunks `save` wrote, if all of them are there, decoded across the cores.
 fn load(dir: &Path) -> Option<Chunks> {
-    (0..CHUNKS_X * CHUNKS_Z)
-        .map(|i| {
-            let image = image::open(chunk_path(dir, i)).ok()?.into_rgba8();
-            (image.width() as usize == TEX_PER_CHUNK && image.height() as usize == TEX_PER_CHUNK).then(|| image.into_raw())
-        })
-        .collect()
+    in_parallel(CHUNKS_X * CHUNKS_Z, |i| {
+        let image = image::open(chunk_path(dir, i)).ok()?.into_rgba8();
+        (image.width() as usize == TEX_PER_CHUNK && image.height() as usize == TEX_PER_CHUNK).then(|| image.into_raw())
+    })
+    .into_iter()
+    .collect()
+}
+
+/// Write the painted chunks as PNGs: into a fresh directory first, renamed into place once complete, so a run
+/// that starts meanwhile (the bands run two days at once) never reads half a cache.
+fn save(chunks: &Chunks, dir: &Path) -> Result<(), String> {
+    let tmp = dir.with_extension(format!("tmp-{}", std::process::id()));
+    std::fs::create_dir_all(&tmp).map_err(|e| e.to_string())?;
+    let n = TEX_PER_CHUNK as u32;
+    let written: Vec<Result<(), String>> = in_parallel(chunks.len(), |i| {
+        let level0 = image::RgbaImage::from_raw(n, n, chunks[i].clone()).ok_or("a ground chunk is the wrong size")?;
+        level0.save(chunk_path(&tmp, i)).map_err(|e| e.to_string())
+    });
+    if let Some(Err(e)) = written.into_iter().find(|r| r.is_err()) {
+        let _ = std::fs::remove_dir_all(&tmp);
+        return Err(e);
+    }
+    if std::fs::rename(&tmp, dir).is_err() {
+        // Another run got there first: its chunks are the same.
+        let _ = std::fs::remove_dir_all(&tmp);
+    }
+    Ok(())
+}
+
+/// Where the painted ground is kept between runs: `BAV_GROUND=<dir>`, or else the user's cache under a key of
+/// everything the painting reads (its own code, the heights' and the data's code, and the diorama's file), so a
+/// change to any of them paints afresh. `BAV_GROUND=off` always paints.
+fn ground_dir() -> Option<PathBuf> {
+    match dev().ground.as_deref() {
+        Some("off") => return None,
+        Some(dir) => return Some(PathBuf::from(dir)),
+        None => {}
+    }
+    let base = std::env::var_os("XDG_CACHE_HOME").map(PathBuf::from).or_else(|| std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".cache")))?;
+    let (_, text) = bav_core::data::source();
+    let mut key: u64 = 0xcbf2_9ce4_8422_2325;
+    for part in [include_str!("terrain.rs"), include_str!("../../core/src/geo.rs"), include_str!("../../core/src/data.rs"), text] {
+        for b in part.bytes() {
+            key = (key ^ b as u64).wrapping_mul(0x0100_0000_01b3);
+        }
+    }
+    Some(base.join("bavovniatko").join("ground").join(format!("{}-{key:016x}", dio_name())))
+}
+
+fn dio_name() -> String {
+    format!("{:?}", diorama()).to_lowercase()
+}
+
+/// Drop the cache's older paintings of this diorama (each is about 150 MB).
+fn prune(dir: &Path) {
+    let (Some(parent), Some(name)) = (dir.parent(), dir.file_name().and_then(|n| n.to_str())) else { return };
+    let prefix = format!("{}-", dio_name());
+    for entry in std::fs::read_dir(parent).into_iter().flatten().flatten() {
+        let other = entry.file_name();
+        let other = other.to_string_lossy();
+        if other.starts_with(&prefix) && other != name && !other.contains(".tmp-") {
+            let _ = std::fs::remove_dir_all(entry.path());
+        }
+    }
 }
 
 const W: usize = CHUNKS_X * TEX_PER_CHUNK;
@@ -664,10 +711,22 @@ fn spawn_terrain(
     mut materials: ResMut<Assets<GroundMaterial>>,
 ) {
     let t0 = Instant::now();
-    let dir = dev().ground.as_deref().map(Path::new);
-    let saved = dir.and_then(load);
+    let dir = ground_dir();
+    let saved = dir.as_deref().and_then(load);
     let from_file = saved.is_some();
     let chunks = saved.unwrap_or_else(paint);
+    if let (Some(dir), false) = (&dir, from_file) {
+        let t = Instant::now();
+        match save(&chunks, dir) {
+            Ok(()) => {
+                info!("ground: kept in {} ({:.0} ms)", dir.display(), t.elapsed().as_secs_f32() * 1000.0);
+                if dev().ground.is_none() {
+                    prune(dir);
+                }
+            }
+            Err(e) => warn!("ground: not kept in {}: {e}", dir.display()),
+        }
+    }
     let t1 = Instant::now();
     let indices = grid_indices();
     let chunk_meshes = in_parallel(CHUNKS_X * CHUNKS_Z, |chunk| chunk_mesh(chunk, &indices));
@@ -675,7 +734,12 @@ fn spawn_terrain(
 
     let mat_template = StandardMaterial { perceptual_roughness: 0.93, reflectance: 0.3, ..default() };
     let noise = images.add(noise_texture());
-    let detail = GroundDetail { params: Vec4::new(1.0, 1.0, if diorama().summer() { 1.0 } else { 0.0 }, 0.0), noise };
+    let t2 = Instant::now();
+    let occluders = images.add(occluder_map());
+    info!("ground: occluder map in {:.0} ms", t2.elapsed().as_secs_f32() * 1000.0);
+    // w: 1 leaves the baked shade out (`BAV_OFF=shade`).
+    let shade_off = if crate::dev::off(crate::dev::Part::Shade) { 1.0 } else if std::env::var("BAV_SHADE_DEBUG").is_ok() { 2.0 } else { 0.0 };
+    let detail = GroundDetail { params: Vec4::new(1.0, 1.0, if diorama().summer() { 1.0 } else { 0.0 }, shade_off), noise, occluders };
     let mut handles = Vec::with_capacity(CHUNKS_X * CHUNKS_Z);
     for (chunk, (data, mesh)) in chunks.into_iter().zip(chunk_meshes).enumerate() {
         let handle = images.add(crate::meshes::rgba8_mipped(TEX_PER_CHUNK, data, ImageSamplerDescriptor::linear(), true));
@@ -695,12 +759,6 @@ fn spawn_terrain(
         ));
     }
     let ground = Ground { images: handles };
-    if let (Some(dir), false) = (dir, from_file) {
-        match ground.save(&images, dir) {
-            Ok(()) => info!("ground: saved to {}", dir.display()),
-            Err(e) => warn!("ground: not saved to {}: {e}", dir.display()),
-        }
-    }
     commands.insert_resource(ground);
 }
 
@@ -800,6 +858,93 @@ fn noise_texture() -> Image {
     }
     let sampler = ImageSamplerDescriptor { address_mode_u: bevy::image::ImageAddressMode::Repeat, address_mode_v: bevy::image::ImageAddressMode::Repeat, ..ImageSamplerDescriptor::linear() };
     crate::meshes::rgba8_mipped(N, data, sampler, false)
+}
+
+/// Metres a texel of the occluder map.
+pub const OCC_TEXEL: f32 = 2.0;
+
+/// What stands between the ground and the sun, for the ground shader to step through towards it: at each 2 m
+/// texel whether any crown stands within 100 m (r: elsewhere the shader does not look), and the canopy's underside
+/// (g), top (b) and density (a), as heights above sea level. The trees never move, so this is baked once; the sun
+/// does, and the shader walks the map along wherever it is now. Where no crown stands, g and b are the terrain's
+/// height, so filtering between a crown and open ground thins the crown out rather than inventing one.
+pub fn occluder_map() -> Image {
+    let (w, h) = ((2.0 * HALF_X / OCC_TEXEL) as usize, (2.0 * HALF_Z / OCC_TEXEL) as usize);
+    let centre = |col: usize, row: usize| Vec2::new(-HALF_X + (col as f32 + 0.5) * OCC_TEXEL, -HALF_Z + (row as f32 + 0.5) * OCC_TEXEL);
+    let rows: Vec<Vec<[f32; 4]>> = in_parallel(h, |row| {
+        (0..w).map(|col| {
+            let c = centre(col, row);
+            let g = geo::height(c.x, c.y);
+            [0.0, g, g, 0.0]
+        })
+        .collect()
+    });
+    let mut texels: Vec<[f32; 4]> = rows.into_iter().flatten().collect();
+    if !crate::dev::off(crate::dev::Part::Trees) {
+        let plants = crate::world::belt_plants();
+        let crowns = plants.trees.iter().filter_map(|t| t.crown.as_ref()).map(|c| (c, 0.85)).chain(plants.shrubs.iter().map(|c| (c, 0.6)));
+        for (i, (c, density)) in crowns.enumerate() {
+            // A crown as a soft disc as wide as its cards, thinning at its rim, and a little holed (light through
+            // the branches): its shade on the field is dappled rather than a black blot.
+            let r = c.w * 0.5;
+            let (bottom, top) = (c.at.y + c.h * 0.15, c.at.y + c.h);
+            let lo = ((c.at.xz() + Vec2::new(HALF_X, HALF_Z) - r) / OCC_TEXEL).floor().max(Vec2::ZERO);
+            let hi = ((c.at.xz() + Vec2::new(HALF_X, HALF_Z) + r) / OCC_TEXEL).ceil().min(Vec2::new(w as f32 - 1.0, h as f32 - 1.0));
+            for row in lo.y as usize..=hi.y as usize {
+                for col in lo.x as usize..=hi.x as usize {
+                    let d = centre(col, row).distance(c.at.xz());
+                    if d > r {
+                        continue;
+                    }
+                    let holes = 0.7 + 0.3 * geo::hash01((row * w + col) as u32 ^ (i as u32).wrapping_mul(2654435761), 0x0cc1);
+                    let a = density * holes * (1.0 - geo::smoothstep(0.55 * r, r, d));
+                    let t = &mut texels[row * w + col];
+                    if t[3] == 0.0 {
+                        (t[1], t[2]) = (bottom, top);
+                    } else {
+                        (t[1], t[2]) = (t[1].min(bottom), t[2].max(top));
+                    }
+                    t[3] = t[3].max(a);
+                }
+            }
+        }
+    }
+    // Near a crown: mark the 16 m cells that hold one, then every texel whose cell is within 112 m of a marked one.
+    const CELL: usize = 8;
+    const REACH: isize = 7;
+    let (cw, chh) = (w.div_ceil(CELL), h.div_ceil(CELL));
+    let mut held = vec![false; cw * chh];
+    for (i, t) in texels.iter().enumerate() {
+        if t[3] > 0.0 {
+            held[(i / w / CELL) * cw + (i % w) / CELL] = true;
+        }
+    }
+    let mut near = vec![false; cw * chh];
+    for (i, n) in near.iter_mut().enumerate() {
+        let (cx, cz) = ((i % cw) as isize, (i / cw) as isize);
+        *n = (-REACH..=REACH).any(|dz| (-REACH..=REACH).any(|dx| {
+            let (x, z) = (cx + dx, cz + dz);
+            x >= 0 && z >= 0 && (x as usize) < cw && (z as usize) < chh && held[z as usize * cw + x as usize]
+        }));
+    }
+    for (i, t) in texels.iter_mut().enumerate() {
+        t[0] = if near[(i / w / CELL) * cw + (i % w) / CELL] { 1.0 } else { 0.0 };
+    }
+    let mut data = Vec::with_capacity(w * h * 8);
+    for t in texels {
+        for v in t {
+            data.extend_from_slice(&half::f16::from_f32(v).to_le_bytes());
+        }
+    }
+    let mut img = Image::new(
+        bevy::render::render_resource::Extent3d { width: w as u32, height: h as u32, depth_or_array_layers: 1 },
+        bevy::render::render_resource::TextureDimension::D2,
+        data,
+        bevy::render::render_resource::TextureFormat::Rgba16Float,
+        bevy::asset::RenderAssetUsages::RENDER_WORLD,
+    );
+    img.sampler = bevy::image::ImageSampler::Descriptor(ImageSamplerDescriptor::linear());
+    img
 }
 
 #[cfg(test)]

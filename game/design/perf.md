@@ -127,10 +127,41 @@ looked the same. But three interleaved rounds (30 windows each, alternating whic
 The cost is in the trees' cards, not the shrubs'; the extra mesh per chunk may even have cost a little. The change
 was reverted.
 
+## The third round: the belts' shade baked (2026-10-16)
+
+The owner found the crown shadows odd-looking anyway, so they were replaced rather than thinned:
+
+- **No shadow maps from trees.** Neither crowns nor trunks cast into the sun's cascades.
+- **A baked occluder map.** At start, `terrain::occluder_map` bakes the canopy into a 2 m map over the whole
+  diorama: crown underside, top and density, as a soft, slightly holed disc per crown and shrub. It also bakes
+  a flag for every texel within about 100 m of a crown. The bake takes 150 ms.
+- **The ground shades itself.** Near a belt, the ground shader walks that map towards wherever the sun is now,
+  in twelve growing steps out to about 90 m. It then takes out the sun's direct light, using Bevy's own Burley
+  diffuse term times what the shadow map already let through. Away from the belts it reads one texel and stops.
+  The shade follows the sun all day, its edge soft and grainy; vehicles keep their real shadows. One loss:
+  things standing in a belt's shade are not darkened, since only the ground reads the map.
+- **Debug view.** `BAV_SHADE_DEBUG=1` shows the shade term alone; `BAV_OFF=shade` leaves it out.
+
+The first version walked 20 steps on every ground pixel and included the terrain. It cost 2.5 ms more in the
+main pass than the crown shadows had saved (GPU 3D pass 3.1 → 5.6 ms). Skipping open field and dropping the
+terrain fixed that.
+
+On a quiet machine, interleaved against the committed build, 30 windows each, at 2560x1600:
+
+| | Robotyne | Vuhledar |
+|---|---|---|
+| crown cards in the cascades | 7.70 ms | 8.30 ms |
+| baked shade | **7.30 ms** | **7.85 ms** |
+
+The main pass costs about 0.7 ms more; the shadow pass saves more than that. Under load the crown shadows had
+measured 1.7–2.8 ms; on a quiet machine the net gain is about 0.4 ms. The look changed more than the frame.
+
+**The painted ground is cached.** It is kept in `~/.cache/bavovniatko/ground/<diorama>-<key>/` (about 70 MB of
+PNGs). The key hashes the painting's code and the diorama's file. Loaded across the cores it takes 64 ms instead
+of 2.7 s of painting, so a start is about half as long. Seed 0 of both days replays identically from the cache.
+
 ## Next levers, not pulled yet
 
-- **The crowns' shadows.** These are a look decision, not a free win:
-  - two crossed shadow cards a tree instead of three, on a render layer only the sun sees;
-  - no crown shadows at all as a lower quality setting.
+- **Shade on what stands in the belts.** The men and vehicles there could read the same map.
 - **The feed camera's 2D pass** at full resolution, about 0.6 ms at 2560x1600.
 - **Worst frames.** Rare ones of 15–20 ms remain; the hitch log names their game time for a trace of their own.

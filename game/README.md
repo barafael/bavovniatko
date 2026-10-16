@@ -175,13 +175,17 @@ that point (at height, then the dive). `BAV_OPERATOR=off` keeps the drone team f
 `BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
 turned) burned out, to look the models over. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
 scales game time. `BAV_DIAG=1` logs the frame time, the CPU time a frame took across threads, the GPU time of every render pass and the entity counts every ten seconds, and any frame over 25 ms on its own
-(headless, it also lifts the frame cap), and `BAV_OFF=shadows,msaa,feed,trees,terrain,particles,vshadows,treeshadows` leaves parts of the
-picture out, so a slow frame can be charged to what makes it slow before anything is rewritten. The picture's
+(headless, it also lifts the frame cap), and `BAV_OFF=shadows,msaa,feed,trees,terrain,particles,vshadows,shade` leaves parts of the
+picture out, so a slow frame can be charged to what makes it slow before anything is rewritten. The tree belts cast no
+shadow maps: the ground darkens itself where a baked height map of the canopy and the terrain stands between it and
+the sun (`terrain::occluder_map`); `BAV_SHADE_DEBUG=1` paints that term alone, white in the sun and black in shade. The picture's
 cost has four knobs, with defaults measured for the 780M at 2560x1600 (`design/perf.md`): `BAV_SCALE` (the 3D
 picture's size against the screen's; by default it is capped near 1920x1200 and the feed pass scales it up),
 `BAV_AA=msaa2|msaa4|smaa|off`, `BAV_SHADOW_MAP=<texels>` (2048) and `BAV_CASCADES=<n>,<first m>` (3, 450).
 `BAV_SKY=overcast` puts the unbroken stratus of the real 6 February over Vuhledar instead of the footage week's
 broken cloud and hard sun (the default). `BAV_DEBRIEF=1` ends the day as soon as `BAV_WARP_TO` arrives
-(or at once), to look at the debrief without playing the day through. `BAV_GROUND=<dir>` reads the 252 ground chunks from that directory's PNGs if they are all there, and
-writes them there after painting if not: the ground as a persisted day will keep it. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
+(or at once), to look at the debrief without playing the day through. The painted ground (252 chunks, about 2.5 s of
+the start) is kept in `~/.cache/bavovniatko/ground/<diorama>-<key>/`, whose key hashes the painting's code and the
+diorama's file, so a change to either paints afresh; `BAV_GROUND=<dir>` keeps it there instead and
+`BAV_GROUND=off` always paints. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
 `devlog/videos.md`. The history is part of the development.

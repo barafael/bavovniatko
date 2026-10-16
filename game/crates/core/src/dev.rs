@@ -31,8 +31,8 @@ pub enum Part {
     Particles,
     /// The vehicles' shadows (they still receive the sun's).
     Vshadows,
-    /// The tree crowns' shadows.
-    Treeshadows,
+    /// The ground's own shade from the baked canopy and terrain (`terrain::occluder_map`).
+    Shade,
 }
 
 /// `BAV_AA`: how the 3D picture's edges are smoothed.
@@ -106,7 +106,8 @@ pub struct DevEnv {
     /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
     pub diag: bool,
     pub off: Vec<Part>,
-    /// A directory of ground chunk PNGs: read at start if complete, written after painting if not.
+    /// Where the painted ground is kept: a directory of chunk PNGs, read at start if complete and written after
+    /// painting if not; `off` always paints. Unset, it is the user's cache (`terrain::ground_dir`).
     pub ground: Option<String>,
     pub log_stats: bool,
     /// Park every vehicle model in a row here (x, z, heading in degrees), live and burned out, to look them over.

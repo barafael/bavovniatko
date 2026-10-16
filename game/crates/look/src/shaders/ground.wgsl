@@ -3,7 +3,9 @@
 // furrows here). The texture is sampled through a small world-space jitter, so no texel edge is ever straight.
 
 #import bevy_pbr::{
-    mesh_view_bindings::fog,
+    mesh_view_bindings::{fog, lights, view},
+    mesh_view_types::DIRECTIONAL_LIGHT_FLAGS_SHADOWS_ENABLED_BIT,
+    shadows::fetch_directional_shadow,
     pbr_fragment::pbr_input_from_standard_material,
     pbr_functions::alpha_discard,
     forward_io::{VertexOutput, FragmentOutput},
@@ -17,6 +19,8 @@ struct GroundDetail {
 @group(#{MATERIAL_BIND_GROUP}) @binding(100) var<uniform> ground: GroundDetail;
 @group(#{MATERIAL_BIND_GROUP}) @binding(101) var noise_tex: texture_2d<f32>;
 @group(#{MATERIAL_BIND_GROUP}) @binding(102) var noise_smp: sampler;
+@group(#{MATERIAL_BIND_GROUP}) @binding(103) var occ_tex: texture_2d<f32>;
+@group(#{MATERIAL_BIND_GROUP}) @binding(104) var occ_smp: sampler;
 
 // The noise comes from a 256-texel tiling texture of random values in four independent channels: one lattice
 // point per texel, filtered, is value noise for the price of a read (the shader used to hash every lattice point,
@@ -46,6 +50,41 @@ fn fbm2(p: vec2<f32>, lod: f32) -> f32 {
 // The same from channels b and a, for a second, independent field at the same place.
 fn fbm2b(p: vec2<f32>, lod: f32) -> f32 {
     return (vn(p, lod).b - 0.5) * 0.65 + (vn(p * 2.3 + 11.0, lod + 1.2).a - 0.5) * 0.35;
+}
+
+// The occluder map covers the diorama (terrain::occluder_map): r whether a crown stands within 100 m, g and b the
+// canopy's underside and top, a its density.
+const HALF: vec2<f32> = vec2<f32>(2304.0, 1792.0);
+const PI: f32 = 3.14159265;
+
+fn occ(q: vec2<f32>) -> vec4<f32> {
+    return textureSampleLevel(occ_tex, occ_smp, (q + HALF) / (2.0 * HALF), 0.0);
+}
+
+// How much of the sun reaches this point past the tree belts: away from them (most of the field) one read says
+// so; near them, walk the map towards the sun in twelve growing steps (out to about 90 m, a crown's shadow at the
+// lowest sun) and take out what each crown in the way blocks. The walk starts at a different fraction of a step
+// on every pixel, so the shade's edge comes out soft and grainy, as the feed shows it, rather than banded.
+fn sun_open(p: vec3<f32>, to_sun: vec3<f32>, jitter: f32) -> f32 {
+    let flat = length(to_sun.xz);
+    if flat < 0.01 || occ(p.xz).r < 0.01 {
+        return 1.0;
+    }
+    let dir = to_sun.xz / flat;
+    let rise = to_sun.y / flat;
+    var open = 1.0;
+    var d = 1.0 + jitter * 3.0;
+    for (var i = 0; i < 12; i = i + 1) {
+        let o = occ(p.xz + dir * d);
+        let ray = p.y + 0.4 + d * rise;
+        let inside = smoothstep(o.g - 0.5, o.g + 0.5, ray) * (1.0 - smoothstep(o.b - 0.5, o.b + 0.5, ray));
+        open *= 1.0 - o.a * inside;
+        if open < 0.02 {
+            break;
+        }
+        d += 3.0 + 0.15 * d;
+    }
+    return open;
 }
 
 @fragment
@@ -128,6 +167,39 @@ fn fragment(in: VertexOutput, @builtin(front_facing) is_front: bool) -> Fragment
     pbr_input.material.base_color = alpha_discard(pbr_input.material, pbr_input.material.base_color);
     var out: FragmentOutput;
     out.color = apply_pbr_lighting(pbr_input);
+    // The belts' shade and the hills': the trees cast nothing into the shadow cascades, so the ground takes the sun's
+    // direct light back out itself where the baked canopy or terrain stands in the way. Bevy's own terms (a rough
+    // Lambert lobe, the light's colour and the exposure), times what the shadow map already let through, so a
+    // vehicle's shadow inside a belt's is not darkened twice.
+    if (ground.params.w < 0.5 || ground.params.w > 1.5) && lights.n_directional_lights > 0u {
+        let to_sun = lights.directional_lights[0].direction_to_light.xyz;
+        let ndl = max(dot(pbr_input.N, to_sun), 0.0);
+        if ndl > 0.0 {
+            let open = sun_open(in.world_position.xyz, to_sun, lattice(in.position.xy).a);
+            if ground.params.w > 1.5 {
+                out.color = vec4<f32>(vec3<f32>(open), 1.0);
+                return out;
+            }
+            if open < 0.999 {
+                var mapped = 1.0;
+                if (lights.directional_lights[0].flags & DIRECTIONAL_LIGHT_FLAGS_SHADOWS_ENABLED_BIT) != 0u {
+                    let view_z = dot(vec4<f32>(view.view_from_world[0].z, view.view_from_world[1].z, view.view_from_world[2].z, view.view_from_world[3].z), in.world_position);
+                    mapped = fetch_directional_shadow(0u, in.world_position, in.world_normal, view_z, in.position.xy);
+                }
+                // Bevy's diffuse lobe for the sun exactly (Burley's: at a low sun on rough ground it is about twice
+                // plain Lambert), so the shade is as dark as a shadow the map would have drawn.
+                let v = pbr_input.V;
+                let h = normalize(to_sun + v);
+                let ldoth = saturate(dot(to_sun, h));
+                let ndv = max(dot(pbr_input.N, v), 0.0001);
+                let rough = pbr_input.material.perceptual_roughness * pbr_input.material.perceptual_roughness;
+                let f90 = 0.5 + 2.0 * rough * ldoth * ldoth;
+                let burley = (1.0 + (f90 - 1.0) * pow(1.0 - ndl, 5.0)) * (1.0 + (f90 - 1.0) * pow(1.0 - ndv, 5.0)) / PI;
+                let sun = c * burley * ndl * lights.directional_lights[0].color.rgb * view.exposure;
+                out.color = vec4<f32>(max(out.color.rgb - sun * mapped * (1.0 - open), vec3<f32>(0.0)), out.color.a);
+            }
+        }
+    }
     // The diorama has no edge: the last 600 m of ground dissolve into the haze.
     let edge = min(2304.0 - abs(w.x), 1792.0 - abs(w.y));
     let e = 1.0 - smoothstep(0.0, 600.0, edge);

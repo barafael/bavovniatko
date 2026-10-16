@@ -195,8 +195,63 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
         let cz = ((p.y + HALF_Z) / CHUNK).clamp(0.0, geo::CHUNKS_Z as f32 - 1.0) as usize;
         cz * CHUNKS_X + cx
     };
-    let trunk_meshes: Vec<MeshBuilder> = (0..6).map(|k| meshes::trunk(7.0 + k as f32 * 1.6, 0.14 + k as f32 * 0.03)).collect();
+    let trunk_meshes: Vec<MeshBuilder> = (0..TRUNKS).map(|k| meshes::trunk(7.0 + k as f32 * 1.6, 0.14 + k as f32 * 0.03)).collect();
+    let plants = belt_plants();
+    for t in &plants.trees {
+        let ci = chunk_of(t.xf.translation.xz());
+        trunks[ci].append(&trunk_meshes[t.trunk], t.xf);
+        if let Some(c) = &t.crown {
+            meshes::crown_cards(&mut crowns[ci], c.at, c.w, c.h, c.yaw, c.colour);
+        }
+    }
+    for c in &plants.shrubs {
+        meshes::crown_cards(&mut crowns[chunk_of(c.at.xz())], c.at, c.w, c.h, c.yaw, c.colour);
+    }
+    for (t, c) in trunks.into_iter().zip(crowns) {
+        if dev::off(dev::Part::Trees) {
+            break;
+        }
+        // Neither trunks nor crowns cast into the sun's cascades: their cards' shadows were most of the belts'
+        // cost and drew odd streaks. The ground shades itself under them instead, from the baked height of the
+        // canopy (terrain::occluder_map).
+        if !t.is_empty() {
+            commands.spawn((Mesh3d(meshes.add(t.build())), MeshMaterial3d(vertex.clone()), bevy::light::NotShadowCaster));
+        }
+        if !c.is_empty() {
+            commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone()), bevy::light::NotShadowCaster));
+        }
+    }
+}
 
+/// How many trunk shapes the belts draw from.
+const TRUNKS: usize = 6;
+
+/// A crown (or a shrub) as crossed cards: the centre of their foot, width, height, turn and colour.
+pub struct Crown {
+    pub at: Vec3,
+    pub w: f32,
+    pub h: f32,
+    pub yaw: f32,
+    pub colour: meshes::Rgb,
+}
+
+/// A belt tree: which trunk, how it stands, and its crown (none when shelling has split it).
+pub struct BeltTree {
+    pub trunk: usize,
+    pub xf: Transform,
+    pub crown: Option<Crown>,
+}
+
+/// Every tree and shrub of the belts, where the meshes put them and the ground's shade reads them from.
+pub struct BeltPlants {
+    pub trees: Vec<BeltTree>,
+    pub shrubs: Vec<Crown>,
+}
+
+/// Where the belts' trees and shrubs stand, and how each looks: the same every run (hashes of their order).
+pub fn belt_plants() -> BeltPlants {
+    let summer = diorama().summer();
+    let mut plants = BeltPlants { trees: Vec::new(), shrubs: Vec::new() };
     let mut id = 0u32;
     for (bi, belt) in geo::layout().belts.iter().enumerate() {
         let len = belt.line.length();
@@ -223,10 +278,9 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
                 let lat = (row as f32 - (rows - 1) as f32 * 0.5) * belt.width / rows as f32 + (hash01(id, 3) - 0.5) * 2.5;
                 let p2 = belt.line.point(s) + belt.line.normal(s) * lat;
                 let p = geo::ground(p2) - Vec3::Y * 0.2;
-                let ci = chunk_of(p2);
                 // Shelling has split and thinned the belts closest to the fighting.
                 let shattered = hash01(id, 9) < 0.12 + 0.18 * (bi < 2) as i32 as f32;
-                let k = (hash01(id, 4) * 6.0) as usize % 6;
+                let k = (hash01(id, 4) * TRUNKS as f32) as usize % TRUNKS;
                 let mut xf = Transform::from_translation(p).with_rotation(Quat::from_rotation_y(hash01(id, 5) * std::f32::consts::TAU));
                 // No two trees the same height; some lean.
                 let grow = 0.75 + 0.5 * hash01(id, 16);
@@ -239,15 +293,15 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
                     xf.scale = Vec3::new(1.0, 0.35 + 0.3 * hash01(id, 6), 1.0);
                     xf.rotation *= Quat::from_rotation_z((hash01(id, 7) - 0.5) * 0.5);
                 }
-                trunks[ci].append(&trunk_meshes[k], xf);
-                if !shattered {
+                let crown = (!shattered).then(|| {
                     let w = 6.0 + hash01(id, 8) * 4.5;
                     let tone = 0.2 + hash01(id, 10) * 0.1;
                     // In June: dense green, locust and ash and wild apricot, a little dusty.
-                    let c = if summer { [tone * 0.95, tone * 1.3 + 0.03, tone * 0.62] } else { [tone, tone * 0.93, tone * 0.86] };
+                    let colour = if summer { [tone * 0.95, tone * 1.3 + 0.03, tone * 0.62] } else { [tone, tone * 0.93, tone * 0.86] };
                     let (w, ch) = if summer { (w * 1.15, h * 0.85) } else { (w, h * 0.78) };
-                    meshes::crown_cards(&mut crowns[ci], p + Vec3::Y * (h * 0.3), w, ch, hash01(id, 11) * 3.0, c);
-                }
+                    Crown { at: p + Vec3::Y * (h * 0.3), w, h: ch, yaw: hash01(id, 11) * 3.0, colour }
+                });
+                plants.trees.push(BeltTree { trunk: k, xf, crown });
             }
             // The shrub storey: hawthorn, elder and sloe under and beside the trees, 1.5–3 m, thickest at the
             // belt's edges where the light is.
@@ -261,28 +315,13 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
                         continue;
                     }
                     let tone = 0.3 + hash01(id, 14) * 0.1;
-                    let c = if summer { [tone * 0.8, tone * 1.05, tone * 0.5] } else { [tone * 1.05, tone, tone * 0.85] };
-                    meshes::crown_cards(&mut crowns[chunk_of(p2)], geo::ground(p2) - Vec3::Y * 0.2, 2.0 + 1.5 * hash01(id, 19), 1.5 + 1.5 * hash01(id, 20), hash01(id, 15) * 3.0, c);
+                    let colour = if summer { [tone * 0.8, tone * 1.05, tone * 0.5] } else { [tone * 1.05, tone, tone * 0.85] };
+                    plants.shrubs.push(Crown { at: geo::ground(p2) - Vec3::Y * 0.2, w: 2.0 + 1.5 * hash01(id, 19), h: 1.5 + 1.5 * hash01(id, 20), yaw: hash01(id, 15) * 3.0, colour });
                 }
             }
         }
     }
-    for (t, c) in trunks.into_iter().zip(crowns) {
-        if dev::off(dev::Part::Trees) {
-            break;
-        }
-        if !t.is_empty() {
-            commands.spawn((Mesh3d(meshes.add(t.build())), MeshMaterial3d(vertex.clone())));
-        }
-        if !c.is_empty() {
-            // The crowns cast too (the shadow pass discards by the same mask), so a belt lays its band of shade
-            // across the field in the low sun.
-            let mut crown = commands.spawn((Mesh3d(meshes.add(c.build())), MeshMaterial3d(branches.clone())));
-            if dev::off(dev::Part::Treeshadows) {
-                crown.insert(bevy::light::NotShadowCaster);
-            }
-        }
-    }
+    plants
 }
 
 /// Facade texture for the panel blocks: grey panels, a 4 × 3 grid of windows, most blown out and sooted.
