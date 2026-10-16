@@ -73,6 +73,8 @@ pub struct DevEnv {
     /// `BAV_CASCADES="<n>,<first far bound m>"`: the sun's shadow cascades (default 3, 450).
     pub cascades: Option<(usize, f32)>,
     pub skip_briefing: bool,
+    /// `BAV_SETTINGS=open`: start with the settings overlay open (for shots of it).
+    pub settings_open: bool,
     /// Film the showcase tour into this directory.
     pub showcase: Option<String>,
     pub no_battery: bool,
@@ -203,6 +205,7 @@ impl DevEnv {
                 Some((n.trim().parse().ok()?, f.trim().parse().ok()?))
             }),
             skip_briefing: var("BAV_SKIP_BRIEFING").is_some(),
+            settings_open: var("BAV_SETTINGS").as_deref() == Some("open"),
             showcase: var("BAV_SHOWCASE"),
             no_battery: var("BAV_NO_BATTERY").is_some(),
             view: parse("BAV_VIEW"),

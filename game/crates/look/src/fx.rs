@@ -113,6 +113,8 @@ pub struct FxAssets {
     pub crater_flash: Handle<StandardMaterial>,
     pub sphere: Handle<Mesh>,
     count: usize,
+    /// How many particles may live at once: `MAX_PARTICLES`, less what the player has turned the effects down.
+    pub budget: usize,
 }
 
 impl FxAssets {
@@ -215,7 +217,7 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
     let quads = [meshes.add(quad(0)), meshes.add(quad(1)), meshes.add(quad(2)), meshes.add(quad(3))];
     let sphere = meshes.add(Sphere::new(1.0).mesh().ico(2).unwrap());
     let crater_flash = materials.add(StandardMaterial { base_color: Color::srgb(1.0, 0.8, 0.5), emissive: LinearRgba::rgb(40.0, 22.0, 8.0), unlit: true, ..default() });
-    commands.insert_resource(FxAssets { rng: SmallRng::seed_from_u64(0x2023_0206), quads, mats, first, base, crater_flash, sphere, count: 0 });
+    commands.insert_resource(FxAssets { rng: SmallRng::seed_from_u64(0x2023_0206), quads, mats, first, base, crater_flash, sphere, count: 0, budget: MAX_PARTICLES });
 }
 
 #[derive(Component)]
@@ -253,7 +255,7 @@ pub fn spawn(commands: &mut Commands, fx: &mut FxAssets, s: Spawn) {
 
 /// A puff of the burning kinds' smoke in a colour of its own.
 pub fn spawn_toned(commands: &mut Commands, fx: &mut FxAssets, s: Spawn, tone: Tone) {
-    if fx.count >= MAX_PARTICLES || crate::dev::off(crate::dev::Part::Particles) {
+    if fx.count >= fx.budget || crate::dev::off(crate::dev::Part::Particles) {
         return;
     }
     fx.count += 1;
@@ -388,7 +390,7 @@ fn update_emitters(
     mut q: Query<(Entity, &mut Emitter, &GlobalTransform)>,
 ) {
     let dt = crate::sim_dt(&time);
-    let load = fx.count as f32 / MAX_PARTICLES as f32;
+    let load = fx.count as f32 / fx.budget.max(1) as f32;
     let mut rng = std::mem::replace(&mut fx.rng, SmallRng::seed_from_u64(0));
     for (e, mut em, gt) in &mut q {
         em.remaining -= dt;

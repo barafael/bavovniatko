@@ -120,8 +120,8 @@ const PICTURE_PIXELS: f32 = 1920.0 * 1200.0;
 
 /// The 3D picture for a screen of `pw` x `ph` physical and `lw` logical pixels wide: its size, and the scale
 /// factor that keeps its logical size the window's, so the cursor and the HUD's markers land where they are seen.
-fn picture(pw: u32, ph: u32, lw: f32) -> (u32, u32, f32) {
-    let s = dev().scale.unwrap_or_else(|| (PICTURE_PIXELS / (pw * ph).max(1) as f32).sqrt()).clamp(0.25, 1.0);
+fn picture(pw: u32, ph: u32, lw: f32, scale: Option<f32>) -> (u32, u32, f32) {
+    let s = scale.or(dev().scale).unwrap_or_else(|| (PICTURE_PIXELS / (pw * ph).max(1) as f32).sqrt()).clamp(0.25, 1.0);
     let (w, h) = (((pw as f32 * s).round() as u32).max(1), ((ph as f32 * s).round() as u32).max(1));
     (w, h, w as f32 / lw.max(1.0))
 }
@@ -133,6 +133,7 @@ fn setup(
     mut images: ResMut<Assets<Image>>,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<FeedMaterial>>,
+    look: Res<crate::LookSettings>,
 ) {
     let (pw, ph, lw, lh) = match (&window, dev().headless) {
         (Some(w), false) => (w.physical_width(), w.physical_height(), w.width(), w.height()),
@@ -141,7 +142,7 @@ fn setup(
             (w, h, w as f32, h as f32)
         }
     };
-    let (w, h, scale_factor) = picture(pw, ph, lw);
+    let (w, h, scale_factor) = picture(pw, ph, lw, look.picture_scale);
     info!("feed: the 3D picture is {w}x{h} on a {pw}x{ph} screen");
     let feed = images.add(target(w, h));
     // The drone's camera paints the picture; the flat camera shows it and carries the interface.
@@ -159,9 +160,11 @@ fn setup(
     commands.insert_resource(FeedImage(feed));
 }
 
-/// The window changed size: the picture and the quad follow it.
+/// The window changed size, or the player the picture's: the picture and the quad follow.
+#[allow(clippy::too_many_arguments)]
 fn resize(
     mut resized: MessageReader<WindowResized>,
+    look: Res<crate::LookSettings>,
     window: Option<Single<&Window, With<PrimaryWindow>>>,
     feed: Option<Res<FeedImage>>,
     mut images: ResMut<Assets<Image>>,
@@ -169,11 +172,11 @@ fn resize(
     screen: Option<Single<&Mesh2d, With<Screen>>>,
     mut cam: Query<&mut RenderTarget, With<MainCamera>>,
 ) {
-    if resized.read().last().is_none() {
+    if resized.read().last().is_none() && !look.is_changed() {
         return;
     }
     let (Some(window), Some(feed), Some(screen)) = (window, feed, screen) else { return };
-    let (w, h, scale_factor) = picture(window.physical_width(), window.physical_height(), window.width());
+    let (w, h, scale_factor) = picture(window.physical_width(), window.physical_height(), window.width(), look.picture_scale);
     if let Some(mut img) = images.get_mut(&feed.0)
         && (img.width() != w || img.height() != h)
     {
@@ -203,6 +206,7 @@ pub fn update_feed(
     screen: Option<Single<&MeshMaterial2d<FeedMaterial>, With<Screen>>>,
     mut materials: ResMut<Assets<FeedMaterial>>,
     teams: Query<&crate::fire::Post>,
+    look: Res<crate::LookSettings>,
 ) {
     let Some(screen) = screen else { return };
     let Some(mut m) = materials.get_mut(&screen.0) else { return };
@@ -210,7 +214,7 @@ pub fn update_feed(
     let fx = &mut m.fx;
     fx.time = time.elapsed_secs() % 1000.0;
     fx.mode = match view.mode {
-        _ if dev::off(dev::Part::Feed) => FeedMode::Raw,
+        _ if dev::off(dev::Part::Feed) || look.video == crate::VideoLook::Off => FeedMode::Raw,
         Mode::Drone => FeedMode::Drone,
         Mode::Op => FeedMode::Binoculars,
         Mode::Ground if view.sight => FeedMode::Sight,
@@ -221,7 +225,7 @@ pub fn update_feed(
         Mode::Drone | Mode::Fpv => 1.0,
         Mode::Op => 0.45,
         Mode::Ground => 0.3,
-    };
+    } * if look.video == crate::VideoLook::Light { 0.35 } else { 1.0 };
     fx.sight = if view.ground_team.and_then(|e| teams.get(e).ok()).and_then(|p| p.weapon) == Some(crate::fire::Atgm::Javelin) { 1.0 } else { 0.0 };
     let jam = if view.mode == Mode::Drone { view.jamming } else { 0.0 };
     fx.glitch = jam.max(if view.mode == Mode::Drone && view.battery < 0.08 { 0.3 } else { 0.0 });

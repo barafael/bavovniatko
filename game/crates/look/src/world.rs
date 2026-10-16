@@ -543,11 +543,12 @@ fn daylight(
     mut sun: Query<(&mut DirectionalLight, &mut Transform)>,
     mut ambient: ResMut<GlobalAmbientLight>,
     mut clear: ResMut<ClearColor>,
-    mut fog: Query<&mut bevy::pbr::DistanceFog>,
+    mut fog: Query<(&mut bevy::pbr::DistanceFog, &mut bevy::camera::Exposure)>,
     skirt: Option<Res<Skirt>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut sky_dome: crate::sky::Sky,
     mut last: Local<Option<Color>>,
+    look: Res<crate::LookSettings>,
 ) {
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(DayDebug::Off) {
@@ -590,8 +591,11 @@ fn daylight(
         _ => Color::srgb(0.46 * light, 0.56 * light, 0.74 * light),
     };
     sky_dome.set(weather, h, zenith, sky, sun_at, Color::srgb(1.0, 0.93, 0.82), 1.6 * day.powf(0.3), 0.6 + 0.4 * day);
-    for mut f in &mut fog {
+    for (mut f, mut ex) in &mut fog {
         f.color = sky;
+        // The frost's clear air, and how far the player has opened or closed it.
+        f.falloff = bevy::pbr::FogFalloff::from_visibility_colors(6000.0 * look.haze, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77));
+        ex.ev100 = 11.25 - look.exposure;
     }
     // Keep the haze band matching the sky (only when it has visibly changed: it re-uploads the material).
     let changed = last.is_none_or(|l| (l.to_srgba().red - sky.to_srgba().red).abs() > 0.004);

@@ -101,6 +101,7 @@ pub fn daylight(
     mut fx_light: ResMut<crate::fx::FxLight>,
     mut sky_dome: crate::sky::Sky,
     mut last: Local<Option<Color>>,
+    look: Res<crate::LookSettings>,
 ) {
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(crate::dev::DayDebug::Off) {
@@ -155,11 +156,11 @@ pub fn daylight(
     for (mut f, mut ex) in &mut cam {
         f.color = sky;
         // Clearer than February's haze, though the morning was 79% cloud: the cloud was high, the air dry.
-        f.falloff = FogFalloff::from_visibility_colors(8000.0, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77));
+        f.falloff = FogFalloff::from_visibility_colors(8000.0 * look.haze, Color::srgb(0.48, 0.5, 0.54), Color::srgb(0.72, 0.74, 0.77));
         // The haze towards the sun glows at dawn.
         f.directional_light_color = Color::srgba(1.0, 0.62, 0.36, 0.15 + 0.45 * dawn);
         // A camera's exposure follows the light: the blue hour reads dark, but not black.
-        ex.ev100 = 8.8 + 2.45 * s(-6.0, 14.0, elev) + ev_off;
+        ex.ev100 = 8.8 + 2.45 * s(-6.0, 14.0, elev) + ev_off - look.exposure;
     }
     let changed = last.is_none_or(|l| (l.to_srgba().red - sky.to_srgba().red).abs() > 0.004 || (l.to_srgba().blue - sky.to_srgba().blue).abs() > 0.004);
     if changed && let Some(sk) = skirt.as_ref() && let Some(mut m) = materials.get_mut(&sk.0) {

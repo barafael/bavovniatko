@@ -120,6 +120,7 @@ the pieces that reach above a height, to write a ring from.
 | 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
 | P, `[`, `]` | pause, slow down, speed up |
 | F12 | screenshot |
+| Esc, F10 | settings: the frame rate and its cap (60 fps by default), vsync, fullscreen, render scale, anti-aliasing, shadows, view distance, brightness, the video look, smoke and fire. Arrow keys pick and change, everything applies at once, and it is kept in `~/.config/bavovniatko/settings.txt` |
 
 On the right, under the tally, the hit feed recounts the last hits: what hit, from where, at what, and what it did
 (our hits in white, hits on our vehicles in amber), for 45 seconds each.
@@ -133,7 +134,7 @@ The game is a Cargo workspace of four crates, layered so the battle cannot reach
 | `bav-core` | `crates/core/` | what every part shares: the ground's geometry and both layouts (`geo.rs`, `geo/robotyne.rs`), which diorama is on the table and the sides (`diorama.rs`), the words in two registers (`text.rs`), the frame's `Step` order and the startup sets (`schedule.rs`), the `BAV_*` switches (`dev.rs`) and the small vocabulary they name (`vocab.rs`) |
 | `bav-sim` | `crates/sim/` | the battle, deterministic: vehicles, soldiers, mines, damage and wrecks (`units.rs`), positions, ATGM teams, artillery, RAAM, smoke and HIMARS (`fire.rs`), the day's script (`director.rs`), the Ka-52s and the dug-in tanks (`robotyne.rs`), the player's drone and posts (`player.rs`), and the queues it fills for the picture and the sound (`fx.rs`, `paint.rs`, `sound.rs`) |
 | `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`), the belts' trees (`trees.rs`), Mala Tokmachka's set and light (`robotyne.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
-| `bavovniatko` | `crates/bavovniatko/` | the game: the app (`main.rs`), the drone, OP and tree-line views and their controls (`camera.rs`), the HUD, briefing and debrief (`hud.rs`), the development systems (`dev.rs`) and the filmed showcase (`showcase.rs`) |
+| `bavovniatko` | `crates/bavovniatko/` | the game: the app (`main.rs`), the drone, OP and tree-line views and their controls (`camera.rs`), the HUD, briefing and debrief (`hud.rs`), the settings overlay (`settings.rs`), the development systems (`dev.rs`) and the filmed showcase (`showcase.rs`) |
 
 `bav-sim` does not depend on `bav-look`. The battle spawns its entities with model handles the look builds at
 startup, and asks for effects, ground marks and sounds through queues the look plays later in the frame. So
