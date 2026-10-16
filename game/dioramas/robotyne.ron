@@ -122,6 +122,9 @@
     registered_fire: (90.0, 4),
     // The drone team behind the start line; south of Mala Tokmachka it is hard to find.
     operator: (pos: (-300.0, -960.0), found_per_hour: 0.05),
+    // Their EW (db/research/11 §5): platoon jammers in the second line behind the crest, each switched on and off, the heavier emitters
+    // further back felt past the jam line; and GNSS jamming lifted about a minute before each Ka-52 run.
+    ew: Some((jammers: [(-1100.0, 950.0), (-350.0, 950.0), (400.0, 950.0), (1150.0, 950.0)], radius: 1100.0, depth: 700.0, ka52_tell: true)),
     // One strike drone for the morning: FPVs were still scarce on this front in June 2023 (db/research/10 §3);
     // a few minutes in the air.
     fpv: Some((count: 1, endurance: 300.0)),

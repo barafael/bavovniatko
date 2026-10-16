@@ -132,6 +132,9 @@
     wanderer: Some(((-150.0, -1150.0), (0.2, 1.0))),
     old_wreck_kinds: [Bmp2, T80, Bmp1, Bmp2, T72, Mtlb, Bmp1, T80],
     registered_fire: (50.0, 6),
+    // Their EW: no source places their jammers at Vuhledar itself (db/research/11 §7); two by the villages in the
+    // valley, from the front-wide picture, and the rear emitters felt past the jam line.
+    ew: Some((jammers: [(-1500.0, 1650.0), (1950.0, 1550.0)], radius: 1000.0, depth: 700.0)),
     // The drone team on the town's southern edge. In February 2023 DJI's AeroScope gave a pilot away and fire
     // followed within minutes (db/research/11 §6), so a team that stays put is found a few times a day.
     operator: (pos: (-300.0, -1240.0), found_per_hour: 0.35),

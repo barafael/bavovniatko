@@ -439,6 +439,7 @@ fn land_shells(
     (models, palette, mut stats, mut smoke): (Res<Models>, Res<Palette>, ResMut<Stats>, ResMut<fx::Smoke>),
     mut positions: Query<&mut Post>,
     mut q: Query<(Entity, &mut Shell)>,
+    (mut jammers, mut log): (Query<(&mut crate::ew::Jammer, &Transform)>, ResMut<crate::hits::HitLog>),
 ) {
     let now = time.elapsed_secs_f64();
     let listener = sound.listener();
@@ -507,6 +508,14 @@ fn land_shells(
             }
         }
         blasts.write(Blast { at: p, radius, cause });
+        // Our shells on their jammers: one within 25 m is knocked out.
+        if s.by == Side::Ua
+            && let Some(at) = crate::ew::knock_out(&mut jammers, s.at)
+        {
+            log.note(now, "155 mm", "our guns", "EW jammer", Side::Ru, "knocked out: the link is cleaner there");
+            radio.say2(now, "Їхній РЕБ на гребені мовчить. Накрили.", "Their jammer's gone quiet. We got it.");
+            info!("ew: jammer at {:.0},{:.0} knocked out, at {now:.0} s", at.x, at.y);
+        }
         // Fire on the tree lines and trenches hurts the men in them, and puts the rest down in the trench for a
         // while, longer the closer it lands: a team under fire does not stand up to guide a missile.
         for mut pos in &mut positions {

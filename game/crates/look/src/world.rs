@@ -547,3 +547,53 @@ pub fn parapets(mut commands: Commands, palette: Res<Palette>, mut meshes_res: R
         commands.spawn((Mesh3d(meshes_res.add(m.build())), MeshMaterial3d(palette.vertex.clone()), Transform::default()));
     }
 }
+
+/// Their jammers as things on the ground: a mast with its antennas, a generator box, and a red lamp that is lit
+/// while it jams (dark when it is off or knocked out). The drone can find them by the lamp.
+pub struct JammersLookPlugin;
+
+impl Plugin for JammersLookPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(Startup, dress_jammers.in_set(Setup::Dress)).add_systems(Update, jammer_lamps.in_set(crate::Step::Effects));
+    }
+}
+
+#[derive(Component)]
+struct JammerLamp(Entity);
+
+#[derive(Resource)]
+struct LampMats {
+    lit: Handle<StandardMaterial>,
+    dark: Handle<StandardMaterial>,
+}
+
+fn dress_jammers(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, jammers: Query<(Entity, &Transform), With<bav_sim::ew::Jammer>>) {
+    let mut m = MeshBuilder::new();
+    m.cylinder(Vec3::ZERO, Vec3::Y * 9.0, 0.08, 6, [0.32, 0.33, 0.30]);
+    for k in 0..3 {
+        let y = 6.0 + k as f32 * 1.2;
+        m.boxc(Vec3::new(-0.6, y, -0.05), Vec3::new(0.6, y + 0.12, 0.05), [0.25, 0.26, 0.24]);
+    }
+    m.boxc(Vec3::new(-0.8, 0.0, 0.6), Vec3::new(0.8, 1.1, 1.8), [0.30, 0.33, 0.24]);
+    let mast = meshes.add(m.build());
+    let lamp = meshes.add(Sphere::new(0.35).mesh().ico(1).expect("an icosphere"));
+    let lit = materials.add(StandardMaterial { base_color: Color::srgb(1.0, 0.15, 0.1), emissive: LinearRgba::rgb(40.0, 2.0, 1.0), unlit: true, ..default() });
+    let dark = materials.add(StandardMaterial { base_color: Color::srgb(0.2, 0.05, 0.05), ..default() });
+    for (e, tf) in &jammers {
+        commands.spawn((Mesh3d(mast.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(tf.translation)));
+        commands.spawn((Mesh3d(lamp.clone()), MeshMaterial3d(dark.clone()), Transform::from_translation(tf.translation + Vec3::Y * 9.3), JammerLamp(e), bevy::light::NotShadowCaster));
+    }
+    commands.insert_resource(LampMats { lit, dark });
+}
+
+fn jammer_lamps(time: Res<Time>, mats: Option<Res<LampMats>>, jammers: Query<&bav_sim::ew::Jammer>, mut lamps: Query<(&JammerLamp, &mut MeshMaterial3d<StandardMaterial>)>) {
+    let Some(mats) = mats else { return };
+    let blink = (time.elapsed_secs() * 1.5) as i32 % 2 == 0;
+    for (lamp, mut mat) in &mut lamps {
+        let on = jammers.get(lamp.0).is_ok_and(|j| j.alive && j.on) && blink;
+        let want = if on { &mats.lit } else { &mats.dark };
+        if mat.0 != *want {
+            mat.0 = want.clone();
+        }
+    }
+}

@@ -30,7 +30,7 @@ impl Plugin for DronesPlugin {
             .insert_resource(Operator { pos: Vec2::new(d.operator.pos.0, d.operator.pos.1), found: None, moving_until: 0.0, moves: 0 })
             .insert_resource(OperatorRng(SmallRng::seed_from_u64(crate::dev::seeded(1306))))
             .add_systems(Update, drone_input.in_set(crate::Step::Control).after(crate::dev::DevSystems))
-            .add_systems(Update, (team_found, fpv_strikes).chain().run_if(crate::running).in_set(crate::Step::Script).after(crate::evac::EvacSystems));
+            .add_systems(Update, (team_found, fpv_strikes, crate::ew::ew_update).chain().run_if(crate::running).in_set(crate::Step::Script).after(crate::evac::EvacSystems));
     }
 }
 

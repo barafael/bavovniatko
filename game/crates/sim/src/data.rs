@@ -31,6 +31,9 @@ pub struct SimData {
     /// Where the drone team flies from, and how often an hour (of the day's clock) the enemy finds it while a drone
     /// is up: often in early 2023, when DJI's AeroScope gave the pilot away; rarely south of Mala Tokmachka.
     pub operator: OperatorSpec,
+    /// Their EW: jammers on their line, the rear ramp, the Ka-52 tell (none: only the scripted bursts).
+    #[serde(default)]
+    pub ew: Option<crate::ew::EwSpec>,
     /// The strike drones the player has (none: the drone is eyes only).
     #[serde(default)]
     pub fpv: Option<FpvSpec>,

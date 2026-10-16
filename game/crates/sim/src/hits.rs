@@ -38,6 +38,14 @@ impl HitLog {
         }
     }
 
+    /// An entry for something that is not a vehicle: a jammer, a post.
+    pub fn note(&mut self, at: f64, weapon: &'static str, from: &'static str, target_name: &str, side: Side, result: impl Into<String>) {
+        self.entries.push(HitEntry { at, weapon, from, target: Entity::PLACEHOLDER, target_name: target_name.to_string(), side, result: result.into() });
+        if self.entries.len() > 20 {
+            self.entries.remove(0);
+        }
+    }
+
     /// Add to the newest entry for this vehicle, if it is recent (the same hit's consequences).
     pub fn add(&mut self, at: f64, target: Entity, more: &str) -> bool {
         match self.entries.iter_mut().rev().find(|h| h.target == target && at - h.at < 2.0) {

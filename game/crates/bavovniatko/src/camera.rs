@@ -252,6 +252,7 @@ fn drone_control(
     scroll: Res<AccumulatedMouseScroll>,
     script: Res<crate::director::Script>,
     flight: Res<Flight>,
+    ew: Res<bav_sim::ew::Ew>,
     mut view: ResMut<View>,
 ) {
     let dt = time.delta_secs();
@@ -281,7 +282,9 @@ fn drone_control(
     if view.feed_down > 0.0 || (keys.just_pressed(KeyCode::KeyH) && view.control) {
         view.rth = None;
     }
-    view.gnss = 1.0 - (jam * 1.4 - 0.2).clamp(0.0, 1.0);
+    // GNSS jamming goes with the rest, except where they lift it for their own helicopters.
+    let gnss_jam = if ew.gnss_lifted(time.elapsed_secs_f64()) { 0.0 } else { jam };
+    view.gnss = 1.0 - (gnss_jam * 1.4 - 0.2).clamp(0.0, 1.0);
     view.gnss_error = Vec2::new(geo::fbm(t * 0.3, 4.0, 2, 66), geo::fbm(t * 0.3 + 9.0, 5.0, 2, 67)) * 120.0 * (1.0 - view.gnss);
     // Gusts: the position hold fights a wind that comes and goes. Mostly a few m/s, now and then a shove.
     let gust = Vec3::new(geo::fbm(t * 0.21, 1.3, 3, 61), 0.0, geo::fbm(t * 0.21 + 40.0, 7.1, 3, 62)) * 2.2
@@ -342,10 +345,11 @@ fn drone_control(
     // Keep the drone over Ukrainian-held ground, mostly: it may creep forward, at a price in jamming.
     view.drone_pos.x = view.drone_pos.x.clamp(-geo::HALF_X + 50.0, geo::HALF_X - 50.0);
     view.drone_pos.z = view.drone_pos.z.clamp(-geo::HALF_Z + 50.0, 1400.0);
-    let jam_z = geo::layout().jam_z;
-    // Past the jam line the link degrades as the drone closes on their emitters, then falls off a cliff.
-    if view.drone_pos.z > jam_z {
-        view.jamming = (view.jamming + dt * 0.2 * ((view.drone_pos.z - jam_z) / 500.0)).min(1.0);
+    // Their EW (bav_sim::ew): near their jammers, and past the jam line towards their rear emitters, the link
+    // degrades; once it has the link it holds it a while (the slow decay above).
+    let field = ew.jam_at(view.drone_pos);
+    if field > view.jamming {
+        view.jamming = (view.jamming + dt * 0.25).min(field);
     }
     let ground = geo::height(view.drone_pos.x, view.drone_pos.z);
     view.drone_pos.y = view.drone_pos.y.clamp(ground + 25.0, ground + 700.0);
@@ -381,6 +385,7 @@ fn fpv_control(
     mut fpv: ResMut<Fpv>,
     mut view: ResMut<View>,
     op: Res<Operator>,
+    ew: Res<bav_sim::ew::Ew>,
     vehicles: Query<(&Vehicle, &Transform)>,
 ) {
     let dt = time.delta_secs();
@@ -396,7 +401,6 @@ fn fpv_control(
     }
     let t = time.elapsed_secs();
     let p = fpv.pos;
-    let lay = geo::layout();
     // The video: 5.8 GHz analogue, good to a few kilometres in the open, thin behind a crest.
     let eye = geo::ground(op.pos) + Vec3::Y * 3.0;
     let seen = {
@@ -409,7 +413,7 @@ fn fpv_control(
     let range = 1.0 - geo::smoothstep(2500.0, 5000.0, eye.xz().distance(p.xz()));
     fpv.signal = (range * if seen { 1.0 } else { 0.4 }).clamp(0.0, 1.0);
     // The control link: their jammers sit past the jam line; in 2023 they took the control, not the video.
-    let jam = ((p.z - lay.jam_z) / 600.0).clamp(0.0, 1.0);
+    let jam = ew.jam_at(p);
     fpv.battery -= dt;
     // At the crest the link is gone about a third of the time, in spells.
     fpv.control = fpv.battery > 0.0 && (jam < 0.2 || geo::value_noise(t * 1.3, 4.0, 91) > -1.0 + 0.72 * jam);

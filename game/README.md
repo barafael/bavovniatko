@@ -43,6 +43,10 @@ piece 1). The outcome is fixed: the breach fails. What is yours is the cost: how
 back. You have a battery with 64 rounds, six smoke missions (smoke hides the column from the Kornets and the
 Russian guns, and from your own drone), one HIMARS mission, and the order to the column.
 
+Their electronic warfare is a field, not a line. Jammers along the crest switch on and off, each a mast with a
+red lamp while it jams; your drone's link frays near them and past the jam line. A 155 mm mission on one knocks
+it out. And watch the satellite count: when the GNSS jamming suddenly lifts, their Ka-52s are a minute out.
+
 ## The showcase film
 
 [`design/showcase.md`](design/showcase.md) is one film of both dioramas, about four minutes: a title,

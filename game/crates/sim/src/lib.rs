@@ -11,6 +11,7 @@ pub mod data;
 pub mod director;
 pub mod drones;
 pub mod evac;
+pub mod ew;
 pub mod fire;
 pub mod fx;
 pub mod hits;
