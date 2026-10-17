@@ -1209,7 +1209,8 @@ fn mortars(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireControl>,
     }
     // Aim at the densest group: the man with the most others within 40 m.
     let target = *men.iter().max_by_key(|p| men.iter().filter(|q| q.distance(**p) < 40.0).count()).unwrap();
-    let rounds = rng.random_range(2..5);
+    // (Never more than are left: three bombs and a draw of four would count below nothing.)
+    let rounds = rng.random_range(2..5).min(fc.mortar_bombs);
     fc.mortar_bombs -= rounds;
     commands.spawn(Mission { target, kind: ShellKind::Mortar120, rounds, sigma: 22.0, interval: 2.5, next: now, flight: 16.0, by: diorama().defender() });
     *next = now + rng.random_range(14.0..26.0);

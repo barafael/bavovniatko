@@ -201,6 +201,11 @@ calls a 155 mm mission on a point at game second 260 (or, without `@`, on the st
 `BAV_FPV="300:-150;724"` launches the FPV at game second 300 and flies it by itself at the enemy vehicle nearest
 that point (at height, then the dive). `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
 
+`cargo xtask smoke` starts the game headless once per development switch and diorama for a second of the day
+each (`devlog/smoke/`). Bevy checks a system's queries and resources only when the system first runs, so a system
+that exists only under a switch (`BAV_COLUMN`, `BAV_FIELD`, `BAV_LINEUP`, `BAV_OFF`, `BAV_PLAY=command`) is checked
+by nothing else; a conflicting query there panics at startup. Run it after adding or changing such a system.
+
 `BAV_LINEUP=x,z,heading` parks every vehicle model in a row at that spot, live and (behind them, turrets
 turned) burned out, to look the models over; with `BAV_LINEUP_FIRE=1` the burned-out row burns (a hull in flames, a smoulder and a pool of diesel in turn), to look at the fires and their smoke side by side. `BAV_CAM` places the drone, `BAV_LOOK=<idx>` keeps the gimbal on a vehicle (`hit`, `pool` or `grass` on the hull a missile is flying at, the newest pool fire or a grass fire's front, for test shots of the fire looks), and `BAV_SPEED`
 scales game time. `BAV_DIAG=1` logs the frame time, the CPU time a frame took across threads, the GPU time of every render pass and the entity counts every ten seconds, and any frame over 25 ms on its own

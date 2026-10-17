@@ -32,6 +32,7 @@ fn main() -> ExitCode {
         Some("film") => film(&args[1..]),
         Some("tour") => tour(&args[1..]),
         Some("mix") => remix(&args[1..]),
+        Some("smoke") => smoke(&args[1..]),
         _ => Err(USAGE.into()),
     };
     match run {
@@ -47,7 +48,8 @@ const USAGE: &str = "usage:
   cargo xtask trailer [--scout] [out.mp4]      the trailer: the action of both days (design/trailer.md)
   cargo xtask film [--scout] [out.mp4]         the showcase film of both (design/showcase.md)
   cargo xtask tour [robotyne] [out.mp4]        the one-minute tour of one day
-  cargo xtask mix <dir> <out.wav> [lead-s] [gain-db]   rebuild a filmed run's soundtrack";
+  cargo xtask mix <dir> <out.wav> [lead-s] [gain-db]   rebuild a filmed run's soundtrack
+  cargo xtask smoke                            start the game headless once per switch and diorama (devlog/smoke/)";
 
 /// The game's directory: the workspace root, one up from this crate.
 fn root() -> PathBuf {
@@ -403,12 +405,79 @@ fn build(root: &Path) -> Result {
     if ok { Ok(()) } else { Err("the game's release build failed".into()) }
 }
 
+/// The game built with the `fast` profile (release speed at a fraction of the build time), for the smoke runs.
+fn build_fast(root: &Path) -> Result {
+    let ok = Command::new(std::env::var("CARGO").unwrap_or_else(|_| "cargo".into())).args(["build", "-q", "--profile", "fast", "-p", "bavovniatko"]).current_dir(root).status().map_err(|e| format!("cargo: {e}"))?.success();
+    if ok { Ok(()) } else { Err("the game's fast build failed".into()) }
+}
+
+/// `cargo xtask smoke`: the game started headless once per development switch and diorama, a second of the day
+/// each, its log and a frame into devlog/smoke/. Bevy checks a system's queries and resources only when the system
+/// first runs, so one that exists only under a switch is checked by nothing else (the showcase's by the same-day
+/// runs). A run that panics, fails or does not finish in three minutes fails the task.
+fn smoke(_args: &[String]) -> Result {
+    const SWITCHES: &[(&str, &[(&str, &str)])] = &[
+        ("plain", &[]),
+        ("column", &[("BAV_COLUMN", "5:0:bradley@0")]),
+        ("field", &[("BAV_FIELD", "1")]),
+        ("lineup", &[("BAV_LINEUP", "0,0,0")]),
+        ("vshadows-off", &[("BAV_OFF", "vshadows")]),
+        ("command", &[("BAV_PLAY", "command"), ("BAV_ORDER", "3:1:hold")]),
+        ("ground", &[("BAV_VIEW", "ground")]),
+        ("diag", &[("BAV_DIAG", "1")]),
+    ];
+    let root = root();
+    build_fast(&root)?;
+    let bin = root.join("target/fast/bavovniatko");
+    let out = root.join("devlog/smoke");
+    mkdir(&out)?;
+    let mut failed = Vec::new();
+    for dio in ["vuhledar", "robotyne"] {
+        for (name, extra) in SWITCHES {
+            let tag = format!("{dio}-{name}");
+            let mut env: Vec<(&str, String)> = vec![("BAV_DIORAMA", dio.into()), ("BAV_RES", "320x180".into()), ("BAV_SHOT", out.join(format!("{tag}.png")).display().to_string()), ("BAV_SHOT_AT", "1".into())];
+            env.extend(extra.iter().map(|(k, v)| (*k, v.to_string())));
+            let started = Instant::now();
+            let (finished, lines) = run_game(&bin, &root, &env, Duration::from_secs(180))?;
+            let log = out.join(format!("{tag}.log"));
+            fs::write(&log, lines.join("\n") + "\n").map_err(|e| format!("{}: {e}", log.display()))?;
+            let panicked = lines.iter().position(|l| l.contains("panicked"));
+            let good = finished && panicked.is_none();
+            println!("{tag}: {} ({:.0} s)", if good { "ok" } else { "FAILED" }, started.elapsed().as_secs_f32());
+            if let Some(i) = panicked {
+                lines.iter().skip(i).take(4).for_each(|l| println!("  {l}"));
+            }
+            if !good {
+                failed.push(tag);
+            }
+        }
+    }
+    if failed.is_empty() { Ok(()) } else { Err(format!("{} smoke runs failed: {}", failed.len(), failed.join(", "))) }
+}
+
 /// Film one part headless: the game's log, without its colour codes and its thousands of "Screenshot saved", goes
 /// to `log`; its panics and errors are shown. A run that has not finished in a little over an hour is stopped.
 fn film_part(root: &Path, env: &[(&str, String)], log: &Path) -> Result {
-    let mut cmd = Command::new(root.join("target/release/bavovniatko"));
+    let mut env: Vec<(&str, String)> = env.to_vec();
+    env.push(("BAV_OPERATOR", "off".into()));
+    let (_, lines) = run_game(&root.join("target/release/bavovniatko"), root, &env, Duration::from_secs(4000))?;
+    fs::write(log, lines.join("\n") + "\n").map_err(|e| format!("{}: {e}", log.display()))?;
+    for (i, l) in lines.iter().enumerate().filter(|(_, l)| (l.contains("panicked") || l.contains("ERROR")) && !l.contains("rodio")).take(5) {
+        eprintln!("{l}");
+        if l.contains("panicked") {
+            lines.iter().skip(i + 1).take(3).for_each(|l| eprintln!("{l}"));
+        }
+    }
+    Ok(())
+}
+
+/// Run the game headless (no briefing, no battery) with `env`, and keep what it logged, without its colour codes
+/// and its thousands of "Screenshot saved". A run that has not finished within `limit` is stopped. Returns whether
+/// it finished by itself and well, with the log.
+fn run_game(bin: &Path, root: &Path, env: &[(&str, String)], limit: Duration) -> Result<(bool, Vec<String>)> {
+    let mut cmd = Command::new(bin);
     cmd.current_dir(root)
-        .envs([("BAV_HEADLESS", "1"), ("BAV_SKIP_BRIEFING", "1"), ("BAV_NO_BATTERY", "1"), ("BAV_OPERATOR", "off")])
+        .envs([("BAV_HEADLESS", "1"), ("BAV_SKIP_BRIEFING", "1"), ("BAV_NO_BATTERY", "1")])
         .envs(env.iter().map(|(k, v)| (*k, v.as_str())))
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
@@ -429,30 +498,23 @@ fn film_part(root: &Path, env: &[(&str, String)], log: &Path) -> Result {
             })
         })
         .collect();
-    let deadline = Instant::now() + Duration::from_secs(4000);
-    loop {
-        if child.try_wait().map_err(|e| e.to_string())?.is_some() {
-            break;
+    let deadline = Instant::now() + limit;
+    let finished = loop {
+        if let Some(status) = child.try_wait().map_err(|e| e.to_string())? {
+            break status.success();
         }
         if Instant::now() > deadline {
             let _ = child.kill();
-            eprintln!("film: stopped a run that did not finish in time");
-            break;
+            eprintln!("xtask: stopped a run that did not finish in time");
+            break false;
         }
         std::thread::sleep(Duration::from_millis(200));
-    }
+    };
     for r in readers {
         let _ = r.join();
     }
-    let lines = lines.lock().unwrap();
-    fs::write(log, lines.join("\n") + "\n").map_err(|e| format!("{}: {e}", log.display()))?;
-    for (i, l) in lines.iter().enumerate().filter(|(_, l)| (l.contains("panicked") || l.contains("ERROR")) && !l.contains("rodio")).take(5) {
-        eprintln!("{l}");
-        if l.contains("panicked") {
-            lines.iter().skip(i + 1).take(3).for_each(|l| eprintln!("{l}"));
-        }
-    }
-    Ok(())
+    let lines = std::mem::take(&mut *lines.lock().unwrap());
+    Ok((finished, lines))
 }
 
 fn strip_ansi(s: &str) -> String {
