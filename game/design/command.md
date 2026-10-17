@@ -216,6 +216,9 @@ stream, so same-day style checks still work per seed):
   `OrdersView` inserted (read by nothing), the Record's day changed from 23 s on (same-day on Vuhledar; the same
   code replays itself exactly). Something in the day depends on the world's make-up rather than its contents —
   likely two systems with no order between them; worth finding before anything else has to join the Record.
+  (2026-10-17, phase 7) The same-day check once differed at Vuhledar in the last four seconds of the day (an extra
+  loss of ours at 1436 s) while other runs loaded the machine; run alone, the same build was the same again. The film's
+  step is not wholly proof against the machine's load either: run the same-day check alone.
 - Tested headless: at Vuhledar a Column held, went on, took tree line 18 from 13 and fell back to its road head;
   at Mala Tokmachka hold and advance to both waves, the orders 4–14 s on the net, two lost under the jammers.
   Shots: devlog/shots/*-orders-*.jpg. The Record is unchanged (same-day: same on both days).
@@ -273,3 +276,19 @@ stream, so same-day style checks still work per seed):
   Wanderer's, 2 km, there at 666 s, the team in the hide 10 s later; a second Column refused for want of Supply.
   Mala Tokmachka, two Bradleys with a Javelin team to the forward tree line, 13 Supply, there at 521 s, the team in
   position, our ATGM teams four. Shots: devlog/shots/*-supply-*.jpg.
+
+### Phase 7, more Support (2026-10-17)
+- Two new kinds of Support in the catalog, for Command only (neither is in the Record's picks, so the day as it was
+  stays as it was): air defence on call (`AirDefence(missiles)`, Mala Tokmachka: 3 missiles, 10 points, two to be had)
+  and more reconnaissance drones (`Mavic(n)`, both days: two more Mavic 3s, 3 points, two to be had).
+- The air defence (`robotyne::air_defence`): a battery behind the start line. The Ka-52 is beyond its reach while it
+  hangs low behind the ridge; each time one pops up to fire, the battery gets one missile at it, while it has any.
+  Three in ten bring it down, four in ten make it turn for home with its Vikhrs unfired, the rest go wide; the net
+  says which ("Мінус «алігатор»!"). Its own random stream; the fire panel shows the missiles left (AD).
+- The Mavics add to the operator's drones when the battle starts (the drone display's DRONES).
+- Points are what make them a choice: at Mala Tokmachka the day's own picks spend 304 of 310, so two batteries of air
+  defence and the Mavics (23 points) cost two of the four 155 mm picks and two of the four Bradleys for the wounded.
+- The day's radio still says the Ka-52s are too far for anything we have: true of the day, less so with a battery on
+  call. A line for it belongs with the Enemy staff's answers (phase 8).
+- Tested headless: Mala Tokmachka with two batteries (6 missiles) and the Mavics: two Ka-52s down and four misses
+  between 439 and 562 s; DRONES 5. Shot: devlog/shots/*-ad-r.jpg.

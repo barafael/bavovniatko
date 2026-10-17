@@ -96,7 +96,8 @@ Command; headless, the table takes its first picks at once (`BAV_TABLE=open` kee
 comes up the road during the battle, and on the battle's table it sends Columns: vehicles of the day's kinds and
 maybe a team for the position, from a road head to a position clicked on the map; the table says how long the way is,
 how much of it runs through the grey zone, and what it costs. `BAV_SEND="200:0:bradley+bradley@54:javelin"` sends one
-at a game time. An allotment over the points, with more of a unit than
+at a game time. Command's catalog also has Support the day did not: air defence on call at Mala Tokmachka,
+which gets a shot at each Ka-52 as it pops up to fire, and more Mavics for the operator on both days. An allotment over the points, with more of a unit than
 there were, or with a position given twice, stops the game with the reason. A unit's position is a number from
 the field (`crates/core/src/field.rs`): the diorama's own posts first, then its tank hides, then every tree line's
 edge and the ruins of the town's edge; a post goes where men can hold it, a tank in a hide or a tree line, and

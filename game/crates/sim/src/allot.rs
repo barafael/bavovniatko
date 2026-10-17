@@ -44,6 +44,10 @@ pub enum SupportKind {
     Mortar(u32),
     /// A strike drone.
     Fpv,
+    /// Air defence on call, with so many missiles for the day: it engages a Ka-52 as it pops up to fire (Command).
+    AirDefence(u32),
+    /// So many more reconnaissance drones for the operator (Mavic 3s).
+    Mavic(u32),
 }
 
 /// One entry of the catalog: what it is, called what, what it costs in allotment points (and later in Supply),
@@ -96,6 +100,7 @@ pub struct Stock {
     pub smoke: u32,
     pub brigade_shells: u32,
     pub mortar_bombs: u32,
+    pub air_defence: u32,
 }
 
 /// The player's side as allotted: what the battle builds it from.
@@ -111,6 +116,8 @@ pub struct Allotment {
     pub fpvs: u32,
     /// Vehicles held back for the wounded.
     pub evacuation: u32,
+    /// More reconnaissance drones for the operator.
+    pub mavics: u32,
     /// What it cost, of how many points.
     pub spent: u32,
     pub points: u32,
@@ -261,6 +268,8 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                 SupportKind::Brigade(r) => st.brigade_shells += r * p.count,
                 SupportKind::Mortar(r) => st.mortar_bombs += r * p.count,
                 SupportKind::Fpv => a.fpvs += p.count,
+                SupportKind::AirDefence(m) => st.air_defence += m * p.count,
+                SupportKind::Mavic(n) => a.mavics += n * p.count,
             }
         }
     }

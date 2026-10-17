@@ -420,7 +420,9 @@ fn update_hud(
                 ColumnOrder::Hold => "HOLD",
                 ColumnOrder::PullBack => "PULL BACK",
             };
-            format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
+            // (Command's air defence on call, while it has missiles.)
+            let ad = if fc.air_defence > 0 { format!("   AD  {}", fc.air_defence) } else { String::new() };
+            format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}{ad}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
         }
     }));
     // The day's caption, the same way: the Ukrainian line over its gloss.

@@ -143,6 +143,8 @@ pub struct FireControl {
     pub brigade_shells: u32,
     /// The battalion's 120 mm mortars, which work over infantry in the open on their own.
     pub mortar_bombs: u32,
+    /// Command: missiles left for the air defence on call (`robotyne::air_defence`).
+    pub air_defence: u32,
     pub atgm_mode: AtgmMode,
     /// The battery can work one player mission at a time.
     pub battery_busy_until: f64,
@@ -158,7 +160,7 @@ impl Default for FireControl {
         // 2022, but a battery on one morning gets a handful of missions.
         // (In Command nothing until the map table has settled the Allotment: `spawn_allotted` sets it then.)
         let s = crate::allot::settled().map(|a| a.stock).unwrap_or_default();
-        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
+        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, air_defence: s.air_defence, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
     }
 }
 
@@ -252,7 +254,8 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
 
 /// Command: our side as the map table settled it, when the battle starts: the posts and the tanks in their hides,
 /// the rounds and missions, the strike drones, the vehicles for the wounded.
-pub fn spawn_allotted(mut commands: Commands, models: Res<Models>, palette: Res<Palette>, mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player::Fpv>, mut evac: ResMut<crate::evac::Evacuation>) {
+#[allow(clippy::too_many_arguments)]
+pub fn spawn_allotted(mut commands: Commands, models: Res<Models>, palette: Res<Palette>, mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player::Fpv>, mut evac: ResMut<crate::evac::Evacuation>, mut view: ResMut<View>) {
     let a = crate::allot::allotment();
     for (i, &(p, weapon)) in a.posts.iter().enumerate() {
         spawn_post(&mut commands, &models, &palette, i, Side::Ua, p, weapon);
@@ -263,6 +266,7 @@ pub fn spawn_allotted(mut commands: Commands, models: Res<Models>, palette: Res<
     *fc = FireControl::default();
     fpv.left = a.fpvs;
     evac.left = a.evacuation;
+    view.drones_left += a.mavics;
 }
 
 /// A post: a few figures in the trench line under the trees, mostly hidden, facing the enemy, and maybe an ATGM team;

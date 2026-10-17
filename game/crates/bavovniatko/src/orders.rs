@@ -78,11 +78,11 @@ fn panel(
 ) {
     let open = ui.open && view.mode == Mode::Drone;
     let units = if open { units(ours.iter(), &book) } else { Vec::new() };
-    let supply = format!("Supply (підвіз) {:.0}", supply.have.floor());
+    let supply = format!("Supply (підвіз): {:.0}", supply.have.floor());
     let s = if !open {
-        format!("[O] Orders (Накази)   [T] the map table (карта)   {supply}")
+        format!("[O] Orders (Накази)   [T] the map table (карта)\n{supply}")
     } else {
-        let mut s = format!("ORDERS (НАКАЗИ)   [O] close   {supply}\n");
+        let mut s = format!("ORDERS (НАКАЗИ)   [O] close\n{supply}\n");
         if units.is_empty() {
             s.push_str("\nNone of ours on the field.\n");
         }

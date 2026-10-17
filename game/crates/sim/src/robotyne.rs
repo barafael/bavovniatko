@@ -25,6 +25,10 @@ impl Plugin for RobotynePlugin {
         }
         app.insert_resource(HeliRng(SmallRng::seed_from_u64(crate::dev::seeded(52))))
             .add_systems(Update, fly_helicopters.run_if(crate::running).in_set(crate::Step::Fire));
+        // Command: the air defence on call, if there is any (nothing of it in the Record's world).
+        if crate::allot::at_table() {
+            app.insert_resource(AdRng(SmallRng::seed_from_u64(crate::dev::seeded(1972)))).add_systems(Update, air_defence.after(fly_helicopters).run_if(crate::running).in_set(crate::Step::Fire));
+        }
     }
 }
 
@@ -150,6 +154,74 @@ fn fly_helicopters(
         ));
         if rng.random_bool(0.5) {
             radio.say(now, "Launch from the helicopter! Missile inbound!");
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// Command's air defence on call (design/command.md phase 7): a battery behind our lines with a few missiles for the
+// day. A Ka-52 is out of its reach while it hangs low behind the ridge; when one pops up to fire, the battery gets one
+// shot at it. It may bring it down, or make it turn for home with its Vikhrs unfired; or the missile goes wide.
+
+/// The air defence's own stream.
+#[derive(Resource)]
+struct AdRng(SmallRng);
+
+/// A Ka-52 the battery has fired at during this pop-up (by the shots it had left then).
+#[derive(Component)]
+struct Engaged(u32);
+
+/// Where the battery stands: behind our start line.
+fn battery() -> Vec2 {
+    geo::layout().home + Vec2::new(300.0, -500.0)
+}
+
+#[allow(clippy::too_many_arguments, clippy::type_complexity)]
+fn air_defence(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut rng: ResMut<AdRng>,
+    mut fc: ResMut<crate::fire::FireControl>,
+    mut fx: ResMut<FxQueue>,
+    mut radio: ResMut<Radio>,
+    mut helis: Query<(Entity, &mut Helicopter, &Transform, Option<&Engaged>)>,
+) {
+    if fc.air_defence == 0 {
+        return;
+    }
+    let now = time.elapsed_secs_f64();
+    let rng = &mut rng.0;
+    for (e, mut h, tf, engaged) in &mut helis {
+        // Up to fire, and not yet fired at this time up.
+        let up = h.shots > 0 && h.timer < 2.5;
+        if !up || engaged.is_some_and(|g| g.0 == h.shots) || fc.air_defence == 0 {
+            continue;
+        }
+        fc.air_defence -= 1;
+        commands.entity(e).insert(Engaged(h.shots));
+        let at = tf.translation;
+        let from = geo::ground(battery()) + Vec3::Y * 3.0;
+        fx.sound(from, crate::sound::Sfx::AtgmLaunch, 1.4);
+        fx.flash(from, 2.0e6, 60.0, 0.12);
+        // The missile's trail, the whole way up to it.
+        for k in 0..40 {
+            let p = from.lerp(at, k as f32 / 40.0);
+            fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: p, vel: Vec3::Y * 0.4, life: 7.0 + k as f32 * 0.05, size0: 1.2, size1: 5.0, alpha: 0.35, drag: 1.0, ..default() });
+        }
+        let roll: f64 = rng.random();
+        if roll < 0.3 {
+            fx.explosion(at, 1.2, false);
+            fx.sound(at, crate::sound::Sfx::BlastFar, 1.2);
+            commands.entity(e).despawn();
+            radio.say2(now, "Мінус «алігатор»! Ка-52 збито.", "One alligator down! The Ka-52 is hit.");
+            info!("air defence: a Ka-52 brought down at {:.0},{:.0}, {} missiles left, at {now:.0} s", at.x, at.z, fc.air_defence);
+        } else if roll < 0.7 {
+            h.shots = 0;
+            radio.say2(now, "ППО працює. Ка-52 розвернувся, йде геть.", "Air defence firing. The Ka-52 has turned away.");
+            info!("air defence: a Ka-52 turned away, {} missiles left, at {now:.0} s", fc.air_defence);
+        } else {
+            radio.say2(now, "ППО: промах.", "Air defence: a miss.");
+            info!("air defence: a miss, {} missiles left, at {now:.0} s", fc.air_defence);
         }
     }
 }

@@ -142,6 +142,10 @@
         (id: "mortar", name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"), what: Mortar(20), cost: 1, available: 8),
         // FPVs were still scarce on this front in June 2023 (db/research/10 §3); a few minutes in the air.
         (id: "fpv", name: ("FPV strike drone", "FPV-дрон"), what: Fpv, cost: 3, available: 3),
+        // Command only, not the day's: a battery behind the start line with a few missiles, which gets a shot at a Ka-52
+        // when it pops up to fire; and more reconnaissance drones for the operator.
+        (id: "ad", name: ("Air defence on call, 3 missiles", "ППО на виклик, 3 ракети"), what: AirDefence(3), cost: 10, available: 2),
+        (id: "mavic", name: ("Two more Mavic 3s", "Ще два Mavic 3"), what: Mavic(2), cost: 3, available: 2),
     ],
     // The Record: the overwatch in the forward tree line; the breach's twenty vehicles (the script's two groups);
     // four Bradleys held back at the start line for the wounded; 64 rounds, one HIMARS and six smoke missions for the
