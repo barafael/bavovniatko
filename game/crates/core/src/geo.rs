@@ -229,8 +229,11 @@ pub struct Route {
     pub line: Polyline,
     /// Arc length where columns leave single file and fan out to dismount.
     pub deploy_s: f32,
-    /// What the dismounts attack.
+    /// What the dismounts attack (on a holding route, the position they take).
     pub objective: Vec2,
+    /// A column's way to a position (design/command.md): it fans out at the end, puts its men into the position
+    /// and holds there, whichever side it is. The layout's routes are attack routes.
+    pub hold: bool,
 }
 
 /// A minefield strip along a road's shoulders, the 72nd's design: the road stays clear, the fields beside it

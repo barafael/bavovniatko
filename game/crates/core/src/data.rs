@@ -408,7 +408,7 @@ pub fn layout(d: &DioramaData) -> Layout {
         .iter()
         .map(|r| {
             let l = line(&r.line);
-            Route { line: l.clone(), deploy_s: l.project(v(r.deploy)).1, objective: v(r.objective) }
+            Route { line: l.clone(), deploy_s: l.project(v(r.deploy)).1, objective: v(r.objective), hold: false }
         })
         .collect();
     let shoulder_fields = d

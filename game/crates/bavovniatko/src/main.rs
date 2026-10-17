@@ -60,7 +60,7 @@ fn main() {
         .add_plugins((units::UnitsPlugin, fire::FirePlugin, director::DirectorPlugin, hud::HudPlugin))
         .add_observer(units::on_wrecked)
         .add_systems(Update, drone_view_audio.in_set(Step::Camera))
-        .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin, settings::SettingsPlugin, robotyne::RobotynePlugin, bav_look::robotyne::RobotyneLookPlugin, bav_sim::evac::EvacPlugin, bav_sim::drones::DronesPlugin, bav_sim::ew::EwPlugin, bav_look::world::JammersLookPlugin))
+        .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin, settings::SettingsPlugin, robotyne::RobotynePlugin, bav_look::robotyne::RobotyneLookPlugin, bav_sim::evac::EvacPlugin, bav_sim::drones::DronesPlugin, bav_sim::columns::ColumnsPlugin, bav_sim::ew::EwPlugin, bav_look::world::JammersLookPlugin))
         .run();
 }
 

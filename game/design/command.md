@@ -166,3 +166,21 @@ stream, so same-day style checks still work per seed):
 - The Allotment places units by position number: men where men can hold it, a tank in a hide or a tree line,
   nothing beyond our side of the grey zone. The Record's posts keep their numbers (its T-64 is now `@9`).
 - `BAV_FIELD=1`: the overlay and the numbered list. The Record is unchanged (same-day: same on both days).
+
+### Phase 3, movement on paths (2026-10-17)
+- `units::RouteBook`: the routes vehicles drive, the layout's at their own indices and each Column's way appended
+  as it is sent; everything that read `layout().routes[v.route]` reads the book. `geo::Route::hold` marks a way to a
+  position.
+- `bav_sim::columns`: a Column's way is the field's tracked route to a point 45 m behind the position, then up to
+  it the way it faces, so the vehicles fan out abreast along its edge, facing out. They start in a line at the road
+  head and keep the slowest one's pace (a tenth under it, `Vehicle::column_pace`); at the end the men go into the
+  position, and the vehicles hold (on a holding route `Overwatch` does not withdraw, and the column order of the
+  Record's breach does not reach them). Columns drive on either side: a holding route drives whoever is on it.
+- The route graph closes our own minefields to vehicles where we laid them (Vuhledar's belts in front of the town
+  and the roads' shoulders): the first test column drove through the 72nd's belt and lost its Leopard. The roads
+  and the belts' lanes stay open.
+- Our tanks holding a position fire as the dug-in tanks do (`defender_tank`); the hit feed names them as ours.
+- `BAV_COLUMN` sends Columns until Supply and the map table exist, and logs their progress.
+- Tested: Mala Tokmachka, a Leopard 2A6 and two Bradleys from the western track to the forward tree line, 1350 m,
+  there by 330–380 s abreast at its edge; Vuhledar, the same from the T-0509's western end to the first tree line,
+  round the end of our mine belt, by 210–400 s, no losses. The Record is unchanged (same-day: same on both days).

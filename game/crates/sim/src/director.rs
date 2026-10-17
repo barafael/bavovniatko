@@ -103,7 +103,7 @@ fn run_script(
     op: Res<crate::player::ObservationPost>,
     models: Res<Models>,
     palette: Res<Palette>,
-    (mut order, helis): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>),
+    (mut order, helis, book): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>, Res<crate::units::RouteBook>),
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
@@ -140,7 +140,7 @@ fn run_script(
                     // The plow leads; a roller vehicle or a second plow behind it keeps its own.
                     let plow = *plow && (i == 0 || k.breacher());
                     let side = diorama().attacker();
-                    units::spawn_vehicle(&mut commands, &models, &palette, VehicleSpec { side, kind: *k, route: *route, s, lat: 0.0, wave: *wave, idx: i as u32, plow, smoke: i < *smoke, rescue: *rescue });
+                    units::spawn_vehicle(&mut commands, &models, &palette, &book, VehicleSpec { side, kind: *k, route: *route, s, lat: 0.0, wave: *wave, idx: i as u32, plow, smoke: i < *smoke, rescue: *rescue });
                     stats.vehicles_committed += 1;
                     stats.wave(*wave).vehicles += 1;
                     stats.sent += k.men();

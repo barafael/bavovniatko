@@ -79,6 +79,8 @@ pub struct DevEnv {
     pub reel: Option<String>,
     /// `BAV_ALLOT=<picks>`: Command's Allotment until the map table exists (`bav_sim::allot`).
     pub allot: Option<String>,
+    /// `BAV_COLUMN=<columns>`: Columns sent at game times until the map table exists (`bav_sim::columns`).
+    pub column: Option<String>,
     /// Film the showcase tour into this directory.
     pub showcase: Option<String>,
     pub no_battery: bool,
@@ -215,6 +217,7 @@ impl DevEnv {
             settings_open: var("BAV_SETTINGS").as_deref() == Some("open"),
             reel: var("BAV_REEL"),
             allot: var("BAV_ALLOT"),
+            column: var("BAV_COLUMN"),
             showcase: var("BAV_SHOWCASE"),
             no_battery: var("BAV_NO_BATTERY").is_some(),
             view: parse("BAV_VIEW"),

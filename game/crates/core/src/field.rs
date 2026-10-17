@@ -372,10 +372,28 @@ impl Graph {
     }
 }
 
-/// Whether a vehicle cannot cross from `a` to `b`: a tree line in the way outside its gaps, or the river away from a
-/// road (the roads cross it on bridges and fords).
+/// Whether a vehicle cannot cross from `a` to `b`: a tree line in the way outside its gaps, the river away from a
+/// road (the roads cross it on bridges and fords), or our own minefields, where we are the defenders and laid them
+/// (Vuhledar: the belts in front of the town and the roads' shoulders; the roads themselves are left clear, and the
+/// belts have lanes where the roads cross, so a column comes up by the road).
 fn blocked(lay: &geo::Layout, a: Vec2, b: Vec2) -> bool {
-    lay.belts.iter().any(|belt| belt.crossings(a, b).any(|(_, gap)| !gap)) || lay.river.as_ref().is_some_and(|r| r.crosses(a, b))
+    lay.belts.iter().any(|belt| belt.crossings(a, b).any(|(_, gap)| !gap)) || lay.river.as_ref().is_some_and(|r| r.crosses(a, b)) || ours_mined(lay, a, b)
+}
+
+/// Whether the stretch `a`–`b` runs through a minefield of ours, looked at every 10 m.
+fn ours_mined(lay: &geo::Layout, a: Vec2, b: Vec2) -> bool {
+    if crate::diorama::diorama().defender() != crate::diorama::Side::Ua {
+        return false;
+    }
+    let n = (a.distance(b) / 10.0).ceil().max(1.0) as usize;
+    (0..=n).map(|i| a.lerp(b, i as f32 / n as f32)).any(|p| {
+        let in_belt = lay.field_mines.iter().any(|(line, width)| line.project(p).0 < width * 0.5) && !lay.roads.iter().any(|r| r.line.project(p).0 < 7.0);
+        let on_shoulder = lay.shoulder_fields.iter().any(|f| {
+            let (lat, s) = lay.roads[f.road].line.lateral(p);
+            (f.s0..f.s1).contains(&s) && (f.inner..f.outer).contains(&lat.abs())
+        });
+        in_belt || on_shoulder
+    })
 }
 
 #[derive(PartialEq)]

@@ -105,6 +105,7 @@ fn answer_requests(
     mut stats: ResMut<Stats>,
     models: Res<Models>,
     palette: Res<Palette>,
+    book: Res<crate::units::RouteBook>,
 ) {
     let now = time.elapsed_secs_f64();
     for r in requests.read() {
@@ -127,6 +128,7 @@ fn answer_requests(
             &mut commands,
             &models,
             &palette,
+            &book,
             VehicleSpec { side, kind: spec.kind, route, s, lat: 0.0, wave: evac.wave, idx: evac.sent, plow: false, smoke: false, rescue: true },
         );
         commands.entity(e).insert(EvacTarget(stop - 25.0));

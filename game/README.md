@@ -96,7 +96,9 @@ edge and the ruins of the town's edge; a post goes where men can hold it, a tank
 nothing on the enemy's side of the grey zone. `BAV_FIELD=1` lists the positions by number in the log and draws the
 field over the picture: the positions (green ours, yellow in the grey zone, red theirs), the road heads, the grey
 zone's edges and the tracked routes from each road head; it lifts the drone's 700 m ceiling, so
-`BAV_CAM="0,0,3200,0,-90,70"` shows the whole box.
+`BAV_CAM="0,0,3200,0,-90,70"` shows the whole box. `BAV_COLUMN="120:0:leo2a6+bradley+bradley@54"` sends a Column at game
+second 120 from road head 0 to position 54: it drives the field's route at its slowest vehicle's pace, fans out
+abreast at the position's edge, puts its men into it and holds; its progress is logged every 30 s.
 
 You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. An integrated one will do: on a Radeon
 780M at 2560x1600 a frame takes about 10 ms. Everything else is generated in code:

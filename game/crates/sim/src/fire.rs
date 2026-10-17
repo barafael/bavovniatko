@@ -956,7 +956,9 @@ fn defender_tank(
     sound.at(muzzle, Sfx::TankGun, 1.0);
     let d = from.distance(tp);
     if rng.random_bool((0.75 - d as f64 / 4000.0).clamp(0.15, 0.7)) {
-        hits.write(DirectHit { target, cause: Cause::TankGun, top: false, weapon: "125 mm", from: "a dug-in T-72" });
+        // Theirs dug in on the crest, or ours holding a position.
+        let (weapon, from) = if v.side == Side::Ua { ("120 mm", "one of our tanks") } else { ("125 mm", "a dug-in T-72") };
+        hits.write(DirectHit { target, cause: Cause::TankGun, top: false, weapon, from });
         fx.explosion(aim, 0.6, false);
         sound.at(aim, Sfx::BlastNear, 0.9);
     } else {
