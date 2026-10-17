@@ -123,13 +123,13 @@ fn scheduled_columns(
 }
 
 /// `BAV_COLUMN`: every 30 s of the day, where each Column's vehicles are and what they are doing.
-fn column_progress(script: Res<crate::director::Script>, book: Res<RouteBook>, q: Query<(&crate::units::Vehicle, &Transform)>, mut next: Local<f32>) {
+fn column_progress(script: Res<crate::director::Script>, book: Res<RouteBook>, q: Query<(&crate::units::Vehicle, &crate::units::Driver, &Transform)>, mut next: Local<f32>) {
     if script.t < *next {
         return;
     }
     *next = script.t + 30.0;
-    for (v, tf) in q.iter().filter(|(v, _)| v.wave >= 100) {
-        let len = book.0[v.route].line.length();
-        info!("column {}/{}: {:?} {:?} at {:.0},{:.0}, {:.0} of {len:.0} m, {:.1} m/s, at game {:.0} s", v.wave, v.idx, v.kind, v.state, tf.translation.x, tf.translation.z, v.s, v.speed, script.t);
+    for (v, d, tf) in q.iter().filter(|(v, ..)| v.wave >= 100) {
+        let len = book.0[d.route].line.length();
+        info!("column {}/{}: {:?} {:?} at {:.0},{:.0}, {:.0} of {len:.0} m, {:.1} m/s, at game {:.0} s", v.wave, v.idx, v.kind, v.state, tf.translation.x, tf.translation.z, d.s, d.speed, script.t);
     }
 }

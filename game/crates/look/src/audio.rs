@@ -455,12 +455,12 @@ fn near_sources(
     emitters: Query<(&bav_sim::fx::Emitter, &GlobalTransform)>,
     grass: Query<&crate::fx::GrassFire>,
     helis: Query<&GlobalTransform, With<bav_sim::robotyne::Helicopter>>,
-    vehicles: Query<(&bav_sim::units::Vehicle, &GlobalTransform)>,
+    vehicles: Query<(&bav_sim::units::Vehicle, &bav_sim::units::Driver, &GlobalTransform)>,
 ) {
     use bav_sim::fx::EmitterKind;
     let at = cam.translation();
     // Engine noise follows the nearest vehicle under way.
-    let (d, speed) = vehicles.iter().filter(|(v, _)| v.state.mobile() && v.speed > 0.5).map(|(v, t)| (t.translation().distance(at), v.speed)).fold((f32::MAX, 0.0), |a, b| if b.0 < a.0 { b } else { a });
+    let (d, speed) = vehicles.iter().filter(|(v, d, _)| v.state.mobile() && d.speed > 0.5).map(|(_, d, t)| (t.translation().distance(at), d.speed)).fold((f32::MAX, 0.0), |a, b| if b.0 < a.0 { b } else { a });
     near.engine_speed = speed;
     near.engines = if d < f32::MAX { (0.6 * 120.0 / (120.0 + d)).min(0.5) } else { 0.0 };
     let fires = emitters

@@ -13,7 +13,7 @@ use crate::dev::dev;
 use crate::fx::{self, FxQueue, FxRng};
 use crate::geo;
 use crate::paint::{Paint, PaintQueue};
-use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Gun, Line, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, VState, Vehicle};
+use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Driver, Gun, Line, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, VState, Vehicle};
 use crate::player::ObservationPost;
 use crate::units::Palette;
 use bevy::{light::NotShadowCaster, prelude::*, window::PrimaryWindow};
@@ -714,7 +714,7 @@ fn atgm_teams(
     mut radio: ResMut<Radio>,
     models: Res<Models>,
     palette: Res<Palette>,
-    vehicles: Query<(Entity, &Vehicle, &Transform)>,
+    vehicles: Query<(Entity, &Vehicle, &Driver, &Transform)>,
     missiles: Query<&Missile>,
     mut teams: Query<(Entity, &Post, &mut AtgmTeam), Without<Suppressed>>,
     view: Res<View>,
@@ -739,14 +739,14 @@ fn atgm_teams(
         }
         let (committed, column_out, targeted) = &*picture.get_or_insert_with(|| {
             let committed = (0..lay.routes.len())
-                .filter(|&r| vehicles.iter().any(|(_, v, _)| v.side == attacker && v.route == r && v.state.alive() && v.s > lay.routes[r].deploy_s - 350.0))
+                .filter(|&r| vehicles.iter().any(|(_, v, d, _)| v.side == attacker && d.route == r && v.state.alive() && d.s > lay.routes[r].deploy_s - 350.0))
                 .collect();
-            let column_out = vehicles.iter().any(|(_, v, t)| v.side == attacker && v.state.alive() && t.translation.z * lay.advance > -450.0);
+            let column_out = vehicles.iter().any(|(_, v, _, t)| v.side == attacker && v.state.alive() && t.translation.z * lay.advance > -450.0);
             (committed, column_out, missiles.iter().map(|m| m.target).collect())
         });
         let range = weapon.range();
         let mut best: Option<(Entity, f32, Vec3)> = None;
-        for (e, v, tf) in &vehicles {
+        for (e, v, drv, tf) in &vehicles {
             if !v.state.alive() || v.side == pos.side || targeted.contains(&e) {
                 continue;
             }
@@ -757,7 +757,7 @@ fn atgm_teams(
                     AtgmMode::Free => d < range,
                     AtgmMode::Hold => d < 400.0,
                     // Defending, wait for the column to commit; attacking, cover it whenever there is something to hit.
-                    AtgmMode::Auto => d < range.min(2500.0) && (pos.side == attacker && *column_out || pos.side != attacker && committed.contains(&v.route) || d < 700.0),
+                    AtgmMode::Auto => d < range.min(2500.0) && (pos.side == attacker && *column_out || pos.side != attacker && committed.contains(&drv.route) || d < 700.0),
                 }
             } else {
                 // The Russian teams on the crest let the column come into the minefield, then fire on anything

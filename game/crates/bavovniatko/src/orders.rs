@@ -157,8 +157,8 @@ fn marks(
         gizmos.line(lift(p.at), lift(p.at + p.facing * 18.0), c);
     }
     let mut way_drawn = false;
-    for (_, v, tf, _) in ours.iter() {
-        if !takes_orders(v, &book) {
+    for (_, v, d, tf, _) in ours.iter() {
+        if !takes_orders(v, d, &book) {
             continue;
         }
         let picked = ui.selected == Some(v.wave);
@@ -167,8 +167,8 @@ fn marks(
         // The way ahead, from one vehicle of the picked unit (every 20 m, along the ground).
         if picked && !way_drawn {
             way_drawn = true;
-            let line = &book.0[v.route].line;
-            let (from, to) = if v.state == bav_sim::units::VState::Withdrawing { (0.0, v.s) } else { (v.s, line.length()) };
+            let line = &book.0[d.route].line;
+            let (from, to) = if v.state == bav_sim::units::VState::Withdrawing { (0.0, d.s) } else { (d.s, line.length()) };
             let n = ((to - from) / 20.0).ceil().max(1.0) as usize;
             gizmos.linestrip((0..=n).map(|k| lift(line.point(from + (to - from) * k as f32 / n as f32))), PICKED.with_alpha(0.8));
         }

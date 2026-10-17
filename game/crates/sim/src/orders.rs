@@ -13,7 +13,7 @@
 
 use crate::geo;
 use crate::player::{MainCamera, cursor_ground};
-use crate::units::{self, Coasting, Gear, Radio, Rescue, RouteBook, Side, VKind, VState, Vehicle};
+use crate::units::{self, Coasting, Driver, Gear, Radio, Rescue, RouteBook, Side, VKind, VState, Vehicle};
 use bav_core::{
     diorama::{Play, play},
     field::{Mover, field, routes},
@@ -168,21 +168,21 @@ impl Doing {
 }
 
 /// Our vehicles that take orders: under way, and not a vehicle sent for the wounded (it answers to the call).
-pub type Ours<'w, 's> = Query<'w, 's, (Entity, &'static Vehicle, &'static Transform, Has<Holding>), (Without<Coasting>, Without<Rescue>)>;
+pub type Ours<'w, 's> = Query<'w, 's, (Entity, &'static Vehicle, &'static Driver, &'static Transform, Has<Holding>), (Without<Coasting>, Without<Rescue>)>;
 
 /// The same, to work them over.
-type OursMut<'w, 's> = Query<'w, 's, (Entity, &'static mut Vehicle, &'static Transform, Has<Holding>), (Without<Coasting>, Without<Rescue>)>;
+type OursMut<'w, 's> = Query<'w, 's, (Entity, &'static mut Vehicle, &'static mut Driver, &'static Transform, Has<Holding>), (Without<Coasting>, Without<Rescue>)>;
 
 /// Whether a vehicle (of `Ours`) takes orders: ours, under way, and driving (where we defend, only a Column does).
-pub fn takes_orders(v: &Vehicle, book: &RouteBook) -> bool {
-    v.side == Side::Ua && v.state.mobile() && (v.side == crate::diorama::diorama().attacker() || book.0[v.route].hold)
+pub fn takes_orders(v: &Vehicle, d: &Driver, book: &RouteBook) -> bool {
+    v.side == Side::Ua && v.state.mobile() && (v.side == crate::diorama::diorama().attacker() || book.0[d.route].hold)
 }
 
 /// Our units now, by wave, from our vehicles (`Ours`).
-pub fn units<'a>(vehicles: impl Iterator<Item = (Entity, &'a Vehicle, &'a Transform, bool)>, book: &RouteBook) -> Vec<Unit> {
+pub fn units<'a>(vehicles: impl Iterator<Item = (Entity, &'a Vehicle, &'a Driver, &'a Transform, bool)>, book: &RouteBook) -> Vec<Unit> {
     let mut by_wave: BTreeMap<u32, Unit> = BTreeMap::new();
-    for (e, v, tf, holding) in vehicles {
-        if !takes_orders(v, book) {
+    for (e, v, d, tf, holding) in vehicles {
+        if !takes_orders(v, d, book) {
             continue;
         }
         let u = by_wave.entry(v.wave).or_insert(Unit { wave: v.wave, vehicles: Vec::new(), kinds: Vec::new(), centre: Vec2::ZERO, doing: Doing::OnPosition });
@@ -253,7 +253,7 @@ fn orders_input(
     let Some(hit) = window.and_then(|w| cursor_ground(&w, cam.0, cam.1)) else { return };
     let at = hit.xz();
     // One of ours under the cursor: pick it.
-    let near = ours.iter().filter(|(e, ..)| units.iter().any(|u| u.vehicles.contains(e))).map(|(_, v, tf, _)| (v.wave, tf.translation.xz().distance(at))).filter(|(_, d)| *d < 40.0).min_by(|a, b| a.1.total_cmp(&b.1));
+    let near = ours.iter().filter(|(e, ..)| units.iter().any(|u| u.vehicles.contains(e))).map(|(_, v, _, tf, _)| (v.wave, tf.translation.xz().distance(at))).filter(|(_, d)| *d < 40.0).min_by(|a, b| a.1.total_cmp(&b.1));
     if let Some((wave, _)) = near {
         ui.selected = Some(wave);
         return;
@@ -390,11 +390,11 @@ fn deliver(
             Order::Advance => {
                 for &e in &unit.vehicles {
                     commands.entity(e).remove::<Holding>();
-                    if let Ok((_, mut v, ..)) = vehicles.get_mut(e)
+                    if let Ok((_, mut v, mut d, ..)) = vehicles.get_mut(e)
                         && v.state == VState::Withdrawing
                     {
                         v.state = VState::Advancing;
-                        v.gear = Gear::Forward;
+                        d.gear = Gear::Forward;
                         v.timer = 0.0;
                     }
                 }
@@ -403,10 +403,10 @@ fn deliver(
             Order::FallBack => {
                 for &e in &unit.vehicles {
                     commands.entity(e).remove::<Holding>();
-                    if let Ok((_, mut v, ..)) = vehicles.get_mut(e)
+                    if let Ok((_, mut v, mut d, ..)) = vehicles.get_mut(e)
                         && v.state != VState::Withdrawing
                     {
-                        units::start_withdrawal(&mut v, &mut rng.0);
+                        units::start_withdrawal(&mut v, &mut d, &mut rng.0);
                     }
                 }
                 Ok(())
@@ -437,9 +437,9 @@ fn take_position(commands: &mut Commands, book: &mut RouteBook, vehicles: &mut O
     // The way it came: the route most of it is on, to 50 m behind the rearmost of it there.
     let mut on: BTreeMap<usize, (u32, f32)> = BTreeMap::new();
     for &e in &unit.vehicles {
-        if let Ok((_, v, ..)) = vehicles.get(e) {
-            let r = on.entry(v.route).or_insert((0, f32::INFINITY));
-            *r = (r.0 + 1, r.1.min(v.s));
+        if let Ok((_, _, d, ..)) = vehicles.get(e) {
+            let r = on.entry(d.route).or_insert((0, f32::INFINITY));
+            *r = (r.0 + 1, r.1.min(d.s));
         }
     }
     let (&came_by, &(_, rearmost)) = on.iter().max_by_key(|(_, (n, _))| *n).ok_or("no vehicles")?;
@@ -464,17 +464,17 @@ fn take_position(commands: &mut Commands, book: &mut RouteBook, vehicles: &mut O
     let pace = unit.kinds.iter().map(|k| k.speed()).fold(f32::INFINITY, f32::min) * 0.9;
     for &e in &unit.vehicles {
         commands.entity(e).remove::<Holding>();
-        let Ok((_, mut v, tf, _)) = vehicles.get_mut(e) else { continue };
+        let Ok((_, mut v, mut d, tf, _)) = vehicles.get_mut(e) else { continue };
         let (lat, s) = line.lateral_near(tf.translation.xz(), cut, 80.0);
-        v.route = route;
-        v.s = s;
-        v.lat = lat;
-        v.target_lat = 0.0;
+        d.route = route;
+        d.s = s;
+        d.lat = lat;
+        d.target_lat = 0.0;
         v.state = VState::Advancing;
-        v.gear = Gear::Forward;
-        v.halt = None;
+        d.gear = Gear::Forward;
+        d.halt = None;
         v.timer = 0.0;
-        v.column_pace = pace;
+        d.column_pace = pace;
     }
     let every: Vec<String> = (0..=((len - cut) / 150.0) as usize).map(|k| line.point(cut + k as f32 * 150.0)).map(|p| format!("{:.0},{:.0}", p.x, p.y)).collect();
     debug!("orders: the way on: {}", every.join(" "));
