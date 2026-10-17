@@ -1148,6 +1148,7 @@ struct Driving {
     evac_at: Option<&'static crate::evac::EvacTarget>,
     rescue: Has<Rescue>,
     plow: Has<Plow>,
+    holding: Has<crate::orders::Holding>,
 }
 
 /// The driver's head: what state the vehicle is in, where he means to be, how fast he wants to go.
@@ -1174,7 +1175,7 @@ fn drive_decisions(
     let attacker = diorama().attacker();
     let rng = &mut rng.0;
 
-    for DrivingItem { e, mut v, tf, traffic, mut intent, evac_at, rescue, plow } in &mut q {
+    for DrivingItem { e, mut v, tf, traffic, mut intent, evac_at, rescue, plow, holding } in &mut q {
         if !drives(&v, &book, attacker) {
             continue;
         }
@@ -1347,8 +1348,8 @@ fn drive_decisions(
                     info!("rescue: Bradley {}/{} coming out with {} aboard after {:.0} s, at {now:.0} s", v.wave, v.idx, v.troops, v.timer);
                 }
             }
-            // A Column at its position holds it until it is ordered off.
-            VState::Overwatch if rt.hold => want_speed = 0.0,
+            // A Column at its position holds it until it is ordered off, and so does a unit told to hold.
+            VState::Overwatch if rt.hold || holding => want_speed = 0.0,
             VState::Overwatch => {
                 want_speed = 0.0;
                 if v.timer > rng.random_range(60.0..140.0) || v.panic > 0.8 {
@@ -1357,8 +1358,11 @@ fn drive_decisions(
             }
             VState::Withdrawing => {
                 if v.s < 30.0 {
-                    stats.withdrawn += 1;
-                    stats.returned += v.crew + v.troops;
+                    // (The tally is the attacker's: our Columns coming back at Vuhledar are not in it.)
+                    if v.side == attacker {
+                        stats.withdrawn += 1;
+                        stats.returned += v.crew + v.troops;
+                    }
                     commands.entity(e).despawn();
                     intent.want_speed = 0.0;
                     continue;
@@ -1396,6 +1400,10 @@ fn drive_decisions(
         if v.hesitate > 0.0 {
             v.hesitate -= dt;
             want_speed = want_speed.min(0.7);
+        }
+        // Told to hold (Command's orders): stop where it is, going either way.
+        if holding {
+            want_speed = 0.0;
         }
         intent.want_speed = want_speed;
     }
@@ -1712,7 +1720,7 @@ pub fn pop_smoke(commands: &mut Commands, fx: &mut FxQueue, rng: &mut SmallRng, 
     smoke.add(tf.translation.xz() + fwd * 45.0, 32.0, now, 120.0);
 }
 
-fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
+pub fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
     v.state = VState::Withdrawing;
     v.gear = Gear::Backing;
     // Turning a tank round on a narrow road means a pivot onto the shoulder.

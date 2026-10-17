@@ -33,7 +33,9 @@ pub struct HitLog {
 impl HitLog {
     /// `rescue`: whether the vehicle carries `units::Rescue`.
     pub fn open(&mut self, at: f64, weapon: &'static str, from: &'static str, target: Entity, v: &Vehicle, rescue: bool, result: impl Into<String>) {
-        self.entries.push(HitEntry { at, weapon, from, target, target_name: name_of(v, rescue), side: v.side, result: result.into() });
+        let result = result.into();
+        bevy::log::debug!("hit: {weapon} {from} on {:?} {} ({}/{}): {result}, at {at:.0} s", v.side, name_of(v, rescue), v.wave, v.idx);
+        self.entries.push(HitEntry { at, weapon, from, target, target_name: name_of(v, rescue), side: v.side, result });
         if self.entries.len() > 20 {
             self.entries.remove(0);
         }

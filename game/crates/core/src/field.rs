@@ -163,6 +163,22 @@ impl Routes {
     pub fn path(&self, head: usize, mover: Mover, to: Vec2) -> Option<Polyline> {
         let from = field().road_heads.get(head)?.at;
         let tree = self.trees.get(head)?[mover as usize].get_or_init(|| self.graph.tree(from, mover));
+        self.walk(tree, from, mover, to)
+    }
+
+    /// The way from anywhere to a place for a mover (a unit ordered on from where it stands): worked out afresh each
+    /// time, so for orders, not for every frame.
+    pub fn path_from(&self, from: Vec2, mover: Mover, to: Vec2) -> Option<Polyline> {
+        self.walk(&self.graph.tree(from, mover), from, mover, to)
+    }
+
+    /// The road head nearest a place.
+    pub fn nearest_head(&self, p: Vec2) -> Option<usize> {
+        field().road_heads.iter().enumerate().min_by(|a, b| a.1.at.distance(p).total_cmp(&b.1.at.distance(p))).map(|(i, _)| i)
+    }
+
+    /// From a tree's start to a place: back up the tree from the node nearest the place, smoothed.
+    fn walk(&self, tree: &Tree, from: Vec2, mover: Mover, to: Vec2) -> Option<Polyline> {
         let end = self.graph.nearest(to, mover, tree)?;
         let mut pts = vec![to];
         let mut n = end;
@@ -330,7 +346,20 @@ impl Graph {
 
     /// The cheapest ways from the node nearest a place, for a mover (Dijkstra).
     fn tree(&self, from: Vec2, mover: Mover) -> Tree {
-        let root = (0..self.nodes.len()).min_by(|&a, &b| self.nodes[a].distance(from).total_cmp(&self.nodes[b].distance(from))).unwrap_or(0);
+        // The nearest node the mover can reach from there in a straight line (a vehicle does not start through a tree
+        // line), or the nearest of all where none can.
+        let lay = geo::layout();
+        let by_distance = |a: &usize, b: &usize| self.nodes[*a].distance(from).total_cmp(&self.nodes[*b].distance(from));
+        let reachable = (0..self.nodes.len()).filter(|&n| self.nodes[n].distance(from) < 400.0 && (mover == Mover::Foot || !blocked(lay, from, self.nodes[n])));
+        let root = reachable.min_by(by_distance).or_else(|| (0..self.nodes.len()).min_by(by_distance)).unwrap_or(0);
+        // Ground in the grey zone costs three times as much to cross, the enemy's eight: our units keep back where
+        // there is a way back there.
+        let grey = field().grey;
+        let exposure: Vec<f32> = self.nodes.iter().map(|&p| match ground_at(grey, p) {
+            Ground::Ours => 1.0,
+            Ground::Grey => 3.0,
+            Ground::Theirs => 8.0,
+        }).collect();
         let mut cost = vec![f32::INFINITY; self.nodes.len()];
         let mut prev = vec![usize::MAX; self.nodes.len()];
         let mut heap = BinaryHeap::new();
@@ -346,7 +375,7 @@ impl Graph {
                 }
                 // Men on foot get through a tree line or across the river, slowly.
                 let slow = if e.foot_only { 2.0 } else { 1.0 };
-                let next = c + e.len * slow / mover.pace(e.class);
+                let next = c + e.len * slow * exposure[e.to] / mover.pace(e.class);
                 if next < cost[e.to] {
                     cost[e.to] = next;
                     prev[e.to] = n;

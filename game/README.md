@@ -100,6 +100,11 @@ zone's edges and the tracked routes from each road head; it lifts the drone's 70
 second 120 from road head 0 to position 54: it drives the field's route at its slowest vehicle's pace, fans out
 abreast at the position's edge, puts its men into it and holds; its progress is logged every 30 s.
 
+In Command our units take Orders over the net, with its delay and the enemy's jamming: O in the drone's view opens
+the orders, a click picks one of ours, G / K / B order it on, to hold, or back, and a click on a ringed position sends
+it there. `BAV_ORDER="200:100:hold,450:100:position@18,800:100:back"` gives orders at game times (wave 100 is the
+first Column; the script's waves count from 1), `BAV_ORDERS=open` starts with the orders open.
+
 You need Rust stable (pinned in `rust-toolchain.toml`) and a Vulkan GPU. An integrated one will do: on a Radeon
 780M at 2560x1600 a frame takes about 10 ms. Everything else is generated in code:
 terrain, ground textures, trees, buildings, people and sound. The two WGSL shaders are embedded.

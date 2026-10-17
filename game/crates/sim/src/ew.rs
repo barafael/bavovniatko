@@ -49,9 +49,19 @@ pub struct Ew {
 impl Ew {
     /// Jamming at a point, 0..1: the rear ramp past the jam line, and each active jammer's falling off with distance.
     pub fn jam_at(&self, p: Vec3) -> f32 {
+        self.jam_within(p, self.radius)
+    }
+
+    /// Jamming on the net at a point, 0..1 (Command's orders): the same jammers, reaching twice as far on the radios'
+    /// band as on the drones' links.
+    pub fn radio_jam_at(&self, p: Vec3) -> f32 {
+        self.jam_within(p, self.radius * 2.0)
+    }
+
+    fn jam_within(&self, p: Vec3, radius: f32) -> f32 {
         let lay = geo::layout();
         let rear = if self.depth > 0.0 { ((p.z - lay.jam_z) / self.depth).clamp(0.0, 1.0) * 0.9 } else { 0.0 };
-        let local: f32 = self.active.iter().filter(|(_, on)| *on).map(|(j, _)| (1.0 - j.distance(p.xz()) / self.radius).max(0.0) * 0.8).sum();
+        let local: f32 = self.active.iter().filter(|(_, on)| *on).map(|(j, _)| (1.0 - j.distance(p.xz()) / radius).max(0.0) * 0.8).sum();
         (rear + local).min(1.0)
     }
 

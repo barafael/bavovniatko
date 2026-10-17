@@ -325,9 +325,10 @@ fn player_fire(
     mut fc: ResMut<FireControl>,
     mut radio: ResMut<Radio>,
     mut sound: Sound,
+    orders: Option<Res<crate::orders::OrdersView>>,
 ) {
-    // Alt+click asks for an evacuation instead (`evac`).
-    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) {
+    // Alt+click asks for an evacuation instead (`evac`); with the orders open (Command) a click is for them (`orders`).
+    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) || orders.is_some_and(|o| o.open) {
         return;
     }
     let now = time.elapsed_secs_f64();

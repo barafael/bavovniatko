@@ -81,6 +81,10 @@ pub struct DevEnv {
     pub allot: Option<String>,
     /// `BAV_COLUMN=<columns>`: Columns sent at game times until the map table exists (`bav_sim::columns`).
     pub column: Option<String>,
+    /// `BAV_ORDER=<orders>`: Orders given at game times, for the headless runs (`bav_sim::orders`).
+    pub order: Option<String>,
+    /// `BAV_ORDERS=open`: start with the field view of the orders open (for shots of it).
+    pub orders_open: bool,
     /// Film the showcase tour into this directory.
     pub showcase: Option<String>,
     pub no_battery: bool,
@@ -218,6 +222,8 @@ impl DevEnv {
             reel: var("BAV_REEL"),
             allot: var("BAV_ALLOT"),
             column: var("BAV_COLUMN"),
+            order: var("BAV_ORDER"),
+            orders_open: var("BAV_ORDERS").is_some_and(|v| v == "open"),
             showcase: var("BAV_SHOWCASE"),
             no_battery: var("BAV_NO_BATTERY").is_some(),
             view: parse("BAV_VIEW"),

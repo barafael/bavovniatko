@@ -17,6 +17,7 @@ pub mod ew;
 pub mod fire;
 pub mod fx;
 pub mod hits;
+pub mod orders;
 pub mod paint;
 pub mod player;
 pub mod robotyne;

@@ -184,3 +184,38 @@ stream, so same-day style checks still work per seed):
 - Tested: Mala Tokmachka, a Leopard 2A6 and two Bradleys from the western track to the forward tree line, 1350 m,
   there by 330–380 s abreast at its edge; Vuhledar, the same from the T-0509's western end to the first tree line,
   round the end of our mine belt, by 210–400 s, no losses. The Record is unchanged (same-day: same on both days).
+
+### Phase 4, orders (2026-10-17)
+- `bav_sim::orders`: in Command each of our units takes Orders (накази) over the net: Advance (Вперед), Hold
+  (Тримати), Fall back (Відхід), Take position (Зайняти позицію). A unit is our vehicles sent in together (a Column, or
+  one of the script's waves where we attack), under a callsign (Грім · Hrim, Сокіл · Sokil, …); a vehicle sent for
+  the wounded answers to its call, not to orders. The Record has none of it.
+- The net: the player says the order at once; the unit has it four to eight seconds later, and up to half a minute
+  later through jamming. Where the net is jammed hard it may never get there: the player hears nothing back, and the
+  operator says the callsign is not answering. The net's jamming is the jammers' field reaching twice as far as it
+  does for the drones' links (`Ew::radio_jam_at`): at Mala Tokmachka a unit in the minefield under the crest is cut
+  off more often than not; at Vuhledar our Columns behind the town are never jammed. The orders draw from their own
+  stream, so giving one shifts nothing else of the day's chance.
+- Hold puts `Holding` on the unit's vehicles: the drivers stop where they are, going either way, and a unit holding
+  a firing line no longer pulls back of itself. Advance lifts it and turns round a unit falling back. Fall back sends it
+  back the way it came. Take position gives the unit a way of its own (`field::Routes::path_from`): back along the
+  way it came to behind its rearmost vehicle (out of the tree line it holds, as it went in), then across the field to
+  the new position, up to it from behind; the way it came stays the start of the new one, so it can still fall back.
+- The route graph now weighs ground by whose it is: the grey zone costs three times as much to cross, the enemy's
+  eight; and a search from anywhere starts at a node the mover can reach in a straight line. Our units go forward of
+  our side only where there is no other way (Vuhledar's tree line 13 to 18: our own belts close the field behind the
+  tree line, and the way goes up the road and along its front).
+- The field view: O in the drone's view opens it. Our units are ringed and named over the picture, the positions
+  vehicles can take ringed (green ours, yellow the grey zone), the picked unit's way ahead drawn; on the left the
+  units with what each is doing (or the order still on the net) and the keys. A click on one of ours picks it; G / K
+  / B give Advance / Hold / Fall back; a click on a ring sends it there. While it is open a click calls no fire.
+- `BAV_ORDER="200:100:hold,450:100:position@18,800:100:back"` gives orders at game times (wave 100 is the first
+  Column, the script's waves count from 1); `BAV_ORDERS=open` starts with the view open.
+- Our vehicles coming back off the field are no longer counted in the enemy's tally at Vuhledar.
+- The Record keeps the world it had: in the Record the orders add nothing to it, not even a resource. With only
+  `OrdersView` inserted (read by nothing), the Record's day changed from 23 s on (same-day on Vuhledar; the same
+  code replays itself exactly). Something in the day depends on the world's make-up rather than its contents —
+  likely two systems with no order between them; worth finding before anything else has to join the Record.
+- Tested headless: at Vuhledar a Column held, went on, took tree line 18 from 13 and fell back to its road head;
+  at Mala Tokmachka hold and advance to both waves, the orders 4–14 s on the net, two lost under the jammers.
+  Shots: devlog/shots/*-orders-*.jpg. The Record is unchanged (same-day: same on both days).
