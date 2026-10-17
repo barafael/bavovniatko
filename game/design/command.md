@@ -220,7 +220,10 @@ stream, so same-day style checks still work per seed):
   same to the last four seconds, and then, one time, three more bursts of machine-gun fire and one more loss of ours
   at 1436 s. Both phases' builds gave both. So the same-day check can say "different" at Vuhledar without a change
   to blame: compare with an earlier run of the other outcome (p8-v and head-v in devlog/same-day), or run it again.
-  Likely the same cause as above, an order between two systems that the scheduler is free to choose.
+  Ruled out so far (phase 9): Bevy's ambiguity report (schedule `ambiguity_detection`, with bevy's `debug` feature for
+  the names) finds 30 pairs of unordered systems that conflict, but in the battle's own steps only `scheduled_columns`
+  (idle without `BAV_COLUMN`); the rest are input, camera, sound and picture. The battle's hash maps are looked up by
+  key, never iterated; it has no parallel iteration, no unseeded random stream, no wall-clock time. Still open.
 - Tested headless: at Vuhledar a Column held, went on, took tree line 18 from 13 and fell back to its road head;
   at Mala Tokmachka hold and advance to both waves, the orders 4–14 s on the net, two lost under the jammers.
   Shots: devlog/shots/*-orders-*.jpg. The Record is unchanged (same-day: same on both days).
@@ -321,3 +324,25 @@ stream, so same-day style checks still work per seed):
   on the dacha road, and the fourth with a plow, two smoke vehicles and a BMP-2 leading; Orlan passes spotted a post
   or so each. At Mala Tokmachka an Orlan spotted six of ours on the slope, and a Lancet went at a Bradley (and missed).
   One run each way says nothing yet about the bands; that is phase 9.
+
+### Phase 9, balance (2026-10-17)
+- Bands, four seeds each (devlog/band/p9.log; `BAND_TAG=rec`, `cmd-off` with `BAV_PLAY=command BAV_STAFF=off`,
+  `cmd-on` with `BAV_PLAY=command`):
+
+  | | Vuhledar: theirs knocked out | Vuhledar: our losses | Mala Tokmachka: ours stopped | Mala Tokmachka: dead |
+  |---|---|---|---|---|
+  | Record | 26–29 | 1–7 | 12–18 | 19–35 |
+  | Command, the day's picks, staff off | 26–31 | 2–6 | 15–17 | 20–37 |
+  | Command, the day's picks, staff on | 27–30 | 2–6 | 16–20 | 16–50 |
+
+- Command with the day's own picks and no staff is the Record's band on both days: building our side when the battle
+  starts, from the table, changes nothing that matters.
+- The staff is not a thumb on the scale. At Mala Tokmachka it costs us about two more vehicles a morning (the
+  Lancets, and their guns on what they have spotted). At Vuhledar it changes nothing measurable: its columns change
+  road and put a plow or smoke in front, and still die in the kill zone, which is the record's lesson too; and with
+  the day's picks we have no vehicles out for the Lancets, which do not go for a tank in its hide.
+- Left as they are: the costs and the Supply. Bands cannot judge a player's choices; the numbers are the file's first
+  guess, to be tuned on played sessions (`allotment.points`, each entry's `cost` and `supply`, `allotment.supply`,
+  `staff`).
+- Next, if the staff should bite harder at Vuhledar: Lancets at spotted tanks in hides (a hit on a `UaTank`), their
+  infantry sent at a flank where no column of theirs looks, and the Ka-52s cued by what is spotted.
