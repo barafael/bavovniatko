@@ -31,8 +31,10 @@ pub struct Smoke {
 }
 
 impl Smoke {
-    pub fn add(&mut self, at: Vec2, radius: f32, until: f64) {
-        self.clouds.push((at, radius, until));
+    /// A cloud at `at`, `radius` m across, for `secs` from `now`. (The clouds gone by now are let go of.)
+    pub fn add(&mut self, at: Vec2, radius: f32, now: f64, secs: f64) {
+        self.clouds.retain(|&(_, _, until)| until > now);
+        self.clouds.push((at, radius, now + secs));
     }
 
     /// Does smoke lie across the line from `a` to `b` at game time `now`?

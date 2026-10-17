@@ -11,7 +11,7 @@
 //! `BAV_FPV="<s>:<x>;<z>"` launches one by itself and flies it at the vehicle nearest that point (tests).
 
 use crate::diorama::{Side, diorama};
-use crate::fire::{FireControl, Mission, ShellKind};
+use crate::fire::{Mission, ShellKind};
 use crate::fx::FxQueue;
 use crate::geo;
 use crate::player::{Fpv, Operator, View};
@@ -121,11 +121,11 @@ fn move_team(op: &mut Operator, view: &mut View, radio: &mut Radio, now: f64, hi
 /// While a drone is up the enemy may find its controller: a ranging round first, then the mission.
 #[allow(clippy::too_many_arguments)]
 fn team_found(
+    mut commands: Commands,
     time: Res<Time>,
     mut rng: ResMut<OperatorRng>,
     mut op: ResMut<Operator>,
     mut view: ResMut<View>,
-    mut fc: ResMut<FireControl>,
     mut radio: ResMut<Radio>,
     fpv: Res<Fpv>,
 ) {
@@ -144,14 +144,14 @@ fn team_found(
                 op.found = Some(now);
                 info!("operator: found at {:.0},{:.0}, at {now:.0} s", op.pos.x, op.pos.y);
                 let near = op.pos + Vec2::new(rng.0.random_range(-60.0..60.0), rng.0.random_range(-60.0..60.0));
-                fc.missions.push(Mission { target: near, kind: ShellKind::Ru152, rounds: 1, sigma: 10.0, interval: 1.0, next: now, flight: 15.0, player: false, by: Side::Ru });
+                commands.spawn(Mission { target: near, kind: ShellKind::Ru152, rounds: 1, sigma: 10.0, interval: 1.0, next: now, flight: 15.0, by: Side::Ru });
                 radio.say2(now, "Приліт поруч з нами! Нас вирахували. {player}, треба міняти точку (M).", "Incoming next to us! They've found us. {player}, we have to move (M).");
             }
         }
         Some(t) => {
             // Twenty seconds after the ranging round, the mission; it lands on whoever is still there.
             if now >= t + 20.0 && now - (dt as f64) < t + 20.0 {
-                fc.missions.push(Mission { target: op.pos, kind: ShellKind::Ru152, rounds: 6, sigma: 25.0, interval: 2.0, next: now, flight: 15.0, player: false, by: Side::Ru });
+                commands.spawn(Mission { target: op.pos, kind: ShellKind::Ru152, rounds: 6, sigma: 25.0, interval: 2.0, next: now, flight: 15.0, by: Side::Ru });
             }
             if now >= t + 38.0 {
                 info!("operator: hit at {:.0},{:.0}, at {now:.0} s", op.pos.x, op.pos.y);

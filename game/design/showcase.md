@@ -134,8 +134,8 @@ so the scout run (verification 1) retimes V4, V5, V7, V8, V9, R4, R8 and the `Me
    team, call `enter_ground` (`camera.rs:311`), set `view.sight`; each frame call a new
    `camera::track_nearest(view, vehicles)`, which is the tracker now inlined in `env_ground`
    (`src/dev.rs:425`), generalised from `Side::Ru` to `diorama().attacker()`; at `launch` set
-   `view.launch = true` once, which `player_atgm` (`src/fire.rs:1148`) takes as a trigger beside the mouse and
-   `BAV_AUTO_ATGM`.
+   write a `player::TriggerPull` message once, which `player_atgm` (`src/fire.rs`) takes as a trigger beside the
+   mouse and `BAV_AUTO_ATGM`.
 7. **Flown shots.** At the shot's first filmed frame `place_camera` places once (pos from `pos0`, yaw and
    gimbal from `look_angles`, targets equal to them as `set_drone_aim` does, fov, zero velocity, `hold = None`,
    `locked = false`) and installs the shot's legs offset by `from`; then it touches nothing for the rest of the

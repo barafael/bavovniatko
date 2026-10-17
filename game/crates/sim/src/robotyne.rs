@@ -32,7 +32,7 @@ impl Plugin for RobotynePlugin {
 pub fn spawn_dug_in(commands: &mut Commands, models: &Models, palette: &Palette) {
     for (k, &((x, z), yaw)) in crate::data::sim_data().dug_in.iter().enumerate() {
         let p = Vec2::new(x, z);
-        let spec = VehicleSpec { side: Side::Ru, kind: VKind::T72, route: 0, s: 0.0, lat: 0.0, wave: 0, idx: 100 + k as u32, plow: false, smoke: false, rescue: false };
+        let spec = VehicleSpec { side: Side::Ru, kind: VKind::T72, route: 0, s: 0.0, lat: 0.0, wave: 0, idx: 100 + k as u32, plow: false, smoke: false, rescue: false, column_pace: f32::INFINITY };
         let e = crate::units::spawn_vehicle_at(commands, models, palette, spec, p, yaw);
         commands.entity(e).insert(Transform::from_translation(geo::ground(p) - Vec3::Y * 1.1).with_rotation(Quat::from_rotation_y(yaw)));
     }

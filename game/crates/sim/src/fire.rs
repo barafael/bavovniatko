@@ -13,7 +13,7 @@ use crate::dev::dev;
 use crate::fx::{self, FxQueue, FxRng};
 use crate::geo;
 use crate::paint::{Paint, PaintQueue};
-use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Line, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, Vehicle, VState};
+use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Gun, Line, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, VState, Vehicle};
 use crate::player::ObservationPost;
 use crate::units::Palette;
 use bevy::{light::NotShadowCaster, prelude::*, window::PrimaryWindow};
@@ -26,10 +26,17 @@ impl Plugin for FirePlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(FireRng(SmallRng::seed_from_u64(crate::dev::seeded(72))))
             .init_resource::<FireControl>()
+            .add_message::<ShellLanded>()
+            .add_message::<crate::player::TriggerPull>()
             .add_systems(Startup, spawn_positions.in_set(crate::schedule::Setup::Field))
             .add_systems(
                 Update,
-                (player_fire, player_atgm, fly_guided, run_missions, land_shells, atgm_teams, fly_missiles, small_arms, vehicle_fire, pre_registered_fires, ua_tank, mortars)
+                (
+                    (player_fire, player_atgm, fly_guided, run_missions).chain(),
+                    (shell_whistle, land_shells, shells_shake, shells_on_jammers, shells_on_posts, shells_on_op, stand_up).chain(),
+                    (reload_launchers, atgm_teams, fly_missiles, small_arms, attacker_guns, defender_tanks).chain(),
+                    (pre_registered_fires, ua_tank, mortars).chain(),
+                )
                     .chain()
                     .run_if(crate::running)
                     .in_set(crate::Step::Fire),
@@ -67,36 +74,44 @@ pub enum ShellKind {
 
 /// A [`Strike`] as the guns fire it.
 pub trait StrikeMission: Sized {
-    fn mission(self, target: Vec2, sigma: f32, now: f64, player: bool) -> Mission;
-    fn on_nearest_stalled(self, fc: &mut FireControl, vehicles: &Query<(&Vehicle, &Transform)>, from: Vec2, now: f64) -> Option<Vec2>;
+    fn mission(self, target: Vec2, sigma: f32, now: f64) -> Mission;
+    fn call(self, commands: &mut Commands, target: Vec2, sigma: f32, now: f64);
+    fn on_nearest_stalled(self, commands: &mut Commands, vehicles: &Query<(&Vehicle, &Transform)>, from: Vec2, now: f64) -> Option<Vec2>;
 }
 
 impl StrikeMission for Strike {
     /// The one place a fire mission is built: rounds, spacing, flight time and dispersion for each kind.
-    fn mission(self, target: Vec2, sigma: f32, now: f64, player: bool) -> Mission {
+    fn mission(self, target: Vec2, sigma: f32, now: f64) -> Mission {
         let (kind, rounds, interval, flight, sigma, delay) = match self {
             Strike::He => (ShellKind::He155, 4, 3.5, 24.0, sigma, 2.0),
             Strike::Raam => (ShellKind::Raam, 3, 5.0, 28.0, sigma * 1.2, 3.0),
             Strike::Himars => (ShellKind::Himars, 2, 4.0, 55.0, 3.0, 2.0),
             Strike::Smoke => (ShellKind::Smoke, 4, 2.5, 24.0, sigma * 1.5 + 15.0, 2.0),
         };
-        Mission { target, kind, rounds, sigma, interval, next: now + delay, flight, player, by: Side::Ua }
+        Mission { target, kind, rounds, sigma, interval, next: now + delay, flight, by: Side::Ua }
+    }
+
+    /// The player calls this strike on a point: its mission goes to the guns, marked as the player's.
+    fn call(self, commands: &mut Commands, target: Vec2, sigma: f32, now: f64) {
+        commands.spawn((self.mission(target, sigma, now), PlayerCalled));
     }
 
     /// Call this strike on the stalled Russian vehicle nearest `from`, as a player would from the drone (the dev
     /// scripts and the showcase do). Returns where it was called.
-    fn on_nearest_stalled(self, fc: &mut FireControl, vehicles: &Query<(&Vehicle, &Transform)>, from: Vec2, now: f64) -> Option<Vec2> {
+    fn on_nearest_stalled(self, commands: &mut Commands, vehicles: &Query<(&Vehicle, &Transform)>, from: Vec2, now: f64) -> Option<Vec2> {
         let target = vehicles
             .iter()
             .filter(|(v, _)| v.state.alive() && v.state != VState::Advancing)
             .map(|(_, t)| t.translation.xz())
             .min_by(|a, b| a.distance(from).total_cmp(&b.distance(from)))?;
-        fc.missions.push(self.mission(target, 12.0, now, true));
+        self.call(commands, target, 12.0, now);
         Some(target)
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+/// A fire mission under way: so many rounds at a target, one every `interval` seconds from `next`, each
+/// `flight` seconds in the air. Spent, it is despawned (`run_missions`).
+#[derive(Component, Clone, Copy, Debug)]
 pub struct Mission {
     pub target: Vec2,
     pub kind: ShellKind,
@@ -105,10 +120,13 @@ pub struct Mission {
     pub interval: f32,
     pub next: f64,
     pub flight: f32,
-    pub player: bool,
     /// Whose guns: the shells hurt the other side's positions too.
     pub by: Side,
 }
+
+/// A mission the player called: the aim gizmo shows where its rounds will land.
+#[derive(Component)]
+pub struct PlayerCalled;
 
 #[derive(Resource)]
 pub struct FireControl {
@@ -120,7 +138,6 @@ pub struct FireControl {
     pub brigade_shells: u32,
     /// The battalion's 120 mm mortars, which work over infantry in the open on their own.
     pub mortar_bombs: u32,
-    pub missions: Vec<Mission>,
     pub atgm_mode: AtgmMode,
     /// The battery can work one player mission at a time.
     pub battery_busy_until: f64,
@@ -135,24 +152,33 @@ impl Default for FireControl {
         // Zaluzhnyi: artillery ammunition is the binding constraint. ~6,000 RAAM shells reached Ukraine in late
         // 2022, but a battery on one morning gets a handful of missions.
         let s = crate::allot::allotment().stock;
-        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, missions: Vec::new(), atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
+        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
     }
 }
 
-/// A position in a tree line or a trench: riflemen, and maybe an ATGM team.
+/// A position in a tree line or a trench: riflemen, and with them maybe an ATGM team (an `AtgmTeam` on the
+/// same entity).
 #[derive(Component)]
 pub struct Post {
     pub side: Side,
     pub pos: Vec2,
     pub strength: u32,
+    pub fire_timer: f32,
+    pub figures: Vec<Entity>,
+}
+
+/// An ATGM team at a position: its launcher, its missiles, and how long until it can fire again.
+#[derive(Component)]
+pub struct AtgmTeam {
+    pub weapon: Atgm,
     pub atgm: u32,
     pub reload: f32,
-    pub fire_timer: f32,
-    /// None: riflemen only.
-    pub weapon: Option<Atgm>,
-    pub figures: Vec<Entity>,
-    /// Down in the trench under fire until this game time: its ATGM team does not fire.
-    pub suppressed_until: f64,
+}
+
+/// A position down in the trench under fire until this game time: its ATGM team does not fire.
+#[derive(Component, Clone, Copy)]
+pub struct Suppressed {
+    pub until: f64,
 }
 
 #[derive(Component)]
@@ -160,8 +186,25 @@ pub struct Shell {
     pub at: Vec2,
     pub kind: ShellKind,
     pub land: f64,
-    pub whistled: bool,
     pub by: Side,
+}
+
+/// A shell whose whistle has been heard (1.4 s out), or that has none to give (direct fire: a tank round, a
+/// 30 mm burst).
+#[derive(Component)]
+pub struct Whistled;
+
+/// A shell has landed and burst: for the picture's shake, the jammers, the positions and the OP, after the blast
+/// itself (`Blast`) has been written.
+#[derive(Message, Clone, Copy)]
+pub struct ShellLanded {
+    pub at: Vec2,
+    pub kind: ShellKind,
+    pub by: Side,
+    /// Lethal radius for people in the open.
+    pub radius: f32,
+    /// How big the burst was.
+    pub size: f32,
 }
 
 #[derive(Component)]
@@ -191,7 +234,6 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
     let ours = &crate::allot::allotment().posts;
     let posts = ours.iter().map(|(p, w)| (Side::Ua, p, *w)).chain(lay.ru_positions.iter().zip(&d.ru_weapons).map(|(p, w)| (Side::Ru, p, *w)));
     for (i, (side, p, weapon)) in posts.enumerate() {
-        let atgm = weapon.map_or(0, Atgm::load);
         let mut figures = Vec::new();
         // A few figures in the trench line under the trees, mostly hidden, facing the enemy.
         let face = if side == Side::Ua { std::f32::consts::PI } else { 0.0 };
@@ -207,10 +249,10 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
                 .id();
             figures.push(e);
         }
-        commands.spawn((
-            Post { side, pos: *p, strength: 6, atgm, reload: 4.0 + i as f32 * 7.0, fire_timer: i as f32, weapon, figures, suppressed_until: 0.0 },
-            Transform::from_translation(geo::ground(*p)),
-        ));
+        let mut e = commands.spawn((Post { side, pos: *p, strength: 6, fire_timer: i as f32, figures }, Transform::from_translation(geo::ground(*p))));
+        if let Some(weapon) = weapon {
+            e.insert(AtgmTeam { weapon, atgm: weapon.load(), reload: 4.0 + i as f32 * 7.0 });
+        }
     }
     crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
     // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot; as many as
@@ -273,6 +315,7 @@ fn observed_sigma(view: &View, target: Vec2) -> f32 {
 }
 
 fn player_fire(
+    mut commands: Commands,
     time: Res<Time>,
     buttons: Res<ButtonInput<MouseButton>>,
     keys: Res<ButtonInput<KeyCode>>,
@@ -300,7 +343,7 @@ fn player_fire(
             return;
         }
         fc.himars -= 1;
-        fc.missions.push(Strike::Himars.mission(target, sigma, now, true));
+        Strike::Himars.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{command}}, я {{player}}. Хаймарс, дві ракети, {lat:.4} {lon:.4}. Підліт близько хвилини."), format!("{{command}}, this is {{player}}. HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
     } else if shift && diorama() == Diorama::Robotyne {
         if fc.smoke == 0 {
@@ -308,7 +351,7 @@ fn player_fire(
             return;
         }
         fc.smoke -= 1;
-        fc.missions.push(Strike::Smoke.mission(target, sigma, now, true));
+        Strike::Smoke.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{guns}}, я {{player}}. Дим, {lat:.4} {lon:.4}. Ставимо завісу. Нам теж нічого не видно."), format!("{{guns}}, this is {{player}}. Smoke, {lat:.4} {lon:.4}. Screening. It blinds us too."));
     } else if shift {
         if fc.raam == 0 {
@@ -316,7 +359,7 @@ fn player_fire(
             return;
         }
         fc.raam -= 1;
-        fc.missions.push(Strike::Raam.mission(target, sigma, now, true));
+        Strike::Raam.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{guns}}, я {{player}}. РААМ, три снаряди, {lat:.4} {lon:.4}. Мінуємо прохід."), format!("{{guns}}, this is {{player}}. RAAM, three shells, {lat:.4} {lon:.4}. Mines going down on that lane."));
     } else {
         if fc.shells < 4 {
@@ -333,7 +376,7 @@ fn player_fire(
         fc.shells -= 4;
         fc.battery_busy_until = now + 18.0;
         fc.last_call = Some((target, now));
-        fc.missions.push(Strike::He.mission(target, sigma, now, true));
+        Strike::He.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{guns}}, я {{player}}. Ціль, {lat:.4} {lon:.4}, чотири снаряди. {}", if adjust { "Коригую від попередньої." } else { "Вихід." }), format!("{{guns}}, this is {{player}}. Fire mission, {lat:.4} {lon:.4}, four rounds. {}", if adjust { "Adjusting from the last." } else { "Shot, over." }));
         if fc.shells <= 32 && !fc.warned_low {
             fc.warned_low = true;
@@ -349,7 +392,7 @@ fn aim_gizmo(
     cam: Single<(&Camera, &GlobalTransform), With<MainCamera>>,
     view: Res<View>,
     keys: Res<ButtonInput<KeyCode>>,
-    fc: Res<FireControl>,
+    missions: Query<&Mission, With<PlayerCalled>>,
     time: Res<Time>,
 ) {
     if view.mode == Mode::Ground {
@@ -369,31 +412,29 @@ fn aim_gizmo(
         gizmos.circle(iso, sigma * 2.0, color);
         gizmos.circle(iso, 1.5, color);
     }
-    // Pending missions: where the rounds will land.
+    // The player's pending missions: where the rounds will land.
     let now = time.elapsed_secs_f64();
-    for m in &fc.missions {
-        if m.player {
-            let blink = ((now * 4.0) as i64 % 2) as f32;
-            let iso = Isometry3d::new(geo::ground(m.target) + Vec3::Y, Quat::from_rotation_x(std::f32::consts::FRAC_PI_2));
-            gizmos.circle(iso, m.sigma * 2.0, Color::srgba(1.0, 0.4, 0.2, 0.3 + 0.5 * blink));
-        }
+    for m in &missions {
+        let blink = ((now * 4.0) as i64 % 2) as f32;
+        let iso = Isometry3d::new(geo::ground(m.target) + Vec3::Y, Quat::from_rotation_x(std::f32::consts::FRAC_PI_2));
+        gizmos.circle(iso, m.sigma * 2.0, Color::srgba(1.0, 0.4, 0.2, 0.3 + 0.5 * blink));
     }
 }
 
 // ---------------------------------------------------------------------------------------------------------
 // Shells
 
-fn run_missions(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireControl>, mut rng: ResMut<FireRng>, mut sound: Sound) {
+/// The missions fire their rounds, each on its own clock, and a spent mission is done with.
+fn run_missions(mut commands: Commands, time: Res<Time>, mut rng: ResMut<FireRng>, mut sound: Sound, mut missions: Query<(Entity, &mut Mission)>) {
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
-    let mut done = Vec::new();
-    for (i, m) in fc.missions.iter_mut().enumerate() {
+    for (e, mut m) in &mut missions {
         while m.rounds > 0 && now >= m.next {
             m.rounds -= 1;
             m.next += m.interval as f64 * rng.random_range(0.7..1.3);
             // A rocket salvo spreads along its line of fire (north–south here) twice as far as across it.
             let off = gauss2(rng) * if m.kind == ShellKind::Tos { Vec2::new(m.sigma * 0.5, m.sigma) } else { Vec2::splat(m.sigma) };
-            commands.spawn(Shell { at: m.target + off, kind: m.kind, land: now + m.flight as f64 * rng.random_range(0.95..1.05), whistled: false, by: m.by });
+            commands.spawn(Shell { at: m.target + off, kind: m.kind, land: now + m.flight as f64 * rng.random_range(0.95..1.05), by: m.by });
             // The guns are heard from where they stand, kilometres back: ours north of the field, theirs south;
             // mortars closer. Rocket launchers ripple.
             let (back, sfx, loud) = match m.kind {
@@ -408,11 +449,8 @@ fn run_missions(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireCont
             }
         }
         if m.rounds == 0 {
-            done.push(i);
+            commands.entity(e).despawn();
         }
-    }
-    for i in done.into_iter().rev() {
-        fc.missions.remove(i);
     }
 }
 
@@ -427,6 +465,25 @@ pub fn gauss(rng: &mut SmallRng) -> f32 {
     (-2.0 * u.ln()).sqrt() * (std::f32::consts::TAU * v).cos()
 }
 
+/// The whistle of a shell coming in, 1.4 s out, heard within 400 m of the listener.
+fn shell_whistle(mut commands: Commands, time: Res<Time>, mut sound: Sound, q: Query<(Entity, &Shell), Without<Whistled>>) {
+    let now = time.elapsed_secs_f64();
+    let listener = sound.listener();
+    for (e, s) in &q {
+        if now <= s.land - 1.4 {
+            continue;
+        }
+        commands.entity(e).insert(Whistled);
+        let p = geo::ground(s.at);
+        if listener.distance(p) < 400.0 {
+            sound.at_time(now - listener.distance(p) as f64 / 343.0, p, Sfx::Whistle, 0.6);
+        }
+    }
+}
+
+/// Shells land: the burst, its sound and its crater, the blast on whoever is near, and what a RAAM or a smoke
+/// shell leaves instead. What a landing does to the positions, the jammers, the OP and the picture follows from
+/// `ShellLanded`.
 fn land_shells(
     mut commands: Commands,
     time: Res<Time>,
@@ -435,31 +492,21 @@ fn land_shells(
     mut paint: ResMut<PaintQueue>,
     mut sound: Sound,
     mut blasts: MessageWriter<Blast>,
+    mut landed: MessageWriter<ShellLanded>,
     mut mf: ResMut<Minefield>,
-    mut shake: ResMut<Shake>,
-    mut view: ResMut<View>,
-    mut radio: ResMut<Radio>,
-    op: Res<ObservationPost>,
-    (models, palette, mut stats, mut smoke): (Res<Models>, Res<Palette>, ResMut<Stats>, ResMut<fx::Smoke>),
-    mut positions: Query<&mut Post>,
-    mut q: Query<(Entity, &mut Shell)>,
-    (mut jammers, mut log): (Query<(&mut crate::ew::Jammer, &Transform)>, ResMut<crate::hits::HitLog>),
+    mut smoke: ResMut<fx::Smoke>,
+    models: Res<Models>,
+    palette: Res<Palette>,
+    q: Query<(Entity, &Shell)>,
 ) {
     let now = time.elapsed_secs_f64();
-    let listener = sound.listener();
     let rng = &mut fxr.0;
-    for (e, mut s) in &mut q {
-        let p = geo::ground(s.at);
-        if !s.whistled && now > s.land - 1.4 {
-            s.whistled = true;
-            if listener.distance(p) < 400.0 && s.kind != ShellKind::Cannon30 {
-                sound.at_time(now - listener.distance(p) as f64 / 343.0, p, Sfx::Whistle, 0.6);
-            }
-        }
+    for (e, s) in &q {
         if now < s.land {
             continue;
         }
         commands.entity(e).despawn();
+        let p = geo::ground(s.at);
         let (size, radius, cause, sfx, crater) = match s.kind {
             ShellKind::He155 => (1.2, 15.0, Cause::Artillery, Sfx::BlastNear, 3.2),
             ShellKind::Mortar120 => (0.8, 12.0, Cause::Artillery, Sfx::BlastNear, 2.0),
@@ -489,7 +536,7 @@ fn land_shells(
                 // White phosphorus, bursting overhead.
                 sound.at(p + Vec3::Y * 80.0, sfx, 0.4);
                 fx.phosphorus(p);
-                smoke.add(s.at, 45.0, now + 100.0);
+                smoke.add(s.at, 45.0, now, 100.0);
                 continue;
             }
             ShellKind::Tos => fx.thermobaric(p),
@@ -504,33 +551,71 @@ fn land_shells(
         if s.kind != ShellKind::Cannon30 {
             sound.at(p, sfx, size);
         }
-        let dist = listener.distance(p);
+        blasts.write(Blast { at: p, radius, cause });
+        landed.write(ShellLanded { at: s.at, kind: s.kind, by: s.by, radius, size });
+    }
+}
+
+/// A burst near the listener shakes the picture, and whites it out when it is very near.
+fn shells_shake(mut landed: MessageReader<ShellLanded>, sound: Sound, mut shake: ResMut<Shake>) {
+    let listener = sound.listener();
+    for s in landed.read() {
+        let dist = listener.distance(geo::ground(s.at));
         if dist < 250.0 {
-            shake.trauma = (shake.trauma + size * (1.0 - dist / 250.0)).min(1.0);
+            shake.trauma = (shake.trauma + s.size * (1.0 - dist / 250.0)).min(1.0);
             if dist < 60.0 {
                 shake.flash = (shake.flash + 0.5).min(1.0);
             }
         }
-        blasts.write(Blast { at: p, radius, cause });
-        // Our shells on their jammers: one within 25 m is knocked out.
+    }
+}
+
+/// Our shells on their jammers: one within 25 m is knocked out.
+fn shells_on_jammers(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut landed: MessageReader<ShellLanded>,
+    mut radio: ResMut<Radio>,
+    mut log: ResMut<crate::hits::HitLog>,
+    jammers: Query<(Entity, &Transform), With<crate::ew::Jammer>>,
+) {
+    let now = time.elapsed_secs_f64();
+    let mut gone = Vec::new();
+    for s in landed.read() {
         if s.by == Side::Ua
-            && let Some(at) = crate::ew::knock_out(&mut jammers, s.at)
+            && let Some(at) = crate::ew::knock_out(&mut commands, &jammers, s.at, &mut gone)
         {
             log.note(now, "155 mm", "our guns", "EW jammer", Side::Ru, "knocked out: the link is cleaner there");
             radio.say2(now, "Їхній РЕБ на гребені мовчить. Накрили.", "Their jammer's gone quiet. We got it.");
             info!("ew: jammer at {:.0},{:.0} knocked out, at {now:.0} s", at.x, at.y);
         }
-        // Fire on the tree lines and trenches hurts the men in them, and puts the rest down in the trench for a
-        // while, longer the closer it lands: a team under fire does not stand up to guide a missile.
-        for mut pos in &mut positions {
+    }
+}
+
+/// Fire on the tree lines and trenches hurts the men in them, and puts the rest down in the trench for a while,
+/// longer the closer it lands: a team under fire does not stand up to guide a missile.
+fn shells_on_posts(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut landed: MessageReader<ShellLanded>,
+    mut fxr: ResMut<FxRng>,
+    mut stats: ResMut<Stats>,
+    mut radio: ResMut<Radio>,
+    mut positions: Query<(Entity, &mut Post, Option<&Suppressed>)>,
+) {
+    let now = time.elapsed_secs_f64();
+    let rng = &mut fxr.0;
+    for s in landed.read() {
+        for (e, mut pos, down) in &mut positions {
             if pos.side == s.by {
                 continue;
             }
             let d = pos.pos.distance(s.at);
-            if d < radius * 3.0 {
-                pos.suppressed_until = pos.suppressed_until.max(now + (20.0 + 40.0 * (1.0 - d / (radius * 3.0))) as f64);
+            if d < s.radius * 3.0 {
+                let until = now + (20.0 + 40.0 * (1.0 - d / (s.radius * 3.0))) as f64;
+                commands.entity(e).insert(Suppressed { until: down.map_or(until, |w| w.until.max(until)) });
             }
-            if pos.strength > 0 && d < radius * 1.6 && rng.random_bool((0.5 * (1.0 - d / (radius * 1.6))) as f64) {
+            if pos.strength > 0 && d < s.radius * 1.6 && rng.random_bool((0.5 * (1.0 - d / (s.radius * 1.6))) as f64) {
                 pos.strength -= 1;
                 if pos.side == diorama().defender() {
                     stats.defender_losses += 1;
@@ -551,10 +636,27 @@ fn land_shells(
                 }
             }
         }
+    }
+}
+
+/// The men stand up again once the fire has moved on.
+fn stand_up(mut commands: Commands, time: Res<Time>, q: Query<(Entity, &Suppressed)>) {
+    let now = time.elapsed_secs_f64();
+    for (e, s) in &q {
+        if now >= s.until {
+            commands.entity(e).remove::<Suppressed>();
+        }
+    }
+}
+
+/// Their heavy shells on the observers' building: once in a while one takes it, and the OP is gone.
+fn shells_on_op(time: Res<Time>, mut landed: MessageReader<ShellLanded>, mut fxr: ResMut<FxRng>, mut view: ResMut<View>, op: Res<ObservationPost>, mut radio: ResMut<Radio>) {
+    let now = time.elapsed_secs_f64();
+    for s in landed.read() {
         if s.by == Side::Ru
             && view.op_alive
             && op.building.distance(s.at) < if s.kind == ShellKind::Tos { 40.0 } else { 15.0 }
-            && rng.random_bool(0.04)
+            && fxr.0.random_bool(0.04)
         {
             view.op_alive = false;
             radio.say(now, match diorama() {
@@ -568,6 +670,39 @@ fn land_shells(
 // ---------------------------------------------------------------------------------------------------------
 // ATGM teams
 
+/// What each team has seen of each vehicle lately: a line-of-sight check holds for half a second, and the checks
+/// on vehicles gone from the field are let go of every so often.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Sightings<'s> {
+    seen: Local<'s, bevy::platform::collections::HashMap<(Entity, Entity), (f64, bool)>>,
+    pruned: Local<'s, f64>,
+}
+
+impl Sightings<'_> {
+    fn visible(&mut self, now: f64, team: Entity, e: Entity, from: Vec2, to: Vec2) -> bool {
+        if now - *self.pruned > 10.0 {
+            *self.pruned = now;
+            self.seen.retain(|_, (at, _)| now - *at < 1.0);
+        }
+        match self.seen.get(&(team, e)) {
+            Some(&(at, v)) if now - at < 0.5 => v,
+            _ => {
+                let v = geo::line_of_sight(from, to);
+                self.seen.insert((team, e), (now, v));
+                v
+            }
+        }
+    }
+}
+
+/// The launchers reload, whoever is at them, the AI or the player, down in the trench or not.
+fn reload_launchers(time: Res<Time>, mut teams: Query<&mut AtgmTeam>) {
+    let dt = time.delta_secs();
+    for mut t in &mut teams {
+        t.reload = (t.reload - dt).max(0.0);
+    }
+}
+
 fn atgm_teams(
     mut commands: Commands,
     time: Res<Time>,
@@ -580,40 +715,25 @@ fn atgm_teams(
     palette: Res<Palette>,
     vehicles: Query<(Entity, &Vehicle, &Transform)>,
     missiles: Query<&Missile>,
-    mut teams: Query<(Entity, &mut Post)>,
+    mut teams: Query<(Entity, &Post, &mut AtgmTeam), Without<Suppressed>>,
     view: Res<View>,
     smoke: Res<fx::Smoke>,
     mut stats: ResMut<Stats>,
-    mut seen: Local<bevy::platform::collections::HashMap<(Entity, Entity), (f64, bool)>>,
+    mut sightings: Sightings,
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
     let lay = geo::layout();
     let attacker = diorama().attacker();
-    // Whether a team can see a vehicle holds for half a second at a time.
-    let mut visible = |team: Entity, e: Entity, from: Vec2, to: Vec2| -> bool {
-        match seen.get(&(team, e)) {
-            Some(&(at, v)) if now - at < 0.5 => v,
-            _ => {
-                let v = geo::line_of_sight(from, to);
-                seen.insert((team, e), (now, v));
-                v
-            }
-        }
-    };
     // The picture a team fires on, looked at only once some team is ready to fire: which columns are committed
     // (the lead vehicle past the deploy point, or stopped in the kill zone), whether our own column is out in the
     // field (attacking, the overwatch covers it once it is, not before), and which vehicles already have a missile
     // on the way.
     let mut picture: Option<(Vec<usize>, bool, Vec<Entity>)> = None;
-    for (team, mut pos) in &mut teams {
-        let Some(weapon) = pos.weapon else { continue };
-        // Reloading goes on whoever is at the launcher, the AI or the player.
-        pos.reload = (pos.reload - dt).max(0.0);
-        if pos.atgm == 0 || pos.strength < 2 || now < pos.suppressed_until || (view.mode == Mode::Ground && view.ground_team == Some(team)) {
-            continue;
-        }
-        if pos.reload > 0.0 {
+    for (team, pos, mut launcher) in &mut teams {
+        let weapon = launcher.weapon;
+        // (The player's own team fires from the ground view, `player_atgm`.)
+        if launcher.atgm == 0 || pos.strength < 2 || launcher.reload > 0.0 || (view.mode == Mode::Ground && view.ground_team == Some(team)) {
             continue;
         }
         let (committed, column_out, targeted) = &*picture.get_or_insert_with(|| {
@@ -647,7 +767,7 @@ fn atgm_teams(
             if !allowed || smoke.blocks(pos.pos, vp, now) {
                 continue;
             }
-            if !visible(team, e, pos.pos, vp) {
+            if !sightings.visible(now, team, e, pos.pos, vp) {
                 stats.hidden += 1;
                 continue;
             }
@@ -662,8 +782,8 @@ fn atgm_teams(
         if !fxr.0.random_bool((dt / 6.0).min(1.0) as f64) {
             continue;
         }
-        pos.atgm -= 1;
-        pos.reload = weapon.reload();
+        launcher.atgm -= 1;
+        launcher.reload = weapon.reload();
         let from = geo::ground(pos.pos) + Vec3::Y * 1.2;
         let dir = (tp - from).normalize();
         fx.muzzle(from, dir, false);
@@ -709,13 +829,13 @@ fn fly_missiles(
     mut hits: MessageWriter<DirectHit>,
     mut paint: ResMut<PaintQueue>,
     mut log: ResMut<crate::hits::HitLog>,
-    targets: Query<(&Transform, &Vehicle), Without<Missile>>,
+    targets: Query<(&Transform, &Vehicle, Has<units::Rescue>), Without<Missile>>,
     mut q: Query<(Entity, &mut Missile, &mut Transform)>,
 ) {
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     for (e, mut m, mut tf) in &mut q {
-        let Ok((t, tv)) = targets.get(m.target) else {
+        let Ok((t, tv, rescue)) = targets.get(m.target) else {
             commands.entity(e).despawn();
             continue;
         };
@@ -761,7 +881,7 @@ fn fly_missiles(
                 fx.explosion(aim, 0.7, false);
             } else {
                 // A miss: it ploughs into the snow beyond.
-                log.open(now, m.weapon, m.from, m.target, tv, "missed: into the ground beyond");
+                log.open(now, m.weapon, m.from, m.target, tv, rescue, "missed: into the ground beyond");
                 let miss = aim.xz() + gauss2(rng) * 12.0;
                 fx.explosion(geo::ground(miss), 0.6, true);
                 paint.push(Paint::Crater { at: miss, radius: 1.2, seed: rng.random() });
@@ -828,18 +948,17 @@ fn small_arms(
 }
 
 /// The attacking vehicles fire on the defenders' tree line as they come (a known position if one is near, else
-/// into the trees ahead), and the defenders' dug-in tanks fire on the attacking vehicles.
-fn vehicle_fire(
+/// into the trees ahead), and their infantry on the ground fire back from where they lie: tracers into the tree
+/// line, mostly harmless.
+fn attacker_guns(
     mut commands: Commands,
     time: Res<Time>,
     mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<FxRng>,
     mut sound: Sound,
-    mut hits: MessageWriter<DirectHit>,
-    smoke: Res<fx::Smoke>,
     positions: Query<&Post>,
     turrets: Query<&GlobalTransform, With<units::Turret>>,
-    mut vehicles: Query<(Entity, &mut Vehicle, &Transform)>,
+    mut guns: Query<(&Vehicle, &mut Gun, &Transform)>,
     soldiers: Query<(&Soldier, &Transform)>,
 ) {
     let dt = time.delta_secs();
@@ -858,50 +977,42 @@ fn vehicle_fire(
         }
         Vec2::new(from.x + rng.random_range(-400.0..400.0), line_z + rng.random_range(-15.0..15.0))
     };
-    // What the defenders' tanks can see: attacking vehicles out of the smoke, within three kilometres.
-    let exposed: Vec<(Entity, Vec2)> = vehicles.iter().filter(|(_, v, _)| v.side == attacker && v.state.alive()).map(|(e, _, t)| (e, t.translation.xz())).collect();
-    for (_, mut v, tf) in &mut vehicles {
-        if v.side != attacker {
-            if v.state.alive() && v.crew > 0 && v.kind.is_tank() {
-                defender_tank(&mut fx, rng, &mut sound, &mut hits, &smoke, &turrets, &mut v, tf, &exposed, dt, now);
-            }
+    for (v, mut gun, tf) in &mut guns {
+        if v.side != attacker || !matches!(v.state, VState::Advancing | VState::Deploying | VState::Overwatch | VState::Halted | VState::Immobilized) || v.crew == 0 {
             continue;
         }
-        if !matches!(v.state, VState::Advancing | VState::Deploying | VState::Overwatch | VState::Halted | VState::Immobilized) || v.crew == 0 || v.kind.breacher() {
-            continue;
-        }
-        v.fire_timer -= dt;
-        if v.aim.is_none() {
+        gun.fire_timer -= dt;
+        if gun.aim.is_none() {
             let from = tf.translation.xz();
-            v.aim = Some(tree_line(rng, from));
+            gun.aim = Some(tree_line(rng, from));
         }
-        if v.fire_timer > 0.0 {
+        if gun.fire_timer > 0.0 {
             continue;
         }
         let from2 = tf.translation.xz();
-        let aim = v.aim.unwrap();
+        let aim = gun.aim.unwrap();
         let muzzle = turrets.get(v.turret).map(|t| t.transform_point(v.muzzle)).unwrap_or(tf.translation + Vec3::Y * 2.0);
         let dir = (geo::ground(aim) - muzzle).normalize();
         if v.kind.is_tank() {
-            v.fire_timer = rng.random_range(14.0..26.0);
+            gun.fire_timer = rng.random_range(14.0..26.0);
             fx.muzzle(muzzle, dir, true);
             sound.at(muzzle, Sfx::TankGun, 1.0);
             let d = from2.distance(aim);
-            commands.spawn(Shell { at: aim + gauss2(rng) * (8.0 + d * 0.01), kind: ShellKind::TankHe, land: now + d as f64 / 900.0, whistled: true, by: v.side });
+            commands.spawn((Shell { at: aim + gauss2(rng) * (8.0 + d * 0.01), kind: ShellKind::TankHe, land: now + d as f64 / 900.0, by: v.side }, Whistled));
         } else {
-            v.fire_timer = rng.random_range(6.0..14.0);
+            gun.fire_timer = rng.random_range(6.0..14.0);
             for k in 0..6 {
                 let hit = aim + gauss2(rng) * 12.0;
                 if k % 2 == 0 {
                     fx.tracer(muzzle, geo::ground(hit) + Vec3::Y, 900.0, v.side);
                 }
-                commands.spawn(Shell { at: hit, kind: ShellKind::Cannon30, land: now + 1.5 + k as f64 * 0.18, whistled: true, by: v.side });
+                commands.spawn((Shell { at: hit, kind: ShellKind::Cannon30, land: now + 1.5 + k as f64 * 0.18, by: v.side }, Whistled));
             }
             fx.muzzle(muzzle, dir, false);
             sound.at(muzzle, Sfx::Cannon30, 0.8);
         }
         if rng.random_bool(0.3) {
-            v.aim = None;
+            gun.aim = None;
         }
     }
     // The attackers' infantry fire back from the ground: tracers into the tree line, mostly harmless.
@@ -920,6 +1031,30 @@ fn vehicle_fire(
     }
 }
 
+/// The defenders' dug-in tanks fire on the attacking vehicles they can see.
+fn defender_tanks(
+    time: Res<Time>,
+    mut fx: ResMut<FxQueue>,
+    mut fxr: ResMut<FxRng>,
+    mut sound: Sound,
+    mut hits: MessageWriter<DirectHit>,
+    smoke: Res<fx::Smoke>,
+    turrets: Query<&GlobalTransform, With<units::Turret>>,
+    vehicles: Query<(Entity, &Vehicle, &Transform)>,
+    mut guns: Query<(&Vehicle, &mut Gun, &Transform)>,
+) {
+    let dt = time.delta_secs();
+    let now = time.elapsed_secs_f64();
+    let rng = &mut fxr.0;
+    let attacker = diorama().attacker();
+    for (v, mut gun, tf) in &mut guns {
+        if v.side == attacker || !v.state.alive() || v.crew == 0 || !v.kind.is_tank() {
+            continue;
+        }
+        defender_tank(&mut fx, rng, &mut sound, &mut hits, &smoke, &turrets, v, &mut gun, tf, &vehicles, dt, now);
+    }
+}
+
 /// A dug-in tank on the crest: picks an attacking vehicle it can see, prefers one that has stopped, and fires
 /// at it with the main gun. A hit at two kilometres is a matter of luck and of how still the target is.
 #[allow(clippy::too_many_arguments)]
@@ -930,26 +1065,28 @@ fn defender_tank(
     hits: &mut MessageWriter<DirectHit>,
     smoke: &fx::Smoke,
     turrets: &Query<&GlobalTransform, With<units::Turret>>,
-    v: &mut Vehicle,
+    v: &Vehicle,
+    gun: &mut Gun,
     tf: &Transform,
-    exposed: &[(Entity, Vec2)],
+    vehicles: &Query<(Entity, &Vehicle, &Transform)>,
     dt: f32,
     now: f64,
 ) {
-    v.fire_timer -= dt;
+    gun.fire_timer -= dt;
     let from = tf.translation.xz();
-    let candidates = || exposed.iter().filter(|(_, p)| p.distance(from) < 2000.0 && p.y > -400.0 && !smoke.blocks(from, *p, now));
-    let Some(&(_, tp)) = candidates().min_by(|a, b| a.1.distance(from).total_cmp(&b.1.distance(from))) else { return };
-    v.aim = Some(tp);
-    if v.fire_timer > 0.0 {
+    // What it can see: the other side's vehicles out of the smoke, within two kilometres.
+    let candidates = || vehicles.iter().filter(|(_, o, _)| o.side != v.side && o.state.alive()).map(|(e, _, t)| (e, t.translation.xz())).filter(|(_, p)| p.distance(from) < 2000.0 && p.y > -400.0 && !smoke.blocks(from, *p, now));
+    let Some((_, tp)) = candidates().min_by(|a, b| a.1.distance(from).total_cmp(&b.1.distance(from))) else { return };
+    gun.aim = Some(tp);
+    if gun.fire_timer > 0.0 {
         return;
     }
     // The shot goes to the nearest one the crest does not hide; if none, look again in a few seconds.
-    let Some(&(target, tp)) = candidates().filter(|(_, p)| geo::line_of_sight(from, *p)).min_by(|a, b| a.1.distance(from).total_cmp(&b.1.distance(from))) else {
-        v.fire_timer = 3.0;
+    let Some((target, tp)) = candidates().filter(|(_, p)| geo::line_of_sight(from, *p)).min_by(|a, b| a.1.distance(from).total_cmp(&b.1.distance(from))) else {
+        gun.fire_timer = 3.0;
         return;
     };
-    v.fire_timer = rng.random_range(16.0..28.0);
+    gun.fire_timer = rng.random_range(16.0..28.0);
     let muzzle = turrets.get(v.turret).map(|t| t.transform_point(v.muzzle)).unwrap_or(tf.translation + Vec3::Y * 2.0);
     let aim = geo::ground(tp) + Vec3::Y * 1.2;
     fx.muzzle(muzzle, (aim - muzzle).normalize(), true);
@@ -971,6 +1108,7 @@ fn defender_tank(
 /// At Vuhledar the 72nd's guns; south of Mala Tokmachka the Russian guns, cued by their drones, which do not see
 /// through smoke.
 fn pre_registered_fires(
+    mut commands: Commands,
     time: Res<Time>,
     mut fc: ResMut<FireControl>,
     mut radio: ResMut<Radio>,
@@ -1017,7 +1155,7 @@ fn pre_registered_fires(
             last[i] = now;
             fc.brigade_shells -= rounds;
             let kind = if defender == Side::Ua { ShellKind::He155 } else { ShellKind::Ru152 };
-            fc.missions.push(Mission { target: *trp, kind, rounds, sigma: 35.0, interval: 2.5, next: now + 1.0, flight: 22.0, player: false, by: defender });
+            commands.spawn(Mission { target: *trp, kind, rounds, sigma: 35.0, interval: 2.5, next: now + 1.0, flight: 22.0, by: defender });
             radio.lines.push((now, match diorama() {
                 Diorama::Vuhledar => Line::both(format!("Я {{guns}}. Вогонь по пристріляній точці {}.", i + 1), format!("This is {{guns}}. Firing on registered point {}.", i + 1)),
                 Diorama::Robotyne => Line::new("Incoming on the lane! They have it registered. Get out of there!"),
@@ -1046,13 +1184,13 @@ fn ua_tank(mut commands: Commands, time: Res<Time>, mut fx: ResMut<FxQueue>, mut
         fx.muzzle(muzzle, (geo::ground(aim) - muzzle).normalize(), true);
         sound.at(muzzle, Sfx::TankGun, 1.2);
         let d = from.distance(aim);
-        commands.spawn(Shell { at: aim + gauss2(rng) * (6.0 + d * 0.006), kind: ShellKind::TankHe, land: now + d as f64 / 850.0, whistled: true, by: Side::Ua });
+        commands.spawn((Shell { at: aim + gauss2(rng) * (6.0 + d * 0.006), kind: ShellKind::TankHe, land: now + d as f64 / 850.0, by: Side::Ua }, Whistled));
     }
 }
 
 /// The defenders' battalion mortars: when the attackers' infantry bunch up within range in the open, a few
 /// bombs on them.
-fn mortars(time: Res<Time>, mut fc: ResMut<FireControl>, mut rng: ResMut<FireRng>, mut next: Local<f64>, smoke: Res<fx::Smoke>, soldiers: Query<(&Soldier, &Transform)>) {
+fn mortars(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireControl>, mut rng: ResMut<FireRng>, mut next: Local<f64>, smoke: Res<fx::Smoke>, soldiers: Query<(&Soldier, &Transform)>) {
     let now = time.elapsed_secs_f64();
     if now < *next || fc.mortar_bombs < 3 {
         return;
@@ -1072,7 +1210,7 @@ fn mortars(time: Res<Time>, mut fc: ResMut<FireControl>, mut rng: ResMut<FireRng
     let target = *men.iter().max_by_key(|p| men.iter().filter(|q| q.distance(**p) < 40.0).count()).unwrap();
     let rounds = rng.random_range(2..5);
     fc.mortar_bombs -= rounds;
-    fc.missions.push(Mission { target, kind: ShellKind::Mortar120, rounds, sigma: 22.0, interval: 2.5, next: now, flight: 16.0, player: false, by: diorama().defender() });
+    commands.spawn(Mission { target, kind: ShellKind::Mortar120, rounds, sigma: 22.0, interval: 2.5, next: now, flight: 16.0, by: diorama().defender() });
     *next = now + rng.random_range(14.0..26.0);
 }
 
@@ -1109,27 +1247,28 @@ fn player_atgm(
     (models, palette): (Res<Models>, Res<Palette>),
     cam: Single<&GlobalTransform, With<MainCamera>>,
     guided: Query<(), With<GuidedMissile>>,
-    mut teams: Query<&mut Post>,
+    mut teams: Query<(&Post, &mut AtgmTeam)>,
+    mut pulls: MessageReader<crate::player::TriggerPull>,
 ) {
     let now = time.elapsed_secs_f64();
-    let scripted = view.launch || dev().auto_atgm.is_some_and(|t| now >= t && now - time.delta_secs_f64() < t);
+    let scripted = pulls.read().count() > 0 || dev().auto_atgm.is_some_and(|t| now >= t && now - time.delta_secs_f64() < t);
     let fire = buttons.just_pressed(MouseButton::Left) || scripted;
     if view.mode != Mode::Ground || !fire || !view.sight || !guided.is_empty() {
         return;
     }
     let Some(team) = view.ground_team else { return };
-    let Ok(mut pos) = teams.get_mut(team) else { return };
-    let Some(weapon) = pos.weapon else { return };
+    let Ok((pos, mut launcher)) = teams.get_mut(team) else { return };
+    let weapon = launcher.weapon;
     if pos.strength < 2 {
         radio.say(now, "Nobody left here to work the launcher.");
         return;
     }
-    if pos.atgm == 0 {
+    if launcher.atgm == 0 {
         radio.say(now, "Out of missiles at this position.");
         return;
     }
-    if pos.reload > 0.0 {
-        radio.say2(now, format!("Перезарядка. {:.0} секунд.", pos.reload.ceil()), format!("Reloading. {:.0} seconds.", pos.reload.ceil()));
+    if launcher.reload > 0.0 {
+        radio.say2(now, format!("Перезарядка. {:.0} секунд.", launcher.reload.ceil()), format!("Reloading. {:.0} seconds.", launcher.reload.ceil()));
         return;
     }
     let locked = view.lock.filter(|(_, t)| *t >= JAVELIN_LOCK).map(|(e, _)| e);
@@ -1137,8 +1276,8 @@ fn player_atgm(
         radio.say(now, "No lock. Hold the seeker on him.");
         return;
     }
-    pos.atgm -= 1;
-    pos.reload = weapon.reload();
+    launcher.atgm -= 1;
+    launcher.reload = weapon.reload();
     // A lock is spent by the shot.
     view.lock = None;
     let gt = cam.compute_transform();

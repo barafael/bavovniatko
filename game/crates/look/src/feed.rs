@@ -205,7 +205,7 @@ pub fn update_feed(
     mut cam: Single<&mut Camera, With<MainCamera>>,
     screen: Option<Single<&MeshMaterial2d<FeedMaterial>, With<Screen>>>,
     mut materials: ResMut<Assets<FeedMaterial>>,
-    teams: Query<&crate::fire::Post>,
+    teams: Query<&crate::fire::AtgmTeam>,
     look: Res<crate::LookSettings>,
 ) {
     let Some(screen) = screen else { return };
@@ -226,7 +226,7 @@ pub fn update_feed(
         Mode::Op => 0.45,
         Mode::Ground => 0.3,
     } * if look.video == crate::VideoLook::Light { 0.35 } else { 1.0 };
-    fx.sight = if view.ground_team.and_then(|e| teams.get(e).ok()).and_then(|p| p.weapon) == Some(crate::fire::Atgm::Javelin) { 1.0 } else { 0.0 };
+    fx.sight = if view.ground_team.and_then(|e| teams.get(e).ok()).is_some_and(|t| t.weapon == crate::fire::Atgm::Javelin) { 1.0 } else { 0.0 };
     let jam = if view.mode == Mode::Drone { view.jamming } else { 0.0 };
     fx.glitch = jam.max(if view.mode == Mode::Drone && view.battery < 0.08 { 0.3 } else { 0.0 });
     fx.bitrate = 1.0 - jam;

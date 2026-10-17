@@ -116,7 +116,7 @@ pub fn spawn_camera(mut commands: Commands, mut view: ResMut<View>) {
     }
 }
 
-fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::Post)>) {
+fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::Post, &crate::fire::AtgmTeam)>) {
     // In the goggles the pilot cannot look anywhere else until the FPV is gone.
     if view.mode == Mode::Fpv {
         return;
@@ -129,7 +129,7 @@ fn switch_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Q
     }
     if keys.just_pressed(KeyCode::Digit3) {
         // Into a tree line with an ATGM team; pressing again moves on to the next team still in action.
-        let mut live: Vec<(Entity, Vec2)> = teams.iter().filter(|(_, p)| p.side == Side::Ua && p.atgm > 0 && p.strength >= 2).map(|(e, p)| (e, p.pos)).collect();
+        let mut live: Vec<(Entity, Vec2)> = teams.iter().filter(|(_, p, t)| p.side == Side::Ua && t.atgm > 0 && p.strength >= 2).map(|(e, p, _)| (e, p.pos)).collect();
         live.sort_by(|a, b| a.1.x.total_cmp(&b.1.x));
         if !live.is_empty() {
             let i = match (view.mode, view.ground_team) {

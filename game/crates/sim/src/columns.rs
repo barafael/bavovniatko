@@ -1,7 +1,7 @@
 //! Columns (колони, design/command.md): vehicles sent in together from a Road head along a Route to a Position.
 //! The slowest sets the pace; at the end they fan out abreast, put their men into the position and hold it, on
 //! either side of the battle. A Column's way is the field's tracked route (`bav_core::field::routes`), written into
-//! the route book as a holding route (`geo::Route::hold`), so it is driven by `units::drive_vehicles` like any.
+//! the route book as a holding route (`geo::Route::hold`), so it is driven by the driving systems in `units` like any.
 //!
 //! Until the map table and Supply exist, `BAV_COLUMN` sends Columns at game times:
 //! `"120:0:leo2a6+bradley+bradley@37,300:1:bradley@40"`: when, from which road head, what, to which position.
@@ -73,12 +73,7 @@ pub fn send(commands: &mut Commands, models: &Models, palette: &Palette, book: &
     columns.sent += 1;
     for (i, &kind) in order.kinds.iter().enumerate() {
         let s = 8.0 + SPACING * (n - 1 - i) as f32;
-        let e = spawn_vehicle(commands, models, palette, book, VehicleSpec { side: Side::Ua, kind, route: r, s, lat: 0.0, wave, idx: i as u32, plow: false, smoke: false, rescue: false });
-        commands.entity(e).queue(move |mut v: EntityWorldMut| {
-            if let Some(mut v) = v.get_mut::<crate::units::Vehicle>() {
-                v.column_pace = pace;
-            }
-        });
+        spawn_vehicle(commands, models, palette, book, VehicleSpec { side: Side::Ua, kind, route: r, s, lat: 0.0, wave, idx: i as u32, plow: false, smoke: false, rescue: false, column_pace: pace });
     }
     let head = &f.road_heads[order.head].name;
     radio.say2(now, format!("Колона пішла: {n} од., {}.", head.1), format!("Column on its way: {n} vehicles, from {}.", head.0));

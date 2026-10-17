@@ -10,8 +10,8 @@
 //! stick script. Unset, the minute tours film exactly as they always did.
 
 use crate::camera::{Flight, Locate, Mode, Target, View, enter_ground, look_angles, track_nearest};
-use crate::fire::{Post, Strike, StrikeMission};
-use bav_sim::player::Fpv;
+use crate::fire::{AtgmTeam, Post, Strike, StrikeMission};
+use bav_sim::player::{Fpv, TriggerPull};
 use crate::units::{Soldier, Vehicle};
 use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};
@@ -282,13 +282,13 @@ fn direct(
     op: Res<ObservationPost>,
     mut view: ResMut<View>,
     mut next_phase: ResMut<NextState<crate::Phase>>,
-    mut fc: ResMut<crate::fire::FireControl>,
     mut flight: ResMut<Flight>,
     mut hud: ResMut<crate::hud::HudHidden>,
     (vehicles, men): (Query<(&Vehicle, &Transform)>, Query<(&Soldier, &Transform)>),
     fpv: Res<Fpv>,
-    teams: Query<(Entity, &Post)>,
+    teams: Query<(Entity, &Post, &AtgmTeam)>,
     mut exit: MessageWriter<AppExit>,
+    mut pulls: MessageWriter<TriggerPull>,
 ) {
     let t = script.t;
     let Some(shot) = SHOTS.get(tour.shot) else {
@@ -301,7 +301,7 @@ fn direct(
     for (k, &(at, kind)) in shot.fire.iter().enumerate() {
         if t >= at && !tour.fired.contains(&(si, k)) {
             tour.fired.push((si, k));
-            let at = kind.on_nearest_stalled(&mut fc, &vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
+            let at = kind.on_nearest_stalled(&mut commands, &vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
             info!("showcase: {kind:?} called on {at:?}, at game {t:.0} s");
         }
     }
@@ -309,7 +309,7 @@ fn direct(
     // is already there when filming starts.
     if let Aim::Ground(near, sight) = shot.aim
         && tour.ground != Some(si)
-        && let Some((e, p)) = teams.iter().filter(|(_, p)| p.atgm > 0).min_by(|a, b| a.1.pos.distance(near).total_cmp(&b.1.pos.distance(near)))
+        && let Some((e, p, _)) = teams.iter().filter(|(_, _, t)| t.atgm > 0).min_by(|a, b| a.1.pos.distance(near).total_cmp(&b.1.pos.distance(near)))
     {
         enter_ground(&mut view, e, p.pos);
         view.sight = sight;
@@ -351,7 +351,9 @@ fn direct(
     // The ground shot's launch: on the one filmed frame where the shot's clock crosses it.
     let step = STEP_FILM as f32;
     let clock = tour.shot_frames as f32 * step;
-    view.launch = shot.launch.is_some_and(|at| clock >= at && clock - step < at);
+    if shot.launch.is_some_and(|at| clock >= at && clock - step < at) {
+        pulls.write(TriggerPull);
+    }
     if tour.shot_frames == 0 {
         // A card goes before the shot: the script renders it into the frames reserved here, so the segment,
         // its sounds and its bed all start after the card.

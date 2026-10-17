@@ -23,14 +23,16 @@ pub struct EwSpec {
     pub ka52_tell: bool,
 }
 
-/// One jammer on the ground.
+/// One jammer on the ground, while it stands: a shell within 25 m takes it off the field (`knock_out`).
 #[derive(Component)]
 pub struct Jammer {
-    pub on: bool,
-    pub alive: bool,
-    /// When it next switches.
+    /// When it next switches on or off.
     next: f64,
 }
+
+/// A jammer that is jamming now.
+#[derive(Component)]
+pub struct Jamming;
 
 /// The field, as the drones feel it this frame.
 #[derive(Resource, Default)]
@@ -88,20 +90,39 @@ fn spawn_jammers(mut commands: Commands, mut rng: ResMut<EwRng>) {
     for &(x, z) in &spec.jammers {
         let on = rng.0.random_bool(0.7);
         let next = rng.0.random_range(30.0..120.0);
-        commands.spawn((Jammer { on, alive: true, next }, Transform::from_translation(geo::ground(Vec2::new(x, z)))));
+        let mut e = commands.spawn((Jammer { next }, Transform::from_translation(geo::ground(Vec2::new(x, z)))));
+        if on {
+            e.insert(Jamming);
+        }
     }
 }
 
-/// Switch the jammers on and off, keep the field current, and give the tell.
-pub fn ew_update(time: Res<Time>, mut rng: ResMut<EwRng>, mut ew: ResMut<Ew>, mut radio: ResMut<Radio>, mut jammers: Query<(&mut Jammer, &Transform)>) {
+/// Switch the jammers on and off, keep the field current, and give the tell. (A switch shows in the field the
+/// frame after.)
+pub fn ew_update(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut rng: ResMut<EwRng>,
+    mut ew: ResMut<Ew>,
+    mut radio: ResMut<Radio>,
+    mut on: Query<(Entity, &mut Jammer, &Transform), With<Jamming>>,
+    mut off: Query<(Entity, &mut Jammer, &Transform), Without<Jamming>>,
+) {
     let now = time.elapsed_secs_f64();
     ew.active.clear();
-    for (mut j, tf) in &mut jammers {
-        if j.alive && now >= j.next {
-            j.on = !j.on;
-            j.next = now + if j.on { rng.0.random_range(60.0..180.0) } else { rng.0.random_range(20.0..90.0) };
+    for (e, mut j, tf) in &mut on {
+        if now >= j.next {
+            commands.entity(e).remove::<Jamming>();
+            j.next = now + rng.0.random_range(20.0..90.0);
         }
-        ew.active.push((tf.translation.xz(), j.alive && j.on));
+        ew.active.push((tf.translation.xz(), true));
+    }
+    for (e, mut j, tf) in &mut off {
+        if now >= j.next {
+            commands.entity(e).insert(Jamming);
+            j.next = now + rng.0.random_range(60.0..180.0);
+        }
+        ew.active.push((tf.translation.xz(), false));
     }
     let told = ew.told;
     if let Some(&(a, _)) = ew.lifts.get(told)
@@ -113,12 +134,13 @@ pub fn ew_update(time: Res<Time>, mut rng: ResMut<EwRng>, mut ew: ResMut<Ew>, mu
     }
 }
 
-/// A shell landing within 25 m of a jammer knocks it out.
-pub fn knock_out(jammers: &mut Query<(&mut Jammer, &Transform)>, at: Vec2) -> Option<Vec2> {
-    for (mut j, tf) in jammers.iter_mut() {
-        if j.alive && tf.translation.xz().distance(at) < 25.0 {
-            j.alive = false;
-            j.on = false;
+/// A shell landing within 25 m of a jammer takes it off the field (`gone`: the ones this frame's earlier shells
+/// took, whose going is still on its way through the commands).
+pub fn knock_out(commands: &mut Commands, jammers: &Query<(Entity, &Transform), With<Jammer>>, at: Vec2, gone: &mut Vec<Entity>) -> Option<Vec2> {
+    for (e, tf) in jammers.iter() {
+        if !gone.contains(&e) && tf.translation.xz().distance(at) < 25.0 {
+            gone.push(e);
+            commands.entity(e).remove::<(Jammer, Jamming)>();
             return Some(tf.translation.xz());
         }
     }

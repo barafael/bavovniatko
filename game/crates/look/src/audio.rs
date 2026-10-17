@@ -439,11 +439,14 @@ pub enum AmbienceKind {
     Heli,
 }
 
-/// How loud the nearest fire and the nearest helicopter are at the camera, 0..1.
+/// How loud the nearest fire, the nearest helicopter and the nearest running engine are at the camera, 0..1.
 #[derive(Resource, Default)]
 pub struct NearSources {
     pub fire: f32,
     pub heli: f32,
+    pub engines: f32,
+    /// The nearest moving vehicle's speed (m/s): the engine note rises with it.
+    pub engine_speed: f32,
 }
 
 fn near_sources(
@@ -452,9 +455,14 @@ fn near_sources(
     emitters: Query<(&bav_sim::fx::Emitter, &GlobalTransform)>,
     grass: Query<&crate::fx::GrassFire>,
     helis: Query<&GlobalTransform, With<bav_sim::robotyne::Helicopter>>,
+    vehicles: Query<(&bav_sim::units::Vehicle, &GlobalTransform)>,
 ) {
     use bav_sim::fx::EmitterKind;
     let at = cam.translation();
+    // Engine noise follows the nearest vehicle under way.
+    let (d, speed) = vehicles.iter().filter(|(v, _)| v.state.mobile() && v.speed > 0.5).map(|(v, t)| (t.translation().distance(at), v.speed)).fold((f32::MAX, 0.0), |a, b| if b.0 < a.0 { b } else { a });
+    near.engine_speed = speed;
+    near.engines = if d < f32::MAX { (0.6 * 120.0 / (120.0 + d)).min(0.5) } else { 0.0 };
     let fires = emitters
         .iter()
         .filter(|(e, _)| matches!(e.kind, EmitterKind::WreckFire | EmitterKind::PoolFire | EmitterKind::EngineSmoke))
@@ -475,7 +483,7 @@ fn start_ambience(mut commands: Commands, bank: Res<Bank>) {
 fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, near: Res<NearSources>, wind: Res<bav_sim::fx::Wind>, mut q: Query<(&Ambience, &mut AudioSink)>) {
     let Some(levels) = levels else { return };
     if let Some(dir) = crate::dev::dev().showcase.as_deref() {
-        bav_core::dev::append(&format!("{dir}/audio.log"), &format!("amb {:.4} {:.4} {}\n", time.elapsed_secs_f64(), levels.engines, levels.drone_view as u8));
+        bav_core::dev::append(&format!("{dir}/audio.log"), &format!("amb {:.4} {:.4} {}\n", time.elapsed_secs_f64(), near.engines, levels.drone_view as u8));
     }
     for (a, mut sink) in &mut q {
         // Under jamming the world thins behind a hiss; frozen, it is gone until the picture moves again.
@@ -484,7 +492,7 @@ fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, near: Res<
             // The day's wind: February's 4–5 m/s at full strength, June's 2 m/s quieter.
             AmbienceKind::Wind => (if levels.drone_view { 0.18 } else { 0.3 }) * (wind.0.length() / 4.5).clamp(0.6, 1.4) * duck,
             AmbienceKind::Rumble => 0.35 * duck,
-            AmbienceKind::Engines => levels.engines * duck,
+            AmbienceKind::Engines => near.engines * duck,
             AmbienceKind::Rotor => if levels.drone_view { 0.05 } else { 0.0 },
             AmbienceKind::Hiss => if levels.drone_view { levels.jam * 0.25 } else { 0.0 },
             AmbienceKind::Fire => near.fire * 0.6 * duck,
@@ -492,7 +500,7 @@ fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, near: Res<
         };
         if a.0 == AmbienceKind::Engines {
             // The note rises with the nearest vehicle's speed.
-            sink.set_speed(0.85 + 0.03 * levels.engine_speed.min(10.0));
+            sink.set_speed(0.85 + 0.03 * near.engine_speed.min(10.0));
         }
         sink.set_volume(Volume::Linear(v));
     }

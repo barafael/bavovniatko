@@ -11,6 +11,10 @@ use bevy::prelude::*;
 #[derive(Component)]
 pub struct MainCamera;
 
+/// The ATGM sight's trigger pulled by a script (the showcase's ground shot), beside the mouse and `BAV_AUTO_ATGM`.
+#[derive(Message)]
+pub struct TriggerPull;
+
 #[derive(Resource)]
 pub struct View {
     pub mode: Mode,
@@ -51,8 +55,6 @@ pub struct View {
     /// The view was placed by hand this frame (the showcase): the flight controller and the ground view's own
     /// controls stand down.
     pub locked: bool,
-    /// The showcase's ground shot fires this frame, beside the mouse and `BAV_AUTO_ATGM`.
-    pub launch: bool,
     /// The control link (the video link is the feed's own): up, and for how long it has been down.
     pub control: bool,
     pub lost_for: f32,
@@ -111,7 +113,6 @@ impl Default for View {
             ground_range: None,
             lock: None,
             locked: false,
-            launch: false,
             control: true,
             lost_for: 0.0,
             rth: None,

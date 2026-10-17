@@ -76,12 +76,10 @@ impl Sound<'_, '_> {
     }
 }
 
-/// Engine noise follows the nearest moving Russian vehicle; the rotor whine is only there in the drone view.
+/// What the player's view does to the ambience: the rotor whine is only there in the drone view, and jamming
+/// thins the world behind a hiss. (What is near the camera, engines and fires, the look finds for itself.)
 #[derive(Resource, Default)]
 pub struct AmbienceLevels {
-    pub engines: f32,
-    /// The nearest moving vehicle's speed (m/s): the engine note rises with it.
-    pub engine_speed: f32,
     pub drone_view: bool,
     /// The jamming on the drone's link, 0..1, and whether its picture is frozen this frame.
     pub jam: f32,

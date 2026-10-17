@@ -8,7 +8,6 @@
 
 use crate::sound::{Sfx, Sound};
 use crate::diorama::{Diorama, diorama};
-use crate::player::MainCamera;
 use crate::fx::{self, Emitter, EmitterKind, FxQueue, FxRng};
 use crate::geo::{self, Polyline};
 use crate::paint::{Paint, PaintQueue};
@@ -31,7 +30,10 @@ impl Plugin for UnitsPlugin {
             .add_systems(Startup, (lay_minefields, spawn_old_wrecks).chain().in_set(crate::schedule::Setup::Field))
             .add_systems(
                 Update,
-                (drive_vehicles, coast, check_mines, resolve_blasts, resolve_direct_hits, era_reacts, crew_bailout, burn, move_soldiers, board_vehicles, animate_legs, fly_debris, drop_riders)
+                (
+                    (sense_traffic, drive_decisions, steer_and_move, track_marks, turret_tracking).chain(),
+                    (coast, check_mines, resolve_blasts, resolve_direct_hits, era_reacts, crew_bailout, burn, move_soldiers, board_vehicles, animate_legs, fly_debris, drop_riders).chain(),
+                )
                     .chain()
                     .run_if(crate::running)
                     .in_set(crate::Step::Units),
@@ -202,13 +204,31 @@ pub enum VState {
     Abandoned,
 }
 
+/// Knocked out while moving: it grinds to a halt at `decel`, slewing round the dead track at `slew`, and then
+/// stays where it stopped. A vehicle wears it from its knock-out on, and `coast` tends it instead of the driving.
+#[derive(Component, Clone, Copy, Debug)]
+pub struct Coasting {
+    pub decel: f32,
+    pub slew: f32,
+}
+
+/// The main armament as the gunner works it: when it fires next, what it is laid on, and where the turret has
+/// got to in traversing onto it. Breachers carry none.
+#[derive(Component)]
+pub struct Gun {
+    pub fire_timer: f32,
+    pub aim: Option<Vec2>,
+    pub turret_yaw: f32,
+}
+
 impl Vehicle {
-    /// Knocked out of action but not destroyed: it coasts to a stop at `decel`, slewing at `slew`.
-    fn immobilise(&mut self, decel: f32, slew: f32) {
+    /// Knocked out of action but not destroyed: it coasts to a stop at `decel`, slewing at `slew`. The caller puts
+    /// the `Coasting` on the entity.
+    #[must_use]
+    fn immobilise(&mut self, decel: f32, slew: f32) -> Coasting {
         self.state = VState::Immobilized;
-        self.coast_decel = decel;
-        self.slew = slew;
         self.timer = 0.0;
+        Coasting { decel, slew }
     }
 
     /// What the crew of a knocked-out vehicle does now: a fit crew is out in 5–15 s, a concussed one (a mine)
@@ -217,21 +237,79 @@ impl Vehicle {
     /// on its one track until it stalls (the T-80BV of October 2022).
     fn crew_plan(&mut self, rng: &mut SmallRng, cause: Cause) {
         self.timer = 0.0;
-        self.bail_at = if cause == Cause::Mine { rng.random_range(20.0..60.0) } else { rng.random_range(5.0..15.0) };
-        self.pivot = false;
-        self.ghost = 0.0;
+        let at = if cause == Cause::Mine { rng.random_range(20.0..60.0) } else { rng.random_range(5.0..15.0) };
+        self.plan = CrewPlan::Bail { at };
         if self.kind.is_tank() && self.crew > 0 {
             if cause == Cause::Mine && rng.random_bool(1.0 / 15.0) {
-                self.ghost = rng.random_range(20.0..40.0);
-                self.bail_at = self.ghost + 10.0;
-                self.slew = if self.slew >= 0.0 { 0.16 } else { -0.16 };
+                let secs = rng.random_range(20.0..40.0);
+                self.plan = CrewPlan::Ghost { secs, at: secs + 10.0 };
             } else if rng.random_bool(0.3) {
-                self.pivot = true;
-                self.bail_at = rng.random_range(120.0..300.0);
+                self.plan = CrewPlan::FightFromTrack { at: rng.random_range(120.0..300.0) };
             }
         }
     }
 }
+
+/// Which way the hull goes along its route: forward, or back down it, either hull first (it reversed out of the
+/// worst) or turned round. A hull hit while backing keeps backing as it coasts, whatever state it is in.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum Gear {
+    Forward,
+    Backing,
+    TurnedRound,
+}
+
+impl Gear {
+    /// Going back down the route, whichever way the hull points.
+    pub fn reversing(self) -> bool {
+        self != Gear::Forward
+    }
+}
+
+/// What the crew of a knocked-out vehicle does (`Vehicle::crew_plan`), with the vehicle's `timer` counting from
+/// the hit.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum CrewPlan {
+    /// Out of the hatches once the timer passes `at`.
+    Bail { at: f32 },
+    /// Nobody at the tiller and the engine alive: the hull circles on its one track for `secs`, then whoever is
+    /// left gets out at `at`.
+    Ghost { secs: f32, at: f32 },
+    /// A live crew on a dead track: it turns the hull to face the enemy and fights from it until `at`.
+    FightFromTrack { at: f32 },
+}
+
+impl CrewPlan {
+    pub fn bail_at(self) -> f32 {
+        match self {
+            CrewPlan::Bail { at } | CrewPlan::Ghost { at, .. } | CrewPlan::FightFromTrack { at } => at,
+        }
+    }
+}
+
+/// A halt on the approach: planned for an odometer reading (a driver who has lost the one ahead in the exhaust
+/// smoke, or waits for an order), then held for its seconds.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum Halt {
+    Planned { at: f32, secs: f32 },
+    Holding { secs: f32 },
+}
+
+impl Halt {
+    pub fn secs(self) -> f32 {
+        match self {
+            Halt::Planned { secs, .. } | Halt::Holding { secs } => secs,
+        }
+    }
+}
+
+/// Sent back in for the men: it stops at the wrecks, waits for them to climb on, and comes out again.
+#[derive(Component)]
+pub struct Rescue;
+
+/// A plow (or rollers) on the front: it turns the mines out of the lane, until one takes it off.
+#[derive(Component)]
+pub struct Plow;
 
 impl VState {
     pub fn alive(self) -> bool {
@@ -254,36 +332,26 @@ pub struct Vehicle {
     pub speed: f32,
     pub wave: u32,
     pub idx: u32,
-    pub plow: bool,
     pub crew: u32,
     pub troops: u32,
     pub timer: f32,
-    pub fire_timer: f32,
     pub panic: f32,
     pub turret: Entity,
     /// The gun's muzzle in the turret's frame.
     pub muzzle: Vec3,
-    pub turret_yaw: f32,
-    pub aim: Option<Vec2>,
     pub travelled: f32,
-    pub reversing: bool,
-    pub counted_returned: bool,
-    /// Set once the wreck has been counted and set burning (several blasts can claim it in one frame).
-    pub wrecked: bool,
+    pub gear: Gear,
     /// Hull heading (rate-limited: a tank turns, it does not snap).
     pub yaw: f32,
+    /// This frame's acceleration along the way it is going (m/s²), and how fast the ground let it go (`going`,
+    /// 0..1): the suspension and the track marks answer to both.
+    pub accel: f32,
+    pub going: f32,
     /// Suspension: pitch and roll and their rates, a damped spring.
     pub pitch: f32,
     pub pitch_v: f32,
     pub roll: f32,
     pub roll_v: f32,
-    /// After a hit or a mine: how fast it grinds to a halt, and how it slews round the dead track.
-    pub coast_decel: f32,
-    pub slew: f32,
-    /// Sent back in for the men: it stops at the wrecks, waits for them to climb on, and comes out again.
-    pub rescue: bool,
-    /// Smoke grenades fired (once).
-    pub smoked: bool,
     /// This driver's own pace, as a fraction of the kind's speed: a column is never one speed.
     pub pace: f32,
     /// How many seconds behind the truth this driver's idea of the vehicle ahead runs.
@@ -292,23 +360,16 @@ pub struct Vehicle {
     pub lead_speed: f32,
     /// Metres driven in all (`travelled` is the paint odometer, reset every 2 m).
     pub odometer: f32,
-    /// A halt planned on the approach: at this odometer reading, for this many seconds (a driver who has lost
-    /// the one ahead in the exhaust smoke, or waits for an order).
-    pub halt_at: Option<(f32, f32)>,
-    /// Knocked out: seconds until the crew gets out.
-    pub bail_at: f32,
-    /// A dead crew and a live engine: seconds left of the hull circling on its one track.
-    pub ghost: f32,
-    /// A live crew on a dead track, turning the hull to face the enemy with the glacis (or to lay a jammed gun).
-    pub pivot: bool,
+    /// A halt planned on the approach, and then held.
+    pub halt: Option<Halt>,
+    /// Knocked out: what the crew does, and when it gets out.
+    pub plan: CrewPlan,
     /// Seconds until the next man climbs out of a knocked-out vehicle.
     pub exit_timer: f32,
     /// How fast the hull is turning now (rad/s): the tracks slip, so it follows the tiller a moment late.
     pub yaw_rate: f32,
     /// The driver's hand on the tiller: the turn rate he is asking for, nothing while he lets it run straight.
     pub steer: f32,
-    /// Going back down the route hull first: it reversed out of the worst, stopped and turned round.
-    pub turned: bool,
     /// Seconds left of a driver's hesitation (a look round, a word on the intercom, a gear missed).
     pub hesitate: f32,
     /// Seconds left of driving on straight past a hull he has swung away from, before he steers for his line.
@@ -331,7 +392,12 @@ impl Vehicle {
 
     /// Reversing hull first rather than turned round.
     pub fn backing(&self) -> bool {
-        self.reversing && !self.turned
+        self.gear == Gear::Backing
+    }
+
+    /// Which way along the route it is going: +1 up it, -1 back down it.
+    pub fn dir(&self) -> f32 {
+        if self.gear.reversing() { -1.0 } else { 1.0 }
     }
 }
 
@@ -753,6 +819,8 @@ pub struct VehicleSpec {
     pub plow: bool,
     pub smoke: bool,
     pub rescue: bool,
+    /// A Column's pace: its slowest vehicle's speed, which none of it outruns (`f32::INFINITY` outside one).
+    pub column_pace: f32,
 }
 
 pub fn spawn_vehicle(commands: &mut Commands, models: &Models, palette: &Palette, book: &RouteBook, v: VehicleSpec) -> Entity {
@@ -771,6 +839,7 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
     let mut t = commands.spawn((skin(&m.turret), Transform::from_translation(m.turret_at), Turret));
     dress(&mut t, &m.turret);
     let turret = t.id();
+    let seed = v.wave * 100 + v.idx;
     let mut e = commands.spawn((
         skin(hull),
         Transform::from_translation(geo::ground(p)).with_rotation(ground_rotation(p, yaw)),
@@ -785,50 +854,48 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
             speed: 0.0,
             wave: v.wave,
             idx: v.idx,
-            plow,
             crew: v.kind.crew(),
             troops: v.kind.troops(),
             timer: 0.0,
-            fire_timer: 8.0 + v.idx as f32 * 2.3,
             panic: 0.0,
             turret,
             muzzle: m.muzzle,
-            turret_yaw: 0.0,
-            aim: None,
             travelled: 0.0,
-            reversing: false,
-            counted_returned: false,
-            wrecked: false,
+            gear: Gear::Forward,
             yaw,
+            accel: 0.0,
+            going: 1.0,
             pitch: 0.0,
             pitch_v: 0.0,
             roll: 0.0,
             roll_v: 0.0,
-            coast_decel: 3.0,
-            slew: 0.0,
-            rescue: v.rescue,
-            smoked: false,
-            pace: 0.9 + 0.2 * geo::hash01(v.wave * 100 + v.idx, 23),
-            lag: 1.0 + 2.0 * geo::hash01(v.wave * 100 + v.idx, 24),
+            pace: 0.9 + 0.2 * geo::hash01(seed, 23),
+            lag: 1.0 + 2.0 * geo::hash01(seed, 24),
             lead_speed: 0.0,
             odometer: 0.0,
-            halt_at: (geo::hash01(v.wave * 100 + v.idx, 25) < 0.1).then(|| (100.0 + 500.0 * geo::hash01(v.wave * 100 + v.idx, 26), 5.0 + 15.0 * geo::hash01(v.wave * 100 + v.idx, 27))),
-            bail_at: 20.0,
-            ghost: 0.0,
-            pivot: false,
+            halt: (geo::hash01(seed, 25) < 0.1).then(|| Halt::Planned { at: 100.0 + 500.0 * geo::hash01(seed, 26), secs: 5.0 + 15.0 * geo::hash01(seed, 27) }),
+            plan: CrewPlan::Bail { at: 20.0 },
             exit_timer: 0.0,
             yaw_rate: 0.0,
             steer: 0.0,
-            turned: false,
             hesitate: 0.0,
             detour: 0.0,
-            // Drawn from the driving stream the first time the vehicle drives.
-            slack: 0.0,
-            gap: 0.0,
-            quirk: 0.0,
-            column_pace: f32::INFINITY,
+            slack: 0.04 + 0.07 * geo::hash01(seed, 29),
+            gap: 28.0 + 27.0 * geo::hash01(seed, 30),
+            quirk: 1000.0 * geo::hash01(seed, 31),
+            column_pace: v.column_pace,
         },
     ));
+    e.insert((Traffic::default(), Intent::default()));
+    if !v.kind.breacher() {
+        e.insert(Gun { fire_timer: 8.0 + v.idx as f32 * 2.3, aim: None, turret_yaw: 0.0 });
+    }
+    if plow {
+        e.insert(Plow);
+    }
+    if v.rescue {
+        e.insert(Rescue);
+    }
     e.add_child(turret);
     dress(&mut e, hull);
     // Desant: the section rides on the roof, not inside (dossier footage, and every Vuhledar video). Mines and
@@ -945,7 +1012,7 @@ struct Snap {
     lat: f32,
     state: VState,
     speed: f32,
-    reversing: bool,
+    gear: Gear,
     pos: Vec2,
 }
 
@@ -965,56 +1032,55 @@ fn going(p: Vec2, lat: f32, lay: &geo::Layout, craters: &crate::paint::Craters, 
     if turning { field * 0.8 } else { field }
 }
 
-fn drive_vehicles(
-    mut commands: Commands,
+/// Does it drive? The attacker's columns do, and on either side a Column sent to a position; the rest stand.
+/// (A hull knocked out wears `Coasting`, and the driving systems leave it out by that.)
+fn drives(v: &Vehicle, book: &RouteBook, attacker: Side) -> bool {
+    v.side == attacker || book.0[v.route].hold
+}
+
+/// What the driver sees of the other hulls this frame (`sense_traffic`), for his decisions and his steering.
+#[derive(Component, Default, Clone, Copy)]
+pub struct Traffic {
+    /// The nearest vehicle ahead in the lane he is steering into, within 55 m.
+    blocker: Option<Snap>,
+    /// A hull within a length ahead: nothing drives through it.
+    blocked_ahead: bool,
+    /// A hull beside him, on the side he is moving to.
+    blocked_beside: bool,
+    /// Which side of the route the hull ahead sits on (the way round it is the other), and where across.
+    away: f32,
+    ahead_across: f32,
+    /// He is more than a couple of metres off the line he wants.
+    turning: bool,
+}
+
+/// What the driver means to do this frame (`drive_decisions`), for the hull to answer (`steer_and_move`).
+#[derive(Component, Default, Clone, Copy)]
+pub struct Intent {
+    /// The speed he wants, before the ground, the bends and the steering take their share.
+    want_speed: f32,
+}
+
+/// Who is ahead of me in my lane, and which hulls are right in front of me or beside me. Two hulls that have slid
+/// into each other sideways (where neither test looks) work apart.
+#[allow(clippy::type_complexity)]
+fn sense_traffic(
     time: Res<Time>,
-    mut rng: ResMut<UnitRng>,
-    mut drive: ResMut<DriveRng>,
-    mut fxr: ResMut<FxRng>,
-    mut fx: ResMut<FxQueue>,
-    mut paint: ResMut<PaintQueue>,
-    mut stats: ResMut<Stats>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    cam: Single<&GlobalTransform, With<MainCamera>>,
-    mut levels: ResMut<crate::sound::AmbienceLevels>,
-    (order, mut radio, mut smoke, book): (Res<ColumnOrder>, ResMut<Radio>, ResMut<fx::Smoke>, Res<RouteBook>),
-    mut q: Query<(Entity, &mut Vehicle, &mut Transform, Option<&crate::evac::EvacTarget>), Without<Turret>>,
-    mut turrets: Query<&mut Transform, With<Turret>>,
+    book: Res<RouteBook>,
+    mut q: ParamSet<(Query<(Entity, &Vehicle, &Transform)>, Sensing)>,
     mut snaps: Local<Vec<Snap>>,
 ) {
     let dt = crate::sim_dt(&time);
-    let now = time.elapsed_secs_f64();
-    let lay = geo::layout();
     let attacker = diorama().attacker();
     snaps.clear();
-    snaps.extend(q.iter().map(|(e, v, t, _)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, reversing: v.reversing, pos: t.translation.xz() }));
-    let cam_pos = cam.translation();
-    let mut nearest_engine = f32::MAX;
-    let mut nearest_speed = 0.0;
-    let rng = &mut rng.0;
-
-    for (e, mut v, mut tf, evac_at) in &mut q {
-        let rt = &book.0[v.route];
-        // The attacker's columns drive, and on either side a Column sent to a position; the rest stand.
-        if (v.side != attacker && !rt.hold) || !v.state.mobile() {
+    snaps.extend(q.p0().iter().map(|(e, v, t)| Snap { e, route: v.route, s: v.s, lat: v.lat, state: v.state, speed: v.speed, gear: v.gear, pos: t.translation.xz() }));
+    for (e, mut v, mut tf, mut traffic) in &mut q.p1() {
+        if !drives(&v, &book, attacker) {
             continue;
         }
-        let route: &Polyline = &rt.line;
-        let deploy_s = rt.deploy_s;
-        // (On a holding route the end of it comes first: the position.)
-        let dismount_s = (deploy_s + 200.0 + v.idx as f32 % 3.0 * 25.0).min(route.length() - 5.0);
-        v.panic = (v.panic - dt * 0.05).max(0.0);
-        v.timer += dt;
-        if v.gap == 0.0 {
-            let r = &mut drive.0;
-            v.slack = r.random_range(0.04..0.11);
-            v.gap = r.random_range(28.0..55.0);
-            v.quirk = r.random_range(0.0..1000.0);
-        }
-
+        let route: &Polyline = &book.0[v.route].line;
         // Who is ahead of me in my lane?
-        let dir = if v.reversing { -1.0 } else { 1.0 };
+        let dir = v.dir();
         let mut blocker: Option<Snap> = None;
         for o in snaps.iter() {
             if o.e == e || o.route != v.route {
@@ -1051,7 +1117,6 @@ fn drive_vehicles(
             }
             // (A hull in front is the test above's: a driver can still turn away from it.)
             blocked_beside |= turning && d.length() < 5.5 && d.dot(side_move) > 0.0 && along < 2.0;
-            // Two hulls that have slid into each other sideways (where neither test looks) work apart.
             if d.length() < 5.0 {
                 push -= d.normalize_or(route.normal(v.s)) * (5.0 - d.length());
             }
@@ -1059,9 +1124,70 @@ fn drive_vehicles(
         if push != Vec2::ZERO {
             me += push.clamp_length_max(1.5 * dt);
             (v.lat, v.s) = route.lateral_near(me, v.s, 20.0);
+            tf.translation = geo::ground(me) + Vec3::Y * 0.05;
         }
-        // A driver's pace drifts over the minutes, and nobody holds a speed over ploughed ground.
-        let rough = geo::value_noise(v.odometer * 0.04, v.quirk, 78);
+        *traffic = Traffic { blocker, blocked_ahead, blocked_beside, away, ahead_across, turning };
+    }
+}
+
+/// A vehicle under way: not knocked out (and not a turret).
+type Underway = (Without<Turret>, Without<Coasting>);
+
+/// The vehicles under way as `sense_traffic` works them over.
+type Sensing<'w, 's> = Query<'w, 's, (Entity, &'static mut Vehicle, &'static mut Transform, &'static mut Traffic), Without<Coasting>>;
+
+/// A vehicle as its driver works it.
+#[derive(bevy::ecs::query::QueryData)]
+#[query_data(mutable)]
+struct Driving {
+    e: Entity,
+    v: &'static mut Vehicle,
+    tf: &'static Transform,
+    traffic: &'static Traffic,
+    intent: &'static mut Intent,
+    evac_at: Option<&'static crate::evac::EvacTarget>,
+    rescue: Has<Rescue>,
+    plow: Has<Plow>,
+}
+
+/// The driver's head: what state the vehicle is in, where he means to be, how fast he wants to go.
+#[allow(clippy::too_many_arguments)]
+fn drive_decisions(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut rng: ResMut<UnitRng>,
+    mut drive: ResMut<DriveRng>,
+    mut fxr: ResMut<FxRng>,
+    mut fx: ResMut<FxQueue>,
+    mut stats: ResMut<Stats>,
+    models: Res<Models>,
+    palette: Res<Palette>,
+    order: Res<ColumnOrder>,
+    mut radio: ResMut<Radio>,
+    mut smoke: ResMut<fx::Smoke>,
+    book: Res<RouteBook>,
+    mut q: Query<Driving, Without<Coasting>>,
+) {
+    let dt = crate::sim_dt(&time);
+    let now = time.elapsed_secs_f64();
+    let lay = geo::layout();
+    let attacker = diorama().attacker();
+    let rng = &mut rng.0;
+
+    for DrivingItem { e, mut v, tf, traffic, mut intent, evac_at, rescue, plow } in &mut q {
+        if !drives(&v, &book, attacker) {
+            continue;
+        }
+        let rt = &book.0[v.route];
+        let route: &Polyline = &rt.line;
+        let deploy_s = rt.deploy_s;
+        // (On a holding route the end of it comes first: the position.)
+        let dismount_s = (deploy_s + 200.0 + v.idx as f32 % 3.0 * 25.0).min(route.length() - 5.0);
+        v.panic = (v.panic - dt * 0.05).max(0.0);
+        v.timer += dt;
+        let Traffic { blocker, blocked_ahead, away, .. } = *traffic;
+
+        // A driver's pace drifts over the minutes.
         let mut want_speed = (v.kind.speed() * v.pace * (1.0 + 0.07 * geo::value_noise(now as f32 * 0.02, v.quirk, 79))).min(v.column_pace);
         // A breacher drives with its plow up until the minefield, then digs in at a walking pace.
         if v.kind.breacher() && !lay.barriers.iter().any(|b| (b.z0 - 60.0..b.z1).contains(&tf.translation.z)) {
@@ -1072,7 +1198,7 @@ fn drive_vehicles(
         }
         // The player's order to the column (Robotyne): hold everyone where they are, or bring them all back. (A
         // Column at its position answers to its own orders.)
-        if v.state != VState::Withdrawing && !v.rescue && !rt.hold {
+        if v.state != VState::Withdrawing && !rescue && !rt.hold {
             match *order {
                 ColumnOrder::PullBack => start_withdrawal(&mut v, rng),
                 ColumnOrder::Hold if matches!(v.state, VState::Advancing | VState::Halted | VState::Deploying) => {
@@ -1083,10 +1209,10 @@ fn drive_vehicles(
         }
         // A rescue vehicle stops short of the first wreck on its track, or where it was sent, puts down smoke and
         // waits for the men.
-        if v.rescue && v.state == VState::Advancing && (blocker.is_some_and(|b| !b.state.mobile() && (b.s - v.s).abs() < 70.0) || evac_at.is_some_and(|t| v.s >= t.0)) {
+        if rescue && v.state == VState::Advancing && (blocker.is_some_and(|b| !b.state.mobile() && (b.s - v.s).abs() < 70.0) || evac_at.is_some_and(|t| v.s >= t.0)) {
             v.state = VState::Overwatch;
             v.timer = 0.0;
-            pop_smoke(&mut commands, &mut fx, &mut fxr.0, &mut smoke, &mut v, &tf, now);
+            pop_smoke(&mut commands, &mut fx, &mut fxr.0, &mut smoke, v.side, tf, now);
             radio.say(now, "Bradley at the wrecks. Ramp down. Get on, get on!");
             info!("rescue: Bradley {}/{} stopped at {:.0},{:.0}, at {now:.0} s", v.wave, v.idx, tf.translation.x, tf.translation.z);
         }
@@ -1094,7 +1220,7 @@ fn drive_vehicles(
             VState::Advancing | VState::Halted => {
                 if let Some(b) = blocker {
                     let gap = (b.s - v.s).abs();
-                    let b_moving = b.state.mobile() && b.speed > 0.5 && b.reversing == v.reversing && b.state != VState::Halted;
+                    let b_moving = b.state.mobile() && b.speed > 0.5 && b.gear.reversing() == v.gear.reversing() && b.state != VState::Halted;
                     if b_moving {
                         // The driver answers the vehicle ahead a second or three late: the column breathes.
                         v.lead_speed += (b.speed - v.lead_speed) * (dt / v.lag).min(1.0);
@@ -1124,7 +1250,7 @@ fn drive_vehicles(
                 } else if v.state == VState::Halted {
                     // A planned halt holds for its time; a halt behind a hull outside the lane ends with a pull
                     // round it; any other halt ends when the road ahead is clear.
-                    if v.halt_at.is_some_and(|(_, secs)| v.timer < secs) {
+                    if v.halt.is_some_and(|h| v.timer < h.secs()) {
                         want_speed = 0.0;
                     } else if blocked_ahead {
                         if v.timer > rng.random_range(4.0..14.0) {
@@ -1133,20 +1259,20 @@ fn drive_vehicles(
                             v.timer = 0.0;
                         }
                     } else {
-                        v.halt_at = None;
+                        v.halt = None;
                         v.state = VState::Advancing;
                     }
                 } else if blocked_ahead {
                     v.state = VState::Halted;
                     v.timer = 0.0;
                 }
-                if let Some((at, secs)) = v.halt_at
+                if let Some(Halt::Planned { at, secs }) = v.halt
                     && v.state == VState::Advancing
                     && v.odometer > at
                 {
                     v.state = VState::Halted;
                     v.timer = 0.0;
-                    v.halt_at = Some((f32::MAX, secs));
+                    v.halt = Some(Halt::Holding { secs });
                 }
                 // Stuck in the minefield under fire, a Bradley drops its ramp and the squad goes on foot.
                 if v.side == Side::Ua && v.state == VState::Halted && v.troops > 0 && v.timer > 3.5 && v.panic > 0.3 {
@@ -1158,7 +1284,7 @@ fn drive_vehicles(
                     v.state = VState::Deploying;
                     // Fan out into the field to dismount: straight into the shoulder minefields.
                     let spread = [0.0f32, -22.0, 24.0, -45.0, 40.0, -64.0, 60.0, -15.0, 15.0, -34.0, 34.0, -55.0];
-                    v.target_lat = if v.plow { 0.0 } else { spread[(v.idx as usize) % spread.len()] + rng.random_range(-6.0..6.0) };
+                    v.target_lat = if plow { 0.0 } else { spread[(v.idx as usize) % spread.len()] + rng.random_range(-6.0..6.0) };
                 }
                 // Panic: a hit nearby, and a mobilised driver yanks the tiller.
                 if v.panic > 0.55 && rng.random_bool((dt * 0.12) as f64) {
@@ -1210,7 +1336,7 @@ fn drive_vehicles(
                     v.timer = 0.0;
                 }
             }
-            VState::Overwatch if v.rescue => {
+            VState::Overwatch if rescue => {
                 want_speed = 0.0;
                 // Wait for the men to climb on: until full, or until staying any longer is death too. One the player
                 // sent waits longer: the wounded it came for are crawling to it.
@@ -1231,12 +1357,10 @@ fn drive_vehicles(
             }
             VState::Withdrawing => {
                 if v.s < 30.0 {
-                    if !v.counted_returned {
-                        v.counted_returned = true;
-                        stats.withdrawn += 1;
-                        stats.returned += v.crew + v.troops;
-                    }
+                    stats.withdrawn += 1;
+                    stats.returned += v.crew + v.troops;
                     commands.entity(e).despawn();
+                    intent.want_speed = 0.0;
                     continue;
                 }
                 want_speed = v.kind.speed() * 1.1 * v.pace;
@@ -1246,7 +1370,7 @@ fn drive_vehicles(
                     if v.timer > 6.0 + 10.0 * geo::hash01(v.wave * 100 + v.idx, 28) {
                         want_speed = 0.0;
                         if v.speed < 0.1 {
-                            v.turned = true;
+                            v.gear = Gear::TurnedRound;
                         }
                     }
                 }
@@ -1266,13 +1390,38 @@ fn drive_vehicles(
 
         // Hesitations: a driver slows to a crawl for a few seconds (a look round, a word on the intercom, a missed
         // gear), and the ones behind close up on him.
-        if v.state == VState::Advancing && !v.rescue && v.s < deploy_s - 50.0 && v.hesitate <= 0.0 && v.speed > 1.5 && drive.0.random_bool((dt / 150.0) as f64) {
+        if v.state == VState::Advancing && !rescue && v.s < deploy_s - 50.0 && v.hesitate <= 0.0 && v.speed > 1.5 && drive.0.random_bool((dt / 150.0) as f64) {
             v.hesitate = drive.0.random_range(1.5..5.0);
         }
         if v.hesitate > 0.0 {
             v.hesitate -= dt;
             want_speed = want_speed.min(0.7);
         }
+        intent.want_speed = want_speed;
+    }
+}
+
+/// The hull answers the driver: skid steering, the weight in the speed, the ground under the tracks, and the
+/// suspension over it all.
+fn steer_and_move(
+    time: Res<Time>,
+    paint: Res<PaintQueue>,
+    book: Res<RouteBook>,
+    mut stats: ResMut<Stats>,
+    mut q: Query<(&mut Vehicle, &mut Transform, &Traffic, &Intent), Underway>,
+) {
+    let dt = crate::sim_dt(&time);
+    let lay = geo::layout();
+    let attacker = diorama().attacker();
+    for (mut v, mut tf, traffic, intent) in &mut q {
+        if !drives(&v, &book, attacker) {
+            continue;
+        }
+        let route: &Polyline = &book.0[v.route].line;
+        let Traffic { blocked_ahead, blocked_beside, blocker, ahead_across, turning, .. } = *traffic;
+        let mut want_speed = intent.want_speed;
+        let dir = v.dir();
+        let me = tf.translation.xz();
 
         // Where the driver means to be: his lane, and on a road or in the field a line of his own that wanders a
         // metre or so either side of it. In the barrier he keeps to the plowed strip, in the plow's own tracks.
@@ -1287,8 +1436,10 @@ fn drive_vehicles(
         let travel = v.travel();
         let err = wrap(vehicle_yaw(aim - me) - vehicle_yaw(travel));
 
-        // The ground: a road, a plowed lane, a field under snow, a turn off the road, a crater under a track.
+        // The ground: a road, a plowed lane, a field under snow, a turn off the road, a crater under a track, and
+        // nobody holds a speed over ploughed ground.
         let going = going(me, v.lat, lay, &paint.craters, turning);
+        let rough = geo::value_noise(v.odometer * 0.04, v.quirk, 78);
         want_speed *= going * (1.0 + (0.05 + 0.3 * (1.0 - going)) * rough);
         // Slow for a bend coming up, slower for a hard one.
         let bend = route.tangent(v.s).angle_to(route.tangent(v.s + dir * 30.0)).abs();
@@ -1351,65 +1502,86 @@ fn drive_vehicles(
             v.lat = v.target_lat + (v.lat - v.target_lat).clamp(-0.05, 0.05);
             p = route.point(v.s) + route.normal(v.s) * v.lat;
         }
-        let yaw = v.yaw;
-        let old = tf.translation.xz();
         tf.translation = geo::ground(p) + Vec3::Y * 0.05;
         // Suspension: nose down under braking, squat under power, roll in turns, pitching and rocking over the
         // ruts, and worse the worse the going.
-        let accel = (v.speed - prev_speed) / dt.max(1e-4) * if v.backing() { -1.0 } else { 1.0 };
+        v.accel = (v.speed - prev_speed) / dt.max(1e-4) * if v.backing() { -1.0 } else { 1.0 };
+        v.going = going;
         let shake = (v.speed / 5.0).min(1.2) * (1.0 + 2.0 * (1.0 - going));
         let bump = geo::value_noise(v.odometer * 0.45, v.quirk, 77) * 0.025 * shake;
         let rock = geo::value_noise(v.odometer * 0.35, v.quirk, 82) * 0.018 * shake;
         let roll_target = -v.yaw_rate * v.speed * 0.012 + rock;
-        suspension(&mut v, accel * 0.022 + bump, roll_target, dt);
-        tf.rotation = ground_rotation(p, yaw) * Quat::from_rotation_x(v.pitch) * Quat::from_rotation_z(v.roll);
-        let moved = old.distance(p);
+        let pitch_target = v.accel * 0.022 + bump;
+        suspension(&mut v, pitch_target, roll_target, dt);
+        tf.rotation = ground_rotation(p, v.yaw) * Quat::from_rotation_x(v.pitch) * Quat::from_rotation_z(v.roll);
+        let moved = me.distance(p);
         v.travelled += moved;
         v.odometer += moved;
-        if v.travelled > 2.0 {
-            v.travelled = 0.0;
-            // Turning or braking hard, the tracks skid and dig in: the look paints that churn deeper.
-            let churn = (v.yaw_rate.abs() / 0.45).max(accel.abs() / 3.5).clamp(0.0, 1.0);
-            let (gauge, tread) = v.kind.tracks();
-            paint.push(Paint::Track { at: p, dir: heading, gauge, tread, churn });
-            // The plow turns the ground over: the lane shows from the air as a raw brown strip.
-            if v.plow {
-                paint.push(Paint::Plow { at: p, dir: heading });
-                // The 2R marks the lane's edges as it goes, so the vehicles behind can keep to it.
-                if v.kind == VKind::Leo2r && ((v.s / 2.0) as u32).is_multiple_of(20) && lay.barriers.iter().any(|b| (b.z0..b.z1).contains(&p.y)) {
-                    for side in [-1.0f32, 1.0] {
-                        let at = p + route.normal(v.s) * side * 2.6;
-                        commands.spawn((Mesh3d(models.marker.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)), NotShadowCaster));
-                    }
+        stats.vehicle_advance = stats.vehicle_advance.max(p.y * lay.advance);
+    }
+}
+
+/// What the tracks leave every two metres: the marks, the plow's raw strip and the 2R's lane markers, and the
+/// mud or snow the tracks throw where the going is hard.
+fn track_marks(
+    mut commands: Commands,
+    mut fxr: ResMut<FxRng>,
+    mut fx: ResMut<FxQueue>,
+    mut paint: ResMut<PaintQueue>,
+    models: Res<Models>,
+    palette: Res<Palette>,
+    book: Res<RouteBook>,
+    mut q: Query<(&mut Vehicle, &Transform, Has<Plow>), Without<Coasting>>,
+) {
+    let lay = geo::layout();
+    let attacker = diorama().attacker();
+    for (mut v, tf, plow) in &mut q {
+        if !drives(&v, &book, attacker) || v.travelled <= 2.0 {
+            continue;
+        }
+        v.travelled = 0.0;
+        let p = tf.translation.xz();
+        let heading = v.travel();
+        // Turning or braking hard, the tracks skid and dig in: the look paints that churn deeper.
+        let churn = (v.yaw_rate.abs() / 0.45).max(v.accel.abs() / 3.5).clamp(0.0, 1.0);
+        let (gauge, tread) = v.kind.tracks();
+        paint.push(Paint::Track { at: p, dir: heading, gauge, tread, churn });
+        // The plow turns the ground over: the lane shows from the air as a raw brown strip.
+        if plow {
+            paint.push(Paint::Plow { at: p, dir: heading });
+            // The 2R marks the lane's edges as it goes, so the vehicles behind can keep to it.
+            if v.kind == VKind::Leo2r && ((v.s / 2.0) as u32).is_multiple_of(20) && lay.barriers.iter().any(|b| (b.z0..b.z1).contains(&p.y)) {
+                let route = &book.0[v.route].line;
+                for side in [-1.0f32, 1.0] {
+                    let at = p + route.normal(v.s) * side * 2.6;
+                    commands.spawn((Mesh3d(models.marker.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)), NotShadowCaster));
                 }
             }
-            // Hard going throws more: the tracks dig.
-            if v.speed > 2.0 && rng.random_bool((0.5 / going.max(0.4)).min(1.0) as f64) {
-                fx.spray(geo::ground(p) + Vec3::new(0.0, 0.0, 0.0) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
-            }
         }
-        if v.speed > 0.5 {
-            let d = cam_pos.distance(tf.translation);
-            if d < nearest_engine {
-                nearest_engine = d;
-                nearest_speed = v.speed;
-            }
-        }
-        stats.vehicle_advance = stats.vehicle_advance.max(p.y * lay.advance);
-
-        // Turret: track the aim point.
-        if let Some(aim) = v.aim {
-            let to = aim - p;
-            let world_yaw = vehicle_yaw(to);
-            let rel = world_yaw - yaw;
-            v.turret_yaw += (wrap(rel - v.turret_yaw)).clamp(-dt * 0.6, dt * 0.6);
-            if let Ok(mut ttf) = turrets.get_mut(v.turret) {
-                ttf.rotation = Quat::from_rotation_y(v.turret_yaw);
-            }
+        // Hard going throws more: the tracks dig.
+        if v.speed > 2.0 && fxr.0.random_bool((0.5 / v.going.max(0.4)).min(1.0) as f64) {
+            fx.spray(geo::ground(p) - (heading * 3.0).extend(0.0).xzy(), (heading * v.speed).extend(0.0).xzy());
         }
     }
-    levels.engine_speed = nearest_speed;
-    levels.engines = if nearest_engine < f32::MAX { (0.6 * 120.0 / (120.0 + nearest_engine)).min(0.5) } else { 0.0 };
+}
+
+/// The turret follows the aim point the gunner has (`fire::attacker_guns`, `fire::defender_tanks`), at a turret's
+/// traverse rate.
+fn turret_tracking(time: Res<Time>, book: Res<RouteBook>, mut q: Query<(&Vehicle, &mut Gun, &Transform), Underway>, mut turrets: Query<&mut Transform, With<Turret>>) {
+    let dt = crate::sim_dt(&time);
+    let attacker = diorama().attacker();
+    for (v, mut gun, tf) in &mut q {
+        if !drives(v, &book, attacker) {
+            continue;
+        }
+        let Some(aim) = gun.aim else { continue };
+        let to = aim - tf.translation.xz();
+        let rel = vehicle_yaw(to) - v.yaw;
+        gun.turret_yaw += (wrap(rel - gun.turret_yaw)).clamp(-dt * 0.6, dt * 0.6);
+        if let Ok(mut ttf) = turrets.get_mut(v.turret) {
+            ttf.rotation = Quat::from_rotation_y(gun.turret_yaw);
+        }
+    }
 }
 
 /// A damped spring on the hull's pitch and roll.
@@ -1421,42 +1593,51 @@ fn suspension(v: &mut Vehicle, pitch_target: f32, roll_target: f32, dt: f32) {
     v.roll += v.roll_v * dt;
 }
 
-/// Vehicles knocked out or immobilised while moving coast to a stop, slewing; then the hull settles.
-fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, posts: Query<&crate::fire::Post>, mut q: Query<(Entity, &mut Vehicle, &mut Transform)>, mut hulls: Local<Vec<(Entity, Vec2)>>, book: Res<RouteBook>) {
+/// Vehicles knocked out or immobilised while moving coast to a stop, slewing; then the hull settles. (The other
+/// hulls' places are last frame's, from their `GlobalTransform`: near enough for a wreck to stop short of one.)
+fn coast(
+    time: Res<Time>,
+    mut paint: ResMut<PaintQueue>,
+    posts: Query<&crate::fire::Post>,
+    book: Res<RouteBook>,
+    hulls: Query<(Entity, &GlobalTransform), With<Vehicle>>,
+    mut q: Query<(Entity, &mut Vehicle, &mut Transform, &mut Coasting)>,
+) {
     let dt = crate::sim_dt(&time);
-    hulls.clear();
-    hulls.extend(q.iter().map(|(e, _, t)| (e, t.translation.xz())));
-    for (e, mut v, mut tf) in &mut q {
-        if v.state.mobile() {
-            continue;
-        }
+    for (e, mut v, mut tf, mut c) in &mut q {
         // Nobody at the tiller and the engine alive: the hull circles on its one track until it stalls.
-        if v.ghost > 0.0 {
-            v.ghost -= dt;
+        if let CrewPlan::Ghost { secs, at } = v.plan
+            && secs > 0.0
+        {
+            v.plan = CrewPlan::Ghost { secs: secs - dt, at };
             v.speed = v.speed.max(1.6);
-            v.slew = if v.slew >= 0.0 { 0.16 } else { -0.16 };
+            c.slew = if c.slew >= 0.0 { 0.16 } else { -0.16 };
         }
         // A live crew on a dead track turns the hull to put the glacis towards the nearest enemy position.
         let mut turned = false;
-        if v.pivot && v.state == VState::Immobilized && v.crew > 0 && v.speed <= 0.02 {
+        if let CrewPlan::FightFromTrack { at } = v.plan
+            && v.state == VState::Immobilized
+            && v.crew > 0
+            && v.speed <= 0.02
+        {
             let me = tf.translation.xz();
             if let Some(target) = posts.iter().filter(|p| p.side != v.side && p.strength > 0).map(|p| p.pos).min_by(|a, b| a.distance(me).total_cmp(&b.distance(me))) {
                 let dyaw = wrap(vehicle_yaw(target - me) - v.yaw);
                 if dyaw.abs() < 0.03 {
-                    v.pivot = false;
+                    v.plan = CrewPlan::Bail { at };
                 } else {
                     v.yaw = wrap(v.yaw + dyaw.clamp(-0.2 * dt, 0.2 * dt));
                     turned = true;
                 }
             } else {
-                v.pivot = false;
+                v.plan = CrewPlan::Bail { at };
             }
         }
         // A rolling wreck stops against the next hull instead of sliding into it.
         if v.speed > 0.02 {
             let dir = v.travel();
             let me = tf.translation.xz();
-            if hulls.iter().any(|(o, p)| *o != e && { let d = *p - me; d.dot(dir) > 0.0 && d.length() < 6.0 }) {
+            if hulls.iter().any(|(o, g)| o != e && { let d = g.translation().xz() - me; d.dot(dir) > 0.0 && d.length() < 6.0 }) {
                 v.speed = 0.0;
             }
         }
@@ -1466,9 +1647,9 @@ fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, posts: Query<&crate::fi
         }
         let prev = v.speed;
         if moving {
-            v.speed = (v.speed - v.coast_decel * dt).max(0.0);
-            v.slew *= (1.0 - dt * 0.8).max(0.0);
-            let yaw = v.yaw + v.slew * dt * (v.speed / 3.0).min(1.0);
+            v.speed = (v.speed - c.decel * dt).max(0.0);
+            c.slew *= (1.0 - dt * 0.8).max(0.0);
+            let yaw = v.yaw + c.slew * dt * (v.speed / 3.0).min(1.0);
             v.yaw = wrap(yaw);
             let dir = v.travel();
             let p = tf.translation.xz() + dir * v.speed * dt;
@@ -1482,11 +1663,12 @@ fn coast(time: Res<Time>, mut paint: ResMut<PaintQueue>, posts: Query<&crate::fi
                 v.travelled = 0.0;
                 // Coasting to a stop with the driver gone or a track off: a skid, dug in.
                 let (gauge, tread) = v.kind.tracks();
-                paint.push(Paint::Track { at: p, dir, gauge, tread, churn: (v.coast_decel / 3.5 + v.slew.abs() * 2.0).min(1.0) });
+                paint.push(Paint::Track { at: p, dir, gauge, tread, churn: (c.decel / 3.5 + c.slew.abs() * 2.0).min(1.0) });
             }
         }
-        let accel = (v.speed - prev) / dt.max(1e-4);
-        suspension(&mut v, accel * 0.022, 0.0, dt);
+        v.accel = (v.speed - prev) / dt.max(1e-4);
+        let pitch_target = v.accel * 0.022;
+        suspension(&mut v, pitch_target, 0.0, dt);
         let p = tf.translation.xz();
         tf.rotation = ground_rotation(p, v.yaw) * Quat::from_rotation_x(v.pitch) * Quat::from_rotation_z(v.roll);
     }
@@ -1510,12 +1692,9 @@ pub fn wrap(a: f32) -> f32 {
 /// Smoke grenades: a fan of grenades arcs 40–60 m ahead and each burns on the ground into a low wall within a
 /// minute, which hides the vehicle from the ATGM teams' sights, and from the drone overhead. The Soviet 902
 /// "Tucha" dischargers make grey-black HC smoke for two minutes and more; a Bradley's are white phosphorus,
-/// a near-instant dense white burst that is gone in half a minute.
-pub fn pop_smoke(commands: &mut Commands, fx: &mut FxQueue, rng: &mut SmallRng, smoke: &mut fx::Smoke, v: &mut Vehicle, tf: &Transform, now: f64) {
-    if v.smoked {
-        return;
-    }
-    v.smoked = true;
+/// a near-instant dense white burst that is gone in half a minute. The dischargers fire once: the caller fires
+/// them on a change of state.
+pub fn pop_smoke(commands: &mut Commands, fx: &mut FxQueue, rng: &mut SmallRng, smoke: &mut fx::Smoke, side: Side, tf: &Transform, now: f64) {
     let fwd = (tf.rotation * Vec3::NEG_Z).xz().normalize_or_zero();
     let from = tf.translation + Vec3::Y * 2.2;
     for k in 0..10 {
@@ -1527,15 +1706,15 @@ pub fn pop_smoke(commands: &mut Commands, fx: &mut FxQueue, rng: &mut SmallRng, 
         let land = tf.translation.xz() + dir * range;
         let vel = Vec3::new(dir.x * range / secs, 0.5 * 9.8 * secs, dir.y * range / secs);
         fx.spawn(fx::Spawn { kind: fx::Kind::GreySmoke, pos: from, vel, life: secs, size0: 0.6, size1: 0.8, alpha: 0.9, drag: 0.0, gravity: 9.8, streak: 5.0, ..default() });
-        let (kind, rate, burn) = if v.side == Side::Ua { (EmitterKind::Wp, 1.5, rng.random_range(18.0..30.0)) } else { (EmitterKind::Hc, 0.8, rng.random_range(90.0..150.0)) };
+        let (kind, rate, burn) = if side == Side::Ua { (EmitterKind::Wp, 1.5, rng.random_range(18.0..30.0)) } else { (EmitterKind::Hc, 0.8, rng.random_range(90.0..150.0)) };
         commands.spawn((Transform::from_translation(geo::ground(land)), Emitter::after(secs, kind, rate, burn, Vec3::Y * 0.3)));
     }
-    smoke.add(tf.translation.xz() + fwd * 45.0, 32.0, now + 120.0);
+    smoke.add(tf.translation.xz() + fwd * 45.0, 32.0, now, 120.0);
 }
 
 fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
     v.state = VState::Withdrawing;
-    v.reversing = true;
+    v.gear = Gear::Backing;
     // Turning a tank round on a narrow road means a pivot onto the shoulder.
     v.target_lat = v.lat + sign(rng) * rng.random_range(3.0..12.0);
     v.timer = 0.0;
@@ -1543,6 +1722,17 @@ fn start_withdrawal(v: &mut Vehicle, rng: &mut SmallRng) {
 
 // ---------------------------------------------------------------------------------------------------------
 // Mines
+
+/// A vehicle as the mines and the hits find it.
+#[derive(bevy::ecs::query::QueryData)]
+#[query_data(mutable)]
+struct Hulls {
+    e: Entity,
+    v: &'static mut Vehicle,
+    tf: &'static Transform,
+    plow: Has<Plow>,
+    rescue: Has<Rescue>,
+}
 
 fn check_mines(
     mut commands: Commands,
@@ -1559,14 +1749,15 @@ fn check_mines(
     mut blasts: MessageWriter<Blast>,
     mut log: ResMut<crate::hits::HitLog>,
     mut rng: ResMut<UnitRng>,
-    mut q: Query<(Entity, &mut Vehicle, &Transform)>,
+    mut q: Query<Hulls, Without<Coasting>>,
     mut near: Local<Vec<usize>>,
 ) {
     let now = time.elapsed_secs_f64();
-    for (_e, mut v, tf) in &mut q {
-        if !v.state.mobile() || v.speed < 0.2 {
+    for HullsItem { e: _e, mut v, tf, plow: has_plow, rescue } in &mut q {
+        if v.speed < 0.2 {
             continue;
         }
+        let mut plow = has_plow;
         let p = tf.translation.xz();
         let fwd3 = tf.rotation * Vec3::NEG_Z;
         let fwd = fwd3.xz().normalize_or_zero();
@@ -1580,7 +1771,7 @@ fn check_mines(
             let d = m.pos - p;
             let (f, x) = (d.dot(fwd), d.dot(right));
             // The plow's teeth turn mines out of the ground ahead of the tracks; now and then one goes off.
-            if v.plow && (-4.7..-3.6).contains(&-f) && x.abs() < 1.9 {
+            if plow && (-4.7..-3.6).contains(&-f) && x.abs() < 1.9 {
                 mf.mines[i].live = false;
                 if let Some(ent) = m.entity {
                     commands.entity(ent).despawn();
@@ -1589,13 +1780,15 @@ fn check_mines(
                 // four explosions", but stacked mines destroyed one after a single blast).
                 if rng.0.random_bool(if m.stacked { 0.45 } else { 0.12 }) {
                     detonate(&mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
-                    v.plow = false;
+                    plow = false;
+                    commands.entity(_e).remove::<Plow>();
                     if m.stacked && rng.0.random_bool(0.5) {
-                        v.immobilise(rng.0.random_range(3.0..5.0), rng.0.random_range(-0.3..0.3));
+                        let coasting = v.immobilise(rng.0.random_range(3.0..5.0), rng.0.random_range(-0.3..0.3));
+                        commands.entity(_e).insert(coasting);
                         v.crew_plan(&mut rng.0, Cause::Mine);
                         v.pitch_v += rng.0.random_range(2.0..3.0);
                         stats.mine_hits += 1;
-                        log.open(now, "a double mine", "", _e, &v, "under the plow: plow gone, stopped");
+                        log.open(now, "a double mine", "", _e, &v, rescue, "under the plow: plow gone, stopped");
                         radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
                     } else {
                         radio.say(now, match diorama() {
@@ -1615,10 +1808,11 @@ fn check_mines(
                 stats.mine_hits += 1;
                 // TM-62 under a track: the track and road wheels are gone. Often more.
                 let kill = rng.0.random_bool(v.kind.mine_kill(m.stacked));
-                log.open(now, if m.stacked { "a double mine" } else { "a mine" }, "", _e, &v, if kill { "under the track: destroyed" } else { "under the track: track off, stopped" });
+                log.open(now, if m.stacked { "a double mine" } else { "a mine" }, "", _e, &v, rescue, if kill { "under the track: destroyed" } else { "under the track: track off, stopped" });
                 // The track is off on that side: it lurches, yaws round the dead side and grinds to a stop within
                 // a length or two; the cut track lies out behind it, a road wheel beside it.
-                v.immobilise(rng.0.random_range(2.0..3.5), x.signum() * -rng.0.random_range(0.35..0.8));
+                let coasting = v.immobilise(rng.0.random_range(2.0..3.5), x.signum() * -rng.0.random_range(0.35..0.8));
+                commands.entity(_e).insert(coasting);
                 v.crew_plan(&mut rng.0, Cause::Mine);
                 v.pitch_v += rng.0.random_range(1.8..3.0);
                 v.roll_v += x.signum() * rng.0.random_range(1.5..2.5);
@@ -1634,7 +1828,6 @@ fn check_mines(
                         commands.entity(_e).insert(Fire::deck(&mut rng.0, Cause::Mine, v.kind));
                         commands.entity(_e).insert(Emitter::new(EmitterKind::EngineSmoke, 4.0, 400.0, Vec3::new(0.0, 1.5, 2.2)));
                     } else {
-                        v.state = VState::Destroyed;
                         commands.trigger(Wrecked { vehicle: _e, cause: Cause::Mine, how: kill_how(v.kind, Cause::Mine, &mut rng.0) });
                     }
                 }
@@ -1784,6 +1977,9 @@ fn toss_turret(commands: &mut Commands, rng: &mut SmallRng, stats: &mut Stats, r
     }
 }
 
+/// A wrecked vehicle: its skin to char, and whether it was the plow or a rescue vehicle.
+type WreckQuery<'w, 's> = Query<'w, 's, (&'static mut Vehicle, &'static Transform, &'static mut MeshMaterial3d<VehicleMaterial>, Has<Rescue>, Has<Plow>), Without<Turret>>;
+
 /// A vehicle's turret: the skin that chars as the wreck burns, and where it sits, for when the charges throw it.
 type TurretMats<'w, 's> = Query<
     'w,
@@ -1811,17 +2007,17 @@ pub fn on_wrecked(
     mut sound: Sound,
     mut paint: ResMut<PaintQueue>,
     mut blasts: MessageWriter<Blast>,
-    mut q: Query<(&mut Vehicle, &Transform, &mut MeshMaterial3d<VehicleMaterial>), Without<Turret>>,
+    mut q: WreckQuery,
     mut turrets: Turrets,
     children: Query<&Children>,
     mut skins: Query<(&Skin, &mut MeshMaterial3d<VehicleMaterial>), Without<Vehicle>>,
     mut log: ResMut<crate::hits::HitLog>,
 ) {
-    let Ok((mut v, tf, mut mat)) = q.get_mut(ev.vehicle) else { return };
-    if v.wrecked {
+    let Ok((mut v, tf, mut mat, rescue, plow)) = q.get_mut(ev.vehicle) else { return };
+    // Several blasts can claim a wreck in one frame; the first one counts.
+    if v.state == VState::Destroyed {
         return;
     }
-    v.wrecked = true;
     let now = time.elapsed_secs_f64();
     if !log.add(now, ev.vehicle, crate::hits::fate(ev.how)) {
         let weapon = match ev.cause {
@@ -1835,7 +2031,7 @@ pub fn on_wrecked(
             Cause::Atgm => "an ATGM",
             Cause::Fpv => "an FPV",
         };
-        log.open(now, weapon, "", ev.vehicle, &v, format!("destroyed{}", crate::hits::fate(ev.how)));
+        log.open(now, weapon, "", ev.vehicle, &v, rescue, format!("destroyed{}", crate::hits::fate(ev.how)));
     }
     // An abandoned hull that burns now is no longer "abandoned" in the ledger.
     if v.state == VState::Abandoned {
@@ -1851,13 +2047,12 @@ pub fn on_wrecked(
     // It does not stop dead: the driver is gone, the engine dies, the hull rolls on and slews. (A vehicle already
     // immobilised, by a mine say, keeps the slew round its dead track that it already has.)
     if v.state.mobile() {
-        v.coast_decel = rng.random_range(2.5..4.0);
-        v.slew = rng.random_range(-0.3..0.3);
+        commands.entity(ev.vehicle).insert(Coasting { decel: rng.random_range(2.5..4.0), slew: rng.random_range(-0.3..0.3) });
     }
     v.pitch_v -= rng.random_range(0.8..1.6);
     v.state = VState::Destroyed;
     let m = models.vehicle(v.kind);
-    char_skins(ev.vehicle, &mut mat, if v.plow { m.plow_hull.as_ref().unwrap_or(&m.hull) } else { &m.hull }, &children, &mut skins);
+    char_skins(ev.vehicle, &mut mat, if plow { m.plow_hull.as_ref().unwrap_or(&m.hull) } else { &m.hull }, &children, &mut skins);
     let attacker = v.side == diorama().attacker();
     if attacker {
         stats.destroyed += 1;
@@ -2015,7 +2210,8 @@ fn resolve_blasts(
                     } else if d < dmg_r && v.state != VState::Abandoned {
                         v.panic = (v.panic + 0.5).min(1.0);
                         if v.state.mobile() && rng.random_bool(0.25) {
-                            v.immobilise(4.0, rng.random_range(-0.4..0.4));
+                            let coasting = v.immobilise(4.0, rng.random_range(-0.4..0.4));
+                            commands.entity(e).insert(coasting);
                             v.crew_plan(rng, b.cause);
                             v.roll_v += rng.random_range(-1.5..1.5);
                         }
@@ -2126,10 +2322,10 @@ fn era_reacts(mut hits: MessageReader<DirectHit>, mut sound: Sound, mut fx: ResM
     }
 }
 
-fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<crate::hits::HitLog>, mut hits: MessageReader<DirectHit>, mut rng: ResMut<UnitRng>, mut q: Query<&mut Vehicle>) {
+fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<crate::hits::HitLog>, mut hits: MessageReader<DirectHit>, mut rng: ResMut<UnitRng>, mut q: Query<(&mut Vehicle, Has<Rescue>)>) {
     let now = time.elapsed_secs_f64();
     for h in hits.read() {
-        let Ok(mut v) = q.get_mut(h.target) else { continue };
+        let Ok((mut v, rescue)) = q.get_mut(h.target) else { continue };
         if !v.state.alive() {
             continue;
         }
@@ -2137,18 +2333,19 @@ fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<
         let how = format!("{}{}", if h.top { "from above: " } else { "" }, if v.kind.era() && h.cause != Cause::TankGun { "reactive armour went; " } else { "" });
         if rng.0.random_bool(p_kill) {
             if rng.0.random_bool(0.2) {
-                log.open(now, h.weapon, h.from, h.target, &v, format!("{how}into the engine: on fire, crawling, crew getting out"));
+                log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}into the engine: on fire, crawling, crew getting out"));
                 // A hit on the engine: it crawls on trailing smoke, the crew gets out, and the fire decides.
-                v.immobilise(rng.0.random_range(0.6..1.2), rng.0.random_range(-0.2..0.2));
+                let coasting = v.immobilise(rng.0.random_range(0.6..1.2), rng.0.random_range(-0.2..0.2));
                 v.crew_plan(&mut rng.0, h.cause);
-                commands.entity(h.target).insert((Fire::deck(&mut rng.0, h.cause, v.kind), Emitter::new(EmitterKind::EngineSmoke, 4.0, 400.0, Vec3::new(0.0, 1.5, 2.2))));
+                commands.entity(h.target).insert((coasting, Fire::deck(&mut rng.0, h.cause, v.kind), Emitter::new(EmitterKind::EngineSmoke, 4.0, 400.0, Vec3::new(0.0, 1.5, 2.2))));
             } else {
-                log.open(now, h.weapon, h.from, h.target, &v, format!("{how}penetrated"));
+                log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}penetrated"));
                 commands.trigger(Wrecked { vehicle: h.target, cause: h.cause, how: kill_how(v.kind, h.cause, &mut rng.0) });
             }
         } else {
-            log.open(now, h.weapon, h.from, h.target, &v, format!("{how}did not get through: stopped, crew shaken"));
-            v.immobilise(3.5, rng.0.random_range(-0.3..0.3));
+            log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}did not get through: stopped, crew shaken"));
+            let coasting = v.immobilise(3.5, rng.0.random_range(-0.3..0.3));
+            commands.entity(h.target).insert(coasting);
             v.crew_plan(&mut rng.0, h.cause);
             v.pitch_v -= 1.2;
             v.panic = 1.0;
@@ -2197,7 +2394,7 @@ fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng
         match v.state {
             VState::Immobilized => {
                 v.timer += dt;
-                if v.timer <= v.bail_at {
+                if v.timer <= v.plan.bail_at() {
                     continue;
                 }
             }
@@ -2251,6 +2448,10 @@ pub struct Fleeing;
 // ---------------------------------------------------------------------------------------------------------
 // Soldiers
 
+/// Wrecks men take cover behind, and vehicles men can run to: neither a soldier.
+type Wrecks = (With<Vehicle>, With<Coasting>, Without<Soldier>);
+type Rides = (Without<Coasting>, Without<Soldier>);
+
 fn move_soldiers(
     mut commands: Commands,
     time: Res<Time>,
@@ -2259,19 +2460,20 @@ fn move_soldiers(
     mut paint: ResMut<PaintQueue>,
     mut mines: FootMines,
     order: Res<ColumnOrder>,
-    wrecks: Query<(&Vehicle, &Transform), Without<Soldier>>,
+    wrecks: Query<&Transform, Wrecks>,
+    bradleys: Query<(&Vehicle, &Transform, Has<Rescue>), Rides>,
     mut q: Query<(Entity, &mut Soldier, &mut Transform, Option<&Fleeing>)>,
 ) {
     let dt = crate::sim_dt(&time);
     let rng = &mut rng.0;
     let lay = geo::layout();
     let attacker = diorama().attacker();
-    let wreck_pos: Vec<Vec2> = wrecks.iter().filter(|(v, _)| !v.state.mobile()).map(|(_, t)| t.translation.xz()).collect();
+    let wreck_pos: Vec<Vec2> = wrecks.iter().map(|t| t.translation.xz()).collect();
     // Bradleys waiting for men: whoever is falling back runs for the nearest one.
-    let pickups: Vec<Vec2> = wrecks
+    let pickups: Vec<Vec2> = bradleys
         .iter()
-        .filter(|(v, _)| v.kind == VKind::Bradley && v.side == attacker && v.state.mobile() && v.troops < 7 && (v.rescue || v.state == VState::Overwatch))
-        .map(|(_, t)| t.translation.xz())
+        .filter(|(v, _, rescue)| v.kind == VKind::Bradley && v.side == attacker && v.troops < 7 && (*rescue || v.state == VState::Overwatch))
+        .map(|(_, t, _)| t.translation.xz())
         .collect();
     let mut foothold = 0;
     // Back is home, or behind the attackers' own start line where there is one: the tree line with the medics.
@@ -2452,14 +2654,14 @@ impl FootMines<'_, '_> {
 /// Men in the field climb onto a Bradley that has stopped near them, or is backing out slowly: the squad it
 /// dropped, a crew whose vehicle burned, anyone. "A Bradley crew pops smoke and covers the dismounts as they
 /// climb onto it" (dossier c09 §6).
-fn board_vehicles(mut commands: Commands, mut stats: ResMut<Stats>, mut vehicles: Query<(&mut Vehicle, &Transform)>, soldiers: Query<(Entity, &Soldier, &Transform)>) {
+fn board_vehicles(mut commands: Commands, mut stats: ResMut<Stats>, mut vehicles: Query<(&mut Vehicle, &Transform, Has<Rescue>), Without<Coasting>>, soldiers: Query<(Entity, &Soldier, &Transform)>) {
     let mut taken: Vec<Entity> = Vec::new();
-    for (mut v, tf) in &mut vehicles {
-        if v.kind != VKind::Bradley || !v.state.mobile() || v.speed > 2.0 || v.state == VState::Dismounting || v.troops >= 7 {
+    for (mut v, tf, rescue) in &mut vehicles {
+        if v.kind != VKind::Bradley || v.speed > 2.0 || v.state == VState::Dismounting || v.troops >= 7 {
             continue;
         }
         // A squad that has just got out does not get straight back in, unless the vehicle is leaving.
-        if !(v.rescue || v.state == VState::Withdrawing || v.state == VState::Overwatch) {
+        if !(rescue || v.state == VState::Withdrawing || v.state == VState::Overwatch) {
             continue;
         }
         let p = tf.translation.xz();
@@ -2516,15 +2718,12 @@ fn fly_debris(mut commands: Commands, time: Res<Time>, mut q: Query<(Entity, &mu
 }
 
 /// Riders get off when the section dismounts or bails out, and are thrown off when the vehicle is hit.
-fn drop_riders(mut commands: Commands, vehicles: Query<(&Vehicle, &Children)>, riders: Query<(), With<Rider>>) {
-    for (v, children) in &vehicles {
-        if v.troops > 0 && v.state.mobile() {
-            continue;
-        }
-        for c in children.iter() {
-            if riders.contains(c) {
-                commands.entity(c).despawn();
-            }
+fn drop_riders(mut commands: Commands, vehicles: Query<(&Vehicle, Has<Coasting>)>, riders: Query<(Entity, &ChildOf), With<Rider>>) {
+    for (rider, hull) in &riders {
+        if let Ok((v, knocked_out)) = vehicles.get(hull.parent())
+            && (v.troops == 0 || knocked_out)
+        {
+            commands.entity(rider).despawn();
         }
     }
 }

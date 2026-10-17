@@ -11,7 +11,7 @@
 //! the end, everyone back to the start line. 03:50 to late morning in about 25 minutes.
 
 use crate::diorama::{Diorama, diorama};
-use crate::fire::{FireControl, Mission, ShellKind};
+use crate::fire::{Mission, ShellKind};
 use crate::geo;
 use crate::units::{self, ColumnOrder, Models, Radio, SState, Side, Stats, VKind, VState, VehicleSpec};
 use crate::units::Palette;
@@ -97,7 +97,6 @@ fn run_script(
     mut rng: ResMut<DirRng>,
     mut radio: ResMut<Radio>,
     mut stats: ResMut<Stats>,
-    mut fc: ResMut<FireControl>,
     mut view: ResMut<crate::player::View>,
     mut sound: audio::Sound,
     op: Res<crate::player::ObservationPost>,
@@ -140,7 +139,7 @@ fn run_script(
                     // The plow leads; a roller vehicle or a second plow behind it keeps its own.
                     let plow = *plow && (i == 0 || k.breacher());
                     let side = diorama().attacker();
-                    units::spawn_vehicle(&mut commands, &models, &palette, &book, VehicleSpec { side, kind: *k, route: *route, s, lat: 0.0, wave: *wave, idx: i as u32, plow, smoke: i < *smoke, rescue: *rescue });
+                    units::spawn_vehicle(&mut commands, &models, &palette, &book, VehicleSpec { side, kind: *k, route: *route, s, lat: 0.0, wave: *wave, idx: i as u32, plow, smoke: i < *smoke, rescue: *rescue, column_pace: f32::INFINITY });
                     stats.vehicles_committed += 1;
                     stats.wave(*wave).vehicles += 1;
                     stats.sent += k.men();
@@ -159,7 +158,7 @@ fn run_script(
                 let aim = op.building + Vec2::new(rng.random_range(-250.0..250.0), rng.random_range(30.0..110.0));
                 // Twenty-four rockets in pairs over about ten seconds, scattered over some 200 × 400 m with the long
                 // axis along the line of fire (from the south).
-                fc.missions.push(Mission { target: aim, kind: ShellKind::Tos, rounds: 24, sigma: 100.0, interval: 0.4, next: now + 3.0, flight: 12.0, player: false, by: Side::Ru });
+                commands.spawn(Mission { target: aim, kind: ShellKind::Tos, rounds: 24, sigma: 100.0, interval: 0.4, next: now + 3.0, flight: 12.0, by: Side::Ru });
                 radio.say(now, "TOS! Solntsepyok on the town! Get down!");
                 *banner = Some((label.to_string(), 4.0));
             }
@@ -169,7 +168,7 @@ fn run_script(
                 for k in 0..*missions {
                     let base = if k % 2 == 0 && !lay_posts.is_empty() { lay_posts[k as usize % lay_posts.len()] } else { Vec2::new(rng.random_range(-2000.0..2000.0), lay.trench_z.unwrap_or(lay.defence_z) + rng.random_range(-10.0..60.0)) };
                     let at = now + (k as f32 / *missions as f32 * over) as f64;
-                    fc.missions.push(Mission { target: base, kind: ShellKind::He155, rounds: 6, sigma: 45.0, interval: 1.6, next: at, flight: 18.0, player: false, by: Side::Ua });
+                    commands.spawn(Mission { target: base, kind: ShellKind::He155, rounds: 6, sigma: 45.0, interval: 1.6, next: at, flight: 18.0, by: Side::Ua });
                 }
             }
             Act::Helicopters(at) => {
@@ -214,9 +213,9 @@ fn run_script(
 /// Tokmachka it hunts the column instead, cued by its drones: whatever has stopped and is not under smoke, and
 /// now and then a single Krasnopol, guided, onto a vehicle that cannot move ("effect over volume", RUSI).
 fn russian_artillery(
+    mut commands: Commands,
     time: Res<Time>,
     mut script: ResMut<Script>,
-    mut fc: ResMut<FireControl>,
     mut rng: ResMut<DirRng>,
     smoke: Res<crate::fx::Smoke>,
     positions: Query<&crate::fire::Post>,
@@ -240,7 +239,7 @@ fn russian_artillery(
         let men: Vec<Vec2> = soldiers.iter().filter(|(s, t)| s.side == Side::Ua && s.state != SState::DugIn && seen(t.translation.xz())).map(|(_, t)| t.translation.xz()).collect();
         if !stopped.is_empty() && rng.random_bool(0.12) {
             let target = stopped[rng.random_range(0..stopped.len())];
-            fc.missions.push(Mission { target, kind: ShellKind::Ru152, rounds: 1, sigma: 3.0, interval: 1.0, next: now, flight: 20.0, player: false, by: Side::Ru });
+            commands.spawn(Mission { target, kind: ShellKind::Ru152, rounds: 1, sigma: 3.0, interval: 1.0, next: now, flight: 20.0, by: Side::Ru });
             return;
         }
         let target = if !stopped.is_empty() && rng.random_bool(0.45) {
@@ -252,7 +251,7 @@ fn russian_artillery(
             let posts: Vec<Vec2> = positions.iter().filter(|p| p.side == Side::Ua && p.strength > 0).map(|p| p.pos).collect();
             if !posts.is_empty() && rng.random_bool(0.3) { posts[rng.random_range(0..posts.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0)) } else { Vec2::new(rng.random_range(-1800.0..1800.0), rng.random_range(-1500.0..-850.0)) }
         };
-        fc.missions.push(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 40.0, interval: 2.0, next: now, flight: 20.0, player: false, by: Side::Ru });
+        commands.spawn(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 40.0, interval: 2.0, next: now, flight: 20.0, by: Side::Ru });
         return;
     }
     script.next_barrage = script.t + rng.random_range(35.0..75.0);
@@ -262,7 +261,7 @@ fn russian_artillery(
     } else {
         Vec2::new(rng.random_range(-1800.0..1500.0), if rng.random_bool(0.5) { geo::layout().defence_z } else { rng.random_range(-1400.0..-1150.0) })
     };
-    fc.missions.push(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 45.0, interval: 2.0, next: now, flight: 20.0, player: false, by: Side::Ru });
+    commands.spawn(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 45.0, interval: 2.0, next: now, flight: 20.0, by: Side::Ru });
 }
 
 fn check_end(script: Res<Script>, stats: Res<Stats>, vehicles: Query<&units::Vehicle>, soldiers: Query<&units::Soldier>, mut next: ResMut<NextState<Phase>>) {

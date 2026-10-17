@@ -361,7 +361,7 @@ fn log_stats(
 
 /// `BAV_FIRE="100:he,130:raam,160:himars"`: at those game seconds, call that strike on the nearest stalled
 /// Russian vehicle, as a player would from the drone.
-fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Res<View>, mut fc: ResMut<FireControl>, q: Query<(&Vehicle, &Transform)>, mut done: Local<usize>) {
+fn scripted_fire(mut commands: Commands, script: Res<crate::director::Script>, time: Res<Time>, view: Res<View>, q: Query<(&Vehicle, &Transform)>, mut done: Local<usize>) {
     let plan = &dev().fire;
     while *done < plan.len() && script.t >= plan[*done].0 {
         let (_, strike, point) = plan[*done];
@@ -370,10 +370,10 @@ fn scripted_fire(script: Res<crate::director::Script>, time: Res<Time>, view: Re
         let called = match point {
             Some((x, z)) => {
                 let at = Vec2::new(x, z);
-                fc.missions.push(strike.mission(at, 12.0, now, true));
+                strike.call(&mut commands, at, 12.0, now);
                 Some(at)
             }
-            None => strike.on_nearest_stalled(&mut fc, &q, view.drone_pos.xz(), now),
+            None => strike.on_nearest_stalled(&mut commands, &q, view.drone_pos.xz(), now),
         };
         if let Some(at) = called {
             info!("scripted: {strike:?} on {:.0},{:.0}, at game {:.0} s", at.x, at.y, script.t);
@@ -440,7 +440,7 @@ fn cpu_secs() -> f64 {
 /// `BAV_VIEW=ground`: start in the tree line nearest the dacha road with a `BAV_TEAM` launcher
 /// (default Stugna-P), sight up, tracking the nearest moving attacker vehicle the way a gunner would.
 /// `BAV_AUTO_ATGM=<s>` launches then.
-fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
+fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post, &crate::fire::AtgmTeam)>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
     if dev().view != Some(Mode::Ground) {
         return;
     }
@@ -450,7 +450,7 @@ fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post)>, q: Query<(&
             crate::diorama::Diorama::Vuhledar => Vec2::new(930.0, -658.0),
             crate::diorama::Diorama::Robotyne => Vec2::new(-100.0, crate::geo::layout().start_z.expect("Mala Tokmachka has a start line")),
         };
-        let Some((e, p)) = teams.iter().filter(|(_, p)| p.atgm > 0 && p.weapon == Some(want)).min_by(|a, b| a.1.pos.distance(kz).total_cmp(&b.1.pos.distance(kz))) else {
+        let Some((e, p, _)) = teams.iter().filter(|(_, _, t)| t.atgm > 0 && t.weapon == want).min_by(|a, b| a.1.pos.distance(kz).total_cmp(&b.1.pos.distance(kz))) else {
             return;
         };
         crate::camera::enter_ground(&mut view, e, p.pos);

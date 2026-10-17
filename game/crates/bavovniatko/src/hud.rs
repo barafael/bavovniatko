@@ -3,7 +3,7 @@
 
 use crate::camera::{Mode, View};
 use crate::director::{self, Script};
-use crate::fire::{Atgm, AtgmMode, FireControl, JAVELIN_LOCK, Post};
+use crate::fire::{Atgm, AtgmMode, AtgmTeam, FireControl, JAVELIN_LOCK, Post};
 use crate::geo;
 use crate::diorama::{Diorama, diorama};
 use crate::units::{ColumnOrder, Radio, Side, Stats};
@@ -266,7 +266,7 @@ fn update_hud(
     fc: Res<FireControl>,
     radio: Res<Radio>,
     (order, fpv_res, op_res): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>),
-    positions: Query<&Post>,
+    positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
         Single<&mut Text, With<Tally>>,
@@ -294,7 +294,7 @@ fn update_hud(
     // The gate: the hull's box on the screen, flashing until the seeker has locked (a Stugna's tracker holds at
     // once), and the corner marks drawn as L-shapes by colour alone.
     let (mut gate, cam, targets) = sight;
-    let team_weapon = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|p| p.weapon);
+    let team_weapon = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|(_, t)| t.map(|t| t.weapon));
     let held = (view.mode == Mode::Ground && view.sight).then_some(view.lock).flatten();
     let gate_box = held.and_then(|(e, t)| {
         let tf = targets.get(e).ok()?;
@@ -340,8 +340,8 @@ fn update_hud(
         }
         Mode::Op => Text::new(format!("{}   x{:.1}", if diorama() == Diorama::Robotyne { "OBSERVER, WATER TOWER (СПОСТЕРІГАЧ, ВОДОНАПІРНА ВЕЖА)" } else { "OBSERVATION POST, 9TH FLOOR (СП, 9-Й ПОВЕРХ)" }, view.zoom())),
         Mode::Ground => {
-            let team = view.ground_team.and_then(|e| positions.get(e).ok());
-            let (weapon, left) = team.map(|p| (p.weapon, p.atgm)).unwrap_or((None, 0));
+            let team = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|(_, t)| t);
+            let (weapon, left) = team.map(|t| (Some(t.weapon), t.atgm)).unwrap_or((None, 0));
             let name = weapon.map_or("ATGM".to_string(), |w| w.to_string().to_uppercase());
             if view.sight {
                 let how = if weapon == Some(Atgm::Javelin) {
@@ -402,8 +402,8 @@ fn update_hud(
             }
         });
     }
-    let teams = positions.iter().filter(|p| p.side == Side::Ua && p.atgm > 0 && p.strength >= 2).count();
-    let missiles: u32 = positions.iter().filter(|p| p.side == Side::Ua && p.strength >= 2).map(|p| p.atgm).sum();
+    let teams = positions.iter().filter(|(p, t)| p.side == Side::Ua && t.is_some_and(|t| t.atgm > 0) && p.strength >= 2).count();
+    let missiles: u32 = positions.iter().filter(|(p, _)| p.side == Side::Ua && p.strength >= 2).map(|(_, t)| t.map_or(0, |t| t.atgm)).sum();
     let mode = match fc.atgm_mode {
         AtgmMode::Auto => "AUTO",
         AtgmMode::Hold => "HOLD",

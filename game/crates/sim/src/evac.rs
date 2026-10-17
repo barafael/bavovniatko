@@ -129,7 +129,7 @@ fn answer_requests(
             &models,
             &palette,
             &book,
-            VehicleSpec { side, kind: spec.kind, route, s, lat: 0.0, wave: evac.wave, idx: evac.sent, plow: false, smoke: false, rescue: true },
+            VehicleSpec { side, kind: spec.kind, route, s, lat: 0.0, wave: evac.wave, idx: evac.sent, plow: false, smoke: false, rescue: true, column_pace: f32::INFINITY },
         );
         commands.entity(e).insert(EvacTarget(stop - 25.0));
         evac.sent += 1;

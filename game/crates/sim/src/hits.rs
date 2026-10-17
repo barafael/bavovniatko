@@ -31,8 +31,9 @@ pub struct HitLog {
 }
 
 impl HitLog {
-    pub fn open(&mut self, at: f64, weapon: &'static str, from: &'static str, target: Entity, v: &Vehicle, result: impl Into<String>) {
-        self.entries.push(HitEntry { at, weapon, from, target, target_name: name_of(v), side: v.side, result: result.into() });
+    /// `rescue`: whether the vehicle carries `units::Rescue`.
+    pub fn open(&mut self, at: f64, weapon: &'static str, from: &'static str, target: Entity, v: &Vehicle, rescue: bool, result: impl Into<String>) {
+        self.entries.push(HitEntry { at, weapon, from, target, target_name: name_of(v, rescue), side: v.side, result: result.into() });
         if self.entries.len() > 20 {
             self.entries.remove(0);
         }
@@ -58,12 +59,12 @@ impl HitLog {
     }
 }
 
-/// A vehicle as the feed names it.
-pub fn name_of(v: &Vehicle) -> String {
+/// A vehicle as the feed names it (`rescue`: it carries `units::Rescue`).
+pub fn name_of(v: &Vehicle, rescue: bool) -> String {
     let what = v.kind.name();
     if v.idx >= 100 {
         format!("{what} (dug in)")
-    } else if v.rescue {
+    } else if rescue {
         format!("{what} (sent for the wounded)")
     } else if !v.state.mobile() {
         format!("{what} (stopped)")

@@ -607,10 +607,10 @@ fn daylight(
 
 /// Our ATGM positions get a parapet in front of the sight (where the ground view kneels): two rows of sandbags,
 /// the spoil, a log, so the eye has something at arm's length. Laid once the battle has placed its posts.
-pub fn parapets(mut commands: Commands, palette: Res<Palette>, mut meshes_res: ResMut<Assets<Mesh>>, posts: Query<&bav_sim::fire::Post>) {
+pub fn parapets(mut commands: Commands, palette: Res<Palette>, mut meshes_res: ResMut<Assets<Mesh>>, posts: Query<&bav_sim::fire::Post, With<bav_sim::fire::AtgmTeam>>) {
     let lay = geo::layout();
     for post in &posts {
-        if post.side != bav_core::diorama::Side::Ua || post.weapon.is_none() {
+        if post.side != bav_core::diorama::Side::Ua {
             continue;
         }
         let p = &post.pos;
@@ -673,11 +673,11 @@ fn dress_jammers(mut commands: Commands, palette: Res<Palette>, mut meshes: ResM
     commands.insert_resource(LampMats { lit, dark });
 }
 
-fn jammer_lamps(time: Res<Time>, mats: Option<Res<LampMats>>, jammers: Query<&bav_sim::ew::Jammer>, mut lamps: Query<(&JammerLamp, &mut MeshMaterial3d<StandardMaterial>)>) {
+fn jammer_lamps(time: Res<Time>, mats: Option<Res<LampMats>>, jamming: Query<(), (With<bav_sim::ew::Jammer>, With<bav_sim::ew::Jamming>)>, mut lamps: Query<(&JammerLamp, &mut MeshMaterial3d<StandardMaterial>)>) {
     let Some(mats) = mats else { return };
     let blink = (time.elapsed_secs() * 1.5) as i32 % 2 == 0;
     for (lamp, mut mat) in &mut lamps {
-        let on = jammers.get(lamp.0).is_ok_and(|j| j.alive && j.on) && blink;
+        let on = jamming.contains(lamp.0) && blink;
         let want = if on { &mats.lit } else { &mats.dark };
         if mat.0 != *want {
             mat.0 = want.clone();

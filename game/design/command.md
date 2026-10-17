@@ -84,7 +84,7 @@ stream, so same-day style checks still work per seed):
 
 ### Simulation (`bav_sim`)
 - Movement on arbitrary paths: generalise vehicle route-following from "one `Route` by arc length" to "a `Path`
-  (polyline built from graph edges) by arc length" — `drive_vehicles` already steers for a look-ahead point and
+  (polyline built from graph edges) by arc length" — `units::steer_and_move` already steers for a look-ahead point and
   projects with `lateral_near`, so a `Path` that implements the same Polyline API slots in. Defender vehicles
   gain the drive system (today only the attacker drives).
 - `Column` entity: members, path, pace = slowest member's speed, spacing; arrives, then members take their
@@ -109,7 +109,7 @@ stream, so same-day style checks still work per seed):
    allotment and no supply). Same-day must stay `same` in Record.
 2. **Positions and routes**: position annotation (generated + hand), route graph and path cache in `geo`,
    a debug overlay (BAV_* switch) showing positions, routes, grey zone, road heads.
-3. **Movement on paths**: `Path` in `drive_vehicles` for both sides; columns with slowest pace; taking positions.
+3. **Movement on paths**: `Path` in the driving systems (`units::sense_traffic` to `steer_and_move`) for both sides; columns with slowest pace; taking positions.
 4. **Orders**: per-unit/column orders over the radio, with delay and EW; field UI for them.
 5. **Map table**: allotment, placement, support picks; Command mode start.
 6. **Supply and reinforcement columns** during the battle.
@@ -123,7 +123,7 @@ stream, so same-day style checks still work per seed):
 - `game/dioramas/{vuhledar,robotyne}.ron`; `crates/core/src/data.rs` (spec types), `crates/core/src/geo.rs`
   (Layout, Polyline, Route → graph), `crates/core/src/diorama.rs`
 - `crates/sim/src/data.rs` (SimData), `director.rs` (Act::Column, script), `units.rs` (VehicleSpec,
-  spawn_vehicle, drive_vehicles, ColumnOrder, Soldier), `fire.rs` (Post, spawn_positions, FireControl, stocks),
+  spawn_vehicle, the driving systems `sense_traffic`, `drive_decisions`, `steer_and_move`, `track_marks`, ColumnOrder, Soldier), `fire.rs` (Post, spawn_positions, FireControl, stocks),
   `evac.rs` (the existing "send a vehicle to a place" pattern)
 - `crates/sim/src/director.rs` `russian_artillery` and the script runner (the Enemy staff hooks in there), new
   `crates/sim/src/staff.rs` (Spotted, reactions, composition)
@@ -161,7 +161,7 @@ stream, so same-day style checks still work per seed):
 - The Route graph: the roads and tracks every 40 m, junctions where two roads meet, and a 100 m field grid; a
   stretch crossing a tree line outside its gaps, or the river away from a road, is for men on foot only. Costs
   by Mover (tracked, wheeled, on foot) and going (road, track, field); a Dijkstra tree per road head and mover,
-  built once; `Field::path` gives a smoothed polyline from a road head to any place, the shape `drive_vehicles`
+  built once; `Field::path` gives a smoothed polyline from a road head to any place, the shape `steer_and_move`
   already follows.
 - The Allotment places units by position number: men where men can hold it, a tank in a hide or a tree line,
   nothing beyond our side of the grey zone. The Record's posts keep their numbers (its T-64 is now `@9`).
