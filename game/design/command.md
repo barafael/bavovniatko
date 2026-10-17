@@ -216,9 +216,11 @@ stream, so same-day style checks still work per seed):
   `OrdersView` inserted (read by nothing), the Record's day changed from 23 s on (same-day on Vuhledar; the same
   code replays itself exactly). Something in the day depends on the world's make-up rather than its contents —
   likely two systems with no order between them; worth finding before anything else has to join the Record.
-  (2026-10-17, phase 7) The same-day check once differed at Vuhledar in the last four seconds of the day (an extra
-  loss of ours at 1436 s) while other runs loaded the machine; run alone, the same build was the same again. The film's
-  step is not wholly proof against the machine's load either: run the same-day check alone.
+  (2026-10-17, phases 7 and 8) The same build films Vuhledar's day one of two ways, run to run, loaded or not: the
+  same to the last four seconds, and then, one time, three more bursts of machine-gun fire and one more loss of ours
+  at 1436 s. Both phases' builds gave both. So the same-day check can say "different" at Vuhledar without a change
+  to blame: compare with an earlier run of the other outcome (p8-v and head-v in devlog/same-day), or run it again.
+  Likely the same cause as above, an order between two systems that the scheduler is free to choose.
 - Tested headless: at Vuhledar a Column held, went on, took tree line 18 from 13 and fell back to its road head;
   at Mala Tokmachka hold and advance to both waves, the orders 4–14 s on the net, two lost under the jammers.
   Shots: devlog/shots/*-orders-*.jpg. The Record is unchanged (same-day: same on both days).
@@ -292,3 +294,30 @@ stream, so same-day style checks still work per seed):
   call. A line for it belongs with the Enemy staff's answers (phase 8).
 - Tested headless: Mala Tokmachka with two batteries (6 missiles) and the Mavics: two Ka-52s down and four misses
   between 439 and 562 s; DRONES 5. Shot: devlog/shots/*-ad-r.jpg.
+
+### Phase 8, Spotted and the Enemy staff (2026-10-17)
+- `bav_sim::staff`, in Command only. **Spotted** is the enemy's picture of our forces, kept apart from the truth: a
+  post is spotted when it launches, a tank in its hide when it fires, a vehicle when one of their posts or vehicles
+  has it in sight within 1.5 km (not through smoke or a tree line); and an Orlan crosses our side every few minutes
+  (Vuhledar 3–6, Mala Tokmachka 2–4) along a 600 m strip, seeing a post under the trees one time in three and a
+  vehicle four in five. Each sighting is where it was then, give or take 15–40 m, and fades: a post's after five
+  minutes, a vehicle's after two.
+- The staff's rules, each with its own budget and stream:
+  - **guns**: their artillery fires on what they have spotted of our posts, not where they truly are
+    (`director::russian_artillery` reads `Spotted`); with nothing spotted, it works over the area as before;
+  - **lancet**: a Lancet comes down out of the sky at a vehicle of ours they have just seen, every four to eight
+    minutes at most, while they have any (Vuhledar 2 for the day, Mala Tokmachka 4: c09 §5);
+  - **columns** (Vuhledar, where the columns are theirs): the next column learns from what the earlier ones met
+    (`Staff::adapt`, from the hit log): six or more lost on its road and fewer than half that on the other, the other
+    road; three to mines, a plow in front; four to our missiles and shells, two more smoke vehicles and a BMP-2 in
+    its first tank's place. The intercepts tell the player ("Перехоплення: наступна колона йде іншою дорогою").
+- The battle's map table rings in red where they think something of ours is: their picture, so a ring sits a little
+  off what it marks, and goes when they lose it.
+- `BAV_STAFF=off` turns it off in Command; `BAV_STAFF=spot,guns` keeps only the rules named (`spot`, `guns`,
+  `lancet`, `columns`), for phase 9's bands to measure each. The smoke runs take Command with it off too.
+- Not yet: a flank (our unit where no column of theirs looks) drawing their infantry; the Ka-52s cued by what is
+  spotted; their answer to our air defence. The day's radio line about the Ka-52s being out of reach stays the day's.
+- Tested headless over a whole day at Vuhledar: the second column came down the other road after the first's losses
+  on the dacha road, and the fourth with a plow, two smoke vehicles and a BMP-2 leading; Orlan passes spotted a post
+  or so each. At Mala Tokmachka an Orlan spotted six of ours on the slope, and a Lancet went at a Bradley (and missed).
+  One run each way says nothing yet about the bands; that is phase 9.

@@ -97,7 +97,10 @@ comes up the road during the battle, and on the battle's table it sends Columns:
 maybe a team for the position, from a road head to a position clicked on the map; the table says how long the way is,
 how much of it runs through the grey zone, and what it costs. `BAV_SEND="200:0:bradley+bradley@54:javelin"` sends one
 at a game time. Command's catalog also has Support the day did not: air defence on call at Mala Tokmachka,
-which gets a shot at each Ka-52 as it pops up to fire, and more Mavics for the operator on both days. An allotment over the points, with more of a unit than
+which gets a shot at each Ka-52 as it pops up to fire, and more Mavics for the operator on both days. In Command an
+Enemy staff answers what the player does, over the day's script: what of ours they have spotted (by our firing,
+their eyes, the Orlans) draws their guns and their Lancets, and their next column learns from the last ones; the
+intercepts say so, and the battle's table rings what they have spotted. `BAV_STAFF=off` turns it off. An allotment over the points, with more of a unit than
 there were, or with a position given twice, stops the game with the reason. A unit's position is a number from
 the field (`crates/core/src/field.rs`): the diorama's own posts first, then its tank hides, then every tree line's
 edge and the ruins of the town's edge; a post goes where men can hold it, a tank in a hide or a tree line, and

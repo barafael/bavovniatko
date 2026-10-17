@@ -90,6 +90,7 @@ impl Script {
     }
 }
 
+#[allow(clippy::type_complexity)]
 fn run_script(
     mut commands: Commands,
     time: Res<Time>,
@@ -102,7 +103,7 @@ fn run_script(
     op: Res<crate::player::ObservationPost>,
     models: Res<Models>,
     palette: Res<Palette>,
-    (mut order, helis, book): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>, Res<crate::units::RouteBook>),
+    (mut order, helis, book, staff): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>, Res<crate::units::RouteBook>, Option<Res<crate::staff::Staff>>),
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
@@ -125,6 +126,13 @@ fn run_script(
         match beat.act {
             Act::Column { route, kinds, plow, smoke, start, label, rescue } => {
                 *wave += 1;
+                // Command: the Enemy staff may send it otherwise than the script has it (`staff::Staff::adapt`).
+                let plan = crate::staff::ColumnPlan { route: *route, kinds: kinds.clone(), plow: *plow, smoke: *smoke, start: *start };
+                let crate::staff::ColumnPlan { route, kinds, plow, smoke, start } = match staff.as_deref() {
+                    Some(s) if !*rescue => s.adapt(plan, &mut radio, now),
+                    _ => plan,
+                };
+                let (route, kinds, plow, smoke, start) = (&route, &kinds, &plow, &smoke, &start);
                 let n = kinds.len();
                 // Single file, the lead furthest up the road, 30–60 m between vehicles: no two drivers keep the
                 // same distance.
@@ -221,8 +229,11 @@ fn russian_artillery(
     positions: Query<&crate::fire::Post>,
     vehicles: Query<(&units::Vehicle, &Transform)>,
     soldiers: Query<(&units::Soldier, &Transform)>,
+    spotted: Option<Res<crate::staff::Spotted>>,
 ) {
     let now = time.elapsed_secs_f64();
+    // Command's Enemy staff: their guns fire on what they have spotted of ours, not on where it truly is.
+    let spotted = spotted.filter(|_| crate::staff::rule("guns")).map(|s| s.positions());
     if script.t < script.next_barrage {
         return;
     }
@@ -248,14 +259,14 @@ fn russian_artillery(
             men[rng.random_range(0..men.len())]
         } else {
             // The start line and the forward tree line.
-            let posts: Vec<Vec2> = positions.iter().filter(|p| p.side == Side::Ua && p.strength > 0).map(|p| p.pos).collect();
+            let posts: Vec<Vec2> = spotted.clone().unwrap_or_else(|| positions.iter().filter(|p| p.side == Side::Ua && p.strength > 0).map(|p| p.pos).collect());
             if !posts.is_empty() && rng.random_bool(0.3) { posts[rng.random_range(0..posts.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0)) } else { Vec2::new(rng.random_range(-1800.0..1800.0), rng.random_range(-1500.0..-850.0)) }
         };
         commands.spawn(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 40.0, interval: 2.0, next: now, flight: 20.0, by: Side::Ru });
         return;
     }
     script.next_barrage = script.t + rng.random_range(35.0..75.0);
-    let live: Vec<Vec2> = positions.iter().filter(|p| p.strength > 0).map(|p| p.pos).collect();
+    let live: Vec<Vec2> = spotted.unwrap_or_else(|| positions.iter().filter(|p| p.strength > 0).map(|p| p.pos).collect());
     let target = if !live.is_empty() && rng.random_bool(0.6) {
         live[rng.random_range(0..live.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0))
     } else {

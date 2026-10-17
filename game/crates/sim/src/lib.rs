@@ -22,6 +22,7 @@ pub mod paint;
 pub mod player;
 pub mod robotyne;
 pub mod sound;
+pub mod staff;
 pub mod supply;
 pub mod units;
 

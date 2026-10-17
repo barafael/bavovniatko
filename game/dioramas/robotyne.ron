@@ -169,6 +169,8 @@
     old_wreck_kinds: [T72, Bmp2, Mtlb, T72, Bmp2, Mtlb, T72, Bmp2],
     registered_fire: (90.0, 4),
     // The drone team behind the start line; south of Mala Tokmachka it is hard to find.
+    // Command's Enemy staff (bav_sim::staff): the Lancets hunted the Leopards here (c09 §5); the Orlans watch the slope.
+    staff: (lancets: 4, orlan: (120.0, 240.0)),
     operator: (pos: (-300.0, -960.0), found_per_hour: 0.05),
     // Their EW (db/research/11 §5): platoon jammers in the second line behind the crest, each switched on and off, the heavier emitters
     // further back felt past the jam line; and GNSS jamming lifted about a minute before each Ka-52 run.

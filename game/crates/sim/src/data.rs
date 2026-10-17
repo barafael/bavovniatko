@@ -39,6 +39,9 @@ pub struct SimData {
     /// The strike drones of the day (how many is the Allotment's; none: the drone is eyes only).
     #[serde(default)]
     pub fpv: Option<FpvSpec>,
+    /// Command's Enemy staff: its budgets for the day (`staff`).
+    #[serde(default)]
+    pub staff: crate::staff::StaffSpec,
     /// The day: at each game second, what happens.
     pub script: Vec<(f32, Act)>,
 }

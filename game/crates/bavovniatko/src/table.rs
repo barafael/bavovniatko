@@ -42,7 +42,7 @@ impl Plugin for TablePlugin {
             .add_systems(Update, (table_flow, fit_map, table_clicks, table_hover, show_table).chain().run_if(in_state(crate::Phase::Briefing)).in_set(crate::Step::Screen))
             .add_systems(OnEnter(crate::Phase::Playing), to_battle)
             .insert_resource(Composer::from_dev())
-            .add_systems(Update, (battle_table, fit_map, battle_clicks, compose_clicks, show_composer).chain().run_if(in_state(crate::Phase::Playing)).in_set(crate::Step::Screen));
+            .add_systems(Update, (battle_table, show_spotted, fit_map, battle_clicks, compose_clicks, show_composer).chain().run_if(in_state(crate::Phase::Playing)).in_set(crate::Step::Screen));
     }
 }
 
@@ -94,6 +94,9 @@ type Panels<'w, 's> = Query<'w, 's, (&'static mut Node, Has<AllotPanel>), (Or<(W
 /// One of our units on the map during the battle, by its wave.
 #[derive(Component)]
 struct UnitMark(u32);
+/// Where the enemy thinks something of ours is (Command's Enemy staff: `bav_sim::staff::Spotted`).
+#[derive(Component)]
+struct SpottedMark;
 /// The Column composer's parts: so many of a vehicle, a team, the road head, and the send button; its texts.
 #[derive(Component)]
 struct SendCount(String, i32);
@@ -703,7 +706,7 @@ fn battle_table(
     for (_, _, mut vis, _, _) in free {
         *vis = Visibility::Hidden;
     }
-    let mut s = String::from("THE MAP TABLE (КАРТА)   [T] close; the battle goes on\n\nOUR UNITS (НАШІ ПІДРОЗДІЛИ)\n");
+    let mut s = String::from("THE MAP TABLE (КАРТА)   [T] close; the battle goes on\nred rings: where the enemy has spotted us (виявлено)\n\nOUR UNITS (НАШІ ПІДРОЗДІЛИ)\n");
     if units.is_empty() {
         s.push_str("None of ours on the move.\n");
     }
@@ -887,4 +890,44 @@ fn show_composer(
         s.push_str(&format!("\n{}", composer.status));
     }
     set(&mut texts.p3(), s);
+}
+
+/// On the battle's table, a red ring where the enemy thinks something of ours is: their picture, not the truth, so
+/// the ring sits a little off what it marks, and goes when they lose sight of it.
+fn show_spotted(
+    mut commands: Commands,
+    ui: Res<bav_sim::orders::OrdersView>,
+    spotted: Option<Res<bav_sim::staff::Spotted>>,
+    map: Single<Entity, With<MapNode>>,
+    mut marks: Query<(&mut Node, &mut Visibility), With<SpottedMark>>,
+) {
+    let seen: Vec<Vec2> = match (&spotted, ui.on_table) {
+        (Some(s), true) => s.0.values().map(|s| s.at).collect(),
+        _ => Vec::new(),
+    };
+    let mut free = marks.iter_mut();
+    for at in &seen {
+        let at = on_map(*at);
+        match free.next() {
+            Some((mut node, mut vis)) => {
+                node.left = percent(at.x * 100.0);
+                node.top = percent(at.y * 100.0);
+                *vis = Visibility::Inherited;
+            }
+            None => {
+                let mark = commands
+                    .spawn((
+                        Node { position_type: PositionType::Absolute, left: percent(at.x * 100.0), top: percent(at.y * 100.0), width: px(22), height: px(22), margin: UiRect { left: px(-11), top: px(-11), ..default() }, border: UiRect::all(px(2)), border_radius: BorderRadius::MAX, ..default() },
+                        BorderColor::all(Color::srgb(0.85, 0.10, 0.05)),
+                        GlobalZIndex(13),
+                        SpottedMark,
+                    ))
+                    .id();
+                commands.entity(*map).add_child(mark);
+            }
+        }
+    }
+    for (_, mut vis) in free {
+        *vis = Visibility::Hidden;
+    }
 }

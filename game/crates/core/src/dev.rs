@@ -87,6 +87,8 @@ pub struct DevEnv {
     pub send: Option<String>,
     /// `BAV_COMPOSE="0:bmp2+mtlb@10:stugna"`: a Column made up on the battle's map table, not sent (for shots of it).
     pub compose: Option<String>,
+    /// `BAV_STAFF=off`, or a list of its rules (`spot,guns,lancet,columns`): Command's Enemy staff (`bav_sim::staff`).
+    pub staff: Option<String>,
     /// `BAV_ORDERS=open`: start with the field view of the orders open (for shots of it).
     pub orders_open: bool,
     /// `BAV_TABLE=open`: keep Command's map table open (for shots of it), even with `BAV_SKIP_BRIEFING`;
@@ -233,6 +235,7 @@ impl DevEnv {
             order: var("BAV_ORDER"),
             send: var("BAV_SEND"),
             compose: var("BAV_COMPOSE"),
+            staff: var("BAV_STAFF"),
             orders_open: var("BAV_ORDERS").is_some_and(|v| v == "open"),
             table_open: var("BAV_TABLE").is_some_and(|v| v == "open"),
             table_battle: var("BAV_TABLE").is_some_and(|v| v == "battle"),
