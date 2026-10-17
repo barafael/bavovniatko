@@ -423,7 +423,7 @@ fn smoke(_args: &[String]) -> Result {
         ("lineup", &[("BAV_LINEUP", "0,0,0")]),
         ("vshadows-off", &[("BAV_OFF", "vshadows")]),
         ("command", &[("BAV_PLAY", "command"), ("BAV_ORDER", "3:1:hold")]),
-        ("table", &[("BAV_PLAY", "command"), ("BAV_TABLE", "battle"), ("BAV_ORDERS", "open")]),
+        ("table", &[("BAV_PLAY", "command"), ("BAV_TABLE", "battle"), ("BAV_ORDERS", "open"), ("BAV_COMPOSE", "0:bradley@3"), ("BAV_SEND", "0.5:0:bradley@3")]),
         ("ground", &[("BAV_VIEW", "ground")]),
         ("diag", &[("BAV_DIAG", "1")]),
     ];

@@ -83,6 +83,10 @@ pub struct DevEnv {
     pub column: Option<String>,
     /// `BAV_ORDER=<orders>`: Orders given at game times, for the headless runs (`bav_sim::orders`).
     pub order: Option<String>,
+    /// `BAV_SEND=<columns>`: Columns sent on Supply at game times, for the headless runs (`bav_sim::supply`).
+    pub send: Option<String>,
+    /// `BAV_COMPOSE="0:bmp2+mtlb@10:stugna"`: a Column made up on the battle's map table, not sent (for shots of it).
+    pub compose: Option<String>,
     /// `BAV_ORDERS=open`: start with the field view of the orders open (for shots of it).
     pub orders_open: bool,
     /// `BAV_TABLE=open`: keep Command's map table open (for shots of it), even with `BAV_SKIP_BRIEFING`;
@@ -227,6 +231,8 @@ impl DevEnv {
             allot: var("BAV_ALLOT"),
             column: var("BAV_COLUMN"),
             order: var("BAV_ORDER"),
+            send: var("BAV_SEND"),
+            compose: var("BAV_COMPOSE"),
             orders_open: var("BAV_ORDERS").is_some_and(|v| v == "open"),
             table_open: var("BAV_TABLE").is_some_and(|v| v == "open"),
             table_battle: var("BAV_TABLE").is_some_and(|v| v == "battle"),

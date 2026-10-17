@@ -247,3 +247,29 @@ stream, so same-day style checks still work per seed):
 - Tested: Command at Vuhledar with other picks (Stugna and Javelins in tree lines 20, 25 and 30, eight 155 mm, three
   HIMARS): four posts and a hide on the field, 128 rounds, the posts' missiles fired. Shots: devlog/shots/*-table-*.jpg.
   The Record is unchanged (same-day: same on both days).
+
+### Phase 6, Supply and reinforcement Columns (2026-10-17)
+- `bav_sim::supply`: in Command, Supply (підвіз) comes up the road during the battle: some at the start and more each
+  minute of the day's clock (`allotment.supply`: Vuhledar 12 and 2 a minute, Mala Tokmachka 16 and 2), about 60 over
+  the day. A Column costs the catalog `supply` of each vehicle and of the team it brings.
+- A Column is vehicles of the day's kinds, as many as there were less the Allotment's and what has been sent; it may
+  bring a team (Stugna, Javelin or riflemen), which takes the position as a post of ours when the first of the Column
+  is there, and is lost with it if none of it gets there. Vuhledar's catalog gains the 72nd's own carriers for it
+  (BMP-2, MT-LB); they wear the same paint as theirs, since liveries go by model, not by side.
+- On the battle's map table: so many of each vehicle (− +), a team or none, the road head (a click steps to the next),
+  a position clicked on the map with none of ours picked (marked on the map), and Send. The panel gives the way's
+  length and how much of it runs through the grey zone (`columns::way`, the same way `columns::send` takes), the
+  cost, and why not where it cannot go (no way there; not enough Supply; none left). The orders' panel over the drone's
+  picture shows the Supply too.
+- At Vuhledar the tree lines in front of the town are no place to send vehicles: our own belts close the field behind
+  them, and the only way is down the road through the kill zone into the grey zone, where the first test Column swerved
+  round the wrecks onto our mined shoulders and was lost with its team. The town's edge, the hides and the tree lines
+  at the belts' ends are reached by road on our side. The table now says this before the Supply is spent.
+- The script's own columns at Mala Tokmachka still go as the script sends them; making the day's attack the player's
+  is for phase 9's balance, with the Enemy staff.
+- `BAV_SEND="200:0:bradley+bradley@54:javelin"` sends a Column on Supply at a game time (road head, vehicles, position,
+  team); `BAV_COMPOSE="1:bmp2+bmp2@36:javelin"` makes one up on the battle's table without sending it.
+- Tested headless: Vuhledar, a BMP-2 and an MT-LB with a Stugna team from road head 0 to the hide west of the
+  Wanderer's, 2 km, there at 666 s, the team in the hide 10 s later; a second Column refused for want of Supply.
+  Mala Tokmachka, two Bradleys with a Javelin team to the forward tree line, 13 Supply, there at 521 s, the team in
+  position, our ATGM teams four. Shots: devlog/shots/*-supply-*.jpg.

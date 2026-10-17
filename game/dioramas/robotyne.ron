@@ -148,6 +148,8 @@
     // player's battery, the brigade's guns, the mortars, and one strike drone. 304 of 310 points.
     allotment: (
         points: 310,
+        // Command's Supply: what there is at the start, and what comes up each minute of the day's clock.
+        supply: (16, 2.0),
         record: [
             (id: "stugna", at: Some(0)), (id: "stugna", at: Some(1)), (id: "javelin", at: Some(2)), (id: "rifles", at: Some(3)),
             (id: "rifles", at: Some(4)),

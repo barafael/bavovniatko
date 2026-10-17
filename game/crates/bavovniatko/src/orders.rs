@@ -68,6 +68,7 @@ fn panel(
     assets: Res<AssetServer>,
     ui: Res<OrdersView>,
     net: Res<Net>,
+    supply: Res<bav_sim::supply::Supply>,
     view: Res<View>,
     ours: Ours,
     book: Res<RouteBook>,
@@ -77,10 +78,11 @@ fn panel(
 ) {
     let open = ui.open && view.mode == Mode::Drone;
     let units = if open { units(ours.iter(), &book) } else { Vec::new() };
+    let supply = format!("Supply (підвіз) {:.0}", supply.have.floor());
     let s = if !open {
-        "[O] Orders (Накази)".to_string()
+        format!("[O] Orders (Накази)   [T] the map table (карта)   {supply}")
     } else {
-        let mut s = String::from("ORDERS (НАКАЗИ)   [O] close\n");
+        let mut s = format!("ORDERS (НАКАЗИ)   [O] close   {supply}\n");
         if units.is_empty() {
             s.push_str("\nNone of ours on the field.\n");
         }

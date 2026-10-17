@@ -267,7 +267,7 @@ pub fn spawn_allotted(mut commands: Commands, models: Res<Models>, palette: Res<
 
 /// A post: a few figures in the trench line under the trees, mostly hidden, facing the enemy, and maybe an ATGM team;
 /// the `i`th of the day's, which staggers its fire and its reloads.
-fn spawn_post(commands: &mut Commands, models: &Models, palette: &Palette, i: usize, side: Side, p: Vec2, weapon: Option<Atgm>) {
+pub(crate) fn spawn_post(commands: &mut Commands, models: &Models, palette: &Palette, i: usize, side: Side, p: Vec2, weapon: Option<Atgm>) {
     let mut figures = Vec::new();
     let face = if side == Side::Ua { std::f32::consts::PI } else { 0.0 };
     for k in 0..3 {

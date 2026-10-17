@@ -11,7 +11,12 @@
 //! they are, and orders given from it as from the drone's view (`bav_sim::orders`).
 //!
 //! Headless (`BAV_SKIP_BRIEFING`) the table settles its first picks at once; `BAV_TABLE=open` keeps it open for a shot,
-//! `BAV_TABLE=battle` opens it once the battle is on.
+//! `BAV_TABLE=battle` opens it once the battle is on, and `BAV_COMPOSE` makes up a Column on it.
+//!
+//! On the battle's table a Column is made up and sent on Supply (`bav_sim::supply`): so many of each vehicle there is
+//! left, maybe a team to bring into the position, the road head (a click steps to the next), a position clicked on the
+//! map with none of ours picked; the panel says how long its way is, how much of it runs through the grey zone, and
+//! what it costs.
 
 use bav_core::{
     field::{Ground, PositionKind, field},
@@ -36,7 +41,8 @@ impl Plugin for TablePlugin {
             .add_systems(Startup, spawn_table)
             .add_systems(Update, (table_flow, fit_map, table_clicks, table_hover, show_table).chain().run_if(in_state(crate::Phase::Briefing)).in_set(crate::Step::Screen))
             .add_systems(OnEnter(crate::Phase::Playing), to_battle)
-            .add_systems(Update, (battle_table, fit_map, battle_clicks).chain().run_if(in_state(crate::Phase::Playing)).in_set(crate::Step::Screen));
+            .insert_resource(Composer::from_dev())
+            .add_systems(Update, (battle_table, fit_map, battle_clicks, compose_clicks, show_composer).chain().run_if(in_state(crate::Phase::Playing)).in_set(crate::Step::Screen));
     }
 }
 
@@ -88,6 +94,42 @@ type Panels<'w, 's> = Query<'w, 's, (&'static mut Node, Has<AllotPanel>), (Or<(W
 /// One of our units on the map during the battle, by its wave.
 #[derive(Component)]
 struct UnitMark(u32);
+/// The Column composer's parts: so many of a vehicle, a team, the road head, and the send button; its texts.
+#[derive(Component)]
+struct SendCount(String, i32);
+#[derive(Component)]
+struct TeamPick(String);
+#[derive(Component)]
+struct HeadPick;
+#[derive(Component)]
+struct SendButton;
+#[derive(Component)]
+struct SendText(String);
+#[derive(Component)]
+struct SupplyText;
+#[derive(Component)]
+struct HeadText;
+#[derive(Component)]
+struct ComposeText;
+
+/// The Column being made up on the table.
+#[derive(Resource, Default)]
+struct Composer {
+    vehicles: std::collections::BTreeMap<String, u32>,
+    team: Option<String>,
+    head: usize,
+    to: Option<usize>,
+    status: String,
+}
+
+impl Composer {
+    /// Empty, or as `BAV_COMPOSE` makes it up.
+    fn from_dev() -> Self {
+        let Some(r) = crate::dev::dev().compose.as_deref() else { return Self::default() };
+        let r = bav_sim::supply::parse_request(r).unwrap_or_else(|| panic!("BAV_COMPOSE: cannot read {r:?} (<road head>:<id>+<id>@<position>[:<team id>])"));
+        Self { vehicles: r.vehicles.into_iter().collect(), team: r.team, head: r.head, to: Some(r.to), status: String::new() }
+    }
+}
 
 const PAPER: [u8; 3] = [233, 226, 207];
 const INK: Color = Color::srgb(0.16, 0.13, 0.10);
@@ -187,7 +229,31 @@ fn spawn_table(mut commands: Commands, assets: Res<AssetServer>, mut images: Res
                 BackgroundColor(PANEL),
                 BattlePanel,
             ))
-            .with_child((text("", 14.0, INK), BattleText));
+            .with_children(|p| {
+                p.spawn((text("", 14.0, INK), BattleText));
+                // The Column composer: vehicles, a team, the road head, then a position on the map, and send.
+                p.spawn(text("\nSEND A COLUMN (ВІДПРАВИТИ КОЛОНУ)", 13.0, DIM_INK));
+                p.spawn((text("", 14.0, INK), SupplyText));
+                for u in d.catalog.iter().filter(|u| matches!(u.what, UnitKind::Vehicle(_))) {
+                    p.spawn(Node { column_gap: px(4), align_items: AlignItems::Start, ..default() }).with_children(|r| {
+                        for (sign, label) in [(-1, " − "), (1, " + ")] {
+                            r.spawn((Button, Node { padding: UiRect::axes(px(4), px(0)), flex_shrink: 0.0, ..default() }, BackgroundColor(Color::srgba(0.0, 0.0, 0.0, 0.12)), SendCount(u.id.clone(), sign)))
+                                .with_child((Text::new(label), font_of(&assets, 14.0), TextColor(INK)));
+                        }
+                        r.spawn((Text::new(""), font_of(&assets, 14.0), TextColor(INK), Node { margin: UiRect::left(px(4)), ..default() }, SendText(u.id.clone())));
+                    });
+                }
+                p.spawn(text("a team to bring into the position (розрахунок):", 12.0, DIM_INK));
+                for u in d.catalog.iter().filter(|u| matches!(u.what, UnitKind::Post(_))) {
+                    p.spawn((Button, Node { padding: UiRect::axes(px(6), px(2)), ..default() }, BackgroundColor(Color::NONE), TeamPick(u.id.clone())))
+                        .with_child((text("", 14.0, INK), SendText(u.id.clone())));
+                }
+                p.spawn((Button, Node { margin: UiRect::top(px(4)), padding: UiRect::axes(px(6), px(2)), align_self: AlignSelf::Start, ..default() }, BackgroundColor(Color::srgba(0.0, 0.0, 0.0, 0.12)), HeadPick))
+                    .with_child((text("", 14.0, INK), HeadText));
+                p.spawn((text("", 13.0, INK), ComposeText));
+                p.spawn((Button, Node { margin: UiRect::top(px(8)), padding: UiRect::axes(px(14), px(6)), align_self: AlignSelf::Start, ..default() }, BackgroundColor(INK), SendButton))
+                    .with_child(text("SEND (ВІДПРАВИТИ)", 15.0, Color::srgb(0.95, 0.92, 0.84)));
+            });
             root.spawn((Node { flex_direction: FlexDirection::Column, width: px(560), flex_shrink: 0.0, padding: UiRect::all(px(14)), row_gap: px(4), overflow: Overflow::clip(), ..default() }, BackgroundColor(PANEL), AllotPanel))
                 .with_children(|p| {
                     p.spawn(text(&format!("ALLOTMENT (НАРЯД СИЛ)\n{}", bav_core::diorama::diorama().tally_date()), 18.0, INK));
@@ -664,6 +730,7 @@ fn battle_table(
 fn battle_clicks(
     keys: Res<ButtonInput<KeyCode>>,
     mut ui: ResMut<bav_sim::orders::OrdersView>,
+    mut composer: ResMut<Composer>,
     marks: Query<(&Interaction, &UnitMark), Changed<Interaction>>,
     markers: Query<(&Interaction, &Marker), Changed<Interaction>>,
     mut requests: MessageWriter<bav_sim::orders::OrderRequest>,
@@ -674,8 +741,24 @@ fn battle_clicks(
     }
     for (i, m) in &marks {
         if *i == Interaction::Pressed {
-            ui.selected = Some(m.0);
+            ui.selected = if ui.selected == Some(m.0) { None } else { Some(m.0) };
         }
+    }
+    for (i, m) in &markers {
+        if *i != Interaction::Pressed {
+            continue;
+        }
+        match ui.selected {
+            // A unit picked: it goes there.
+            Some(wave) if field().positions[m.0].kind.holds_vehicles() => requests.write(OrderRequest { wave, order: Order::TakePosition(m.0) }),
+            Some(_) => continue,
+            // Nothing picked: the Column being made up goes there.
+            None => {
+                composer.to = Some(m.0);
+                composer.status.clear();
+                continue;
+            }
+        };
     }
     let Some(wave) = ui.selected else { return };
     for (key, order) in [(KeyCode::KeyG, Order::Advance), (KeyCode::KeyK, Order::Hold), (KeyCode::KeyB, Order::FallBack)] {
@@ -683,9 +766,125 @@ fn battle_clicks(
             requests.write(OrderRequest { wave, order });
         }
     }
-    for (i, m) in &markers {
-        if *i == Interaction::Pressed && field().positions[m.0].kind.holds_vehicles() {
-            requests.write(OrderRequest { wave, order: Order::TakePosition(m.0) });
+}
+
+/// The Column composer's buttons: one more or fewer of a vehicle, a team or none, the next road head, and send.
+#[allow(clippy::too_many_arguments, clippy::type_complexity)]
+fn compose_clicks(
+    ui: Res<bav_sim::orders::OrdersView>,
+    mut composer: ResMut<Composer>,
+    counts: Query<(&Interaction, &SendCount), Changed<Interaction>>,
+    teams: Query<(&Interaction, &TeamPick), Changed<Interaction>>,
+    head: Query<&Interaction, (Changed<Interaction>, With<HeadPick>)>,
+    send: Query<&Interaction, (Changed<Interaction>, With<SendButton>)>,
+    supply: Res<bav_sim::supply::Supply>,
+    mut requests: MessageWriter<bav_sim::supply::ColumnRequest>,
+) {
+    if !ui.on_table {
+        return;
+    }
+    for (i, c) in &counts {
+        if *i == Interaction::Pressed {
+            let n = composer.vehicles.entry(c.0.clone()).or_default();
+            *n = (*n as i32 + c.1).clamp(0, supply.left(&c.0) as i32) as u32;
+            composer.status.clear();
         }
     }
+    for (i, t) in &teams {
+        if *i == Interaction::Pressed {
+            composer.team = if composer.team.as_deref() == Some(&t.0) { None } else { Some(t.0.clone()) };
+            composer.status.clear();
+        }
+    }
+    if head.iter().any(|i| *i == Interaction::Pressed) {
+        composer.head = (composer.head + 1) % field().road_heads.len().max(1);
+    }
+    if send.iter().any(|i| *i == Interaction::Pressed) {
+        let Some(to) = composer.to else {
+            composer.status = "Click a position on the map for it first (with none of ours picked).".into();
+            return;
+        };
+        let r = request(&composer, to);
+        match supply.cost(&r) {
+            Ok(c) if c as f32 > supply.have => composer.status = format!("Not enough Supply: it needs {c}, there is {:.0}.", supply.have),
+            Ok(_) => {
+                requests.write(r);
+                composer.vehicles.clear();
+                composer.team = None;
+                composer.status = "Sent.".into();
+            }
+            Err(e) => composer.status = e,
+        }
+    }
+}
+
+/// The Column as made up so far, to a position.
+fn request(composer: &Composer, to: usize) -> bav_sim::supply::ColumnRequest {
+    bav_sim::supply::ColumnRequest {
+        vehicles: composer.vehicles.iter().filter(|(_, n)| **n > 0).map(|(id, n)| (id.clone(), *n)).collect(),
+        team: composer.team.clone(),
+        head: composer.head,
+        to,
+    }
+}
+
+/// The composer's texts: the Supply, each vehicle and team with its cost and what is left, the road head, and the
+/// Column's way and cost.
+#[allow(clippy::type_complexity)]
+fn show_composer(
+    ui: Res<bav_sim::orders::OrdersView>,
+    composer: Res<Composer>,
+    supply: Res<bav_sim::supply::Supply>,
+    mut texts: ParamSet<(Query<(&SendText, &mut Text)>, Single<&mut Text, With<SupplyText>>, Single<&mut Text, With<HeadText>>, Single<&mut Text, With<ComposeText>>)>,
+    mut teams: Query<(&TeamPick, &mut BackgroundColor), Without<Marker>>,
+    mut markers: Query<(&Marker, &mut BackgroundColor), Without<TeamPick>>,
+) {
+    if !ui.on_table {
+        return;
+    }
+    // The position the Column is for, marked on the map.
+    for (m, mut bg) in &mut markers {
+        let want = if composer.to == Some(m.0) { ARMED } else if bg.0 == ARMED { Color::srgba(1.0, 1.0, 1.0, 0.35) } else { continue };
+        if bg.0 != want {
+            bg.0 = want;
+        }
+    }
+    let d = bav_sim::data::sim_data();
+    let set = |t: &mut Text, s: String| {
+        if t.0 != s {
+            t.0 = s;
+        }
+    };
+    for (st, mut t) in &mut texts.p0() {
+        let Some(u) = d.catalog.iter().find(|u| u.id == st.0) else { continue };
+        let chosen = if matches!(u.what, UnitKind::Vehicle(_)) { format!("   {} chosen", composer.vehicles.get(&st.0).copied().unwrap_or(0)) } else { String::new() };
+        set(&mut t, format!("{} ({})   {} supply   {} left{chosen}", u.name.0, u.name.1, u.supply, supply.left(&st.0)));
+    }
+    for (tp, mut bg) in &mut teams {
+        bg.0 = if composer.team.as_deref() == Some(&tp.0) { ARMED } else { Color::NONE };
+    }
+    set(&mut texts.p1(), format!("Supply (підвіз): {:.0}, {:.0} more a minute", supply.have.floor(), supply.per_min));
+    let heads = &field().road_heads;
+    let h = &heads[composer.head.min(heads.len().saturating_sub(1))];
+    set(&mut texts.p2(), format!("from road head {}: {} ({}) >", composer.head, h.name.0, h.name.1));
+    let mut s = match composer.to {
+        None => "to: click a position on the map (with none of ours picked)".to_string(),
+        Some(to) => {
+            let p = &field().positions[to];
+            let way = match bav_sim::columns::way(composer.head, to) {
+                Ok(w) if w.exposed > 50.0 => format!("{:.1} km, {:.1} km of it through the grey zone", w.line.length() / 1000.0, w.exposed / 1000.0),
+                Ok(w) => format!("{:.1} km, all on our side", w.line.length() / 1000.0),
+                Err(e) => e,
+            };
+            let cost = match supply.cost(&request(&composer, to)) {
+                Ok(c) => format!("costs {c} supply"),
+                Err(e) => e,
+            };
+            format!("to position {to}, the {} ({}): {way}\n{cost}", p.kind.name().0, p.kind.name().1)
+        }
+    };
+    if !composer.status.is_empty() {
+        s.push_str(&format!("\n{}", composer.status));
+    }
+    set(&mut texts.p3(), s);
 }

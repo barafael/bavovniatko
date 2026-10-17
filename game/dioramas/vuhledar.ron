@@ -141,6 +141,9 @@
         (id: "rifles", name: ("Rifle section", "Стрілецьке відділення"), what: Post(None), cost: 3, supply: 2, available: 9),
         // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
         (id: "t64", name: ("T-64BV in a hide", "Т-64БВ у капонірі"), what: Hide, cost: 10, supply: 6, available: 2),
+        // The 72nd's own carriers, for Command's Supply: a Column of them brings a team up to a position by day.
+        (id: "bmp2", name: ("BMP-2", "БМП-2"), what: Vehicle(Bmp2), cost: 6, supply: 6, available: 4),
+        (id: "mtlb", name: ("MT-LB", "МТ-ЛБ"), what: Vehicle(Mtlb), cost: 4, supply: 4, available: 3),
     ],
     support: [
         (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 10),
@@ -154,6 +157,8 @@
     // the brigade's guns on their points, the battalion's mortars. 144 of 150 points.
     allotment: (
         points: 150,
+        // Command's Supply: what there is at the start, and what comes up the road each minute of the day's clock.
+        supply: (12, 2.0),
         record: [
             (id: "stugna", at: Some(0)), (id: "javelin", at: Some(1)), (id: "javelin", at: Some(2)), (id: "stugna", at: Some(3)),
             (id: "stugna", at: Some(4)), (id: "javelin", at: Some(5)), (id: "rifles", at: Some(6)), (id: "rifles", at: Some(7)),

@@ -42,24 +42,15 @@ pub struct ColumnSpec {
 const SPACING: f32 = 35.0;
 
 /// Send a Column for our side: its way from the road head to the position, the vehicles in a line at the road
-/// head, the lead first, all at the slowest one's pace (a little under it, so every driver can keep it).
+/// head, the lead first, all at the slowest one's pace (a little under it, so every driver can keep it). Its wave.
 #[allow(clippy::too_many_arguments)]
-pub fn send(commands: &mut Commands, models: &Models, palette: &Palette, book: &mut RouteBook, columns: &mut Columns, radio: &mut Radio, now: f64, order: &ColumnSpec) -> Result<(), String> {
-    let f = field();
-    let pos = f.positions.get(order.to).ok_or_else(|| format!("no position {}", order.to))?;
-    if pos.ground != Ground::Ours {
-        return Err(format!("position {} is not on our side of the grey zone", order.to));
-    }
+pub fn send(commands: &mut Commands, models: &Models, palette: &Palette, book: &mut RouteBook, columns: &mut Columns, radio: &mut Radio, now: f64, order: &ColumnSpec) -> Result<u32, String> {
     if order.kinds.is_empty() {
         return Err("a column of nothing".into());
     }
-    // The way leads behind the position, and the last stretch comes up to it the way it faces, so the Column fans out
-    // abreast along its edge, facing out (into a tree line from the back of it, as vehicles take one).
-    let behind = pos.at - pos.facing * 45.0;
-    let way = routes().path(order.head, Mover::Tracked, behind).ok_or_else(|| format!("no way from road head {} to position {}", order.head, order.to))?;
-    let mut pts = way.pts;
-    pts.push(pos.at);
-    let line = geo::Polyline::new(pts);
+    let line = way(order.head, order.to)?.line;
+    let f = field();
+    let pos = &f.positions[order.to];
     let len = line.length();
     let n = order.kinds.len();
     if len < SPACING * n as f32 + 60.0 {
@@ -78,7 +69,32 @@ pub fn send(commands: &mut Commands, models: &Models, palette: &Palette, book: &
     let head = &f.road_heads[order.head].name;
     radio.say2(now, format!("Колона пішла: {n} од., {}.", head.1), format!("Column on its way: {n} vehicles, from {}.", head.0));
     info!("column {wave}: {n} vehicles ({:?}) from road head {} to position {} ({:?} at {:.0},{:.0}), {len:.0} m at {pace:.1} m/s, at {now:.0} s", order.kinds, order.head, order.to, pos.kind, pos.at.x, pos.at.y);
-    Ok(())
+    Ok(wave)
+}
+
+/// A Column's way, and how much of it runs forward of our side.
+pub struct Way {
+    pub line: geo::Polyline,
+    /// Metres of it in the grey zone or beyond.
+    pub exposed: f32,
+}
+
+/// The way a Column takes from a road head to a position of ours: the field's tracked route to a point 45 m behind
+/// the position, and the last stretch up to it the way it faces, so the Column fans out abreast along its edge,
+/// facing out (into a tree line from the back of it, as vehicles take one).
+pub fn way(head: usize, to: usize) -> Result<Way, String> {
+    let f = field();
+    let pos = f.positions.get(to).ok_or_else(|| format!("no position {to}"))?;
+    if pos.ground != Ground::Ours {
+        return Err(format!("position {to} is not on our side of the grey zone"));
+    }
+    let behind = pos.at - pos.facing * 45.0;
+    let way = routes().path(head, Mover::Tracked, behind).ok_or_else(|| format!("no way from road head {head} to position {to}"))?;
+    let mut pts = way.pts;
+    pts.push(pos.at);
+    let line = geo::Polyline::new(pts);
+    let exposed = line.pts.windows(2).filter(|w| (w[0] + w[1]).y * 0.5 >= f.grey.0).map(|w| w[0].distance(w[1])).sum();
+    Ok(Way { line, exposed })
 }
 
 /// `BAV_COLUMN`: the Columns, by game time.
