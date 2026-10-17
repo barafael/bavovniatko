@@ -2728,7 +2728,7 @@ fn fly_debris(mut commands: Commands, time: Res<Time>, mut q: Query<(Entity, &mu
 }
 
 /// Riders get off when the section dismounts or bails out, and are thrown off when the vehicle is hit.
-fn drop_riders(mut commands: Commands, vehicles: Query<(&Vehicle, Has<Coasting>)>, riders: Query<(Entity, &ChildOf), With<Rider>>) {
+pub(crate) fn drop_riders(mut commands: Commands, vehicles: Query<(&Vehicle, Has<Coasting>)>, riders: Query<(Entity, &ChildOf), With<Rider>>) {
     for (rider, hull) in &riders {
         if let Ok((v, knocked_out)) = vehicles.get(hull.parent())
             && (v.troops == 0 || knocked_out)

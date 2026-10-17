@@ -28,6 +28,8 @@ pub struct HitEntry {
 #[derive(Resource, Default)]
 pub struct HitLog {
     pub entries: Vec<HitEntry>,
+    /// How many entries there have ever been (the list keeps only the last twenty).
+    pub total: u64,
 }
 
 impl HitLog {
@@ -36,6 +38,7 @@ impl HitLog {
         let result = result.into();
         bevy::log::debug!("hit: {weapon} {from} on {:?} {} ({}/{}): {result}, at {at:.0} s", v.side, name_of(v, rescue), v.wave, v.idx);
         self.entries.push(HitEntry { at, weapon, from, target, target_name: name_of(v, rescue), side: v.side, result });
+        self.total += 1;
         if self.entries.len() > 20 {
             self.entries.remove(0);
         }
@@ -44,6 +47,7 @@ impl HitLog {
     /// An entry for something that is not a vehicle: a jammer, a post.
     pub fn note(&mut self, at: f64, weapon: &'static str, from: &'static str, target_name: &str, side: Side, result: impl Into<String>) {
         self.entries.push(HitEntry { at, weapon, from, target: Entity::PLACEHOLDER, target_name: target_name.to_string(), side, result: result.into() });
+        self.total += 1;
         if self.entries.len() > 20 {
             self.entries.remove(0);
         }

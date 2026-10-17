@@ -36,8 +36,9 @@ impl Plugin for StaffPlugin {
         let spec = crate::data::sim_data().staff;
         app.insert_resource(Spotted::default())
             .insert_resource(StaffRng(SmallRng::seed_from_u64(crate::dev::seeded(1945))))
-            .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, losses: BTreeMap::new(), read: 0.0 })
-            .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().run_if(crate::running).in_set(crate::Step::Units));
+            .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, losses: BTreeMap::new(), read: 0 })
+            // After the units' systems, so the frame's hits are all in the log and the vehicles where they ended up.
+            .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
     }
 }
 
@@ -109,15 +110,21 @@ impl Spotted {
         self.0.insert(e, Sighting { at, seen: now, how, what });
     }
 
-    /// Where they think our posts and tanks in hides are.
+    /// Where they think our posts and tanks in hides are, west to east (in an order that does not hang on entity
+    /// ids, which parallel systems may hand out in either order).
     pub fn positions(&self) -> Vec<Vec2> {
-        self.0.values().filter(|s| s.what != What::Vehicle).map(|s| s.at).collect()
+        by_place(self.0.values().filter(|s| s.what != What::Vehicle).map(|s| s.at).collect())
     }
 
-    /// Where they think our vehicles are.
+    /// Where they think our vehicles are, west to east.
     pub fn vehicles(&self) -> Vec<Vec2> {
-        self.0.values().filter(|s| s.what == What::Vehicle).map(|s| s.at).collect()
+        by_place(self.0.values().filter(|s| s.what == What::Vehicle).map(|s| s.at).collect())
     }
+}
+
+fn by_place(mut v: Vec<Vec2>) -> Vec<Vec2> {
+    v.sort_by(|a, b| a.x.total_cmp(&b.x).then(a.y.total_cmp(&b.y)));
+    v
 }
 
 /// The staff's own stream: its choices never shift the day's other draws.
@@ -132,8 +139,8 @@ pub struct Staff {
     next_orlan: f32,
     /// Their vehicles lost, by the route they were on and what did it.
     losses: BTreeMap<(usize, Loss), u32>,
-    /// The hit log read up to here.
-    read: f64,
+    /// How many of the hit log's entries have been read.
+    read: u64,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
@@ -275,8 +282,8 @@ fn lancets(
         return;
     }
     let now = time.elapsed_secs_f64();
-    // The freshest sighting of a vehicle still there to hit.
-    let Some((&target, _)) = spotted.0.iter().filter(|(e, s)| s.what == What::Vehicle && now - s.seen < 30.0 && vehicles.get(**e).is_ok_and(|(v, _)| v.state.alive())).max_by(|a, b| a.1.seen.total_cmp(&b.1.seen)) else {
+    // The freshest sighting of a vehicle still there to hit (of those seen at once, the westernmost: not by entity).
+    let Some((&target, _)) = spotted.0.iter().filter(|(e, s)| s.what == What::Vehicle && now - s.seen < 30.0 && vehicles.get(**e).is_ok_and(|(v, _)| v.state.alive())).max_by(|a, b| a.1.seen.total_cmp(&b.1.seen).then(b.1.at.x.total_cmp(&a.1.at.x))) else {
         return;
     };
     let Ok((_, tf)) = vehicles.get(target) else { return };
@@ -299,8 +306,10 @@ fn lancets(
 
 /// What killed their vehicles, by the road they were on (from the hit log, as it fills).
 fn count_losses(mut staff: ResMut<Staff>, log: Res<HitLog>, vehicles: Query<&crate::units::Driver>) {
-    let read = staff.read;
-    for h in log.entries.iter().filter(|h| h.at > read && h.side == Side::Ru && !h.result.starts_with("missed") && !h.result.contains("did not get through")) {
+    // The entries since the last read: the newest `total - read` of the list (no more than it keeps).
+    let new = ((log.total - staff.read) as usize).min(log.entries.len());
+    staff.read = log.total;
+    for h in log.entries[log.entries.len() - new..].iter().filter(|h| h.side == Side::Ru && !h.result.starts_with("missed") && !h.result.contains("did not get through")) {
         let Ok(d) = vehicles.get(h.target) else { continue };
         let loss = match h.weapon {
             w if w.contains("mine") => Loss::Mine,
@@ -309,9 +318,6 @@ fn count_losses(mut staff: ResMut<Staff>, log: Res<HitLog>, vehicles: Query<&cra
             _ => Loss::Other,
         };
         *staff.losses.entry((d.route, loss)).or_default() += 1;
-    }
-    if let Some(last) = log.entries.last() {
-        staff.read = staff.read.max(last.at);
     }
 }
 

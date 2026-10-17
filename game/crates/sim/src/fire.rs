@@ -26,14 +26,17 @@ impl Plugin for FirePlugin {
     fn build(&self, app: &mut App) {
         // Command: our side comes onto the field when the battle starts, as the map table settled it. (Nothing of it in
         // the Record's world: there our side is laid out with theirs.)
+        // In Command the positions, theirs and ours, are laid out together when the battle starts, in the Record's
+        // order (ours first): the systems that go through the posts meet them as they would in the Record.
         if crate::allot::at_table() {
-            app.add_systems(OnEnter(crate::Phase::Playing), spawn_allotted);
+            app.add_systems(OnEnter(crate::Phase::Playing), (spawn_positions, allotted_stock).chain());
+        } else {
+            app.add_systems(Startup, spawn_positions.in_set(crate::schedule::Setup::Field));
         }
         app.insert_resource(FireRng(SmallRng::seed_from_u64(crate::dev::seeded(72))))
             .init_resource::<FireControl>()
             .add_message::<ShellLanded>()
             .add_message::<crate::player::TriggerPull>()
-            .add_systems(Startup, spawn_positions.in_set(crate::schedule::Setup::Field))
             .add_systems(
                 Update,
                 (
@@ -158,7 +161,7 @@ impl Default for FireControl {
     fn default() -> Self {
         // Zaluzhnyi: artillery ammunition is the binding constraint. ~6,000 RAAM shells reached Ukraine in late
         // 2022, but a battery on one morning gets a handful of missions.
-        // (In Command nothing until the map table has settled the Allotment: `spawn_allotted` sets it then.)
+        // (In Command nothing until the map table has settled the Allotment: `allotted_stock` sets it then.)
         let s = crate::allot::settled().map(|a| a.stock).unwrap_or_default();
         Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, air_defence: s.air_defence, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
     }
@@ -235,8 +238,8 @@ pub struct UaTank {
     pub timer: f32,
 }
 
-/// The posts and the tanks in their hides: ours as allotted (in Command, only once the map table has settled it, by
-/// `spawn_allotted`), theirs as the day had them.
+/// The posts and the tanks in their hides: ours as allotted, theirs as the day had them. At start-up in the Record;
+/// in Command when the battle starts, once the map table has settled the Allotment.
 fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
     let lay = geo::layout();
     let d = crate::data::sim_data();
@@ -252,17 +255,10 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
     }
 }
 
-/// Command: our side as the map table settled it, when the battle starts: the posts and the tanks in their hides,
-/// the rounds and missions, the strike drones, the vehicles for the wounded.
-#[allow(clippy::too_many_arguments)]
-pub fn spawn_allotted(mut commands: Commands, models: Res<Models>, palette: Res<Palette>, mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player::Fpv>, mut evac: ResMut<crate::evac::Evacuation>, mut view: ResMut<View>) {
+/// Command: the rest of our side as the map table settled it, when the battle starts: the rounds and missions, the
+/// strike drones, the vehicles for the wounded, the Mavics.
+pub fn allotted_stock(mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player::Fpv>, mut evac: ResMut<crate::evac::Evacuation>, mut view: ResMut<View>) {
     let a = crate::allot::allotment();
-    for (i, &(p, weapon)) in a.posts.iter().enumerate() {
-        spawn_post(&mut commands, &models, &palette, i, Side::Ua, p, weapon);
-    }
-    for &(hide, facing) in &a.hides {
-        spawn_hide(&mut commands, &models, hide, facing);
-    }
     *fc = FireControl::default();
     fpv.left = a.fpvs;
     evac.left = a.evacuation;

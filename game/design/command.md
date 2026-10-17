@@ -243,7 +243,7 @@ stream, so same-day style checks still work per seed):
 - The vehicles of the day's columns (Mala Tokmachka) are listed but not chosen yet: the script sends them, and their
   points stay spent. Supply makes them a choice (phase 6).
 - The Allotment is settled at the table (`allot::settle`), so in Command our side comes onto the field when the battle
-  starts (`fire::spawn_allotted`): the posts, the tanks in their hides, the rounds and missions, the FPVs, the vehicles
+  starts (`fire::spawn_positions`, then `fire::allotted_stock`): the posts, the tanks in their hides, the rounds and missions, the FPVs, the vehicles
   for the wounded. Nothing reads it before (`allot::settled`). The Record builds our side with theirs at start-up as
   it always did; the posts' and hides' spawning is shared (`spawn_post`, `spawn_hide`) and called in the same order.
 - During the battle T opens the same map over the picture, the battle running on under it: our units marked where
@@ -325,24 +325,33 @@ stream, so same-day style checks still work per seed):
   or so each. At Mala Tokmachka an Orlan spotted six of ours on the slope, and a Lancet went at a Bradley (and missed).
   One run each way says nothing yet about the bands; that is phase 9.
 
-### Phase 9, balance (2026-10-17)
-- Bands, four seeds each (devlog/band/p9.log; `BAND_TAG=rec`, `cmd-off` with `BAV_PLAY=command BAV_STAFF=off`,
-  `cmd-on` with `BAV_PLAY=command`):
+### Phase 9, balance (2026-10-17, redone 2026-10-18 after a review)
+- Fixed before measuring: in Command the positions, theirs and ours, are laid out together when the battle starts,
+  in the Record's order (`fire::spawn_positions` at `OnEnter(Playing)`); before, ours came after theirs, and the
+  systems that go through the posts (their guns pick a post by its place in the list) met them in another order. And
+  the staff's systems now run after the units' (they were unordered against the systems that write the hit log and
+  move the vehicles), read the hit log by count rather than by time (a hit logged later in the same frame was lost),
+  and order what they have spotted by place rather than by entity.
+- Command with the day's picks and no staff is now the Record, seed for seed, at Mala Tokmachka; at Vuhledar three
+  seeds in four, up to the last seconds' flip (above), and seed 1 not (27 of theirs knocked out against 29).
+- Bands, four seeds each (devlog/band/p9b.log, `BAV_STAFF` per rule), means; Mala Tokmachka of 20 vehicles of ours
+  (no evacuations sent, so not the 24 of the earlier bands with `BAV_EVAC=30`, nor the record's 19 of 24):
 
-  | | Vuhledar: theirs knocked out | Vuhledar: our losses | Mala Tokmachka: ours stopped | Mala Tokmachka: dead |
-  |---|---|---|---|---|
-  | Record | 26–29 | 1–7 | 12–18 | 19–35 |
-  | Command, the day's picks, staff off | 26–31 | 2–6 | 15–17 | 20–37 |
-  | Command, the day's picks, staff on | 27–30 | 2–6 | 16–20 | 16–50 |
+  | | Vuhledar: theirs knocked out | their dead | our losses | Mala Tokmachka: ours stopped of 20 | dead |
+  |---|---|---|---|---|---|
+  | Command, staff off | 27.5 | 161 | 4.0 | 15.8 | 28 |
+  | all rules | 29.5 | 172 | 5.0 | 17.3 | 25 |
+  | spot, guns | 28.5 | 162 | 4.0 | 17.0 | 31 |
+  | spot, lancet | 29.0 | 172 | 3.3 | 17.0 | 26 |
+  | columns | 29.5 | 171 | 4.5 | – | – |
 
-- Command with the day's own picks and no staff is the Record's band on both days: building our side when the battle
-  starts, from the table, changes nothing that matters.
-- The staff is not a thumb on the scale. At Mala Tokmachka it costs us about two more vehicles a morning (the
-  Lancets, and their guns on what they have spotted). At Vuhledar it changes nothing measurable: its columns change
-  road and put a plow or smoke in front, and still die in the kill zone, which is the record's lesson too; and with
-  the day's picks we have no vehicles out for the Lancets, which do not go for a tank in its hide.
-- Left as they are: the costs and the Supply. Bands cannot judge a player's choices; the numbers are the file's first
-  guess, to be tuned on played sessions (`allotment.points`, each entry's `cost` and `supply`, `allotment.supply`,
-  `staff`).
-- Next, if the staff should bite harder at Vuhledar: Lancets at spotted tanks in hides (a hit on a `UaTank`), their
-  infantry sent at a flank where no column of theirs looks, and the Ka-52s cued by what is spotted.
+- At Mala Tokmachka the staff costs us about one and a half vehicles a morning: their guns on what they have spotted
+  and the Lancets about one each. The dead do not rise.
+- At Vuhledar the staff costs *them* two vehicles if anything: the adapted columns still die in the kill zone, and
+  their guns no longer know where our posts are until they fire.
+- The limit of these numbers: at Vuhledar the Lancet rule moved the band though it fired no Lancet (we have no
+  vehicles out there for one). Inserting the staff's resources changes the day, the world-make-up fragility above, so
+  differences of one or two between these rows are within what that alone does.
+- Left as they are: the costs and the Supply, until played sessions; and making the staff bite at Vuhledar (Lancets
+  at spotted tanks in hides, their infantry at a flank where no column of theirs looks, the Ka-52s cued by what is
+  spotted).
