@@ -18,7 +18,7 @@ impl Plugin for FxPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(FxLight(1.0))
             .add_systems(Startup, setup_fx)
-            .add_systems(Update, (play_requests, update_particles, update_emitters, fire_glow, grass_fires, update_flashes, light_particles).chain().in_set(crate::Step::Effects));
+            .add_systems(Update, (play_requests, update_particles, update_emitters, fire_glow, grass_fires, update_flashes, update_shocks, light_particles).chain().in_set(crate::Step::Effects));
     }
 }
 
@@ -111,6 +111,8 @@ pub struct FxAssets {
     /// Each non-emissive material's own colour, to scale by [`FxLight`].
     base: Vec<Option<Color>>,
     pub crater_flash: Handle<StandardMaterial>,
+    /// The blast wave's dome, in alpha steps (`Shock`).
+    shock: Vec<Handle<StandardMaterial>>,
     pub sphere: Handle<Mesh>,
     count: usize,
     /// How many particles may live at once: `MAX_PARTICLES`, less what the player has turned the effects down.
@@ -217,7 +219,13 @@ fn setup_fx(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materi
     let quads = [meshes.add(quad(0)), meshes.add(quad(1)), meshes.add(quad(2)), meshes.add(quad(3))];
     let sphere = meshes.add(Sphere::new(1.0).mesh().ico(2).unwrap());
     let crater_flash = materials.add(StandardMaterial { base_color: Color::srgb(1.0, 0.8, 0.5), emissive: LinearRgba::rgb(40.0, 22.0, 8.0), unlit: true, ..default() });
-    commands.insert_resource(FxAssets { rng: SmallRng::seed_from_u64(0x2023_0206), quads, mats, first, base, crater_flash, sphere, count: 0, budget: MAX_PARTICLES });
+    let shock = (0..STEPS)
+        .map(|a| {
+            let alpha = (a as f32 + 1.0) / STEPS as f32 * SHOCK_ALPHA;
+            materials.add(StandardMaterial { base_color: Color::srgba(0.86, 0.87, 0.89, alpha), alpha_mode: AlphaMode::Blend, unlit: true, fog_enabled: true, ..default() })
+        })
+        .collect();
+    commands.insert_resource(FxAssets { rng: SmallRng::seed_from_u64(0x2023_0206), quads, mats, first, base, crater_flash, shock, sphere, count: 0, budget: MAX_PARTICLES });
 }
 
 #[derive(Component)]
@@ -582,6 +590,49 @@ fn update_flashes(mut commands: Commands, time: Res<Time>, mut q: Query<(Entity,
     }
 }
 
+/// The blast wave's front, as a drone sees it over a burst: a pale dome racing out from the ground, thinning as it
+/// goes, gone in a fifth of a second.
+#[derive(Component)]
+pub struct Shock {
+    age: f32,
+    life: f32,
+    /// How far it gets (m).
+    reach: f32,
+}
+
+/// How opaque the dome is at its start.
+const SHOCK_ALPHA: f32 = 0.13;
+
+fn update_shocks(mut commands: Commands, time: Res<Time>, fx: Res<FxAssets>, mut q: Query<(Entity, &mut Shock, &mut Transform, &mut MeshMaterial3d<StandardMaterial>)>) {
+    for (e, mut s, mut tf, mut mat) in &mut q {
+        s.age += time.delta_secs();
+        if s.age >= s.life {
+            commands.entity(e).despawn();
+            continue;
+        }
+        let f = s.age / s.life;
+        // Fast out of the burst, slowing as it spreads; a little flattened, as it runs along the ground.
+        let r = 1.5 + s.reach * (1.0 - (1.0 - f).powi(3));
+        tf.scale = Vec3::new(r, r * 0.75, r);
+        let a = (1.0 - f).powf(1.6);
+        let ai = ((a * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
+        if mat.0 != fx.shock[ai] {
+            mat.0 = fx.shock[ai].clone();
+        }
+    }
+}
+
+/// A blast wave from `at`, out to `reach` metres in `life` seconds.
+fn shock(commands: &mut Commands, fx: &FxAssets, at: Vec3, reach: f32, life: f32) {
+    commands.spawn((
+        Mesh3d(fx.sphere.clone()),
+        MeshMaterial3d(fx.shock[STEPS - 1].clone()),
+        Transform::from_translation(at).with_scale(Vec3::splat(1.5)),
+        NotShadowCaster,
+        Shock { age: 0.0, life, reach },
+    ));
+}
+
 pub fn flash(commands: &mut Commands, pos: Vec3, intensity: f32, range: f32, life: f32) {
     commands.spawn((
         PointLight { intensity, range, color: Color::srgb(1.0, 0.75, 0.45), shadow_maps_enabled: false, ..default() },
@@ -593,9 +644,10 @@ pub fn flash(commands: &mut Commands, pos: Vec3, intensity: f32, range: f32, lif
 // ---------------------------------------------------------------------------------------------------------
 // Composite effects
 
-/// A shell burst (`size` 1 is a 155 mm round; `ground` for a burst in the field rather than on a hull). In
-/// February a dark column of frozen clods with a white skirt of snow and a pale haze that clears in half a minute;
-/// in June a khaki column of dry earth and a brown haze that hangs for minutes.
+/// A shell burst (`size` 1 is a 155 mm round; `ground` for a burst in the field rather than on a hull): a white-hot
+/// core, an orange fireball that rolls up into its own soot, the blast wave racing out (a pale dome, and a ring of snow
+/// or dust off the ground), then the earth. In February a dark column of frozen clods with a white skirt of snow and a
+/// pale haze that clears in half a minute; in June a khaki column of dry earth and a brown haze that hangs for minutes.
 pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, size: f32, ground: bool) {
     let mut rng = std::mem::replace(&mut fx.rng, SmallRng::seed_from_u64(0));
     let rng = &mut rng;
@@ -610,36 +662,59 @@ pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, size: f32
         PointLight { intensity: 0.0, range: 1.0, ..default() },
         Flash { age: 0.0, life: 0.12, intensity: 0.0 },
     ));
-    // 0. The fireball: a fraction of a second of white-orange heat at the burst.
-    for _ in 0..(6.0 * size) as u32 {
+    // A warm glow on the ground for as long as the fireball burns.
+    flash(commands, at + Vec3::Y * 4.0, 1.2e7 * size, 90.0 * size, 0.6);
+    // 0. The core: white-hot for two frames.
+    spawn(commands, fx, Spawn { kind: Kind::Flash, pos: at + Vec3::Y * 2.0, vel: Vec3::ZERO, life: 0.14, size0: 8.0 * size, size1: 3.0 * size, alpha: 1.0, ..default() });
+    // 1. The fireball: orange, swelling to some 20 m across at 155 mm for half a second above the spray, its top
+    // rising as it goes.
+    for _ in 0..(4.0 + 18.0 * size) as u32 {
         let d = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.0..1.0), rng.random_range(-1.0..1.0));
-        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 1.5 + d * size, vel: d * rng.random_range(4.0..12.0), life: rng.random_range(0.12..0.3), size0: 3.0 * size, size1: 6.5 * size, alpha: 1.0, drag: 3.0, ..default() });
+        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 2.5 * size.sqrt() + d * 1.5 * size, vel: d * rng.random_range(5.0..14.0) * size.sqrt() + Vec3::Y * 3.0, life: rng.random_range(0.3..0.7), size0: 4.0 * size, size1: 11.0 * size, alpha: 1.0, drag: 3.5, buoyancy: 0.8, ..default() });
     }
-    // 1. Spikes: earth thrown out in fast jets, the splash silhouette of a hit.
+    // 2. Its soot: the fireball rolls up into a dark puff that climbs out of the earth and greys away.
+    for _ in 0..(5.0 * size).ceil() as u32 {
+        let jitter = Vec3::new(rng.random_range(-2.0..2.0), 0.0, rng.random_range(-2.0..2.0)) * size;
+        spawn(commands, fx, Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::Y * rng.random_range(2.5..5.0) * size.sqrt() + jitter, vel: Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(2.0..5.0), rng.random_range(-1.0..1.0)), life: rng.random_range(10.0..20.0), size0: 3.0 * size, size1: 15.0 * size, alpha: 0.45, drag: 0.7, buoyancy: 0.35, ..default() });
+    }
+    // 3. The blast wave: a faint dome racing out some 18 m at 155 mm, and on open ground a ring of snow or dust
+    // whipped off it, out ahead of the slower skirt.
+    if size >= 0.5 {
+        shock(commands, fx, at, 18.0 * size, 0.12 + 0.04 * size);
+    }
+    if ground {
+        let n = (28.0 * size) as u32;
+        for k in 0..n {
+            let a = k as f32 / n.max(1) as f32 * std::f32::consts::TAU + rng.random_range(-0.08..0.08);
+            let dir = Vec3::new(a.cos(), 0.0, a.sin());
+            spawn(commands, fx, Spawn { kind: if summer { Kind::Dust } else { Kind::Snow }, pos: at + dir * 1.5 + Vec3::Y * 0.4, vel: dir * rng.random_range(50.0..85.0) * size.sqrt() + Vec3::Y * rng.random_range(0.5..2.0), life: rng.random_range(0.7..1.3), size0: 1.2 * size, size1: 6.0 * size, alpha: 0.65, drag: 3.5, ..default() });
+        }
+    }
+    // 4. Spikes: earth thrown out in fast jets, the splash silhouette of a hit.
     for _ in 0..(14.0 * size) as u32 {
         let dir = Vec3::new(rng.random_range(-0.65..0.65), 1.0, rng.random_range(-0.65..0.65)).normalize();
         spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(30.0..62.0) * size.sqrt(), life: rng.random_range(0.6..1.2), size0: 0.7 * size, size1: 1.4 * size, alpha: 0.95, drag: 0.9, gravity: 9.8, streak: 4.5, ..default() });
     }
-    // 2. The column: earth heaving up 20–35 m and collapsing back; frozen it is dark and chunky, dry it is wide.
+    // 5. The column: earth heaving up 20–35 m and collapsing back; frozen it is dark and chunky, dry it is wide.
     for _ in 0..(14.0 * size) as u32 {
         let spread = if summer { 0.5 } else { 0.35 };
         let dir = Vec3::new(rng.random_range(-spread..spread), 1.0, rng.random_range(-spread..spread)).normalize();
         spawn(commands, fx, Spawn { kind: earth, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(16.0..38.0) * size.sqrt(), life: rng.random_range(1.8..3.4), size0: 2.2 * size, size1: if summer { 11.0 } else { 9.0 } * size, alpha: 0.95, drag: 1.4, gravity: 9.0, ..default() });
     }
-    // 3. Clods: bits of earth arcing out and falling, pocking the ground round the crater.
+    // 6. Clods: bits of earth arcing out and falling, pocking the ground round the crater.
     for _ in 0..(18.0 * size) as u32 {
         let a = rng.random_range(0.0..std::f32::consts::TAU);
         let v = Vec3::new(a.cos(), rng.random_range(0.6..1.6), a.sin()).normalize() * rng.random_range(10.0..28.0) * size.sqrt();
         spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at + Vec3::Y, vel: v, life: rng.random_range(1.4..2.8), size0: 0.45, size1: 0.35, alpha: 1.0, drag: 0.15, gravity: 9.8, streak: 2.0, ..default() });
     }
-    // 4. The skirt: snow (or dust) racing out low along the ground.
+    // 7. The skirt: snow (or dust) rolling out low along the ground behind the wave.
     for _ in 0..(14.0 * size) as u32 {
         let a = rng.random_range(0.0..std::f32::consts::TAU);
         let v = Vec3::new(a.cos(), rng.random_range(0.05..0.25), a.sin()) * rng.random_range(14.0..30.0) * size.sqrt();
         let kind = if !ground { Kind::GreySmoke } else if summer { Kind::Dust } else { Kind::Snow };
         spawn(commands, fx, Spawn { kind, pos: at + Vec3::Y * 0.8, vel: v, life: rng.random_range(2.5..5.0), size0: 2.5 * size, size1: 12.0 * size, alpha: 0.75, drag: 2.2, gravity: 1.0, ..default() });
     }
-    // 5. The haze: in winter pale snow dust and grey smoke that clears in half a minute; in June a brown dust
+    // 8. The haze: in winter pale snow dust and grey smoke that clears in half a minute; in June a brown dust
     // cloud that hangs for minutes and drifts off with the wind.
     let (n, life, kinds): (u32, std::ops::Range<f32>, [Kind; 2]) = if summer { ((10.0 * size) as u32, 60.0..120.0, [Kind::Dust, Kind::GreySmoke]) } else { ((8.0 * size) as u32, 20.0..40.0, [Kind::Snow, Kind::GreySmoke]) };
     for _ in 0..n {
@@ -836,6 +911,7 @@ pub fn thermobaric(commands: &mut Commands, fx: &mut FxAssets, at: Vec3) {
         PointLight { intensity: 0.0, range: 1.0, ..default() },
         Flash { age: 0.0, life: 0.25, intensity: 0.0 },
     ));
+    shock(commands, fx, at + Vec3::Y * 2.0, 70.0, 0.35);
     // The fireball: it rolls up and darkens.
     for _ in 0..22 {
         let d = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.1..1.0), rng.random_range(-1.0..1.0)).normalize();
