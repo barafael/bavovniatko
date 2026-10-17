@@ -31,7 +31,7 @@ impl Plugin for OrdersPlugin {
         if play() != Play::Command {
             return;
         }
-        app.insert_resource(OrdersView { open: crate::dev::dev().orders_open, selected: None });
+        app.insert_resource(OrdersView { open: crate::dev::dev().orders_open, selected: None, on_table: false });
         app.add_message::<OrderRequest>()
             .init_resource::<Net>()
             .insert_resource(OrderRng(SmallRng::seed_from_u64(crate::dev::seeded(20230608))))
@@ -89,6 +89,15 @@ pub struct Holding;
 pub struct OrdersView {
     pub open: bool,
     pub selected: Option<u32>,
+    /// The map table is open over the picture (`bavovniatko::table`): a click there is the table's.
+    pub on_table: bool,
+}
+
+impl OrdersView {
+    /// Whether a click on the picture is for the orders or the table, not the fire or the evacuation.
+    pub fn takes_clicks(&self) -> bool {
+        self.open || self.on_table
+    }
 }
 
 /// Orders on their way, and the last one each unit had (for the screen).
@@ -233,7 +242,7 @@ fn orders_input(
     if keys.just_pressed(KeyCode::KeyO) {
         ui.open = !ui.open;
     }
-    if !ui.open || view.mode != bav_core::vocab::Mode::Drone {
+    if !ui.open || ui.on_table || view.mode != bav_core::vocab::Mode::Drone {
         return;
     }
     let units = units(ours.iter(), &book);

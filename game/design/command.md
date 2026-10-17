@@ -219,3 +219,31 @@ stream, so same-day style checks still work per seed):
 - Tested headless: at Vuhledar a Column held, went on, took tree line 18 from 13 and fell back to its road head;
   at Mala Tokmachka hold and advance to both waves, the orders 4–14 s on the net, two lost under the jammers.
   Shots: devlog/shots/*-orders-*.jpg. The Record is unchanged (same-day: same on both days).
+
+### Phase 5, the map table (2026-10-17)
+- In Command the briefing leads to the map table, and the table starts the battle. A paper map of the field drawn
+  from the layout once (`bavovniatko::table::paint_map`): the ground's relief and contours (every 5 m, every 25 m
+  darker), the town's blocks, the roads (tracks dashed), the tree lines with their gaps, the river, the minefields we
+  know of in red (Vuhledar's own belts and shoulders; their barrier belts at Mala Tokmachka cross-hatched), the grey
+  zone hatched, the road heads; north up, so our side is at the top on both days. Our positions are marked on it,
+  lettered where a unit holds one (S Stugna, J Javelin, R riflemen, T a tank in a hide).
+- Beside it the Allotment: the units that go to a position (pick one, then a position; a click on a held one takes it
+  off), the vehicles for the wounded and the Support as so many of each, the points spent and left, and a line saying
+  what a position is, or why a change was refused. Every change is checked as the battle checks it (`allot::build`):
+  the points, how many there were, men only where men can stand, a tank only in a hide or a tree line, nothing beyond
+  our side of the grey zone. It starts from the day's own picks, or `BAV_ALLOT`'s. "To the field" (Enter) settles it.
+- The vehicles of the day's columns (Mala Tokmachka) are listed but not chosen yet: the script sends them, and their
+  points stay spent. Supply makes them a choice (phase 6).
+- The Allotment is settled at the table (`allot::settle`), so in Command our side comes onto the field when the battle
+  starts (`fire::spawn_allotted`): the posts, the tanks in their hides, the rounds and missions, the FPVs, the vehicles
+  for the wounded. Nothing reads it before (`allot::settled`). The Record builds our side with theirs at start-up as
+  it always did; the posts' and hides' spawning is shared (`spawn_post`, `spawn_hide`) and called in the same order.
+- During the battle T opens the same map over the picture, the battle running on under it: our units marked where
+  they are with their callsigns and strength, the panel listing what each is doing, and the orders given from it as
+  from the drone's view (a click picks a unit, G / K / B, a click on a position). A click on the table calls no fire,
+  asks for no evacuation and picks nothing in the picture (`OrdersView::takes_clicks`).
+- Headless the table settles its first picks at once; `BAV_TABLE=open` keeps it open for a shot, `BAV_TABLE=battle`
+  opens it once the battle is on. `cargo xtask smoke` runs the table too.
+- Tested: Command at Vuhledar with other picks (Stugna and Javelins in tree lines 20, 25 and 30, eight 155 mm, three
+  HIMARS): four posts and a hide on the field, 128 rounds, the posts' missiles fired. Shots: devlog/shots/*-table-*.jpg.
+  The Record is unchanged (same-day: same on both days).

@@ -85,6 +85,10 @@ pub struct DevEnv {
     pub order: Option<String>,
     /// `BAV_ORDERS=open`: start with the field view of the orders open (for shots of it).
     pub orders_open: bool,
+    /// `BAV_TABLE=open`: keep Command's map table open (for shots of it), even with `BAV_SKIP_BRIEFING`;
+    /// `BAV_TABLE=battle`: open it once the battle is on.
+    pub table_open: bool,
+    pub table_battle: bool,
     /// Film the showcase tour into this directory.
     pub showcase: Option<String>,
     pub no_battery: bool,
@@ -224,6 +228,8 @@ impl DevEnv {
             column: var("BAV_COLUMN"),
             order: var("BAV_ORDER"),
             orders_open: var("BAV_ORDERS").is_some_and(|v| v == "open"),
+            table_open: var("BAV_TABLE").is_some_and(|v| v == "open"),
+            table_battle: var("BAV_TABLE").is_some_and(|v| v == "battle"),
             showcase: var("BAV_SHOWCASE"),
             no_battery: var("BAV_NO_BATTERY").is_some(),
             view: parse("BAV_VIEW"),

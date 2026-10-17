@@ -2,9 +2,9 @@
 //! (підрозділи) and Support (підтримка) under its allotment points (design/command.md).
 //!
 //! In the Record (літопис) the allotment is the day's own, the `record` in the diorama's file, and the battle is
-//! the one the archive describes. In Command (командування) the player picks; until the map table exists,
-//! `BAV_ALLOT` names the picks (`stugna@0,javelin@3,155*6,himars*2`: a unit at a position, or so many of an item),
-//! and without it Command plays the record's allotment too. Everything on the player's side that used to be read
+//! the one the archive describes. In Command (командування) the player picks at the map table, which starts from the
+//! day's own picks, or from `BAV_ALLOT`'s (`stugna@0,javelin@3,155*6,himars*2`: a unit at a position, or so many of
+//! an item); our side is built when the battle starts, from what the table settled. Everything on the player's side that used to be read
 //! straight from the file (the posts and their weapons, the tank in its hide, the stock of rounds and missions,
 //! the FPVs, the vehicles for the wounded) is read from here, so the Record is Command with the record's picks.
 
@@ -118,20 +118,58 @@ pub struct Allotment {
 
 static ALLOTMENT: OnceLock<Allotment> = OnceLock::new();
 
-/// The player's side for this run.
+/// Whether the map table settles the Allotment (Command): our side is then built when the battle starts, from what
+/// the table settled, and nothing may read the Allotment before (`settled`). In the Record it is the day's own, there
+/// from the start.
+pub fn at_table() -> bool {
+    bav_core::diorama::play() == Play::Command
+}
+
+/// The player's side for this run. In Command, only once the map table has settled it.
 pub fn allotment() -> &'static Allotment {
+    if at_table() {
+        return ALLOTMENT.get().expect("the Allotment is read before the map table settled it");
+    }
     ALLOTMENT.get_or_init(|| {
-        let d = crate::data::sim_data();
-        let place = bav_core::diorama::diorama();
-        let record = build(&d.allotment.record).unwrap_or_else(|e| panic!("{place} record allotment: {e}"));
-        check_record(&record);
-        let a = match (bav_core::diorama::play(), bav_core::dev::dev().allot.as_deref()) {
-            (Play::Command, Some(spec)) => parse(spec).and_then(|picks| build(&picks)).unwrap_or_else(|e| panic!("{place} allotment (BAV_ALLOT): {e}")),
-            _ => record,
-        };
-        bevy::log::info!("allotment ({}): {} of {} points, {} posts, {} hides, {:?}", bav_core::diorama::play(), a.spent, a.points, a.posts.len(), a.hides.len(), a.stock);
-        a
+        let record = record().unwrap_or_else(|e| panic!("{} record allotment: {e}", bav_core::diorama::diorama()));
+        log(&record);
+        record
     })
+}
+
+/// The Allotment if it is settled: always in the Record, in Command once the map table has settled it.
+pub fn settled() -> Option<&'static Allotment> {
+    if at_table() { ALLOTMENT.get() } else { Some(allotment()) }
+}
+
+/// The map table settles the Allotment (Command), once.
+pub fn settle(picks: &[Pick]) -> Result<&'static Allotment, String> {
+    let a = build(picks)?;
+    log(&a);
+    if ALLOTMENT.set(a).is_err() {
+        return Err("the Allotment is settled already".into());
+    }
+    Ok(ALLOTMENT.get().expect("just set"))
+}
+
+/// The picks the map table starts with: `BAV_ALLOT`'s if given, else the day's own.
+pub fn first_picks() -> Vec<Pick> {
+    record().unwrap_or_else(|e| panic!("{} record allotment: {e}", bav_core::diorama::diorama()));
+    match bav_core::dev::dev().allot.as_deref() {
+        Some(spec) => parse(spec).and_then(|p| build(&p).map(|_| p)).unwrap_or_else(|e| panic!("{} allotment (BAV_ALLOT): {e}", bav_core::diorama::diorama())),
+        None => crate::data::sim_data().allotment.record.clone(),
+    }
+}
+
+/// The day's own allotment, checked against the script.
+fn record() -> Result<Allotment, String> {
+    let a = build(&crate::data::sim_data().allotment.record)?;
+    check_record(&a);
+    Ok(a)
+}
+
+fn log(a: &Allotment) {
+    bevy::log::info!("allotment ({}): {} of {} points, {} posts, {} hides, {:?}", bav_core::diorama::play(), a.spent, a.points, a.posts.len(), a.hides.len(), a.stock);
 }
 
 /// The Record's vehicles are the script's: our columns in the day's script are made of exactly what the record

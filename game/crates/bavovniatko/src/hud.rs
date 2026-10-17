@@ -216,7 +216,8 @@ Alt+click: send a Bradley for the wounded there (four for the day).  V: answer t
 Press Enter.";
 
 fn briefing_input(keys: Res<ButtonInput<KeyCode>>, phase: Res<State<Phase>>, mut next: ResMut<NextState<Phase>>) {
-    if *phase.get() == Phase::Briefing && (keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::NumpadEnter) || crate::dev::dev().skip_briefing) {
+    // In Command the briefing leads to the map table, which starts the battle (`table`).
+    if *phase.get() == Phase::Briefing && !bav_sim::allot::at_table() && (keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::NumpadEnter) || crate::dev::dev().skip_briefing) {
         next.set(Phase::Playing);
     }
 }

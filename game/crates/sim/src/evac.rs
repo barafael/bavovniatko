@@ -62,7 +62,7 @@ impl Evacuation {
     fn new() -> Self {
         let d = crate::data::sim_data();
         let columns = d.script.iter().filter(|(_, a)| matches!(a, crate::director::Act::Column { .. })).count() as u32;
-        Self { left: crate::allot::allotment().evacuation, last_call: None, auto: Vec::new(), wave: columns + 1, sent: 0, next_check: 20.0 }
+        Self { left: crate::allot::settled().map_or(0, |a| a.evacuation), last_call: None, auto: Vec::new(), wave: columns + 1, sent: 0, next_check: 20.0 }
     }
 }
 
@@ -76,6 +76,7 @@ fn evac_input(
     evac: Res<Evacuation>,
     mut radio: ResMut<Radio>,
     mut requests: MessageWriter<EvacRequest>,
+    orders: Option<Res<crate::orders::OrdersView>>,
 ) {
     if keys.just_pressed(KeyCode::KeyV) {
         match evac.last_call {
@@ -87,6 +88,7 @@ fn evac_input(
     }
     let alt = keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight);
     if alt
+        && !orders.is_some_and(|o| o.takes_clicks())
         && buttons.just_pressed(MouseButton::Left)
         && let Some(w) = window
         && let Some(hit) = cursor_ground(&w, cam.0, cam.1)

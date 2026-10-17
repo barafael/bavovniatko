@@ -87,9 +87,12 @@ cargo run --release
 The day plays as the Record (Літопис): the forces, the stock and the script as the archive has them. Command
 (Командування, [`design/command.md`](design/command.md), in the making) is the other way to play it: the player's
 side is an Allotment (наряд сил) of Units and Support chosen from what was there that day, under a limit of
-points. Until the map table exists, `BAV_ALLOT="stugna@0,javelin@3,t64@9,155*8,himars*3"` (a unit at a position, or
-so many of an item; the ids are the diorama file's `catalog` and `support`) plays Command with those picks;
-`BAV_PLAY=command` without it plays Command with the Record's allotment. An allotment over the points, with more of a unit than
+points. `BAV_PLAY=command` plays Command: after the briefing the map table, a paper map of the field with our
+positions marked on it and the day's catalog beside it; pick a unit, then a position for it, choose the Support, and
+go to the field. During the battle T opens the table again over the picture, our units marked on it, and orders them
+from it. The table starts from the day's own picks, or from `BAV_ALLOT="stugna@0,javelin@3,t64@9,155*8,himars*3"` (a
+unit at a position, or so many of an item; the ids are the diorama file's `catalog` and `support`), which also plays
+Command; headless, the table takes its first picks at once (`BAV_TABLE=open` keeps it open for a shot). An allotment over the points, with more of a unit than
 there were, or with a position given twice, stops the game with the reason. A unit's position is a number from
 the field (`crates/core/src/field.rs`): the diorama's own posts first, then its tank hides, then every tree line's
 edge and the ruins of the town's edge; a post goes where men can hold it, a tank in a hide or a tree line, and
@@ -140,6 +143,8 @@ the pieces that reach above a height, to write a ring from.
 | Space | Vuhledar: ATGM teams AUTO (wait until the column commits), HOLD, or FREE. Mala Tokmachka: the column PUSH ON, HOLD, or PULL BACK (picking up the infantry) |
 | 1, 2, Tab | the drone, or the observer (a nine-storey roof; a water tower by the N08) |
 | 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
+| O, G, K, B | Command: the orders over the drone's picture. A click picks one of our units, G / K / B order it to advance, hold or fall back, and a click on a ringed position sends it there; the order goes over the net, late and maybe not at all where they jam it |
+| T | Command: the map table over the picture, the battle running on: our units on the map, ordered from it the same way |
 | P, `[`, `]` | pause, slow down, speed up |
 | F12 | screenshot |
 | Esc, F10 | settings: the frame rate and its cap (60 fps by default), vsync, fullscreen, render scale, anti-aliasing, shadows, view distance, brightness, the video look, smoke and fire. Arrow keys pick and change, everything applies at once, and it is kept in `~/.config/bavovniatko/settings.txt` |

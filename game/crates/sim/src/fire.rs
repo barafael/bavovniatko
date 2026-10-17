@@ -24,6 +24,11 @@ pub struct FirePlugin;
 
 impl Plugin for FirePlugin {
     fn build(&self, app: &mut App) {
+        // Command: our side comes onto the field when the battle starts, as the map table settled it. (Nothing of it in
+        // the Record's world: there our side is laid out with theirs.)
+        if crate::allot::at_table() {
+            app.add_systems(OnEnter(crate::Phase::Playing), spawn_allotted);
+        }
         app.insert_resource(FireRng(SmallRng::seed_from_u64(crate::dev::seeded(72))))
             .init_resource::<FireControl>()
             .add_message::<ShellLanded>()
@@ -151,7 +156,8 @@ impl Default for FireControl {
     fn default() -> Self {
         // Zaluzhnyi: artillery ammunition is the binding constraint. ~6,000 RAAM shells reached Ukraine in late
         // 2022, but a battery on one morning gets a handful of missions.
-        let s = crate::allot::allotment().stock;
+        // (In Command nothing until the map table has settled the Allotment: `spawn_allotted` sets it then.)
+        let s = crate::allot::settled().map(|a| a.stock).unwrap_or_default();
         Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
     }
 }
@@ -227,43 +233,68 @@ pub struct UaTank {
     pub timer: f32,
 }
 
+/// The posts and the tanks in their hides: ours as allotted (in Command, only once the map table has settled it, by
+/// `spawn_allotted`), theirs as the day had them.
 fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Palette>) {
     let lay = geo::layout();
     let d = crate::data::sim_data();
-    // Ours as allotted, theirs as the day had them.
-    let ours = &crate::allot::allotment().posts;
+    let allotted = crate::allot::settled();
+    let ours = allotted.map_or(&[][..], |a| &a.posts[..]);
     let posts = ours.iter().map(|(p, w)| (Side::Ua, p, *w)).chain(lay.ru_positions.iter().zip(&d.ru_weapons).map(|(p, w)| (Side::Ru, p, *w)));
     for (i, (side, p, weapon)) in posts.enumerate() {
-        let mut figures = Vec::new();
-        // A few figures in the trench line under the trees, mostly hidden, facing the enemy.
-        let face = if side == Side::Ua { std::f32::consts::PI } else { 0.0 };
-        for k in 0..3 {
-            let at = *p + Vec2::new(k as f32 * 3.0 - 3.0, (k % 2) as f32 * 1.5);
-            let e = commands
-                .spawn((
-                    Mesh3d(models.figure(side).body.clone()),
-                    MeshMaterial3d(palette.vertex.clone()),
-                    Transform::from_translation(geo::ground(at) - Vec3::Y * 0.9).with_rotation(Quat::from_rotation_y(face)),
-                    NotShadowCaster,
-                ))
-                .id();
-            figures.push(e);
-        }
-        let mut e = commands.spawn((Post { side, pos: *p, strength: 6, fire_timer: i as f32, figures }, Transform::from_translation(geo::ground(*p))));
-        if let Some(weapon) = weapon {
-            e.insert(AtgmTeam { weapon, atgm: weapon.load(), reload: 4.0 + i as f32 * 7.0 });
-        }
+        spawn_post(&mut commands, &models, &palette, i, side, *p, weapon);
     }
     crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
-    // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot; as many as
-    // were allotted.
-    for &(hide, facing) in &crate::allot::allotment().hides {
-        let yaw = units::vehicle_yaw(facing);
-        let m = &models.ua_tank;
-        let mut e = commands.spawn((units::skin(&m.hull), Transform::from_translation(geo::ground(hide)).with_rotation(Quat::from_rotation_y(yaw)), UaTank { timer: 20.0 }));
-        e.with_children(|c| units::dress(&mut c.spawn((units::skin(&m.turret), Transform::from_translation(m.turret_at))), &m.turret));
-        units::dress(&mut e, &m.hull);
+    for &(hide, facing) in allotted.map_or(&[][..], |a| &a.hides[..]) {
+        spawn_hide(&mut commands, &models, hide, facing);
     }
+}
+
+/// Command: our side as the map table settled it, when the battle starts: the posts and the tanks in their hides,
+/// the rounds and missions, the strike drones, the vehicles for the wounded.
+pub fn spawn_allotted(mut commands: Commands, models: Res<Models>, palette: Res<Palette>, mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player::Fpv>, mut evac: ResMut<crate::evac::Evacuation>) {
+    let a = crate::allot::allotment();
+    for (i, &(p, weapon)) in a.posts.iter().enumerate() {
+        spawn_post(&mut commands, &models, &palette, i, Side::Ua, p, weapon);
+    }
+    for &(hide, facing) in &a.hides {
+        spawn_hide(&mut commands, &models, hide, facing);
+    }
+    *fc = FireControl::default();
+    fpv.left = a.fpvs;
+    evac.left = a.evacuation;
+}
+
+/// A post: a few figures in the trench line under the trees, mostly hidden, facing the enemy, and maybe an ATGM team;
+/// the `i`th of the day's, which staggers its fire and its reloads.
+fn spawn_post(commands: &mut Commands, models: &Models, palette: &Palette, i: usize, side: Side, p: Vec2, weapon: Option<Atgm>) {
+    let mut figures = Vec::new();
+    let face = if side == Side::Ua { std::f32::consts::PI } else { 0.0 };
+    for k in 0..3 {
+        let at = p + Vec2::new(k as f32 * 3.0 - 3.0, (k % 2) as f32 * 1.5);
+        let e = commands
+            .spawn((
+                Mesh3d(models.figure(side).body.clone()),
+                MeshMaterial3d(palette.vertex.clone()),
+                Transform::from_translation(geo::ground(at) - Vec3::Y * 0.9).with_rotation(Quat::from_rotation_y(face)),
+                NotShadowCaster,
+            ))
+            .id();
+        figures.push(e);
+    }
+    let mut e = commands.spawn((Post { side, pos: p, strength: 6, fire_timer: i as f32, figures }, Transform::from_translation(geo::ground(p))));
+    if let Some(weapon) = weapon {
+        e.insert(AtgmTeam { weapon, atgm: weapon.load(), reload: 4.0 + i as f32 * 7.0 });
+    }
+}
+
+/// The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
+fn spawn_hide(commands: &mut Commands, models: &Models, hide: Vec2, facing: Vec2) {
+    let yaw = units::vehicle_yaw(facing);
+    let m = &models.ua_tank;
+    let mut e = commands.spawn((units::skin(&m.hull), Transform::from_translation(geo::ground(hide)).with_rotation(Quat::from_rotation_y(yaw)), UaTank { timer: 20.0 }));
+    e.with_children(|c| units::dress(&mut c.spawn((units::skin(&m.turret), Transform::from_translation(m.turret_at))), &m.turret));
+    units::dress(&mut e, &m.hull);
 }
 
 fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, mut order: ResMut<ColumnOrder>, time: Res<Time>, mut radio: ResMut<Radio>) {
@@ -328,7 +359,7 @@ fn player_fire(
     orders: Option<Res<crate::orders::OrdersView>>,
 ) {
     // Alt+click asks for an evacuation instead (`evac`); with the orders open (Command) a click is for them (`orders`).
-    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) || orders.is_some_and(|o| o.open) {
+    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) || orders.is_some_and(|o| o.takes_clicks()) {
         return;
     }
     let now = time.elapsed_secs_f64();
