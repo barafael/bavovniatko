@@ -47,6 +47,9 @@ pub struct DioramaData {
     pub words: Words,
     /// Where the drone starts.
     pub camera: P,
+    /// Where the observers are and their eye's height above the ground, where the set does not decide it.
+    #[serde(default)]
+    pub op: Option<(P, f32)>,
     /// What the observers' fire is adjusted from: their error grows with the distance from it.
     pub observed_from: ObservedFrom,
     /// Whether the ground is worn by weeks of war already: old craters along the belts and scattered over the
@@ -125,6 +128,9 @@ pub struct OsmSpec {
     pub lines: Vec<(String, LineSpec)>,
     pub roads: Vec<RoadSpec>,
     pub rails: Vec<String>,
+    /// Each runway's centreline ends and width, before the box clips it.
+    #[serde(default)]
+    pub runways: Vec<(P, P, f32)>,
     pub belts: Vec<BeltSpec>,
     pub areas: Vec<(crate::geo::AreaKind, Vec<P>)>,
     pub buildings: Vec<BuildingSpec>,
@@ -339,6 +345,49 @@ fn builtin(d: Diorama) -> &'static [(&'static str, &'static str)] {
     }
 }
 
+/// RON without its comments (`//` to the line's end, `/* */`), the strings left alone (`"..."` with escapes, and raw
+/// `r#"..."#`, which the briefings are).
+fn uncomment(t: &str) -> String {
+    let b = t.as_bytes();
+    let mut out = String::with_capacity(t.len());
+    let mut i = 0;
+    let mut from = 0;
+    while i < b.len() {
+        match b[i] {
+            b'r' if b.get(i + 1) == Some(&b'#') || (b.get(i + 1) == Some(&b'"') && (i == 0 || !b[i - 1].is_ascii_alphanumeric())) => {
+                let hashes = b[i + 1..].iter().take_while(|&&c| c == b'#').count();
+                if b.get(i + 1 + hashes) != Some(&b'"') {
+                    i += 1;
+                    continue;
+                }
+                let end = format!("\"{}", "#".repeat(hashes));
+                let start = i + 2 + hashes;
+                i = t[start..].find(&end).map_or(b.len(), |k| start + k + end.len());
+            }
+            b'"' => {
+                i += 1;
+                while i < b.len() && b[i] != b'"' {
+                    i += if b[i] == b'\\' { 2 } else { 1 };
+                }
+                i += 1;
+            }
+            b'/' if b.get(i + 1) == Some(&b'/') => {
+                out.push_str(&t[from..i]);
+                i = t[i..].find('\n').map_or(b.len(), |k| i + k);
+                from = i;
+            }
+            b'/' if b.get(i + 1) == Some(&b'*') => {
+                out.push_str(&t[from..i]);
+                i = t[i..].find("*/").map_or(b.len(), |k| i + k + 2);
+                from = i;
+            }
+            _ => i += 1,
+        }
+    }
+    out.push_str(&t[from.min(b.len())..]);
+    out
+}
+
 /// Several files' records as one: each file is a record `( ... )` after its comments, and their fields are joined in
 /// order. One file is returned as it is, so its errors point at its own lines.
 fn merge(texts: &[String]) -> String {
@@ -346,11 +395,11 @@ fn merge(texts: &[String]) -> String {
         return one.clone();
     }
     let body = |t: &str| {
-        let open = t.lines().position(|l| l.trim_start().starts_with('(')).unwrap_or_else(|| panic!("a diorama file without its record"));
-        let rest: Vec<&str> = t.lines().skip(open).collect();
-        let joined = rest.join("\n");
-        let inner = joined.trim_end();
-        inner[inner.find('(').unwrap() + 1..inner.rfind(')').unwrap()].trim_end().trim_end_matches(',').to_string()
+        // Comments out first (they may hold brackets, or follow the last field), then the record's brackets off.
+        let t = uncomment(t);
+        let inner = t.trim();
+        let (open, close) = (inner.find('(').expect("a diorama file without its record"), inner.rfind(')').expect("a diorama file without its record"));
+        inner[open + 1..close].trim_end().trim_end_matches(',').to_string()
     };
     format!("({})", texts.iter().map(|t| body(t)).collect::<Vec<_>>().join(",\n"))
 }
@@ -548,6 +597,7 @@ pub fn layout(d: &DioramaData) -> Layout {
         barriers: d.barriers.iter().map(|b| Barrier { z0: b.z0, z1: b.z1, at: 1.0 / b.at_per, stacked: b.stacked, ap: 1.0 / b.ap_per }).collect(),
         areas: d.osm.areas.iter().map(|(k, pts)| crate::geo::Area::new(*k, pts.iter().copied().map(v).collect())).collect(),
         buildings: d.osm.buildings.iter().map(|b| crate::geo::Building { kind: b.kind, height: b.height, foot: b.foot.iter().copied().map(v).collect() }).collect(),
+        runways: d.osm.runways.iter().map(|&(a, b, w)| (v(a), v(b), w)).collect(),
         rails: d.osm.rails.iter().map(|r| line(r).clone()).collect(),
         river: d.river.as_deref().map(|r| line(r).clone()),
         town: rect(d.town),
@@ -566,5 +616,32 @@ pub fn layout(d: &DioramaData) -> Layout {
         home: v(d.home),
         jam_z: d.jam_z,
         mortar_band: d.mortar_band,
+    }
+}
+
+#[cfg(test)]
+mod merge_tests {
+    use super::{merge, uncomment};
+
+    #[test]
+    fn comments_go_and_strings_stay() {
+        let t = "( a: \"https://x.org/y\", // a comment (with a bracket)\n b: r#\"raw // kept\"#, /* c ) */ c: 1 // last\n) // after )";
+        let u = uncomment(t);
+        assert!(u.contains("https://x.org/y") && u.contains("raw // kept"));
+        assert!(!u.contains("a comment") && !u.contains("c )") && !u.contains("after"));
+    }
+
+    #[test]
+    fn files_join_as_one_record() {
+        let a = "// head\n(\n    x: 1 // no comma, then a comment\n)\n".to_string();
+        let b = "(\n    y: \"(\",\n)\n".to_string();
+        let m = merge(&[a, b]);
+        #[derive(serde::Deserialize)]
+        struct Xy {
+            x: u32,
+            y: String,
+        }
+        let v: Xy = ron::from_str(&m).unwrap();
+        assert_eq!((v.x, v.y.as_str()), (1, "("));
     }
 }

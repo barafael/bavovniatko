@@ -35,7 +35,7 @@ Press Enter."#,
         op_lost: "The observers are hit. No eyes on the runway.",
         forward_belt: "the tree line",
         plow_mine: "",
-        mine_lines: [""],
+        mine_lines: [],
         registered: ("", "Molot firing on the runway."),
         closing: [
             "No Il-76 landed at Hostomel. On 25 February the column from Belarus arrived, and the VDV had the field again.",
@@ -53,6 +53,8 @@ Press Enter."#,
     ),
     // Over the tree line north of the field, looking south at the apron.
     camera: (700.0, -300.0),
+    // The observers, at the tree line's edge: the tower is the VDV's.
+    op: Some(((700.0, -280.0), 2.5)),
     observed_from: Home,
 
     // The VDV's hold (phase 7 places them by the areas): the hangar, the apron, the tower, the stands.

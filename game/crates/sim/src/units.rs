@@ -1800,7 +1800,7 @@ fn check_mines(
                         stats.mine_hits += 1;
                         log.open(now, "a double mine", "", _e, &v, rescue, "under the plow: plow gone, stopped");
                         radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
-                    } else {
+                    } else if !bav_core::data::data().words.plow_mine.is_empty() {
                         radio.say(now, bav_core::data::data().words.plow_mine.as_str());
                     }
                 }
@@ -1839,7 +1839,7 @@ fn check_mines(
                     }
                 }
                 let lines = &bav_core::data::data().words.mine_lines;
-                if rng.0.random_bool(0.6) {
+                if rng.0.random_bool(0.6) && !lines.is_empty() {
                     radio.say(now, lines[rng.0.random_range(0..lines.len())].as_str());
                 }
                 break;

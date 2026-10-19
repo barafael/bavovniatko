@@ -354,6 +354,8 @@ fn woods(plants: &mut BeltPlants, mut id: u32) {
             (lo - Vec2::splat(r.width + 4.0), hi + Vec2::splat(r.width + 4.0), r)
         })
         .collect();
+    // ...and the railways, kept clear as wide as their cutting.
+    let rails: Vec<&geo::Polyline> = lay.rails.iter().collect();
     for area in lay.areas.iter().filter(|a| a.kind == geo::AreaKind::Wood) {
         let (nx, nz) = (((area.max.x - area.min.x) / step) as i32, ((area.max.y - area.min.y) / step) as i32);
         for iz in 0..=nz {
@@ -367,7 +369,7 @@ fn woods(plants: &mut BeltPlants, mut id: u32) {
                 if hash01(id, 31) > (edge / 450.0).clamp(0.0, 1.0) {
                     continue;
                 }
-                if roads.iter().any(|(lo, hi, r)| p2.cmpge(*lo).all() && p2.cmple(*hi).all() && r.line.project(p2).0 < r.width * 0.5 + 3.0) {
+                if roads.iter().any(|(lo, hi, r)| p2.cmpge(*lo).all() && p2.cmple(*hi).all() && r.line.project(p2).0 < r.width * 0.5 + 3.0) || rails.iter().any(|r| r.project(p2).0 < 9.0) {
                     continue;
                 }
                 let kind = match hash01(id, 3) {

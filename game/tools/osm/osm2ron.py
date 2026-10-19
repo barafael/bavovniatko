@@ -43,7 +43,7 @@ def main(place: str) -> None:
         return ((p["lon"] - lon0) * m_lon - ox, -(p["lat"] - lat0) * m_lat - oz)
 
     elements = json.loads((GAME / "tools/osm/data" / f"{place}.json").read_text())["elements"]
-    lines, roads, rails, belts, areas, buildings = [], [], [], [], [], []
+    lines, roads, rails, belts, areas, buildings, runways = [], [], [], [], [], [], []
     for e in elements:
         t = e.get("tags", {})
         g = e.get("geometry")
@@ -69,7 +69,10 @@ def main(place: str) -> None:
         hw = t.get("highway")
         if way == "runway":
             # The strip itself as a polygon: the line widened to its width.
-            areas.append(("Runway", clip_poly(widen(pts, float(t.get("width", 50))))))
+            width = number(t.get("width"), 50.0)
+            areas.append(("Runway", clip_poly(widen(pts, width))))
+            # Its whole frame, ends and width, unclipped: the markings are measured from its real ends.
+            runways.append((pts[0], pts[-1], width))
             continue
         for part in clip_line(simplify(pts, 1.0)):
             if len(part) < 2:
@@ -104,6 +107,7 @@ def main(place: str) -> None:
         out.append(f'        (line: "osm{i}", width: {w:.1f}, kind: {k}),')
     out.append("    ],")
     out.append("    rails: [" + ", ".join(f'"osm{i}"' for i in rails) + "],")
+    out.append("    runways: [" + ", ".join(f"({p(a)}, {p(b)}, {w:.1f})" for a, b, w in runways) + "],")
     out.append("    belts: [Lines(lines: [")
     for a, b in belts:
         out.append(f"        ({p(a)}, {p(b)}),")
@@ -170,6 +174,14 @@ def building_kind(t):
     if t.get("aeroway") == "hangar" or b == "hangar":
         return "Hangar"
     return {"house": "House", "apartments": "Block", "dormitory": "Block", "industrial": "Industrial", "shed": "Shed", "garage": "Shed", "greenhouse": "Shed", "kiosk": "Shed"}.get(b, "Other")
+
+
+def number(v, default):
+    """A tag's number, whatever unit it is written with ("50", "50 m")."""
+    try:
+        return float(str(v).split()[0])
+    except (ValueError, IndexError):
+        return default
 
 
 def height(t, a):

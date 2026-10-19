@@ -354,9 +354,10 @@ pub fn atlas(summer: bool) -> Image {
         let seed = 100 + cell as u32 * 37 + if summer { 0 } else { 1000 };
         let kinds = [Kind::Robinia, Kind::Elm, Kind::Ash, Kind::Poplar, Kind::Walnut, Kind::Broken, Kind::Shrub, Kind::Thicket];
         let cv = match (cell, summer) {
-            // The pine, evergreen: its side and its top, the same in either season.
-            (12, _) => pine_side(seed),
-            (13, _) => leafy_patch(Kind::Pine, seed),
+            // The pine, evergreen, in winter's free cells (in June every cell is a kind's leaf patch, and a pine
+            // borrows the elm's).
+            (12, false) => pine_side(seed),
+            (13, false) => leafy_patch(Kind::Pine, seed),
             // June: two patches of each kind's leaf.
             (_, true) => leafy_patch(kinds[cell % 8], seed),
             (0..8, false) => bare_side(kinds[cell], seed),
@@ -473,7 +474,8 @@ fn patches(m: &mut crate::meshes::MeshBuilder, kind: Kind, mid: Vec3, w: f32, h:
         let right = up.cross(face).normalize_or(Vec3::X);
         let (r, u) = (right * size * 0.5, up * size * 0.5);
         let pts = [p - r - u, p + r - u, p + r + u, p - r + u];
-        let cell = if kind == Kind::Pine { 12 + (hash01(id, 7) < 0.5) as usize } else { kind.side_cell() + if hash01(id, 7) < 0.5 { 0 } else { 8 } };
+        let side = if kind == Kind::Pine { Kind::Elm.side_cell() } else { kind.side_cell() };
+        let cell = side + if hash01(id, 7) < 0.5 { 0 } else { 8 };
         let uvs = [cell_uv(cell, 0.0, 1.0), cell_uv(cell, 1.0, 1.0), cell_uv(cell, 1.0, 0.0), cell_uv(cell, 0.0, 0.0)];
         m.poly_uv_normals(&pts, &uvs, &pts.map(normal), c);
     }

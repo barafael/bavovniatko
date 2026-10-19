@@ -90,7 +90,15 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut i
     roofs.cylinder(g - Vec3::Y, Vec3::Y * (TOWER_H + 1.0), 2.6, 10, [0.70, 0.70, 0.68]);
     roofs.boxc(g + Vec3::Y * (TOWER_H + 1.6), Vec3::new(7.5, 3.2, 7.5), [0.18, 0.22, 0.26]);
     roofs.boxc(g + Vec3::Y * (TOWER_H + 3.4), Vec3::new(8.4, 0.4, 8.4), [0.72, 0.73, 0.74]);
-    commands.insert_resource(bav_sim::player::ObservationPost { eye: g + Vec3::new(0.0, TOWER_H + 1.8, 4.2), building: TOWER });
+    // The observers: in the tower, or where the part's file puts them (at dusk the tower is the enemy's).
+    let op = match bav_core::data::data().op {
+        Some(((x, z), h)) => {
+            let at = Vec2::new(x, z);
+            bav_sim::player::ObservationPost { eye: geo::ground(at) + Vec3::Y * h, building: at }
+        }
+        None => bav_sim::player::ObservationPost { eye: g + Vec3::new(0.0, TOWER_H + 1.8, 4.2), building: TOWER },
+    };
+    commands.insert_resource(op);
     let solid = materials.add(StandardMaterial { perceptual_roughness: 0.95, ..default() });
     commands.spawn((Mesh3d(meshes.add(roofs.build())), MeshMaterial3d(solid)));
 }
@@ -138,9 +146,9 @@ fn hangar(walls: &mut MeshBuilder, roofs: &mut MeshBuilder, foot: &[Vec2], base:
     // The long walls up to the springing line, and the gables: the doors are the whole of one end.
     let uv = |w: f32, h: f32| [Vec2::ZERO, Vec2::new(w / 12.0, 0.0), Vec2::new(w / 12.0, -h / 8.4), Vec2::new(0.0, -h / 8.4)];
     let len = hi.x - lo.x;
-    walls.poly_uv(&[at(lo.x, span_lo, 0.0), at(hi.x, span_lo, 0.0), at(hi.x, span_lo, spring), at(lo.x, span_lo, spring)], &uv(len, spring), [0.9; 3]);
-    walls.poly_uv(&[at(hi.x, span_hi, 0.0), at(lo.x, span_hi, 0.0), at(lo.x, span_hi, spring), at(hi.x, span_hi, spring)], &uv(len, spring), [0.9; 3]);
-    for (x, flip) in [(lo.x, true), (hi.x, false)] {
+    walls.poly_uv(&[at(hi.x, span_lo, 0.0), at(lo.x, span_lo, 0.0), at(lo.x, span_lo, spring), at(hi.x, span_lo, spring)], &uv(len, spring), [0.9; 3]);
+    walls.poly_uv(&[at(lo.x, span_hi, 0.0), at(hi.x, span_hi, 0.0), at(hi.x, span_hi, spring), at(lo.x, span_hi, spring)], &uv(len, spring), [0.9; 3]);
+    for (x, flip) in [(lo.x, false), (hi.x, true)] {
         let mut pts = vec![at(x, span_lo, 0.0), at(x, span_hi, 0.0)];
         pts.extend((0..=segs).rev().map(|k| {
             let (b, y) = arc(k);

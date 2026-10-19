@@ -122,6 +122,10 @@ static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(|| {
 
 fn shots_minute() -> Vec<Shot> {
     let s = shot;
+    // Hostomel has no shot list yet (design/hostomel.md, phase 8): nothing to film rather than Vuhledar's.
+    if matches!(crate::diorama::diorama(), crate::diorama::Diorama::HostomelLanding | crate::diorama::Diorama::HostomelCounter) {
+        return Vec::new();
+    }
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
         return vec![
             // The blue hour: our guns' preparation walking along the crest, the column not yet moving.
@@ -166,6 +170,10 @@ fn shots_minute() -> Vec<Shot> {
 /// first estimates from the beat table and the day-7 log; the scout retimes what the sheets disagree with.
 fn shots_film() -> Vec<Shot> {
     let f = shot;
+    // Hostomel has no shot list yet (design/hostomel.md, phase 8): nothing to film rather than Vuhledar's.
+    if matches!(crate::diorama::diorama(), crate::diorama::Diorama::HostomelLanding | crate::diorama::Diorama::HostomelCounter) {
+        return Vec::new();
+    }
     let card = |title: &'static str, line: &'static str, note: &'static str, secs: f32| Card { title, line, note, secs };
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
         return vec![

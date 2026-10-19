@@ -505,7 +505,8 @@ fn paint() -> Chunks {
                 let lat = (w - p).dot(nrm).abs();
                 if kind == RoadKind::Concrete {
                     // Airfield slabs: grey concrete in 7.5 m squares with dark joints, the snow lying in patches.
-                    let along = s + (w - p).dot(nrm.perp());
+                    // (`normal` is the tangent turned left: the tangent is its turn back.)
+                    let along = s + (w - p).dot(-nrm.perp());
                     return concrete(c, d, (w - p).dot(nrm), along, w, summer);
                 }
                 if summer {
@@ -536,6 +537,32 @@ fn paint() -> Chunks {
                         mix(base, mud, rut * if kind == RoadKind::Dirt { 0.85 } else { 0.5 })
                     }
                 }
+            });
+            s += 1.0;
+        }
+    }
+
+    // Railways: a bed of grey ballast, the sleepers dark across it, the two rails bright.
+    for rail in &lay.rails {
+        let mut s = 0.0;
+        while s < rail.length() {
+            let p = rail.point(s);
+            let nrm = rail.normal(s);
+            stamp(&mut chunks, p, 3.2, &|d, c, w| {
+                let lat = (w - p).dot(nrm);
+                let along = s + (w - p).dot(-nrm.perp());
+                let n = value_noise(w.x * 2.0, w.y * 2.0, 95) * 0.5 + 0.5;
+                if d > 0.85 {
+                    return mix(c, [0.45, 0.42, 0.38], 0.5);
+                }
+                let mut col = mix([0.46, 0.44, 0.42], [0.38, 0.36, 0.34], n);
+                if along.rem_euclid(0.6) < 0.22 && lat.abs() < 1.3 {
+                    col = [0.25, 0.22, 0.20];
+                }
+                if (lat.abs() - 0.76).abs() < 0.07 {
+                    col = [0.62, 0.62, 0.62];
+                }
+                col
             });
             s += 1.0;
         }
@@ -635,14 +662,15 @@ fn areas(chunks: &mut Chunks) {
     use bav_core::geo::AreaKind as K;
     let summer = diorama().summer();
     for area in &geo::layout().areas {
-        // The runway's frame: its centreline from the middle of one short end to the other's.
-        let (c0, c1) = if area.kind == K::Runway && area.poly.len() == 4 {
-            ((area.poly[0] + area.poly[3]) * 0.5, (area.poly[1] + area.poly[2]) * 0.5)
-        } else {
-            (Vec2::ZERO, Vec2::X)
-        };
-        let (axis, len) = ((c1 - c0).normalize_or(Vec2::X), c0.distance(c1));
-        let half_w = if area.poly.len() == 4 { area.poly[0].distance(area.poly[3]) * 0.5 } else { 0.0 };
+        // The runway's frame, whole (the box may cut one end off): the centreline nearest the area's middle.
+        let mid = (area.min + area.max) * 0.5;
+        let (c0, c1, width) = geo::layout()
+            .runways
+            .iter()
+            .copied()
+            .min_by(|a, b| geo::segment_distance(mid, a.0, a.1).total_cmp(&geo::segment_distance(mid, b.0, b.1)))
+            .unwrap_or((Vec2::ZERO, Vec2::X, 0.0));
+        let (axis, len, half_w) = ((c1 - c0).normalize_or(Vec2::X), c0.distance(c1), width * 0.5);
         for t in rect(area.min, area.max) {
             t.each(&mut chunks[t.chunk], |px, w, _| {
                 if !area.contains(w) {

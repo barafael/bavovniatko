@@ -231,6 +231,13 @@ impl Area {
     }
 }
 
+/// A point's distance from the segment a-b.
+pub fn segment_distance(p: Vec2, a: Vec2, b: Vec2) -> f32 {
+    let d = b - a;
+    let t = ((p - a).dot(d) / d.length_squared().max(1e-9)).clamp(0.0, 1.0);
+    p.distance(a + d * t)
+}
+
 /// Whether a point is inside a polygon (even-odd).
 pub fn inside(poly: &[Vec2], p: Vec2) -> bool {
     let mut c = false;
@@ -352,6 +359,8 @@ pub struct Layout {
     pub areas: Vec<Area>,
     pub buildings: Vec<Building>,
     pub rails: Vec<Polyline>,
+    /// Runways: the centreline's two ends and the width, whole (the areas hold what of them is in the box).
+    pub runways: Vec<(Vec2, Vec2, f32)>,
     pub town: Rect,
     pub dachas: Rect,
     pub pavlivka: Rect,
