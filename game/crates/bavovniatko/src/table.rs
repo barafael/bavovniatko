@@ -595,6 +595,7 @@ fn paint_map() -> Image {
             geo::RoadKind::Asphalt => (1.8, [0.18, 0.15, 0.12], false),
             geo::RoadKind::Dirt => (1.3, [0.35, 0.27, 0.18], false),
             geo::RoadKind::Track => (1.0, [0.35, 0.27, 0.18], true),
+            geo::RoadKind::Concrete => (2.4, [0.42, 0.42, 0.40], false),
         };
         let dash = move |s: f32| dashed && (s / 30.0) as i32 % 2 == 1;
         stroke(&mut px, &road.line.pts, r, c, 0.9, &dash);

@@ -1,0 +1,34 @@
+// Antonov airport at Hostomel (Гостомель), 24 February 2022: the ground both sub-chapters share (design/hostomel.md).
+// The history is in db/research/chapters/c01-march-on-kyiv.md (§3 the airport, §4 the forces, §6 set pieces 2 and 3).
+// The roads, taxiways, railway, tree rows, land cover and buildings come from OpenStreetMap (osm.ron beside this,
+// made by tools/osm/osm2ron.py); this file holds what the map does not: the ground's shape and the lines the battle
+// uses. The box is the game's fixed 4608 x 3584 m, its centre 500 m east and 700 m south of the runway's middle,
+// so the apron, the Antonov hangar, the National Guard's base and the flats by its gate are inside. +x is east,
+// +z south; metres. Each sub-chapter's file (landing.ron, counter.ron) adds the day: its clock, sides and script.
+(
+    place: ("Hostomel", "Гостомель"),
+    date: "24 February 2022",
+    tally_date: "24 FEB 2022",
+    summer: false,
+    // 24 February is the 55th day of the year; Kyiv was on UTC+2.
+    sun: Some((55, 2.0)),
+    // The war's first day: no old craters; the morning's Kalibrs are the day's own.
+    worn: false,
+
+    // The airfield sits on a flat sandy plateau at about 157 m (the runway's elevation), falling a few metres west
+    // towards the Irpin's floodplain and south to the Bucha stream; pine woods on the sand.
+    ground: [
+        Ramp(base: 150.0, amp: 9.0, power: 1.0, ramp: Falling(-2300.0, 2300.0)),
+        Noise(scale: 1500.0, octaves: 3, seed: 41, amp: 3.0),
+        Noise(scale: 260.0, octaves: 3, seed: 43, amp: 0.6),
+    ],
+    curves: [],
+
+    // The E373 (the Kyiv-Kovel highway, the trunk road past the field's north-east corner), from the north-west edge
+    // to the gate of the National Guard's base: the road the counterattack and the columns come by.
+    lines: [
+        ("e373", Points([(210.6, -1792.0), (496.0, -1423.9), (1030.6, -713.6), (1707.4, 156.9)])),
+    ],
+    roads: [],
+    belts: [],
+)

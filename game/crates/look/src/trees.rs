@@ -39,11 +39,17 @@ pub enum Kind {
     Shrub,
     /// Locust suckers and wild rose along the margins: upright and uneven.
     Thicket,
+    /// Scots pine, the tree of the sands round Kyiv: a tall bare stem and a flat-topped crown of dark needle clumps,
+    /// green in February.
+    Pine,
 }
 
 impl Kind {
     fn side_cell(self) -> usize {
-        self as usize
+        match self {
+            Kind::Pine => 12,
+            _ => self as usize,
+        }
     }
 
     fn top_cell(self) -> usize {
@@ -52,6 +58,7 @@ impl Kind {
             Kind::Elm | Kind::Walnut => 1,
             Kind::Poplar => 2,
             Kind::Shrub | Kind::Thicket => 3,
+            Kind::Pine => 5,
         }
     }
 
@@ -66,6 +73,7 @@ impl Kind {
             Kind::Broken => 0.7,
             Kind::Shrub => 1.6,
             Kind::Thicket => 1.0,
+            Kind::Pine => 0.6,
         }
     }
 }
@@ -87,6 +95,7 @@ fn outline(kind: Kind) -> fn(f32) -> f32 {
         Kind::Broken => |y| if y < 0.6 { arch(y / 0.6).powf(0.6) * 0.8 } else { 0.0 },
         Kind::Shrub => |y| arch(0.5 + y * 0.5).powf(0.5),
         Kind::Thicket => |y| arch(y * 0.85 + 0.15).powf(0.7),
+        Kind::Pine => |y| arch(0.2 + y * 0.7).powf(0.35),
     }
 }
 
@@ -203,6 +212,7 @@ fn leafy_patch(kind: Kind, seed: u32) -> Canvas {
         Kind::Broken => (25, (0.07, 0.12), 0.4),
         Kind::Shrub => (50, (0.1, 0.17), 0.2),
         Kind::Thicket => (40, (0.08, 0.14), 0.3),
+        Kind::Pine => (60, (0.08, 0.13), 0.15),
     };
     for k in 0..clumps {
         let id = seed * 7919 + k;
@@ -241,6 +251,50 @@ fn leafy_patch(kind: Kind, seed: u32) -> Canvas {
     cv
 }
 
+/// A pine's crown from the side: the stem running up through it, a few limbs, and the needles in flat clumps along
+/// them, densest high up, with sky between the clumps.
+fn pine_side(seed: u32) -> Canvas {
+    let aspect = Kind::Pine.aspect();
+    let mut cv = Canvas::new();
+    let half = aspect * 0.5;
+    let outline = outline(Kind::Pine);
+    let bark = [0.62, 0.46, 0.36];
+    cv.limb(Vec2::new(0.0, -0.05), Vec2::new(0.01, 0.92), 0.05, 0.02, 0.0, bark, aspect);
+    for k in 0..7u32 {
+        let y = 0.2 + 0.7 * hash01(seed + k, 50);
+        let side = if k % 2 == 0 { 1.0 } else { -1.0 };
+        let reach = (outline)(y) * half * (0.7 + 0.3 * hash01(seed + k, 51));
+        cv.limb(Vec2::new(0.0, y - 0.05), Vec2::new(side * reach, y + 0.04), 0.022, 0.01, -0.1, bark, aspect);
+    }
+    for k in 0..70u32 {
+        let id = seed * 7919 + k;
+        let y = 0.18 + 0.8 * hash01(id, 1).powf(0.7);
+        let w = (outline)(y.clamp(0.0, 1.0)) * half;
+        let x = (hash01(id, 2) * 2.0 - 1.0) * w * 0.85;
+        let r = 0.05 + 0.05 * hash01(id, 3);
+        let c = Vec2::new(x, y.min(0.97 - r * 0.5));
+        let zc = hash01(id, 4) * 0.3;
+        let (c0, c1, r0, r1) = Canvas::span(c, r * 1.3, aspect);
+        for row in r0..=r1 {
+            for col in c0..=c1 {
+                let q = Canvas::at(col, row, aspect);
+                // A clump is wider than it is tall: the needles sit in flat plates along the limbs.
+                let d = (q - c) / Vec2::new(r * 1.4, r * 0.7);
+                let rough = value_noise(q.x * 40.0, q.y * 40.0, seed + 44) * 0.3;
+                let dd = d.length() * (1.0 - rough);
+                if dd > 1.0 {
+                    continue;
+                }
+                let nz = (1.0 - dd * dd).max(0.0).sqrt();
+                let lit = 0.55 + 0.45 * (0.4 * d.y.max(-1.0) + 0.6 * nz).max(0.0);
+                let a = ((1.0 - dd) / 0.15).clamp(0.0, 1.0);
+                cv.put(row * CELL + col, zc + nz * 0.1, [lit * 0.85, lit, lit * 0.8], a);
+            }
+        }
+    }
+    cv
+}
+
 /// A bare crown seen from the side: the trunk's top, limbs, and the twigs as a fine fringe at their ends.
 fn bare_side(kind: Kind, seed: u32) -> Canvas {
     let aspect = kind.aspect();
@@ -260,6 +314,7 @@ fn bare_side(kind: Kind, seed: u32) -> Canvas {
         Kind::Broken => (2, 0.7, 0.2, 0.03, 0.35),
         Kind::Shrub => (9, 0.8, 0.35, 0.02, 0.45),
         Kind::Thicket => (7, 0.5, 0.55, 0.02, 0.55),
+        Kind::Pine => (4, 0.6, 0.3, 0.03, 0.5),
     };
     let bark = [0.5, 0.46, 0.43];
     for k in 0..limbs {
@@ -299,6 +354,9 @@ pub fn atlas(summer: bool) -> Image {
         let seed = 100 + cell as u32 * 37 + if summer { 0 } else { 1000 };
         let kinds = [Kind::Robinia, Kind::Elm, Kind::Ash, Kind::Poplar, Kind::Walnut, Kind::Broken, Kind::Shrub, Kind::Thicket];
         let cv = match (cell, summer) {
+            // The pine, evergreen: its side and its top, the same in either season.
+            (12, _) => pine_side(seed),
+            (13, _) => leafy_patch(Kind::Pine, seed),
             // June: two patches of each kind's leaf.
             (_, true) => leafy_patch(kinds[cell % 8], seed),
             (0..8, false) => bare_side(kinds[cell], seed),
@@ -415,7 +473,7 @@ fn patches(m: &mut crate::meshes::MeshBuilder, kind: Kind, mid: Vec3, w: f32, h:
         let right = up.cross(face).normalize_or(Vec3::X);
         let (r, u) = (right * size * 0.5, up * size * 0.5);
         let pts = [p - r - u, p + r - u, p + r + u, p - r + u];
-        let cell = kind.side_cell() + if hash01(id, 7) < 0.5 { 0 } else { 8 };
+        let cell = if kind == Kind::Pine { 12 + (hash01(id, 7) < 0.5) as usize } else { kind.side_cell() + if hash01(id, 7) < 0.5 { 0 } else { 8 } };
         let uvs = [cell_uv(cell, 0.0, 1.0), cell_uv(cell, 1.0, 1.0), cell_uv(cell, 1.0, 0.0), cell_uv(cell, 0.0, 0.0)];
         m.poly_uv_normals(&pts, &uvs, &pts.map(normal), c);
     }

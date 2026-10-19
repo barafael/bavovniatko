@@ -216,3 +216,16 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
 ## Progress
 
 - 2026-10-19: planned. The models job (table above) runs as a separate agent.
+- 2026-10-20: phase 0, first part (`625f317`). Each diorama's words, keys and enemy guns now come from its file;
+  the code no longer asks which place it is, except where a set or a tally is truly the place's own (exhaustive
+  matches, so a new diorama is flagged by the compiler). Same-day is `same` for both against `fx-v`/`fx-r`.
+- 2026-10-20: phase 1, first part. The map from OpenStreetMap (`tools/osm/`): the runway (3,499 m at 154.6°, 50 m),
+  taxiways as concrete, the railway, 172 areas of land cover painted by kind, 245 buildings raised from their
+  footprints, the Antonov hangar under a barrel roof, pine woods (a new evergreen in the tree atlas). The box is
+  500 m east and 700 m south of the runway's middle. `BAV_DIORAMA=hostomel-1|hostomel-2` loads `map.ron` +
+  `osm.ron` + the part's file as one record. The sun is computed for 50.6 N on day 55 (sunset at 17:30 with the -0.83° horizon, the dossier
+  17:31; civil dusk ends 18:04, nautical 18:45), under the overcast. **Assumptions to check:** the control tower's place (840, 380) and
+  the radar's (520, 1000) are placed by eye; OSM is the map of 2026, and buildings put up since 2022 that are not
+  named as such are still in.
+- The models are blocked on a Sketchfab token (the agent's report: BTR-3E at Hostomel, so a BTR-82A stand-in under
+  the id `btr80`; manilov.ap's Su24 is a clean source for the bomb runs).

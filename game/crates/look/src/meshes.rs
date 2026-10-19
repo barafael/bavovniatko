@@ -121,6 +121,21 @@ impl MeshBuilder {
         }
     }
 
+    /// Triangles over these points (any outline, already triangulated), all facing `n`.
+    pub fn tris(&mut self, pts: &[Vec3], uvs: &[Vec2], tris: &[[usize; 3]], n: Vec3, c: Rgb) {
+        let base = self.pos.len() as u32;
+        let col = lin(c);
+        for (p, uv) in pts.iter().zip(uvs) {
+            self.pos.push(p.to_array());
+            self.nor.push(n.to_array());
+            self.col.push(col);
+            self.uv.push(uv.to_array());
+        }
+        for t in tris {
+            self.idx.extend_from_slice(&[base + t[0] as u32, base + t[1] as u32, base + t[2] as u32]);
+        }
+    }
+
     /// A flat polygon with a normal of its own at each corner (a card standing in for something rounder).
     pub fn poly_uv_normals(&mut self, pts: &[Vec3], uvs: &[Vec2], normals: &[Vec3], c: Rgb) {
         let base = self.pos.len() as u32;

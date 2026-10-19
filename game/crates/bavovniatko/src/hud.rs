@@ -351,6 +351,9 @@ fn update_hud(
             "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
             diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
         ),
+        // The field's own tally (helicopters down, minutes held, the runway) comes with its fight (design/hostomel.md,
+        // phases 2 to 5); until then, the clock.
+        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("{}   {}", diorama().tally_date(), director::clock_text(script.t)),
     }));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
     let mut spans: Vec<(String, bool)> = Vec::new();
@@ -396,6 +399,7 @@ fn update_hud(
             let ad = if fc.air_defence > 0 { format!("   AD  {}", fc.air_defence) } else { String::new() };
             format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}{ad}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
         }
+        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("guns  {} rds{}", fc.shells, speed_line),
     }));
     // The day's caption, the same way: the Ukrainian line over its gloss.
     let banner = script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default();
@@ -599,6 +603,13 @@ fn show_debrief(
                 ["vehicles", "burned", "left"],
             )
         }
+        Diorama::HostomelLanding | Diorama::HostomelCounter => (
+            format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()),
+            format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)),
+            vec![("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells))],
+            Vec::new(),
+            ["", "", ""],
+        ),
     };
     let words = &bav_core::data::data().words;
     let (closing, sources, keys) = (&words.closing, &words.sources, words.keys.as_str());

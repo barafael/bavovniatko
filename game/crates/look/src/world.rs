@@ -41,6 +41,9 @@ impl Plugin for WorldPlugin {
             Diorama::Robotyne => {
                 app.add_systems(Startup, crate::robotyne::spawn_set.after(spawn_belts)).add_systems(Update, crate::robotyne::daylight.in_set(crate::Step::Effects));
             }
+            Diorama::HostomelLanding | Diorama::HostomelCounter => {
+                app.add_systems(Startup, crate::hostomel::spawn_set.after(spawn_belts)).add_systems(Update, crate::hostomel::daylight.in_set(crate::Step::Effects));
+            }
         }
     }
 }
@@ -226,6 +229,8 @@ fn kind_look(kind: Kind) -> ((f32, f32), f32, meshes::Rgb, meshes::Rgb) {
         Kind::Broken => ((6.0, 11.0), 0.25, [0.64, 0.60, 0.40], [0.53, 0.49, 0.46]),
         Kind::Shrub => ((1.5, 3.5), 0.0, [0.52, 0.63, 0.33], [0.54, 0.48, 0.46]),
         Kind::Thicket => ((2.0, 4.5), 0.0, [0.60, 0.68, 0.38], [0.51, 0.44, 0.41]),
+        // Pine: a crown on the top third of a tall stem, dark needles the year round.
+        Kind::Pine => ((17.0, 25.0), 0.58, [0.30, 0.40, 0.25], [0.27, 0.35, 0.24]),
     }
 }
 
@@ -329,7 +334,62 @@ pub fn belt_plants() -> BeltPlants {
             }
         }
     }
+    woods(&mut plants, id);
     plants
+}
+
+/// The woods of a map's land cover (tools/osm): pine on the sand, a stem every six or seven metres with a few
+/// birches and oaks among them (bare in February), thinning out into the haze at the box's edge, and clear of the
+/// roads that run through them.
+fn woods(plants: &mut BeltPlants, mut id: u32) {
+    let summer = diorama().summer();
+    let lay = geo::layout();
+    let step = 6.5;
+    // Each road's box, so a tree only measures its distance to the roads it could be near.
+    let roads: Vec<(Vec2, Vec2, &geo::Road)> = lay
+        .roads
+        .iter()
+        .map(|r| {
+            let (lo, hi) = r.line.pts.iter().fold((Vec2::splat(f32::MAX), Vec2::splat(f32::MIN)), |(lo, hi), p| (lo.min(*p), hi.max(*p)));
+            (lo - Vec2::splat(r.width + 4.0), hi + Vec2::splat(r.width + 4.0), r)
+        })
+        .collect();
+    for area in lay.areas.iter().filter(|a| a.kind == geo::AreaKind::Wood) {
+        let (nx, nz) = (((area.max.x - area.min.x) / step) as i32, ((area.max.y - area.min.y) / step) as i32);
+        for iz in 0..=nz {
+            for ix in 0..=nx {
+                id += 1;
+                let p2 = area.min + Vec2::new(ix as f32 + hash01(id, 1) * 0.9, iz as f32 + hash01(id, 2) * 0.9) * step;
+                if !area.contains(p2) {
+                    continue;
+                }
+                let edge = (HALF_X - p2.x.abs()).min(HALF_Z - p2.y.abs());
+                if hash01(id, 31) > (edge / 450.0).clamp(0.0, 1.0) {
+                    continue;
+                }
+                if roads.iter().any(|(lo, hi, r)| p2.cmpge(*lo).all() && p2.cmple(*hi).all() && r.line.project(p2).0 < r.width * 0.5 + 3.0) {
+                    continue;
+                }
+                let kind = match hash01(id, 3) {
+                    u if u < 0.84 => Kind::Pine,
+                    u if u < 0.94 => Kind::Ash,
+                    _ => Kind::Elm,
+                };
+                let ((h0, h1), base, june, february) = kind_look(kind);
+                let h = h0 + (h1 - h0) * hash01(id, 4);
+                let p = geo::ground(p2) - Vec3::Y * 0.2;
+                let k = (hash01(id, 5) * TRUNKS as f32) as usize % TRUNKS;
+                let mut xf = Transform::from_translation(p).with_rotation(Quat::from_rotation_y(hash01(id, 6) * std::f32::consts::TAU));
+                xf.scale = Vec3::new(1.0, h / TRUNK_H, 1.0);
+                let ch = h * (1.0 - base);
+                let w = ch * kind.aspect() * (0.8 + 0.4 * hash01(id, 7));
+                let tone = 0.86 + 0.28 * hash01(id, 8);
+                let c = if summer { june } else { february };
+                let crown = Crown { kind, at: p + Vec3::Y * (h * base), w, h: ch, yaw: hash01(id, 9) * 3.0, flip: hash01(id, 10) < 0.5, colour: c.map(|v| v * tone) };
+                plants.trees.push(BeltTree { trunk: k, xf, crown: Some(crown) });
+            }
+        }
+    }
 }
 
 /// Facade texture for the panel blocks: grey panels, a 4 × 3 grid of windows, most blown out and sooted.

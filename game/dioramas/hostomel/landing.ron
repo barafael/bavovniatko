@@ -1,0 +1,90 @@
+// Hostomel, sub-chapter I, The landing (Десант): 24 February 2022, late morning. About 34 helicopters bring 200-300
+// VDV of the 31st Air Assault and 45th Spetsnaz Brigades onto the field; fewer than 200 National Guard conscripts
+// of the 4th Rapid Reaction Brigade's rear echelon hold them for more than an hour, then pull out, out of ammunition
+// (c01 §2 the timeline, §4, §6 set piece 2). The schema is bav_core::data and bav_sim::data; the map is map.ron.
+//
+// Phase 1 of design/hostomel.md: the field and the clock. The helicopters, the infantry fight and the Igla come in
+// phases 2 to 4; until then the attack's lines below are set so nothing in the column game fires.
+(
+    // 10:20 to about 13:05 in the day's 1500 s: the stream crosses the Kyiv dam about 10:30 and is over the field
+    // about 11:00; the defenders are out by 13:00.
+    day_start_min: 620.0,
+    compression: 0.11,
+    attacker: Ru,
+    // Fictional, the National Guard's: the player (viburnum), the D-30s at Horenka (mace), the observers on the
+    // tower (tower), the battalion's command post (oak).
+    callsigns: (player: ("Kalyna", "Калина"), guns: ("Bulava", "Булава"), op: ("Vezha", "Вежа"), command: ("Dub", "Дуб")),
+    words: (
+        briefing: r#"HOSTOMEL (ГОСТОМЕЛЬ), ANTONOV AIRPORT
+24 FEBRUARY 2022, LATE MORNING
+
+At four this morning Russia invaded. At dawn Kalibr missiles hit this airfield and the National Guard's base
+beside it. The airport has a 3.5 km runway, 25 km from Kyiv: whoever holds it can fly an army in.
+
+The 4th Rapid Reaction Brigade (4-та бригада оперативного призначення НГУ) has gone east. Its rear echelon is
+left: fewer than two hundred conscripts, with rifles, a few BTRs, Igla missiles and one ZU-23-2.
+Two D-30 howitzers stand at Horenka (Горенка).
+
+Helicopters are coming down the Dnipro. Dozens of them.
+
+The day will run whether or not you do anything. What you do decides how long the field holds.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
+Left click: the D-30s at Horenka.  1/2 or Tab: drone / the tower.  P: pause.  [ ]: time.
+
+Press Enter."#,
+        op_label: "OBSERVERS, THE CONTROL TOWER (СПОСТЕРІГАЧІ, ДИСПЕТЧЕРСЬКА ВЕЖА)",
+        op_lost: "The tower is hit. No eyes over the apron.",
+        forward_belt: "the apron",
+        plow_mine: "",
+        mine_lines: [""],
+        registered: ("", "Bulava firing on the runway."),
+        closing: [
+            "The airlift that was to follow, eighteen Il-76s with the 76th Air Assault Division, turned back in the air.",
+            "At dusk the army came back for the field (the counterattack, the next part).",
+        ],
+        keys: "R: the same morning again.     Esc: quit.",
+        sources: [
+            (publisher: "The Washington Post", date: "24 Aug 2022", title: "Battle for Kyiv: Ukrainian valor, Russian blunders combined to save the capital", url: "https://www.washingtonpost.com/national-security/interactive/2022/kyiv-battle-ukraine-survival/"),
+            (publisher: "RUSI", date: "7 Nov 2022", title: "The Russian air war and Ukrainian requirements for air defence", url: "https://www.rusi.org/explore-our-research/publications/special-resources/russian-air-war-and-ukrainian-requirements-air-defence"),
+            (publisher: "RUSI", date: "30 Nov 2022", title: "Preliminary lessons in conventional warfighting from Russia's invasion of Ukraine: February–July 2022", url: "https://www.rusi.org/explore-our-research/publications/special-resources/preliminary-lessons-conventional-warfighting-russias-invasion-ukraine-february-july-2022"),
+            (publisher: "War on the Rocks", date: "10 Aug 2023", title: "The battle of Hostomel airport: a key moment in Russia's defeat in Kyiv", url: "https://warontherocks.com/the-battle-of-hostomel-airport-a-key-moment-in-russias-defeat-in-kyiv/"),
+            (publisher: "The British Army Review", date: "Mar 2024", title: "The battle of Irpin River, February/March 2022", url: "https://chacr.org.uk/wp-content/uploads/2024/03/BAR-187-compressed.pdf"),
+            (publisher: "Modern War Institute", date: "21 Feb 2025", title: "Urban Warfare Project case study #12: battle of Kyiv", url: "https://mwi.westpoint.edu/urban-warfare-project-case-study-12-battle-of-kyiv/"),
+        ],
+    ),
+    // Over the apron, looking west at the runway.
+    camera: (900.0, 450.0),
+    observed_from: Home,
+
+    // The National Guard's posts (c01 §3): the hangar, the apron's north end, the stands, the tower and offices,
+    // and the base's gate by the railway crossing. Where the radar stood the sources do not place; here it is at the
+    // runway's south end (an assumption, flagged in design/hostomel.md).
+    ua_positions: [(990.0, 610.0), (700.0, 330.0), (800.0, 700.0), (1000.0, 1100.0), (1250.0, 560.0), (520.0, 1000.0)],
+    ru_positions: [],
+    routes: [
+        (line: "e373", deploy: (1030.0, -713.0), objective: (1600.0, 450.0)),
+    ],
+    // The column game's lines, out of the way until the areas replace them (phase 3).
+    grey_zone: (4000.0, 4500.0),
+    advance: 1.0,
+    foothold_z: 9000.0,
+    defence_z: 9000.0,
+    home: (1450.0, 760.0),
+    jam_z: 9000.0,
+    mortar_band: (0.0, 0.0),
+
+    // ---- The battle's part (bav_sim::data) ----
+    catalog: [],
+    support: [],
+    allotment: (points: 0, record: []),
+    old_wreck_kinds: [],
+    space_key: Atgm,
+    shift_fire: Raam,
+    registered_fire: (600.0, 0),
+    operator: (pos: (1450.0, 760.0), found_per_hour: 0.0),
+    script: [
+        (2.0, Say("Bird up. Low cloud, drizzle. The hangars are still smoking from this morning's missiles.")),
+        (12.0, Say("All, this is {command}. Helicopters over the Kyiv dam, coming up the river. Many of them. To your posts.")),
+    ],
+)

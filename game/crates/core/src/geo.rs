@@ -187,6 +187,82 @@ pub enum RoadKind {
     Asphalt,
     Dirt,
     Track,
+    /// An airfield's taxiways: wide slabs of concrete.
+    Concrete,
+}
+
+/// Land cover drawn from a map (tools/osm): what a stretch of ground is, painted in this order.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, serde::Deserialize)]
+pub enum AreaKind {
+    Farmland,
+    Grass,
+    Allotments,
+    Residential,
+    Industrial,
+    Wood,
+    Wetland,
+    Water,
+    Apron,
+    Runway,
+}
+
+/// A stretch of ground of one kind: its outline, and the box round it.
+#[derive(Clone, Debug)]
+pub struct Area {
+    pub kind: AreaKind,
+    pub poly: Vec<Vec2>,
+    pub min: Vec2,
+    pub max: Vec2,
+}
+
+impl Area {
+    pub fn new(kind: AreaKind, poly: Vec<Vec2>) -> Self {
+        let min = poly.iter().fold(Vec2::splat(f32::MAX), |a, p| a.min(*p));
+        let max = poly.iter().fold(Vec2::splat(f32::MIN), |a, p| a.max(*p));
+        Self { kind, poly, min, max }
+    }
+
+    /// Whether the point is inside the outline (even-odd).
+    pub fn contains(&self, p: Vec2) -> bool {
+        if p.x < self.min.x || p.y < self.min.y || p.x > self.max.x || p.y > self.max.y {
+            return false;
+        }
+        inside(&self.poly, p)
+    }
+}
+
+/// Whether a point is inside a polygon (even-odd).
+pub fn inside(poly: &[Vec2], p: Vec2) -> bool {
+    let mut c = false;
+    let mut j = poly.len() - 1;
+    for i in 0..poly.len() {
+        let (a, b) = (poly[i], poly[j]);
+        if (a.y > p.y) != (b.y > p.y) && p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x {
+            c = !c;
+        }
+        j = i;
+    }
+    c
+}
+
+/// What a building is, for its shape and its colour.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, serde::Deserialize)]
+pub enum BuildingKind {
+    House,
+    /// Flats: panel or brick blocks.
+    Block,
+    Industrial,
+    Shed,
+    Hangar,
+    Other,
+}
+
+/// A building from a map: its footprint and its height to the eaves.
+#[derive(Clone, Debug)]
+pub struct Building {
+    pub kind: BuildingKind,
+    pub height: f32,
+    pub foot: Vec<Vec2>,
 }
 
 #[derive(Clone, Debug)]
@@ -272,6 +348,10 @@ pub struct Layout {
     /// Barrier minefields across the whole width of the box.
     pub barriers: Vec<Barrier>,
     pub river: Option<Polyline>,
+    /// Land cover and buildings drawn from a map, and its railway lines (empty where the ground is drawn by hand).
+    pub areas: Vec<Area>,
+    pub buildings: Vec<Building>,
+    pub rails: Vec<Polyline>,
     pub town: Rect,
     pub dachas: Rect,
     pub pavlivka: Rect,

@@ -10,6 +10,7 @@ pub mod audio;
 pub mod baked;
 pub mod feed;
 pub mod fx;
+pub mod hostomel;
 pub mod meshes;
 pub mod models;
 pub mod robotyne;

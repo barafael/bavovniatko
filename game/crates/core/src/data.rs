@@ -39,12 +39,20 @@ pub struct DioramaData {
     pub callsigns: Callsigns,
     /// The map's anchor: the latitude and longitude at (x, z), and metres per degree of longitude there.
     pub anchor: Anchor,
+    /// The sun's day: the day of the year, and local time's offset from UTC (hours). None: the place keeps its own
+    /// hand-made curve.
+    #[serde(default)]
+    pub sun: Option<(u32, f32)>,
     /// What the day says that is this place's own.
     pub words: Words,
     /// Where the drone starts.
     pub camera: P,
     /// What the observers' fire is adjusted from: their error grows with the distance from it.
     pub observed_from: ObservedFrom,
+    /// Whether the ground is worn by weeks of war already: old craters along the belts and scattered over the
+    /// fields (not on a war's first morning).
+    #[serde(default = "yes")]
+    pub worn: bool,
     /// A band of old shelling pocking no-man's-land: how many craters, from this z, over that depth.
     #[serde(default)]
     pub shelled: Option<(u32, f32, f32)>,
@@ -65,6 +73,9 @@ pub struct DioramaData {
     pub field_mines: Vec<(Vec<P>, f32)>,
     #[serde(default)]
     pub barriers: Vec<BarrierSpec>,
+    /// The ground drawn from a map (tools/osm): its lines, roads and tree rows join the hand-drawn ones.
+    #[serde(default)]
+    pub osm: OsmSpec,
     /// The line that is the river, if there is one.
     #[serde(default)]
     pub river: Option<String>,
@@ -105,6 +116,29 @@ pub struct DioramaData {
     pub home: P,
     pub jam_z: f32,
     pub mortar_band: (f32, f32),
+}
+
+/// What tools/osm/osm2ron.py makes of a map: lines (roads, taxiways, railways), the roads on them, tree rows, land
+/// cover in painting order, buildings, and which lines are railways.
+#[derive(Deserialize, Debug, Default)]
+pub struct OsmSpec {
+    pub lines: Vec<(String, LineSpec)>,
+    pub roads: Vec<RoadSpec>,
+    pub rails: Vec<String>,
+    pub belts: Vec<BeltSpec>,
+    pub areas: Vec<(crate::geo::AreaKind, Vec<P>)>,
+    pub buildings: Vec<BuildingSpec>,
+}
+
+#[derive(Deserialize, Debug)]
+pub struct BuildingSpec {
+    pub kind: crate::geo::BuildingKind,
+    pub height: f32,
+    pub foot: Vec<P>,
+}
+
+fn yes() -> bool {
+    true
 }
 
 /// The copy that is one place's: the briefing, the observers' post, the lines on the net that name its ground, and
@@ -292,12 +326,33 @@ pub enum PointSpec {
     OffLine(String, P, P),
 }
 
-/// The built-in files, by diorama.
-fn builtin(d: Diorama) -> (&'static str, &'static str) {
+/// The built-in files, by diorama. A diorama of several files (the sub-chapters of one place share its map) is read
+/// as one: their fields, in this order, make one record (`merge`).
+fn builtin(d: Diorama) -> &'static [(&'static str, &'static str)] {
+    const HOSTOMEL_MAP: (&str, &str) = ("hostomel/map.ron", include_str!("../../../dioramas/hostomel/map.ron"));
+    const HOSTOMEL_OSM: (&str, &str) = ("hostomel/osm.ron", include_str!("../../../dioramas/hostomel/osm.ron"));
     match d {
-        Diorama::Vuhledar => ("vuhledar.ron", include_str!("../../../dioramas/vuhledar.ron")),
-        Diorama::Robotyne => ("robotyne.ron", include_str!("../../../dioramas/robotyne.ron")),
+        Diorama::Vuhledar => &[("vuhledar.ron", include_str!("../../../dioramas/vuhledar.ron"))],
+        Diorama::Robotyne => &[("robotyne.ron", include_str!("../../../dioramas/robotyne.ron"))],
+        Diorama::HostomelLanding => &[HOSTOMEL_MAP, HOSTOMEL_OSM, ("hostomel/landing.ron", include_str!("../../../dioramas/hostomel/landing.ron"))],
+        Diorama::HostomelCounter => &[HOSTOMEL_MAP, HOSTOMEL_OSM, ("hostomel/counter.ron", include_str!("../../../dioramas/hostomel/counter.ron"))],
     }
+}
+
+/// Several files' records as one: each file is a record `( ... )` after its comments, and their fields are joined in
+/// order. One file is returned as it is, so its errors point at its own lines.
+fn merge(texts: &[String]) -> String {
+    if let [one] = texts {
+        return one.clone();
+    }
+    let body = |t: &str| {
+        let open = t.lines().position(|l| l.trim_start().starts_with('(')).unwrap_or_else(|| panic!("a diorama file without its record"));
+        let rest: Vec<&str> = t.lines().skip(open).collect();
+        let joined = rest.join("\n");
+        let inner = joined.trim_end();
+        inner[inner.find('(').unwrap() + 1..inner.rfind(')').unwrap()].trim_end().trim_end_matches(',').to_string()
+    };
+    format!("({})", texts.iter().map(|t| body(t)).collect::<Vec<_>>().join(",\n"))
 }
 
 static SOURCE: OnceLock<(String, String)> = OnceLock::new();
@@ -306,15 +361,19 @@ static SOURCE: OnceLock<(String, String)> = OnceLock::new();
 /// this module the place and the layout, `bav_sim` the forces and the day's script.
 pub fn source() -> (&'static str, &'static str) {
     let (name, text) = SOURCE.get_or_init(|| {
-        let (name, text) = builtin(diorama());
-        match std::env::var("BAV_DATA").ok().filter(|d| !d.is_empty()) {
-            Some(dir) => {
-                let path = std::path::Path::new(&dir).join(name);
-                let text = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
-                (path.display().to_string(), text)
-            }
-            None => (name.to_string(), text.to_string()),
-        }
+        let files = builtin(diorama());
+        let names = files.iter().map(|(n, _)| *n).collect::<Vec<_>>().join(" + ");
+        let texts: Vec<String> = match std::env::var("BAV_DATA").ok().filter(|d| !d.is_empty()) {
+            Some(dir) => files
+                .iter()
+                .map(|(name, _)| {
+                    let path = std::path::Path::new(&dir).join(name);
+                    std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()))
+                })
+                .collect(),
+            None => files.iter().map(|(_, t)| t.to_string()).collect(),
+        };
+        (names, merge(&texts))
     });
     (name, text)
 }
@@ -407,7 +466,7 @@ fn s_at_z(road: &Polyline, z: f32) -> f32 {
 /// The layout the file describes.
 pub fn layout(d: &DioramaData) -> Layout {
     let mut lines: HashMap<&str, Polyline> = HashMap::new();
-    for (name, spec) in &d.lines {
+    for (name, spec) in d.lines.iter().chain(&d.osm.lines) {
         let line = match spec {
             LineSpec::Points(pts) => Polyline::new(pts.iter().copied().map(v).collect()),
             LineSpec::Smoothed(pts, k) => Polyline::smoothed(pts.iter().copied().map(v).collect(), *k),
@@ -426,9 +485,9 @@ pub fn layout(d: &DioramaData) -> Layout {
         lines.insert(name, line);
     }
     let line = |name: &str| lines.get(name).unwrap_or_else(|| panic!("no line {name:?}"));
-    let roads: Vec<Road> = d.roads.iter().map(|r| Road { line: line(&r.line).clone(), width: r.width, kind: r.kind }).collect();
+    let roads: Vec<Road> = d.roads.iter().chain(&d.osm.roads).map(|r| Road { line: line(&r.line).clone(), width: r.width, kind: r.kind }).collect();
     let mut belts = Vec::new();
-    for spec in &d.belts {
+    for spec in d.belts.iter().chain(&d.osm.belts) {
         match spec {
             BeltSpec::Rows { rows, amp, period, phase_step, x0, span, n } => {
                 for (i, &(z, width)) in rows.iter().enumerate() {
@@ -487,6 +546,9 @@ pub fn layout(d: &DioramaData) -> Layout {
         shoulder_fields,
         field_mines: d.field_mines.iter().map(|(pts, w)| (Polyline::new(pts.iter().copied().map(v).collect()), *w)).collect(),
         barriers: d.barriers.iter().map(|b| Barrier { z0: b.z0, z1: b.z1, at: 1.0 / b.at_per, stacked: b.stacked, ap: 1.0 / b.ap_per }).collect(),
+        areas: d.osm.areas.iter().map(|(k, pts)| crate::geo::Area::new(*k, pts.iter().copied().map(v).collect())).collect(),
+        buildings: d.osm.buildings.iter().map(|b| crate::geo::Building { kind: b.kind, height: b.height, foot: b.foot.iter().copied().map(v).collect() }).collect(),
+        rails: d.osm.rails.iter().map(|r| line(r).clone()).collect(),
         river: d.river.as_deref().map(|r| line(r).clone()),
         town: rect(d.town),
         dachas: rect(d.dachas),

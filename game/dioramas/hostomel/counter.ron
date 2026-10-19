@@ -1,0 +1,86 @@
+// Hostomel, sub-chapter II, The counterattack (Контратака): 24 February 2022, dusk. Zaluzhnyi: "We have to retake
+// Hostomel." Vdovychenko: "I don't have enough forces." Zaluzhnyi: "We should try." The 72nd, 80th and 95th Brigades,
+// the 3rd SSO Regiment and volunteers, with artillery and Su-24s, retake the field by 21:00, crater the runway and
+// pull back; the VDV have it again next day, when the column from Belarus arrives (c01 §2, §6 set piece 3, §7).
+// The schema is bav_core::data and bav_sim::data; the map is map.ron.
+//
+// Phase 1 of design/hostomel.md: the field and the clock. The attack itself comes in phase 7.
+(
+    // 17:00 to about 21:30 in the day's 1500 s; sunset 17:31.
+    day_start_min: 1020.0,
+    compression: 0.18,
+    attacker: Ua,
+    // Fictional: the player (little owl), the guns (hammer), the observers (elm), the command post (Kyi).
+    callsigns: (player: ("Sych", "Сич"), guns: ("Molot", "Молот"), op: ("Berest", "Берест"), command: ("Kyi", "Кий")),
+    words: (
+        briefing: r#"HOSTOMEL (ГОСТОМЕЛЬ), ANTONOV AIRPORT
+24 FEBRUARY 2022, DUSK
+
+Since one o'clock Russian paratroopers have held the airfield. Their transports are waiting in Pskov:
+eighteen Il-76s with a division aboard, to land as soon as the runway is safe.
+
+Zaluzhnyi: "We have to retake Hostomel." Vdovychenko: "I don't have enough forces." Zaluzhnyi: "We should try."
+
+Units of the 72nd, 80th and 95th Brigades, the 3rd Special Purpose Regiment and volunteers go in as the light
+fails, behind the guns and the Su-24s. Take the field, break the runway, and get out before the column from
+Belarus arrives.
+
+The evening will run whether or not you do anything. What you do decides what it costs.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
+Left click: 152 mm fire mission.  1/2 or Tab: drone / observers.  P: pause.  [ ]: time.
+
+Press Enter."#,
+        op_label: "OBSERVERS, THE TREE LINE NORTH OF THE FIELD (СПОСТЕРІГАЧІ, ПОСАДКА НА ПІВНОЧІ)",
+        op_lost: "The observers are hit. No eyes on the runway.",
+        forward_belt: "the tree line",
+        plow_mine: "",
+        mine_lines: [""],
+        registered: ("", "Molot firing on the runway."),
+        closing: [
+            "No Il-76 landed at Hostomel. On 25 February the column from Belarus arrived, and the VDV had the field again.",
+            "The Russians left it on 31 March, when they gave up on Kyiv.",
+        ],
+        keys: "R: the same evening again.     Esc: quit.",
+        sources: [
+            (publisher: "The Washington Post", date: "24 Aug 2022", title: "Battle for Kyiv: Ukrainian valor, Russian blunders combined to save the capital", url: "https://www.washingtonpost.com/national-security/interactive/2022/kyiv-battle-ukraine-survival/"),
+            (publisher: "RUSI", date: "7 Nov 2022", title: "The Russian air war and Ukrainian requirements for air defence", url: "https://www.rusi.org/explore-our-research/publications/special-resources/russian-air-war-and-ukrainian-requirements-air-defence"),
+            (publisher: "RUSI", date: "30 Nov 2022", title: "Preliminary lessons in conventional warfighting from Russia's invasion of Ukraine: February–July 2022", url: "https://www.rusi.org/explore-our-research/publications/special-resources/preliminary-lessons-conventional-warfighting-russias-invasion-ukraine-february-july-2022"),
+            (publisher: "War on the Rocks", date: "10 Aug 2023", title: "The battle of Hostomel airport: a key moment in Russia's defeat in Kyiv", url: "https://warontherocks.com/the-battle-of-hostomel-airport-a-key-moment-in-russias-defeat-in-kyiv/"),
+            (publisher: "The British Army Review", date: "Mar 2024", title: "The battle of Irpin River, February/March 2022", url: "https://chacr.org.uk/wp-content/uploads/2024/03/BAR-187-compressed.pdf"),
+            (publisher: "Modern War Institute", date: "21 Feb 2025", title: "Urban Warfare Project case study #12: battle of Kyiv", url: "https://mwi.westpoint.edu/urban-warfare-project-case-study-12-battle-of-kyiv/"),
+        ],
+    ),
+    // Over the tree line north of the field, looking south at the apron.
+    camera: (700.0, -300.0),
+    observed_from: Home,
+
+    // The VDV's hold (phase 7 places them by the areas): the hangar, the apron, the tower, the stands.
+    ua_positions: [],
+    ru_positions: [(990.0, 610.0), (700.0, 330.0), (800.0, 700.0), (1000.0, 1100.0)],
+    routes: [
+        (line: "e373", deploy: (1030.0, -713.0), objective: (1000.0, 600.0)),
+    ],
+    // The column game's lines, out of the way until the areas replace them (phase 3).
+    grey_zone: (4000.0, 4500.0),
+    advance: 1.0,
+    foothold_z: 9000.0,
+    defence_z: 9000.0,
+    home: (500.0, -1400.0),
+    jam_z: 9000.0,
+    mortar_band: (0.0, 0.0),
+
+    // ---- The battle's part (bav_sim::data) ----
+    catalog: [],
+    support: [],
+    allotment: (points: 0, record: []),
+    old_wreck_kinds: [],
+    space_key: Column,
+    shift_fire: Smoke,
+    registered_fire: (600.0, 0),
+    operator: (pos: (500.0, -1400.0), found_per_hour: 0.0),
+    script: [
+        (2.0, Say("Bird up. Getting dark. Smoke over the hangars. They are dug in on the apron.")),
+        (12.0, Say("All, this is {command}. The guns start in five. Su-24s after them. Then we go.")),
+    ],
+)

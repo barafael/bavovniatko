@@ -1,4 +1,4 @@
-//! Which diorama is on the table: `vuhledar` (the default) or `robotyne`, chosen by the first command-line
+//! Which diorama is on the table: `vuhledar` (the default), `robotyne`, `hostomel-1` or `hostomel-2`, chosen by the first command-line
 //! argument or `BAV_DIORAMA`. The two places share the kit (terrain, vehicles, mines, fire, the drone), and
 //! differ in season, ground, forces, and which way the war is going. The player is Ukrainian in both.
 
@@ -18,6 +18,13 @@ pub enum Diorama {
     /// 8 June 2023: the 47th Brigade's breach south of Mala Tokmachka, into the Russian minefields
     /// (db/research/chapters/c09-robotyne.md §6, set piece 1).
     Robotyne,
+    /// 24 February 2022, Antonov airport at Hostomel, morning: the VDV come in by helicopter onto the National
+    /// Guard's rear echelon (db/research/chapters/c01-march-on-kyiv.md; design/hostomel.md, sub-chapter I).
+    #[strum(serialize = "hostomel-1")]
+    HostomelLanding,
+    /// The same day at dusk: the counterattack that retakes the field and craters the runway (sub-chapter II).
+    #[strum(serialize = "hostomel-2")]
+    HostomelCounter,
 }
 
 /// How the day is played (design/command.md).

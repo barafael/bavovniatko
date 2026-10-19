@@ -466,6 +466,8 @@ fn paint() -> Chunks {
         s += 3.0;
     }
 
+    areas(&mut chunks);
+
     // Shelterbelts: leaf litter, scrub and trampled snow under the trees. Not in the belts' gaps, which are field
     // (they read as a black strip with no trees over it).
     for belt in &lay.belts {
@@ -501,9 +503,15 @@ fn paint() -> Chunks {
             let summer = diorama().summer();
             stamp(&mut chunks, p, r, &|d, c, w| {
                 let lat = (w - p).dot(nrm).abs();
+                if kind == RoadKind::Concrete {
+                    // Airfield slabs: grey concrete in 7.5 m squares with dark joints, the snow lying in patches.
+                    let along = s + (w - p).dot(nrm.perp());
+                    return concrete(c, d, (w - p).dot(nrm), along, w, summer);
+                }
                 if summer {
                     // June: grey asphalt with dry verges; dirt tracks of pale dust with two darker ruts.
                     return match kind {
+                        RoadKind::Concrete => unreachable!(),
                         RoadKind::Asphalt => if d < 0.8 { mix([0.34, 0.34, 0.33], [0.42, 0.41, 0.39], value_noise(w.x / 5.0, w.y / 5.0, 5) * 0.5 + 0.5) } else { mix(c, [0.58, 0.55, 0.42], 0.5) },
                         RoadKind::Dirt | RoadKind::Track => {
                             let rut = (1.0 - ((lat - 1.4).abs() / 0.6).min(1.0)).powf(0.7);
@@ -514,6 +522,7 @@ fn paint() -> Chunks {
                     };
                 }
                 match kind {
+                    RoadKind::Concrete => unreachable!(),
                     RoadKind::Asphalt => {
                         let edge_snow = value_noise(w.x / 4.0, w.y / 4.0, 5) * 0.5 + 0.5;
                         if d < 0.8 { mix([0.29, 0.29, 0.30], SNOW, edge_snow * 0.25) } else { mix(c, [0.55, 0.53, 0.50], 0.6) }
@@ -552,7 +561,9 @@ fn paint() -> Chunks {
             k += 1;
         }
     }
-    for belt in &lay.belts {
+    // (Not where the war is a day old: the first morning's craters are the day's own.)
+    let worn = bav_core::data::data().worn;
+    for belt in lay.belts.iter().filter(|_| worn) {
         let n = (belt.line.length() / 35.0) as u32;
         for _ in 0..n {
             let s = geo::hash01(k, 51) * belt.line.length();
@@ -563,7 +574,7 @@ fn paint() -> Chunks {
         }
     }
     // Scattered harassing fire in clusters (a battery's sheaf lands as a group).
-    for _ in 0..90 {
+    for _ in 0..if worn { 90 } else { 0 } {
         let c = Vec2::new((geo::hash01(k, 61) * 2.0 - 1.0) * HALF_X, (geo::hash01(k, 62) * 1.6 - 1.0) * HALF_Z);
         k += 1;
         for _ in 0..(2 + (geo::hash01(k, 64) * 5.0) as u32) {
@@ -616,6 +627,99 @@ fn paint() -> Chunks {
         }
     }
     chunks
+}
+
+/// Land cover from a map (tools/osm), each kind over the ones before it: thin late-February snow lying in patches
+/// on fields and grass, needles under the pines, the airfield's concrete with its runway markings.
+fn areas(chunks: &mut Chunks) {
+    use bav_core::geo::AreaKind as K;
+    let summer = diorama().summer();
+    for area in &geo::layout().areas {
+        // The runway's frame: its centreline from the middle of one short end to the other's.
+        let (c0, c1) = if area.kind == K::Runway && area.poly.len() == 4 {
+            ((area.poly[0] + area.poly[3]) * 0.5, (area.poly[1] + area.poly[2]) * 0.5)
+        } else {
+            (Vec2::ZERO, Vec2::X)
+        };
+        let (axis, len) = ((c1 - c0).normalize_or(Vec2::X), c0.distance(c1));
+        let half_w = if area.poly.len() == 4 { area.poly[0].distance(area.poly[3]) * 0.5 } else { 0.0 };
+        for t in rect(area.min, area.max) {
+            t.each(&mut chunks[t.chunk], |px, w, _| {
+                if !area.contains(w) {
+                    return;
+                }
+                let c = from_srgb8(px);
+                let n = value_noise(w.x / 7.0, w.y / 7.0, 81) * 0.5 + 0.5;
+                // Thin snow (0-3 cm, ERA5) lies in drifts behind every tussock and furrow: streaks a few metres
+                // long, gathered into larger lighter and darker stretches, never a clean edge.
+                let broad = fbm(w.x / 60.0, w.y / 60.0, 3, 82) * 0.5 + 0.5;
+                let fine = fbm(w.x / 2.5, w.y / 7.0, 2, 83) * 0.5 + 0.5;
+                let patch = geo::smoothstep(0.35, 0.75, broad * 0.55 + fine * 0.45) * 0.85;
+                let snowy = |under: Px, k: f32| if summer { under } else { mix(under, SNOW, patch * k) };
+                let (out, code) = match area.kind {
+                    // Autumn-ploughed fields: dark earth, the thin snow lying in the furrows.
+                    K::Farmland => (snowy(mix([0.33, 0.28, 0.23], [0.27, 0.23, 0.19], n), 0.8), px[3]),
+                    // Last year's grass, straw and grey, the snow patchy on it.
+                    K::Grass => (snowy(mix([0.52, 0.49, 0.40], [0.44, 0.42, 0.34], n), 0.75), 0),
+                    K::Allotments => (snowy(mix([0.42, 0.37, 0.30], [0.36, 0.33, 0.27], n), 0.6), 0),
+                    K::Residential => (snowy(mix([0.48, 0.46, 0.42], [0.40, 0.38, 0.35], n), 0.5), 0),
+                    K::Industrial => (snowy(mix([0.44, 0.43, 0.41], [0.36, 0.35, 0.34], n), 0.4), 0),
+                    // Pine needles and sand under the trees; little snow gets through the crowns.
+                    K::Wood => (snowy(mix([0.36, 0.30, 0.24], [0.28, 0.24, 0.20], n), 0.25), 0),
+                    K::Wetland => (snowy(mix([0.47, 0.43, 0.33], [0.36, 0.34, 0.28], n), 0.5), 0),
+                    K::Water => (mix([0.58, 0.62, 0.66], [0.50, 0.55, 0.60], n), 0),
+                    K::Apron => (concrete(c, 0.0, w.x, w.y, w, summer), 0),
+                    K::Runway => {
+                        let q = w - c0;
+                        let (along, lat) = (q.dot(axis), q.dot(axis.perp()));
+                        // Swept: the snow only along the edges, where the ploughs threw it.
+                        let mut col = concrete(c, 0.0, lat, along, w, true);
+                        if !summer {
+                            col = mix(col, SNOW, geo::smoothstep(half_w - 6.0, half_w, lat.abs()) * patch);
+                        }
+                        // Rubber at the touchdown zones, the centreline's dashes, the edge lines, the threshold bars.
+                        let end = along.min(len - along);
+                        if end > 300.0 && end < 900.0 && lat.abs() < 12.0 {
+                            col = mix(col, [0.20, 0.20, 0.20], 0.35 * n);
+                        }
+                        let paint = [0.86, 0.86, 0.84];
+                        let dash = lat.abs() < 0.45 && along.rem_euclid(50.0) < 30.0 && end > 60.0;
+                        let edge = (lat.abs() - (half_w - 1.5)).abs() < 0.45;
+                        let bars = end > 6.0 && end < 36.0 && (lat.abs() % 3.6) < 1.8 && lat.abs() < half_w - 3.0;
+                        if dash || edge || bars {
+                            col = mix(col, paint, 0.85);
+                        }
+                        (col, 0)
+                    }
+                };
+                px.copy_from_slice(&to_srgb8(out, code));
+            });
+        }
+    }
+}
+
+/// Airfield concrete at (lat, along) in the slab's own frame: 7.5 m squares, dark sealed joints, stains, and in
+/// winter thin snow lying in patches; its edge fades into the verge.
+fn concrete(c: Px, d: f32, lat: f32, along: f32, w: Vec2, summer: bool) -> Px {
+    if d > 0.9 {
+        return mix(c, [0.52, 0.50, 0.46], 0.5);
+    }
+    let joint = |x: f32| {
+        let f = (x / 7.5).rem_euclid(1.0);
+        f.min(1.0 - f) * 7.5 < 0.08
+    };
+    let slab = geo::hash01(((lat / 7.5).floor() as i32 * 7919 + (along / 7.5).floor() as i32) as u32, 91);
+    let grey = mix([0.50, 0.50, 0.48], [0.58, 0.57, 0.54], slab);
+    let stain = value_noise(w.x / 6.0, w.y / 6.0, 92) * 0.5 + 0.5;
+    let mut col = mix(grey, [0.36, 0.35, 0.33], stain.powi(3) * 0.6);
+    if joint(lat) || joint(along) {
+        col = mix(col, [0.22, 0.22, 0.21], 0.6);
+    }
+    if !summer {
+        let snow = value_noise(w.x / 9.0, w.y / 9.0, 93) * 0.5 + 0.5;
+        col = mix(col, SNOW, geo::smoothstep(0.55, 0.85, snow) * 0.7);
+    }
+    col
 }
 
 /// Crater shape: a dark wet core, a raised rim of earth, and thrown dirt splashed over the snow in rays.
