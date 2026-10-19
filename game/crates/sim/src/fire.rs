@@ -76,6 +76,8 @@ pub enum ShellKind {
     Tos,
     TankHe,
     Cannon30,
+    /// An 80 mm aircraft rocket (S-8), from a helicopter's pods.
+    Rocket,
     /// White phosphorus and smoke: a screen on the ground for a minute or two.
     Smoke,
 }
@@ -563,6 +565,7 @@ fn land_shells(
             ShellKind::Tos => (1.6, 30.0, Cause::Thermobaric, Sfx::Thermobaric, 4.5),
             ShellKind::TankHe => (0.8, 9.0, Cause::TankGun, Sfx::BlastNear, 2.0),
             ShellKind::Cannon30 => (0.18, 2.0, Cause::TankGun, Sfx::BlastNear, 0.0),
+            ShellKind::Rocket => (0.7, 10.0, Cause::Artillery, Sfx::BlastNear, 1.6),
             ShellKind::Raam => (0.5, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
             ShellKind::Smoke => (0.3, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
         };

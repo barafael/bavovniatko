@@ -7,6 +7,7 @@
 pub use bav_core::schedule::{MAX_STEP, Phase, Step, running, sim_dt};
 pub use bav_core::{dev, diorama, geo, schedule, text, vocab};
 
+pub mod air;
 pub mod allot;
 pub mod columns;
 pub mod data;

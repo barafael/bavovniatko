@@ -64,6 +64,8 @@ pub enum Act {
     Tos { label: String },
     Say(String),
     Jam(f32),
+    /// Sorties of the helicopter stream or the airlift (`air`).
+    Air(Vec<crate::air::Sortie>),
 }
 
 struct Beat {
@@ -103,7 +105,7 @@ fn run_script(
     op: Res<crate::player::ObservationPost>,
     models: Res<Models>,
     palette: Res<Palette>,
-    (mut order, helis, book, staff): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>, Res<crate::units::RouteBook>, Option<Res<crate::staff::Staff>>),
+    (mut order, helis, book, staff, air): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>, Res<crate::units::RouteBook>, Option<Res<crate::staff::Staff>>, Option<Res<crate::air::AirModels>>),
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
@@ -183,6 +185,13 @@ fn run_script(
                 if let Some(h) = helis.as_ref() {
                     for p in at {
                         crate::robotyne::spawn_helicopter(&mut commands, h, Vec2::new(p.0, p.1));
+                    }
+                }
+            }
+            Act::Air(sorties) => {
+                if let Some(m) = air.as_ref() {
+                    for s in sorties {
+                        crate::air::launch(&mut commands, m, s);
                     }
                 }
             }

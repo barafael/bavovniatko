@@ -6,6 +6,7 @@ pub use bav_core::schedule::{Step, running, sim_dt};
 pub use bav_core::{dev, diorama, geo, schedule, text, vocab};
 pub use bav_sim::{director, fire, player, units};
 
+pub mod air;
 pub mod audio;
 pub mod baked;
 pub mod feed;
