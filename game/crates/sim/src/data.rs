@@ -39,6 +39,13 @@ pub struct SimData {
     /// The strike drones of the day (how many is the Allotment's; none: the drone is eyes only).
     #[serde(default)]
     pub fpv: Option<FpvSpec>,
+    /// What Space orders: the ATGM teams' fire discipline, or the column.
+    pub space_key: crate::fire::SpaceKey,
+    /// What Shift+click calls: RAAM mines or smoke.
+    pub shift_fire: crate::fire::ShiftFire,
+    /// The enemy's guns, and what they fire on (none: they have none).
+    #[serde(default)]
+    pub ru_guns: Option<crate::director::RuGuns>,
     /// Command's Enemy staff: its budgets for the day (`staff`).
     #[serde(default)]
     pub staff: crate::staff::StaffSpec,

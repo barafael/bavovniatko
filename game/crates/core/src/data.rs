@@ -39,6 +39,15 @@ pub struct DioramaData {
     pub callsigns: Callsigns,
     /// The map's anchor: the latitude and longitude at (x, z), and metres per degree of longitude there.
     pub anchor: Anchor,
+    /// What the day says that is this place's own.
+    pub words: Words,
+    /// Where the drone starts.
+    pub camera: P,
+    /// What the observers' fire is adjusted from: their error grows with the distance from it.
+    pub observed_from: ObservedFrom,
+    /// A band of old shelling pocking no-man's-land: how many craters, from this z, over that depth.
+    #[serde(default)]
+    pub shelled: Option<(u32, f32, f32)>,
     /// The ground's height above sea level: these terms, summed in order.
     pub ground: Vec<HeightTerm>,
     /// Named curves z(x), for lines sampled along them, valleys, and the set.
@@ -96,6 +105,46 @@ pub struct DioramaData {
     pub home: P,
     pub jam_z: f32,
     pub mortar_band: (f32, f32),
+}
+
+/// The copy that is one place's: the briefing, the observers' post, the lines on the net that name its ground, and
+/// the debrief's close.
+#[derive(Deserialize, Debug)]
+pub struct Words {
+    pub briefing: String,
+    /// The observers' post as the HUD names it, and the line when it is lost.
+    pub op_label: String,
+    pub op_lost: String,
+    /// Where our ATGM teams fire from, as the hit feed says it.
+    pub forward_belt: String,
+    /// A mine under a plow that stays on its tracks.
+    pub plow_mine: String,
+    /// Mines under the tracks: one of these, at random.
+    pub mine_lines: Vec<String>,
+    /// The brigade's guns on a registered point `{n}`: in Ukrainian and English (no Ukrainian: the net's own table).
+    pub registered: (String, String),
+    /// The debrief: the lines about what came after, and the keys.
+    pub closing: Vec<String>,
+    pub keys: String,
+    pub sources: Vec<SourceSpec>,
+}
+
+/// A source the day rests on.
+#[derive(Deserialize, Debug)]
+pub struct SourceSpec {
+    pub publisher: String,
+    pub date: String,
+    pub title: String,
+    pub url: String,
+}
+
+/// Where adjusted fire is observed from.
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub enum ObservedFrom {
+    /// A line across the map at this z (a town's edge).
+    LineZ(f32),
+    /// The player's own home.
+    Home,
 }
 
 #[derive(Deserialize, Debug, Clone)]

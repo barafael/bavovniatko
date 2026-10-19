@@ -21,7 +21,7 @@ use crate::fire::{Missile, Post, UaTank};
 use crate::geo;
 use crate::hits::HitLog;
 use crate::units::{Coasting, Radio, Side, VKind, Vehicle};
-use bav_core::diorama::{Diorama, Play, diorama, play};
+use bav_core::diorama::{Play, diorama, play};
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use std::collections::BTreeMap;
@@ -331,12 +331,12 @@ pub struct ColumnPlan {
 }
 
 impl Staff {
-    /// The next column after what the last ones met (Vuhledar's: the attacker's columns are theirs only there):
+    /// The next column after what the last ones met (only where the columns are theirs, attacking):
     /// six or more lost on its road and fewer than half that on the other, the other road; three to mines, a plow in
     /// front; four to our missiles and shells, two more smoke vehicles and a BMP-2 in its first tank's place. What it
     /// changes, the intercepts catch.
     pub fn adapt(&self, mut c: ColumnPlan, radio: &mut Radio, now: f64) -> ColumnPlan {
-        if !rule("columns") || diorama() != Diorama::Vuhledar {
+        if !rule("columns") || diorama().attacker() != Side::Ru {
             return c;
         }
         let lost = |route: usize, of: &[Loss]| -> u32 { self.losses.iter().filter(|((r, l), _)| *r == route && of.contains(l)).map(|(_, n)| n).sum() };

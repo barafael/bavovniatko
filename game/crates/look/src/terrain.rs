@@ -7,7 +7,7 @@
 //! them back on the next run: the shape a persisted day's ground takes (design/next.md).
 
 use crate::dev::dev;
-use crate::diorama::{Diorama, diorama};
+use crate::diorama::diorama;
 use crate::geo::{self, CHUNK, CHUNKS_X, CHUNKS_Z, HALF_X, HALF_Z, RoadKind, TEX_PER_CHUNK, fbm, value_noise};
 use bevy::{
     asset::RenderAssetUsages,
@@ -573,10 +573,10 @@ fn paint() -> Chunks {
         }
     }
 
-    if diorama() == Diorama::Robotyne {
+    if let Some((count, z0, depth)) = bav_core::data::data().shelled {
         // A year of artillery between the lines: no-man's-land is pocked from the forward minefield to the crest.
-        for _ in 0..240 {
-            let c = Vec2::new((geo::hash01(k, 67) * 2.0 - 1.0) * HALF_X, -480.0 + geo::hash01(k, 68) * 1250.0);
+        for _ in 0..count {
+            let c = Vec2::new((geo::hash01(k, 67) * 2.0 - 1.0) * HALF_X, z0 + geo::hash01(k, 68) * depth);
             k += 1;
             for _ in 0..(1 + (geo::hash01(k, 69) * 4.0) as u32) {
                 let p = c + Vec2::new(geo::hash01(k, 70) - 0.5, geo::hash01(k, 71) - 0.5) * 70.0;
@@ -584,6 +584,8 @@ fn paint() -> Chunks {
                 k += 1;
             }
         }
+    }
+    if let Some(tz) = geo::layout().trench_z {
         // The Russian first line: a zigzag trench along the crest tree line, spoil thrown forward, communication
         // trenches back into the trees, dugouts at each platoon position. A short Ukrainian trench in the forward
         // tree line opposite.
@@ -596,7 +598,6 @@ fn paint() -> Chunks {
                 stamp(chunks, p, 0.8, &|_, _, w| mix([0.15, 0.12, 0.09], [0.22, 0.18, 0.13], value_noise(w.x, w.y, 8) * 0.5 + 0.5));
             }
         };
-        let tz = geo::layout().trench_z.expect("Mala Tokmachka has a trench");
         let mut x = -HALF_X + 30.0;
         let mut side = 1.0;
         while x < HALF_X - 30.0 {

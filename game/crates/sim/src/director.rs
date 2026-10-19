@@ -10,7 +10,7 @@
 //! the western track, eleven on the eastern; Ka-52s from beyond reach; four Bradleys back in for the men; and in
 //! the end, everyone back to the start line. 03:50 to late morning in about 25 minutes.
 
-use crate::diorama::{Diorama, diorama};
+use crate::diorama::diorama;
 use crate::fire::{Mission, ShellKind};
 use crate::geo;
 use crate::units::{self, ColumnOrder, Models, Radio, SState, Side, Stats, VKind, VState, VehicleSpec};
@@ -217,6 +217,15 @@ fn run_script(
     }
 }
 
+/// The enemy's guns (`SimData::ru_guns`).
+#[derive(serde::Deserialize, Debug, Clone, Copy)]
+pub enum RuGuns {
+    /// Attacking: they work our positions and the line all day, else at random over x and the band of z behind it.
+    Posts { x: (f32, f32), band: (f32, f32) },
+    /// Defending: they hunt our column on the slope beyond `seen_z`, and else fire into the field (x0, x1, z0, z1).
+    Column { seen_z: f32, field: (f32, f32, f32, f32) },
+}
+
 /// Russian artillery works the tree lines and the town all day: 152 mm barrages every minute or so. South of Mala
 /// Tokmachka it hunts the column instead, cued by its drones: whatever has stopped and is not under smoke, and
 /// now and then a single Krasnopol, guided, onto a vehicle that cannot move ("effect over volume", RUSI).
@@ -238,10 +247,13 @@ fn russian_artillery(
         return;
     }
     let rng = &mut rng.0;
-    if diorama() == Diorama::Robotyne {
+    let Some(guns) = crate::data::sim_data().ru_guns else {
+        return;
+    };
+    if let RuGuns::Column { seen_z, field } = guns {
         script.next_barrage = script.t + rng.random_range(35.0..70.0);
         // Their drones watch the slope; their guns wait until the column is in the minefields' reach.
-        let seen = |p: Vec2| !smoke.covers(p, now) && p.y > -650.0;
+        let seen = |p: Vec2| !smoke.covers(p, now) && p.y > seen_z;
         let stopped: Vec<Vec2> = vehicles
             .iter()
             .filter(|(v, t)| v.side == Side::Ua && v.state.alive() && (!v.state.mobile() || v.state == VState::Halted) && seen(t.translation.xz()))
@@ -260,17 +272,18 @@ fn russian_artillery(
         } else {
             // The start line and the forward tree line.
             let posts: Vec<Vec2> = spotted.clone().unwrap_or_else(|| positions.iter().filter(|p| p.side == Side::Ua && p.strength > 0).map(|p| p.pos).collect());
-            if !posts.is_empty() && rng.random_bool(0.3) { posts[rng.random_range(0..posts.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0)) } else { Vec2::new(rng.random_range(-1800.0..1800.0), rng.random_range(-1500.0..-850.0)) }
+            if !posts.is_empty() && rng.random_bool(0.3) { posts[rng.random_range(0..posts.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0)) } else { Vec2::new(rng.random_range(field.0..field.1), rng.random_range(field.2..field.3)) }
         };
         commands.spawn(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 40.0, interval: 2.0, next: now, flight: 20.0, by: Side::Ru });
         return;
     }
+    let RuGuns::Posts { x, band } = guns else { unreachable!() };
     script.next_barrage = script.t + rng.random_range(35.0..75.0);
     let live: Vec<Vec2> = spotted.unwrap_or_else(|| positions.iter().filter(|p| p.strength > 0).map(|p| p.pos).collect());
     let target = if !live.is_empty() && rng.random_bool(0.6) {
         live[rng.random_range(0..live.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0))
     } else {
-        Vec2::new(rng.random_range(-1800.0..1500.0), if rng.random_bool(0.5) { geo::layout().defence_z } else { rng.random_range(-1400.0..-1150.0) })
+        Vec2::new(rng.random_range(x.0..x.1), if rng.random_bool(0.5) { geo::layout().defence_z } else { rng.random_range(band.0..band.1) })
     };
     commands.spawn(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 45.0, interval: 2.0, next: now, flight: 20.0, by: Side::Ru });
 }

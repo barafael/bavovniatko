@@ -167,19 +167,7 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
     }
 
     // The briefing.
-    let briefing = if diorama() == Diorama::Robotyne { ROBOTYNE_BRIEFING } else { "VUHLEDAR (ВУГЛЕДАР)\n6 FEBRUARY 2023\n\n\
-Vuhledar is a coal-mining town of Soviet apartment blocks on a ridge above open, flat fields.\n\
-Since late October the Pacific Fleet's 155th Naval Infantry Brigade (155-та ОБрМП) has attacked it, and been cut to pieces.\n\
-On 24 January Russia attacked again. Today is the largest assault yet.\n\n\
-You are with the 72nd Mechanised Brigade (72-га ОМБр, the Black Zaporozhians): a drone operator and a fire controller.\n\
-The roads are left clear. The fields beside them are mined. ATGM teams wait in the tree lines.\n\
-The day will run whether or not you do anything. What you do matters at the margin.\n\n\
-Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.\n\
-Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.\n\
-Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / rooftop observer.  P: pause.  [ ]: time.\n\
-M: move the drone team when they find you (the feed is down while it moves).\n\
-3: into a tree line with an ATGM team (again for the next).  Right button: the sight.  Left click: launch.\n\n\
-Press Enter." };
+    let briefing = bav_core::data::data().words.briefing.as_str();
     commands
         .spawn((
             Node { position_type: PositionType::Absolute, width: percent(100), height: percent(100), justify_content: JustifyContent::Center, align_items: AlignItems::Center, ..default() },
@@ -198,22 +186,6 @@ Press Enter." };
         ))
         .with_child((Node { flex_direction: FlexDirection::Column, max_width: px(1100), width: percent(86), max_height: percent(96), overflow: Overflow::clip(), ..default() }, DebriefText));
 }
-
-const ROBOTYNE_BRIEFING: &str = "SOUTH OF MALA TOKMACHKA (МАЛА ТОКМАЧКА)\n8 JUNE 2023\n\n\
-South of Orikhiv (Оріхів) the steppe climbs towards Tokmak (Токмак) through fields cut by tree lines.\n\
-Since the autumn Russia has dug in across it: minefields hundreds of metres deep, a trench on every crest,\n\
-guns registered on every track.\n\n\
-Before dawn the 47th Mechanised Brigade (47-ма ОМБр «Маґура») goes forward with its new armour: Leopards and Bradleys,\n\
-mine plows in front. The guns have finished their preparation. The column is late.\n\n\
-You are with the brigade: a drone operator and a fire controller. These are our vehicles, and our men.\n\
-The morning will run whether or not you do anything. What you do decides what it costs.\n\n\
-Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.\n\
-Left click: 155 mm fire mission (4 rounds).  Shift+click: smoke.  Ctrl+click: HIMARS.\n\
-Space: the column PUSH ON / HOLD / PULL BACK.  1/2 or Tab: drone / the water tower.  P: pause.  [ ]: time.\n\
-Alt+click: send a Bradley for the wounded there (four for the day).  V: answer the last call for evacuation.\n\
-4: fly the FPV (one today): mouse points it, W/S throttle, A/D bank.  M: move the drone team if they find you.\n\
-3: into the forward tree line with an ATGM team.  Right button: the sight.  Left click: launch.\n\n\
-Press Enter.";
 
 fn briefing_input(keys: Res<ButtonInput<KeyCode>>, phase: Res<State<Phase>>, mut next: ResMut<NextState<Phase>>) {
     // In Command the briefing leads to the map table, which starts the battle (`table`).
@@ -339,7 +311,7 @@ fn update_hud(
                 op.pos.distance(fpv.pos.xz()) / 1000.0
             ))
         }
-        Mode::Op => Text::new(format!("{}   x{:.1}", if diorama() == Diorama::Robotyne { "OBSERVER, WATER TOWER (СПОСТЕРІГАЧ, ВОДОНАПІРНА ВЕЖА)" } else { "OBSERVATION POST, 9TH FLOOR (СП, 9-Й ПОВЕРХ)" }, view.zoom())),
+        Mode::Op => Text::new(format!("{}   x{:.1}", bav_core::data::data().words.op_label, view.zoom())),
         Mode::Ground => {
             let team = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|(_, t)| t);
             let (weapon, left) = team.map(|t| (Some(t.weapon), t.atgm)).unwrap_or((None, 0));
@@ -505,40 +477,9 @@ fn osd_update(time: &Time, view: &View, script: &Script, osd: &mut Query<(&Osd, 
     }
 }
 
-/// A source the day rests on, shown as a row the player can open.
-struct Source {
-    publisher: &'static str,
-    date: &'static str,
-    title: &'static str,
-    url: &'static str,
-}
-
-const BAV_SOURCES: &[Source] = &[
-    Source { publisher: "Institute for the Study of War", date: "9 Feb 2023", title: "Russian Offensive Campaign Assessment", url: "https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-9-2023" },
-    Source { publisher: "Reuters", date: "10 Feb 2023", title: "Russia likely lost dozens of armoured vehicles near Ukraine's Vuhledar: UK", url: "https://www.reuters.com/world/europe/russia-likely-lost-dozens-tanks-failed-attack-vuhledar-uk-2023-02-10/" },
-    Source { publisher: "Politico Europe", date: "12 Feb 2023", title: "Russia may have lost an entire elite brigade near a Donetsk coal-mining town", url: "https://www.politico.eu/article/russia-may-have-lost-an-entire-elite-brigade-near-a-coal-mining-town-in-donbas-ukraine-says/" },
-    Source { publisher: "CNN", date: "13 Feb 2023", title: "'Like turkeys at a shooting range': mauling of Russian forces in Donetsk hotspot", url: "https://www.cnn.com/2023/02/13/europe/russia-ukraine-vuhledar-donetsk-fiasco-intl/index.html" },
-    Source { publisher: "Kyiv Post", date: "14 Feb 2023", title: "Skilled Vuhledar defenses halt major Kremlin attack", url: "https://www.kyivpost.com/post/12165" },
-    Source { publisher: "RFE/RL", date: "17 Feb 2023", title: "What happened in Vuhledar? A battle points to major Russian military problems", url: "https://www.rferl.org/a/ukraine-russia-battle-vuhledar/32276547.html" },
-    Source { publisher: "Novaya Gazeta Europe", date: "16 Mar 2023", title: "UK intelligence on Ukraine's use of RAAM anti-tank mines at Vuhledar", url: "https://novayagazeta.eu/articles/2023/03/16/uk-intel-russia-suffered-heavy-losses-at-vuhledar-due-to-ukraines-use-of-raam-anti-tank-mines-en-news" },
-    Source { publisher: "Butusov Plus", date: "29 Dec 2023", title: "Битва за Вугледар. Розгром батальйону «Алга» (documentary)", url: "https://www.youtube.com/watch?v=xjx2pRiGidk" },
-    Source { publisher: "RUSI", date: "Jul 2024", title: "Preliminary lessons from Ukraine's offensive operations, 2022–23", url: "https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf" },
-];
-
-const ROBOTYNE_SOURCES: &[Source] = &[
-    Source { publisher: "Popular Mechanics", date: "9 Jun 2023", title: "Ukraine's Western armor suffered enormous losses while breaching a minefield", url: "https://www.popularmechanics.com/military/weapons/a44157100/ukraine-suffers-losses-breaching-minefield/" },
-    Source { publisher: "Euromaidan Press", date: "10 Jun 2023", title: "So how many Leopard tanks did Ukraine lose near Mala Tokmachka?", url: "https://euromaidanpress.com/2023/06/10/so-how-many-leopard-tanks-were-lost-in-ukraine/" },
-    Source { publisher: "The Guardian", date: "14 Jun 2023", title: "Ukraine's failed Mala Tokmachka assault lays bare counteroffensive challenges", url: "https://www.theguardian.com/world/2023/jun/14/ukraine-failed-assault-near-mala-tokmachka-raises-counteroffensive-challenges" },
-    Source { publisher: "The War Zone", date: "15 Jun 2023", title: "Ukraine's armor appears to have a Russian attack helicopter problem", url: "https://www.twz.com/ukraines-armor-appears-to-have-a-russian-attack-helicopter-problem" },
-    Source { publisher: "BBC News", date: "27 Jul 2023", title: "Western armour struggles against Russian defences", url: "https://www.bbc.com/news/world-europe-66306150" },
-    Source { publisher: "War on the Rocks", date: "4 Sep 2023", title: "Perseverance and adaptation: Ukraine's counteroffensive at three months", url: "https://warontherocks.com/2023/09/perseverance-and-adaptation-ukraines-counteroffensive-at-three-months/" },
-    Source { publisher: "RUSI", date: "Sep 2023", title: "Stormbreak: fighting through Russian defences in Ukraine's 2023 offensive", url: "https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf" },
-    Source { publisher: "Kyiv Independent", date: "26 Sep 2023", title: "Overcoming setbacks, NATO-trained brigade breaches Surovikin line", url: "https://kyivindependent.com/overcoming-setbacks-nato-trained-brigade-breaches-surovikin-line-in-zaporizhzhia-oblast/" },
-];
-
 /// A row of the sources table: clicking it opens the page.
 #[derive(Component)]
-struct SourceLink(&'static str);
+struct SourceLink(String);
 
 /// Every top-level UI node: no parent, and not the debrief's own.
 type TopLevel<'w, 's> = Query<'w, 's, &'static mut Visibility, (With<Node>, Without<ChildOf>, Without<Debrief>)>;
@@ -549,17 +490,14 @@ struct HudNodes<'w, 's> {
     nodes: TopLevel<'w, 's>,
 }
 
-/// All the copy the debrief screen is built from: the heading, the clock span, the (label, value) rows, the
-/// per-column table, its three heads, the lines that come after, the sources, and the keys.
+/// The debrief's copy that is counted: the heading, the clock span, the (label, value) rows, the per-column table,
+/// and its three heads. The lines that come after, the sources and the keys are the diorama's words.
 type DebriefCopy = (
     String,
     String,
     Vec<(String, String)>,
     Vec<(String, [u32; 3])>,
     [&'static str; 3],
-    Vec<String>,
-    &'static [Source],
-    &'static str,
 );
 
 /// The end of the day: its date and clock span as the heading; the day's own account in aligned rows; the
@@ -590,7 +528,7 @@ fn show_debrief(
     let tf = |size: f32| TextFont { font: FontSource::Handle(font.clone()), font_size: FontSize::Px(size), ..default() };
     let out = stats.destroyed + stats.abandoned;
     // (label, value) rows, and the columns table: (name, vehicles, destroyed, abandoned).
-    let (heading, span, rows, columns, col_heads, closing, sources, keys): DebriefCopy = match diorama() {
+    let (heading, span, rows, columns, col_heads): DebriefCopy = match diorama() {
         Diorama::Vuhledar => {
             let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
             (
@@ -615,12 +553,6 @@ fn show_debrief(
                 ],
                 stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (format!("column {i}"), [w.vehicles, w.destroyed, w.abandoned])).collect(),
                 ["vehicles", "destroyed", "abandoned"],
-                vec![
-                    "The 155th was rebuilt, and attacked again. Russia kept coming at the town's front for another year and a half.".into(),
-                    format!("{} fell on 1–2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.", crate::text::VUHLEDAR.hud()),
-                ],
-                BAV_SOURCES,
-                "R: the same day again, down the same roads.     Esc: quit.",
             )
         }
         Diorama::Robotyne => {
@@ -665,21 +597,17 @@ fn show_debrief(
                 ],
                 stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (names.get(i).copied().unwrap_or("another group").to_string(), [w.vehicles, w.destroyed, w.abandoned])).collect(),
                 ["vehicles", "burned", "left"],
-                vec![
-                    "Within days the armour was stopped, and the brigades went forward on foot instead, a tree line at a time.".into(),
-                    format!("{}, eleven kilometres to the south, was taken in August. {} was not reached.", crate::text::ROBOTYNE.hud(), crate::text::TOKMAK.hud()),
-                ],
-                ROBOTYNE_SOURCES,
-                "R: the same morning again, down the same tracks.     Esc: quit.",
             )
         }
     };
+    let words = &bav_core::data::data().words;
+    let (closing, sources, keys) = (&words.closing, &words.sources, words.keys.as_str());
     let dim = Color::srgba(0.72, 0.72, 0.70, 0.85);
     // The film's end card reads this: one label and value per row, and the closing lines prefixed `closing\t`.
     // Written fresh, once, when the screen comes up.
     if let Some(dir) = crate::dev::dev().showcase.as_deref() {
         let mut text = rows.iter().map(|(l, v)| format!("{l}\t{v}\n")).collect::<String>();
-        for line in &closing {
+        for line in closing {
             text.push_str(&format!("closing\t{line}\n"));
         }
         if let Ok(mut f) = std::fs::File::create(format!("{dir}/ledger.txt")) {
@@ -722,16 +650,16 @@ fn show_debrief(
             }
         }
         p.spawn(Node { height: px(26), ..default() });
-        for line in &closing {
+        for line in closing {
             p.spawn((Text::new(line.as_str()), tf(15.0), TextColor(WHITE)));
         }
         p.spawn(Node { height: px(26), ..default() });
         p.spawn((Text::new("Sources"), tf(13.0), TextColor(dim), Node { margin: UiRect::bottom(px(6)), ..default() }));
         for s in sources {
-            p.spawn((Interaction::None, Node { flex_direction: FlexDirection::Row, column_gap: px(16), padding: UiRect::vertical(px(2)), ..default() }, SourceLink(s.url))).with_children(|r| {
-                r.spawn((Text::new(s.publisher), tf(13.0), TextColor(dim), Node { width: px(250), ..default() }, nowrap));
-                r.spawn((Text::new(s.date), tf(13.0), TextColor(dim), Node { width: px(110), ..default() }, nowrap));
-                r.spawn((Text::new(s.title), tf(13.0), TextColor(AMBER), Node { flex_grow: 1.0, ..default() }));
+            p.spawn((Interaction::None, Node { flex_direction: FlexDirection::Row, column_gap: px(16), padding: UiRect::vertical(px(2)), ..default() }, SourceLink(s.url.clone()))).with_children(|r| {
+                r.spawn((Text::new(s.publisher.as_str()), tf(13.0), TextColor(dim), Node { width: px(250), ..default() }, nowrap));
+                r.spawn((Text::new(s.date.as_str()), tf(13.0), TextColor(dim), Node { width: px(110), ..default() }, nowrap));
+                r.spawn((Text::new(s.title.as_str()), tf(13.0), TextColor(AMBER), Node { flex_grow: 1.0, ..default() }));
             });
         }
         p.spawn((Text::new(keys), tf(14.0), TextColor(dim), Node { margin: UiRect::top(px(26)), ..default() }));
@@ -743,11 +671,11 @@ fn open_sources(links: Query<(&Interaction, &SourceLink), Changed<Interaction>>)
     for (i, link) in &links {
         if *i == Interaction::Pressed {
             #[cfg(target_os = "linux")]
-            let _ = std::process::Command::new("xdg-open").arg(link.0).spawn();
+            let _ = std::process::Command::new("xdg-open").arg(&link.0).spawn();
             #[cfg(target_os = "macos")]
-            let _ = std::process::Command::new("open").arg(link.0).spawn();
+            let _ = std::process::Command::new("open").arg(&link.0).spawn();
             #[cfg(target_os = "windows")]
-            let _ = std::process::Command::new("cmd").args(["/C", "start", "", link.0]).spawn();
+            let _ = std::process::Command::new("cmd").args(["/C", "start", "", link.0.as_str()]).spawn();
         }
     }
 }

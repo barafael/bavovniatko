@@ -16,6 +16,58 @@
     anchor: (lat: 47.7810, lon: 37.2461, x: -900.0, z: -1500.0, m_per_lon: 74740.0),
 
     // SRTM-like: ~190 m on the town ridge, ~142 m in the valley.
+    // What the day says (design/hostomel.md, phase 0): the briefing, the lines that are this place's, the debrief's close.
+    words: (
+        briefing: r#"VUHLEDAR (ВУГЛЕДАР)
+6 FEBRUARY 2023
+
+Vuhledar is a coal-mining town of Soviet apartment blocks on a ridge above open, flat fields.
+Since late October the Pacific Fleet's 155th Naval Infantry Brigade (155-та ОБрМП) has attacked it, and been cut to pieces.
+On 24 January Russia attacked again. Today is the largest assault yet.
+
+You are with the 72nd Mechanised Brigade (72-га ОМБр, the Black Zaporozhians): a drone operator and a fire controller.
+The roads are left clear. The fields beside them are mined. ATGM teams wait in the tree lines.
+The day will run whether or not you do anything. What you do matters at the margin.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
+Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.
+Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / rooftop observer.  P: pause.  [ ]: time.
+M: move the drone team when they find you (the feed is down while it moves).
+3: into a tree line with an ATGM team (again for the next).  Right button: the sight.  Left click: launch.
+
+Press Enter."#,
+        op_label: "OBSERVATION POST, 9TH FLOOR (СП, 9-Й ПОВЕРХ)",
+        op_lost: "The OP on the roof is gone. TOS took the building. No eyes from the high-rise.",
+        forward_belt: "the first tree line",
+        plow_mine: "Mine under the plow. The lead tank's plow is gone, it keeps going.",
+        mine_lines: [
+            "Mine! He went off the road. That one's done.",
+            "Another one on the shoulder. Tracks off.",
+            "He drove right past the last wreck, same line. Mine.",
+            "Boom. Mine. He's not moving.",
+        ],
+        registered: ("Я {guns}. Вогонь по пристріляній точці {n}.", "This is {guns}. Firing on registered point {n}."),
+        closing: [
+            "The 155th was rebuilt, and attacked again. Russia kept coming at the town's front for another year and a half.",
+            "Vuhledar (Вугледар) fell on 1–2 October 2024, to an attack on its flanks, not its front. The 72nd Brigade was never rotated.",
+        ],
+        keys: "R: the same day again, down the same roads.     Esc: quit.",
+        sources: [
+            (publisher: "Institute for the Study of War", date: "9 Feb 2023", title: "Russian Offensive Campaign Assessment", url: "https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-9-2023"),
+            (publisher: "Reuters", date: "10 Feb 2023", title: "Russia likely lost dozens of armoured vehicles near Ukraine's Vuhledar: UK", url: "https://www.reuters.com/world/europe/russia-likely-lost-dozens-tanks-failed-attack-vuhledar-uk-2023-02-10/"),
+            (publisher: "Politico Europe", date: "12 Feb 2023", title: "Russia may have lost an entire elite brigade near a Donetsk coal-mining town", url: "https://www.politico.eu/article/russia-may-have-lost-an-entire-elite-brigade-near-a-coal-mining-town-in-donbas-ukraine-says/"),
+            (publisher: "CNN", date: "13 Feb 2023", title: "'Like turkeys at a shooting range': mauling of Russian forces in Donetsk hotspot", url: "https://www.cnn.com/2023/02/13/europe/russia-ukraine-vuhledar-donetsk-fiasco-intl/index.html"),
+            (publisher: "Kyiv Post", date: "14 Feb 2023", title: "Skilled Vuhledar defenses halt major Kremlin attack", url: "https://www.kyivpost.com/post/12165"),
+            (publisher: "RFE/RL", date: "17 Feb 2023", title: "What happened in Vuhledar? A battle points to major Russian military problems", url: "https://www.rferl.org/a/ukraine-russia-battle-vuhledar/32276547.html"),
+            (publisher: "Novaya Gazeta Europe", date: "16 Mar 2023", title: "UK intelligence on Ukraine's use of RAAM anti-tank mines at Vuhledar", url: "https://novayagazeta.eu/articles/2023/03/16/uk-intel-russia-suffered-heavy-losses-at-vuhledar-due-to-ukraines-use-of-raam-anti-tank-mines-en-news"),
+            (publisher: "Butusov Plus", date: "29 Dec 2023", title: "Битва за Вугледар. Розгром батальйону «Алга» (documentary)", url: "https://www.youtube.com/watch?v=xjx2pRiGidk"),
+            (publisher: "RUSI", date: "Jul 2024", title: "Preliminary lessons from Ukraine's offensive operations, 2022–23", url: "https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf"),
+        ],
+    ),
+    // Where the drone starts, and what the observers fire from (their error grows with the distance from it).
+    camera: (150.0, -700.0),
+    observed_from: LineZ(-1200.0),
+
     ground: [
         // The ridge: flat on the town plateau, falling to the Kashlahach.
         Ramp(base: 146.0, amp: 42.0, power: 1.15, ramp: Falling(-1350.0, 1550.0)),
@@ -173,6 +225,10 @@
     // between the town-edge posts.
     hides: [((-150.0, -1150.0), (0.2, 1.0)), ((-450.0, -1120.0), (0.1, 1.0))],
     old_wreck_kinds: [Bmp2, T80, Bmp1, Bmp2, T72, Mtlb, Bmp1, T80],
+    // Space orders the ATGM teams or our column; Shift+click calls RAAM or smoke; the enemy's guns and their habits.
+    space_key: Atgm,
+    shift_fire: Raam,
+    ru_guns: Some(Posts(x: (-1800.0, 1500.0), band: (-1400.0, -1150.0))),
     registered_fire: (50.0, 6),
     // Their EW: no source places their jammers at Vuhledar itself (db/research/11 §7); two by the villages in the
     // valley, from the front-wide picture, and the rear emitters felt past the jam line.

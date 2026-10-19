@@ -15,6 +15,60 @@
     callsigns: (player: ("Sapsan", "Сапсан"), guns: ("Hrim", "Грім"), op: ("Zhuravel", "Журавель"), command: ("Skelia", "Скеля")),
     anchor: (lat: 47.4967, lon: 35.8968, x: 0.0, z: 0.0, m_per_lon: 75250.0),
 
+    // What the day says (design/hostomel.md, phase 0): the briefing, the lines that are this place's, the debrief's close.
+    words: (
+        briefing: r#"SOUTH OF MALA TOKMACHKA (МАЛА ТОКМАЧКА)
+8 JUNE 2023
+
+South of Orikhiv (Оріхів) the steppe climbs towards Tokmak (Токмак) through fields cut by tree lines.
+Since the autumn Russia has dug in across it: minefields hundreds of metres deep, a trench on every crest,
+guns registered on every track.
+
+Before dawn the 47th Mechanised Brigade (47-ма ОМБр «Маґура») goes forward with its new armour: Leopards and Bradleys,
+mine plows in front. The guns have finished their preparation. The column is late.
+
+You are with the brigade: a drone operator and a fire controller. These are our vehicles, and our men.
+The morning will run whether or not you do anything. What you do decides what it costs.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
+Left click: 155 mm fire mission (4 rounds).  Shift+click: smoke.  Ctrl+click: HIMARS.
+Space: the column PUSH ON / HOLD / PULL BACK.  1/2 or Tab: drone / the water tower.  P: pause.  [ ]: time.
+Alt+click: send a Bradley for the wounded there (four for the day).  V: answer the last call for evacuation.
+4: fly the FPV (one today): mouse points it, W/S throttle, A/D bank.  M: move the drone team if they find you.
+3: into the forward tree line with an ATGM team.  Right button: the sight.  Left click: launch.
+
+Press Enter."#,
+        op_label: "OBSERVER, WATER TOWER (СПОСТЕРІГАЧ, ВОДОНАПІРНА ВЕЖА)",
+        op_lost: "The water tower is down. No eyes from the farm.",
+        forward_belt: "the forward tree line",
+        plow_mine: "Mine under the plow. Plow's gone. The rest of the lane is not cleared.",
+        mine_lines: [
+            "Mine! Left track gone. He's stuck in the lane.",
+            "He went round the Leopard. Off the lane. Mine.",
+            "Another one. They're everywhere off the plowed strip.",
+            "Mine. Crew's alive, they're getting out.",
+        ],
+        registered: ("", "Incoming on the lane! They have it registered. Get out of there!"),
+        closing: [
+            "Within days the armour was stopped, and the brigades went forward on foot instead, a tree line at a time.",
+            "Robotyne (Роботине), eleven kilometres to the south, was taken in August. Tokmak (Токмак) was not reached.",
+        ],
+        keys: "R: the same morning again, down the same tracks.     Esc: quit.",
+        sources: [
+            (publisher: "Popular Mechanics", date: "9 Jun 2023", title: "Ukraine's Western armor suffered enormous losses while breaching a minefield", url: "https://www.popularmechanics.com/military/weapons/a44157100/ukraine-suffers-losses-breaching-minefield/"),
+            (publisher: "Euromaidan Press", date: "10 Jun 2023", title: "So how many Leopard tanks did Ukraine lose near Mala Tokmachka?", url: "https://euromaidanpress.com/2023/06/10/so-how-many-leopard-tanks-were-lost-in-ukraine/"),
+            (publisher: "The Guardian", date: "14 Jun 2023", title: "Ukraine's failed Mala Tokmachka assault lays bare counteroffensive challenges", url: "https://www.theguardian.com/world/2023/jun/14/ukraine-failed-assault-near-mala-tokmachka-raises-counteroffensive-challenges"),
+            (publisher: "The War Zone", date: "15 Jun 2023", title: "Ukraine's armor appears to have a Russian attack helicopter problem", url: "https://www.twz.com/ukraines-armor-appears-to-have-a-russian-attack-helicopter-problem"),
+            (publisher: "BBC News", date: "27 Jul 2023", title: "Western armour struggles against Russian defences", url: "https://www.bbc.com/news/world-europe-66306150"),
+            (publisher: "War on the Rocks", date: "4 Sep 2023", title: "Perseverance and adaptation: Ukraine's counteroffensive at three months", url: "https://warontherocks.com/2023/09/perseverance-and-adaptation-ukraines-counteroffensive-at-three-months/"),
+            (publisher: "RUSI", date: "Sep 2023", title: "Stormbreak: fighting through Russian defences in Ukraine's 2023 offensive", url: "https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf"),
+            (publisher: "Kyiv Independent", date: "26 Sep 2023", title: "Overcoming setbacks, NATO-trained brigade breaches Surovikin line", url: "https://kyivindependent.com/overcoming-setbacks-nato-trained-brigade-breaches-surovikin-line-in-zaporizhzhia-oblast/"),
+        ],
+    ),
+    // Where the drone starts, and what the observers fire from (their error grows with the distance from it).
+    camera: (80.0, -1150.0),
+    observed_from: Home,
+
     ground: [
         // The long open slope up from the Kinska valley to the crest: the attackers climb under observation, so the
         // slope is concave to the crest (no dead ground below it), and levels off behind the trench.
@@ -113,6 +167,8 @@
     // The 291st's trench along the northern edge of the crest belt, and the 47th's start line in the forward tree
     // line, where its ATGM teams overwatch the attack.
     trench_z: Some(702.0),
+    // A year of shelling between the lines: 240 craters, from the forward minefield to the crest.
+    shelled: Some((240, -480.0, 1250.0)),
     start_z: Some(-900.0),
     home: (-200.0, -1600.0),
     jam_z: 100.0,
@@ -167,6 +223,10 @@
     // The 291st's T-72B3s, dug in hull-down on the crest behind the trench, facing north.
     dug_in: [((-150.0, 724.0), 0.15), ((1050.0, 720.0), -0.1)],
     old_wreck_kinds: [T72, Bmp2, Mtlb, T72, Bmp2, Mtlb, T72, Bmp2],
+    // Space orders the ATGM teams or our column; Shift+click calls RAAM or smoke; the enemy's guns and their habits.
+    space_key: Column,
+    shift_fire: Smoke,
+    ru_guns: Some(Column(seen_z: -650.0, field: (-1800.0, 1800.0, -1500.0, -850.0))),
     registered_fire: (90.0, 4),
     // The drone team behind the start line; south of Mala Tokmachka it is hard to find.
     // Command's Enemy staff (bav_sim::staff): the Lancets hunted the Leopards here (c09 §5); the Orlans watch the slope.

@@ -2,7 +2,6 @@
 //! observers' post, the ATGM team's sight, and the camera that shows it. The battle reads it (a drone over a
 //! target tightens the sheaf, the TOS can take the OP); the game's camera flies it and puts the picture there.
 
-use crate::diorama::{Diorama, diorama};
 use crate::geo;
 use bav_core::vocab::Mode;
 use bevy::prelude::*;
@@ -80,10 +79,8 @@ impl Default for View {
     fn default() -> Self {
         // At Vuhledar over the town looking south across the fields; at Mala Tokmachka over the forward tree
         // line, looking south up the slope to the crest.
-        let drone_pos = match diorama() {
-            Diorama::Vuhledar => Vec3::new(150.0, 0.0, -700.0),
-            Diorama::Robotyne => Vec3::new(80.0, 0.0, -1150.0),
-        };
+        let (x, z) = bav_core::data::data().camera;
+        let drone_pos = Vec3::new(x, 0.0, z);
         Self {
             mode: Mode::Drone,
             drone_pos,

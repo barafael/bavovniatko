@@ -7,7 +7,7 @@
 //! their crews get out.
 
 use crate::sound::{Sfx, Sound};
-use crate::diorama::{Diorama, diorama};
+use crate::diorama::diorama;
 use crate::fx::{self, Emitter, EmitterKind, FxQueue, FxRng};
 use crate::geo::{self, Polyline};
 use crate::paint::{Paint, PaintQueue};
@@ -22,7 +22,7 @@ impl Plugin for UnitsPlugin {
             .add_message::<DirectHit>()
             .insert_resource(UnitRng(SmallRng::seed_from_u64(crate::dev::seeded(155))))
             .insert_resource(DriveRng(SmallRng::seed_from_u64(crate::dev::seeded(1557))))
-            .insert_resource(Stats { vehicle_advance: f32::MIN, max_advance: if diorama() == Diorama::Robotyne { f32::MIN } else { 0.0 }, ..default() })
+            .insert_resource(Stats { vehicle_advance: f32::MIN, max_advance: if geo::layout().start_z.is_some() { f32::MIN } else { 0.0 }, ..default() })
             .init_resource::<Radio>()
             .init_resource::<ColumnOrder>()
             .insert_resource(RouteBook(geo::layout().routes.clone()))
@@ -1801,10 +1801,7 @@ fn check_mines(
                         log.open(now, "a double mine", "", _e, &v, rescue, "under the plow: plow gone, stopped");
                         radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
                     } else {
-                        radio.say(now, match diorama() {
-                            Diorama::Vuhledar => "Mine under the plow. The lead tank's plow is gone, it keeps going.",
-                            Diorama::Robotyne => "Mine under the plow. Plow's gone. The rest of the lane is not cleared.",
-                        });
+                        radio.say(now, bav_core::data::data().words.plow_mine.as_str());
                     }
                 }
                 continue;
@@ -1841,22 +1838,9 @@ fn check_mines(
                         commands.trigger(Wrecked { vehicle: _e, cause: Cause::Mine, how: kill_how(v.kind, Cause::Mine, &mut rng.0) });
                     }
                 }
-                let lines = match diorama() {
-                    Diorama::Vuhledar => [
-                        "Mine! He went off the road. That one's done.",
-                        "Another one on the shoulder. Tracks off.",
-                        "He drove right past the last wreck, same line. Mine.",
-                        "Boom. Mine. He's not moving.",
-                    ],
-                    Diorama::Robotyne => [
-                        "Mine! Left track gone. He's stuck in the lane.",
-                        "He went round the Leopard. Off the lane. Mine.",
-                        "Another one. They're everywhere off the plowed strip.",
-                        "Mine. Crew's alive, they're getting out.",
-                    ],
-                };
+                let lines = &bav_core::data::data().words.mine_lines;
                 if rng.0.random_bool(0.6) {
-                    radio.say(now, lines[rng.0.random_range(0..lines.len())]);
+                    radio.say(now, lines[rng.0.random_range(0..lines.len())].as_str());
                 }
                 break;
             }

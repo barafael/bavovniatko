@@ -6,7 +6,7 @@
 //! and the guns registered on the lanes work over the stalled column and the crews climbing out.
 
 use crate::sound::{Sfx, Sound};
-use crate::diorama::{Diorama, diorama};
+use crate::diorama::diorama;
 use crate::player::{self, MainCamera, Shake, View};
 use bav_core::vocab::Mode;
 use crate::dev::dev;
@@ -297,9 +297,25 @@ fn spawn_hide(commands: &mut Commands, models: &Models, hide: Vec2, facing: Vec2
     units::dress(&mut e, &m.hull);
 }
 
+/// What Space orders.
+#[derive(serde::Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SpaceKey {
+    /// The ATGM teams: AUTO, HOLD, FREE.
+    Atgm,
+    /// Our column: PUSH ON, HOLD, PULL BACK.
+    Column,
+}
+
+/// What Shift+click calls.
+#[derive(serde::Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ShiftFire {
+    Raam,
+    Smoke,
+}
+
 fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, mut order: ResMut<ColumnOrder>, time: Res<Time>, mut radio: ResMut<Radio>) {
-    if keys.just_pressed(KeyCode::Space) && diorama() == Diorama::Robotyne {
-        // Robotyne: Space is the order to the column.
+    if keys.just_pressed(KeyCode::Space) && crate::data::sim_data().space_key == SpaceKey::Column {
+        // Where we attack, Space is the order to the column.
         *order = match *order {
             ColumnOrder::Push => ColumnOrder::Hold,
             ColumnOrder::Hold => ColumnOrder::PullBack,
@@ -338,9 +354,9 @@ fn observed_sigma(view: &View, target: Vec2) -> f32 {
             let d = view.drone_pos.xz().distance(target);
             if view.feed_down > 0.0 { 40.0 } else { 9.0 + d * 0.006 }
         }
-        Mode::Op | Mode::Ground | Mode::Fpv => match diorama() {
-            Diorama::Vuhledar => 14.0 + 0.004 * (target.y + 1200.0).abs(),
-            Diorama::Robotyne => 14.0 + 0.004 * target.distance(geo::layout().home),
+        Mode::Op | Mode::Ground | Mode::Fpv => match bav_core::data::data().observed_from {
+            bav_core::data::ObservedFrom::LineZ(z) => 14.0 + 0.004 * (target.y - z).abs(),
+            bav_core::data::ObservedFrom::Home => 14.0 + 0.004 * target.distance(geo::layout().home),
         },
     }
 }
@@ -377,7 +393,7 @@ fn player_fire(
         fc.himars -= 1;
         Strike::Himars.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{command}}, я {{player}}. Хаймарс, дві ракети, {lat:.4} {lon:.4}. Підліт близько хвилини."), format!("{{command}}, this is {{player}}. HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
-    } else if shift && diorama() == Diorama::Robotyne {
+    } else if shift && crate::data::sim_data().shift_fire == ShiftFire::Smoke {
         if fc.smoke == 0 {
             radio.say(now, "No more smoke.");
             return;
@@ -691,10 +707,7 @@ fn shells_on_op(time: Res<Time>, mut landed: MessageReader<ShellLanded>, mut fxr
             && fxr.0.random_bool(0.04)
         {
             view.op_alive = false;
-            radio.say(now, match diorama() {
-                Diorama::Vuhledar => "The OP on the roof is gone. TOS took the building. No eyes from the high-rise.",
-                Diorama::Robotyne => "The water tower is down. No eyes from the farm.",
-            });
+            radio.say(now, bav_core::data::data().words.op_lost.as_str());
         }
     }
 }
@@ -835,10 +848,9 @@ fn atgm_teams(
                 p_hit: None,
                 top_attack: weapon == Atgm::Javelin,
                 weapon: weapon.name(),
-                from: match (pos.side, diorama()) {
-                    (Side::Ru, _) => "the crest",
-                    (Side::Ua, Diorama::Vuhledar) => "the first tree line",
-                    (Side::Ua, Diorama::Robotyne) => "the forward tree line",
+                from: match pos.side {
+                    Side::Ru => "the crest",
+                    Side::Ua => bav_core::data::data().words.forward_belt.as_str(),
                 },
             },
             NotShadowCaster,
@@ -1188,10 +1200,9 @@ fn pre_registered_fires(
             fc.brigade_shells -= rounds;
             let kind = if defender == Side::Ua { ShellKind::He155 } else { ShellKind::Ru152 };
             commands.spawn(Mission { target: *trp, kind, rounds, sigma: 35.0, interval: 2.5, next: now + 1.0, flight: 22.0, by: defender });
-            radio.lines.push((now, match diorama() {
-                Diorama::Vuhledar => Line::both(format!("Я {{guns}}. Вогонь по пристріляній точці {}.", i + 1), format!("This is {{guns}}. Firing on registered point {}.", i + 1)),
-                Diorama::Robotyne => Line::new("Incoming on the lane! They have it registered. Get out of there!"),
-            }));
+            let (uk, en) = &bav_core::data::data().words.registered;
+            let n = (i + 1).to_string();
+            radio.lines.push((now, if uk.is_empty() { Line::new(en.replace("{n}", &n)) } else { Line::both(uk.replace("{n}", &n), en.replace("{n}", &n)) }));
         }
     }
 }
