@@ -21,3 +21,5 @@ db/web/crates/app/bridge/
 db/web/crates/app/dist/
 db/web/crates/app/public/data/
 db/web/crates/app/public/licenses/
+
+SKETCHFAB_TOKEN
