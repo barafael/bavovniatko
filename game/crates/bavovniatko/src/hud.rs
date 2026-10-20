@@ -582,6 +582,7 @@ type DebriefCopy = (
 /// lines about what came after, with no heading; and the sources the day rests on, each a row that opens in the
 /// browser. No figures from the record are set against the day's own: the sources say where the day came from,
 /// the ledger what it cost (design/next-items.md, package K).
+#[allow(clippy::type_complexity)]
 fn show_debrief(
     mut commands: Commands,
     fonts: Res<Fonts>,
