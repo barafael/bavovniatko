@@ -63,7 +63,6 @@ struct Crosshair;
 #[derive(Component)]
 struct Reticle;
 
-/// The field's tally: what has come down, what has landed, who holds what, and our men.
 /// Who holds each of the field's areas.
 fn zones_line(f: &bav_sim::fight::Field) -> String {
     f.zones
@@ -80,10 +79,21 @@ fn zones_line(f: &bav_sim::fight::Field) -> String {
         .join("   ")
 }
 
+/// The runway in the tally: its longest whole stretch, and whether an Il-76 could land on it.
+fn runway_line(r: &bav_sim::air::Runway) -> String {
+    format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" })
+}
+
+/// The airlift in the debrief.
+fn airlift_row(a: Option<&bav_sim::air::AirTally>) -> &'static str {
+    a.map_or("—", |a| if a.airlift_landed { "landed: the field lost for good" } else if a.airlift_turned_back { "turned back in the air" } else { "not yet decided" })
+}
+
+/// The field's tally: what has come down, what has landed, who holds what, and our men.
 fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, runway: Option<&bav_sim::air::Runway>) -> String {
     let zones = zones_line(f);
     let (down, landed) = air.map_or((0, 0), |a| (a.down.len(), a.men_landed));
-    let strip = runway.map_or(String::new(), |r| format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" }));
+    let strip = runway.map_or(String::new(), runway_line);
     format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{zones}{strip}", f.out, f.captured)
 }
 
@@ -190,7 +200,7 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
 
     // The Igla's ring: the seeker's field, about 2.2° across the shouldered eye's narrower view. (Only where there are
     // Iglas: an entity more would renumber another day's.)
-    if bav_sim::air::flies() {
+    if bav_sim::manpads::present() {
         commands.spawn((
         Node { position_type: PositionType::Absolute, left: percent(50), top: percent(50), width: px(IGLA_RING), height: px(IGLA_RING), margin: UiRect { left: px(-IGLA_RING * 0.5), top: px(-IGLA_RING * 0.5), ..default() }, border: UiRect::all(px(2)), border_radius: BorderRadius::MAX, ..default() },
         BorderColor::all(Color::srgba(0.05, 0.05, 0.05, 0.8)),
@@ -428,7 +438,7 @@ fn update_hud(
         Diorama::HostomelLanding => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref(), runway.as_deref()))),
         Diorama::HostomelCounter => {
             let zones = field.as_ref().map_or(String::new(), |f| zones_line(f));
-            let strip = runway.as_ref().map_or(String::new(), |r| format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" }));
+            let strip = runway.as_deref().map_or(String::new(), runway_line);
             let taken = field.as_ref().map_or(0, |f| f.lost);
             format!(
                 "{}   {}\nour vehicles committed {}   lost {}   men sent {}   VDV posts taken {taken}\n{zones}{strip}",
@@ -721,7 +731,7 @@ fn show_debrief(
             if let Some(r) = runway.as_deref() {
                 rows.push(("The runway: the longest stretch left whole".into(), format!("{:.1} km{}", r.longest() / 1000.0, if r.usable() { ", enough for an Il-76" } else { ", too short to land on" })));
             }
-            rows.push(("The airlift".into(), a.map_or("—", |a| if a.airlift_landed { "landed: the field lost for good" } else if a.airlift_turned_back { "turned back in the air" } else { "not yet decided" }).into()));
+            rows.push(("The airlift".into(), airlift_row(a).into()));
             rows.push(("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
             (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])
         }
@@ -749,7 +759,7 @@ fn show_debrief(
                 let held: Vec<&str> = f.zones.iter().filter(|z| z.held == Some(Side::Ru)).map(|z| z.name.0.as_str()).collect();
                 rows.push(("Theirs at the end".into(), if held.is_empty() { "nothing".into() } else { held.join(", ") }));
             }
-            rows.push(("The airlift".into(), a.map_or("—", |a| if a.airlift_landed { "landed: the field lost for good" } else if a.airlift_turned_back { "turned back in the air" } else { "not yet decided" }).into()));
+            rows.push(("The airlift".into(), airlift_row(a).into()));
             rows.push(("Iglas left".into(), iglas.iter().map(|i| i.missiles).sum::<u32>().to_string()));
             rows.push(("D-30 rounds left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
             (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])

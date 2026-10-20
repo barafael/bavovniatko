@@ -54,6 +54,11 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
     if fx.mode == 4u {
         return textureSample(screen_texture, texture_sampler, uv);
     }
+    if fx.mode == 6u && fx.down > 0.5 {
+        // The thermal channel comes over the same link: when it is down, so is the picture.
+        let n = hash(floor(uv * dims / 3.0) + frame);
+        return vec4<f32>(vec3<f32>(0.05 + 0.06 * n), 1.0);
+    }
     if fx.mode == 6u {
         // ---- The drone's thermal channel, white hot (`bav_look::thermal`) ----
         // The world is near one temperature: the visible picture flattened to a narrow grey, a little lighter where
@@ -75,6 +80,13 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
         t += (hash(floor(uv * dims / 2.0)) - 0.5) * 0.012 + (hash(floor(uv * dims / 2.0) + frame) - 0.5) * 0.025;
         let d = distance(uv, vec2<f32>(0.5));
         t *= 1.0 - smoothstep(0.6, 1.0, d) * 0.3;
+        // Jamming breaks it up as it does the visible picture: blocks the decoder gave up on, stale and flat.
+        if fx.glitch > 0.0 {
+            let blk = floor(uv * dims / 16.0);
+            if hash(blk + floor(frame / 3.0)) < fx.glitch * 0.6 {
+                t = 0.18 + 0.1 * hash(blk);
+            }
+        }
         return vec4<f32>(vec3<f32>(clamp(t + fx.flash, 0.0, 1.0)), 1.0);
     }
     if fx.mode == 0u {

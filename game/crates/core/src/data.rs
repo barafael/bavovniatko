@@ -43,7 +43,7 @@ pub struct DioramaData {
     /// hand-made curve.
     #[serde(default)]
     pub sun: Option<(u32, f32)>,
-    /// Whether the player's drone has a thermal channel here (a Mavic 2 Enterprise Advanced, key H): the hot things
+    /// Whether the player's drone has a thermal channel here (a Mavic 2 Enterprise Advanced, key I): the hot things
     /// then carry their heat (`bav_look::thermal`).
     #[serde(default)]
     pub thermal: bool,

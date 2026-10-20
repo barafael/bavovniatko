@@ -304,16 +304,17 @@ impl Aftermath {
         base.join("bavovniatko").join("hostomel-aftermath.ron")
     }
 
-    /// The evening's: in Command, the player's own morning if it was played, else the Record's.
+    /// The evening's (a part whose file has an aftermath): in Command, the player's own morning if it was played, else
+    /// the Record's. Nothing for any other part.
     pub fn for_today() -> Option<Aftermath> {
-        let record = crate::data::sim_data().aftermath.clone();
+        let record = crate::data::sim_data().aftermath.clone()?;
         if crate::allot::at_table()
             && let Ok(text) = std::fs::read_to_string(Self::path())
             && let Ok(mine) = ron::from_str::<Aftermath>(&text)
         {
             return Some(mine);
         }
-        record
+        Some(record)
     }
 
     /// Keep this morning's for the evening (Command only: the Record's evening is the record's).
@@ -332,9 +333,11 @@ impl Aftermath {
     }
 }
 
-/// When a morning ends (a part with no aftermath of its own), what came down on the field is kept for its evening.
+/// When a morning ends (a fight for a place with no aftermath of its own: Hostomel's landing), what came down on the
+/// field is kept for its evening.
 fn keep_aftermath(wrecks: Query<&AirWreck>) {
-    if crate::data::sim_data().aftermath.is_none() {
+    let d = crate::data::sim_data();
+    if d.aftermath.is_none() && d.fight.is_some() {
         let mut w: Vec<(AirKind, Vec2)> = wrecks.iter().filter(|w| w.at.x.abs() < geo::HALF_X && w.at.y.abs() < geo::HALF_Z).map(|w| (w.kind, w.at)).collect();
         w.sort_by(|a, b| a.1.x.total_cmp(&b.1.x));
         Aftermath::keep(w.into_iter());
@@ -436,7 +439,7 @@ fn crater_runway(mut runway: ResMut<Runway>, mut landed: MessageReader<crate::fi
 
 /// Whether the airlift can land: the field's apron and tower theirs, and the runway usable.
 pub fn runway_open(field: &crate::fight::Field, runway: &Runway) -> bool {
-    let theirs = |n: &str| field.zones.iter().any(|z| z.name.0.contains(n) && z.held == Some(Side::Ru));
+    let theirs = |k: &str| field.zones.iter().any(|z| z.key == k && z.held == Some(Side::Ru));
     theirs("apron") && theirs("tower") && runway.usable()
 }
 

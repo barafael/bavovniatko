@@ -1,7 +1,7 @@
 //! The drone's thermal channel (design/hostomel.md, phase 6), where the diorama has one (`thermal` in its file).
 //! The picture has no heat of its own, so what is hot carries it: a small marker on every man, on a vehicle's
 //! engine deck, on an aircraft's engines, and over a fire, in a colour nothing else in the scene is (magenta). The
-//! markers are hidden until the channel is on (key H, from the drone); the feed's thermal mode reads the colour as
+//! markers are hidden until the channel is on (key I, from the drone); the feed's thermal mode reads the colour as
 //! heat and draws it white over a world flattened to one grey.
 //!
 //! Only where the file asks for it: every marker is an entity, and an entity more would change another day.
@@ -41,9 +41,10 @@ fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials
     });
 }
 
-/// H: the drone's camera between its visible and its thermal channel.
+/// I (infrared): the drone's camera between its visible and its thermal channel. (H is the drone's: it takes it back
+/// from return-to-home.)
 fn toggle(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>) {
-    if view.mode == Mode::Drone && keys.just_pressed(KeyCode::KeyH) {
+    if view.mode == Mode::Drone && keys.just_pressed(KeyCode::KeyI) {
         view.thermal = !view.thermal;
     }
     if crate::dev::dev().thermal && view.mode == Mode::Drone {

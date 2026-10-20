@@ -40,7 +40,7 @@ impl Plugin for StaffPlugin {
             // After the units' systems, so the frame's hits are all in the log and the vehicles where they ended up.
             .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
         // Where aircraft fly: a launch's smoke and a ZU's tracers give the post away to the gunships (`air::fight`).
-        if crate::air::flies() {
+        if crate::manpads::present() {
             app.add_systems(Update, spot_air.run_if(|| rule("spot")).after(spot_fire).run_if(crate::running).in_set(crate::Step::Units));
         }
     }

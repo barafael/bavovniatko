@@ -712,7 +712,7 @@ struct IglaTube;
 
 fn spawn_igla(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, camera: Single<Entity, With<MainCamera>>) {
     // Only where there are Iglas: an entity more anywhere else would renumber that day's (and change it).
-    if !bav_sim::air::flies() {
+    if !bav_sim::manpads::present() {
         return;
     }
     let mut m = crate::meshes::MeshBuilder::new();

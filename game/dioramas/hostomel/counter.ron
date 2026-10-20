@@ -28,7 +28,7 @@ Belarus arrives.
 The evening will run whether or not you do anything. What you do decides what it costs.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
-Left click: 152 mm fire mission.  Shift+click: smoke.  1/2 or Tab: drone / observers.  H: the drone's thermal.
+Left click: 152 mm fire mission.  Shift+click: smoke.  1/2 or Tab: drone / observers.  I: the drone's thermal.
 Space: the attack PUSH ON / HOLD / PULL BACK.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -111,11 +111,11 @@ Press Enter."#,
         // Our men go on from post to post through the dark, behind the guns.
         assault: 0.25,
         zones: [
-            (name: ("the hangar", "ангар"), poly: [(900.0, 520.0), (1090.0, 520.0), (1090.0, 720.0), (900.0, 720.0)]),
-            (name: ("the apron", "перон"), poly: [(520.0, 220.0), (900.0, 220.0), (900.0, 780.0), (520.0, 780.0)]),
-            (name: ("the tower", "вежа"), poly: [(780.0, 320.0), (900.0, 320.0), (900.0, 440.0), (780.0, 440.0)]),
-            (name: ("the base", "база"), poly: [(1180.0, 520.0), (1820.0, 520.0), (1820.0, 1160.0), (1180.0, 1160.0)]),
-            (name: ("the radar", "радар"), poly: [(440.0, 920.0), (600.0, 920.0), (600.0, 1080.0), (440.0, 1080.0)]),
+            (key: "hangar", name: ("the hangar", "ангар"), poly: [(900.0, 520.0), (1090.0, 520.0), (1090.0, 720.0), (900.0, 720.0)]),
+            (key: "apron", name: ("the apron", "перон"), poly: [(520.0, 220.0), (900.0, 220.0), (900.0, 780.0), (520.0, 780.0)]),
+            (key: "tower", name: ("the tower", "вежа"), poly: [(780.0, 320.0), (900.0, 320.0), (900.0, 440.0), (780.0, 440.0)]),
+            (key: "base", name: ("the base", "база"), poly: [(1180.0, 520.0), (1820.0, 520.0), (1820.0, 1160.0), (1180.0, 1160.0)]),
+            (key: "radar", name: ("the radar", "радар"), poly: [(440.0, 920.0), (600.0, 920.0), (600.0, 1080.0), (440.0, 1080.0)]),
         ],
     )),
     operator: (pos: (500.0, -1400.0), found_per_hour: 0.0),

@@ -19,7 +19,7 @@ impl Plugin for FightPlugin {
         let Some(spec) = spec() else { return };
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
             .insert_resource(Sight(1.0))
-            .insert_resource(Field { zones: spec.zones.iter().map(|z| Zone { name: z.name.clone(), poly: z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect(), held: None }).collect(), ..default() })
+            .insert_resource(Field { zones: spec.zones.iter().map(|z| Zone { key: z.key.clone(), name: z.name.clone(), poly: z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect(), held: None }).collect(), ..default() })
             .add_systems(Update, (see, supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
     }
 }
@@ -44,6 +44,8 @@ pub struct FightSpec {
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct ZoneSpec {
+    /// What the rules know it by (`apron`, `tower`: the airlift needs both).
+    pub key: String,
     pub name: (String, String),
     pub poly: Vec<(f32, f32)>,
 }
@@ -78,6 +80,7 @@ pub struct Leaving(pub Vec2);
 
 /// An area of the field, and who holds it.
 pub struct Zone {
+    pub key: String,
     pub name: (String, String),
     pub poly: Vec<Vec2>,
     pub held: Option<Side>,
@@ -170,19 +173,20 @@ fn return_fire(
         if post.side == attacker || post.strength == 0 {
             continue;
         }
-        let mut shooters: Vec<(Vec3, f32)> = soldiers
+        // Only so many can fire on one post at once, from where they lie: the nearest ten that can see it (the sight
+        // lines tested nearest first, and no more than needed).
+        let mut near: Vec<(Vec3, f32)> = soldiers
             .iter()
             .filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded))
             .map(|(_, t)| (t.translation, t.translation.xz().distance(post.pos)))
-            .filter(|(p, d)| *d < 400.0 * sight.0 && geo::line_of_sight(p.xz(), post.pos))
+            .filter(|(_, d)| *d < 400.0 * sight.0)
             .collect();
+        near.sort_by(|a, b| a.1.total_cmp(&b.1));
+        let shooters: Vec<(Vec3, f32)> = near.into_iter().filter(|(p, _)| geo::line_of_sight(p.xz(), post.pos)).take(10).collect();
         if shooters.is_empty() {
             continue;
         }
-        // Only so many can fire on one post at once, from where they lie: the nearest ten. Each a few rounds a minute
-        // that tell, the closer the more.
-        shooters.sort_by(|a, b| a.1.total_cmp(&b.1));
-        shooters.truncate(10);
+        // Each a few rounds a minute that tell, the closer the more.
         let p: f32 = shooters.iter().map(|(_, d)| 0.002 * (1.0 - d / 450.0)).sum::<f32>() * dt;
         if ((now * 10.0) as u64).is_multiple_of(7)
             && let Some((from, _)) = shooters.first()

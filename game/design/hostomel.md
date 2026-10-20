@@ -307,3 +307,10 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
 - 2026-10-20: the thermal view (`bav_look::thermal`, where the file says `thermal: true`): key H on the drone; men,
   posts, engines and fires carry a heat marker of a colour nothing else is, which the feed's mode 6 draws white
   over a world flattened to one grey, with an uncooled sensor's bloom and noise.
+- 2026-10-20: the review of the unpushed range (ten findings, fixed): the saved morning was laid into the morning and
+  into Robotyne, and Robotyne's debrief overwrote it (now only an evening reads it, only a morning with a fight
+  keeps it); the Igla's tube, ring, systems and the staff's eye on it now need Igla teams in the catalog
+  (`manpads::present`), not aircraft; thermal moved from H (the drone's return-to-home) to I, and goes down and breaks
+  up with the link; the airlift checks the areas by `key`, not by their English names; `return_fire` tests sight
+  lines nearest first, ten at most; the HUD's runway and airlift lines are shared. Robotyne's Record moves again by
+  the entities it no longer has: new baseline `r2-r`; band 16/26, 16/18, 15/37, 17/34.

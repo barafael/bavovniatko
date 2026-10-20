@@ -16,9 +16,15 @@ use rand::{Rng, SeedableRng, rngs::SmallRng};
 
 pub struct ManpadsPlugin;
 
+/// Whether the day has any air defence of ours at its posts (an `Air` unit in its catalog): only then is any of this
+/// in its world, the Igla's view among it.
+pub fn present() -> bool {
+    crate::data::sim_data().catalog.iter().any(|u| matches!(u.what, crate::allot::UnitKind::Air(_)))
+}
+
 impl Plugin for ManpadsPlugin {
     fn build(&self, app: &mut App) {
-        if !crate::air::flies() {
+        if !present() {
             return;
         }
         app.insert_resource(ManpadsRng(SmallRng::seed_from_u64(crate::dev::seeded(9338))))
