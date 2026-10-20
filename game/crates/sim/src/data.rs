@@ -46,6 +46,10 @@ pub struct SimData {
     /// The enemy's guns, and what they fire on (none: they have none).
     #[serde(default)]
     pub ru_guns: Option<crate::director::RuGuns>,
+    /// What an earlier part of the day left on the ground (`air::Aftermath`): the Record's own, which Command replaces
+    /// with what the player's morning left.
+    #[serde(default)]
+    pub aftermath: Option<crate::air::Aftermath>,
     /// The infantry fight for a place (`fight`): ammunition, pulling out, capture, the field's areas.
     #[serde(default)]
     pub fight: Option<crate::fight::FightSpec>,

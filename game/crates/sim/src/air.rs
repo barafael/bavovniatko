@@ -26,7 +26,8 @@ impl Plugin for AirPlugin {
             .init_resource::<AirTally>()
             .insert_resource(Runway::new())
             .add_message::<AirHit>()
-            .add_systems(Update, (crater_runway, airlift, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
+            .add_systems(OnEnter(bav_core::schedule::Phase::Debrief), keep_aftermath)
+            .add_systems(Update, (lay_aftermath, crater_runway, airlift, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
     }
 }
 
@@ -40,7 +41,7 @@ pub fn flies() -> bool {
 }
 
 /// What flies.
-#[derive(Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Deserialize, serde::Serialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum AirKind {
     /// The Ka-52 "Alligator": the stream's lead gunships, armoured, two crew side by side.
     Ka52,
@@ -284,6 +285,83 @@ pub fn launch(commands: &mut Commands, models: &AirModels, s: &Sortie) {
         e.with_children(|c| crate::units::dress(&mut c.spawn((crate::units::skin(&rotor), Transform::from_translation(at), AirRotor)), &rotor));
     }
     crate::units::dress(&mut e, body);
+}
+
+/// What the morning left on the field for the evening: the aircraft that came down, where.
+#[derive(Deserialize, serde::Serialize, Debug, Clone, Default)]
+pub struct Aftermath {
+    pub wrecks: Vec<(AirKind, (f32, f32))>,
+}
+
+impl Aftermath {
+    /// Where a played morning's is kept for the evening (Command): beside the player's other data.
+    pub fn path() -> std::path::PathBuf {
+        let base = std::env::var_os("XDG_DATA_HOME").map(std::path::PathBuf::from).unwrap_or_else(|| std::path::PathBuf::from(std::env::var_os("HOME").unwrap_or_default()).join(".local/share"));
+        base.join("bavovniatko").join("hostomel-aftermath.ron")
+    }
+
+    /// The evening's: in Command, the player's own morning if it was played, else the Record's.
+    pub fn for_today() -> Option<Aftermath> {
+        let record = crate::data::sim_data().aftermath.clone();
+        if crate::allot::at_table()
+            && let Ok(text) = std::fs::read_to_string(Self::path())
+            && let Ok(mine) = ron::from_str::<Aftermath>(&text)
+        {
+            return Some(mine);
+        }
+        record
+    }
+
+    /// Keep this morning's for the evening (Command only: the Record's evening is the record's).
+    pub fn keep(wrecks: impl Iterator<Item = (AirKind, Vec2)>) {
+        if !crate::allot::at_table() {
+            return;
+        }
+        let a = Aftermath { wrecks: wrecks.map(|(k, p)| (k, (p.x, p.y))).collect() };
+        let path = Self::path();
+        if let Some(dir) = path.parent() {
+            let _ = std::fs::create_dir_all(dir);
+        }
+        if let Ok(text) = ron::ser::to_string_pretty(&a, ron::ser::PrettyConfig::default()) {
+            let _ = std::fs::write(&path, text);
+        }
+    }
+}
+
+/// When a morning ends (a part with no aftermath of its own), what came down on the field is kept for its evening.
+fn keep_aftermath(wrecks: Query<&AirWreck>) {
+    if crate::data::sim_data().aftermath.is_none() {
+        let mut w: Vec<(AirKind, Vec2)> = wrecks.iter().filter(|w| w.at.x.abs() < geo::HALF_X && w.at.y.abs() < geo::HALF_Z).map(|w| (w.kind, w.at)).collect();
+        w.sort_by(|a, b| a.1.x.total_cmp(&b.1.x));
+        Aftermath::keep(w.into_iter());
+    }
+}
+
+/// The morning's wrecks, burnt out on the field when the evening starts (once the models are in).
+fn lay_aftermath(mut commands: Commands, models: Option<Res<AirModels>>, mut done: Local<bool>) {
+    if *done {
+        return;
+    }
+    let Some(m) = models else { return };
+    *done = true;
+    let Some(a) = Aftermath::for_today() else { return };
+    for (k, (x, z)) in a.wrecks {
+        let Some((_, body, rotor, rotor_at)) = m.get(k) else { continue };
+        let p = Vec2::new(x, z);
+        let yaw = (x * 0.37 + z * 0.11).sin() * 3.0;
+        let mut e = commands.spawn((
+            crate::units::burnt(body),
+            Transform::from_translation(geo::ground(p) + Vec3::Y * 0.4).with_rotation(Quat::from_rotation_y(yaw) * Quat::from_rotation_z(0.35)),
+            AirWreck { kind: k, at: p },
+            Emitter::new(EmitterKind::Smoulder, 3.0, 99999.0, Vec3::new(0.0, 1.0, 0.0)),
+        ));
+        crate::units::dress_charred(&mut e, body);
+        if !rotor.is_empty() {
+            let rotor = rotor.clone();
+            let at = *rotor_at;
+            e.with_children(|c| crate::units::dress_charred(&mut c.spawn((crate::units::burnt(&rotor), Transform::from_translation(at))), &rotor));
+        }
+    }
 }
 
 /// The airlift's hour has come (`Act::Airlift`).

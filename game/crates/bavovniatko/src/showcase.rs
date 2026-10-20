@@ -122,9 +122,13 @@ static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(|| {
 
 fn shots_minute() -> Vec<Shot> {
     let s = shot;
-    // Hostomel has no shot list yet (design/hostomel.md, phase 8): nothing to film rather than Vuhledar's.
+    // Hostomel's minute, until it has its own (design/hostomel.md, phase 8): the apron from over the base, then the
+    // debrief. (The bands film the day by this list to its end.)
     if matches!(crate::diorama::diorama(), crate::diorama::Diorama::HostomelLanding | crate::diorama::Diorama::HostomelCounter) {
-        return Vec::new();
+        return vec![
+            s(20.0, 8.0, (1500.0, 900.0, 200.0), (1480.0, 880.0, 200.0), Drone(Point(Vec2::new(800.0, 500.0))), (40.0, 34.0)),
+            Shot { debrief: true, ..s(1474.0, 4.0, (1480.0, 880.0, 200.0), (1480.0, 880.0, 200.0), Drone(Point(Vec2::new(800.0, 500.0))), (34.0, 34.0)) },
+        ];
     }
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
         return vec![

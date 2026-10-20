@@ -31,4 +31,6 @@ done
 wait
 for s in $seeds; do
   echo "$dio seed $s: $(grep committed= "$out/seed-$s/tally.txt" | tail -1 | sed 's/ overlap_frames.*//; s/ hidden=[0-9]*//') $(grep -o 'wounded=[0-9/]*' "$out/seed-$s/tally.txt" | tail -1)"
+  # A fight for a place (Hostomel) logs its field each minute: the last of it.
+  grep flown= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    field: /"
 done

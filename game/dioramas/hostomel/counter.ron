@@ -91,6 +91,10 @@ Press Enter."#,
         points: 120,
         record: [(id: "bmp2", count: 10), (id: "mtlb", count: 6), (id: "152", count: 5), (id: "smoke", count: 3)],
     ),
+    // What the morning left (the Record's; Command's evening has the player's own morning, if it was played): the
+    // Ka-52 the Igla gunner dropped onto the runway, "an extra obstacle" (c01 §6 set piece 2), and a Mi-8 by the
+    // apron.
+    aftermath: Some((wrecks: [(Ka52, (-120.0, 90.0)), (Mi8, (620.0, 560.0))])),
     // The VDV's groups: riflemen, machine guns and RPGs, no ATGMs.
     ru_weapons: [None, None, None, None, None, None],
     old_wreck_kinds: [],
