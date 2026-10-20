@@ -117,7 +117,7 @@ token-free packs. Resumable: re-run and it skips what's already `status: ok`.
 | BMP-3 | [BMP-3](https://sketchfab.com/3d-models/a45b0e7355634b8c8b7e30af416ace73) | lampilamp | 335k | ✓ | 2A70+2A72 correct; decimate (Kurdyumivka) |
 | BTR-80 | [BTR-80 RKHM](https://sketchfab.com/3d-models/dfd734a9ae4343fc8f572b11fe09ead3) | perceval-66 | 51k | ✓ | recon variant, base-80 hull/turret |
 | BTR-80 | [Abandoned Soviet BTR-80](https://sketchfab.com/3d-models/32145d6303e5487e9d92097b9845ef02) | GameDevNick | 108k | ✓ | derelict styling; retexture for service |
-| BTR-82A | [Low poly BTR 82](https://sketchfab.com/3d-models/6226acae68424d99bf03882b245ff7c5) | S1Priv | 21k | ✓ | check 2A72 turret fit |
+| BTR-82A | [Low poly BTR 82](https://sketchfab.com/3d-models/6226acae68424d99bf03882b245ff7c5) | S1Priv | 21k | ✓ | check 2A72 turret fit; baked as `btr80`, standing in for the 4th NGU Brigade's BTR-3E at Hostomel (30 mm turret, closest free match) |
 | BTR-4 Bucefal | [BTR-4 vehicle](https://sketchfab.com/3d-models/0653ced66d2f49cebdc4edfd0f0db04a) | Taher.Maknine | 102k | ✓ | UA-built, game-ready |
 | BTR-4 | [Low poly BTR 4](https://sketchfab.com/3d-models/ecd845e80b1549dab7464b8f29c45cc9) | S1Priv | 28k | ✓ | budget alt |
 | MT-LB | [MTLB](https://sketchfab.com/3d-models/369d8a7eb1ed4daeaa52843ba7563beb) | citizensnip | 89k | ✓ | the workhorse |
@@ -237,6 +237,7 @@ strakes + fold-wing box onto any FAB body. This matters: glide bombs are the war
 | Su-30 proxy | [[PBR] Sukhoi Su-30](https://sketchfab.com/3d-models/421bd56fd97c4c7196904e778f27aef7) | Immersive3A | 20k | ✓ | generic Flanker-C; check SM details |
 | Su-30SM2 | [SU-30SM2](https://sketchfab.com/3d-models/3ff55f1cfa934aed89838db19ea4407f) | urastyzh | 11k | ? | rare exact SM2; verify textures |
 | Su-34 | [Su34](https://sketchfab.com/3d-models/1c94f436be51453fa598e9eab50eb0a7) | manilov.ap | 58k | ✓ | the one clean Fullback |
+| Su-24M | [Su24](https://sketchfab.com/3d-models/3439ae4000df438894a44127ebda538c) | manilov.ap | 12.6k | ✓ | Hostomel bomb runs; same author as the ✓ Mi8/Mi24/An225/Su34 rows, no rip admission |
 | Su-35S | [Sukhoi Su-35](https://sketchfab.com/3d-models/c98cf9b3b3e04017a04732798a31888a) | andertan | 24k | ✓ | no canards + TVC |
 | Su-35S | [Su-35 low poly](https://sketchfab.com/3d-models/830b103029184fdf853dce9bb1ea7336) | Chenzoss | 21k | ✓ | |
 | MiG-29 | [MiG-29 (Ukrainian Air Force)](https://sketchfab.com/3d-models/34afffebbf494ff281b5c2b00d03ad65) | ADSKIE | 179k | ✓ | UA markings out of the box |

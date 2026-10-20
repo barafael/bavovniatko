@@ -16,9 +16,9 @@ pub fn livery(id: &str) -> Livery {
     let summer = diorama().summer();
     let seed = baked::IDS.iter().position(|&i| i == id).unwrap_or(0) as f32 * 7.31;
     let (scheme, whitewash) = match id {
-        "t80" | "t72" | "bmp1" | "bmp2" | "mtlb" => (0.0, if summer { 0.0 } else { 0.7 }),
+        "t80" | "t72" | "bmp1" | "bmp2" | "mtlb" | "bmd2" => (0.0, if summer { 0.0 } else { 0.7 }),
         "leo2a6" | "leo2r" | "bradley" => (1.0, 0.0),
-        "t64" => (2.0, 0.0),
+        "t64" | "btr80" | "zu23" => (2.0, 0.0),
         _ => (3.0, 0.0),
     };
     Livery { scheme: Vec4::new(scheme, whitewash, summer as u32 as f32, seed), ..default() }

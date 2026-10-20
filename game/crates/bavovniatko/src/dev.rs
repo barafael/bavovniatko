@@ -103,20 +103,46 @@ fn field_overlay(mut gizmos: Gizmos, lines: Res<FieldLines>) {
 }
 
 /// `BAV_LINEUP="x,z,heading"`: every vehicle model side by side, 10 m apart, and behind them the same burned
-/// out, turrets turned a little so the split shows.
+/// out, turrets turned a little so the split shows. The baked models no vehicle kind drives yet (the Ka-52, the
+/// aircraft, Hostomel's set) follow, spaced by their own size.
 fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<crate::baked::VehicleMaterial>>) {
     use crate::units::{VKind, VehicleMeshes, burnt, dress, dress_charred, skin};
+    use bevy::camera::primitives::MeshAabb;
     use strum::VariantArray;
+    const SPARE: [&str; 9] = ["ka52", "mi8", "mi24", "il76", "an225", "su24", "zu23", "btr80", "bmd2"];
     let Some([x, z, heading]) = dev().lineup else { return };
     let rot = Quat::from_rotation_y(heading.to_radians());
     let across = rot * Vec3::X;
     let back = rot * Vec3::Z;
-    let b = crate::baked::load("ka52", bav_look::models::livery("ka52"), &mut meshes, &mut images, &mut materials);
-    let ka52 = VehicleMeshes { hull: b.hull, plow_hull: None, turret: b.turret, turret_at: b.turret_at, muzzle: b.muzzle };
-    let all: Vec<&VehicleMeshes> = VKind::VARIANTS.iter().map(|k| models.vehicle(*k)).chain([&models.ua_tank, &ka52]).collect();
-    for (i, m) in all.into_iter().enumerate() {
+    let spare: Vec<VehicleMeshes> = SPARE
+        .iter()
+        .map(|&id| {
+            let b = crate::baked::load(id, bav_look::models::livery(id), &mut meshes, &mut images, &mut materials);
+            VehicleMeshes { hull: b.hull, plow_hull: None, turret: b.turret, turret_at: b.turret_at, muzzle: b.muzzle }
+        })
+        .collect();
+    // Each model's place along the row and the depth of its row, from its footprint (a rotor's disc included).
+    let footprint = |m: &VehicleMeshes| {
+        let (mut lo, mut hi) = (Vec3::MAX, Vec3::MIN);
+        for (parts, off) in [(&m.hull, Vec3::ZERO), (&m.turret, m.turret_at)] {
+            for b in parts.iter().filter_map(|p| meshes.get(&p.mesh)?.compute_aabb()) {
+                lo = lo.min(Vec3::from(b.min()) + off);
+                hi = hi.max(Vec3::from(b.max()) + off);
+            }
+        }
+        (hi.x.max(-lo.x), hi.z - lo.z)
+    };
+    let fixed: Vec<&VehicleMeshes> = VKind::VARIANTS.iter().map(|k| models.vehicle(*k)).chain([&models.ua_tank]).collect();
+    let mut all: Vec<(&VehicleMeshes, f32, f32)> = fixed.iter().enumerate().map(|(i, m)| (*m, i as f32 * 10.0, 14.0)).collect();
+    let mut edge = (fixed.len() as f32 - 0.5) * 10.0;
+    for m in &spare {
+        let (half, length) = footprint(m);
+        all.push((m, edge + half.max(2.5), (length + 4.0).max(14.0)));
+        edge += 2.0 * half.max(2.5) + 4.0;
+    }
+    for (i, (m, side, depth)) in all.into_iter().enumerate() {
         for row in 0..2 {
-            let at = Vec3::new(x, 0.0, z) + across * (i as f32 * 10.0) + back * (row as f32 * 14.0);
+            let at = Vec3::new(x, 0.0, z) + across * side + back * (row as f32 * depth);
             let at = crate::geo::ground(at.xz());
             let at = Transform::from_translation(at).with_rotation(rot);
             let turret = Transform::from_translation(m.turret_at).with_rotation(Quat::from_rotation_y(row as f32 * 0.5));
