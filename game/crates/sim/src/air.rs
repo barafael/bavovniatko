@@ -25,9 +25,13 @@ impl Plugin for AirPlugin {
         app.insert_resource(AirRng(SmallRng::seed_from_u64(crate::dev::seeded(2402))))
             .init_resource::<AirTally>()
             .add_message::<AirHit>()
-            .add_systems(Update, (fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).after(crate::director::DirectorSystems));
+            .add_systems(Update, (fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
     }
 }
+
+/// The aircraft's systems, for what shoots at them to run before.
+#[derive(SystemSet, Clone, PartialEq, Eq, Hash, Debug)]
+pub struct AirSystems;
 
 /// Whether the day's script flies anything.
 pub fn flies() -> bool {

@@ -75,9 +75,27 @@ Press Enter."#,
     mortar_band: (0.0, 0.0),
 
     // ---- The battle's part (bav_sim::data) ----
-    catalog: [],
-    support: [],
-    allotment: (points: 0, record: []),
+    // The National Guard's rear echelon (c01 §4): small arms, a few BTRs, Igla MANPADS, one ZU-23-2, and two D-30s
+    // at Horenka. How many Iglas the sources do not say; here two teams of three missiles in the Record, more on the
+    // table. (The BTRs come with their model: the BTR-3E, a BTR-80 hull.)
+    catalog: [
+        (id: "rifles", name: ("Rifle section", "Стрілецьке відділення"), what: Post(None), cost: 3, supply: 2, available: 8),
+        (id: "igla", name: ("Igla team, 3 missiles", "Розрахунок «Ігли», 3 ракети"), what: Air(Igla(3)), cost: 8, supply: 6, available: 4),
+        (id: "zu23", name: ("ZU-23-2", "ЗУ-23-2"), what: Air(Zu23(30)), cost: 7, supply: 5, available: 2),
+    ],
+    support: [
+        (id: "d30", name: ("Two D-30s at Horenka, 20 rounds", "Два Д-30 у Горенці, 20 пострілів"), what: Shells(20), cost: 4, available: 4),
+    ],
+    // The Record: riflemen at the hangar, the offices and the radar; the Igla teams at the apron's north end and the
+    // stands; the ZU-23-2 by the base's gate; forty rounds for the D-30s.
+    allotment: (
+        points: 60,
+        record: [
+            (id: "rifles", at: Some(0)), (id: "igla", at: Some(1)), (id: "igla", at: Some(2)), (id: "rifles", at: Some(3)),
+            (id: "zu23", at: Some(4)), (id: "rifles", at: Some(5)),
+            (id: "d30", count: 2),
+        ],
+    ),
     old_wreck_kinds: [],
     space_key: Atgm,
     shift_fire: Raam,

@@ -229,3 +229,19 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   named as such are still in.
 - The models are blocked on a Sketchfab token (the agent's report: BTR-3E at Hostomel, so a BTR-82A stand-in under
   the id `btr80`; manilov.ap's Su24 is a clean source for the bomb runs).
+- 2026-10-20: the review of phases 0-1 (eight findings, all fixed in `9d6825f`): the pine had taken two of summer's
+  leaf cells (Robotyne's walnuts and broken trees), the hangar's walls faced in, the taxiway grid ran backwards, the
+  runway's frame was measured at the box's cut, the observers sat in the VDV's tower at dusk, the railway was not
+  drawn, empty radio lines, and comments could break the merged record (`uncomment`, with tests).
+- 2026-10-20: phase 2, first part (`1c58a4d`). `air.rs`: sorties from `Act::Air` fly in at treetop height; Mi-8s
+  slow, flare, land and put out sixteen VDV each, then lift and go; Ka-52s and Mi-24s circle the field and dive on
+  our posts and men with S-8 salvos (`ShellKind::Rocket`); `AirHit` damages, a hit one smokes and turns away, a
+  killed one falls and burns where it lands (`AirWreck`). The Robotyne Ka-52s are left as they were (their day
+  stays the same) rather than moved onto `Aircraft`: a deliberate change from the plan. Models fall back to the
+  Ka-52 until the bake lands. The landing's stream: 10 Ka-52, 8 Mi-24, 16 Mi-8 (256 VDV) in four waves from 11:00.
+- 2026-10-20: phase 4, first part. `manpads.rs`: Igla teams and the ZU-23-2 as `UnitKind::Air` at positions; the
+  teams fire by themselves; key 5 takes one (`Mode::Manpads`): standing, mouse look, RMB shoulders the tube, the
+  ring (2.2°) holds a target, the growl quickens and turns to the steady tone after 1 s, LMB launches; under 500 m
+  the warhead does not arm ("let him pass"). The missile leads its target, may be lost against the ground (half the
+  time under 40 m, else 0.3), may take a flare (Ka-52 0.25 to put them out, then 0.45 to take one). First tuning:
+  six down in ten minutes was far too many; the band is set in phase 8.

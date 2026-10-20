@@ -16,7 +16,7 @@ impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(crate::camera::Flight(dev().fly.clone()))
             .add_systems(Startup, lineup.after(crate::Setup::Kit));
-        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
+        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, env_manpads, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
         if dev().field {
             app.add_systems(Startup, field_overlay_setup).add_systems(Update, field_overlay.in_set(crate::Step::Screen));
         }
@@ -435,6 +435,32 @@ fn cpu_secs() -> f64 {
     // After the command name: state is field 3, utime 14 and stime 15 (1-based), in clock ticks of 1/100 s.
     let tick = |i: usize| f.get(i - 3).and_then(|v| v.parse::<f64>().ok()).unwrap_or(0.0);
     (tick(14) + tick(15)) / 100.0
+}
+
+/// `BAV_VIEW=manpads`: out with the first Igla team (west to east), the tube shouldered, holding the nearest
+/// helicopter in the air in the ring the way a gunner would, so the seeker's tone builds.
+fn env_manpads(mut view: ResMut<View>, teams: Query<(Entity, &Post, &bav_sim::manpads::Igla)>, aircraft: Query<(&bav_sim::air::Aircraft, &Transform)>, mut started: Local<bool>) {
+    if dev().view != Some(Mode::Manpads) {
+        return;
+    }
+    if !*started {
+        let mut live: Vec<(Entity, Vec2)> = teams.iter().map(|(e, p, _)| (e, p.pos)).collect();
+        live.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.y.total_cmp(&b.1.y)));
+        let Some(&(e, p)) = live.first() else { return };
+        view.mode = Mode::Manpads;
+        view.ground_team = Some(e);
+        view.ground_eye = crate::geo::ground(p + Vec2::new(2.0, 2.0)) + Vec3::Y * 1.65;
+        view.ground_yaw = -std::f32::consts::FRAC_PI_2;
+        view.ground_pitch = 0.1;
+        *started = true;
+    }
+    view.sight = true;
+    let eye = view.ground_eye;
+    if let Some(t) = aircraft.iter().filter(|(a, _)| bav_sim::manpads::up(a)).map(|(_, t)| t.translation).min_by(|a, b| a.distance(eye).total_cmp(&b.distance(eye))) {
+        let d = t - eye;
+        view.ground_yaw = crate::units::vehicle_yaw(d.xz());
+        view.ground_pitch = (d.y / d.xz().length()).atan();
+    }
 }
 
 /// `BAV_VIEW=ground`: start in the tree line nearest the dacha road with a `BAV_TEAM` launcher

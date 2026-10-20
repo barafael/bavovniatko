@@ -130,8 +130,12 @@ impl View {
             Mode::Op => 55f32.to_radians() / self.op_fov,
             Mode::Ground => if self.sight { Self::SIGHT_ZOOM } else { 1.0 },
             Mode::Fpv => 1.0,
+            // The Igla's sight has no glass: shouldering it only narrows the eye to the ring.
+            Mode::Manpads => if self.sight { Self::IGLA_ZOOM } else { 1.0 },
         }
     }
+
+    pub const IGLA_ZOOM: f32 = 1.6;
 
     pub const GROUND_FOV: f32 = 0.95;
     /// Magnification of the ATGM sight.

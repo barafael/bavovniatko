@@ -17,7 +17,7 @@ impl Plugin for HudPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<HudHidden>()
             .add_systems(Startup, spawn_hud)
-            .add_systems(Update, (update_hud, update_hit_feed, briefing_input, hud_switch).chain().in_set(crate::Step::Screen))
+            .add_systems(Update, (update_hud, update_hit_feed, briefing_input, hud_switch, igla_ring).chain().in_set(crate::Step::Screen))
             .add_systems(OnEnter(Phase::Playing), hide_briefing)
             .add_systems(OnEnter(Phase::Debrief), show_debrief)
             .add_systems(Update, (debrief_input, open_sources).run_if(in_state(Phase::Debrief)).in_set(crate::Step::Screen).after(briefing_input));
@@ -62,6 +62,25 @@ struct NoSignal;
 struct Crosshair;
 #[derive(Component)]
 struct Reticle;
+
+/// The Igla's ring, and its size on a 900 px high screen.
+#[derive(Component)]
+struct IglaRing;
+const IGLA_RING: f32 = 116.0;
+
+/// The ring shows while the tube is shouldered: dark while it searches, amber while the seeker growls, green on the
+/// steady tone.
+fn igla_ring(view: Res<View>, mut q: Query<(&mut Visibility, &mut BorderColor), With<IglaRing>>) {
+    for (mut v, mut border) in &mut q {
+        v.set_if_neq(if view.mode == Mode::Manpads && view.sight { Visibility::Inherited } else { Visibility::Hidden });
+        let c = match view.lock {
+            Some((_, t)) if t >= bav_sim::manpads::LOCK => Color::srgba(0.3, 0.9, 0.35, 0.9),
+            Some(_) => AMBER,
+            None => Color::srgba(0.05, 0.05, 0.05, 0.8),
+        };
+        *border = BorderColor::all(c);
+    }
+}
 /// The sight's track gate: four corners round the vehicle the seeker holds (flashing until the Javelin locks).
 #[derive(Component)]
 struct Gate(usize);
@@ -144,6 +163,15 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
             Crosshair,
         ));
     }
+
+    // The Igla's ring: the seeker's field, about 2.2° across the shouldered eye's narrower view.
+    commands.spawn((
+        Node { position_type: PositionType::Absolute, left: percent(50), top: percent(50), width: px(IGLA_RING), height: px(IGLA_RING), margin: UiRect { left: px(-IGLA_RING * 0.5), top: px(-IGLA_RING * 0.5), ..default() }, border: UiRect::all(px(2)), border_radius: BorderRadius::MAX, ..default() },
+        BorderColor::all(Color::srgba(0.05, 0.05, 0.05, 0.8)),
+        BackgroundColor(Color::NONE),
+        Visibility::Hidden,
+        IglaRing,
+    ));
 
     // The ATGM sight's reticle: a long thin cross with stadia ticks.
     let line = |w: f32, h: f32, dx: f32, dy: f32| {
@@ -238,7 +266,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>),
+    (order, fpv_res, op_res, iglas): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -312,6 +340,23 @@ fn update_hud(
             ))
         }
         Mode::Op => Text::new(format!("{}   x{:.1}", bav_core::data::data().words.op_label, view.zoom())),
+        Mode::Manpads => {
+            let igla = view.ground_team.and_then(|e| iglas.get(e).ok());
+            let (left, ready) = igla.map_or((0, false), |i| (i.missiles, i.reload <= 0.0));
+            let range = view.ground_range.map_or("----".to_string(), |d| format!("{d:>4.0}"));
+            let seeker = match view.lock {
+                _ if !view.sight => "[RMB] shoulder it".to_string(),
+                _ if !ready => "the next tube is coming up".to_string(),
+                Some((_, t)) if t >= bav_sim::manpads::LOCK => format!("TONE, STEADY   {range} m   [LMB] launch"),
+                Some((_, t)) => format!("growl {}   {range} m   hold him in the ring", "|".repeat(1 + (t / bav_sim::manpads::LOCK * 8.0) as usize)),
+                None => "put a helicopter in the ring".to_string(),
+            };
+            let near = view.ground_range.is_some_and(|d| d < bav_sim::manpads::MIN_RANGE);
+            Text::new(format!(
+                "IGLA (ІГЛА)   MISSILES {left}   {seeker}{}\n[5] next team   [1] drone",
+                if near { "   TOO CLOSE: let him pass" } else { "" }
+            ))
+        }
         Mode::Ground => {
             let team = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|(_, t)| t);
             let (weapon, left) = team.map(|t| (Some(t.weapon), t.atgm)).unwrap_or((None, 0));

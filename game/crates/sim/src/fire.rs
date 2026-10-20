@@ -251,6 +251,13 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
     for (i, (side, p, weapon)) in posts.enumerate() {
         spawn_post(&mut commands, &models, &palette, i, side, *p, weapon);
     }
+    // Air defence (Hostomel): riflemen round an Igla team or a ZU-23-2, after every other post so their timers
+    // stay as they were where there is none.
+    let first = ours.len() + lay.ru_positions.len();
+    for (k, &(p, arm)) in allotted.map_or(&[][..], |a| &a.air[..]).iter().enumerate() {
+        let e = spawn_post(&mut commands, &models, &palette, first + k, Side::Ua, p, None);
+        crate::manpads::arm(&mut commands, e, arm, k);
+    }
     crate::robotyne::spawn_dug_in(&mut commands, &models, &palette);
     for &(hide, facing) in allotted.map_or(&[][..], |a| &a.hides[..]) {
         spawn_hide(&mut commands, &models, hide, facing);
@@ -269,7 +276,7 @@ pub fn allotted_stock(mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player
 
 /// A post: a few figures in the trench line under the trees, mostly hidden, facing the enemy, and maybe an ATGM team;
 /// the `i`th of the day's, which staggers its fire and its reloads.
-pub(crate) fn spawn_post(commands: &mut Commands, models: &Models, palette: &Palette, i: usize, side: Side, p: Vec2, weapon: Option<Atgm>) {
+pub(crate) fn spawn_post(commands: &mut Commands, models: &Models, palette: &Palette, i: usize, side: Side, p: Vec2, weapon: Option<Atgm>) -> Entity {
     let mut figures = Vec::new();
     let face = if side == Side::Ua { std::f32::consts::PI } else { 0.0 };
     for k in 0..3 {
@@ -288,6 +295,7 @@ pub(crate) fn spawn_post(commands: &mut Commands, models: &Models, palette: &Pal
     if let Some(weapon) = weapon {
         e.insert(AtgmTeam { weapon, atgm: weapon.load(), reload: 4.0 + i as f32 * 7.0 });
     }
+    e.id()
 }
 
 /// The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
@@ -356,7 +364,7 @@ fn observed_sigma(view: &View, target: Vec2) -> f32 {
             let d = view.drone_pos.xz().distance(target);
             if view.feed_down > 0.0 { 40.0 } else { 9.0 + d * 0.006 }
         }
-        Mode::Op | Mode::Ground | Mode::Fpv => match bav_core::data::data().observed_from {
+        Mode::Op | Mode::Ground | Mode::Fpv | Mode::Manpads => match bav_core::data::data().observed_from {
             bav_core::data::ObservedFrom::LineZ(z) => 14.0 + 0.004 * (target.y - z).abs(),
             bav_core::data::ObservedFrom::Home => 14.0 + 0.004 * target.distance(geo::layout().home),
         },

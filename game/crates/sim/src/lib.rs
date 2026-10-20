@@ -18,6 +18,7 @@ pub mod ew;
 pub mod fire;
 pub mod fx;
 pub mod hits;
+pub mod manpads;
 pub mod orders;
 pub mod paint;
 pub mod player;

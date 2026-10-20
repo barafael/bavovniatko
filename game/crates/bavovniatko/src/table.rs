@@ -169,6 +169,8 @@ fn letter(id: &str) -> &'static str {
         Some(UnitKind::Post(Some(_))) => "A",
         Some(UnitKind::Post(None)) => "R",
         Some(UnitKind::Hide) => "T",
+        Some(UnitKind::Air(bav_sim::allot::AirArm::Igla(_))) => "I",
+        Some(UnitKind::Air(bav_sim::allot::AirArm::Zu23(_))) => "Z",
         _ => "?",
     }
 }
@@ -264,7 +266,7 @@ fn spawn_table(mut commands: Commands, assets: Res<AssetServer>, mut images: Res
                     p.spawn(text("\nUNITS (ПІДРОЗДІЛИ): pick one, then a position on the map", 13.0, DIM_INK));
                     for u in &d.catalog {
                         match u.what {
-                            UnitKind::Post(_) | UnitKind::Hide => {
+                            UnitKind::Post(_) | UnitKind::Hide | UnitKind::Air(_) => {
                                 p.spawn((Button, Node { padding: UiRect::axes(px(6), px(3)), ..default() }, BackgroundColor(Color::NONE), UnitRow(u.id.clone())))
                                     .with_child((text("", 14.0, INK), CountText(u.id.clone())));
                             }

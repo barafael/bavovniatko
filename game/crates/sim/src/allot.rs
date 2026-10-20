@@ -25,6 +25,17 @@ pub enum UnitKind {
     Vehicle(VKind),
     /// A vehicle held back to go in for the wounded when the player sends it.
     Evacuation,
+    /// Air defence at a position, with riflemen round it: an Igla team or a ZU-23-2 (`manpads`).
+    Air(AirArm),
+}
+
+/// What a position fights aircraft with.
+#[derive(Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum AirArm {
+    /// An Igla team with so many missiles.
+    Igla(u32),
+    /// A ZU-23-2 with so many bursts.
+    Zu23(u32),
 }
 
 /// Support: off the map, called rather than placed.
@@ -110,6 +121,8 @@ pub struct Allotment {
     pub posts: Vec<(Vec2, Option<Atgm>)>,
     /// Tanks in their hides: where, and which way they face.
     pub hides: Vec<(Vec2, Vec2)>,
+    /// Air defence at positions: where, and what with.
+    pub air: Vec<(Vec2, AirArm)>,
     /// The vehicles for the columns, by kind.
     pub vehicles: HashMap<VKind, u32>,
     pub stock: Stock,
@@ -239,7 +252,7 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
         a.spent += cost * p.count;
         if let Some(u) = unit {
             match u.what {
-                UnitKind::Post(_) | UnitKind::Hide => {
+                UnitKind::Post(_) | UnitKind::Hide | UnitKind::Air(_) => {
                     let at = p.at.ok_or_else(|| format!("{} needs a position (@n)", p.id))?;
                     let pos = positions.get(at).ok_or_else(|| format!("{}@{at}: there are {} positions", p.id, positions.len()))?;
                     let kind = pos.kind.name().0;
@@ -282,6 +295,7 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
         match h {
             Some(UnitKind::Post(weapon)) => a.posts.push((pos.at, *weapon)),
             Some(UnitKind::Hide) => a.hides.push((pos.at, pos.facing)),
+            Some(UnitKind::Air(arm)) => a.air.push((pos.at, *arm)),
             _ => {}
         }
     }

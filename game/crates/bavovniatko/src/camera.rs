@@ -28,8 +28,8 @@ impl Plugin for CameraPlugin {
         app.init_resource::<View>()
             .init_resource::<Shake>()
             .add_systems(Startup, spawn_camera.before(FeedSetup))
-            .add_systems(Startup, spawn_launcher.after(spawn_camera))
-            .add_systems(Update, (switch_view, drone_control, fpv_control, op_control, ground_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
+            .add_systems(Startup, (spawn_launcher, spawn_igla).after(spawn_camera))
+            .add_systems(Update, (switch_view, igla_view, drone_control, fpv_control, op_control, ground_control, igla_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
     }
 }
 
@@ -577,6 +577,14 @@ fn apply_view(
             let rot = Quat::from_euler(EulerRot::YXZ, fpv.yaw + buzz.x, fpv.pitch + buzz.y, fpv.roll);
             (fpv.pos, rot, 1.3)
         }
+        Mode::Manpads => {
+            // Standing, the tube on the shoulder: the whole body sways, and more as the arms tire of it.
+            let breath = (t * 1.3).sin();
+            let sway = Vec2::new((t * 0.7).sin() + 0.5 * (t * 1.9).sin(), (t * 0.9).cos() + 0.4 * (t * 2.4).sin()) * if view.sight { 0.0012 } else { 0.004 };
+            let eye = view.ground_eye + Vec3::Y * breath * 0.015;
+            let rot = Quat::from_euler(EulerRot::YXZ, view.ground_yaw + sway.x, view.ground_pitch + sway.y, 0.0);
+            (eye, rot, View::GROUND_FOV / view.zoom())
+        }
         Mode::Ground => {
             // Kneeling, breathing; the sight on its tripod is steadier, but the gunner's hands are not.
             let breath = (t * 1.4).sin();
@@ -592,13 +600,13 @@ fn apply_view(
     };
     // Shake from nearby blasts.
     let tr = shake.trauma * shake.trauma;
-    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground => 0.35, Mode::Drone | Mode::Fpv => 0.25 };
+    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground | Mode::Manpads => 0.35, Mode::Drone | Mode::Fpv => 0.25 };
     let rjit = Quat::from_euler(EulerRot::YXZ, (t * 37.0).sin() * tr * 0.02, (t * 43.0).sin() * tr * 0.02, (t * 29.0).sin() * tr * 0.03);
     tf.translation = pos + jitter;
     tf.rotation = rot * rjit;
     if let Projection::Perspective(p) = proj.as_mut() {
         p.fov = fov;
-        p.near = if matches!(view.mode, Mode::Ground | Mode::Fpv) { 0.1 } else { 0.5 };
+        p.near = if matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads) { 0.1 } else { 0.5 };
     }
     shake.trauma = (shake.trauma - dt * 0.9).max(0.0);
     shake.flash = (shake.flash - dt * 2.5).max(0.0);
@@ -630,10 +638,97 @@ fn spawn_launcher(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut 
     commands.entity(*camera).add_child(e);
 }
 
-fn show_launcher(view: Res<View>, mut q: Query<&mut Visibility, With<Launcher>>) {
+type Tube<'w, 's> = Query<'w, 's, (&'static mut Visibility, &'static mut Transform), (With<IglaTube>, Without<Launcher>)>;
+
+fn show_launcher(view: Res<View>, mut q: Query<&mut Visibility, With<Launcher>>, mut tube: Tube) {
     for mut v in &mut q {
         v.set_if_neq(if view.mode == Mode::Ground && !view.sight { Visibility::Inherited } else { Visibility::Hidden });
     }
+    // On the shoulder, the tube comes up beside the eye when it is aimed.
+    for (mut v, mut tf) in &mut tube {
+        v.set_if_neq(if view.mode == Mode::Manpads { Visibility::Inherited } else { Visibility::Hidden });
+        tf.translation = if view.sight { Vec3::new(0.16, -0.12, 0.0) } else { Vec3::new(0.26, -0.32, -0.1) };
+    }
+}
+
+/// 5: out with an Igla team (again for the next team with missiles left), standing at its post, looking where the
+/// helicopters are, or east, where they came from.
+fn igla_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Query<(Entity, &crate::fire::Post, &bav_sim::manpads::Igla)>, aircraft: Query<&Transform, With<bav_sim::air::Aircraft>>) {
+    if view.mode == Mode::Fpv || !keys.just_pressed(KeyCode::Digit5) {
+        return;
+    }
+    let mut live: Vec<(Entity, Vec2)> = teams.iter().filter(|(_, p, t)| t.missiles > 0 && p.strength >= 2).map(|(e, p, _)| (e, p.pos)).collect();
+    live.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.y.total_cmp(&b.1.y)));
+    if live.is_empty() {
+        return;
+    }
+    let i = match (view.mode, view.ground_team) {
+        (Mode::Manpads, Some(cur)) => live.iter().position(|(e, _)| *e == cur).map(|i| (i + 1) % live.len()).unwrap_or(0),
+        _ => 0,
+    };
+    let (e, p) = live[i];
+    view.mode = Mode::Manpads;
+    view.ground_team = Some(e);
+    view.ground_eye = geo::ground(p + Vec2::new(2.0, 2.0)) + Vec3::Y * 1.65;
+    let toward = aircraft.iter().map(|t| t.translation.xz()).min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))).unwrap_or(p + Vec2::X);
+    view.ground_yaw = vehicle_yaw(toward - p);
+    view.ground_pitch = 0.08;
+    view.lock = None;
+}
+
+/// The Igla's eye: mouse look, the right button shoulders the tube, and whatever hot thing sits in its ring is held
+/// by the seeker, the longer the steadier (`bav_sim::manpads::LOCK`).
+fn igla_control(
+    time: Res<Time>,
+    buttons: Res<ButtonInput<MouseButton>>,
+    motion: Res<AccumulatedMouseMotion>,
+    mut view: ResMut<View>,
+    camera: Single<&GlobalTransform, With<MainCamera>>,
+    aircraft: Query<(Entity, &bav_sim::air::Aircraft, &Transform)>,
+) {
+    if view.mode != Mode::Manpads {
+        return;
+    }
+    if dev().view != Some(Mode::Manpads) && !view.locked {
+        view.sight = buttons.pressed(MouseButton::Right);
+    }
+    let k = 0.0022 / view.zoom();
+    view.ground_yaw -= motion.delta.x * k;
+    view.ground_pitch = (view.ground_pitch - motion.delta.y * k).clamp(-0.3, 1.2);
+    let gt = camera.compute_transform();
+    let ring = bav_sim::manpads::in_ring(gt.translation, *gt.forward(), aircraft.iter().map(|(e, a, t)| (e, t.translation, bav_sim::manpads::up(a))));
+    view.ground_range = ring.map(|(_, d)| d);
+    view.lock = match (ring, view.lock) {
+        (Some((e, _)), Some((l, t))) if e == l && view.sight => Some((e, t + time.delta_secs())),
+        (Some((e, _)), _) if view.sight => Some((e, 0.0)),
+        _ => None,
+    };
+}
+
+/// The Igla on the shoulder, along the line of sight on the right: the tube, its grip and launcher mechanism, the
+/// seeker's cap off.
+#[derive(Component)]
+struct IglaTube;
+
+fn spawn_igla(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, camera: Single<Entity, With<MainCamera>>) {
+    let mut m = crate::meshes::MeshBuilder::new();
+    // The 1.7 m tube, 72 mm across, olive; the battery-coolant unit and grip under it; the front sight's ring.
+    // (Only what is in front of the eye: the rest of the tube runs back over the shoulder, out of view.)
+    m.cylinder(Vec3::new(0.0, 0.0, -0.25), Vec3::new(0.0, 0.0, -1.25), 0.036, 12, [0.30, 0.34, 0.24]);
+    m.cylinder(Vec3::new(0.0, 0.0, -1.45), Vec3::new(0.0, 0.0, -0.06), 0.04, 12, [0.24, 0.27, 0.20]);
+    m.boxc(Vec3::new(0.0, -0.08, -0.35), Vec3::new(0.05, 0.1, 0.2), [0.16, 0.17, 0.15]);
+    m.boxc(Vec3::new(-0.045, 0.05, -1.2), Vec3::new(0.01, 0.05, 0.01), [0.1, 0.1, 0.1]);
+    let e = commands
+        .spawn((
+            Mesh3d(meshes.add(m.build())),
+            MeshMaterial3d(materials.add(StandardMaterial { perceptual_roughness: 0.75, ..default() })),
+            Transform::from_xyz(0.13, -0.11, -0.2),
+            Visibility::Hidden,
+            bevy::light::NotShadowCaster,
+            IglaTube,
+        ))
+        .id();
+    commands.entity(*camera).add_child(e);
 }
 
 /// Capture the cursor in the ground view (mouse look); give it back elsewhere.
@@ -643,7 +738,7 @@ fn cursor_grab(view: Res<View>, mut last: Local<Option<Mode>>, mut cursor: Query
     }
     *last = Some(view.mode);
     for mut c in &mut cursor {
-        let grab = matches!(view.mode, Mode::Ground | Mode::Fpv);
+        let grab = matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads);
         c.grab_mode = if grab { bevy::window::CursorGrabMode::Locked } else { bevy::window::CursorGrabMode::None };
         c.visible = !grab;
     }

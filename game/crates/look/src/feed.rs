@@ -218,13 +218,13 @@ pub fn update_feed(
         Mode::Drone => FeedMode::Drone,
         Mode::Op => FeedMode::Binoculars,
         Mode::Ground if view.sight => FeedMode::Sight,
-        Mode::Ground => FeedMode::Eye,
+        Mode::Ground | Mode::Manpads => FeedMode::Eye,
         Mode::Fpv => FeedMode::Fpv,
     } as u32;
     fx.grain = match view.mode {
         Mode::Drone | Mode::Fpv => 1.0,
         Mode::Op => 0.45,
-        Mode::Ground => 0.3,
+        Mode::Ground | Mode::Manpads => 0.3,
     } * if look.video == crate::VideoLook::Light { 0.35 } else { 1.0 };
     fx.sight = if view.ground_team.and_then(|e| teams.get(e).ok()).is_some_and(|t| t.weapon == crate::fire::Atgm::Javelin) { 1.0 } else { 0.0 };
     let jam = if view.mode == Mode::Drone { view.jamming } else { 0.0 };

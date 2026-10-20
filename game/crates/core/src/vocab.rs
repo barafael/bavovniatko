@@ -13,6 +13,8 @@ pub enum Mode {
     Ground,
     /// Through an FPV's goggles, flying it.
     Fpv,
+    /// Standing with an Igla on the shoulder, looking for the heat of a helicopter (design/hostomel.md, phase 4).
+    Manpads,
 }
 
 /// What a camera follows: a point, a vehicle of the column, the infantry (`BAV_LOOK`, the showcase), one
