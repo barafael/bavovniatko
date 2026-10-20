@@ -711,6 +711,10 @@ fn igla_control(
 struct IglaTube;
 
 fn spawn_igla(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, camera: Single<Entity, With<MainCamera>>) {
+    // Only where there are Iglas: an entity more anywhere else would renumber that day's (and change it).
+    if !bav_sim::air::flies() {
+        return;
+    }
     let mut m = crate::meshes::MeshBuilder::new();
     // The 1.7 m tube, 72 mm across, olive; the battery-coolant unit and grip under it; the front sight's ring.
     // (Only what is in front of the eye: the rest of the tube runs back over the shoulder, out of view.)

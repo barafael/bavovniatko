@@ -164,14 +164,17 @@ fn spawn_hud(mut commands: Commands, assets: Res<AssetServer>) {
         ));
     }
 
-    // The Igla's ring: the seeker's field, about 2.2° across the shouldered eye's narrower view.
-    commands.spawn((
+    // The Igla's ring: the seeker's field, about 2.2° across the shouldered eye's narrower view. (Only where there are
+    // Iglas: an entity more would renumber another day's.)
+    if bav_sim::air::flies() {
+        commands.spawn((
         Node { position_type: PositionType::Absolute, left: percent(50), top: percent(50), width: px(IGLA_RING), height: px(IGLA_RING), margin: UiRect { left: px(-IGLA_RING * 0.5), top: px(-IGLA_RING * 0.5), ..default() }, border: UiRect::all(px(2)), border_radius: BorderRadius::MAX, ..default() },
         BorderColor::all(Color::srgba(0.05, 0.05, 0.05, 0.8)),
         BackgroundColor(Color::NONE),
-        Visibility::Hidden,
-        IglaRing,
-    ));
+            Visibility::Hidden,
+            IglaRing,
+        ));
+    }
 
     // The ATGM sight's reticle: a long thin cross with stadia ticks.
     let line = |w: f32, h: f32, dx: f32, dy: f32| {
