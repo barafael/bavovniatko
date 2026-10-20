@@ -10,6 +10,7 @@
 //! ```sh
 //! cd game/tools/bake && cargo run --release            # all models
 //! cargo run --release -- t72 bmp2                      # some
+//! BAKE_VIEW=<dir> cargo run --release -- mi8           # and draw it from above, the side and the front
 //! ```
 
 mod spec;
@@ -247,6 +248,9 @@ fn bake(s: &Spec, dir: &Path, out: &Path) {
         }
     };
     let turret_at = if tb.lo[1] < f32::MAX { place(ring) } else { [0.0, (hb.hi[1] + off[1]) * k, 0.0] };
+    if s.verbose && tb.lo[1] < f32::MAX {
+        println!("  turret {}  (scale {k:.3})", Bounds { lo: place(tb.lo), hi: place(tb.hi) }.fmt());
+    }
     for ((role, _), b) in buckets.iter_mut() {
         for v in &mut b.verts {
             v.p = place(v.p);
@@ -259,6 +263,9 @@ fn bake(s: &Spec, dir: &Path, out: &Path) {
     let muzzle = buckets.iter().filter(|((r, _), _)| *r == TURRET).flat_map(|(_, b)| b.verts.iter()).map(|v| v.p).min_by(|a, b| a[2].total_cmp(&b[2])).unwrap_or([0.0, 0.4, -3.0]);
     let hull_lo = place(hb.lo);
     let hull_hi = place(hb.hi);
+    if let Ok(dir) = std::env::var("BAKE_VIEW") {
+        view(&buckets, turret_at, &Path::new(&dir).join(format!("{}.png", s.id)));
+    }
 
     // Simplify to the budget, sharing it out by triangle count.
     let total: usize = buckets.values().map(|b| b.idx.len() / 3).sum();
@@ -266,7 +273,7 @@ fn bake(s: &Spec, dir: &Path, out: &Path) {
     let mut kept = 0;
     for b in buckets.values_mut() {
         if ratio < 1.0 && b.idx.len() > 3 * 64 {
-            simplify(b, ratio);
+            simplify(b, ratio, s.across_seams);
         }
         kept += b.idx.len() / 3;
     }
@@ -307,6 +314,75 @@ fn bake(s: &Spec, dir: &Path, out: &Path) {
     }
     std::fs::write(out, &f).unwrap();
     println!("  {} materials, {} parts, {:.1} MB ({:.1} MB textures)", mat_ids.len(), parts.len(), f.len() as f32 / 1e6, tex_bytes as f32 / 1e6);
+}
+
+/// `BAKE_VIEW=<dir>`: the baked model from above (front up), from the left and from the front, the hull grey and
+/// the turret red, a metre grid, the origin crossed: to check the orientation, the scale and the split by eye.
+fn view(buckets: &HashMap<(u8, usize), Bucket>, turret_at: V3, out: &Path) {
+    let mut b = Bounds::new();
+    for ((role, _), bk) in buckets {
+        for v in &bk.verts {
+            b.add(if *role == TURRET { [v.p[0] + turret_at[0], v.p[1] + turret_at[1], v.p[2] + turret_at[2]] } else { v.p });
+        }
+    }
+    let span = (0..3).map(|k| b.hi[k] - b.lo[k]).fold(0.0f32, f32::max).max(1.0);
+    let px = 400.0 / span;
+    let (cell, pad) = (440u32, 20.0);
+    let mut img = RgbaImage::from_pixel(cell * 3, cell, image::Rgba([255, 255, 255, 255]));
+    // (horizontal, vertical-down) per view, in world axes.
+    let views: [(usize, f32, usize, f32); 3] = [(0, 1.0, 2, 1.0), (2, 1.0, 1, -1.0), (0, 1.0, 1, -1.0)];
+    for (n, &(h, hs, v, vs)) in views.iter().enumerate() {
+        let x0 = n as u32 * cell;
+        let map = |p: V3| -> (f32, f32) {
+            let c = |k: usize, s: f32| if s > 0.0 { p[k] - b.lo[k] } else { b.hi[k] - p[k] };
+            (x0 as f32 + pad + c(h, hs) * px, pad + c(v, vs) * px)
+        };
+        // Metre grid, every 1 m (or 10 m past 40 m).
+        let step = if span > 40.0 { 10.0 } else { 1.0 };
+        for k in [h, v] {
+            let mut t = (b.lo[k] / step).floor() * step;
+            while t <= b.hi[k] {
+                let mut p = [0.0; 3];
+                p[k] = t;
+                let (a, c) = map(p);
+                for i in 0..cell {
+                    let (x, y) = if k == h { (a as i32, i as i32) } else { ((x0 + i) as i32, c as i32) };
+                    if x >= x0 as i32 && x < (x0 + cell) as i32 && y >= 0 && y < cell as i32 {
+                        img.put_pixel(x as u32, y as u32, image::Rgba(if t == 0.0 { [120, 120, 255, 255] } else { [225, 225, 225, 255] }));
+                    }
+                }
+                t += step;
+            }
+        }
+        for ((role, _), bk) in buckets {
+            let col = if *role == TURRET { [200, 40, 40, 255] } else { [90, 90, 90, 255] };
+            for t in bk.idx.chunks(3) {
+                let q: Vec<(f32, f32)> = t
+                    .iter()
+                    .map(|&i| {
+                        let p = bk.verts[i as usize].p;
+                        map(if *role == TURRET { [p[0] + turret_at[0], p[1] + turret_at[1], p[2] + turret_at[2]] } else { p })
+                    })
+                    .collect();
+                let (lx, hx) = (q.iter().map(|a| a.0).fold(f32::MAX, f32::min), q.iter().map(|a| a.0).fold(f32::MIN, f32::max));
+                let (ly, hy) = (q.iter().map(|a| a.1).fold(f32::MAX, f32::min), q.iter().map(|a| a.1).fold(f32::MIN, f32::max));
+                let e = |a: (f32, f32), b: (f32, f32), x: f32, y: f32| (b.0 - a.0) * (y - a.1) - (b.1 - a.1) * (x - a.0);
+                let area = e(q[0], q[1], q[2].0, q[2].1);
+                for y in ly.floor() as i32..=hy.ceil() as i32 {
+                    for x in lx.floor() as i32..=hx.ceil() as i32 {
+                        let (fx, fy) = (x as f32 + 0.5, y as f32 + 0.5);
+                        let (w0, w1, w2) = (e(q[1], q[2], fx, fy), e(q[2], q[0], fx, fy), e(q[0], q[1], fx, fy));
+                        let inside = if area >= 0.0 { w0 >= 0.0 && w1 >= 0.0 && w2 >= 0.0 } else { w0 <= 0.0 && w1 <= 0.0 && w2 <= 0.0 };
+                        let thin = hx - lx < 1.0 || hy - ly < 1.0;
+                        if (inside || thin) && x >= x0 as i32 && x < (x0 + cell) as i32 && y >= 0 && y < cell as i32 {
+                            img.put_pixel(x as u32, y as u32, image::Rgba(col));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    img.save(out).unwrap();
 }
 
 const IDENT: [[f32; 4]; 4] = [[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]];
@@ -402,13 +478,13 @@ fn smooth_normals(pos: &[V3], idx: &[u32]) -> Vec<V3> {
     n.into_iter().map(norm).collect()
 }
 
-fn simplify(b: &mut Bucket, ratio: f32) {
+fn simplify(b: &mut Bucket, ratio: f32, across_seams: bool) {
     let target = ((b.idx.len() as f32 * ratio) as usize / 3 * 3).max(3 * 32);
     let bytes = meshopt::typed_to_bytes(&b.verts);
     let adapter = meshopt::VertexDataAdapter::new(bytes, std::mem::size_of::<Vert>(), 0).unwrap();
     // UVs weigh in, so seams and painted detail hold up longer than flat panels.
     let attrs: Vec<f32> = b.verts.iter().flat_map(|v| [v.uv[0], v.uv[1], v.n[0], v.n[1], v.n[2]]).collect();
-    let idx = meshopt::simplify_with_attributes_and_locks(&b.idx, &adapter, &attrs, &[0.5, 0.5, 0.3, 0.3, 0.3], 5 * 4, &vec![false; b.verts.len()], target, 0.02, meshopt::SimplifyOptions::None, None);
+    let idx = meshopt::simplify_with_attributes_and_locks(&b.idx, &adapter, &attrs, &[0.5, 0.5, 0.3, 0.3, 0.3], 5 * 4, &vec![false; b.verts.len()], target, 0.02, if across_seams { meshopt::SimplifyOptions::Permissive } else { meshopt::SimplifyOptions::None }, None);
     let mut remap = vec![u32::MAX; b.verts.len()];
     let mut verts = Vec::new();
     b.idx = idx
