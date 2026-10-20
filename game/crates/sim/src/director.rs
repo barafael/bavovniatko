@@ -66,6 +66,9 @@ pub enum Act {
     Jam(f32),
     /// Sorties of the helicopter stream or the airlift (`air`).
     Air(Vec<crate::air::Sortie>),
+    /// The order to pull out of a place (`fight`), as the day gave it: in the Record only; in Command it is the
+    /// player's (Space).
+    PullOut,
     /// Bombers over the field (Su-24s): so many heavy bombs along a line from one point to another.
     Bombs { from: (f32, f32), to: (f32, f32), n: u32, label: String },
     /// The airlift's hour: so many Il-76s come if the field is theirs and the runway clear (Command); in the Record
@@ -191,6 +194,16 @@ fn run_script(
                     for p in at {
                         crate::robotyne::spawn_helicopter(&mut commands, h, Vec2::new(p.0, p.1));
                     }
+                }
+            }
+            Act::PullOut => {
+                if !crate::allot::at_table() {
+                    commands.queue(|w: &mut World| {
+                        if let Some(mut f) = w.get_resource_mut::<crate::fight::Field>() {
+                            f.ordered_out = true;
+                        }
+                    });
+                    radio.say2(now, "Всім, я {command}. Відхід на Горенку. Набоїв нема, тримати нічим.", "All, this is {command}. Fall back to Horenka. No ammunition left to hold it with.");
                 }
             }
             Act::Bombs { from, to, n, label } => {

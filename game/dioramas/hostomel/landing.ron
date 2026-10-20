@@ -104,12 +104,12 @@ Press Enter."#,
     // The fight for the field: the rear echelon's ammunition ran out after about two hours (c01 §2: "out of
     // ammunition, the defenders withdraw"); about thirty men to a post; out to the south-east, towards Horenka.
     fight: Some((
-        ammo: 280,
+        ammo: 230,
         men_per: 5,
         // HUR claimed up to fifty VDV killed at Hostomel; the posts fire among hangars, aircraft and stands.
         rifles: 0.3,
         // The VDV had no armour and no guns: they worked forward slowly, post by post.
-        assault: 0.06,
+        assault: 0.03,
         out_to: (2350.0, 1850.0),
         zones: [
             (name: ("the hangar", "ангар"), poly: [(900.0, 520.0), (1090.0, 520.0), (1090.0, 720.0), (900.0, 720.0)]),
@@ -174,5 +174,8 @@ Press Enter."#,
         // The airlift (c01 §2, §7): eighteen Il-76s with the 76th Division, to land once the runway was taken. They
         // were turned back in the air that day.
         (1250.0, Airlift(4)),
+        // Out of ammunition, the defenders withdraw (c01 §2, about 13:00; here earlier, as the posts are worn down
+        // sooner): the Record's order. In Command it is yours.
+        (950.0, PullOut),
     ],
 )

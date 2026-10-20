@@ -280,3 +280,13 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   is a drone's low-light mode (grainy, blue, the field readable), with the glow of the towns on the cloud. The
   counterattack has its own HUD lines (vehicles, men, VDV posts taken, the areas, the runway; 152 mm, smoke, the
   attack's order). Not yet: thermal views, flares and illumination rounds, the fires lighting the night.
+- 2026-10-20: phase 8, the landing's first band (`scripts/band.sh hostomel-1 0 1 2 3`, which now prints the field;
+  Hostomel has a minimal shot list so the bands can film it). The morning's wrecks carry into the evening
+  (`air::Aftermath`: the Record's in `counter.ron`, the player's own kept at `$XDG_DATA_HOME/bavovniatko/` in
+  Command). The VDV's return fire is capped at the nearest ten men on a post; the Record has the order to pull
+  out (`Act::PullOut`, Record only: in Command it is the player's Space) at 12:04, since the posts are worn down by
+  about 12:20. Band t7: taken 15/30/15/20 (history about 20), walked out 70/30/65/55, VDV killed 63/45/44/51 (HUR:
+  up to 50), helicopters down 1/0/3/4 (history: 3 Ka-52 and a Mi-8 at the field), the field held until 12:04-12:08
+  (history about 13:00, held "more than an hour"). Next: posts that last longer (cover, the base's walls), so the
+  order can come nearer 13:00; more helicopters down without more kills per missile (more teams in the open, the
+  ZU's ammunition); the counterattack's band.

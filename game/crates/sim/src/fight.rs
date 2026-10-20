@@ -170,7 +170,7 @@ fn return_fire(
         if post.side == attacker || post.strength == 0 {
             continue;
         }
-        let shooters: Vec<(Vec3, f32)> = soldiers
+        let mut shooters: Vec<(Vec3, f32)> = soldiers
             .iter()
             .filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded))
             .map(|(_, t)| (t.translation, t.translation.xz().distance(post.pos)))
@@ -179,8 +179,11 @@ fn return_fire(
         if shooters.is_empty() {
             continue;
         }
-        // Each man a few rounds a minute that tell; the closer the more.
-        let p: f32 = shooters.iter().map(|(_, d)| 0.003 * (1.0 - d / 450.0)).sum::<f32>() * dt;
+        // Only so many can fire on one post at once, from where they lie: the nearest ten. Each a few rounds a minute
+        // that tell, the closer the more.
+        shooters.sort_by(|a, b| a.1.total_cmp(&b.1));
+        shooters.truncate(10);
+        let p: f32 = shooters.iter().map(|(_, d)| 0.002 * (1.0 - d / 450.0)).sum::<f32>() * dt;
         if ((now * 10.0) as u64).is_multiple_of(7)
             && let Some((from, _)) = shooters.first()
         {
