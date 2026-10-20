@@ -66,6 +66,9 @@ pub enum Act {
     Jam(f32),
     /// Sorties of the helicopter stream or the airlift (`air`).
     Air(Vec<crate::air::Sortie>),
+    /// The airlift's hour: so many Il-76s come if the field is theirs and the runway clear (Command); in the Record
+    /// they turn back in the air, as they did.
+    Airlift(u32),
 }
 
 struct Beat {
@@ -188,6 +191,9 @@ fn run_script(
                     }
                 }
             }
+            Act::Airlift(n) => {
+                commands.insert_resource(crate::air::Airlift { il76: *n, decided: false });
+            }
             Act::Air(sorties) => {
                 if let Some(m) = air.as_ref() {
                     for s in sorties {
@@ -300,7 +306,9 @@ fn russian_artillery(
 fn check_end(script: Res<Script>, stats: Res<Stats>, vehicles: Query<&units::Vehicle>, soldiers: Query<&units::Soldier>, mut next: ResMut<NextState<Phase>>) {
     let attacker = diorama().attacker();
     // While the showcase films, the quiet exit waits: the tour's own debrief shot ends the day.
+    // (A fight for a place runs its whole window: their men dug in round the field are not a quiet end.)
     let quiet = crate::dev::dev().showcase.is_none()
+        && crate::fight::spec().is_none()
         && script.t > 1350.0
         && vehicles.iter().filter(|v| v.side == attacker).all(|v| !v.state.mobile())
         && soldiers.iter().filter(|s| s.side == attacker && s.state != units::SState::DugIn).count() == 0;

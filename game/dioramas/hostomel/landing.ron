@@ -76,11 +76,11 @@ Press Enter."#,
 
     // ---- The battle's part (bav_sim::data) ----
     // The National Guard's rear echelon (c01 §4): small arms, a few BTRs, Igla MANPADS, one ZU-23-2, and two D-30s
-    // at Horenka. How many Iglas the sources do not say; here two teams of three missiles in the Record, more on the
+    // at Horenka. How many Iglas the sources do not say; here three teams of two missiles in the Record, more on the
     // table. (The BTRs come with their model: the BTR-3E, a BTR-80 hull.)
     catalog: [
         (id: "rifles", name: ("Rifle section", "Стрілецьке відділення"), what: Post(None), cost: 3, supply: 2, available: 8),
-        (id: "igla", name: ("Igla team, 3 missiles", "Розрахунок «Ігли», 3 ракети"), what: Air(Igla(3)), cost: 8, supply: 6, available: 4),
+        (id: "igla", name: ("Igla team, 2 missiles", "Розрахунок «Ігли», 2 ракети"), what: Air(Igla(2)), cost: 7, supply: 6, available: 4),
         (id: "zu23", name: ("ZU-23-2", "ЗУ-23-2"), what: Air(Zu23(30)), cost: 7, supply: 5, available: 2),
     ],
     support: [
@@ -106,6 +106,8 @@ Press Enter."#,
     fight: Some((
         ammo: 280,
         men_per: 5,
+        // HUR claimed up to fifty VDV killed at Hostomel; the posts fire among hangars, aircraft and stands.
+        rifles: 0.3,
         out_to: (2350.0, 1850.0),
         zones: [
             (name: ("the hangar", "ангар"), poly: [(900.0, 520.0), (1090.0, 520.0), (1090.0, 720.0), (900.0, 720.0)]),
@@ -167,5 +169,8 @@ Press Enter."#,
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 570.0)], at: (640.0, 1000.0), goal: Some((840.0, 380.0)), delay: 40.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 610.0)], at: (300.0, 300.0), goal: Some((1250.0, 560.0)), delay: 45.0),
         ])),
+        // The airlift (c01 §2, §7): eighteen Il-76s with the 76th Division, to land once the runway was taken. They
+        // were turned back in the air that day.
+        (1250.0, Airlift(4)),
     ],
 )

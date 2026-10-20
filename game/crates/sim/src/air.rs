@@ -24,8 +24,9 @@ impl Plugin for AirPlugin {
         }
         app.insert_resource(AirRng(SmallRng::seed_from_u64(crate::dev::seeded(2402))))
             .init_resource::<AirTally>()
+            .insert_resource(Runway::new())
             .add_message::<AirHit>()
-            .add_systems(Update, (fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
+            .add_systems(Update, (crater_runway, airlift, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
     }
 }
 
@@ -173,6 +174,9 @@ pub struct AirTally {
     pub driven_off: u32,
     pub landed: u32,
     pub men_landed: u32,
+    /// The airlift: landed (the day lost outside the record), or turned back.
+    pub airlift_landed: bool,
+    pub airlift_turned_back: bool,
 }
 
 /// What an aircraft is doing.
@@ -280,6 +284,119 @@ pub fn launch(commands: &mut Commands, models: &AirModels, s: &Sortie) {
         e.with_children(|c| crate::units::dress(&mut c.spawn((crate::units::skin(&rotor), Transform::from_translation(at), AirRotor)), &rotor));
     }
     crate::units::dress(&mut e, body);
+}
+
+/// The airlift's hour has come (`Act::Airlift`).
+#[derive(Resource)]
+pub struct Airlift {
+    pub il76: u32,
+    pub decided: bool,
+}
+
+/// The runway, in 100 m stretches along its centreline: which are broken (a crater, a wreck on it). An Il-76 needs
+/// 1.8 km of it whole to land.
+#[derive(Resource)]
+pub struct Runway {
+    pub broken: Vec<bool>,
+}
+
+impl Runway {
+    const STRETCH: f32 = 100.0;
+    const NEEDS: f32 = 1800.0;
+
+    fn new() -> Self {
+        let n = geo::layout().runways.first().map_or(0, |&(a, b, _)| (a.distance(b) / Self::STRETCH).ceil() as usize);
+        Self { broken: vec![false; n] }
+    }
+
+    /// Break the stretch a point on the runway is in (within 30 m of its centreline).
+    pub fn hit(&mut self, p: Vec2) -> bool {
+        let Some(&(a, b, _)) = geo::layout().runways.first() else { return false };
+        let d = b - a;
+        let t = (p - a).dot(d) / d.length_squared();
+        if !(0.0..=1.0).contains(&t) || geo::segment_distance(p, a, b) > 30.0 {
+            return false;
+        }
+        let k = ((t * d.length()) / Self::STRETCH) as usize;
+        let fresh = self.broken.get(k).is_some_and(|b| !b);
+        if let Some(s) = self.broken.get_mut(k) {
+            *s = true;
+        }
+        fresh
+    }
+
+    /// The longest unbroken run, in metres.
+    pub fn longest(&self) -> f32 {
+        let (mut best, mut run) = (0, 0);
+        for b in &self.broken {
+            run = if *b { 0 } else { run + 1 };
+            best = best.max(run);
+        }
+        best as f32 * Self::STRETCH
+    }
+
+    pub fn usable(&self) -> bool {
+        self.longest() >= Self::NEEDS
+    }
+}
+
+/// Shells, bombs and rockets on the runway break it; a wreck on it closes its stretch.
+fn crater_runway(mut runway: ResMut<Runway>, mut landed: MessageReader<crate::fire::ShellLanded>, wrecks: Query<&AirWreck, Added<AirWreck>>) {
+    for s in landed.read() {
+        if s.radius >= 7.0 {
+            runway.hit(s.at);
+        }
+    }
+    for w in &wrecks {
+        runway.hit(w.at);
+    }
+}
+
+/// Whether the airlift can land: the field's apron and tower theirs, and the runway usable.
+pub fn runway_open(field: &crate::fight::Field, runway: &Runway) -> bool {
+    let theirs = |n: &str| field.zones.iter().any(|z| z.name.0.contains(n) && z.held == Some(Side::Ru));
+    theirs("apron") && theirs("tower") && runway.usable()
+}
+
+/// The Il-76s: in Command, if the runway is theirs and open, they come in over the threshold and land, and the day is
+/// lost outside the record; else (and always in the Record) they turn back in the air.
+#[allow(clippy::too_many_arguments)]
+fn airlift(
+    mut commands: Commands,
+    time: Res<Time>,
+    lift: Option<ResMut<Airlift>>,
+    field: Option<Res<crate::fight::Field>>,
+    models: Option<Res<AirModels>>,
+    mut tally: ResMut<AirTally>,
+    mut radio: ResMut<Radio>,
+    mut script: ResMut<crate::director::Script>,
+    runway: Res<Runway>,
+) {
+    let Some(mut lift) = lift else { return };
+    if lift.decided {
+        return;
+    }
+    lift.decided = true;
+    let now = time.elapsed_secs_f64();
+    let open = crate::allot::at_table() && field.as_deref().is_some_and(|f| runway_open(f, &runway));
+    let Some(&(a, b, _)) = geo::layout().runways.first() else { return };
+    if open && let Some(m) = models.as_ref() {
+        // In from the south-east over the threshold, one behind another, to stop along the runway.
+        let dir = (a - b).normalize();
+        for k in 0..lift.il76 {
+            let from = b - dir * (9000.0 + k as f32 * 2500.0);
+            let at = b + dir * (900.0 + k as f32 * 450.0);
+            launch(&mut commands, m, &Sortie { kind: AirKind::Il76, from: (from.x, from.y), via: vec![(b.x - dir.x * 1500.0, b.y - dir.y * 1500.0)], at: (at.x, at.y), goal: None, delay: k as f32 * 20.0 });
+        }
+        tally.airlift_landed = true;
+        script.banner = Some(("The Il-76s are landing. The airlift is in; the field is lost for good.".into(), 12.0));
+        radio.say2(now, "Іл-76 заходять на посадку! Смуга їхня.", "Il-76s on approach! The runway is theirs.");
+        info!("air: the airlift lands, {} Il-76s, at {now:.0} s", lift.il76);
+    } else {
+        tally.airlift_turned_back = true;
+        radio.say2(now, "Перехоплення: їхні Іл-76 розвернулись у повітрі. Смуга їм не дісталась.", "Intercept: their Il-76s have turned back in the air. They did not get the runway.");
+        info!("air: the airlift turns back, at {now:.0} s");
+    }
 }
 
 /// Turn `yaw` towards `want` by at most `rate * dt`.

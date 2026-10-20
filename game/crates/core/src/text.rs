@@ -57,6 +57,16 @@ pub fn uk(en: &str) -> &'static str {
         "This is {op}. Quiet on the lanes. Only the smoke." => "Я {op}. На проходах тихо. Тільки дим.",
         "All, this is {command}. That's enough. All callsigns back to the start line. Bring the infantry." => "Всім, я {command}. Досить. Всі позивні — назад на вихідну. Піхоту забрати.",
         "Launch from the helicopter! Missile inbound!" => "Пуск з вертольота! Ракета йде!",
+        // Hostomel, the landing
+        "Bird up. Low cloud, drizzle. The hangars are still smoking from this morning's missiles." => "Пташка в повітрі. Низька хмарність, мряка. Ангари ще димлять після ранкових ракет.",
+        "All, this is {command}. Helicopters over the Kyiv dam, coming up the river. Many of them. To your posts." => "Всім, я {command}. Вертольоти над Київською ГЕС, ідуть уздовж річки. Багато. По місцях.",
+        "This is {op}. Helicopters, east, low over the trees! Dozens!" => "Я {op}. Вертольоти, схід, низько над лісом! Десятки!",
+        "Helicopter rockets on the apron! Get down!" => "НУРСи по перону! Лягай!",
+        "It's hit! Smoking, turning away." => "Влучили! Димить, розвертається.",
+        "Out of ammunition! We're pulling out." => "Набої закінчились! Відходимо.",
+        // Hostomel, the counterattack
+        "Bird up. Getting dark. Smoke over the hangars. They are dug in on the apron." => "Пташка в повітрі. Темніє. Дим над ангарами. Вони окопались на пероні.",
+        "All, this is {command}. The guns start in five. Su-24s after them. Then we go." => "Всім, я {command}. Арта починає за п'ять. Після неї Су-24. Тоді йдемо.",
         // Orders
         "All teams, this is {player}. Wait until the column is committed, then fire." => "Всім розрахункам, я {player}. Чекати, поки колона втягнеться, тоді вогонь.",
         "All teams, this is {player}. Hold fire. Let them come." => "Всім розрахункам, я {player}. Вогонь не відкривати. Нехай ідуть.",

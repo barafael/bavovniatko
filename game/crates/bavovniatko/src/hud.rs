@@ -64,7 +64,7 @@ struct Crosshair;
 struct Reticle;
 
 /// The field's tally: what has come down, what has landed, who holds what, and our men.
-fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>) -> String {
+fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, runway: Option<&bav_sim::air::Runway>) -> String {
     let zones: Vec<String> = f
         .zones
         .iter()
@@ -78,7 +78,8 @@ fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>) -
         })
         .collect();
     let (down, landed) = air.map_or((0, 0), |a| (a.down.len(), a.men_landed));
-    format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{}", f.out, f.captured, zones.join("   "))
+    let strip = runway.map_or(String::new(), |r| format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" }));
+    format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{}{strip}", f.out, f.captured, zones.join("   "))
 }
 
 /// The Igla's ring, and its size on a 900 px high screen.
@@ -287,7 +288,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>),
+    (order, fpv_res, op_res, iglas, field, air, runway): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -419,7 +420,7 @@ fn update_hud(
         ),
         // The field's own tally (helicopters down, minutes held, the runway) comes with its fight (design/hostomel.md,
         // phases 2 to 5); until then, the clock.
-        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref()))),
+        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref(), runway.as_deref()))),
     }));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
     let mut spans: Vec<(String, bool)> = Vec::new();
@@ -593,6 +594,7 @@ fn show_debrief(
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
+    (field, air, iglas): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>),
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
@@ -676,13 +678,35 @@ fn show_debrief(
                 ["vehicles", "burned", "left"],
             )
         }
-        Diorama::HostomelLanding | Diorama::HostomelCounter => (
-            format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()),
-            format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)),
-            vec![("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells))],
-            Vec::new(),
-            ["", "", ""],
-        ),
+        Diorama::HostomelLanding | Diorama::HostomelCounter => {
+            let a = air.as_deref();
+            let down = |k: bav_sim::air::AirKind| a.map_or(0, |a| a.down.iter().filter(|(d, _)| *d == k).count());
+            let by = |w: &str| a.map_or(0, |a| a.down.iter().filter(|(_, x)| *x == w).count());
+            let mut rows: Vec<(String, String)> = vec![
+                ("Helicopters in the stream".into(), a.map_or(0, |a| a.flown).to_string()),
+                ("Shot down".into(), a.map_or(0, |a| a.down.len()).to_string()),
+                ("    Ka-52".into(), down(bav_sim::air::AirKind::Ka52).to_string()),
+                ("    Mi-24".into(), down(bav_sim::air::AirKind::Mi24).to_string()),
+                ("    Mi-8, with the men aboard".into(), down(bav_sim::air::AirKind::Mi8).to_string()),
+                ("    by Igla".into(), by("Igla").to_string()),
+                ("    by the ZU-23-2".into(), by("ZU-23-2").to_string()),
+                ("Hit and turned away".into(), a.map_or(0, |a| a.driven_off).to_string()),
+                ("Paratroopers landed".into(), a.map_or(0, |a| a.men_landed).to_string()),
+                ("    killed".into(), stats.attacker_dead.to_string()),
+            ];
+            if let Some(f) = field.as_deref() {
+                rows.push(("Our men lost at their posts".into(), stats.defender_losses.to_string()));
+                rows.push(("Walked out to Horenka".into(), f.out.to_string()));
+                rows.push(("Taken prisoner".into(), f.captured.to_string()));
+                rows.push(("The field held until".into(), f.held_until.map_or("the end".into(), director::clock_text)));
+                let held: Vec<&str> = f.zones.iter().filter(|z| z.held == Some(Side::Ru)).map(|z| z.name.0.as_str()).collect();
+                rows.push(("Theirs at the end".into(), if held.is_empty() { "nothing".into() } else { held.join(", ") }));
+            }
+            rows.push(("The airlift".into(), a.map_or("—", |a| if a.airlift_landed { "landed: the field lost for good" } else if a.airlift_turned_back { "turned back in the air" } else { "not yet decided" }).into()));
+            rows.push(("Iglas left".into(), iglas.iter().map(|i| i.missiles).sum::<u32>().to_string()));
+            rows.push(("D-30 rounds left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
+            (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])
+        }
     };
     let words = &bav_core::data::data().words;
     let (closing, sources, keys) = (&words.closing, &words.sources, words.keys.as_str());

@@ -32,6 +32,8 @@ pub struct FightSpec {
     pub men_per: u32,
     /// Where our men go when they pull out.
     pub out_to: (f32, f32),
+    /// How much of the open field's rifle fire tells here, among buildings, aircraft and the apron's cover.
+    pub rifles: f32,
     /// The field's areas.
     pub zones: Vec<ZoneSpec>,
 }

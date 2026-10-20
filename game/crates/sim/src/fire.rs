@@ -997,7 +997,7 @@ fn small_arms(
         sound.at(from, Sfx::MachineGun, 0.5);
         let Ok((_, mut s, tf)) = soldiers.get_mut(e) else { continue };
         let prone = if matches!(s.state, SState::Prone | SState::DugIn) { 0.35 } else { 1.0 };
-        let p_kill = (0.42 * (1.0 - d / 800.0) * prone * (pos.strength as f32 / 6.0).sqrt()).clamp(0.02, 0.6);
+        let p_kill = (0.42 * (1.0 - d / 800.0) * prone * (pos.strength as f32 / 6.0).sqrt()).clamp(0.02, 0.6) * if ammo.is_some() { crate::fight::spec().map_or(1.0, |s| s.rifles) } else { 1.0 };
         if rng.random_bool(p_kill as f64) {
             stats.died("rifles", (s.side == diorama().attacker()) as u32);
             units::kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, None, rng);

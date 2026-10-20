@@ -39,6 +39,10 @@ impl Plugin for StaffPlugin {
             .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, losses: BTreeMap::new(), read: 0 })
             // After the units' systems, so the frame's hits are all in the log and the vehicles where they ended up.
             .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
+        // Where aircraft fly: a launch's smoke and a ZU's tracers give the post away to the gunships (`air::fight`).
+        if crate::air::flies() {
+            app.add_systems(Update, spot_air.run_if(|| rule("spot")).after(spot_fire).run_if(crate::running).in_set(crate::Step::Units));
+        }
     }
 }
 
@@ -177,6 +181,34 @@ fn spot_fire(
         let last = timers.insert(e, t.timer).unwrap_or(t.timer);
         if t.timer > last + 5.0 {
             spotted.see(e, tf.translation.xz(), now, How::Fired, What::Hide, &mut rng.0);
+        }
+    }
+}
+
+/// Our air defence firing: an Igla's launch from a post, a ZU-23-2's burst (its bursts going down).
+#[allow(clippy::type_complexity)]
+fn spot_air(
+    time: Res<Time>,
+    mut spotted: ResMut<Spotted>,
+    mut rng: ResMut<StaffRng>,
+    launches: Query<&Transform, Added<crate::manpads::IglaMissile>>,
+    posts: Query<(Entity, &Post)>,
+    guns: Query<(Entity, &Post, &crate::manpads::Zu23)>,
+    mut bursts: Local<BTreeMap<Entity, u32>>,
+) {
+    let now = time.elapsed_secs_f64();
+    for t in &launches {
+        let at = t.translation.xz();
+        if let Some((e, p)) = posts.iter().filter(|(_, p)| p.side == Side::Ua).min_by(|a, b| a.1.pos.distance(at).total_cmp(&b.1.pos.distance(at)))
+            && p.pos.distance(at) < 40.0
+        {
+            spotted.see(e, p.pos, now, How::Fired, What::Post, &mut rng.0);
+        }
+    }
+    for (e, p, gun) in &guns {
+        let last = bursts.insert(e, gun.bursts).unwrap_or(gun.bursts);
+        if gun.bursts < last {
+            spotted.see(e, p.pos, now, How::Fired, What::Post, &mut rng.0);
         }
     }
 }

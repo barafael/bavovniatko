@@ -254,3 +254,12 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   out, 1 helicopter down and 8 driven off (history: 3 Ka-52 and a Mi-8 at the field), so the Igla's warhead is now
   1.8-3.6 against hp 2-3. Not yet: the men withdrawing are not shot at; capture uses the posts' men, not men on
   foot; the bands over seeds (phase 8).
+- 2026-10-20: phase 5, first part. The landing's debrief counts the field's day (the stream, shot down by kind and
+  by weapon, driven off, VDV landed and killed, our men lost, out and taken, held until, who has what, the airlift).
+  `Act::Airlift`: in the Record the Il-76s turn back; in Command they land if the apron and tower are theirs and
+  the runway has 1.8 km whole (`Runway`: 100 m stretches broken by shells, rockets and wrecks). The enemy staff
+  spots our Igla launches and the ZU's bursts (`spot_air`) for its gunships (`rule("air")`). Ukrainian for the
+  landing's lines. A fight's day runs its whole window (no "quiet" end). Rifle fire among the hangars tells less
+  (`rifles: 0.3`): one seed now gives the field held until 12:44, 20 taken, 61 VDV killed (HUR: up to 50), and 6
+  helicopters down, so the Record now has three Igla teams of two missiles; helicopters down varied 1 to 6 over the
+  runs: the bands over seeds are phase 8's.
