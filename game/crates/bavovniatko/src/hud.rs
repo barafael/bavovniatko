@@ -594,7 +594,7 @@ fn show_debrief(
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
-    (field, air, iglas): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>),
+    (field, air, iglas, runway): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Runway>>),
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
@@ -678,7 +678,31 @@ fn show_debrief(
                 ["vehicles", "burned", "left"],
             )
         }
-        Diorama::HostomelLanding | Diorama::HostomelCounter => {
+        Diorama::HostomelCounter => {
+            let a = air.as_deref();
+            let ru = positions.iter().filter(|p| p.side == Side::Ru).count();
+            let quiet = positions.iter().filter(|p| p.side == Side::Ru && p.strength == 0).count();
+            let mut rows: Vec<(String, String)> = vec![
+                ("Our vehicles committed".into(), stats.vehicles_committed.to_string()),
+                ("    lost".into(), out.to_string()),
+                ("Men sent forward".into(), stats.sent.to_string()),
+                ("    killed".into(), stats.attacker_dead.to_string()),
+                ("    wounded".into(), stats.wounded.to_string()),
+                ("VDV positions silenced".into(), format!("{quiet} of {ru}")),
+                ("Ka-52s shot down".into(), a.map_or(0, |a| a.down.len()).to_string()),
+            ];
+            if let Some(f) = field.as_deref() {
+                let ours: Vec<&str> = f.zones.iter().filter(|z| z.held == Some(Side::Ua)).map(|z| z.name.0.as_str()).collect();
+                rows.push(("Ours at the end".into(), if ours.is_empty() { "nothing".into() } else { ours.join(", ") }));
+            }
+            if let Some(r) = runway.as_deref() {
+                rows.push(("The runway: the longest stretch left whole".into(), format!("{:.1} km{}", r.longest() / 1000.0, if r.usable() { ", enough for an Il-76" } else { ", too short to land on" })));
+            }
+            rows.push(("The airlift".into(), a.map_or("—", |a| if a.airlift_landed { "landed: the field lost for good" } else if a.airlift_turned_back { "turned back in the air" } else { "not yet decided" }).into()));
+            rows.push(("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
+            (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])
+        }
+        Diorama::HostomelLanding => {
             let a = air.as_deref();
             let down = |k: bav_sim::air::AirKind| a.map_or(0, |a| a.down.iter().filter(|(d, _)| *d == k).count());
             let by = |w: &str| a.map_or(0, |a| a.down.iter().filter(|(_, x)| *x == w).count());

@@ -108,6 +108,8 @@ Press Enter."#,
         men_per: 5,
         // HUR claimed up to fifty VDV killed at Hostomel; the posts fire among hangars, aircraft and stands.
         rifles: 0.3,
+        // The VDV had no armour and no guns: they worked forward slowly, post by post.
+        assault: 0.06,
         out_to: (2350.0, 1850.0),
         zones: [
             (name: ("the hangar", "ангар"), poly: [(900.0, 520.0), (1090.0, 520.0), (1090.0, 720.0), (900.0, 720.0)]),

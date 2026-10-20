@@ -66,6 +66,8 @@ pub enum Act {
     Jam(f32),
     /// Sorties of the helicopter stream or the airlift (`air`).
     Air(Vec<crate::air::Sortie>),
+    /// Bombers over the field (Su-24s): so many heavy bombs along a line from one point to another.
+    Bombs { from: (f32, f32), to: (f32, f32), n: u32, label: String },
     /// The airlift's hour: so many Il-76s come if the field is theirs and the runway clear (Command); in the Record
     /// they turn back in the air, as they did.
     Airlift(u32),
@@ -189,6 +191,18 @@ fn run_script(
                     for p in at {
                         crate::robotyne::spawn_helicopter(&mut commands, h, Vec2::new(p.0, p.1));
                     }
+                }
+            }
+            Act::Bombs { from, to, n, label } => {
+                // A pair low over the trees and gone: the bombs walk along their line a beat apart.
+                let (a, b) = (Vec2::new(from.0, from.1), Vec2::new(to.0, to.1));
+                for k in 0..*n {
+                    let at = a.lerp(b, k as f32 / (*n).max(2).saturating_sub(1) as f32) + Vec2::new(rng.random_range(-25.0..25.0), rng.random_range(-25.0..25.0));
+                    commands.spawn((crate::fire::Shell { at, kind: ShellKind::Himars, land: now + 2.0 + k as f64 * 0.35, by: Side::Ua }, crate::fire::Whistled));
+                }
+                radio.say(now, "Su-24s, low! Bombs on the apron!");
+                if !label.is_empty() {
+                    *banner = Some((label.to_string(), 6.0));
                 }
             }
             Act::Airlift(n) => {

@@ -263,3 +263,14 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   (`rifles: 0.3`): one seed now gives the field held until 12:44, 20 taken, 61 VDV killed (HUR: up to 50), and 6
   helicopters down, so the Record now has three Igla teams of two missiles; helicopters down varied 1 to 6 over the
   runs: the bands over seeds are phase 8's.
+- 2026-10-20: phase 7, first part. The counterattack: the VDV in six posts round the apron (riflemen, no ATGMs),
+  two pairs of Ka-52s on call until dark, the 72nd's guns working the field (`Prep` at dusk and three more through
+  the evening), the Su-24s (`Act::Bombs`: heavy bombs along a line, twice on the apron, once along the runway), a
+  company of BMP-2s and MT-LBs down the E373 and another up from Horenka (`horenka` line), infantry behind them, the
+  airlift's hour at night, the order to pull back at 21:05. Its debrief (vehicles and men, VDV positions silenced,
+  the runway's longest whole stretch, the airlift). The fight now gives the defenders' posts (whoever defends) the
+  ammunition and the rifle share, and the attackers an `assault`: men who reached their goal go on to the nearest
+  post still holding (per part: 0.06 for the VDV in the morning, 0.25 for ours at dusk). One seed each: the landing
+  held until 12:29, 25 taken, 3 down, 43 VDV killed; the counterattack took three of six posts and the hangar by
+  20:36, the apron contested. Not yet: the field fully retaken by 21:00 (more pressure, the player's guns), dusk's
+  sight lines and thermals (phase 6), the carry-over from the morning.

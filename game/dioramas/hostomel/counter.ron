@@ -57,11 +57,14 @@ Press Enter."#,
     op: Some(((700.0, -280.0), 2.5)),
     observed_from: Home,
 
-    // The VDV's hold (phase 7 places them by the areas): the hangar, the apron, the tower, the stands.
+    // The VDV's hold since one o'clock: groups dug in at the hangar, the apron, the tower, the stands, the offices and
+    // the radar; riflemen, machine guns and RPGs (no ATGMs, no armour: they came by helicopter).
     ua_positions: [],
-    ru_positions: [(990.0, 610.0), (700.0, 330.0), (800.0, 700.0), (1000.0, 1100.0)],
+    ru_positions: [(990.0, 610.0), (700.0, 330.0), (800.0, 700.0), (1000.0, 1100.0), (840.0, 380.0), (520.0, 1000.0)],
+    // The way in: down the E373 from the north-east, and up from Horenka in the south-east through the base.
     routes: [
-        (line: "e373", deploy: (1030.0, -713.0), objective: (1000.0, 600.0)),
+        (line: "e373", deploy: (1500.0, -110.0), objective: (800.0, 450.0)),
+        (line: "horenka", deploy: (1500.0, 950.0), objective: (900.0, 750.0)),
     ],
     // The column game's lines, out of the way until the areas replace them (phase 3).
     grey_zone: (4000.0, 4500.0),
@@ -73,16 +76,72 @@ Press Enter."#,
     mortar_band: (0.0, 0.0),
 
     // ---- The battle's part (bav_sim::data) ----
-    catalog: [],
-    support: [],
-    allotment: (points: 0, record: []),
+    // The counterattack's side (c01 §4, §6 set piece 3): what could be brought up by dusk from the 72nd, 80th and
+    // 95th, the 3rd SSO Regiment and volunteers. Which vehicles and how many the sources do not count; here a
+    // company's worth of BMP-2s and MT-LBs, and the guns.
+    catalog: [
+        (id: "bmp2", name: ("BMP-2, with its squad", "БМП-2 з десантом"), what: Vehicle(Bmp2), cost: 6, supply: 4, available: 14),
+        (id: "mtlb", name: ("MT-LB, with its squad", "МТ-ЛБ з десантом"), what: Vehicle(Mtlb), cost: 4, supply: 3, available: 8),
+    ],
+    support: [
+        (id: "152", name: ("152 mm, 16 rounds", "152 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 8),
+        (id: "smoke", name: ("Smoke mission", "Димова завіса"), what: Smoke, cost: 1, available: 6),
+    ],
+    allotment: (
+        points: 120,
+        record: [(id: "bmp2", count: 10), (id: "mtlb", count: 6), (id: "152", count: 5), (id: "smoke", count: 3)],
+    ),
+    // The VDV's groups: riflemen, machine guns and RPGs, no ATGMs.
+    ru_weapons: [None, None, None, None, None, None],
     old_wreck_kinds: [],
     space_key: Column,
     shift_fire: Smoke,
     registered_fire: (600.0, 0),
+    // The field is fought for as in the morning; the areas say who has it.
+    fight: Some((
+        ammo: 400,
+        men_per: 5,
+        out_to: (2350.0, 1850.0),
+        rifles: 0.3,
+        // Our men go on from post to post through the dark, behind the guns.
+        assault: 0.25,
+        zones: [
+            (name: ("the hangar", "ангар"), poly: [(900.0, 520.0), (1090.0, 520.0), (1090.0, 720.0), (900.0, 720.0)]),
+            (name: ("the apron", "перон"), poly: [(520.0, 220.0), (900.0, 220.0), (900.0, 780.0), (520.0, 780.0)]),
+            (name: ("the tower", "вежа"), poly: [(780.0, 320.0), (900.0, 320.0), (900.0, 440.0), (780.0, 440.0)]),
+            (name: ("the base", "база"), poly: [(1180.0, 520.0), (1820.0, 520.0), (1820.0, 1160.0), (1180.0, 1160.0)]),
+            (name: ("the radar", "радар"), poly: [(440.0, 920.0), (600.0, 920.0), (600.0, 1080.0), (440.0, 1080.0)]),
+        ],
+    )),
     operator: (pos: (500.0, -1400.0), found_per_hour: 0.0),
+    // 17:00 to 21:30 (c01 §2 timeline, §6 set piece 3): the guns on the field at dusk, the Su-24s, the columns from
+    // two sides, the VDV's Ka-52s on call until the dark; the field retaken by 21:00, the runway cratered, and out
+    // before the column from Belarus. The airlift's hour passes in the night.
     script: [
         (2.0, Say("Bird up. Getting dark. Smoke over the hangars. They are dug in on the apron.")),
         (12.0, Say("All, this is {command}. The guns start in five. Su-24s after them. Then we go.")),
+        (60.0, Prep(missions: 12, over: 120.0)),
+        (90.0, Air([
+            (kind: Ka52, from: (9000.0, -2500.0), via: [(2000.0, -900.0)], at: (700.0, 500.0), goal: None, delay: 0.0),
+            (kind: Ka52, from: (9000.0, -2500.0), via: [(2000.0, -800.0)], at: (700.0, 500.0), goal: None, delay: 8.0),
+        ])),
+        (200.0, Bombs(from: (300.0, 200.0), to: (900.0, 700.0), n: 8, label: "17:36  Su-24s over the apron")),
+        (230.0, Bombs(from: (-300.0, -500.0), to: (150.0, 650.0), n: 8, label: "")),
+        (240.0, Column(route: 0, kinds: [Bmp2, Bmp2, Mtlb, Bmp2, Bmp2, Mtlb, Bmp2, Bmp2], plow: false, smoke: 0, start: 900.0, label: "17:43  The 72nd's company down the E373")),
+        (300.0, Column(route: 1, kinds: [Bmp2, Mtlb, Bmp2, Mtlb, Bmp2, Mtlb, Bmp2, Mtlb], plow: false, smoke: 0, start: 700.0, label: "17:54  The 80th and the SSO from Horenka, through the base")),
+        (420.0, Air([
+            (kind: Ka52, from: (9000.0, -2500.0), via: [(2000.0, -900.0)], at: (700.0, 500.0), goal: None, delay: 0.0),
+            (kind: Ka52, from: (9000.0, -2500.0), via: [(2000.0, -800.0)], at: (700.0, 500.0), goal: None, delay: 8.0),
+        ])),
+        (450.0, Infantry(route: 0, groups: 6, size: 8, every: 25.0, label: "")),
+        (480.0, Infantry(route: 1, groups: 6, size: 8, every: 25.0, label: "")),
+        // The 72nd's artillery group (2S1, 2S3, Grad) keeps working the apron and the hangar through the evening.
+        (520.0, Prep(missions: 8, over: 90.0)),
+        (700.0, Prep(missions: 8, over: 90.0)),
+        (1000.0, Prep(missions: 8, over: 90.0)),
+        (900.0, Bombs(from: (-500.0, -800.0), to: (200.0, 800.0), n: 10, label: "19:42  The Su-24s again, on the runway")),
+        (1250.0, Airlift(4)),
+        (1350.0, Order(PullBack)),
+        (1360.0, Say("All, this is {command}. The runway is broken. Everyone out, back to the road. The column from Belarus is coming.")),
     ],
 )

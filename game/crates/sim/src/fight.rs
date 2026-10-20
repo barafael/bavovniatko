@@ -19,7 +19,7 @@ impl Plugin for FightPlugin {
         let Some(spec) = spec() else { return };
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
             .insert_resource(Field { zones: spec.zones.iter().map(|z| Zone { name: z.name.clone(), poly: z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect(), held: None }).collect(), ..default() })
-            .add_systems(Update, (supply_posts, order_out, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
+            .add_systems(Update, (supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
     }
 }
 
@@ -34,6 +34,9 @@ pub struct FightSpec {
     pub out_to: (f32, f32),
     /// How much of the open field's rifle fire tells here, among buildings, aircraft and the apron's cover.
     pub rifles: f32,
+    /// How readily the attackers' men who have got where they were going go on to the next post (each, every five
+    /// seconds).
+    pub assault: f64,
     /// The field's areas.
     pub zones: Vec<ZoneSpec>,
 }
@@ -84,12 +87,12 @@ pub struct Field {
     pub ordered_out: bool,
 }
 
-/// Our posts get their ammunition once they are on the ground.
+/// The defenders' posts get their ammunition once they are on the ground (ours in the morning, the VDV's at dusk).
 #[allow(clippy::type_complexity)]
 fn supply_posts(mut commands: Commands, posts: Query<(Entity, &Post), (Without<Ammo>, Without<PulledOut>)>) {
     let Some(s) = spec() else { return };
     for (e, p) in &posts {
-        if p.side == Side::Ua {
+        if p.side == crate::diorama::diorama().defender() {
             commands.entity(e).insert(Ammo(s.ammo));
         }
     }
@@ -102,6 +105,37 @@ fn order_out(keys: Res<ButtonInput<KeyCode>>, time: Res<Time>, mut field: ResMut
     }
     field.ordered_out = true;
     radio.say2(time.elapsed_secs_f64(), "Всім, я {player}. Відхід! Відходимо на Горенку. Поранених забрати.", "All, this is {player}. Pull out! Fall back to Horenka. Bring the wounded.");
+}
+
+/// The attackers do not stop at the end of their road: every few seconds a few of the men who have got where they
+/// were going (dug in at their goal) get up and go for the nearest of the defenders' posts still holding, to within
+/// a stone's throw of it, where they go to ground again round it.
+fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, posts: Query<&Post, Without<PulledOut>>, mut soldiers: Query<(&mut Soldier, &Transform), Without<Leaving>>) {
+    *tick -= crate::sim_dt(&time);
+    if *tick > 0.0 {
+        return;
+    }
+    *tick = 5.0;
+    let attacker = crate::diorama::diorama().attacker();
+    let holding: Vec<Vec2> = posts.iter().filter(|p| p.side != attacker && p.strength > 0).map(|p| p.pos).collect();
+    if holding.is_empty() {
+        return;
+    }
+    for (mut s, tf) in &mut soldiers {
+        let p = tf.translation.xz();
+        if s.side != attacker || s.state != SState::DugIn || !rng.0.random_bool(spec().map_or(0.0, |f| f.assault)) {
+            continue;
+        }
+        let Some(&post) = holding.iter().min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))) else { continue };
+        let d = post.distance(p);
+        if d < 40.0 || d > 900.0 {
+            continue;
+        }
+        // Not straight at it: round to a side, about twenty-five metres out.
+        let side = Vec2::from_angle(rng.0.random_range(-1.2..1.2)).rotate((p - post).normalize_or(Vec2::Y));
+        s.goal = post + side * 25.0;
+        s.state = SState::Advance;
+    }
 }
 
 /// Their men fire back: a man lying or dug in within rifle range of a post he can see, now and then, and the post
