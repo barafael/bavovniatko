@@ -54,6 +54,29 @@ fn fragment(in: VertexOutput) -> @location(0) vec4<f32> {
     if fx.mode == 4u {
         return textureSample(screen_texture, texture_sampler, uv);
     }
+    if fx.mode == 6u {
+        // ---- The drone's thermal channel, white hot (`bav_look::thermal`) ----
+        // The world is near one temperature: the visible picture flattened to a narrow grey, a little lighter where
+        // it was lit. What is hot carries a marker of a colour nothing else is (magenta), which reads as heat: white,
+        // with a halo, as an uncooled sensor blooms. 640 x 512, with its fixed-pattern noise.
+        let bq = (floor(uv * dims / 2.0) + 0.5) * 2.0 / dims;
+        var heat = 0.0;
+        for (var i = -2; i <= 2; i++) {
+            for (var j = -2; j <= 2; j++) {
+                let s = textureSample(screen_texture, texture_sampler, bq + vec2<f32>(f32(i), f32(j)) * px * 2.0).rgb;
+                let key = clamp((min(s.r, s.b) - s.g) * 3.0, 0.0, 1.0);
+                let w = 1.0 - (abs(f32(i)) + abs(f32(j))) * 0.18;
+                heat = max(heat, key * w);
+            }
+        }
+        let l = luma(textureSample(screen_texture, texture_sampler, bq).rgb);
+        var t = 0.14 + 0.2 * l;
+        t = mix(t, 1.0, heat);
+        t += (hash(floor(uv * dims / 2.0)) - 0.5) * 0.012 + (hash(floor(uv * dims / 2.0) + frame) - 0.5) * 0.025;
+        let d = distance(uv, vec2<f32>(0.5));
+        t *= 1.0 - smoothstep(0.6, 1.0, d) * 0.3;
+        return vec4<f32>(vec3<f32>(clamp(t + fx.flash, 0.0, 1.0)), 1.0);
+    }
     if fx.mode == 0u {
         // ---- Drone feed ----
         if fx.down > 0.5 {

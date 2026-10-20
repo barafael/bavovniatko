@@ -28,7 +28,8 @@ Belarus arrives.
 The evening will run whether or not you do anything. What you do decides what it costs.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
-Left click: 152 mm fire mission.  1/2 or Tab: drone / observers.  P: pause.  [ ]: time.
+Left click: 152 mm fire mission.  Shift+click: smoke.  1/2 or Tab: drone / observers.  H: the drone's thermal.
+Space: the attack PUSH ON / HOLD / PULL BACK.  P: pause.  [ ]: time.
 
 Press Enter."#,
         op_label: "OBSERVERS, THE TREE LINE NORTH OF THE FIELD (СПОСТЕРІГАЧІ, ПОСАДКА НА ПІВНОЧІ)",
@@ -60,7 +61,7 @@ Press Enter."#,
     // The VDV's hold since one o'clock: groups dug in at the hangar, the apron, the tower, the stands, the offices and
     // the radar; riflemen, machine guns and RPGs (no ATGMs, no armour: they came by helicopter).
     ua_positions: [],
-    ru_positions: [(990.0, 610.0), (700.0, 330.0), (800.0, 700.0), (1000.0, 1100.0), (840.0, 380.0), (520.0, 1000.0)],
+    ru_positions: [(915.0, 650.0), (700.0, 330.0), (800.0, 700.0), (955.0, 1075.0), (840.0, 380.0), (520.0, 1000.0)],
     // The way in: down the E373 from the north-east, and up from Horenka in the south-east through the base.
     routes: [
         (line: "e373", deploy: (1500.0, -110.0), objective: (800.0, 450.0)),

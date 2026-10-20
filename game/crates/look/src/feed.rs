@@ -41,6 +41,8 @@ pub enum FeedMode {
     Raw = 4,
     /// An FPV's analogue goggles.
     Fpv = 5,
+    /// The drone's thermal channel: white hot.
+    Thermal = 6,
 }
 
 /// What the feed shader is told each frame.
@@ -215,6 +217,7 @@ pub fn update_feed(
     fx.time = time.elapsed_secs() % 1000.0;
     fx.mode = match view.mode {
         _ if dev::off(dev::Part::Feed) || look.video == crate::VideoLook::Off => FeedMode::Raw,
+        Mode::Drone if view.thermal => FeedMode::Thermal,
         Mode::Drone => FeedMode::Drone,
         Mode::Op => FeedMode::Binoculars,
         Mode::Ground if view.sight => FeedMode::Sight,

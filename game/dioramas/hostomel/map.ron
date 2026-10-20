@@ -14,6 +14,8 @@
     sun: Some((55, 2.0)),
     // The war's first day: no old craters; the morning's Kalibrs are the day's own.
     worn: false,
+    // A thermal drone (the Mavic 2 Enterprise Advanced, in Ukrainian hands from the first days): key H.
+    thermal: true,
 
     // The airfield sits on a flat sandy plateau at about 157 m (the runway's elevation), falling a few metres west
     // towards the Irpin's floodplain and south to the Bucha stream; pine woods on the sand.

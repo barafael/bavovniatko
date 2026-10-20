@@ -17,6 +17,7 @@ pub mod models;
 pub mod robotyne;
 pub mod sky;
 pub mod terrain;
+pub mod thermal;
 pub mod trees;
 pub mod world;
 

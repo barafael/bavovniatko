@@ -23,11 +23,12 @@ impl Plugin for AirPlugin {
             return;
         }
         app.insert_resource(AirRng(SmallRng::seed_from_u64(crate::dev::seeded(2402))))
+            .insert_resource(AdRng(SmallRng::seed_from_u64(crate::dev::seeded(1972))))
             .init_resource::<AirTally>()
             .insert_resource(Runway::new())
             .add_message::<AirHit>()
             .add_systems(OnEnter(bav_core::schedule::Phase::Debrief), keep_aftermath)
-            .add_systems(Update, (lay_aftermath, crater_runway, airlift, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
+            .add_systems(Update, (lay_aftermath, crater_runway, airlift, station, air_defence, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
     }
 }
 
@@ -37,7 +38,7 @@ pub struct AirSystems;
 
 /// Whether the day's script flies anything.
 pub fn flies() -> bool {
-    crate::data::sim_data().script.iter().any(|(_, a)| matches!(a, crate::director::Act::Air(_)))
+    crate::data::sim_data().script.iter().any(|(_, a)| matches!(a, crate::director::Act::Air(_) | crate::director::Act::Helicopters(_)))
 }
 
 /// What flies.
@@ -197,6 +198,9 @@ pub enum Flight {
     Orbit { until: f32 },
     /// Diving on a target: fires at `fire_at` metres.
     Run { target: Vec2 },
+    /// On station beyond reach (Robotyne's Ka-52s): hanging low behind the ridge at `home`, popping up when `timer`
+    /// runs down to fire a Vikhr at something of ours, and down again.
+    Station { home: Vec2, timer: f32, age: f32, phase: f32 },
     /// Hit hard enough: falling.
     Falling,
 }
@@ -477,6 +481,165 @@ fn airlift(
     }
 }
 
+/// A Ka-52 on station at `at` (`Act::Helicopters`): six Vikhrs, beyond the reach of anything we have.
+pub fn launch_station(commands: &mut Commands, models: &AirModels, at: Vec2) {
+    let Some((_, body, rotor, rotor_at)) = models.get(AirKind::Ka52) else { return };
+    let phase = (at.x * 0.013).sin() * 3.0;
+    let mut e = commands.spawn((
+        crate::units::skin(body),
+        Transform::from_translation(geo::ground(at) + Vec3::Y * 20.0),
+        Aircraft {
+            kind: AirKind::Ka52,
+            hp: AirKind::Ka52.hp(),
+            flight: Flight::Station { home: at, timer: 10.0 + phase.abs() * 3.0, age: 0.0, phase },
+            route: vec![Vec2::ZERO],
+            leg: 0,
+            speed: 45.0,
+            yaw: 0.0,
+            // Going home is away from the field's middle.
+            lz: Vec2::ZERO,
+            goal: at,
+            troops: 0,
+            salvos: 6,
+            vel: Vec3::ZERO,
+            spin: 0.0,
+            damaged: false,
+            side: 1.0,
+            angle: 0.0,
+        },
+    ));
+    let rotor = rotor.clone();
+    let at3 = *rotor_at;
+    e.with_children(|c| crate::units::dress(&mut c.spawn((crate::units::skin(&rotor), Transform::from_translation(at3), AirRotor)), &rotor));
+    crate::units::dress(&mut e, body);
+}
+
+/// On station: hang low behind the ridge, sway, pop up to fire a Vikhr at what of ours the smoke does not hide
+/// (preferably something that cannot move), and drop back; out of missiles, or hit, away home.
+#[allow(clippy::too_many_arguments)]
+fn station(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut rng: ResMut<AirRng>,
+    mut fx: ResMut<FxQueue>,
+    mut fxr: ResMut<crate::fx::FxRng>,
+    mut radio: ResMut<Radio>,
+    smoke: Res<fx::Smoke>,
+    models: Res<Models>,
+    palette: Res<Palette>,
+    vehicles: Query<(Entity, &crate::units::Vehicle, &Transform), Without<Aircraft>>,
+    mut q: Query<(&mut Aircraft, &mut Transform)>,
+) {
+    let dt = crate::sim_dt(&time);
+    let now = time.elapsed_secs_f64();
+    let rng = &mut rng.0;
+    for (mut a, mut tf) in &mut q {
+        let Flight::Station { home, timer, age, phase } = a.flight else { continue };
+        if a.salvos == 0 || a.damaged {
+            a.flight = Flight::Outbound;
+            a.speed = 45.0;
+            a.yaw = crate::units::vehicle_yaw(home.normalize_or(Vec2::Y));
+            continue;
+        }
+        let (timer, age) = (timer - dt, age + dt);
+        let mut p = tf.translation;
+        let pop = (1.0 - (timer.min(4.0) / 4.0)).max(0.0);
+        let want_y = geo::height(p.x, p.z) + 22.0 + 5.0 * (age * 0.35 + phase).sin() + 35.0 * pop;
+        p.y += (want_y - p.y) * (1.0 - (-dt * 1.2).exp());
+        p.x = home.x + 40.0 * (age * 0.11 + phase).sin();
+        tf.translation = p;
+        let face = Vec2::new(0.0, 200.0) - p.xz();
+        tf.rotation = Quat::from_rotation_y(crate::units::vehicle_yaw(face)) * Quat::from_rotation_x(-0.08 - 0.06 * pop);
+        a.flight = Flight::Station { home, timer, age, phase };
+        if timer > 0.0 {
+            continue;
+        }
+        let from = p.xz();
+        let mut best: Option<(Entity, f32)> = None;
+        for (ve, v, vt) in &vehicles {
+            if v.side != Side::Ua || !v.state.alive() || smoke.blocks(from, vt.translation.xz(), now) {
+                continue;
+            }
+            let score = vt.translation.xz().distance(from) - if v.state.mobile() { 0.0 } else { 1500.0 } + rng.random_range(0.0..800.0);
+            if best.is_none_or(|b| score < b.1) {
+                best = Some((ve, score));
+            }
+        }
+        a.flight = Flight::Station { home, timer: rng.random_range(18.0..30.0), age, phase };
+        let Some((target, _)) = best else { continue };
+        a.salvos -= 1;
+        let fwd = tf.rotation * Vec3::NEG_Z;
+        let muzzle = p + fwd * 3.0 - Vec3::Y * 0.6;
+        fx.flash(muzzle, 4.0e6, 80.0, 0.15);
+        fx.sound(muzzle, crate::sound::Sfx::VikhrLaunch, 1.5);
+        for _ in 0..6 {
+            fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: muzzle, vel: -fwd * fxr.0.random_range(3.0..9.0), life: 6.0, size0: 1.5, size1: 8.0, alpha: 0.5, drag: 1.0, ..default() });
+        }
+        commands.spawn((
+            Mesh3d(models.missile.clone()),
+            MeshMaterial3d(palette.vertex.clone()),
+            Transform::from_translation(muzzle).looking_to(fwd, Vec3::Y),
+            crate::fire::Missile { target, launched_at: muzzle, speed: 450.0, trail: 0.0, p_hit: Some(0.62), top_attack: false, weapon: "Vikhr", from: "a Ka-52" },
+            bevy::light::NotShadowCaster,
+        ));
+        if rng.random_bool(0.5) {
+            radio.say(now, "Launch from the helicopter! Missile inbound!");
+        }
+    }
+}
+
+/// Command's air defence on call (design/command.md phase 7): a battery behind our lines with a few missiles. A Ka-52
+/// on station is out of its reach until it pops up to fire; then the battery gets one shot at it, which may bring
+/// it down (`AirHit`), make it turn for home hit, or go wide.
+#[derive(Resource)]
+struct AdRng(SmallRng);
+
+#[allow(clippy::too_many_arguments)]
+fn air_defence(
+    time: Res<Time>,
+    mut rng: ResMut<AdRng>,
+    mut fc: ResMut<crate::fire::FireControl>,
+    mut fx: ResMut<FxQueue>,
+    mut radio: ResMut<Radio>,
+    mut hits: MessageWriter<AirHit>,
+    mut q: Query<(Entity, &mut Aircraft, &Transform)>,
+    mut engaged: Local<std::collections::BTreeMap<Entity, u32>>,
+) {
+    if fc.air_defence == 0 || !crate::allot::at_table() {
+        return;
+    }
+    let now = time.elapsed_secs_f64();
+    let rng = &mut rng.0;
+    for (e, a, tf) in &mut q {
+        let Flight::Station { timer, .. } = a.flight else { continue };
+        let up = a.salvos > 0 && timer < 2.5;
+        if !up || engaged.get(&e) == Some(&a.salvos) || fc.air_defence == 0 {
+            continue;
+        }
+        fc.air_defence -= 1;
+        engaged.insert(e, a.salvos);
+        let at = tf.translation;
+        let from = geo::ground(geo::layout().home + Vec2::new(300.0, -500.0)) + Vec3::Y * 3.0;
+        fx.sound(from, crate::sound::Sfx::AtgmLaunch, 1.4);
+        fx.flash(from, 2.0e6, 60.0, 0.12);
+        for k in 0..40 {
+            let p = from.lerp(at, k as f32 / 40.0);
+            fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: p, vel: Vec3::Y * 0.4, life: 7.0 + k as f32 * 0.05, size0: 1.2, size1: 5.0, alpha: 0.35, drag: 1.0, ..default() });
+        }
+        let roll: f64 = rng.random();
+        if roll < 0.3 {
+            hits.write(AirHit { target: e, damage: 99.0, weapon: "air defence", from: "the battery" });
+            radio.say2(now, "Мінус «алігатор»! Ка-52 збито.", "One alligator down! The Ka-52 is hit.");
+        } else if roll < 0.7 {
+            hits.write(AirHit { target: e, damage: 0.5, weapon: "air defence", from: "the battery" });
+            radio.say2(now, "ППО працює. Ка-52 розвернувся, йде геть.", "Air defence firing. The Ka-52 has turned away.");
+        } else {
+            radio.say2(now, "ППО: промах.", "Air defence: a miss.");
+        }
+        info!("air defence: roll {roll:.2}, {} missiles left, at {now:.0} s", fc.air_defence);
+    }
+}
+
 /// Turn `yaw` towards `want` by at most `rate * dt`.
 fn turn(yaw: f32, want: f32, rate: f32, dt: f32) -> f32 {
     let d = (want - yaw + std::f32::consts::PI).rem_euclid(std::f32::consts::TAU) - std::f32::consts::PI;
@@ -499,7 +662,7 @@ fn fly(
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     for (e, mut a, mut tf, mut vis) in &mut q {
-        if a.flight == Flight::Falling {
+        if matches!(a.flight, Flight::Falling | Flight::Station { .. }) {
             continue;
         }
         let mut p = tf.translation;
@@ -583,7 +746,7 @@ fn fly(
                 aim = Some(target);
                 want_agl = 60.0;
             }
-            Flight::Falling => unreachable!(),
+            Flight::Falling | Flight::Station { .. } => unreachable!(),
         }
         if let Some(to) = aim {
             let want = crate::units::vehicle_yaw(to - here);
@@ -658,7 +821,7 @@ fn fight(
                         commands.spawn((crate::fire::Shell { at: target + off, kind: crate::fire::ShellKind::Rocket, land: now + d as f64 / 600.0 + k as f64 * 0.12, by: Side::Ru }, crate::fire::Whistled));
                         fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation + fwd * (6.0 + k as f32), vel: -fwd * 4.0, life: 3.0, size0: 1.0, size1: 4.0, alpha: 0.4, drag: 1.0, ..default() });
                     }
-                    if rng.random_bool(0.4) {
+                    if rng.random_bool(0.15) {
                         radio.say(now, "Helicopter rockets on the apron! Get down!");
                     }
                     // Break away and back to the circle.

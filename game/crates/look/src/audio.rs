@@ -454,7 +454,7 @@ fn near_sources(
     cam: Single<&GlobalTransform, With<bav_sim::player::MainCamera>>,
     emitters: Query<(&bav_sim::fx::Emitter, &GlobalTransform)>,
     grass: Query<&crate::fx::GrassFire>,
-    helis: Query<&GlobalTransform, With<bav_sim::robotyne::Helicopter>>,
+    helis: Query<&GlobalTransform, With<bav_sim::air::Aircraft>>,
     vehicles: Query<(&bav_sim::units::Vehicle, &bav_sim::units::Driver, &GlobalTransform)>,
 ) {
     use bav_sim::fx::EmitterKind;

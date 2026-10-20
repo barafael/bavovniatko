@@ -27,7 +27,7 @@ enum Wall {
 const WALLS: [Wall; 3] = [Wall::Block, Wall::Works, Wall::House];
 
 /// The buildings, one mesh per facade, and the roofs in one more.
-pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
+pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>, mut paint: ResMut<Assets<crate::baked::VehicleMaterial>>) {
     let lay = geo::layout();
     let mut walls: Vec<MeshBuilder> = WALLS.iter().map(|_| MeshBuilder::new()).collect();
     let mut roofs = MeshBuilder::new();
@@ -84,6 +84,16 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut i
         let mat = materials.add(StandardMaterial { base_color_texture: Some(tex), perceptual_roughness: 0.92, ..default() });
         commands.spawn((Mesh3d(meshes.add(m.build())), MeshMaterial3d(mat)));
     }
+    // The Mriya in the Antonov hangar, as she stood that morning, ready to fly since 22:00 the night before
+    // (c01 §6 set piece 4): along the hangar's long axis, under the vault.
+    if let Some(h) = lay.buildings.iter().find(|b| b.kind == BuildingKind::Hangar) {
+        let mid = h.foot.iter().copied().sum::<Vec2>() / h.foot.len() as f32;
+        let axis = (0..h.foot.len()).map(|k| h.foot[(k + 1) % h.foot.len()] - h.foot[k]).max_by(|a, b| a.length().total_cmp(&b.length())).unwrap_or(Vec2::X);
+        let m = crate::baked::load("an225", crate::models::livery("an225"), &mut meshes, &mut images, &mut paint);
+        let mut e = commands.spawn((bav_sim::units::skin(&m.hull), Transform::from_translation(geo::ground(mid)).with_rotation(Quat::from_rotation_y(bav_sim::units::vehicle_yaw(axis)))));
+        bav_sim::units::dress(&mut e, &m.hull);
+    }
+
     // The control tower by the apron, where the observers are: a concrete shaft and the glazed cab on it. The map
     // does not have it; where it stands is placed by eye from the apron's layout (design/hostomel.md).
     let g = geo::ground(TOWER);
@@ -148,7 +158,13 @@ fn hangar(walls: &mut MeshBuilder, roofs: &mut MeshBuilder, foot: &[Vec2], base:
     let len = hi.x - lo.x;
     walls.poly_uv(&[at(hi.x, span_lo, 0.0), at(lo.x, span_lo, 0.0), at(lo.x, span_lo, spring), at(hi.x, span_lo, spring)], &uv(len, spring), [0.9; 3]);
     walls.poly_uv(&[at(lo.x, span_hi, 0.0), at(hi.x, span_hi, 0.0), at(hi.x, span_hi, spring), at(lo.x, span_hi, spring)], &uv(len, spring), [0.9; 3]);
+    // The doors are the whole of one end, open: the end towards the apron.
+    let apron = Vec2::new(700.0, 500.0);
+    let open_lo = (axis * lo.x + across * (lo.y + hi.y) * 0.5).distance(apron) < (axis * hi.x + across * (lo.y + hi.y) * 0.5).distance(apron);
     for (x, flip) in [(lo.x, false), (hi.x, true)] {
+        if (x == lo.x) == open_lo {
+            continue;
+        }
         let mut pts = vec![at(x, span_lo, 0.0), at(x, span_hi, 0.0)];
         pts.extend((0..=segs).rev().map(|k| {
             let (b, y) = arc(k);

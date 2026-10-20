@@ -113,7 +113,7 @@ fn run_script(
     op: Res<crate::player::ObservationPost>,
     models: Res<Models>,
     palette: Res<Palette>,
-    (mut order, helis, book, staff, air): (ResMut<ColumnOrder>, Option<Res<crate::robotyne::HeliModels>>, Res<crate::units::RouteBook>, Option<Res<crate::staff::Staff>>, Option<Res<crate::air::AirModels>>),
+    (mut order, book, staff, air): (ResMut<ColumnOrder>, Res<crate::units::RouteBook>, Option<Res<crate::staff::Staff>>, Option<Res<crate::air::AirModels>>),
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
@@ -190,9 +190,9 @@ fn run_script(
                 }
             }
             Act::Helicopters(at) => {
-                if let Some(h) = helis.as_ref() {
+                if let Some(m) = air.as_ref() {
                     for p in at {
-                        crate::robotyne::spawn_helicopter(&mut commands, h, Vec2::new(p.0, p.1));
+                        crate::air::launch_station(&mut commands, m, Vec2::new(p.0, p.1));
                     }
                 }
             }

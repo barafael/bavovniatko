@@ -117,6 +117,8 @@ pub struct DevEnv {
     pub seed: u64,
     /// Go straight to the debrief once the warp (if any) arrives, to lay the screen out without playing the day.
     pub debrief: bool,
+    /// `BAV_THERMAL`: the drone on its thermal channel from the start (where there is one).
+    pub thermal: bool,
     pub rec: Option<String>,
     pub rec_from: f32,
     pub rec_secs: f32,
@@ -254,6 +256,7 @@ impl DevEnv {
             warp_to: parse("BAV_WARP_TO"),
             seed: parse("BAV_SEED").unwrap_or(0),
             debrief: var("BAV_DEBRIEF").is_some(),
+            thermal: var("BAV_THERMAL").is_some(),
             rec: var("BAV_REC"),
             rec_from: parse("BAV_REC_FROM").unwrap_or(5.0),
             rec_secs: parse("BAV_REC_SECS").unwrap_or(10.0),

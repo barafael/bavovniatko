@@ -290,3 +290,20 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   (history about 13:00, held "more than an hour"). Next: posts that last longer (cover, the base's walls), so the
   order can come nearer 13:00; more helicopters down without more kills per missile (more teams in the open, the
   ZU's ammunition); the counterattack's band.
+- 2026-10-20: the models are in (the bake's `ecd6006`, merged): Mi-8, Mi-24, Il-76, An-225, Su-24, ZU-23-2, a BTR-82A
+  standing in for the NGU's BTR-3E (`btr80`), and a BMD-2 (its turret does not turn: a one-piece scan). The
+  ZU-23-2 stands at its post and its guns follow the nearest aircraft; the Mriya stands in the Antonov hangar, whose
+  doors (the end towards the apron) are open.
+- 2026-10-20: placement checked against the OSM's points (twelve stands, a covered stand at 913,477, the fuel farm,
+  the threshold) and for play: the hangar's post moved out of the hangar to its west doors (915,650), the offices'
+  out of the flight-test centre to (955,1075), in both parts. The control tower and the radar are still placed by
+  eye (the OSM has neither).
+- 2026-10-20: the aircraft unified (the plan's phase 2 as written): Robotyne's Ka-52s are `air::Flight::Station`
+  (hanging behind the ridge, popping up to fire a Vikhr), and Command's air defence fires `AirHit`s, so a Ka-52 it
+  brings down falls and burns. `robotyne.rs` keeps only the dug-in tanks; the look's helicopter models are
+  `bav_look::air`'s for every diorama with aircraft. Robotyne's Record changes by it (its own stream of chance):
+  new same-day baseline `u-r`; band (stopped of 20, killed) 17/27, 15/37, 19/33, 16/30 against 16/30, 17/31, 12/19,
+  18/35 before.
+- 2026-10-20: the thermal view (`bav_look::thermal`, where the file says `thermal: true`): key H on the drone; men,
+  posts, engines and fires carry a heat marker of a colour nothing else is, which the feed's mode 6 draws white
+  over a world flattened to one grey, with an uncooled sensor's bloom and noise.

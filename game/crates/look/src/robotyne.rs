@@ -1,29 +1,17 @@
 //! Mala Tokmachka, 8 June 2023, as it looks: the farm by the N08 and its water tower (the observers' post), the
-//! power line, last summer's combine, the berms on the crest, the Ka-52s' rotors, and the June light. The battle's
+//! power line, last summer's combine, the berms on the crest, and the June light (the Ka-52s are `air`'s). The battle's
 //! side is `bav_sim::robotyne`.
 
 use crate::meshes::{self, MeshBuilder};
 use crate::world::Skirt;
 use bav_core::geo::{self, smoothstep};
 use bav_sim::player::{MainCamera, ObservationPost};
-use bav_sim::robotyne::{HeliModels, Rotor};
 use bevy::{camera::Exposure, pbr::FogFalloff, prelude::*};
-
-pub struct RobotyneLookPlugin;
-
-impl Plugin for RobotyneLookPlugin {
-    fn build(&self, app: &mut App) {
-        if bav_core::diorama::diorama() != bav_core::diorama::Diorama::Robotyne {
-            return;
-        }
-        app.add_systems(Update, spin_rotors.in_set(bav_core::schedule::Step::Effects));
-    }
-}
 
 /// The observers' water tower, by the farm on the N08.
 const TOWER: Vec2 = Vec2::new(-1150.0, -1470.0);
 
-pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>, mut images: ResMut<Assets<Image>>, mut paint: ResMut<Assets<crate::baked::VehicleMaterial>>) {
+pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<StandardMaterial>>) {
     let solid = materials.add(StandardMaterial { perceptual_roughness: 0.95, ..default() });
     let mut set = MeshBuilder::new();
     // The kolkhoz by the highway: long sheds, two of them roofless, a row of silos, and the water tower.
@@ -73,16 +61,6 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut m
     }
     commands.spawn((Mesh3d(meshes.add(set.build())), MeshMaterial3d(solid)));
     commands.insert_resource(ObservationPost { eye: g + Vec3::new(0.0, 18.4, 2.7), building: TOWER });
-
-    let b = crate::baked::load("ka52", crate::models::livery("ka52"), &mut meshes, &mut images, &mut paint);
-    let heli = HeliModels { body: b.hull, rotor: b.turret, rotor_at: b.turret_at };
-    commands.insert_resource(heli);
-}
-
-fn spin_rotors(time: Res<Time>, mut q: Query<&mut Transform, With<Rotor>>) {
-    for mut tf in &mut q {
-        tf.rotate_y(time.delta_secs() * 28.0);
-    }
 }
 
 // ---------------------------------------------------------------------------------------------------------

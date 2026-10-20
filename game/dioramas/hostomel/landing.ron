@@ -30,7 +30,9 @@ Helicopters are coming down the Dnipro. Dozens of them.
 The day will run whether or not you do anything. What you do decides how long the field holds.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
-Left click: the D-30s at Horenka.  1/2 or Tab: drone / the tower.  P: pause.  [ ]: time.
+Left click: the D-30s at Horenka.  1/2 or Tab: drone / the tower.  H: the drone's thermal.  P: pause.  [ ]: time.
+5: out with an Igla team (again for the next).  Right button: shoulder it.  Left click: launch, on the steady tone.
+Space: everyone out, back to Horenka.
 
 Press Enter."#,
         op_label: "OBSERVERS, THE CONTROL TOWER (СПОСТЕРІГАЧІ, ДИСПЕТЧЕРСЬКА ВЕЖА)",
@@ -57,10 +59,12 @@ Press Enter."#,
     camera: (900.0, 450.0),
     observed_from: Home,
 
-    // The National Guard's posts (c01 §3): the hangar, the apron's north end, the stands, the tower and offices,
-    // and the base's gate by the railway crossing. Where the radar stood the sources do not place; here it is at the
-    // runway's south end (an assumption, flagged in design/hostomel.md).
-    ua_positions: [(990.0, 610.0), (700.0, 330.0), (800.0, 700.0), (1000.0, 1100.0), (1250.0, 560.0), (520.0, 1000.0)],
+    // The National Guard's posts (c01 §3), each at the edge of what it holds, not inside it (the map's footprints are
+    // solid): the hangar's west doors, the apron's north end by the fuel farm, the stands (OSM's parking positions
+    // 6-7), the offices of the Antonov flight-test centre, and the base's gate by the railway crossing. Where the
+    // radar stood the sources do not place; here it is at the runway's south end by stand 12 (an assumption, flagged
+    // in design/hostomel.md), as are the control tower's place (the OSM has none) and so the observers'.
+    ua_positions: [(915.0, 650.0), (700.0, 330.0), (800.0, 700.0), (955.0, 1075.0), (1250.0, 560.0), (520.0, 1000.0)],
     ru_positions: [],
     routes: [
         (line: "e373", deploy: (1030.0, -713.0), objective: (1600.0, 450.0)),
@@ -138,11 +142,11 @@ Press Enter."#,
             (kind: Mi24, from: (9000.0, 300.0), via: [(2600.0, 350.0)], at: (700.0, 500.0), goal: None, delay: 30.0),
         ])),
         (320.0, Air([
-            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 200.0)], at: (600.0, 300.0), goal: Some((990.0, 610.0)), delay: 20.0),
+            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 200.0)], at: (600.0, 300.0), goal: Some((915.0, 650.0)), delay: 20.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 240.0)], at: (700.0, 450.0), goal: Some((840.0, 380.0)), delay: 25.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 280.0)], at: (560.0, 600.0), goal: Some((1250.0, 560.0)), delay: 30.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 320.0)], at: (450.0, 480.0), goal: Some((520.0, 1000.0)), delay: 35.0),
-            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 360.0)], at: (780.0, 260.0), goal: Some((1000.0, 1100.0)), delay: 40.0),
+            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 360.0)], at: (780.0, 260.0), goal: Some((955.0, 1075.0)), delay: 40.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 400.0)], at: (660.0, 720.0), goal: Some((700.0, 330.0)), delay: 45.0),
         ])),
         (420.0, Air([
@@ -154,9 +158,9 @@ Press Enter."#,
             (kind: Mi24, from: (8000.0, -2600.0), via: [(1800.0, -800.0)], at: (700.0, 500.0), goal: None, delay: 30.0),
             (kind: Mi8, from: (8000.0, -2600.0), via: [(1600.0, -700.0)], at: (120.0, 560.0), goal: Some((1250.0, 560.0)), delay: 25.0),
             (kind: Mi8, from: (8000.0, -2600.0), via: [(1600.0, -670.0)], at: (30.0, 380.0), goal: Some((520.0, 1000.0)), delay: 30.0),
-            (kind: Mi8, from: (8000.0, -2600.0), via: [(1600.0, -640.0)], at: (250.0, 720.0), goal: Some((1000.0, 1100.0)), delay: 35.0),
+            (kind: Mi8, from: (8000.0, -2600.0), via: [(1600.0, -640.0)], at: (250.0, 720.0), goal: Some((955.0, 1075.0)), delay: 35.0),
             (kind: Mi8, from: (8000.0, -2600.0), via: [(1600.0, -610.0)], at: (-60.0, 200.0), goal: Some((700.0, 330.0)), delay: 40.0),
-            (kind: Mi8, from: (8000.0, -2600.0), via: [(1600.0, -580.0)], at: (380.0, 860.0), goal: Some((990.0, 610.0)), delay: 45.0),
+            (kind: Mi8, from: (8000.0, -2600.0), via: [(1600.0, -580.0)], at: (380.0, 860.0), goal: Some((915.0, 650.0)), delay: 45.0),
         ])),
         (540.0, Air([
             (kind: Ka52, from: (9000.0, 300.0), via: [(2600.0, 500.0)], at: (700.0, 500.0), goal: None, delay: 0.0),
@@ -165,9 +169,9 @@ Press Enter."#,
             (kind: Mi24, from: (9000.0, 300.0), via: [(2600.0, 600.0)], at: (700.0, 500.0), goal: None, delay: 18.0),
             (kind: Mi24, from: (9000.0, 300.0), via: [(2600.0, 600.0)], at: (700.0, 500.0), goal: None, delay: 24.0),
             (kind: Mi24, from: (9000.0, 300.0), via: [(2600.0, 600.0)], at: (700.0, 500.0), goal: None, delay: 30.0),
-            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 450.0)], at: (820.0, 820.0), goal: Some((1000.0, 1100.0)), delay: 25.0),
+            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 450.0)], at: (820.0, 820.0), goal: Some((955.0, 1075.0)), delay: 25.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 490.0)], at: (520.0, 960.0), goal: Some((700.0, 330.0)), delay: 30.0),
-            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 530.0)], at: (900.0, 700.0), goal: Some((990.0, 610.0)), delay: 35.0),
+            (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 530.0)], at: (900.0, 700.0), goal: Some((915.0, 650.0)), delay: 35.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 570.0)], at: (640.0, 1000.0), goal: Some((840.0, 380.0)), delay: 40.0),
             (kind: Mi8, from: (9000.0, 300.0), via: [(2600.0, 610.0)], at: (300.0, 300.0), goal: Some((1250.0, 560.0)), delay: 45.0),
         ])),

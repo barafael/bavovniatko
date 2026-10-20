@@ -47,6 +47,8 @@ pub struct View {
     pub ground_yaw: f32,
     pub ground_pitch: f32,
     pub sight: bool,
+    /// The drone's camera on its thermal channel (where the diorama has one: `thermal` in its file).
+    pub thermal: bool,
     /// Range to whatever the sight's crosshair is on.
     pub ground_range: Option<f32>,
     /// Javelin: the vehicle the seeker is tracking and for how long (it locks after 2.5 s).
@@ -107,6 +109,7 @@ impl Default for View {
             ground_yaw: std::f32::consts::PI,
             ground_pitch: 0.0,
             sight: false,
+            thermal: false,
             ground_range: None,
             lock: None,
             locked: false,
