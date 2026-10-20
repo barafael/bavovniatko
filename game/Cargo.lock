@@ -397,6 +397,7 @@ dependencies = [
  "bav-core",
  "bevy",
  "rand 0.9.5",
+ "ron",
  "serde",
  "strum",
 ]
