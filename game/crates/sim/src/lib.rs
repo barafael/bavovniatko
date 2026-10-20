@@ -15,6 +15,7 @@ pub mod director;
 pub mod drones;
 pub mod evac;
 pub mod ew;
+pub mod fight;
 pub mod fire;
 pub mod fx;
 pub mod hits;

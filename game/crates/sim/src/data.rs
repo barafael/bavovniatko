@@ -46,6 +46,9 @@ pub struct SimData {
     /// The enemy's guns, and what they fire on (none: they have none).
     #[serde(default)]
     pub ru_guns: Option<crate::director::RuGuns>,
+    /// The infantry fight for a place (`fight`): ammunition, pulling out, capture, the field's areas.
+    #[serde(default)]
+    pub fight: Option<crate::fight::FightSpec>,
     /// Command's Enemy staff: its budgets for the day (`staff`).
     #[serde(default)]
     pub staff: crate::staff::StaffSpec,

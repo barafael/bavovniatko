@@ -314,6 +314,8 @@ pub enum SpaceKey {
     Atgm,
     /// Our column: PUSH ON, HOLD, PULL BACK.
     Column,
+    /// Every post of ours: pull out (`fight`).
+    Withdraw,
 }
 
 /// What Shift+click calls.
@@ -339,7 +341,7 @@ fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, m
         radio.say(time.elapsed_secs_f64(), line);
         return;
     }
-    if keys.just_pressed(KeyCode::Space) {
+    if keys.just_pressed(KeyCode::Space) && crate::data::sim_data().space_key == SpaceKey::Atgm {
         fc.atgm_mode = match fc.atgm_mode {
             AtgmMode::Auto => AtgmMode::Hold,
             AtgmMode::Hold => AtgmMode::Free,
@@ -573,7 +575,7 @@ fn land_shells(
             ShellKind::Tos => (1.6, 30.0, Cause::Thermobaric, Sfx::Thermobaric, 4.5),
             ShellKind::TankHe => (0.8, 9.0, Cause::TankGun, Sfx::BlastNear, 2.0),
             ShellKind::Cannon30 => (0.18, 2.0, Cause::TankGun, Sfx::BlastNear, 0.0),
-            ShellKind::Rocket => (0.7, 10.0, Cause::Artillery, Sfx::BlastNear, 1.6),
+            ShellKind::Rocket => (0.7, 7.0, Cause::Artillery, Sfx::BlastNear, 1.6),
             ShellKind::Raam => (0.5, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
             ShellKind::Smoke => (0.3, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
         };
@@ -958,14 +960,15 @@ fn small_arms(
     mut sound: Sound,
     models: Res<Models>,
     palette: Res<Palette>,
-    mut positions: Query<&mut Post>,
+    mut positions: Query<(&mut Post, Option<&mut crate::fight::Ammo>)>,
     mut soldiers: Query<(Entity, &mut Soldier, &Transform)>,
 ) {
     let dt = time.delta_secs();
     let rng = &mut fxr.0;
     let mut dead: Vec<Entity> = Vec::new();
-    for mut pos in &mut positions {
-        if pos.strength == 0 {
+    for (mut pos, mut ammo) in &mut positions {
+        // (A post with its ammunition counted, where the fight counts it, fires no more when it is dry.)
+        if pos.strength == 0 || ammo.as_ref().is_some_and(|a| a.0 == 0) {
             continue;
         }
         pos.fire_timer -= dt;
@@ -982,6 +985,9 @@ fn small_arms(
             .collect();
         near.sort_by(|a, b| a.1.total_cmp(&b.1));
         let Some(&(e, d, tp)) = near.iter().find(|(_, _, tp)| geo::line_of_sight(pos.pos, tp.xz())) else { continue };
+        if let Some(a) = ammo.as_mut() {
+            a.0 -= 1;
+        }
         for k in 0..5 {
             let spread = Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(0.0..1.5), rng.random_range(-3.0..3.0)) * (d / 300.0);
             if k % 2 == 0 {

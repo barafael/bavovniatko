@@ -95,8 +95,8 @@ impl AirKind {
     /// Rocket salvos it carries (S-8, eight to a salvo).
     fn salvos(self) -> u32 {
         match self {
-            AirKind::Ka52 => 5,
-            AirKind::Mi24 => 4,
+            AirKind::Ka52 => 3,
+            AirKind::Mi24 => 3,
             _ => 0,
         }
     }
@@ -458,7 +458,8 @@ fn fight(
                     fx.flash(tf.translation + fwd * 3.0, 3.0e6, 60.0, 0.2);
                     fx.sound(tf.translation, crate::sound::Sfx::Ripple, 1.4);
                     for k in 0..8 {
-                        let off = Vec2::new(rng.random_range(-25.0..25.0), rng.random_range(-25.0..25.0)) + fwd.xz().normalize_or_zero() * rng.random_range(-30.0..30.0);
+                        // Unguided from a moving helicopter at a kilometre: a beaten zone, not a point.
+                        let off = Vec2::new(rng.random_range(-45.0..45.0), rng.random_range(-45.0..45.0)) + fwd.xz().normalize_or_zero() * rng.random_range(-60.0..60.0);
                         commands.spawn((crate::fire::Shell { at: target + off, kind: crate::fire::ShellKind::Rocket, land: now + d as f64 / 600.0 + k as f64 * 0.12, by: Side::Ru }, crate::fire::Whistled));
                         fx.spawn(fx::Spawn { kind: fx::Kind::WhiteSmoke, pos: tf.translation + fwd * (6.0 + k as f32), vel: -fwd * 4.0, life: 3.0, size0: 1.0, size1: 4.0, alpha: 0.4, drag: 1.0, ..default() });
                     }

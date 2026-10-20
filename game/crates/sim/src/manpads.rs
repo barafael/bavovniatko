@@ -163,7 +163,7 @@ fn auto_iglas(
             .collect();
         // In a fixed order (by place, not by entity id, which is not the day's own).
         in_reach.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.z.total_cmp(&b.1.z)));
-        if in_reach.is_empty() || !rng.0.random_bool((0.06 * dt as f64).min(1.0)) {
+        if in_reach.is_empty() || !rng.0.random_bool((0.12 * dt as f64).min(1.0)) {
             continue;
         }
         let (target, at) = in_reach[rng.0.random_range(0..in_reach.len())];
@@ -215,7 +215,7 @@ fn zu23(
         sound.at(at, crate::sound::Sfx::Cannon30, 1.0);
         // Slow and low is easiest; on the ground, easier still.
         let slow = if matches!(a.flight, Flight::Landed { .. } | Flight::Approach) { 1.6 } else { 1.0 };
-        let p = (0.12 * (1.0 - d / 2200.0) * slow).clamp(0.0, 0.9);
+        let p = (0.2 * (1.0 - d / 2200.0) * slow).clamp(0.0, 0.9);
         if rng.0.random_bool(p as f64) {
             hits.write(AirHit { target, damage: rng.0.random_range(0.8..1.4), weapon: "ZU-23-2", from: "the base" });
         }
@@ -246,7 +246,7 @@ fn fly_iglas(
             && let Some((_, tp)) = tgt
         {
             let agl = tp.y - geo::height(tp.x, tp.z);
-            m.lost = Some(rng.0.random_bool(if agl < 40.0 { 0.5 } else { 0.3 }));
+            m.lost = Some(rng.0.random_bool(if agl < 40.0 { 0.35 } else { 0.2 }));
         }
         if m.lost == Some(true) {
             tgt = None;
@@ -306,7 +306,7 @@ fn fly_iglas(
             if (p0 + seg * t).distance(tp) < 4.0 && m.travelled > MIN_RANGE {
                 fx.explosion(tp, 0.5, false);
                 // The 1.2 kg warhead against a helicopter: often enough it comes down, often it only smokes and limps off.
-                hits.write(AirHit { target: m.target.unwrap(), damage: rng.0.random_range(1.2..3.4), weapon: "Igla", from: m.from });
+                hits.write(AirHit { target: m.target.unwrap(), damage: rng.0.random_range(1.8..3.6), weapon: "Igla", from: m.from });
                 commands.entity(e).despawn();
                 continue;
             }

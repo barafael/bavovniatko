@@ -245,3 +245,12 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   the warhead does not arm ("let him pass"). The missile leads its target, may be lost against the ground (half the
   time under 40 m, else 0.3), may take a flare (Ka-52 0.25 to put them out, then 0.45 to take one). First tuning:
   six down in ten minutes was far too many; the band is set in phase 8.
+- 2026-10-20: phase 3, first part. `fight.rs` (Hostomel only, from the part's `fight`): posts carry ammunition
+  (`Ammo`, spent by `fire::small_arms`), the VDV on foot wear them down (`return_fire`), a dry post pulls out and
+  its men walk off towards Horenka (`Leaving`), Space orders everyone out (`SpaceKey::Withdraw`), a spent post with
+  six of theirs round it is taken with its men, and five areas (hangar, apron, tower, base, radar) are whoever's men
+  are in them; the HUD tallies helicopters down, VDV landed, our men out and taken, and the areas. First tuning, one
+  seed (the Record): the field held until 12:49 (history about 13:00), 10 taken (about 20 at the radar), 40 walked
+  out, 1 helicopter down and 8 driven off (history: 3 Ka-52 and a Mi-8 at the field), so the Igla's warhead is now
+  1.8-3.6 against hp 2-3. Not yet: the men withdrawing are not shot at; capture uses the posts' men, not men on
+  foot; the bands over seeds (phase 8).

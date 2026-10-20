@@ -63,6 +63,24 @@ struct Crosshair;
 #[derive(Component)]
 struct Reticle;
 
+/// The field's tally: what has come down, what has landed, who holds what, and our men.
+fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>) -> String {
+    let zones: Vec<String> = f
+        .zones
+        .iter()
+        .map(|z| {
+            let who = match z.held {
+                Some(Side::Ua) => "ours",
+                Some(Side::Ru) => "THEIRS",
+                None => "contested",
+            };
+            format!("{} {who}", z.name.0)
+        })
+        .collect();
+    let (down, landed) = air.map_or((0, 0), |a| (a.down.len(), a.men_landed));
+    format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{}", f.out, f.captured, zones.join("   "))
+}
+
 /// The Igla's ring, and its size on a 900 px high screen.
 #[derive(Component)]
 struct IglaRing;
@@ -269,7 +287,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>),
+    (order, fpv_res, op_res, iglas, field, air): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -401,7 +419,7 @@ fn update_hud(
         ),
         // The field's own tally (helicopters down, minutes held, the runway) comes with its fight (design/hostomel.md,
         // phases 2 to 5); until then, the clock.
-        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("{}   {}", diorama().tally_date(), director::clock_text(script.t)),
+        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref()))),
     }));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
     let mut spans: Vec<(String, bool)> = Vec::new();
@@ -447,7 +465,14 @@ fn update_hud(
             let ad = if fc.air_defence > 0 { format!("   AD  {}", fc.air_defence) } else { String::new() };
             format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}{ad}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
         }
-        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("guns  {} rds{}", fc.shells, speed_line),
+        Diorama::HostomelLanding | Diorama::HostomelCounter => {
+            let out = match field.as_ref() {
+                Some(f) if f.ordered_out => "   PULLING OUT".to_string(),
+                Some(_) if bav_sim::data::sim_data().space_key == bav_sim::fire::SpaceKey::Withdraw => "   [Space] pull out".to_string(),
+                _ => String::new(),
+            };
+            format!("D-30  {} rds   [5] Igla{out}{}", fc.shells, speed_line)
+        }
     }));
     // The day's caption, the same way: the Ukrainian line over its gloss.
     let banner = script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default();
