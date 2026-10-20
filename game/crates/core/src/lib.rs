@@ -7,6 +7,7 @@ pub mod dev;
 pub mod diorama;
 pub mod field;
 pub mod geo;
+pub mod sun;
 pub mod schedule;
 pub mod text;
 pub mod vocab;

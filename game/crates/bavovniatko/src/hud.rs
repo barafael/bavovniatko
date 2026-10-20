@@ -64,9 +64,9 @@ struct Crosshair;
 struct Reticle;
 
 /// The field's tally: what has come down, what has landed, who holds what, and our men.
-fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, runway: Option<&bav_sim::air::Runway>) -> String {
-    let zones: Vec<String> = f
-        .zones
+/// Who holds each of the field's areas.
+fn zones_line(f: &bav_sim::fight::Field) -> String {
+    f.zones
         .iter()
         .map(|z| {
             let who = match z.held {
@@ -76,10 +76,15 @@ fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, r
             };
             format!("{} {who}", z.name.0)
         })
-        .collect();
+        .collect::<Vec<_>>()
+        .join("   ")
+}
+
+fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, runway: Option<&bav_sim::air::Runway>) -> String {
+    let zones = zones_line(f);
     let (down, landed) = air.map_or((0, 0), |a| (a.down.len(), a.men_landed));
     let strip = runway.map_or(String::new(), |r| format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" }));
-    format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{}{strip}", f.out, f.captured, zones.join("   "))
+    format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{zones}{strip}", f.out, f.captured)
 }
 
 /// The Igla's ring, and its size on a 900 px high screen.
@@ -420,7 +425,16 @@ fn update_hud(
         ),
         // The field's own tally (helicopters down, minutes held, the runway) comes with its fight (design/hostomel.md,
         // phases 2 to 5); until then, the clock.
-        Diorama::HostomelLanding | Diorama::HostomelCounter => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref(), runway.as_deref()))),
+        Diorama::HostomelLanding => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref(), runway.as_deref()))),
+        Diorama::HostomelCounter => {
+            let zones = field.as_ref().map_or(String::new(), |f| zones_line(f));
+            let strip = runway.as_ref().map_or(String::new(), |r| format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" }));
+            let taken = field.as_ref().map_or(0, |f| f.lost);
+            format!(
+                "{}   {}\nour vehicles committed {}   lost {}   men sent {}   VDV posts taken {taken}\n{zones}{strip}",
+                diorama().tally_date(), director::clock_text(script.t), committed, out, stats.sent
+            )
+        }
     }));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
     let mut spans: Vec<(String, bool)> = Vec::new();
@@ -466,7 +480,15 @@ fn update_hud(
             let ad = if fc.air_defence > 0 { format!("   AD  {}", fc.air_defence) } else { String::new() };
             format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}{ad}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
         }
-        Diorama::HostomelLanding | Diorama::HostomelCounter => {
+        Diorama::HostomelCounter => {
+            let order = match *order {
+                ColumnOrder::Push => "PUSH ON",
+                ColumnOrder::Hold => "HOLD",
+                ColumnOrder::PullBack => "PULL BACK",
+            };
+            format!("152 mm  {} rds   SMOKE  {}\nthe attack [{order}]{}", fc.shells, fc.smoke, speed_line)
+        }
+        Diorama::HostomelLanding => {
             let out = match field.as_ref() {
                 Some(f) if f.ordered_out => "   PULLING OUT".to_string(),
                 Some(_) if bav_sim::data::sim_data().space_key == bav_sim::fire::SpaceKey::Withdraw => "   [Space] pull out".to_string(),

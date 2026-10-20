@@ -283,27 +283,6 @@ fn in_triangle(p: Vec2, a: Vec2, b: Vec2, c: Vec2) -> bool {
     !(neg && pos)
 }
 
-/// The sun at the anchor's latitude and longitude on the diorama's day (`sun` in its file), at this many minutes
-/// after local midnight: elevation and azimuth from north, clockwise, in degrees. NOAA's low-precision formulae:
-/// good to a fraction of a degree, which is all a battlefield needs.
-pub fn sun_position(minutes: f32) -> (f32, f32) {
-    let d = bav_core::data::data();
-    let (doy, utc) = d.sun.unwrap_or((172, 2.0));
-    let (lat, lon) = (d.anchor.lat as f32, d.anchor.lon as f32);
-    let g = std::f32::consts::TAU / 365.0 * (doy as f32 - 1.0 + (minutes / 60.0 - utc - 12.0) / 24.0);
-    let eqtime = 229.18 * (0.000075 + 0.001868 * g.cos() - 0.032077 * g.sin() - 0.014615 * (2.0 * g).cos() - 0.040849 * (2.0 * g).sin());
-    let decl = 0.006918 - 0.399912 * g.cos() + 0.070257 * g.sin() - 0.006758 * (2.0 * g).cos() + 0.000907 * (2.0 * g).sin() - 0.002697 * (3.0 * g).cos() + 0.00148 * (3.0 * g).sin();
-    let true_solar = minutes + eqtime + 4.0 * lon - 60.0 * utc;
-    let ha = (true_solar / 4.0 - 180.0).to_radians();
-    let phi = lat.to_radians();
-    let cos_zen = (phi.sin() * decl.sin() + phi.cos() * decl.cos() * ha.cos()).clamp(-1.0, 1.0);
-    let zen = cos_zen.acos();
-    let elev = 90.0 - zen.to_degrees();
-    let az = ((phi.sin() * cos_zen - decl.sin()) / (phi.cos() * zen.sin()).max(1e-6)).clamp(-1.0, 1.0).acos().to_degrees();
-    let azim = if ha > 0.0 { (az + 180.0) % 360.0 } else { (540.0 - az) % 360.0 };
-    (elev, azim)
-}
-
 /// The light under a low deck of cloud, from the late morning to full dark: the sun a brightness behind the cloud
 /// and never a hard shadow, the ambient carrying the day; after sunset the blue hour, then the night, which the
 /// camera opens up to (a drone's sensor), and the fires and flares carry it from then on (`FxLight`).
@@ -326,14 +305,14 @@ pub fn daylight(
         return;
     }
     let minutes = bav_sim::director::clock_minutes(script.t);
-    let (elev, azim) = sun_position(minutes);
+    let (elev, azim) = bav_core::sun::position(minutes);
     let s = |e0: f32, e1: f32, x: f32| smoothstep(e0, e1, x);
     let twilight = s(-12.0, 0.0, elev);
     let day = s(0.0, 25.0, elev);
     let mix3 = |a: [f32; 3], b: [f32; 3], t: f32| [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
     let [k_sun, k_amb, ev_off] = crate::dev::dev().light;
     // The light's direction in the sun's steps, so shadows of things standing still hold still.
-    let (e_step, a_step) = sun_position(crate::world::sun_hours(minutes) * 60.0);
+    let (e_step, a_step) = bav_core::sun::position(crate::world::sun_hours(minutes) * 60.0);
     let e = e_step.max(8.0).to_radians();
     let a = a_step.to_radians();
     for (mut l, mut tf) in &mut sun {
@@ -348,7 +327,8 @@ pub fn daylight(
         l.color = Color::srgb(c[0], c[1], c[2]);
     }
     // The cloud is the light: a grey dome that dims through the blue hour into night.
-    ambient.brightness = (60.0 + 700.0 * twilight + 900.0 * day) * k_amb;
+    // (A little ambient is left at night: the glow of Kyiv and Irpin on the cloud's underside.)
+    ambient.brightness = (140.0 + 620.0 * twilight + 900.0 * day) * k_amb;
     let a_col = mix3([0.30, 0.36, 0.60], [0.80, 0.84, 0.92], twilight);
     ambient.color = Color::srgb(a_col[0], a_col[1], a_col[2]);
     let mut sky = mix3([0.03, 0.04, 0.07], [0.30, 0.33, 0.42], twilight);
@@ -369,7 +349,8 @@ pub fn daylight(
         f.falloff = FogFalloff::from_visibility_colors(4500.0 * look.haze, Color::srgb(0.46, 0.48, 0.52), Color::srgb(0.66, 0.68, 0.71));
         f.directional_light_color = Color::NONE;
         // The sensor opens up as the light goes, but the night still reads as night.
-        ex.ev100 = 7.2 + 3.6 * s(-14.0, 12.0, elev) + ev_off - look.exposure;
+        // A drone's low-light mode opens up further: grainy, but the field is there.
+        ex.ev100 = 6.3 + 4.5 * s(-14.0, 12.0, elev) + ev_off - look.exposure;
     }
     let changed = last.is_none_or(|l| (l.to_srgba().red - sky_c.to_srgba().red).abs() > 0.004);
     if changed && let Some(sk) = skirt.as_ref() && let Some(mut m) = materials.get_mut(&sk.0) {

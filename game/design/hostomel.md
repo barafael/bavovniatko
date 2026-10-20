@@ -274,3 +274,9 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   held until 12:29, 25 taken, 3 down, 43 VDV killed; the counterattack took three of six posts and the hangar by
   20:36, the apron contested. Not yet: the field fully retaken by 21:00 (more pressure, the player's guns), dusk's
   sight lines and thermals (phase 6), the carry-over from the morning.
+- 2026-10-20: phase 6, first part. `bav_core::sun` (moved from the look): the sun's place for a diorama with a
+  `sun`, and `sight`, how far men see as a share of the day's (1 in daylight, about a third at night); the fight
+  keeps it in `fight::Sight`, and the posts' rifles and the attackers' return fire reach no further. The night picture
+  is a drone's low-light mode (grainy, blue, the field readable), with the glow of the towns on the cloud. The
+  counterattack has its own HUD lines (vehicles, men, VDV posts taken, the areas, the runway; 152 mm, smoke, the
+  attack's order). Not yet: thermal views, flares and illumination rounds, the fires lighting the night.

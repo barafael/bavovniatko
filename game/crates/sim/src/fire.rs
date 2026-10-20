@@ -962,7 +962,10 @@ fn small_arms(
     palette: Res<Palette>,
     mut positions: Query<(&mut Post, Option<&mut crate::fight::Ammo>)>,
     mut soldiers: Query<(Entity, &mut Soldier, &Transform)>,
+    sight: Option<Res<crate::fight::Sight>>,
 ) {
+    // In the dark men see less far (only where the fight counts it).
+    let reach = 750.0 * sight.map_or(1.0, |s| s.0);
     let dt = time.delta_secs();
     let rng = &mut fxr.0;
     let mut dead: Vec<Entity> = Vec::new();
@@ -980,7 +983,7 @@ fn small_arms(
         // The nearest man within rifle range that a belt or a crest does not hide.
         let mut near: Vec<(Entity, f32, Vec3)> = soldiers
             .iter()
-            .filter(|(e, s, tf)| s.side != pos.side && !dead.contains(e) && tf.translation.xz().distance(pos.pos) < 750.0)
+            .filter(|(e, s, tf)| s.side != pos.side && !dead.contains(e) && tf.translation.xz().distance(pos.pos) < reach)
             .map(|(e, _, tf)| (e, tf.translation.xz().distance(pos.pos), tf.translation))
             .collect();
         near.sort_by(|a, b| a.1.total_cmp(&b.1));

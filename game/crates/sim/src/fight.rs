@@ -18,8 +18,9 @@ impl Plugin for FightPlugin {
     fn build(&self, app: &mut App) {
         let Some(spec) = spec() else { return };
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
+            .insert_resource(Sight(1.0))
             .insert_resource(Field { zones: spec.zones.iter().map(|z| Zone { name: z.name.clone(), poly: z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect(), held: None }).collect(), ..default() })
-            .add_systems(Update, (supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
+            .add_systems(Update, (see, supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
     }
 }
 
@@ -53,6 +54,15 @@ pub fn spec() -> Option<&'static FightSpec> {
 
 #[derive(Resource)]
 struct FightRng(SmallRng);
+
+/// How far men see now, as a share of the day's (`bav_core::sun::sight`): the posts' rifles and the attackers' fire
+/// reach no further.
+#[derive(Resource)]
+pub struct Sight(pub f32);
+
+fn see(script: Res<crate::director::Script>, mut sight: ResMut<Sight>) {
+    sight.0 = bav_core::sun::sight(crate::director::clock_minutes(script.t));
+}
 
 /// A post's ammunition: volleys left. (The posts' own fire, `fire::small_arms`, spends it.)
 #[derive(Component)]
@@ -144,6 +154,7 @@ fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, pos
 fn return_fire(
     mut commands: Commands,
     time: Res<Time>,
+    sight: Res<Sight>,
     mut rng: ResMut<FightRng>,
     mut fx: ResMut<crate::fx::FxQueue>,
     mut stats: ResMut<Stats>,
@@ -163,7 +174,7 @@ fn return_fire(
             .iter()
             .filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded))
             .map(|(_, t)| (t.translation, t.translation.xz().distance(post.pos)))
-            .filter(|(p, d)| *d < 400.0 && geo::line_of_sight(p.xz(), post.pos))
+            .filter(|(p, d)| *d < 400.0 * sight.0 && geo::line_of_sight(p.xz(), post.pos))
             .collect();
         if shooters.is_empty() {
             continue;
@@ -261,7 +272,11 @@ fn overrun(
             }
             commands.entity(e).insert(PulledOut);
             field.held_until = Some(script.t);
-            radio.say2(now, "Позиція оточена. Зв'язку нема.", "The position is surrounded. No contact.");
+            if post.side == Side::Ua {
+                radio.say2(now, "Позиція оточена. Зв'язку нема.", "The position is surrounded. No contact.");
+            } else {
+                radio.say2(now, "Їхню позицію взяли. Полонені є.", "Their position is ours. We have prisoners.");
+            }
             info!("fight: a post at {:.0},{:.0} taken, {men} men, at {now:.0} s", post.pos.x, post.pos.y);
         }
     }
