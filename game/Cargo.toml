@@ -23,6 +23,8 @@ strum = { version = "0.28.0", features = ["derive"] }
 # The dioramas' data files (the versions Bevy already depends on).
 serde = { version = "1", features = ["derive"] }
 ron = "0.12"
+# RON laid out as the dioramas are (game/fmt.ron): the library, without its command line.
+fmtron = { version = "1.0.0-rc.2", default-features = false }
 # The ground chunks as PNGs (the version Bevy's own image loading uses).
 image = { version = "0.25", default-features = false, features = ["png"] }
 

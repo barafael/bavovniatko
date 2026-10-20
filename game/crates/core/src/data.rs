@@ -627,6 +627,20 @@ pub fn layout(d: &DioramaData) -> Layout {
 mod merge_tests {
     use super::{merge, uncomment};
 
+    /// Every diorama's files are laid out as fmtron lays them (game/fmt.ron: 120 wide): `fmtron dioramas` fixes one
+    /// that is not.
+    #[test]
+    fn the_dioramas_are_formatted() {
+        let config = fmtron::Config::default().with_max_width(120);
+        for d in [crate::diorama::Diorama::Vuhledar, crate::diorama::Diorama::Robotyne, crate::diorama::Diorama::HostomelLanding, crate::diorama::Diorama::HostomelCounter] {
+            for (name, text) in super::builtin(d) {
+                // (The library ends without a line break; the command line, which wrote the files, adds one.)
+                let formatted = fmtron::format_ron(text, &config).unwrap_or_else(|e| panic!("{name}: {e}")) + "\n";
+                assert!(formatted == *text, "{name} is not formatted: run `fmtron dioramas` in game/");
+            }
+        }
+    }
+
     #[test]
     fn comments_go_and_strings_stay() {
         let t = "( a: \"https://x.org/y\", // a comment (with a bracket)\n b: r#\"raw // kept\"#, /* c ) */ c: 1 // last\n) // after )";

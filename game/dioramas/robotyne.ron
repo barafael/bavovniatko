@@ -12,7 +12,12 @@
     summer: true,
     // Fictional, the 47th's own: the player (peregrine), the guns (thunder), the observers on the water tower (crane,
     // the old well sweep), the command post (cliff).
-    callsigns: (player: ("Sapsan", "Сапсан"), guns: ("Hrim", "Грім"), op: ("Zhuravel", "Журавель"), command: ("Skelia", "Скеля")),
+    callsigns: (
+        player: ("Sapsan", "Сапсан"),
+        guns: ("Hrim", "Грім"),
+        op: ("Zhuravel", "Журавель"),
+        command: ("Skelia", "Скеля"),
+    ),
     anchor: (lat: 47.4967, lon: 35.8968, x: 0.0, z: 0.0, m_per_lon: 75250.0),
 
     // What the day says (design/hostomel.md, phase 0): the briefing, the lines that are this place's, the debrief's close.
@@ -55,14 +60,54 @@ Press Enter."#,
         ],
         keys: "R: the same morning again, down the same tracks.     Esc: quit.",
         sources: [
-            (publisher: "Popular Mechanics", date: "9 Jun 2023", title: "Ukraine's Western armor suffered enormous losses while breaching a minefield", url: "https://www.popularmechanics.com/military/weapons/a44157100/ukraine-suffers-losses-breaching-minefield/"),
-            (publisher: "Euromaidan Press", date: "10 Jun 2023", title: "So how many Leopard tanks did Ukraine lose near Mala Tokmachka?", url: "https://euromaidanpress.com/2023/06/10/so-how-many-leopard-tanks-were-lost-in-ukraine/"),
-            (publisher: "The Guardian", date: "14 Jun 2023", title: "Ukraine's failed Mala Tokmachka assault lays bare counteroffensive challenges", url: "https://www.theguardian.com/world/2023/jun/14/ukraine-failed-assault-near-mala-tokmachka-raises-counteroffensive-challenges"),
-            (publisher: "The War Zone", date: "15 Jun 2023", title: "Ukraine's armor appears to have a Russian attack helicopter problem", url: "https://www.twz.com/ukraines-armor-appears-to-have-a-russian-attack-helicopter-problem"),
-            (publisher: "BBC News", date: "27 Jul 2023", title: "Western armour struggles against Russian defences", url: "https://www.bbc.com/news/world-europe-66306150"),
-            (publisher: "War on the Rocks", date: "4 Sep 2023", title: "Perseverance and adaptation: Ukraine's counteroffensive at three months", url: "https://warontherocks.com/2023/09/perseverance-and-adaptation-ukraines-counteroffensive-at-three-months/"),
-            (publisher: "RUSI", date: "Sep 2023", title: "Stormbreak: fighting through Russian defences in Ukraine's 2023 offensive", url: "https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf"),
-            (publisher: "Kyiv Independent", date: "26 Sep 2023", title: "Overcoming setbacks, NATO-trained brigade breaches Surovikin line", url: "https://kyivindependent.com/overcoming-setbacks-nato-trained-brigade-breaches-surovikin-line-in-zaporizhzhia-oblast/"),
+            (
+                publisher: "Popular Mechanics",
+                date: "9 Jun 2023",
+                title: "Ukraine's Western armor suffered enormous losses while breaching a minefield",
+                url: "https://www.popularmechanics.com/military/weapons/a44157100/ukraine-suffers-losses-breaching-minefield/",
+            ),
+            (
+                publisher: "Euromaidan Press",
+                date: "10 Jun 2023",
+                title: "So how many Leopard tanks did Ukraine lose near Mala Tokmachka?",
+                url: "https://euromaidanpress.com/2023/06/10/so-how-many-leopard-tanks-were-lost-in-ukraine/",
+            ),
+            (
+                publisher: "The Guardian",
+                date: "14 Jun 2023",
+                title: "Ukraine's failed Mala Tokmachka assault lays bare counteroffensive challenges",
+                url: "https://www.theguardian.com/world/2023/jun/14/ukraine-failed-assault-near-mala-tokmachka-raises-counteroffensive-challenges",
+            ),
+            (
+                publisher: "The War Zone",
+                date: "15 Jun 2023",
+                title: "Ukraine's armor appears to have a Russian attack helicopter problem",
+                url: "https://www.twz.com/ukraines-armor-appears-to-have-a-russian-attack-helicopter-problem",
+            ),
+            (
+                publisher: "BBC News",
+                date: "27 Jul 2023",
+                title: "Western armour struggles against Russian defences",
+                url: "https://www.bbc.com/news/world-europe-66306150",
+            ),
+            (
+                publisher: "War on the Rocks",
+                date: "4 Sep 2023",
+                title: "Perseverance and adaptation: Ukraine's counteroffensive at three months",
+                url: "https://warontherocks.com/2023/09/perseverance-and-adaptation-ukraines-counteroffensive-at-three-months/",
+            ),
+            (
+                publisher: "RUSI",
+                date: "Sep 2023",
+                title: "Stormbreak: fighting through Russian defences in Ukraine's 2023 offensive",
+                url: "https://static.rusi.org/Stormbreak-Special-Report-web-final_0.pdf",
+            ),
+            (
+                publisher: "Kyiv Independent",
+                date: "26 Sep 2023",
+                title: "Overcoming setbacks, NATO-trained brigade breaches Surovikin line",
+                url: "https://kyivindependent.com/overcoming-setbacks-nato-trained-brigade-breaches-surovikin-line-in-zaporizhzhia-oblast/",
+            ),
         ],
     ),
     // Where the drone starts, and what the observers fire from (their error grows with the distance from it).
@@ -78,8 +123,26 @@ Press Enter."#,
         Noise(scale: 1200.0, octaves: 3, seed: 17, amp: 4.5),
         Noise(scale: 240.0, octaves: 3, seed: 19, amp: 0.8),
         // A balka running north off the slope on the east side, and a shallower one in the west.
-        Gully(x0: 1350.0, amp: 120.0, period: 500.0, z_offset: 0.0, phase: 0.0, width: 60.0, depth: 8.0, fade: Out(-500.0, 700.0)),
-        Gully(x0: -1400.0, amp: 90.0, period: 380.0, z_offset: 0.0, phase: 1.0, width: 45.0, depth: 4.0, fade: Out(-900.0, -100.0)),
+        Gully(
+            x0: 1350.0,
+            amp: 120.0,
+            period: 500.0,
+            z_offset: 0.0,
+            phase: 0.0,
+            width: 60.0,
+            depth: 8.0,
+            fade: Out(-500.0, 700.0),
+        ),
+        Gully(
+            x0: -1400.0,
+            amp: 90.0,
+            period: 380.0,
+            z_offset: 0.0,
+            phase: 1.0,
+            width: 45.0,
+            depth: 4.0,
+            fade: Out(-900.0, -100.0),
+        ),
     ],
 
     curves: [
@@ -91,8 +154,32 @@ Press Enter."#,
         ("n08", Sampled(curve: "n08", x0: -2364.0, span: 4728.0, n: 24)),
         // The two tracks south, each along the east side of a north-south tree line: "a wide muddy track between
         // hedgerows" (Guardian). Dry on 8 June: dust, not mud.
-        ("west", Smoothed([(-470.0, -1795.0), (-492.0, -1450.0), (-503.0, -1000.0), (-498.0, -500.0), (-494.0, 0.0), (-489.0, 400.0), (-482.0, 700.0), (-470.0, 1000.0)], 3)),
-        ("east", Smoothed([(704.0, -1795.0), (690.0, -1300.0), (676.0, -800.0), (667.0, -300.0), (661.0, 200.0), (656.0, 600.0), (651.0, 720.0), (640.0, 1000.0)], 3)),
+        (
+            "west",
+            Smoothed(
+                [
+                    (-470.0, -1795.0),
+                    (-492.0, -1450.0),
+                    (-503.0, -1000.0),
+                    (-498.0, -500.0),
+                    (-494.0, 0.0),
+                    (-489.0, 400.0),
+                    (-482.0, 700.0),
+                    (-470.0, 1000.0),
+                ],
+                3,
+            ),
+        ),
+        (
+            "east",
+            Smoothed(
+                [
+                    (704.0, -1795.0), (690.0, -1300.0), (676.0, -800.0), (667.0, -300.0), (661.0, 200.0),
+                    (656.0, 600.0), (651.0, 720.0), (640.0, 1000.0),
+                ],
+                3,
+            ),
+        ),
         // Field tracks along the Ukrainian forward tree line and behind the Russian one.
         ("lateral", Points([(-2350.0, -914.0), (2350.0, -914.0)])),
         ("rear", Points([(-2350.0, 1000.0), (2350.0, 1000.0)])),
@@ -110,8 +197,24 @@ Press Enter."#,
     // and Sentinel-2 sample box around Robotyne). The second row is the Ukrainian forward tree line; the fifth, on
     // the crest, is the Russian position: wider, thicker.
     belts: [
-        Rows(rows: [(-1450.0, 13.0), (-900.0, 17.0), (-350.0, 13.0), (200.0, 17.0), (720.0, 22.0), (1270.0, 17.0)], amp: 7.0, period: 340.0, phase_step: 1.7, x0: -2264.0, span: 4528.0, n: 40),
-        Lines(lines: [((-1650.0, -1700.0), (-1662.0, 1650.0)), ((-520.0, -1700.0), (-532.0, 1650.0)), ((640.0, -1700.0), (628.0, 1650.0)), ((1780.0, -1700.0), (1768.0, 1650.0))], width: 12.0),
+        Rows(
+            rows: [(-1450.0, 13.0), (-900.0, 17.0), (-350.0, 13.0), (200.0, 17.0), (720.0, 22.0), (1270.0, 17.0)],
+            amp: 7.0,
+            period: 340.0,
+            phase_step: 1.7,
+            x0: -2264.0,
+            span: 4528.0,
+            n: 40,
+        ),
+        Lines(
+            lines: [
+                ((-1650.0, -1700.0), (-1662.0, 1650.0)),
+                ((-520.0, -1700.0), (-532.0, 1650.0)),
+                ((640.0, -1700.0), (628.0, 1650.0)),
+                ((1780.0, -1700.0), (1768.0, 1650.0)),
+            ],
+            width: 12.0,
+        ),
     ],
 
     // The columns deploy only once through the barrier, at the trench: they never got that far.
@@ -131,15 +234,23 @@ Press Enter."#,
     ua_positions: [
         // ATGM teams in the forward tree line, at the heads of the two tracks (where the belts' gaps let them see up
         // the lanes) and between, watching the crest 1.6 km away.
-        (-520.0, -896.0), (640.0, -895.0), (260.0, -897.0),
+        (-520.0, -896.0),
+        (640.0, -895.0),
+        (260.0, -897.0),
         // Riflemen covering the start line.
-        (-180.0, -895.0), (-1350.0, -896.0),
+        (-180.0, -895.0),
+        (-1350.0, -896.0),
     ],
     ru_positions: [
         // The 291st's first line: platoon positions along the crest trench, Kornet teams at the heads of the tracks,
         // looking straight down them through the belts' gaps.
-        (-1500.0, 702.0), (-930.0, 700.0), (-468.0, 702.0), (180.0, 699.0),
-        (666.0, 702.0), (1350.0, 701.0), (1900.0, 702.0),
+        (-1500.0, 702.0),
+        (-930.0, 700.0),
+        (-468.0, 702.0),
+        (180.0, 699.0),
+        (666.0, 702.0),
+        (1350.0, 701.0),
+        (1900.0, 702.0),
     ],
 
     // The map table's (design/command.md). Ours runs to the start line in the forward tree line; the grey zone is
@@ -154,8 +265,12 @@ Press Enter."#,
 
     // The Russian guns have every lane registered: where the tracks cross the minefields.
     trps: [
-        OnLine("west", (-497.0, -340.0)), OnLine("west", (-492.0, 160.0)), OnLine("west", (-488.0, 420.0)),
-        OnLine("east", (666.0, -340.0)), OnLine("east", (661.0, 160.0)), OnLine("east", (657.0, 420.0)),
+        OnLine("west", (-497.0, -340.0)),
+        OnLine("west", (-492.0, 160.0)),
+        OnLine("west", (-488.0, 420.0)),
+        OnLine("east", (666.0, -340.0)),
+        OnLine("east", (661.0, 160.0)),
+        OnLine("east", (657.0, 420.0)),
     ],
 
     // Last year's wrecks, from the Russian advance in 2022, still in the fields.
@@ -180,27 +295,94 @@ Press Enter."#,
     // Leopard 2A6s, and what it cost in allotment points. June 2023: at most about 55 guns on the whole axis (RUSI),
     // so a battery's morning for the breach; the Russian guns had 35 days of ammunition at the gun line.
     catalog: [
-        (id: "stugna", name: ("Stugna-P team", "Розрахунок «Стугни-П»"), what: Post(Some(Stugna)), cost: 8, supply: 5, available: 4),
-        (id: "javelin", name: ("Javelin team", "Розрахунок «Джавеліна»"), what: Post(Some(Javelin)), cost: 9, supply: 5, available: 3),
-        (id: "rifles", name: ("Rifle section", "Стрілецьке відділення"), what: Post(None), cost: 3, supply: 2, available: 5),
-        (id: "leo2r", name: ("Leopard 2R mine plow", "Leopard 2R з тралом"), what: Vehicle(Leo2r), cost: 12, supply: 8, available: 3),
+        (
+            id: "stugna",
+            name: ("Stugna-P team", "Розрахунок «Стугни-П»"),
+            what: Post(Some(Stugna)),
+            cost: 8,
+            supply: 5,
+            available: 4,
+        ),
+        (
+            id: "javelin",
+            name: ("Javelin team", "Розрахунок «Джавеліна»"),
+            what: Post(Some(Javelin)),
+            cost: 9,
+            supply: 5,
+            available: 3,
+        ),
+        (
+            id: "rifles",
+            name: ("Rifle section", "Стрілецьке відділення"),
+            what: Post(None),
+            cost: 3,
+            supply: 2,
+            available: 5,
+        ),
+        (
+            id: "leo2r",
+            name: ("Leopard 2R mine plow", "Leopard 2R з тралом"),
+            what: Vehicle(Leo2r),
+            cost: 12,
+            supply: 8,
+            available: 3,
+        ),
         (id: "bmr2", name: ("BMR-2 mine clearer", "БМР-2"), what: Vehicle(Bmr2), cost: 8, supply: 5, available: 2),
-        (id: "wisent", name: ("Wisent 1 engineer tank", "Wisent 1"), what: Vehicle(Wisent), cost: 10, supply: 6, available: 1),
+        (
+            id: "wisent",
+            name: ("Wisent 1 engineer tank", "Wisent 1"),
+            what: Vehicle(Wisent),
+            cost: 10,
+            supply: 6,
+            available: 1,
+        ),
         (id: "leo2a6", name: ("Leopard 2A6", "Leopard 2A6"), what: Vehicle(Leo2a6), cost: 12, supply: 8, available: 4),
-        (id: "bradley", name: ("M2A2 Bradley, with its squad", "M2A2 Bradley з десантом"), what: Vehicle(Bradley), cost: 6, supply: 4, available: 20),
-        (id: "evac", name: ("Bradley for the wounded", "Бредлі на евакуацію"), what: Evacuation, cost: 5, supply: 4, available: 6),
+        (
+            id: "bradley",
+            name: ("M2A2 Bradley, with its squad", "M2A2 Bradley з десантом"),
+            what: Vehicle(Bradley),
+            cost: 6,
+            supply: 4,
+            available: 20,
+        ),
+        (
+            id: "evac",
+            name: ("Bradley for the wounded", "Бредлі на евакуацію"),
+            what: Evacuation,
+            cost: 5,
+            supply: 4,
+            available: 6,
+        ),
     ],
     support: [
         (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 8),
         (id: "himars", name: ("HIMARS mission", "Удар HIMARS"), what: Himars, cost: 8, available: 2),
         (id: "smoke", name: ("Smoke mission", "Димова завіса"), what: Smoke, cost: 1, available: 10),
-        (id: "brigade", name: ("Brigade guns, 20 rounds", "Бригадна артилерія, 20 пострілів"), what: Brigade(20), cost: 2, available: 40),
-        (id: "mortar", name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"), what: Mortar(20), cost: 1, available: 8),
+        (
+            id: "brigade",
+            name: ("Brigade guns, 20 rounds", "Бригадна артилерія, 20 пострілів"),
+            what: Brigade(20),
+            cost: 2,
+            available: 40,
+        ),
+        (
+            id: "mortar",
+            name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"),
+            what: Mortar(20),
+            cost: 1,
+            available: 8,
+        ),
         // FPVs were still scarce on this front in June 2023 (db/research/10 §3); a few minutes in the air.
         (id: "fpv", name: ("FPV strike drone", "FPV-дрон"), what: Fpv, cost: 3, available: 3),
         // Command only, not the day's: a battery behind the start line with a few missiles, which gets a shot at a Ka-52
         // when it pops up to fire; and more reconnaissance drones for the operator.
-        (id: "ad", name: ("Air defence on call, 3 missiles", "ППО на виклик, 3 ракети"), what: AirDefence(3), cost: 10, available: 2),
+        (
+            id: "ad",
+            name: ("Air defence on call, 3 missiles", "ППО на виклик, 3 ракети"),
+            what: AirDefence(3),
+            cost: 10,
+            available: 2,
+        ),
         (id: "mavic", name: ("Two more Mavic 3s", "Ще два Mavic 3"), what: Mavic(2), cost: 3, available: 2),
     ],
     // The Record: the overwatch in the forward tree line; the breach's twenty vehicles (the script's two groups);
@@ -211,11 +393,23 @@ Press Enter."#,
         // Command's Supply: what there is at the start, and what comes up each minute of the day's clock.
         supply: (16, 2.0),
         record: [
-            (id: "stugna", at: Some(0)), (id: "stugna", at: Some(1)), (id: "javelin", at: Some(2)), (id: "rifles", at: Some(3)),
+            (id: "stugna", at: Some(0)),
+            (id: "stugna", at: Some(1)),
+            (id: "javelin", at: Some(2)),
+            (id: "rifles", at: Some(3)),
             (id: "rifles", at: Some(4)),
-            (id: "leo2r", count: 2), (id: "bmr2"), (id: "wisent"), (id: "leo2a6", count: 3), (id: "bradley", count: 13),
+            (id: "leo2r", count: 2),
+            (id: "bmr2"),
+            (id: "wisent"),
+            (id: "leo2a6", count: 3),
+            (id: "bradley", count: 13),
             (id: "evac", count: 4),
-            (id: "155", count: 4), (id: "himars"), (id: "smoke", count: 6), (id: "brigade", count: 30), (id: "mortar", count: 4), (id: "fpv"),
+            (id: "155", count: 4),
+            (id: "himars"),
+            (id: "smoke", count: 6),
+            (id: "brigade", count: 30),
+            (id: "mortar", count: 4),
+            (id: "fpv"),
         ],
     ),
     // The 291st's Kornets on the crest, covering both tracks.
@@ -234,7 +428,12 @@ Press Enter."#,
     operator: (pos: (-300.0, -960.0), found_per_hour: 0.05),
     // Their EW (db/research/11 §5): platoon jammers in the second line behind the crest, each switched on and off, the heavier emitters
     // further back felt past the jam line; and GNSS jamming lifted about a minute before each Ka-52 run.
-    ew: Some((jammers: [(-1100.0, 950.0), (-350.0, 950.0), (400.0, 950.0), (1150.0, 950.0)], radius: 1100.0, depth: 700.0, ka52_tell: true)),
+    ew: Some((
+        jammers: [(-1100.0, 950.0), (-350.0, 950.0), (400.0, 950.0), (1150.0, 950.0)],
+        radius: 1100.0,
+        depth: 700.0,
+        ka52_tell: true,
+    )),
     // A strike drone flies a few minutes.
     fpv: Some((endurance: 300.0)),
     // The Bradleys held back at the start line for the wounded, sent one at a time where the player asks.
@@ -250,10 +449,35 @@ Press Enter."#,
         (3.0, Prep(missions: 14, over: 70.0)),
         (8.0, Say("All, this is {command}. The column is late. The guns will be finished before it gets there.")),
         (85.0, Say("This is {op}. Guns are done. Nothing on the track yet.")),
-        (110.0, Column(route: 0, kinds: [Leo2r, Bmr2, Leo2a6, Bradley, Bradley, Bradley, Bradley, Bradley, Bradley], plow: true, smoke: 0, start: 350.0, label: "04:23  The first group moves off behind the plows. It is getting light.")),
-        (125.0, Say("This is {op}. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it.")),
+        (
+            110.0,
+            Column(
+                route: 0,
+                kinds: [Leo2r, Bmr2, Leo2a6, Bradley, Bradley, Bradley, Bradley, Bradley, Bradley],
+                plow: true,
+                smoke: 0,
+                start: 350.0,
+                label: "04:23  The first group moves off behind the plows. It is getting light.",
+            ),
+        ),
+        (
+            125.0,
+            Say(
+                "This is {op}. First group on the western track. Nine vehicles. The Leopard with the plow in front, the rollers behind it.",
+            ),
+        ),
         (150.0, Jam(0.4)),
-        (330.0, Column(route: 1, kinds: [Leo2r, Wisent, Leo2a6, Bradley, Bradley, Bradley, Bradley, Leo2a6, Bradley, Bradley, Bradley], plow: true, smoke: 0, start: 280.0, label: "05:29  The second group, eleven vehicles, on the eastern track")),
+        (
+            330.0,
+            Column(
+                route: 1,
+                kinds: [Leo2r, Wisent, Leo2a6, Bradley, Bradley, Bradley, Bradley, Leo2a6, Bradley, Bradley, Bradley],
+                plow: true,
+                smoke: 0,
+                start: 280.0,
+                label: "05:29  The second group, eleven vehicles, on the eastern track",
+            ),
+        ),
         (345.0, Say("This is {op}. Second group moving. Same plan, the other track.")),
         (430.0, Helicopters([(2900.0, 3000.0), (3500.0, 2650.0)])),
         (436.0, Say("Ka-52s! Two of them, south-east, low over the ridge. Too far for anything we have.")),

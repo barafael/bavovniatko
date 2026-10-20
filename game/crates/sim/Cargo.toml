@@ -11,6 +11,7 @@ bav-core.workspace = true
 bevy.workspace = true
 rand.workspace = true
 ron.workspace = true
+fmtron.workspace = true
 serde.workspace = true
 strum.workspace = true
 

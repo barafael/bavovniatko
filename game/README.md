@@ -214,6 +214,11 @@ calls a 155 mm mission on a point at game second 260 (or, without `@`, on the st
 `BAV_FPV="300:-150;724"` launches the FPV at game second 300 and flies it by itself at the enemy vehicle nearest
 that point (at height, then the dive). `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
 
+The dioramas' RON is laid out by [fmtron](https://crates.io/crates/fmtron) (`cargo install fmtron --version
+1.0.0-rc.2`), at the width in `fmt.ron`: `fmtron dioramas` formats them, `fmtron --check dioramas` says what it
+would change, and `cargo test -p bav-core` fails on a file that is not formatted. `tools/osm/osm2ron.py` runs it on
+what it generates.
+
 `cargo xtask smoke` starts the game headless once per development switch and diorama for a second of the day
 each (`devlog/smoke/`). Bevy checks a system's queries and resources only when the system first runs, so a system
 that exists only under a switch (`BAV_COLUMN`, `BAV_FIELD`, `BAV_LINEUP`, `BAV_OFF`, `BAV_PLAY=command`) is checked

@@ -1,0 +1,4 @@
+// fmtron's settings for the game's RON (the dioramas): the width their comments are written to.
+(
+    max_width: 120,
+)

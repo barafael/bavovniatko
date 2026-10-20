@@ -327,8 +327,11 @@ impl Aftermath {
         if let Some(dir) = path.parent() {
             let _ = std::fs::create_dir_all(dir);
         }
-        if let Ok(text) = ron::ser::to_string_pretty(&a, ron::ser::PrettyConfig::default()) {
-            let _ = std::fs::write(&path, text);
+        // Laid out as the game's own RON is (fmtron, game/fmt.ron's width), so the file reads like a diorama's.
+        if let Ok(text) = ron::to_string(&a)
+            && let Ok(text) = fmtron::format_ron(&text, &fmtron::Config::default().with_max_width(120))
+        {
+            let _ = std::fs::write(&path, text + "\n");
         }
     }
 }

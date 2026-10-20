@@ -12,7 +12,12 @@
     attacker: Ru,
     summer: false,
     // Fictional, as game/design/next.md decided: the player, the guns, the observers on the roof, the command post.
-    callsigns: (player: ("Maestro", "Маестро"), guns: ("Berkut", "Беркут"), op: ("Sokil", "Сокіл"), command: ("Hranit", "Граніт")),
+    callsigns: (
+        player: ("Maestro", "Маестро"),
+        guns: ("Berkut", "Беркут"),
+        op: ("Sokil", "Сокіл"),
+        command: ("Hranit", "Граніт"),
+    ),
     anchor: (lat: 47.7810, lon: 37.2461, x: -900.0, z: -1500.0, m_per_lon: 74740.0),
 
     // SRTM-like: ~190 m on the town ridge, ~142 m in the valley.
@@ -53,15 +58,60 @@ Press Enter."#,
         ],
         keys: "R: the same day again, down the same roads.     Esc: quit.",
         sources: [
-            (publisher: "Institute for the Study of War", date: "9 Feb 2023", title: "Russian Offensive Campaign Assessment", url: "https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-9-2023"),
-            (publisher: "Reuters", date: "10 Feb 2023", title: "Russia likely lost dozens of armoured vehicles near Ukraine's Vuhledar: UK", url: "https://www.reuters.com/world/europe/russia-likely-lost-dozens-tanks-failed-attack-vuhledar-uk-2023-02-10/"),
-            (publisher: "Politico Europe", date: "12 Feb 2023", title: "Russia may have lost an entire elite brigade near a Donetsk coal-mining town", url: "https://www.politico.eu/article/russia-may-have-lost-an-entire-elite-brigade-near-a-coal-mining-town-in-donbas-ukraine-says/"),
-            (publisher: "CNN", date: "13 Feb 2023", title: "'Like turkeys at a shooting range': mauling of Russian forces in Donetsk hotspot", url: "https://www.cnn.com/2023/02/13/europe/russia-ukraine-vuhledar-donetsk-fiasco-intl/index.html"),
-            (publisher: "Kyiv Post", date: "14 Feb 2023", title: "Skilled Vuhledar defenses halt major Kremlin attack", url: "https://www.kyivpost.com/post/12165"),
-            (publisher: "RFE/RL", date: "17 Feb 2023", title: "What happened in Vuhledar? A battle points to major Russian military problems", url: "https://www.rferl.org/a/ukraine-russia-battle-vuhledar/32276547.html"),
-            (publisher: "Novaya Gazeta Europe", date: "16 Mar 2023", title: "UK intelligence on Ukraine's use of RAAM anti-tank mines at Vuhledar", url: "https://novayagazeta.eu/articles/2023/03/16/uk-intel-russia-suffered-heavy-losses-at-vuhledar-due-to-ukraines-use-of-raam-anti-tank-mines-en-news"),
-            (publisher: "Butusov Plus", date: "29 Dec 2023", title: "Битва за Вугледар. Розгром батальйону «Алга» (documentary)", url: "https://www.youtube.com/watch?v=xjx2pRiGidk"),
-            (publisher: "RUSI", date: "Jul 2024", title: "Preliminary lessons from Ukraine's offensive operations, 2022–23", url: "https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf"),
+            (
+                publisher: "Institute for the Study of War",
+                date: "9 Feb 2023",
+                title: "Russian Offensive Campaign Assessment",
+                url: "https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-february-9-2023",
+            ),
+            (
+                publisher: "Reuters",
+                date: "10 Feb 2023",
+                title: "Russia likely lost dozens of armoured vehicles near Ukraine's Vuhledar: UK",
+                url: "https://www.reuters.com/world/europe/russia-likely-lost-dozens-tanks-failed-attack-vuhledar-uk-2023-02-10/",
+            ),
+            (
+                publisher: "Politico Europe",
+                date: "12 Feb 2023",
+                title: "Russia may have lost an entire elite brigade near a Donetsk coal-mining town",
+                url: "https://www.politico.eu/article/russia-may-have-lost-an-entire-elite-brigade-near-a-coal-mining-town-in-donbas-ukraine-says/",
+            ),
+            (
+                publisher: "CNN",
+                date: "13 Feb 2023",
+                title: "'Like turkeys at a shooting range': mauling of Russian forces in Donetsk hotspot",
+                url: "https://www.cnn.com/2023/02/13/europe/russia-ukraine-vuhledar-donetsk-fiasco-intl/index.html",
+            ),
+            (
+                publisher: "Kyiv Post",
+                date: "14 Feb 2023",
+                title: "Skilled Vuhledar defenses halt major Kremlin attack",
+                url: "https://www.kyivpost.com/post/12165",
+            ),
+            (
+                publisher: "RFE/RL",
+                date: "17 Feb 2023",
+                title: "What happened in Vuhledar? A battle points to major Russian military problems",
+                url: "https://www.rferl.org/a/ukraine-russia-battle-vuhledar/32276547.html",
+            ),
+            (
+                publisher: "Novaya Gazeta Europe",
+                date: "16 Mar 2023",
+                title: "UK intelligence on Ukraine's use of RAAM anti-tank mines at Vuhledar",
+                url: "https://novayagazeta.eu/articles/2023/03/16/uk-intel-russia-suffered-heavy-losses-at-vuhledar-due-to-ukraines-use-of-raam-anti-tank-mines-en-news",
+            ),
+            (
+                publisher: "Butusov Plus",
+                date: "29 Dec 2023",
+                title: "Битва за Вугледар. Розгром батальйону «Алга» (documentary)",
+                url: "https://www.youtube.com/watch?v=xjx2pRiGidk",
+            ),
+            (
+                publisher: "RUSI",
+                date: "Jul 2024",
+                title: "Preliminary lessons from Ukraine's offensive operations, 2022–23",
+                url: "https://static.rusi.org/lessons-learned-ukraine-offensive-2022-23.pdf",
+            ),
         ],
     ),
     // Where the drone starts, and what the observers fire from (their error grows with the distance from it).
@@ -77,23 +127,69 @@ Press Enter."#,
         // The river valley.
         Valley(curve: "river", profile: [(7.0, 85.0), (3.0, 320.0)]),
         // A balka (gully) running down from the middle of the field to the river.
-        Gully(x0: 260.0, amp: 140.0, period: 600.0, z_offset: -200.0, phase: 0.0, width: 45.0, depth: 5.5, fade: In(-350.0, 400.0)),
+        Gully(
+            x0: 260.0,
+            amp: 140.0,
+            period: 600.0,
+            z_offset: -200.0,
+            phase: 0.0,
+            width: 45.0,
+            depth: 5.5,
+            fade: In(-350.0, 400.0),
+        ),
     ],
 
-    curves: [
-        ("river", (base: 1480.0, waves: [(55.0, 410.0, 0.0), (28.0, 160.0, 1.3)])),
-    ],
+    curves: [("river", (base: 1480.0, waves: [(55.0, 410.0, 0.0), (28.0, 160.0, 1.3)]))],
 
     lines: [
         ("river", Sampled(curve: "river", x0: -2354.0, span: 4708.0, n: 96)),
         // The T-0509 runs east-west just south of the town.
-        ("t0509", Smoothed([(-2400.0, -1040.0), (-1200.0, -1010.0), (0.0, -990.0), (1100.0, -1030.0), (2400.0, -1120.0)], 3)),
+        (
+            "t0509",
+            Smoothed([(-2400.0, -1040.0), (-1200.0, -1010.0), (0.0, -990.0), (1100.0, -1030.0), (2400.0, -1120.0)], 3),
+        ),
         // Route A, "the dacha road": from Mykilske north-west up to the dachas south-east of the town.
-        ("road_a", Smoothed([(2450.0, 1350.0), (2050.0, 1180.0), (1650.0, 820.0), (1350.0, 420.0), (1150.0, -40.0), (960.0, -420.0), (820.0, -780.0), (760.0, -1010.0)], 3)),
+        (
+            "road_a",
+            Smoothed(
+                [
+                    (2450.0, 1350.0), (2050.0, 1180.0), (1650.0, 820.0), (1350.0, 420.0), (1150.0, -40.0),
+                    (960.0, -420.0), (820.0, -780.0), (760.0, -1010.0),
+                ],
+                3,
+            ),
+        ),
         // Route B: from Pavlivka north across the Kashlahach, up the slope to the town's southern blocks.
-        ("road_b", Smoothed([(-1500.0, 1900.0), (-1350.0, 1480.0), (-1250.0, 1000.0), (-1020.0, 520.0), (-880.0, 20.0), (-760.0, -480.0), (-650.0, -1000.0)], 3)),
+        (
+            "road_b",
+            Smoothed(
+                [
+                    (-1500.0, 1900.0),
+                    (-1350.0, 1480.0),
+                    (-1250.0, 1000.0),
+                    (-1020.0, 520.0),
+                    (-880.0, 20.0),
+                    (-760.0, -480.0),
+                    (-650.0, -1000.0),
+                ],
+                3,
+            ),
+        ),
         // The lateral along the river, Pavlivka to Mykilske (Russian since November).
-        ("lateral", Smoothed([(-2400.0, 1600.0), (-1350.0, 1560.0), (-300.0, 1600.0), (900.0, 1560.0), (2000.0, 1420.0), (2450.0, 1380.0)], 2)),
+        (
+            "lateral",
+            Smoothed(
+                [
+                    (-2400.0, 1600.0),
+                    (-1350.0, 1560.0),
+                    (-300.0, 1600.0),
+                    (900.0, 1560.0),
+                    (2000.0, 1420.0),
+                    (2450.0, 1380.0),
+                ],
+                2,
+            ),
+        ),
         // Field tracks along the belts.
         ("track_1", Points([(-1700.0, -110.0), (1900.0, -110.0)])),
         ("track_2", Points([(-500.0, -1000.0), (-500.0, 1560.0)])),
@@ -110,8 +206,24 @@ Press Enter."#,
 
     // Shelterbelts: field blocks about 0.55 × 1.2 km (db/research/06 §8). The first is the 72nd's forward tree line.
     belts: [
-        Rows(rows: [(-660.0, 14.0), (-110.0, 18.0), (440.0, 14.0), (990.0, 18.0)], amp: 6.0, period: 300.0, phase_step: 1.0, x0: -2264.0, span: 4528.0, n: 40),
-        Lines(lines: [((-1700.0, -950.0), (-1685.0, 1380.0)), ((-500.0, -950.0), (-485.0, 1380.0)), ((700.0, -950.0), (715.0, 1380.0)), ((1900.0, -950.0), (1915.0, 1380.0))], width: 12.0),
+        Rows(
+            rows: [(-660.0, 14.0), (-110.0, 18.0), (440.0, 14.0), (990.0, 18.0)],
+            amp: 6.0,
+            period: 300.0,
+            phase_step: 1.0,
+            x0: -2264.0,
+            span: 4528.0,
+            n: 40,
+        ),
+        Lines(
+            lines: [
+                ((-1700.0, -950.0), (-1685.0, 1380.0)),
+                ((-500.0, -950.0), (-485.0, 1380.0)),
+                ((700.0, -950.0), (715.0, 1380.0)),
+                ((1900.0, -950.0), (1915.0, 1380.0)),
+            ],
+            width: 12.0,
+        ),
     ],
 
     routes: [
@@ -141,11 +253,17 @@ Press Enter."#,
 
     ua_positions: [
         // The first belt: ATGM teams, each with a clear line down its road (none behind a north-south belt).
-        (-930.0, -655.0), (-560.0, -660.0), (780.0, -664.0), (930.0, -658.0),
+        (-930.0, -655.0),
+        (-560.0, -660.0),
+        (780.0, -664.0),
+        (930.0, -658.0),
         // flanks
-        (-1500.0, -665.0), (1350.0, -662.0),
+        (-1500.0, -665.0),
+        (1350.0, -662.0),
         // town edge and dachas
-        (-760.0, -1060.0), (250.0, -1100.0), (820.0, -1060.0),
+        (-760.0, -1060.0),
+        (250.0, -1100.0),
+        (820.0, -1060.0),
     ],
 
     // The map table's (design/command.md). Ours is the town and the first tree line: nothing of the 72nd is placed
@@ -159,8 +277,12 @@ Press Enter."#,
 
     // Pre-registered artillery target points on the approach roads.
     trps: [
-        OnLine("road_a", (1350.0, 420.0)), OnLine("road_a", (1150.0, -110.0)), OnLine("road_a", (900.0, -560.0)),
-        OnLine("road_b", (-1020.0, 440.0)), OnLine("road_b", (-880.0, -110.0)), OnLine("road_b", (-740.0, -560.0)),
+        OnLine("road_a", (1350.0, 420.0)),
+        OnLine("road_a", (1150.0, -110.0)),
+        OnLine("road_a", (900.0, -560.0)),
+        OnLine("road_b", (-1020.0, 440.0)),
+        OnLine("road_b", (-880.0, -110.0)),
+        OnLine("road_b", (-740.0, -560.0)),
     ],
 
     // Where the January assaults left wrecks: beside the roads, and two out in the fields.
@@ -188,9 +310,30 @@ Press Enter."#,
     // with what it cost to have it in allotment points. Zaluzhnyi: artillery ammunition is the binding constraint.
     // About 6,000 RAAM shells reached Ukraine in late 2022, but a battery on one morning gets a handful of missions.
     catalog: [
-        (id: "stugna", name: ("Stugna-P team", "Розрахунок «Стугни-П»"), what: Post(Some(Stugna)), cost: 8, supply: 5, available: 5),
-        (id: "javelin", name: ("Javelin team", "Розрахунок «Джавеліна»"), what: Post(Some(Javelin)), cost: 9, supply: 5, available: 4),
-        (id: "rifles", name: ("Rifle section", "Стрілецьке відділення"), what: Post(None), cost: 3, supply: 2, available: 9),
+        (
+            id: "stugna",
+            name: ("Stugna-P team", "Розрахунок «Стугни-П»"),
+            what: Post(Some(Stugna)),
+            cost: 8,
+            supply: 5,
+            available: 5,
+        ),
+        (
+            id: "javelin",
+            name: ("Javelin team", "Розрахунок «Джавеліна»"),
+            what: Post(Some(Javelin)),
+            cost: 9,
+            supply: 5,
+            available: 4,
+        ),
+        (
+            id: "rifles",
+            name: ("Rifle section", "Стрілецьке відділення"),
+            what: Post(None),
+            cost: 3,
+            supply: 2,
+            available: 9,
+        ),
         // The Wanderer (NYT): a T-64 in a hide at the town edge, firing on coordinates from a drone pilot.
         (id: "t64", name: ("T-64BV in a hide", "Т-64БВ у капонірі"), what: Hide, cost: 10, supply: 6, available: 2),
         // The 72nd's own carriers, for Command's Supply: a Column of them brings a team up to a position by day.
@@ -201,8 +344,20 @@ Press Enter."#,
         (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 10),
         (id: "raam", name: ("RAAM mission", "Дистанційне мінування (RAAM)"), what: Raam, cost: 3, available: 6),
         (id: "himars", name: ("HIMARS mission", "Удар HIMARS"), what: Himars, cost: 8, available: 3),
-        (id: "brigade", name: ("Brigade guns, 20 rounds", "Бригадна артилерія, 20 пострілів"), what: Brigade(20), cost: 2, available: 10),
-        (id: "mortar", name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"), what: Mortar(20), cost: 1, available: 10),
+        (
+            id: "brigade",
+            name: ("Brigade guns, 20 rounds", "Бригадна артилерія, 20 пострілів"),
+            what: Brigade(20),
+            cost: 2,
+            available: 10,
+        ),
+        (
+            id: "mortar",
+            name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"),
+            what: Mortar(20),
+            cost: 1,
+            available: 10,
+        ),
         // Command only, not the day's: more reconnaissance drones for the operator.
         (id: "mavic", name: ("Two more Mavic 3s", "Ще два Mavic 3"), what: Mavic(2), cost: 3, available: 2),
     ],
@@ -214,11 +369,21 @@ Press Enter."#,
         // Command's Supply: what there is at the start, and what comes up the road each minute of the day's clock.
         supply: (12, 2.0),
         record: [
-            (id: "stugna", at: Some(0)), (id: "javelin", at: Some(1)), (id: "javelin", at: Some(2)), (id: "stugna", at: Some(3)),
-            (id: "stugna", at: Some(4)), (id: "javelin", at: Some(5)), (id: "rifles", at: Some(6)), (id: "rifles", at: Some(7)),
+            (id: "stugna", at: Some(0)),
+            (id: "javelin", at: Some(1)),
+            (id: "javelin", at: Some(2)),
+            (id: "stugna", at: Some(3)),
+            (id: "stugna", at: Some(4)),
+            (id: "javelin", at: Some(5)),
+            (id: "rifles", at: Some(6)),
+            (id: "rifles", at: Some(7)),
             (id: "rifles", at: Some(8)),
             (id: "t64", at: Some(9)),
-            (id: "155", count: 6), (id: "raam", count: 4), (id: "himars", count: 2), (id: "brigade", count: 7), (id: "mortar", count: 8),
+            (id: "155", count: 6),
+            (id: "raam", count: 4),
+            (id: "himars", count: 2),
+            (id: "brigade", count: 7),
+            (id: "mortar", count: 8),
         ],
     ),
     // Hides on the town's northern edge for a tank firing on coordinates: the Wanderer's, and one west of it,
@@ -245,19 +410,62 @@ Press Enter."#,
     script: [
         (1.0, Say("Bird up. Visibility good, frost. Watch the dacha road and the Pavlivka road.")),
         (6.0, Say("All, this is {command}. They're coming again today. Leave the roads clear. Let them in.")),
-        (14.0, Column(route: 0, kinds: [T80, T80, Bmp2, Bmp2, T80, Bmp2, Bmp1, Mtlb, Bmp2, T80, Bmp1, Bmp2], plow: true, start: 1150.0, smoke: 3, label: "06:45  The 155th Naval Infantry attacks down the dacha road")),
+        (
+            14.0,
+            Column(
+                route: 0,
+                kinds: [T80, T80, Bmp2, Bmp2, T80, Bmp2, Bmp1, Mtlb, Bmp2, T80, Bmp1, Bmp2],
+                plow: true,
+                start: 1150.0,
+                smoke: 3,
+                label: "06:45  The 155th Naval Infantry attacks down the dacha road",
+            ),
+        ),
         (20.0, Jam(0.5)),
         (22.0, Say("Bird: column on the dacha road. Twelve units, tanks leading, a plow in front. Smoke.")),
         (150.0, Tos(label: "TOS-1A on the town")),
-        (330.0, Column(route: 0, kinds: [T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb], plow: false, start: 500.0, smoke: 1, label: "08:40  A second column. The same road.")),
+        (
+            330.0,
+            Column(
+                route: 0,
+                kinds: [T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb],
+                plow: false,
+                start: 500.0,
+                smoke: 1,
+                label: "08:40  A second column. The same road.",
+            ),
+        ),
         (345.0, Say("This is {op}. Second column. Same route. Exactly the same route.")),
-        (600.0, Column(route: 1, kinds: [T72, Bmp1, Bmp1, Bmp2, Mtlb, Bmp1, T72, Bmp1], plow: true, start: 650.0, smoke: 2, label: "10:20  The Alga battalion, from Pavlivka")),
+        (
+            600.0,
+            Column(
+                route: 1,
+                kinds: [T72, Bmp1, Bmp1, Bmp2, Mtlb, Bmp1, T72, Bmp1],
+                plow: true,
+                start: 650.0,
+                smoke: 2,
+                label: "10:20  The Alga battalion, from Pavlivka",
+            ),
+        ),
         (610.0, Jam(0.6)),
         (615.0, Say("Bird: Pavlivka road now. Volunteers by the look of it. BMP-1s.")),
         (700.0, Tos(label: "TOS-1A again")),
-        (900.0, Column(route: 0, kinds: [T80, Bmp2, Bmp2, Bmp2, T80, Bmp1], plow: false, start: 550.0, smoke: 0, label: "12:00  Again, the dacha road")),
+        (
+            900.0,
+            Column(
+                route: 0,
+                kinds: [T80, Bmp2, Bmp2, Bmp2, T80, Bmp1],
+                plow: false,
+                start: 550.0,
+                smoke: 0,
+                label: "12:00  Again, the dacha road",
+            ),
+        ),
         (915.0, Say("This is {op}. They're driving past their own wrecks from this morning. Same line.")),
-        (1110.0, Infantry(route: 1, groups: 6, size: 5, every: 14.0, label: "13:20  No more armour. Infantry, on foot.")),
+        (
+            1110.0,
+            Infantry(route: 1, groups: 6, size: 5, every: 14.0, label: "13:20  No more armour. Infantry, on foot."),
+        ),
         (1125.0, Infantry(route: 0, groups: 6, size: 5, every: 14.0)),
         (1140.0, Say("This is {op}. Groups of five. Walking across the open field. Towards the tree line.")),
         (1230.0, Tos(label: "TOS-1A")),

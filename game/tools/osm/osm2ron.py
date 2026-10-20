@@ -3,7 +3,7 @@
 the box, as RON fields for `bav_core::data` (design/hostomel.md, phase 1).
 
     tools/osm/fetch.sh hostomel              # the Overpass extract, into tools/osm/data/hostomel.json
-    python3 tools/osm/osm2ron.py hostomel    # writes dioramas/hostomel/osm.ron
+    python3 tools/osm/osm2ron.py hostomel    # writes dioramas/hostomel/osm.ron, formatted with fmtron
 
 The data is © OpenStreetMap contributors (ODbL); the extract and what is made from it carry that credit
 (dioramas/hostomel/CREDITS.md). OSM is the map as it is now: what was built after the day (housing estates
@@ -14,6 +14,8 @@ The box is the game's fixed 4608 x 3584 m (`geo::HALF_X`, `geo::HALF_Z`), +x eas
 """
 import json
 import math
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -125,6 +127,12 @@ def main(place: str) -> None:
     dest = GAME / "dioramas" / place / "osm.ron"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text("\n".join(out) + "\n")
+    # Laid out as every RON file of the game is (fmtron, with game/fmt.ron's width).
+    fmtron = shutil.which("fmtron")
+    if fmtron:
+        subprocess.run([fmtron, str(dest)], check=True)
+    else:
+        print("fmtron not found (cargo install fmtron --version 1.0.0-rc.2): osm.ron left unformatted", file=sys.stderr)
     print(f"{dest}: {len(lines)} lines, {len(roads)} roads, {len(rails)} rails, {len(belts)} belt segments, {len(areas)} areas, {len(buildings)} buildings")
 
 
