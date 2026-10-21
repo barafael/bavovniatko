@@ -63,7 +63,7 @@ fn main() {
         .add_observer(units::on_wrecked)
         .add_systems(Update, drone_view_audio.in_set(Step::Camera))
         .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin, settings::SettingsPlugin, bav_sim::evac::EvacPlugin, bav_sim::drones::DronesPlugin, bav_sim::columns::ColumnsPlugin, bav_sim::ew::EwPlugin, bav_look::world::JammersLookPlugin, bav_sim::orders::OrdersPlugin, bav_sim::supply::SupplyPlugin, orders::OrdersScreenPlugin, table::TablePlugin))
-        .add_plugins((bav_sim::staff::StaffPlugin, bav_sim::air::AirPlugin, bav_sim::manpads::ManpadsPlugin, bav_sim::fight::FightPlugin, bav_look::air::AirLookPlugin, bav_look::thermal::ThermalPlugin))
+        .add_plugins((bav_sim::staff::StaffPlugin, bav_sim::air::AirPlugin, bav_sim::manpads::ManpadsPlugin, bav_sim::bradley::BradleyPlugin, bav_sim::fight::FightPlugin, bav_look::air::AirLookPlugin, bav_look::thermal::ThermalPlugin))
         .run();
 }
 

@@ -41,9 +41,10 @@ Since four this morning their guns have not stopped. They will come at first lig
 The day will run whether or not you do anything. What you do matters at the margin.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
-Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.  4: an FPV.
+Left click: 155 mm fire mission (4 rounds).  Shift+click: cluster shells.  Ctrl+click: HIMARS.  4: an FPV.
 Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / the observers on the heap.  I: thermal.  P: pause.  [ ]: time.
 M: move the drone team when they find you.  3: into a position with an ATGM team.  Right button: the sight.  Left click: launch.
+6: into a Bradley's gunner's seat (again for the next).  Right button: the sight.  Left click: a burst.  X: AP / HE.  T: a TOW.
 
 Press Enter."#,
         op_label: "OBSERVERS, THE HEAP'S FIRST TERRACE (СПОСТЕРІГАЧІ, ПЕРША ТЕРАСА ТЕРИКОНУ)",
@@ -102,6 +103,9 @@ Press Enter."#,
         ],
     ),
 
+    // The war's first mechanised assault on the shoulder: no wrecks in these fields yet.
+    old_wrecks: [],
+
     // ---- The battle's part (bav_sim::data) ----
     // The 47th's and the 110th's side as Units and Support: Stugnas and Javelins in the positions, a Leopard 2A6
     // in a hide, and the 55th's guns with a working day's rounds; cluster shells come in phase 5, the Bradleys as
@@ -132,12 +136,29 @@ Press Enter."#,
             available: 9,
         ),
         (id: "tank", name: ("Tank in a hide", "Танк у капонірі"), what: Hide, cost: 10, supply: 6, available: 3),
+        // The 47th's Bradleys hull-down at the hides, a gunner's seat the player can take (key 6).
+        (
+            id: "m2",
+            name: ("Bradley in a hide", "«Бредлі» у капонірі"),
+            what: Dug(Bradley),
+            cost: 9,
+            supply: 6,
+            available: 4,
+        ),
         (id: "bradley", name: ("Bradley", "«Бредлі»"), what: Vehicle(Bradley), cost: 7, supply: 6, available: 6),
         (id: "mtlb", name: ("MT-LB", "МТ-ЛБ"), what: Vehicle(Mtlb), cost: 4, supply: 4, available: 3),
     ],
     support: [
         (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 10),
         (id: "raam", name: ("RAAM mission", "Дистанційне мінування (RAAM)"), what: Raam, cost: 3, available: 6),
+        // Cluster shells: the 55th's DPICM, two to a mission, for the infantry in the open (c11 §5).
+        (
+            id: "dpicm",
+            name: ("Cluster mission, 2 shells", "Касетні, 2 снаряди"),
+            what: Cluster(1),
+            cost: 2,
+            available: 8,
+        ),
         (id: "himars", name: ("HIMARS mission", "Удар HIMARS"), what: Himars, cost: 8, available: 2),
         (
             id: "brigade",
@@ -157,7 +178,8 @@ Press Enter."#,
         (id: "mavic", name: ("Two more Mavic 3s", "Ще два Mavic 3"), what: Mavic(2), cost: 3, available: 2),
     ],
     // The Record: the ATGM teams at the village's edge and along the railway, riflemen on the heap and at the
-    // plant's corner, a tank in the village, 96 rounds, three RAAM missions, one HIMARS, a dozen FPVs.
+    // plant's corner, two Bradleys and a tank in the village's hides, 96 rounds, three RAAM missions, four cluster, one
+    // HIMARS, a dozen FPVs.
     allotment: (
         points: 180,
         supply: (12, 2.0),
@@ -171,9 +193,12 @@ Press Enter."#,
             (id: "rifles", at: Some(6)),
             (id: "rifles", at: Some(7)),
             (id: "rifles", at: Some(8)),
-            (id: "tank", at: Some(9)),
+            (id: "m2", at: Some(9)),
+            (id: "m2", at: Some(10)),
+            (id: "tank", at: Some(11)),
             (id: "155", count: 6),
             (id: "raam", count: 3),
+            (id: "dpicm", count: 4),
             (id: "himars", count: 1),
             (id: "brigade", count: 6),
             (id: "mortar", count: 6),
@@ -182,7 +207,8 @@ Press Enter."#,
     ),
     old_wreck_kinds: [],
     space_key: Atgm,
-    shift_fire: Raam,
+    // Shift+click: cluster on the infantry. (RAAM stays on the stock for Command's table.)
+    shift_fire: Cluster,
     // Their guns work the village, the railway and the heap all day, and the ground behind.
     ru_guns: Some(Posts(x: (-1800.0, 1800.0), band: (-1300.0, -600.0))),
     registered_fire: (50.0, 6),
@@ -191,7 +217,7 @@ Press Enter."#,
     // FPVs by the day (phase 4 makes them a stock; one at a time until then), five minutes in the air.
     fpv: Some((endurance: 300.0)),
     // Command's Enemy staff: Lancets for the Bradleys and the Leopard; Orlans over the village every few minutes.
-    staff: (lancets: 3, orlan: (150.0, 300.0)),
+    staff: (lancets: 3, orlan: (150.0, 300.0), kabs: 5, kab_every: (240.0, 480.0)),
     // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
     // February, but still.
     operator: (pos: (900.0, -1400.0), found_per_hour: 0.2),
@@ -207,6 +233,38 @@ Press Enter."#,
         ),
         (20.0, Prep(missions: 10, over: 220.0)),
         (120.0, Tos(label: "TOS-1A on the plant's edge")),
+        // The morning's air strikes (c11 §2: "massed air strikes"): KABs from Su-34s far back, on the village and
+        // on the heap, a minute in the air each.
+        (
+            180.0,
+            Bombs(
+                from: (1150.0, -820.0),
+                to: (1000.0, -700.0),
+                n: 2,
+                label: "06:25  KABs on Stepove",
+                say: "Su-34s, far back. Bombs coming, on the village. Get down.",
+            ),
+        ),
+        (
+            560.0,
+            Bombs(
+                from: (-1050.0, 520.0),
+                to: (-950.0, 440.0),
+                n: 2,
+                label: "",
+                say: "KABs on the heap!",
+            ),
+        ),
+        (
+            1020.0,
+            Bombs(
+                from: (-1250.0, -980.0),
+                to: (-1150.0, -900.0),
+                n: 2,
+                label: "",
+                say: "Su-34s again. On the plant this time.",
+            ),
+        ),
         (
             230.0,
             Column(

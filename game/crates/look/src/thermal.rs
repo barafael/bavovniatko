@@ -44,10 +44,10 @@ fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials
 /// I (infrared): the drone's camera between its visible and its thermal channel. (H is the drone's: it takes it back
 /// from return-to-home.)
 fn toggle(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>) {
-    if view.mode == Mode::Drone && keys.just_pressed(KeyCode::KeyI) {
+    if matches!(view.mode, Mode::Drone | Mode::Bradley) && keys.just_pressed(KeyCode::KeyI) {
         view.thermal = !view.thermal;
     }
-    if crate::dev::dev().thermal && view.mode == Mode::Drone {
+    if crate::dev::dev().thermal && matches!(view.mode, Mode::Drone | Mode::Bradley) {
         view.thermal = true;
     }
 }

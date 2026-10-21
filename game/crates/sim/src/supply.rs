@@ -95,6 +95,7 @@ fn placed(what: UnitKind) -> u32 {
         UnitKind::Vehicle(k) => a.vehicles.get(&k).copied().unwrap_or(0),
         UnitKind::Post(w) => a.posts.iter().filter(|(_, pw)| *pw == w).count() as u32,
         UnitKind::Hide => a.hides.len() as u32,
+        UnitKind::Dug(k) => a.dug.iter().filter(|(_, _, dk)| *dk == k).count() as u32,
         UnitKind::Evacuation => a.evacuation,
         UnitKind::Air(w) => a.air.iter().filter(|(_, aw)| *aw == w).count() as u32,
     }

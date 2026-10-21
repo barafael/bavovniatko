@@ -981,6 +981,9 @@ pub enum Cause {
     CookOff,
     /// The player's FPV going in.
     Fpv,
+    /// A Bradley's 25 mm: AP that goes through a BMP and bounces off a tank's front, where it takes the optics, a
+    /// track or the engine instead (design/avdiivka.md, phase 2).
+    Autocannon,
 }
 
 /// An explosion that hurts whatever is near it.
@@ -1499,6 +1502,12 @@ fn steer_and_move(
         d.yaw = wrap(d.yaw + d.yaw_rate * dt);
         // A turn scrubs speed off: one track brakes, both slide.
         want_speed *= 1.0 - 0.5 * (d.yaw_rate.abs() / v.kind.pivot_rate()).min(1.0);
+        // A spoil heap's face is no ground for a hull: it stops at the foot and fires from there (the fields
+        // and the belts' swells are far below the grade that slows one).
+        let grade = geo::slope(me + d.travel() * 8.0);
+        if grade > 0.12 {
+            want_speed *= (1.0 - (grade - 0.12) / 0.12).clamp(0.0, 1.0);
+        }
 
         // Speed, with the weight in it: it pulls away slowly, slower in the field and near its top speed, and
         // brakes at about 1.6 m/s² (hard only when something is right in front of it).
@@ -2028,6 +2037,7 @@ pub fn on_wrecked(
             Cause::TankGun => "a tank gun",
             Cause::Atgm => "an ATGM",
             Cause::Fpv => "an FPV",
+            Cause::Autocannon => "25 mm fire",
         };
         log.open(now, weapon, "", ev.vehicle, &v, rescue, format!("destroyed{}", crate::hits::fate(ev.how)));
     }
@@ -2327,8 +2337,36 @@ fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<
         if !v.state.alive() {
             continue;
         }
+        if h.cause == Cause::Autocannon && v.kind.is_tank() {
+            // A burst of 25 mm on a tank: it does not get through the armour, but a tank is more than its armour.
+            // The Stepove gunner went for the sights, then the engine deck (v02 §5, §7).
+            let roll: f64 = rng.0.random();
+            if roll < 0.35 {
+                log.open(now, h.weapon, h.from, h.target, &v, rescue, "blinded: the sights gone, driving blind, the crew getting out");
+                let coasting = v.immobilise(0.0, 0.0);
+                let secs = rng.0.random_range(20.0..40.0);
+                v.plan = CrewPlan::Ghost { secs, at: secs + rng.0.random_range(5.0..15.0) };
+                v.timer = 0.0;
+                v.panic = 1.0;
+                commands.entity(h.target).insert(coasting);
+            } else if roll < 0.60 {
+                log.open(now, h.weapon, h.from, h.target, &v, rescue, "a track off: stopped");
+                let coasting = v.immobilise(2.5, rng.0.random_range(-0.4..0.4));
+                commands.entity(h.target).insert(coasting);
+                v.crew_plan(&mut rng.0, h.cause);
+            } else if roll < 0.72 {
+                log.open(now, h.weapon, h.from, h.target, &v, rescue, "into the engine deck: on fire, crawling, crew getting out");
+                let coasting = v.immobilise(rng.0.random_range(0.6..1.2), rng.0.random_range(-0.2..0.2));
+                v.crew_plan(&mut rng.0, h.cause);
+                commands.entity(h.target).insert((coasting, Fire::deck(&mut rng.0, h.cause, v.kind), Emitter::new(EmitterKind::EngineSmoke, 4.0, 400.0, Vec3::new(0.0, 1.5, 2.2))));
+            } else {
+                log.open(now, h.weapon, h.from, h.target, &v, rescue, "sparks off the turret: nothing");
+                v.panic = (v.panic + 0.4).min(1.0);
+            }
+            continue;
+        }
         let p_kill = if h.top { (v.kind.hit_kill() + 0.2).min(0.95) } else { v.kind.hit_kill() };
-        let how = format!("{}{}", if h.top { "from above: " } else { "" }, if v.kind.era() && h.cause != Cause::TankGun { "reactive armour went; " } else { "" });
+        let how = format!("{}{}", if h.top { "from above: " } else { "" }, if v.kind.era() && !matches!(h.cause, Cause::TankGun | Cause::Autocannon) { "reactive armour went; " } else { "" });
         if rng.0.random_bool(p_kill) {
             if rng.0.random_bool(0.2) {
                 log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}into the engine: on fire, crawling, crew getting out"));
@@ -2585,7 +2623,10 @@ fn move_soldiers(
         if speed > 0.0 {
             let d = (target - p).normalize_or_zero();
             let wob = Vec2::new((s.timer * 0.7 + s.phase).sin(), (s.timer * 0.5 + s.phase).cos()) * 0.25;
-            let step = (d + wob).normalize_or_zero() * speed * dt;
+            // Climbing a spoil heap's face is a scramble on loose black slag: a third of a walking pace at best.
+            let grade = geo::slope(p);
+            let climb = if grade > 0.1 { (1.0 - (grade - 0.1) * 2.5).clamp(0.3, 1.0) } else { 1.0 };
+            let step = (d + wob).normalize_or_zero() * speed * climb * dt;
             let np = p + step;
             tf.translation = geo::ground(np);
             tf.rotation = Quat::from_rotation_y(vehicle_yaw(step));

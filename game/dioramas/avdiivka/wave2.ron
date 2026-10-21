@@ -43,9 +43,10 @@ again, with more smoke and fewer vehicles to a group, and they mean to take the 
 The day will run whether or not you do anything. What you do matters at the margin.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
-Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.  4: an FPV.
+Left click: 155 mm fire mission (4 rounds).  Shift+click: cluster shells.  Ctrl+click: HIMARS.  4: an FPV.
 Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / the observers on the heap.  I: thermal.  P: pause.  [ ]: time.
 M: move the drone team when they find you.  3: into a position with an ATGM team.  Right button: the sight.  Left click: launch.
+6: into a Bradley's gunner's seat (again for the next).  Right button: the sight.  Left click: a burst.  X: AP / HE.  T: a TOW.
 
 Press Enter."#,
         op_label: "OBSERVERS, THE HEAP'S FIRST TERRACE (СПОСТЕРІГАЧІ, ПЕРША ТЕРАСА ТЕРИКОНУ)",
@@ -104,6 +105,48 @@ Press Enter."#,
         ],
     ),
 
+    // What the first wave left in the fields (part I's band: about thirty-five hulls on the two lanes), where they
+    // stopped: beside the lanes, a few turned back.
+    old_wrecks: [
+        (At((1206.0, 1415.8)), -0.45),
+        (At((1211.2, 1313.1)), 3.08),
+        (At((1175.2, 1238.0)), 0.13),
+        (At((1167.6, 1148.9)), -0.45),
+        (At((1177.5, 1088.3)), 0.06),
+        (At((1176.1, 972.9)), 3.19),
+        (At((1222.9, 921.8)), -0.03),
+        (At((1154.4, 838.9)), -0.26),
+        (At((1190.8, 708.0)), 3.62),
+        (At((1131.8, 620.8)), -0.08),
+        (At((1182.0, 571.0)), -0.15),
+        (At((1122.6, 497.1)), -0.03),
+        (At((1167.8, 368.0)), -0.11),
+        (At((1120.8, 307.2)), -0.01),
+        (At((1159.9, 208.3)), 3.51),
+        (At((1102.0, 135.1)), 0.36),
+        (At((1169.6, 57.6)), -0.35),
+        (At((1160.2, -21.5)), -0.32),
+        (At((1157.4, -112.8)), 0.19),
+        (At((1091.8, -205.6)), 0.37),
+        (At((-310.6, 1295.3)), -0.4),
+        (At((-354.6, 1240.2)), -0.39),
+        (At((-380.0, 1113.4)), 3.26),
+        (At((-308.1, 1031.9)), 0.1),
+        (At((-330.4, 949.8)), 2.95),
+        (At((-325.5, 844.2)), 2.8),
+        (At((-393.9, 747.6)), 0.41),
+        (At((-400.3, 642.3)), -0.24),
+        (At((-349.3, 557.5)), 0.11),
+        (At((-413.8, 500.3)), 0.24),
+        (At((-425.9, 385.8)), 0.29),
+        (At((-371.8, 297.3)), 0.44),
+        (At((-407.0, 208.1)), -0.03),
+        (At((-428.1, 57.2)), 0.15),
+    ],
+    // Overcast by the 20th, with the wind gusting to 33 km/h (ERA5, c11 §3): the drone works for its hover.
+    overcast: true,
+    wind: Some((-6.0, 0.0, 4.5)),
+
     // ---- The battle's part (bav_sim::data) ----
     // The 47th's and the 110th's side as Units and Support: Stugnas and Javelins in the positions, a Leopard 2A6
     // in a hide, and the 55th's guns with a working day's rounds; cluster shells come in phase 5, the Bradleys as
@@ -134,12 +177,29 @@ Press Enter."#,
             available: 9,
         ),
         (id: "tank", name: ("Tank in a hide", "Танк у капонірі"), what: Hide, cost: 10, supply: 6, available: 3),
+        // The 47th's Bradleys hull-down at the hides, a gunner's seat the player can take (key 6).
+        (
+            id: "m2",
+            name: ("Bradley in a hide", "«Бредлі» у капонірі"),
+            what: Dug(Bradley),
+            cost: 9,
+            supply: 6,
+            available: 4,
+        ),
         (id: "bradley", name: ("Bradley", "«Бредлі»"), what: Vehicle(Bradley), cost: 7, supply: 6, available: 6),
         (id: "mtlb", name: ("MT-LB", "МТ-ЛБ"), what: Vehicle(Mtlb), cost: 4, supply: 4, available: 3),
     ],
     support: [
         (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 10),
         (id: "raam", name: ("RAAM mission", "Дистанційне мінування (RAAM)"), what: Raam, cost: 3, available: 6),
+        // Cluster shells: the 55th's DPICM, two to a mission, for the infantry in the open (c11 §5).
+        (
+            id: "dpicm",
+            name: ("Cluster mission, 2 shells", "Касетні, 2 снаряди"),
+            what: Cluster(1),
+            cost: 2,
+            available: 8,
+        ),
         (id: "himars", name: ("HIMARS mission", "Удар HIMARS"), what: Himars, cost: 8, available: 2),
         (
             id: "brigade",
@@ -159,7 +219,8 @@ Press Enter."#,
         (id: "mavic", name: ("Two more Mavic 3s", "Ще два Mavic 3"), what: Mavic(2), cost: 3, available: 2),
     ],
     // The Record: the ATGM teams at the village's edge and along the railway, riflemen on the heap and at the
-    // plant's corner, a tank in the village, 96 rounds, three RAAM missions, one HIMARS, a dozen FPVs.
+    // plant's corner, two Bradleys and a tank in the village's hides, 96 rounds, three RAAM missions, four cluster, one
+    // HIMARS, a dozen FPVs.
     allotment: (
         points: 180,
         supply: (12, 2.0),
@@ -173,18 +234,22 @@ Press Enter."#,
             (id: "rifles", at: Some(6)),
             (id: "rifles", at: Some(7)),
             (id: "rifles", at: Some(8)),
-            (id: "tank", at: Some(9)),
+            (id: "m2", at: Some(9)),
+            (id: "m2", at: Some(10)),
+            (id: "tank", at: Some(11)),
             (id: "155", count: 6),
             (id: "raam", count: 3),
+            (id: "dpicm", count: 4),
             (id: "himars", count: 1),
             (id: "brigade", count: 6),
             (id: "mortar", count: 6),
             (id: "fpv", count: 12),
         ],
     ),
-    old_wreck_kinds: [],
+    old_wreck_kinds: [T72, Bmp2, Bmp1, Mtlb, T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb, T72],
     space_key: Atgm,
-    shift_fire: Raam,
+    // Shift+click: cluster on the infantry. (RAAM stays on the stock for Command's table.)
+    shift_fire: Cluster,
     // Their guns work the village, the railway and the heap all day, and the ground behind.
     ru_guns: Some(Posts(x: (-1800.0, 1800.0), band: (-1300.0, -600.0))),
     registered_fire: (50.0, 6),
@@ -193,86 +258,102 @@ Press Enter."#,
     // FPVs by the day (phase 4 makes them a stock; one at a time until then), five minutes in the air.
     fpv: Some((endurance: 300.0)),
     // Command's Enemy staff: Lancets for the Bradleys and the Leopard; Orlans over the village every few minutes.
-    staff: (lancets: 3, orlan: (150.0, 300.0)),
+    staff: (lancets: 4, orlan: (120.0, 240.0), kabs: 6, kab_every: (200.0, 400.0)),
     // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
     // February, but still.
     operator: (pos: (900.0, -1400.0), found_per_hour: 0.2),
 
-    // The day (c11 §2, §6 set piece 1): the fire preparation before dawn, then four columns of 15-22 across the
-    // open field, two on Stepove and two on the heap and the railway, with infantry on foot behind them; about 70
-    // vehicles on the shoulder (the geolocated count for the whole salient that day).
+    // The day (c11 §2 19-20 Oct, §6 set piece 2): the guns again, then four groups of 15-22 under more smoke, the
+    // infantry dismounting at the belts and walking the last kilometre; and from mid-morning the heap stormed on foot,
+    // tanks at its base, men climbing the face under the drone's drops (folded in from about 16 October).
     script: [
-        (2.0, Say("Bird up. Clear, a frost on the stubble. Their guns have been going since four.")),
+        (2.0, Say("Bird up. Overcast, a strong wind from the west. Holding is hard work today.")),
         (
             10.0,
-            Say("All, this is {command}. They are coming today. Everyone knows it. Let them come across the field."),
+            Say(
+                "All, this is {command}. They are forming up beyond the heap and at Krasnohorivka again. Same as the tenth.",
+            ),
         ),
-        (20.0, Prep(missions: 10, over: 220.0)),
-        (120.0, Tos(label: "TOS-1A on the plant's edge")),
+        (20.0, Prep(missions: 8, over: 200.0)),
         (
-            230.0,
+            150.0,
+            Bombs(
+                from: (1150.0, -820.0),
+                to: (1000.0, -700.0),
+                n: 2,
+                label: "07:10  KABs on Stepove",
+                say: "Su-34s. Bombs on the village again. Down.",
+            ),
+        ),
+        (
+            210.0,
             Column(
                 route: 0,
-                kinds: [
-                    T72, T72, Bmp2, Bmp1, Bmp2, T80, Mtlb, Bmp2, Bmp1, Bmp2, T72, Bmp1, Mtlb, Bmp2, Bmp2, T72, Bmp1,
-                    Bmp2, Mtlb, Bmp1, Bmp2, Bmp2,
-                ],
+                kinds: [T72, Bmp2, Bmp1, Bmp2, T80, Mtlb, Bmp2, Bmp1, Bmp2, T72, Bmp2, Mtlb, Bmp1, Bmp2, Bmp2],
+                plow: true,
+                start: 300.0,
+                smoke: 4,
+                label: "07:25  The first group, under smoke, on Stepove",
+            ),
+        ),
+        (220.0, Jam(0.6)),
+        (235.0, Say("Bird: a column from Krasnohorivka again. Smaller. A lot of smoke, I can't count them.")),
+        (
+            300.0,
+            Infantry(route: 0, groups: 8, size: 6, every: 15.0, label: "07:50  Their infantry dismounts at the belts"),
+        ),
+        (
+            380.0,
+            Column(
+                route: 1,
+                kinds: [T80, Bmp2, Bmp2, T72, Mtlb, Bmp1, Bmp2, Bmp2, Mtlb, Bmp1, Bmp2, T80],
                 plow: true,
                 start: 300.0,
                 smoke: 3,
-                label: "06:35  The 114th Brigade from Krasnohorivka, on Stepove",
+                label: "08:10  Tanks to the foot of the heap",
             ),
         ),
-        (240.0, Jam(0.5)),
+        (400.0, Infantry(route: 2, groups: 12, size: 6, every: 12.0, label: "08:15  Men on the heap's face")),
+        (420.0, Say("This is {op}. They are climbing. The face, below us. Tanks at the foot, firing up.")),
         (
-            250.0,
-            Say("Bird: column from Krasnohorivka. Twenty-plus, tanks leading, a plow in front. Smoke on the field."),
-        ),
-        (
-            330.0,
-            Column(
-                route: 1,
-                kinds: [
-                    T80, T80, Bmp2, Bmp2, Mtlb, Bmp1, T80, Bmp2, Mtlb, Bmp1, Bmp2, Bmp2, T72, Mtlb, Bmp1, Bmp2, Bmp2,
-                    Mtlb,
-                ],
-                plow: true,
-                start: 300.0,
-                smoke: 2,
-                label: "07:00  The 10th Tank Regiment from Kamianka, on the heap",
+            560.0,
+            Bombs(
+                from: (-1050.0, 520.0),
+                to: (-950.0, 440.0),
+                n: 2,
+                label: "",
+                say: "KABs on the heap!",
             ),
         ),
-        (345.0, Say("This is {op}. From the east now. Tanks, a lot of BMPs. Straight at the heap.")),
         (
-            640.0,
+            700.0,
             Column(
                 route: 0,
                 kinds: [
-                    T72, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb, Bmp1, Bmp2, Bmp2, T80, Bmp1, Mtlb, Bmp2, Bmp2, Bmp1, Bmp2,
-                    Mtlb, Bmp2, Bmp2,
+                    T72, Bmp2, Bmp2, Bmp1, Mtlb, Bmp2, T72, Bmp1, Bmp2, Mtlb, Bmp2, Bmp2, Bmp1, T80, Bmp2, Bmp2, Mtlb,
                 ],
                 plow: false,
                 start: 300.0,
-                smoke: 2,
-                label: "08:20  A second column. The same field.",
+                smoke: 4,
+                label: "09:35  A second group on Stepove, past the first's wrecks",
             ),
         ),
-        (655.0, Say("This is {op}. Second column. Past the first one's wrecks. Exactly the same line.")),
-        (700.0, Infantry(route: 1, groups: 8, size: 6, every: 20.0, label: "08:35  Infantry on foot at the heap")),
-        (720.0, Tos(label: "TOS-1A again")),
+        (720.0, Infantry(route: 0, groups: 8, size: 6, every: 15.0)),
+        (740.0, Tos(label: "TOS-1A on the village")),
+        (800.0, Infantry(route: 2, groups: 10, size: 6, every: 12.0, label: "10:00  The heap again, on foot")),
         (
-            950.0,
+            1000.0,
             Column(
                 route: 1,
-                kinds: [T72, Bmp2, Bmp1, Bmp2, Mtlb, Bmp1, Bmp2, T72, Bmp1, Mtlb, Bmp2, Bmp2, Bmp1, Bmp2],
+                kinds: [T72, Bmp1, Bmp2, Mtlb, Bmp2, Bmp1, Bmp2, T72, Mtlb, Bmp2, Bmp2, Bmp1],
                 plow: false,
                 start: 300.0,
-                smoke: 1,
-                label: "09:35  Again, from the east",
+                smoke: 2,
+                label: "10:50  The last of the armour, from the east",
             ),
         ),
-        (960.0, Jam(0.6)),
-        (1100.0, Infantry(route: 0, groups: 6, size: 6, every: 18.0, label: "10:15  Men on foot towards the railway")),
-        (1250.0, Say("This is {op}. They are gathering again beyond the heap. Not today, I think.")),
+        (1020.0, Jam(0.6)),
+        (1100.0, Infantry(route: 2, groups: 8, size: 6, every: 14.0, label: "11:15  More men onto the face")),
+        (1250.0, Say("This is {op}. They have a foothold on the north face. Not the top. Not today.")),
     ],
 )

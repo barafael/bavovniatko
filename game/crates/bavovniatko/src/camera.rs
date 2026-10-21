@@ -29,7 +29,7 @@ impl Plugin for CameraPlugin {
             .init_resource::<Shake>()
             .add_systems(Startup, spawn_camera.before(FeedSetup))
             .add_systems(Startup, (spawn_launcher, spawn_igla).after(spawn_camera))
-            .add_systems(Update, (switch_view, igla_view, drone_control, fpv_control, op_control, ground_control, igla_control, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
+            .add_systems(Update, (switch_view, igla_view, bradley_view, drone_control, fpv_control, op_control, ground_control, igla_control, bradley_control, hide_own_turret, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
     }
 }
 
@@ -585,6 +585,12 @@ fn apply_view(
             let rot = Quat::from_euler(EulerRot::YXZ, view.ground_yaw + sway.x, view.ground_pitch + sway.y, 0.0);
             (eye, rot, View::GROUND_FOV / view.zoom())
         }
+        Mode::Bradley => {
+            // In the turret: the hull is still, the sight stabilised; only the engine's idle trembles the picture.
+            let tremble = Vec2::new((t * 31.0).sin() + 0.5 * (t * 47.0).sin(), (t * 29.0).cos() + 0.4 * (t * 53.0).sin()) * if view.sight { 0.00012 } else { 0.0006 };
+            let rot = Quat::from_euler(EulerRot::YXZ, view.ground_yaw + tremble.x, view.ground_pitch + tremble.y, 0.0);
+            (view.ground_eye, rot, View::GROUND_FOV / view.zoom())
+        }
         Mode::Ground => {
             // Kneeling, breathing; the sight on its tripod is steadier, but the gunner's hands are not.
             let breath = (t * 1.4).sin();
@@ -600,13 +606,13 @@ fn apply_view(
     };
     // Shake from nearby blasts.
     let tr = shake.trauma * shake.trauma;
-    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground | Mode::Manpads => 0.35, Mode::Drone | Mode::Fpv => 0.25 };
+    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground | Mode::Manpads => 0.35, Mode::Bradley => 0.2, Mode::Drone | Mode::Fpv => 0.25 };
     let rjit = Quat::from_euler(EulerRot::YXZ, (t * 37.0).sin() * tr * 0.02, (t * 43.0).sin() * tr * 0.02, (t * 29.0).sin() * tr * 0.03);
     tf.translation = pos + jitter;
     tf.rotation = rot * rjit;
     if let Projection::Perspective(p) = proj.as_mut() {
         p.fov = fov;
-        p.near = if matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads) { 0.1 } else { 0.5 };
+        p.near = if matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley) { 0.1 } else { 0.5 };
     }
     shake.trauma = (shake.trauma - dt * 0.9).max(0.0);
     shake.flash = (shake.flash - dt * 2.5).max(0.0);
@@ -676,6 +682,70 @@ fn igla_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, teams: Que
     view.lock = None;
 }
 
+/// The gunner's eye over the hull's origin: the ISU's head on the turret roof, the hull sunk in its hide.
+const EYE: f32 = 3.7;
+
+/// 6: into a Bradley's gunner's seat (where the day has Bradleys dug in); again for the next one still in action.
+fn bradley_view(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>, bradleys: Query<(Entity, &Vehicle, &Transform), With<bav_sim::bradley::BradleyArms>>) {
+    if view.mode == Mode::Fpv || !keys.just_pressed(KeyCode::Digit6) {
+        return;
+    }
+    let mut live: Vec<(Entity, Vec3, f32)> = bradleys.iter().filter(|(_, v, _)| v.crew > 0 && v.state.alive()).map(|(e, _, t)| (e, t.translation, t.rotation.to_euler(EulerRot::YXZ).0)).collect();
+    live.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.z.total_cmp(&b.1.z)));
+    if live.is_empty() {
+        return;
+    }
+    let i = match (view.mode, view.ground_team) {
+        (Mode::Bradley, Some(cur)) => live.iter().position(|(e, ..)| *e == cur).map(|i| (i + 1) % live.len()).unwrap_or(0),
+        _ => 0,
+    };
+    let (e, p, yaw) = live[i];
+    view.mode = Mode::Bradley;
+    view.ground_team = Some(e);
+    view.ground_eye = p + Vec3::Y * EYE;
+    view.ground_yaw = yaw;
+    view.ground_pitch = 0.0;
+    view.sight = false;
+    view.lock = None;
+}
+
+/// The gunner sees through the sight, not the turret he sits in: the seat's own turret (gun, launcher and all) is
+/// hidden while he is in it, and shown again when he leaves.
+fn hide_own_turret(view: Res<View>, vehicles: Query<&Vehicle>, mut vis: Query<&mut Visibility>, mut hidden: Local<Option<Entity>>) {
+    let own = (view.mode == Mode::Bradley).then_some(view.ground_team).flatten().and_then(|e| vehicles.get(e).ok()).map(|v| v.turret);
+    if *hidden == own {
+        return;
+    }
+    if let Some(t) = *hidden
+        && let Ok(mut v) = vis.get_mut(t)
+    {
+        *v = Visibility::Inherited;
+    }
+    if let Some(t) = own
+        && let Ok(mut v) = vis.get_mut(t)
+    {
+        *v = Visibility::Hidden;
+    }
+    *hidden = own;
+}
+
+/// The gunner's hand: mouse look turns the turret, the right button is the sight. The eye stays on the turret.
+fn bradley_control(buttons: Res<ButtonInput<MouseButton>>, motion: Res<AccumulatedMouseMotion>, mut view: ResMut<View>, bradleys: Query<&Transform, With<bav_sim::bradley::BradleyArms>>) {
+    if view.mode != Mode::Bradley {
+        return;
+    }
+    if let Some(t) = view.ground_team.and_then(|e| bradleys.get(e).ok()) {
+        // The ISU's head sits on the turret roof, a little left of the gun.
+        view.ground_eye = t.translation + Vec3::Y * EYE + (t.rotation * Vec3::NEG_X) * 0.4;
+    }
+    if dev().view != Some(Mode::Bradley) && !view.locked {
+        view.sight = buttons.pressed(MouseButton::Right);
+    }
+    let k = 0.0022 / view.zoom();
+    view.ground_yaw -= motion.delta.x * k;
+    view.ground_pitch = (view.ground_pitch - motion.delta.y * k).clamp(-0.15, 0.5);
+}
+
 /// The Igla's eye: mouse look, the right button shoulders the tube, and whatever hot thing sits in its ring is held
 /// by the seeker, the longer the steadier (`bav_sim::manpads::LOCK`).
 fn igla_control(
@@ -742,7 +812,7 @@ fn cursor_grab(view: Res<View>, mut last: Local<Option<Mode>>, mut cursor: Query
     }
     *last = Some(view.mode);
     for mut c in &mut cursor {
-        let grab = matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads);
+        let grab = matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley);
         c.grab_mode = if grab { bevy::window::CursorGrabMode::Locked } else { bevy::window::CursorGrabMode::None };
         c.visible = !grab;
     }

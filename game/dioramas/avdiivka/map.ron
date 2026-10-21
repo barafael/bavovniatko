@@ -45,6 +45,11 @@
             "lane_heap",
             Smoothed([(-300.0, 1792.0), (-340.0, 1150.0), (-380.0, 500.0), (-410.0, 0.0), (-450.0, -400.0)], 2),
         ),
+        // Onto the heap's north-east face and its top: the storming parties' way.
+        (
+            "heap_face",
+            Smoothed([(-900.0, 1792.0), (-950.0, 1450.0), (-1000.0, 1200.0), (-1050.0, 950.0), (-1066.0, 830.0)], 2),
+        ),
     ],
     roads: [(line: "lane_stepove", width: 3.5, kind: Track), (line: "lane_heap", width: 3.5, kind: Track)],
     belts: [],
@@ -54,6 +59,8 @@
         (line: "lane_stepove", deploy: (1130.0, -200.0), objective: (1000.0, -900.0)),
         // 1: on the heap's foot and the railway behind it.
         (line: "lane_heap", deploy: (-380.0, 400.0), objective: (-500.0, -600.0)),
+        // 2: up the heap's north-east face to its top (men climb it; hulls stop at its foot).
+        (line: "heap_face", deploy: (-980.0, 1300.0), objective: (-1066.0, 830.0)),
     ],
     // Mines laid at night on the approaches (v02 §5): a belt in front of the railway at Stepove, another in front
     // of the heap.
@@ -99,12 +106,13 @@
         OnLine("lane_heap", (-390.0, 300.0)),
         OnLine("lane_heap", (-430.0, -250.0)),
     ],
-    old_wrecks: [],
+    // (The wrecks on the field are each part's own: none on 10 October, that morning's after it.)
 
     advance: -1.0,
     foothold_z: -550.0,
     defence_z: -650.0,
     home: (900.0, -1400.0),
-    jam_z: 600.0,
+    // Their jammers' line: beyond the heap's far foot (the heap and its face are ours to fly over).
+    jam_z: 1350.0,
     mortar_band: (-900.0, 900.0),
 )

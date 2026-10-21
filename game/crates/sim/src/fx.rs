@@ -20,6 +20,9 @@ pub struct Wind(pub Vec3);
 
 /// The day's wind (see `Wind`); the ground painter reads it too, for the drifts in the belts' lee.
 pub fn day_wind() -> Vec3 {
+    if let Some((x, y, z)) = bav_core::data::data().wind {
+        return Vec3::new(x, y, z);
+    }
     if crate::diorama::diorama().summer() { Vec3::new(-2.0, 0.0, -0.7) } else { Vec3::new(-3.2, 0.0, 3.2) }
 }
 

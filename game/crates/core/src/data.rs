@@ -49,6 +49,13 @@ pub struct DioramaData {
     /// then carry their heat (`bav_look::thermal`).
     #[serde(default)]
     pub thermal: bool,
+    /// An overcast day, where the place lights itself from the computed sun (`sun`): a diffuse key and no hard
+    /// shadows (the sky switch `BAV_SKY` overrides it).
+    #[serde(default)]
+    pub overcast: bool,
+    /// The day's wind (m/s along x, y, z), where it is not the season's: the drone's drift, the smoke, the drifts.
+    #[serde(default)]
+    pub wind: Option<(f32, f32, f32)>,
     /// What the day says that is this place's own.
     pub words: Words,
     /// Where the drone starts.

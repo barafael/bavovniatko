@@ -27,6 +27,9 @@ pub enum UnitKind {
     Evacuation,
     /// Air defence at a position, with riflemen round it: an Igla team or a ZU-23-2 (`manpads`).
     Air(AirArm),
+    /// A vehicle of ours dug in hull-down at a hide, as a whole vehicle with its own gun (a Bradley): it fights
+    /// where it stands, and the player can take its gunner's seat (`bradley`).
+    Dug(VKind),
 }
 
 /// What a position fights aircraft with.
@@ -59,6 +62,8 @@ pub enum SupportKind {
     AirDefence(u32),
     /// So many more reconnaissance drones for the operator (Mavic 3s).
     Mavic(u32),
+    /// So many cluster (DPICM) missions, two shells each (`fire::Strike::Cluster`).
+    Cluster(u32),
 }
 
 /// One entry of the catalog: what it is, called what, what it costs in allotment points (and later in Supply),
@@ -112,6 +117,8 @@ pub struct Stock {
     pub brigade_shells: u32,
     pub mortar_bombs: u32,
     pub air_defence: u32,
+    /// Cluster missions (DPICM), two shells each.
+    pub cluster: u32,
 }
 
 /// The player's side as allotted: what the battle builds it from.
@@ -119,6 +126,8 @@ pub struct Stock {
 pub struct Allotment {
     /// The posts, in the layout's position order: where, and the weapon (none: riflemen only).
     pub posts: Vec<(Vec2, Option<Atgm>)>,
+    /// Our vehicles dug in at hides (`Dug`): where, which way they face, what they are.
+    pub dug: Vec<(Vec2, Vec2, VKind)>,
     /// Tanks in their hides: where, and which way they face.
     pub hides: Vec<(Vec2, Vec2)>,
     /// Air defence at positions: where, and what with.
@@ -252,14 +261,14 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
         a.spent += cost * p.count;
         if let Some(u) = unit {
             match u.what {
-                UnitKind::Post(_) | UnitKind::Hide | UnitKind::Air(_) => {
+                UnitKind::Post(_) | UnitKind::Hide | UnitKind::Air(_) | UnitKind::Dug(_) => {
                     let at = p.at.ok_or_else(|| format!("{} needs a position (@n)", p.id))?;
                     let pos = positions.get(at).ok_or_else(|| format!("{}@{at}: there are {} positions", p.id, positions.len()))?;
                     let kind = pos.kind.name().0;
                     if pos.ground != bav_core::field::Ground::Ours {
                         return Err(format!("{}@{at}: the {kind} at {:.0},{:.0} is not on our side of the grey zone", p.id, pos.at.x, pos.at.y));
                     }
-                    let fits = if matches!(u.what, UnitKind::Hide) { pos.kind.holds_vehicles() } else { pos.kind.holds_men() };
+                    let fits = if matches!(u.what, UnitKind::Hide | UnitKind::Dug(_)) { pos.kind.holds_vehicles() } else { pos.kind.holds_men() };
                     if !fits {
                         return Err(format!("{}@{at}: a {kind} does not hold it", p.id));
                     }
@@ -283,6 +292,7 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                 SupportKind::Fpv => a.fpvs += p.count,
                 SupportKind::AirDefence(m) => st.air_defence += m * p.count,
                 SupportKind::Mavic(n) => a.mavics += n * p.count,
+                SupportKind::Cluster(m) => st.cluster += m * p.count,
             }
         }
     }
@@ -296,6 +306,7 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
             Some(UnitKind::Post(weapon)) => a.posts.push((pos.at, *weapon)),
             Some(UnitKind::Hide) => a.hides.push((pos.at, pos.facing)),
             Some(UnitKind::Air(arm)) => a.air.push((pos.at, *arm)),
+            Some(UnitKind::Dug(kind)) => a.dug.push((pos.at, pos.facing, *kind)),
             _ => {}
         }
     }

@@ -77,7 +77,7 @@ pub fn daylight(
     }
     let minutes = bav_sim::director::clock_minutes(script.t);
     let winter = !bav_core::diorama::diorama().summer();
-    let weather = crate::dev::dev().sky.unwrap_or(if winter { crate::sky::Weather::Overcast } else { crate::sky::Weather::Sun });
+    let weather = crate::dev::dev().sky.unwrap_or(if winter || bav_core::data::data().overcast { crate::sky::Weather::Overcast } else { crate::sky::Weather::Sun });
     let overcast = weather == crate::sky::Weather::Overcast;
     let (elev, azim) = bav_core::sun::position(minutes);
     let azim = geo::map_heading(azim).to_radians();

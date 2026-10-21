@@ -233,6 +233,15 @@ impl Area {
     }
 }
 
+/// How steep the ground is at a point: the rise per metre across a four-metre step, the larger of the two axes'.
+/// Flat fields and the belts' swells are under 0.05; a spoil heap's face is 0.3 and more.
+pub fn slope(p: Vec2) -> f32 {
+    let h = |x: f32, z: f32| height(x, z);
+    let dx = (h(p.x + 2.0, p.y) - h(p.x - 2.0, p.y)).abs() / 4.0;
+    let dz = (h(p.x, p.y + 2.0) - h(p.x, p.y - 2.0)).abs() / 4.0;
+    dx.max(dz)
+}
+
 /// A point's distance from the segment a-b.
 pub fn segment_distance(p: Vec2, a: Vec2, b: Vec2) -> f32 {
     let d = b - a;

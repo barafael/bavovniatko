@@ -46,6 +46,7 @@ impl Plugin for FirePlugin {
                     (pre_registered_fires, ua_tank, mortars).chain(),
                 )
                     .chain()
+                    .in_set(FireSystems)
                     .run_if(crate::running)
                     .in_set(crate::Step::Fire),
             )
@@ -80,6 +81,9 @@ pub enum ShellKind {
     Rocket,
     /// White phosphorus and smoke: a screen on the ground for a minute or two.
     Smoke,
+    /// A 155 mm cluster shell (DPICM): 72 bomblets over a football pitch, each a grenade on a man in the open or
+    /// a carrier's roof.
+    Cluster,
 }
 
 /// A [`Strike`] as the guns fire it.
@@ -97,6 +101,7 @@ impl StrikeMission for Strike {
             Strike::Raam => (ShellKind::Raam, 3, 5.0, 28.0, sigma * 1.2, 3.0),
             Strike::Himars => (ShellKind::Himars, 2, 4.0, 55.0, 3.0, 2.0),
             Strike::Smoke => (ShellKind::Smoke, 4, 2.5, 24.0, sigma * 1.5 + 15.0, 2.0),
+            Strike::Cluster => (ShellKind::Cluster, 2, 4.0, 24.0, sigma * 1.2, 2.0),
         };
         Mission { target, kind, rounds, sigma, interval, next: now + delay, flight, by: Side::Ua }
     }
@@ -118,6 +123,10 @@ impl StrikeMission for Strike {
         Some(target)
     }
 }
+
+/// The fire systems, in their order: what fires after them (the Bradleys) hooks on here.
+#[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
+pub struct FireSystems;
 
 /// A fire mission under way: so many rounds at a target, one every `interval` seconds from `next`, each
 /// `flight` seconds in the air. Spent, it is despawned (`run_missions`).
@@ -144,6 +153,8 @@ pub struct FireControl {
     pub raam: u32,
     pub himars: u32,
     pub smoke: u32,
+    /// Cluster missions (DPICM).
+    pub cluster: u32,
     /// The defending brigade's guns, which fire on their registered points by themselves.
     pub brigade_shells: u32,
     /// The battalion's 120 mm mortars, which work over infantry in the open on their own.
@@ -165,7 +176,7 @@ impl Default for FireControl {
         // 2022, but a battery on one morning gets a handful of missions.
         // (In Command nothing until the map table has settled the Allotment: `allotted_stock` sets it then.)
         let s = crate::allot::settled().map(|a| a.stock).unwrap_or_default();
-        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, air_defence: s.air_defence, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
+        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, cluster: s.cluster, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, air_defence: s.air_defence, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
     }
 }
 
@@ -262,6 +273,13 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
     for &(hide, facing) in allotted.map_or(&[][..], |a| &a.hides[..]) {
         spawn_hide(&mut commands, &models, hide, facing);
     }
+    // Our vehicles dug in hull-down at their hides (Avdiivka's Bradleys): whole vehicles, with a gunner's seat.
+    for (k, &(hide, facing, kind)) in allotted.map_or(&[][..], |a| &a.dug[..]).iter().enumerate() {
+        let yaw = units::vehicle_yaw(facing);
+        let spec = units::VehicleSpec { side: Side::Ua, kind, route: 0, s: 0.0, lat: 0.0, wave: 0, idx: 200 + k as u32, plow: false, smoke: false, rescue: false, column_pace: f32::INFINITY };
+        let e = units::spawn_vehicle_at(&mut commands, &models, &palette, spec, hide, yaw);
+        commands.entity(e).insert((Transform::from_translation(geo::ground(hide) - Vec3::Y * 0.9).with_rotation(Quat::from_rotation_y(yaw)), crate::bradley::BradleyArms::default()));
+    }
 }
 
 /// Command: the rest of our side as the map table settled it, when the battle starts: the rounds and missions, the
@@ -323,6 +341,8 @@ pub enum SpaceKey {
 pub enum ShiftFire {
     Raam,
     Smoke,
+    /// Cluster shells (Avdiivka: the 55th's DPICM on infantry in the open).
+    Cluster,
 }
 
 fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, mut order: ResMut<ColumnOrder>, time: Res<Time>, mut radio: ResMut<Radio>) {
@@ -366,7 +386,7 @@ fn observed_sigma(view: &View, target: Vec2) -> f32 {
             let d = view.drone_pos.xz().distance(target);
             if view.feed_down > 0.0 { 40.0 } else { 9.0 + d * 0.006 }
         }
-        Mode::Op | Mode::Ground | Mode::Fpv | Mode::Manpads => match bav_core::data::data().observed_from {
+        Mode::Op | Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley => match bav_core::data::data().observed_from {
             bav_core::data::ObservedFrom::LineZ(z) => 14.0 + 0.004 * (target.y - z).abs(),
             bav_core::data::ObservedFrom::Home => 14.0 + 0.004 * target.distance(geo::layout().home),
         },
@@ -405,6 +425,19 @@ fn player_fire(
         fc.himars -= 1;
         Strike::Himars.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{command}}, я {{player}}. Хаймарс, дві ракети, {lat:.4} {lon:.4}. Підліт близько хвилини."), format!("{{command}}, this is {{player}}. HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
+    } else if shift && crate::data::sim_data().shift_fire == ShiftFire::Cluster {
+        if fc.cluster == 0 {
+            radio.say(now, "No more cluster. HE only.");
+            return;
+        }
+        if now < fc.battery_busy_until {
+            radio.say(now, "{player}, this is {guns}. Still firing the last mission. Wait.");
+            return;
+        }
+        fc.cluster -= 1;
+        fc.battery_busy_until = now + 12.0;
+        Strike::Cluster.call(&mut commands, target, sigma, now);
+        radio.say2(now, format!("{{guns}}, я {{player}}. Касетні, два снаряди, {lat:.4} {lon:.4}. По піхоті у полі."), format!("{{guns}}, this is {{player}}. Cluster, two shells, {lat:.4} {lon:.4}. On the infantry in the open."));
     } else if shift && crate::data::sim_data().shift_fire == ShiftFire::Smoke {
         if fc.smoke == 0 {
             radio.say(now, "No more smoke.");
@@ -578,6 +611,7 @@ fn land_shells(
             ShellKind::Rocket => (0.7, 7.0, Cause::Artillery, Sfx::BlastNear, 1.6),
             ShellKind::Raam => (0.5, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
             ShellKind::Smoke => (0.3, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
+            ShellKind::Cluster => (0.4, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
         };
         match s.kind {
             ShellKind::Raam => {
@@ -591,6 +625,22 @@ fn land_shells(
                         .id();
                     mf.add(Mine { entity: Some(ent), ..Mine::at(mp) });
                 }
+                continue;
+            }
+            ShellKind::Cluster => {
+                // The shell opens overhead and the bomblets rain over a circle sixty metres across: a crackle of
+                // small blasts, each enough for a man in the open and a thin roof, none for a hull.
+                sound.at(p + Vec3::Y * 90.0, sfx, 0.5);
+                fx.spawn(fx::Spawn { kind: fx::Kind::GreySmoke, pos: p + Vec3::Y * 90.0, vel: Vec3::Y * -2.0, life: 3.0, size0: 2.5, size1: 7.0, alpha: 0.4, ..default() });
+                for k in 0..24 {
+                    let bp = geo::ground(s.at + gauss2(rng) * 24.0);
+                    fx.explosion(bp, 0.3, true);
+                    if k % 3 == 0 {
+                        sound.at(bp, Sfx::BlastNear, 0.35);
+                    }
+                    blasts.write(Blast { at: bp, radius: 6.0, cause: Cause::Artillery });
+                }
+                landed.write(ShellLanded { at: s.at, kind: s.kind, by: s.by, radius: 30.0, size: 0.6 });
                 continue;
             }
             ShellKind::Smoke => {
@@ -1293,6 +1343,9 @@ pub struct GuidedMissile {
     pub eye: Vec3,
     /// The line the sight last held. Updated only while the player is at that sight.
     pub dir: Vec3,
+    /// For the hit feed: what it is, and from where.
+    pub weapon: &'static str,
+    pub from: &'static str,
 }
 
 /// Javelin seekers lock after this long on the target.
@@ -1363,7 +1416,7 @@ fn player_atgm(
             radio.say(now, "Javelin away. Get down, move.");
         }
         _ => {
-            commands.spawn((missile, Transform::from_translation(from).looking_to(fwd, Vec3::Y), GuidedMissile { travelled: 1.2, speed: 40.0, trail: 0.0, team, eye: gt.translation, dir: fwd }));
+            commands.spawn((missile, Transform::from_translation(from).looking_to(fwd, Vec3::Y), GuidedMissile { travelled: 1.2, speed: 40.0, trail: 0.0, team, eye: gt.translation, dir: fwd, weapon: "Stugna-P", from: "your team" }));
             radio.say2(now, format!("{weapon}: пуск. Тримай його."), format!("{weapon}: launch. Hold it on him."));
         }
     }
@@ -1399,7 +1452,7 @@ fn fly_guided(
         m.travelled += m.speed * dt;
         // The guidance steers onto the sight's line at the missile's range. Only the launching sight steers it;
         // if the player leaves it, the wire carries the last line it held.
-        if view.mode == Mode::Ground && view.ground_team == Some(m.team) {
+        if matches!(view.mode, Mode::Ground | Mode::Bradley) && view.ground_team == Some(m.team) {
             m.dir = *gt.forward();
         }
         // Real missiles fly a little above the sight line, clear of the ground in front.
@@ -1427,7 +1480,7 @@ fn fly_guided(
             fx.explosion(p, 0.7, false);
             sound.at(p, Sfx::BlastNear, 1.0);
             if v.state.alive() {
-                hits.write(DirectHit { target, cause: Cause::Atgm, top: false, weapon: "Stugna-P", from: "your team" });
+                hits.write(DirectHit { target, cause: Cause::Atgm, top: false, weapon: m.weapon, from: m.from });
                 radio.say(now, "Hit! He's burning.");
             }
         } else if ground || m.travelled > Atgm::Stugna.range() + 700.0 {

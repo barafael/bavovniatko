@@ -303,7 +303,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>),
+    (order, fpv_res, op_res, iglas, field, air, runway, bradleys): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>, Query<&bav_sim::bradley::BradleyArms>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -394,6 +394,18 @@ fn update_hud(
                 if near { "   TOO CLOSE: let him pass" } else { "" }
             ))
         }
+        Mode::Bradley => {
+            let a = view.ground_team.and_then(|e| bradleys.get(e).ok());
+            let (ap, he, tows, reload, he_up) = a.map_or((0, 0, 0, 0.0, false), |a| (a.ap, a.he, a.tows, a.tow_reload, a.he_selected));
+            let range = view.ground_range.map_or("----".to_string(), |d| format!("{d:>4.0} m"));
+            let sel = if he_up { "HE" } else { "AP" };
+            if view.sight {
+                let tow = if tows == 0 { "no TOW".to_string() } else if reload > 0.0 { format!("TOW reloading {reload:.0}") } else { "[T] TOW".to_string() };
+                Text::new(format!("ISU x4   {}   RANGE {range}   {sel} AP {ap} HE {he}   TOW {tows}\n[LMB] burst   [X] {}   {tow}   [I] thermal", if view.thermal { "THERMAL, WHITE HOT" } else { "DAY TV" }, if he_up { "AP" } else { "HE" }))
+            } else {
+                Text::new(format!("BRADLEY (БРЕДЛІ), GUNNER'S SEAT   AP {ap} HE {he}   TOW {tows}\n[RMB] sight   [6] next Bradley   [1] drone"))
+            }
+        }
         Mode::Ground => {
             let team = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|(_, t)| t);
             let (weapon, left) = team.map(|t| (Some(t.weapon), t.atgm)).unwrap_or((None, 0));
@@ -481,7 +493,7 @@ fn update_hud(
     texts.p2().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar => format!("155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, teams, missiles, mode, speed_line),
         Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
-            format!("155 mm  {} rds   RAAM  {}   HIMARS  {}   FPV  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, team.0.left, teams, missiles, mode, speed_line)
+            format!("155 mm  {} rds   DPICM  {}   RAAM  {}   HIMARS  {}   FPV  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.cluster, fc.raam, fc.himars, team.0.left, teams, missiles, mode, speed_line)
         }
         Diorama::Robotyne => {
             let order = match *order {

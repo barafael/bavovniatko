@@ -15,6 +15,8 @@ pub enum Mode {
     Fpv,
     /// Standing with an Igla on the shoulder, looking for the heat of a helicopter (design/hostomel.md, phase 4).
     Manpads,
+    /// In a Bradley's gunner's seat, hull-down in its hide (design/avdiivka.md, phase 3).
+    Bradley,
 }
 
 /// What a camera follows: a point, a vehicle of the column, the infantry (`BAV_LOOK`, the showcase), one
@@ -127,6 +129,9 @@ pub enum Strike {
     Himars,
     /// Smoke shells: a screen on the ground that hides vehicles from the guns' and the ATGMs' sights.
     Smoke,
+    /// Cluster shells (DPICM): a carpet of bomblets over men in the open and the thin roofs of carriers; what the
+    /// 55th used at Avdiivka to drive infantry into cover before the high explosive flushed them out.
+    Cluster,
 }
 
 /// The weather over a day: which deck, how high, whether the sun shows.

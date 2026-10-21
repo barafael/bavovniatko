@@ -296,3 +296,38 @@ existing bakes if the optional rows are skipped.
   player's rounds untouched. The plan's band (25–40 of 60–80) holds without a hand on it; what the hands-off day
   lacks is our own losses (no vehicles of ours are in the field yet: phase 6) and the guns' share (the brigade's
   120 registered rounds killed 0–2: the points and the sheaf want looking at in phase 10).
+- 2026-10-21: phase 2, first part. `Cause::Autocannon`: a burst of 25 mm on a tank does not get through, and
+  `resolve_direct_hits` rolls what it took instead: the sights (35 in 100: the hull drives blind on the ghost
+  plan and the crew gets out), a track (25), the engine deck (12, on fire), or nothing but sparks; on a carrier it
+  penetrates as a missile would. `Strike::Cluster` / `ShellKind::Cluster` (DPICM): a mission of two shells, each
+  a rain of 24 small blasts over sixty metres, lethal to men in the open and nothing to a hull; Shift+click where
+  the file says `shift_fire: Cluster`, `SupportKind::Cluster(n)` on the stock, "DPICM" on the HUD. KABs: the script's
+  `Bombs` act now takes `say` (the net's line) and drops by the attacking side, so part I has three KAB pairs in
+  the Record (on the village, the heap and the plant); in Command the staff's `kabs` budget (`kab_every` seconds
+  apart, the rule `kab`) puts a FAB-500 on the freshest post or hide it has spotted, forty seconds after the
+  warning. Not yet: the Su-25 runs (the model is baked), the blinded hull's turret spinning in the look.
+- 2026-10-21: phase 3 and 6, first part. `UnitKind::Dug(Bradley)`: a whole Bradley hull-down at a hide (the
+  layout's `hides` hold `Dug` units as they hold tanks), spawned through `spawn_vehicle_at` with `BradleyArms`
+  (300 AP, 230 HE, 7 TOWs). `bav_sim::bradley`: by itself it works what it sees within 1.8 km out of the smoke,
+  a TOW at a tank it can hold (`Missile`, 0.3–0.7 by range), AP bursts at everything else (a hit 0.2–0.7 by range,
+  a tank's front taking a third of that), the turret following its aim. The player's seat (`Mode::Bradley`, key
+  6, cycling the Bradleys still in action): mouse look turns the turret, the right button is the ISU at x4 (day
+  TV, or the thermal channel on I), the left button a burst along the crosshair (X picks AP or HE: AP into the
+  hull it meets, HE as six small blasts where the line meets the ground, for men), T a TOW that `fly_guided`
+  steers from this sight as it steers the Stugna. The Record has two Bradleys in Stepove's hides and the tank in
+  the third. `BAV_VIEW=bradley` starts in the seat, the turret on the nearest enemy vehicle. Not yet: the pair's
+  runs (G / K / B to the driver), the first pass that fails by script in part III, our vehicles lost in the debrief,
+  the 25 mm's own report (the 30 mm's stands in).
+- 2026-10-21: phase 5, first part. `geo::slope` (the rise per metre over a four-metre step): men on a grade over
+  0.1 slow to a scramble (a third of a walking pace on the heap's face), and a driver's wanted speed goes to
+  nothing past a grade of 0.24, so the hulls stop at the heap's foot. Flat fields and the belts' swells are far
+  below both thresholds, so the older days are untouched (same-day). A third route runs up the heap's north-east
+  face to its top, for the storming parties. Not yet: the heap's areas held by whoever is on them (Hostomel's
+  `fight.zones` want the fight's posts, which are the column game's posts here), the drops from the drone.
+- 2026-10-21: phases 7 and 8, first part. Part II's own day: the first wave's wrecks laid along the lanes where
+  its band left them (34 hulls, `old_wrecks` now each part's own), overcast (`overcast: true`, the computed sun
+  behind cloud) with the wind gusting from the west (`wind`, which `day_wind` now reads from the file), four
+  smaller groups under more smoke with the infantry dismounting at the belts, three KAB pairs, and from 08:15
+  the heap stormed on foot (thirty groups up the face through the morning, tanks at its foot). Part III has both
+  waves' wrecks under the snow and the T-90M. The jam line moved past the heap's far foot (1350), since the heap
+  is ours to fly over. Not yet: parts II's and III's bands (phase 10), part III's duel as a script.

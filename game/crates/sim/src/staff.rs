@@ -36,9 +36,13 @@ impl Plugin for StaffPlugin {
         let spec = crate::data::sim_data().staff;
         app.insert_resource(Spotted::default())
             .insert_resource(StaffRng(SmallRng::seed_from_u64(crate::dev::seeded(1945))))
-            .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, losses: BTreeMap::new(), read: 0 })
+            .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, kabs: spec.kabs, next_kab: 420.0, losses: BTreeMap::new(), read: 0 })
             // After the units' systems, so the frame's hits are all in the log and the vehicles where they ended up.
             .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
+        // Only where the day has them: a system more anywhere else would be in that day's schedule.
+        if spec.kabs > 0 {
+            app.add_systems(Update, kabs.after(lancets).run_if(crate::running).in_set(crate::Step::Units));
+        }
         // Where aircraft fly: a launch's smoke and a ZU's tracers give the post away to the gunships (`air::fight`).
         if crate::manpads::present() {
             app.add_systems(Update, spot_air.run_if(|| rule("spot")).after(spot_fire).run_if(crate::running).in_set(crate::Step::Units));
@@ -65,11 +69,21 @@ pub struct StaffSpec {
     pub lancets: u32,
     /// Seconds between Orlan passes over our side (at least, at most).
     pub orlan: (f32, f32),
+    /// Glide bombs for the day (Avdiivka: Su-34s from stand-off range on a post or a hide they have spotted), and
+    /// the seconds between them (at least, at most).
+    #[serde(default)]
+    pub kabs: u32,
+    #[serde(default = "kab_every")]
+    pub kab_every: (f32, f32),
+}
+
+fn kab_every() -> (f32, f32) {
+    (300.0, 600.0)
 }
 
 impl Default for StaffSpec {
     fn default() -> Self {
-        Self { lancets: 0, orlan: (180.0, 360.0) }
+        Self { lancets: 0, orlan: (180.0, 360.0), kabs: 0, kab_every: kab_every() }
     }
 }
 
@@ -141,6 +155,8 @@ pub struct Staff {
     lancets: u32,
     next_lancet: f32,
     next_orlan: f32,
+    kabs: u32,
+    next_kab: f32,
     /// Their vehicles lost, by the route they were on and what did it.
     losses: BTreeMap<(usize, Loss), u32>,
     /// How many of the hit log's entries have been read.
@@ -334,6 +350,27 @@ fn lancets(
     ));
     radio.say2(now, "Ланцет у повітрі! Над технікою!", "A Lancet up! Over our vehicles!");
     info!("staff: a Lancet at a vehicle at {:.0},{:.0}, {} left, at {now:.0} s", p.x, p.y, staff.lancets);
+}
+
+/// A glide bomb on the freshest post or hide of ours they have spotted: a Su-34 from forty kilometres back, the
+/// bomb a minute in the air, a FAB-500's blast where they think the post is (design/avdiivka.md, phase 2: the air
+/// war the player cannot answer).
+fn kabs(mut commands: Commands, time: Res<Time>, script: Res<crate::director::Script>, mut staff: ResMut<Staff>, spotted: Res<Spotted>, mut rng: ResMut<StaffRng>, mut radio: ResMut<Radio>) {
+    if !rule("kab") || staff.kabs == 0 || script.t < staff.next_kab {
+        return;
+    }
+    let now = time.elapsed_secs_f64();
+    let Some(s) = spotted.0.values().filter(|s| s.what != What::Vehicle && now - s.seen < 600.0).max_by(|a, b| a.seen.total_cmp(&b.seen).then(b.at.x.total_cmp(&a.at.x))) else {
+        return;
+    };
+    let rng = &mut rng.0;
+    staff.kabs -= 1;
+    let (lo, hi) = crate::data::sim_data().staff.kab_every;
+    staff.next_kab = script.t + rng.random_range(lo..hi);
+    let at = s.at + Vec2::new(rng.random_range(-35.0..35.0), rng.random_range(-35.0..35.0));
+    commands.spawn((crate::fire::Shell { at, kind: crate::fire::ShellKind::Himars, land: now + 40.0, by: Side::Ru }, crate::fire::Whistled));
+    radio.say2(now, "Су-34 на підльоті. КАБ. Всім у бліндажі.", "Su-34 inbound. KAB. Everyone into the dugouts.");
+    info!("staff: a KAB at {:.0},{:.0}, {} left, at {now:.0} s", at.x, at.y, staff.kabs);
 }
 
 /// What killed their vehicles, by the road they were on (from the hit log, as it fills).

@@ -16,7 +16,7 @@ impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(crate::camera::Flight(dev().fly.clone()))
             .add_systems(Startup, lineup.after(crate::Setup::Kit));
-        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, env_manpads, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
+        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, env_manpads, env_bradley, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
         if dev().field {
             app.add_systems(Startup, field_overlay_setup).add_systems(Update, field_overlay.in_set(crate::Step::Screen));
         }
@@ -484,6 +484,32 @@ fn env_manpads(mut view: ResMut<View>, teams: Query<(Entity, &Post, &bav_sim::ma
     let eye = view.ground_eye;
     if let Some(t) = aircraft.iter().filter(|(a, _)| bav_sim::manpads::up(a)).map(|(_, t)| t.translation).min_by(|a, b| a.distance(eye).total_cmp(&b.distance(eye))) {
         let d = t - eye;
+        view.ground_yaw = crate::units::vehicle_yaw(d.xz());
+        view.ground_pitch = (d.y / d.xz().length()).atan();
+    }
+}
+
+/// `BAV_VIEW=bradley`: start in the first Bradley's gunner's seat, sight up, the turret on the nearest enemy vehicle
+/// the way a gunner would hold it.
+fn env_bradley(mut view: ResMut<View>, bradleys: Query<(Entity, &Transform), With<bav_sim::bradley::BradleyArms>>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
+    if dev().view != Some(Mode::Bradley) {
+        return;
+    }
+    if !*started {
+        let mut live: Vec<(Entity, Vec3)> = bradleys.iter().map(|(e, t)| (e, t.translation)).collect();
+        live.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.z.total_cmp(&b.1.z)));
+        let Some(&(e, p)) = live.first() else { return };
+        view.mode = Mode::Bradley;
+        view.ground_team = Some(e);
+        view.ground_eye = p + Vec3::Y * 3.7;
+        view.ground_yaw = std::f32::consts::PI;
+        view.ground_pitch = 0.0;
+        *started = true;
+    }
+    view.sight = true;
+    let eye = view.ground_eye;
+    if let Some(t) = q.iter().filter(|(v, _)| v.side == bav_core::diorama::Side::Ru && v.state.alive()).map(|(_, t)| t.translation).min_by(|a, b| a.distance(eye).total_cmp(&b.distance(eye))) {
+        let d = t + Vec3::Y * 1.2 - eye;
         view.ground_yaw = crate::units::vehicle_yaw(d.xz());
         view.ground_pitch = (d.y / d.xz().length()).atan();
     }
