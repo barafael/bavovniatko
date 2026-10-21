@@ -53,6 +53,10 @@ pub struct SimData {
     /// The infantry fight for a place (`fight`): ammunition, pulling out, capture, the field's areas.
     #[serde(default)]
     pub fight: Option<crate::fight::FightSpec>,
+    /// The Bradleys dug in (`bradley`): what is in their launchers and how far their gunners open fire (none: a full
+    /// launcher, and the gun's whole reach).
+    #[serde(default)]
+    pub bradley: Option<BradleySpec>,
     /// Command's Enemy staff: its budgets for the day (`staff`).
     #[serde(default)]
     pub staff: crate::staff::StaffSpec,
@@ -64,6 +68,13 @@ pub struct SimData {
 pub struct OperatorSpec {
     pub pos: (f32, f32),
     pub found_per_hour: f32,
+}
+
+/// The Bradleys dug in: TOWs in each launcher, and the range inside which the gunners open fire.
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub struct BradleySpec {
+    pub tows: u32,
+    pub range: f32,
 }
 
 /// FPVs: how long one flies (s).

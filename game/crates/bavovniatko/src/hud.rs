@@ -683,7 +683,11 @@ fn show_debrief(
                     (if diorama() == Diorama::Vuhledar { "Closest any Russian got to the town" } else { "Closest any Russian got to the village" }.into(), format!("{closest:.0} m")),
                     ("Ukrainian casualties".into(), stats.defender_losses.to_string()),
                     ("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)),
-                ],
+                ]
+                .into_iter()
+                // Where we have vehicles in the field (Avdiivka's Bradleys), what they cost.
+                .chain((diorama() != Diorama::Vuhledar).then(|| ("Our vehicles lost".to_string(), stats.defender_vehicles.to_string())))
+                .collect(),
                 stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (format!("column {i}"), [w.vehicles, w.destroyed, w.abandoned])).collect(),
                 ["vehicles", "destroyed", "abandoned"],
             )

@@ -58,8 +58,14 @@ pub struct BradleyArms {
 
 impl Default for BradleyArms {
     fn default() -> Self {
-        Self { ap: 300, he: 230, tows: 7, tow_reload: 10.0, burst_timer: 6.0, he_selected: false }
+        let tows = crate::data::sim_data().bradley.map_or(7, |b| b.tows);
+        Self { ap: 300, he: 230, tows, tow_reload: 10.0, burst_timer: 6.0, he_selected: false }
     }
+}
+
+/// How far the gunners left to themselves open fire: the file's, else the gun's reach.
+fn reach() -> f32 {
+    crate::data::sim_data().bradley.map_or(GUN_RANGE, |b| b.range.min(GUN_RANGE))
 }
 
 /// A sight line from `eye` along `fwd`: the enemy vehicle nearest along it whose hull it passes within three metres,
@@ -247,7 +253,8 @@ fn auto_guns(
         }
         let muzzle = muzzle_of(v, tf, &turrets);
         // A tank it can hold in the sight gets the TOW; else the nearest thing gets the gun.
-        if a.tows > 0 && a.tow_reload <= 0.0 && let Some((t, _, p)) = seen.iter().find(|(_, o, _)| o.kind.is_tank()) {
+        let tow_reach = crate::data::sim_data().bradley.map_or(TOW_RANGE, |b| b.range.min(TOW_RANGE));
+        if a.tows > 0 && a.tow_reload <= 0.0 && let Some((t, _, p)) = seen.iter().find(|(_, o, p)| o.kind.is_tank() && p.distance(eye) < tow_reach) {
             a.tows -= 1;
             a.tow_reload = rng.random_range(25.0..40.0);
             a.burst_timer = 3.0;
@@ -260,13 +267,13 @@ fn auto_guns(
                 MeshMaterial3d(palette.vertex.clone()),
                 NotShadowCaster,
                 Transform::from_translation(muzzle + Vec3::Y * 0.3).looking_at(*p, Vec3::Y),
-                Missile { target: *t, launched_at: muzzle, speed: 190.0, trail: 0.0, p_hit: Some((0.75 - d / 8000.0).clamp(0.3, 0.7)), top_attack: false, weapon: "TOW", from: "a Bradley" },
+                Missile { target: *t, launched_at: muzzle, speed: 190.0, trail: 0.0, p_hit: Some((0.65 - d / 8000.0).clamp(0.25, 0.6)), top_attack: false, weapon: "TOW", from: "a Bradley" },
             ));
             continue;
         }
         let (t, o, p) = seen[0];
         let d = p.distance(eye);
-        if d > GUN_RANGE || a.ap < BURST {
+        if d > reach() || a.ap < BURST {
             a.burst_timer = 2.0;
             continue;
         }
@@ -277,7 +284,7 @@ fn auto_guns(
         burst_fx(&mut fx, &mut sound, rng, muzzle, dir, d, Side::Ua);
         // A burst at a mile: a hit on a hull more often than not; a tank's front shrugs most of it off, and the
         // hit itself decides what it took (`units::resolve_direct_hits`).
-        let p_hit = (0.8 - d / 4000.0).clamp(0.2, 0.7) * if o.kind.is_tank() { 0.6 } else { 1.0 };
+        let p_hit = (0.7 - d / 3500.0).clamp(0.15, 0.6) * if o.kind.is_tank() { 0.6 } else { 1.0 };
         if rng.random_bool(p_hit as f64) {
             hits.write(DirectHit { target: t, cause: Cause::Autocannon, top: false, weapon: "25 mm", from: "a Bradley" });
             fx.explosion(p + Vec3::Y * 1.0, 0.3, false);

@@ -178,6 +178,8 @@ the pieces that reach above a height, to write a ring from.
 | Space | Vuhledar: ATGM teams AUTO (wait until the column commits), HOLD, or FREE. Mala Tokmachka: the column PUSH ON, HOLD, or PULL BACK (picking up the infantry) |
 | 1, 2, Tab | the drone, or the observer (a nine-storey roof; a water tower by the N08) |
 | 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
+| 6 | Avdiivka: into a Bradley's gunner's seat; again for the next one. Mouse turns the turret, right button holds the ISU sight (x4; I for its thermal channel), left click fires a burst, X picks AP or HE, T launches a TOW that follows the crosshair |
+| Shift+click | Avdiivka: cluster shells (DPICM), two to a mission, on infantry in the open |
 | O, G, K, B | Command: the orders over the drone's picture. A click picks one of our units, G / K / B order it to advance, hold or fall back, and a click on a ringed position sends it there; the order goes over the net, late and maybe not at all where they jam it |
 | T | Command: the map table over the picture, the battle running on: our units on the map, ordered from it the same way, and Columns sent on Supply |
 | P, `[`, `]` | pause, slow down, speed up |

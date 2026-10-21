@@ -331,3 +331,14 @@ existing bakes if the optional rows are skipped.
   the heap stormed on foot (thirty groups up the face through the morning, tanks at its foot). Part III has both
   waves' wrecks under the snow and the T-90M. The jam line moved past the heap's far foot (1350), since the heap
   is ours to fly over. Not yet: parts II's and III's bands (phase 10), part III's duel as a script.
+- 2026-10-21: phase 10, the first bands of all three parts with the Bradleys in (t2, hands-off, four seeds). Part I:
+  of 74 sent, knocked out 46/51/47/53 (destroyed 37–42, left 6–12), withdrew 8–21, Russian dead 288–389 of 678,
+  our casualties 2–4, no vehicle of ours lost: above the plan's 25–40, since five ATGM teams and two Bradleys
+  were firing. Part II: of 56 sent (four smaller groups; the heap's storming parties are men), knocked out 36–44,
+  Russian dead 319–354 of 723, 156–168 of theirs alive on the field at noon (the parties dug in on the face), our
+  casualties 1–4. Part III: the T-90M and its two BMPs killed every seed, all three by the posts' missiles before
+  the Bradleys' guns spoke. So (t3): parts I and II keep three ATGM teams, not five (the other posts riflemen);
+  part III's village is riflemen's, its Bradleys' launchers empty and their gunners opening at 700 m
+  (`bradley: (tows: 0, range: 700)`), so the 25 mm decides as it did; and the Bradleys left to themselves hit a
+  little less surely (bursts 0.15–0.6 by range, TOWs 0.25–0.6). The debrief counts our vehicles lost where we
+  have them in the field.

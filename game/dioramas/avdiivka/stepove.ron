@@ -228,12 +228,13 @@ Press Enter."#,
         points: 180,
         supply: (12, 2.0),
         record: [
-            (id: "stugna", at: Some(0)),
-            (id: "javelin", at: Some(1)),
+            // The trench under the tank's fire is riflemen's; the answer that afternoon was the Bradleys' gun.
+            (id: "rifles", at: Some(0)),
+            (id: "rifles", at: Some(1)),
             (id: "rifles", at: Some(2)),
-            (id: "stugna", at: Some(3)),
-            (id: "javelin", at: Some(4)),
-            (id: "stugna", at: Some(5)),
+            (id: "rifles", at: Some(3)),
+            (id: "rifles", at: Some(4)),
+            (id: "rifles", at: Some(5)),
             (id: "rifles", at: Some(6)),
             (id: "rifles", at: Some(7)),
             (id: "rifles", at: Some(8)),
@@ -258,6 +259,9 @@ Press Enter."#,
     ew: Some((jammers: [(1300.0, 1700.0), (-900.0, 1750.0)], radius: 900.0, depth: 700.0)),
     // FPVs by the day (phase 4 makes them a stock; one at a time until then), five minutes in the air.
     fpv: Some((endurance: 300.0)),
+    // The launchers empty that afternoon (the experts' question, v02 §7: "unless they were out"), and the fight at
+    // the village's own ranges: it was the 25 mm that did it.
+    bradley: Some((tows: 0, range: 700.0)),
     // Command's Enemy staff: Lancets for the Bradleys and the Leopard; Orlans over the village every few minutes.
     staff: (lancets: 3, orlan: (150.0, 300.0)),
     // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
