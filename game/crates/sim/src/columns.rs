@@ -66,8 +66,9 @@ pub fn send(commands: &mut Commands, models: &Models, palette: &Palette, book: &
         let s = 8.0 + SPACING * (n - 1 - i) as f32;
         spawn_vehicle(commands, models, palette, book, VehicleSpec { side: Side::Ua, kind, route: r, s, lat: 0.0, wave, idx: i as u32, plow: false, smoke: false, rescue: false, column_pace: pace });
     }
-    let head = &f.road_heads[order.head].name;
-    radio.say2(now, format!("Колона пішла: {n} од., {}.", head.1), format!("Column on its way: {n} vehicles, from {}.", head.0));
+    if let Some(head) = f.road_heads.get(order.head).map(|h| &h.name) {
+        radio.say2(now, format!("Колона пішла: {n} од., {}.", head.1), format!("Column on its way: {n} vehicles, from {}.", head.0));
+    }
     info!("column {wave}: {n} vehicles ({:?}) from road head {} to position {} ({:?} at {:.0},{:.0}), {len:.0} m at {pace:.1} m/s, at {now:.0} s", order.kinds, order.head, order.to, pos.kind, pos.at.x, pos.at.y);
     Ok(wave)
 }

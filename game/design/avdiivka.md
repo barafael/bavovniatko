@@ -342,3 +342,16 @@ existing bakes if the optional rows are skipped.
   (`bradley: (tows: 0, range: 700)`), so the 25 mm decides as it did; and the Bradleys left to themselves hit a
   little less surely (bursts 0.15–0.6 by range, TOWs 0.25–0.6). The debrief counts our vehicles lost where we
   have them in the field.
+- 2026-10-21: the bands after that (t3, hands-off, four seeds). Part I: of 74 sent, knocked out 38/39/37/35
+  (destroyed 22–29, left 9–15), withdrew 23–26, Russian dead 301–322, our casualties 5–7, no vehicle of ours lost:
+  inside the plan's 25–40. Part II: of 56 sent, knocked out 36/42/41/38, withdrew 4–14, Russian dead 334–382 of
+  723, 161–197 of theirs on the field at the end (the parties dug in on the heap's face, which the hands-off day
+  never drives off), our casualties 0–8. The smoke run (`cargo xtask smoke`) now starts every diorama under
+  every switch; it found Command's map table falling over on a field with no road heads or fewer positions than
+  a switch names (Hostomel's), which it no longer does. Part III (t3): the T-90M and its two BMPs stopped every
+  seed, none by a missile now (the posts are riflemen's, the launchers empty), two of the three on the night's
+  mines in front of the railway and the rest by the Bradleys' bursts, left or burning; our casualties 0–2, no
+  Bradley lost. The duel wants its shape still: the mines moved off the village's own approach for January, the
+  first pass that fails by script, and the T-90M reaching the east end before the guns speak. Next: that, the heap's
+  areas and the drops (phase 5), the pair's runs and orders (phase 3), the Su-25 runs (phase 2), the showcase shots
+  and a played session of each part (phase 10).

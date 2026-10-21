@@ -872,10 +872,15 @@ fn show_composer(
     }
     set(&mut texts.p1(), format!("Supply (підвіз): {:.0}, {:.0} more a minute", supply.have.floor(), supply.per_min));
     let heads = &field().road_heads;
-    let h = &heads[composer.head.min(heads.len().saturating_sub(1))];
-    set(&mut texts.p2(), format!("from road head {}: {} ({}) >", composer.head, h.name.0, h.name.1));
+    // (A place with no road heads, Hostomel's field: nothing comes up a road there.)
+    match heads.get(composer.head.min(heads.len().saturating_sub(1))) {
+        Some(h) => set(&mut texts.p2(), format!("from road head {}: {} ({}) >", composer.head, h.name.0, h.name.1)),
+        None => set(&mut texts.p2(), "no road heads on this field".to_string()),
+    }
     let mut s = match composer.to {
         None => "to: click a position on the map (with none of ours picked)".to_string(),
+        // (A position the field does not have, from a switch: say so rather than fall over.)
+        Some(to) if to >= field().positions.len() => format!("to position {to}: there are {} positions on this field", field().positions.len()),
         Some(to) => {
             let p = &field().positions[to];
             let way = match bav_sim::columns::way(composer.head, to) {
