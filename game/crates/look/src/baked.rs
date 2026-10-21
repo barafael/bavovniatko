@@ -34,7 +34,7 @@ pub struct Baked {
 pub type Pair = (Handle<VehicleMaterial>, Handle<VehicleMaterial>);
 
 /// Every baked model, by the name `tools/bake` gives it.
-pub const IDS: [&str; 19] = ["t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley", "ka52", "mi8", "mi24", "il76", "an225", "su24", "zu23", "btr80", "bmd2", "t90m"];
+pub const IDS: [&str; 20] = ["t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley", "ka52", "mi8", "mi24", "il76", "an225", "su24", "zu23", "btr80", "bmd2", "t90m", "su25"];
 
 fn file(id: &str) -> &'static [u8] {
     macro_rules! veh {
@@ -45,7 +45,7 @@ fn file(id: &str) -> &'static [u8] {
             }
         };
     }
-    veh!("t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley", "ka52", "mi8", "mi24", "il76", "an225", "su24", "zu23", "btr80", "bmd2", "t90m")
+    veh!("t80", "t72", "t64", "bmp1", "bmp2", "mtlb", "leo2a6", "leo2r", "bradley", "ka52", "mi8", "mi24", "il76", "an225", "su24", "zu23", "btr80", "bmd2", "t90m", "su25")
 }
 
 struct Reader<'a> {

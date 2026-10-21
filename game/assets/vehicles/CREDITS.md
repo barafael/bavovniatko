@@ -23,3 +23,4 @@ re-encodes it, and changes nothing else.
 - `btr80.veh`: Low poly BTR 82 by S1Priv — CC BY 4.0 — https://sketchfab.com/3d-models/6226acae68424d99bf03882b245ff7c5
 - `bmd2.veh`: Bmd-2 Free by 2w — CC BY 4.0 — https://sketchfab.com/3d-models/407cda86aaa74654a2b0574015e798fd
 - `t90m.veh`: T-90M by minehffd — CC BY 4.0 — https://sketchfab.com/3d-models/2e31a3cf16b04f0180b9387df5198c9a
+- `su25.veh`: [PBR] Sukhoi Su-25 by Immersive3A — CC BY 4.0 — https://sketchfab.com/3d-models/956d0cb0bbe54fa8ad72e8c3e224fd2d

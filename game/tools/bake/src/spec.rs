@@ -107,4 +107,7 @@ pub const SPECS: &[Spec] = &[
     // The hull's span runs from the front skirt flaps to the stowed fuel drums: 7.3 m there puts the gun-forward
     // length at the real 9.63 and the width at 3.68 (3.78 over the skirts). Simplified across seams: 206k faces.
     Spec { id: "t90m", dir: "tanks/tanks_t-90m-proryv_minehffd", yaw: -90.0, length: Some(7.3), across_seams: true, turret_nodes: &[136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 178, 180, 182, 184, 186, 188, 190, 192, 194, 196, 198, 200, 202, 204, 206, 208, 210, 212, 214, 216, 218, 220, 222, 224, 226, 228, 230, 232, 234, 236], max_tris: 28_000, ..BASE },
+    // [PBR] Sukhoi Su-25 by Immersive3A: the rocket runs at Avdiivka, on its gear. 15.53 m long puts the span at
+    // 14.5 m (14.36) and the fin at 4.7 m (4.8).
+    Spec { id: "su25", dir: "aircraft/aircraft_su-25_immersive3a", length: Some(15.53), turret_none: true, ..BASE },
 ];
