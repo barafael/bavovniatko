@@ -284,3 +284,15 @@ existing bakes if the optional rows are skipped.
   with their own clock, season and sun until phases 8 and 9. **Assumptions to check:** the OSM is the map of
   2026, the plant in ruins there; the heap's terraces are drawn by eye; the routes and positions are placed by eye
   against the dossier's description and the field overlay (`BAV_FIELD=1`).
+- 2026-10-21: phase 1, second part. The heap on the map's own outline (`Heap`: the `Spoil` area rises over 170 m in
+  from its edge, its foot wandering and its benches shifted by noise, so it is not rings), the coke plant's skyline
+  by eye inside its area (two batteries with their coal and quench towers, five chimneys, the fuel farm's tanks
+  where the map has them; the map has the footprints but none of the heights), and Stepove as the `town` (the
+  TOS, the field's ruin positions, the advance measured to the village's edge). The T-90M is a `VKind` (Relikt:
+  a missile destroys it 55 in 100 against the T-72B3's 72; a carousel; the T-72's slow reverse and pivot), and
+  part III's tank is one. The models merged (`74922c5`: the T-90M and the Su-25).
+- 2026-10-21: part I's first band, hands-off (`scripts/band.sh avdiivka-1 0 1 2 3`, t1): of 74 sent, knocked out
+  38/37/31/39 (destroyed 21–22, left 10–18), withdrew 17–26, Russian dead 352–377 of 678, our casualties 2–6, the
+  player's rounds untouched. The plan's band (25–40 of 60–80) holds without a hand on it; what the hands-off day
+  lacks is our own losses (no vehicles of ours are in the field yet: phase 6) and the guns' share (the brigade's
+  120 registered rounds killed 0–2: the points and the sheaf want looking at in phase 10).

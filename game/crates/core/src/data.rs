@@ -253,6 +253,10 @@ pub enum HeightTerm {
     /// `top`, then the face falling to the ground at `radius`, with terraces every `terrace` metres of height
     /// (0: a smooth face).
     Mound { at: P, radius: f32, top: f32, height: f32, terrace: f32 },
+    /// A spoil heap on the map's own outline: the `Spoil` area of the map (`osm`) that holds `inside` rises to
+    /// `height` over `rim` metres in from its edge, in terraces every `terrace` metres of height (0: a smooth
+    /// face), the face and the benches roughened by noise so no two stretches of it are alike.
+    Heap { inside: P, height: f32, rim: f32, terrace: f32 },
 }
 
 #[derive(Deserialize, Debug, Clone, Copy)]
@@ -486,6 +490,7 @@ pub enum Term {
     Valley { curve: Curve, profile: Vec<(f32, f32)> },
     Gully { x0: f32, amp: f32, period: f32, z_offset: f32, phase: f32, width: f32, depth: f32, fade: Fade },
     Mound { at: Vec2, radius: f32, top: f32, height: f32, terrace: f32 },
+    Heap { poly: Vec<Vec2>, min: Vec2, max: Vec2, height: f32, rim: f32, terrace: f32 },
 }
 
 static GROUND: OnceLock<Vec<Term>> = OnceLock::new();
@@ -503,6 +508,20 @@ pub fn height(x: f32, z: f32) -> f32 {
                 HeightTerm::Valley { curve: c, profile } => Term::Valley { curve: curve(&c).clone(), profile },
                 HeightTerm::Gully { x0, amp, period, z_offset, phase, width, depth, fade } => Term::Gully { x0, amp, period, z_offset, phase, width, depth, fade },
                 HeightTerm::Mound { at, radius, top, height, terrace } => Term::Mound { at: v(at), radius, top, height, terrace },
+                HeightTerm::Heap { inside, height, rim, terrace } => {
+                    let at = v(inside);
+                    let poly: Vec<Vec2> = data()
+                        .osm
+                        .areas
+                        .iter()
+                        .filter(|(k, _)| *k == crate::geo::AreaKind::Spoil)
+                        .map(|(_, pts)| pts.iter().copied().map(v).collect::<Vec<Vec2>>())
+                        .find(|poly| crate::geo::inside(poly, at))
+                        .unwrap_or_else(|| panic!("no spoil heap on the map holds ({}, {})", at.x, at.y));
+                    let min = poly.iter().fold(Vec2::splat(f32::MAX), |a, p| a.min(*p));
+                    let max = poly.iter().fold(Vec2::splat(f32::MIN), |a, p| a.max(*p));
+                    Term::Heap { poly, min, max, height, rim, terrace }
+                }
             })
             .collect()
     });
@@ -537,18 +556,39 @@ pub fn height(x: f32, z: f32) -> f32 {
             }
             Term::Mound { at, radius, top, height, terrace } => {
                 let d = Vec2::new(x, z).distance(*at);
-                let mut rise = height * (1.0 - smoothstep(*top, *radius, d));
-                if *terrace > 0.0 && rise > 0.0 && rise < height - 0.5 {
-                    // The face climbs in steps: each terrace a bench a few metres wide, then the next face.
-                    let k = (rise / terrace).floor();
-                    let frac = rise / terrace - k;
-                    rise = (k + smoothstep(0.25, 1.0, frac)) * terrace;
+                h += terraced(height * (1.0 - smoothstep(*top, *radius, d)), *height, *terrace, 0.0);
+            }
+            Term::Heap { poly, min, max, height, rim, terrace } => {
+                let p = Vec2::new(x, z);
+                if p.x < min.x - 40.0 || p.y < min.y - 40.0 || p.x > max.x + 40.0 || p.y > max.y + 40.0 {
+                    continue;
                 }
-                h += rise;
+                let n = poly.len();
+                let edge = (0..n).map(|i| crate::geo::segment_distance(p, poly[i], poly[(i + 1) % n])).fold(f32::MAX, f32::min);
+                // The tip's edge is never where the map drew it to the metre: the foot wanders in and out.
+                let wander = fbm(x / 70.0, z / 70.0, 2, 61) * 25.0;
+                let d = if crate::geo::inside(poly, p) { edge + wander } else { wander - edge };
+                if d <= 0.0 {
+                    continue;
+                }
+                let rise = height * smoothstep(0.0, *rim, d);
+                h += terraced(rise, *height, *terrace, fbm(x / 35.0, z / 35.0, 2, 62) * 2.5);
             }
         }
     }
     h
+}
+
+/// A rise up a spoil heap's face in benches: every `terrace` metres of height a flat few metres, then the next face;
+/// `wobble` shifts where the benches fall so they are not rings. Nothing below the ground or above the top.
+fn terraced(rise: f32, height: f32, terrace: f32, wobble: f32) -> f32 {
+    if terrace <= 0.0 || rise <= 0.0 || rise >= height - 0.5 {
+        return rise.clamp(0.0, height);
+    }
+    let r = (rise + wobble).clamp(0.0, height);
+    let k = (r / terrace).floor();
+    let frac = r / terrace - k;
+    ((k + smoothstep(0.3, 1.0, frac)) * terrace).clamp(0.0, height)
 }
 
 /// Arc length where a road first climbs (northbound) past `z`.

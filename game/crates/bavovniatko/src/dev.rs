@@ -103,13 +103,13 @@ fn field_overlay(mut gizmos: Gizmos, lines: Res<FieldLines>) {
 }
 
 /// `BAV_LINEUP="x,z,heading"`: every vehicle model side by side, 10 m apart, and behind them the same burned
-/// out, turrets turned a little so the split shows. The baked models no vehicle kind drives yet (the T-90M, the Su-25, the Ka-52, the
+/// out, turrets turned a little so the split shows. The baked models no vehicle kind drives yet (the Su-25, the Ka-52, the
 /// aircraft, Hostomel's set) follow, spaced by their own size.
 fn lineup(mut commands: Commands, models: Res<crate::units::Models>, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<crate::baked::VehicleMaterial>>) {
     use crate::units::{VKind, VehicleMeshes, burnt, dress, dress_charred, skin};
     use bevy::camera::primitives::MeshAabb;
     use strum::VariantArray;
-    const SPARE: [&str; 11] = ["t90m", "su25", "su24", "ka52", "mi8", "mi24", "il76", "an225", "zu23", "btr80", "bmd2"];
+    const SPARE: [&str; 10] = ["su25", "su24", "ka52", "mi8", "mi24", "il76", "an225", "zu23", "btr80", "bmd2"];
     let Some([x, z, heading]) = dev().lineup else { return };
     let rot = Quat::from_rotation_y(heading.to_radians());
     let across = rot * Vec3::X;

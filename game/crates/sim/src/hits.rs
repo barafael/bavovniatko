@@ -95,6 +95,7 @@ impl VKind {
         match self {
             VKind::T80 => "T-80BV",
             VKind::T72 => "T-72B3",
+            VKind::T90m => "T-90M",
             VKind::Bmp1 => "BMP-1",
             VKind::Bmp2 => "BMP-2",
             VKind::Mtlb => "MT-LB",

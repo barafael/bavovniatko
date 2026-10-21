@@ -73,20 +73,22 @@ pub enum VKind {
     Bmr2,
     /// M2A2 ODS Bradley
     Bradley,
+    /// T-90M Proryv: Relikt reactive armour, a carousel, the best tank Russia had at Avdiivka
+    T90m,
 }
 
 impl VKind {
     pub fn is_tank(self) -> bool {
-        matches!(self, VKind::T80 | VKind::T72 | VKind::Leo2a6)
+        matches!(self, VKind::T80 | VKind::T72 | VKind::Leo2a6 | VKind::T90m)
     }
     /// Explosive reactive armour on the hull and turret front: Kontakt-1 on the T-80BV, Kontakt-5 on the
     /// T-72B3, the BRAT tiles on the 47th's Bradleys (M2A2 ODS-SA).
     pub fn era(self) -> bool {
-        matches!(self, VKind::T80 | VKind::T72 | VKind::Bradley)
+        matches!(self, VKind::T80 | VKind::T72 | VKind::Bradley | VKind::T90m)
     }
     /// T-72/T-80 carousel autoloaders: when the charges go, the turret goes up.
     pub fn carousel(self) -> bool {
-        matches!(self, VKind::T80 | VKind::T72)
+        matches!(self, VKind::T80 | VKind::T72 | VKind::T90m)
     }
     /// Built for crew survival (blow-out panels, spall liners, escape hatches and ramps): most crews get out.
     pub fn western(self) -> bool {
@@ -95,7 +97,7 @@ impl VKind {
     /// The marks its tracks leave: the distance between their centres and each track's width, in metres.
     pub fn tracks(self) -> (f32, f32) {
         match self {
-            VKind::T80 | VKind::T72 => (2.79, 0.58),
+            VKind::T80 | VKind::T72 | VKind::T90m => (2.79, 0.58),
             VKind::Leo2a6 | VKind::Leo2r => (2.79, 0.64),
             VKind::Wisent => (2.7, 0.55),
             VKind::Bmr2 => (2.64, 0.58),
@@ -117,7 +119,7 @@ impl VKind {
     }
     pub fn troops(self) -> u32 {
         match self {
-            VKind::T80 | VKind::T72 | VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0,
+            VKind::T80 | VKind::T72 | VKind::T90m | VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0,
             VKind::Bmp1 | VKind::Bmp2 | VKind::Bradley => 6,
             VKind::Mtlb => 8,
         }
@@ -125,7 +127,7 @@ impl VKind {
     /// Chance a mine under a track destroys the vehicle outright, rather than only tearing off the track.
     fn mine_kill(self, stacked: bool) -> f64 {
         let base = match self {
-            VKind::T80 | VKind::T72 => 0.3,
+            VKind::T80 | VKind::T72 | VKind::T90m => 0.3,
             VKind::Leo2a6 => 0.1,
             VKind::Bradley => 0.25,
             VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0.12,
@@ -138,6 +140,8 @@ impl VKind {
         match self {
             // Kontakt-1 on the glacis and turret front saves some; side and top hits mostly don't.
             VKind::T80 | VKind::T72 => 0.72,
+            // Relikt on the front and sides, and the glacis sloped: more of what hits it is thrown.
+            VKind::T90m => 0.55,
             VKind::Leo2a6 => 0.3,
             VKind::Bradley => 0.55,
             VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0.5,
@@ -173,7 +177,7 @@ impl VKind {
     /// reverses nearly as fast as it goes forward.
     fn reverse_speed(self) -> f32 {
         match self {
-            VKind::T72 | VKind::Bmr2 => 1.4,
+            VKind::T72 | VKind::T90m | VKind::Bmr2 => 1.4,
             VKind::T80 => 3.0,
             VKind::Leo2a6 | VKind::Leo2r => 6.0,
             VKind::Bradley => 4.5,
@@ -185,7 +189,7 @@ impl VKind {
     fn pivot_rate(self) -> f32 {
         match self {
             VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bradley => 0.55,
-            VKind::T80 | VKind::T72 | VKind::Bmr2 => 0.38,
+            VKind::T80 | VKind::T72 | VKind::T90m | VKind::Bmr2 => 0.38,
             _ => 0.45,
         }
     }

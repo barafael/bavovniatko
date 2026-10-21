@@ -198,7 +198,7 @@ Press Enter."#,
             90.0,
             Column(
                 route: 0,
-                kinds: [T80, Bmp2, Bmp2],
+                kinds: [T90m, Bmp2, Bmp2],
                 plow: false,
                 start: 1400.0,
                 smoke: 2,

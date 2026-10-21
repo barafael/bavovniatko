@@ -668,7 +668,7 @@ fn show_debrief(
                     ("Men sent forward".into(), stats.sent.to_string()),
                     ("    came back".into(), stats.returned.to_string()),
                     ("    Russian dead".into(), stats.attacker_dead.to_string()),
-                    ("Closest any Russian got to the town".into(), format!("{closest:.0} m")),
+                    (if diorama() == Diorama::Vuhledar { "Closest any Russian got to the town" } else { "Closest any Russian got to the village" }.into(), format!("{closest:.0} m")),
                     ("Ukrainian casualties".into(), stats.defender_losses.to_string()),
                     ("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)),
                 ],

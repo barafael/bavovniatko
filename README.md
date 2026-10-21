@@ -9,13 +9,17 @@ The repository has two halves.
 ## [game/](game/README.md): the game
 
 Self-running dioramas of single historical episodes, built in Bevy. The day plays out by itself along its
-historical course, and the player, a drone operator and fire controller, matters at the margin. Two dioramas
-exist, one minefield seen from both sides: **Vuhledar, 6 February 2023** and **Mala Tokmachka, 8 June 2023**.
+historical course, and the player, a drone operator and fire controller, matters at the margin. Four places
+exist: **Vuhledar, 6 February 2023** and **Mala Tokmachka, 8 June 2023**, one minefield seen from both sides;
+**Hostomel, 24 February 2022**, the helicopter landing and the counterattack; and **Avdiivka**, October 2023 and
+January 2024, in the making.
 
 ```sh
 cd game
-cargo run --release              # Vuhledar
-cargo run --release -- robotyne  # Mala Tokmachka
+cargo run --release                 # Vuhledar
+cargo run --release -- robotyne     # Mala Tokmachka
+cargo run --release -- hostomel-1   # Hostomel, the landing (hostomel-2: the counterattack)
+cargo run --release -- avdiivka-1   # Avdiivka, the first wave (avdiivka-2, avdiivka-3)
 ```
 
 | path | contents |

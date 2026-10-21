@@ -3,11 +3,15 @@
 The playable dioramas of bavovniatko, built in Bevy 0.19. Each is one bounded historical episode that runs by
 itself; the design is in [`design/`](design/) (the principles in [`chapters.md`](design/chapters.md), the
 campaign in [`campaign.md`](design/campaign.md), the work in progress in [`roadmap.md`](design/roadmap.md)). There
-are two so far, one minefield seen from both sides:
+are four places so far, the first two one minefield seen from both sides:
 
 - **Vuhledar, 6 February 2023** (`cargo run --release`): Russian columns into the 72nd Brigade's kill zone.
 - **Mala Tokmachka, 8 June 2023** (`cargo run --release -- robotyne`): the 47th Brigade's breach into the Russian
   minefields, the first day of the Robotyne chapter.
+- **Hostomel, 24 February 2022** (`-- hostomel-1`, `-- hostomel-2`): the helicopter landing on the Antonov airport
+  and the counterattack at dusk, in two parts ([`design/hostomel.md`](design/hostomel.md)).
+- **Avdiivka, October 2023 and January 2024** (`-- avdiivka-1`, `-- avdiivka-2`, `-- avdiivka-3`): the northern
+  shoulder of the salient in three parts, in the making ([`design/avdiivka.md`](design/avdiivka.md)).
 
 To watch rather than play, `cargo xtask film` produces a four-minute film of both, directed from
 `design/showcase.md` ([below](#the-showcase-film)).
@@ -46,6 +50,29 @@ Russian guns, and from your own drone), one HIMARS mission, and the order to the
 Their electronic warfare is a field, not a line. Jammers along the crest switch on and off, each a mast with a
 red lamp while it jams; your drone's link frays near them and past the jam line. A 155 mm mission on one knocks
 it out. And watch the satellite count: when the GNSS jamming suddenly lifts, their Ka-52s are a minute out.
+
+## Hostomel
+
+The war's first morning. At Antonov airport, 25 km from Kyiv, fewer than two hundred National Guard conscripts
+of the 4th Rapid Reaction Brigade's rear echelon hold the field against about thirty-four helicopters landing
+the VDV. Key 5 puts an Igla on your shoulder: the seeker's growl, the steady tone, the launch, and a minimum range
+inside which the warhead will not arm, so you let the Ka-52 pass and take it going away. Posts run out of
+ammunition and pull out; Space orders everyone out before they are taken. At dusk (`hostomel-2`) the army comes
+back for the field behind the guns and the Su-24s, to crater the runway before the Il-76s can land. The history
+is in [`db/research/chapters/c01-march-on-kyiv.md`](../db/research/chapters/c01-march-on-kyiv.md); the plan,
+decisions and bands in [`design/hostomel.md`](design/hostomel.md).
+
+## Avdiivka
+
+The northern shoulder of the salient: Stepove, the railway, the coke plant's spoil heap and the plant's edge, on
+a map turned so the Russian columns come down the field from Krasnohorivka and Kamianka. Part I is the first
+wave of 10 October 2023, seen from the 47th Brigade's drone at Stepove, with the 55th Artillery's rounds, FPVs
+by the dozen, ATGM posts along the rails and the observers on the heap; part II the second wave of 19 October;
+part III an afternoon in the snow of 11 January 2024, the T-90M in the village. The engine for the Bradley's
+gunner's seat, the cluster shells, the KABs and the heap stormed on foot is being built: the plan, its decisions
+and the bands so far are in [`design/avdiivka.md`](design/avdiivka.md), the history in
+[`db/research/chapters/c11-avdiivka.md`](../db/research/chapters/c11-avdiivka.md) and
+[`v02-stepove-bradley.md`](../db/research/chapters/v02-stepove-bradley.md).
 
 ## The showcase film
 

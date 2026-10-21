@@ -16,7 +16,7 @@ pub fn livery(id: &str) -> Livery {
     let summer = diorama().summer();
     let seed = baked::IDS.iter().position(|&i| i == id).unwrap_or(0) as f32 * 7.31;
     let (scheme, whitewash) = match id {
-        "t80" | "t72" | "bmp1" | "bmp2" | "mtlb" | "bmd2" => (0.0, if summer { 0.0 } else { 0.7 }),
+        "t80" | "t72" | "t90m" | "bmp1" | "bmp2" | "mtlb" | "bmd2" => (0.0, if summer { 0.0 } else { 0.7 }),
         "leo2a6" | "leo2r" | "bradley" => (1.0, 0.0),
         "t64" | "btr80" | "zu23" => (2.0, 0.0),
         _ => (3.0, 0.0),
@@ -53,6 +53,7 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mu
             VKind::Wisent => ("leo2r", Some(meshes::wisent_top(WEST_GREEN))),
             VKind::Bmr2 => ("t64", Some(meshes::bmr2_top(WEST_GREEN))),
             VKind::Bradley => ("bradley", None),
+            VKind::T90m => ("t90m", None),
         };
         let (turret, turret_at, muzzle) = match top {
             Some((t, at)) => (hand(&mut meshes, id, at.y, t), at, Vec3::new(0.0, 0.6, -1.6)),

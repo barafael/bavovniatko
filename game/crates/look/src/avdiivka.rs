@@ -17,9 +17,40 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut i
     let ((x, z), h) = bav_core::data::data().op.expect("Avdiivka's parts place the observers");
     let at = Vec2::new(x, z);
     commands.insert_resource(bav_sim::player::ObservationPost { eye: geo::ground(at) + Vec3::Y * h, building: at });
+    plant(&mut roofs);
     if !roofs.is_empty() {
         let solid = materials.add(StandardMaterial { perceptual_roughness: 0.95, ..default() });
         commands.spawn((Mesh3d(meshes.add(roofs.build())), MeshMaterial3d(solid)));
+    }
+}
+
+/// The coke plant's skyline along the box's south-west end, placed by eye inside its area (the map has its
+/// footprints but none of its heights): the coke batteries, long and low with their coal towers and quench
+/// towers over them, the chimneys that marked the plant from anywhere on the salient, and the fuel farm's tanks.
+/// Bombed for months by the day, its shapes stand but blackened.
+fn plant(m: &mut MeshBuilder) {
+    let soot = [0.30, 0.29, 0.28];
+    let brick = [0.42, 0.33, 0.28];
+    let steel = [0.36, 0.37, 0.38];
+    let at = |x: f32, z: f32| geo::ground(Vec2::new(x, z)) - Vec3::Y * 0.5;
+    // Two batteries along the plant's long axis (+x), each a wall of ovens with its coal tower at one end and the
+    // quench tower off its side.
+    for (x, z) in [(-1500.0, -600.0), (-1750.0, -280.0)] {
+        let g = at(x, z);
+        m.boxc(g + Vec3::Y * 7.0, Vec3::new(190.0, 14.0, 16.0), brick);
+        m.boxc(g + Vec3::Y * 14.5, Vec3::new(190.0, 1.4, 20.0), steel);
+        m.boxc(g + Vec3::new(-105.0, 23.0, 0.0), Vec3::new(13.0, 46.0, 13.0), soot);
+        m.boxc(g + Vec3::new(60.0, 15.0, 24.0), Vec3::new(11.0, 30.0, 11.0), steel);
+    }
+    // The chimneys: tapering stacks of brick and concrete.
+    for (x, z, h) in [(-1400.0, -720.0, 80.0), (-1770.0, -470.0, 70.0), (-2020.0, -200.0, 92.0), (-1300.0, -1000.0, 60.0), (-2200.0, -880.0, 75.0)] {
+        let g = at(x, z);
+        m.cylinder(g, Vec3::Y * h, 4.2, 12, brick);
+        m.cylinder(g + Vec3::Y * (h - 0.5), Vec3::Y * 2.0, 4.6, 12, soot);
+    }
+    // The fuel farm's tanks, where the map has them.
+    for (x, z) in [(-1999.0, -821.0), (-2065.0, -767.0), (-1992.0, -785.0), (-2037.0, -813.0), (-2028.0, -776.0), (-2075.0, -802.0)] {
+        m.cylinder(at(x, z), Vec3::Y * 12.0, 14.0, 16, steel);
     }
 }
 
