@@ -425,7 +425,7 @@ fn update_hud(
     let committed = stats.vehicles_committed;
     let out = stats.destroyed + stats.abandoned;
     texts.p1().set_if_neq(Text::new(match diorama() {
-        Diorama::Vuhledar => format!(
+        Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => format!(
             "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}",
             diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
         ),
@@ -480,6 +480,9 @@ fn update_hud(
     let speed_line = if (speed - 1.0).abs() > 0.01 { format!("\ntime x{speed}") } else { String::new() };
     texts.p2().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar => format!("155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, teams, missiles, mode, speed_line),
+        Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
+            format!("155 mm  {} rds   RAAM  {}   HIMARS  {}   FPV  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, team.0.left, teams, missiles, mode, speed_line)
+        }
         Diorama::Robotyne => {
             let order = match *order {
                 ColumnOrder::Push => "PUSH ON",
@@ -546,8 +549,8 @@ fn osd_update(time: &Time, view: &View, script: &Script, osd: &mut Query<(&Osd, 
     let (lat, lon) = geo::latlon(p2 + view.gnss_error);
     let agl = view.drone_pos.y - geo::height(p2.x, p2.y);
     let rec = script.t as u32;
-    // Heading from the yaw (0 faces north, turning left positive).
-    let heading = ((-view.drone_yaw.to_degrees()) % 360.0 + 360.0) % 360.0;
+    // Heading from the yaw (0 faces -z, turning left positive), as a compass bearing where the map is turned.
+    let heading = geo::true_heading((-view.drone_yaw.to_degrees()).rem_euclid(360.0));
     let hs = view.drone_vel.xz().length();
     let jam = view.jamming;
     for (kind, mut text, mut vis) in osd.iter_mut() {
@@ -641,11 +644,17 @@ fn show_debrief(
     let out = stats.destroyed + stats.abandoned;
     // (label, value) rows, and the columns table: (name, vehicles, destroyed, abandoned).
     let (heading, span, rows, columns, col_heads): DebriefCopy = match diorama() {
-        Diorama::Vuhledar => {
+        Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
             let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
+            let (heading, span) = if diorama() == Diorama::Vuhledar {
+                (format!("6 February 2023   {}", crate::text::VUHLEDAR.hud()), format!("06:40 – {}", director::clock_text(script.t)))
+            } else {
+                let place = if diorama() == Diorama::AvdiivkaStepove { crate::text::STEPOVE } else { crate::text::AVDIIVKA };
+                (format!("{}   {}", bav_core::data::data().date, place.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)))
+            };
             (
-                format!("6 February 2023   {}", crate::text::VUHLEDAR.hud()),
-                format!("06:40 – {}", director::clock_text(script.t)),
+                heading,
+                span,
                 vec![
                     ("Russian vehicles committed".into(), stats.vehicles_committed.to_string()),
                     ("Knocked out".into(), format!("{out}")),

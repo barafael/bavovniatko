@@ -266,6 +266,11 @@ fn rect(min: Vec2, max: Vec2) -> Vec<Texels> {
 
 /// Furrow direction per field block, as the alpha code the ground shader reads (1..=255; 0 = no furrows).
 fn furrow_code(x: f32, z: f32) -> u8 {
+    if diorama().season() == bav_core::data::Season::Autumn {
+        // Stubble, plough and the standing stalks all run in rows; only the fallow does not.
+        let (kind, t) = summer_field(x, z);
+        return if kind % 4 == 2 { 0 } else { 1 + (t * 254.0) as u8 };
+    }
     if diorama().summer() {
         // Only the sown fields have rows: last year's unharvested sunflowers, and this year's few crops.
         let (kind, t) = summer_field(x, z);
@@ -315,8 +320,37 @@ fn summer_colour(x: f32, z: f32) -> Px {
     [c[0] + n, c[1] + n, c[2] + n * 0.6]
 }
 
+/// The fields in October, by the same blocks as June's: 0 stubble (the wheat and barley cut in July, pale straw
+/// in rows), 1 ploughed since, 2 fallow weeds dried off, 3 sunflowers never harvested, black stalks on pale ground.
+fn autumn_colour(x: f32, z: f32) -> Px {
+    let (kind, _) = summer_field(x, z);
+    let broad = fbm(x / 60.0, z / 60.0, 3, 23) * 0.5 + 0.5;
+    let fine = value_noise(x / 3.0, z / 3.0, 24) * 0.5 + 0.5;
+    let straw: Px = [0.64, 0.57, 0.38];
+    let plough: Px = [0.31, 0.25, 0.19];
+    let weeds: Px = [0.52, 0.48, 0.33];
+    let mut c = match kind % 4 {
+        0 => mix(straw, [0.56, 0.50, 0.34], broad * 0.6),
+        1 => mix(plough, [0.38, 0.31, 0.24], broad * 0.5),
+        2 => mix(weeds, [0.45, 0.44, 0.30], broad * 0.5),
+        _ => {
+            let stalks = ((fbm(x / 2.2, z / 2.2, 2, 27) - 0.1) * 3.0).clamp(0.0, 1.0);
+            mix(mix([0.55, 0.49, 0.35], straw, broad * 0.4), [0.26, 0.22, 0.17], stalks * 0.5)
+        }
+    };
+    // Eighteen months of shelling between the lines: churned earth where the grass has not come back.
+    let churn = (1.0 - ((z - 300.0).abs() / 800.0)).clamp(0.0, 1.0);
+    let bare = ((fbm(x / 9.0, z / 9.0, 3, 26) + 0.3 - churn * 0.5) * 4.0).clamp(0.0, 1.0);
+    c = mix([0.40, 0.34, 0.26], c, 0.35 + 0.65 * bare);
+    let n = (fine - 0.5) * 0.06;
+    [c[0] + n, c[1] + n, c[2] + n * 0.6]
+}
+
 /// Base ground colour at a world point: snow over ploughed fields, thinner in patches where the wind scoured it.
 fn base_colour(x: f32, z: f32) -> Px {
+    if diorama().season() == bav_core::data::Season::Autumn {
+        return autumn_colour(x, z);
+    }
     if diorama().summer() {
         return summer_colour(x, z);
     }
@@ -684,6 +718,11 @@ fn areas(chunks: &mut Chunks) {
                 let fine = fbm(w.x / 2.5, w.y / 7.0, 2, 83) * 0.5 + 0.5;
                 let patch = geo::smoothstep(0.35, 0.75, broad * 0.55 + fine * 0.45) * 0.85;
                 let snowy = |under: Px, k: f32| if summer { under } else { mix(under, SNOW, patch * k) };
+                // Without snow the fields and grass keep the ground's own painting (the blocks of stubble, plough
+                // and fallow), and the woods' floor is leaf litter.
+                if summer && matches!(area.kind, K::Farmland | K::Grass) {
+                    return;
+                }
                 let (out, code) = match area.kind {
                     // Autumn-ploughed fields: dark earth, the thin snow lying in the furrows.
                     K::Farmland => (snowy(mix([0.33, 0.28, 0.23], [0.27, 0.23, 0.19], n), 0.8), px[3]),
@@ -692,7 +731,10 @@ fn areas(chunks: &mut Chunks) {
                     K::Allotments => (snowy(mix([0.42, 0.37, 0.30], [0.36, 0.33, 0.27], n), 0.6), 0),
                     K::Residential => (snowy(mix([0.48, 0.46, 0.42], [0.40, 0.38, 0.35], n), 0.5), 0),
                     K::Industrial => (snowy(mix([0.44, 0.43, 0.41], [0.36, 0.35, 0.34], n), 0.4), 0),
+                    // Coal and coke spoil: black, greying where it has weathered, a dust of it on the flats.
+                    K::Spoil => (snowy(mix([0.15, 0.14, 0.13], [0.27, 0.25, 0.23], n * n), 0.3), 0),
                     // Pine needles and sand under the trees; little snow gets through the crowns.
+                    K::Wood if summer => (mix([0.40, 0.33, 0.24], [0.31, 0.26, 0.19], n), 0),
                     K::Wood => (snowy(mix([0.36, 0.30, 0.24], [0.28, 0.24, 0.20], n), 0.25), 0),
                     K::Wetland => (snowy(mix([0.47, 0.43, 0.33], [0.36, 0.34, 0.28], n), 0.5), 0),
                     K::Water => (mix([0.58, 0.62, 0.66], [0.50, 0.55, 0.60], n), 0),

@@ -1,0 +1,110 @@
+// The northern shoulder of the Avdiivka salient: Stepove, the railway, the coke plant's spoil heap and the plant's
+// edge, the ground the three parts share (design/avdiivka.md). The history is in
+// db/research/chapters/c11-avdiivka.md (§3 the ground, §4 the forces, §5, §6 set pieces 1, 2 and 6) and
+// v02-stepove-bradley.md. The roads, railway, tree rows, land cover and buildings come from OpenStreetMap
+// (osm.ron beside this, made by tools/osm/osm2ron.py); this file holds what the map does not: the ground's shape,
+// the heap, and the lines the battle uses.
+//
+// The box is the game's fixed 4608 x 3584 m, turned so that +z points east-north-east (bearing 75), the way the
+// Russian columns came from Krasnohorivka and Kamianka; +x then points north-north-west. Its centre is 48.1898 N
+// 37.6998 E, between the village and the heap. Stepove lies at about (1050, -1300), the heap at (-1066, 830), the
+// plant along the box's -x end; Krasnohorivka is 470 m beyond the +z edge, Berdychi and Lastochkyne beyond -z.
+// Each part's file (wave1.ron, wave2.ron, stepove.ron) adds the day: its clock, sides, forces and script.
+(
+    // (The parts give the date, the clock, the season and the sun.)
+    place: ("Avdiivka", "Авдіївка"),
+    // Where the drone starts: over the village's east edge, looking out across the field to the heap.
+    camera: (950.0, -800.0),
+    // The observers: the heap's first terrace on its forward face, 2 m above the spoil.
+    op: Some(((-1000.0, 560.0), 2.0)),
+    // Adjusted fire is observed from the village's edge and the rails.
+    observed_from: LineZ(-700.0),
+    // Eighteen months of a front line here: old craters along the belts and in no-man's-land.
+    worn: true,
+    shelled: Some((250, -300.0, 1500.0)),
+
+    // Flat steppe at 195-205 m, a shade higher at the plant end (south-west) than at Krasnohorivka, with the heap
+    // standing 38 m over it: a flat top 180 m across, terraced faces falling to the ground 460 m out (SRTM: a top
+    // of about 231 m over a base of 180-200, c11 §3).
+    ground: [
+        Ramp(base: 196.0, amp: 8.0, power: 1.0, ramp: Falling(-1792.0, 1792.0)),
+        Noise(scale: 1100.0, octaves: 3, seed: 17, amp: 3.0),
+        Noise(scale: 240.0, octaves: 3, seed: 19, amp: 0.6),
+        Mound(at: (-1066.0, 830.0), radius: 460.0, top: 180.0, height: 38.0, terrace: 12.0),
+    ],
+    curves: [],
+
+    // The lanes the columns drove, as field tracks: from the Krasnohorivka road at the +z edge down the open field
+    // to Stepove's east end, and from the Kamianka side past the heap's north face to the railway.
+    lines: [
+        (
+            "lane_stepove",
+            Smoothed([(1250.0, 1792.0), (1210.0, 1200.0), (1160.0, 500.0), (1120.0, -100.0), (1090.0, -600.0)], 2),
+        ),
+        (
+            "lane_heap",
+            Smoothed([(-300.0, 1792.0), (-340.0, 1150.0), (-380.0, 500.0), (-410.0, 0.0), (-450.0, -400.0)], 2),
+        ),
+    ],
+    roads: [(line: "lane_stepove", width: 3.5, kind: Track), (line: "lane_heap", width: 3.5, kind: Track)],
+    belts: [],
+
+    routes: [
+        // 0: on Stepove, across the open field and the railway.
+        (line: "lane_stepove", deploy: (1130.0, -200.0), objective: (1000.0, -900.0)),
+        // 1: on the heap's foot and the railway behind it.
+        (line: "lane_heap", deploy: (-380.0, 400.0), objective: (-500.0, -600.0)),
+    ],
+    // Mines laid at night on the approaches (v02 §5): a belt in front of the railway at Stepove, another in front
+    // of the heap.
+    field_mines: [
+        ([(1500.0, -350.0), (700.0, -150.0), (0.0, 100.0)], 40.0),
+        ([(-500.0, 1450.0), (-1600.0, 1500.0)], 40.0),
+    ],
+
+    // The plant's north-east corner stands for the town: what the TOS works over, and what the advance is measured
+    // against.
+    town: Some(((-1500.0, -1300.0), (-415.0, 400.0))),
+
+    ua_positions: [
+        // Stepove's east edge, and its two corners.
+        (1000.0, -760.0),
+        (1200.0, -900.0),
+        (850.0, -700.0),
+        // Along the railway in front of the village, and at its bend.
+        (700.0, -420.0),
+        (200.0, -220.0),
+        (-300.0, -80.0),
+        // The heap: the trench on its forward terrace, and its top.
+        (-950.0, 480.0),
+        (-1100.0, 820.0),
+        // The plant's edge.
+        (-520.0, -900.0),
+    ],
+    ru_positions: [],
+    // Hides for a tank firing on coordinates: in the village's lanes, and behind the heap.
+    hides: [((760.0, -1050.0), (0.2, 1.0)), ((1200.0, -1300.0), (-0.1, 1.0)), ((-1650.0, 50.0), (0.3, 1.0))],
+
+    // The map table's: ours is the village, the railway and the heap; theirs beyond the heap's far foot.
+    grey_zone: (900.0, 1400.0),
+    road_heads: [
+        (name: ("The Berdychi road", "Дорога з Бердичів"), at: (1300.0, -1785.0)),
+        (name: ("The Lastochkyne road", "Дорога з Ластівкиного"), at: (-1700.0, -1785.0)),
+    ],
+    trps: [
+        OnLine("lane_stepove", (1200.0, 1000.0)),
+        OnLine("lane_stepove", (1150.0, 300.0)),
+        OnLine("lane_stepove", (1110.0, -350.0)),
+        OnLine("lane_heap", (-350.0, 1000.0)),
+        OnLine("lane_heap", (-390.0, 300.0)),
+        OnLine("lane_heap", (-430.0, -250.0)),
+    ],
+    old_wrecks: [],
+
+    advance: -1.0,
+    foothold_z: -550.0,
+    defence_z: -650.0,
+    home: (900.0, -1400.0),
+    jam_z: 600.0,
+    mortar_band: (-900.0, 900.0),
+)

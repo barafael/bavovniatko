@@ -434,7 +434,7 @@ fn smoke(_args: &[String]) -> Result {
     let out = root.join("devlog/smoke");
     mkdir(&out)?;
     let mut failed = Vec::new();
-    for dio in ["vuhledar", "robotyne"] {
+    for dio in ["vuhledar", "robotyne", "hostomel-1", "hostomel-2", "avdiivka-1", "avdiivka-2", "avdiivka-3"] {
         for (name, extra) in SWITCHES {
             let tag = format!("{dio}-{name}");
             let mut env: Vec<(&str, String)> = vec![("BAV_DIORAMA", dio.into()), ("BAV_RES", "320x180".into()), ("BAV_SHOT", out.join(format!("{tag}.png")).display().to_string()), ("BAV_SHOT_AT", "1".into())];

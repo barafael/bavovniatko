@@ -10,7 +10,7 @@
     day_start_min: 400.0,
     compression: 0.36,
     attacker: Ru,
-    summer: false,
+    season: Winter,
     // Fictional, as game/design/next.md decided: the player, the guns, the observers on the roof, the command post.
     callsigns: (
         player: ("Maestro", "Маестро"),

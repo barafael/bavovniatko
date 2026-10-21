@@ -20,6 +20,8 @@ pub const VUHLEDAR: Name = Name { uk: "Вугледар", en: "Vuhledar" };
 pub const MALA_TOKMACHKA: Name = Name { uk: "Мала Токмачка", en: "Mala Tokmachka" };
 pub const ROBOTYNE: Name = Name { uk: "Роботине", en: "Robotyne" };
 pub const HOSTOMEL: Name = Name { uk: "Гостомель", en: "Hostomel" };
+pub const AVDIIVKA: Name = Name { uk: "Авдіївка", en: "Avdiivka" };
+pub const STEPOVE: Name = Name { uk: "Степове", en: "Stepove" };
 pub const TOKMAK: Name = Name { uk: "Токмак", en: "Tokmak" };
 
 /// The interface's face: Liberation Mono (SIL Open Font License, src/fonts/), which has the Ukrainian letters

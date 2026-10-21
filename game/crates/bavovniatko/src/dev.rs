@@ -503,6 +503,8 @@ fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post, &crate::fire:
             crate::diorama::Diorama::Robotyne => Vec2::new(-100.0, crate::geo::layout().start_z.expect("Mala Tokmachka has a start line")),
             // The apron's north end.
             crate::diorama::Diorama::HostomelLanding | crate::diorama::Diorama::HostomelCounter => Vec2::new(700.0, 330.0),
+            // Stepove's east edge.
+            crate::diorama::Diorama::AvdiivkaWave1 | crate::diorama::Diorama::AvdiivkaWave2 | crate::diorama::Diorama::AvdiivkaStepove => Vec2::new(1000.0, -760.0),
         };
         let Some((e, p, _)) = teams.iter().filter(|(_, _, t)| t.atgm > 0 && t.weapon == want).min_by(|a, b| a.1.pos.distance(kz).total_cmp(&b.1.pos.distance(kz))) else {
             return;

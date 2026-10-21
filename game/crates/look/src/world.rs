@@ -44,6 +44,9 @@ impl Plugin for WorldPlugin {
             Diorama::HostomelLanding | Diorama::HostomelCounter => {
                 app.add_systems(Startup, crate::hostomel::spawn_set.after(spawn_belts)).add_systems(Update, crate::hostomel::daylight.in_set(crate::Step::Effects));
             }
+            Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
+                app.add_systems(Startup, crate::avdiivka::spawn_set.after(spawn_belts)).add_systems(Update, crate::avdiivka::daylight.in_set(crate::Step::Effects));
+            }
         }
     }
 }
@@ -115,7 +118,7 @@ pub fn spawn_belts(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut
     // hard-edged cut-outs. Both faces drawn, but not double-sided in the lighting: a card's back keeps the normals
     // of the crown it stands in for (trees::crown) instead of turning dark.
     let branches = materials.add(StandardMaterial {
-        base_color_texture: Some(images.add(crate::trees::atlas(summer))),
+        base_color_texture: Some(images.add(crate::trees::atlas(diorama().season()))),
         alpha_mode: if matches!(dev::aa(), dev::Aa::Msaa4 | dev::Aa::Msaa2) { AlphaMode::AlphaToCoverage } else { AlphaMode::Mask(0.5) },
         double_sided: false,
         cull_mode: None,
@@ -374,10 +377,22 @@ fn woods(plants: &mut BeltPlants, mut id: u32) {
                 if roads.iter().any(|(lo, hi, r)| p2.cmpge(*lo).all() && p2.cmple(*hi).all() && r.line.project(p2).0 < r.width * 0.5 + 3.0) || rails.iter().any(|r| r.project(p2).0 < 9.0) || posts.iter().any(|q| q.distance(p2) < 30.0) {
                     continue;
                 }
-                let kind = match hash01(id, 3) {
-                    u if u < 0.84 => Kind::Pine,
-                    u if u < 0.94 => Kind::Ash,
-                    _ => Kind::Elm,
+                // Hostomel's woods are pine on the sand; on the steppe a wood on the map is a shelterbelt grown
+                // wide, the belts' own kinds.
+                let kind = if diorama().hostomel() {
+                    match hash01(id, 3) {
+                        u if u < 0.84 => Kind::Pine,
+                        u if u < 0.94 => Kind::Ash,
+                        _ => Kind::Elm,
+                    }
+                } else {
+                    match hash01(id, 3) {
+                        u if u < 0.40 => Kind::Robinia,
+                        u if u < 0.62 => Kind::Elm,
+                        u if u < 0.80 => Kind::Ash,
+                        u if u < 0.92 => Kind::Poplar,
+                        _ => Kind::Shrub,
+                    }
                 };
                 let ((h0, h1), base, june, february) = kind_look(kind);
                 let h = h0 + (h1 - h0) * hash01(id, 4);

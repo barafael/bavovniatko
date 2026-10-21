@@ -1,5 +1,5 @@
-//! Which diorama is on the table: `vuhledar` (the default), `robotyne`, `hostomel-1` or `hostomel-2`, chosen by the first command-line
-//! argument or `BAV_DIORAMA`. The two places share the kit (terrain, vehicles, mines, fire, the drone), and
+//! Which diorama is on the table: `vuhledar` (the default), `robotyne`, `hostomel-1` or `hostomel-2`, `avdiivka-1`,
+//! `avdiivka-2` or `avdiivka-3`, chosen by the first command-line argument or `BAV_DIORAMA`. The two places share the kit (terrain, vehicles, mines, fire, the drone), and
 //! differ in season, ground, forces, and which way the war is going. The player is Ukrainian in both.
 
 use std::sync::OnceLock;
@@ -25,6 +25,16 @@ pub enum Diorama {
     /// The same day at dusk: the counterattack that retakes the field and craters the runway (sub-chapter II).
     #[strum(serialize = "hostomel-2")]
     HostomelCounter,
+    /// 10 October 2023, the northern shoulder of the Avdiivka salient: the first mechanised wave at Stepove and the
+    /// spoil heap (db/research/chapters/c11-avdiivka.md; design/avdiivka.md, part I).
+    #[strum(serialize = "avdiivka-1")]
+    AvdiivkaWave1,
+    /// 19 October 2023: the second wave, and the heap stormed on foot (part II).
+    #[strum(serialize = "avdiivka-2")]
+    AvdiivkaWave2,
+    /// 11 January 2024, Stepove in the snow: the T-90M and the two Bradleys (part III, vignette v02).
+    #[strum(serialize = "avdiivka-3")]
+    AvdiivkaStepove,
 }
 
 /// How the day is played (design/command.md).
@@ -63,6 +73,16 @@ pub fn diorama() -> Diorama {
 }
 
 impl Diorama {
+    /// Whether this is one of Avdiivka's parts (they share a map and a set).
+    pub fn avdiivka(self) -> bool {
+        matches!(self, Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove)
+    }
+
+    /// Whether this is one of Hostomel's parts.
+    pub fn hostomel(self) -> bool {
+        matches!(self, Diorama::HostomelLanding | Diorama::HostomelCounter)
+    }
+
     /// Whose columns drive into whose minefields.
     pub fn attacker(self) -> Side {
         crate::data::data().attacker
@@ -75,8 +95,14 @@ impl Diorama {
         }
     }
 
+    /// The season the place is painted for.
+    pub fn season(self) -> crate::data::Season {
+        crate::data::data().season
+    }
+
+    /// Whether the ground is bare of snow: summer's and autumn's dust, fields and leaves rather than winter's snow.
     pub fn summer(self) -> bool {
-        crate::data::data().summer
+        self.season() != crate::data::Season::Winter
     }
 
     /// "Vuhledar (Вугледар), 6 February 2023".

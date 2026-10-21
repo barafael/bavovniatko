@@ -8,7 +8,9 @@ pub use bav_sim::{director, fire, player, units};
 
 pub mod air;
 pub mod audio;
+pub mod avdiivka;
 pub mod baked;
+pub mod buildings;
 pub mod feed;
 pub mod fx;
 pub mod hostomel;

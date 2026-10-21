@@ -199,6 +199,8 @@ pub enum AreaKind {
     Allotments,
     Residential,
     Industrial,
+    /// A mine's or a works' spoil heap and the ground it has spread over: black-grey, bare.
+    Spoil,
     Wood,
     Wetland,
     Water,
@@ -515,13 +517,36 @@ pub fn line_of_sight(a: Vec2, b: Vec2) -> bool {
 }
 
 /// Map position to WGS84. Vuhledar is anchored on the town node (47.7810 N, 37.2461 E) at (-900, -1500);
-/// Robotyne's box on the fields about 4 km south of Mala Tokmachka (47.4967 N, 35.8968 E at the origin).
+/// Robotyne's box on the fields about 4 km south of Mala Tokmachka (47.4967 N, 35.8968 E at the origin). A map
+/// with a bearing (`Anchor::bearing`) is turned about its anchor.
 pub fn latlon(p: Vec2) -> (f64, f64) {
     let a = crate::data::data().anchor;
-    let (lat0, lon0, x0, z0, m_per_lon) = (a.lat, a.lon, a.x, a.z, a.m_per_lon);
-    let lat = lat0 - (p.y as f64 - z0) / 111_200.0;
-    let lon = lon0 + (p.x as f64 - x0) / m_per_lon;
-    (lat, lon)
+    let (east, north) = east_north(p.x as f64 - a.x, p.y as f64 - a.z);
+    (a.lat + north / 111_200.0, a.lon + east / a.m_per_lon)
+}
+
+/// A map offset (metres along +x, +z) as metres east and north: +z points along the map's bearing, +x a right
+/// angle to its right (east when +z is south).
+pub fn east_north(x: f64, z: f64) -> (f64, f64) {
+    let b = crate::data::data().anchor.bearing.to_radians();
+    (-x * b.cos() + z * b.sin(), x * b.sin() + z * b.cos())
+}
+
+/// Metres east and north as a map offset (the inverse of `east_north`).
+pub fn map_offset(east: f64, north: f64) -> (f64, f64) {
+    let b = crate::data::data().anchor.bearing.to_radians();
+    (-east * b.cos() + north * b.sin(), east * b.sin() + north * b.cos())
+}
+
+/// A true compass bearing as a heading in the map's frame, where 0 looks along -z and 180 along +z (so with the
+/// default bearing a map heading is the compass one).
+pub fn map_heading(bearing: f32) -> f32 {
+    (bearing - crate::data::data().anchor.bearing as f32 + 180.0).rem_euclid(360.0)
+}
+
+/// A heading in the map's frame as a true compass bearing (the inverse of `map_heading`).
+pub fn true_heading(map_heading: f32) -> f32 {
+    (map_heading + crate::data::data().anchor.bearing as f32 - 180.0).rem_euclid(360.0)
 }
 
 #[cfg(test)]

@@ -347,8 +347,12 @@ fn bare_top(cell: usize, seed: u32) -> Canvas {
     cv
 }
 
-/// The atlas: each cell drawn, then its mips with each cell's coverage kept.
-pub fn atlas(summer: bool) -> Image {
+/// The atlas: each cell drawn, then its mips with each cell's coverage kept. June's leaves for summer; in autumn
+/// the same crowns turned, each cell its own way (the robinias and poplars yellow, the elms rust, the ash still
+/// half green); bare twigs and the pine in winter.
+pub fn atlas(season: bav_core::data::Season) -> Image {
+    use bav_core::data::Season;
+    let summer = season != Season::Winter;
     let mut level0 = vec![[0.0f32; 4]; ATLAS * ATLAS];
     for cell in 0..CELLS * CELLS {
         let seed = 100 + cell as u32 * 37 + if summer { 0 } else { 1000 };
@@ -374,10 +378,20 @@ pub fn atlas(summer: bool) -> Image {
         }
         let mean = sum.map(|s| s / wsum.max(1.0) * 0.8);
         let (ox, oy) = ((cell % CELLS) * CELL, (cell / CELLS) * CELL);
+        // October: the leaf's green goes to yellow and rust by how far this cell's crown has turned.
+        let turned = if season == Season::Autumn { 0.35 + 0.6 * hash01(cell as u32 + 900, 3) } else { 0.0 };
+        let turn = |c: [f32; 3]| -> [f32; 3] {
+            if turned == 0.0 {
+                return c;
+            }
+            let lum = 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2];
+            let gold = [lum * 1.75 + 0.05, lum * 1.25, lum * 0.45];
+            [c[0] + (gold[0] - c[0]) * turned, c[1] + (gold[1] - c[1]) * turned, c[2] + (gold[2] - c[2]) * turned]
+        };
         for row in 0..CELL {
             for col in 0..CELL {
                 let i = row * CELL + col;
-                let c = if cv.a[i] > 0.0 { cv.rgb[i] } else { mean };
+                let c = turn(if cv.a[i] > 0.0 { cv.rgb[i] } else { mean });
                 level0[(oy + row) * ATLAS + ox + col] = [c[0], c[1], c[2], cv.a[i]];
             }
         }

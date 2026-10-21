@@ -34,10 +34,12 @@ pub struct DioramaData {
     pub day_start_min: f32,
     pub compression: f32,
     pub attacker: Side,
-    pub summer: bool,
+    /// The season the ground, the trees and the weather are painted for.
+    pub season: Season,
     /// The net's callsigns, in English and Ukrainian (`crate::text::fill`).
     pub callsigns: Callsigns,
-    /// The map's anchor: the latitude and longitude at (x, z), and metres per degree of longitude there.
+    /// The map's anchor: the latitude and longitude at (x, z), metres per degree of longitude there, and which way
+    /// the map is turned.
     pub anchor: Anchor,
     /// The sun's day: the day of the year, and local time's offset from UTC (hours). None: the place keeps its own
     /// hand-made curve.
@@ -213,6 +215,23 @@ pub struct Anchor {
     pub x: f64,
     pub z: f64,
     pub m_per_lon: f64,
+    /// The compass bearing of the map's +z, in degrees: 180 (south, the default) keeps +x east, as the first
+    /// dioramas were drawn; a map turned to face its attack (Avdiivka, where the columns come from the north-east)
+    /// gives the bearing they come from, so the column game still runs along z.
+    #[serde(default = "south")]
+    pub bearing: f64,
+}
+
+fn south() -> f64 {
+    180.0
+}
+
+/// The season a diorama is painted for: its ground, trees, dust or snow, and wind.
+#[derive(Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Season {
+    Winter,
+    Summer,
+    Autumn,
 }
 
 /// One term of the ground's height.
@@ -230,6 +249,10 @@ pub enum HeightTerm {
     /// A gully running along z, its floor at `x0 + amp * sin((z - z_offset) / period + phase)`:
     /// `- depth * fade(z) * exp(-((x - floor) / width)²)`.
     Gully { x0: f32, amp: f32, period: f32, z_offset: f32, phase: f32, width: f32, depth: f32, fade: Fade },
+    /// A spoil heap: `+ height * (1 - smoothstep(top, radius, d))` for d the distance from `at`, a flat top out to
+    /// `top`, then the face falling to the ground at `radius`, with terraces every `terrace` metres of height
+    /// (0: a smooth face).
+    Mound { at: P, radius: f32, top: f32, height: f32, terrace: f32 },
 }
 
 #[derive(Deserialize, Debug, Clone, Copy)]
@@ -341,8 +364,13 @@ pub enum PointSpec {
 fn builtin(d: Diorama) -> &'static [(&'static str, &'static str)] {
     const HOSTOMEL_MAP: (&str, &str) = ("hostomel/map.ron", include_str!("../../../dioramas/hostomel/map.ron"));
     const HOSTOMEL_OSM: (&str, &str) = ("hostomel/osm.ron", include_str!("../../../dioramas/hostomel/osm.ron"));
+    const AVDIIVKA_MAP: (&str, &str) = ("avdiivka/map.ron", include_str!("../../../dioramas/avdiivka/map.ron"));
+    const AVDIIVKA_OSM: (&str, &str) = ("avdiivka/osm.ron", include_str!("../../../dioramas/avdiivka/osm.ron"));
     match d {
         Diorama::Vuhledar => &[("vuhledar.ron", include_str!("../../../dioramas/vuhledar.ron"))],
+        Diorama::AvdiivkaWave1 => &[AVDIIVKA_MAP, AVDIIVKA_OSM, ("avdiivka/wave1.ron", include_str!("../../../dioramas/avdiivka/wave1.ron"))],
+        Diorama::AvdiivkaWave2 => &[AVDIIVKA_MAP, AVDIIVKA_OSM, ("avdiivka/wave2.ron", include_str!("../../../dioramas/avdiivka/wave2.ron"))],
+        Diorama::AvdiivkaStepove => &[AVDIIVKA_MAP, AVDIIVKA_OSM, ("avdiivka/stepove.ron", include_str!("../../../dioramas/avdiivka/stepove.ron"))],
         Diorama::Robotyne => &[("robotyne.ron", include_str!("../../../dioramas/robotyne.ron"))],
         Diorama::HostomelLanding => &[HOSTOMEL_MAP, HOSTOMEL_OSM, ("hostomel/landing.ron", include_str!("../../../dioramas/hostomel/landing.ron"))],
         Diorama::HostomelCounter => &[HOSTOMEL_MAP, HOSTOMEL_OSM, ("hostomel/counter.ron", include_str!("../../../dioramas/hostomel/counter.ron"))],
@@ -457,6 +485,7 @@ pub enum Term {
     Noise { scale: f32, octaves: u32, seed: u32, amp: f32 },
     Valley { curve: Curve, profile: Vec<(f32, f32)> },
     Gully { x0: f32, amp: f32, period: f32, z_offset: f32, phase: f32, width: f32, depth: f32, fade: Fade },
+    Mound { at: Vec2, radius: f32, top: f32, height: f32, terrace: f32 },
 }
 
 static GROUND: OnceLock<Vec<Term>> = OnceLock::new();
@@ -473,6 +502,7 @@ pub fn height(x: f32, z: f32) -> f32 {
                 HeightTerm::Noise { scale, octaves, seed, amp } => Term::Noise { scale, octaves, seed, amp },
                 HeightTerm::Valley { curve: c, profile } => Term::Valley { curve: curve(&c).clone(), profile },
                 HeightTerm::Gully { x0, amp, period, z_offset, phase, width, depth, fade } => Term::Gully { x0, amp, period, z_offset, phase, width, depth, fade },
+                HeightTerm::Mound { at, radius, top, height, terrace } => Term::Mound { at: v(at), radius, top, height, terrace },
             })
             .collect()
     });
@@ -504,6 +534,17 @@ pub fn height(x: f32, z: f32) -> f32 {
                 };
                 let depth = depth * f;
                 h -= depth * (-((x - floor) / width).powi(2)).exp();
+            }
+            Term::Mound { at, radius, top, height, terrace } => {
+                let d = Vec2::new(x, z).distance(*at);
+                let mut rise = height * (1.0 - smoothstep(*top, *radius, d));
+                if *terrace > 0.0 && rise > 0.0 && rise < height - 0.5 {
+                    // The face climbs in steps: each terrace a bench a few metres wide, then the next face.
+                    let k = (rise / terrace).floor();
+                    let frac = rise / terrace - k;
+                    rise = (k + smoothstep(0.25, 1.0, frac)) * terrace;
+                }
+                h += rise;
             }
         }
     }
@@ -632,7 +673,8 @@ mod merge_tests {
     #[test]
     fn the_dioramas_are_formatted() {
         let config = fmtron::Config::default().with_max_width(120);
-        for d in [crate::diorama::Diorama::Vuhledar, crate::diorama::Diorama::Robotyne, crate::diorama::Diorama::HostomelLanding, crate::diorama::Diorama::HostomelCounter] {
+        use crate::diorama::Diorama as D;
+        for d in [D::Vuhledar, D::Robotyne, D::HostomelLanding, D::HostomelCounter, D::AvdiivkaWave1, D::AvdiivkaWave2, D::AvdiivkaStepove] {
             for (name, text) in super::builtin(d) {
                 // (The library ends without a line break; the command line, which wrote the files, adds one.)
                 let formatted = fmtron::format_ron(text, &config).unwrap_or_else(|e| panic!("{name}: {e}")) + "\n";

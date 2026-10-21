@@ -130,6 +130,14 @@ fn shots_minute() -> Vec<Shot> {
             Shot { debrief: true, ..s(1474.0, 4.0, (1480.0, 880.0, 200.0), (1480.0, 880.0, 200.0), Drone(Point(Vec2::new(800.0, 500.0))), (34.0, 34.0)) },
         ];
     }
+    // Avdiivka's minute, until it has its own (design/avdiivka.md, phase 10): the field from over Stepove, then the
+    // debrief.
+    if crate::diorama::diorama().avdiivka() {
+        return vec![
+            s(20.0, 8.0, (900.0, -1000.0, 220.0), (880.0, -980.0, 220.0), Drone(Point(Vec2::new(300.0, 300.0))), (40.0, 34.0)),
+            Shot { debrief: true, ..s(1474.0, 4.0, (880.0, -980.0, 220.0), (880.0, -980.0, 220.0), Drone(Point(Vec2::new(300.0, 300.0))), (34.0, 34.0)) },
+        ];
+    }
     if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
         return vec![
             // The blue hour: our guns' preparation walking along the crest, the column not yet moving.
@@ -175,7 +183,7 @@ fn shots_minute() -> Vec<Shot> {
 fn shots_film() -> Vec<Shot> {
     let f = shot;
     // Hostomel has no shot list yet (design/hostomel.md, phase 8): nothing to film rather than Vuhledar's.
-    if matches!(crate::diorama::diorama(), crate::diorama::Diorama::HostomelLanding | crate::diorama::Diorama::HostomelCounter) {
+    if crate::diorama::diorama().hostomel() || crate::diorama::diorama().avdiivka() {
         return Vec::new();
     }
     let card = |title: &'static str, line: &'static str, note: &'static str, secs: f32| Card { title, line, note, secs };

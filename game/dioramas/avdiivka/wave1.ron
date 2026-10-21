@@ -1,0 +1,276 @@
+// Avdiivka, part I, The first wave (Перша хвиля): 10 October 2023, dawn to noon, the northern shoulder. After the
+// strongest fire preparation of the war in Donbas, columns of 20-40 vehicles of the 1st Army Corps' 114th Brigade
+// and the 41st Army's 90th Tank Division cross the open fields from Krasnohorivka and Kamianka towards Stepove, the
+// railway and the spoil heap, into the 47th Brigade's Bradleys and the 110th on the heap (c11 §2 10-12 Oct, §5,
+// §6 set piece 1). The schema is bav_core::data and bav_sim::data; the map is map.ron.
+(
+    date: "10 October 2023",
+    tally_date: "10 OCT 2023",
+    // 05:40 to about 11:55 in the day's 1500 s: the preparation in the dark, the first column at first light
+    // (sunrise 06:40), the last at mid-morning.
+    day_start_min: 340.0,
+    compression: 0.25,
+    attacker: Ru,
+    season: Autumn,
+    // 10 October is the 283rd day of the year; Kyiv was on summer time, UTC+3.
+    sun: Some((283, 3.0)),
+    // The 47th flew thermal Mavics by then: key I.
+    thermal: true,
+    // Fictional, the 47th's: the player (a sighthound), the 55th's guns (anvil), the observers on the heap (crest),
+    // the battalion's command post (flint).
+    callsigns: (
+        player: ("Khort", "Хорт"),
+        guns: ("Kovadlo", "Ковадло"),
+        op: ("Hrebin", "Гребінь"),
+        command: ("Kremin", "Кремінь"),
+    ),
+    words: (
+        briefing: r#"AVDIIVKA (АВДІЇВКА), THE NORTHERN SHOULDER
+10 OCTOBER 2023, BEFORE DAWN
+
+Avdiivka has been a fortified salient since 2014, ten kilometres from Donetsk. Its northern anchor is the coke
+plant; north of the plant stands its spoil heap, and beyond the heap the village of Stepove on the railway.
+Open stubble fields run from both towards Krasnohorivka and Kamianka, where the Russians are.
+
+You are with the 47th Mechanised Brigade (47-ма ОМБр), moved here from Zaporizhzhia with little time to rest:
+a drone operator and a fire controller at Stepove. The 110th holds the heap. The 55th Artillery Brigade's guns
+are behind you, and for once there are shells.
+
+Since four this morning their guns have not stopped. They will come at first light.
+
+The day will run whether or not you do anything. What you do matters at the margin.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
+Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.  4: an FPV.
+Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / the observers on the heap.  I: thermal.  P: pause.  [ ]: time.
+M: move the drone team when they find you.  3: into a position with an ATGM team.  Right button: the sight.  Left click: launch.
+
+Press Enter."#,
+        op_label: "OBSERVERS, THE HEAP'S FIRST TERRACE (СПОСТЕРІГАЧІ, ПЕРША ТЕРАСА ТЕРИКОНУ)",
+        op_lost: "The observers on the heap are gone. No eyes from the height.",
+        forward_belt: "the railway",
+        plow_mine: "Mine under the plow. The lead tank's plow is gone, it keeps going.",
+        mine_lines: [
+            "Mine! He went off the track. That one's done.",
+            "Another one. Tracks off.",
+            "He drove right past the last one, same line. Mine.",
+            "Boom. Mine. He's not moving.",
+        ],
+        registered: ("Я {guns}. Вогонь по пристріляній точці {n}.", "This is {guns}. Firing on registered point {n}."),
+        closing: [
+            "Across the whole salient that day a geolocated count found 70 Russian vehicles destroyed; by satellite, 109 in the first ten days.",
+            "The second wave came on 19 October (the next part). The heap fell on 28 October. The city held until 17 February 2024.",
+        ],
+        keys: "R: the same morning again, across the same field.     Esc: quit.",
+        sources: [
+            (
+                publisher: "Institute for the Study of War",
+                date: "11 Oct 2023",
+                title: "Russian Offensive Campaign Assessment",
+                url: "https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment_11-14/",
+            ),
+            (
+                publisher: "OSW",
+                date: "13 Oct 2023",
+                title: "Battle of Avdiivka. Day 596 of the war",
+                url: "https://www.osw.waw.pl/en/publikacje/analyses/2023-10-13/battle-avdiivka-day-596-war",
+            ),
+            (
+                publisher: "Euromaidan Press",
+                date: "16 Oct 2023",
+                title: "Frontline report: Russia's failed frontal assault on Avdiivka coal spoil tip",
+                url: "https://euromaidanpress.com/2023/10/16/frontline-report-russias-failed-frontal-assault-on-avdiivka-coal-spoil-tip-shows-russian-strategic-lapses/",
+            ),
+            (
+                publisher: "Frontelligence Insight",
+                date: "23 Oct 2023",
+                title: "Avdiivka: Russian losses from October 10 to 20",
+                url: "https://frontelligence.substack.com/p/avdiivka-russian-losses-from-october",
+            ),
+            (
+                publisher: "FDD's Long War Journal",
+                date: "Mar 2024",
+                title: "Battle of Avdiivka: a preliminary analysis",
+                url: "https://www.longwarjournal.org/archives/2024/03/battle-of-avdiivka-a-preliminary-analysis.php",
+            ),
+            (
+                publisher: "Wikipedia",
+                date: "2024",
+                title: "Battle of Avdiivka (2023–2024)",
+                url: "https://en.wikipedia.org/wiki/Battle_of_Avdiivka_(2023%E2%80%932024)",
+            ),
+        ],
+    ),
+
+    // ---- The battle's part (bav_sim::data) ----
+    // The 47th's and the 110th's side as Units and Support: Stugnas and Javelins in the positions, a Leopard 2A6
+    // in a hide, and the 55th's guns with a working day's rounds; cluster shells come in phase 5, the Bradleys as
+    // units in phase 6 (design/avdiivka.md). FPVs were a daily stock by this autumn (arcs.md §6).
+    catalog: [
+        (
+            id: "stugna",
+            name: ("Stugna-P team", "Розрахунок «Стугни-П»"),
+            what: Post(Some(Stugna)),
+            cost: 8,
+            supply: 5,
+            available: 5,
+        ),
+        (
+            id: "javelin",
+            name: ("Javelin team", "Розрахунок «Джавеліна»"),
+            what: Post(Some(Javelin)),
+            cost: 9,
+            supply: 5,
+            available: 4,
+        ),
+        (
+            id: "rifles",
+            name: ("Rifle section", "Стрілецьке відділення"),
+            what: Post(None),
+            cost: 3,
+            supply: 2,
+            available: 9,
+        ),
+        (id: "tank", name: ("Tank in a hide", "Танк у капонірі"), what: Hide, cost: 10, supply: 6, available: 3),
+        (id: "bradley", name: ("Bradley", "«Бредлі»"), what: Vehicle(Bradley), cost: 7, supply: 6, available: 6),
+        (id: "mtlb", name: ("MT-LB", "МТ-ЛБ"), what: Vehicle(Mtlb), cost: 4, supply: 4, available: 3),
+    ],
+    support: [
+        (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 10),
+        (id: "raam", name: ("RAAM mission", "Дистанційне мінування (RAAM)"), what: Raam, cost: 3, available: 6),
+        (id: "himars", name: ("HIMARS mission", "Удар HIMARS"), what: Himars, cost: 8, available: 2),
+        (
+            id: "brigade",
+            name: ("Brigade guns, 20 rounds", "Бригадна артилерія, 20 пострілів"),
+            what: Brigade(20),
+            cost: 2,
+            available: 10,
+        ),
+        (
+            id: "mortar",
+            name: ("120 mm mortars, 20 bombs", "Міномети 120 мм, 20 мін"),
+            what: Mortar(20),
+            cost: 1,
+            available: 10,
+        ),
+        (id: "fpv", name: ("FPV strike drone", "FPV-дрон"), what: Fpv, cost: 2, available: 20),
+        (id: "mavic", name: ("Two more Mavic 3s", "Ще два Mavic 3"), what: Mavic(2), cost: 3, available: 2),
+    ],
+    // The Record: the ATGM teams at the village's edge and along the railway, riflemen on the heap and at the
+    // plant's corner, a tank in the village, 96 rounds, three RAAM missions, one HIMARS, a dozen FPVs.
+    allotment: (
+        points: 180,
+        supply: (12, 2.0),
+        record: [
+            (id: "stugna", at: Some(0)),
+            (id: "javelin", at: Some(1)),
+            (id: "rifles", at: Some(2)),
+            (id: "stugna", at: Some(3)),
+            (id: "javelin", at: Some(4)),
+            (id: "stugna", at: Some(5)),
+            (id: "rifles", at: Some(6)),
+            (id: "rifles", at: Some(7)),
+            (id: "rifles", at: Some(8)),
+            (id: "tank", at: Some(9)),
+            (id: "155", count: 6),
+            (id: "raam", count: 3),
+            (id: "himars", count: 1),
+            (id: "brigade", count: 6),
+            (id: "mortar", count: 6),
+            (id: "fpv", count: 12),
+        ],
+    ),
+    old_wreck_kinds: [],
+    space_key: Atgm,
+    shift_fire: Raam,
+    // Their guns work the village, the railway and the heap all day, and the ground behind.
+    ru_guns: Some(Posts(x: (-1800.0, 1800.0), band: (-1300.0, -600.0))),
+    registered_fire: (50.0, 6),
+    // Their EW: jammers with the columns' start lines, the rear emitters past the heap's far foot.
+    ew: Some((jammers: [(1300.0, 1700.0), (-900.0, 1750.0)], radius: 900.0, depth: 700.0)),
+    // FPVs by the day (phase 4 makes them a stock; one at a time until then), five minutes in the air.
+    fpv: Some((endurance: 300.0)),
+    // Command's Enemy staff: Lancets for the Bradleys and the Leopard; Orlans over the village every few minutes.
+    staff: (lancets: 3, orlan: (150.0, 300.0)),
+    // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
+    // February, but still.
+    operator: (pos: (900.0, -1400.0), found_per_hour: 0.2),
+
+    // The day (c11 §2, §6 set piece 1): the fire preparation before dawn, then four columns of 15-22 across the
+    // open field, two on Stepove and two on the heap and the railway, with infantry on foot behind them; about 70
+    // vehicles on the shoulder (the geolocated count for the whole salient that day).
+    script: [
+        (2.0, Say("Bird up. Clear, a frost on the stubble. Their guns have been going since four.")),
+        (
+            10.0,
+            Say("All, this is {command}. They are coming today. Everyone knows it. Let them come across the field."),
+        ),
+        (20.0, Prep(missions: 10, over: 220.0)),
+        (120.0, Tos(label: "TOS-1A on the plant's edge")),
+        (
+            230.0,
+            Column(
+                route: 0,
+                kinds: [
+                    T72, T72, Bmp2, Bmp1, Bmp2, T80, Mtlb, Bmp2, Bmp1, Bmp2, T72, Bmp1, Mtlb, Bmp2, Bmp2, T72, Bmp1,
+                    Bmp2, Mtlb, Bmp1, Bmp2, Bmp2,
+                ],
+                plow: true,
+                start: 300.0,
+                smoke: 3,
+                label: "06:35  The 114th Brigade from Krasnohorivka, on Stepove",
+            ),
+        ),
+        (240.0, Jam(0.5)),
+        (
+            250.0,
+            Say("Bird: column from Krasnohorivka. Twenty-plus, tanks leading, a plow in front. Smoke on the field."),
+        ),
+        (
+            330.0,
+            Column(
+                route: 1,
+                kinds: [
+                    T80, T80, Bmp2, Bmp2, Mtlb, Bmp1, T80, Bmp2, Mtlb, Bmp1, Bmp2, Bmp2, T72, Mtlb, Bmp1, Bmp2, Bmp2,
+                    Mtlb,
+                ],
+                plow: true,
+                start: 300.0,
+                smoke: 2,
+                label: "07:00  The 10th Tank Regiment from Kamianka, on the heap",
+            ),
+        ),
+        (345.0, Say("This is {op}. From the east now. Tanks, a lot of BMPs. Straight at the heap.")),
+        (
+            640.0,
+            Column(
+                route: 0,
+                kinds: [
+                    T72, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb, Bmp1, Bmp2, Bmp2, T80, Bmp1, Mtlb, Bmp2, Bmp2, Bmp1, Bmp2,
+                    Mtlb, Bmp2, Bmp2,
+                ],
+                plow: false,
+                start: 300.0,
+                smoke: 2,
+                label: "08:20  A second column. The same field.",
+            ),
+        ),
+        (655.0, Say("This is {op}. Second column. Past the first one's wrecks. Exactly the same line.")),
+        (700.0, Infantry(route: 1, groups: 8, size: 6, every: 20.0, label: "08:35  Infantry on foot at the heap")),
+        (720.0, Tos(label: "TOS-1A again")),
+        (
+            950.0,
+            Column(
+                route: 1,
+                kinds: [T72, Bmp2, Bmp1, Bmp2, Mtlb, Bmp1, Bmp2, T72, Bmp1, Mtlb, Bmp2, Bmp2, Bmp1, Bmp2],
+                plow: false,
+                start: 300.0,
+                smoke: 1,
+                label: "09:35  Again, from the east",
+            ),
+        ),
+        (960.0, Jam(0.6)),
+        (1100.0, Infantry(route: 0, groups: 6, size: 6, every: 18.0, label: "10:15  Men on foot towards the railway")),
+        (1250.0, Say("This is {op}. They are gathering again beyond the heap. Not today, I think.")),
+    ],
+)

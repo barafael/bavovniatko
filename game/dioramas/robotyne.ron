@@ -9,7 +9,7 @@
     day_start_min: 230.0,
     compression: 0.30,
     attacker: Ua,
-    summer: true,
+    season: Summer,
     // Fictional, the 47th's own: the player (peregrine), the guns (thunder), the observers on the water tower (crane,
     // the old well sweep), the command post (cliff).
     callsigns: (

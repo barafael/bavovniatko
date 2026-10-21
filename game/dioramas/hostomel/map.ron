@@ -9,7 +9,7 @@
     place: ("Hostomel", "Гостомель"),
     date: "24 February 2022",
     tally_date: "24 FEB 2022",
-    summer: false,
+    season: Winter,
     // 24 February is the 55th day of the year; Kyiv was on UTC+2.
     sun: Some((55, 2.0)),
     // The war's first day: no old craters; the morning's Kalibrs are the day's own.
