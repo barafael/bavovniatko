@@ -42,7 +42,7 @@ impl Plugin for TablePlugin {
             .add_systems(Update, (table_flow, fit_map, table_clicks, table_hover, show_table).chain().run_if(in_state(crate::Phase::Briefing)).in_set(crate::Step::Screen))
             .add_systems(OnEnter(crate::Phase::Playing), to_battle)
             .insert_resource(Composer::from_dev())
-            .add_systems(Update, (battle_table, show_spotted, fit_map, battle_clicks, compose_clicks, show_composer).chain().run_if(in_state(crate::Phase::Playing)).in_set(crate::Step::Screen));
+            .add_systems(Update, (battle_table, show_spotted, show_areas, fit_map, battle_clicks, compose_clicks, show_composer).chain().run_if(in_state(crate::Phase::Playing)).in_set(crate::Step::Screen));
     }
 }
 
@@ -97,6 +97,10 @@ struct UnitMark(u32);
 /// Where the enemy thinks something of ours is (Command's Enemy staff: `bav_sim::staff::Spotted`).
 #[derive(Component)]
 struct SpottedMark;
+
+/// On the battle's table, an area's name and who holds it (`bav_sim::fight::Field`), at the area's middle.
+#[derive(Component)]
+struct AreaMark(usize);
 /// The Column composer's parts: so many of a vehicle, a team, the road head, and the send button; its texts.
 #[derive(Component)]
 struct SendCount(String, i32);
@@ -612,6 +616,13 @@ fn paint_map() -> Image {
     for h0 in &f.road_heads {
         stroke(&mut px, &[h0.at, h0.at + Vec2::X * 0.01], 6.0, [0.15, 0.30, 0.62], 0.9, &none);
     }
+    // The field's areas, outlined in a dashed purple pencil (who holds them is written over them in the battle).
+    for z in bav_sim::fight::zone_specs() {
+        let mut pts: Vec<Vec2> = z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect();
+        pts.extend(pts.first().copied());
+        let dash = |s: f32| (s / 40.0) as i32 % 2 == 1;
+        stroke(&mut px, &pts, 1.2, [0.42, 0.18, 0.48], 0.8, &dash);
+    }
     let data: Vec<u8> = px.iter().flat_map(|c| [(c[0].clamp(0.0, 1.0) * 255.0) as u8, (c[1].clamp(0.0, 1.0) * 255.0) as u8, (c[2].clamp(0.0, 1.0) * 255.0) as u8, 255]).collect();
     Image::new(Extent3d { width: MAP_W, height: MAP_H, depth_or_array_layers: 1 }, TextureDimension::D2, data, TextureFormat::Rgba8UnormSrgb, RenderAssetUsages::default())
 }
@@ -940,5 +951,41 @@ fn show_spotted(
     }
     for (_, mut vis) in free {
         *vis = Visibility::Hidden;
+    }
+}
+
+/// On the battle's table, each of the field's areas named at its middle with who holds it now.
+fn show_areas(mut commands: Commands, assets: Res<AssetServer>, ui: Res<bav_sim::orders::OrdersView>, field: Option<Res<bav_sim::fight::Field>>, map: Single<Entity, With<MapNode>>, mut marks: Query<(&AreaMark, &mut Text, &mut Visibility)>) {
+    let Some(field) = field else { return };
+    if marks.is_empty() {
+        for (i, z) in field.zones.iter().enumerate() {
+            let mid = on_map(z.poly.iter().copied().sum::<Vec2>() / z.poly.len().max(1) as f32);
+            let mark = commands
+                .spawn((
+                    Node { position_type: PositionType::Absolute, left: percent(mid.x * 100.0), top: percent(mid.y * 100.0), margin: UiRect { left: px(-40), top: px(-8), ..default() }, ..default() },
+                    Text::new(""),
+                    font_of(&assets, 12.0),
+                    TextColor(Color::srgb(0.42, 0.18, 0.48)),
+                    GlobalZIndex(13),
+                    Visibility::Hidden,
+                    AreaMark(i),
+                ))
+                .id();
+            commands.entity(*map).add_child(mark);
+        }
+        return;
+    }
+    for (m, mut text, mut vis) in &mut marks {
+        let Some(z) = field.zones.get(m.0) else { continue };
+        let who = match z.held {
+            Some(bav_sim::units::Side::Ua) => "ours",
+            Some(bav_sim::units::Side::Ru) => "THEIRS",
+            None => "contested",
+        };
+        let line = format!("{}: {who}", z.name.0);
+        if text.0 != line {
+            text.0 = line;
+        }
+        vis.set_if_neq(if ui.on_table { Visibility::Inherited } else { Visibility::Hidden });
     }
 }

@@ -79,6 +79,20 @@ fn zones_line(f: &bav_sim::fight::Field) -> String {
         .join("   ")
 }
 
+/// Who holds an area, in the debrief.
+fn held_by(held: Option<Side>) -> &'static str {
+    match held {
+        Some(Side::Ua) => "ours",
+        Some(Side::Ru) => "theirs",
+        None => "contested",
+    }
+}
+
+fn capital(s: &str) -> String {
+    let mut c = s.chars();
+    c.next().map_or(String::new(), |f| f.to_uppercase().chain(c).collect())
+}
+
 /// The runway in the tally: its longest whole stretch, and whether an Il-76 could land on it.
 fn runway_line(r: &bav_sim::air::Runway) -> String {
     format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" })
@@ -303,7 +317,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway, bradleys): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>, Query<&bav_sim::bradley::BradleyArms>),
+    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>, Query<&bav_sim::bradley::BradleyArms>, Option<Res<bav_sim::drones::Drops>>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -437,9 +451,11 @@ fn update_hud(
     let committed = stats.vehicles_committed;
     let out = stats.destroyed + stats.abandoned;
     texts.p1().set_if_neq(Text::new(match diorama() {
+        // (Where the day has areas, who holds them under it.)
         Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => format!(
-            "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}",
-            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
+            "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}{}",
+            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned,
+            field.as_ref().map_or(String::new(), |f| format!("\n{}", zones_line(f)))
         ),
         Diorama::Robotyne => format!(
             "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
@@ -492,7 +508,9 @@ fn update_hud(
     texts.p2().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar => format!("155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, teams, missiles, mode, speed_line),
         Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
-            format!("155 mm  {} rds   DPICM  {}   RAAM  {}   HIMARS  {}   FPV  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.cluster, fc.raam, fc.himars, team.0.left, teams, missiles, mode, speed_line)
+            // (The drone's grenades where it has them: C drops one.)
+            let vog = drops.as_ref().map_or(String::new(), |d| format!("   VOG  {} [C]", d.left));
+            format!("155 mm  {} rds   DPICM  {}   RAAM  {}   HIMARS  {}   FPV  {}{vog}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.cluster, fc.raam, fc.himars, team.0.left, teams, missiles, mode, speed_line)
         }
         Diorama::Robotyne => {
             let order = match *order {
@@ -641,7 +659,7 @@ fn show_debrief(
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
-    (field, air, iglas, runway): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Runway>>),
+    (field, air, iglas, runway, drops): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Runway>>, Option<Res<bav_sim::drones::Drops>>),
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
@@ -686,6 +704,9 @@ fn show_debrief(
                 .into_iter()
                 // Where we have vehicles in the field (Avdiivka's Bradleys), what they cost.
                 .chain((diorama() != Diorama::Vuhledar).then(|| ("Our vehicles lost".to_string(), stats.defender_vehicles.to_string())))
+                // The areas at the end (the heap is part II's question), and what the drone's drops did.
+                .chain(field.as_deref().into_iter().flat_map(|f| f.zones.iter().map(|z| (format!("{} at the end", capital(&z.name.0)), held_by(z.held).to_string()))))
+                .chain(drops.as_deref().map(|d| ("Grenades dropped from the drone".to_string(), format!("{} of {}, {} killed", d.dropped, d.dropped + d.left, stats.deaths.iter().find(|(w, _)| *w == "drops").map_or(0, |(_, n)| *n)))))
                 .collect(),
                 stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (format!("column {i}"), [w.vehicles, w.destroyed, w.abandoned])).collect(),
                 ["vehicles", "destroyed", "abandoned"],

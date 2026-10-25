@@ -143,6 +143,9 @@ pub struct DevEnv {
     pub operator_off: bool,
     /// `BAV_FPV="<game s>:<x>;<z>"`: launch the FPV then and fly it by itself at the vehicle nearest that point.
     pub fpv: Option<(f32, (f32, f32))>,
+    /// `BAV_DROP="<game s>:<x>;<z>,…"`: drop a grenade from the reconnaissance drone then on the enemy's man nearest
+    /// that point, from 60 m over him, allowing for the mean wind as an operator would (`bav_sim::drones`).
+    pub drop: Vec<(f32, (f32, f32))>,
     /// `BAV_EVAC=<seconds>`: answer every call for evacuation after this delay, as a player would (balance runs).
     pub evac: Option<f32>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
@@ -277,6 +280,17 @@ impl DevEnv {
                 let (x, z) = at.split_once(';')?;
                 Some((t.trim().parse().ok()?, (x.trim().parse().ok()?, z.trim().parse().ok()?)))
             }),
+            drop: var("BAV_DROP")
+                .map(|plan| {
+                    plan.split(',')
+                        .filter_map(|item| {
+                            let (t, at) = item.split_once(':')?;
+                            let (x, z) = at.split_once(';')?;
+                            Some((t.trim().parse().ok()?, (x.trim().parse().ok()?, z.trim().parse().ok()?)))
+                        })
+                        .collect()
+                })
+                .unwrap_or_default(),
             lineup: var("BAV_LINEUP").and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok()),
             light: var("BAV_LIGHT")
                 .and_then(|c| <[f32; 3]>::try_from(c.split(',').filter_map(|s| s.trim().parse().ok()).collect::<Vec<f32>>()).ok())

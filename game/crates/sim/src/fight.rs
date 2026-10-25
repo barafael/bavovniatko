@@ -3,7 +3,8 @@
 //! told to (Space: "Відхід!"), pulls out and its men walk off the field; one overrun where it stands is taken, men
 //! and all. Over it, the field's areas (the hangar, the apron, the tower, the base) are whoever's men are in them.
 //!
-//! Only a diorama whose battle file has a `fight` has any of this: the Record of the others must not change.
+//! Only a diorama whose battle file has a `fight` has any of this: the Record of the others must not change. A day
+//! with `areas` and no fight (Avdiivka) has the areas alone: who holds each, on the HUD, the table and in the debrief.
 
 use crate::fire::Post;
 use crate::geo;
@@ -16,10 +17,18 @@ pub struct FightPlugin;
 
 impl Plugin for FightPlugin {
     fn build(&self, app: &mut App) {
-        let Some(spec) = spec() else { return };
+        let Some(spec) = spec() else {
+            // The areas without the fight (Avdiivka): who holds each, and nothing else of it. The posts there are the
+            // column game's, worn down by its own fire.
+            let areas = &crate::data::sim_data().areas;
+            if !areas.is_empty() {
+                app.insert_resource(Field { zones: zones(areas), ..default() }).add_systems(Update, (hold_zones, log_areas).chain().run_if(crate::running).in_set(crate::Step::Units));
+            }
+            return;
+        };
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
             .insert_resource(Sight(1.0))
-            .insert_resource(Field { zones: spec.zones.iter().map(|z| Zone { key: z.key.clone(), name: z.name.clone(), poly: z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect(), held: None }).collect(), ..default() })
+            .insert_resource(Field { zones: zones(&spec.zones), ..default() })
             .add_systems(Update, (see, supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
     }
 }
@@ -52,6 +61,16 @@ pub struct ZoneSpec {
 
 pub fn spec() -> Option<&'static FightSpec> {
     crate::data::sim_data().fight.as_ref()
+}
+
+/// The field's areas as the file draws them: the fight's, or the day's own where it has no fight (none: no areas).
+pub fn zone_specs() -> &'static [ZoneSpec] {
+    let d = crate::data::sim_data();
+    d.fight.as_ref().map_or(&d.areas[..], |f| &f.zones[..])
+}
+
+fn zones(specs: &[ZoneSpec]) -> Vec<Zone> {
+    specs.iter().map(|z| Zone { key: z.key.clone(), name: z.name.clone(), poly: z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect(), held: None }).collect()
 }
 
 #[derive(Resource)]
@@ -328,6 +347,25 @@ fn log_field(script: Res<crate::director::Script>, field: Res<Field>, air: Optio
         field.held_until.map(crate::director::clock_text),
         zones.join(",")
     );
+}
+
+/// For the bands (`BAV_LOG_STATS`), where the areas stand without the fight: who holds each, once a minute of the day's
+/// clock, with the attackers' men alive in each.
+fn log_areas(script: Res<crate::director::Script>, field: Res<Field>, soldiers: Query<(&Soldier, &Transform)>, mut last: Local<u32>) {
+    if !crate::dev::dev().log_stats || script.t as u32 / 60 == *last {
+        return;
+    }
+    *last = script.t as u32 / 60;
+    let attacker = crate::diorama::diorama().attacker();
+    let areas: Vec<String> = field
+        .zones
+        .iter()
+        .map(|z| {
+            let men = soldiers.iter().filter(|(s, t)| s.side == attacker && s.state != SState::Wounded && geo::inside(&z.poly, t.translation.xz())).count();
+            format!("{}={}/{men}", z.key, z.held.map_or("-", |s| if s == Side::Ua { "ua" } else { "ru" }))
+        })
+        .collect();
+    info!("areas: t={:>4.0} {} areas={}", script.t, crate::director::clock_text(script.t), areas.join(","));
 }
 
 /// Who holds each area: whoever has men in it, the other side none.

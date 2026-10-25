@@ -984,6 +984,9 @@ pub enum Cause {
     /// A Bradley's 25 mm: AP that goes through a BMP and bounces off a tank's front, where it takes the optics, a
     /// track or the engine instead (design/avdiivka.md, phase 2).
     Autocannon,
+    /// A grenade dropped from the reconnaissance drone (a VOG-17): a small burst on men, nothing to a hull
+    /// (design/avdiivka.md, phase 4).
+    Drop,
 }
 
 /// An explosion that hurts whatever is near it.
@@ -2038,6 +2041,7 @@ pub fn on_wrecked(
             Cause::Atgm => "an ATGM",
             Cause::Fpv => "an FPV",
             Cause::Autocannon => "25 mm fire",
+            Cause::Drop => "a dropped grenade",
         };
         log.open(now, weapon, "", ev.vehicle, &v, rescue, format!("destroyed{}", crate::hits::fate(ev.how)));
     }
@@ -2261,6 +2265,7 @@ fn resolve_blasts(
                     Cause::Mine => "mines",
                     Cause::Atgm | Cause::TankGun => "direct fire",
                     Cause::CookOff => "cook-offs",
+                    Cause::Drop => "drops",
                     _ => "shells",
                 }, (s.side == diorama().attacker()) as u32);
                 // Inside four metres (five of a cook-off) the blast throws the body a few metres; a man killed
@@ -2552,6 +2557,10 @@ fn move_soldiers(
                     s.state = if fleeing.is_some() || (s.side == Side::Ua && *order == ColumnOrder::PullBack) {
                         SState::Flee
                     } else if s.fear > 2.2 && near_wreck && rng.random_bool(0.5) {
+                        SState::DugIn
+                    } else if s.fear > 1.6 && geo::slope(p) > 0.1 && rng.random_bool(0.5) {
+                        // Pinned on a spoil heap's face, a man scrapes a hole in the slag rather than get up into the
+                        // fire from the brow again: the face is reached and held against (c11 §6 set piece 2).
                         SState::DugIn
                     } else if s.fear > 2.6 && rng.random_bool(0.5) {
                         SState::Flee
