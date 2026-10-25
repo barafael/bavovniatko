@@ -24,3 +24,9 @@ re-encodes it, and changes nothing else.
 - `bmd2.veh`: Bmd-2 Free by 2w — CC BY 4.0 — https://sketchfab.com/3d-models/407cda86aaa74654a2b0574015e798fd
 - `t90m.veh`: T-90M by minehffd — CC BY 4.0 — https://sketchfab.com/3d-models/2e31a3cf16b04f0180b9387df5198c9a
 - `su25.veh`: [PBR] Sukhoi Su-25 by Immersive3A — CC BY 4.0 — https://sketchfab.com/3d-models/956d0cb0bbe54fa8ad72e8c3e224fd2d
+- `fpv.veh`: Combat FPV drone by Amaranthus_retroflexus — CC BY 4.0 — https://sketchfab.com/3d-models/df640a20c2af49a6af7c371b2d49d51f
+- `vampire.veh`: Octocopter (DJI S1000 parts) by idmental — CC BY 4.0 — https://sketchfab.com/3d-models/2b401b4488d649bcb05d1b2af3212471 (changed: the parts sheet assembled into the octocopter by `game/tools/bake/s1000.py`, painted dark, with props, a battery, legs, a camera ball and a TM-62 mine added)
+- `orlan.veh`: Orlan-10 by flightclubua — CC BY 4.0 — https://sketchfab.com/3d-models/e2efb223c1814b7291818a9a7b4e80c5
+- `zala.veh`: Zala_421_16E2 by Viktor.Zhuravlev — CC BY 4.0 — https://sketchfab.com/3d-models/25c8c177042340238af814ded16ca24b
+- `l200.veh`: Mitsubishi L200 by David_Holiday — CC BY 4.0 — https://sketchfab.com/3d-models/372e50454f3246239a5a1551f839f862
+- `lada.veh`: LADA 2107 by tiunov.se — CC BY 4.0 — https://sketchfab.com/3d-models/31201f80892b404a8e49c272490a664c
