@@ -293,4 +293,5 @@ The other switches, by what they are for (the full list, with each one's format,
 | `BAV_SETTINGS=open` | start with the settings overlay open, for shots of it |
 | `BAV_ERA_AT=<s>` | with `BAV_LINEUP`: set off the lineup's reactive armour then |
 | `BAV_LIGHT=<sun>,<ambient>,<ev>` | scale the sun and the ambient light and shift the exposure, to judge a day's light |
+| `BAV_AMBIGUITY=1` | log the pairs of systems that touch the same data in no fixed order, which make a day replay differently (build with `--features bevy/debug` for their names) |
 | `BAV_DAYDBG=off\|nosun` | daylight debugging: hold the light as it was at startup, or animate it with the sun held where it is |

@@ -43,8 +43,10 @@ impl Plugin for BradleyPlugin {
             return;
         }
         app.insert_resource(BradleyRng(SmallRng::seed_from_u64(crate::dev::seeded(2525))))
-            .add_systems(Update, (seat_orders, start_runs, player_gun, auto_guns, drive_runs, spin_blind, turrets).chain().run_if(crate::running).in_set(crate::Step::Fire).after(crate::fire::FireSystems))
-            .add_systems(Update, tanks_answer.run_if(crate::running).in_set(crate::Step::Fire).before(crate::fire::FireSystems));
+            // After the guns, the shells and the aircraft (Avdiivka has Su-25s and Iglas too): they share the effects, the
+            // hulls' places and the net, and the day must replay the same.
+            .add_systems(Update, (seat_orders, start_runs, player_gun, auto_guns, drive_runs, spin_blind, turrets).chain().run_if(crate::running).in_set(crate::Step::Fire).after(crate::fire::FireSystems).after(crate::air::AirSystems))
+            .add_systems(Update, tanks_answer.run_if(crate::running).in_set(crate::Step::Fire).after(crate::manpads::ManpadsSystems).before(crate::fire::FireSystems).before(crate::air::AirSystems));
         if opens_on_run() {
             app.init_resource::<Duel>().add_systems(Update, keep_duel.after(turrets).run_if(crate::running).in_set(crate::Step::Fire));
         }

@@ -52,6 +52,11 @@ fn main() {
     if dev::dev().diag {
         app.add_plugins(bevy::render::diagnostic::RenderDiagnosticsPlugin);
     }
+    if dev::dev().ambiguity {
+        app.edit_schedule(Update, |s| {
+            s.set_build_settings(bevy::ecs::schedule::ScheduleBuildSettings { ambiguity_detection: bevy::ecs::schedule::LogLevel::Warn, ..default() });
+        });
+    }
     // The font lives in the binary, as the shaders do (bav_look), so the game runs from anywhere with no asset folder.
     bevy::asset::embedded_asset!(app, "fonts/LiberationMono-Regular.ttf");
     app.configure_sets(Update, (Step::Control, Step::Camera, Step::Script, Step::Fire, Step::Units, Step::Effects, Step::Screen).chain())

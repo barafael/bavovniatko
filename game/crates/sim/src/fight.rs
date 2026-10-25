@@ -22,7 +22,7 @@ impl Plugin for FightPlugin {
             // column game's, worn down by its own fire.
             let areas = &crate::data::sim_data().areas;
             if !areas.is_empty() {
-                app.insert_resource(Field { zones: zones(areas), ..default() }).add_systems(Update, (hold_zones, log_areas).chain().run_if(crate::running).in_set(crate::Step::Units));
+                app.insert_resource(Field { zones: zones(areas), ..default() }).add_systems(Update, (hold_zones, log_areas).chain().run_if(crate::running).in_set(crate::Step::Units).after(crate::units::drop_riders));
             }
             return;
         };

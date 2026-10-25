@@ -133,6 +133,9 @@ pub struct DevEnv {
     pub fly: Vec<(f32, f32, String)>,
     /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
     pub diag: bool,
+    /// `BAV_AMBIGUITY=1`: log the pairs of systems that touch the same data in no fixed order (two such systems
+    /// can run either way round, and the day then does not replay; build with `--features bevy/debug` for names).
+    pub ambiguity: bool,
     /// `BAV_FIELD=1`: draw the field over the picture (`bav_core::field`): positions, road heads, the grey zone, routes.
     pub field: bool,
     pub off: Vec<Part>,
@@ -316,6 +319,7 @@ impl DevEnv {
             gun,
             fly,
             diag: var("BAV_DIAG").is_some(),
+            ambiguity: var("BAV_AMBIGUITY").is_some(),
             field: var("BAV_FIELD").is_some(),
             off: var("BAV_OFF").map(|s| s.split(',').filter_map(|p| p.trim().parse().ok()).collect()).unwrap_or_default(),
             ground: var("BAV_GROUND"),

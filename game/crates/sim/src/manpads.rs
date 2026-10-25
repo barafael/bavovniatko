@@ -22,13 +22,17 @@ pub fn present() -> bool {
     crate::data::sim_data().catalog.iter().any(|u| matches!(u.what, crate::allot::UnitKind::Air(_)))
 }
 
+/// The Iglas' and the ZU's systems, for what must run before or after them.
+#[derive(SystemSet, Clone, PartialEq, Eq, Hash, Debug)]
+pub struct ManpadsSystems;
+
 impl Plugin for ManpadsPlugin {
     fn build(&self, app: &mut App) {
         if !present() {
             return;
         }
         app.insert_resource(ManpadsRng(SmallRng::seed_from_u64(crate::dev::seeded(9338))))
-            .add_systems(Update, (player_igla, auto_iglas, zu23, fly_iglas).chain().run_if(crate::running).in_set(crate::Step::Fire).before(crate::air::AirSystems));
+            .add_systems(Update, (player_igla, auto_iglas, zu23, fly_iglas).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(ManpadsSystems).before(crate::air::AirSystems));
     }
 }
 

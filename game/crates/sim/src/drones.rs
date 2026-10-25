@@ -40,8 +40,8 @@ impl Plugin for DronesPlugin {
         // The drop, only where the day has grenades for it: the Record of the others must not change.
         if d.support.iter().any(|s| matches!(s.what, crate::allot::SupportKind::Drops(_))) {
             app.insert_resource(Drops { left: crate::allot::settled().map_or(0, |a| a.drops), dropped: 0 })
-                .add_systems(Update, drop_input.run_if(crate::running).in_set(crate::Step::Control).after(crate::dev::DevSystems))
-                .add_systems(Update, fall.run_if(crate::running).in_set(crate::Step::Fire));
+                .add_systems(Update, drop_input.run_if(crate::running).in_set(crate::Step::Control).after(crate::dev::DevSystems).after(drone_input))
+                .add_systems(Update, fall.run_if(crate::running).in_set(crate::Step::Fire).after(crate::fire::FireSystems).before(crate::air::AirSystems));
         }
     }
 }

@@ -38,7 +38,8 @@ impl Plugin for AirPlugin {
             app.add_message::<AirHit>().add_systems(Update, (station, air_defence, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
         }
         if jets() {
-            app.add_systems(Update, (crate::jets::fly_jets, crate::jets::rocket_trails).chain().after(fight).before(take_hits).run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems));
+            // (After the guns and shells: both write the hit log and the net, and an unordered pair replays differently.)
+            app.add_systems(Update, (crate::jets::fly_jets, crate::jets::rocket_trails).chain().after(fight).after(crate::fire::FireSystems).before(take_hits).run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems));
         }
     }
 }
