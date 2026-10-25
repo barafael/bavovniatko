@@ -13,6 +13,8 @@
 (
     // (The parts give the date, the clock, the season and the sun.)
     place: ("Avdiivka", "Авдіївка"),
+    // The set raised over the ground, with its light (bav_look::data): the map's buildings and the coke plant.
+    set: CokePlant,
     // Where the drone starts: over the village's east edge, looking out across the field to the heap.
     camera: (950.0, -800.0),
     // BAV_VIEW=ground: the team nearest Stepove's east edge.

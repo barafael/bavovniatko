@@ -11,6 +11,8 @@
     compression: 0.36,
     attacker: Ru,
     season: Winter,
+    // The set raised over the ground, with its light (bav_look::data): the town's panel blocks.
+    set: PanelBlocks,
     // Fictional, as game/design/next.md decided: the player, the guns, the observers on the roof, the command post.
     callsigns: (
         player: ("Maestro", "Маестро"),

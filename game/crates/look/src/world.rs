@@ -2,7 +2,8 @@
 
 use bav_core::schedule::Setup;
 use crate::dev::{self, DayDebug};
-use crate::diorama::{Diorama, diorama};
+use crate::data::{Set, Woods};
+use crate::diorama::diorama;
 use crate::geo::{self, CHUNK, CHUNKS_X, HALF_X, HALF_Z, hash01};
 use crate::meshes::{self, MeshBuilder};
 use crate::trees::Kind;
@@ -34,17 +35,18 @@ impl Plugin for WorldPlugin {
             .insert_resource(GlobalAmbientLight { color: Color::srgb(0.80, 0.86, 1.0), brightness: 450.0, ..default() })
             .insert_resource(bevy::light::DirectionalLightShadowMap { size: dev::dev().shadow_map.unwrap_or(2048) as usize })
             .add_systems(Startup, (spawn_light, spawn_belts.in_set(Setup::Kit), crate::models::setup_models.after(spawn_belts).in_set(Setup::Kit), parapets.in_set(Setup::Dress)));
-        match diorama() {
-            Diorama::Vuhledar => {
+        // The set the file names, each with its own light.
+        match crate::data::look_data().set {
+            Set::PanelBlocks => {
                 app.add_systems(Startup, spawn_town.after(spawn_belts)).add_systems(Update, daylight.in_set(crate::Step::Effects));
             }
-            Diorama::Robotyne => {
+            Set::WaterTower => {
                 app.add_systems(Startup, crate::robotyne::spawn_set.after(spawn_belts)).add_systems(Update, crate::robotyne::daylight.in_set(crate::Step::Effects));
             }
-            Diorama::HostomelLanding | Diorama::HostomelCounter => {
+            Set::Antonov => {
                 app.add_systems(Startup, crate::hostomel::spawn_set.after(spawn_belts)).add_systems(Update, crate::hostomel::daylight.in_set(crate::Step::Effects));
             }
-            Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
+            Set::CokePlant => {
                 app.add_systems(Startup, crate::avdiivka::spawn_set.after(spawn_belts)).add_systems(Update, crate::avdiivka::daylight.in_set(crate::Step::Effects));
             }
         }
@@ -377,9 +379,9 @@ fn woods(plants: &mut BeltPlants, mut id: u32) {
                 if roads.iter().any(|(lo, hi, r)| p2.cmpge(*lo).all() && p2.cmple(*hi).all() && r.line.project(p2).0 < r.width * 0.5 + 3.0) || rails.iter().any(|r| r.project(p2).0 < 9.0) || posts.iter().any(|q| q.distance(p2) < 30.0) {
                     continue;
                 }
-                // Hostomel's woods are pine on the sand; on the steppe a wood on the map is a shelterbelt grown
-                // wide, the belts' own kinds.
-                let kind = if diorama().hostomel() {
+                // Pine on the sand (Hostomel's); on the steppe a wood on the map is a shelterbelt grown wide, the
+                // belts' own kinds.
+                let kind = if crate::data::look_data().woods == Woods::Pine {
                     match hash01(id, 3) {
                         u if u < 0.84 => Kind::Pine,
                         u if u < 0.94 => Kind::Ash,
