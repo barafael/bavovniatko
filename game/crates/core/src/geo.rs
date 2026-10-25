@@ -386,19 +386,21 @@ pub struct Layout {
     pub old_wrecks: Vec<(Vec2, f32)>,
     /// Which way the attack goes along z: -1 north (Vuhledar), +1 south (Robotyne).
     pub advance: f32,
-    /// The defenders' forward line (z): attackers alive at or past it hold a foothold.
-    pub foothold_z: f32,
-    /// The defenders' main line (z), the tree line or trench the attackers' guns work over.
-    pub defence_z: f32,
+    /// The defenders' forward line (z): attackers alive at or past it hold a foothold. None where the fight is for
+    /// places rather than a line (Hostomel).
+    pub foothold_z: Option<f32>,
+    /// The defenders' main line (z), the tree line or trench the attackers' guns work over; None: no line, and the
+    /// guns work over the defenders' posts.
+    pub defence_z: Option<f32>,
     /// The defenders' trench, where one is painted across the field.
     pub trench_z: Option<f32>,
     /// The attackers' start line, where they leave from a tree line of their own.
     pub start_z: Option<f32>,
-    /// The drone's base, and the z beyond which it flies into the enemy's jamming.
+    /// The drone's base, and the z beyond which it flies into the enemy's jamming (None: no jam line).
     pub home: Vec2,
-    pub jam_z: f32,
-    /// Where the defenders' mortars reach (a z band in front of their line).
-    pub mortar_band: (f32, f32),
+    pub jam_z: Option<f32>,
+    /// Where the defenders' mortars reach (a z band in front of their line); None: no mortars.
+    pub mortar_band: Option<(f32, f32)>,
 }
 
 static LAYOUT: OnceLock<Layout> = OnceLock::new();

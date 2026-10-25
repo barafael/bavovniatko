@@ -77,9 +77,10 @@ pub struct DevEnv {
     pub settings_open: bool,
     /// `BAV_REEL=<file>`: the reel tour's shot list (`BAV_TOUR=reel`).
     pub reel: Option<String>,
-    /// `BAV_ALLOT=<picks>`: Command's Allotment until the map table exists (`bav_sim::allot`).
+    /// `BAV_ALLOT=<picks>`: Command's Allotment without the map table: the table's first picks, or a headless run's
+    /// (`bav_sim::allot`).
     pub allot: Option<String>,
-    /// `BAV_COLUMN=<columns>`: Columns sent at game times until the map table exists (`bav_sim::columns`).
+    /// `BAV_COLUMN=<columns>`: Columns sent at game times, for the headless runs (`bav_sim::columns`).
     pub column: Option<String>,
     /// `BAV_ORDER=<orders>`: Orders given at game times, for the headless runs (`bav_sim::orders`).
     pub order: Option<String>,

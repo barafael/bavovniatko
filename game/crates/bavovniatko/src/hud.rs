@@ -445,8 +445,7 @@ fn update_hud(
             "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
             diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
         ),
-        // The field's own tally (helicopters down, minutes held, the runway) comes with its fight (design/hostomel.md,
-        // phases 2 to 5); until then, the clock.
+        // The clock, then the field's own tally: helicopters down, the posts held, the runway.
         Diorama::HostomelLanding => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref(), runway.as_deref()))),
         Diorama::HostomelCounter => {
             let zones = field.as_ref().map_or(String::new(), |f| zones_line(f));

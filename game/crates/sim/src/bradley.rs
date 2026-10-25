@@ -10,7 +10,7 @@ use crate::fx::{self, FxQueue};
 use crate::geo;
 use crate::player::{MainCamera, View};
 use crate::sound::{Sfx, Sound};
-use crate::units::{self, Blast, Cause, DirectHit, Gun, Radio, Turret, VKind, Vehicle};
+use crate::units::{self, Blast, Cause, DirectHit, Gun, Radio, Turret, Vehicle};
 use bav_core::diorama::Side;
 use bav_core::vocab::Mode;
 use bevy::light::NotShadowCaster;
@@ -307,9 +307,4 @@ fn turrets(time: Res<Time>, mut q: Query<(&Vehicle, &Transform, &mut Gun), With<
             ttf.rotation = Quat::from_rotation_y(gun.turret_yaw);
         }
     }
-}
-
-/// Which kinds a `Dug` unit may be.
-pub fn dug_kind(k: VKind) -> bool {
-    k == VKind::Bradley
 }

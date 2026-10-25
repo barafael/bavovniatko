@@ -16,12 +16,12 @@
     // Where the drone starts: over the village's east edge, looking out across the field to the heap.
     camera: (950.0, -800.0),
     // The observers: the heap's first terrace on its forward face, 2 m above the spoil.
-    op: Some(((-1000.0, 560.0), 2.0)),
+    op: ((-1000.0, 560.0), 2.0),
     // Adjusted fire is observed from the village's edge and the rails.
     observed_from: LineZ(-700.0),
     // Eighteen months of a front line here: old craters along the belts and in no-man's-land.
     worn: true,
-    shelled: Some((250, -300.0, 1500.0)),
+    shelled: (250, -300.0, 1500.0),
 
     // Flat steppe at 195-205 m, a shade higher at the plant end (south-west) than at Krasnohorivka, with the heap
     // standing 38 m over it on the map's own outline: its faces climb in benches over 170 m in from the edge to a
@@ -71,7 +71,7 @@
 
     // Stepove stands for the town: what the TOS works over, where the field's ruin positions are, and what the
     // advance is measured against (the village's edge is at z -731).
-    town: Some(((800.0, -1750.0), (1260.0, -731.0))),
+    town: ((800.0, -1750.0), (1260.0, -731.0)),
 
     ua_positions: [
         // Stepove's east edge, and its two corners.

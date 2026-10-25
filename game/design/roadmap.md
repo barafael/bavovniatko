@@ -1,6 +1,7 @@
 # Roadmap: the tidy-up, the dioramas as data, and the drones (plan, 2026-10-15)
 
-Status: plan, nothing started. It absorbs the local `pending/` notes of 11–12 October, which are now gone, and
+Status: carried out 15–16 October 2026; the progress table below is the record. The work after it is planned in
+`hostomel.md`, `command.md` and `avdiivka.md`. The plan absorbs the local `pending/` notes of 11–12 October, which are now gone, and
 it records the owner's decisions of 15 October. When this plan is done, the game will:
 
 - sit in a repo with two halves;

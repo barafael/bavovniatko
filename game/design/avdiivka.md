@@ -1,6 +1,7 @@
 # Avdiivka: the fourth diorama, the northern shoulder in three parts
 
-Status: planned (2026-10-21). Progress is logged at the end of this file.
+Status: in progress (2026-10-25): all three parts play, with bands for each; what is open is at the end of the
+progress log. Progress is logged at the end of this file.
 
 ## Context
 

@@ -94,7 +94,7 @@ pub fn way(head: usize, to: usize) -> Result<Way, String> {
     let mut pts = way.pts;
     pts.push(pos.at);
     let line = geo::Polyline::new(pts);
-    let exposed = line.pts.windows(2).filter(|w| (w[0] + w[1]).y * 0.5 >= f.grey.0).map(|w| w[0].distance(w[1])).sum();
+    let exposed = line.pts.windows(2).filter(|w| f.grey.is_some_and(|(z0, _)| (w[0] + w[1]).y * 0.5 >= z0)).map(|w| w[0].distance(w[1])).sum();
     Ok(Way { line, exposed })
 }
 

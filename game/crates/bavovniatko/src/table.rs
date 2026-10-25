@@ -218,13 +218,15 @@ fn spawn_table(mut commands: Commands, assets: Res<AssetServer>, mut images: Res
                             TextColor(Color::srgb(0.12, 0.25, 0.55)),
                         ));
                     }
-                    let grey = on_map(Vec2::new(-geo::HALF_X, (f.grey.0 + f.grey.1) * 0.5));
-                    m.spawn((
-                        Node { position_type: PositionType::Absolute, left: percent(1), top: percent(grey.y * 100.0), margin: UiRect { top: px(-8), ..default() }, ..default() },
-                        Text::new("GREY ZONE (СІРА ЗОНА)"),
-                        font_of(&assets, 12.0),
-                        TextColor(DIM_INK),
-                    ));
+                    if let Some((z0, z1)) = f.grey {
+                        let grey = on_map(Vec2::new(-geo::HALF_X, (z0 + z1) * 0.5));
+                        m.spawn((
+                            Node { position_type: PositionType::Absolute, left: percent(1), top: percent(grey.y * 100.0), margin: UiRect { top: px(-8), ..default() }, ..default() },
+                            Text::new("GREY ZONE (СІРА ЗОНА)"),
+                            font_of(&assets, 12.0),
+                            TextColor(DIM_INK),
+                        ));
+                    }
                     m.spawn((Node { position_type: PositionType::Absolute, right: percent(1), top: percent(1), ..default() }, Text::new("OURS (НАШІ)"), font_of(&assets, 13.0), TextColor(OURS)));
                     m.spawn((Node { position_type: PositionType::Absolute, right: percent(1), bottom: percent(1), ..default() }, Text::new("THEIRS (ВОРОГ)"), font_of(&assets, 13.0), TextColor(Color::srgb(0.55, 0.12, 0.10))));
                 });
@@ -535,7 +537,7 @@ fn paint_map() -> Image {
             }
             // The grey zone: diagonal hatching.
             let p = world(x as f32, y as f32);
-            if (f.grey.0..f.grey.1).contains(&p.y) && (x + y) % 14 < 2 {
+            if f.grey.is_some_and(|(z0, z1)| (z0..z1).contains(&p.y)) && (x + y) % 14 < 2 {
                 c = mix(c, [0.45, 0.43, 0.40], 0.45);
             }
             // Their barrier minefields, cross-hatched in red.

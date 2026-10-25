@@ -73,6 +73,9 @@ pub fn diorama() -> Diorama {
 }
 
 impl Diorama {
+    /// Every diorama, in the order the READMEs give them.
+    pub const ALL: [Diorama; 7] = [Self::Vuhledar, Self::Robotyne, Self::HostomelLanding, Self::HostomelCounter, Self::AvdiivkaWave1, Self::AvdiivkaWave2, Self::AvdiivkaStepove];
+
     /// Whether this is one of Avdiivka's parts (they share a map and a set).
     pub fn avdiivka(self) -> bool {
         matches!(self, Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove)

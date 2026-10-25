@@ -133,8 +133,9 @@ pub struct Tree {
 pub struct Field {
     pub positions: Vec<Position>,
     pub road_heads: Vec<RoadHead>,
-    /// The grey zone: from this z to that one (the enemy is to +z on both days).
-    pub grey: (f32, f32),
+    /// The grey zone: from this z to that one (the enemy is to +z on both days); None where there is no front across
+    /// the field.
+    pub grey: Option<(f32, f32)>,
 }
 
 /// The ways across the field: the graph, and for each road head a shortest-way tree per mover, each worked out the
@@ -172,11 +173,6 @@ impl Routes {
         self.walk(&self.graph.tree(from, mover), from, mover, to)
     }
 
-    /// The road head nearest a place.
-    pub fn nearest_head(&self, p: Vec2) -> Option<usize> {
-        field().road_heads.iter().enumerate().min_by(|a, b| a.1.at.distance(p).total_cmp(&b.1.at.distance(p))).map(|(i, _)| i)
-    }
-
     /// From a tree's start to a place: back up the tree from the node nearest the place, smoothed.
     fn walk(&self, tree: &Tree, from: Vec2, mover: Mover, to: Vec2) -> Option<Polyline> {
         let end = self.graph.nearest(to, mover, tree)?;
@@ -197,7 +193,8 @@ impl Routes {
     }
 }
 
-fn ground_at(grey: (f32, f32), p: Vec2) -> Ground {
+fn ground_at(grey: Option<(f32, f32)>, p: Vec2) -> Ground {
+    let Some(grey) = grey else { return Ground::Ours };
     if p.y < grey.0 {
         Ground::Ours
     } else if p.y > grey.1 {

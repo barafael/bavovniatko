@@ -113,16 +113,20 @@ pub struct DioramaData {
     /// Where the player's columns come in (design/command.md): a name in English and Ukrainian, and the place.
     #[serde(default)]
     pub road_heads: Vec<RoadHeadSpec>,
-    /// The grey zone, from this z to that (the enemy is to +z): nothing of ours is placed in it or beyond.
-    pub grey_zone: (f32, f32),
+    /// The grey zone, from this z to that (the enemy is to +z): nothing of ours is placed in it or beyond. None: no
+    /// front across the field (Hostomel's fight is for places, not a line), so all of it is ours to place on.
+    #[serde(default)]
+    pub grey_zone: Option<(f32, f32)>,
     #[serde(default)]
     pub trps: Vec<PointSpec>,
     #[serde(default)]
     pub old_wrecks: Vec<(PointSpec, f32)>,
     /// Which way the attack goes along z: -1 north, +1 south.
     pub advance: f32,
-    pub foothold_z: f32,
-    pub defence_z: f32,
+    #[serde(default)]
+    pub foothold_z: Option<f32>,
+    #[serde(default)]
+    pub defence_z: Option<f32>,
     /// The defenders' trench, where there is one painted across the field.
     #[serde(default)]
     pub trench_z: Option<f32>,
@@ -130,8 +134,10 @@ pub struct DioramaData {
     #[serde(default)]
     pub start_z: Option<f32>,
     pub home: P,
-    pub jam_z: f32,
-    pub mortar_band: (f32, f32),
+    #[serde(default)]
+    pub jam_z: Option<f32>,
+    #[serde(default)]
+    pub mortar_band: Option<(f32, f32)>,
 }
 
 /// What tools/osm/osm2ron.py makes of a map: lines (roads, taxiways, railways), the roads on them, tree rows, land
@@ -170,12 +176,15 @@ pub struct Words {
     pub op_lost: String,
     /// Where our ATGM teams fire from, as the hit feed says it.
     pub forward_belt: String,
-    /// A mine under a plow that stays on its tracks.
-    pub plow_mine: String,
+    /// A mine under a plow that stays on its tracks (none: no plows that day).
+    #[serde(default)]
+    pub plow_mine: Option<String>,
     /// Mines under the tracks: one of these, at random.
     pub mine_lines: Vec<String>,
-    /// The brigade's guns on a registered point `{n}`: in Ukrainian and English (no Ukrainian: the net's own table).
-    pub registered: (String, String),
+    /// The defenders' guns on a registered point `{n}`, as our net hears it: in Ukrainian and English (no Ukrainian:
+    /// the net's own table). Where the defenders are theirs (Mala Tokmachka) it is our warning.
+    #[serde(default)]
+    pub registered: Option<(String, String)>,
     /// The debrief: the lines about what came after, and the keys.
     pub closing: Vec<String>,
     pub keys: String,
@@ -449,6 +458,12 @@ fn merge(texts: &[String]) -> String {
     format!("({})", texts.iter().map(|t| body(t)).collect::<Vec<_>>().join(",\n"))
 }
 
+/// A diorama's built-in files as the one record they make (for checks over every diorama; the game reads
+/// `source`).
+pub fn builtin_text(d: Diorama) -> String {
+    merge(&builtin(d).iter().map(|(_, t)| t.to_string()).collect::<Vec<_>>())
+}
+
 static SOURCE: OnceLock<(String, String)> = OnceLock::new();
 
 /// The file of the diorama on the table: its name (or path) and its text. Each crate reads its own part of it:
@@ -473,10 +488,15 @@ pub fn source() -> (&'static str, &'static str) {
 }
 
 /// Parse this crate's or another's part of the diorama's file; a file that does not parse stops the game with
-/// the file, line and column.
+/// the file, line and column. An optional field is written as its value (`trench_z: 702.0`), not `Some(702.0)`.
 pub fn read<T: serde::de::DeserializeOwned>() -> T {
     let (name, text) = source();
-    ron::from_str(text).unwrap_or_else(|e| panic!("{name}: {e}"))
+    parse(text).unwrap_or_else(|e| panic!("{name}: {e}"))
+}
+
+/// RON as the dioramas are written: with implicit `Some`.
+pub fn parse<T: serde::de::DeserializeOwned>(text: &str) -> ron::error::SpannedResult<T> {
+    ron::Options::default().with_default_extension(ron::extensions::Extensions::IMPLICIT_SOME).from_str(text)
 }
 
 static DATA: OnceLock<DioramaData> = OnceLock::new();
@@ -731,13 +751,22 @@ mod merge_tests {
     #[test]
     fn the_dioramas_are_formatted() {
         let config = fmtron::Config::default().with_max_width(120);
-        use crate::diorama::Diorama as D;
-        for d in [D::Vuhledar, D::Robotyne, D::HostomelLanding, D::HostomelCounter, D::AvdiivkaWave1, D::AvdiivkaWave2, D::AvdiivkaStepove] {
+        for d in crate::diorama::Diorama::ALL {
             for (name, text) in super::builtin(d) {
                 // (The library ends without a line break; the command line, which wrote the files, adds one.)
                 let formatted = fmtron::format_ron(text, &config).unwrap_or_else(|e| panic!("{name}: {e}")) + "\n";
                 assert!(formatted == *text, "{name} is not formatted: run `fmtron dioramas` in game/");
             }
+        }
+    }
+
+    /// Every diorama reads, and its layout builds: every line, road and area it names is there.
+    #[test]
+    fn every_diorama_reads_and_lays_out() {
+        for d in crate::diorama::Diorama::ALL {
+            let data: super::DioramaData = super::parse(&super::builtin_text(d)).unwrap_or_else(|e| panic!("{d}: {e}"));
+            let lay = super::layout(&data);
+            assert!(!lay.routes.is_empty() || !lay.ua_positions.is_empty(), "{d}: neither routes nor positions");
         }
     }
 

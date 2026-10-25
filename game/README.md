@@ -270,3 +270,23 @@ the start) is kept in `~/.cache/bavovniatko/ground/<diorama>-<key>/`, whose key 
 diorama's file, so a change to either paints afresh; `BAV_GROUND=<dir>` keeps it there instead and
 `BAV_GROUND=off` always paints. Every test screenshot and clip goes into `devlog/` (local, gitignored), indexed in `devlog/shots.md` and
 `devlog/videos.md`. The history is part of the development.
+
+The other switches, by what they are for (the full list, with each one's format, is `crates/core/src/dev.rs`):
+
+| switch | what it does |
+|---|---|
+| `BAV_DIORAMA=<name>` | the day, as the first argument names it (`robotyne`, `hostomel-2`, `avdiivka-3`, …); the scripts use it |
+| `BAV_DATA=<dir>` | read the diorama's files from `<dir>` rather than the ones built in, to edit a layout without a rebuild |
+| `BAV_RES=<w>x<h>` | the window's or the headless frame's size |
+| `BAV_VIEW=op\|ground\|manpads\|bradley` | start on the observers' post, in a tree line with a `BAV_TEAM=stugna\|javelin\|…` launcher (`BAV_AUTO_ATGM=<s>` fires it then), with the first Igla team, or in a Bradley's gunner's seat |
+| `BAV_THERMAL=1` | the drone on its thermal channel from the start, where there is one |
+| `BAV_FLY="3-9:w+,9-12:q"` | fly the drone by script: legs of game time with what the sticks do |
+| `BAV_NO_BATTERY=1` | the drone never runs down (the same-day runs) |
+| `BAV_LOG_STATS=1` | the tally once a game minute in the log (the same-day and band runs read it) |
+| `BAV_REC=<dir>`, `BAV_REC_FROM`, `BAV_REC_SECS` | save frames at 15 fps from a game time for so many seconds (`record.sh`) |
+| `BAV_REEL=<file>` | the trailer's shot list for `BAV_TOUR=reel` (`cargo xtask trailer` writes it) |
+| `BAV_COMPOSE="0:bmp2+mtlb@10:stugna"` | a Column made up on the battle's map table and not sent, for shots of it |
+| `BAV_SETTINGS=open` | start with the settings overlay open, for shots of it |
+| `BAV_ERA_AT=<s>` | with `BAV_LINEUP`: set off the lineup's reactive armour then |
+| `BAV_LIGHT=<sun>,<ambient>,<ev>` | scale the sun and the ambient light and shift the exposure, to judge a day's light |
+| `BAV_DAYDBG=off\|nosun` | daylight debugging: hold the light as it was at startup, or animate it with the sun held where it is |

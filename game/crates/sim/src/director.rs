@@ -185,7 +185,13 @@ fn run_script(
                 // The guns walk up and down the crest trench line and the positions behind it.
                 let lay_posts = &lay.ru_positions;
                 for k in 0..*missions {
-                    let base = if k % 2 == 0 && !lay_posts.is_empty() { lay_posts[k as usize % lay_posts.len()] } else { Vec2::new(rng.random_range(-2000.0..2000.0), lay.trench_z.unwrap_or(lay.defence_z) + rng.random_range(-10.0..60.0)) };
+                    let base = match lay.trench_z.or(lay.defence_z) {
+                        _ if k % 2 == 0 && !lay_posts.is_empty() => lay_posts[k as usize % lay_posts.len()],
+                        Some(z) => Vec2::new(rng.random_range(-2000.0..2000.0), z + rng.random_range(-10.0..60.0)),
+                        // No line across the field (Hostomel): between their posts instead.
+                        None if !lay_posts.is_empty() => lay_posts[rng.random_range(0..lay_posts.len())] + Vec2::new(rng.random_range(-120.0..120.0), rng.random_range(-120.0..120.0)),
+                        None => continue,
+                    };
                     let at = now + (k as f32 / *missions as f32 * over) as f64;
                     commands.spawn(Mission { target: base, kind: ShellKind::He155, rounds: 6, sigma: 45.0, interval: 1.6, next: at, flight: 18.0, by: Side::Ua });
                 }
@@ -326,7 +332,10 @@ fn russian_artillery(
     let target = if !live.is_empty() && rng.random_bool(0.6) {
         live[rng.random_range(0..live.len())] + Vec2::new(rng.random_range(-60.0..60.0), rng.random_range(-30.0..30.0))
     } else {
-        Vec2::new(rng.random_range(x.0..x.1), if rng.random_bool(0.5) { geo::layout().defence_z } else { rng.random_range(band.0..band.1) })
+        Vec2::new(rng.random_range(x.0..x.1), match geo::layout().defence_z {
+            Some(z) if rng.random_bool(0.5) => z,
+            _ => rng.random_range(band.0..band.1),
+        })
     };
     commands.spawn(Mission { target, kind: ShellKind::Ru152, rounds: rng.random_range(3..8), sigma: 45.0, interval: 2.0, next: now, flight: 20.0, by: Side::Ru });
 }

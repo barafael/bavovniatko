@@ -1,10 +1,7 @@
 // Avdiivka, part II, The second wave (Друга хвиля): 19 October 2023, morning, the northern shoulder. The Russians
 // come again, having learned: smaller groups under more smoke, the infantry dismounting at the belts, and the heap
 // stormed on foot with tanks at its base (c11 §2 19-20 Oct, §6 set piece 2, folded in from about 16 October:
-// design/avdiivka.md, phase 8). The schema is bav_core::data and bav_sim::data; the map is map.ron.
-//
-// Phase 1 of design/avdiivka.md: the field and the clock; the day's own script and the morning's wrecks come in
-// phase 8. Until then it is the first wave's day, nine days on.
+// design/avdiivka.md). The schema is bav_core::data and bav_sim::data; the map is map.ron.
 (
     date: "19 October 2023",
     tally_date: "19 OCT 2023",
@@ -14,7 +11,7 @@
     attacker: Ru,
     season: Autumn,
     // 19 October is the 292nd day of the year; Kyiv was on summer time, UTC+3.
-    sun: Some((292, 3.0)),
+    sun: (292, 3.0),
     // The 47th flew thermal Mavics by then: key I.
     thermal: true,
     // Fictional, the 47th's: the player (a sighthound), the 55th's guns (anvil), the observers on the heap (crest),
@@ -145,17 +142,17 @@ Press Enter."#,
     ],
     // Overcast by the 20th, with the wind gusting to 33 km/h (ERA5, c11 §3): the drone works for its hover.
     overcast: true,
-    wind: Some((-6.0, 0.0, 4.5)),
+    wind: (-6.0, 0.0, 4.5),
 
     // ---- The battle's part (bav_sim::data) ----
-    // The 47th's and the 110th's side as Units and Support: Stugnas and Javelins in the positions, a Leopard 2A6
-    // in a hide, and the 55th's guns with a working day's rounds; cluster shells come in phase 5, the Bradleys as
-    // units in phase 6 (design/avdiivka.md). FPVs were a daily stock by this autumn (arcs.md §6).
+    // The 47th's and the 110th's side as Units and Support: Stugna and Javelin teams and rifle sections for the
+    // positions, a tank and the Bradleys for the hides, and the 55th's guns with a working day's rounds and cluster
+    // shells. FPVs were a daily stock by this autumn (arcs.md §6).
     catalog: [
         (
             id: "stugna",
             name: ("Stugna-P team", "Розрахунок «Стугни-П»"),
-            what: Post(Some(Stugna)),
+            what: Post(Stugna),
             cost: 8,
             supply: 5,
             available: 5,
@@ -163,7 +160,7 @@ Press Enter."#,
         (
             id: "javelin",
             name: ("Javelin team", "Розрахунок «Джавеліна»"),
-            what: Post(Some(Javelin)),
+            what: Post(Javelin),
             cost: 9,
             supply: 5,
             available: 4,
@@ -225,18 +222,18 @@ Press Enter."#,
         points: 180,
         supply: (12, 2.0),
         record: [
-            (id: "stugna", at: Some(0)),
-            (id: "javelin", at: Some(1)),
-            (id: "rifles", at: Some(2)),
-            (id: "stugna", at: Some(3)),
-            (id: "rifles", at: Some(4)),
-            (id: "rifles", at: Some(5)),
-            (id: "rifles", at: Some(6)),
-            (id: "rifles", at: Some(7)),
-            (id: "rifles", at: Some(8)),
-            (id: "m2", at: Some(9)),
-            (id: "m2", at: Some(10)),
-            (id: "tank", at: Some(11)),
+            (id: "stugna", at: 0),
+            (id: "javelin", at: 1),
+            (id: "rifles", at: 2),
+            (id: "stugna", at: 3),
+            (id: "rifles", at: 4),
+            (id: "rifles", at: 5),
+            (id: "rifles", at: 6),
+            (id: "rifles", at: 7),
+            (id: "rifles", at: 8),
+            (id: "m2", at: 9),
+            (id: "m2", at: 10),
+            (id: "tank", at: 11),
             (id: "155", count: 6),
             (id: "raam", count: 3),
             (id: "dpicm", count: 4),
@@ -251,13 +248,13 @@ Press Enter."#,
     // Shift+click: cluster on the infantry. (RAAM stays on the stock for Command's table.)
     shift_fire: Cluster,
     // Their guns work the village, the railway and the heap all day, and the ground behind.
-    ru_guns: Some(Posts(x: (-1800.0, 1800.0), band: (-1300.0, -600.0))),
+    ru_guns: Posts(x: (-1800.0, 1800.0), band: (-1300.0, -600.0)),
     registered_fire: (50.0, 6),
     // Their EW: jammers with the columns' start lines, the rear emitters past the heap's far foot.
-    ew: Some((jammers: [(1300.0, 1700.0), (-900.0, 1750.0)], radius: 900.0, depth: 700.0)),
-    // FPVs by the day (phase 4 makes them a stock; one at a time until then), five minutes in the air.
-    fpv: Some((endurance: 300.0)),
-    // Command's Enemy staff: Lancets for the Bradleys and the Leopard; Orlans over the village every few minutes.
+    ew: (jammers: [(1300.0, 1700.0), (-900.0, 1750.0)], radius: 900.0, depth: 700.0),
+    // FPVs by the day, five minutes in the air.
+    fpv: (endurance: 300.0),
+    // Command's Enemy staff: Lancets for the Bradleys and the tank; Orlans over the village every few minutes.
     staff: (lancets: 4, orlan: (120.0, 240.0), kabs: 6, kab_every: (200.0, 400.0)),
     // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
     // February, but still.

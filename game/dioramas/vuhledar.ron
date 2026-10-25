@@ -21,7 +21,7 @@
     anchor: (lat: 47.7810, lon: 37.2461, x: -900.0, z: -1500.0, m_per_lon: 74740.0),
 
     // SRTM-like: ~190 m on the town ridge, ~142 m in the valley.
-    // What the day says (design/hostomel.md, phase 0): the briefing, the lines that are this place's, the debrief's close.
+    // What the day says: the briefing, the lines that are this place's, the debrief's close.
     words: (
         briefing: r#"VUHLEDAR (ВУГЛЕДАР)
 6 FEBRUARY 2023
@@ -245,11 +245,11 @@ Press Enter."#,
         ([(200.0, -330.0), (1600.0, -360.0)], 35.0),
     ],
 
-    river: Some("river"),
-    town: Some(((-2304.0, -1792.0), (450.0, -1130.0))),
-    dachas: Some(((480.0, -1250.0), (1250.0, -880.0))),
-    pavlivka: Some(((-2100.0, 1560.0), (-900.0, 1792.0))),
-    mykilske: Some(((1750.0, 1480.0), (2304.0, 1792.0))),
+    river: "river",
+    town: ((-2304.0, -1792.0), (450.0, -1130.0)),
+    dachas: ((480.0, -1250.0), (1250.0, -880.0)),
+    pavlivka: ((-2100.0, 1560.0), (-900.0, 1792.0)),
+    mykilske: ((1750.0, 1480.0), (2304.0, 1792.0)),
 
     ua_positions: [
         // The first belt: ATGM teams, each with a clear line down its road (none behind a north-south belt).
@@ -313,7 +313,7 @@ Press Enter."#,
         (
             id: "stugna",
             name: ("Stugna-P team", "Розрахунок «Стугни-П»"),
-            what: Post(Some(Stugna)),
+            what: Post(Stugna),
             cost: 8,
             supply: 5,
             available: 5,
@@ -321,7 +321,7 @@ Press Enter."#,
         (
             id: "javelin",
             name: ("Javelin team", "Розрахунок «Джавеліна»"),
-            what: Post(Some(Javelin)),
+            what: Post(Javelin),
             cost: 9,
             supply: 5,
             available: 4,
@@ -369,16 +369,16 @@ Press Enter."#,
         // Command's Supply: what there is at the start, and what comes up the road each minute of the day's clock.
         supply: (12, 2.0),
         record: [
-            (id: "stugna", at: Some(0)),
-            (id: "javelin", at: Some(1)),
-            (id: "javelin", at: Some(2)),
-            (id: "stugna", at: Some(3)),
-            (id: "stugna", at: Some(4)),
-            (id: "javelin", at: Some(5)),
-            (id: "rifles", at: Some(6)),
-            (id: "rifles", at: Some(7)),
-            (id: "rifles", at: Some(8)),
-            (id: "t64", at: Some(9)),
+            (id: "stugna", at: 0),
+            (id: "javelin", at: 1),
+            (id: "javelin", at: 2),
+            (id: "stugna", at: 3),
+            (id: "stugna", at: 4),
+            (id: "javelin", at: 5),
+            (id: "rifles", at: 6),
+            (id: "rifles", at: 7),
+            (id: "rifles", at: 8),
+            (id: "t64", at: 9),
             (id: "155", count: 6),
             (id: "raam", count: 4),
             (id: "himars", count: 2),
@@ -393,11 +393,11 @@ Press Enter."#,
     // Space orders the ATGM teams or our column; Shift+click calls RAAM or smoke; the enemy's guns and their habits.
     space_key: Atgm,
     shift_fire: Raam,
-    ru_guns: Some(Posts(x: (-1800.0, 1500.0), band: (-1400.0, -1150.0))),
+    ru_guns: Posts(x: (-1800.0, 1500.0), band: (-1400.0, -1150.0)),
     registered_fire: (50.0, 6),
     // Their EW: no source places their jammers at Vuhledar itself (db/research/11 §7); two by the villages in the
     // valley, from the front-wide picture, and the rear emitters felt past the jam line.
-    ew: Some((jammers: [(-1500.0, 1650.0), (1950.0, 1550.0)], radius: 1000.0, depth: 700.0)),
+    ew: (jammers: [(-1500.0, 1650.0), (1950.0, 1550.0)], radius: 1000.0, depth: 700.0),
     // The drone team on the town's southern edge. In February 2023 DJI's AeroScope gave a pilot away and fire
     // followed within minutes (db/research/11 §6), so a team that stays put is found a few times a day.
     // Command's Enemy staff (bav_sim::staff): a couple of Lancets for the day; the Orlans over the town every few minutes.

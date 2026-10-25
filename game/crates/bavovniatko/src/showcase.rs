@@ -182,7 +182,8 @@ fn shots_minute() -> Vec<Shot> {
 /// first estimates from the beat table and the day-7 log; the scout retimes what the sheets disagree with.
 fn shots_film() -> Vec<Shot> {
     let f = shot;
-    // Hostomel has no shot list yet (design/hostomel.md, phase 8): nothing to film rather than Vuhledar's.
+    // Hostomel and Avdiivka have no film yet (design/hostomel.md, phase 8; design/avdiivka.md, phase 10): nothing to
+    // film rather than Vuhledar's.
     if crate::diorama::diorama().hostomel() || crate::diorama::diorama().avdiivka() {
         return Vec::new();
     }

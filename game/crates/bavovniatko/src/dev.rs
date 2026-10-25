@@ -33,14 +33,14 @@ struct FieldLines {
 /// `BAV_FIELD=1`: the field as the map table will know it. Each position a ring (green ours, yellow in the grey
 /// zone, red theirs; hides and ruins larger, trenches and hides doubled) with a tick the way it faces; the road heads,
 /// blue; the grey zone's edges; and the tracked routes from each road head to every other position of ours. The
-/// positions are listed by number in the log, for `BAV_ALLOT` (`stugna@37`) until the map table exists.
+/// positions are listed by number in the log, for `BAV_ALLOT` (`stugna@37`).
 fn field_overlay_setup(mut commands: Commands, mut store: ResMut<GizmoConfigStore>) {
     use bav_core::field::{Ground, Mover, PositionKind, field, routes};
     let (config, _) = store.config_mut::<DefaultGizmoConfigGroup>();
     config.line.width = 3.0;
     let f = field();
     let ours = f.positions.iter().filter(|p| p.ground == Ground::Ours).count();
-    info!("field: {} positions ({ours} ours), {} road heads, {} route nodes, grey zone z {:.0}..{:.0}", f.positions.len(), f.road_heads.len(), routes().graph.nodes.len(), f.grey.0, f.grey.1);
+    info!("field: {} positions ({ours} ours), {} road heads, {} route nodes, grey zone {}", f.positions.len(), f.road_heads.len(), routes().graph.nodes.len(), f.grey.map_or("none".into(), |(z0, z1)| format!("z {z0:.0}..{z1:.0}")));
     for (i, p) in f.positions.iter().enumerate() {
         info!("field: position {i}: {} ({}) at {:.0},{:.0}, {:?}", p.kind.name().0, p.kind.name().1, p.at.x, p.at.y, p.ground);
     }
@@ -78,7 +78,7 @@ fn field_overlay_setup(mut commands: Commands, mut store: ResMut<GizmoConfigStor
             lines.rings.push((lift(h.at), r, Color::srgb(0.3, 0.5, 1.0)));
         }
     }
-    for z in [f.grey.0, f.grey.1] {
+    for z in f.grey.into_iter().flat_map(|(z0, z1)| [z0, z1]) {
         lines.strips.push((on_ground(&[Vec2::new(-crate::geo::HALF_X, z), Vec2::new(crate::geo::HALF_X, z)]), yellow));
     }
     let colours = [Color::srgb(0.2, 0.9, 1.0), Color::srgb(1.0, 0.4, 1.0), Color::srgb(1.0, 1.0, 1.0)];

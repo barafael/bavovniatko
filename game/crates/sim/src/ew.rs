@@ -60,7 +60,7 @@ impl Ew {
 
     fn jam_within(&self, p: Vec3, radius: f32) -> f32 {
         let lay = geo::layout();
-        let rear = if self.depth > 0.0 { ((p.z - lay.jam_z) / self.depth).clamp(0.0, 1.0) * 0.9 } else { 0.0 };
+        let rear = match lay.jam_z { Some(z) if self.depth > 0.0 => ((p.z - z) / self.depth).clamp(0.0, 1.0) * 0.9, _ => 0.0 };
         let local: f32 = self.active.iter().filter(|(_, on)| *on).map(|(j, _)| (1.0 - j.distance(p.xz()) / radius).max(0.0) * 0.8).sum();
         (rear + local).min(1.0)
     }

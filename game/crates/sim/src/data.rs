@@ -24,8 +24,10 @@ pub struct SimData {
     pub dug_in: Vec<((f32, f32), f32)>,
     /// What the old wrecks were, in turn.
     pub old_wreck_kinds: Vec<VKind>,
-    /// The defending brigade's guns on their registered points: every so many seconds, so many rounds.
-    pub registered_fire: (f64, u32),
+    /// The defending brigade's guns on their registered points: every so many seconds, so many rounds (none: no
+    /// registered fire).
+    #[serde(default)]
+    pub registered_fire: Option<(f64, u32)>,
     /// The vehicles that can go in for the wounded: what kind, from where (how many is the Allotment's; none:
     /// nothing gets there by day).
     #[serde(default)]
@@ -41,8 +43,9 @@ pub struct SimData {
     pub fpv: Option<FpvSpec>,
     /// What Space orders: the ATGM teams' fire discipline, or the column.
     pub space_key: crate::fire::SpaceKey,
-    /// What Shift+click calls: RAAM mines or smoke.
-    pub shift_fire: crate::fire::ShiftFire,
+    /// What Shift+click calls: RAAM mines, smoke or cluster (none: Shift+click is a plain fire mission).
+    #[serde(default)]
+    pub shift_fire: Option<crate::fire::ShiftFire>,
     /// The enemy's guns, and what they fire on (none: they have none).
     #[serde(default)]
     pub ru_guns: Option<crate::director::RuGuns>,
@@ -88,4 +91,15 @@ static DATA: OnceLock<SimData> = OnceLock::new();
 /// The battle's part of the diorama on the table.
 pub fn sim_data() -> &'static SimData {
     DATA.get_or_init(bav_core::data::read)
+}
+
+#[cfg(test)]
+mod tests {
+    /// Every diorama's battle reads: the forces, the stock and the script.
+    #[test]
+    fn every_battle_reads() {
+        for d in bav_core::diorama::Diorama::ALL {
+            let _: super::SimData = bav_core::data::parse(&bav_core::data::builtin_text(d)).unwrap_or_else(|e| panic!("{d}: {e}"));
+        }
+    }
 }

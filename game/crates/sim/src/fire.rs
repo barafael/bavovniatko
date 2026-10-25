@@ -425,7 +425,7 @@ fn player_fire(
         fc.himars -= 1;
         Strike::Himars.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{command}}, я {{player}}. Хаймарс, дві ракети, {lat:.4} {lon:.4}. Підліт близько хвилини."), format!("{{command}}, this is {{player}}. HIMARS, two rockets, {lat:.4} {lon:.4}. Flight time about a minute."));
-    } else if shift && crate::data::sim_data().shift_fire == ShiftFire::Cluster {
+    } else if shift && crate::data::sim_data().shift_fire == Some(ShiftFire::Cluster) {
         if fc.cluster == 0 {
             radio.say(now, "No more cluster. HE only.");
             return;
@@ -438,7 +438,7 @@ fn player_fire(
         fc.battery_busy_until = now + 12.0;
         Strike::Cluster.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{guns}}, я {{player}}. Касетні, два снаряди, {lat:.4} {lon:.4}. По піхоті у полі."), format!("{{guns}}, this is {{player}}. Cluster, two shells, {lat:.4} {lon:.4}. On the infantry in the open."));
-    } else if shift && crate::data::sim_data().shift_fire == ShiftFire::Smoke {
+    } else if shift && crate::data::sim_data().shift_fire == Some(ShiftFire::Smoke) {
         if fc.smoke == 0 {
             radio.say(now, "No more smoke.");
             return;
@@ -446,7 +446,7 @@ fn player_fire(
         fc.smoke -= 1;
         Strike::Smoke.call(&mut commands, target, sigma, now);
         radio.say2(now, format!("{{guns}}, я {{player}}. Дим, {lat:.4} {lon:.4}. Ставимо завісу. Нам теж нічого не видно."), format!("{{guns}}, this is {{player}}. Smoke, {lat:.4} {lon:.4}. Screening. It blinds us too."));
-    } else if shift {
+    } else if shift && crate::data::sim_data().shift_fire == Some(ShiftFire::Raam) {
         if fc.raam == 0 {
             radio.say(now, "No more RAAM.");
             return;
@@ -869,7 +869,7 @@ fn atgm_teams(
             } else {
                 // The Russian teams on the crest let the column come into the minefield, then fire on anything
                 // in it, stopped ones first (the scoring below).
-                d < 2200.0 && (vp.y - lay.foothold_z) * lay.advance > -1050.0
+                d < 2200.0 && lay.foothold_z.is_some_and(|z| (vp.y - z) * lay.advance > -1050.0)
             };
             // They cannot shoot what the smoke hides, nor what a belt or a crest hides.
             if !allowed || smoke.blocks(pos.pos, vp, now) {
@@ -1082,14 +1082,21 @@ fn attacker_guns(
     let line_z = geo::layout().defence_z;
     let live: Vec<Vec2> = positions.iter().filter(|p| p.strength > 0 && p.side != attacker).map(|p| p.pos).collect();
     let tree_line = |rng: &mut SmallRng, from: Vec2| -> Vec2 {
-        // Fire at a known position if one is near, else into the nearest tree line ahead.
+        // Fire at a known position if one is near, else into the defenders' line ahead.
         if !live.is_empty() && rng.random_bool(0.5) {
             let p = live[rng.random_range(0..live.len())];
             if p.distance(from) < 2500.0 {
                 return p + gauss2(rng) * 30.0;
             }
         }
-        Vec2::new(from.x + rng.random_range(-400.0..400.0), line_z + rng.random_range(-15.0..15.0))
+        match line_z {
+            Some(z) => Vec2::new(from.x + rng.random_range(-400.0..400.0), z + rng.random_range(-15.0..15.0)),
+            // No tree line to work over (Hostomel): the nearest of their posts, or the ground ahead.
+            None => match live.iter().min_by(|a, b| a.distance(from).total_cmp(&b.distance(from))) {
+                Some(p) => *p + gauss2(rng) * 30.0,
+                None => from + Vec2::new(rng.random_range(-400.0..400.0), 600.0 * geo::layout().advance),
+            },
+        }
     };
     for (v, mut gun, tf) in &mut guns {
         if v.side != attacker || !matches!(v.state, VState::Advancing | VState::Deploying | VState::Overwatch | VState::Halted | VState::Immobilized) || v.crew == 0 {
@@ -1240,7 +1247,7 @@ fn pre_registered_fires(
     let (stalled_at, men_at) = &mut *seen;
     let mut gathered = false;
     for (i, trp) in trps.iter().enumerate() {
-        let (every, rounds) = crate::data::sim_data().registered_fire;
+        let Some((every, rounds)) = crate::data::sim_data().registered_fire else { return };
         if now - last[i] < every || fc.brigade_shells < rounds {
             continue;
         }
@@ -1270,9 +1277,10 @@ fn pre_registered_fires(
             fc.brigade_shells -= rounds;
             let kind = if defender == Side::Ua { ShellKind::He155 } else { ShellKind::Ru152 };
             commands.spawn(Mission { target: *trp, kind, rounds, sigma: 35.0, interval: 2.5, next: now + 1.0, flight: 22.0, by: defender });
-            let (uk, en) = &bav_core::data::data().words.registered;
-            let n = (i + 1).to_string();
-            radio.lines.push((now, if uk.is_empty() { Line::new(en.replace("{n}", &n)) } else { Line::both(uk.replace("{n}", &n), en.replace("{n}", &n)) }));
+            if let Some((uk, en)) = &bav_core::data::data().words.registered {
+                let n = (i + 1).to_string();
+                radio.lines.push((now, if uk.is_empty() { Line::new(en.replace("{n}", &n)) } else { Line::both(uk.replace("{n}", &n), en.replace("{n}", &n)) }));
+            }
         }
     }
 }
@@ -1309,7 +1317,7 @@ fn mortars(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireControl>,
         return;
     }
     let rng = &mut rng.0;
-    let (z0, z1) = geo::layout().mortar_band;
+    let Some((z0, z1)) = geo::layout().mortar_band else { return };
     let men: Vec<Vec2> = soldiers
         .iter()
         .filter(|(s, t)| s.side == diorama().attacker() && s.state != SState::Flee && t.translation.z < z1 && t.translation.z > z0 && !smoke.covers(t.translation.xz(), now))

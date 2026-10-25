@@ -1813,8 +1813,8 @@ fn check_mines(
                         stats.mine_hits += 1;
                         log.open(now, "a double mine", "", _e, &v, rescue, "under the plow: plow gone, stopped");
                         radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
-                    } else if !bav_core::data::data().words.plow_mine.is_empty() {
-                        radio.say(now, bav_core::data::data().words.plow_mine.as_str());
+                    } else if let Some(line) = &bav_core::data::data().words.plow_mine {
+                        radio.say(now, line.as_str());
                     }
                 }
                 continue;
@@ -2652,7 +2652,7 @@ fn move_soldiers(
             tf.translation = geo::ground(p) + Vec3::Y * if s.state == SState::DugIn { -0.6 } else { -0.75 };
         }
         // A foothold: attackers alive at the defenders' forward line or past it.
-        if matches!(s.state, SState::DugIn | SState::Prone | SState::Advance) && (p.y - lay.foothold_z) * lay.advance > 0.0 {
+        if matches!(s.state, SState::DugIn | SState::Prone | SState::Advance) && lay.foothold_z.is_some_and(|z| (p.y - z) * lay.advance > 0.0) {
             foothold += 1;
         }
         stats.max_advance = stats.max_advance.max(p.y * lay.advance);

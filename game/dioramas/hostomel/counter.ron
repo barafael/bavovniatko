@@ -3,8 +3,6 @@
 // the 3rd SSO Regiment and volunteers, with artillery and Su-24s, retake the field by 21:00, crater the runway and
 // pull back; the VDV have it again next day, when the column from Belarus arrives (c01 §2, §6 set piece 3, §7).
 // The schema is bav_core::data and bav_sim::data; the map is map.ron.
-//
-// Phase 1 of design/hostomel.md: the field and the clock. The attack itself comes in phase 7.
 (
     // 17:00 to about 21:30 in the day's 1500 s; sunset 17:31.
     day_start_min: 1020.0,
@@ -35,9 +33,7 @@ Press Enter."#,
         op_label: "OBSERVERS, THE TREE LINE NORTH OF THE FIELD (СПОСТЕРІГАЧІ, ПОСАДКА НА ПІВНОЧІ)",
         op_lost: "The observers are hit. No eyes on the runway.",
         forward_belt: "the tree line",
-        plow_mine: "",
         mine_lines: [],
-        registered: ("", "Molot firing on the runway."),
         closing: [
             "No Il-76 landed at Hostomel. On 25 February the column from Belarus arrived, and the VDV had the field again.",
             "The Russians left it on 31 March, when they gave up on Kyiv.",
@@ -85,7 +81,7 @@ Press Enter."#,
     // Over the tree line north of the field, looking south at the apron.
     camera: (700.0, -300.0),
     // The observers, at the tree line's edge: the tower is the VDV's.
-    op: Some(((700.0, -280.0), 2.5)),
+    op: ((700.0, -280.0), 2.5),
     observed_from: Home,
 
     // The VDV's hold since one o'clock: groups dug in at the hangar, the apron, the tower, the stands, the offices and
@@ -97,14 +93,9 @@ Press Enter."#,
         (line: "e373", deploy: (1500.0, -110.0), objective: (800.0, 450.0)),
         (line: "horenka", deploy: (1500.0, 950.0), objective: (900.0, 750.0)),
     ],
-    // The column game's lines, out of the way until the areas replace them (phase 3).
-    grey_zone: (4000.0, 4500.0),
+    // No front across the field: no grey zone, foothold, defence or jam line, and no mortars (each is None).
     advance: 1.0,
-    foothold_z: 9000.0,
-    defence_z: 9000.0,
     home: (500.0, -1400.0),
-    jam_z: 9000.0,
-    mortar_band: (0.0, 0.0),
 
     // ---- The battle's part (bav_sim::data) ----
     // The counterattack's side (c01 §4, §6 set piece 3): what could be brought up by dusk from the 72nd, 80th and
@@ -139,15 +130,14 @@ Press Enter."#,
     // What the morning left (the Record's; Command's evening has the player's own morning, if it was played): the
     // Ka-52 the Igla gunner dropped onto the runway, "an extra obstacle" (c01 §6 set piece 2), and a Mi-8 by the
     // apron.
-    aftermath: Some((wrecks: [(Ka52, (-120.0, 90.0)), (Mi8, (620.0, 560.0))])),
+    aftermath: (wrecks: [(Ka52, (-120.0, 90.0)), (Mi8, (620.0, 560.0))]),
     // The VDV's groups: riflemen, machine guns and RPGs, no ATGMs.
     ru_weapons: [None, None, None, None, None, None],
     old_wreck_kinds: [],
     space_key: Column,
     shift_fire: Smoke,
-    registered_fire: (600.0, 0),
     // The field is fought for as in the morning; the areas say who has it.
-    fight: Some((
+    fight: (
         ammo: 400,
         men_per: 5,
         out_to: (2350.0, 1850.0),
@@ -181,7 +171,7 @@ Press Enter."#,
                 poly: [(440.0, 920.0), (600.0, 920.0), (600.0, 1080.0), (440.0, 1080.0)],
             ),
         ],
-    )),
+    ),
     operator: (pos: (500.0, -1400.0), found_per_hour: 0.0),
     // 17:00 to 21:30 (c01 §2 timeline, §6 set piece 3): the guns on the field at dusk, the Su-24s, the columns from
     // two sides, the VDV's Ka-52s on call until the dark; the field retaken by 21:00, the runway cratered, and out
@@ -261,11 +251,11 @@ Press Enter."#,
         // The 72nd's artillery group (2S1, 2S3, Grad) keeps working the apron and the hangar through the evening.
         (520.0, Prep(missions: 8, over: 90.0)),
         (700.0, Prep(missions: 8, over: 90.0)),
-        (1000.0, Prep(missions: 8, over: 90.0)),
         (
             900.0,
             Bombs(from: (-500.0, -800.0), to: (200.0, 800.0), n: 10, label: "19:42  The Su-24s again, on the runway"),
         ),
+        (1000.0, Prep(missions: 8, over: 90.0)),
         (1250.0, Airlift(4)),
         (1350.0, Order(PullBack)),
         (

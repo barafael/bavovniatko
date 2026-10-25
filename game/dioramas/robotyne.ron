@@ -20,7 +20,7 @@
     ),
     anchor: (lat: 47.4967, lon: 35.8968, x: 0.0, z: 0.0, m_per_lon: 75250.0),
 
-    // What the day says (design/hostomel.md, phase 0): the briefing, the lines that are this place's, the debrief's close.
+    // What the day says: the briefing, the lines that are this place's, the debrief's close.
     words: (
         briefing: r#"SOUTH OF MALA TOKMACHKA (МАЛА ТОКМАЧКА)
 8 JUNE 2023
@@ -281,10 +281,10 @@ Press Enter."#,
     defence_z: 702.0,
     // The 291st's trench along the northern edge of the crest belt, and the 47th's start line in the forward tree
     // line, where its ATGM teams overwatch the attack.
-    trench_z: Some(702.0),
+    trench_z: 702.0,
     // A year of shelling between the lines: 240 craters, from the forward minefield to the crest.
-    shelled: Some((240, -480.0, 1250.0)),
-    start_z: Some(-900.0),
+    shelled: (240, -480.0, 1250.0),
+    start_z: -900.0,
     home: (-200.0, -1600.0),
     jam_z: 100.0,
     mortar_band: (-600.0, 702.0),
@@ -298,7 +298,7 @@ Press Enter."#,
         (
             id: "stugna",
             name: ("Stugna-P team", "Розрахунок «Стугни-П»"),
-            what: Post(Some(Stugna)),
+            what: Post(Stugna),
             cost: 8,
             supply: 5,
             available: 4,
@@ -306,7 +306,7 @@ Press Enter."#,
         (
             id: "javelin",
             name: ("Javelin team", "Розрахунок «Джавеліна»"),
-            what: Post(Some(Javelin)),
+            what: Post(Javelin),
             cost: 9,
             supply: 5,
             available: 3,
@@ -393,11 +393,11 @@ Press Enter."#,
         // Command's Supply: what there is at the start, and what comes up each minute of the day's clock.
         supply: (16, 2.0),
         record: [
-            (id: "stugna", at: Some(0)),
-            (id: "stugna", at: Some(1)),
-            (id: "javelin", at: Some(2)),
-            (id: "rifles", at: Some(3)),
-            (id: "rifles", at: Some(4)),
+            (id: "stugna", at: 0),
+            (id: "stugna", at: 1),
+            (id: "javelin", at: 2),
+            (id: "rifles", at: 3),
+            (id: "rifles", at: 4),
             (id: "leo2r", count: 2),
             (id: "bmr2"),
             (id: "wisent"),
@@ -413,14 +413,14 @@ Press Enter."#,
         ],
     ),
     // The 291st's Kornets on the crest, covering both tracks.
-    ru_weapons: [None, Some(Kornet), Some(Kornet), None, Some(Kornet), None, None],
+    ru_weapons: [None, Kornet, Kornet, None, Kornet, None, None],
     // The 291st's T-72B3s, dug in hull-down on the crest behind the trench, facing north.
     dug_in: [((-150.0, 724.0), 0.15), ((1050.0, 720.0), -0.1)],
     old_wreck_kinds: [T72, Bmp2, Mtlb, T72, Bmp2, Mtlb, T72, Bmp2],
     // Space orders the ATGM teams or our column; Shift+click calls RAAM or smoke; the enemy's guns and their habits.
     space_key: Column,
     shift_fire: Smoke,
-    ru_guns: Some(Column(seen_z: -650.0, field: (-1800.0, 1800.0, -1500.0, -850.0))),
+    ru_guns: Column(seen_z: -650.0, field: (-1800.0, 1800.0, -1500.0, -850.0)),
     registered_fire: (90.0, 4),
     // The drone team behind the start line; south of Mala Tokmachka it is hard to find.
     // Command's Enemy staff (bav_sim::staff): the Lancets hunted the Leopards here (c09 §5); the Orlans watch the slope.
@@ -428,16 +428,16 @@ Press Enter."#,
     operator: (pos: (-300.0, -960.0), found_per_hour: 0.05),
     // Their EW (db/research/11 §5): platoon jammers in the second line behind the crest, each switched on and off, the heavier emitters
     // further back felt past the jam line; and GNSS jamming lifted about a minute before each Ka-52 run.
-    ew: Some((
+    ew: (
         jammers: [(-1100.0, 950.0), (-350.0, 950.0), (400.0, 950.0), (1150.0, 950.0)],
         radius: 1100.0,
         depth: 700.0,
         ka52_tell: true,
-    )),
+    ),
     // A strike drone flies a few minutes.
-    fpv: Some((endurance: 300.0)),
+    fpv: (endurance: 300.0),
     // The Bradleys held back at the start line for the wounded, sent one at a time where the player asks.
-    evacuation: Some((kind: Bradley, start: 900.0)),
+    evacuation: (kind: Bradley, start: 900.0),
 
     // Mala Tokmachka, 8 June 2023 (c09 §2, §6 set piece 1, §11 on the date): the guns finish their preparation in
     // the dark; the column is late and moves off at first light; nine vehicles behind a Leopard 2R and a BMR-2 on the

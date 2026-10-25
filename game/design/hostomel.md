@@ -1,6 +1,8 @@
 # Hostomel: the third diorama, in two sub-chapters
 
-Status: planned (2026-10-19). Progress is logged at the end of this file.
+Status: both sub-chapters play (2026-10-20). Open: the night's lights (phase 6: flares, illumination rounds, the
+fires lighting the night), the film's shots (phase 8) and the Command bands. Progress is logged at the end of this
+file.
 
 ## Context
 
