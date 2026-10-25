@@ -6,6 +6,7 @@
 //! retiming shots. Needs ffmpeg, ffprobe and ImageMagick's `magick` on the path. The work dir holds thousands of
 //! 1080p frames (tens of GB): it goes under `devlog/`, on the disk, never in `target/` or on a tmpfs.
 
+mod days;
 mod mix;
 mod reel;
 
@@ -47,7 +48,7 @@ fn main() -> ExitCode {
 const USAGE: &str = "usage:
   cargo xtask trailer [--scout] [out.mp4]      the trailer: the action of both days (design/trailer.md)
   cargo xtask film [--scout] [out.mp4]         the showcase film of both (design/showcase.md)
-  cargo xtask tour [day] [--scout] [out.mp4]   the one-minute tour of one day (vuhledar, robotyne, hostomel-1|2)
+  cargo xtask tour [day] [--scout] [out.mp4]   the one-minute tour of one day (any in dioramas/index.ron with shots)
   cargo xtask mix <dir> <out.wav> [lead-s] [gain-db]   rebuild a filmed run's soundtrack
   cargo xtask smoke                            start the game headless once per switch and diorama (devlog/smoke/)";
 
@@ -180,10 +181,11 @@ fn level(dir: &Path, wav: &Path) -> Result<mix::Mixed> {
 fn film(args: &[String]) -> Result {
     let job = Job::new("film", args, 27)?;
     let w = job.w().to_path_buf();
-    let parts = reel::DAYS.map(|d| d.part);
+    let days = reel::days(&job.root)?;
+    let parts: Vec<&str> = days.iter().map(|d| d.part.as_str()).collect();
 
-    // 1. The two parts, one after the other: they share the GPU.
-    for part in parts {
+    // 1. The parts, one after the other: they share the GPU.
+    for &part in &parts {
         let dir = w.join(part);
         mkdir(&dir)?;
         let start = Instant::now();
@@ -193,7 +195,7 @@ fn film(args: &[String]) -> Result {
 
     // 2. The cards: black frames with a title, a smaller line and a dim note, linked into the frame ranges the
     //    tour reserved for them (before each shot's first frame).
-    for part in parts {
+    for &part in &parts {
         let dir = w.join(part);
         for c in mix::cards(&dir) {
             let (first, last) = ((c.vt * 30.0).round() as u32, ((c.vt + c.secs) * 30.0).round() as u32);
@@ -208,27 +210,27 @@ fn film(args: &[String]) -> Result {
     }
 
     // 3. Each part's sound, levelled, and the part encoded.
-    for part in parts {
+    for &part in &parts {
         let (dir, wav) = (w.join(part), w.join(format!("{part}.wav")));
         level(&dir, &wav)?;
         job.encode_frames(&dir, 0, None, &wav, None, &w.join(format!("{part}.mp4")))?;
     }
 
-    // 4. Title and end card; the end card reads both parts' ledgers: four rows each, then the closing lines verbatim.
+    // 4. Title and end card; the end card reads the parts' ledgers: four rows each, then the closing lines verbatim.
     let title = job.still("title", 5.0, (0.8, 0.6), ("BAVOVNIATKO", "Two dioramas of the Russo-Ukrainian war", "Everything here is simulated, and seen through a Ukrainian drone."), &w.join(parts[0]))?;
-    fs::write(w.join("end.txt"), end_card(&w)?).map_err(|e| e.to_string())?;
+    fs::write(w.join("end.txt"), end_card(&w, &days)?).map_err(|e| e.to_string())?;
     job.card.text_file(&w.join("end.png"), &w.join("end.txt"))?;
-    mix::write_wav(&w.join("end.wav"), &mix::bed(&w.join(parts[1]), 10 * mix::RATE)?)?;
+    mix::write_wav(&w.join("end.wav"), &mix::bed(&w.join(parts[parts.len() - 1]), 10 * mix::RATE)?)?;
     job.still_from(&w.join("end.png"), &w.join("end.wav"), 10.0, (0.5, 1.0), &w.join("end.mp4"))?;
 
     // 5. The scout's contact sheets, a part at a time.
     if job.scout {
         let stem = job.out.file_stem().unwrap_or_default().to_string_lossy().to_string();
-        for part in parts {
+        for &part in &parts {
             ffmpeg(args!["-i", w.join(format!("{part}.mp4")), "-vf", "fps=1,scale=240:-1,tile=8x15", job.logs.join(format!("{stem}-{part}-sheet-%02d.png"))])?;
         }
     }
-    let pieces = [title, w.join(format!("{}.mp4", parts[0])), w.join(format!("{}.mp4", parts[1])), w.join("end.mp4")];
+    let pieces: Vec<PathBuf> = std::iter::once(title).chain(parts.iter().map(|part| w.join(format!("{part}.mp4")))).chain([w.join("end.mp4")]).collect();
     job.finish(&pieces, "The showcase film (design/showcase.md): title, Vuhledar with its cards, the intertitle, Mala Tokmachka, the end card from both ledgers.")
 }
 
@@ -241,18 +243,19 @@ fn trailer(args: &[String]) -> Result {
 
     // 1. The events passes, both days at once at a postage-stamp size: nothing is filmed, every blast and hit is
     //    logged.
+    let days = reel::days(&job.root)?;
     let start = Instant::now();
     std::thread::scope(|s| -> Result {
-        let runs: Vec<_> = reel::DAYS
+        let runs: Vec<_> = days
             .iter()
             .map(|day| {
-                let part = day.part;
+                let part = day.part.as_str();
                 let (dir, file, log) = (w.join(format!("events-{part}")), w.join(format!("events-{part}.reel")), job.logs.join(format!("reel-events-{part}.log")));
                 let root = &job.root;
                 s.spawn(move || -> Result {
                     mkdir(&dir)?;
-                    fs::write(&file, format!("end {}\n", day.end)).map_err(|e| e.to_string())?;
-                    film_part(root, &env_for(part, "reel", Some(&file), &dir, (320, 180), day.env), &log)
+                    fs::write(&file, format!("end {}\n", day.reel.end)).map_err(|e| e.to_string())?;
+                    film_part(root, &env_for(part, "reel", Some(&file), &dir, (320, 180), &day.reel.env), &log)
                 })
             })
             .collect();
@@ -265,9 +268,9 @@ fn trailer(args: &[String]) -> Result {
 
     // 2. Each day's moments, filmed in runs; each run's sound rebuilt and levelled, and each moment cut from the run's
     //    frames and sound.
-    let mut pieces = vec![job.still("title", 3.5, (0.4, 0.4), ("BAVOVNIATKO", "One minefield, seen from both sides", "Two days of the Russo-Ukrainian war, simulated, and seen through a Ukrainian drone."), &w.join("events-vuhledar"))?];
-    for day in &reel::DAYS {
-        let part = day.part;
+    let mut pieces = vec![job.still("title", 3.5, (0.4, 0.4), ("BAVOVNIATKO", "One minefield, seen from both sides", "Two days of the Russo-Ukrainian war, simulated, and seen through a Ukrainian drone."), &w.join(format!("events-{}", days[0].part)))?];
+    for day in &days {
+        let part = day.part.as_str();
         let events = w.join(format!("events-{part}/events.txt"));
         let _ = fs::copy(&events, job.logs.join(format!("reel-events-{part}.txt")));
         let moments = reel::moments(&events)?;
@@ -282,7 +285,7 @@ fn trailer(args: &[String]) -> Result {
             let shots: String = run.iter().map(|&i| format!("{}\n", moments[i].line)).collect();
             fs::write(&file, format!("{shots}end {:.2}\n", last + 1.0)).map_err(|e| e.to_string())?;
             let start = Instant::now();
-            film_part(&job.root, &env_for(part, "reel", Some(&file), &dir, job.res, day.env), &job.logs.join(format!("reel-{part}-{k}.log")))?;
+            film_part(&job.root, &env_for(part, "reel", Some(&file), &dir, job.res, &day.reel.env), &job.logs.join(format!("reel-{part}-{k}.log")))?;
             println!("film: {part} run {k}, {} shots, in {} min", run.len(), start.elapsed().as_secs() / 60);
             let wav = w.join(format!("{part}-{k}.wav"));
             level(&dir, &wav)?;
@@ -300,24 +303,26 @@ fn trailer(args: &[String]) -> Result {
                 }
             }
         }
-        pieces.push(job.still(&format!("card-{part}"), 2.5, (0.4, 0.4), day.card, &w.join(format!("events-{part}")))?);
+        let card = &day.reel.card;
+        pieces.push(job.still(&format!("card-{part}"), 2.5, (0.4, 0.4), (&card.0, &card.1, &card.2), &w.join(format!("events-{part}")))?);
         pieces.extend(reel::order(&moments).into_iter().filter_map(|i| clips[i].clone()));
     }
-    pieces.push(job.still("end", 4.0, (0.4, 0.4), ("BAVOVNIATKO", "One minefield, seen from both sides", "Everything here is simulated."), &w.join("events-robotyne"))?);
+    pieces.push(job.still("end", 4.0, (0.4, 0.4), ("BAVOVNIATKO", "One minefield, seen from both sides", "Everything here is simulated."), &w.join(format!("events-{}", days[days.len() - 1].part)))?);
     job.finish(&pieces, "The trailer (design/trailer.md): the action of both days, found by an events pass.")
 }
 
 /// A filming run's switches: the day, the tour (and the reel's file), the size, where it films to, and the day's
 /// own.
-fn env_for(part: &str, tour: &str, reel: Option<&Path>, dir: &Path, size: (u32, u32), extra: &[(&'static str, &'static str)]) -> Vec<(&'static str, String)> {
+fn env_for<'a>(part: &str, tour: &str, reel: Option<&Path>, dir: &Path, size: (u32, u32), extra: &'a [(String, String)]) -> Vec<(&'a str, String)> {
     let mut env = vec![("BAV_DIORAMA", part.to_string()), ("BAV_TOUR", tour.to_string()), ("BAV_RES", format!("{}x{}", size.0, size.1)), ("BAV_SHOWCASE", dir.display().to_string())];
     env.extend(reel.map(|r| ("BAV_REEL", r.display().to_string())));
-    env.extend(extra.iter().map(|(k, v)| (*k, v.to_string())));
+    env.extend(extra.iter().map(|(k, v)| (k.as_str(), v.clone())));
     env
 }
 
-/// The end card: both days' ledgers side by side, four rows each, then each day's closing lines.
-fn end_card(work: &Path) -> Result<String> {
+/// The end card: the days' ledgers side by side under their cards' titles, four rows each, then each day's closing
+/// lines.
+fn end_card(work: &Path, days: &[reel::Day]) -> Result<String> {
     let ledger = |part: &str| fs::read_to_string(work.join(part).join("ledger.txt")).map_err(|e| format!("{part}'s ledger: {e}"));
     let rows = |text: &str| -> Vec<String> {
         text.lines()
@@ -332,32 +337,31 @@ fn end_card(work: &Path) -> Result<String> {
             .collect()
     };
     let closings = |text: &str| -> Vec<String> { text.lines().filter_map(|l| l.strip_prefix("closing\t")).map(String::from).collect() };
-    let (v, r) = (ledger("vuhledar")?, ledger("robotyne")?);
-    let mut lines = vec![format!("{:<57} МАЛА ТОКМАЧКА (MALA TOKMACHKA)", "ВУГЛЕДАР (VUHLEDAR)"), String::new()];
-    lines.extend(rows(&v).into_iter().zip(rows(&r)).map(|(a, b)| format!("{a}   {b}")));
-    lines.push(String::new());
-    lines.extend(closings(&v));
-    lines.push(String::new());
-    lines.extend(closings(&r));
+    let ledgers = days.iter().map(|d| ledger(&d.part)).collect::<Result<Vec<_>>>()?;
+    let (last, rest) = days.split_last().ok_or("no day for the end card")?;
+    let head: String = rest.iter().map(|d| format!("{:<57} ", d.reel.card.0)).collect();
+    let mut lines = vec![format!("{head}{}", last.reel.card.0), String::new()];
+    let columns: Vec<Vec<String>> = ledgers.iter().map(|l| rows(l)).collect();
+    let n = columns.iter().map(Vec::len).min().unwrap_or(0);
+    lines.extend((0..n).map(|i| columns.iter().map(|c| c[i].as_str()).collect::<Vec<_>>().join("   ")));
+    for l in &ledgers {
+        lines.push(String::new());
+        lines.extend(closings(l));
+    }
     Ok(lines.join("\n"))
 }
 
-/// The days a tour can film, as `BAV_DIORAMA` names them, with the title card's place and date.
-const TOURS: &[(&str, &str, &str)] = &[
-    ("vuhledar", "VUHLEDAR", "6 FEBRUARY 2023"),
-    ("robotyne", "SOUTH OF MALA TOKMACHKA", "8 JUNE 2023"),
-    ("hostomel-1", "HOSTOMEL, ANTONOV AIRPORT", "24 FEBRUARY 2022, THE LANDING"),
-    ("hostomel-2", "HOSTOMEL, ANTONOV AIRPORT", "24 FEBRUARY 2022, DUSK"),
-];
-
-/// The one-minute tour of one day: a title over a lead-in bed, then the tour, in one encode. `--scout` films it at
-/// 640x360 into devlog/film/ with a contact sheet (a tile a second), for retiming the shots.
+/// The one-minute tour of one day (any of `dioramas/index.ron`'s with a shots file; Vuhledar unnamed): a title over a
+/// lead-in bed, then the tour, in one encode. `--scout` films it at 640x360 into devlog/film/ with a contact sheet (a
+/// tile a second), for retiming the shots.
 fn tour(args: &[String]) -> Result {
     let scout = args.iter().any(|a| a == "--scout");
-    let (part, place, date) = *args.iter().find_map(|a| TOURS.iter().find(|t| t.0 == a.as_str())).unwrap_or(&TOURS[0]);
-    let out_arg = args.iter().find(|a| !a.starts_with("--") && TOURS.iter().all(|t| t.0 != a.as_str()));
-    needs(&["ffmpeg", "ffprobe", "magick"])?;
     let root = root();
+    let days = days::days(&root)?;
+    let day = args.iter().find_map(|a| days.iter().find(|d| d.part == *a)).unwrap_or(&days[0]);
+    let (part, place, date) = (day.part.as_str(), day.card.0.as_str(), day.card.1.as_str());
+    let out_arg = args.iter().find(|a| !a.starts_with("--") && days.iter().all(|d| d.part != **a));
+    needs(&["ffmpeg", "ffprobe", "magick"])?;
     let ((w_px, h_px), crf, preset) = if scout { ((640, 360), "30", "veryfast") } else { ((1920, 1080), "27", "slow") };
     let stamp = now("+%Y%m%d-%H%M")?;
     let out = match out_arg {
@@ -448,10 +452,10 @@ fn smoke(_args: &[String]) -> Result {
     let out = root.join("devlog/smoke");
     mkdir(&out)?;
     let mut failed = Vec::new();
-    for dio in ["vuhledar", "robotyne", "hostomel-1", "hostomel-2", "avdiivka-1", "avdiivka-2", "avdiivka-3"] {
+    for dio in days::ids(&root)? {
         for (name, extra) in SWITCHES {
             let tag = format!("{dio}-{name}");
-            let mut env: Vec<(&str, String)> = vec![("BAV_DIORAMA", dio.into()), ("BAV_RES", "320x180".into()), ("BAV_SHOT", out.join(format!("{tag}.png")).display().to_string()), ("BAV_SHOT_AT", "1".into())];
+            let mut env: Vec<(&str, String)> = vec![("BAV_DIORAMA", dio.clone()), ("BAV_RES", "320x180".into()), ("BAV_SHOT", out.join(format!("{tag}.png")).display().to_string()), ("BAV_SHOT_AT", "1".into())];
             env.extend(extra.iter().map(|(k, v)| (*k, v.to_string())));
             let started = Instant::now();
             let (finished, lines) = run_game(&bin, &root, &env, Duration::from_secs(180))?;
