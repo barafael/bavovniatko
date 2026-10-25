@@ -414,6 +414,7 @@ dependencies = [
  "bevy",
  "image",
  "rand 0.9.5",
+ "serde",
  "strum",
 ]
 

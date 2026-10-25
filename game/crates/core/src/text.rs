@@ -1,28 +1,7 @@
-//! The words: place names in two registers (design/next-items.md §2.4), the radio net's Ukrainian, and the
-//! font that can set them. On the net Ukrainian comes first and the English gloss sits under it; where the
-//! player reads fast (the counters, the ledger, the briefing) Latin first: "Vuhledar (Вугледар)". The spellings
-//! are the 2010 national romanisation; the Russian-derived ones appear nowhere.
-
-/// A place in Ukrainian and in its romanisation.
-pub struct Name {
-    pub uk: &'static str,
-    pub en: &'static str,
-}
-
-impl Name {
-    /// For the player's bookkeeping: "Vuhledar (Вугледар)".
-    pub fn hud(&self) -> String {
-        format!("{} ({})", self.en, self.uk)
-    }
-}
-
-pub const VUHLEDAR: Name = Name { uk: "Вугледар", en: "Vuhledar" };
-pub const MALA_TOKMACHKA: Name = Name { uk: "Мала Токмачка", en: "Mala Tokmachka" };
-pub const ROBOTYNE: Name = Name { uk: "Роботине", en: "Robotyne" };
-pub const HOSTOMEL: Name = Name { uk: "Гостомель", en: "Hostomel" };
-pub const AVDIIVKA: Name = Name { uk: "Авдіївка", en: "Avdiivka" };
-pub const STEPOVE: Name = Name { uk: "Степове", en: "Stepove" };
-pub const TOKMAK: Name = Name { uk: "Токмак", en: "Tokmak" };
+//! The words: the radio net's Ukrainian, and the font that can set it. Place names are the dioramas' own (`place`,
+//! the debrief's `place`), in two registers (design/next-items.md §2.4): on the net Ukrainian comes first and the
+//! English gloss sits under it; where the player reads fast (the counters, the ledger, the briefing) Latin first:
+//! "Vuhledar (Вугледар)". The spellings are the 2010 national romanisation; the Russian-derived ones appear nowhere.
 
 /// The interface's face: Liberation Mono (SIL Open Font License, src/fonts/), which has the Ukrainian letters
 /// Bevy's built-in subset lacks, and the signal dots.

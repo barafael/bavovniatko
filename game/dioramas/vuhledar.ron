@@ -114,6 +114,40 @@ Press Enter."#,
             ),
         ],
     ),
+    // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
+    // left to fire, `{name}` a figure the HUD fills in, and the debrief's rows.
+    hud: (
+        tally: "{date}   {clock}\nRussian vehicles committed {committed}   knocked out {out}   withdrew {withdrawn}\nmen sent {sent}   came back {returned}{air}",
+        stock: "155 mm  {shells} rds   RAAM  {raam}   HIMARS  {himars}\nATGM teams {teams} ({missiles} missiles)   [{atgm_mode}]{speed}",
+    ),
+    debrief: (
+        rows: [
+            Line("Russian vehicles committed", Committed),
+            Line("Knocked out", Out),
+            Line("    destroyed", Destroyed),
+            Line("    abandoned", Abandoned),
+            Line("    on mines", MineHits),
+            Line("    by ATGM", AtgmKills),
+            Line("    by artillery", ArtilleryKills),
+            Line("    turrets thrown", TurretTosses),
+            Line("Withdrew", Withdrawn),
+            Line("Men sent forward", Sent),
+            Line("    came back", Returned),
+            Line("    Russian dead", AttackerDead),
+            Line("Closest any Russian got to the town", Closest),
+            Line("Ukrainian casualties", DefenderLosses),
+            Line("Shells left", Shells),
+            If(
+                Flew,
+                [Line("Su-25 runs", Flown), Line("    shot down", Down), Line("    hit and turned away", DrivenOff)],
+            ),
+            Areas("{area} at the end"),
+            If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+        ],
+        columns: (heads: ("vehicles", "destroyed", "abandoned"), other: "column {n}"),
+    ),
+    // BAV_VIEW=ground: the team nearest the dacha road's kill zone.
+    ground_team: (930.0, -658.0),
     // Where the drone starts, and what the observers fire from (their error grows with the distance from it).
     camera: (150.0, -700.0),
     observed_from: LineZ(-1200.0),

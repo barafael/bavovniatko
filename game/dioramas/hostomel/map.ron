@@ -7,6 +7,8 @@
 // +z south; metres. Each sub-chapter's file (landing.ron, counter.ron) adds the day: its clock, sides and script.
 (
     place: ("Hostomel", "Гостомель"),
+    // BAV_VIEW=ground: the team nearest the apron's north end.
+    ground_team: (700.0, 330.0),
     date: "24 February 2022",
     tally_date: "24 FEB 2022",
     season: Winter,

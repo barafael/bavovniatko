@@ -380,7 +380,8 @@ fn log_stats(
         view.mode, view.drone_pos.x, view.drone_pos.y, view.drone_pos.z, view.drone_yaw, view.drone_fov, view.jamming, view.rth
     );
     *overlap = (0, 0, 0, 0);
-    if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
+    // Where the day has evacuation, how it went: the men picked up, the wounded brought out.
+    if bav_sim::data::sim_data().evacuation.is_some() {
         info!("     picked_up={} ru_vehicles={} vehicle_advance={:.0} foot_advance={:.0} order={:?} overwatch_lost={} wounded={}/{} deaths={:?}", stats.picked_up, stats.defender_vehicles, stats.vehicle_advance.max(-9999.0), stats.max_advance.max(-9999.0), *order, stats.overwatch_losses, stats.wounded_out, stats.wounded, stats.deaths);
     }
 }
@@ -603,7 +604,7 @@ fn scripted_gun(
     }
 }
 
-/// `BAV_VIEW=ground`: start in the tree line nearest the dacha road with a `BAV_TEAM` launcher
+/// `BAV_VIEW=ground`: start in the tree line nearest the file's `ground_team` point with a `BAV_TEAM` launcher
 /// (default Stugna-P), sight up, tracking the nearest moving attacker vehicle the way a gunner would.
 /// `BAV_AUTO_ATGM=<s>` launches then.
 fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post, &crate::fire::AtgmTeam)>, q: Query<(&Vehicle, &Transform)>, mut started: Local<bool>) {
@@ -612,14 +613,7 @@ fn env_ground(mut view: ResMut<View>, teams: Query<(Entity, &Post, &crate::fire:
     }
     if !*started {
         let want = dev().team.unwrap_or(Atgm::Stugna);
-        let kz = match crate::diorama::diorama() {
-            crate::diorama::Diorama::Vuhledar => Vec2::new(930.0, -658.0),
-            crate::diorama::Diorama::Robotyne => Vec2::new(-100.0, crate::geo::layout().start_z.expect("Mala Tokmachka has a start line")),
-            // The apron's north end.
-            crate::diorama::Diorama::HostomelLanding | crate::diorama::Diorama::HostomelCounter => Vec2::new(700.0, 330.0),
-            // Stepove's east edge.
-            crate::diorama::Diorama::AvdiivkaWave1 | crate::diorama::Diorama::AvdiivkaWave2 | crate::diorama::Diorama::AvdiivkaStepove => Vec2::new(1000.0, -760.0),
-        };
+        let kz = Vec2::from(crate::screen::screen().ground_team);
         let Some((e, p, _)) = teams.iter().filter(|(_, _, t)| t.atgm > 0 && t.weapon == want).min_by(|a, b| a.1.pos.distance(kz).total_cmp(&b.1.pos.distance(kz))) else {
             return;
         };

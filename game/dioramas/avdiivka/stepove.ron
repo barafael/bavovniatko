@@ -92,6 +92,30 @@ Press Enter."#,
             ),
         ],
     ),
+    // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
+    // left to fire, `{name}` a figure the HUD fills in, and the debrief's rows.
+    hud: (
+        tally: "{date}   {clock}\nRussian vehicles committed {committed}   knocked out {out}   withdrew {withdrawn}\nmen sent {sent}   came back {returned}{air}\n{zones}",
+        stock: "155 mm  {shells} rds   DPICM  {cluster}   RAAM  {raam}   HIMARS  {himars}   FPV  {fpv}{vog}\nATGM teams {teams} ({missiles} missiles)   [{atgm_mode}]{speed}",
+    ),
+    debrief: (
+        place: ("Stepove", "Степове"),
+        rows: [
+            Line("The T-90M", TankFate),
+            TankHits("    nothing of ours reached it"),
+            Line("The BMPs knocked out", OtherHulls),
+            Line("Their men sent forward", Sent),
+            Line("    dead", AttackerDead),
+            Line("Closest any Russian got to the village", Closest),
+            Line("The trench", Trench),
+            Line("    our casualties", DefenderLosses),
+            Runs,
+            Line("Bradleys lost", DefenderVehicles),
+            Line("25 mm fired, AP and HE", Fired25),
+            Line("FPVs left", FpvsLeft),
+            Line("Shells left", Shells),
+        ],
+    ),
 
     // October's wrecks under the snow, where the two waves stopped.
     old_wrecks: [

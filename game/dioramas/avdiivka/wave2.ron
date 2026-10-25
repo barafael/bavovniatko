@@ -103,6 +103,39 @@ Press Enter."#,
             ),
         ],
     ),
+    // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
+    // left to fire, `{name}` a figure the HUD fills in, and the debrief's rows.
+    hud: (
+        tally: "{date}   {clock}\nRussian vehicles committed {committed}   knocked out {out}   withdrew {withdrawn}\nmen sent {sent}   came back {returned}{air}\n{zones}",
+        stock: "155 mm  {shells} rds   DPICM  {cluster}   RAAM  {raam}   HIMARS  {himars}   FPV  {fpv}{vog}\nATGM teams {teams} ({missiles} missiles)   [{atgm_mode}]{speed}",
+    ),
+    debrief: (
+        rows: [
+            Line("Russian vehicles committed", Committed),
+            Line("Knocked out", Out),
+            Line("    destroyed", Destroyed),
+            Line("    abandoned", Abandoned),
+            Line("    on mines", MineHits),
+            Line("    by ATGM", AtgmKills),
+            Line("    by artillery", ArtilleryKills),
+            Line("    turrets thrown", TurretTosses),
+            Line("Withdrew", Withdrawn),
+            Line("Men sent forward", Sent),
+            Line("    came back", Returned),
+            Line("    Russian dead", AttackerDead),
+            Line("Closest any Russian got to the village", Closest),
+            Line("Ukrainian casualties", DefenderLosses),
+            Line("Shells left", Shells),
+            Line("Our vehicles lost", DefenderVehicles),
+            If(
+                Flew,
+                [Line("Su-25 runs", Flown), Line("    shot down", Down), Line("    hit and turned away", DrivenOff)],
+            ),
+            Areas("{area} at the end"),
+            If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+        ],
+        columns: (heads: ("vehicles", "destroyed", "abandoned"), other: "column {n}"),
+    ),
 
     // What the first wave left in the fields (part I's band: about thirty-five hulls on the two lanes), where they
     // stopped: beside the lanes, a few turned back.
