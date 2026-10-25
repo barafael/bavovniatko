@@ -444,3 +444,17 @@ existing bakes if the optional rows are skipped.
   its BMPs stopped every seed, everything ours. Not yet: a holding rule that a handful dug in on a terrace does not
   tip (or a reason for the parties to go back down); part I's route 1 stopped short of the rails; a sortie of two
   with a flight home to re-arm; Russian drops on our trench.
+- 2026-10-25: the three branches merged (the Su-25s `19accc6`, the duel `feca223`, the heap `8db6d71`) and made to
+  replay. Merged, part I no longer replayed itself: two runs of one build parted at 974 s, because the Su-25s, the
+  Iglas and the Bradleys, all new together in its frame, shared the hit log, the net and the effects with the guns
+  and shells in no fixed order. `c6f682e` gives them their order (the Su-25s after the fire systems, the drop's fall
+  between them and the aircraft, the Bradleys after the aircraft, the tanks' answer after the Iglas, the areas after
+  the men), and `BAV_AMBIGUITY=1` lists what is still unordered (the picture, and keys a headless day never presses).
+  Each part filmed twice from one build is now byte-identical; Vuhledar, Robotyne and Hostomel stay `same`. Then the
+  railway: in every seed of parts I and II their men ended on it, since route 1's objective lay 600 m past the rails;
+  it is now in the field short of them (-420, 250), where the footholds were. Bands (hands-off, seeds 0–3), knocked
+  out and our casualties: part I 37/45/38/41, ours 3/7/6/1 (the band 25–40; one seed over as before), the areas all
+  ours at the end; part II 35/33/42/32, ours 4/6/5/3 (the band 35–55; two seeds a little under), Stepove, the
+  railway and the plant ours and the heap contested by one to six of theirs dug in on its face (the Record's "the
+  north-west face reached and held against"); part III as the duel's entry, every area ours. Not yet: part I's top
+  seeds and part II's low ones brought inside their bands; a played session of each part; the showcase shots.

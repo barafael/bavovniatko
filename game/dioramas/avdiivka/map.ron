@@ -57,8 +57,9 @@
     routes: [
         // 0: on Stepove, across the open field and the railway.
         (line: "lane_stepove", deploy: (1130.0, -200.0), objective: (1000.0, -900.0)),
-        // 1: on the heap's foot and the railway behind it.
-        (line: "lane_heap", deploy: (-380.0, 400.0), objective: (-500.0, -600.0)),
+        // 1: on the heap's foot and the railway behind it; the men make for the field short of the rails, where the
+        // footholds of 10 and 19 October were (c11 §2): the objective is not the rails themselves.
+        (line: "lane_heap", deploy: (-380.0, 400.0), objective: (-420.0, 250.0)),
         // 2: up the heap's north-east face to its top (men climb it; hulls stop at its foot).
         (line: "heap_face", deploy: (-980.0, 1300.0), objective: (-1066.0, 830.0)),
     ],
