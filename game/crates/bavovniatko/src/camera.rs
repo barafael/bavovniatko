@@ -738,7 +738,7 @@ fn bradley_control(buttons: Res<ButtonInput<MouseButton>>, motion: Res<Accumulat
         // The ISU's head sits on the turret roof, a little left of the gun.
         view.ground_eye = t.translation + Vec3::Y * EYE + (t.rotation * Vec3::NEG_X) * 0.4;
     }
-    if dev().view != Some(Mode::Bradley) && !view.locked {
+    if dev().view != Some(Mode::Bradley) && dev().gun.is_empty() && !view.locked {
         view.sight = buttons.pressed(MouseButton::Right);
     }
     let k = 0.0022 / view.zoom();

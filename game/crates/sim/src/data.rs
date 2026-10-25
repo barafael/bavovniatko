@@ -78,6 +78,17 @@ pub struct OperatorSpec {
 pub struct BradleySpec {
     pub tows: u32,
     pub range: f32,
+    /// When the gunners left to themselves first open fire (`bradley::Opens`): at what they see, or not before
+    /// their run.
+    #[serde(default)]
+    pub opens: crate::bradley::Opens,
+    /// How far a run takes a Bradley out of its hide towards what it goes for (m).
+    #[serde(default = "run_length")]
+    pub run: f32,
+}
+
+fn run_length() -> f32 {
+    150.0
 }
 
 /// FPVs: how long one flies (s).

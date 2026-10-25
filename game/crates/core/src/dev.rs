@@ -126,6 +126,9 @@ pub struct DevEnv {
     /// Scripted fire missions: game time, strike, and where (`BAV_FIRE="100:he,130:raam,200:he@-468;702"`: at a
     /// point, or else on the stalled vehicle nearest the drone).
     pub fire: Vec<ScriptedFire>,
+    /// A scripted gunner in a Bradley's seat (`BAV_GUN="250:seat,262:go,280:ap,284:he,330:back"`): at those game
+    /// seconds, what the hand in the seat does.
+    pub gun: Vec<(f32, GunHand)>,
     /// Scripted drone flight: legs of game time with what the sticks do (see `camera::Stick::scripted`).
     pub fly: Vec<(f32, f32, String)>,
     /// Log frame times and the GPU time of every render pass; headless, also lift the frame cap.
@@ -161,6 +164,40 @@ pub struct DevEnv {
 
 /// A scripted fire mission: game time, strike, and the point it is called on (or none: the nearest stalled vehicle).
 pub type ScriptedFire = (f32, Strike, Option<(f32, f32)>);
+
+/// What `BAV_GUN`'s gunner does at a game time: take the seat (`seat`, or `seat@1` for the second Bradley west to
+/// east, as key 6 counts them), fire a burst of AP or HE at the nearest of their hulls (`ap`, `he`), launch a TOW
+/// (`tow`), or order the driver on, to hold, or back (`go`, `hold`, `back`). Between times it holds the sight on the
+/// nearest hull.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum GunHand {
+    Seat(usize),
+    Ap,
+    He,
+    Tow,
+    Go,
+    Hold,
+    Back,
+}
+
+impl FromStr for GunHand {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, String> {
+        Ok(match s.trim() {
+            "seat" => GunHand::Seat(0),
+            "ap" => GunHand::Ap,
+            "he" => GunHand::He,
+            "tow" => GunHand::Tow,
+            "go" => GunHand::Go,
+            "hold" => GunHand::Hold,
+            "back" => GunHand::Back,
+            s => match s.split_once('@') {
+                Some(("seat", k)) => GunHand::Seat(k.trim().parse().map_err(|_| format!("BAV_GUN: {s:?}"))?),
+                _ => return Err(format!("BAV_GUN: cannot read {s:?} (seat[@n], ap, he, tow, go, hold, back)")),
+            },
+        })
+    }
+}
 
 /// `BAV_TOUR`.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
@@ -200,6 +237,17 @@ impl DevEnv {
                             None => (k, None),
                         };
                         Some((t.trim().parse().ok()?, k.trim().parse().ok()?, at))
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+        let gun = var("BAV_GUN")
+            .map(|plan| {
+                plan.split(',')
+                    .filter(|item| !item.trim().is_empty())
+                    .map(|item| {
+                        let (t, what) = item.split_once(':').unwrap_or_else(|| panic!("BAV_GUN: cannot read {item:?} (<game s>:<what>)"));
+                        (t.trim().parse().unwrap_or_else(|_| panic!("BAV_GUN: cannot read {item:?}")), what.parse().unwrap_or_else(|e: String| panic!("{e}")))
                     })
                     .collect()
             })
@@ -262,6 +310,7 @@ impl DevEnv {
             rec_from: parse("BAV_REC_FROM").unwrap_or(5.0),
             rec_secs: parse("BAV_REC_SECS").unwrap_or(10.0),
             fire,
+            gun,
             fly,
             diag: var("BAV_DIAG").is_some(),
             field: var("BAV_FIELD").is_some(),

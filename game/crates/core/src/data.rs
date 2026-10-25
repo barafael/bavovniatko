@@ -87,6 +87,10 @@ pub struct DioramaData {
     /// Belts of mines in open field: a line and its width.
     #[serde(default)]
     pub field_mines: Vec<(Vec<P>, f32)>,
+    /// Which of the map's belts of `field_mines` a part has, by number (none: all of them). Avdiivka's night mines
+    /// lay on the approaches in October and were not on the village's own approach in January.
+    #[serde(default)]
+    pub mines_laid: Option<Vec<usize>>,
     #[serde(default)]
     pub barriers: Vec<BarrierSpec>,
     /// The ground drawn from a map (tools/osm): its lines, roads and tree rows join the hand-drawn ones.
@@ -716,7 +720,7 @@ pub fn layout(d: &DioramaData) -> Layout {
         belts,
         routes,
         shoulder_fields,
-        field_mines: d.field_mines.iter().map(|(pts, w)| (Polyline::new(pts.iter().copied().map(v).collect()), *w)).collect(),
+        field_mines: d.field_mines.iter().enumerate().filter(|(i, _)| d.mines_laid.as_ref().is_none_or(|laid| laid.contains(i))).map(|(_, (pts, w))| (Polyline::new(pts.iter().copied().map(v).collect()), *w)).collect(),
         barriers: d.barriers.iter().map(|b| Barrier { z0: b.z0, z1: b.z1, at: 1.0 / b.at_per, stacked: b.stacked, ap: 1.0 / b.ap_per }).collect(),
         areas: d.osm.areas.iter().map(|(k, pts)| crate::geo::Area::new(*k, pts.iter().copied().map(v).collect())).collect(),
         buildings: d.osm.buildings.iter().map(|b| crate::geo::Building { kind: b.kind, height: b.height, foot: b.foot.iter().copied().map(v).collect() }).collect(),
