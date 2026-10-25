@@ -31,21 +31,22 @@ plant; north of the plant stands its spoil heap, and beyond the heap the village
 Open stubble fields run from both towards Krasnohorivka and Kamianka, where the Russians are.
 
 You are with the 47th Mechanised Brigade (47-ма ОМБр), moved here from Zaporizhzhia with little time to rest:
-a drone operator and a fire controller at Stepove. The 110th holds the heap. The 55th Artillery Brigade's guns
-are behind you, and for once there are shells.
+this afternoon the gunner of the second of two Bradleys in the village's hides, with the drone's feed and the 55th
+Artillery Brigade's guns on the net, and one FPV on the stock. The 110th holds the heap.
 
 Three months of this. The October wrecks are under the snow. The Russians come at the village in small groups now,
 a tank or two with them, and the field between the village and the railway is where they die.
 
-This afternoon a T-90M is in the village's east end, firing on the trench.
+This afternoon a T-90M comes into the village's east end and fires on the trench. The launchers are empty: the
+25 mm is what you have. The first crew goes out at him; then it is yours.
 
 The day will run whether or not you do anything. What you do matters at the margin.
 
-Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
-Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.  4: an FPV.
-Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / the observers on the heap.  I: thermal.  P: pause.  [ ]: time.
-M: move the drone team when they find you.  3: into a position with an ATGM team.  Right button: the sight.  Left click: launch.
-6: into a Bradley's gunner's seat (again for the next).  Right button: the sight.  Left click: a burst.  X: AP / HE.  T: a TOW.
+6: into your Bradley's gunner's seat (again for the other).  Right button: the sight.  Left click: a burst.  X: AP / HE.
+G / K / B: the driver on out of the hide, to hold, or back into it.  I: thermal.
+1/2 or Tab: drone / the observers on the heap.  Mouse: right-drag to look, wheel to zoom.  WASD: fly.  Q/E: turn.  R/F: climb/descend.
+Left click: 155 mm fire mission (4 rounds).  Shift+click: RAAM mines.  Ctrl+click: HIMARS.  4: the FPV.  P: pause.  [ ]: time.
+M: move the drone team when they find you.  In Command, Space and 3: the ATGM teams, where you have bought them.
 
 Press Enter."#,
         op_label: "OBSERVERS, THE HEAP'S FIRST TERRACE (СПОСТЕРІГАЧІ, ПЕРША ТЕРАСА ТЕРИКОНУ)",
@@ -257,17 +258,21 @@ Press Enter."#,
     // FPVs by the day, five minutes in the air.
     fpv: (endurance: 300.0),
     // The launchers empty that afternoon (the experts' question, v02 §7: "unless they were out"), and the fight at
-    // the village's own ranges: it was the 25 mm that did it.
-    bradley: (tows: 0, range: 700.0),
+    // the village's own ranges: it was the 25 mm that did it. The pair keep quiet in their hides until their runs,
+    // and the tank fires on the trench first (v02 §1, §6).
+    bradley: (tows: 0, range: 700.0, opens: Run, run: 150.0),
+    // The night's mines lie in front of the heap; the village's own approach is open by January (the belt in front
+    // of the railway at Stepove is October's, map.ron).
+    mines_laid: [1],
     // Command's Enemy staff: Lancets for the Bradleys and the tank; Orlans over the village every few minutes.
     staff: (lancets: 3, orlan: (150.0, 300.0)),
     // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
     // February, but still.
     operator: (pos: (900.0, -1400.0), found_per_hour: 0.2),
 
-    // The day (c11 §2, §6 set piece 1): the fire preparation before dawn, then four columns of 15-22 across the
-    // open field, two on Stepove and two on the heap and the railway, with infantry on foot behind them; about 70
-    // vehicles on the shoulder (the geolocated count for the whole salient that day).
+    // The afternoon (v02 §1, §6): a T-90M and two BMP-2s under smoke into the village's east end, where the tank stops
+    // and fires on the trench, a section on foot behind; the first Bradley's pass, which fails; then the second, the
+    // player's.
     script: [
         (2.0, Say("Bird up. Snow, cloud down on the field. Nothing moving yet.")),
         (60.0, Say("This is {op}. Smoke on the east end. Something behind it.")),
@@ -280,9 +285,20 @@ Press Enter."#,
                 start: 1400.0,
                 smoke: 2,
                 label: "14:08  A tank and two BMPs into the east end",
+                // To the lane's end at the village's edge, and there it stays until it is stopped.
+                stay: (deploy: (1110.0, -380.0), secs: 1200.0),
             ),
         ),
         (100.0, Infantry(route: 0, groups: 2, size: 6, every: 20.0)),
         (110.0, Say("Bird: a T-90 in the village. He's firing on the trench.")),
+        (
+            200.0,
+            Run(
+                bradley: 1,
+                fails: true,
+                say: "All, this is {command}. First crew, out at him. Take him from the flank.",
+            ),
+        ),
+        (260.0, Run(bradley: 0, say: "Second crew, it didn't work. Your turn. Go, go.")),
     ],
 )

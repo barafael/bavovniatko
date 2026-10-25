@@ -52,8 +52,14 @@ pub fn clock_text(t: f32) -> String {
 /// One thing the day's script does (written in the diorama's file).
 #[derive(serde::Deserialize, Debug)]
 pub enum Act {
-    /// A column of the attacking side down a route, single file; `start` is where its tail spawns.
-    Column { route: usize, kinds: Vec<VKind>, plow: bool, smoke: usize, start: f32, label: String, #[serde(default)] rescue: bool },
+    /// A column of the attacking side down a route, single file; `start` is where its tail spawns. `stay`: it deploys
+    /// at a place of its own on the route and holds its overwatch there a while (part III's T-90M in the village).
+    Column { route: usize, kinds: Vec<VKind>, plow: bool, smoke: usize, start: f32, label: String, #[serde(default)] rescue: bool, #[serde(default)] stay: Option<StaySpec> },
+    /// One of our Bradleys in the hides (the `bradley`th of the day's, in the Allotment's order) goes out on a run at
+    /// the nearest of their hulls it can see once one has stopped within its reach, and comes back to its hide
+    /// (`bradley::Run`). `fails`: its fire does nothing and it backs off under its smoke, as the first crew's pass at
+    /// Stepove "didn't work out" (v02 §7). `say`: the net's line as it goes.
+    Run { bradley: usize, #[serde(default)] fails: bool, #[serde(default)] say: String },
     /// The attacker's artillery preparation on the defenders' line: so many missions over so many seconds.
     Prep { missions: u32, over: f32 },
     /// A pair of Ka-52s arrives on station at these points, beyond reach.
@@ -75,6 +81,13 @@ pub enum Act {
     /// The airlift's hour: so many Il-76s come if the field is theirs and the runway clear (Command); in the Record
     /// they turn back in the air, as they did.
     Airlift(u32),
+}
+
+/// Where a column that stays deploys (a point near its route), and how long it holds there at least (s).
+#[derive(serde::Deserialize, Debug, Clone, Copy)]
+pub struct StaySpec {
+    pub deploy: (f32, f32),
+    pub secs: f32,
 }
 
 struct Beat {
@@ -135,7 +148,7 @@ fn run_script(
         }
         beat.done = true;
         match beat.act {
-            Act::Column { route, kinds, plow, smoke, start, label, rescue } => {
+            Act::Column { route, kinds, plow, smoke, start, label, rescue, stay } => {
                 *wave += 1;
                 // Command: the Enemy staff may send it otherwise than the script has it (`staff::Staff::adapt`).
                 let plan = crate::staff::ColumnPlan { route: *route, kinds: kinds.clone(), plow: *plow, smoke: *smoke, start: *start };
@@ -158,7 +171,11 @@ fn run_script(
                     // The plow leads; a roller vehicle or a second plow behind it keeps its own.
                     let plow = *plow && (i == 0 || k.breacher());
                     let side = diorama().attacker();
-                    units::spawn_vehicle(&mut commands, &models, &palette, &book, VehicleSpec { side, kind: *k, route: *route, s, lat: 0.0, wave: *wave, idx: i as u32, plow, smoke: i < *smoke, rescue: *rescue, column_pace: f32::INFINITY });
+                    let e = units::spawn_vehicle(&mut commands, &models, &palette, &book, VehicleSpec { side, kind: *k, route: *route, s, lat: 0.0, wave: *wave, idx: i as u32, plow, smoke: i < *smoke, rescue: *rescue, column_pace: f32::INFINITY });
+                    if let Some(st) = stay {
+                        let deploy_s = book.0[*route].line.project(Vec2::new(st.deploy.0, st.deploy.1)).1;
+                        commands.entity(e).insert(units::Stay { deploy_s, secs: st.secs });
+                    }
                     stats.vehicles_committed += 1;
                     stats.wave(*wave).vehicles += 1;
                     stats.sent += k.men();
@@ -241,6 +258,10 @@ fn run_script(
                     radio.say(now, "All, this is {command}. That's enough. All callsigns back to the start line. Bring the infantry.");
                     *banner = Some(("08:50  Everyone back to the start line".to_string(), 7.0));
                 }
+            }
+            Act::Run { bradley, fails, say } => {
+                let (k, fails, say) = (*bradley, *fails, say.as_str());
+                commands.queue(move |w: &mut World| crate::bradley::order_run(w, k, fails, say));
             }
             Act::Say(s) => radio.say(now, s.as_str()),
             Act::Jam(j) => {

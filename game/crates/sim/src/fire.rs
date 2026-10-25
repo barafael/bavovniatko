@@ -279,6 +279,9 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
         let spec = units::VehicleSpec { side: Side::Ua, kind, route: 0, s: 0.0, lat: 0.0, wave: 0, idx: 200 + k as u32, plow: false, smoke: false, rescue: false, column_pace: f32::INFINITY };
         let e = units::spawn_vehicle_at(&mut commands, &models, &palette, spec, hide, yaw);
         commands.entity(e).insert((Transform::from_translation(geo::ground(hide) - Vec3::Y * 0.9).with_rotation(Quat::from_rotation_y(yaw)), crate::bradley::BradleyArms::default()));
+        if crate::bradley::opens_on_run() {
+            commands.entity(e).insert(crate::bradley::Quiet);
+        }
     }
 }
 
@@ -406,8 +409,9 @@ fn player_fire(
     mut sound: Sound,
     orders: Option<Res<crate::orders::OrdersView>>,
 ) {
-    // Alt+click asks for an evacuation instead (`evac`); with the orders open (Command) a click is for them (`orders`).
-    if !buttons.just_pressed(MouseButton::Left) || view.mode == Mode::Ground || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) || orders.is_some_and(|o| o.takes_clicks()) {
+    // Alt+click asks for an evacuation instead (`evac`); with the orders open (Command) a click is for them (`orders`);
+    // in a sight (a launcher, a Bradley's gun) it fires that.
+    if !buttons.just_pressed(MouseButton::Left) || matches!(view.mode, Mode::Ground | Mode::Bradley) || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) || orders.is_some_and(|o| o.takes_clicks()) {
         return;
     }
     let now = time.elapsed_secs_f64();
@@ -1072,7 +1076,8 @@ fn attacker_guns(
     mut sound: Sound,
     positions: Query<&Post>,
     turrets: Query<&GlobalTransform, With<units::Turret>>,
-    mut guns: Query<(&Vehicle, &mut Gun, &Transform)>,
+    // (A hull whose sights are shot out sees nothing to fire at.)
+    mut guns: Query<(&Vehicle, &mut Gun, &Transform), Without<units::Blinded>>,
     soldiers: Query<(&Soldier, &Transform)>,
 ) {
     let dt = time.delta_secs();

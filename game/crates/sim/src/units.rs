@@ -315,6 +315,20 @@ pub struct Rescue;
 #[derive(Component)]
 pub struct Plow;
 
+/// Its sights shot out (25 mm, `Cause::Autocannon` or `Cause::Blinding`): the crew can see nothing to fire at, and
+/// the turret swings loose while the hull drives blind (v02 §1: "backed away with its turret spinning").
+#[derive(Component)]
+pub struct Blinded;
+
+/// A column of the script's that stops at a place of its own on its route and stays there a while before its crews
+/// think of going back (part III's T-90M in Stepove's east end, firing on the trench): where it deploys, and for how
+/// many seconds it holds its overwatch at least.
+#[derive(Component, Clone, Copy)]
+pub struct Stay {
+    pub deploy_s: f32,
+    pub secs: f32,
+}
+
 impl VState {
     pub fn alive(self) -> bool {
         !matches!(self, VState::Destroyed | VState::Abandoned)
@@ -984,6 +998,9 @@ pub enum Cause {
     /// A Bradley's 25 mm: AP that goes through a BMP and bounces off a tank's front, where it takes the optics, a
     /// track or the engine instead (design/avdiivka.md, phase 2).
     Autocannon,
+    /// 25 mm HE laid on a tank's sights and periscopes: it gets through nothing, and it is how the Stepove gunner
+    /// stopped the T-90M once his AP gave trouble ("I started blinding him so he couldn't leave", v02 §6).
+    Blinding,
 }
 
 /// An explosion that hurts whatever is near it.
@@ -1156,6 +1173,7 @@ struct Driving {
     rescue: Has<Rescue>,
     plow: Has<Plow>,
     holding: Has<crate::orders::Holding>,
+    stay: Option<&'static Stay>,
 }
 
 /// The driver's head: what state the vehicle is in, where he means to be, how fast he wants to go.
@@ -1182,13 +1200,13 @@ fn drive_decisions(
     let attacker = diorama().attacker();
     let rng = &mut rng.0;
 
-    for DrivingItem { e, mut v, mut d, tf, traffic, mut intent, evac_at, rescue, plow, holding } in &mut q {
+    for DrivingItem { e, mut v, mut d, tf, traffic, mut intent, evac_at, rescue, plow, holding, stay } in &mut q {
         if !drives(&v, &d, &book, attacker) {
             continue;
         }
         let rt = &book.0[d.route];
         let route: &Polyline = &rt.line;
-        let deploy_s = rt.deploy_s;
+        let deploy_s = stay.map_or(rt.deploy_s, |s| s.deploy_s);
         // (On a holding route the end of it comes first: the position.)
         let dismount_s = (deploy_s + 200.0 + v.idx as f32 % 3.0 * 25.0).min(route.length() - 5.0);
         v.panic = (v.panic - dt * 0.05).max(0.0);
@@ -1357,6 +1375,8 @@ fn drive_decisions(
             }
             // A Column at its position holds it until it is ordered off, and so does a unit told to hold.
             VState::Overwatch if rt.hold || holding => want_speed = 0.0,
+            // One sent to stay holds its place through its time, whatever comes at it.
+            VState::Overwatch if stay.is_some_and(|s| v.timer < s.secs) => want_speed = 0.0,
             VState::Overwatch => {
                 want_speed = 0.0;
                 if v.timer > rng.random_range(60.0..140.0) || v.panic > 0.8 {
@@ -2037,7 +2057,7 @@ pub fn on_wrecked(
             Cause::TankGun => "a tank gun",
             Cause::Atgm => "an ATGM",
             Cause::Fpv => "an FPV",
-            Cause::Autocannon => "25 mm fire",
+            Cause::Autocannon | Cause::Blinding => "25 mm fire",
         };
         log.open(now, weapon, "", ev.vehicle, &v, rescue, format!("destroyed{}", crate::hits::fate(ev.how)));
     }
@@ -2330,11 +2350,35 @@ fn era_reacts(mut hits: MessageReader<DirectHit>, mut sound: Sound, mut fx: ResM
     }
 }
 
-fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<crate::hits::HitLog>, mut hits: MessageReader<DirectHit>, mut rng: ResMut<UnitRng>, mut q: Query<(&mut Vehicle, &mut Suspension, Has<Rescue>)>) {
+fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<crate::hits::HitLog>, mut hits: MessageReader<DirectHit>, mut rng: ResMut<UnitRng>, mut q: Query<(&mut Vehicle, &mut Suspension, Has<Rescue>, Has<Blinded>)>) {
     let now = time.elapsed_secs_f64();
     for h in hits.read() {
-        let Ok((mut v, mut sus, rescue)) = q.get_mut(h.target) else { continue };
+        let Ok((mut v, mut sus, rescue, blinded)) = q.get_mut(h.target) else { continue };
         if !v.state.alive() {
+            continue;
+        }
+        if blinded && matches!(h.cause, Cause::Autocannon | Cause::Blinding) {
+            log.open(now, h.weapon, h.from, h.target, &v, rescue, "on a hull already blind: nothing more");
+            continue;
+        }
+        // The sights shot out: the hull drives blind on its last order, slewing, and the crew gets out.
+        let mut blind = |v: &mut Vehicle, rng: &mut SmallRng| {
+            log.open(now, h.weapon, h.from, h.target, v, rescue, "blinded: the sights gone, driving blind, the crew getting out");
+            let coasting = v.immobilise(0.0, 0.0);
+            let secs = rng.random_range(20.0..40.0);
+            v.plan = CrewPlan::Ghost { secs, at: secs + rng.random_range(5.0..15.0) };
+            v.timer = 0.0;
+            v.panic = 1.0;
+            commands.entity(h.target).insert((coasting, Blinded));
+        };
+        if h.cause == Cause::Blinding && v.kind.is_tank() {
+            // HE on the sights: the periscopes and the sight heads take most of a burst that reaches the turret.
+            if rng.0.random_bool(0.6) {
+                blind(&mut v, &mut rng.0);
+            } else {
+                log.open(now, h.weapon, h.from, h.target, &v, rescue, "HE on the turret: the sights smeared, still seeing");
+                v.panic = (v.panic + 0.3).min(1.0);
+            }
             continue;
         }
         if h.cause == Cause::Autocannon && v.kind.is_tank() {
@@ -2342,13 +2386,7 @@ fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<
             // The Stepove gunner went for the sights, then the engine deck (v02 §5, §7).
             let roll: f64 = rng.0.random();
             if roll < 0.35 {
-                log.open(now, h.weapon, h.from, h.target, &v, rescue, "blinded: the sights gone, driving blind, the crew getting out");
-                let coasting = v.immobilise(0.0, 0.0);
-                let secs = rng.0.random_range(20.0..40.0);
-                v.plan = CrewPlan::Ghost { secs, at: secs + rng.0.random_range(5.0..15.0) };
-                v.timer = 0.0;
-                v.panic = 1.0;
-                commands.entity(h.target).insert(coasting);
+                blind(&mut v, &mut rng.0);
             } else if roll < 0.60 {
                 log.open(now, h.weapon, h.from, h.target, &v, rescue, "a track off: stopped");
                 let coasting = v.immobilise(2.5, rng.0.random_range(-0.4..0.4));
@@ -2366,7 +2404,7 @@ fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut log: ResMut<
             continue;
         }
         let p_kill = if h.top { (v.kind.hit_kill() + 0.2).min(0.95) } else { v.kind.hit_kill() };
-        let how = format!("{}{}", if h.top { "from above: " } else { "" }, if v.kind.era() && !matches!(h.cause, Cause::TankGun | Cause::Autocannon) { "reactive armour went; " } else { "" });
+        let how = format!("{}{}", if h.top { "from above: " } else { "" }, if v.kind.era() && !matches!(h.cause, Cause::TankGun | Cause::Autocannon | Cause::Blinding) { "reactive armour went; " } else { "" });
         if rng.0.random_bool(p_kill) {
             if rng.0.random_bool(0.2) {
                 log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}into the engine: on fire, crawling, crew getting out"));

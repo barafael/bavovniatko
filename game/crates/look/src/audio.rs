@@ -340,6 +340,8 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let mut rng = SmallRng::seed_from_u64(0x2023_0206);
     // Sounds added later draw from a stream of their own, so the older ones stay the same, sample for sample.
     let mut rng2 = SmallRng::seed_from_u64(0x2023_0608);
+    // ...and those added after the beds below drew from `rng2`, from a third.
+    let mut rng3 = SmallRng::seed_from_u64(0x2024_0111);
     let mut add = |v: Vec<f32>| assets.add(Synth { samples: Arc::new(v) });
     // In `Sfx`'s order, which `Bank::get` indexes by (and the synthesis draws from `rng` in this order).
     let sounds: Vec<Handle<Synth>> = Sfx::VARIANTS
@@ -362,6 +364,7 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
             Sfx::GunReport => add(blast(&mut rng2, 2.6, 240.0, 1.4)),
             Sfx::Ripple => add(ripple(&mut rng2)),
             Sfx::VikhrLaunch => add(whoosh(&mut rng2)),
+            Sfx::Cannon25 => add(burst(&mut rng3, 6, 0.3, 3400.0)),
         })
         .collect();
     let wind = add(bed(&mut rng, 24.0, 250.0, 900.0, 0));

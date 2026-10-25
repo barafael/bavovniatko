@@ -303,7 +303,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway, bradleys): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>, Query<&bav_sim::bradley::BradleyArms>),
+    (order, fpv_res, op_res, iglas, field, air, runway, bradleys): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -396,14 +396,16 @@ fn update_hud(
         }
         Mode::Bradley => {
             let a = view.ground_team.and_then(|e| bradleys.get(e).ok());
-            let (ap, he, tows, reload, he_up) = a.map_or((0, 0, 0, 0.0, false), |a| (a.ap, a.he, a.tows, a.tow_reload, a.he_selected));
+            let (ap, he, tows, reload, he_up) = a.map_or((0, 0, 0, 0.0, false), |(a, _)| (a.ap, a.he, a.tows, a.tow_reload, a.he_selected));
+            // Where the driver has the hull: in the hide, or on a run and which way.
+            let driver = a.and_then(|(_, r)| r).map_or("IN THE HIDE".to_string(), |r| format!("RUN {} {:.0} m", r.leg.name(), r.along));
             let range = view.ground_range.map_or("----".to_string(), |d| format!("{d:>4.0} m"));
             let sel = if he_up { "HE" } else { "AP" };
             if view.sight {
                 let tow = if tows == 0 { "no TOW".to_string() } else if reload > 0.0 { format!("TOW reloading {reload:.0}") } else { "[T] TOW".to_string() };
-                Text::new(format!("ISU x4   {}   RANGE {range}   {sel} AP {ap} HE {he}   TOW {tows}\n[LMB] burst   [X] {}   {tow}   [I] thermal", if view.thermal { "THERMAL, WHITE HOT" } else { "DAY TV" }, if he_up { "AP" } else { "HE" }))
+                Text::new(format!("ISU x4   {}   RANGE {range}   {sel} AP {ap} HE {he}   TOW {tows}   {driver}\n[LMB] burst   [X] {}   {tow}   [G/K/B] on / hold / back   [I] thermal", if view.thermal { "THERMAL, WHITE HOT" } else { "DAY TV" }, if he_up { "AP" } else { "HE" }))
             } else {
-                Text::new(format!("BRADLEY (БРЕДЛІ), GUNNER'S SEAT   AP {ap} HE {he}   TOW {tows}\n[RMB] sight   [6] next Bradley   [1] drone"))
+                Text::new(format!("BRADLEY (БРЕДЛІ), GUNNER'S SEAT   AP {ap} HE {he}   TOW {tows}   {driver}\n[RMB] sight   [G/K/B] driver on / hold / back   [6] next Bradley   [1] drone"))
             }
         }
         Mode::Ground => {
@@ -642,6 +644,7 @@ fn show_debrief(
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
     (field, air, iglas, runway): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Runway>>),
+    duel: StepoveDuel,
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
@@ -655,13 +658,17 @@ fn show_debrief(
     let out = stats.destroyed + stats.abandoned;
     // (label, value) rows, and the columns table: (name, vehicles, destroyed, abandoned).
     let (heading, span, rows, columns, col_heads): DebriefCopy = match diorama() {
-        Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
+        Diorama::AvdiivkaStepove => {
+            let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
+            let heading = format!("{}   {}", bav_core::data::data().date, crate::text::STEPOVE.hud());
+            (heading, format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), stepove_rows(&stats, &fc, &script, &duel, closest), Vec::new(), ["", "", ""])
+        }
+        Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 => {
             let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
             let (heading, span) = if diorama() == Diorama::Vuhledar {
                 (format!("6 February 2023   {}", crate::text::VUHLEDAR.hud()), format!("06:40 – {}", director::clock_text(script.t)))
             } else {
-                let place = if diorama() == Diorama::AvdiivkaStepove { crate::text::STEPOVE } else { crate::text::AVDIIVKA };
-                (format!("{}   {}", bav_core::data::data().date, place.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)))
+                (format!("{}   {}", bav_core::data::data().date, crate::text::AVDIIVKA.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)))
             };
             (
                 heading,
@@ -853,6 +860,73 @@ fn show_debrief(
         }
         p.spawn((Text::new(keys), tf(14.0), TextColor(dim), Node { margin: UiRect::top(px(26)), ..default() }));
     });
+}
+
+/// What the debrief of Stepove's afternoon reads besides the tally: the duel's ledger, the hulls, the pair's arms.
+#[derive(bevy::ecs::system::SystemParam)]
+struct StepoveDuel<'w, 's> {
+    time: Res<'w, Time>,
+    ledger: Option<Res<'w, bav_sim::bradley::Duel>>,
+    vehicles: Query<'w, 's, (&'static crate::units::Vehicle, Has<crate::units::Blinded>)>,
+    arms: Query<'w, 's, &'static bav_sim::bradley::BradleyArms>,
+    fpv: Res<'w, bav_sim::player::Fpv>,
+}
+
+/// Stepove's afternoon in its own terms (design/avdiivka.md, part III): the duel as the hit feed saw it (what hit the
+/// T-90M, from where, what it did), the BMPs and the men, the trench, the pair and what they fired.
+fn stepove_rows(stats: &Stats, fc: &FireControl, script: &Script, duel: &StepoveDuel, closest: f32) -> Vec<(String, String)> {
+    use crate::units::{VKind, VState};
+    // The feed's times are the clock's since the start of the run; the day's clock started with the battle.
+    let offset = duel.time.elapsed_secs_f64() - script.t as f64;
+    let clock = |at: f64| director::clock_text((at - offset) as f32);
+    let tank = duel.vehicles.iter().find(|(v, _)| v.kind == VKind::T90m && v.side == Side::Ru);
+    let fate = match tank {
+        None => "never came".to_string(),
+        Some((v, blind)) => {
+            let how = match v.state {
+                VState::Destroyed => "burned out",
+                VState::Abandoned => "left in the village",
+                VState::Immobilized => "stopped",
+                VState::Withdrawing => "withdrawing",
+                _ => "still fighting",
+            };
+            let crew = if v.state.alive() && v.crew > 0 { "" } else { ", the crew out" };
+            format!("{}{how}{crew}", if blind { "blinded, " } else { "" })
+        }
+    };
+    let mut rows: Vec<(String, String)> = vec![("The T-90M".into(), fate)];
+    // Each hit on the tank, the same thing over again counted once.
+    let hits = duel.ledger.as_deref().map_or(&[][..], |d| &d.hits[..]);
+    let mut lines: Vec<(String, String, u32)> = Vec::new();
+    for h in hits.iter().filter(|h| h.side == Side::Ru && h.target_name.starts_with("T-90M")) {
+        let what = format!("    {}{}: {}", h.weapon, if h.from.is_empty() { String::new() } else { format!(" from {}", h.from) }, h.result);
+        match lines.last_mut() {
+            Some((w, _, n)) if *w == what => *n += 1,
+            _ => lines.push((what, clock(h.at), 1)),
+        }
+    }
+    if lines.is_empty() {
+        rows.push(("    nothing of ours reached it".into(), String::new()));
+    }
+    rows.extend(lines.into_iter().map(|(w, at, n)| (if n > 1 { format!("{w} (x{n})") } else { w }, at)));
+    let bmps: Vec<_> = duel.vehicles.iter().filter(|(v, _)| v.side == Side::Ru && v.kind != VKind::T90m).collect();
+    let stopped = bmps.iter().filter(|(v, _)| !v.state.mobile()).count();
+    rows.push(("The BMPs knocked out".into(), format!("{stopped} of {}", bmps.len())));
+    rows.push(("Their men sent forward".into(), stats.sent.to_string()));
+    rows.push(("    dead".into(), stats.attacker_dead.to_string()));
+    rows.push(("Closest any Russian got to the village".into(), format!("{closest:.0} m")));
+    rows.push(("The trench".into(), if stats.foothold > 0 { "lost".into() } else { "held".into() }));
+    rows.push(("    our casualties".into(), stats.defender_losses.to_string()));
+    // The pair: their runs, what they lost, what they fired.
+    for (at, what) in duel.ledger.as_deref().map_or(&[][..], |d| &d.runs[..]) {
+        rows.push((format!("    {what}"), clock(*at)));
+    }
+    rows.push(("Bradleys lost".into(), stats.defender_vehicles.to_string()));
+    let (ap, he) = duel.arms.iter().fold((0, 0), |(ap, he), a| (ap + 300 - a.ap.min(300), he + 230 - a.he.min(230)));
+    rows.push(("25 mm fired, AP and HE".into(), format!("{ap} and {he}")));
+    rows.push(("FPVs left".into(), duel.fpv.left.to_string()));
+    rows.push(("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
+    rows
 }
 
 /// A click on a source opens it in the browser.

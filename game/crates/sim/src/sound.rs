@@ -28,6 +28,8 @@ pub enum Sfx {
     Ripple,
     /// A Ka-52's Vikhr leaving the rail.
     VikhrLaunch,
+    /// A Bradley's M242 in a burst: slower and sharper than a BMP's 30 mm, about 200 rounds a minute (v02 §5).
+    Cannon25,
 }
 
 #[derive(Resource, Default)]

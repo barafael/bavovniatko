@@ -171,8 +171,9 @@ enum Loss {
     Other,
 }
 
-/// A post of ours that launches, and a tank in its hide that fires, give themselves away.
-#[allow(clippy::type_complexity)]
+/// A post of ours that launches, a tank in its hide that fires, and a Bradley's TOW or long burst
+/// (`bradley::Revealed`) give themselves away.
+#[allow(clippy::type_complexity, clippy::too_many_arguments)]
 fn spot_fire(
     time: Res<Time>,
     mut spotted: ResMut<Spotted>,
@@ -181,6 +182,7 @@ fn spot_fire(
     vehicles: Query<&Vehicle>,
     posts: Query<(Entity, &Post)>,
     tanks: Query<(Entity, &UaTank, &Transform)>,
+    bradleys: Query<(Entity, &Transform), Changed<crate::bradley::Revealed>>,
     mut timers: Local<BTreeMap<Entity, f32>>,
 ) {
     let now = time.elapsed_secs_f64();
@@ -198,6 +200,12 @@ fn spot_fire(
         if t.timer > last + 5.0 {
             spotted.see(e, tf.translation.xz(), now, How::Fired, What::Hide, &mut rng.0);
         }
+    }
+    // A Bradley that has given itself away is a vehicle to them: the Lancets' business.
+    let mut fired: Vec<(Entity, Vec2)> = bradleys.iter().map(|(e, t)| (e, t.translation.xz())).collect();
+    fired.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.y.total_cmp(&b.1.y)));
+    for (e, p) in fired {
+        spotted.see(e, p, now, How::Fired, What::Vehicle, &mut rng.0);
     }
 }
 

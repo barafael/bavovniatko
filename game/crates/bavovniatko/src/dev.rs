@@ -16,7 +16,7 @@ impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(crate::camera::Flight(dev().fly.clone()))
             .add_systems(Startup, lineup.after(crate::Setup::Kit));
-        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, env_manpads, env_bradley, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
+        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, env_manpads, env_bradley, scripted_gun, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
         if dev().field {
             app.add_systems(Startup, field_overlay_setup).add_systems(Update, field_overlay.in_set(crate::Step::Screen));
         }
@@ -509,6 +509,94 @@ fn env_bradley(mut view: ResMut<View>, bradleys: Query<(Entity, &Transform), Wit
     view.sight = true;
     let eye = view.ground_eye;
     if let Some(t) = q.iter().filter(|(v, _)| v.side == bav_core::diorama::Side::Ru && v.state.alive()).map(|(_, t)| t.translation).min_by(|a, b| a.distance(eye).total_cmp(&b.distance(eye))) {
+        let d = t + Vec3::Y * 1.2 - eye;
+        view.ground_yaw = crate::units::vehicle_yaw(d.xz());
+        view.ground_pitch = (d.y / d.xz().length()).atan();
+    }
+}
+
+/// `BAV_GUN`: a gunner in a Bradley's seat by script, for the headless bands. At its times the hand takes a seat, fires
+/// a burst of AP or HE, launches a TOW or orders the driver, through the seat's own keys and buttons as a player would
+/// press them; between times the sight is up and held on the nearest of their hulls still in the fight.
+#[allow(clippy::too_many_arguments)]
+fn scripted_gun(
+    script: Res<crate::director::Script>,
+    mut view: ResMut<View>,
+    mut keys: ResMut<ButtonInput<KeyCode>>,
+    mut buttons: ResMut<ButtonInput<MouseButton>>,
+    bradleys: Query<(Entity, &Vehicle, &Transform, &bav_sim::bradley::BradleyArms)>,
+    q: Query<(&Vehicle, &Transform)>,
+    mut done: Local<usize>,
+    mut held: Local<(Vec<KeyCode>, bool)>,
+    mut sat: Local<Option<Entity>>,
+) {
+    let plan = &dev().gun;
+    if plan.is_empty() {
+        return;
+    }
+    // The hand stays in its seat while the Bradley is in action (whatever else steers the view, the showcase's tour).
+    if let Some(e) = *sat {
+        if bradleys.get(e).is_ok_and(|(_, v, ..)| v.crew > 0 && v.state.alive()) {
+            view.mode = Mode::Bradley;
+            view.ground_team = Some(e);
+        } else {
+            *sat = None;
+        }
+    }
+    // Last frame's presses let go.
+    for k in held.0.drain(..) {
+        keys.release(k);
+        keys.clear_just_pressed(k);
+    }
+    if held.1 {
+        buttons.release(MouseButton::Left);
+        buttons.clear_just_pressed(MouseButton::Left);
+        held.1 = false;
+    }
+    while *done < plan.len() && script.t >= plan[*done].0 {
+        let hand = plan[*done].1;
+        *done += 1;
+        info!("scripted gunner: {hand:?} at game {:.0} s", script.t);
+        let seat = view.ground_team.filter(|_| view.mode == Mode::Bradley).and_then(|e| bradleys.get(e).ok());
+        let mut press: Vec<KeyCode> = Vec::new();
+        match (hand, seat) {
+            (GunHand::Seat(k), _) => {
+                // West to east, as key 6 counts them.
+                let mut live: Vec<(Entity, Vec3)> = bradleys.iter().filter(|(_, v, ..)| v.crew > 0 && v.state.alive()).map(|(e, _, t, _)| (e, t.translation)).collect();
+                live.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.z.total_cmp(&b.1.z)));
+                let Some(&(e, p)) = live.get(k) else { continue };
+                view.mode = Mode::Bradley;
+                view.ground_team = Some(e);
+                view.ground_eye = p + Vec3::Y * 3.7;
+                *sat = Some(e);
+            }
+            (_, None) => info!("scripted gunner: not in a seat"),
+            (GunHand::Ap | GunHand::He, Some((.., a))) => {
+                if a.he_selected != (hand == GunHand::He) {
+                    press.push(KeyCode::KeyX);
+                }
+                buttons.press(MouseButton::Left);
+                held.1 = true;
+            }
+            (GunHand::Tow, _) => press.push(KeyCode::KeyT),
+            (GunHand::Go, _) => press.push(KeyCode::KeyG),
+            (GunHand::Hold, _) => press.push(KeyCode::KeyK),
+            (GunHand::Back, _) => press.push(KeyCode::KeyB),
+        }
+        for k in press {
+            keys.press(k);
+            held.0.push(k);
+        }
+    }
+    if view.mode != Mode::Bradley {
+        return;
+    }
+    view.sight = true;
+    let eye = view.ground_eye;
+    let theirs = || q.iter().filter(|(v, _)| v.side == bav_core::diorama::Side::Ru && v.state.alive());
+    let near = |it: &mut dyn Iterator<Item = Vec3>| it.min_by(|a, b| a.distance(eye).total_cmp(&b.distance(eye)));
+    let target = near(&mut theirs().filter(|(v, _)| v.crew > 0).map(|(_, t)| t.translation)).or_else(|| near(&mut theirs().map(|(_, t)| t.translation)));
+    if let Some(t) = target {
         let d = t + Vec3::Y * 1.2 - eye;
         view.ground_yaw = crate::units::vehicle_yaw(d.xz());
         view.ground_pitch = (d.y / d.xz().length()).atan();

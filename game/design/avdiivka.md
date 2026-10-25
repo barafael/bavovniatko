@@ -356,3 +356,36 @@ existing bakes if the optional rows are skipped.
   first pass that fails by script, and the T-90M reaching the east end before the guns speak. Next: that, the heap's
   areas and the drops (phase 5), the pair's runs and orders (phase 3), the Su-25 runs (phase 2), the showcase shots
   and a played session of each part (phase 10).
+- 2026-10-25: phase 3's runs and phase 9's duel. Part III has its own night: `mines_laid` (a part's pick of the map's
+  `field_mines` belts; none, all of them) gives it the belt in front of the heap only, so the village's approach is
+  open in January. The T-90M's column stays (`Column { stay }`, `units::Stay`): it deploys at the lane's end on the
+  village's edge and holds there, firing on the trench, until it is stopped. The pair keep quiet in their hides until
+  their runs (`bradley: (opens: Run, run: 150)`, `bradley::Quiet`). A run (`bradley::Run`) takes a Bradley out of its
+  hide 150 m towards what it goes for, the gun working a burst every two or three seconds ("we fired with all we
+  could"), and backs it in again under its smoke. `Act::Run` orders one from the script once a hull of theirs has
+  stopped within a kilometre and the other Bradley is home; `fails` makes it the first crew's pass, its AP off the
+  tank's front and back after four bursts. A tank that sees a Bradley out turns its gun on it (`tanks_answer`): the
+  first shot goes wide (v02 §1), the later ones hit by range and movement, and a tank that loses it in the smoke goes
+  back to the trench. HE on a tank goes for the sights (`Cause::Blinding`: six bursts in ten that reach the turret
+  blind it); the second Bradley left to itself opens with AP and turns to HE, as the gunner did. A blinded hull
+  (`units::Blinded`) holds its fire, its turret swings loose while it drives blind, and more 25 mm on it does nothing
+  more. From the seat G / K / B order the driver on (out along the sight's line), to hold, or back; the HUD says where
+  the driver has the hull. A TOW's launch or a long burst (18 rounds in a few seconds) gives the hide away in Command
+  (`bradley::Revealed`, which `staff::spot_fire` reads as a vehicle seen firing), and the Lancets come for it.
+  `BAV_GUN="200:seat,290:ap,294:he,…,345:back"` is a scripted gunner for the headless runs: it takes a seat (`seat@1`
+  the other), holds the sight on the nearest hull still fighting, and fires, launches or orders the driver through the
+  seat's own keys. The 25 mm has its own report (`Sfx::Cannon25`, 200 rounds a minute, from a random stream of its own,
+  so every older sound is the same sample for sample). Part III's debrief is its own: what hit the T-90M, from where and
+  what it did (`bradley::Duel` keeps every entry of the hit feed), the BMPs, the men, the trench, the pair's runs, the
+  Bradleys lost and the 25 mm fired. The briefing makes the player the second Bradley's gunner and lists the part's
+  keys (Space and 3 only for Command's bought ATGM teams; no TOW). Same-day: Vuhledar (`fx-v`), Robotyne (`r2-r`) and
+  both Hostomel parts (`td2-h1`, `td2-h2`) `same`; parts I and II (`a0-1`, `a0-2`) the same tally and segments, and the
+  same sound log once Cannon25 is read as Cannon30 (their Bradleys' bursts have the 25 mm's report now). Part III's
+  band, four seeds (release build): before (t3), the T-90M and both BMPs stopped every seed, two of the three on the
+  night's mines in front of the railway; now, hands-off, the T-90M blinded by the second Bradley's HE every seed
+  (14:24 to 14:29) after the first pass's four AP bursts did nothing, the crew out, both BMPs knocked out by the
+  Bradleys from their hides, the trench held, our casualties 0–3, no Bradley lost. With `BAV_GUN` in the second seat:
+  blinded from the hide in three seeds, and in the fourth set on fire through the engine deck by the opening AP burst
+  (it burns out without being blinded). What the hands-off day cannot reach is the end of the Record's band: nobody
+  flies the FPV, so the tank is left in the village rather than burned (`BAV_FPV` at its place does that). Not yet: the
+  hull hitting a tree as it drives blind; Command's Lancets on a revealed hide measured; a played session.
