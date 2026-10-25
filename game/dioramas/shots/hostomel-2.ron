@@ -1,0 +1,77 @@
+// Hostomel at dusk, the counterattack: its tour. It has no film yet (design/hostomel.md, phase 8).
+// The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
+// one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
+// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
+// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
+// `hud: false` films it without the interface, and `debrief` ends the day on it.
+(
+    // The tour's title card: the place and the date.
+    card: ("HOSTOMEL, ANTONOV AIRPORT", "24 FEBRUARY 2022, DUSK"),
+    // The one-minute tour (`cargo xtask tour hostomel-2`, and the same-day runs).
+    minute: [
+        // 17:15: the guns on the apron at dusk, the VDV's posts under the shells.
+        (
+            from: 100.0,
+            secs: 8.0,
+            pos: ((700.0, -250.0, 180.0), (720.0, -230.0, 180.0)),
+            aim: Drone(Point((800.0, 520.0))),
+            fov: (24.0, 18.0),
+        ),
+        // 17:36: the Su-24s' bombs walk across the apron.
+        (
+            from: 199.0,
+            secs: 8.0,
+            pos: ((300.0, -200.0, 200.0), (320.0, -180.0, 200.0)),
+            aim: Drone(Point((600.0, 450.0))),
+            fov: (30.0, 24.0),
+        ),
+        // The 72nd's company down the E373 in the last of the light.
+        (
+            from: 340.0,
+            secs: 8.0,
+            pos: ((1550.0, -380.0, 140.0), (1530.0, -360.0, 140.0)),
+            aim: Drone(Wave(1, 0)),
+            fov: (14.0, 10.0),
+        ),
+        // The 80th and the SSO up from Horenka, through the base.
+        (
+            from: 400.0,
+            secs: 8.0,
+            pos: ((1950.0, 1250.0, 170.0), (1930.0, 1230.0, 170.0)),
+            aim: Drone(Wave(2, 0)),
+            fov: (16.0, 12.0),
+        ),
+        // 18:31: the assault groups go in on foot under their flares.
+        (
+            from: 503.0,
+            secs: 9.0,
+            pos: ((900.0, 100.0, 140.0), (880.0, 120.0, 140.0)),
+            aim: Drone(MenNear((800.0, 450.0))),
+            fov: (24.0, 18.0),
+        ),
+        // 19:42: the Su-24s again, along the runway.
+        (
+            from: 899.0,
+            secs: 8.0,
+            pos: ((500.0, -500.0, 250.0), (480.0, -480.0, 250.0)),
+            aim: Drone(Point((-150.0, 0.0))),
+            fov: (30.0, 24.0),
+        ),
+        // 21:05: the order to pull back: our men come off the field in the dark.
+        (
+            from: 1372.0,
+            secs: 8.0,
+            pos: ((900.0, -200.0, 180.0), (880.0, -180.0, 180.0)),
+            aim: Drone(MenNear((800.0, 450.0))),
+            fov: (24.0, 18.0),
+        ),
+        (
+            from: 1474.0,
+            secs: 4.0,
+            pos: ((880.0, -280.0, 220.0), (880.0, -280.0, 220.0)),
+            aim: Drone(Point((600.0, 450.0))),
+            fov: (32.0, 32.0),
+            debrief: true,
+        ),
+    ],
+)

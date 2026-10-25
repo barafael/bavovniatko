@@ -5,9 +5,9 @@
 //! `<dir>/f00000.png`…, `<dir>/segments.txt` maps game time to video time, and the audio module logs every sound
 //! it plays to `<dir>/audio.log`, so the xtask (`xtask/src/mix.rs`) can rebuild the soundtrack offline.
 //!
-//! `BAV_TOUR=film` films the showcase film's two tours instead (design/showcase.md): shots typed with
-//! cards before them, the interface switched per shot, two ground shots from an ATGM team, and two flown by the
-//! stick script. Unset, the minute tours film exactly as they always did.
+//! The shots are the day's shots file's (`dioramas/shots/<id>.ron`): its minute tour, or with `BAV_TOUR=film` its
+//! part of the showcase film (design/showcase.md), shots with cards before them, the interface switched per shot,
+//! ground shots from an ATGM team, and shots flown by the stick script.
 
 use crate::camera::{Flight, Locate, Mode, Target, View, enter_ground, look_angles, track_nearest};
 use crate::fire::{AtgmTeam, Post, Strike, StrikeMission};
@@ -16,6 +16,7 @@ use bav_sim::player::{Fpv, TriggerPull};
 use crate::units::{Soldier, Vehicle};
 use crate::world::ObservationPost;
 use bevy::{prelude::*, render::view::screenshot::{Screenshot, save_to_disk}, time::TimeUpdateStrategy};
+use serde::Deserialize;
 use std::{io::Write, sync::LazyLock, time::Duration};
 
 mod reel;
@@ -58,7 +59,6 @@ enum Aim {
     /// The drone placed once at its first filmed frame, then flown by the shot's stick script.
     Fly(Target),
     /// The OP looking at a point (x, z) on the ground.
-    #[expect(dead_code, reason = "the film's R9 may yet become the water tower; the camera supports it")]
     Op(Vec2),
     /// Through the FPV's goggles if it is up (the reel launches it on its own schedule); the view is left to it.
     Goggles,
@@ -66,14 +66,12 @@ enum Aim {
     Air(Vec2),
 }
 
-use Aim::Drone;
-use Target::{Men, MenNear, Point, Vehicle as Column, Wave};
-
 /// A card the script renders over black before the shot: a title, a smaller line, a dim note.
+#[derive(Deserialize)]
 struct Card {
-    title: &'static str,
-    line: &'static str,
-    note: &'static str,
+    title: String,
+    line: String,
+    note: String,
     secs: f32,
 }
 
@@ -85,14 +83,14 @@ struct Shot {
     aim: Aim,
     fov: (f32, f32),
     /// Fire missions to call (game time, strike) before or during the shot, on the nearest stalled vehicle.
-    fire: &'static [(f32, Strike)],
+    fire: Vec<(f32, Strike)>,
     debrief: bool,
     /// A card over black before the shot; its frames are reserved, its time goes in the segment's front.
     card: Option<Card>,
     /// The interface in shot: the atmosphere shots go without.
     hud: bool,
     /// Stick-script legs (seconds into the shot, what the sticks do) for a flown shot.
-    fly: &'static [(f32, f32, &'static str)],
+    fly: Vec<(f32, f32, String)>,
     /// A ground shot fires its missile this many seconds in.
     launch: Option<f32>,
 }
@@ -105,212 +103,112 @@ fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim
         pos1: Vec3::new(p1.0, p1.1, p1.2),
         aim,
         fov,
-        fire: &[],
+        fire: Vec::new(),
         debrief: false,
         card: None,
         hud: true,
-        fly: &[],
+        fly: Vec::new(),
         launch: None,
     }
 }
 
-/// The tour, shot by shot: the minute tours, or the film's.
+/// A day's tours as its file has them (`dioramas/shots/<id>.ron`): the minute tour and the film's part (none: no
+/// film).
+#[derive(Deserialize)]
+struct ShotsFile {
+    minute: Vec<ShotSpec>,
+    #[serde(default)]
+    film: Vec<ShotSpec>,
+}
+
+/// A shot as the file writes it ([`Shot`]'s fields; `pos` is the drone's (x, z, height above the ground) at the
+/// shot's start and end).
+#[derive(Deserialize)]
+struct ShotSpec {
+    from: f32,
+    secs: f32,
+    pos: ((f32, f32, f32), (f32, f32, f32)),
+    aim: AimSpec,
+    fov: (f32, f32),
+    #[serde(default)]
+    fire: Vec<(f32, Strike)>,
+    #[serde(default)]
+    debrief: bool,
+    #[serde(default)]
+    card: Option<Card>,
+    #[serde(default = "yes")]
+    hud: bool,
+    #[serde(default)]
+    fly: Vec<(f32, f32, String)>,
+    #[serde(default)]
+    launch: Option<f32>,
+}
+
+fn yes() -> bool {
+    true
+}
+
+/// [`Aim`] as the file writes it, points as (x, z).
+#[derive(Deserialize)]
+enum AimSpec {
+    Drone(TargetSpec),
+    Ground((f32, f32), bool),
+    Fly(TargetSpec),
+    Op((f32, f32)),
+    Goggles,
+    Air((f32, f32)),
+}
+
+/// [`Target`] as the file writes it.
+#[derive(Deserialize)]
+enum TargetSpec {
+    Point((f32, f32)),
+    Vehicle(u32),
+    Wave(u32, u32),
+    Men,
+    MenNear((f32, f32)),
+}
+
+impl From<TargetSpec> for Target {
+    fn from(t: TargetSpec) -> Target {
+        match t {
+            TargetSpec::Point(p) => Target::Point(p.into()),
+            TargetSpec::Vehicle(i) => Target::Vehicle(i),
+            TargetSpec::Wave(w, i) => Target::Wave(w, i),
+            TargetSpec::Men => Target::Men,
+            TargetSpec::MenNear(p) => Target::MenNear(p.into()),
+        }
+    }
+}
+
+impl From<ShotSpec> for Shot {
+    fn from(s: ShotSpec) -> Shot {
+        let aim = match s.aim {
+            AimSpec::Drone(t) => Aim::Drone(t.into()),
+            AimSpec::Ground(p, sight) => Aim::Ground(p.into(), sight),
+            AimSpec::Fly(t) => Aim::Fly(t.into()),
+            AimSpec::Op(p) => Aim::Op(p.into()),
+            AimSpec::Goggles => Aim::Goggles,
+            AimSpec::Air(p) => Aim::Air(p.into()),
+        };
+        Shot { fire: s.fire, debrief: s.debrief, card: s.card, hud: s.hud, fly: s.fly, launch: s.launch, ..shot(s.from, s.secs, s.pos.0, s.pos.1, aim, s.fov) }
+    }
+}
+
+/// The tour, shot by shot: the day's minute tour, or its part of the film (`BAV_TOUR=film`), from its shots file; or
+/// the reel's.
 static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(|| {
-    match crate::dev::dev().tour {
-        Some(crate::dev::TourKind::Film) => shots_film(),
-        Some(crate::dev::TourKind::Reel) => reel::load(),
-        None => shots_minute(),
-    }
+    let film = match crate::dev::dev().tour {
+        Some(crate::dev::TourKind::Reel) => return reel::load(),
+        Some(crate::dev::TourKind::Film) => true,
+        None => false,
+    };
+    let (name, text) = bav_core::data::shots_source().unwrap_or_else(|| panic!("{} has no shots file to film", crate::diorama::diorama()));
+    let file: ShotsFile = bav_core::data::parse(text).unwrap_or_else(|e| panic!("{name}: {e}"));
+    // A day with no film films nothing rather than another day's.
+    let shots = if film { file.film } else { file.minute };
+    shots.into_iter().map(Shot::from).collect()
 });
-
-fn shots_minute() -> Vec<Shot> {
-    let s = shot;
-    if crate::diorama::diorama() == crate::diorama::Diorama::HostomelLanding {
-        return vec![
-            // 10:56: the stream comes in from the river low over the pines, the gunships first.
-            s(402.0, 8.0, (2750.0, 650.0, 90.0), (2700.0, 640.0, 90.0), Aim::Air(Vec2::new(2900.0, 260.0)), (22.0, 16.0)),
-            // The Mi-8s behind them, the VDV aboard; an Igla goes up from the stands after one.
-            s(451.0, 9.0, (2350.0, 600.0, 100.0), (2320.0, 590.0, 100.0), Aim::Air(Vec2::new(2600.0, 250.0)), (24.0, 18.0)),
-            // The Mi-8s settle on the apron and the stands and put their men out.
-            s(508.0, 9.0, (1050.0, 120.0, 150.0), (1030.0, 140.0, 150.0), Aim::Air(Vec2::new(650.0, 420.0)), (20.0, 14.0)),
-            // The VDV off the ramps and across the apron.
-            s(545.0, 8.0, (900.0, 100.0, 110.0), (880.0, 110.0, 110.0), Drone(MenNear(Vec2::new(650.0, 400.0))), (12.0, 9.0)),
-            // They go for the posts among the hangars.
-            s(700.0, 8.0, (1100.0, 450.0, 110.0), (1090.0, 470.0, 110.0), Drone(MenNear(Vec2::new(900.0, 620.0))), (11.0, 8.0)),
-            // 12:05: out of ammunition, the posts pull out and walk off towards Horenka.
-            s(962.0, 8.0, (1550.0, 900.0, 130.0), (1560.0, 920.0, 130.0), Drone(Point(Vec2::new(1330.0, 680.0))), (14.0, 10.0)),
-            // Before one: the field is theirs, the wrecks on it.
-            s(1440.0, 6.0, (1500.0, 900.0, 220.0), (1480.0, 880.0, 220.0), Drone(Point(Vec2::new(800.0, 500.0))), (36.0, 32.0)),
-            Shot { debrief: true, ..s(1474.0, 4.0, (1480.0, 880.0, 220.0), (1480.0, 880.0, 220.0), Drone(Point(Vec2::new(800.0, 500.0))), (32.0, 32.0)) },
-        ];
-    }
-    if crate::diorama::diorama() == crate::diorama::Diorama::HostomelCounter {
-        return vec![
-            // 17:15: the guns on the apron at dusk, the VDV's posts under the shells.
-            s(100.0, 8.0, (700.0, -250.0, 180.0), (720.0, -230.0, 180.0), Drone(Point(Vec2::new(800.0, 520.0))), (24.0, 18.0)),
-            // 17:36: the Su-24s' bombs walk across the apron.
-            s(199.0, 8.0, (300.0, -200.0, 200.0), (320.0, -180.0, 200.0), Drone(Point(Vec2::new(600.0, 450.0))), (30.0, 24.0)),
-            // The 72nd's company down the E373 in the last of the light.
-            s(340.0, 8.0, (1550.0, -380.0, 140.0), (1530.0, -360.0, 140.0), Drone(Wave(1, 0)), (14.0, 10.0)),
-            // The 80th and the SSO up from Horenka, through the base.
-            s(400.0, 8.0, (1950.0, 1250.0, 170.0), (1930.0, 1230.0, 170.0), Drone(Wave(2, 0)), (16.0, 12.0)),
-            // 18:31: the assault groups go in on foot under their flares.
-            s(503.0, 9.0, (900.0, 100.0, 140.0), (880.0, 120.0, 140.0), Drone(MenNear(Vec2::new(800.0, 450.0))), (24.0, 18.0)),
-            // 19:42: the Su-24s again, along the runway.
-            s(899.0, 8.0, (500.0, -500.0, 250.0), (480.0, -480.0, 250.0), Drone(Point(Vec2::new(-150.0, 0.0))), (30.0, 24.0)),
-            // 21:05: the order to pull back: our men come off the field in the dark.
-            s(1372.0, 8.0, (900.0, -200.0, 180.0), (880.0, -180.0, 180.0), Drone(MenNear(Vec2::new(800.0, 450.0))), (24.0, 18.0)),
-            Shot { debrief: true, ..s(1474.0, 4.0, (880.0, -280.0, 220.0), (880.0, -280.0, 220.0), Drone(Point(Vec2::new(600.0, 450.0))), (32.0, 32.0)) },
-        ];
-    }
-    // Avdiivka's minute, until it has its own (design/avdiivka.md, phase 10): the field from over Stepove, then the
-    // debrief.
-    if crate::diorama::diorama().avdiivka() {
-        return vec![
-            s(20.0, 8.0, (900.0, -1000.0, 220.0), (880.0, -980.0, 220.0), Drone(Point(Vec2::new(300.0, 300.0))), (40.0, 34.0)),
-            Shot { debrief: true, ..s(1474.0, 4.0, (880.0, -980.0, 220.0), (880.0, -980.0, 220.0), Drone(Point(Vec2::new(300.0, 300.0))), (34.0, 34.0)) },
-        ];
-    }
-    if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
-        return vec![
-            // The blue hour: our guns' preparation walking along the crest, the column not yet moving.
-            s(20.0, 6.0, (100.0, -1100.0, 150.0), (140.0, -1070.0, 150.0), Drone(Point(Vec2::new(0.0, 700.0))), (22.0, 17.0)),
-            // First light: the first group moves off down the western track behind the plow, raising dust.
-            s(150.0, 7.0, (-300.0, -1250.0, 90.0), (-285.0, -1190.0, 90.0), Drone(Column(0)), (26.0, 18.0)),
-            // The plow in the forward minefield: the lane, the markers, the first mine.
-            s(470.0, 8.0, (-380.0, -720.0, 110.0), (-370.0, -700.0, 110.0), Drone(Column(0)), (9.0, 7.0)),
-            // The second group bunching behind its stopped plow on the eastern track.
-            s(600.0, 7.0, (420.0, -800.0, 140.0), (440.0, -780.0, 140.0), Drone(Point(Vec2::new(665.0, -360.0))), (12.0, 9.0)),
-            // The men in the field, between the burning vehicles.
-            s(690.0, 7.0, (-260.0, -700.0, 120.0), (-250.0, -690.0, 120.0), Drone(Point(Vec2::new(-492.0, -330.0))), (9.0, 7.0)),
-            // Smoke on the wrecks, and the Bradleys that went back in for the men.
-            Shot { fire: &[(745.0, Strike::Smoke)], ..s(760.0, 8.0, (-250.0, -800.0, 130.0), (-240.0, -790.0, 130.0), Drone(Point(Vec2::new(-492.0, -360.0))), (11.0, 8.0)) },
-            // Late morning: the row of wrecks along the track, still smoking.
-            s(1350.0, 5.0, (-650.0, -950.0, 240.0), (-630.0, -930.0, 240.0), Drone(Point(Vec2::new(-492.0, -330.0))), (16.0, 13.0)),
-            Shot { debrief: true, ..s(1355.0, 4.0, (-630.0, -930.0, 240.0), (-630.0, -930.0, 240.0), Drone(Point(Vec2::new(-492.0, -330.0))), (13.0, 13.0)) },
-        ];
-    }
-    vec![
-        // Dawn over the January wrecks on the dacha road, before the first column.
-        s(4.0, 6.0, (1150.0, 200.0, 70.0), (1220.0, 300.0, 60.0), Drone(Point(Vec2::new(1440.0, 530.0))), (26.0, 20.0)),
-        // The 155th's column in single file behind its smoke screen.
-        s(22.0, 8.0, (1000.0, -250.0, 170.0), (1000.0, -250.0, 170.0), Drone(Column(3)), (16.0, 11.0)),
-        // From behind the tree line: the ATGM teams open up.
-        s(68.0, 9.0, (1500.0, -300.0, 90.0), (1490.0, -320.0, 90.0), Drone(Column(0)), (22.0, 16.0)),
-        // The kill zone: mines, wrecks, crews in the snow, a fire mission landing among them.
-        Shot { fire: &[(80.0, Strike::He), (90.0, Strike::He)], ..s(97.0, 10.0, (750.0, -500.0, 120.0), (760.0, -480.0, 120.0), Drone(Column(2)), (5.0, 4.2)) },
-        // The TOS-1A salvo landing on the town's southern blocks.
-        s(164.0, 8.0, (250.0, -760.0, 140.0), (230.0, -780.0, 140.0), Drone(Point(Vec2::new(-290.0, -1150.0))), (34.0, 30.0)),
-        // Afternoon: infantry on foot across the field, the battalion mortars working over them.
-        s(1186.0, 7.0, (-640.0, -760.0, 90.0), (-630.0, -740.0, 90.0), Drone(Men), (7.0, 5.5)),
-        // Dusk over the dacha road: everything that came down it today is still there.
-        s(1470.0, 4.0, (950.0, -820.0, 200.0), (980.0, -800.0, 200.0), Drone(Point(Vec2::new(1130.0, -80.0))), (34.0, 30.0)),
-        // The debrief.
-        Shot { debrief: true, ..s(1474.0, 4.0, (980.0, -800.0, 200.0), (980.0, -800.0, 200.0), Drone(Point(Vec2::new(1130.0, -80.0))), (30.0, 30.0)) },
-    ]
-}
-
-/// The film's tours (design/showcase.md): 250–600 m off and 100–200 m up, gimbal 45–70° down, fov 7–14°, the
-/// horizon out of frame, no placed shot below fov 7, cards as hard cuts between shots. The `from` times are
-/// first estimates from the beat table and the day-7 log; the scout retimes what the sheets disagree with.
-fn shots_film() -> Vec<Shot> {
-    let f = shot;
-    // Hostomel and Avdiivka have no film yet (design/hostomel.md, phase 8; design/avdiivka.md, phase 10): nothing to
-    // film rather than Vuhledar's.
-    if crate::diorama::diorama().hostomel() || crate::diorama::diorama().avdiivka() {
-        return Vec::new();
-    }
-    let card = |title: &'static str, line: &'static str, note: &'static str, secs: f32| Card { title, line, note, secs };
-    if crate::diorama::diorama() == crate::diorama::Diorama::Robotyne {
-        return vec![
-            // R1. The guns in the dark: 155 mm on the crest trench, where prep mission 8 lands 61–71. Drop if the
-            //      sheet reads black.
-            Shot {
-                card: Some(card("Four months later. The other side of the minefield.", "South of МАЛА ТОКМАЧКА (MALA TOKMACHKA), 8 June 2023", "The 47th Mechanised Brigade goes forward into the Russian minefields. Now the columns are ours.", 5.0)),
-                hud: false,
-                ..f(60.0, 6.0, (-760.0, -120.0, 200.0), (-770.0, -100.0, 200.0), Drone(Point(Vec2::new(-930.0, 700.0))), (10.0, 8.0))
-            },
-            // R2. First light: the first group moves off down the western track; nine vehicles pass under the camera.
-            f(132.0, 9.0, (-400.0, -1150.0, 160.0), (-410.0, -1115.0, 160.0), Drone(Column(3)), (14.0, 10.0)),
-            // R3. Ground, eye level: the Leopard 2R with its plow passes the overwatch position, the head following.
-            f(152.0, 10.0, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Aim::Ground(Vec2::new(-520.0, crate::geo::layout().start_z.expect("Mala Tokmachka has a start line")), false), (54.0, 54.0)),
-            // R4. The plow in the forward minefield: the lane, the first mine (a double, under the plow).
-            f(318.0, 12.0, (-420.0, -470.0, 140.0), (-430.0, -440.0, 140.0), Drone(Column(0)), (8.0, 7.0)),
-            // R5. The second group, eleven, on the eastern track.
-            Shot {
-                card: Some(card("05:29", "The second group, eleven vehicles, on the eastern track.", "", 2.5)),
-                ..f(400.0, 9.0, (720.0, -700.0, 150.0), (700.0, -660.0, 150.0), Drone(Wave(2, 0)), (12.0, 9.0))
-            },
-            // R6. Stopped vehicles under the Ka-52s; crews out. The helicopters arrive from t=430 by the script.
-            f(455.0, 12.0, (-560.0, -430.0, 150.0), (-570.0, -400.0, 150.0), Drone(Column(1)), (9.0, 7.0)),
-            // R7. The men in the field between the burning vehicles.
-            f(560.0, 10.0, (-540.0, -380.0, 110.0), (-550.0, -355.0, 110.0), Drone(MenNear(Vec2::new(-492.0, -300.0))), (8.0, 7.0)),
-            // R8. Flown: trailing the rescue Bradleys up the lane, smoke blooming ahead (called at 646 for 672–680).
-            //     Fallback if the framing fails: placed (-430,-420,130) → (-440,-390,130), Wave(3,0), 9→7, from 690.
-            Shot {
-                card: Some(card("07:02", "Four Bradleys go back in for the men.", "", 2.5)),
-                fire: &[(646.0, Strike::Smoke)],
-                fly: &[(0.0, 14.0, "w-")],
-                ..f(668.0, 14.0, (-497.0, -780.0, 120.0), (0.0, 0.0, 0.0), Aim::Fly(Wave(3, 0)), (12.0, 12.0))
-            },
-            // R9. Walking back: the men go down the slope past the wrecks. The owner's option: the water tower.
-            Shot {
-                card: Some(card("08:50", "Everyone back to the start line.", "", 2.5)),
-                ..f(1010.0, 8.0, (-560.0, -700.0, 120.0), (-570.0, -675.0, 120.0), Drone(MenNear(Vec2::new(-495.0, -600.0))), (9.0, 8.0))
-            },
-            // R10. Late morning: the row of wrecks along the track, still smoking. "Quiet on the lanes" in-shot.
-            f(1300.0, 8.0, (-600.0, -520.0, 200.0), (-590.0, -480.0, 200.0), Drone(Point(Vec2::new(-492.0, -330.0))), (14.0, 12.0)),
-            // R11. The ledger.
-            Shot { debrief: true, hud: false, ..f(1308.0, 7.0, (-590.0, -480.0, 200.0), (-590.0, -480.0, 200.0), Drone(Point(Vec2::new(-492.0, -330.0))), (12.0, 12.0)) },
-        ];
-    }
-    vec![
-        // V1. Dawn: the January wrecks on the dacha road, near-overhead, ends before the 06:45 banner.
-        Shot {
-            card: Some(card("ВУГЛЕДАР (VUHLEDAR)", "6 February 2023", "Russian columns attack the 72nd Mechanised Brigade. The roads are left clear; the fields beside them are mined.", 5.0)),
-            hud: false,
-            ..f(6.0, 7.0, (1270.0, 250.0, 140.0), (1250.0, 215.0, 140.0), Drone(Point(Vec2::new(1228.0, 203.0))), (12.0, 9.0))
-        },
-        // V2. The column in single file behind its smoke; the net's report and the first jamming land in-shot.
-        f(15.0, 9.0, (1130.0, 70.0, 170.0), (1110.0, 10.0, 170.0), Drone(Column(2)), (14.0, 10.0)),
-        // V3. Ground: the Stugna-P sight on the lead tank, the launch at +4 s. The fault of every earlier cut
-        //     (missiles as specks) answered from the sight.
-        Shot { launch: Some(4.0), ..f(62.0, 12.0, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Aim::Ground(Vec2::new(930.0, -658.0), true), (54.0, 54.0)) },
-        // V4. The kill zone, wide: the column stacks at the deploy point. Slide to 82 if the lead is not there yet.
-        f(76.0, 10.0, (1110.0, -380.0, 170.0), (1090.0, -410.0, 170.0), Drone(Column(1)), (11.0, 8.0)),
-        // V5. The kill zone, close: mines, crews in the snow, 155 mm landing (fires at 76 and 84, lands 102/110);
-        //     fates and bail-outs.
-        Shot { fire: &[(76.0, Strike::He), (84.0, Strike::He)], ..f(100.0, 10.0, (1060.0, -250.0, 140.0), (1040.0, -290.0, 140.0), Drone(Column(2)), (8.0, 7.0)) },
-        // V6. TOS-1A on the southern blocks, rockets landing 165–175; from the drone, no parapet.
-        f(163.0, 10.0, (-110.0, -900.0, 160.0), (-130.0, -925.0, 160.0), Drone(Point(Vec2::new(-290.0, -1170.0))), (20.0, 16.0)),
-        // V7. The second column passes the morning's wrecks at the middle belt; `Vehicle(0)` would pick wave 1's wreck.
-        Shot {
-            card: Some(card("08:40", "A second column. The same road.", "", 2.5)),
-            ..f(470.0, 10.0, (1190.0, -50.0, 150.0), (1170.0, -100.0, 150.0), Drone(Wave(2, 0)), (10.0, 8.0))
-        },
-        // V8. Alga's BMP-1s in the shoulder mines on the Pavlivka road.
-        Shot {
-            card: Some(card("10:20", "The Alga battalion, from Павлівка (Pavlivka).", "", 2.5)),
-            ..f(790.0, 10.0, (-740.0, -240.0, 150.0), (-760.0, -280.0, 150.0), Drone(Wave(3, 1)), (10.0, 7.0))
-        },
-        // V9. Flown: the operator pushes in over the third column at its wrecks — hover, fly in sport, zoom, hover.
-        //     Fallback if the framing fails: placed (1120,-150,150) → (1100,-190,150), Wave(4,0), 12→8.
-        Shot {
-            fly: &[(3.0, 9.0, "w+"), (9.0, 11.0, "z")],
-            ..f(1036.0, 12.0, (1250.0, -80.0, 160.0), (0.0, 0.0, 0.0), Aim::Fly(Wave(4, 0)), (20.0, 20.0))
-        },
-        // V10. Infantry on foot under the mortars: 100 m up, a man about 120 px tall at 1080p.
-        Shot {
-            card: Some(card("13:20", "No more armour. Infantry, on foot.", "", 2.5)),
-            ..f(1190.0, 10.0, (-900.0, 300.0, 100.0), (-910.0, 275.0, 100.0), Drone(MenNear(Vec2::new(-950.0, 250.0))), (9.0, 7.0))
-        },
-        // V11. Late afternoon over the dacha road: everything that came down it is still there.
-        f(1440.0, 8.0, (1060.0, -630.0, 220.0), (1090.0, -570.0, 220.0), Drone(Point(Vec2::new(1040.0, -330.0))), (22.0, 18.0)),
-        // V12. The ledger, before the day's end.
-        Shot { debrief: true, hud: false, ..f(1448.0, 7.0, (1090.0, -570.0, 220.0), (1090.0, -570.0, 220.0), Drone(Point(Vec2::new(1040.0, -330.0))), (18.0, 18.0)) },
-    ]
-}
-
 #[derive(Resource)]
 struct Tour {
     dir: String,
@@ -498,7 +396,7 @@ fn place_fly(view: &mut View, shot: &Shot, flight: &mut Flight, vehicles: &Query
     view.tilt = Vec3::ZERO;
     view.rth = None;
     view.locked = false;
-    flight.0 = shot.fly.iter().map(|&(a, b, s)| (shot.from + a, shot.from + b, s.to_string())).collect();
+    flight.0 = shot.fly.iter().map(|(a, b, s)| (shot.from + a, shot.from + b, s.clone())).collect();
 }
 
 pub fn append(path: &str, line: &str) {

@@ -1,0 +1,198 @@
+// Mala Tokmachka's tours, and its day in the trailer.
+// The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
+// one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
+// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
+// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
+// `hud: false` films it without the interface, and `debrief` ends the day on it.
+(
+    // The tour's title card: the place and the date.
+    card: ("SOUTH OF MALA TOKMACHKA", "8 JUNE 2023"),
+    // The one-minute tour (`cargo xtask tour robotyne`, and the same-day runs).
+    minute: [
+        // The blue hour: our guns' preparation walking along the crest, the column not yet moving.
+        (
+            from: 20.0,
+            secs: 6.0,
+            pos: ((100.0, -1100.0, 150.0), (140.0, -1070.0, 150.0)),
+            aim: Drone(Point((0.0, 700.0))),
+            fov: (22.0, 17.0),
+        ),
+        // First light: the first group moves off down the western track behind the plow, raising dust.
+        (
+            from: 150.0,
+            secs: 7.0,
+            pos: ((-300.0, -1250.0, 90.0), (-285.0, -1190.0, 90.0)),
+            aim: Drone(Vehicle(0)),
+            fov: (26.0, 18.0),
+        ),
+        // The plow in the forward minefield: the lane, the markers, the first mine.
+        (
+            from: 470.0,
+            secs: 8.0,
+            pos: ((-380.0, -720.0, 110.0), (-370.0, -700.0, 110.0)),
+            aim: Drone(Vehicle(0)),
+            fov: (9.0, 7.0),
+        ),
+        // The second group bunching behind its stopped plow on the eastern track.
+        (
+            from: 600.0,
+            secs: 7.0,
+            pos: ((420.0, -800.0, 140.0), (440.0, -780.0, 140.0)),
+            aim: Drone(Point((665.0, -360.0))),
+            fov: (12.0, 9.0),
+        ),
+        // The men in the field, between the burning vehicles.
+        (
+            from: 690.0,
+            secs: 7.0,
+            pos: ((-260.0, -700.0, 120.0), (-250.0, -690.0, 120.0)),
+            aim: Drone(Point((-492.0, -330.0))),
+            fov: (9.0, 7.0),
+        ),
+        // Smoke on the wrecks, and the Bradleys that went back in for the men.
+        (
+            from: 760.0,
+            secs: 8.0,
+            pos: ((-250.0, -800.0, 130.0), (-240.0, -790.0, 130.0)),
+            aim: Drone(Point((-492.0, -360.0))),
+            fov: (11.0, 8.0),
+            fire: [(745.0, Smoke)],
+        ),
+        // Late morning: the row of wrecks along the track, still smoking.
+        (
+            from: 1350.0,
+            secs: 5.0,
+            pos: ((-650.0, -950.0, 240.0), (-630.0, -930.0, 240.0)),
+            aim: Drone(Point((-492.0, -330.0))),
+            fov: (16.0, 13.0),
+        ),
+        (
+            from: 1355.0,
+            secs: 4.0,
+            pos: ((-630.0, -930.0, 240.0), (-630.0, -930.0, 240.0)),
+            aim: Drone(Point((-492.0, -330.0))),
+            fov: (13.0, 13.0),
+            debrief: true,
+        ),
+    ],
+    // Its part of the showcase film (`cargo xtask film`, design/showcase.md).
+    film: [
+        // R1. The guns in the dark: 155 mm on the crest trench, where prep mission 8 lands 61–71. Drop if the
+        //      sheet reads black.
+        (
+            from: 60.0,
+            secs: 6.0,
+            pos: ((-760.0, -120.0, 200.0), (-770.0, -100.0, 200.0)),
+            aim: Drone(Point((-930.0, 700.0))),
+            fov: (10.0, 8.0),
+            hud: false,
+            card: (
+                title: "Four months later. The other side of the minefield.",
+                line: "South of МАЛА ТОКМАЧКА (MALA TOKMACHKA), 8 June 2023",
+                note: "The 47th Mechanised Brigade goes forward into the Russian minefields. Now the columns are ours.",
+                secs: 5.0,
+            ),
+        ),
+        // R2. First light: the first group moves off down the western track; nine vehicles pass under the camera.
+        (
+            from: 132.0,
+            secs: 9.0,
+            pos: ((-400.0, -1150.0, 160.0), (-410.0, -1115.0, 160.0)),
+            aim: Drone(Vehicle(3)),
+            fov: (14.0, 10.0),
+        ),
+        // R3. Ground, eye level: the Leopard 2R with its plow passes the overwatch position, the head following.
+        (
+            from: 152.0,
+            secs: 10.0,
+            pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)),
+            aim: Ground((-520.0, -900.0), false),
+            fov: (54.0, 54.0),
+        ),
+        // R4. The plow in the forward minefield: the lane, the first mine (a double, under the plow).
+        (
+            from: 318.0,
+            secs: 12.0,
+            pos: ((-420.0, -470.0, 140.0), (-430.0, -440.0, 140.0)),
+            aim: Drone(Vehicle(0)),
+            fov: (8.0, 7.0),
+        ),
+        // R5. The second group, eleven, on the eastern track.
+        (
+            from: 400.0,
+            secs: 9.0,
+            pos: ((720.0, -700.0, 150.0), (700.0, -660.0, 150.0)),
+            aim: Drone(Wave(2, 0)),
+            fov: (12.0, 9.0),
+            card: (
+                title: "05:29",
+                line: "The second group, eleven vehicles, on the eastern track.",
+                note: "",
+                secs: 2.5,
+            ),
+        ),
+        // R6. Stopped vehicles under the Ka-52s; crews out. The helicopters arrive from t=430 by the script.
+        (
+            from: 455.0,
+            secs: 12.0,
+            pos: ((-560.0, -430.0, 150.0), (-570.0, -400.0, 150.0)),
+            aim: Drone(Vehicle(1)),
+            fov: (9.0, 7.0),
+        ),
+        // R7. The men in the field between the burning vehicles.
+        (
+            from: 560.0,
+            secs: 10.0,
+            pos: ((-540.0, -380.0, 110.0), (-550.0, -355.0, 110.0)),
+            aim: Drone(MenNear((-492.0, -300.0))),
+            fov: (8.0, 7.0),
+        ),
+        // R8. Flown: trailing the rescue Bradleys up the lane, smoke blooming ahead (called at 646 for 672–680).
+        //     Fallback if the framing fails: placed (-430,-420,130) → (-440,-390,130), Wave(3,0), 9→7, from 690.
+        (
+            from: 668.0,
+            secs: 14.0,
+            pos: ((-497.0, -780.0, 120.0), (0.0, 0.0, 0.0)),
+            aim: Fly(Wave(3, 0)),
+            fov: (12.0, 12.0),
+            fire: [(646.0, Smoke)],
+            fly: [(0.0, 14.0, "w-")],
+            card: (title: "07:02", line: "Four Bradleys go back in for the men.", note: "", secs: 2.5),
+        ),
+        // R9. Walking back: the men go down the slope past the wrecks. The owner's option: the water tower.
+        (
+            from: 1010.0,
+            secs: 8.0,
+            pos: ((-560.0, -700.0, 120.0), (-570.0, -675.0, 120.0)),
+            aim: Drone(MenNear((-495.0, -600.0))),
+            fov: (9.0, 8.0),
+            card: (title: "08:50", line: "Everyone back to the start line.", note: "", secs: 2.5),
+        ),
+        // R10. Late morning: the row of wrecks along the track, still smoking. "Quiet on the lanes" in-shot.
+        (
+            from: 1300.0,
+            secs: 8.0,
+            pos: ((-600.0, -520.0, 200.0), (-590.0, -480.0, 200.0)),
+            aim: Drone(Point((-492.0, -330.0))),
+            fov: (14.0, 12.0),
+        ),
+        // R11. The ledger.
+        (
+            from: 1308.0,
+            secs: 7.0,
+            pos: ((-590.0, -480.0, 200.0), (-590.0, -480.0, 200.0)),
+            aim: Drone(Point((-492.0, -330.0))),
+            fov: (12.0, 12.0),
+            debrief: true,
+            hud: false,
+        ),
+    ],
+    // Its day in the trailer (`cargo xtask trailer`, design/trailer.md): 155 mm on the jammer behind the crest; the
+    // FPV at the western dug-in T-72; HIMARS on the eastern one. The Bradleys go for the wounded half a minute after
+    // each call, as a player would send them.
+    reel: (
+        card: ("МАЛА ТОКМАЧКА (MALA TOKMACHKA)", "8 June 2023", "The 47th Brigade into the Russian minefields."),
+        end: 1300.0,
+        env: [("BAV_FIRE", "334:he@-350;950,640:himars@1050;720"), ("BAV_FPV", "590:-150;724"), ("BAV_EVAC", "30")],
+    ),
+)

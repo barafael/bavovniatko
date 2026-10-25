@@ -1,0 +1,77 @@
+// Hostomel's morning, the landing: its tour. It has no film yet (design/hostomel.md, phase 8).
+// The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
+// one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
+// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
+// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
+// `hud: false` films it without the interface, and `debrief` ends the day on it.
+(
+    // The tour's title card: the place and the date.
+    card: ("HOSTOMEL, ANTONOV AIRPORT", "24 FEBRUARY 2022, THE LANDING"),
+    // The one-minute tour (`cargo xtask tour hostomel-1`, and the same-day runs).
+    minute: [
+        // 10:56: the stream comes in from the river low over the pines, the gunships first.
+        (
+            from: 402.0,
+            secs: 8.0,
+            pos: ((2750.0, 650.0, 90.0), (2700.0, 640.0, 90.0)),
+            aim: Air((2900.0, 260.0)),
+            fov: (22.0, 16.0),
+        ),
+        // The Mi-8s behind them, the VDV aboard; an Igla goes up from the stands after one.
+        (
+            from: 451.0,
+            secs: 9.0,
+            pos: ((2350.0, 600.0, 100.0), (2320.0, 590.0, 100.0)),
+            aim: Air((2600.0, 250.0)),
+            fov: (24.0, 18.0),
+        ),
+        // The Mi-8s settle on the apron and the stands and put their men out.
+        (
+            from: 508.0,
+            secs: 9.0,
+            pos: ((1050.0, 120.0, 150.0), (1030.0, 140.0, 150.0)),
+            aim: Air((650.0, 420.0)),
+            fov: (20.0, 14.0),
+        ),
+        // The VDV off the ramps and across the apron.
+        (
+            from: 545.0,
+            secs: 8.0,
+            pos: ((900.0, 100.0, 110.0), (880.0, 110.0, 110.0)),
+            aim: Drone(MenNear((650.0, 400.0))),
+            fov: (12.0, 9.0),
+        ),
+        // They go for the posts among the hangars.
+        (
+            from: 700.0,
+            secs: 8.0,
+            pos: ((1100.0, 450.0, 110.0), (1090.0, 470.0, 110.0)),
+            aim: Drone(MenNear((900.0, 620.0))),
+            fov: (11.0, 8.0),
+        ),
+        // 12:05: out of ammunition, the posts pull out and walk off towards Horenka.
+        (
+            from: 962.0,
+            secs: 8.0,
+            pos: ((1550.0, 900.0, 130.0), (1560.0, 920.0, 130.0)),
+            aim: Drone(Point((1330.0, 680.0))),
+            fov: (14.0, 10.0),
+        ),
+        // Before one: the field is theirs, the wrecks on it.
+        (
+            from: 1440.0,
+            secs: 6.0,
+            pos: ((1500.0, 900.0, 220.0), (1480.0, 880.0, 220.0)),
+            aim: Drone(Point((800.0, 500.0))),
+            fov: (36.0, 32.0),
+        ),
+        (
+            from: 1474.0,
+            secs: 4.0,
+            pos: ((1480.0, 880.0, 220.0), (1480.0, 880.0, 220.0)),
+            aim: Drone(Point((800.0, 500.0))),
+            fov: (32.0, 32.0),
+            debrief: true,
+        ),
+    ],
+)

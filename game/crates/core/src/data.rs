@@ -407,6 +407,39 @@ fn builtin(d: Diorama) -> &'static [(&'static str, &'static str)] {
     }
 }
 
+/// The built-in shots file of a diorama's tours (`dioramas/shots/`), read by the game's showcase.
+fn builtin_shots(d: Diorama) -> Option<(&'static str, &'static str)> {
+    Some(match d {
+        Diorama::Vuhledar => ("shots/vuhledar.ron", include_str!("../../../dioramas/shots/vuhledar.ron")),
+        Diorama::Robotyne => ("shots/robotyne.ron", include_str!("../../../dioramas/shots/robotyne.ron")),
+        Diorama::HostomelLanding => ("shots/hostomel-1.ron", include_str!("../../../dioramas/shots/hostomel-1.ron")),
+        Diorama::HostomelCounter => ("shots/hostomel-2.ron", include_str!("../../../dioramas/shots/hostomel-2.ron")),
+        Diorama::AvdiivkaWave1 => ("shots/avdiivka-1.ron", include_str!("../../../dioramas/shots/avdiivka-1.ron")),
+        Diorama::AvdiivkaWave2 => ("shots/avdiivka-2.ron", include_str!("../../../dioramas/shots/avdiivka-2.ron")),
+        Diorama::AvdiivkaStepove => ("shots/avdiivka-3.ron", include_str!("../../../dioramas/shots/avdiivka-3.ron")),
+    })
+}
+
+static SHOTS: OnceLock<Option<(String, String)>> = OnceLock::new();
+
+/// The shots file of the diorama on the table, if it has one: its name and its text (`BAV_DATA=<dir>` reads it from
+/// there, as it does the diorama's files).
+pub fn shots_source() -> Option<(&'static str, &'static str)> {
+    SHOTS
+        .get_or_init(|| {
+            let (name, text) = builtin_shots(diorama())?;
+            Some(match std::env::var("BAV_DATA").ok().filter(|d| !d.is_empty()) {
+                Some(dir) => {
+                    let path = std::path::Path::new(&dir).join(name);
+                    (name.to_string(), std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display())))
+                }
+                None => (name.to_string(), text.to_string()),
+            })
+        })
+        .as_ref()
+        .map(|(n, t)| (n.as_str(), t.as_str()))
+}
+
 /// RON without its comments (`//` to the line's end, `/* */`), the strings left alone (`"..."` with escapes, and raw
 /// `r#"..."#`, which the briefings are).
 fn uncomment(t: &str) -> String {
@@ -760,7 +793,7 @@ mod merge_tests {
     fn the_dioramas_are_formatted() {
         let config = fmtron::Config::default().with_max_width(120);
         for d in crate::diorama::Diorama::ALL {
-            for (name, text) in super::builtin(d) {
+            for (name, text) in super::builtin(d).iter().chain(&super::builtin_shots(d)) {
                 // (The library ends without a line break; the command line, which wrote the files, adds one.)
                 let formatted = fmtron::format_ron(text, &config).unwrap_or_else(|e| panic!("{name}: {e}")) + "\n";
                 assert!(formatted == *text, "{name} is not formatted: run `fmtron dioramas` in game/");

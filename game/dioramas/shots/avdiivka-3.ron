@@ -1,0 +1,30 @@
+// Avdiivka, part III: its tour. It has no film yet (design/avdiivka.md, phase 10).
+// The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
+// one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
+// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
+// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
+// `hud: false` films it without the interface, and `debrief` ends the day on it.
+(
+    // The tour's title card: the place and the date.
+    card: ("STEPOVE, NORTH OF AVDIIVKA", "11 JANUARY 2024"),
+    // The one-minute tour (`cargo xtask tour avdiivka-3`, and the same-day runs).
+    minute: [
+        // Avdiivka's minute, until it has its own (design/avdiivka.md, phase 10): the field from over Stepove, then
+        // the debrief.
+        (
+            from: 20.0,
+            secs: 8.0,
+            pos: ((900.0, -1000.0, 220.0), (880.0, -980.0, 220.0)),
+            aim: Drone(Point((300.0, 300.0))),
+            fov: (40.0, 34.0),
+        ),
+        (
+            from: 1474.0,
+            secs: 4.0,
+            pos: ((880.0, -980.0, 220.0), (880.0, -980.0, 220.0)),
+            aim: Drone(Point((300.0, 300.0))),
+            fov: (34.0, 34.0),
+            debrief: true,
+        ),
+    ],
+)
