@@ -15,5 +15,10 @@ strum.workspace = true
 [dev-dependencies]
 fmtron.workspace = true
 
+# The build script reads dioramas/index.ron.
+[build-dependencies]
+ron.workspace = true
+serde.workspace = true
+
 [lints]
 workspace = true

@@ -128,7 +128,7 @@ mod tests {
     /// Vuhledar's net reads as it did before its callsigns came from the file (the default diorama).
     #[test]
     fn the_net_fills_its_callsigns() {
-        if crate::diorama::diorama() != crate::diorama::Diorama::Vuhledar {
+        if crate::diorama::diorama().id() != "vuhledar" {
             return;
         }
         let (uk, en) = super::net("{player}, this is {guns}. Out of shells. Nothing to send.");
