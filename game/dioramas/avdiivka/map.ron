@@ -82,18 +82,61 @@
         (700.0, -420.0),
         (200.0, -220.0),
         (-300.0, -80.0),
-        // The heap: the trench on its forward terrace, and its top.
-        (-950.0, 480.0),
-        (-1100.0, 820.0),
+        // The heap: the 110th's trench on the first terrace of the north-east face, the face the storming parties
+        // climb, and the brow of the top above it (from the middle of the top the brow hides them until they are on
+        // it).
+        (-1004.0, 1215.0),
+        (-1030.0, 1065.0),
         // The plant's edge.
         (-520.0, -900.0),
     ],
     ru_positions: [],
+    // The field's areas, held by whoever has men in them (bav_sim::fight, without Hostomel's fight): the village on
+    // the map's own outline, the heap's top and first terrace (the map's outline drawn in 60 m, where the first bench
+    // is and the 110th's trench), the railway in front of the village with the posts behind its embankment, and the
+    // plant's north-east corner. The dachas of the plan are not in the box: the map's allotments (Ivushka's,
+    // 48.157-48.162 N 37.737-37.745 E) lie four kilometres south-east of it.
+    areas: [
+        (
+            key: "stepove",
+            name: ("Stepove", "Степове"),
+            poly: [(800.0, -690.0), (1280.0, -690.0), (1280.0, -1760.0), (800.0, -1760.0)],
+        ),
+        (
+            key: "heap",
+            name: ("the heap", "терикон"),
+            poly: [
+                (-987.0, 416.0),
+                (-916.0, 483.0),
+                (-963.0, 586.0),
+                (-701.0, 778.0),
+                (-695.0, 863.0),
+                (-754.0, 1063.0),
+                (-973.0, 1239.0),
+                (-1410.0, 1005.0),
+                (-1427.0, 865.0),
+                (-1211.0, 495.0),
+            ],
+        ),
+        (
+            key: "railway",
+            name: ("the railway", "залізниця"),
+            poly: [
+                (-700.0, 95.0), (-215.0, -20.0), (990.0, -320.0), (1142.0, -360.0), (1142.0, -560.0), (990.0, -520.0),
+                (-215.0, -215.0), (-700.0, -100.0),
+            ],
+        ),
+        (
+            key: "plant",
+            name: ("the plant's edge", "край заводу"),
+            poly: [(-489.0, -325.0), (-400.0, -430.0), (-400.0, -980.0), (-1040.0, -980.0), (-815.0, -236.0)],
+        ),
+    ],
     // Hides for a tank firing on coordinates: in the village's lanes, and behind the heap.
     hides: [((760.0, -1050.0), (0.2, 1.0)), ((1200.0, -1300.0), (-0.1, 1.0)), ((-1650.0, 50.0), (0.3, 1.0))],
 
-    // The map table's: ours is the village, the railway and the heap; theirs beyond the heap's far foot.
-    grey_zone: (900.0, 1400.0),
+    // The map table's: ours is the village, the railway and the heap to its north-east foot; theirs beyond.
+    grey_zone: (1250.0, 1400.0),
     road_heads: [
         (name: ("The Berdychi road", "Дорога з Бердичів"), at: (1300.0, -1785.0)),
         (name: ("The Lastochkyne road", "Дорога з Ластівкиного"), at: (-1700.0, -1785.0)),

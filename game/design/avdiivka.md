@@ -411,3 +411,36 @@ existing bakes if the optional rows are skipped.
   (it burns out without being blinded). What the hands-off day cannot reach is the end of the Record's band: nobody
   flies the FPV, so the tank is left in the village rather than burned (`BAV_FPV` at its place does that). Not yet: the
   hull hitting a tree as it drives blind; Command's Lancets on a revealed hide measured; a played session.
+- 2026-10-25: phases 4 and 5, the heap. **The drop**: where the day's support has `Drops` (part II only: four pairs
+  of VOG-17s on the Record, a point a pair; db/research/10-drones-ua-2023.md §5), C lets a grenade go from the drone
+  with the drone's own way on it. It falls with drag (about 45 m/s at most) through the day's wind, weaker near the
+  ground and gusting by a third on a slow beat, so from the drone's 190 m it lands twenty-odd metres downwind and
+  from 60 m a few; it bursts as a `Cause::Drop` blast of radius 2 (lethal to six metres, surely only at the point:
+  the CTC's "multiple drops are needed"), nothing to a hull. The falling grenade is drawn, the net says "Скид.", the
+  hit feed says how close it came to the men it was meant for, the HUD counts them (`VOG n [C]`), and the debrief
+  says how many were dropped and killed. `BAV_DROP="<s>:<x>;<z>,…"` drops on the enemy's man nearest each point from
+  60 m, allowing for the mean wind (the gust it cannot). **The areas**: `areas` in the battle's file (map.ron, so all
+  three parts) are Hostomel's zones without its fight: who holds each (whoever has men or posts in it, contested
+  with both), on the HUD's tally, on Command's table (outlined on the paper map, named with their holder in the
+  battle) and in the debrief, and a line a minute for the bands (`areas=heap=-/6`: held, and their men in it).
+  Stepove, the heap (its outline drawn in 60 m: the top and the first terrace), the railway in front of the village,
+  the plant's north-east corner. The plan's dachas are not in the box (the map's allotments lie 4 km south-east).
+  **The heap held**: before, the storming parties climbed unseen (the trench was on the heap's far side and the
+  top's post in its middle, the brow hiding the face) and dug in on the top by the dozen. The trench is now on the
+  first terrace of the north-east face and the second post on the brow above it, the grey zone starting at the
+  heap's foot (1250); and a man pinned on a grade over 0.1 digs into the slag rather than get up again, half the
+  time (no older day has such a grade: same-day `same` for Vuhledar `fx-v`, Robotyne `r2-r`, Hostomel `td2-h1`
+  and `td2-h2`). **Smoke on the heap**: it did not blind the observers before; a mission called from their post
+  (2) through smoke now falls as unobserved, and they say so.
+- 2026-10-25: the bands (hands-off, four seeds). Part II before: knocked out 36/42/41/38, withdrew 14/4/9/8, Russian
+  dead 334/351/334/382, 161/197/175/169 of theirs alive at the end (dug in on the heap's top), our casualties
+  5/0/3/8. After: knocked out 35/32/33/36, withdrew 16/14/14/16, dead 394/444/398/405, 73/58/63/60 alive, our
+  casualties 4/5/3/3; nobody on the top, the heap contested at the end by two to seven men dug in on the face's
+  first terrace; Stepove, the railway and the plant ours. With eight scripted drops on the face (`BAND_TAG=drop`,
+  the first three before anyone was there): knocked out 40/38/33/37, dead 400/440/408/410, the heap contested by
+  one to ten, each drop within 0-8 m of its man: eight grenades are the margin, not the answer. Part I (the map's
+  posts moved): knocked out 38/43/38/35, withdrew 19-25, dead 287-345, our casualties 2-6, the heap ours, the
+  railway contested by 2-25 of theirs at the end (route 1's objective lies past the rails). Part III: the T-90M and
+  its BMPs stopped every seed, everything ours. Not yet: a holding rule that a handful dug in on a terrace does not
+  tip (or a reason for the parties to go back down); part I's route 1 stopped short of the rails; a sortie of two
+  with a flight home to re-arm; Russian drops on our trench.

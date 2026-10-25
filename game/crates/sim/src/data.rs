@@ -56,6 +56,10 @@ pub struct SimData {
     /// The infantry fight for a place (`fight`): ammunition, pulling out, capture, the field's areas.
     #[serde(default)]
     pub fight: Option<crate::fight::FightSpec>,
+    /// The field's areas, held by whoever has men in them, where the day has them without the fight (Avdiivka's;
+    /// Hostomel's are the fight's own, `fight.zones`).
+    #[serde(default)]
+    pub areas: Vec<crate::fight::ZoneSpec>,
     /// The Bradleys dug in (`bradley`): what is in their launchers and how far their gunners open fire (none: a full
     /// launcher, and the gun's whole reach).
     #[serde(default)]

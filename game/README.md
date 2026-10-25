@@ -180,6 +180,7 @@ the pieces that reach above a height, to write a ring from.
 | 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
 | 6 | Avdiivka: into a Bradley's gunner's seat; again for the next one. Mouse turns the turret, right button holds the ISU sight (x4; I for its thermal channel), left click fires a burst, X picks AP or HE (HE on a tank goes for its sights), T launches a TOW that follows the crosshair; G / K / B order the driver out of the hide on a run, to hold, or back into it. A TOW or a long burst gives the hide away (in Command the Lancets come) |
 | Shift+click | Avdiivka: cluster shells (DPICM), two to a mission, on infantry in the open |
+| C | Avdiivka, the second wave: drop a grenade (a VOG-17) from the drone, eight for the day. It falls in the day's wind, metres off from 190 m and little from low down; a small burst on men, nothing to a hull. The tally says who holds the village, the heap, the railway and the plant's edge |
 | O, G, K, B | Command: the orders over the drone's picture. A click picks one of our units, G / K / B order it to advance, hold or fall back, and a click on a ringed position sends it there; the order goes over the net, late and maybe not at all where they jam it |
 | T | Command: the map table over the picture, the battle running on: our units on the map, ordered from it the same way, and Columns sent on Supply |
 | P, `[`, `]` | pause, slow down, speed up |
@@ -243,7 +244,8 @@ calls a 155 mm mission on a point at game second 260 (or, without `@`, on the st
 `BAV_FPV="300:-150;724"` launches the FPV at game second 300 and flies it by itself at the enemy vehicle nearest
 that point (at height, then the dive). `BAV_GUN="250:seat,262:go,280:ap,284:he,330:back"` puts a gunner in a
 Bradley's seat (`seat@1` the second, west to east) who holds the sight on the nearest of their hulls and at those game
-seconds fires AP or HE, launches a TOW (`tow`) or orders the driver (`go`, `hold`, `back`). `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
+seconds fires AP or HE, launches a TOW (`tow`) or orders the driver (`go`, `hold`, `back`). `BAV_DROP="500:-1000;1000,520:-1010;990"` drops a grenade at each game second
+on the enemy's man nearest the point, from 60 m over him, allowing for the mean wind. `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
 
 The dioramas' RON is laid out by [fmtron](https://crates.io/crates/fmtron) (`cargo install fmtron --version
 1.0.0-rc.2`), at the width in `fmt.ron`: `fmtron dioramas` formats them, `fmtron --check dioramas` says what it

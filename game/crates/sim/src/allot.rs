@@ -64,6 +64,8 @@ pub enum SupportKind {
     Mavic(u32),
     /// So many cluster (DPICM) missions, two shells each (`fire::Strike::Cluster`).
     Cluster(u32),
+    /// So many grenades for the reconnaissance drone to drop (VOG-17s on a release under the Mavic, `drones`).
+    Drops(u32),
 }
 
 /// One entry of the catalog: what it is, called what, what it costs in allotment points (and later in Supply),
@@ -140,6 +142,8 @@ pub struct Allotment {
     pub evacuation: u32,
     /// More reconnaissance drones for the operator.
     pub mavics: u32,
+    /// Grenades for the reconnaissance drone to drop.
+    pub drops: u32,
     /// What it cost, of how many points.
     pub spent: u32,
     pub points: u32,
@@ -293,6 +297,7 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                 SupportKind::AirDefence(m) => st.air_defence += m * p.count,
                 SupportKind::Mavic(n) => a.mavics += n * p.count,
                 SupportKind::Cluster(m) => st.cluster += m * p.count,
+                SupportKind::Drops(n) => a.drops += n * p.count,
             }
         }
     }

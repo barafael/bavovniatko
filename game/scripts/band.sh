@@ -33,4 +33,6 @@ for s in $seeds; do
   echo "$dio seed $s: $(grep committed= "$out/seed-$s/tally.txt" | tail -1 | sed 's/ overlap_frames.*//; s/ hidden=[0-9]*//') $(grep -o 'wounded=[0-9/]*' "$out/seed-$s/tally.txt" | tail -1)"
   # A fight for a place (Hostomel) logs its field each minute: the last of it.
   grep flown= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    field: /"
+  # Areas held without the fight (Avdiivka): who holds each at the end, with their men in it.
+  grep areas= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    areas: /"
 done

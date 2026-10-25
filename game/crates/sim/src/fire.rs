@@ -287,10 +287,13 @@ fn spawn_positions(mut commands: Commands, models: Res<Models>, palette: Res<Pal
 
 /// Command: the rest of our side as the map table settled it, when the battle starts: the rounds and missions, the
 /// strike drones, the vehicles for the wounded, the Mavics.
-pub fn allotted_stock(mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player::Fpv>, mut evac: ResMut<crate::evac::Evacuation>, mut view: ResMut<View>) {
+pub fn allotted_stock(mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player::Fpv>, mut evac: ResMut<crate::evac::Evacuation>, mut view: ResMut<View>, drops: Option<ResMut<crate::drones::Drops>>) {
     let a = crate::allot::allotment();
     *fc = FireControl::default();
     fpv.left = a.fpvs;
+    if let Some(mut d) = drops {
+        d.left = a.drops;
+    }
     evac.left = a.evacuation;
     view.drones_left += a.mavics;
 }
@@ -382,8 +385,18 @@ fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, m
 // ---------------------------------------------------------------------------------------------------------
 // Player fire control
 
-fn observed_sigma(view: &View, target: Vec2) -> f32 {
-    // Adjusted fire: a drone over the target halves the dispersion; the OP on the roof helps close in.
+/// Smoke lies between the observers and the target, and they cannot see the fall of shot (the heap's post on its
+/// first terrace, Avdiivka; any smoke, ours or theirs, from the shells or the hulls' grenades).
+fn op_blinded(view: &View, op: Option<&ObservationPost>, smoke: &fx::Smoke, target: Vec2, now: f64) -> bool {
+    view.mode == Mode::Op && op.is_some_and(|op| smoke.blocks(op.eye.xz(), target, now))
+}
+
+fn observed_sigma(view: &View, target: Vec2, blind: bool) -> f32 {
+    // Adjusted fire: a drone over the target halves the dispersion; the OP on the roof helps close in, unless the
+    // smoke hides the target from it, and then the guns fire as if nobody watched.
+    if blind {
+        return 40.0;
+    }
     match view.mode {
         Mode::Drone => {
             let d = view.drone_pos.xz().distance(target);
@@ -408,6 +421,7 @@ fn player_fire(
     mut radio: ResMut<Radio>,
     mut sound: Sound,
     orders: Option<Res<crate::orders::OrdersView>>,
+    (op, smoke): (Option<Res<ObservationPost>>, Res<fx::Smoke>),
 ) {
     // Alt+click asks for an evacuation instead (`evac`); with the orders open (Command) a click is for them (`orders`);
     // in a sight (a launcher, a Bradley's gun) it fires that.
@@ -417,7 +431,11 @@ fn player_fire(
     let now = time.elapsed_secs_f64();
     let Some(hit) = player::cursor_ground(&window, cam.0, cam.1) else { return };
     let target = hit.xz();
-    let sigma = observed_sigma(&view, target);
+    let blind = op_blinded(&view, op.as_deref(), &smoke, target, now);
+    let sigma = observed_sigma(&view, target, blind);
+    if blind {
+        radio.say2(now, "{player}, я {op}. Дим між нами і ціллю. Розривів не бачимо.", "{player}, this is {op}. Smoke between us and the target. We can't see the fall of shot.");
+    }
     let shift = keys.pressed(KeyCode::ShiftLeft) || keys.pressed(KeyCode::ShiftRight);
     let ctrl = keys.pressed(KeyCode::ControlLeft) || keys.pressed(KeyCode::ControlRight);
     let (lat, lon) = geo::latlon(target);
@@ -491,13 +509,14 @@ fn aim_gizmo(
     keys: Res<ButtonInput<KeyCode>>,
     missions: Query<&Mission, With<PlayerCalled>>,
     time: Res<Time>,
+    (op, smoke): (Option<Res<ObservationPost>>, Res<fx::Smoke>),
 ) {
     if view.mode == Mode::Ground {
         return;
     }
     if let Some(hit) = player::cursor_ground(&window, cam.0, cam.1) {
         let t = hit.xz();
-        let sigma = observed_sigma(&view, t);
+        let sigma = observed_sigma(&view, t, op_blinded(&view, op.as_deref(), &smoke, t, time.elapsed_secs_f64()));
         let color = if keys.pressed(KeyCode::ControlLeft) {
             Color::srgba(1.0, 0.3, 0.2, 0.8)
         } else if keys.pressed(KeyCode::ShiftLeft) {
