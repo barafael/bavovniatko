@@ -120,7 +120,7 @@ fn ground_dir() -> Option<PathBuf> {
 }
 
 fn dio_name() -> String {
-    format!("{:?}", diorama()).to_lowercase()
+    diorama().id().to_string()
 }
 
 /// Drop the cache's older paintings of this diorama (each is about 150 MB).

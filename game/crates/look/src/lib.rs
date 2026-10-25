@@ -11,6 +11,7 @@ pub mod audio;
 pub mod avdiivka;
 pub mod baked;
 pub mod buildings;
+pub mod data;
 pub mod feed;
 pub mod fx;
 pub mod hostomel;

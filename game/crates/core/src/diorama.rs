@@ -1,6 +1,7 @@
-//! Which diorama is on the table: `vuhledar` (the default), `robotyne`, `hostomel-1` or `hostomel-2`, `avdiivka-1`,
-//! `avdiivka-2` or `avdiivka-3`, chosen by the first command-line argument or `BAV_DIORAMA`. The two places share the kit (terrain, vehicles, mines, fire, the drone), and
-//! differ in season, ground, forces, and which way the war is going. The player is Ukrainian in both.
+//! Which diorama is on the table: one of `game/dioramas/index.ron`'s ids (`vuhledar`, the first, by default;
+//! `robotyne`, `hostomel-1`, `avdiivka-3`, …), chosen by the first command-line argument or `BAV_DIORAMA`. The places
+//! share the kit (terrain, vehicles, mines, fire, the drone) and differ in what their files say: the season, the
+//! ground, the forces, the set, and which way the war is going. The player is Ukrainian in all of them.
 
 use std::sync::OnceLock;
 
@@ -10,31 +11,34 @@ pub enum Side {
     Ua,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString, strum::Display)]
-#[strum(serialize_all = "lowercase", ascii_case_insensitive)]
-pub enum Diorama {
-    /// 6 February 2023: Russian columns into the 72nd Brigade's minefields (db/research/chapters/c08-vuhledar.md).
-    Vuhledar,
-    /// 8 June 2023: the 47th Brigade's breach south of Mala Tokmachka, into the Russian minefields
-    /// (db/research/chapters/c09-robotyne.md §6, set piece 1).
-    Robotyne,
-    /// 24 February 2022, Antonov airport at Hostomel, morning: the VDV come in by helicopter onto the National
-    /// Guard's rear echelon (db/research/chapters/c01-march-on-kyiv.md; design/hostomel.md, sub-chapter I).
-    #[strum(serialize = "hostomel-1")]
-    HostomelLanding,
-    /// The same day at dusk: the counterattack that retakes the field and craters the runway (sub-chapter II).
-    #[strum(serialize = "hostomel-2")]
-    HostomelCounter,
-    /// 10 October 2023, the northern shoulder of the Avdiivka salient: the first mechanised wave at Stepove and the
-    /// spoil heap (db/research/chapters/c11-avdiivka.md; design/avdiivka.md, part I).
-    #[strum(serialize = "avdiivka-1")]
-    AvdiivkaWave1,
-    /// 19 October 2023: the second wave, and the heap stormed on foot (part II).
-    #[strum(serialize = "avdiivka-2")]
-    AvdiivkaWave2,
-    /// 11 January 2024, Stepove in the snow: the T-90M and the two Bradleys (part III, vignette v02).
-    #[strum(serialize = "avdiivka-3")]
-    AvdiivkaStepove,
+/// A diorama, by its place in the index. What it is (its id, its files, its tours' shots) is the index's, built into
+/// the binary by bav-core's build script; what it holds is its files'.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub struct Diorama(usize);
+
+/// An entry of the index as the build script writes it: the id, the files (name, text) merged in order into one
+/// record, and the shots file of its tours.
+pub(crate) struct Builtin {
+    pub id: &'static str,
+    pub files: &'static [(&'static str, &'static str)],
+    pub shots: Option<(&'static str, &'static str)>,
+}
+
+include!(concat!(env!("OUT_DIR"), "/dioramas.rs"));
+
+impl std::fmt::Display for Diorama {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(self.id())
+    }
+}
+
+impl std::str::FromStr for Diorama {
+    type Err = String;
+
+    /// An id of the index, in any case.
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        BUILTIN.iter().position(|b| b.id.eq_ignore_ascii_case(s)).map(Diorama).ok_or_else(|| format!("no diorama {s:?} in dioramas/index.ron"))
+    }
 }
 
 /// How the day is played (design/command.md).
@@ -68,22 +72,35 @@ pub fn diorama() -> Diorama {
     *DIORAMA.get_or_init(|| {
         // The first argument names it unless that is a flag (a test harness passes its own).
         let pick = std::env::args().nth(1).filter(|a| !a.starts_with('-')).or_else(|| std::env::var("BAV_DIORAMA").ok());
-        pick.and_then(|s| s.trim().parse().ok()).unwrap_or(Diorama::Vuhledar)
+        pick.and_then(|s| s.trim().parse().ok()).unwrap_or(Diorama::ALL[0])
     })
 }
 
 impl Diorama {
-    /// Every diorama, in the order the READMEs give them.
-    pub const ALL: [Diorama; 7] = [Self::Vuhledar, Self::Robotyne, Self::HostomelLanding, Self::HostomelCounter, Self::AvdiivkaWave1, Self::AvdiivkaWave2, Self::AvdiivkaStepove];
+    /// Every diorama, in the index's order (the order the READMEs give them).
+    pub const ALL: [Diorama; COUNT] = {
+        let mut all = [Diorama(0); COUNT];
+        let mut i = 0;
+        while i < COUNT {
+            all[i] = Diorama(i);
+            i += 1;
+        }
+        all
+    };
 
-    /// Whether this is one of Avdiivka's parts (they share a map and a set).
-    pub fn avdiivka(self) -> bool {
-        matches!(self, Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove)
+    /// Its id, as the command line and `BAV_DIORAMA` name it.
+    pub fn id(self) -> &'static str {
+        BUILTIN[self.0].id
     }
 
-    /// Whether this is one of Hostomel's parts.
-    pub fn hostomel(self) -> bool {
-        matches!(self, Diorama::HostomelLanding | Diorama::HostomelCounter)
+    /// Its built-in files, (name, text), in the order they are merged.
+    pub fn files(self) -> &'static [(&'static str, &'static str)] {
+        BUILTIN[self.0].files
+    }
+
+    /// Its built-in shots file (`dioramas/shots/`), if it has tours.
+    pub fn shots(self) -> Option<(&'static str, &'static str)> {
+        BUILTIN[self.0].shots
     }
 
     /// Whose columns drive into whose minefields.

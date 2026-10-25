@@ -83,7 +83,7 @@ this README, shown: one minefield from both sides. There is no narrator and no m
 radio net carry it.
 
 It is filmed by the same machinery the game runs on. The binary runs headless on a fixed step with
-`BAV_TOUR=film` (which selects the film's shot list in `crates/bavovniatko/src/showcase.rs` instead of the one-minute tours),
+`BAV_TOUR=film` (which selects the film's shot list in the day's `dioramas/shots/<id>.ron` instead of its one-minute tour),
 the script places the drone and flies it, cards are hard cuts over black between the shots, and each part's
 soundtrack is rebuilt offline from the game's log of every sound it played (`xtask/src/mix.rs`), each part
 levelled to -18 LUFS. The tasks are an xtask (`xtask/`): plain Rust, with ffmpeg, ffprobe and ImageMagick on the
@@ -198,10 +198,10 @@ The game is a Cargo workspace of four crates, layered so the battle cannot reach
 
 | crate | path | contents |
 |---|---|---|
-| `bav-core` | `crates/core/` | what every part shares: the ground's geometry and both layouts (`geo.rs`, `geo/robotyne.rs`), which diorama is on the table and the sides (`diorama.rs`), the words in two registers (`text.rs`), the frame's `Step` order and the startup sets (`schedule.rs`), the `BAV_*` switches (`dev.rs`) and the small vocabulary they name (`vocab.rs`) |
-| `bav-sim` | `crates/sim/` | the battle, deterministic: vehicles, soldiers, mines, damage and wrecks (`units.rs`), positions, ATGM teams, artillery, RAAM, smoke and HIMARS (`fire.rs`), the day's script (`director.rs`), the Ka-52s and the dug-in tanks (`robotyne.rs`), the player's drone and posts (`player.rs`), and the queues it fills for the picture and the sound (`fx.rs`, `paint.rs`, `sound.rs`) |
-| `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`), the belts' trees (`trees.rs`), Mala Tokmachka's set and light (`robotyne.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
-| `bavovniatko` | `crates/bavovniatko/` | the game: the app (`main.rs`), the drone, OP and tree-line views and their controls (`camera.rs`), the HUD, briefing and debrief (`hud.rs`), the settings overlay (`settings.rs`), the development systems (`dev.rs`) and the filmed showcase (`showcase.rs`) |
+| `bav-core` | `crates/core/` | what every part shares: the ground's geometry and both layouts (`geo.rs`, `geo/robotyne.rs`), which diorama is on the table and the sides (`diorama.rs`, the ids and files of `dioramas/index.ron`, built in by `build.rs`), the dioramas' place and layout (`data.rs`), the words in two registers (`text.rs`), the frame's `Step` order and the startup sets (`schedule.rs`), the `BAV_*` switches (`dev.rs`) and the small vocabulary they name (`vocab.rs`) |
+| `bav-sim` | `crates/sim/` | the battle, deterministic: vehicles, soldiers, mines, damage and wrecks (`units/`: kinds, mines, spawn, drive, wrecks, blasts, soldiers), positions, ATGM teams, artillery, RAAM, smoke and HIMARS (`fire.rs`), the day's script (`director.rs`), the Ka-52s and the dug-in tanks (`robotyne.rs`), the player's drone and posts (`player.rs`), and the queues it fills for the picture and the sound (`fx.rs`, `paint.rs`, `sound.rs`) |
+| `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`, raising the set the diorama's file names: `data.rs`), the belts' trees (`trees.rs`), Mala Tokmachka's set and light (`robotyne.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
+| `bavovniatko` | `crates/bavovniatko/` | the game: the app (`main.rs`), the drone, OP and tree-line views and their controls (`camera.rs`), the HUD, briefing and debrief (`hud.rs`, in the words of the diorama's `hud` and `debrief`: `screen.rs`), the settings overlay (`settings.rs`), the development systems (`dev.rs`) and the filmed showcase (`showcase.rs`) |
 
 `bav-sim` does not depend on `bav-look`. The battle spawns its entities with model handles the look builds at
 startup, and asks for effects, ground marks and sounds through queues the look plays later in the frame. So
@@ -209,6 +209,7 @@ nothing the picture does (its particles, its random stream) can change how a day
 
 | path | contents |
 |---|---|
+| `dioramas/` | the places as data ([`design/data.md`](design/data.md)): `index.ron` lists each diorama's id and files, merged in order into one record (a single `<id>.ron`, or a place's directory: Hostomel's and Avdiivka's `map.ron`, `osm.ron`, Avdiivka's shared `forces.ron`, and a file per part); `shots/<id>.ron` holds a day's tours |
 | `design/` | the design notes: chapters, campaign, units, the plans and their decisions (the current one is [`roadmap.md`](design/roadmap.md)) |
 | `data/` | the game feed exported from the knowledge base (`db/tools/sim.py export`) |
 | `assets/vehicles/`, `tools/bake/` | the baked vehicle models, and the tool that bakes them (a workspace of its own) |
@@ -229,8 +230,8 @@ scripts/shot.sh <name> "<x,z,agl,yaw,pitch,fov>" <game-s> "note" [diorama]
 
 Angles in `BAV_CAM` are degrees; yaw 0 looks north, 180 south.
 
-`cargo xtask tour [day] [--scout] [out.mp4]` films a directed one-minute tour of a single day (`vuhledar`, `robotyne`,
-`hostomel-1`, `hostomel-2`) at 1920x1080 with sound (`--scout`: 640x360 with a contact sheet, into `devlog/film/`)
+`cargo xtask tour [day] [--scout] [out.mp4]` films a directed one-minute tour of a single day (any id of `dioramas/index.ron` with
+a shots file: `vuhledar`, `robotyne`, `hostomel-1`, `avdiivka-2`, …) at 1920x1080 with sound (`--scout`: 640x360 with a contact sheet, into `devlog/film/`)
 (the four-minute film of both dioramas is `cargo xtask film`, [above](#the-showcase-film)). The game
 runs on a fixed step while filming, logs every sound it plays, and the xtask rebuilds the soundtrack offline
 (`cargo xtask mix <dir> <out.wav>` does it again for a kept work dir). It takes about ten minutes, with no window or speakers, and the day is deterministic, so

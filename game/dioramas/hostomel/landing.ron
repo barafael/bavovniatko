@@ -85,6 +85,39 @@ Press Enter."#,
             ),
         ],
     ),
+    // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
+    // left to fire, `{name}` a figure the HUD fills in, and the debrief's rows.
+    hud: (
+        tally: "{date}   {clock}\nhelicopters down {air_down}   VDV landed {landed}   our men out {men_out}   taken {captured}\n{zones}{runway}",
+        stock: "D-30  {shells} rds   [5] Igla{pull_out}{speed}",
+    ),
+    debrief: (
+        rows: [
+            Line("Helicopters in the stream", Flown),
+            Line("Shot down", Down),
+            Line("    Ka-52", DownKind(Ka52)),
+            Line("    Mi-24", DownKind(Mi24)),
+            Line("    Mi-8, with the men aboard", DownKind(Mi8)),
+            Line("    by Igla", DownBy("Igla")),
+            Line("    by the ZU-23-2", DownBy("ZU-23-2")),
+            Line("Hit and turned away", DrivenOff),
+            Line("Paratroopers landed", MenLanded),
+            Line("    killed", AttackerDead),
+            If(
+                Field,
+                [
+                    Line("Our men lost at their posts", DefenderLosses),
+                    Line("Walked out to Horenka", MenOut),
+                    Line("Taken prisoner", Captured),
+                    Line("The field held until", HeldUntil),
+                    Line("Theirs at the end", Held(Ru)),
+                ],
+            ),
+            Line("The airlift", Airlift),
+            Line("Iglas left", IglasLeft),
+            Line("D-30 rounds left", Shells),
+        ],
+    ),
     // Over the apron, looking west at the runway.
     camera: (900.0, 450.0),
     observed_from: Home,

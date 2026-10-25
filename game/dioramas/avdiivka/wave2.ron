@@ -1,27 +1,17 @@
 // Avdiivka, part II, The second wave (Друга хвиля): 19 October 2023, morning, the northern shoulder. The Russians
 // come again, having learned: smaller groups under more smoke, the infantry dismounting at the belts, and the heap
 // stormed on foot with tanks at its base (c11 §2 19-20 Oct, §6 set piece 2, folded in from about 16 October:
-// design/avdiivka.md). The schema is bav_core::data and bav_sim::data; the map is map.ron.
+// design/avdiivka.md). The schema is bav_core::data and bav_sim::data;
+// the map is map.ron, and what the three parts share is forces.ron.
 (
     date: "19 October 2023",
     tally_date: "19 OCT 2023",
     // 06:30 to about 13:00 in the day's 1500 s.
     day_start_min: 390.0,
     compression: 0.26,
-    attacker: Ru,
     season: Autumn,
     // 19 October is the 292nd day of the year; Kyiv was on summer time, UTC+3.
     sun: (292, 3.0),
-    // The 47th flew thermal Mavics by then: key I.
-    thermal: true,
-    // Fictional, the 47th's: the player (a sighthound), the 55th's guns (anvil), the observers on the heap (crest),
-    // the battalion's command post (flint).
-    callsigns: (
-        player: ("Khort", "Хорт"),
-        guns: ("Kovadlo", "Ковадло"),
-        op: ("Hrebin", "Гребінь"),
-        command: ("Kremin", "Кремінь"),
-    ),
     words: (
         briefing: r#"AVDIIVKA (АВДІЇВКА), THE NORTHERN SHOULDER
 19 OCTOBER 2023, MORNING
@@ -102,6 +92,34 @@ Press Enter."#,
                 url: "https://en.wikipedia.org/wiki/Battle_of_Avdiivka_(2023%E2%80%932024)",
             ),
         ],
+    ),
+    // The debrief's rows (the schema is the game's screen.rs); the tally's and the fire panel's lines are forces.ron's.
+    debrief: (
+        rows: [
+            Line("Russian vehicles committed", Committed),
+            Line("Knocked out", Out),
+            Line("    destroyed", Destroyed),
+            Line("    abandoned", Abandoned),
+            Line("    on mines", MineHits),
+            Line("    by ATGM", AtgmKills),
+            Line("    by artillery", ArtilleryKills),
+            Line("    turrets thrown", TurretTosses),
+            Line("Withdrew", Withdrawn),
+            Line("Men sent forward", Sent),
+            Line("    came back", Returned),
+            Line("    Russian dead", AttackerDead),
+            Line("Closest any Russian got to the village", Closest),
+            Line("Ukrainian casualties", DefenderLosses),
+            Line("Shells left", Shells),
+            Line("Our vehicles lost", DefenderVehicles),
+            If(
+                Flew,
+                [Line("Su-25 runs", Flown), Line("    shot down", Down), Line("    hit and turned away", DrivenOff)],
+            ),
+            Areas("{area} at the end"),
+            If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+        ],
+        columns: (heads: ("vehicles", "destroyed", "abandoned"), other: "column {n}"),
     ),
 
     // What the first wave left in the fields (part I's band: about thirty-five hulls on the two lanes), where they
@@ -265,23 +283,11 @@ Press Enter."#,
         ],
     ),
     old_wreck_kinds: [T72, Bmp2, Bmp1, Mtlb, T80, Bmp2, Bmp2, T72, Bmp1, Bmp2, Mtlb, T72],
-    space_key: Atgm,
     // Shift+click: cluster on the infantry. (RAAM stays on the stock for Command's table.)
     shift_fire: Cluster,
-    // Their guns work the village, the railway and the heap all day, and the ground behind.
-    ru_guns: Posts(x: (-1800.0, 1800.0), band: (-1300.0, -600.0)),
-    registered_fire: (50.0, 6),
-    // Their EW: jammers with the columns' start lines, the rear emitters past the heap's far foot.
-    ew: (jammers: [(1300.0, 1700.0), (-900.0, 1750.0)], radius: 900.0, depth: 700.0),
-    // FPVs by the day, five minutes in the air.
-    fpv: (endurance: 300.0),
     // Command's Enemy staff: Lancets for the Bradleys and the tank; Orlans over the village every few minutes; KABs
     // and Su-25 pairs on the posts and hides it has spotted.
     staff: (lancets: 4, orlan: (120.0, 240.0), kabs: 6, kab_every: (200.0, 400.0), su25: 3, su25_every: (240.0, 480.0)),
-    // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
-    // February, but still.
-    operator: (pos: (900.0, -1400.0), found_per_hour: 0.2),
-
     // The day (c11 §2 19-20 Oct, §6 set piece 2): the guns again, then four groups of 15-22 under more smoke, the
     // infantry dismounting at the belts and walking the last kilometre; and from mid-morning the heap stormed on foot,
     // tanks at its base, men climbing the face under the drone's drops (folded in from about 16 October).

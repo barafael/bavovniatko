@@ -7,9 +7,15 @@
 // +z south; metres. Each sub-chapter's file (landing.ron, counter.ron) adds the day: its clock, sides and script.
 (
     place: ("Hostomel", "Гостомель"),
+    // BAV_VIEW=ground: the team nearest the apron's north end.
+    ground_team: (700.0, 330.0),
     date: "24 February 2022",
     tally_date: "24 FEB 2022",
     season: Winter,
+    // The set raised over the ground, with its light (bav_look::data): the airport, its hangar and the Mriya; and the
+    // woods are pine on the sand.
+    set: Antonov,
+    woods: Pine,
     // 24 February is the 55th day of the year; Kyiv was on UTC+2.
     sun: (55, 2.0),
     // The war's first day: no old craters; the morning's Kalibrs are the day's own.

@@ -7,34 +7,21 @@
 
 use std::{fs, path::Path};
 
-/// A day of the reel: the diorama, its card, when its events pass ends, and its switches: what the player does in
-/// it (`BAV_FIRE`, `BAV_FPV`, the same in the events pass and every filming run) and the day's own.
+/// A day of the reel: the diorama, and its `reel` from its shots file (`crate::days::Reel`): the card, when its events
+/// pass ends, and its switches.
 pub struct Day {
-    pub part: &'static str,
-    /// The card before the day's moments: (title, line, note).
-    pub card: (&'static str, &'static str, &'static str),
-    pub end: f32,
-    pub env: &'static [(&'static str, &'static str)],
+    pub part: String,
+    pub reel: crate::days::Reel,
 }
 
-pub const DAYS: [Day; 2] = [
-    Day {
-        part: "vuhledar",
-        card: ("ВУГЛЕДАР (VUHLEDAR)", "6 February 2023", "Russian columns into the 72nd Brigade's minefields."),
-        end: 1440.0,
-        // 155 mm on the first column in the kill zone; RAAM on the second column's lane, HIMARS on its tail; 155 mm on
-        // the third at the middle belt and on Alga's at the Pavlivka road.
-        env: &[("BAV_FIRE", "86:he@1200;90,480:raam@1233;150,505:himars@1335;350,700:he@1150;30,860:he@-870;-10")],
-    },
-    Day {
-        part: "robotyne",
-        card: ("МАЛА ТОКМАЧКА (MALA TOKMACHKA)", "8 June 2023", "The 47th Brigade into the Russian minefields."),
-        end: 1300.0,
-        // 155 mm on the jammer behind the crest; the FPV at the western dug-in T-72; HIMARS on the eastern one. The
-        // Bradleys go for the wounded half a minute after each call, as a player would send them.
-        env: &[("BAV_FIRE", "334:he@-350;950,640:himars@1050;720"), ("BAV_FPV", "590:-150;724"), ("BAV_EVAC", "30")],
-    },
-];
+/// The reel's days: those whose shots file has a `reel`, in the index's order (Vuhledar, then Mala Tokmachka).
+pub fn days(root: &Path) -> Result<Vec<Day>, String> {
+    let days: Vec<Day> = crate::days::days(root)?.into_iter().filter_map(|d| d.reel.map(|reel| Day { part: d.part, reel })).collect();
+    if days.is_empty() {
+        return Err("no shots file has a reel: there is no day to film".into());
+    }
+    Ok(days)
+}
 
 /// How many moments each day gets, and how far apart in time and place two must be to be different scenes.
 const MOMENTS: usize = 12;

@@ -9,12 +9,17 @@
 // Russian columns came from Krasnohorivka and Kamianka; +x then points north-north-west. Its centre is 48.1898 N
 // 37.6998 E, between the village and the heap. Stepove lies at about (1050, -1300), the heap at (-1066, 830), the
 // plant along the box's -x end; Krasnohorivka is 470 m beyond the +z edge, Berdychi and Lastochkyne beyond -z.
-// Each part's file (wave1.ron, wave2.ron, stepove.ron) adds the day: its clock, sides, forces and script.
+// forces.ron holds what the three parts share of the day (the sides, the 47th's callsigns, their guns and EW, the
+// tally's lines); each part's file (wave1.ron, wave2.ron, stepove.ron) adds its own: its clock, forces and script.
 (
     // (The parts give the date, the clock, the season and the sun.)
     place: ("Avdiivka", "Авдіївка"),
+    // The set raised over the ground, with its light (bav_look::data): the map's buildings and the coke plant.
+    set: CokePlant,
     // Where the drone starts: over the village's east edge, looking out across the field to the heap.
     camera: (950.0, -800.0),
+    // BAV_VIEW=ground: the team nearest Stepove's east edge.
+    ground_team: (1000.0, -760.0),
     // The observers: the heap's first terrace on its forward face, 2 m above the spoil.
     op: ((-1000.0, 560.0), 2.0),
     // Adjusted fire is observed from the village's edge and the rails.

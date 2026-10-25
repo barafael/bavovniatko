@@ -10,6 +10,8 @@
     compression: 0.30,
     attacker: Ua,
     season: Summer,
+    // The set raised over the ground, with its light (bav_look::data): the farm and the observers' water tower.
+    set: WaterTower,
     // Fictional, the 47th's own: the player (peregrine), the guns (thunder), the observers on the water tower (crane,
     // the old well sweep), the command post (cliff).
     callsigns: (
@@ -110,6 +112,43 @@ Press Enter."#,
             ),
         ],
     ),
+    // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
+    // left to fire, `{name}` a figure the HUD fills in, and the debrief's rows.
+    hud: (
+        tally: "{date}   {clock}\nour vehicles committed {committed}   stopped in the field {out}   came back {withdrawn}\nmen sent {sent}   brought out {returned}",
+        stock: "155 mm  {shells} rds   SMOKE  {smoke}   HIMARS  {himars}{ad}\ncolumn [{order}]   ATGM teams {teams} ({missiles} missiles){speed}",
+    ),
+    debrief: (
+        rows: [
+            Line("Our vehicles committed", Committed),
+            Line("Left in the field", Out),
+            Line("    burned out", Destroyed),
+            Line("    immobilised and abandoned (the recovery crews will try tonight)", Abandoned),
+            Line("Came back", Withdrawn),
+            Line("Men sent forward", Sent),
+            Line("    brought out", Returned),
+            Line("    of them picked up in the field by a Bradley", PickedUp),
+            Line("    killed", AttackerDead),
+            Line("Wounded", Wounded),
+            Line("    brought out", WoundedOut),
+            Line("    still lying out there", WoundedLying),
+            Line("Bradleys you sent in for them", Evacuations),
+            Line("The overwatch in the forward tree line lost", OverwatchLosses),
+            Line("The furthest vehicle stopped", VehicleReach),
+            Line("On foot, the furthest anyone got", FootReach),
+            Line("Russian positions on the crest silenced", PositionsSilenced),
+            Line("Their dug-in tanks knocked out", DugInKnockedOut),
+            Line("Shells left", Shells),
+            Line("Smoke left", Smoke),
+        ],
+        columns: (
+            heads: ("vehicles", "burned", "left"),
+            names: ["the first group", "the second group", "sent in for the wounded"],
+            other: "another group",
+        ),
+    ),
+    // BAV_VIEW=ground: the overwatch on the start line.
+    ground_team: (-100.0, -900.0),
     // Where the drone starts, and what the observers fire from (their error grows with the distance from it).
     camera: (80.0, -1150.0),
     observed_from: Home,

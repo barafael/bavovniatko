@@ -1,0 +1,205 @@
+// Vuhledar's tours, and its day in the trailer.
+// The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
+// one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
+// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
+// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
+// `hud: false` films it without the interface, and `debrief` ends the day on it.
+(
+    // The tour's title card: the place and the date.
+    card: ("VUHLEDAR", "6 FEBRUARY 2023"),
+    // The one-minute tour (`cargo xtask tour vuhledar`, and the same-day runs).
+    minute: [
+        // Dawn over the January wrecks on the dacha road, before the first column.
+        (
+            from: 4.0,
+            secs: 6.0,
+            pos: ((1150.0, 200.0, 70.0), (1220.0, 300.0, 60.0)),
+            aim: Drone(Point((1440.0, 530.0))),
+            fov: (26.0, 20.0),
+        ),
+        // The 155th's column in single file behind its smoke screen.
+        (
+            from: 22.0,
+            secs: 8.0,
+            pos: ((1000.0, -250.0, 170.0), (1000.0, -250.0, 170.0)),
+            aim: Drone(Vehicle(3)),
+            fov: (16.0, 11.0),
+        ),
+        // From behind the tree line: the ATGM teams open up.
+        (
+            from: 68.0,
+            secs: 9.0,
+            pos: ((1500.0, -300.0, 90.0), (1490.0, -320.0, 90.0)),
+            aim: Drone(Vehicle(0)),
+            fov: (22.0, 16.0),
+        ),
+        // The kill zone: mines, wrecks, crews in the snow, a fire mission landing among them.
+        (
+            from: 97.0,
+            secs: 10.0,
+            pos: ((750.0, -500.0, 120.0), (760.0, -480.0, 120.0)),
+            aim: Drone(Vehicle(2)),
+            fov: (5.0, 4.2),
+            fire: [(80.0, He), (90.0, He)],
+        ),
+        // The TOS-1A salvo landing on the town's southern blocks.
+        (
+            from: 164.0,
+            secs: 8.0,
+            pos: ((250.0, -760.0, 140.0), (230.0, -780.0, 140.0)),
+            aim: Drone(Point((-290.0, -1150.0))),
+            fov: (34.0, 30.0),
+        ),
+        // Afternoon: infantry on foot across the field, the battalion mortars working over them.
+        (
+            from: 1186.0,
+            secs: 7.0,
+            pos: ((-640.0, -760.0, 90.0), (-630.0, -740.0, 90.0)),
+            aim: Drone(Men),
+            fov: (7.0, 5.5),
+        ),
+        // Dusk over the dacha road: everything that came down it today is still there.
+        (
+            from: 1470.0,
+            secs: 4.0,
+            pos: ((950.0, -820.0, 200.0), (980.0, -800.0, 200.0)),
+            aim: Drone(Point((1130.0, -80.0))),
+            fov: (34.0, 30.0),
+        ),
+        // The debrief.
+        (
+            from: 1474.0,
+            secs: 4.0,
+            pos: ((980.0, -800.0, 200.0), (980.0, -800.0, 200.0)),
+            aim: Drone(Point((1130.0, -80.0))),
+            fov: (30.0, 30.0),
+            debrief: true,
+        ),
+    ],
+    // Its part of the showcase film (`cargo xtask film`, design/showcase.md).
+    film: [
+        // V1. Dawn: the January wrecks on the dacha road, near-overhead, ends before the 06:45 banner.
+        (
+            from: 6.0,
+            secs: 7.0,
+            pos: ((1270.0, 250.0, 140.0), (1250.0, 215.0, 140.0)),
+            aim: Drone(Point((1228.0, 203.0))),
+            fov: (12.0, 9.0),
+            hud: false,
+            card: (
+                title: "ВУГЛЕДАР (VUHLEDAR)",
+                line: "6 February 2023",
+                note: "Russian columns attack the 72nd Mechanised Brigade. The roads are left clear; the fields beside them are mined.",
+                secs: 5.0,
+            ),
+        ),
+        // V2. The column in single file behind its smoke; the net's report and the first jamming land in-shot.
+        (
+            from: 15.0,
+            secs: 9.0,
+            pos: ((1130.0, 70.0, 170.0), (1110.0, 10.0, 170.0)),
+            aim: Drone(Vehicle(2)),
+            fov: (14.0, 10.0),
+        ),
+        // V3. Ground: the Stugna-P sight on the lead tank, the launch at +4 s. The fault of every earlier cut
+        //     (missiles as specks) answered from the sight.
+        (
+            from: 62.0,
+            secs: 12.0,
+            pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)),
+            aim: Ground((930.0, -658.0), true),
+            fov: (54.0, 54.0),
+            launch: 4.0,
+        ),
+        // V4. The kill zone, wide: the column stacks at the deploy point. Slide to 82 if the lead is not there yet.
+        (
+            from: 76.0,
+            secs: 10.0,
+            pos: ((1110.0, -380.0, 170.0), (1090.0, -410.0, 170.0)),
+            aim: Drone(Vehicle(1)),
+            fov: (11.0, 8.0),
+        ),
+        // V5. The kill zone, close: mines, crews in the snow, 155 mm landing (fires at 76 and 84, lands 102/110);
+        //     fates and bail-outs.
+        (
+            from: 100.0,
+            secs: 10.0,
+            pos: ((1060.0, -250.0, 140.0), (1040.0, -290.0, 140.0)),
+            aim: Drone(Vehicle(2)),
+            fov: (8.0, 7.0),
+            fire: [(76.0, He), (84.0, He)],
+        ),
+        // V6. TOS-1A on the southern blocks, rockets landing 165–175; from the drone, no parapet.
+        (
+            from: 163.0,
+            secs: 10.0,
+            pos: ((-110.0, -900.0, 160.0), (-130.0, -925.0, 160.0)),
+            aim: Drone(Point((-290.0, -1170.0))),
+            fov: (20.0, 16.0),
+        ),
+        // V7. The second column passes the morning's wrecks at the middle belt; `Vehicle(0)` would pick wave 1's wreck.
+        (
+            from: 470.0,
+            secs: 10.0,
+            pos: ((1190.0, -50.0, 150.0), (1170.0, -100.0, 150.0)),
+            aim: Drone(Wave(2, 0)),
+            fov: (10.0, 8.0),
+            card: (title: "08:40", line: "A second column. The same road.", note: "", secs: 2.5),
+        ),
+        // V8. Alga's BMP-1s in the shoulder mines on the Pavlivka road.
+        (
+            from: 790.0,
+            secs: 10.0,
+            pos: ((-740.0, -240.0, 150.0), (-760.0, -280.0, 150.0)),
+            aim: Drone(Wave(3, 1)),
+            fov: (10.0, 7.0),
+            card: (title: "10:20", line: "The Alga battalion, from Павлівка (Pavlivka).", note: "", secs: 2.5),
+        ),
+        // V9. Flown: the operator pushes in over the third column at its wrecks — hover, fly in sport, zoom, hover.
+        //     Fallback if the framing fails: placed (1120,-150,150) → (1100,-190,150), Wave(4,0), 12→8.
+        (
+            from: 1036.0,
+            secs: 12.0,
+            pos: ((1250.0, -80.0, 160.0), (0.0, 0.0, 0.0)),
+            aim: Fly(Wave(4, 0)),
+            fov: (20.0, 20.0),
+            fly: [(3.0, 9.0, "w+"), (9.0, 11.0, "z")],
+        ),
+        // V10. Infantry on foot under the mortars: 100 m up, a man about 120 px tall at 1080p.
+        (
+            from: 1190.0,
+            secs: 10.0,
+            pos: ((-900.0, 300.0, 100.0), (-910.0, 275.0, 100.0)),
+            aim: Drone(MenNear((-950.0, 250.0))),
+            fov: (9.0, 7.0),
+            card: (title: "13:20", line: "No more armour. Infantry, on foot.", note: "", secs: 2.5),
+        ),
+        // V11. Late afternoon over the dacha road: everything that came down it is still there.
+        (
+            from: 1440.0,
+            secs: 8.0,
+            pos: ((1060.0, -630.0, 220.0), (1090.0, -570.0, 220.0)),
+            aim: Drone(Point((1040.0, -330.0))),
+            fov: (22.0, 18.0),
+        ),
+        // V12. The ledger, before the day's end.
+        (
+            from: 1448.0,
+            secs: 7.0,
+            pos: ((1090.0, -570.0, 220.0), (1090.0, -570.0, 220.0)),
+            aim: Drone(Point((1040.0, -330.0))),
+            fov: (18.0, 18.0),
+            debrief: true,
+            hud: false,
+        ),
+    ],
+    // Its day in the trailer (`cargo xtask trailer`, design/trailer.md): the card before its moments, when its
+    // events pass ends, and what the player does in it, the same in the events pass and every filming run: 155 mm
+    // on the first column in the kill zone; RAAM on the second column's lane, HIMARS on its tail; 155 mm on the
+    // third at the middle belt and on Alga's at the Pavlivka road.
+    reel: (
+        card: ("ВУГЛЕДАР (VUHLEDAR)", "6 February 2023", "Russian columns into the 72nd Brigade's minefields."),
+        end: 1440.0,
+        env: [("BAV_FIRE", "86:he@1200;90,480:raam@1233;150,505:himars@1335;350,700:he@1150;30,860:he@-870;-10")],
+    ),
+)

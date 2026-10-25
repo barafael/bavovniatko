@@ -118,7 +118,7 @@ impl Atgm {
 }
 
 /// What the player can call down (and what the dev scripts can call: `BAV_FIRE="100:he,130:raam"`).
-#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, strum::EnumString, serde::Deserialize)]
 #[strum(ascii_case_insensitive)]
 pub enum Strike {
     /// 155 mm high explosive, four rounds.

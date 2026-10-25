@@ -79,6 +79,27 @@ Press Enter."#,
             ),
         ],
     ),
+    // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
+    // left to fire, `{name}` a figure the HUD fills in, and the debrief's rows.
+    hud: (
+        tally: "{date}   {clock}\nour vehicles committed {committed}   lost {out}   men sent {sent}   VDV posts taken {taken}\n{zones}{runway}",
+        stock: "152 mm  {shells} rds   SMOKE  {smoke}   ILLUM  {illum}\nthe attack [{order}]{speed}",
+    ),
+    debrief: (
+        rows: [
+            Line("Our vehicles committed", Committed),
+            Line("    lost", Out),
+            Line("Men sent forward", Sent),
+            Line("    killed", AttackerDead),
+            Line("    wounded", Wounded),
+            Line("VDV positions silenced", PositionsSilenced),
+            Line("Ka-52s shot down", Down),
+            If(Field, [Line("Ours at the end", Held(Ua))]),
+            If(Runway, [Line("The runway: the longest stretch left whole", Runway)]),
+            Line("The airlift", Airlift),
+            Line("Shells left", Shells),
+        ],
+    ),
     // Over the tree line north of the field, looking south at the apron.
     camera: (700.0, -300.0),
     // The observers, at the tree line's edge: the tower is the VDV's.

@@ -1,0 +1,43 @@
+// The dioramas, in the order the READMEs give them. Each is an id (the first command-line argument or BAV_DIORAMA
+// names it), its files (read in this order and merged into one record, `bav_core::data`: a field may be in one
+// of them only), and its tours' shots (`shots/`, read by the game's showcase and by the xtask). bav-core's build
+// script builds every file named here into the binary; a new diorama is a new entry and its files.
+[
+    // 6 February 2023: Russian columns into the 72nd Brigade's minefields (db/research/chapters/c08-vuhledar.md).
+    (id: "vuhledar", files: ["vuhledar.ron"], shots: "shots/vuhledar.ron"),
+    // 8 June 2023: the 47th Brigade's breach south of Mala Tokmachka, into the Russian minefields
+    // (db/research/chapters/c09-robotyne.md §6, set piece 1).
+    (id: "robotyne", files: ["robotyne.ron"], shots: "shots/robotyne.ron"),
+    // 24 February 2022, Antonov airport at Hostomel, morning: the VDV come in by helicopter onto the National
+    // Guard's rear echelon (db/research/chapters/c01-march-on-kyiv.md; design/hostomel.md, sub-chapter I).
+    (
+        id: "hostomel-1",
+        files: ["hostomel/map.ron", "hostomel/osm.ron", "hostomel/landing.ron"],
+        shots: "shots/hostomel-1.ron",
+    ),
+    // The same day at dusk: the counterattack that retakes the field and craters the runway (sub-chapter II).
+    (
+        id: "hostomel-2",
+        files: ["hostomel/map.ron", "hostomel/osm.ron", "hostomel/counter.ron"],
+        shots: "shots/hostomel-2.ron",
+    ),
+    // 10 October 2023, the northern shoulder of the Avdiivka salient: the first mechanised wave at Stepove and the
+    // spoil heap (db/research/chapters/c11-avdiivka.md; design/avdiivka.md, part I).
+    (
+        id: "avdiivka-1",
+        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/forces.ron", "avdiivka/wave1.ron"],
+        shots: "shots/avdiivka-1.ron",
+    ),
+    // 19 October 2023: the second wave, and the heap stormed on foot (part II).
+    (
+        id: "avdiivka-2",
+        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/forces.ron", "avdiivka/wave2.ron"],
+        shots: "shots/avdiivka-2.ron",
+    ),
+    // 11 January 2024, Stepove in the snow: the T-90M and the two Bradleys (part III, vignette v02).
+    (
+        id: "avdiivka-3",
+        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/forces.ron", "avdiivka/stepove.ron"],
+        shots: "shots/avdiivka-3.ron",
+    ),
+]

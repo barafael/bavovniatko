@@ -5,7 +5,8 @@ use crate::camera::{Mode, View};
 use crate::director::{self, Script};
 use crate::fire::{Atgm, AtgmMode, AtgmTeam, FireControl, JAVELIN_LOCK, Post};
 use crate::geo;
-use crate::diorama::{Diorama, diorama};
+use crate::diorama::diorama;
+use crate::screen;
 use crate::units::{ColumnOrder, Radio, Side, Stats};
 use crate::Phase;
 use bevy::{prelude::*, text::FontSource};
@@ -101,14 +102,6 @@ fn runway_line(r: &bav_sim::air::Airfield) -> String {
 /// The airlift in the debrief.
 fn airlift_row(a: Option<&bav_sim::air::Airfield>) -> &'static str {
     a.map_or("—", |a| if a.airlift_landed { "landed: the field lost for good" } else if a.airlift_turned_back { "turned back in the air" } else { "not yet decided" })
-}
-
-/// The field's tally: what has come down, what has landed, who holds what, and our men.
-fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, runway: Option<&bav_sim::air::Airfield>) -> String {
-    let zones = zones_line(f);
-    let (down, landed) = (air.map_or(0, |a| a.down.len()), runway.map_or(0, |r| r.men_landed));
-    let strip = runway.map_or(String::new(), runway_line);
-    format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{zones}{strip}", f.out, f.captured)
 }
 
 /// The Igla's ring, and its size on a 900 px high screen.
@@ -450,33 +443,27 @@ fn update_hud(
         }
     };
     texts.p0().set_if_neq(telemetry);
-    let committed = stats.vehicles_committed;
-    let out = stats.destroyed + stats.abandoned;
-    texts.p1().set_if_neq(Text::new(match diorama() {
-        // (Where the day has areas, who holds them under it.)
-        Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => format!(
-            "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}{}{}",
-            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned,
-            // Avdiivka's Su-25s, once any have come over.
-            air.as_deref().filter(|a| a.flown > 0).map_or(String::new(), |a| format!("   aircraft over {}   down {}", a.flown, a.down.len())),
-            field.as_ref().map_or(String::new(), |f| format!("\n{}", zones_line(f)))
-        ),
-        Diorama::Robotyne => format!(
-            "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
-            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
-        ),
-        // The clock, then the field's own tally: helicopters down, the posts held, the runway.
-        Diorama::HostomelLanding => format!("{}   {}{}", diorama().tally_date(), director::clock_text(script.t), field.as_ref().map_or(String::new(), |f| field_line(f, air.as_deref(), runway.as_deref()))),
-        Diorama::HostomelCounter => {
-            let zones = field.as_ref().map_or(String::new(), |f| zones_line(f));
-            let strip = runway.as_deref().map_or(String::new(), runway_line);
-            let taken = field.as_ref().map_or(0, |f| f.lost);
-            format!(
-                "{}   {}\nour vehicles committed {}   lost {}   men sent {}   VDV posts taken {taken}\n{zones}{strip}",
-                diorama().tally_date(), director::clock_text(script.t), committed, out, stats.sent
-            )
-        }
-    }));
+    // The tally, in the place's words (`hud.tally`), with what the day has: its aircraft once any have come over, its
+    // areas, its fight and its runway.
+    let (field, air, runway) = (field.as_deref(), air.as_deref(), runway.as_deref());
+    texts.p1().set_if_neq(Text::new(screen::fill(&screen::screen().hud.tally, |key| match key {
+        "date" => diorama().tally_date().to_string(),
+        "clock" => director::clock_text(script.t),
+        "committed" => stats.vehicles_committed.to_string(),
+        "out" => (stats.destroyed + stats.abandoned).to_string(),
+        "withdrawn" => stats.withdrawn.to_string(),
+        "sent" => stats.sent.to_string(),
+        "returned" => stats.returned.to_string(),
+        "air" => air.filter(|a| a.flown > 0).map_or(String::new(), |a| format!("   aircraft over {}   down {}", a.flown, a.down.len())),
+        "zones" => field.map_or(String::new(), zones_line),
+        "air_down" => air.map_or(0, |a| a.down.len()).to_string(),
+        "landed" => runway.map_or(0, |r| r.men_landed).to_string(),
+        "men_out" => field.map_or(0, |f| f.out).to_string(),
+        "captured" => field.map_or(0, |f| f.captured).to_string(),
+        "taken" => field.map_or(0, |f| f.lost).to_string(),
+        "runway" => runway.map_or(String::new(), runway_line),
+        _ => String::new(),
+    })));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
     let mut spans: Vec<(String, bool)> = Vec::new();
     for (t, line) in radio.lines.iter().rev().take(6).collect::<Vec<_>>().into_iter().rev() {
@@ -509,40 +496,37 @@ fn update_hud(
     };
     let speed = vtime.relative_speed();
     let speed_line = if (speed - 1.0).abs() > 0.01 { format!("\ntime x{speed}") } else { String::new() };
-    texts.p2().set_if_neq(Text::new(match diorama() {
-        Diorama::Vuhledar => format!("155 mm  {} rds   RAAM  {}   HIMARS  {}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.raam, fc.himars, teams, missiles, mode, speed_line),
-        Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => {
-            // (The drone's grenades where it has them: C drops one.)
-            let vog = drops.as_ref().map_or(String::new(), |d| format!("   VOG  {} [C]", d.left));
-            format!("155 mm  {} rds   DPICM  {}   RAAM  {}   HIMARS  {}   FPV  {}{vog}\nATGM teams {} ({} missiles)   [{}]{}", fc.shells, fc.cluster, fc.raam, fc.himars, team.0.left, teams, missiles, mode, speed_line)
+    // What is left to fire, in the place's words (`hud.stock`).
+    texts.p2().set_if_neq(Text::new(screen::fill(&screen::screen().hud.stock, |key| match key {
+        "shells" => fc.shells.to_string(),
+        "cluster" => fc.cluster.to_string(),
+        "raam" => fc.raam.to_string(),
+        "himars" => fc.himars.to_string(),
+        "smoke" => fc.smoke.to_string(),
+        "illum" => fc.illum.to_string(),
+        "fpv" => team.0.left.to_string(),
+        // The drone's grenades where it has them: C drops one.
+        "vog" => drops.as_deref().map_or(String::new(), |d| format!("   VOG  {} [C]", d.left)),
+        // Command's air defence on call, while it has missiles.
+        "ad" => if fc.air_defence > 0 { format!("   AD  {}", fc.air_defence) } else { String::new() },
+        "teams" => teams.to_string(),
+        "missiles" => missiles.to_string(),
+        "atgm_mode" => mode.to_string(),
+        "order" => match *order {
+            ColumnOrder::Push => "PUSH ON",
+            ColumnOrder::Hold => "HOLD",
+            ColumnOrder::PullBack => "PULL BACK",
         }
-        Diorama::Robotyne => {
-            let order = match *order {
-                ColumnOrder::Push => "PUSH ON",
-                ColumnOrder::Hold => "HOLD",
-                ColumnOrder::PullBack => "PULL BACK",
-            };
-            // (Command's air defence on call, while it has missiles.)
-            let ad = if fc.air_defence > 0 { format!("   AD  {}", fc.air_defence) } else { String::new() };
-            format!("155 mm  {} rds   SMOKE  {}   HIMARS  {}{ad}\ncolumn [{}]   ATGM teams {} ({} missiles){}", fc.shells, fc.smoke, fc.himars, order, teams, missiles, speed_line)
-        }
-        Diorama::HostomelCounter => {
-            let order = match *order {
-                ColumnOrder::Push => "PUSH ON",
-                ColumnOrder::Hold => "HOLD",
-                ColumnOrder::PullBack => "PULL BACK",
-            };
-            format!("152 mm  {} rds   SMOKE  {}   ILLUM  {}\nthe attack [{order}]{}", fc.shells, fc.smoke, fc.illum, speed_line)
-        }
-        Diorama::HostomelLanding => {
-            let out = match field.as_ref() {
-                Some(f) if f.ordered_out => "   PULLING OUT".to_string(),
-                Some(_) if bav_sim::data::sim_data().space_key == bav_sim::fire::SpaceKey::Withdraw => "   [Space] pull out".to_string(),
-                _ => String::new(),
-            };
-            format!("D-30  {} rds   [5] Igla{out}{}", fc.shells, speed_line)
-        }
-    }));
+        .to_string(),
+        // Where the fight's posts can be pulled out: whether they have been told.
+        "pull_out" => match field {
+            Some(f) if f.ordered_out => "   PULLING OUT".to_string(),
+            Some(_) if bav_sim::data::sim_data().space_key == bav_sim::fire::SpaceKey::Withdraw => "   [Space] pull out".to_string(),
+            _ => String::new(),
+        },
+        "speed" => speed_line.clone(),
+        _ => String::new(),
+    })));
     // The day's caption, the same way: the Ukrainian line over its gloss.
     let banner = script.banner.as_ref().map(|b| b.0.clone()).unwrap_or_default();
     if shown.1 != banner {
@@ -636,16 +620,6 @@ struct HudNodes<'w, 's> {
     nodes: TopLevel<'w, 's>,
 }
 
-/// The debrief's copy that is counted: the heading, the clock span, the (label, value) rows, the per-column table,
-/// and its three heads. The lines that come after, the sources and the keys are the diorama's words.
-type DebriefCopy = (
-    String,
-    String,
-    Vec<(String, String)>,
-    Vec<(String, [u32; 3])>,
-    [&'static str; 3],
-);
-
 /// The end of the day: its date and clock span as the heading; the day's own account in aligned rows; the
 /// lines about what came after, with no heading; and the sources the day rests on, each a row that opens in the
 /// browser. No figures from the record are set against the day's own: the sources say where the day came from,
@@ -657,14 +631,14 @@ fn show_debrief(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     script: Res<Script>,
-    positions: Query<&Post>,
-    soldiers: Query<&crate::units::Soldier>,
+    positions: Query<&'static Post>,
+    soldiers: Query<&'static crate::units::Soldier>,
     evac: Res<bav_sim::evac::Evacuation>,
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
-    (field, air, iglas, runway, drops): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>),
-    duel: StepoveDuel,
+    (field, air, iglas, runway, drops): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&'static bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>),
+    duel: DuelView,
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
@@ -675,152 +649,18 @@ fn show_debrief(
     }
     let font = fonts.0.clone();
     let tf = |size: f32| TextFont { font: FontSource::Handle(font.clone()), font_size: FontSize::Px(size), ..default() };
-    let out = stats.destroyed + stats.abandoned;
-    // (label, value) rows, and the columns table: (name, vehicles, destroyed, abandoned).
-    let (heading, span, rows, columns, col_heads): DebriefCopy = match diorama() {
-        Diorama::AvdiivkaStepove => {
-            let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
-            let heading = format!("{}   {}", bav_core::data::data().date, crate::text::STEPOVE.hud());
-            (heading, format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), stepove_rows(&stats, &fc, &script, &duel, closest), Vec::new(), ["", "", ""])
-        }
-        Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 => {
-            let closest = (-geo::layout().town.max.y - stats.max_advance).max(0.0);
-            let (heading, span) = if diorama() == Diorama::Vuhledar {
-                (format!("6 February 2023   {}", crate::text::VUHLEDAR.hud()), format!("06:40 – {}", director::clock_text(script.t)))
-            } else {
-                (format!("{}   {}", bav_core::data::data().date, crate::text::AVDIIVKA.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)))
-            };
-            (
-                heading,
-                span,
-                vec![
-                    ("Russian vehicles committed".into(), stats.vehicles_committed.to_string()),
-                    ("Knocked out".into(), format!("{out}")),
-                    ("    destroyed".into(), stats.destroyed.to_string()),
-                    ("    abandoned".into(), stats.abandoned.to_string()),
-                    ("    on mines".into(), stats.mine_hits.to_string()),
-                    ("    by ATGM".into(), stats.atgm_kills.to_string()),
-                    ("    by artillery".into(), stats.artillery_kills.to_string()),
-                    ("    turrets thrown".into(), stats.turret_tosses.to_string()),
-                    ("Withdrew".into(), stats.withdrawn.to_string()),
-                    ("Men sent forward".into(), stats.sent.to_string()),
-                    ("    came back".into(), stats.returned.to_string()),
-                    ("    Russian dead".into(), stats.attacker_dead.to_string()),
-                    (if diorama() == Diorama::Vuhledar { "Closest any Russian got to the town" } else { "Closest any Russian got to the village" }.into(), format!("{closest:.0} m")),
-                    ("Ukrainian casualties".into(), stats.defender_losses.to_string()),
-                    ("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)),
-                ]
-                .into_iter()
-                // Where we have vehicles in the field (Avdiivka's Bradleys), what they cost.
-                .chain((diorama() != Diorama::Vuhledar).then(|| ("Our vehicles lost".to_string(), stats.defender_vehicles.to_string())))
-                // Where their aircraft came in (Avdiivka's Su-25s), what came and what our Iglas did to it.
-                .chain(air.as_deref().filter(|a| a.flown > 0).into_iter().flat_map(|a| [("Su-25 runs".to_string(), a.flown.to_string()), ("    shot down".to_string(), a.down.len().to_string()), ("    hit and turned away".to_string(), a.driven_off.to_string())]))
-                // The areas at the end (the heap is part II's question), and what the drone's drops did.
-                .chain(field.as_deref().into_iter().flat_map(|f| f.zones.iter().map(|z| (format!("{} at the end", capital(&z.name.0)), held_by(z.held).to_string()))))
-                .chain(drops.as_deref().map(|d| ("Grenades dropped from the drone".to_string(), format!("{} of {}, {} killed", d.dropped, d.dropped + d.left, stats.deaths.iter().find(|(w, _)| *w == "drops").map_or(0, |(_, n)| *n)))))
-                .collect(),
-                stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (format!("column {i}"), [w.vehicles, w.destroyed, w.abandoned])).collect(),
-                ["vehicles", "destroyed", "abandoned"],
-            )
-        }
-        Diorama::Robotyne => {
-            let names = ["", "the first group", "the second group", "sent in for the wounded"];
-            let trench = crate::geo::layout().trench_z.expect("Mala Tokmachka has a trench");
-            let short = |a: f32| {
-                if a == f32::MIN {
-                    "nowhere yet".to_string()
-                } else if a > trench - 1.0 {
-                    "in the trench".to_string()
-                } else {
-                    format!("{:.0} m short of the trench", trench - a)
-                }
-            };
-            let ru = positions.iter().filter(|p| p.side == Side::Ru).count();
-            let lying = soldiers.iter().filter(|s| s.side == Side::Ua && s.state == crate::units::SState::Wounded).count();
-            let quiet = positions.iter().filter(|p| p.side == Side::Ru && p.strength == 0).count();
-            (
-                format!("8 June 2023   {}", crate::text::MALA_TOKMACHKA.hud()),
-                format!("03:50 – {}", director::clock_text(script.t)),
-                vec![
-                    ("Our vehicles committed".into(), stats.vehicles_committed.to_string()),
-                    ("Left in the field".into(), out.to_string()),
-                    ("    burned out".into(), stats.destroyed.to_string()),
-                    ("    immobilised and abandoned (the recovery crews will try tonight)".into(), stats.abandoned.to_string()),
-                    ("Came back".into(), stats.withdrawn.to_string()),
-                    ("Men sent forward".into(), stats.sent.to_string()),
-                    ("    brought out".into(), stats.returned.to_string()),
-                    ("    of them picked up in the field by a Bradley".into(), stats.picked_up.to_string()),
-                    ("    killed".into(), stats.attacker_dead.to_string()),
-                    ("Wounded".into(), stats.wounded.to_string()),
-                    ("    brought out".into(), stats.wounded_out.to_string()),
-                    ("    still lying out there".into(), lying.to_string()),
-                    ("Bradleys you sent in for them".into(), format!("{} of {}", evac.sent, evac.sent + evac.left)),
-                    ("The overwatch in the forward tree line lost".into(), stats.overwatch_losses.to_string()),
-                    ("The furthest vehicle stopped".into(), short(stats.vehicle_advance)),
-                    ("On foot, the furthest anyone got".into(), short(stats.max_advance)),
-                    ("Russian positions on the crest silenced".into(), format!("{quiet} of {ru}")),
-                    ("Their dug-in tanks knocked out".into(), format!("{} of 2", stats.defender_vehicles)),
-                    ("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)),
-                    ("Smoke left".into(), format!("{} of {}", fc.smoke, fc.start.smoke)),
-                ],
-                stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (names.get(i).copied().unwrap_or("another group").to_string(), [w.vehicles, w.destroyed, w.abandoned])).collect(),
-                ["vehicles", "burned", "left"],
-            )
-        }
-        Diorama::HostomelCounter => {
-            let a = air.as_deref();
-            let ru = positions.iter().filter(|p| p.side == Side::Ru).count();
-            let quiet = positions.iter().filter(|p| p.side == Side::Ru && p.strength == 0).count();
-            let mut rows: Vec<(String, String)> = vec![
-                ("Our vehicles committed".into(), stats.vehicles_committed.to_string()),
-                ("    lost".into(), out.to_string()),
-                ("Men sent forward".into(), stats.sent.to_string()),
-                ("    killed".into(), stats.attacker_dead.to_string()),
-                ("    wounded".into(), stats.wounded.to_string()),
-                ("VDV positions silenced".into(), format!("{quiet} of {ru}")),
-                ("Ka-52s shot down".into(), a.map_or(0, |a| a.down.len()).to_string()),
-            ];
-            if let Some(f) = field.as_deref() {
-                let ours: Vec<&str> = f.zones.iter().filter(|z| z.held == Some(Side::Ua)).map(|z| z.name.0.as_str()).collect();
-                rows.push(("Ours at the end".into(), if ours.is_empty() { "nothing".into() } else { ours.join(", ") }));
-            }
-            if let Some(r) = runway.as_deref() {
-                rows.push(("The runway: the longest stretch left whole".into(), format!("{:.1} km{}", r.longest() / 1000.0, if r.usable() { ", enough for an Il-76" } else { ", too short to land on" })));
-            }
-            rows.push(("The airlift".into(), airlift_row(runway.as_deref()).into()));
-            rows.push(("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
-            (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])
-        }
-        Diorama::HostomelLanding => {
-            let a = air.as_deref();
-            let down = |k: bav_sim::air::AirKind| a.map_or(0, |a| a.down.iter().filter(|(d, _)| *d == k).count());
-            let by = |w: &str| a.map_or(0, |a| a.down.iter().filter(|(_, x)| *x == w).count());
-            let mut rows: Vec<(String, String)> = vec![
-                ("Helicopters in the stream".into(), a.map_or(0, |a| a.flown).to_string()),
-                ("Shot down".into(), a.map_or(0, |a| a.down.len()).to_string()),
-                ("    Ka-52".into(), down(bav_sim::air::AirKind::Ka52).to_string()),
-                ("    Mi-24".into(), down(bav_sim::air::AirKind::Mi24).to_string()),
-                ("    Mi-8, with the men aboard".into(), down(bav_sim::air::AirKind::Mi8).to_string()),
-                ("    by Igla".into(), by("Igla").to_string()),
-                ("    by the ZU-23-2".into(), by("ZU-23-2").to_string()),
-                ("Hit and turned away".into(), a.map_or(0, |a| a.driven_off).to_string()),
-                ("Paratroopers landed".into(), runway.as_deref().map_or(0, |r| r.men_landed).to_string()),
-                ("    killed".into(), stats.attacker_dead.to_string()),
-            ];
-            if let Some(f) = field.as_deref() {
-                rows.push(("Our men lost at their posts".into(), stats.defender_losses.to_string()));
-                rows.push(("Walked out to Horenka".into(), f.out.to_string()));
-                rows.push(("Taken prisoner".into(), f.captured.to_string()));
-                rows.push(("The field held until".into(), f.held_until.map_or("the end".into(), director::clock_text)));
-                let held: Vec<&str> = f.zones.iter().filter(|z| z.held == Some(Side::Ru)).map(|z| z.name.0.as_str()).collect();
-                rows.push(("Theirs at the end".into(), if held.is_empty() { "nothing".into() } else { held.join(", ") }));
-            }
-            rows.push(("The airlift".into(), airlift_row(runway.as_deref()).into()));
-            rows.push(("Iglas left".into(), iglas.iter().map(|i| i.missiles).sum::<u32>().to_string()));
-            rows.push(("D-30 rounds left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
-            (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])
-        }
-    };
+    // The heading's date and place, the clock's span, and the day's account in the place's words (`debrief`).
+    let spec = &screen::screen().debrief;
+    let data = bav_core::data::data();
+    let place = spec.place.as_ref().unwrap_or(&data.place);
+    let heading = format!("{}   {} ({})", data.date, place.0, place.1);
+    let span = format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t));
+    let ledger = Ledger { stats: &stats, fc: &fc, positions: &positions, soldiers: &soldiers, evac: &evac, field: field.as_deref(), air: air.as_deref(), iglas: &iglas, runway: runway.as_deref(), drops: drops.as_deref(), duel: &duel, script: &script };
+    let mut rows = Vec::new();
+    ledger.rows(&spec.rows, &mut rows);
+    // The columns, as a small table: (name, vehicles, destroyed, abandoned).
+    let columns: Vec<(String, [u32; 3])> = spec.columns.as_ref().map_or(Vec::new(), |c| stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (c.name(i), [w.vehicles, w.destroyed, w.abandoned])).collect());
+    let col_heads = spec.columns.as_ref().map_or([""; 3], |c| [c.heads.0.as_str(), c.heads.1.as_str(), c.heads.2.as_str()]);
     let words = &bav_core::data::data().words;
     let (closing, sources, keys) = (&words.closing, &words.sources, words.keys.as_str());
     let dim = Color::srgba(0.72, 0.72, 0.70, 0.85);
@@ -887,9 +727,10 @@ fn show_debrief(
     });
 }
 
-/// What the debrief of Stepove's afternoon reads besides the tally: the duel's ledger, the hulls, the pair's arms.
+/// What the debrief reads of a duel, where the day has one (Stepove's afternoon): the hits the feed saw, the hulls, the
+/// pair's arms, the FPVs.
 #[derive(bevy::ecs::system::SystemParam)]
-struct StepoveDuel<'w, 's> {
+struct DuelView<'w, 's> {
     time: Res<'w, Time>,
     ledger: Option<Res<'w, bav_sim::bradley::Duel>>,
     vehicles: Query<'w, 's, (&'static crate::units::Vehicle, Has<crate::units::Blinded>)>,
@@ -897,63 +738,170 @@ struct StepoveDuel<'w, 's> {
     fpv: Res<'w, bav_sim::player::Fpv>,
 }
 
-/// Stepove's afternoon in its own terms (design/avdiivka.md, part III): the duel as the hit feed saw it (what hit the
-/// T-90M, from where, what it did), the BMPs and the men, the trench, the pair and what they fired.
-fn stepove_rows(stats: &Stats, fc: &FireControl, script: &Script, duel: &StepoveDuel, closest: f32) -> Vec<(String, String)> {
-    use crate::units::{VKind, VState};
-    // The feed's times are the clock's since the start of the run; the day's clock started with the battle.
-    let offset = duel.time.elapsed_secs_f64() - script.t as f64;
-    let clock = |at: f64| director::clock_text((at - offset) as f32);
-    let tank = duel.vehicles.iter().find(|(v, _)| v.kind == VKind::T90m && v.side == Side::Ru);
-    let fate = match tank {
-        None => "never came".to_string(),
-        Some((v, blind)) => {
-            let how = match v.state {
-                VState::Destroyed => "burned out",
-                VState::Abandoned => "left in the village",
-                VState::Immobilized => "stopped",
-                VState::Withdrawing => "withdrawing",
-                _ => "still fighting",
-            };
-            let crew = if v.state.alive() && v.crew > 0 { "" } else { ", the crew out" };
-            format!("{}{how}{crew}", if blind { "blinded, " } else { "" })
-        }
-    };
-    let mut rows: Vec<(String, String)> = vec![("The T-90M".into(), fate)];
-    // Each hit on the tank, the same thing over again counted once.
-    let hits = duel.ledger.as_deref().map_or(&[][..], |d| &d.hits[..]);
-    let mut lines: Vec<(String, String, u32)> = Vec::new();
-    for h in hits.iter().filter(|h| h.side == Side::Ru && h.target_name.starts_with("T-90M")) {
-        let what = format!("    {}{}: {}", h.weapon, if h.from.is_empty() { String::new() } else { format!(" from {}", h.from) }, h.result);
-        match lines.last_mut() {
-            Some((w, _, n)) if *w == what => *n += 1,
-            _ => lines.push((what, clock(h.at), 1)),
-        }
-    }
-    if lines.is_empty() {
-        rows.push(("    nothing of ours reached it".into(), String::new()));
-    }
-    rows.extend(lines.into_iter().map(|(w, at, n)| (if n > 1 { format!("{w} (x{n})") } else { w }, at)));
-    let bmps: Vec<_> = duel.vehicles.iter().filter(|(v, _)| v.side == Side::Ru && v.kind != VKind::T90m).collect();
-    let stopped = bmps.iter().filter(|(v, _)| !v.state.mobile()).count();
-    rows.push(("The BMPs knocked out".into(), format!("{stopped} of {}", bmps.len())));
-    rows.push(("Their men sent forward".into(), stats.sent.to_string()));
-    rows.push(("    dead".into(), stats.attacker_dead.to_string()));
-    rows.push(("Closest any Russian got to the village".into(), format!("{closest:.0} m")));
-    rows.push(("The trench".into(), if stats.foothold > 0 { "lost".into() } else { "held".into() }));
-    rows.push(("    our casualties".into(), stats.defender_losses.to_string()));
-    // The pair: their runs, what they lost, what they fired.
-    for (at, what) in duel.ledger.as_deref().map_or(&[][..], |d| &d.runs[..]) {
-        rows.push((format!("    {what}"), clock(*at)));
-    }
-    rows.push(("Bradleys lost".into(), stats.defender_vehicles.to_string()));
-    let (ap, he) = duel.arms.iter().fold((0, 0), |(ap, he), a| (ap + 300 - a.ap.min(300), he + 230 - a.he.min(230)));
-    rows.push(("25 mm fired, AP and HE".into(), format!("{ap} and {he}")));
-    rows.push(("FPVs left".into(), duel.fpv.left.to_string()));
-    rows.push(("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
-    rows
+/// Everything the debrief's rows can count.
+struct Ledger<'a, 'w, 's> {
+    stats: &'a Stats,
+    fc: &'a FireControl,
+    script: &'a Script,
+    positions: &'a Query<'w, 's, &'static Post>,
+    soldiers: &'a Query<'w, 's, &'static crate::units::Soldier>,
+    evac: &'a bav_sim::evac::Evacuation,
+    field: Option<&'a bav_sim::fight::Field>,
+    air: Option<&'a bav_sim::air::AirTally>,
+    iglas: &'a Query<'w, 's, &'static bav_sim::manpads::Igla>,
+    runway: Option<&'a bav_sim::air::Airfield>,
+    drops: Option<&'a bav_sim::drones::Drops>,
+    duel: &'a DuelView<'w, 's>,
 }
 
+impl Ledger<'_, '_, '_> {
+    /// The file's rows as (label, value), in order.
+    fn rows(&self, spec: &[screen::Row], out: &mut Vec<(String, String)>) {
+        for row in spec {
+            match row {
+                screen::Row::Line(label, figure) => out.push((label.clone(), self.figure(figure))),
+                screen::Row::If(gate, rows) => {
+                    let has = match gate {
+                        screen::Gate::Flew => self.air.is_some_and(|a| a.flown > 0),
+                        screen::Gate::Field => self.field.is_some(),
+                        screen::Gate::Runway => self.runway.is_some(),
+                        screen::Gate::Drops => self.drops.is_some(),
+                    };
+                    if has {
+                        self.rows(rows, out);
+                    }
+                }
+                screen::Row::Areas(label) => {
+                    out.extend(self.field.into_iter().flat_map(|f| f.zones.iter().map(|z| (label.replace("{area}", &capital(&z.name.0)), held_by(z.held).to_string()))));
+                }
+                screen::Row::TankHits(none) => self.tank_hits(none, out),
+                screen::Row::Runs => {
+                    for (at, what) in self.duel.ledger.as_deref().map_or(&[][..], |d| &d.runs[..]) {
+                        out.push((format!("    {what}"), self.clock(*at)));
+                    }
+                }
+            }
+        }
+    }
+
+    /// The feed's times are the clock's since the start of the run; the day's clock started with the battle.
+    fn clock(&self, at: f64) -> String {
+        let offset = self.duel.time.elapsed_secs_f64() - self.script.t as f64;
+        director::clock_text((at - offset) as f32)
+    }
+
+    /// Each hit on the duel's tank as the hit feed saw it (what hit it, from where, what it did), the same thing over
+    /// again counted once.
+    fn tank_hits(&self, none: &str, out: &mut Vec<(String, String)>) {
+        let hits = self.duel.ledger.as_deref().map_or(&[][..], |d| &d.hits[..]);
+        let mut lines: Vec<(String, String, u32)> = Vec::new();
+        for h in hits.iter().filter(|h| h.side == Side::Ru && h.target_name.starts_with("T-90M")) {
+            let what = format!("    {}{}: {}", h.weapon, if h.from.is_empty() { String::new() } else { format!(" from {}", h.from) }, h.result);
+            match lines.last_mut() {
+                Some((w, _, n)) if *w == what => *n += 1,
+                _ => lines.push((what, self.clock(h.at), 1)),
+            }
+        }
+        if lines.is_empty() {
+            out.push((none.to_string(), String::new()));
+        }
+        out.extend(lines.into_iter().map(|(w, at, n)| (if n > 1 { format!("{w} (x{n})") } else { w }, at)));
+    }
+
+    /// The trench's distance from the furthest our men got: in it, so far short, or nowhere yet.
+    fn short(a: f32) -> String {
+        let trench = crate::geo::layout().trench_z.expect("a reach short of the trench needs a trench");
+        if a == f32::MIN {
+            "nowhere yet".to_string()
+        } else if a > trench - 1.0 {
+            "in the trench".to_string()
+        } else {
+            format!("{:.0} m short of the trench", trench - a)
+        }
+    }
+
+    fn figure(&self, figure: &screen::Figure) -> String {
+        use crate::units::{VKind, VState};
+        use screen::Figure as F;
+        let (stats, fc, a) = (self.stats, self.fc, self.air);
+        let theirs = |held: Side| {
+            let named: Vec<&str> = self.field.map_or(Vec::new(), |f| f.zones.iter().filter(|z| z.held == Some(held)).map(|z| z.name.0.as_str()).collect());
+            if named.is_empty() { "nothing".to_string() } else { named.join(", ") }
+        };
+        match figure {
+            F::Committed => stats.vehicles_committed.to_string(),
+            F::Out => (stats.destroyed + stats.abandoned).to_string(),
+            F::Destroyed => stats.destroyed.to_string(),
+            F::Abandoned => stats.abandoned.to_string(),
+            F::MineHits => stats.mine_hits.to_string(),
+            F::AtgmKills => stats.atgm_kills.to_string(),
+            F::ArtilleryKills => stats.artillery_kills.to_string(),
+            F::TurretTosses => stats.turret_tosses.to_string(),
+            F::Withdrawn => stats.withdrawn.to_string(),
+            F::Sent => stats.sent.to_string(),
+            F::Returned => stats.returned.to_string(),
+            F::PickedUp => stats.picked_up.to_string(),
+            F::AttackerDead => stats.attacker_dead.to_string(),
+            F::Wounded => stats.wounded.to_string(),
+            F::WoundedOut => stats.wounded_out.to_string(),
+            F::WoundedLying => self.soldiers.iter().filter(|s| s.side == Side::Ua && s.state == crate::units::SState::Wounded).count().to_string(),
+            F::Closest => format!("{:.0} m", (-geo::layout().town.max.y - stats.max_advance).max(0.0)),
+            F::DefenderLosses => stats.defender_losses.to_string(),
+            F::DefenderVehicles => stats.defender_vehicles.to_string(),
+            F::OverwatchLosses => stats.overwatch_losses.to_string(),
+            F::Shells => format!("{} of {}", fc.shells, fc.start.shells),
+            F::Smoke => format!("{} of {}", fc.smoke, fc.start.smoke),
+            F::Evacuations => format!("{} of {}", self.evac.sent, self.evac.sent + self.evac.left),
+            F::VehicleReach => Self::short(stats.vehicle_advance),
+            F::FootReach => Self::short(stats.max_advance),
+            F::PositionsSilenced => {
+                let ru = self.positions.iter().filter(|p| p.side == Side::Ru).count();
+                let quiet = self.positions.iter().filter(|p| p.side == Side::Ru && p.strength == 0).count();
+                format!("{quiet} of {ru}")
+            }
+            F::DugInKnockedOut => format!("{} of {}", stats.defender_vehicles, bav_sim::data::sim_data().dug_in.len()),
+            F::Flown => a.map_or(0, |a| a.flown).to_string(),
+            F::Down => a.map_or(0, |a| a.down.len()).to_string(),
+            F::DownKind(k) => a.map_or(0, |a| a.down.iter().filter(|(d, _)| d == k).count()).to_string(),
+            F::DownBy(w) => a.map_or(0, |a| a.down.iter().filter(|(_, x)| x == w).count()).to_string(),
+            F::DrivenOff => a.map_or(0, |a| a.driven_off).to_string(),
+            F::MenLanded => self.runway.map_or(0, |r| r.men_landed).to_string(),
+            F::MenOut => self.field.map_or(0, |f| f.out).to_string(),
+            F::Captured => self.field.map_or(0, |f| f.captured).to_string(),
+            F::HeldUntil => self.field.and_then(|f| f.held_until).map_or("the end".into(), director::clock_text),
+            F::Held(side) => theirs(*side),
+            F::Runway => self.runway.map_or(String::new(), |r| format!("{:.1} km{}", r.longest() / 1000.0, if r.usable() { ", enough for an Il-76" } else { ", too short to land on" })),
+            F::Airlift => airlift_row(self.runway).to_string(),
+            F::IglasLeft => self.iglas.iter().map(|i| i.missiles).sum::<u32>().to_string(),
+            F::Drops => self.drops.map_or(String::new(), |d| format!("{} of {}, {} killed", d.dropped, d.dropped + d.left, stats.deaths.iter().find(|(w, _)| *w == "drops").map_or(0, |(_, n)| *n))),
+            F::TankFate => match self.duel.vehicles.iter().find(|(v, _)| v.kind == VKind::T90m && v.side == Side::Ru) {
+                None => "never came".to_string(),
+                Some((v, blind)) => {
+                    let how = match v.state {
+                        VState::Destroyed => "burned out",
+                        VState::Abandoned => "left in the village",
+                        VState::Immobilized => "stopped",
+                        VState::Withdrawing => "withdrawing",
+                        _ => "still fighting",
+                    };
+                    let crew = if v.state.alive() && v.crew > 0 { "" } else { ", the crew out" };
+                    format!("{}{how}{crew}", if blind { "blinded, " } else { "" })
+                }
+            },
+            F::OtherHulls => {
+                let bmps: Vec<_> = self.duel.vehicles.iter().filter(|(v, _)| v.side == Side::Ru && v.kind != VKind::T90m).collect();
+                let stopped = bmps.iter().filter(|(v, _)| !v.state.mobile()).count();
+                format!("{stopped} of {}", bmps.len())
+            }
+            F::Trench => if stats.foothold > 0 { "lost" } else { "held" }.to_string(),
+            F::Fired25 => {
+                let (ap, he) = self.duel.arms.iter().fold((0, 0), |(ap, he), a| (ap + 300 - a.ap.min(300), he + 230 - a.he.min(230)));
+                format!("{ap} and {he}")
+            }
+            F::FpvsLeft => self.duel.fpv.left.to_string(),
+        }
+    }
+}
 /// A click on a source opens it in the browser.
 fn open_sources(links: Query<(&Interaction, &SourceLink), Changed<Interaction>>) {
     for (i, link) in &links {

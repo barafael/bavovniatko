@@ -8,6 +8,7 @@ mod camera;
 mod dev;
 mod hud;
 mod orders;
+mod screen;
 mod settings;
 mod showcase;
 mod table;
