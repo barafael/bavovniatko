@@ -25,19 +25,19 @@
     // spoil heap (db/research/chapters/c11-avdiivka.md; design/avdiivka.md, part I).
     (
         id: "avdiivka-1",
-        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/wave1.ron"],
+        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/forces.ron", "avdiivka/wave1.ron"],
         shots: "shots/avdiivka-1.ron",
     ),
     // 19 October 2023: the second wave, and the heap stormed on foot (part II).
     (
         id: "avdiivka-2",
-        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/wave2.ron"],
+        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/forces.ron", "avdiivka/wave2.ron"],
         shots: "shots/avdiivka-2.ron",
     ),
     // 11 January 2024, Stepove in the snow: the T-90M and the two Bradleys (part III, vignette v02).
     (
         id: "avdiivka-3",
-        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/stepove.ron"],
+        files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/forces.ron", "avdiivka/stepove.ron"],
         shots: "shots/avdiivka-3.ron",
     ),
 ]
