@@ -20,7 +20,9 @@ impl Plugin for FightPlugin {
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
             .insert_resource(Sight { dark: 1.0, lit: Vec::new() })
             .insert_resource(Field { zones: spec.zones.iter().map(|z| Zone { key: z.key.clone(), name: z.name.clone(), poly: z.poly.iter().map(|&(x, y)| Vec2::new(x, y)).collect(), held: None }).collect(), ..default() })
-            .add_systems(Update, (see, supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
+            // After the units have moved, fought and died this frame: the fight reads and writes the same men, posts and
+            // places, and in no fixed order against them a day would not replay itself.
+            .add_systems(Update, (see, supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
         crate::flares::add(app);
     }
 }

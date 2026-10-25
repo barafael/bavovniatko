@@ -16,8 +16,8 @@ use rand::Rng;
 /// What is burning up there.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum FlareKind {
-    /// A hand-held illumination rocket or a flare pistol's star: up 150 m, twenty-odd seconds, a few hundred metres
-    /// of ground lit.
+    /// A hand-held illumination rocket or a flare pistol's star: up 150 m, fifteen seconds or so, a hundred and fifty
+    /// metres of ground lit round the point under it.
     Hand,
     /// A 152 mm illumination round's star under its parachute: opened at 450 m, it comes down at 5 m/s and burns for
     /// about a minute over a kilometre of ground.
@@ -35,7 +35,7 @@ impl FlareKind {
     /// How long it burns (s).
     pub fn secs(self) -> f32 {
         match self {
-            FlareKind::Hand => 22.0,
+            FlareKind::Hand => 15.0,
             FlareKind::Shell => 60.0,
         }
     }
@@ -49,7 +49,7 @@ impl FlareKind {
     /// The ground it lights enough to see by: so far round the point under it (m).
     pub fn reach(self) -> f32 {
         match self {
-            FlareKind::Hand => 180.0,
+            FlareKind::Hand => 150.0,
             FlareKind::Shell => 500.0,
         }
     }
@@ -159,7 +159,7 @@ pub(crate) fn post_flares(
             .iter()
             .filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Wounded | SState::DugIn))
             .map(|(_, t)| t.translation.xz())
-            .filter(|p| p.distance(post.pos) < 300.0)
+            .filter(|p| p.distance(post.pos) < 200.0)
             .min_by(|a, b| a.distance(post.pos).total_cmp(&b.distance(post.pos)));
         let Some(p) = near else { continue };
         fl.left -= 1;

@@ -22,8 +22,8 @@ impl Plugin for NightPlugin {
             return;
         }
         app.add_systems(Startup, light_fires.in_set(bav_core::schedule::Setup::Dress))
-            .add_systems(Update, muzzles.in_set(crate::Step::Effects).before(crate::fx::play_requests))
-            .add_systems(Update, (bombed_buildings, flare_lights, budget).chain().in_set(crate::Step::Effects).after(crate::fx::light_particles));
+            .add_systems(Update, muzzles.in_set(crate::Step::Effects).after(crate::hostomel::daylight).before(crate::fx::play_requests))
+            .add_systems(Update, (bombed_buildings, flare_lights, budget).chain().in_set(crate::Step::Effects).after(crate::fx::light_particles).after(crate::hostomel::daylight));
     }
 }
 

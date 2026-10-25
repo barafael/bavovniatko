@@ -1,7 +1,7 @@
 # Hostomel: the third diorama, in two sub-chapters
 
 Status: both sub-chapters play, lit at night, with their minute tours and their Command bands (2026-10-25). Open: the
-counterattack's balance (the field is not fully retaken by 21:00 in the Record), a Command evening that differs from
+counterattack's pressure (the field is not fully retaken by 21:00 in the Record), a Command evening that differs from
 the Record (its staff changes nothing at dusk), a place in the showcase film, and the fuel farm (not on the map).
 Progress is logged at the end of this file.
 
@@ -319,9 +319,10 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   the entities it no longer has: new baseline `r2-r`; band 16/26, 16/18, 15/37, 17/34.
 - 2026-10-25: phases 6 and 8, the rest. **The night's lights.** `bav_sim::flares`: a `Flare` is a light in the air,
   falling as it burns; under it men see as by day, both sides (`fight::Sight::at`, which the posts' rifles and the
-  attackers' return fire now ask for the man or post they aim at). Hand flares: the attackers' by script
-  (`Act::Flares`, three times in the evening) and the VDV's posts', four each (`fight.flares`), sent up over the
-  nearest of our men within 300 m when the dark hides them, a minute or two apart. Illumination rounds: a Support
+  attackers' return fire now ask for the man or post they aim at). Hand flares (up 150 m, fifteen seconds, 150 m
+  round): the attackers' by script (`Act::Flares`, over three of the VDV's posts every forty seconds through the
+  assault) and the VDV's posts', two each (`fight.flares`), sent up over the nearest of our men within 200 m when the
+  dark hides them, a minute or two apart. Illumination rounds: a Support
   item (`Illum(4)`, two in the Record's allotment, eight rounds), L over the cursor (`Strike::Illum`, also
   `BAV_FIRE="770:illum@750;450"`): the star opens at 450 m, comes down at 5 m/s, burns a minute and lights 500 m
   round. The picture (`bav_look::night`): what burns since the afternoon (`fires` in the file: the stores at the
@@ -336,22 +337,32 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   counterattack the guns at dusk, the Su-24s on the apron, the two companies, the assault under its flares, the
   runway bombed, our men coming back off the field, the debrief. `cargo xtask tour <day> [--scout]` films any of
   the four (scouts in devlog/film/20261025-1751-tour-hostomel-1-scout.mp4 and -1801-…-hostomel-2-…). The film still
-  has no Hostomel. The tours change both parts' Records (the shots set the step): new same-day baselines f1-h1 and
-  f1-h2; Vuhledar, Mala Tokmachka and the three Avdiivka parts are `same`.
+  has no Hostomel. The tours change both parts' Records (the shots set the step), and so does the fight's new place
+  in the frame: its systems now run after the units' (`.after(units::drop_riders)`), where Bevy's ambiguity report
+  had them in no fixed order against the units' moves, mines and blasts (Transform, Post, Soldier, Radio, Stats); the
+  flares' systems sit inside that order. New same-day baselines f3-h1 and f3-h2 (hostomel-2 filmed twice from one
+  build is byte for byte the same); Vuhledar, Mala Tokmachka and the three Avdiivka parts are `same`.
   **Bands**, four seeds, (helicopters down, taken, walked out, held until) for the landing and (VDV posts taken of 6,
   our dead, held until, the hangar ours) for the counterattack:
 
   | | the landing | the counterattack |
   |---|---|---|
   | Record before (td2) | 1/0/3/4, 30/25/30/25, 40/50/55/55, 12:04-12:14 | 4/2/3/3, 40/52/47/43, 20:19-20:39, 2 of 4 |
-  | Record after | 2/0/3/3, 20/30/30/10, 65/35/55/85, 12:04-12:14 | 4/0/1/2, 47/67/64/64, 19:19-20:38, 2 of 4 |
-  | Command, staff off | 2/0/3/3, 45/40/35/40, 20/25/15/15, 12:21-12:23 | as the Record, seed for seed |
-  | Command, staff on | 2/0/3/3, 40/30/40/40, 15/25/25/0, 12:22-12:31 | as the Record, seed for seed |
+  | Record, first flares (four a post, three scripted) | 2/0/3/3, 20/30/30/10, 65/35/55/85, 12:04-12:14 | 4/0/1/2, 47/67/64/64, 19:19-20:38, 2 of 4 |
+  | Record after (f3) | 2/0/3/3, 30/30/15/10, 50/45/65/55, 12:11-12:15 | 4/2/2/3, 55/48/52/50, 20:24-21:05, 1 of 4 |
+  | Command, staff off | 2/0/3/3, 25/25/40/45, 30/25/20/10, 12:21-12:22 | as the Record, seed for seed |
+  | Command, staff on | 2/0/3/3, 35/35/40/35, 30/25/5/15, 12:21-12:23 | as the Record, seed for seed |
 
-  The VDV's flares cost the counterattack: our men rushing a post are seen at full range, so more of them die and
-  fewer posts fall (history: the field retaken by 21:00). In Command the morning has no order to pull out (it is the
+  The VDV's flares cost the counterattack at first: our men rushing a post were seen at full range, more of them died
+  and fewer posts fell. Re-tuned on the flares alone, the night left as it is: the posts have two, not four, and fire
+  them only at men within 200 m; a hand flare burns fifteen seconds over 150 m, not twenty-two over 180; our groups
+  light the posts every forty seconds through the assault. Tried and dropped: illumination rounds in the Record over
+  the apron (they light our men as well, and the posts' rifles reach 750 m to our 400: fewer posts fell), flares set
+  beyond the posts, one flare a post. The counterattack is back at its band before the lights (posts 2.75 of 6
+  against 3.0, our dead 48-55 against 40-52), and as before it does not retake the field by 21:00: that wants more
+  pressure, not less night. In Command the morning has no order to pull out (it is the
   player's Space), so the posts hold until they are dry and more men are taken: the Command band is the Record's
   less that order, as it should be; the staff barely moves it (it spots the Iglas for the gunships). In the evening
   Command with the day's picks is the Record exactly, and the staff changes nothing: there is no rule for a VDV
-  without guns. Not done: the counterattack's balance under the flares (more pressure, or illumination of our own
-  in the Record), a staff for the evening, Hostomel in the showcase film.
+  without guns. `cargo xtask smoke` passes (70 runs). Not done: the
+  field retaken by 21:00 (the attack's pressure), a staff for the evening, Hostomel in the showcase film.
