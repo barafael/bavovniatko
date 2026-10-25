@@ -510,7 +510,7 @@ fn update_hud(
                 ColumnOrder::Hold => "HOLD",
                 ColumnOrder::PullBack => "PULL BACK",
             };
-            format!("152 mm  {} rds   SMOKE  {}\nthe attack [{order}]{}", fc.shells, fc.smoke, speed_line)
+            format!("152 mm  {} rds   SMOKE  {}   ILLUM  {}\nthe attack [{order}]{}", fc.shells, fc.smoke, fc.illum, speed_line)
         }
         Diorama::HostomelLanding => {
             let out = match field.as_ref() {

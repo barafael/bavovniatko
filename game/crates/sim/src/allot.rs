@@ -64,6 +64,8 @@ pub enum SupportKind {
     Mavic(u32),
     /// So many cluster (DPICM) missions, two shells each (`fire::Strike::Cluster`).
     Cluster(u32),
+    /// So many illumination rounds (`fire::Strike::Illum`), one a call.
+    Illum(u32),
 }
 
 /// One entry of the catalog: what it is, called what, what it costs in allotment points (and later in Supply),
@@ -119,6 +121,8 @@ pub struct Stock {
     pub air_defence: u32,
     /// Cluster missions (DPICM), two shells each.
     pub cluster: u32,
+    /// Illumination rounds.
+    pub illum: u32,
 }
 
 /// The player's side as allotted: what the battle builds it from.
@@ -293,6 +297,7 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                 SupportKind::AirDefence(m) => st.air_defence += m * p.count,
                 SupportKind::Mavic(n) => a.mavics += n * p.count,
                 SupportKind::Cluster(m) => st.cluster += m * p.count,
+                SupportKind::Illum(n) => st.illum += n * p.count,
             }
         }
     }

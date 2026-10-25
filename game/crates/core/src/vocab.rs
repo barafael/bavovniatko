@@ -132,6 +132,9 @@ pub enum Strike {
     /// Cluster shells (DPICM): a carpet of bomblets over men in the open and the thin roofs of carriers; what the
     /// 55th used at Avdiivka to drive infantry into cover before the high explosive flushed them out.
     Cluster,
+    /// An illumination round: a star under a parachute high over the point, falling slowly and burning for about a
+    /// minute, under which men see as by day (Hostomel's counterattack at night).
+    Illum,
 }
 
 /// The weather over a day: which deck, how high, whether the sun shows.
