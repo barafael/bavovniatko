@@ -7,6 +7,9 @@ __pycache__/
 claude-resume
 # downloaded reference footage (temporary, for review only — not part of the KB)
 db/research/footage-ref/
+game/reference-footage/
+# agent worktrees
+.claude/worktrees/
 # downloaded 3D asset files (reference only; the catalogue in db/research/assets/ is links-only)
 db/research/assets/files/
 # derived staging artefacts (regenerate with the tools)

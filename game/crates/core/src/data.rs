@@ -312,6 +312,8 @@ pub enum LineSpec {
     Smoothed(Vec<P>, usize),
     /// Along a named curve, at n + 1 points from x0 across span.
     Sampled { curve: String, x0: f32, span: f32, n: u32 },
+    /// Another line (the map's own or the OSM file's), walked the other way.
+    Reversed(String),
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -622,8 +624,17 @@ pub fn layout(d: &DioramaData) -> Layout {
                         .collect(),
                 )
             }
+            // Resolved below, once every line it could name is built.
+            LineSpec::Reversed(_) => continue,
         };
         lines.insert(name, line);
+    }
+    for (name, spec) in d.lines.iter().chain(&d.osm.lines) {
+        if let LineSpec::Reversed(of) = spec {
+            let of = lines.get(of.as_str()).unwrap_or_else(|| panic!("{name:?} reverses no line {of:?}"));
+            let line = Polyline::new(of.pts.iter().rev().copied().collect());
+            lines.insert(name, line);
+        }
     }
     let line = |name: &str| lines.get(name).unwrap_or_else(|| panic!("no line {name:?}"));
     let roads: Vec<Road> = d.roads.iter().chain(&d.osm.roads).map(|r| Road { line: line(&r.line).clone(), width: r.width, kind: r.kind }).collect();

@@ -30,7 +30,7 @@
     // to the gate of the National Guard's base: the road the counterattack and the columns come by.
     lines: [
         // (The counterattack comes down it the other way: from the north-west edge, then south-east to the gate.)
-        ("e373", Points([(210.6, -1792.0), (496.0, -1423.9), (1030.6, -713.6), (1707.4, 156.9)])),
+        ("e373", Reversed("osm0")),
         // From Horenka: in at the box's south-east corner, up the road past the base, onto the apron's south end.
         ("horenka", Points([(2300.0, 1780.0), (1900.0, 1450.0), (1500.0, 1150.0), (1150.0, 900.0), (900.0, 750.0)])),
     ],
