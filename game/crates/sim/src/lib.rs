@@ -18,6 +18,7 @@ pub mod evac;
 pub mod ew;
 pub mod fight;
 pub mod fire;
+pub mod flares;
 pub mod fx;
 pub mod hits;
 pub mod jets;

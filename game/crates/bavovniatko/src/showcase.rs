@@ -11,6 +11,7 @@
 
 use crate::camera::{Flight, Locate, Mode, Target, View, enter_ground, look_angles, track_nearest};
 use crate::fire::{AtgmTeam, Post, Strike, StrikeMission};
+use bav_sim::air::Aircraft;
 use bav_sim::player::{Fpv, TriggerPull};
 use crate::units::{Soldier, Vehicle};
 use crate::world::ObservationPost;
@@ -61,6 +62,8 @@ enum Aim {
     Op(Vec2),
     /// Through the FPV's goggles if it is up (the reel launches it on its own schedule); the view is left to it.
     Goggles,
+    /// The drone, following the aircraft in the air nearest the point (x, z), or the point when there is none.
+    Air(Vec2),
 }
 
 use Aim::Drone;
@@ -122,12 +125,42 @@ static SHOTS: LazyLock<Vec<Shot>> = LazyLock::new(|| {
 
 fn shots_minute() -> Vec<Shot> {
     let s = shot;
-    // Hostomel's minute, until it has its own (design/hostomel.md, phase 8): the apron from over the base, then the
-    // debrief. (The bands film the day by this list to its end.)
-    if matches!(crate::diorama::diorama(), crate::diorama::Diorama::HostomelLanding | crate::diorama::Diorama::HostomelCounter) {
+    if crate::diorama::diorama() == crate::diorama::Diorama::HostomelLanding {
         return vec![
-            s(20.0, 8.0, (1500.0, 900.0, 200.0), (1480.0, 880.0, 200.0), Drone(Point(Vec2::new(800.0, 500.0))), (40.0, 34.0)),
-            Shot { debrief: true, ..s(1474.0, 4.0, (1480.0, 880.0, 200.0), (1480.0, 880.0, 200.0), Drone(Point(Vec2::new(800.0, 500.0))), (34.0, 34.0)) },
+            // 10:56: the stream comes in from the river low over the pines, the gunships first.
+            s(402.0, 8.0, (2750.0, 650.0, 90.0), (2700.0, 640.0, 90.0), Aim::Air(Vec2::new(2900.0, 260.0)), (22.0, 16.0)),
+            // The Mi-8s behind them, the VDV aboard; an Igla goes up from the stands after one.
+            s(451.0, 9.0, (2350.0, 600.0, 100.0), (2320.0, 590.0, 100.0), Aim::Air(Vec2::new(2600.0, 250.0)), (24.0, 18.0)),
+            // The Mi-8s settle on the apron and the stands and put their men out.
+            s(508.0, 9.0, (1050.0, 120.0, 150.0), (1030.0, 140.0, 150.0), Aim::Air(Vec2::new(650.0, 420.0)), (20.0, 14.0)),
+            // The VDV off the ramps and across the apron.
+            s(545.0, 8.0, (900.0, 100.0, 110.0), (880.0, 110.0, 110.0), Drone(MenNear(Vec2::new(650.0, 400.0))), (12.0, 9.0)),
+            // They go for the posts among the hangars.
+            s(700.0, 8.0, (1100.0, 450.0, 110.0), (1090.0, 470.0, 110.0), Drone(MenNear(Vec2::new(900.0, 620.0))), (11.0, 8.0)),
+            // 12:05: out of ammunition, the posts pull out and walk off towards Horenka.
+            s(962.0, 8.0, (1550.0, 900.0, 130.0), (1560.0, 920.0, 130.0), Drone(Point(Vec2::new(1330.0, 680.0))), (14.0, 10.0)),
+            // Before one: the field is theirs, the wrecks on it.
+            s(1440.0, 6.0, (1500.0, 900.0, 220.0), (1480.0, 880.0, 220.0), Drone(Point(Vec2::new(800.0, 500.0))), (36.0, 32.0)),
+            Shot { debrief: true, ..s(1474.0, 4.0, (1480.0, 880.0, 220.0), (1480.0, 880.0, 220.0), Drone(Point(Vec2::new(800.0, 500.0))), (32.0, 32.0)) },
+        ];
+    }
+    if crate::diorama::diorama() == crate::diorama::Diorama::HostomelCounter {
+        return vec![
+            // 17:15: the guns on the apron at dusk, the VDV's posts under the shells.
+            s(100.0, 8.0, (700.0, -250.0, 180.0), (720.0, -230.0, 180.0), Drone(Point(Vec2::new(800.0, 520.0))), (24.0, 18.0)),
+            // 17:36: the Su-24s' bombs walk across the apron.
+            s(199.0, 8.0, (300.0, -200.0, 200.0), (320.0, -180.0, 200.0), Drone(Point(Vec2::new(600.0, 450.0))), (30.0, 24.0)),
+            // The 72nd's company down the E373 in the last of the light.
+            s(340.0, 8.0, (1550.0, -380.0, 140.0), (1530.0, -360.0, 140.0), Drone(Wave(1, 0)), (14.0, 10.0)),
+            // The 80th and the SSO up from Horenka, through the base.
+            s(400.0, 8.0, (1950.0, 1250.0, 170.0), (1930.0, 1230.0, 170.0), Drone(Wave(2, 0)), (16.0, 12.0)),
+            // 18:31: the assault groups go in on foot under their flares.
+            s(503.0, 9.0, (900.0, 100.0, 140.0), (880.0, 120.0, 140.0), Drone(MenNear(Vec2::new(800.0, 450.0))), (24.0, 18.0)),
+            // 19:42: the Su-24s again, along the runway.
+            s(899.0, 8.0, (500.0, -500.0, 250.0), (480.0, -480.0, 250.0), Drone(Point(Vec2::new(-150.0, 0.0))), (30.0, 24.0)),
+            // 21:05: the order to pull back: our men come off the field in the dark.
+            s(1372.0, 8.0, (900.0, -200.0, 180.0), (880.0, -180.0, 180.0), Drone(MenNear(Vec2::new(800.0, 450.0))), (24.0, 18.0)),
+            Shot { debrief: true, ..s(1474.0, 4.0, (880.0, -280.0, 220.0), (880.0, -280.0, 220.0), Drone(Point(Vec2::new(600.0, 450.0))), (32.0, 32.0)) },
         ];
     }
     // Avdiivka's minute, until it has its own (design/avdiivka.md, phase 10): the field from over Stepove, then the
@@ -305,7 +338,7 @@ fn direct(
     mut next_phase: ResMut<NextState<crate::Phase>>,
     mut flight: ResMut<Flight>,
     mut hud: ResMut<crate::hud::HudHidden>,
-    (vehicles, men): (Query<(&Vehicle, &Transform)>, Query<(&Soldier, &Transform)>),
+    (vehicles, men, aircraft): (Query<(&Vehicle, &Transform)>, Query<(&Soldier, &Transform)>, Query<(&Transform, &Aircraft)>),
     fpv: Res<Fpv>,
     teams: Query<(Entity, &Post, &AtgmTeam)>,
     mut exit: MessageWriter<AppExit>,
@@ -341,7 +374,7 @@ fn direct(
         let step = if shot.from - t > 1.0 { step_skip() } else { STEP_FILM };
         *strategy = TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step));
         tour.aim = None;
-        place_camera(&mut view, shot, 0.0, &mut tour.aim, &op, &vehicles, &men);
+        place_camera(&mut view, shot, 0.0, &mut tour.aim, &op, &vehicles, &men, &aircraft);
         if matches!(shot.aim, Aim::Ground(..)) {
             track_nearest(&mut view, &vehicles);
         }
@@ -362,7 +395,7 @@ fn direct(
             view.mode = crate::camera::Mode::Fpv;
         }
     } else {
-        place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men);
+        place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men, &aircraft);
     }
     // The debrief shot ends the day, once: re-setting the state every frame would re-fire `OnEnter` (and
     // `show_debrief`) every frame.
@@ -401,7 +434,8 @@ fn direct(
     }
 }
 
-fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: &ObservationPost, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>) {
+#[allow(clippy::too_many_arguments)]
+fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: &ObservationPost, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>, aircraft: &Query<(&Transform, &Aircraft)>) {
     let ease = k * k * (3.0 - 2.0 * k);
     let fov = (shot.fov.0 + (shot.fov.1 - shot.fov.0) * ease).to_radians();
     // The view is placed by hand this frame: the flight controller and the ground view's own controls stand down.
@@ -418,6 +452,17 @@ fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op
         // The FPV flies itself; the drone waits where the last shot left it.
         Aim::Goggles => {
             view.locked = false;
+            return;
+        }
+        Aim::Air(p) => {
+            view.mode = Mode::Drone;
+            view.drone_fov = fov;
+            let at = shot.pos0.lerp(shot.pos1, ease);
+            view.drone_pos = Vec3::new(at.x, crate::geo::height(at.x, at.y) + at.z, at.y);
+            let target = aircraft.iter().filter(|(_, a)| !matches!(a.flight, bav_sim::air::Flight::Waiting(_))).map(|(t, _)| t.translation).min_by(|a, b| a.xz().distance(p).total_cmp(&b.xz().distance(p))).unwrap_or(crate::geo::ground(p));
+            let a = aim.get_or_insert(target);
+            *a = a.lerp(target, 0.06);
+            (view.drone_yaw, view.gimbal) = look_angles(*a - view.drone_pos);
             return;
         }
         Aim::Drone(target) | Aim::Fly(target) => target,

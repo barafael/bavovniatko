@@ -58,7 +58,8 @@ of the 4th Rapid Reaction Brigade's rear echelon hold the field against about th
 the VDV. Key 5 puts an Igla on your shoulder: the seeker's growl, the steady tone, the launch, and a minimum range
 inside which the warhead will not arm, so you let the Ka-52 pass and take it going away. Posts run out of
 ammunition and pull out; Space orders everyone out before they are taken. At dusk (`hostomel-2`) the army comes
-back for the field behind the guns and the Su-24s, to crater the runway before the Il-76s can land. The history
+back for the field behind the guns and the Su-24s, to crater the runway before the Il-76s can land; after dark men
+see a third as far, except under the flares both sides send up and the illumination rounds you call (L). The history
 is in [`db/research/chapters/c01-march-on-kyiv.md`](../db/research/chapters/c01-march-on-kyiv.md); the plan,
 decisions and bands in [`design/hostomel.md`](design/hostomel.md).
 
@@ -172,6 +173,7 @@ the pieces that reach above a height, to write a ring from.
 | left click | 155 mm fire mission, 4 rounds (a drone over the target tightens the sheaf) |
 | Shift+click | Vuhledar: RAAM, scattering mines onto a lane. Mala Tokmachka: smoke |
 | Ctrl+click | HIMARS (two missions all day at Vuhledar, one at Mala Tokmachka) |
+| L | Hostomel at dusk: an illumination round over the cursor, a star under a parachute that lights the ground for about a minute; under it both sides see as by day |
 | Alt+click, V | Mala Tokmachka: send a Bradley for the wounded at the cursor, or (V) where the last call for evacuation came from; four for the day. At Vuhledar nothing gets down to the tree line by day |
 | 4 | Mala Tokmachka: fly the FPV (one for the morning). The mouse points it and it goes where it points; W/S throttle, A/D bank, and it levels itself. Its analogue picture thins with range and behind the ground; near their jammers the control link drops out in spells |
 | M | move the drone team once the enemy has found it (a ranging round lands close): the feed is down while it moves. A team that stays is hit and loses a drone. Vuhledar's team is found a few times a day; Mala Tokmachka's rarely |
@@ -227,7 +229,8 @@ scripts/shot.sh <name> "<x,z,agl,yaw,pitch,fov>" <game-s> "note" [diorama]
 
 Angles in `BAV_CAM` are degrees; yaw 0 looks north, 180 south.
 
-`cargo xtask tour [robotyne] [out.mp4]` films a directed one-minute tour of a single day at 1920x1080 with sound
+`cargo xtask tour [day] [--scout] [out.mp4]` films a directed one-minute tour of a single day (`vuhledar`, `robotyne`,
+`hostomel-1`, `hostomel-2`) at 1920x1080 with sound (`--scout`: 640x360 with a contact sheet, into `devlog/film/`)
 (the four-minute film of both dioramas is `cargo xtask film`, [above](#the-showcase-film)). The game
 runs on a fixed step while filming, logs every sound it plays, and the xtask rebuilds the soundtrack offline
 (`cargo xtask mix <dir> <out.wav>` does it again for a kept work dir). It takes about ten minutes, with no window or speakers, and the day is deterministic, so

@@ -355,7 +355,7 @@ fn update_particles(
 }
 
 
-fn light_particles(light: Res<FxLight>, fx: Res<FxAssets>, mut materials: ResMut<Assets<StandardMaterial>>, mut last: Local<Option<f32>>) {
+pub(crate) fn light_particles(light: Res<FxLight>, fx: Res<FxAssets>, mut materials: ResMut<Assets<StandardMaterial>>, mut last: Local<Option<f32>>) {
     if last.is_some_and(|l| (l - light.0).abs() < 0.01) {
         return;
     }
@@ -369,7 +369,7 @@ fn light_particles(light: Res<FxLight>, fx: Res<FxAssets>, mut materials: ResMut
 }
 
 /// Play the battle's requests of this frame, in the order it made them.
-fn play_requests(mut commands: Commands, mut fx: ResMut<FxAssets>, mut queue: ResMut<FxQueue>, mut paint: ResMut<PaintQueue>, mut sound: bav_sim::sound::Sound) {
+pub(crate) fn play_requests(mut commands: Commands, mut fx: ResMut<FxAssets>, mut queue: ResMut<FxQueue>, mut paint: ResMut<PaintQueue>, mut sound: bav_sim::sound::Sound) {
     for call in queue.0.drain(..) {
         let (c, f) = (&mut commands, &mut *fx);
         match call {

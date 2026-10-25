@@ -47,7 +47,7 @@ fn main() -> ExitCode {
 const USAGE: &str = "usage:
   cargo xtask trailer [--scout] [out.mp4]      the trailer: the action of both days (design/trailer.md)
   cargo xtask film [--scout] [out.mp4]         the showcase film of both (design/showcase.md)
-  cargo xtask tour [robotyne] [out.mp4]        the one-minute tour of one day
+  cargo xtask tour [day] [--scout] [out.mp4]   the one-minute tour of one day (vuhledar, robotyne, hostomel-1|2)
   cargo xtask mix <dir> <out.wav> [lead-s] [gain-db]   rebuild a filmed run's soundtrack
   cargo xtask smoke                            start the game headless once per switch and diorama (devlog/smoke/)";
 
@@ -342,32 +342,42 @@ fn end_card(work: &Path) -> Result<String> {
     Ok(lines.join("\n"))
 }
 
-/// The one-minute tour of one day: a title over a lead-in bed, then the tour, in one encode.
+/// The days a tour can film, as `BAV_DIORAMA` names them, with the title card's place and date.
+const TOURS: &[(&str, &str, &str)] = &[
+    ("vuhledar", "VUHLEDAR", "6 FEBRUARY 2023"),
+    ("robotyne", "SOUTH OF MALA TOKMACHKA", "8 JUNE 2023"),
+    ("hostomel-1", "HOSTOMEL, ANTONOV AIRPORT", "24 FEBRUARY 2022, THE LANDING"),
+    ("hostomel-2", "HOSTOMEL, ANTONOV AIRPORT", "24 FEBRUARY 2022, DUSK"),
+];
+
+/// The one-minute tour of one day: a title over a lead-in bed, then the tour, in one encode. `--scout` films it at
+/// 640x360 into devlog/film/ with a contact sheet (a tile a second), for retiming the shots.
 fn tour(args: &[String]) -> Result {
-    let robotyne = args.iter().any(|a| a == "robotyne");
-    let out_arg = args.iter().find(|a| a.as_str() != "robotyne" && a.as_str() != "vuhledar");
+    let scout = args.iter().any(|a| a == "--scout");
+    let (part, place, date) = *args.iter().find_map(|a| TOURS.iter().find(|t| t.0 == a.as_str())).unwrap_or(&TOURS[0]);
+    let out_arg = args.iter().find(|a| !a.starts_with("--") && TOURS.iter().all(|t| t.0 != a.as_str()));
     needs(&["ffmpeg", "ffprobe", "magick"])?;
     let root = root();
+    let ((w_px, h_px), crf, preset) = if scout { ((640, 360), "30", "veryfast") } else { ((1920, 1080), "27", "slow") };
+    let stamp = now("+%Y%m%d-%H%M")?;
     let out = match out_arg {
         Some(o) => absolute(o)?,
-        None => root.join(format!("devlog/videos/{}-tour-{}.mp4", now("+%Y%m%d-%H%M")?, if robotyne { "robotyne" } else { "vuhledar" })),
+        None if scout => root.join(format!("devlog/film/{stamp}-tour-{part}-scout.mp4")),
+        None => root.join(format!("devlog/videos/{stamp}-tour-{part}.mp4")),
     };
     mkdir(out.parent().unwrap_or(&root))?;
     mkdir(&root.join("devlog/film"))?;
     build(&root)?;
     let work = WorkDir::new(&root)?;
     let w = &work.0;
-    let mut env = vec![("BAV_RES", "1920x1080".to_string()), ("BAV_SHOWCASE", w.display().to_string())];
-    if robotyne {
-        env.push(("BAV_DIORAMA", "robotyne".into()));
-    }
-    film_part(&root, &env, &root.join("devlog/film/tour.log"))?;
+    let env = vec![("BAV_RES", format!("{w_px}x{h_px}")), ("BAV_SHOWCASE", w.display().to_string()), ("BAV_DIORAMA", part.to_string())];
+    film_part(&root, &env, &root.join(format!("devlog/film/tour-{part}.log")))?;
     let lead = 3.0;
-    let (place, date) = if robotyne { ("SOUTH OF MALA TOKMACHKA", "8 JUNE 2023") } else { ("VUHLEDAR", "6 FEBRUARY 2023") };
+    let px = |v: f64| format!("{}", (v * h_px as f64 / 1080.0).round());
     magick(&[
-        "-size", "1920x1080", "xc:black", "-font", "DejaVu-Sans", "-fill", "#e8e8ea", "-gravity", "center",
-        "-pointsize", "64", "-annotate", "+0-60", place, "-pointsize", "34", "-annotate", "+0+20", date,
-        "-fill", "#9a9ca0", "-pointsize", "22", "-annotate", "+0+90", "bavovniatko: a diorama of the Russo-Ukrainian war",
+        "-size", &format!("{w_px}x{h_px}"), "xc:black", "-font", "DejaVu-Sans", "-fill", "#e8e8ea", "-gravity", "center",
+        "-pointsize", &px(64.0), "-annotate", &format!("+0-{}", px(60.0)), place, "-pointsize", &px(34.0), "-annotate", &format!("+0+{}", px(20.0)), date,
+        "-fill", "#9a9ca0", "-pointsize", &px(22.0), "-annotate", &format!("+0+{}", px(90.0)), "bavovniatko: a diorama of the Russo-Ukrainian war",
         &w.join("title.png").display().to_string(),
     ])?;
     let m = mix::mix(w, lead)?;
@@ -378,9 +388,13 @@ fn tour(args: &[String]) -> Result {
         "-framerate", "30", "-i", w.join("f%05d.png"),
         "-i", w.join("sound.wav"),
         "-filter_complex", "[0:v]fade=t=in:st=0:d=0.8,fade=t=out:st=2.4:d=0.6,format=yuv420p[t];[1:v]format=yuv420p[g];[t][g]concat=n=2:v=1:a=0[v]",
-        "-map", "[v]", "-map", "2:a", "-c:v", "libx264", "-crf", "27", "-preset", "slow", "-tune", "grain", "-c:a", "aac", "-b:a", "160k", "-shortest",
+        "-map", "[v]", "-map", "2:a", "-c:v", "libx264", "-crf", crf, "-preset", preset, "-tune", "grain", "-c:a", "aac", "-b:a", "160k", "-shortest",
         &out,
     ])?;
+    if scout {
+        let stem = out.file_stem().unwrap_or_default().to_string_lossy().to_string();
+        ffmpeg(args!["-i", &out, "-vf", "fps=1,scale=240:-1,tile=8x10", root.join(format!("devlog/film/{stem}-sheet-%02d.png"))])?;
+    }
     drop(work);
     println!("tour: {} ({:.0} MB)", out.display(), fs::metadata(&out).map(|m| m.len() as f64 / 1e6).unwrap_or(0.0));
     Ok(())

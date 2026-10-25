@@ -26,7 +26,8 @@ Belarus arrives.
 The evening will run whether or not you do anything. What you do decides what it costs.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.
-Left click: 152 mm fire mission.  Shift+click: smoke.  1/2 or Tab: drone / observers.  I: the drone's thermal.
+Left click: 152 mm fire mission.  Shift+click: smoke.  L: an illumination round over the cursor.
+1/2 or Tab: drone / observers.  I: the drone's thermal.
 Space: the attack PUSH ON / HOLD / PULL BACK.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -83,6 +84,10 @@ Press Enter."#,
     // The observers, at the tree line's edge: the tower is the VDV's.
     op: ((700.0, -280.0), 2.5),
     observed_from: Home,
+    // What has been burning since the afternoon's fight and the shelling, and lights the dark: the stores at the
+    // apron's north end and two sheds by the hangar (each so many flames across). The fuel farm is not on the map
+    // (OSM has no point for it). Buildings the Su-24s' bombs land on catch fire too.
+    fires: [((676.0, 274.0), 3), ((669.0, 310.0), 2), ((1120.0, 865.0), 2)],
 
     // The VDV's hold since one o'clock: groups dug in at the hangar, the apron, the tower, the stands, the offices and
     // the radar; riflemen, machine guns and RPGs (no ATGMs, no armour: they came by helicopter).
@@ -122,10 +127,23 @@ Press Enter."#,
     support: [
         (id: "152", name: ("152 mm, 16 rounds", "152 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 8),
         (id: "smoke", name: ("Smoke mission", "Димова завіса"), what: Smoke, cost: 1, available: 6),
+        (
+            id: "illum",
+            name: ("Illumination, 152 mm, 4 rounds", "Освітлювальні, 152 мм, 4 постріли"),
+            what: Illum(4),
+            cost: 1,
+            available: 4,
+        ),
     ],
     allotment: (
         points: 120,
-        record: [(id: "bmp2", count: 10), (id: "mtlb", count: 6), (id: "152", count: 5), (id: "smoke", count: 3)],
+        record: [
+            (id: "bmp2", count: 10),
+            (id: "mtlb", count: 6),
+            (id: "152", count: 5),
+            (id: "smoke", count: 3),
+            (id: "illum", count: 2),
+        ],
     ),
     // What the morning left (the Record's; Command's evening has the player's own morning, if it was played): the
     // Ka-52 the Igla gunner dropped onto the runway, "an extra obstacle" (c01 §6 set piece 2), and a Mi-8 by the
@@ -144,6 +162,8 @@ Press Enter."#,
         rifles: 0.3,
         // Our men go on from post to post through the dark, behind the guns.
         assault: 0.25,
+        // The VDV's posts each have a couple of hand flares for when they are rushed in the dark.
+        flares: 2,
         zones: [
             (
                 key: "hangar",
@@ -248,15 +268,38 @@ Press Enter."#,
         ),
         (450.0, Infantry(route: 0, groups: 6, size: 8, every: 25.0, label: "")),
         (480.0, Infantry(route: 1, groups: 6, size: 8, every: 25.0, label: "")),
+        // Our assault groups send up flares over the VDV's posts through the assault, three every forty seconds.
+        (480.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
         // The 72nd's artillery group (2S1, 2S3, Grad) keeps working the apron and the hangar through the evening.
         (520.0, Prep(missions: 8, over: 90.0)),
+        (520.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (560.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (600.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (640.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (680.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
         (700.0, Prep(missions: 8, over: 90.0)),
+        (720.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (760.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (800.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (840.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (880.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
         (
             900.0,
             Bombs(from: (-500.0, -800.0), to: (200.0, 800.0), n: 10, label: "19:42  The Su-24s again, on the runway"),
         ),
+        (920.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (960.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
         (1000.0, Prep(missions: 8, over: 90.0)),
+        (1000.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (1040.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (1080.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (1120.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (1160.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
+        (1200.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (1240.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
         (1250.0, Airlift(4)),
+        (1280.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        (1320.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
         (1350.0, Order(PullBack)),
         (
             1360.0,

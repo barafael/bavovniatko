@@ -49,6 +49,10 @@ pub struct DioramaData {
     /// then carry their heat (`bav_look::thermal`).
     #[serde(default)]
     pub thermal: bool,
+    /// What is burning on the field when the day starts, and lights the dark: fires at these points, each so many
+    /// flames across. Where there are any, a building a heavy bomb lands on catches fire too (`bav_look::fx`).
+    #[serde(default)]
+    pub fires: Vec<(P, u32)>,
     /// An overcast day, where the place lights itself from the computed sun (`sun`): a diffuse key and no hard
     /// shadows (the sky switch `BAV_SKY` overrides it).
     #[serde(default)]

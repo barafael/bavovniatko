@@ -81,6 +81,8 @@ pub enum Act {
     /// The airlift's hour: so many Il-76s come if the field is theirs and the runway clear (Command); in the Record
     /// they turn back in the air, as they did.
     Airlift(u32),
+    /// The attackers send up hand flares over these points as they go in at night (`flares`).
+    Flares(Vec<(f32, f32)>),
 }
 
 /// Where a column that stays deploys (a point near its route), and how long it holds there at least (s).
@@ -240,6 +242,12 @@ fn run_script(
                 radio.say(now, if say.is_empty() { "Su-24s, low! Bombs on the apron!" } else { say.as_str() });
                 if !label.is_empty() {
                     *banner = Some((label.to_string(), 6.0));
+                }
+            }
+            Act::Flares(over) => {
+                for p in over {
+                    let at = geo::ground(Vec2::new(p.0, p.1)) + Vec3::Y * crate::flares::FlareKind::Hand.height();
+                    crate::flares::light(&mut commands, crate::flares::FlareKind::Hand, at, now);
                 }
             }
             Act::Airlift(n) => {

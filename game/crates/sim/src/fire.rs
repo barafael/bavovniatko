@@ -84,6 +84,8 @@ pub enum ShellKind {
     /// A 155 mm cluster shell (DPICM): 72 bomblets over a football pitch, each a grenade on a man in the open or
     /// a carrier's roof.
     Cluster,
+    /// An illumination round: it opens high over the point and lets down a star (`flares::Flare`).
+    Illum,
 }
 
 /// A [`Strike`] as the guns fire it.
@@ -102,6 +104,8 @@ impl StrikeMission for Strike {
             Strike::Himars => (ShellKind::Himars, 2, 4.0, 55.0, 3.0, 2.0),
             Strike::Smoke => (ShellKind::Smoke, 4, 2.5, 24.0, sigma * 1.5 + 15.0, 2.0),
             Strike::Cluster => (ShellKind::Cluster, 2, 4.0, 24.0, sigma * 1.2, 2.0),
+            // The star drifts on the wind under its canopy: where it bursts matters less than for a shell.
+            Strike::Illum => (ShellKind::Illum, 1, 1.0, 24.0, sigma * 1.5 + 30.0, 2.0),
         };
         Mission { target, kind, rounds, sigma, interval, next: now + delay, flight, by: Side::Ua }
     }
@@ -155,6 +159,8 @@ pub struct FireControl {
     pub smoke: u32,
     /// Cluster missions (DPICM).
     pub cluster: u32,
+    /// Illumination rounds.
+    pub illum: u32,
     /// The defending brigade's guns, which fire on their registered points by themselves.
     pub brigade_shells: u32,
     /// The battalion's 120 mm mortars, which work over infantry in the open on their own.
@@ -176,7 +182,7 @@ impl Default for FireControl {
         // 2022, but a battery on one morning gets a handful of missions.
         // (In Command nothing until the map table has settled the Allotment: `allotted_stock` sets it then.)
         let s = crate::allot::settled().map(|a| a.stock).unwrap_or_default();
-        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, cluster: s.cluster, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, air_defence: s.air_defence, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
+        Self { shells: s.shells, raam: s.raam, himars: s.himars, smoke: s.smoke, cluster: s.cluster, illum: s.illum, brigade_shells: s.brigade_shells, mortar_bombs: s.mortar_bombs, air_defence: s.air_defence, atgm_mode: AtgmMode::Auto, battery_busy_until: 0.0, last_call: None, warned_low: false, start: s }
     }
 }
 
@@ -635,6 +641,7 @@ fn land_shells(
             ShellKind::Raam => (0.5, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
             ShellKind::Smoke => (0.3, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
             ShellKind::Cluster => (0.4, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
+            ShellKind::Illum => (0.0, 0.0, Cause::Artillery, Sfx::BlastFar, 0.0),
         };
         match s.kind {
             ShellKind::Raam => {
@@ -664,6 +671,13 @@ fn land_shells(
                     blasts.write(Blast { at: bp, radius: 6.0, cause: Cause::Artillery });
                 }
                 landed.write(ShellLanded { at: s.at, kind: s.kind, by: s.by, radius: 30.0, size: 0.6 });
+                continue;
+            }
+            ShellKind::Illum => {
+                // The base charge pops high overhead and the star lights under its canopy.
+                let at = p + Vec3::Y * crate::flares::FlareKind::Shell.height();
+                sound.at(at, sfx, 0.25);
+                crate::flares::light(&mut commands, crate::flares::FlareKind::Shell, at, now);
                 continue;
             }
             ShellKind::Smoke => {
@@ -1037,8 +1051,8 @@ fn small_arms(
     mut soldiers: Query<(Entity, &mut Soldier, &Transform)>,
     sight: Option<Res<crate::fight::Sight>>,
 ) {
-    // In the dark men see less far (only where the fight counts it).
-    let reach = 750.0 * sight.map_or(1.0, |s| s.0);
+    // In the dark men see less far, except under a flare (only where the fight counts it).
+    let reach = |p: Vec2| 750.0 * sight.as_ref().map_or(1.0, |s| s.at(p));
     let dt = time.delta_secs();
     let rng = &mut fxr.0;
     let mut dead: Vec<Entity> = Vec::new();
@@ -1056,7 +1070,7 @@ fn small_arms(
         // The nearest man within rifle range that a belt or a crest does not hide.
         let mut near: Vec<(Entity, f32, Vec3)> = soldiers
             .iter()
-            .filter(|(e, s, tf)| s.side != pos.side && !dead.contains(e) && tf.translation.xz().distance(pos.pos) < reach)
+            .filter(|(e, s, tf)| s.side != pos.side && !dead.contains(e) && tf.translation.xz().distance(pos.pos) < reach(tf.translation.xz()))
             .map(|(e, _, tf)| (e, tf.translation.xz().distance(pos.pos), tf.translation))
             .collect();
         near.sort_by(|a, b| a.1.total_cmp(&b.1));

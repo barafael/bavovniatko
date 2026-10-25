@@ -27,9 +27,12 @@ impl Plugin for FightPlugin {
             return;
         };
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
-            .insert_resource(Sight(1.0))
+            .insert_resource(Sight { dark: 1.0, lit: Vec::new() })
             .insert_resource(Field { zones: zones(&spec.zones), ..default() })
-            .add_systems(Update, (see, supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().run_if(crate::running).in_set(crate::Step::Units));
+            // After the units have moved, fought and died this frame: the fight reads and writes the same men, posts and
+            // places, and in no fixed order against them a day would not replay itself.
+            .add_systems(Update, (see, supply_posts, order_out, assault, return_fire, pull_out, overrun, leave, hold_zones, log_field).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
+        crate::flares::add(app);
     }
 }
 
@@ -47,6 +50,9 @@ pub struct FightSpec {
     /// How readily the attackers' men who have got where they were going go on to the next post (each, every five
     /// seconds).
     pub assault: f64,
+    /// Hand flares at each of the defenders' posts, sent up over the men rushing it in the dark (`flares`).
+    #[serde(default)]
+    pub flares: u32,
     /// The field's areas.
     pub zones: Vec<ZoneSpec>,
 }
@@ -74,15 +80,26 @@ fn zones(specs: &[ZoneSpec]) -> Vec<Zone> {
 }
 
 #[derive(Resource)]
-struct FightRng(SmallRng);
+pub(crate) struct FightRng(pub(crate) SmallRng);
 
-/// How far men see now, as a share of the day's (`bav_core::sun::sight`): the posts' rifles and the attackers' fire
-/// reach no further.
+/// How far men see now, as a share of the day's: in the dark (`bav_core::sun::sight`), and under the flares burning
+/// over the field, where they see as by day. The posts' rifles and the attackers' fire reach no further.
 #[derive(Resource)]
-pub struct Sight(pub f32);
+pub struct Sight {
+    pub dark: f32,
+    /// The ground the flares light: under each, so far round (`flares::FlareKind::reach`).
+    pub lit: Vec<(Vec2, f32)>,
+}
 
-fn see(script: Res<crate::director::Script>, mut sight: ResMut<Sight>) {
-    sight.0 = bav_core::sun::sight(crate::director::clock_minutes(script.t));
+impl Sight {
+    /// How far men see a man or a post at `p`, as a share of the day's.
+    pub fn at(&self, p: Vec2) -> f32 {
+        if self.lit.iter().any(|(c, r)| c.distance(p) < *r) { 1.0 } else { self.dark }
+    }
+}
+
+pub(crate) fn see(script: Res<crate::director::Script>, mut sight: ResMut<Sight>) {
+    sight.dark = bav_core::sun::sight(crate::director::clock_minutes(script.t));
 }
 
 /// A post's ammunition: volleys left. (The posts' own fire, `fire::small_arms`, spends it.)
@@ -121,11 +138,14 @@ pub struct Field {
 
 /// The defenders' posts get their ammunition once they are on the ground (ours in the morning, the VDV's at dusk).
 #[allow(clippy::type_complexity)]
-fn supply_posts(mut commands: Commands, posts: Query<(Entity, &Post), (Without<Ammo>, Without<PulledOut>)>) {
+pub(crate) fn supply_posts(mut commands: Commands, posts: Query<(Entity, &Post), (Without<Ammo>, Without<PulledOut>)>) {
     let Some(s) = spec() else { return };
     for (e, p) in &posts {
         if p.side == crate::diorama::diorama().defender() {
             commands.entity(e).insert(Ammo(s.ammo));
+            if s.flares > 0 {
+                commands.entity(e).insert(crate::flares::HandFlares { left: s.flares, next: 0.0 });
+            }
         }
     }
 }
@@ -173,7 +193,7 @@ fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, pos
 /// Their men fire back: a man lying or dug in within rifle range of a post he can see, now and then, and the post
 /// loses a man to it now and then.
 #[allow(clippy::type_complexity)]
-fn return_fire(
+pub(crate) fn return_fire(
     mut commands: Commands,
     time: Res<Time>,
     sight: Res<Sight>,
@@ -198,7 +218,7 @@ fn return_fire(
             .iter()
             .filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded))
             .map(|(_, t)| (t.translation, t.translation.xz().distance(post.pos)))
-            .filter(|(_, d)| *d < 400.0 * sight.0)
+            .filter(|(_, d)| *d < 400.0 * sight.at(post.pos))
             .collect();
         near.sort_by(|a, b| a.1.total_cmp(&b.1));
         let shooters: Vec<(Vec3, f32)> = near.into_iter().filter(|(p, _)| geo::line_of_sight(p.xz(), post.pos)).take(10).collect();
@@ -228,7 +248,7 @@ fn return_fire(
 
 /// A post out of ammunition, or told to, pulls out: its men get up and go, and it fires no more.
 #[allow(clippy::too_many_arguments)]
-fn pull_out(
+pub(crate) fn pull_out(
     mut commands: Commands,
     time: Res<Time>,
     script: Res<crate::director::Script>,
