@@ -272,7 +272,7 @@ strakes + fold-wing box onto any FAB body. This matters: glide bombs are the war
 | FPV quad | [Combat FPV drone](https://sketchfab.com/3d-models/df640a20c2af49a6af7c371b2d49d51f) | Amaranthus_retroflexus | 40k | ✓ | RPG-7 warhead; most on-theme |
 | FPV quad LOD | [Low-Poly FPV Drone](https://sketchfab.com/3d-models/d080d91ee43446d29fa6a446664bc4c4) | misha_xok | 8k | ✓ | mass-spawn |
 | fibre FPV | [Tail FPV Optic Fibre Drone](https://sketchfab.com/3d-models/4c8c3dc239a8483c8053f8ce7515441b) | line-o | 217k | ✓ | AI-generated; only fibre-spool variant found |
-| Baba Yaga proxy | [Octocopter (DJI S1000 parts)](https://sketchfab.com/3d-models/2b401b4488d649bcb05d1b2af3212471) | idmental | 82k | ✓ | heavy-lift airframe to dress as night bomber |
+| Baba Yaga proxy | [Octocopter (DJI S1000 parts)](https://sketchfab.com/3d-models/2b401b4488d649bcb05d1b2af3212471) | idmental | 82k | ✓ | heavy-lift airframe to dress as night bomber; a parts sheet, not assembled: `game/tools/bake/s1000.py` puts it together |
 | Mavic 3 | [DJI Mavic 3](https://sketchfab.com/3d-models/c5a5abae1dea468ab73b1bdc7d616fa6) | llirikslon | 127k | ✓ | recon quad |
 | Mavic 3 + pad | [Mavic 3 on landing pad](https://sketchfab.com/3d-models/e380b27d1c2d40c485f60a0c73bb874d) | eyesonukraine | 141k | ✓ | from a UA war-documentation account |
 | Bayraktar TB2 | [Baykar Bayraktar TB2](https://sketchfab.com/3d-models/8e5b6972f7d049f19688096e03949487) | TheDevilsEye | 9k | ✓ | chapters 1–2 |

@@ -110,4 +110,19 @@ pub const SPECS: &[Spec] = &[
     // [PBR] Sukhoi Su-25 by Immersive3A: the rocket runs at Avdiivka, on its gear. 15.53 m long puts the span at
     // 14.5 m (14.36) and the fin at 4.7 m (4.8).
     Spec { id: "su25", dir: "aircraft/aircraft_su-25_immersive3a", length: Some(15.53), turret_none: true, ..BASE },
+    // Combat FPV drone by Amaranthus_retroflexus: Myrnohrad's FPVs, the RPG-7 warhead forward. The source is a
+    // 10-inch class (0.42 m motor to motor); 0.38 m nose to tail makes it a 7-inch, 0.25 m motor to motor and 18 cm
+    // props. Many fly at once: a couple of thousand triangles, small textures.
+    Spec { id: "fpv", dir: "drones/drones_fpv-quad_amaranthus-retroflexus", yaw: 180.0, length: Some(0.38), turret_none: true, max_tris: 2_500, across_seams: true, tex: 256, ..BASE },
+    // Octocopter (DJI S1000 parts) by idmental, assembled by `s1000.py` (run it first) and dressed as the Baba Yaga
+    // night bomber: 1.06 m motor to motor, 15-inch props, a TM-62 under the belly, in metres and nose to -Z already.
+    Spec { id: "vampire", dir: "drones/drones_baba-yaga-proxy_idmental/vampire", turret_none: true, max_tris: 20_000, across_seams: true, ..BASE },
+    // Orlan-10 by flightclubua: their reconnaissance wing. 1.8 m long puts the span at the real 3.1 m.
+    Spec { id: "orlan", dir: "drones/drones_orlan-10_flightclubua", yaw: 180.0, length: Some(1.8), turret_none: true, max_tris: 10_000, ..BASE },
+    // Zala_421_16E2 by Viktor.Zhuravlev: the second silhouette, a pusher flying wing, 2.78 m across as modelled.
+    Spec { id: "zala", dir: "drones/drones_zala-421-16e_viktor-zhuravlev", yaw: -90.0, turret_none: true, ..BASE },
+    // Mitsubishi L200 by David_Holiday: the pickup on the fog's run, 5.2 m.
+    Spec { id: "l200", dir: "trucks/trucks_mitsubishi-l200_david-holiday", yaw: 180.0, length: Some(5.2), turret_none: true, max_tris: 20_000, ..BASE },
+    // LADA 2107 by tiunov.se: the wrecked cars on the road and in the yards, 4.145 m.
+    Spec { id: "lada", dir: "civilian/civilian_lada-2107_tiunov-se", length: Some(4.145), turret_none: true, max_tris: 12_000, across_seams: true, ..BASE },
 ];

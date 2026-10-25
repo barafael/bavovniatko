@@ -30,6 +30,9 @@ PLACES = {
     # The northern shoulder of the Avdiivka salient (design/avdiivka.md): the box's centre between Stepove and the
     # spoil heap, turned so the Russian columns from Krasnohorivka and Kamianka come down +z.
     "avdiivka": dict(lat0=48.1898, lon0=37.6998, east=0.0, south=0.0, bearing=75.0),
+    # The road into Myrnohrad (design/myrnohrad.md): the box's centre west of the town, turned to 150 so +z points
+    # south-south-east at the railway and their side, the road from Rivne and Svitle coming in at -x.
+    "myrnohrad": dict(lat0=48.302, lon0=37.248, east=0.0, south=0.0, bearing=150.0),
 }
 
 # Built after 24 February 2022 (the names say so): not on the day's ground.
