@@ -9,12 +9,13 @@
 //! What the staff does with it, each a rule with its own budget from the day (`staff` in the diorama's file):
 //! - their guns fire on what is spotted instead of on where our posts truly are (`director::russian_artillery`);
 //! - Lancets, a few a day, go at our spotted vehicles;
+//! - glide bombs and Su-25 rocket runs, where the day has them, go at our spotted posts and hides;
 //! - their next column learns from the last ones (`adapt`): heavy losses on one road send it down the other, mines
 //!   bring a plow, our missiles and shells more smoke and a BMP in a tank's place.
 //!
 //! The net tells the player when the intercepts catch it.
 //!
-//! `BAV_STAFF=off` turns it off in Command; `BAV_STAFF=spot,guns` (of `spot`, `guns`, `lancet`, `columns`) keeps only
+//! `BAV_STAFF=off` turns it off in Command; `BAV_STAFF=spot,guns` (of `spot`, `guns`, `lancet`, `kab`, `su25`, `columns`) keeps only
 //! those rules, for the balance runs to measure what each changes.
 
 use crate::fire::{Missile, Post, UaTank};
@@ -36,12 +37,15 @@ impl Plugin for StaffPlugin {
         let spec = crate::data::sim_data().staff;
         app.insert_resource(Spotted::default())
             .insert_resource(StaffRng(SmallRng::seed_from_u64(crate::dev::seeded(1945))))
-            .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, kabs: spec.kabs, next_kab: 420.0, losses: BTreeMap::new(), read: 0 })
+            .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, kabs: spec.kabs, next_kab: 420.0, su25: spec.su25, next_su25: 360.0, losses: BTreeMap::new(), read: 0 })
             // After the units' systems, so the frame's hits are all in the log and the vehicles where they ended up.
             .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
         // Only where the day has them: a system more anywhere else would be in that day's schedule.
         if spec.kabs > 0 {
             app.add_systems(Update, kabs.after(lancets).run_if(crate::running).in_set(crate::Step::Units));
+        }
+        if spec.su25 > 0 {
+            app.add_systems(Update, su25s.after(lancets).run_if(crate::running).in_set(crate::Step::Units));
         }
         // Where aircraft fly: a launch's smoke and a ZU's tracers give the post away to the gunships (`air::fight`).
         if crate::manpads::present() {
@@ -75,6 +79,16 @@ pub struct StaffSpec {
     pub kabs: u32,
     #[serde(default = "kab_every")]
     pub kab_every: (f32, f32),
+    /// Su-25 pairs for the day (Avdiivka: a rocket run on a post or a hide they have spotted, `jets`), and the
+    /// seconds between them (at least, at most).
+    #[serde(default)]
+    pub su25: u32,
+    #[serde(default = "su25_every")]
+    pub su25_every: (f32, f32),
+}
+
+fn su25_every() -> (f32, f32) {
+    (360.0, 720.0)
 }
 
 fn kab_every() -> (f32, f32) {
@@ -83,7 +97,7 @@ fn kab_every() -> (f32, f32) {
 
 impl Default for StaffSpec {
     fn default() -> Self {
-        Self { lancets: 0, orlan: (180.0, 360.0), kabs: 0, kab_every: kab_every() }
+        Self { lancets: 0, orlan: (180.0, 360.0), kabs: 0, kab_every: kab_every(), su25: 0, su25_every: su25_every() }
     }
 }
 
@@ -157,6 +171,8 @@ pub struct Staff {
     next_orlan: f32,
     kabs: u32,
     next_kab: f32,
+    su25: u32,
+    next_su25: f32,
     /// Their vehicles lost, by the route they were on and what did it.
     losses: BTreeMap<(usize, Loss), u32>,
     /// How many of the hit log's entries have been read.
@@ -371,6 +387,31 @@ fn kabs(mut commands: Commands, time: Res<Time>, script: Res<crate::director::Sc
     commands.spawn((crate::fire::Shell { at, kind: crate::fire::ShellKind::Himars, land: now + 40.0, by: Side::Ru }, crate::fire::Whistled));
     radio.say2(now, "Су-34 на підльоті. КАБ. Всім у бліндажі.", "Su-34 inbound. KAB. Everyone into the dugouts.");
     info!("staff: a KAB at {:.0},{:.0}, {} left, at {now:.0} s", at.x, at.y, staff.kabs);
+}
+
+/// A pair of Su-25s on the freshest post or hide of ours they have spotted: in low from their side, a rocket run
+/// each, and home (`jets`). Where the Iglas are, a pair may not come back whole.
+#[allow(clippy::too_many_arguments)]
+fn su25s(mut commands: Commands, time: Res<Time>, script: Res<crate::director::Script>, mut staff: ResMut<Staff>, spotted: Res<Spotted>, mut rng: ResMut<StaffRng>, models: Option<Res<crate::air::AirModels>>) {
+    if !rule("su25") || staff.su25 == 0 || script.t < staff.next_su25 {
+        return;
+    }
+    let Some(models) = models else { return };
+    let now = time.elapsed_secs_f64();
+    let Some(s) = spotted.0.values().filter(|s| s.what != What::Vehicle && now - s.seen < 600.0).max_by(|a, b| a.seen.total_cmp(&b.seen).then(b.at.x.total_cmp(&a.at.x))) else {
+        return;
+    };
+    let rng = &mut rng.0;
+    staff.su25 -= 1;
+    let (lo, hi) = crate::data::sim_data().staff.su25_every;
+    staff.next_su25 = script.t + rng.random_range(lo..hi);
+    // From their side (+z), well beyond the box, the wingman a few seconds behind and a little to one side.
+    let from = Vec2::new(s.at.x + rng.random_range(-1500.0..1500.0), 6500.0);
+    for k in 0..2 {
+        let at = s.at + Vec2::new(k as f32 * 35.0, k as f32 * -25.0);
+        crate::air::launch(&mut commands, &models, &crate::air::Sortie { kind: crate::air::AirKind::Su25, from: (from.x + k as f32 * 250.0, from.y), via: Vec::new(), at: (at.x, at.y), goal: None, delay: k as f32 * 7.0 });
+    }
+    info!("staff: a pair of Su-25s on {:.0},{:.0}, {} left, at {now:.0} s", s.at.x, s.at.y, staff.su25);
 }
 
 /// What killed their vehicles, by the road they were on (from the hit log, as it fills).

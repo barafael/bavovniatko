@@ -6,7 +6,9 @@
 //! the runway as much as any crater.
 //!
 //! Only a diorama whose script flies sorties (`Act::Air`) has any of this in its world: the Record of the others
-//! must not change. Robotyne's Ka-52s on station beyond reach are `robotyne`'s own.
+//! must not change. Robotyne's Ka-52s on station beyond reach are `robotyne`'s own. The airfield's account (the
+//! runway, what landed, the airlift, the evening's wrecks) comes only with helicopters; Avdiivka's Su-25s fly a
+//! fixed-wing pass of their own (`jets`) without it.
 
 use crate::fx::{self, Emitter, EmitterKind, FxQueue};
 use crate::geo;
@@ -24,11 +26,20 @@ impl Plugin for AirPlugin {
         }
         app.insert_resource(AirRng(SmallRng::seed_from_u64(crate::dev::seeded(2402))))
             .insert_resource(AdRng(SmallRng::seed_from_u64(crate::dev::seeded(1972))))
-            .init_resource::<AirTally>()
-            .insert_resource(Runway::new())
-            .add_message::<AirHit>()
-            .add_systems(OnEnter(bav_core::schedule::Phase::Debrief), keep_aftermath)
-            .add_systems(Update, (lay_aftermath, crater_runway, airlift, station, air_defence, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
+            .init_resource::<AirTally>();
+        // The airfield's account in its old place among the resources and the systems, so a day that had it keeps
+        // its numbering and its order.
+        if airfield() {
+            app.insert_resource(Airfield::new())
+                .add_message::<AirHit>()
+                .add_systems(OnEnter(bav_core::schedule::Phase::Debrief), keep_aftermath)
+                .add_systems(Update, (lay_aftermath, crater_runway, airlift, station, air_defence, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
+        } else {
+            app.add_message::<AirHit>().add_systems(Update, (station, air_defence, fly, fight, take_hits, fall).chain().run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems).after(crate::director::DirectorSystems));
+        }
+        if jets() {
+            app.add_systems(Update, (crate::jets::fly_jets, crate::jets::rocket_trails).chain().after(fight).before(take_hits).run_if(crate::running).in_set(crate::Step::Fire).in_set(AirSystems));
+        }
     }
 }
 
@@ -36,9 +47,26 @@ impl Plugin for AirPlugin {
 #[derive(SystemSet, Clone, PartialEq, Eq, Hash, Debug)]
 pub struct AirSystems;
 
-/// Whether the day's script flies anything.
+/// Whether the day's script flies anything (or its staff may send Su-25s).
 pub fn flies() -> bool {
-    crate::data::sim_data().script.iter().any(|(_, a)| matches!(a, crate::director::Act::Air(_) | crate::director::Act::Helicopters(_)))
+    crate::data::sim_data().script.iter().any(|(_, a)| matches!(a, crate::director::Act::Air(_) | crate::director::Act::Helicopters(_))) || jets()
+}
+
+/// Whether anything flies a fixed-wing pass: a sortie of the script's, or the staff's Su-25s in Command.
+pub fn jets() -> bool {
+    let d = crate::data::sim_data();
+    d.staff.su25 > 0 || d.script.iter().any(|(_, a)| matches!(a, crate::director::Act::Air(s) if s.iter().any(|s| s.kind.fixed_wing())))
+}
+
+/// Whether helicopters fly the day (Hostomel's stream, Robotyne's Ka-52s on station), and with them the airfield's
+/// account: what lands, the runway where the map has one (none at Robotyne), the airlift and the evening's wrecks. A
+/// day of fixed-wing passes only (Avdiivka's Su-25s) has none of it.
+pub fn airfield() -> bool {
+    crate::data::sim_data().script.iter().any(|(_, a)| match a {
+        crate::director::Act::Helicopters(_) => true,
+        crate::director::Act::Air(s) => s.iter().any(|s| !s.kind.fixed_wing()),
+        _ => false,
+    })
 }
 
 /// What flies.
@@ -52,6 +80,9 @@ pub enum AirKind {
     Mi8,
     /// The Il-76MD: the airlift that was to land on the runway once it was taken.
     Il76,
+    /// The Su-25 "Grach": the attack aircraft that came in low over Avdiivka's fields with rockets (c11 §4), on a
+    /// fixed-wing pass (`jets`).
+    Su25,
 }
 
 impl AirKind {
@@ -62,15 +93,18 @@ impl AirKind {
             AirKind::Mi24 => 3.0,
             AirKind::Mi8 => 2.0,
             AirKind::Il76 => 5.0,
+            // Titanium round the cockpit and the engines apart: often enough it took an Igla and flew home.
+            AirKind::Su25 => 3.0,
         }
     }
 
     /// Cruise over the field, m/s.
-    fn cruise(self) -> f32 {
+    pub fn cruise(self) -> f32 {
         match self {
             AirKind::Ka52 | AirKind::Mi24 => 60.0,
             AirKind::Mi8 => 55.0,
             AirKind::Il76 => 85.0,
+            AirKind::Su25 => 190.0,
         }
     }
 
@@ -78,13 +112,18 @@ impl AirKind {
     fn agl(self) -> f32 {
         match self {
             AirKind::Il76 => 350.0,
-            AirKind::Ka52 | AirKind::Mi24 => 45.0,
+            AirKind::Ka52 | AirKind::Mi24 | AirKind::Su25 => 45.0,
             AirKind::Mi8 => 30.0,
         }
     }
 
     pub fn gunship(self) -> bool {
         matches!(self, AirKind::Ka52 | AirKind::Mi24)
+    }
+
+    /// Flies a fixed-wing pass, never hovering or circling (`jets`).
+    pub fn fixed_wing(self) -> bool {
+        self == AirKind::Su25
     }
 
     /// Men it brings.
@@ -111,6 +150,8 @@ impl AirKind {
             AirKind::Mi24 => 0.45,
             AirKind::Mi8 => 0.5,
             AirKind::Il76 => 0.8,
+            // A Su-25 puts them out on every break off the target.
+            AirKind::Su25 => 0.85,
         }
     }
 
@@ -120,6 +161,7 @@ impl AirKind {
             AirKind::Mi24 => "Mi-24",
             AirKind::Mi8 => "Mi-8",
             AirKind::Il76 => "Il-76",
+            AirKind::Su25 => "Su-25",
         }
     }
 
@@ -130,21 +172,23 @@ impl AirKind {
             AirKind::Mi24 => "mi24",
             AirKind::Mi8 => "mi8",
             AirKind::Il76 => "il76",
+            AirKind::Su25 => "su25",
         }
     }
 }
 
 /// One aircraft of a script's `Act::Air`: what, from where (beyond the box), by which points, and, for a transport,
-/// where it lands and where its men go; for a gunship, the middle of the field it works over.
+/// where it lands and where its men go; for a gunship, the middle of the field it works over; for a Su-25, what it
+/// fires its rockets at, and where it goes home to (by default the way it came).
 #[derive(Deserialize, Debug, Clone)]
 pub struct Sortie {
     pub kind: AirKind,
     pub from: (f32, f32),
     #[serde(default)]
     pub via: Vec<(f32, f32)>,
-    /// A transport's landing zone; a gunship's orbit centre.
+    /// A transport's landing zone; a gunship's orbit centre; a Su-25's target.
     pub at: (f32, f32),
-    /// Where a transport's men go once out of it.
+    /// Where a transport's men go once out of it; where a Su-25 leaves the field for.
     #[serde(default)]
     pub goal: Option<(f32, f32)>,
     /// Seconds after the act's time it takes off from `from` (so a wave strings out).
@@ -165,7 +209,7 @@ impl AirModels {
 }
 
 #[derive(Resource)]
-struct AirRng(SmallRng);
+pub(crate) struct AirRng(pub(crate) SmallRng);
 
 /// The day's count of what flew and what fell.
 #[derive(Resource, Default, Debug)]
@@ -174,11 +218,6 @@ pub struct AirTally {
     pub down: Vec<(AirKind, &'static str)>,
     /// Turned for home hit, or by the fire around them.
     pub driven_off: u32,
-    pub landed: u32,
-    pub men_landed: u32,
-    /// The airlift: landed (the day lost outside the record), or turned back.
-    pub airlift_landed: bool,
-    pub airlift_turned_back: bool,
 }
 
 /// What an aircraft is doing.
@@ -196,6 +235,9 @@ pub enum Flight {
     Outbound,
     /// A gunship circling the field, between runs.
     Orbit { until: f32 },
+    /// A fixed-wing aircraft off its low run in and onto its target (`jets::Jet` has which part of it: the pop-up,
+    /// the dive, the break).
+    Attack,
     /// Diving on a target: fires at `fire_at` metres.
     Run { target: Vec2 },
     /// On station beyond reach (Robotyne's Ka-52s): hanging low behind the ridge at `home`, popping up when `timer`
@@ -210,12 +252,12 @@ pub struct Aircraft {
     pub kind: AirKind,
     pub hp: f32,
     pub flight: Flight,
-    route: Vec<Vec2>,
-    leg: usize,
-    speed: f32,
-    yaw: f32,
+    pub(crate) route: Vec<Vec2>,
+    pub(crate) leg: usize,
+    pub(crate) speed: f32,
+    pub(crate) yaw: f32,
     lz: Vec2,
-    goal: Vec2,
+    pub(crate) goal: Vec2,
     troops: u32,
     salvos: u32,
     /// Falling: the velocity it has, and its spin.
@@ -223,9 +265,16 @@ pub struct Aircraft {
     spin: f32,
     /// Hit at all: smoking, and it will not stay.
     pub damaged: bool,
-    /// Which way round it orbits, and where on the circle it is.
-    side: f32,
+    /// Which way round it orbits (a Su-25: which way it breaks), and where on the circle it is.
+    pub(crate) side: f32,
     angle: f32,
+}
+
+impl Aircraft {
+    /// How it is moving, for the sound's pitch: along its nose at its speed, or as it falls.
+    pub fn velocity(&self, tf: &Transform) -> Vec3 {
+        if self.flight == Flight::Falling { self.vel } else { tf.rotation * Vec3::NEG_Z * self.speed }
+    }
 }
 
 /// A rotor: spun by the look.
@@ -260,19 +309,21 @@ pub fn launch(commands: &mut Commands, models: &AirModels, s: &Sortie) {
     route.push(at);
     let yaw = crate::units::vehicle_yaw(route[0] - from);
     let p = Vec3::new(from.x, geo::height(from.x, from.y).max(150.0) + s.kind.agl(), from.y);
+    // A Su-25 waits off the map even when it has no delay: its first moment in the air is counted there.
+    let flight = if s.delay > 0.0 || s.kind.fixed_wing() { Flight::Waiting(s.delay) } else { Flight::Inbound };
     let mut e = commands.spawn((
         crate::units::skin(body),
         Transform::from_translation(p).with_rotation(Quat::from_rotation_y(yaw)),
         Aircraft {
             kind: s.kind,
             hp: s.kind.hp(),
-            flight: if s.delay > 0.0 { Flight::Waiting(s.delay) } else { Flight::Inbound },
+            flight,
             route,
             leg: 0,
             speed: s.kind.cruise(),
             yaw,
             lz: at,
-            goal: s.goal.map_or(at, |(x, z)| Vec2::new(x, z)),
+            goal: s.goal.map_or(if s.kind.fixed_wing() { from } else { at }, |(x, z)| Vec2::new(x, z)),
             troops: s.kind.troops(),
             salvos: s.kind.salvos(),
             vel: Vec3::ZERO,
@@ -283,6 +334,9 @@ pub fn launch(commands: &mut Commands, models: &AirModels, s: &Sortie) {
         },
         Visibility::Hidden,
     ));
+    if s.kind.fixed_wing() {
+        e.insert(crate::jets::Jet::new(at));
+    }
     if !rotor.is_empty() {
         let rotor = rotor.clone();
         let at = *rotor_at;
@@ -381,20 +435,26 @@ pub struct Airlift {
     pub decided: bool,
 }
 
-/// The runway, in 100 m stretches along its centreline: which are broken (a crater, a wreck on it). An Il-76 needs
-/// 1.8 km of it whole to land.
+/// The airfield (Hostomel's): the runway in 100 m stretches along its centreline, which are broken (a crater, a
+/// wreck on it), and what landed on and round it. An Il-76 needs 1.8 km of the runway whole to land.
 #[derive(Resource)]
-pub struct Runway {
+pub struct Airfield {
     pub broken: Vec<bool>,
+    /// Helicopters down on their landing zones, and the men they put out.
+    pub landed: u32,
+    pub men_landed: u32,
+    /// The airlift: landed (the day lost outside the record), or turned back.
+    pub airlift_landed: bool,
+    pub airlift_turned_back: bool,
 }
 
-impl Runway {
+impl Airfield {
     const STRETCH: f32 = 100.0;
     const NEEDS: f32 = 1800.0;
 
     fn new() -> Self {
         let n = geo::layout().runways.first().map_or(0, |&(a, b, _)| (a.distance(b) / Self::STRETCH).ceil() as usize);
-        Self { broken: vec![false; n] }
+        Self { broken: vec![false; n], landed: 0, men_landed: 0, airlift_landed: false, airlift_turned_back: false }
     }
 
     /// Break the stretch a point on the runway is in (within 30 m of its centreline).
@@ -429,7 +489,7 @@ impl Runway {
 }
 
 /// Shells, bombs and rockets on the runway break it; a wreck on it closes its stretch.
-fn crater_runway(mut runway: ResMut<Runway>, mut landed: MessageReader<crate::fire::ShellLanded>, wrecks: Query<&AirWreck, Added<AirWreck>>) {
+fn crater_runway(mut runway: ResMut<Airfield>, mut landed: MessageReader<crate::fire::ShellLanded>, wrecks: Query<&AirWreck, Added<AirWreck>>) {
     for s in landed.read() {
         if s.radius >= 7.0 {
             runway.hit(s.at);
@@ -441,7 +501,7 @@ fn crater_runway(mut runway: ResMut<Runway>, mut landed: MessageReader<crate::fi
 }
 
 /// Whether the airlift can land: the field's apron and tower theirs, and the runway usable.
-pub fn runway_open(field: &crate::fight::Field, runway: &Runway) -> bool {
+pub fn runway_open(field: &crate::fight::Field, runway: &Airfield) -> bool {
     let theirs = |k: &str| field.zones.iter().any(|z| z.key == k && z.held == Some(Side::Ru));
     theirs("apron") && theirs("tower") && runway.usable()
 }
@@ -455,10 +515,9 @@ fn airlift(
     lift: Option<ResMut<Airlift>>,
     field: Option<Res<crate::fight::Field>>,
     models: Option<Res<AirModels>>,
-    mut tally: ResMut<AirTally>,
     mut radio: ResMut<Radio>,
     mut script: ResMut<crate::director::Script>,
-    runway: Res<Runway>,
+    mut runway: ResMut<Airfield>,
 ) {
     let Some(mut lift) = lift else { return };
     if lift.decided {
@@ -476,12 +535,12 @@ fn airlift(
             let at = b + dir * (900.0 + k as f32 * 450.0);
             launch(&mut commands, m, &Sortie { kind: AirKind::Il76, from: (from.x, from.y), via: vec![(b.x - dir.x * 1500.0, b.y - dir.y * 1500.0)], at: (at.x, at.y), goal: None, delay: k as f32 * 20.0 });
         }
-        tally.airlift_landed = true;
+        runway.airlift_landed = true;
         script.banner = Some(("The Il-76s are landing. The airlift is in; the field is lost for good.".into(), 12.0));
         radio.say2(now, "Іл-76 заходять на посадку! Смуга їхня.", "Il-76s on approach! The runway is theirs.");
         info!("air: the airlift lands, {} Il-76s, at {now:.0} s", lift.il76);
     } else {
-        tally.airlift_turned_back = true;
+        runway.airlift_turned_back = true;
         radio.say2(now, "Перехоплення: їхні Іл-76 розвернулись у повітрі. Смуга їм не дісталась.", "Intercept: their Il-76s have turned back in the air. They did not get the runway.");
         info!("air: the airlift turns back, at {now:.0} s");
     }
@@ -659,11 +718,12 @@ fn fly(
     time: Res<Time>,
     mut rng: ResMut<AirRng>,
     mut tally: ResMut<AirTally>,
+    mut airfield: Option<ResMut<Airfield>>,
     mut stats: ResMut<Stats>,
     mut radio: ResMut<Radio>,
     models: Res<Models>,
     palette: Res<Palette>,
-    mut q: Query<(Entity, &mut Aircraft, &mut Transform, &mut Visibility)>,
+    mut q: Query<(Entity, &mut Aircraft, &mut Transform, &mut Visibility), Without<crate::jets::Jet>>,
 ) {
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
@@ -706,7 +766,9 @@ fn fly(
                 want_agl = (d * 0.25).clamp(0.0, a.kind.agl());
                 if d < 6.0 {
                     a.flight = Flight::Landed { left: 22.0 + rng.0.random_range(0.0..8.0), out: 1.5 };
-                    tally.landed += 1;
+                    if let Some(f) = airfield.as_mut() {
+                        f.landed += 1;
+                    }
                 }
             }
             Flight::Landed { left, out } => {
@@ -722,7 +784,9 @@ fn fly(
                     let goal = a.goal + Vec2::new(rng.0.random_range(-40.0..40.0), rng.0.random_range(-40.0..40.0));
                     crate::units::spawn_soldier(&mut commands, &models, &palette, Side::Ru, at, goal, a.lz, 1.0, None, &mut rng.0);
                     stats.sent += 1;
-                    tally.men_landed += 1;
+                    if let Some(f) = airfield.as_mut() {
+                        f.men_landed += 1;
+                    }
                 }
                 let left = left - dt;
                 a.flight = if left <= 0.0 && a.troops == 0 { Flight::Outbound } else { Flight::Landed { left, out } };
@@ -752,7 +816,7 @@ fn fly(
                 aim = Some(target);
                 want_agl = 60.0;
             }
-            Flight::Falling | Flight::Station { .. } => unreachable!(),
+            Flight::Falling | Flight::Station { .. } | Flight::Attack => unreachable!(),
         }
         if let Some(to) = aim {
             let want = crate::units::vehicle_yaw(to - here);

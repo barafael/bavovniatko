@@ -20,6 +20,7 @@ pub mod fight;
 pub mod fire;
 pub mod fx;
 pub mod hits;
+pub mod jets;
 pub mod manpads;
 pub mod orders;
 pub mod paint;

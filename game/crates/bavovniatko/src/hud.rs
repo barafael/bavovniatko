@@ -80,19 +80,19 @@ fn zones_line(f: &bav_sim::fight::Field) -> String {
 }
 
 /// The runway in the tally: its longest whole stretch, and whether an Il-76 could land on it.
-fn runway_line(r: &bav_sim::air::Runway) -> String {
+fn runway_line(r: &bav_sim::air::Airfield) -> String {
     format!("   runway: {:.1} km whole{}", r.longest() / 1000.0, if r.usable() { "" } else { ", NO LANDING" })
 }
 
 /// The airlift in the debrief.
-fn airlift_row(a: Option<&bav_sim::air::AirTally>) -> &'static str {
+fn airlift_row(a: Option<&bav_sim::air::Airfield>) -> &'static str {
     a.map_or("—", |a| if a.airlift_landed { "landed: the field lost for good" } else if a.airlift_turned_back { "turned back in the air" } else { "not yet decided" })
 }
 
 /// The field's tally: what has come down, what has landed, who holds what, and our men.
-fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, runway: Option<&bav_sim::air::Runway>) -> String {
+fn field_line(f: &bav_sim::fight::Field, air: Option<&bav_sim::air::AirTally>, runway: Option<&bav_sim::air::Airfield>) -> String {
     let zones = zones_line(f);
-    let (down, landed) = air.map_or((0, 0), |a| (a.down.len(), a.men_landed));
+    let (down, landed) = (air.map_or(0, |a| a.down.len()), runway.map_or(0, |r| r.men_landed));
     let strip = runway.map_or(String::new(), runway_line);
     format!("\nhelicopters down {down}   VDV landed {landed}   our men out {}   taken {}\n{zones}{strip}", f.out, f.captured)
 }
@@ -303,7 +303,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway, bradleys): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Runway>>, Query<&bav_sim::bradley::BradleyArms>),
+    (order, fpv_res, op_res, iglas, field, air, runway, bradleys): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<&bav_sim::bradley::BradleyArms>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -438,8 +438,10 @@ fn update_hud(
     let out = stats.destroyed + stats.abandoned;
     texts.p1().set_if_neq(Text::new(match diorama() {
         Diorama::Vuhledar | Diorama::AvdiivkaWave1 | Diorama::AvdiivkaWave2 | Diorama::AvdiivkaStepove => format!(
-            "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}",
-            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned
+            "{}   {}\nRussian vehicles committed {}   knocked out {}   withdrew {}\nmen sent {}   came back {}{}",
+            diorama().tally_date(), director::clock_text(script.t), committed, out, stats.withdrawn, stats.sent, stats.returned,
+            // Avdiivka's Su-25s, once any have come over.
+            air.as_deref().filter(|a| a.flown > 0).map_or(String::new(), |a| format!("   aircraft over {}   down {}", a.flown, a.down.len()))
         ),
         Diorama::Robotyne => format!(
             "{}   {}\nour vehicles committed {}   stopped in the field {}   came back {}\nmen sent {}   brought out {}",
@@ -641,7 +643,7 @@ fn show_debrief(
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
-    (field, air, iglas, runway): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Runway>>),
+    (field, air, iglas, runway): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>),
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
@@ -686,6 +688,8 @@ fn show_debrief(
                 .into_iter()
                 // Where we have vehicles in the field (Avdiivka's Bradleys), what they cost.
                 .chain((diorama() != Diorama::Vuhledar).then(|| ("Our vehicles lost".to_string(), stats.defender_vehicles.to_string())))
+                // Where their aircraft came in (Avdiivka's Su-25s), what came and what our Iglas did to it.
+                .chain(air.as_deref().filter(|a| a.flown > 0).into_iter().flat_map(|a| [("Su-25 runs".to_string(), a.flown.to_string()), ("    shot down".to_string(), a.down.len().to_string()), ("    hit and turned away".to_string(), a.driven_off.to_string())]))
                 .collect(),
                 stats.per_wave.iter().enumerate().skip(1).map(|(i, w)| (format!("column {i}"), [w.vehicles, w.destroyed, w.abandoned])).collect(),
                 ["vehicles", "destroyed", "abandoned"],
@@ -755,7 +759,7 @@ fn show_debrief(
             if let Some(r) = runway.as_deref() {
                 rows.push(("The runway: the longest stretch left whole".into(), format!("{:.1} km{}", r.longest() / 1000.0, if r.usable() { ", enough for an Il-76" } else { ", too short to land on" })));
             }
-            rows.push(("The airlift".into(), airlift_row(a).into()));
+            rows.push(("The airlift".into(), airlift_row(runway.as_deref()).into()));
             rows.push(("Shells left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
             (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])
         }
@@ -772,7 +776,7 @@ fn show_debrief(
                 ("    by Igla".into(), by("Igla").to_string()),
                 ("    by the ZU-23-2".into(), by("ZU-23-2").to_string()),
                 ("Hit and turned away".into(), a.map_or(0, |a| a.driven_off).to_string()),
-                ("Paratroopers landed".into(), a.map_or(0, |a| a.men_landed).to_string()),
+                ("Paratroopers landed".into(), runway.as_deref().map_or(0, |r| r.men_landed).to_string()),
                 ("    killed".into(), stats.attacker_dead.to_string()),
             ];
             if let Some(f) = field.as_deref() {
@@ -783,7 +787,7 @@ fn show_debrief(
                 let held: Vec<&str> = f.zones.iter().filter(|z| z.held == Some(Side::Ru)).map(|z| z.name.0.as_str()).collect();
                 rows.push(("Theirs at the end".into(), if held.is_empty() { "nothing".into() } else { held.join(", ") }));
             }
-            rows.push(("The airlift".into(), airlift_row(a).into()));
+            rows.push(("The airlift".into(), airlift_row(runway.as_deref()).into()));
             rows.push(("Iglas left".into(), iglas.iter().map(|i| i.missiles).sum::<u32>().to_string()));
             rows.push(("D-30 rounds left".into(), format!("{} of {}", fc.shells, fc.start.shells)));
             (format!("24 February 2022   {}", crate::text::HOSTOMEL.hud()), format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t)), rows, Vec::new(), ["", "", ""])

@@ -44,6 +44,7 @@ Left click: 155 mm fire mission (4 rounds).  Shift+click: cluster shells.  Ctrl+
 Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / the observers on the heap.  I: thermal.  P: pause.  [ ]: time.
 M: move the drone team when they find you.  3: into a position with an ATGM team.  Right button: the sight.  Left click: launch.
 6: into a Bradley's gunner's seat (again for the next).  Right button: the sight.  Left click: a burst.  X: AP / HE.  T: a TOW.
+5: out with an Igla team (again for the next).  Right button: shoulder it.  Left click: launch, on the steady tone.
 
 Press Enter."#,
         op_label: "OBSERVERS, THE HEAP'S FIRST TERRACE (СПОСТЕРІГАЧІ, ПЕРША ТЕРАСА ТЕРИКОНУ)",
@@ -173,6 +174,16 @@ Press Enter."#,
             supply: 2,
             available: 9,
         ),
+        // The 47th's Igla teams (c11 §4: the Su-25s forced in close were the ones lost, five aircraft in ten days
+        // over the whole salient), riflemen round a team of two missiles.
+        (
+            id: "igla",
+            name: ("Igla team, 2 missiles", "Розрахунок «Ігли», 2 ракети"),
+            what: Air(Igla(2)),
+            cost: 7,
+            supply: 6,
+            available: 3,
+        ),
         (id: "tank", name: ("Tank in a hide", "Танк у капонірі"), what: Hide, cost: 10, supply: 6, available: 3),
         // The 47th's Bradleys hull-down at the hides, a gunner's seat the player can take (key 6).
         (
@@ -226,9 +237,9 @@ Press Enter."#,
             (id: "javelin", at: 1),
             (id: "rifles", at: 2),
             (id: "stugna", at: 3),
-            (id: "rifles", at: 4),
+            (id: "igla", at: 4),
             (id: "rifles", at: 5),
-            (id: "rifles", at: 6),
+            (id: "igla", at: 6),
             (id: "rifles", at: 7),
             (id: "rifles", at: 8),
             (id: "m2", at: 9),
@@ -254,8 +265,9 @@ Press Enter."#,
     ew: (jammers: [(1300.0, 1700.0), (-900.0, 1750.0)], radius: 900.0, depth: 700.0),
     // FPVs by the day, five minutes in the air.
     fpv: (endurance: 300.0),
-    // Command's Enemy staff: Lancets for the Bradleys and the tank; Orlans over the village every few minutes.
-    staff: (lancets: 4, orlan: (120.0, 240.0), kabs: 6, kab_every: (200.0, 400.0)),
+    // Command's Enemy staff: Lancets for the Bradleys and the tank; Orlans over the village every few minutes; KABs
+    // and Su-25 pairs on the posts and hides it has spotted.
+    staff: (lancets: 4, orlan: (120.0, 240.0), kabs: 6, kab_every: (200.0, 400.0), su25: 3, su25_every: (240.0, 480.0)),
     // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
     // February, but still.
     operator: (pos: (900.0, -1400.0), found_per_hour: 0.2),
@@ -311,6 +323,15 @@ Press Enter."#,
             ),
         ),
         (400.0, Infantry(route: 2, groups: 12, size: 6, every: 12.0, label: "08:15  Men on the heap's face")),
+        // Su-25s on the heap's trench as the storming parties climb (c11 §2: the Su-25s forced in close by 19 October,
+        // five aircraft claimed in ten days).
+        (
+            430.0,
+            Air([
+                (kind: Su25, from: (-3400.0, 6000.0), via: [(-2900.0, 4800.0)], at: (-950.0, 480.0)),
+                (kind: Su25, from: (-3100.0, 6000.0), via: [(-2700.0, 4800.0)], at: (-980.0, 500.0), delay: 8.0),
+            ]),
+        ),
         (420.0, Say("This is {op}. They are climbing. The face, below us. Tanks at the foot, firing up.")),
         (
             560.0,
@@ -338,6 +359,14 @@ Press Enter."#,
         (720.0, Infantry(route: 0, groups: 8, size: 6, every: 15.0)),
         (740.0, Tos(label: "TOS-1A on the village")),
         (800.0, Infantry(route: 2, groups: 10, size: 6, every: 12.0, label: "10:00  The heap again, on foot")),
+        // A pair on Stepove's east edge.
+        (
+            830.0,
+            Air([
+                (kind: Su25, from: (2100.0, 6500.0), via: [(1800.0, 4600.0)], at: (1000.0, -760.0)),
+                (kind: Su25, from: (2400.0, 6500.0), via: [(2000.0, 4600.0)], at: (1200.0, -900.0), delay: 8.0),
+            ]),
+        ),
         (
             1000.0,
             Column(

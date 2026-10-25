@@ -77,6 +77,7 @@ pub struct Bank {
     hiss: Handle<Synth>,
     fire: Handle<Synth>,
     heli: Handle<Synth>,
+    jet: Handle<Synth>,
 }
 
 impl Bank {
@@ -315,6 +316,30 @@ fn heli(rng: &mut SmallRng) -> Vec<f32> {
     normalize(out, 0.7)
 }
 
+/// A Su-25's two turbojets going over low: a broad roar with the compressors' whine high in it (a seamless loop,
+/// its tail faded into its head). The pitch the look gives it rises and falls with the pass.
+fn jet(rng: &mut SmallRng) -> Vec<f32> {
+    let (n, fade) = (len(4.0), len(0.5));
+    let mut low = Lp::new(700.0);
+    let mut body = Lp::new(2400.0);
+    let mut out = Vec::with_capacity(n + fade);
+    for i in 0..n + fade {
+        let t = i as f32 / RATE as f32;
+        let tone = |f: f32| (t * f * std::f32::consts::TAU).sin();
+        let x = rng.random_range(-1.0f32..1.0);
+        // The roar, the hiss on top of it that a near pass has, and the whine wavering a little.
+        let roar = low.run(x) * 2.6 + body.run(x) * 0.5;
+        let whine = (tone(2950.0 + 25.0 * tone(0.7)) + tone(4410.0) * 0.4) * 0.05;
+        out.push(roar + whine);
+    }
+    for i in 0..fade {
+        let w = i as f32 / fade as f32;
+        out[i] = out[i] * w + out[n + i] * (1.0 - w);
+    }
+    out.truncate(n);
+    normalize(out, 0.7)
+}
+
 fn write_wav(path: &str, samples: &[f32]) {
     let mut b = Vec::with_capacity(44 + samples.len() * 2);
     let data = (samples.len() * 2) as u32;
@@ -372,6 +397,8 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
     let rotor = add(rotor(&mut rng));
     let fire = add(crackle(&mut rng2));
     let heli = add(heli(&mut rng2));
+    // The jet from a stream of its own again, so nothing before it moves.
+    let jet = add(jet(&mut SmallRng::seed_from_u64(0x2023_1010)));
     if let Some(dir) = crate::dev::dev().showcase.as_deref() {
         // The showcase rebuilds the soundtrack offline from these.
         let dump = |name: &str, h: &Handle<Synth>| {
@@ -389,8 +416,9 @@ fn build_bank(mut commands: Commands, mut assets: ResMut<Assets<Synth>>) {
         dump("Hiss", &hiss);
         dump("Fire", &fire);
         dump("Heli", &heli);
+        dump("Jet", &jet);
     }
-    commands.insert_resource(Bank { sounds, wind, rumble, engines, rotor, hiss, fire, heli });
+    commands.insert_resource(Bank { sounds, wind, rumble, engines, rotor, hiss, fire, heli, jet });
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -437,13 +465,19 @@ pub enum AmbienceKind {
     Fire,
     /// The nearest Ka-52.
     Heli,
+    /// The nearest Su-25 (only where one flies).
+    Jet,
 }
 
-/// How loud the nearest fire, the nearest helicopter and the nearest running engine are at the camera, 0..1.
+/// How loud the nearest fire, the nearest helicopter, the nearest jet and the nearest running engine are at the
+/// camera, 0..1.
 #[derive(Resource, Default)]
 pub struct NearSources {
     pub fire: f32,
     pub heli: f32,
+    pub jet: f32,
+    /// The nearest jet's Doppler: the playback speed its roar is heard at.
+    pub jet_pitch: f32,
     pub engines: f32,
     /// The nearest moving vehicle's speed (m/s): the engine note rises with it.
     pub engine_speed: f32,
@@ -454,7 +488,7 @@ fn near_sources(
     cam: Single<&GlobalTransform, With<bav_sim::player::MainCamera>>,
     emitters: Query<(&bav_sim::fx::Emitter, &GlobalTransform)>,
     grass: Query<&crate::fx::GrassFire>,
-    helis: Query<&GlobalTransform, With<bav_sim::air::Aircraft>>,
+    aircraft: Query<(&bav_sim::air::Aircraft, &Transform, &GlobalTransform, Has<bav_sim::jets::Jet>)>,
     vehicles: Query<(&bav_sim::units::Vehicle, &bav_sim::units::Driver, &GlobalTransform)>,
 ) {
     use bav_sim::fx::EmitterKind;
@@ -470,13 +504,21 @@ fn near_sources(
         .chain(grass.iter().filter_map(|g| g.centre()).map(|c| crate::geo::ground(c).distance(at)));
     let d = fires.fold(f32::MAX, f32::min);
     near.fire = if d < f32::MAX { (60.0 / (60.0 + d)).powf(1.3).min(1.0) } else { 0.0 };
-    let h = helis.iter().map(|t| t.translation().distance(at)).fold(f32::MAX, f32::min);
+    let h = aircraft.iter().filter(|(_, _, _, jet)| !jet).map(|(_, _, t, _)| t.translation().distance(at)).fold(f32::MAX, f32::min);
     near.heli = if h < f32::MAX { (400.0 / (400.0 + h)).powf(1.1).min(1.0) } else { 0.0 };
+    // A jet is heard much further off, and higher as it comes on, lower as it goes (343 m/s).
+    let jet = aircraft.iter().filter(|(a, _, _, jet)| *jet && bav_sim::manpads::up(a)).map(|(a, tf, t, _)| (t.translation().distance(at), a.velocity(tf).dot((at - t.translation()).normalize_or_zero()))).min_by(|a, b| a.0.total_cmp(&b.0));
+    near.jet = jet.map_or(0.0, |(d, _)| (1500.0 / (1500.0 + d)).powf(1.4).min(1.0));
+    near.jet_pitch = jet.map_or(1.0, |(_, v)| (1.0 / (1.0 - v / 343.0)).clamp(0.6, 1.6));
 }
 
 fn start_ambience(mut commands: Commands, bank: Res<Bank>) {
     for (h, k, v) in [(bank.wind.clone(), AmbienceKind::Wind, 0.25), (bank.rumble.clone(), AmbienceKind::Rumble, 0.35), (bank.engines.clone(), AmbienceKind::Engines, 0.0), (bank.rotor.clone(), AmbienceKind::Rotor, 0.04), (bank.hiss.clone(), AmbienceKind::Hiss, 0.0), (bank.fire.clone(), AmbienceKind::Fire, 0.0), (bank.heli.clone(), AmbienceKind::Heli, 0.0)] {
         commands.spawn((AudioPlayer(h), PlaybackSettings::LOOP.with_volume(Volume::Linear(v)), Ambience(k)));
+    }
+    // Only where a jet flies: an entity more would renumber another day's.
+    if bav_sim::air::jets() {
+        commands.spawn((AudioPlayer(bank.jet.clone()), PlaybackSettings::LOOP.with_volume(Volume::Linear(0.0)), Ambience(AmbienceKind::Jet)));
     }
 }
 
@@ -497,10 +539,14 @@ fn ambience_mix(time: Res<Time>, levels: Option<Res<AmbienceLevels>>, near: Res<
             AmbienceKind::Hiss => if levels.drone_view { levels.jam * 0.25 } else { 0.0 },
             AmbienceKind::Fire => near.fire * 0.6 * duck,
             AmbienceKind::Heli => near.heli * 0.5 * duck,
+            AmbienceKind::Jet => near.jet * 0.9 * duck,
         };
         if a.0 == AmbienceKind::Engines {
             // The note rises with the nearest vehicle's speed.
             sink.set_speed(0.85 + 0.03 * near.engine_speed.min(10.0));
+        }
+        if a.0 == AmbienceKind::Jet {
+            sink.set_speed(near.jet_pitch);
         }
         sink.set_volume(Volume::Linear(v));
     }

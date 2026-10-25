@@ -356,3 +356,25 @@ existing bakes if the optional rows are skipped.
   first pass that fails by script, and the T-90M reaching the east end before the guns speak. Next: that, the heap's
   areas and the drops (phase 5), the pair's runs and orders (phase 3), the Su-25 runs (phase 2), the showcase shots
   and a played session of each part (phase 10).
+- 2026-10-25: phase 2, the Su-25 runs. `AirKind::Su25` flies a fixed-wing pass of its own (`bav_sim::jets`): in
+  low from the Russian side along its route, a pop-up 4.2 km out, a shallow dive with a ripple of twenty S-8s at
+  1.9 km slant (`fire::ShellKind::Rocket`, a beaten zone long along the line of flight, each rocket's smoke laid as
+  it flies), a hard break the way home is nearer with eight pairs of flares, and out low; never hovering or
+  circling. Hit, it smokes and goes home; killed, it falls and burns (`air::take_hits`, as the helicopters). Each
+  part's Record has two pairs (I: the railway posts ahead of the first column at 07:15 and the heap's trench at
+  08:50; II: the heap's trench as the storming parties climb, and Stepove's east edge) and the 47th's Igla teams
+  (I: one at the railway's bend; II: there and on the heap's trench), riflemen round two missiles each, so the
+  Igla view (key 5) is in both parts. In Command the staff sends pairs on the posts and hides it has spotted
+  (`su25`, `su25_every`; rule `su25`). The net calls them from the compass ("Su-25s, low, from the north-east!"),
+  the hit feed has the run on its post, the tally line counts aircraft over and down, and the debrief the runs, the
+  downed and the driven off. The engines' roar is synthesised in code from a stream of its own (the older sounds
+  untouched) and pitched by its Doppler. `AirPlugin` is split: the airfield's account (`Airfield`: the runway,
+  what landed, the airlift; the evening's wrecks) comes only with helicopters, so Avdiivka has no runway and no
+  landing tallies, and `AirTally` is the aircraft's (flown, down, driven off). Same-day `same` for Vuhledar
+  (`fx-v`), Robotyne (`r2-r`) and both Hostomel parts (`td2-h1`, `td2-h2`); part III `same` against `a0-3`; I and
+  II change (new baselines `su-a1`, `su-a2`). Bands (hands-off, four seeds; I also seeds 4–7): part I knocked out
+  before 38/39/37/35/40/48/45/46, our casualties 7/5/5/5/4/10/3/5; after 41/38/42/40/42/42/43/38, ours
+  7/6/10/2/10/6/4/3, a Su-25 down in two seeds of eight. Part II before 36/42/41/38, ours 5/0/3/8; after
+  41/33/39/38, ours 5/6/6/5, one down in two seeds of four. Both stay in their Record bands but for part I's
+  stray seeds over 40, which it had before. Not yet: the baked hull flies with its gear down (the model has no
+  gear-up split); a hide is hit only by a rocket's chance; a second pass on one sortie.

@@ -309,14 +309,15 @@ fn leave(mut commands: Commands, time: Res<Time>, mut q: Query<(Entity, &Leaving
 }
 
 /// For the bands (`BAV_LOG_STATS`): the field each minute of the day's clock.
-fn log_field(script: Res<crate::director::Script>, field: Res<Field>, air: Option<Res<crate::air::AirTally>>, posts: Query<(&Post, Option<&Ammo>), Without<PulledOut>>, mut last: Local<u32>) {
+fn log_field(script: Res<crate::director::Script>, field: Res<Field>, air: Option<Res<crate::air::AirTally>>, airfield: Option<Res<crate::air::Airfield>>, posts: Query<(&Post, Option<&Ammo>), Without<PulledOut>>, mut last: Local<u32>) {
     if !crate::dev::dev().log_stats || script.t as u32 / 60 == *last {
         return;
     }
     *last = script.t as u32 / 60;
     let holding: Vec<String> = posts.iter().filter(|(p, _)| p.side == Side::Ua && p.strength > 0).map(|(p, a)| format!("{}/{}", p.strength, a.map_or(0, |a| a.0))).collect();
     let zones: Vec<String> = field.zones.iter().map(|z| format!("{}={}", z.name.0.trim_start_matches("the "), z.held.map_or("-", |s| if s == Side::Ua { "ua" } else { "ru" }))).collect();
-    let (flown, down, off, landed) = air.as_ref().map_or((0, 0, 0, 0), |a| (a.flown, a.down.len(), a.driven_off, a.men_landed));
+    let (flown, down, off) = air.as_ref().map_or((0, 0, 0), |a| (a.flown, a.down.len(), a.driven_off));
+    let landed = airfield.as_ref().map_or(0, |f| f.men_landed);
     info!(
         "field: t={:>4.0} {} flown={flown} down={down} driven_off={off} vdv_landed={landed} posts={:?} out={} taken={} lost={} held_until={:?} zones={}",
         script.t,

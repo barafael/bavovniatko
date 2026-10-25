@@ -45,6 +45,7 @@ Left click: 155 mm fire mission (4 rounds).  Shift+click: cluster shells.  Ctrl+
 Space: ATGM teams AUTO / HOLD / FREE.  1/2 or Tab: drone / the observers on the heap.  I: thermal.  P: pause.  [ ]: time.
 M: move the drone team when they find you.  3: into a position with an ATGM team.  Right button: the sight.  Left click: launch.
 6: into a Bradley's gunner's seat (again for the next).  Right button: the sight.  Left click: a burst.  X: AP / HE.  T: a TOW.
+5: out with an Igla team (again for the next).  Right button: shoulder it.  Left click: launch, on the steady tone.
 
 Press Enter."#,
         op_label: "OBSERVERS, THE HEAP'S FIRST TERRACE (СПОСТЕРІГАЧІ, ПЕРША ТЕРАСА ТЕРИКОНУ)",
@@ -135,6 +136,16 @@ Press Enter."#,
             supply: 2,
             available: 9,
         ),
+        // The 47th's Igla teams (c11 §4: the Su-25s forced in close were the ones lost, five aircraft in ten days
+        // over the whole salient), riflemen round a team of two missiles.
+        (
+            id: "igla",
+            name: ("Igla team, 2 missiles", "Розрахунок «Ігли», 2 ракети"),
+            what: Air(Igla(2)),
+            cost: 7,
+            supply: 6,
+            available: 3,
+        ),
         (id: "tank", name: ("Tank in a hide", "Танк у капонірі"), what: Hide, cost: 10, supply: 6, available: 3),
         // The 47th's Bradleys hull-down at the hides, a gunner's seat the player can take (key 6).
         (
@@ -188,7 +199,7 @@ Press Enter."#,
             (id: "javelin", at: 1),
             (id: "rifles", at: 2),
             (id: "stugna", at: 3),
-            (id: "rifles", at: 4),
+            (id: "igla", at: 4),
             (id: "rifles", at: 5),
             (id: "rifles", at: 6),
             (id: "rifles", at: 7),
@@ -216,8 +227,9 @@ Press Enter."#,
     ew: (jammers: [(1300.0, 1700.0), (-900.0, 1750.0)], radius: 900.0, depth: 700.0),
     // FPVs by the day, five minutes in the air.
     fpv: (endurance: 300.0),
-    // Command's Enemy staff: Lancets for the Bradleys and the tank; Orlans over the village every few minutes.
-    staff: (lancets: 3, orlan: (150.0, 300.0), kabs: 5, kab_every: (240.0, 480.0)),
+    // Command's Enemy staff: Lancets for the Bradleys and the tank; Orlans over the village every few minutes; KABs
+    // and Su-25 pairs on the posts and hides it has spotted.
+    staff: (lancets: 3, orlan: (150.0, 300.0), kabs: 5, kab_every: (240.0, 480.0), su25: 2, su25_every: (300.0, 600.0)),
     // The drone team behind the village. By October 2023 the Russians found a Mavic pilot less often than in
     // February, but still.
     operator: (pos: (900.0, -1400.0), found_per_hour: 0.2),
@@ -279,6 +291,15 @@ Press Enter."#,
             ),
         ),
         (345.0, Say("This is {op}. From the east now. Tanks, a lot of BMPs. Straight at the heap.")),
+        // Su-25s in low over Krasnohorivka with rockets on the railway posts ahead of the first column (c11 §2: the
+        // morning's massed air strikes; §4: Su-25s close in).
+        (
+            390.0,
+            Air([
+                (kind: Su25, from: (1900.0, 6500.0), via: [(1500.0, 4500.0)], at: (700.0, -420.0)),
+                (kind: Su25, from: (2200.0, 6500.0), via: [(1700.0, 4500.0)], at: (740.0, -450.0), delay: 8.0),
+            ]),
+        ),
         (
             560.0,
             Bombs(
@@ -306,6 +327,14 @@ Press Enter."#,
         (655.0, Say("This is {op}. Second column. Past the first one's wrecks. Exactly the same line.")),
         (700.0, Infantry(route: 1, groups: 8, size: 6, every: 20.0, label: "08:35  Infantry on foot at the heap")),
         (720.0, Tos(label: "TOS-1A again")),
+        // A pair from Kamianka on the heap's trench, as the infantry goes at it.
+        (
+            760.0,
+            Air([
+                (kind: Su25, from: (-3600.0, 6000.0), via: [(-2900.0, 4800.0)], at: (-950.0, 480.0)),
+                (kind: Su25, from: (-3300.0, 6000.0), via: [(-2700.0, 4800.0)], at: (-920.0, 450.0), delay: 8.0),
+            ]),
+        ),
         (
             950.0,
             Column(
