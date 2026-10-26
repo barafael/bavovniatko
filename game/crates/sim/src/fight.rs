@@ -29,7 +29,7 @@ impl Plugin for FightPlugin {
             // column game's, worn down by its own fire.
             let areas = &crate::data::sim_data().areas;
             if !areas.is_empty() {
-                app.insert_resource(Field { zones: zones(areas), ..default() }).add_systems(Update, (hold_zones, log_areas).chain().run_if(crate::running).in_set(crate::Step::Units).after(crate::units::drop_riders));
+                app.insert_resource(Field { zones: zones(areas), ..default() }).add_systems(Update, (hold_zones, log_areas).chain().run_if(crate::running).in_set(crate::Step::Units).after(crate::units::drop_riders).after(crate::seep::SeepSystems));
             }
             return;
         };
@@ -178,7 +178,7 @@ pub(crate) fn see(script: Res<crate::director::Script>, mut seeing: ResMut<Seein
 }
 
 /// The fog has lifted when it lets one see this far (m): the road is open to their drones.
-const LIFTED: f32 = 2000.0;
+pub(crate) const LIFTED: f32 = 2000.0;
 
 /// When the fog lifts (minutes after midnight): where its metres first pass `LIFTED` in the day's table, if they do.
 fn lift_time() -> Option<f32> {

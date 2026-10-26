@@ -29,6 +29,10 @@ use std::collections::BTreeMap;
 
 pub struct StaffPlugin;
 
+/// The staff's own systems, for what has to come before them in `Step::Units` (`seep`'s burrows feed `Spotted`).
+#[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub struct StaffSystems;
+
 impl Plugin for StaffPlugin {
     fn build(&self, app: &mut App) {
         if play() != Play::Command || crate::dev::dev().staff.as_deref() == Some("off") {
@@ -39,7 +43,7 @@ impl Plugin for StaffPlugin {
             .insert_resource(StaffRng(SmallRng::seed_from_u64(crate::dev::seeded(1945))))
             .insert_resource(Staff { lancets: spec.lancets, next_lancet: 240.0, next_orlan: 90.0, kabs: spec.kabs, next_kab: 420.0, su25: spec.su25, next_su25: 360.0, losses: BTreeMap::new(), read: 0 })
             // After the units' systems, so the frame's hits are all in the log and the vehicles where they ended up.
-            .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
+            .add_systems(Update, ((spot_fire, spot_by_eye, orlan, forget).run_if(|| rule("spot")), lancets, count_losses).chain().in_set(StaffSystems).after(crate::units::drop_riders).run_if(crate::running).in_set(crate::Step::Units));
         // Only where the day has them: a system more anywhere else would be in that day's schedule.
         if spec.kabs > 0 {
             app.add_systems(Update, kabs.after(lancets).run_if(crate::running).in_set(crate::Step::Units));

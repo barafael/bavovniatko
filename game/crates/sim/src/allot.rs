@@ -68,6 +68,8 @@ pub enum SupportKind {
     Drops(u32),
     /// So many illumination rounds (`fire::Strike::Illum`), one a call.
     Illum(u32),
+    /// A search-and-strike team (Command): it goes to a burrow we have found and clears it (`seep`).
+    Search,
 }
 
 /// One entry of the catalog: what it is, called what, what it costs in allotment points (and later in Supply),
@@ -148,6 +150,8 @@ pub struct Allotment {
     pub mavics: u32,
     /// Grenades for the reconnaissance drone to drop.
     pub drops: u32,
+    /// Search-and-strike teams for the burrows (`seep`).
+    pub search: u32,
     /// What it cost, of how many points.
     pub spent: u32,
     pub points: u32,
@@ -303,6 +307,7 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                 SupportKind::Cluster(m) => st.cluster += m * p.count,
                 SupportKind::Drops(n) => a.drops += n * p.count,
                 SupportKind::Illum(n) => st.illum += n * p.count,
+                SupportKind::Search => a.search += p.count,
             }
         }
     }

@@ -29,6 +29,7 @@ pub mod paint;
 pub mod player;
 pub mod robots;
 pub mod robotyne;
+pub mod seep;
 pub mod sound;
 pub mod staff;
 pub mod supply;

@@ -21,6 +21,10 @@ impl Plugin for ThermalPlugin {
         }
         app.add_systems(Startup, setup)
             .add_systems(Update, (toggle, mark_men, mark_posts, mark_vehicles, mark_aircraft, mark_fires, show).chain().in_set(bav_core::schedule::Step::Effects));
+        // Their cloaks, where their infantry seeps in (`bav_sim::seep`).
+        if bav_sim::seep::present() {
+            app.add_systems(Update, cloaks.after(show).in_set(bav_core::schedule::Step::Effects));
+        }
     }
 }
 
@@ -90,6 +94,33 @@ fn mark_fires(mut commands: Commands, kit: Res<HeatKit>, fires: Query<(Entity, &
     for (e, em) in &fires {
         if matches!(em.kind, EmitterKind::WreckFire | EmitterKind::PoolFire) {
             commands.entity(e).with_child(marker(&kit, Vec3::Y * 1.5, Vec3::new(4.0, 3.0, 4.0)));
+        }
+    }
+}
+
+/// A man's size of heat, and the least share of it the picture still shows.
+const MAN: Vec3 = Vec3::new(0.45, 1.4, 0.3);
+const FAINTEST: f32 = 0.15;
+
+/// The cloaked men, apart from the markers.
+type CloakedMen<'w, 's> = Query<'w, 's, (&'static Soldier, &'static GlobalTransform), (With<bav_sim::seep::Cloaked>, Without<Heat>)>;
+
+/// A man under a cloak shows the thermal camera less of his heat the further off it is, unless he moves
+/// (`bav_sim::seep::heat_shown`): his marker shrinks with the share, and below the faintest it is gone.
+fn cloaks(view: Res<View>, men: CloakedMen, mut markers: Query<(&ChildOf, &mut Transform, &mut Visibility), With<Heat>>) {
+    if !(view.thermal && view.mode == Mode::Drone) {
+        return;
+    }
+    for (parent, mut tf, mut v) in &mut markers {
+        let Ok((s, at)) = men.get(parent.parent()) else { continue };
+        let moving = matches!(s.state, bav_sim::units::SState::Advance | bav_sim::units::SState::Flee);
+        let share = bav_sim::seep::heat_shown(view.drone_pos.distance(at.translation()), moving);
+        let size = MAN * share.sqrt();
+        if tf.scale != size {
+            tf.scale = size;
+        }
+        if share < FAINTEST {
+            v.set_if_neq(Visibility::Hidden);
         }
     }
 }
