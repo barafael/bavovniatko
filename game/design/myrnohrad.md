@@ -1,8 +1,8 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
 Status: planned 2026-10-25; phases 0 and 1 built 2026-10-26 (the place, its map and set, the pocket; the days are
-placeholders). The owner's direction of 25 October: the next diorama comes from the era of humans against drones
-against other drones (2024–2026). This file first chooses the episode, then plans it.
+placeholders); phase 2, the fog in the battle, the same day. The owner's direction of 25 October: the next diorama
+comes from the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
 References: `c15` is `db/research/chapters/c15-pokrovsk-myrnohrad.md`, `c17` the Kupiansk dossier, `c19` Vivaldi's,
@@ -87,7 +87,7 @@ What the engine already has, and where this plan takes it from:
 - the EW field (jammers on the ground, the link fraying past the jam line): Robotyne;
 - the enemy staff (Spotted, Orlan passes, Lancets, the guns, KABs through `Act::Bombs`): Command, Avdiivka;
 - posts with ammunition, return fire, a dry post pulling out, areas held by whoever is in them: Hostomel, Avdiivka;
-- night, flares, the night's lights, sight shortened in the dark (`fight::Sight`): Hostomel;
+- night, flares, the night's lights, sight shortened in the dark (`fight::Seeing`): Hostomel;
 - Supply, Columns from a road head with the way's length through the grey zone, orders over the net: Command;
 - the evacuation runs and the wounded calling for help (`evac.rs`): Robotyne;
 - OSM maps with buildings, the turned box (`Anchor::bearing`), `Spoil` heaps on a `Mound`, the seasons: Avdiivka.
@@ -193,7 +193,7 @@ concern its own system with a `Step`.
   smoking; snow cover in II and III with Vuhledar's winter palette.
 
 ### 2. Fog in the battle
-- **One visibility.** `fight::Sight` (the night's) becomes `Visibility`: daylight × weather, asked by the posts'
+- **One visibility.** `fight::Sight` (the night's) becomes `Seeing` (Bevy has a `Visibility`): daylight × weather, asked by the posts'
   rifles, the attackers' return fire, the observers, the staff's eyes, the drone's picture and the FPVs. The file's
   `fog: [(from, to, metres)]` sets the weather's term through the day; the look's `DistanceFog` follows the battle's
   value instead of a constant.
@@ -317,7 +317,7 @@ the EW domes' masts.
 ## Critical files
 - `crates/core/src/{data,diorama,geo,field,sun}.rs` (the part, the pocket's polygons, the moon);
   `tools/osm/{fetch.sh,osm2ron.py}`; `dioramas/myrnohrad/{map,osm,fog,road,frost}.ron`
-- `crates/sim/src/fight.rs` (`Sight` → `Visibility`, burrows, areas), new `killzone.rs` (their drones), new
+- `crates/sim/src/fight.rs` (`Sight` → `Seeing`, burrows, areas), new `killzone.rs` (their drones), new
   `seep.rs` (the flow), new `robots.rs` (the UGV, its cargo and casevac, the bomber), `ew.rs` (domes on both
   sides), `staff.rs` (the wings as aircraft, the hunting preference, `Spotted` from burrows), `drones.rs`
   (the interceptor), `supply.rs`, `columns.rs`, `evac.rs`, `director.rs` (`Act::Seep`, the fog's lift)
@@ -406,3 +406,38 @@ the EW domes' masts.
   (that is `fight::Sight`, phase 2's); the clock reads 24:00–27:59 after midnight (`director::clock_text`, a one-line
   fix left for after the Hostomel branch that owns the file); the villages' gardens and trees; the robots, their
   drones, the flow and the fog in the battle (phases 2–9).
+- 2026-10-26: phase 2, the fog in the battle. **One visibility.** `fight::Sight` is now `fight::Seeing` (Bevy has a
+  `Visibility`): the light as a share of the day's (`sun::sight`, and as by day under a flare) and the weather's
+  metres (`murk`, the fog's). The fog table moved from the picture's data to the place's (`bav_core::data::fog`,
+  `fog_at`), so the picture and the battle read the same numbers. `Seeing::reach(base, p)` is base × light × the fog
+  as a share of base, at most 1: with no fog the share is exactly 1, so Hostomel's night gives the same floats it
+  did. `Seeing::through(Eye)` is how far an eye sees in the weather: a man's and a day camera's the fog's metres, a
+  thermal camera's three times that. Asked by the posts' rifles (`fire::small_arms`, 750 m in clear daylight), the
+  attackers' return fire (`fight::return_fire`, 400 m), the observers and the drone (a fire mission on a target
+  further off than they see through the fog is unobserved, 40 m dispersion, with its own line on the net; the
+  drone's slant range against its day or thermal channel), the staff's eyes (`spot_by_eye`'s 1.5 km; an Orlan's
+  chances times the fog's metres over a kilometre) and the FPVs: `fpv.heavy` is the share of the day's FPVs that
+  fly in fog (Myrnohrad's half, `map.ron`); below 500 m only those go, in clear air the light ones go first. Vehicles
+  drive as before. The look's `DistanceFog` is `Seeing::through` for the view on screen (the thermal's on the
+  drone's channel I), so in fog the day picture loses a group that the thermal still shows (devlog shots
+  `m1-fog-day`, `m1-fog-thermal`, `m1-clear-day`). `Seeing` exists where the day has a fight, a fog or a dated moon
+  (a night part); elsewhere nothing of it is spawned or scheduled. **The lift**: the fog passes 2 km at 10:28 by the
+  table, and the net warns twenty minutes before (`fight::lift`, 10:08); the script's own lines follow at 10:30 and
+  11:06. **III's dark** now reaches its posts: their rifles see 262 m all night instead of 750. `BAV_FOG=off` lifts
+  the fog from the start, to measure it; `BAV_LOG_STATS` logs the seeing once a minute and the distance at which each
+  of theirs first comes into a post's reach.
+  **Myrnohrad I with and without fog** (seed 0): the posts' rifles reach 234–293 m until 09:00 and 750 m from about
+  10:00; theirs first come into reach at 273–290 m early in the morning (median over the day 596 m, as the later
+  groups come under thinner fog), against 642–750 m (median 750) with the fog off. By 08:25 4 of 32 sent are dead in
+  fog against 10 without, by 09:22 15 of 48 against 19, and the south-eastern edge holds 9–11 of theirs through the
+  morning against 5–6; once it lifts the posts catch them in the open (55 dead by 11:18 against 53). The drone's day
+  channel sees 250–300 m, its thermal 750–900 m. Bands (`band.sh`, seeds 0–3, dead of 63 sent): base 56–58, fog
+  56–58, fog off 56–57: the placeholder's end does not move, when they die does. III: base 6–10 dead of 16, now 6 in
+  all four seeds (only 6 come within the posts' 262 m). **Checks**: Vuhledar, Mala Tokmachka, both Hostomel parts
+  and the three Avdiivka parts `same` against `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; each
+  Myrnohrad part filmed twice from one build is the same, and II is the same as the base build's (it has neither fog
+  nor moon). `cargo test`, clippy, fmtron and `cargo xtask smoke` pass. **Changed on purpose**: in Command at
+  Hostomel the staff's eyes see less far at night (`spot_by_eye` through `Seeing`); the Record does not run it.
+  **Not done**: the vehicle run under the fog and its loss when it lifts (phase 7); their FPVs grounded by the fog
+  (phase 3); cloaks against the thermal (phase 4); the FPV's flight in fog beyond the goggles' picture; II's dusk,
+  which has no `Seeing` (the part ends at sunset).

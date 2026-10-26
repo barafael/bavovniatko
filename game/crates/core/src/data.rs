@@ -61,6 +61,11 @@ pub struct DioramaData {
     /// shadows (the sky switch `BAV_SKY` overrides it).
     #[serde(default)]
     pub overcast: bool,
+    /// The fog through the day: how far one sees through it (m) at clock times (minutes after midnight), between
+    /// them in a straight line, the first and last held before and after. The picture draws it and the battle sees
+    /// through it (`bav_sim::fight::Seeing`). Empty: clear air.
+    #[serde(default)]
+    pub fog: Vec<(f32, f32)>,
     /// The day's wind (m/s along x, y, z), where it is not the season's: the drone's drift, the smoke, the drifts.
     #[serde(default)]
     pub wind: Option<(f32, f32, f32)>,
@@ -551,6 +556,25 @@ static DATA: OnceLock<DioramaData> = OnceLock::new();
 /// The diorama on the table, as its file describes it.
 pub fn data() -> &'static DioramaData {
     DATA.get_or_init(read)
+}
+
+/// How far one sees through the day's fog at this clock time (minutes after midnight), where the file gives one
+/// (`fog`) and `BAV_FOG=off` does not lift it.
+pub fn fog_at(minutes: f32) -> Option<f32> {
+    if crate::dev::dev().fog_off {
+        return None;
+    }
+    let fog = &data().fog;
+    let (first, last) = (fog.first()?, fog.last()?);
+    if minutes <= first.0 {
+        return Some(first.1);
+    }
+    if minutes >= last.0 {
+        return Some(last.1);
+    }
+    let k = fog.windows(2).find(|w| minutes < w[1].0)?;
+    let t = (minutes - k[0].0) / (k[1].0 - k[0].0);
+    Some(k[0].1 + (k[1].1 - k[0].1) * t)
 }
 
 /// A named curve of the diorama on the table.

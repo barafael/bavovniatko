@@ -174,6 +174,8 @@ pub fn cursor_ground(window: &Window, camera: &Camera, cam_tf: &GlobalTransform)
 pub struct Fpv {
     /// Left for the day.
     pub left: u32,
+    /// Of those, the heavy ones that fly in fog (`drones::launch_fpv`).
+    pub heavy: u32,
     pub flying: bool,
     pub pos: Vec3,
     pub vel: Vec3,

@@ -253,13 +253,15 @@ fn spot_air(
     }
 }
 
-/// Every two seconds: our vehicles that one of their posts or vehicles has in sight, within 1.5 km, not through smoke.
+/// Every two seconds: our vehicles that one of their posts or vehicles has in sight, within 1.5 km, not through smoke;
+/// in the dark and in fog only as far as men see (`fight::Seeing`).
 #[allow(clippy::too_many_arguments)]
 fn spot_by_eye(
     time: Res<Time>,
     mut spotted: ResMut<Spotted>,
     mut rng: ResMut<StaffRng>,
     smoke: Res<crate::fx::Smoke>,
+    seeing: Option<Res<crate::fight::Seeing>>,
     posts: Query<&Post>,
     vehicles: Query<(Entity, &Vehicle, &Transform), Without<Coasting>>,
     mut next: Local<f64>,
@@ -280,14 +282,16 @@ fn spot_by_eye(
             continue;
         }
         let p = tf.translation.xz();
-        if eyes.iter().any(|&eye| eye.distance(p) < 1500.0 && geo::line_of_sight(eye, p) && !smoke.blocks(eye, p, now)) {
+        let reach = seeing.as_ref().map_or(1500.0, |s| s.reach(1500.0, p));
+        if eyes.iter().any(|&eye| eye.distance(p) < reach && geo::line_of_sight(eye, p) && !smoke.blocks(eye, p, now)) {
             spotted.see(e, p, now, How::Seen, What::Vehicle, &mut rng.0);
         }
     }
 }
 
 /// Now and then an Orlan crosses our side along a strip 600 m wide: what is in the strip and not under smoke it may
-/// see (a post under the trees one time in three, a vehicle four times in five).
+/// see (a post under the trees one time in three, a vehicle four times in five); in fog as much less as its camera
+/// sees through it from a kilometre up (`fight::Seeing`).
 #[allow(clippy::too_many_arguments)]
 fn orlan(
     time: Res<Time>,
@@ -297,6 +301,7 @@ fn orlan(
     mut rng: ResMut<StaffRng>,
     mut radio: ResMut<Radio>,
     smoke: Res<crate::fx::Smoke>,
+    seeing: Option<Res<crate::fight::Seeing>>,
     posts: Query<(Entity, &Post)>,
     vehicles: Query<(Entity, &Vehicle, &Transform), Without<Coasting>>,
 ) {
@@ -309,16 +314,17 @@ fn orlan(
     staff.next_orlan = script.t + rng.random_range(lo..hi);
     let x = rng.random_range(-1800.0..1800.0f32);
     let under = |p: Vec2| (p.x - x).abs() < 300.0 && !smoke.covers(p, now);
+    let fog = seeing.as_ref().map_or(1.0, |s| (s.through(crate::fight::Eye::Man) / 1000.0).min(1.0) as f64);
     let mut found = 0;
     for (e, p) in &posts {
-        if p.side == Side::Ua && p.strength > 0 && under(p.pos) && rng.random_bool(0.35) {
+        if p.side == Side::Ua && p.strength > 0 && under(p.pos) && rng.random_bool(0.35 * fog) {
             spotted.see(e, p.pos, now, How::Orlan, What::Post, rng);
             found += 1;
         }
     }
     for (e, v, tf) in &vehicles {
         let p = tf.translation.xz();
-        if v.side == Side::Ua && v.state.alive() && under(p) && rng.random_bool(0.8) {
+        if v.side == Side::Ua && v.state.alive() && under(p) && rng.random_bool(0.8 * fog) {
             spotted.see(e, p, now, How::Orlan, What::Vehicle, rng);
             found += 1;
         }

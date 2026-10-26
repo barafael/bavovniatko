@@ -21,11 +21,6 @@ pub struct LookData {
     /// Burnt-out cars where the drones caught them: where, and which way they face (radians).
     #[serde(default)]
     pub cars: Vec<((f32, f32), f32)>,
-    /// The fog through the day, as the picture shows it: how far one sees (m) at clock times (minutes after
-    /// midnight), between them in a straight line, the first and last held before and after. Empty: the set's own
-    /// haze.
-    #[serde(default)]
-    pub fog: Vec<(f32, f32)>,
 }
 
 /// A set: its buildings, its observers' post and its day's light, each a builder of its own (`world`).

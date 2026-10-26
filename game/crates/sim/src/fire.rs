@@ -297,6 +297,7 @@ pub fn allotted_stock(mut fc: ResMut<FireControl>, mut fpv: ResMut<crate::player
     let a = crate::allot::allotment();
     *fc = FireControl::default();
     fpv.left = a.fpvs;
+    fpv.heavy = crate::drones::heavy_of(a.fpvs);
     if let Some(mut d) = drops {
         d.left = a.drops;
     }
@@ -391,10 +392,25 @@ fn atgm_mode_key(keys: Res<ButtonInput<KeyCode>>, mut fc: ResMut<FireControl>, m
 // ---------------------------------------------------------------------------------------------------------
 // Player fire control
 
-/// Smoke lies between the observers and the target, and they cannot see the fall of shot (the heap's post on its
-/// first terrace, Avdiivka; any smoke, ours or theirs, from the shells or the hulls' grenades).
-fn op_blinded(view: &View, op: Option<&ObservationPost>, smoke: &fx::Smoke, target: Vec2, now: f64) -> bool {
-    view.mode == Mode::Op && op.is_some_and(|op| smoke.blocks(op.eye.xz(), target, now))
+/// Why whoever watches cannot see the fall of shot.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+enum Unseen {
+    /// Smoke lies between the observers and the target (the heap's post on its first terrace, Avdiivka; any smoke,
+    /// ours or theirs, from the shells or the hulls' grenades).
+    Smoke,
+    /// The target is further off in the fog than the observers' eyes or the drone's camera see (`fight::Seeing`): its
+    /// day channel no further than a man, its thermal some way more.
+    Fog,
+}
+
+fn unseen(view: &View, op: Option<&ObservationPost>, smoke: &fx::Smoke, seeing: Option<&crate::fight::Seeing>, target: Vec2, now: f64) -> Option<Unseen> {
+    let eye = if view.thermal { crate::fight::Eye::Thermal } else { crate::fight::Eye::Man };
+    match view.mode {
+        Mode::Op if op.is_some_and(|op| smoke.blocks(op.eye.xz(), target, now)) => Some(Unseen::Smoke),
+        Mode::Op if op.zip(seeing).is_some_and(|(op, s)| op.eye.xz().distance(target) > s.through(crate::fight::Eye::Man)) => Some(Unseen::Fog),
+        Mode::Drone if seeing.is_some_and(|s| view.drone_pos.distance(geo::ground(target)) > s.through(eye)) => Some(Unseen::Fog),
+        _ => None,
+    }
 }
 
 fn observed_sigma(view: &View, target: Vec2, blind: bool) -> f32 {
@@ -427,7 +443,7 @@ fn player_fire(
     mut radio: ResMut<Radio>,
     mut sound: Sound,
     orders: Option<Res<crate::orders::OrdersView>>,
-    (op, smoke): (Option<Res<ObservationPost>>, Res<fx::Smoke>),
+    (op, smoke, seeing): (Option<Res<ObservationPost>>, Res<fx::Smoke>, Option<Res<crate::fight::Seeing>>),
 ) {
     // Alt+click asks for an evacuation instead (`evac`); with the orders open (Command) a click is for them (`orders`);
     // in a sight (a launcher, a Bradley's gun) it fires that.
@@ -437,10 +453,13 @@ fn player_fire(
     let now = time.elapsed_secs_f64();
     let Some(hit) = player::cursor_ground(&window, cam.0, cam.1) else { return };
     let target = hit.xz();
-    let blind = op_blinded(&view, op.as_deref(), &smoke, target, now);
-    let sigma = observed_sigma(&view, target, blind);
-    if blind {
-        radio.say2(now, "{player}, я {op}. Дим між нами і ціллю. Розривів не бачимо.", "{player}, this is {op}. Smoke between us and the target. We can't see the fall of shot.");
+    let why = unseen(&view, op.as_deref(), &smoke, seeing.as_deref(), target, now);
+    let sigma = observed_sigma(&view, target, why.is_some());
+    match why {
+        Some(Unseen::Smoke) => radio.say2(now, "{player}, я {op}. Дим між нами і ціллю. Розривів не бачимо.", "{player}, this is {op}. Smoke between us and the target. We can't see the fall of shot."),
+        Some(Unseen::Fog) if view.mode == Mode::Op => radio.say2(now, "{player}, я {op}. Туман. Розривів не бачимо.", "{player}, this is {op}. Fog. We can't see the fall of shot."),
+        Some(Unseen::Fog) => radio.say2(now, "Ціль у тумані, розривів не побачу.", "The target's in the fog. I won't see the fall of shot."),
+        None => {}
     }
     let shift = keys.pressed(KeyCode::ShiftLeft) || keys.pressed(KeyCode::ShiftRight);
     let ctrl = keys.pressed(KeyCode::ControlLeft) || keys.pressed(KeyCode::ControlRight);
@@ -515,14 +534,14 @@ fn aim_gizmo(
     keys: Res<ButtonInput<KeyCode>>,
     missions: Query<&Mission, With<PlayerCalled>>,
     time: Res<Time>,
-    (op, smoke): (Option<Res<ObservationPost>>, Res<fx::Smoke>),
+    (op, smoke, seeing): (Option<Res<ObservationPost>>, Res<fx::Smoke>, Option<Res<crate::fight::Seeing>>),
 ) {
     if view.mode == Mode::Ground {
         return;
     }
     if let Some(hit) = player::cursor_ground(&window, cam.0, cam.1) {
         let t = hit.xz();
-        let sigma = observed_sigma(&view, t, op_blinded(&view, op.as_deref(), &smoke, t, time.elapsed_secs_f64()));
+        let sigma = observed_sigma(&view, t, unseen(&view, op.as_deref(), &smoke, seeing.as_deref(), t, time.elapsed_secs_f64()).is_some());
         let color = if keys.pressed(KeyCode::ControlLeft) {
             Color::srgba(1.0, 0.3, 0.2, 0.8)
         } else if keys.pressed(KeyCode::ShiftLeft) {
@@ -1056,12 +1075,13 @@ fn small_arms(
     palette: Res<Palette>,
     mut positions: Query<(&mut Post, Option<&mut crate::fight::Ammo>, Has<Suppressed>)>,
     mut soldiers: Query<(Entity, &mut Soldier, &Transform)>,
-    sight: Option<Res<crate::fight::Sight>>,
+    seeing: Option<Res<crate::fight::Seeing>>,
 ) {
     // Where the fight says so, a post down under fire fires only so much (`FightSpec::pinned`).
     let pinned = crate::fight::spec().map_or(1.0, |f| f.pinned);
-    // In the dark men see less far, except under a flare (only where the fight counts it).
-    let reach = |p: Vec2| 750.0 * sight.as_ref().map_or(1.0, |s| s.at(p));
+    // In the dark men see less far, except under a flare, and in fog no further than it lets them (where the day
+    // has either).
+    let reach = |p: Vec2| seeing.as_ref().map_or(750.0, |s| s.reach(750.0, p));
     let dt = time.delta_secs();
     let rng = &mut fxr.0;
     let mut dead: Vec<Entity> = Vec::new();

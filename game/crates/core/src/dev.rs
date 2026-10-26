@@ -147,6 +147,8 @@ pub struct DevEnv {
     pub lineup: Option<[f32; 3]>,
     /// `BAV_OPERATOR=off`: the enemy never finds the drone team (the showcase film, whose shots need the feed).
     pub operator_off: bool,
+    /// `BAV_FOG=off`: the day's fog lifted from the start, in the picture and the battle (to measure what it does).
+    pub fog_off: bool,
     /// `BAV_FPV="<game s>:<x>;<z>"`: launch the FPV then and fly it by itself at the vehicle nearest that point.
     pub fpv: Option<(f32, (f32, f32))>,
     /// `BAV_DROP="<game s>:<x>;<z>,…"`: drop a grenade from the reconnaissance drone then on the enemy's man nearest
@@ -328,6 +330,7 @@ impl DevEnv {
             lineup_fire: var("BAV_LINEUP_FIRE").is_some(),
             evac: parse("BAV_EVAC"),
             operator_off: var("BAV_OPERATOR").is_some_and(|v| v == "off"),
+            fog_off: var("BAV_FOG").is_some_and(|v| v == "off"),
             fpv: var("BAV_FPV").and_then(|s| {
                 let (t, at) = s.split_once(':')?;
                 let (x, z) = at.split_once(';')?;

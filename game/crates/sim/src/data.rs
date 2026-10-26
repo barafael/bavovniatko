@@ -95,10 +95,17 @@ fn run_length() -> f32 {
     150.0
 }
 
-/// FPVs: how long one flies (s).
+/// FPVs: how long one flies (s), and what share of the day's are heavy enough to fly in fog (`fight::Seeing`): the
+/// light ones are useless in the wet (c15 §3). All of them where the file does not say.
 #[derive(Deserialize, Debug, Clone, Copy)]
 pub struct FpvSpec {
     pub endurance: f32,
+    #[serde(default = "all")]
+    pub heavy: f32,
+}
+
+fn all() -> f32 {
+    1.0
 }
 
 static DATA: OnceLock<SimData> = OnceLock::new();

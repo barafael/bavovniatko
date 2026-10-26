@@ -17,7 +17,8 @@
     // humidity 97-98% to 08:00, 83% by 10:00; wind 3-10 km/h from the south).
     overcast: true,
     wind: (0.8, 0.0, -1.0),
-    // The fog as the picture shows it: a few hundred metres until mid-morning, thinning from 10:00, gone by 11:20.
+    // The fog, drawn and seen through alike (bav_sim::fight::Seeing): a few hundred metres until mid-morning,
+    // thinning from 10:00, gone by 11:20. The net warns of the lift twenty minutes ahead.
     fog: [(390.0, 250.0), (540.0, 300.0), (600.0, 700.0), (650.0, 3000.0), (680.0, 6000.0)],
     // The town after five months of it: a third of the roofs gone, a dozen ruins smouldering, a few cars caught on
     // the road.

@@ -32,7 +32,8 @@ pub struct DronesPlugin;
 impl Plugin for DronesPlugin {
     fn build(&self, app: &mut App) {
         let d = crate::data::sim_data();
-        app.insert_resource(Fpv { left: crate::allot::settled().map_or(0, |a| a.fpvs), ..default() })
+        let fpvs = crate::allot::settled().map_or(0, |a| a.fpvs);
+        app.insert_resource(Fpv { left: fpvs, heavy: heavy_of(fpvs), ..default() })
             .insert_resource(Operator { pos: Vec2::new(d.operator.pos.0, d.operator.pos.1), found: None, moving_until: 0.0, moves: 0 })
             .insert_resource(OperatorRng(SmallRng::seed_from_u64(crate::dev::seeded(1306))))
             .add_systems(Update, drone_input.in_set(crate::Step::Control).after(crate::dev::DevSystems))
@@ -53,13 +54,23 @@ struct OperatorRng(SmallRng);
 /// The FPV's warhead: a PG-7 class shaped charge, and fragments.
 const FPV_BLAST: f32 = 6.0;
 
-/// Put the player in an FPV's goggles over the team's position, facing the enemy.
-pub fn launch_fpv(fpv: &mut Fpv, view: &mut View, op: &Operator, radio: &mut Radio, now: f64) -> bool {
+/// Of so many FPVs, how many are heavy enough to fly in fog (`FpvSpec::heavy`).
+pub fn heavy_of(n: u32) -> u32 {
+    crate::data::sim_data().fpv.map_or(n, |f| (n as f32 * f.heavy).round() as u32).min(n)
+}
+
+/// Put the player in an FPV's goggles over the team's position, facing the enemy. In fog thick enough to ground the
+/// light ones only a heavy one goes (`fight::Seeing`); in clear air the light ones go first, the heavy kept back.
+pub fn launch_fpv(fpv: &mut Fpv, view: &mut View, op: &Operator, radio: &mut Radio, seeing: Option<&crate::fight::Seeing>, now: f64) -> bool {
     let Some(spec) = crate::data::sim_data().fpv else {
         return false;
     };
-    if fpv.left == 0 || fpv.flying || now < op.moving_until {
+    let grounded = seeing.is_some_and(|s| s.grounds_light_fpvs());
+    if fpv.left == 0 || fpv.flying || now < op.moving_until || (grounded && fpv.heavy == 0) {
         return false;
+    }
+    if grounded || fpv.heavy == fpv.left {
+        fpv.heavy -= 1;
     }
     fpv.left -= 1;
     fpv.flying = true;
@@ -92,17 +103,20 @@ fn drone_input(
     mut view: ResMut<View>,
     mut op: ResMut<Operator>,
     mut radio: ResMut<Radio>,
+    seeing: Option<Res<crate::fight::Seeing>>,
     mut auto_launched: Local<bool>,
 ) {
     let now = time.elapsed_secs_f64();
     let auto = crate::dev::dev().fpv.is_some_and(|(t, _)| script.t >= t) && !*auto_launched;
     if keys.just_pressed(KeyCode::Digit4) || auto {
         *auto_launched |= auto;
-        if !launch_fpv(&mut fpv, &mut view, &op, &mut radio, now) {
+        if !launch_fpv(&mut fpv, &mut view, &op, &mut radio, seeing.as_deref(), now) {
             let why = if crate::data::sim_data().fpv.is_none() {
                 ("Ударних дронів сьогодні нема.", "No strike drones today.")
             } else if fpv.left == 0 {
                 ("FPV більше нема.", "No more FPVs.")
+            } else if fpv.heavy == 0 && !fpv.flying && now >= op.moving_until {
+                ("Туман. Легкі в такому не літають, а важких більше нема.", "Fog. The light ones don't fly in this, and the heavy ones are gone.")
             } else {
                 ("Не зараз: група на переміщенні.", "Not now: the team is moving.")
             };
