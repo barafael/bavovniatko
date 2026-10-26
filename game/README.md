@@ -13,13 +13,10 @@ are five places so far, the first two one minefield seen from both sides:
 - **Avdiivka, October 2023 and January 2024** (`-- avdiivka-1`, `-- avdiivka-2`, `-- avdiivka-3`): the northern
   shoulder of the salient in three parts, in the making ([`design/avdiivka.md`](design/avdiivka.md)).
 - **Myrnohrad, November 2025 to January 2026** (`-- myrnohrad-1`, `-- myrnohrad-2`, `-- myrnohrad-3`): the road
-  into the pocket, in the fog, by day and in the frost; so far the place and its map, the ground robots and the
-  heavy bomber, their drone crews over the road (FPVs on radio and fibre, waiters on the shoulders) against our EW
-  domes and nets, their infantry seeping in by twos and threes. Part I is the day of 10 November: the fog, the
-  morning's run into the town under it, and the seep at the fog's rate; III is the night of 19-20 January: robots
-  and the Vampire feeding the north, single men seeping in, the wounded waiting; II is 3 December, the road by day
-  with robots that mostly do not survive it
-  ([`design/myrnohrad.md`](design/myrnohrad.md)).
+  into the pocket in three parts, the fog of 10 November, the road by day on 3 December and the frost of the night
+  of 19-20 January: ground robots and a heavy bomber where nothing on wheels gets through, their drone crews over
+  the road against our EW domes, nets and interceptors, and their infantry seeping in by twos and threes
+  ([below](#myrnohrad), [`design/myrnohrad.md`](design/myrnohrad.md)).
 
 To watch rather than play, `cargo xtask film` produces a four-minute film of both, directed from
 `design/showcase.md` ([below](#the-showcase-film)).
@@ -82,6 +79,34 @@ gunner's seat, the cluster shells, the KABs and the heap stormed on foot is bein
 and the bands so far are in [`design/avdiivka.md`](design/avdiivka.md), the history in
 [`db/research/chapters/c11-avdiivka.md`](../db/research/chapters/c11-avdiivka.md) and
 [`v02-stepove-bradley.md`](../db/research/chapters/v02-stepove-bradley.md).
+
+## Myrnohrad
+
+The last act of Pokrovsk and Myrnohrad, from the November fog to the January frost. You are a drone team of the
+garrison inside a pocket that one road, the H-32 past Rivne and Svitle, joins to the rest of the front, and the
+whole box is inside their kill zone: the road head is where the danger starts, not where it ends. Their drone
+crews (Rubikon, Sudny Den, the Archangels) fly FPVs on radio and on fibre at what moves on the road and at the drone
+teams, and their waiters sit on its shoulders until something passes. Our EW domes break the radio links and
+never the fibre ones, and give themselves away; nets over the road hold the FPVs off until they are torn. Their
+infantry seeps in by twos and threes, sneaking past the posts to go to ground in a ruin, a burrow, from which it
+goes for the drone crews and calls its guns. Nothing on wheels gets through in clear weather: ammunition, food, fuel
+and batteries go in by ground robot and by the Vampire, the heavy bomber, and the wounded wait for a robot to bring
+them out, often for days.
+
+Part I (`myrnohrad-1`, 06:30 to midday) is the fog of 10 November: two pickups run into the town and back under it
+(N sends the run early, Shift+N turns it back), a volunteers' Lada is still on the road when the fog lifts, and
+thirty to forty of theirs get in, against about ten on a clear day. Part II (`myrnohrad-2`, 08:00 to dusk) is 3
+December, the road by day with no fog: the robots mostly do not survive the trip, their Orlans and ZALAs spot for
+the FPVs against our three interceptors and a radar, the Vampire flies at dusk, and the queue of the wounded is
+longer at dusk than at dawn. Part III (`myrnohrad-3`, 22:00 to 03:45) is the night of 19-20 January at -15 °C, with
+no moon: robots and the Vampire feed the northern quarters, single men seep in, and the fibre snags in the ice. Each
+part starts from the last as the Record has it. The keys are 7 (a robot's own camera), 8 (the Vampire), 9 (an
+interceptor), J (our domes off and on), N (the run) and V (a robot for the wounded), with 4 for an FPV, C for a
+grenade from the drone and I for its thermal channel ([Controls](#controls)); `BAV_FOG=off`, `BAV_UGV`,
+`BAV_BOMBER`, `BAV_INTERCEPT`, `BAV_DOME` and `BAV_RUN` play the same from the shell, for the bands
+([Development](#development)). The history is in
+[`db/research/chapters/c15-pokrovsk-myrnohrad.md`](../db/research/chapters/c15-pokrovsk-myrnohrad.md), the plan,
+its decisions and the bands in [`design/myrnohrad.md`](design/myrnohrad.md).
 
 ## The showcase film
 
@@ -177,24 +202,25 @@ the pieces that reach above a height, to write a ring from.
 | input | does |
 |---|---|
 | WASD, Q/E, R/F | fly the drone, turn it, climb or descend |
+| I | the drone's thermal channel, where it has one (Hostomel, Avdiivka, Myrnohrad) |
 | right-drag, wheel | look around, zoom |
 | left click | 155 mm fire mission, 4 rounds (a drone over the target tightens the sheaf) |
 | Shift+click | Vuhledar: RAAM, scattering mines onto a lane. Mala Tokmachka: smoke |
 | Ctrl+click | HIMARS (two missions all day at Vuhledar, one at Mala Tokmachka) |
 | L | Hostomel at dusk: an illumination round over the cursor, a star under a parachute that lights the ground for about a minute; under it both sides see as by day |
 | Alt+click, V | Mala Tokmachka: send a Bradley for the wounded at the cursor, or (V) where the last call for evacuation came from; four for the day. At Vuhledar nothing gets down to the tree line by day |
-| 4 | Mala Tokmachka: fly the FPV (one for the morning). The mouse points it and it goes where it points; W/S throttle, A/D bank, and it levels itself. Its analogue picture thins with range and behind the ground; near their jammers the control link drops out in spells |
-| M | move the drone team once the enemy has found it (a ranging round lands close): the feed is down while it moves. A team that stays is hit and loses a drone. Vuhledar's team is found a few times a day; Mala Tokmachka's rarely |
+| 4 | Mala Tokmachka, Avdiivka, Myrnohrad: fly an FPV (at Mala Tokmachka one for the morning). The mouse points it and it goes where it points; W/S throttle, A/D bank, and it levels itself. Its analogue picture thins with range and behind the ground; near their jammers the control link drops out in spells |
+| M | move the drone team once the enemy has found it (a ranging round lands close): the feed is down while it moves. A team that stays is hit and loses a drone. Vuhledar's team is found a few times a day; Mala Tokmachka's rarely. At Myrnohrad their direction-finders find it while a drone is up and their FPVs come for it, and hit it only if it has not moved |
 | Space | Vuhledar: ATGM teams AUTO (wait until the column commits), HOLD, or FREE. Mala Tokmachka: the column PUSH ON, HOLD, or PULL BACK (picking up the infantry) |
-| 1, 2, Tab | the drone, or the observer (a nine-storey roof; a water tower by the N08) |
+| 1, 2, Tab | the drone, or the observer (a nine-storey roof; a water tower by the N08; at Myrnohrad a roof on Soborna street, or the Tsentralna headframe in the frost) |
 | 3 | into a tree line behind an ATGM team; again for the next team. Mouse looks, right button holds the sight, left click launches |
 | 6 | Avdiivka: into a Bradley's gunner's seat; again for the next one. Mouse turns the turret, right button holds the ISU sight (x4; I for its thermal channel), left click fires a burst, X picks AP or HE (HE on a tank goes for its sights), T launches a TOW that follows the crosshair; G / K / B order the driver out of the hide on a run, to hold, or back into it. A TOW or a long burst gives the hide away (in Command the Lancets come) |
 | Shift+click | Avdiivka: cluster shells (DPICM), two to a mission, on infantry in the open |
-| C | Avdiivka, the second wave: drop a grenade (a VOG-17) from the drone, eight for the day. It falls in the day's wind, metres off from 190 m and little from low down; a small burst on men, nothing to a hull. The tally says who holds the village, the heap, the railway and the plant's edge |
-| 7 | Myrnohrad: a ground robot's own camera, low on its nose; again for the next robot out. W/S take its throttle and A/D its lane across the route, and it goes as you drive it; G, or leaving its camera, gives it back to its route. Its link breaks up in their EW and drops out, now and then for an hour or more, and it stands while it is down; it sticks in craters and mud. A robot is out for real minutes, so their FPVs come at it at their rate by the real hour, not the clock's |
+| C | Avdiivka's second wave and Myrnohrad: drop a grenade (a VOG-17) from the drone, eight for the day at Avdiivka. It falls in the day's wind, metres off from 190 m and little from low down; a small burst on men, nothing to a hull. The tally says who holds the village, the heap, the railway and the plant's edge |
+| 7 | Myrnohrad: a ground robot's own camera, low on its nose; again for the next robot out. W/S take its throttle and A/D its lane across the route, and it goes as you drive it; G, or leaving its camera, gives it back to its route. Its link breaks up in their EW and drops out, now and then for an hour or more (the rest of the part), and it stands while it is down; it sticks in craters and mud. A robot is out for real minutes, so their FPVs come at it at their rate by the real hour, not the clock's |
 | V, Alt+click | Myrnohrad: the wounded wait for a robot. V sends one for the longest-waiting call, Alt+click one with ammunition to the position nearest the cursor; it unloads, takes on two wounded and comes back. The robots are the Allotment's (Support), in the Record and in Command alike; in the Record one also goes by itself for a call that has waited long |
 | 8 | Myrnohrad, II and III: the Vampire, the heavy bomber, on a sortie from the drone team with four 60 mm bombs (Shift+8: a bundle of ammunition for a post), flown with the drone's sticks; C lets one go, H brings it home, I its thermal camera, and 8 again puts you back in its camera |
-| 9 | Myrnohrad I: an interceptor from the drone team, flown in the goggles as the FPV is but faster and climbing (the mouse may point it up); it brings one of their Orlans or ZALAs down by passing within a few metres of it. Where the day has a radar, the rest go up by themselves at a wing it has held inside its range for a while, and bring it down about half the time |
+| 9 | Myrnohrad I and II: an interceptor from the drone team, three for the day, flown in the goggles as the FPV is but faster and climbing (the mouse may point it up); it brings one of their Orlans or ZALAs down by passing within a few metres of it. Where the day has a radar, the rest go up by themselves at a wing it has held inside its range for a while, and bring it down about half the time |
 | N, Shift+N | Myrnohrad I: the morning's run. N sends the next car run now rather than at its time, Shift+N turns back the cars on the road in and in the town |
 | J | Myrnohrad: switch our EW domes off, or on again. A dome that is on breaks their radio FPVs' links and gives itself away to their direction-finders, and it blinds our own FPVs and interceptors inside it; the radar's interceptors and our strikes on their launch points pause it by themselves |
 | O, G, K, B | Command: the orders over the drone's picture. A click picks one of our units, G / K / B order it to advance, hold or fall back, and a click on a ringed position sends it there; the order goes over the net, late and maybe not at all where they jam it |
@@ -213,8 +239,8 @@ The game is a Cargo workspace of four crates, layered so the battle cannot reach
 | crate | path | contents |
 |---|---|---|
 | `bav-core` | `crates/core/` | what every part shares: the ground's geometry and both layouts (`geo.rs`, `geo/robotyne.rs`), which diorama is on the table and the sides (`diorama.rs`, the ids and files of `dioramas/index.ron`, built in by `build.rs`), the dioramas' place and layout (`data.rs`), the words in two registers (`text.rs`), the frame's `Step` order and the startup sets (`schedule.rs`), the `BAV_*` switches (`dev.rs`) and the small vocabulary they name (`vocab.rs`) |
-| `bav-sim` | `crates/sim/` | the battle, deterministic: vehicles, soldiers, mines, damage and wrecks (`units/`: kinds, mines, spawn, drive, wrecks, blasts, soldiers), positions, ATGM teams, artillery, RAAM, smoke and HIMARS (`fire.rs`), the day's script (`director.rs`), the Ka-52s and the dug-in tanks (`robotyne.rs`), the player's drone and posts (`player.rs`), and the queues it fills for the picture and the sound (`fx.rs`, `paint.rs`, `sound.rs`) |
-| `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`, raising the set the diorama's file names: `data.rs`), the belts' trees (`trees.rs`), Mala Tokmachka's set and light (`robotyne.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
+| `bav-sim` | `crates/sim/` | the battle, deterministic: vehicles, soldiers, mines, damage and wrecks (`units/`: kinds, mines, spawn, drive, wrecks, blasts, soldiers), positions, ATGM teams, artillery, RAAM, smoke and HIMARS (`fire.rs`), the day's script (`director.rs`), the Ka-52s and the dug-in tanks (`robotyne.rs`), the player's drone and posts (`player.rs`), Myrnohrad's kill zone of their drone crews, our domes and nets (`killzone.rs`, `ew.rs`), the seep and its burrows (`seep.rs`), the robots and the Vampire (`robots/`) and the wings and interceptors (`wings.rs`), and the queues it fills for the picture and the sound (`fx.rs`, `paint.rs`, `sound.rs`) |
+| `bav-look` | `crates/look/` | the picture and the sound, which read the battle and play its queues from their own random stream: the painted ground (`terrain.rs`), belts, towns and light (`world.rs`, raising the set the diorama's file names: `data.rs`), the belts' trees (`trees.rs`), Mala Tokmachka's set and light (`robotyne.rs`), Myrnohrad's headframe and ruins (`myrnohrad.rs`) and its drones, robots and wings (`killzone.rs`, `robots.rs`, `wings.rs`), sky, particles and fire (`fx.rs`), the models (`models.rs`, `meshes.rs`, `baked.rs`), the video feed (`feed.rs`), the synthesised sound (`audio.rs`), and the WGSL shaders |
 | `bavovniatko` | `crates/bavovniatko/` | the game: the app (`main.rs`), the drone, OP and tree-line views and their controls (`camera.rs`), the HUD, briefing and debrief (`hud.rs`, in the words of the diorama's `hud` and `debrief`: `screen.rs`), the settings overlay (`settings.rs`), the development systems (`dev.rs`) and the filmed showcase (`showcase.rs`) |
 
 `bav-sim` does not depend on `bav-look`. The battle spawns its entities with model handles the look builds at
@@ -223,7 +249,7 @@ nothing the picture does (its particles, its random stream) can change how a day
 
 | path | contents |
 |---|---|
-| `dioramas/` | the places as data ([`design/data.md`](design/data.md)): `index.ron` lists each diorama's id and files, merged in order into one record (a single `<id>.ron`, or a place's directory: Hostomel's and Avdiivka's `map.ron`, `osm.ron`, Avdiivka's shared `forces.ron`, and a file per part); `shots/<id>.ron` holds a day's tours |
+| `dioramas/` | the places as data ([`design/data.md`](design/data.md)): `index.ron` lists each diorama's id and files, merged in order into one record (a single `<id>.ron`, or a place's directory: Hostomel's, Avdiivka's and Myrnohrad's `map.ron`, `osm.ron`, Avdiivka's shared `forces.ron`, and a file per part); `shots/<id>.ron` holds a day's tours |
 | `design/` | the design notes: chapters, campaign, units, the plans and their decisions (the current one is [`roadmap.md`](design/roadmap.md)) |
 | `data/` | the game feed exported from the knowledge base (`db/tools/sim.py export`) |
 | `assets/vehicles/`, `tools/bake/` | the baked vehicle models, and the tool that bakes them (a workspace of its own) |
@@ -245,7 +271,7 @@ scripts/shot.sh <name> "<x,z,agl,yaw,pitch,fov>" <game-s> "note" [diorama]
 Angles in `BAV_CAM` are degrees; yaw 0 looks north, 180 south.
 
 `cargo xtask tour [day] [--scout] [out.mp4]` films a directed one-minute tour of a single day (any id of `dioramas/index.ron` with
-a shots file: `vuhledar`, `robotyne`, `hostomel-1`, `avdiivka-2`, …) at 1920x1080 with sound (`--scout`: 640x360 with a contact sheet, into `devlog/film/`)
+a shots file: `vuhledar`, `robotyne`, `hostomel-1`, `avdiivka-2`, `myrnohrad-3`, …) at 1920x1080 with sound (`--scout`: 640x360 with a contact sheet, into `devlog/film/`)
 (the four-minute film of both dioramas is `cargo xtask film`, [above](#the-showcase-film)). The game
 runs on a fixed step while filming, logs every sound it plays, and the xtask rebuilds the soundtrack offline
 (`cargo xtask mix <dir> <out.wav>` does it again for a kept work dir). It takes about ten minutes, with no window or speakers, and the day is deterministic, so
@@ -307,7 +333,7 @@ The other switches, by what they are for (the full list, with each one's format,
 | `BAV_DIORAMA=<name>` | the day, as the first argument names it (`robotyne`, `hostomel-2`, `avdiivka-3`, …); the scripts use it |
 | `BAV_DATA=<dir>` | read the diorama's files from `<dir>` rather than the ones built in, to edit a layout without a rebuild |
 | `BAV_RES=<w>x<h>` | the window's or the headless frame's size |
-| `BAV_VIEW=op\|ground\|manpads\|bradley` | start on the observers' post, in a tree line with a `BAV_TEAM=stugna\|javelin\|…` launcher (`BAV_AUTO_ATGM=<s>` fires it then), with the first Igla team, or in a Bradley's gunner's seat |
+| `BAV_VIEW=op\|ground\|manpads\|bradley\|robot\|bomber` | start on the observers' post, in a tree line with a `BAV_TEAM=stugna\|javelin\|…` launcher (`BAV_AUTO_ATGM=<s>` fires it then), with the first Igla team, in a Bradley's gunner's seat, or in the camera of the first robot or Vampire out (Myrnohrad) |
 | `BAV_THERMAL=1` | the drone on its thermal channel from the start, where there is one |
 | `BAV_FOG=off` | the day's fog lifted from the start, in the picture and the battle (Myrnohrad I with and without it) |
 | `BAV_FLY="3-9:w+,9-12:q"` | fly the drone by script: legs of game time with what the sticks do |

@@ -64,6 +64,46 @@ enum Aim {
     Goggles,
     /// The drone, following the aircraft in the air nearest the point (x, z), or the point when there is none.
     Air(Vec2),
+    /// The drone, following the one of a kind of Myrnohrad's things nearest the point (x, z), or the point when
+    /// there is none.
+    Near(Thing, Vec2),
+    /// The Vampire's camera under its belly (key 8); the drone's while it is not up.
+    Bomber,
+}
+
+/// What a Myrnohrad shot follows (design/myrnohrad.md, phase 10): a robot (on its run or lost where it stands), a car
+/// of ours, one of their wings, the Vampire, a burrow (a found one before any other).
+#[derive(Clone, Copy, Deserialize)]
+enum Thing {
+    Robot,
+    Car,
+    Wing,
+    Vampire,
+    Burrow,
+}
+
+/// Where the things a [`Thing`] names are, for the shots that follow them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Things<'w, 's> {
+    robots: Query<'w, 's, &'static Transform, With<bav_sim::robots::Robot>>,
+    cars: Query<'w, 's, &'static Transform, With<bav_sim::killzone::Car>>,
+    wings: Query<'w, 's, &'static Transform, With<bav_sim::wings::Wing>>,
+    vampires: Query<'w, 's, &'static bav_sim::robots::Vampire>,
+    burrows: Query<'w, 's, (&'static bav_sim::seep::Burrow, Has<bav_sim::seep::Found>)>,
+}
+
+impl Things<'_, '_> {
+    /// The nearest of a kind to `p`, a burrow found before one not.
+    fn near(&self, thing: Thing, p: Vec2) -> Option<Vec3> {
+        let by = |a: &Vec3, b: &Vec3| a.xz().distance(p).total_cmp(&b.xz().distance(p));
+        match thing {
+            Thing::Robot => self.robots.iter().map(|t| t.translation).min_by(by),
+            Thing::Car => self.cars.iter().map(|t| t.translation).min_by(by),
+            Thing::Wing => self.wings.iter().map(|t| t.translation).min_by(by),
+            Thing::Vampire => self.vampires.iter().map(|v| v.pos).min_by(by),
+            Thing::Burrow => self.burrows.iter().min_by(|a, b| b.1.cmp(&a.1).then(a.0.at.distance(p).total_cmp(&b.0.at.distance(p)))).map(|(b, _)| crate::geo::ground(b.at)),
+        }
+    }
 }
 
 /// A card the script renders over black before the shot: a title, a smaller line, a dim note.
@@ -93,6 +133,8 @@ struct Shot {
     fly: Vec<(f32, f32, String)>,
     /// A ground shot fires its missile this many seconds in.
     launch: Option<f32>,
+    /// The drone on its thermal channel for the shot (a night's shots).
+    thermal: bool,
 }
 
 fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim, fov: (f32, f32)) -> Shot {
@@ -109,6 +151,7 @@ fn shot(from: f32, secs: f32, p0: (f32, f32, f32), p1: (f32, f32, f32), aim: Aim
         hud: true,
         fly: Vec::new(),
         launch: None,
+        thermal: false,
     }
 }
 
@@ -142,6 +185,8 @@ struct ShotSpec {
     fly: Vec<(f32, f32, String)>,
     #[serde(default)]
     launch: Option<f32>,
+    #[serde(default)]
+    thermal: bool,
 }
 
 fn yes() -> bool {
@@ -157,6 +202,8 @@ enum AimSpec {
     Op((f32, f32)),
     Goggles,
     Air((f32, f32)),
+    Near(Thing, (f32, f32)),
+    Bomber,
 }
 
 /// [`Target`] as the file writes it.
@@ -190,8 +237,10 @@ impl From<ShotSpec> for Shot {
             AimSpec::Op(p) => Aim::Op(p.into()),
             AimSpec::Goggles => Aim::Goggles,
             AimSpec::Air(p) => Aim::Air(p.into()),
+            AimSpec::Near(thing, p) => Aim::Near(thing, p.into()),
+            AimSpec::Bomber => Aim::Bomber,
         };
-        Shot { fire: s.fire, debrief: s.debrief, card: s.card, hud: s.hud, fly: s.fly, launch: s.launch, ..shot(s.from, s.secs, s.pos.0, s.pos.1, aim, s.fov) }
+        Shot { fire: s.fire, debrief: s.debrief, card: s.card, hud: s.hud, fly: s.fly, launch: s.launch, thermal: s.thermal, ..shot(s.from, s.secs, s.pos.0, s.pos.1, aim, s.fov) }
     }
 }
 
@@ -237,7 +286,7 @@ fn direct(
     mut flight: ResMut<Flight>,
     mut hud: ResMut<crate::hud::HudHidden>,
     (vehicles, men, aircraft): (Query<(&Vehicle, &Transform)>, Query<(&Soldier, &Transform)>, Query<(&Transform, &Aircraft)>),
-    fpv: Res<Fpv>,
+    (fpv, things): (Res<Fpv>, Things),
     teams: Query<(Entity, &Post, &AtgmTeam)>,
     mut exit: MessageWriter<AppExit>,
     mut pulls: MessageWriter<TriggerPull>,
@@ -249,6 +298,13 @@ fn direct(
     };
     let si = tour.shot;
     hud.set_if_neq(crate::hud::HudHidden(!shot.hud));
+    // A shot on the thermal channel puts the drone on it, and the shot after takes it off again (`BAV_THERMAL` keeps it
+    // on, `thermal::toggle`).
+    if shot.thermal {
+        view.thermal = true;
+    } else if si > 0 && SHOTS[si - 1].thermal {
+        view.thermal = false;
+    }
     // Fire missions for this shot, called at their own times (possibly before the shot starts).
     for (k, &(at, kind)) in shot.fire.iter().enumerate() {
         if t >= at && !tour.fired.contains(&(si, k)) {
@@ -272,7 +328,7 @@ fn direct(
         let step = if shot.from - t > 1.0 { step_skip() } else { STEP_FILM };
         *strategy = TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step));
         tour.aim = None;
-        place_camera(&mut view, shot, 0.0, &mut tour.aim, &op, &vehicles, &men, &aircraft);
+        place_camera(&mut view, shot, 0.0, &mut tour.aim, &op, &vehicles, &men, &aircraft, &things);
         if matches!(shot.aim, Aim::Ground(..)) {
             track_nearest(&mut view, &vehicles);
         }
@@ -293,7 +349,7 @@ fn direct(
             view.mode = crate::camera::Mode::Fpv;
         }
     } else {
-        place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men, &aircraft);
+        place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men, &aircraft, &things);
     }
     // The debrief shot ends the day, once: re-setting the state every frame would re-fire `OnEnter` (and
     // `show_debrief`) every frame.
@@ -333,7 +389,7 @@ fn direct(
 }
 
 #[allow(clippy::too_many_arguments)]
-fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: &ObservationPost, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>, aircraft: &Query<(&Transform, &Aircraft)>) {
+fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: &ObservationPost, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>, aircraft: &Query<(&Transform, &Aircraft)>, things: &Things) {
     let ease = k * k * (3.0 - 2.0 * k);
     let fov = (shot.fov.0 + (shot.fov.1 - shot.fov.0) * ease).to_radians();
     // The view is placed by hand this frame: the flight controller and the ground view's own controls stand down.
@@ -358,6 +414,25 @@ fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op
             let at = shot.pos0.lerp(shot.pos1, ease);
             view.drone_pos = Vec3::new(at.x, crate::geo::height(at.x, at.y) + at.z, at.y);
             let target = aircraft.iter().filter(|(_, a)| !matches!(a.flight, bav_sim::air::Flight::Waiting(_))).map(|(t, _)| t.translation).min_by(|a, b| a.xz().distance(p).total_cmp(&b.xz().distance(p))).unwrap_or(crate::geo::ground(p));
+            let a = aim.get_or_insert(target);
+            *a = a.lerp(target, 0.06);
+            (view.drone_yaw, view.gimbal) = look_angles(*a - view.drone_pos);
+            return;
+        }
+        // The Vampire's own camera, which its controls place; the drone waits where it is until the Vampire is up.
+        Aim::Bomber => {
+            if !things.vampires.is_empty() {
+                view.mode = Mode::Bomber;
+            }
+            view.locked = false;
+            return;
+        }
+        Aim::Near(thing, p) => {
+            view.mode = Mode::Drone;
+            view.drone_fov = fov;
+            let at = shot.pos0.lerp(shot.pos1, ease);
+            view.drone_pos = Vec3::new(at.x, crate::geo::height(at.x, at.y) + at.z, at.y);
+            let target = things.near(thing, p).unwrap_or(crate::geo::ground(p));
             let a = aim.get_or_insert(target);
             *a = a.lerp(target, 0.06);
             (view.drone_yaw, view.gimbal) = look_angles(*a - view.drone_pos);
