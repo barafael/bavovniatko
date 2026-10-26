@@ -64,6 +64,9 @@ pub struct SimData {
     /// launcher, and the gun's whole reach).
     #[serde(default)]
     pub bradley: Option<BradleySpec>,
+    /// The ground robots and the heavy bomber (`robots`; none: the day has neither).
+    #[serde(default)]
+    pub robots: Option<crate::robots::RobotsSpec>,
     /// Command's Enemy staff: its budgets for the day (`staff`).
     #[serde(default)]
     pub staff: crate::staff::StaffSpec,

@@ -35,4 +35,6 @@ for s in $seeds; do
   grep flown= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    field: /"
   # Areas held without the fight (Avdiivka): who holds each at the end, with their men in it.
   grep areas= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    areas: /"
+  # Robots (Myrnohrad): sent/back/lost/left, loads delivered, the wounded waiting/out/dead aboard, the bomber.
+  grep robots= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    robots: /"
 done

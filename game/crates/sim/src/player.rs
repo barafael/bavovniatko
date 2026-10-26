@@ -136,6 +136,7 @@ impl View {
             // The Igla's sight has no glass: shouldering it only narrows the eye to the ring.
             Mode::Manpads => if self.sight { Self::IGLA_ZOOM } else { 1.0 },
             Mode::Bradley => if self.sight { crate::bradley::SIGHT_ZOOM } else { 1.0 },
+            Mode::Robot | Mode::Bomber => 1.0,
         }
     }
 

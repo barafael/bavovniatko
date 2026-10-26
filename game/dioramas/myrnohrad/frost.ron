@@ -60,6 +60,7 @@ The night will run whether or not you do anything. What you do matters at the ma
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
+V: a ground robot for the wounded.  7: the robot's camera.  8: the Vampire (Shift+8 with a bundle); in it C drops.
 1/2 or Tab: drone / the observers on the headframe.  M: move the drone team when they find you.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -109,6 +110,16 @@ Press Enter."#,
             Areas("{area} at dawn"),
             Line("Shells left", Shells),
             If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+            If(
+                Robots,
+                [
+                    Line("Ground robots", Robots),
+                    Line("    loads delivered", Delivered),
+                    Line("Wounded brought out by robot", WoundedCarried),
+                    Line("    still waiting", WoundedWaiting),
+                ],
+            ),
+            If(Bomber, [Line("The Vampire's sorties", Sorties)]),
         ],
     ),
     // The observers up the Tsentralna headframe, under its sheaves.
@@ -159,6 +170,10 @@ Press Enter."#,
     ],
 
     // ---- The battle's part (bav_sim::data) ----
+    // The night's robots (c15 §2, 14-23 Jan: the northern quarters supplied by heavy drones and UGVs): two ground
+    // robots, the wounded waiting for them, and the Vampire with three sorties in it, about twenty minutes in the air
+    // each in the cold. Their FPVs see less in the dark (a third of the day's chance per kilometre).
+    robots: (ugvs: 2, casevac: true, found_per_km: 0.2, bomber: (sorties: 3, endurance: 1000.0)),
     // The Record: riflemen at the seven posts, a battery's sixteen rounds, four FPVs, six grenades.
     allotment: (
         points: 80,
@@ -180,6 +195,11 @@ Press Enter."#,
     script: [
         (2.0, Say("Bird up, thermal. Minus fifteen. The battery won't last long in this.")),
         (40.0, Say("All, this is {command}. Robots up the road tonight. Keep the road clear of them.")),
+        // Placeholder runs and sorties (the part's content is phase 9): a robot with fuel and batteries for Rivne, the
+        // Vampire's bombs on the twos coming from the jaw, and a bundle of ammunition for the mine.
+        (80.0, Ugv(to: 1, cargo: Power)),
+        (330.0, Sortie(to: (1800.0, -900.0), load: Bombs)),
+        (950.0, Sortie(to: (1400.0, -300.0), load: Bundle(Ammo))),
         (
             200.0,
             Infantry(route: 1, groups: 3, size: 2, every: 180.0, label: "22:50  Twos from the jaw, towards the mine"),

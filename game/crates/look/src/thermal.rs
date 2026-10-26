@@ -44,10 +44,10 @@ fn setup(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials
 /// I (infrared): the drone's camera between its visible and its thermal channel. (H is the drone's: it takes it back
 /// from return-to-home.)
 fn toggle(keys: Res<ButtonInput<KeyCode>>, mut view: ResMut<View>) {
-    if matches!(view.mode, Mode::Drone | Mode::Bradley) && keys.just_pressed(KeyCode::KeyI) {
+    if matches!(view.mode, Mode::Drone | Mode::Bradley | Mode::Bomber) && keys.just_pressed(KeyCode::KeyI) {
         view.thermal = !view.thermal;
     }
-    if crate::dev::dev().thermal && matches!(view.mode, Mode::Drone | Mode::Bradley) {
+    if crate::dev::dev().thermal && matches!(view.mode, Mode::Drone | Mode::Bradley | Mode::Bomber) {
         view.thermal = true;
     }
 }
@@ -70,10 +70,11 @@ fn mark_posts(mut commands: Commands, kit: Res<HeatKit>, posts: Query<Entity, Ad
     }
 }
 
-/// A vehicle: its engine deck, at the back.
-fn mark_vehicles(mut commands: Commands, kit: Res<HeatKit>, vehicles: Query<Entity, Added<Vehicle>>) {
-    for e in &vehicles {
-        commands.entity(e).with_child(marker(&kit, Vec3::new(0.0, 1.7, 2.2), Vec3::new(2.2, 0.5, 1.8)));
+/// A vehicle: its engine deck, at the back; a robot's batteries and motors, low in its hull.
+fn mark_vehicles(mut commands: Commands, kit: Res<HeatKit>, vehicles: Query<(Entity, &Vehicle), Added<Vehicle>>) {
+    for (e, v) in &vehicles {
+        let (at, size) = if v.kind == bav_sim::units::VKind::Ugv { (Vec3::new(0.0, 0.4, 0.3), Vec3::new(0.6, 0.3, 1.0)) } else { (Vec3::new(0.0, 1.7, 2.2), Vec3::new(2.2, 0.5, 1.8)) };
+        commands.entity(e).with_child(marker(&kit, at, size));
     }
 }
 
@@ -95,7 +96,7 @@ fn mark_fires(mut commands: Commands, kit: Res<HeatKit>, fires: Query<(Entity, &
 
 /// The markers show only on the thermal channel.
 fn show(view: Res<View>, mut q: Query<&mut Visibility, With<Heat>>) {
-    let want = if view.thermal && view.mode == Mode::Drone { Visibility::Inherited } else { Visibility::Hidden };
+    let want = if view.thermal && matches!(view.mode, Mode::Drone | Mode::Bomber) { Visibility::Inherited } else { Visibility::Hidden };
     for mut v in &mut q {
         v.set_if_neq(want);
     }

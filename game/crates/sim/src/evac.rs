@@ -18,6 +18,11 @@ impl Plugin for EvacPlugin {
             .insert_resource(Evacuation::new())
             .add_systems(Update, evac_input.in_set(crate::Step::Control).after(crate::dev::DevSystems))
             .add_systems(Update, (answer_requests, call_for_evacuation).chain().run_if(crate::running).in_set(crate::Step::Script).in_set(EvacSystems).after(crate::director::DirectorSystems));
+        // Where the wounded wait for a robot (`robots.casevac` in the day's file), and only there: the Record of the
+        // others must not change.
+        if crate::robots::casevac() {
+            app.init_resource::<Casualties>().add_systems(Update, wounded_wait.run_if(crate::running).in_set(crate::Step::Script).in_set(EvacSystems).after(call_for_evacuation));
+        }
     }
 }
 
@@ -78,6 +83,10 @@ fn evac_input(
     mut requests: MessageWriter<EvacRequest>,
     orders: Option<Res<crate::orders::OrdersView>>,
 ) {
+    // Where the wounded wait for a robot, V and Alt+click send one (`robots`).
+    if crate::robots::casevac() {
+        return;
+    }
     if keys.just_pressed(KeyCode::KeyV) {
         match evac.last_call {
             Some((at, _)) => {
@@ -183,5 +192,109 @@ fn call_for_evacuation(
     radio.say2(now, format!("Триста, {n}, {lat:.4} {lon:.4}. Потрібна евакуація."), format!("Three hundred, {n} of them, at {lat:.4} {lon:.4}. Need evacuation."));
     if let Some(delay) = crate::dev::dev().evac {
         evac.auto.push((now + delay as f64, at));
+    }
+}
+
+/// The wounded waiting for a robot (design/myrnohrad.md, phase 5): on days whose file says so (`robots.casevac`), the
+/// calls for evacuation are a queue, and only a robot empties it (c15 §5: medics' vehicles got no closer than 10-15 km,
+/// and the wounded waited days, up to two weeks). A post that loses men has some of them wounded, about three in five,
+/// who call from where they lie; a robot at the post takes on what it can carry (`robots::CAPACITY`).
+#[derive(Resource, Default)]
+pub struct Casualties {
+    pub waiting: Vec<Call>,
+    /// Brought out by a robot, and died aboard one that was lost.
+    pub out: u32,
+    pub died: u32,
+    /// The posts' strength as last seen, and the share of a man not yet counted wounded.
+    seen: Vec<(Entity, u32)>,
+    share: f32,
+}
+
+/// A call waiting: where, how many, and since when (game s).
+#[derive(Clone, Copy, Debug)]
+pub struct Call {
+    pub at: Vec2,
+    pub n: u32,
+    pub since: f64,
+}
+
+impl Casualties {
+    /// The wounded waiting, all told.
+    pub fn count(&self) -> u32 {
+        self.waiting.iter().map(|c| c.n).sum()
+    }
+
+    /// Where the longest-waiting call is.
+    pub fn oldest(&self) -> Option<Vec2> {
+        self.waiting.iter().min_by(|a, b| a.since.total_cmp(&b.since)).map(|c| c.at)
+    }
+
+    /// How long the longest-waiting call has waited (game s).
+    pub fn longest(&self, now: f64) -> f64 {
+        self.waiting.iter().map(|c| now - c.since).fold(0.0, f64::max)
+    }
+
+    /// Take on up to `max` of the wounded waiting within `r` of `p`, the longest-waiting first.
+    pub fn take_near(&mut self, p: Vec2, r: f32, max: u32) -> u32 {
+        let mut took = 0;
+        let mut order: Vec<usize> = (0..self.waiting.len()).filter(|&i| self.waiting[i].at.distance(p) < r).collect();
+        order.sort_by(|&a, &b| self.waiting[a].since.total_cmp(&self.waiting[b].since));
+        for i in order {
+            let k = (max - took).min(self.waiting[i].n);
+            self.waiting[i].n -= k;
+            took += k;
+        }
+        self.waiting.retain(|c| c.n > 0);
+        took
+    }
+}
+
+/// A post of ours that lost men since the last look has wounded among them, who call for evacuation; they wait.
+fn wounded_wait(time: Res<Time>, mut cas: ResMut<Casualties>, mut radio: ResMut<Radio>, posts: Query<(Entity, &crate::fire::Post)>) {
+    let now = time.elapsed_secs_f64();
+    for (e, p) in &posts {
+        if p.side != Side::Ua {
+            continue;
+        }
+        let Some(i) = cas.seen.iter().position(|(s, _)| *s == e) else {
+            cas.seen.push((e, p.strength));
+            continue;
+        };
+        let lost = cas.seen[i].1.saturating_sub(p.strength);
+        cas.seen[i].1 = p.strength;
+        if lost == 0 {
+            continue;
+        }
+        cas.share += lost as f32 * 0.6;
+        let n = cas.share.floor() as u32;
+        cas.share -= n as f32;
+        if n == 0 {
+            continue;
+        }
+        match cas.waiting.iter_mut().find(|c| c.at.distance(p.pos) < 50.0) {
+            Some(c) => c.n += n,
+            None => cas.waiting.push(Call { at: p.pos, n, since: now }),
+        }
+        let (lat, lon) = geo::latlon(p.pos);
+        info!("evacuation call: {n} wounded at the post at {:.0},{:.0}, {} waiting, at {now:.0} s", p.pos.x, p.pos.y, cas.count());
+        radio.say2(now, format!("Триста, {n}, {lat:.4} {lon:.4}. Чекаємо робота."), format!("Three hundred, {n} of them, at {lat:.4} {lon:.4}. Waiting for a robot."));
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Call, Casualties};
+    use bevy::math::Vec2;
+
+    /// A robot at a post takes on the longest-waiting first, no more than it carries, and only from near it.
+    #[test]
+    fn a_robot_takes_the_longest_waiting() {
+        let mut c = Casualties { waiting: vec![Call { at: Vec2::new(0.0, 0.0), n: 1, since: 50.0 }, Call { at: Vec2::new(30.0, 0.0), n: 3, since: 10.0 }, Call { at: Vec2::new(900.0, 0.0), n: 2, since: 0.0 }], ..Default::default() };
+        assert_eq!(c.take_near(Vec2::ZERO, 200.0, 2), 2);
+        assert_eq!(c.count(), 4);
+        assert_eq!(c.waiting.iter().find(|w| w.since == 10.0).map(|w| w.n), Some(1));
+        assert_eq!(c.oldest(), Some(Vec2::new(900.0, 0.0)));
+        assert_eq!(c.take_near(Vec2::ZERO, 200.0, 2), 2);
+        assert_eq!(c.waiting.len(), 1);
     }
 }

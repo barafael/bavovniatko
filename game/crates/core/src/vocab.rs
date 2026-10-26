@@ -17,6 +17,10 @@ pub enum Mode {
     Manpads,
     /// In a Bradley's gunner's seat, hull-down in its hide (design/avdiivka.md, phase 3).
     Bradley,
+    /// A ground robot's own camera, low on its nose, over its radio link (design/myrnohrad.md, phase 5).
+    Robot,
+    /// The heavy bomber's camera, under its belly (design/myrnohrad.md, phase 5).
+    Bomber,
 }
 
 /// What a camera follows: a point, a vehicle of the column, the infantry (`BAV_LOOK`, the showcase), one

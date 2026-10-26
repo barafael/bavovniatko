@@ -444,6 +444,9 @@ fn smoke(_args: &[String]) -> Result {
         ("staff-off", &[("BAV_PLAY", "command"), ("BAV_STAFF", "off")]),
         ("table", &[("BAV_PLAY", "command"), ("BAV_TABLE", "battle"), ("BAV_ORDERS", "open"), ("BAV_COMPOSE", "0:bradley@3"), ("BAV_SEND", "0.5:0:bradley@3")]),
         ("ground", &[("BAV_VIEW", "ground")]),
+        // The robot's camera and the bomber's (where the day has robots; elsewhere the switches do nothing).
+        ("robot", &[("BAV_VIEW", "robot"), ("BAV_UGV", "0.2:1")]),
+        ("bomber", &[("BAV_VIEW", "bomber"), ("BAV_BOMBER", "0.2:0;0")]),
         ("diag", &[("BAV_DIAG", "1")]),
     ];
     let root = root();

@@ -26,6 +26,7 @@ pub mod manpads;
 pub mod orders;
 pub mod paint;
 pub mod player;
+pub mod robots;
 pub mod robotyne;
 pub mod sound;
 pub mod staff;

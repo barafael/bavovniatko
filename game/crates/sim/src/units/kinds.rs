@@ -36,6 +36,9 @@ pub enum VKind {
     Bradley,
     /// T-90M Proryv: Relikt reactive armour, a carousel, the best tank Russia had at Avdiivka
     T90m,
+    /// A ground robot (НРК): a tracked cart of about 500 kg at 10 km/h with 20 km of range, driven over a radio
+    /// link, no crew (the Zmiy, c15 §5); it carries cargo in and the wounded out (`robots`).
+    Ugv,
 }
 
 impl VKind {
@@ -65,14 +68,20 @@ impl VKind {
             VKind::Bmp1 | VKind::Bmp2 => (2.65, 0.3),
             VKind::Mtlb => (2.5, 0.35),
             VKind::Bradley => (2.75, 0.53),
+            VKind::Ugv => (0.95, 0.2),
         }
     }
     /// Mine-clearing vehicles: no gun worth firing, a plow or rollers in front.
     pub fn breacher(self) -> bool {
         matches!(self, VKind::Leo2r | VKind::Wisent | VKind::Bmr2)
     }
+    /// A gun its crew fires: not a breacher's, not a robot's.
+    pub fn armed(self) -> bool {
+        !self.breacher() && self != VKind::Ugv
+    }
     pub fn crew(self) -> u32 {
         match self {
+            VKind::Ugv => 0,
             VKind::Mtlb | VKind::Bmr2 => 2,
             VKind::Leo2a6 => 4,
             _ => 3,
@@ -80,7 +89,7 @@ impl VKind {
     }
     pub fn troops(self) -> u32 {
         match self {
-            VKind::T80 | VKind::T72 | VKind::T90m | VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0,
+            VKind::T80 | VKind::T72 | VKind::T90m | VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bmr2 | VKind::Ugv => 0,
             VKind::Bmp1 | VKind::Bmp2 | VKind::Bradley => 6,
             VKind::Mtlb => 8,
         }
@@ -92,6 +101,7 @@ impl VKind {
             VKind::Leo2a6 => 0.1,
             VKind::Bradley => 0.25,
             VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0.12,
+            VKind::Ugv => 0.9,
             _ => 0.5,
         };
         if stacked { (base + 0.3f64).min(0.8) } else { base }
@@ -106,6 +116,7 @@ impl VKind {
             VKind::Leo2a6 => 0.3,
             VKind::Bradley => 0.55,
             VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0.5,
+            VKind::Ugv => 0.85,
             _ => 0.92,
         }
     }
@@ -117,6 +128,8 @@ impl VKind {
         match self {
             // A plow digging in moves at a walking pace.
             VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 2.4,
+            // 10 km/h loaded (c15 §5).
+            VKind::Ugv => 2.8,
             VKind::Leo2a6 => 5.4,
             VKind::Bradley => 6.0,
             _ if self.is_tank() => 5.2,
@@ -130,6 +143,7 @@ impl VKind {
             VKind::Leo2a6 | VKind::Bradley => 1.3,
             VKind::Leo2r | VKind::Wisent | VKind::Bmr2 => 0.6,
             VKind::T80 => 1.0,
+            VKind::Ugv => 0.7,
             _ if self.is_tank() => 0.8,
             _ => 1.0,
         }
@@ -142,6 +156,7 @@ impl VKind {
             VKind::T80 => 3.0,
             VKind::Leo2a6 | VKind::Leo2r => 6.0,
             VKind::Bradley => 4.5,
+            VKind::Ugv => 2.5,
             _ => 2.8,
         }
     }
@@ -150,6 +165,7 @@ impl VKind {
     pub(super) fn pivot_rate(self) -> f32 {
         match self {
             VKind::Leo2a6 | VKind::Leo2r | VKind::Wisent | VKind::Bradley => 0.55,
+            VKind::Ugv => 0.8,
             VKind::T80 | VKind::T72 | VKind::T90m | VKind::Bmr2 => 0.38,
             _ => 0.45,
         }
@@ -190,7 +206,7 @@ impl Vehicle {
     /// Knocked out of action but not destroyed: it coasts to a stop at `decel`, slewing at `slew`. The caller puts
     /// the `Coasting` on the entity.
     #[must_use]
-    pub(super) fn immobilise(&mut self, decel: f32, slew: f32) -> Coasting {
+    pub(crate) fn immobilise(&mut self, decel: f32, slew: f32) -> Coasting {
         self.state = VState::Immobilized;
         self.timer = 0.0;
         Coasting { decel, slew }

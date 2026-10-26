@@ -18,7 +18,7 @@ pub fn livery(id: &str) -> Livery {
     let (scheme, whitewash) = match id {
         "t80" | "t72" | "t90m" | "bmp1" | "bmp2" | "mtlb" | "bmd2" => (0.0, if summer { 0.0 } else { 0.7 }),
         "leo2a6" | "leo2r" | "bradley" => (1.0, 0.0),
-        "t64" | "btr80" | "zu23" => (2.0, 0.0),
+        "t64" | "btr80" | "zu23" | "ugv" => (2.0, 0.0),
         _ => (3.0, 0.0),
     };
     Livery { scheme: Vec4::new(scheme, whitewash, summer as u32 as f32, seed), ..default() }
@@ -29,6 +29,20 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mu
     let baked: HashMap<&str, baked::Baked> = baked::IDS.iter().map(|&id| (id, baked::load(id, livery(id), &mut meshes, &mut images, &mut materials))).collect();
     // What is built in code on a model's hull wears its colours as vertex colours, under the same livery.
     let vertex = StandardMaterial { perceptual_roughness: 0.6, ..default() };
+    // The ground robot has no model to sit on: all of it is built here (`meshes::ugv`).
+    let ugv = {
+        let (hull, top, at) = meshes::ugv(WEST_GREEN);
+        let (stuff, frame) = (Vec4::new(0.0, 0.0, 1.0, 0.0), Vec4::new(0.66, 0.63, 0.0, 0.0));
+        let (material, charred) = baked::pair(&mut materials, vertex.clone(), &livery("ugv"), frame, stuff);
+        let (top_material, top_charred) = baked::pair(&mut materials, vertex.clone(), &livery("ugv"), frame.with_z(at.y), stuff);
+        VehicleMeshes {
+            hull: vec![Part { mesh: meshes.add(hull.build()), material, charred }],
+            plow_hull: None,
+            turret: vec![Part { mesh: meshes.add(top.build()), material: top_material, charred: top_charred }],
+            turret_at: at,
+            muzzle: Vec3::ZERO,
+        }
+    };
     let mut hand_paint: HashMap<(&str, u32), baked::Pair> = HashMap::new();
     let mut hand = |meshes: &mut Assets<Mesh>, id: &'static str, lift: f32, m: meshes::MeshBuilder| {
         let b = &baked[id];
@@ -40,6 +54,9 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mu
     };
     let mut vehicles = HashMap::new();
     for &k in VKind::VARIANTS {
+        if k == VKind::Ugv {
+            continue;
+        }
         // The model whose hull it takes, and the hand-built top for those without a model of their own: the
         // Leopard 2R and the Wisent (a Leopard 1 hull, near enough a 2A4's), and the BMR-2 (a T-55's, here a T-64's).
         let (id, top) = match k {
@@ -54,6 +71,7 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mu
             VKind::Bmr2 => ("t64", Some(meshes::bmr2_top(WEST_GREEN))),
             VKind::Bradley => ("bradley", None),
             VKind::T90m => ("t90m", None),
+            VKind::Ugv => unreachable!("built above"),
         };
         let (turret, turret_at, muzzle) = match top {
             Some((t, at)) => (hand(&mut meshes, id, at.y, t), at, Vec3::new(0.0, 0.6, -1.6)),
@@ -72,6 +90,7 @@ pub fn setup_models(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mu
         let hull = b.hull.iter().cloned().chain(extra).collect();
         vehicles.insert(k, VehicleMeshes { hull, plow_hull, turret, turret_at, muzzle });
     }
+    vehicles.insert(VKind::Ugv, ugv);
     let t64 = &baked["t64"];
     let ua_tank = VehicleMeshes { hull: t64.hull.clone(), plow_hull: None, turret: t64.turret.clone(), turret_at: t64.turret_at, muzzle: t64.muzzle };
     let mut figure = |coat, trousers, helmet, tape| {

@@ -53,6 +53,7 @@ The day will run whether or not you do anything. What you do matters at the marg
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
+V: a ground robot for the wounded.  Alt+click: a robot with ammunition.  7: the robot's camera.
 1/2 or Tab: drone / the observers on the high-rise.  M: move the drone team when they find you.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -102,6 +103,16 @@ Press Enter."#,
             Areas("{area} at the end"),
             Line("Shells left", Shells),
             If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+            If(
+                Robots,
+                [
+                    Line("Ground robots", Robots),
+                    Line("    loads delivered", Delivered),
+                    Line("Wounded brought out by robot", WoundedCarried),
+                    Line("    still waiting", WoundedWaiting),
+                ],
+            ),
+            If(Bomber, [Line("The Vampire's sorties", Sorties)]),
         ],
     ),
     // The observers on the roof of a nine-storey block on Soborna street.
@@ -153,6 +164,11 @@ Press Enter."#,
     ],
 
     // ---- The battle's part (bav_sim::data) ----
+    // The garrison's ground robots (c15 §5: ammunition, food and fuel in, the wounded out; the Zmiy's link lost for
+    // 1.5 hours; robots stuck in craters). Three for the morning; the wounded wait for one. Their FPVs on the road
+    // are a chance per kilometre until their drone crews are built (design/myrnohrad.md, phase 3), and small under
+    // the fog.
+    robots: (ugvs: 3, casevac: true, found_per_km: 0.1),
     // The Record: riflemen at the eight posts, a battery's sixteen rounds, four FPVs (the light ones useless in the
     // wet, c15 §3), six grenades for the drone.
     allotment: (
@@ -176,6 +192,9 @@ Press Enter."#,
     script: [
         (2.0, Say("Bird up. Fog on everything. I can see the road for a hundred metres, no more.")),
         (20.0, Say("All, this is {command}. They walk in this weather. Watch the belts and the ruins.")),
+        // Placeholder runs (the part's content is phase 7): ammunition to Rivne under the fog, food to Svitle.
+        (90.0, Ugv(to: 1, cargo: Ammo)),
+        (420.0, Ugv(to: 0, cargo: Food)),
         (
             60.0,
             Infantry(

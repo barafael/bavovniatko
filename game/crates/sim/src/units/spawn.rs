@@ -80,7 +80,7 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
         Suspension::default(),
     ));
     e.insert((Traffic::default(), Intent::default()));
-    if !v.kind.breacher() {
+    if v.kind.armed() {
         e.insert(Gun { fire_timer: 8.0 + v.idx as f32 * 2.3, aim: None, turret_yaw: 0.0 });
     }
     if plow {
@@ -107,7 +107,9 @@ pub fn spawn_vehicle_at(commands: &mut Commands, models: &Models, palette: &Pale
             Rider,
         ));
     }
-    if v.smoke {
+    if v.kind == VKind::Ugv {
+        // A robot's motors put out nothing to see.
+    } else if v.smoke {
         // TDA: diesel injected into the exhaust, a white wall that drifts with the wind.
         e.insert(Emitter::new(EmitterKind::SmokeScreen, 2.5, 240.0, Vec3::new(0.0, 1.2, 3.6)));
     } else {

@@ -163,8 +163,8 @@
     // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
     // left to fire (the debrief's rows are each part's).
     hud: (
-        tally: "{date}   {clock}\nTheir men sent in {sent}   came back {returned}{air}\n{zones}",
-        stock: "155 mm  {shells} rds   FPV  {fpv}{vog}{speed}",
+        tally: "{date}   {clock}\nTheir men sent in {sent}   came back {returned}{air}\n{zones}{robots}",
+        stock: "155 mm  {shells} rds   FPV  {fpv}{vog}{ugv}{bomber}{speed}",
     ),
     space_key: Atgm,
     // Their EW: jammers behind their lines on the three sides, the rest building up into their ground.
@@ -185,6 +185,8 @@
             supply: 2,
             available: 10,
         ),
+        // Ground robots, sent on Supply as a Column of one with ammunition for the position (c15 §5).
+        (id: "ugv", name: ("Ground robot", "НРК"), what: Vehicle(Ugv), cost: 2, supply: 1, available: 6),
     ],
     support: [
         (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 4),

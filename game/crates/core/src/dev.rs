@@ -156,6 +156,14 @@ pub struct DevEnv {
     pub drop: Vec<(f32, (f32, f32))>,
     /// `BAV_EVAC=<seconds>`: answer every call for evacuation after this delay, as a player would (balance runs).
     pub evac: Option<f32>,
+    /// `BAV_UGV="<game s>:<position>[:<cargo>],…"`: send a ground robot then from the road head to that position of
+    /// the field with its cargo (`ammo`, `food`, `power`; ammunition unless named), or (`<game s>:wounded`) for the
+    /// longest-waiting call for evacuation, where the day has robots (`bav_sim::robots`).
+    pub ugv: Vec<(f32, String)>,
+    /// `BAV_BOMBER="<game s>:<x>;<z>[:bundle],…"`: a heavy bomber's sortie then from the drone team's position, its
+    /// 60 mm bombs on the enemy's men nearest the point (or a bundle of ammunition for the post nearest it), where
+    /// the day has one (`bav_sim::robots`).
+    pub bomber: Vec<(f32, String)>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
     pub era_at: Option<f32>,
     /// `BAV_LINEUP_FIRE=1` with `BAV_LINEUP`: the burned-out row burns, a hull in flames, a smoulder and a pool of
@@ -224,6 +232,21 @@ fn var(k: &str) -> Option<String> {
 
 fn parse<T: FromStr>(k: &str) -> Option<T> {
     var(k).and_then(|s| s.trim().parse().ok())
+}
+
+/// A list of `<game s>:<what>` items, the what left for its reader.
+fn timed(k: &str) -> Vec<(f32, String)> {
+    var(k)
+        .map(|plan| {
+            plan.split(',')
+                .filter(|item| !item.trim().is_empty())
+                .map(|item| {
+                    let (t, what) = item.split_once(':').unwrap_or_else(|| panic!("{k}: cannot read {item:?} (<game s>:<what>)"));
+                    (t.trim().parse().unwrap_or_else(|_| panic!("{k}: cannot read {item:?}")), what.trim().to_string())
+                })
+                .collect()
+        })
+        .unwrap_or_default()
 }
 
 impl DevEnv {
@@ -329,6 +352,8 @@ impl DevEnv {
             era_at: parse("BAV_ERA_AT"),
             lineup_fire: var("BAV_LINEUP_FIRE").is_some(),
             evac: parse("BAV_EVAC"),
+            ugv: timed("BAV_UGV"),
+            bomber: timed("BAV_BOMBER"),
             operator_off: var("BAV_OPERATOR").is_some_and(|v| v == "off"),
             fog_off: var("BAV_FOG").is_some_and(|v| v == "off"),
             fpv: var("BAV_FPV").and_then(|s| {
