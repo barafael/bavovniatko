@@ -107,6 +107,7 @@ struct Flow {
     fog: f32,
     crews: f64,
     until: Option<f32>,
+    men: (u32, u32),
     /// Men owed by the rate so far, and how many the next group is.
     owed: f32,
     next: u32,
@@ -114,14 +115,14 @@ struct Flow {
 
 /// The script starts a flow (`Act::Seep`).
 pub fn start(w: &mut World, act: &'static crate::director::Act) {
-    let crate::director::Act::Seep { route, from, width, per_hour, fog, crews, until, .. } = act else { return };
+    let crate::director::Act::Seep { route, from, width, per_hour, fog, crews, until, men, .. } = act else { return };
     // Owed something already, so the first group is not always a whole group's wait away.
     let (owed, next) = {
         let mut rng = w.resource_mut::<SeepRng>();
-        let next = rng.0.random_range(2..=3);
+        let next = rng.0.random_range(men.0..=men.1);
         (rng.0.random_range(0.0..next as f32), next)
     };
-    w.resource_mut::<Seep>().flows.push(Flow { route: *route, from: *from, width: *width, per_hour: *per_hour, fog: *fog, crews: *crews as f64, until: *until, owed, next });
+    w.resource_mut::<Seep>().flows.push(Flow { route: *route, from: *from, width: *width, per_hour: *per_hour, fog: *fog, crews: *crews as f64, until: *until, men: *men, owed, next });
 }
 
 /// One of a group on its way in: the way's points, the one he is making for, and his group.
@@ -297,7 +298,7 @@ fn flow(
         let size = f.next;
         // Never quite on the beat: the next group is owed a little sooner or later.
         f.owed -= size as f32 * rng.random_range(0.6..1.4);
-        f.next = rng.random_range(2..=3);
+        f.next = rng.random_range(f.men.0..=f.men.1);
         let r = &lay.routes[f.route];
         let off = rng.random_range(-f.width..f.width);
         let start = r.line.point(f.from) + r.line.normal(f.from) * off;

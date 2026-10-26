@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
 Status: planned 2026-10-25; phases 0 to 6 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26. The owner's direction of 25 October: the next diorama comes from
+in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 9, part III's night, 2026-10-26. The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -623,3 +623,43 @@ the EW domes' masts.
   the player cannot order the run (when it goes, when it turns back), which the plan's "what decides it" wants: a
   key or a Command order for the cars is code for later; the areas end contested in most seeds, with no figure in
   the dossier for part I to hold them to; the wounded wait and the Record's robots do not go for them.
+- 2026-10-26: phase 9, **part III's night** (`frost.ron`, `shots/myrnohrad-3.ron`). 22:00 to 03:45 on 19-20 January,
+  -15 °C, no moon, the town half theirs; the night as the dossier gives it and no more: the north fed by robots and
+  the Vampire, their drones on the road at the night's tempo, single men seeping into the north, the wounded waiting.
+  **The team moves**: a part's file may put the drone team elsewhere than the map's `home` and `operator`
+  (`DioramaData::team`, read by the layout and `drones`): in III it is in the blocks north of Tsentralna street
+  (900, -700), the basement of I being theirs. The posts are moved to suit: Svitle, Rivne, the town's western
+  entrance, north of the street, the northern quarters' south edge over the team (with the dome), the mine, the
+  north-east. **The seep in ones**: `Act::Seep` takes `men`, the fewest and most in a group (twos and threes where
+  the file does not say, drawn as before); III sends ones and twos (single men by January, Euromaidan Press 2 Jan),
+  0.6 an hour from the jaw (half for the team) and 0.6 out of the town's south (all for the team), about seven in the
+  night (the design's: ten a day in clear weather, c15 §5, and the cold). **Their drones**: Rubikon's and the
+  Archangels' fibre crews, Sudny Den's radio crew from inside the town's south, the Irish from the jaw, one waiter,
+  at about a third of part I's rates; `snag` 0.33 for the ice (06's icing row: the fibre's modules lose 20-50%); they
+  watch only the H-32 from the road head to the town's western entrance (in the town the blocks hide the street; with
+  Tsentralna street watched too they found every post of the north and wounded 20-23 a night). Nets over the H-32
+  from the road head to the town (the length is the design's), the dome over the team, no car runs. **The robots**:
+  four, out early because at 10 km/h the north is 3.4 km and most of the night from the road head (fuel and
+  batteries for the team at 5 s, ammunition for the western entrance at 25 s, food for Rivne at 60 s, ammunition for
+  Svitle at 450 s); the Vampire's four sorties (rounds for the north-east post, bombs on the jaw's way, food for the
+  mine, bombs on the town's south). `post_ammo` 60 as in I (merged from phase 7), and the debrief's `Killzone` rows.
+  **Bands** (`band.sh myrnohrad-3 0 1 2 3`, the Record). Before (the placeholder): sent 16, dead 6, our losses 0 in
+  all four; one robot sent, 0/0/1/1 back, one load delivered; one bundle, four bombs. After: sent 6/8/8/6, dead
+  2/0/2/0, our losses 6/2/5/7; robots 4 sent, back 0/1/1/0, lost 4/3/2/4, loads delivered 3/2/2/3 (the team's fuel
+  never: that robot dies on the way), wounded carried 0, waiting at dawn 3/1/2/3; the Vampire
+  flew 3/2/2/4 sorties, bundles in 2/1/1/2; their FPVs 33/38/31/25, 4-6 snagged in the ice; the posts' fewest volleys
+  left 46/60/44/53 of 60; Svitle and Rivne ours at dawn in all four, the mine contested in all four (a burrow or a
+  man still walking by it), the western quarters theirs or contested. Against the Record's table: the north held and
+  fed by robots and the Vampire, the posts not starved, the garrison not cut off; the robots "usually don't survive
+  the trip" (c15 §5), and the wounded wait, as they did (days to two weeks). Command, the historical allotment, staff
+  off: sent 6/8/8/6, dead 2/0/1/1, our losses 3/10/6/5, wounded waiting 1/4/3/3 (the robots and sorties are the
+  player's there, so none went); staff on: dead 2/0/1/1, our losses 1/4/6/4. **Checks**: the seven older days `same`
+  against `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; Myrnohrad I `same` against `p7-m1`, II
+  against `p6o-m2`; III filmed twice from one build the same (`p9-m3`). Clippy, `cargo test` and fmtron pass. The
+  tour (devlog stills `m3-frost-t6`, `-t17`, `-t66`): the road head in the dark, the Vampire over the north-east
+  post's blocks, the observers on the headframe, the robot at Rivne, the bombs on the jaw's way, a man out of the
+  town's south, the north from above. **Not done**: the night does not start from II's aftermath (Hostomel's
+  `Aftermath` is aircraft wrecks only; the cars and ruins are written into the file); our own fibre FPVs do not fail
+  in the cold (ours are not fibre in the engine); the map's areas have no "northern quarters" (the mine stands for
+  it, and adding an area to `map.ron` would change I and II); the robots in the tour are too small to see at the
+  shots' range.
