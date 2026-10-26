@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
 Status: planned 2026-10-25; phases 0 to 6 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders). The owner's direction of 25 October: the next diorama comes from
+in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26. The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -594,3 +594,32 @@ the EW domes' masts.
   it. **Not done**: the wings are too easy to bring down and spot nothing before they fall (phase 10's bands); no
   HUD stock for the interceptors or the domes' state; Russia's own interceptors (02 e8) are a rule for the staff,
   later.
+- 2026-10-26: phase 7, **part I's day** (`dioramas/myrnohrad/fog.ron`, its tour). **The run**: two of the brigade's
+  L200s from the road head under the nets at 07:05 (the plan's MT-LB and BMP-2 stand-ins are not needed now the
+  pickup is baked; the dossier names no kind), in the town by 07:40, an hour of the clock there, back at the road
+  head by 09:20, before the radio crews fly (the fog past 500 m about 09:35) and an hour before the lift; then a
+  volunteers' Lada sets out at 10:00 and is on the road when the fog goes, which is the design's way of showing
+  "what is still on the road when it lifts is hit". The northern road's pickup of the placeholder is gone. **The
+  seep** weighted to the 51st CAA's ways in (the south-eastern edge 1.1 men an hour in clear air, the jaw 0.9),
+  the 2nd CAA's from Pokrovsk's side fewer (0.45 each), the fog's 3.5 times. **The posts' ammunition** without the
+  fight: `post_ammo` (60 volleys, the design's), `fight::volleys` (the fight's or this), so a robot's ammunition
+  fills a post by half here too; `BAV_LOG_STATS` logs the volleys left. The posts that see most of the seep run dry
+  after the lift, when they first see far: none is dry before 10:30. The KAB pairs, the robots' two runs, the wings
+  and our two strikes on their points stay, their comments saying which numbers are the design's. **The screen**:
+  the tally's `{killzone}` (their FPVs flown, our cars out, through and burnt; in `map.ron`'s line, empty where a day
+  has no kill zone) and the debrief's `If(Killzone, …)` rows (`TheirSorties`, `TheirHits`, `Cars`); the briefing
+  names the run, 9 and J. The tour: the run under the nets past a waiter, the Lada at the town's edge as the fog
+  goes, the observers' roof, the lift over Svitle (devlog stills `m1-run-nets`, `m1-hud-0930`, `m1-debrief`).
+  **Bands** (`band.sh myrnohrad-1 0 1 2 3`, the Record): before sent 42/39/37/37, dead 17/18/13/17, our losses
+  11/5/5/7, cars 3/0/3, 3/2/1, 3/1/2, 3/1/2 (out/through/burnt), their sorties 18/24/29/21. After sent
+  35/40/40/35, dead 22/18/17/16, our losses 6/8/6/3, the run's two pickups back in all four, the Lada burnt in all
+  four, their sorties 33/25/23/25 (radio 6-8, fibre 11-19, waiters 5-6), the drone team hit 3/0/0/0, robots 2 sent,
+  1/1/0/1 back. Against the Record's table: thirty to forty in, the run in and back under the fog, the late car
+  lost. Command, staff off: sent 34/40/40/35, dead 10/18/16/15, our losses 5/6/7/4, cars through 1/2/2/2; staff on
+  (the old tour, before the last shot list): dead 18/13/14/17, our losses 8/9/11/7, radio sorties 15-27 as the staff
+  spends Rubikon's budget on what it spots, cars through 2/2/1/2. **Checks**: the seven older days `same` against
+  `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; Myrnohrad II and III `same` against `p6o-m2`,
+  `p6o-m3`; I filmed twice from one build the same (`p7-m1`). Clippy, `cargo test` and fmtron pass. **Not done**:
+  the player cannot order the run (when it goes, when it turns back), which the plan's "what decides it" wants: a
+  key or a Command order for the cars is code for later; the areas end contested in most seeds, with no figure in
+  the dossier for part I to hold them to; the wounded wait and the Record's robots do not go for them.

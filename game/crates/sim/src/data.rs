@@ -68,6 +68,10 @@ pub struct SimData {
     /// Hostomel's are the fight's own, `fight.zones`).
     #[serde(default)]
     pub areas: Vec<crate::fight::ZoneSpec>,
+    /// The volleys each of our posts has where the day has no fight (Myrnohrad's; the fight's are `fight.ammo`): a post
+    /// fires no more when it is dry, and a robot's or a bomber's ammunition fills it by half (none: never dry).
+    #[serde(default)]
+    pub post_ammo: Option<u32>,
     /// The Bradleys dug in (`bradley`): what is in their launchers and how far their gunners open fire (none: a full
     /// launcher, and the gun's whole reach).
     #[serde(default)]

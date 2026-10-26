@@ -31,6 +31,10 @@ impl Plugin for FightPlugin {
             if !areas.is_empty() {
                 app.insert_resource(Field { zones: zones(areas), ..default() }).add_systems(Update, (hold_zones, log_areas).chain().run_if(crate::running).in_set(crate::Step::Units).after(crate::units::drop_riders).after(crate::seep::SeepSystems));
             }
+            // The posts' ammunition without the fight, where the file counts it (`post_ammo`).
+            if crate::data::sim_data().post_ammo.is_some() {
+                app.add_systems(Update, (stock_posts, log_ammo).chain().run_if(crate::running).in_set(crate::Step::Units).after(crate::units::drop_riders).after(crate::seep::SeepSystems));
+            }
             return;
         };
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
@@ -294,6 +298,37 @@ pub(crate) fn supply_posts(mut commands: Commands, posts: Query<(Entity, &Post),
             }
         }
     }
+}
+
+/// The volleys a post of ours has when it is full: the fight's, or the day's own without it (`SimData::post_ammo`);
+/// none where nothing counts them.
+pub fn volleys() -> Option<u32> {
+    spec().map(|s| s.ammo).or(crate::data::sim_data().post_ammo)
+}
+
+/// Our posts get their ammunition once they are on the ground, where the day counts it without the fight.
+fn stock_posts(mut commands: Commands, posts: Query<(Entity, &Post), Without<Ammo>>) {
+    let Some(n) = crate::data::sim_data().post_ammo else { return };
+    for (e, p) in &posts {
+        if p.side == crate::diorama::diorama().defender() {
+            commands.entity(e).insert(Ammo(n));
+        }
+    }
+}
+
+/// For the bands (`BAV_LOG_STATS`): our posts' volleys left once a game minute, west to east.
+fn log_ammo(script: Res<crate::director::Script>, posts: Query<(&Post, &Ammo)>, mut last: Local<Option<u32>>) {
+    if !crate::dev::dev().log_stats {
+        return;
+    }
+    let minute = script.t as u32 / 60;
+    if *last == Some(minute) {
+        return;
+    }
+    *last = Some(minute);
+    let mut left: Vec<(f32, u32)> = posts.iter().map(|(p, a)| (p.pos.x, a.0)).collect();
+    left.sort_by(|a, b| a.0.total_cmp(&b.0));
+    info!("ammo: {} volleys {}", crate::director::clock_text(script.t), left.iter().map(|(_, n)| n.to_string()).collect::<Vec<_>>().join("/"));
 }
 
 /// Space: everyone out.

@@ -1,4 +1,4 @@
-// Myrnohrad, part I, the fog: its tour. It has no film yet (design/myrnohrad.md, phase 10).
+// Myrnohrad, part I, the fog: its tour (design/myrnohrad.md, phase 7). It has no film yet (phase 10).
 // The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
 // one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
 // one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
@@ -12,15 +12,23 @@
         // 06:35: the H-32 into the town's western entrance, in the fog.
         (
             from: 20.0,
-            secs: 8.0,
+            secs: 7.0,
             pos: ((-600.0, -420.0, 90.0), (-450.0, -400.0, 90.0)),
             aim: Drone(Point((300.0, -280.0))),
             fov: (50.0, 44.0),
         ),
+        // 07:15: the first of the run's two pickups under the nets, past a waiter on the shoulder by Rivne.
+        (
+            from: 203.0,
+            secs: 8.0,
+            pos: ((-1180.0, -330.0, 60.0), (-1200.0, -320.0, 60.0)),
+            aim: Drone(Point((-1320.0, -180.0))),
+            fov: (40.0, 34.0),
+        ),
         // Twos and threes from the south-eastern edge, between the houses.
         (
             from: 230.0,
-            secs: 9.0,
+            secs: 8.0,
             pos: ((1000.0, 700.0, 110.0), (980.0, 720.0, 110.0)),
             aim: Drone(MenNear((1150.0, 1050.0))),
             fov: (24.0, 18.0),
@@ -28,7 +36,7 @@
         // 08:05: the KABs on the western quarters.
         (
             from: 410.0,
-            secs: 9.0,
+            secs: 8.0,
             pos: ((200.0, -150.0, 200.0), (220.0, -140.0, 200.0)),
             aim: Drone(Point((700.0, 280.0))),
             fov: (40.0, 36.0),
@@ -38,18 +46,18 @@
         // 10:40: the fog lifts over Svitle.
         (
             from: 1060.0,
-            secs: 10.0,
+            secs: 9.0,
             pos: ((-200.0, -700.0, 260.0), (-320.0, -760.0, 280.0)),
             aim: Drone(Point((-550.0, -1400.0))),
             fov: (52.0, 48.0),
         ),
-        // The town in the clear: the mine, its heap and the road.
+        // 10:35: the volunteers' Lada, still on the road at the town's edge as the fog goes.
         (
-            from: 1250.0,
+            from: 1012.0,
             secs: 9.0,
-            pos: ((300.0, -700.0, 420.0), (380.0, -720.0, 420.0)),
-            aim: Drone(Point((1300.0, -200.0))),
-            fov: (55.0, 50.0),
+            pos: ((-60.0, -420.0, 120.0), (-80.0, -410.0, 120.0)),
+            aim: Drone(Point((-150.0, -220.0))),
+            fov: (42.0, 36.0),
         ),
         (
             from: 1474.0,
