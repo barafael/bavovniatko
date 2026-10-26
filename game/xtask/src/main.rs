@@ -450,6 +450,8 @@ fn smoke(_args: &[String]) -> Result {
         // The goggles' interceptor and the domes switched (where the day has wings and domes).
         ("intercept", &[("BAV_INTERCEPT", "0.2")]),
         ("dome", &[("BAV_DOME", "0.2:off,0.5:on")]),
+        // The day's car run sent early and turned back (where the day has runs).
+        ("run", &[("BAV_RUN", "0.2:go,0.5:back")]),
         ("diag", &[("BAV_DIAG", "1")]),
     ];
     let root = root();

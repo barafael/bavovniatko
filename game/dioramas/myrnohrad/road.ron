@@ -185,21 +185,21 @@ Press Enter."#,
 
     // ---- The battle's part (bav_sim::data) ----
     // Ground robots and a heavy bomber (c15 §5: every supply run into the town by drone or UGV, and the UGVs "usually
-    // don't survive the trip"; bombers lift 60 mm bombs, never 120 mm). Six robots, four of them the Record's runs;
-    // two sorties of the Vampire left for the dusk. The wounded wait for a robot, and three already wait at first
-    // light from the days before (c15 §5: days, by November up to two weeks): two at the mine and one at the
-    // high-rise; the numbers and the hours are the design's. With their drone crews on the road the per-kilometre
-    // stand-in is off.
+    // don't survive the trip"; bombers lift 60 mm bombs, never 120 mm). Six robots and two sorties of the Vampire for
+    // the dusk (the allotment's, below): five of the robots the Record's runs, and one for a call that has waited two
+    // hours of the clock (`fetch`). The wounded wait for a robot, and three already wait at first light from the days
+    // before (c15 §5: days, by November up to two weeks): two at the mine and one at the high-rise; the numbers and
+    // the hours are the design's. With their drone crews on the road the per-kilometre stand-in is off.
     // What each post has to fire before it is dry, as in the fog (fog.ron, the design's): a robot's load of
     // ammunition or the Vampire's bundle fills it by half.
     post_ammo: 60,
     // Their position on the south-eastern edge: riflemen only.
     ru_weapons: [None],
     robots: (
-        ugvs: 6,
         casevac: true,
         waiting: [(post: 5, n: 2, hours: 30.0), (post: 4, n: 1, hours: 14.0)],
-        bomber: (sorties: 2, endurance: 900.0),
+        fetch: 2.0,
+        bomber: (endurance: 900.0),
     ),
     // The Record: riflemen at the seven posts, a battery's sixteen rounds, eight FPVs, eight grenades for the drone.
     allotment: (
@@ -216,14 +216,17 @@ Press Enter."#,
             (id: "155", count: 1),
             (id: "fpv", count: 8),
             (id: "vog", count: 4),
+            (id: "robot", count: 6),
+            (id: "vampire", count: 2),
         ],
     ),
     // Their drones over the road (bav_sim::killzone; c15 §4, §5): the same crews as in the fog, at the full day's tempo
     // from first light on a dry day, Rubikon on the road all day (it held the single road "almost constantly under
     // fire control", c15 §5). Our two EW domes: over the drone team at the town's western entrance, and at the road
     // head, where the robots leave the H-32 for the villages' tracks; nets over the road's west stretch, from the
-    // edge past Rivne and Svitle to the town's western entrance. No car on the road in the Record: nothing on wheels
-    // gets through by day (c15 §5). The rates are the design's (c15 §11).
+    // edge past Rivne and Svitle to the town's western entrance, and over the robots' track from the road head down
+    // to Rivne as far as the road's watchers see (the stretch is the design's). No car on the road in the Record:
+    // nothing on wheels gets through by day (c15 §5). The rates are the design's (c15 §11).
     killzone: (
         crews: [
             (name: ("Rubikon", "Рубікон"), kind: Fibre, at: (600.0, 2900.0), per_hour: 14.0, budget: 12),
@@ -273,6 +276,17 @@ Press Enter."#,
                 (-718.8, -82.4),
                 (-415.7, -105.0),
             ],
+            [
+                (-2128.0, -398.0),
+                (-2111.0, -393.0),
+                (-2100.0, -415.0),
+                (-2061.0, -504.0),
+                (-2013.0, -607.0),
+                (-1911.0, -567.0),
+                (-1845.0, -593.0),
+                (-1787.0, -633.0),
+                (-1761.0, -676.0),
+            ],
         ],
         // Their direction-finders locate our drone team's ground station about once an hour of drone time.
         team: 1.0,
@@ -308,8 +322,9 @@ Press Enter."#,
         interceptors: 3,
         radar: (at: (450.0, -60.0), range: 2000.0),
     ),
-    // The day: about ten get in on a day like this (c15 §5), seeping from four sides at about 1.3 men an hour
-    // (bav_sim::seep); four robot runs by day, and the Vampire's two sorties at dusk; a KAB pair; the claim of
+    // The day: about ten get in on a day like this (c15 §5), seeping from three sides at about 1.3 men an hour
+    // (bav_sim::seep): the 51st CAA's from the south-eastern edge and the jaw, the 2nd CAA's from Pokrovsk's side onto
+    // Rivne (c15 §4); the road through Svitle stays ours. Five robot runs by day, and the Vampire's two sorties at dusk; a KAB pair; the claim of
     // 1 December on the net (c15 §9), which changes nothing on the ground. The runs' times and cargoes are the
     // design's.
     script: [
@@ -321,28 +336,29 @@ Press Enter."#,
             ),
         ),
         // A robot makes 10 km/h, and the day's clock runs about eighteen times faster than the game's (c15 §5, the
-        // Zmiy): the long runs leave at first light. Food and water to the mine, where two wounded wait, nearly four
-        // kilometres; fuel and batteries for the drone team at the town's western entrance; ammunition to Svitle; and
-        // at midday ammunition to Rivne, the post nearest the road head, there and back. The high-rise's wounded are
-        // left to the player (V).
+        // Zmiy): a run of four kilometres is the day's clock from first light to dusk, so the long runs leave at
+        // first light and are not back by dark. Food and water to the mine, where two wounded wait; fuel and batteries
+        // for the drone team at the town's western entrance; ammunition to Svitle by the villages' tracks; and
+        // ammunition, then food, to Rivne, the post nearest the road head, there and back. The robot left over goes
+        // for the high-rise's wounded at first light (`robots.fetch`).
         (20.0, Ugv(to: 5, cargo: Food)),
         (60.0, Ugv(to: 6, cargo: Power)),
         (120.0, Ugv(to: 0, cargo: Ammo)),
-        (600.0, Ugv(to: 1, cargo: Ammo)),
+        (180.0, Ugv(to: 1, cargo: Ammo)),
+        (900.0, Ugv(to: 1, cargo: Food)),
         (
             150.0,
             Seep(
                 route: 0,
                 from: 450.0,
                 width: 300.0,
-                per_hour: 0.45,
+                per_hour: 0.55,
                 crews: 0.6,
                 label: "08:45  Twos and threes at the south-eastern edge",
             ),
         ),
-        (150.0, Seep(route: 1, from: 700.0, width: 300.0, per_hour: 0.35, crews: 0.4)),
-        (150.0, Seep(route: 2, from: 1550.0, width: 300.0, per_hour: 0.25, crews: 0.15)),
-        (150.0, Seep(route: 3, from: 1000.0, width: 300.0, per_hour: 0.25, crews: 0.15)),
+        (150.0, Seep(route: 1, from: 700.0, width: 300.0, per_hour: 0.45, crews: 0.4)),
+        (150.0, Seep(route: 2, from: 1550.0, width: 300.0, per_hour: 0.3, crews: 0.15)),
         (
             600.0,
             Bombs(

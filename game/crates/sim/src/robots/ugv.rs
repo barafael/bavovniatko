@@ -154,13 +154,16 @@ pub(super) fn adopt(mut commands: Commands, mut robots: ResMut<Robots>, book: Re
 }
 
 /// The radio link: it frays in their EW, and drops out now and then, mostly for a minute or less, now and then for
-/// the best part of an hour of the day's clock (the Zmiy's 1.5 hours, c15 §5). Without it the robot stands.
+/// an hour or an hour and a half (the Zmiy's 1.5 hours, c15 §5), by the hour of real time. Without it the robot
+/// stands.
 #[allow(clippy::too_many_arguments)]
 pub(super) fn link(mut commands: Commands, time: Res<Time>, ew: Res<crate::ew::Ew>, mut rng: ResMut<RobotRng>, mut radio: ResMut<Radio>, mut q: Query<(Entity, &mut Robot, &Transform, Has<Stalled>)>) {
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
     let Some(spec) = spec() else { return };
-    let per_s = spec.drops_per_hour * crate::diorama::diorama().compression() / 60.0;
+    // By the hour of real time, as their FPVs' sorties at it are (`killzone::launch`): the robot is out for real
+    // minutes, whatever the day's clock does meanwhile.
+    let per_s = spec.drops_per_hour / 3600.0;
     for (e, mut r, tf, stalled) in &mut q {
         if !r.running() {
             continue;
@@ -168,9 +171,10 @@ pub(super) fn link(mut commands: Commands, time: Res<Time>, ew: Res<crate::ew::E
         let jam = ew.jam_at(tf.translation + Vec3::Y * 1.5);
         let was_down = now < r.down_until;
         if !was_down && rng.0.random_bool(((per_s * (1.0 + 4.0 * jam)) * dt).min(1.0) as f64) {
-            // About one in seven is a long one: an hour or an hour and a half of the clock.
-            let secs = if rng.0.random_bool(0.15) { rng.0.random_range(60.0..90.0) / crate::diorama::diorama().compression() } else { rng.0.random_range(8.0..45.0) };
-            r.down_until = now + secs as f64;
+            // About one in seven is a long one: an hour or an hour and a half, which on the day's clock is the rest of
+            // it.
+            let secs = if rng.0.random_bool(0.15) { rng.0.random_range(3600.0..5400.0) } else { rng.0.random_range(8.0..45.0) };
+            r.down_until = now + secs;
             info!("robot {}: link down for {secs:.0} s at {:.0},{:.0} (jam {jam:.2}), at {now:.0} s", r.n, tf.translation.x, tf.translation.z);
             radio.say2(now, format!("Втратили зв'язок з роботом {}.", r.n), format!("Lost the link to robot {}.", r.n));
         } else if was_down && now + dt as f64 >= r.down_until {
@@ -183,6 +187,18 @@ pub(super) fn link(mut commands: Commands, time: Res<Time>, ew: Res<crate::ew::E
             commands.entity(e).insert(Stalled);
         } else if !stall && stalled {
             commands.entity(e).remove::<Stalled>();
+        }
+    }
+}
+
+/// A robot left to its route keeps to its track: once it has pulled aside for one coming the other way it comes back
+/// to the middle of it, a metre every two seconds, rather than drive on offset (at a sharp turn of the villages'
+/// tracks a hull far off its line turns on the spot for good). The player's hand on it is his own lane.
+pub(super) fn keep_to_track(time: Res<Time>, mut q: Query<(&Robot, &mut crate::units::Driver, &Hand)>) {
+    let step = 0.5 * crate::sim_dt(&time);
+    for (r, mut d, h) in &mut q {
+        if r.running() && !h.held && d.target_lat != 0.0 {
+            d.target_lat -= d.target_lat.clamp(-step, step);
         }
     }
 }

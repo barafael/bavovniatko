@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
 Status: planned 2026-10-25; phases 0 to 6 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 8, part II's day, 2026-10-26; phase 9, part III's night, 2026-10-26. The owner's direction of 25 October: the next diorama comes from
+in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 8, part II's day, 2026-10-26; phase 9, part III's night, 2026-10-26; phase 10, first half (balance and the gaps), 2026-10-26. The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -705,3 +705,43 @@ the EW domes' masts.
   starts empty); the Vampire's script order is dropped when the team is moving or the bomber is still up, rather
   than kept; in Command the robots are the map table's catalog and no switch sends them without one allotted.
 
+- 2026-10-26: phase 10, first half: **balance and the gaps** the three days left. **Robots on the day's clock.** A
+  crew's tempo is by the hour of the day's clock, which runs 14 to 18 times faster than the game's; a robot at 10 km/h
+  is on the road for real minutes, so on the clock's rate a run of half an hour met the sorties of seven hours, and
+  every run in II died. Their sorties at what is on the road (vehicles and robots, `killzone::Class::on_road`) now
+  draw on a charge of their own filled by the real hour (`Crew::road`), by the light alone: in fog the crews ready
+  their drones and wait, so what is on the road when it lifts meets them at once (part I's late car), and a radio
+  crew the fog grounds flies nothing whatever it has ready. The robot's link drops by the real hour too, a long drop
+  an hour or an hour and a half. What the clock still does, honestly: a run of four kilometres is a whole part, so the
+  far runs leave at first light and are not back by dark; only Rivne (0.8 km) is a round trip within a part. A robot
+  left to its route now comes back to the middle of its track after pulling aside (`keep_to_track`): on a sharp turn
+  of the villages' tracks one 17 m off its line turned on the spot until dawn, which counted as neither back nor lost.
+  Nets over the robots' track from the road head down to Rivne in II and III (the stretch is the design's). **The
+  wounded**: `robots.fetch` sends a Record robot for a call that has waited so many hours of the clock (I half an
+  hour, II two, III one) when one is left over the script's runs still to come and none is on its way there; III has
+  five robots. The tally logs the wounded aboard a robot still on the road (`casevac=waiting/out/died/aboard`).
+  **Areas**: II's seep is from three sides, the road through Svitle ours (no `seep_w`; the others a little more, about
+  ten a day still); III's single men from the jaw all go for the drone team; and their men still on their way in,
+  sneaking unseen, hold no area until they go to ground (`fight::hold_zones`; only Myrnohrad has `seep::Cover`).
+  **Their wings**: the camera looks out 900 m either side of the track (was 300), the radar holds a wing after about
+  25 s inside its range (`OnRadar`), the interceptor climbs at 12 m/s, and a pass brings the wing down 45% of the
+  time (was 60%). **The Vampire's orders** the script gives while it is up or the team is moving are kept and flown in
+  turn (`Robots::queued`). **Command**: the robots and the Vampire's sorties are Support in the allotment
+  (`SupportKind::Robots`, `Vampire`; the record picks carry 3, 6 and 5 robots, 2 and 4 sorties), so the player has
+  them in Command; more robots still come on Supply. Part I's run is the player's at the margin: N sends the next
+  run before its time (the cars that were to follow it as far behind), Shift+N turns back what is on the way in or in
+  the town (`killzone::RunOrder`, `BAV_RUN`); the volunteers' Lada now leaves at 10:15.
+  **Bands** (`band.sh`-style, seeds 0-3, the Record), before → after. I: dead 22/18/17/16 → 21/21/17/16, our losses
+  6/8/6/3 → 8/9/7/4; robots 2 sent, back 1/1/0/1 → 3 sent (the third for the wounded), back 1/1/1/1, lost 1/1/1/0;
+  the run's pickups back and the Lada burnt in all four, before and after; the wings spotted nothing and both fell
+  in every seed → spotted 2-3, 5 of 8 brought down. II: robots 4 sent, none back → 6 sent, back 0/1/1/1, lost
+  5/4/4/5 (most lost, as the table has it), loads delivered 2-3; wounded 3 at dawn, 7 at dusk → 6-9 at dusk, one
+  brought out in one seed, one aboard in another; the Vampire's bombs flown in two seeds → in all four; Svitle ours
+  in 2 → 4, the western quarters in 1 → 4, the south-eastern edge theirs in all; the wings 4-13 spotted, 0-2 of 4
+  down. III: robots back 0/1/1/0, lost 4/3/2/4 → back 1/1/1/1, lost 1/1/0/1; the mine contested in all four → ours
+  in all four; wounded at dawn 0-3, 0-2 aboard. Command, the record allotment with the script's runs and sorties
+  given by `BAV_UGV`/`BAV_BOMBER` (the Record's own are not sent in Command), staff off: I dead 21/17/15/15, robots
+  back 1 each; II dead 4/6/4/2, robots back 1/1/1/1, Svitle and the western quarters ours in all four; III robots
+  back 1/1/1/1, the mine ours in all four. Staff on: I our losses 8-11, II 6-14, III 4-11, the rest as staff off.
+  **Not done**: within a part the wounded are rarely brought out, since only Rivne is a round trip on the clock (they
+  are aboard on the road at the end); the burrows I leaves are not carried over; Russia's own interceptors.

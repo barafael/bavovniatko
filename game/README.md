@@ -17,7 +17,8 @@ are five places so far, the first two one minefield seen from both sides:
   heavy bomber, their drone crews over the road (FPVs on radio and fibre, waiters on the shoulders) against our EW
   domes and nets, their infantry seeping in by twos and threes. Part I is the day of 10 November: the fog, the
   morning's run into the town under it, and the seep at the fog's rate; III is the night of 19-20 January: robots
-  and the Vampire feeding the north, single men seeping in, the wounded waiting; II is still a placeholder
+  and the Vampire feeding the north, single men seeping in, the wounded waiting; II is 3 December, the road by day
+  with robots that mostly do not survive it
   ([`design/myrnohrad.md`](design/myrnohrad.md)).
 
 To watch rather than play, `cargo xtask film` produces a four-minute film of both, directed from
@@ -190,10 +191,11 @@ the pieces that reach above a height, to write a ring from.
 | 6 | Avdiivka: into a Bradley's gunner's seat; again for the next one. Mouse turns the turret, right button holds the ISU sight (x4; I for its thermal channel), left click fires a burst, X picks AP or HE (HE on a tank goes for its sights), T launches a TOW that follows the crosshair; G / K / B order the driver out of the hide on a run, to hold, or back into it. A TOW or a long burst gives the hide away (in Command the Lancets come) |
 | Shift+click | Avdiivka: cluster shells (DPICM), two to a mission, on infantry in the open |
 | C | Avdiivka, the second wave: drop a grenade (a VOG-17) from the drone, eight for the day. It falls in the day's wind, metres off from 190 m and little from low down; a small burst on men, nothing to a hull. The tally says who holds the village, the heap, the railway and the plant's edge |
-| 7 | Myrnohrad: a ground robot's own camera, low on its nose; again for the next robot out. W/S take its throttle and A/D its lane across the route, and it goes as you drive it; G, or leaving its camera, gives it back to its route. Its link breaks up in their EW and drops out, now and then for most of an hour of the day's clock, and it stands while it is down; it sticks in craters and mud |
-| V, Alt+click | Myrnohrad: the wounded wait for a robot. V sends one for the longest-waiting call, Alt+click one with ammunition to the position nearest the cursor; it unloads, takes on two wounded and comes back |
+| 7 | Myrnohrad: a ground robot's own camera, low on its nose; again for the next robot out. W/S take its throttle and A/D its lane across the route, and it goes as you drive it; G, or leaving its camera, gives it back to its route. Its link breaks up in their EW and drops out, now and then for an hour or more, and it stands while it is down; it sticks in craters and mud. A robot is out for real minutes, so their FPVs come at it at their rate by the real hour, not the clock's |
+| V, Alt+click | Myrnohrad: the wounded wait for a robot. V sends one for the longest-waiting call, Alt+click one with ammunition to the position nearest the cursor; it unloads, takes on two wounded and comes back. The robots are the Allotment's (Support), in the Record and in Command alike; in the Record one also goes by itself for a call that has waited long |
 | 8 | Myrnohrad, II and III: the Vampire, the heavy bomber, on a sortie from the drone team with four 60 mm bombs (Shift+8: a bundle of ammunition for a post), flown with the drone's sticks; C lets one go, H brings it home, I its thermal camera, and 8 again puts you back in its camera |
-| 9 | Myrnohrad I: an interceptor from the drone team, flown in the goggles as the FPV is but faster and climbing (the mouse may point it up); it brings one of their Orlans or ZALAs down by passing within a few metres of it. Where the day has a radar, the rest go up by themselves at a wing inside its range |
+| 9 | Myrnohrad I: an interceptor from the drone team, flown in the goggles as the FPV is but faster and climbing (the mouse may point it up); it brings one of their Orlans or ZALAs down by passing within a few metres of it. Where the day has a radar, the rest go up by themselves at a wing it has held inside its range for a while, and bring it down about half the time |
+| N, Shift+N | Myrnohrad I: the morning's run. N sends the next car run now rather than at its time, Shift+N turns back the cars on the road in and in the town |
 | J | Myrnohrad: switch our EW domes off, or on again. A dome that is on breaks their radio FPVs' links and gives itself away to their direction-finders, and it blinds our own FPVs and interceptors inside it; the radar's interceptors and our strikes on their launch points pause it by themselves |
 | O, G, K, B | Command: the orders over the drone's picture. A click picks one of our units, G / K / B order it to advance, hold or fall back, and a click on a ringed position sends it there; the order goes over the net, late and maybe not at all where they jam it |
 | T | Command: the map table over the picture, the battle running on: our units on the map, ordered from it the same way, and Columns sent on Supply |
@@ -266,7 +268,8 @@ ground robot at each game second to a position of the field with its cargo (`amm
 longest-waiting call for evacuation, and `BAV_BOMBER="300:1800;-900,900:1400;-300:bundle"` flies the Vampire's
 sorties by themselves, on the enemy's men nearest each point or with a bundle for the post nearest it (Myrnohrad).
 `BAV_INTERCEPT="1100,1300"` puts the goggles' interceptor up at each game second and flies it by itself at the nearest
-of their wings, and `BAV_DOME="600:off,700:on"` switches our EW domes as J does.
+of their wings, `BAV_DOME="600:off,700:on"` switches our EW domes as J does, and `BAV_RUN="100:go,400:back"` sends the
+day's next car run early and turns the cars back, as N and Shift+N do.
 `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
 
 The dioramas' RON is laid out by [fmtron](https://crates.io/crates/fmtron) (`cargo install fmtron --version

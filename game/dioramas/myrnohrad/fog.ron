@@ -58,7 +58,7 @@ The day will run whether or not you do anything. What you do matters at the marg
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
 V: a ground robot for the wounded.  Alt+click: a robot with ammunition.  7: the robot's camera.
-9: an interceptor at their Orlans.  J: our EW dome off or on.
+9: an interceptor at their Orlans.  J: our EW dome off or on.  N: the run goes now.  Shift+N: the run turns back.
 1/2 or Tab: drone / the observers on the high-rise.  M: move the drone team when they find you.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -187,10 +187,10 @@ Press Enter."#,
 
     // ---- The battle's part (bav_sim::data) ----
     // The garrison's ground robots (c15 §5: ammunition, food and fuel in, the wounded out; the Zmiy's link lost for
-    // 1.5 hours; robots stuck in craters). Three for the morning; the wounded wait for one. Their FPVs on the road
-    // are a chance per kilometre until their drone crews are built (design/myrnohrad.md, phase 3), and small under
-    // the fog.
-    robots: (ugvs: 3, casevac: true, found_per_km: 0.1),
+    // 1.5 hours; robots stuck in craters). Three for the morning (the allotment's, below): two the script's runs, the
+    // third for a call that has waited half an hour of the clock (`fetch`); the wounded wait for one. The chance per
+    // kilometre is for a day without their drone crews; this one has them (`killzone`).
+    robots: (casevac: true, found_per_km: 0.1, fetch: 0.5),
     // What each post has to fire before it is dry, a robot's load of ammunition filling it by half. The dossier gives
     // no figure: the design's, so that the posts that see most of the seep run low by noon unless a robot reaches them.
     post_ammo: 60,
@@ -211,6 +211,7 @@ Press Enter."#,
             (id: "155", count: 1),
             (id: "fpv", count: 4),
             (id: "vog", count: 3),
+            (id: "robot", count: 3),
         ],
     ),
     // Their drones over the road (bav_sim::killzone; c15 §4, §5). Sudny Den's radio FPVs from Pokrovsk's side and the
@@ -272,7 +273,7 @@ Press Enter."#,
         // (unloading, and the wounded on board), and back at the road head by about 09:20, before the radio crews fly
         // (the fog past 500 m about 09:35) and an hour before the lift (10:28). The dossier names
         // no kind; the L200 is the brigades' pickup of the era. Then a volunteers' Lada that sets out late, at about
-        // 10:00, and is still on the road when the fog goes (c15 §5: "the main losses aren't at the positions, but on
+        // 10:15, and is still on the road when the fog goes (c15 §5: "the main losses aren't at the positions, but on
         // the road"; that it is lost is the design's).
         runs: [
             (
@@ -314,7 +315,7 @@ Press Enter."#,
                 back: 250.0,
             ),
             (
-                at: 870.0,
+                at: 930.0,
                 kind: Lada,
                 way: [
                     (-2290.0, -444.0),
@@ -410,7 +411,7 @@ Press Enter."#,
             ),
         ),
         (
-            865.0,
+            925.0,
             Say(
                 "{command}: a volunteers' car at the road head, going in now. They say they'll make it before it clears.",
             ),
