@@ -616,7 +616,7 @@ the EW domes' masts.
   four, their sorties 33/25/23/25 (radio 6-8, fibre 11-19, waiters 5-6), the drone team hit 3/0/0/0, robots 2 sent,
   1/1/0/1 back. Against the Record's table: thirty to forty in, the run in and back under the fog, the late car
   lost. Command, staff off: sent 34/40/40/35, dead 10/18/16/15, our losses 5/6/7/4, cars through 1/2/2/2; staff on
-  (the old tour, before the last shot list): dead 18/13/14/17, our losses 8/9/11/7, radio sorties 15-27 as the staff
+  (built after the last shot list): dead 18/13/14/17, our losses 8/9/11/7, radio sorties 15-27 as the staff
   spends Rubikon's budget on what it spots, cars through 2/2/1/2. **Checks**: the seven older days `same` against
   `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; Myrnohrad II and III `same` against `p6o-m2`,
   `p6o-m3`; I filmed twice from one build the same (`p7-m1`). Clippy, `cargo test` and fmtron pass. **Not done**:
