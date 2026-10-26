@@ -46,7 +46,7 @@ pub fn clock_minutes(t: f32) -> f32 {
 
 pub fn clock_text(t: f32) -> String {
     let m = clock_minutes(t);
-    format!("{:02}:{:02}", (m / 60.0) as u32, (m % 60.0) as u32)
+    format!("{:02}:{:02}", (m / 60.0) as u32 % 24, (m % 60.0) as u32)
 }
 
 /// One thing the day's script does (written in the diorama's file).
