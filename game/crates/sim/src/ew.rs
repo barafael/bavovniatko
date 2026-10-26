@@ -44,6 +44,8 @@ pub struct Ew {
     /// Windows (game s) when GNSS jamming is lifted.
     pub lifts: Vec<(f64, f64)>,
     told: usize,
+    /// Our domes that stand and jam now: where (on the ground) and how far (`ours_at`).
+    pub ours: Vec<(Vec3, f32)>,
 }
 
 impl Ew {
@@ -69,6 +71,13 @@ impl Ew {
         };
         let local: f32 = self.active.iter().filter(|(_, on)| *on).map(|(j, _)| (1.0 - j.distance(p.xz()) / radius).max(0.0) * 0.8).sum();
         (rear + local).min(1.0)
+    }
+
+    /// Our own domes' jamming on our FPVs' control band at a point, 0..1 (02 §6: friendly jamming blinds our own
+    /// drones): all of it over the inner three quarters of a dome, none at its edge. The reconnaissance drone's link
+    /// is on another band and the domes are set clear of it.
+    pub fn ours_at(&self, p: Vec3) -> f32 {
+        self.ours.iter().map(|(c, r)| ((1.0 - c.distance(p) / r) * 2.0).clamp(0.0, 1.0)).fold(0.0, f32::max)
     }
 
     /// Whether GNSS jamming is lifted now (the Ka-52 tell).
@@ -100,7 +109,9 @@ impl Plugin for EwPlugin {
             .add_systems(Startup, spawn_jammers.in_set(crate::schedule::Setup::Field));
         // Our domes, only where the day has them: an entity more anywhere else would be in that day's Record.
         if crate::killzone::spec().is_some_and(|k| !k.domes.is_empty()) {
-            app.add_systems(Startup, spawn_domes.in_set(crate::schedule::Setup::Field));
+            app.add_systems(Startup, spawn_domes.in_set(crate::schedule::Setup::Field))
+                // After the jammers and the robots (whose links they leave alone), before the wings and their FPVs.
+                .add_systems(Update, (switch_domes, our_domes).chain().run_if(crate::running).in_set(crate::Step::Script).in_set(DomeSystems).after(ew_update).after(crate::robots::RobotSystems));
         }
     }
 }
@@ -129,6 +140,87 @@ pub struct DomeDown;
 
 /// The chance a dome breaks the link of a radio FPV that crosses into it (frequency hopping gets some through).
 pub const DOME_BREAKS: f64 = 0.85;
+
+/// A dome we have switched off (J, or a pause for a strike of ours): it jams nothing, theirs or ours, and emits
+/// nothing for their direction-finders to find.
+#[derive(Component)]
+pub struct DomeOff;
+
+/// A dome paused for a strike of ours: on again at this game time.
+#[derive(Component)]
+pub struct Pause(pub f64);
+
+/// Our domes' switching, for what must run after it.
+#[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub struct DomeSystems;
+
+/// Pause a dome for a strike of ours until a game time (02 §6: EW pauses scheduled for a strike).
+pub fn pause(commands: &mut Commands, dome: Entity, until: f64) {
+    commands.entity(dome).insert((DomeOff, Pause(until)));
+}
+
+/// J switches our standing domes off for our FPVs to fly through, or on again (02 §6, the friendly-fire toggle);
+/// `BAV_DOME="<game s>:off|on,…"` does it at game times. A pause runs out by itself.
+#[allow(clippy::type_complexity)]
+fn switch_domes(
+    mut commands: Commands,
+    keys: Res<ButtonInput<KeyCode>>,
+    time: Res<Time>,
+    script: Res<crate::director::Script>,
+    mut radio: ResMut<Radio>,
+    domes: Query<(Entity, &Dome, Has<DomeOff>, Option<&Pause>), Without<DomeDown>>,
+    mut done: Local<usize>,
+) {
+    let now = time.elapsed_secs_f64();
+    let mut domes: Vec<_> = domes.iter().collect();
+    domes.sort_by_key(|d| d.1.idx);
+    let mut resumed = false;
+    for &(e, _, _, pause) in &domes {
+        if pause.is_some_and(|p| now >= p.0) {
+            commands.entity(e).remove::<(DomeOff, Pause)>();
+            resumed = true;
+        }
+    }
+    if resumed {
+        info!("ew: our domes on again after the pause, at {now:.0} s");
+        radio.say2(now, "РЕБ знову працює.", "The EW's back on.");
+    }
+    let plan = &crate::dev::dev().dome;
+    let mut want: Option<bool> = None;
+    while *done < plan.len() && script.t >= plan[*done].0 {
+        want = Some(plan[*done].1 != "off");
+        *done += 1;
+    }
+    if keys.just_pressed(KeyCode::KeyJ) {
+        // Any on: all off; else all on.
+        want = Some(!domes.iter().any(|d| !d.2));
+    }
+    let Some(on) = want else { return };
+    if domes.is_empty() {
+        return;
+    }
+    for &(e, _, _, _) in &domes {
+        if on {
+            commands.entity(e).remove::<(DomeOff, Pause)>();
+        } else {
+            commands.entity(e).insert(DomeOff).remove::<Pause>();
+        }
+    }
+    info!("ew: our domes switched {}, at {now:.0} s", if on { "on" } else { "off" });
+    if on {
+        radio.say2(now, "РЕБ увімкнули. Над нами купол.", "The EW's on. We're under the dome.");
+    } else {
+        radio.say2(now, "РЕБ вимкнули: наші FPV пройдуть, їхні теж.", "The EW's off: our FPVs can get through, and so can theirs.");
+    }
+}
+
+/// Where our standing domes jam this frame, for our own drones' links.
+#[allow(clippy::type_complexity)]
+fn our_domes(mut ew: ResMut<Ew>, domes: Query<(&Dome, &Transform), (Without<DomeDown>, Without<DomeOff>)>) {
+    let mut ours: Vec<(usize, Vec3, f32)> = domes.iter().map(|(d, t)| (d.idx, t.translation, d.radius)).collect();
+    ours.sort_by_key(|d| d.0);
+    ew.ours = ours.into_iter().map(|(_, c, r)| (c, r)).collect();
+}
 
 fn spawn_domes(mut commands: Commands) {
     let Some(k) = crate::killzone::spec() else { return };

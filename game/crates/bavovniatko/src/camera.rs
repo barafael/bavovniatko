@@ -395,9 +395,11 @@ fn drone_control(
 
 /// Fly the FPV: it goes where it is pointed. The mouse points it (and turns it); W/S are the throttle; A/D bank it
 /// sideways, and it levels itself when let go. Its analogue video thins with range and behind the ground; near
-/// their jammers the control link drops out in spells, and without it the drone falls. `BAV_FPV` flies it by
-/// itself at the vehicle nearest a point.
-#[allow(clippy::too_many_arguments)]
+/// their jammers the control link drops out in spells, and without it the drone falls; inside one of our own EW
+/// domes that is switched on it has no link at all (J switches them off). An interceptor (9) is faster and climbs
+/// to their wings. `BAV_FPV` flies it by itself at the vehicle nearest a point, `BAV_INTERCEPT` the interceptor at
+/// the nearest wing.
+#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn fpv_control(
     time: Res<Time>,
     keys: Res<ButtonInput<KeyCode>>,
@@ -407,6 +409,7 @@ fn fpv_control(
     op: Res<Operator>,
     ew: Res<bav_sim::ew::Ew>,
     vehicles: Query<(&Vehicle, &Transform)>,
+    wings: Query<(&bav_sim::wings::Wing, &Transform), Without<bav_sim::wings::Downed>>,
 ) {
     let dt = time.delta_secs();
     if !fpv.flying {
@@ -435,12 +438,22 @@ fn fpv_control(
     // The control link: their jammers sit past the jam line; in 2023 they took the control, not the video.
     let jam = ew.jam_at(p);
     fpv.battery -= dt;
-    // At the crest the link is gone about a third of the time, in spells.
-    fpv.control = fpv.battery > 0.0 && (jam < 0.2 || geo::value_noise(t * 1.3, 4.0, 91) > -1.0 + 0.72 * jam);
+    // At the crest the link is gone about a third of the time, in spells; under our own dome it is gone.
+    fpv.control = fpv.battery > 0.0 && (jam < 0.2 || geo::value_noise(t * 1.3, 4.0, 91) > -1.0 + 0.72 * jam) && ew.ours_at(p) <= 0.5;
+    let interceptor = fpv.airframe == bav_sim::player::Airframe::Interceptor;
     fpv.lost_for = if fpv.control { 0.0 } else { fpv.lost_for + dt };
     let mut bank = 0.0;
     if fpv.control {
-        if let Some((_, (x, z))) = dev().fpv {
+        if interceptor && !dev().intercept.is_empty() {
+            // The test pilot: a lead pursuit onto the nearest wing.
+            if let Some((w, tf)) = wings.iter().min_by(|a, b| a.1.translation.distance(p).total_cmp(&b.1.translation.distance(p))) {
+                let t_go = (tf.translation.distance(p) / 50.0).min(20.0);
+                let (yaw, pitch) = look_angles(tf.translation + w.velocity() * t_go - p);
+                fpv.aim_yaw = yaw;
+                fpv.aim_pitch = pitch.clamp(-1.4, 1.2);
+                fpv.throttle = 1.0;
+            }
+        } else if let Some((_, (x, z))) = dev().fpv {
             let at = Vec2::new(x, z);
             // The test pilot: at the vehicle nearest the point, full throttle.
             if let Some((_, tf)) = vehicles.iter().filter(|(v, _)| v.side == Side::Ru && v.state.alive()).min_by(|a, b| a.1.translation.xz().distance(at).total_cmp(&b.1.translation.xz().distance(at))) {
@@ -455,7 +468,7 @@ fn fpv_control(
         } else {
             let axis = |a, b| keys.pressed(a) as u8 as f32 - keys.pressed(b) as u8 as f32;
             fpv.aim_yaw -= motion.delta.x * 0.003 + axis(KeyCode::KeyE, KeyCode::KeyQ) * dt * 1.5;
-            fpv.aim_pitch = (fpv.aim_pitch - motion.delta.y * 0.003).clamp(-1.4, 0.5);
+            fpv.aim_pitch = (fpv.aim_pitch - motion.delta.y * 0.003).clamp(-1.4, if interceptor { 1.2 } else { 0.5 });
             fpv.throttle = (fpv.throttle + axis(KeyCode::KeyW, KeyCode::KeyS) * dt * 0.7).clamp(0.0, 1.0);
             bank = axis(KeyCode::KeyD, KeyCode::KeyA);
         }
@@ -472,7 +485,8 @@ fn fpv_control(
     if fpv.lost_for < 0.8 {
         // (A short dropout: the receiver holds the last command.) A 7-inch quad with an RPG warhead slung under
         // it is no racer: 5 m/s idling forward, cruising at 15–25, about 28 flat out, a little more in a dive.
-        let speed = 5.0 + 23.0 * fpv.throttle + (-fpv.pitch).max(0.0) * 5.0;
+        // An interceptor is built for speed and climb: about 50 m/s flat out.
+        let speed = if interceptor { 8.0 + 42.0 * fpv.throttle } else { 5.0 + 23.0 * fpv.throttle } + (-fpv.pitch).max(0.0) * 5.0;
         let want = fwd * speed + right * bank * 5.0;
         let dv = want - fpv.vel;
         fpv.vel += dv.clamp_length_max(10.0 * dt);

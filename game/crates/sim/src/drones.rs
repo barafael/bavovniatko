@@ -73,6 +73,7 @@ pub fn launch_fpv(fpv: &mut Fpv, view: &mut View, op: &Operator, radio: &mut Rad
         fpv.heavy -= 1;
     }
     fpv.left -= 1;
+    fpv.airframe = crate::player::Airframe::Strike;
     fpv.flying = true;
     fpv.gone = 0.0;
     fpv.pos = geo::ground(op.pos) + Vec3::Y * 1.5;
@@ -94,6 +95,36 @@ pub fn launch_fpv(fpv: &mut Fpv, view: &mut View, op: &Operator, radio: &mut Rad
     true
 }
 
+/// Put the player in an interceptor's goggles over the team's position, climbing towards their side (`wings`): one of
+/// the day's interceptors, shared with the radar's.
+pub fn launch_interceptor(fpv: &mut Fpv, view: &mut View, op: &Operator, radio: &mut Radio, stock: &mut crate::wings::Interceptors, now: f64) -> bool {
+    if stock.left == 0 || fpv.flying || now < op.moving_until {
+        return false;
+    }
+    stock.left -= 1;
+    fpv.airframe = crate::player::Airframe::Interceptor;
+    fpv.flying = true;
+    fpv.gone = 0.0;
+    fpv.pos = geo::ground(op.pos) + Vec3::Y * 1.5;
+    fpv.vel = Vec3::ZERO;
+    let towards = bav_core::field::pocket().towards_theirs(op.pos);
+    fpv.yaw = (-towards.x).atan2(-towards.y);
+    fpv.aim_yaw = fpv.yaw;
+    fpv.pitch = 0.0;
+    fpv.aim_pitch = 0.6;
+    fpv.roll = 0.0;
+    fpv.throttle = 1.0;
+    fpv.battery = INTERCEPTOR_ENDURANCE;
+    fpv.signal = 1.0;
+    fpv.control = true;
+    view.mode = Mode::Fpv;
+    radio.say2(now, "Перехоплювач у повітрі. Відео є.", "Interceptor up. Video's good.");
+    true
+}
+
+/// How long the goggles' interceptor flies (s).
+const INTERCEPTOR_ENDURANCE: f32 = 240.0;
+
 #[allow(clippy::too_many_arguments)]
 fn drone_input(
     keys: Res<ButtonInput<KeyCode>>,
@@ -104,13 +135,43 @@ fn drone_input(
     mut op: ResMut<Operator>,
     mut radio: ResMut<Radio>,
     seeing: Option<Res<crate::fight::Seeing>>,
+    (ew, mut stock, mut wings): (Res<crate::ew::Ew>, Option<ResMut<crate::wings::Interceptors>>, Option<ResMut<crate::wings::WingsTally>>),
     mut auto_launched: Local<bool>,
+    mut intercepts: Local<usize>,
 ) {
     let now = time.elapsed_secs_f64();
+    // Our own domes blind what goes up under them (02 §6): J switches them off.
+    let under_dome = ew.ours_at(geo::ground(op.pos) + Vec3::Y * 2.0) > 0.5;
+    let plan = &crate::dev::dev().intercept;
+    let auto = *intercepts < plan.len() && script.t >= plan[*intercepts];
+    if keys.just_pressed(KeyCode::Digit9) || auto {
+        *intercepts += auto as usize;
+        if let Some(s) = stock.as_deref_mut() {
+            if launch_interceptor(&mut fpv, &mut view, &op, &mut radio, s, now) {
+                if let Some(w) = wings.as_deref_mut() {
+                    w.up[1] += 1;
+                }
+                info!("fpv: an interceptor up from {:.0},{:.0}, {} left, at {now:.0} s", op.pos.x, op.pos.y, s.left);
+                if under_dome {
+                    radio.say2(now, "Купол над нами працює: осліпить. Вимкни РЕБ (J).", "Our dome's on over us: it'll blind it. Switch the EW off (J).");
+                }
+            } else if s.left == 0 {
+                radio.say2(now, "Перехоплювачів більше нема.", "No more interceptors.");
+            } else {
+                radio.say2(now, "Не зараз.", "Not now.");
+            }
+        } else {
+            radio.say2(now, "Перехоплювачів сьогодні нема.", "No interceptors today.");
+        }
+    }
     let auto = crate::dev::dev().fpv.is_some_and(|(t, _)| script.t >= t) && !*auto_launched;
     if keys.just_pressed(KeyCode::Digit4) || auto {
         *auto_launched |= auto;
-        if !launch_fpv(&mut fpv, &mut view, &op, &mut radio, seeing.as_deref(), now) {
+        if launch_fpv(&mut fpv, &mut view, &op, &mut radio, seeing.as_deref(), now) {
+            if under_dome {
+                radio.say2(now, "Купол над нами працює: осліпить. Вимкни РЕБ (J).", "Our dome's on over us: it'll blind it. Switch the EW off (J).");
+            }
+        } else {
             let why = if crate::data::sim_data().fpv.is_none() {
                 ("Ударних дронів сьогодні нема.", "No strike drones today.")
             } else if fpv.left == 0 {
@@ -197,7 +258,8 @@ pub fn team_hit(op: &mut Operator, view: &mut View, radio: &mut Radio, now: f64)
     move_team(op, view, radio, now, true);
 }
 
-/// Where the FPV meets a hull or the ground, it goes in.
+/// Where the FPV meets a hull or the ground, it goes in. (One that passes close enough to a wing of theirs brings it
+/// down instead: `wings`.)
 #[allow(clippy::too_many_arguments)]
 fn fpv_strikes(
     time: Res<Time>,
@@ -230,7 +292,9 @@ fn fpv_strikes(
     fx.flash(p, 6.0e6, 60.0, 0.12);
     sound.at(p, Sfx::BlastNear, 1.6);
     blasts.write(Blast { at: p, radius: FPV_BLAST, cause: Cause::Fpv });
-    stats.fpv_strikes += 1;
+    if fpv.airframe == crate::player::Airframe::Strike {
+        stats.fpv_strikes += 1;
+    }
     match hull {
         Some((e, v, t)) => {
             let top = p.y > t.translation.y + 1.6;

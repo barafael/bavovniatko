@@ -135,7 +135,7 @@ pub struct Sighting {
 pub struct Spotted(pub BTreeMap<Entity, Sighting>);
 
 impl Spotted {
-    fn see(&mut self, e: Entity, at: Vec2, now: f64, how: How, what: What, rng: &mut SmallRng) {
+    pub(crate) fn see(&mut self, e: Entity, at: Vec2, now: f64, how: How, what: What, rng: &mut SmallRng) {
         // Give or take: a firing post is pinned closer than a glimpse from a drone.
         let err = match how {
             How::Fired => 15.0,
@@ -304,9 +304,12 @@ fn spot_by_eye(
 
 /// Now and then an Orlan crosses our side along a strip 600 m wide: what is in the strip and not under smoke it may
 /// see (a post under the trees one time in three, a vehicle four times in five); in fog as much less as its camera
-/// sees through it from a kilometre up (`fight::Seeing`).
+/// sees through it from a kilometre up (`fight::Seeing`). Where the day has its wings as aircraft (`wings`, Myrnohrad) the
+/// Orlan is one, on a path from their side over ours and back, which the interceptors can bring down.
 #[allow(clippy::too_many_arguments)]
 fn orlan(
+    mut commands: Commands,
+    (op, wing_models): (Res<crate::player::Operator>, Option<Res<crate::wings::WingModels>>),
     time: Res<Time>,
     script: Res<crate::director::Script>,
     mut staff: ResMut<Staff>,
@@ -326,6 +329,16 @@ fn orlan(
     let rng = &mut rng.0;
     staff.next_orlan = script.t + rng.random_range(lo..hi);
     let x = rng.random_range(-1800.0..1800.0f32);
+    // Where the day has its wings as aircraft (`wings`), the Orlan flies in from their side over the drone team's
+    // line at that x and back out, and its camera spots as it goes.
+    if crate::wings::present() {
+        let pocket = bav_core::field::pocket();
+        let over = Vec2::new(x, op.pos.y);
+        let path = vec![pocket.from_their_side(over, 0.0, 4500.0), over, pocket.from_their_side(over, rng.random_range(-1500.0..1500.0), 4500.0)];
+        crate::wings::launch(&mut commands, wing_models.as_deref(), crate::wings::WingKind::Orlan, path, 700.0, now);
+        info!("staff: an Orlan sent over x {x:.0}, at {now:.0} s");
+        return;
+    }
     let under = |p: Vec2| (p.x - x).abs() < 300.0 && !smoke.covers(p, now);
     let fog = seeing.as_ref().map_or(1.0, |s| (s.through(crate::fight::Eye::Man) / 1000.0).min(1.0) as f64);
     let mut found = 0;

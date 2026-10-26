@@ -57,10 +57,42 @@ pub struct KillzoneSpec {
     /// The share of fibre sorties whose cable snags on the way (02 §6); more in the frost.
     #[serde(default = "snag")]
     pub snag: f32,
+    /// Our strikes on their launch points and relays in the Record, each at its time (`StrikeSpec`).
+    #[serde(default)]
+    pub strikes: Vec<StrikeSpec>,
+    /// How long a launch point or a relay our fire has hit stays out (hours of the day's clock): a lever, not a win
+    /// (c15 §5, §10).
+    #[serde(default = "down")]
+    pub down: f32,
 }
 
 fn snag() -> f32 {
     0.04
+}
+
+fn down() -> f32 {
+    1.0
+}
+
+/// A strike of ours on a crew's launch point, or on its relay.
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub struct StrikeSpec {
+    pub at: f32,
+    /// The crew's row in the file.
+    pub crew: usize,
+    pub by: StrikeBy,
+    /// On its relay rather than its launch point.
+    #[serde(default)]
+    pub relay: bool,
+}
+
+/// What a strike of ours on a launch point is.
+#[derive(Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StrikeBy {
+    /// A 155 mm mission of four rounds.
+    Guns,
+    /// An FPV of ours from the drone team, flown at it; our domes pause while it goes out.
+    Fpv,
 }
 
 /// One of their drone crews.
@@ -78,6 +110,10 @@ pub struct CrewSpec {
     /// In Command, the sorties the staff has of an arriving crew to spend on what it has spotted.
     #[serde(default)]
     pub budget: u32,
+    /// A radio crew's relay: the repeater on a mast on their ground that carries its links over the road (none: it
+    /// needs none). While it is down the crew flies nothing.
+    #[serde(default)]
+    pub relay: Option<(f32, f32)>,
 }
 
 /// What a crew flies.
@@ -228,11 +264,52 @@ pub struct Crew {
     rearm: f64,
     /// An arriving crew in Command: the staff's sorties left.
     budget: u32,
+    /// Its relay, if it flies through one.
+    pub relay: Option<Entity>,
 }
 
 /// A crew that has not arrived yet (`CrewSpec::arrives`).
 #[derive(Component)]
 pub struct Arriving(pub f32);
+
+/// A radio crew's relay on its mast, on their ground (`CrewSpec::relay`).
+#[derive(Component)]
+pub struct Relay {
+    pub crew: usize,
+}
+
+/// A launch point or a relay our fire has put out of action, until then: its crew flies nothing (c15 §5: the HUR's
+/// strike on a Rubikon base had a limited effect).
+#[derive(Component)]
+pub struct Struck(pub f64);
+
+/// A launch point or a relay our direction-finders have located (02 §6, "emit and die": theirs emit too): it shows
+/// on the picture. A radio crew gives itself away as it flies; a fibre one does not.
+#[derive(Component)]
+pub struct Located;
+
+/// An FPV of ours flying itself at a launch point or a relay (`StrikeBy::Fpv`).
+#[derive(Component)]
+pub struct OurStrike {
+    aim: Vec3,
+    vel: Vec3,
+    battery: f32,
+    /// Seconds without its control link (inside one of our own domes).
+    lost_for: f32,
+}
+
+/// The stream for our strikes on their points and their finding: its draws never shift the kill zone's own.
+#[derive(Resource)]
+struct PointRng(SmallRng);
+
+/// The chance a radio sortie gives its launch point and relay away to our direction-finders.
+const LOCATES: f64 = 0.3;
+/// Within so far of a 155 mm burst (times its lethal radius), and of our FPV's, a launch point or a relay may be put
+/// out, by these chances.
+const SHELL_REACH: f32 = 1.5;
+const SHELL_TAKES: f64 = 0.6;
+const FPV_REACH: f32 = 10.0;
+const FPV_TAKES: f64 = 0.85;
 
 /// Whose: our drone team (the operator, a resource and no thing) or a thing on the field.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -255,7 +332,7 @@ pub struct Sighting {
 pub struct Picture(pub Vec<Sighting>);
 
 impl Picture {
-    fn see(&mut self, mark: Mark, class: Class, at: Vec2, now: f64) {
+    pub(crate) fn see(&mut self, mark: Mark, class: Class, at: Vec2, now: f64) {
         match self.0.iter_mut().find(|s| s.mark == mark) {
             Some(s) => {
                 s.at = at;
@@ -373,6 +450,11 @@ pub struct KzTally {
     pub cars_out: u32,
     pub cars_through: u32,
     pub cars_lost: u32,
+    /// Bursts of ours within reach of a launch point or a relay, and of those the ones that put it out.
+    pub strikes: u32,
+    pub struck: u32,
+    /// The sorties their crews did not fly while their points were out: what the strikes cost them.
+    pub lost: f32,
 }
 
 /// The kill zone's own stream: its draws never shift the rest of the day's.
@@ -407,6 +489,7 @@ impl Plugin for KillzonePlugin {
             return;
         }
         app.insert_resource(KzRng(SmallRng::seed_from_u64(crate::dev::seeded(2511))))
+            .insert_resource(PointRng(SmallRng::seed_from_u64(crate::dev::seeded(2512))))
             .init_resource::<Picture>()
             .init_resource::<KzTally>()
             .add_message::<Impact>()
@@ -415,7 +498,15 @@ impl Plugin for KillzonePlugin {
             // are settled.
             .add_systems(
                 Update,
-                (drive, look_over, arrive, launch, wait, fly, strike).chain().run_if(crate::running).in_set(crate::Step::Script).in_set(KillzoneSystems).after(crate::ew::ew_update).after(crate::director::DirectorSystems).after(crate::robots::RobotSystems),
+                (drive, look_over, arrive, points, launch, wait, fly, strike, our_strikes)
+                    .chain()
+                    .run_if(crate::running)
+                    .in_set(crate::Step::Script)
+                    .in_set(KillzoneSystems)
+                    .after(crate::ew::ew_update)
+                    .after(crate::ew::DomeSystems)
+                    .after(crate::director::DirectorSystems)
+                    .after(crate::robots::RobotSystems),
             )
             .add_systems(Update, log_tally.run_if(crate::running).in_set(crate::Step::Effects));
     }
@@ -426,7 +517,8 @@ fn spawn_crews(mut commands: Commands) {
     let command = play() == Play::Command;
     for (idx, c) in spec.crews.iter().enumerate() {
         let at = Vec2::new(c.at.0, c.at.1);
-        let mut e = commands.spawn((Crew { idx, kind: c.kind, charge: 0.0, rearm: 0.0, budget: if command { c.budget } else { 0 } }, Transform::from_translation(ground(at))));
+        let relay = c.relay.map(|(x, z)| commands.spawn((Relay { crew: idx }, Transform::from_translation(ground(Vec2::new(x, z))))).id());
+        let mut e = commands.spawn((Crew { idx, kind: c.kind, charge: 0.0, rearm: 0.0, budget: if command { c.budget } else { 0 }, relay }, Transform::from_translation(ground(at))));
         if let Some(t) = c.arrives {
             e.insert(Arriving(t));
         }
@@ -441,7 +533,7 @@ fn spawn_nets(mut commands: Commands) {
 }
 
 /// The ground under a point, in the box or beyond its edge (the launch points are off the map).
-fn ground(p: Vec2) -> Vec3 {
+pub(crate) fn ground(p: Vec2) -> Vec3 {
     let c = Vec2::new(p.x.clamp(-geo::HALF_X, geo::HALF_X), p.y.clamp(-geo::HALF_Z, geo::HALF_Z));
     Vec3::new(p.x, geo::height(c.x, c.y), p.y)
 }
@@ -479,13 +571,13 @@ fn finding(seeing: Option<&crate::fight::Seeing>) -> f32 {
 
 /// Vehicles on the ground, not coasting to a stop, and not one of their FPVs.
 type Ground = (Without<Coasting>, Without<TheirFpv>);
-/// Our domes that stand.
-type Standing = (Without<crate::ew::DomeDown>, Without<TheirFpv>);
+/// Our domes that stand and jam: neither knocked out nor switched off.
+type Standing = (Without<crate::ew::DomeDown>, Without<crate::ew::DomeOff>, Without<TheirFpv>);
 
 /// What of ours they can hunt, and where it is now (none: gone, burnt, emptied).
 #[derive(bevy::ecs::system::SystemParam)]
 pub struct Quarry<'w, 's> {
-    prey: Query<'w, 's, (Entity, &'static Prey, &'static Transform), Without<TheirFpv>>,
+    prey: Query<'w, 's, (Entity, &'static Prey, &'static Transform, Has<crate::ew::DomeOff>), Without<TheirFpv>>,
     vehicles: Query<'w, 's, (Entity, &'static Vehicle, &'static Transform), Ground>,
     posts: Query<'w, 's, (Entity, &'static Post)>,
 }
@@ -495,7 +587,7 @@ impl Quarry<'_, '_> {
     /// not there.
     fn find(&self, mark: Mark) -> Option<Vec3> {
         let Mark::Thing(e) = mark else { return None };
-        if let Ok((_, _, t)) = self.prey.get(e) {
+        if let Ok((_, _, t, _)) = self.prey.get(e) {
             return Some(t.translation + Vec3::Y);
         }
         if let Ok((_, v, t)) = self.vehicles.get(e)
@@ -514,7 +606,7 @@ impl Quarry<'_, '_> {
 
     /// What of ours is on wheels or tracks: the cars, the robots, the column game's vehicles.
     fn wheels(&self) -> Vec<(Mark, Class, Vec2)> {
-        let prey = self.prey.iter().filter(|(_, p, _)| matches!(p.0, Class::Vehicle | Class::Robot)).map(|(e, p, t)| (Mark::Thing(e), p.0, t.translation.xz()));
+        let prey = self.prey.iter().filter(|(_, p, _, _)| matches!(p.0, Class::Vehicle | Class::Robot)).map(|(e, p, t, _)| (Mark::Thing(e), p.0, t.translation.xz()));
         let vehicles = self.vehicles.iter().filter(|(_, v, _)| v.side == Side::Ua && v.state.alive()).map(|(e, v, t)| (Mark::Thing(e), if v.kind == VKind::Ugv { Class::Robot } else { Class::Vehicle }, t.translation.xz()));
         prey.chain(vehicles).collect()
     }
@@ -618,7 +710,7 @@ fn through(tally: &mut KzTally, radio: &mut Radio, car: &Car, back: bool, now: f
 }
 
 /// The point `s` metres along a line, and the way it runs there.
-fn along(line: &[Vec2], mut s: f32) -> (Vec2, Vec2) {
+pub(crate) fn along(line: &[Vec2], mut s: f32) -> (Vec2, Vec2) {
     for w in line.windows(2) {
         let d = w[0].distance(w[1]);
         let dir = (w[1] - w[0]).normalize_or(Vec2::X);
@@ -658,8 +750,8 @@ fn look_over(
     let watched = |p: Vec2| roads.iter().any(|w| dist_to_line(w, p) < WATCHED);
     let mut seen: Vec<(Mark, Class, Vec2, f64)> = Vec::new();
     seen.extend(quarry.wheels().into_iter().filter(|w| watched(w.2)).map(|(m, c, p)| (m, c, p, 0.6 * find)));
-    // Every emitter shows (02 §6): a dome is located whatever the weather, given time.
-    seen.extend(quarry.prey.iter().filter(|(_, p, _)| p.0 == Class::Ew).map(|(e, _, t)| (Mark::Thing(e), Class::Ew, t.translation.xz(), 0.25)));
+    // Every emitter shows (02 §6): a dome is located whatever the weather, given time, while it jams.
+    seen.extend(quarry.prey.iter().filter(|(_, p, _, off)| p.0 == Class::Ew && !off).map(|(e, _, t, _)| (Mark::Thing(e), Class::Ew, t.translation.xz(), 0.25)));
     seen.extend(quarry.posts().into_iter().filter(|p| watched(p.1)).map(|(m, p)| (m, Class::Men, p, 0.1 * find)));
     let up = view.feed_down <= 0.0 || fpv.flying;
     if up && spec.team > 0.0 && now >= op.moving_until {
@@ -693,7 +785,7 @@ fn arrive(mut commands: Commands, time: Res<Time>, script: Res<crate::director::
 
 /// Each crew's tempo fills its sorties; with one ready it launches at the best thing in its picture that has not
 /// already two of their FPVs on the way.
-#[allow(clippy::too_many_arguments)]
+#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn launch(
     mut commands: Commands,
     time: Res<Time>,
@@ -703,8 +795,10 @@ fn launch(
     spotted: Option<Res<crate::staff::Spotted>>,
     models: Option<Res<KillzoneModels>>,
     mut rng: ResMut<KzRng>,
+    (mut found, mut radio): (ResMut<PointRng>, ResMut<Radio>),
     quarry: Quarry,
-    mut crews: Query<(&mut Crew, &Transform), Without<Arriving>>,
+    mut crews: Query<(Entity, &mut Crew, &Transform, Has<Located>), (Without<Arriving>, Without<Struck>)>,
+    relays: Query<Has<Struck>, With<Relay>>,
     flying: Query<&TheirFpv>,
 ) {
     let Some(spec) = spec() else { return };
@@ -713,9 +807,10 @@ fn launch(
     // Sorties an hour of the day's clock, as a rate a game second.
     let per_s = crate::diorama::diorama().compression() / 60.0;
     let mut out: Vec<Mark> = flying.iter().map(|f| f.mark).collect();
-    let mut crews: Vec<_> = crews.iter_mut().filter(|(c, _)| c.kind != Kind::Waiter).collect();
-    crews.sort_by_key(|(c, _)| c.idx);
-    for (mut crew, tf) in crews {
+    // A crew whose launch point or relay our fire has put out flies nothing until it is back (`points`).
+    let mut crews: Vec<_> = crews.iter_mut().filter(|(_, c, _, _)| c.kind != Kind::Waiter && !c.relay.is_some_and(|r| relays.get(r).unwrap_or(false))).collect();
+    crews.sort_by_key(|(_, c, _, _)| c.idx);
+    for (e, mut crew, tf, located) in crews {
         let cs = &spec.crews[crew.idx];
         // In Command the staff spends an arriving crew's sorties, on what it has spotted.
         let staffed = cs.arrives.is_some() && spotted.is_some();
@@ -743,6 +838,20 @@ fn launch(
         put_up(&mut commands, models.as_deref(), crew.idx, k, tf.translation + Vec3::Y * 2.0, mark, class, ground(at) + Vec3::Y, snag_at);
         tally.sorties[k as usize] += 1;
         info!("killzone: {} sends a {} FPV at the {} at {:.0},{:.0}, {:.1} km, at {now:.0} s", cs.name.0, k.name(), class.name(), at.x, at.y, from.distance(at) / 1000.0);
+        // A radio crew's control link is an emitter: our direction-finders may take a bearing on it, and on its relay.
+        if k == Kind::Rf && !located && found.0.random_bool(LOCATES) {
+            commands.entity(e).insert(Located);
+            if let Some(r) = crew.relay {
+                commands.entity(r).insert(Located);
+            }
+            let (lat, lon) = geo::latlon(from);
+            info!("killzone: {} located at {:.0},{:.0}, at {now:.0} s", cs.name.0, from.x, from.y);
+            radio.say2(
+                now,
+                format!("Пеленг: точка запуску «{}», {lat:.3} {lon:.3}{}.", cs.name.1, if crew.relay.is_some() { ", і її ретранслятор" } else { "" }),
+                format!("A bearing: {}'s launch point, {lat:.3} {lon:.3}{}.", cs.name.0, if crew.relay.is_some() { ", and its relay" } else { "" }),
+            );
+        }
     }
 }
 
@@ -1010,6 +1119,173 @@ fn strike(
     }
 }
 
+/// A launch point or a relay of theirs: which crew's, where, and whether it is out now.
+struct Point {
+    e: Entity,
+    crew: usize,
+    relay: bool,
+    at: Vec2,
+    struck: Option<f64>,
+}
+
+/// Our fire on their launch points and relays (c15 §5, §10; 02 §6): a 155 mm burst or an FPV of ours near one may put
+/// it out for a while (`KillzoneSpec::down`), and its crew flies nothing until it is back; what it did not fly in that
+/// time is counted. In the Record the day's own strikes go in at their times.
+#[allow(clippy::too_many_arguments, clippy::type_complexity)]
+fn points(
+    mut commands: Commands,
+    time: Res<Time>,
+    script: Res<crate::director::Script>,
+    mut rng: ResMut<PointRng>,
+    (mut tally, mut radio, mut log): (ResMut<KzTally>, ResMut<Radio>, ResMut<crate::hits::HitLog>),
+    seeing: Option<Res<crate::fight::Seeing>>,
+    op: Res<Operator>,
+    models: Option<Res<KillzoneModels>>,
+    (mut landed, mut blasts): (MessageReader<crate::fire::ShellLanded>, MessageReader<crate::units::Blast>),
+    mut crews: Query<(Entity, &mut Crew, &Transform, Option<&Struck>), (Without<Relay>, Without<Arriving>)>,
+    relays: Query<(Entity, &Relay, &Transform, Option<&Struck>), Without<Crew>>,
+    domes: Query<(Entity, &crate::ew::Dome), (Without<crate::ew::DomeDown>, Without<crate::ew::DomeOff>)>,
+    mut done: Local<usize>,
+) {
+    let Some(spec) = spec() else { return };
+    let now = time.elapsed_secs_f64();
+    let dt = crate::sim_dt(&time);
+    let per_s = crate::diorama::diorama().compression() / 60.0;
+    let mut pts: Vec<Point> = crews
+        .iter()
+        .filter(|(_, c, _, _)| c.kind != Kind::Waiter)
+        .map(|(e, c, t, s)| Point { e, crew: c.idx, relay: false, at: t.translation.xz(), struck: s.map(|s| s.0) })
+        .chain(relays.iter().map(|(e, r, t, s)| Point { e, crew: r.crew, relay: true, at: t.translation.xz(), struck: s.map(|s| s.0) }))
+        .collect();
+    pts.sort_by_key(|p| (p.crew, p.relay));
+    // Back up when its time is out.
+    for p in pts.iter_mut() {
+        if p.struck.is_some_and(|until| now >= until) {
+            p.struck = None;
+            commands.entity(p.e).remove::<Struck>();
+            let name = &spec.crews[p.crew].name;
+            info!("killzone: {}'s {} back up, at {now:.0} s", name.0, if p.relay { "relay" } else { "launch point" });
+            radio.say2(now, format!("Перехоплення: «{}» знову в ефірі.", name.1), format!("Intercept: {} is back on the air.", name.0));
+        }
+    }
+    // What the crews that are out do not fly.
+    for (_, c, _, _) in &crews {
+        if c.kind != Kind::Waiter && pts.iter().any(|p| p.crew == c.idx && p.struck.is_some()) {
+            tally.lost += spec.crews[c.idx].per_hour * per_s * tempo(c.kind, seeing.as_deref()) * dt;
+        }
+    }
+    // Our bursts this frame: the guns' (theirs land on our side), and our FPVs going in.
+    let mut bursts: Vec<(Vec2, f32, f64, &'static str)> = landed.read().filter(|l| l.by == Side::Ua && l.radius > 0.0).map(|l| (l.at, l.radius * SHELL_REACH, SHELL_TAKES, "155 mm")).collect();
+    bursts.extend(blasts.read().filter(|b| b.cause == Cause::Fpv).map(|b| (b.at.xz(), FPV_REACH, FPV_TAKES, "FPV")));
+    let down = (spec.down * 60.0 / crate::diorama::diorama().compression()) as f64;
+    for (at, reach, takes, weapon) in bursts {
+        for p in pts.iter_mut().filter(|p| p.struck.is_none() && p.at.distance(at) < reach) {
+            tally.strikes += 1;
+            let name = &spec.crews[p.crew].name;
+            let what = if p.relay { "relay" } else { "launch point" };
+            if !rng.0.random_bool(takes) {
+                info!("killzone: a {weapon} burst {:.0} m from {}'s {what}, no effect, at {now:.0} s", p.at.distance(at), name.0);
+                continue;
+            }
+            tally.struck += 1;
+            p.struck = Some(now + down);
+            commands.entity(p.e).insert((Struck(now + down), Located));
+            if !p.relay
+                && let Ok((_, mut c, _, _)) = crews.get_mut(p.e)
+            {
+                // The drones it had ready are gone with it.
+                c.charge = 0.0;
+            }
+            info!("killzone: {}'s {what} out by a {weapon} burst {:.0} m off, for {down:.0} s, at {now:.0} s", name.0, p.at.distance(at));
+            log.note(now, weapon, "our fire", &format!("{}'s {what}", name.0), Side::Ru, "out of action");
+            radio.say2(
+                now,
+                format!("Є влучання по {} «{}». Якийсь час буде тихо.", if p.relay { "ретранслятору" } else { "точці запуску" }, name.1),
+                format!("A hit on {}'s {what}. That'll keep them quiet for a while.", name.0),
+            );
+        }
+    }
+    // The Record's strikes, each at its time.
+    while *done < spec.strikes.len() && script.t >= spec.strikes[*done].at {
+        let s = spec.strikes[*done];
+        *done += 1;
+        if play() != Play::Record {
+            continue;
+        }
+        let Some(cs) = spec.crews.get(s.crew) else { continue };
+        let Some(target) = (if s.relay { cs.relay } else { Some(cs.at) }).map(|(x, z)| Vec2::new(x, z)) else { continue };
+        let what = if s.relay { "relay" } else { "launch point" };
+        match s.by {
+            StrikeBy::Guns => {
+                commands.spawn(crate::fire::Mission { target, kind: crate::fire::ShellKind::He155, rounds: 4, sigma: 20.0, interval: 3.0, next: now, flight: 20.0, by: Side::Ua });
+                radio.say2(now, format!("Вогонь по точці «{}», чотири снаряди.", cs.name.1), format!("Fire mission on {}'s {what}, four rounds.", cs.name.0));
+            }
+            StrikeBy::Fpv => {
+                let from = geo::ground(op.pos) + Vec3::Y * 1.5;
+                let flight = from.xz().distance(target) / Kind::Rf.speed();
+                let mut e = commands.spawn((OurStrike { aim: ground(target) + Vec3::Y, vel: Vec3::Y * 4.0, battery: BATTERY, lost_for: 0.0 }, Transform::from_translation(from).with_scale(Vec3::splat(3.0)), bevy::light::NotShadowCaster));
+                if let Some(m) = &models {
+                    e.insert(crate::units::skin(&m.fpv));
+                    crate::units::dress(&mut e, &m.fpv);
+                }
+                // Our domes pause while it climbs out of them (02 §6).
+                let mut paused: Vec<(usize, Entity)> = domes.iter().map(|(e, d)| (d.idx, e)).collect();
+                paused.sort_by_key(|d| d.0);
+                for (_, d) in &paused {
+                    crate::ew::pause(&mut commands, *d, now + 40.0);
+                }
+                radio.say2(
+                    now,
+                    format!("FPV пішов на {} «{}»{}.", if s.relay { "ретранслятор" } else { "точку" }, cs.name.1, if paused.is_empty() { "" } else { ", РЕБ на паузі" }),
+                    format!("An FPV away at {}'s {what}{}.", cs.name.0, if paused.is_empty() { "" } else { ", the EW paused" }),
+                );
+                info!("killzone: an FPV of ours at {}'s {what}, {:.0} s out, at {now:.0} s", cs.name.0, flight);
+            }
+        }
+        info!("killzone: our strike on {}'s {what} at {:.0},{:.0}, at {now:.0} s", cs.name.0, target.x, target.y);
+    }
+}
+
+/// Our FPVs at their points fly as theirs do: out at fifty metres, the dive, and a burst where they go in (`points`
+/// reads it). Inside one of our own domes the link goes and it falls.
+fn our_strikes(mut commands: Commands, time: Res<Time>, ew: Res<crate::ew::Ew>, mut fx: ResMut<FxQueue>, mut sound: Sound, mut blasts: MessageWriter<crate::units::Blast>, mut q: Query<(Entity, &mut OurStrike, &mut Transform)>) {
+    let now = time.elapsed_secs_f64();
+    let dt = crate::sim_dt(&time);
+    for (e, mut f, mut tf) in &mut q {
+        let mut p = tf.translation;
+        f.battery -= dt;
+        f.lost_for = if ew.ours_at(p) > 0.5 { f.lost_for + dt } else { 0.0 };
+        if f.battery > 0.0 && f.lost_for < 0.8 {
+            let speed = Kind::Rf.speed();
+            let to = f.aim - p;
+            let want = if to.xz().length() > DIVE { Vec3::new(f.aim.x, ground(p.xz()).y.max(f.aim.y) + CRUISE, f.aim.z) - p } else { to };
+            f.vel = f.vel.lerp(want.normalize_or(Vec3::NEG_Y) * speed, (4.0 * dt).min(1.0));
+            if to.length() < speed * dt + 2.0 {
+                p = f.aim;
+                f.vel = Vec3::NEG_Y;
+            }
+        } else {
+            f.vel.y -= 9.81 * dt;
+            f.vel *= 1.0 - 0.3 * dt;
+        }
+        p += f.vel * dt;
+        let floor = ground(p.xz()).y;
+        if p.y <= floor + 0.3 || p.distance(f.aim) < 1.0 {
+            let at = Vec3::new(p.x, floor, p.z);
+            commands.entity(e).despawn();
+            fx.explosion(at, 0.7, true);
+            sound.at(at, Sfx::BlastNear, 1.3);
+            blasts.write(crate::units::Blast { at, radius: 6.0, cause: Cause::Fpv });
+            info!("killzone: our FPV goes in at {:.0},{:.0}, {:.0} m from its point, at {now:.0} s", at.x, at.z, at.xz().distance(f.aim.xz()));
+            continue;
+        }
+        tf.translation = p;
+        if f.vel.length_squared() > 0.01 {
+            tf.look_to(f.vel.normalize(), Vec3::Y);
+        }
+    }
+}
+
 /// For the bands (`BAV_LOG_STATS`): the kill zone's count once a game minute.
 fn log_tally(script: Res<crate::director::Script>, tally: Res<KzTally>, mut last: Local<Option<u32>>) {
     if !crate::dev::dev().log_stats {
@@ -1022,7 +1298,7 @@ fn log_tally(script: Res<crate::director::Script>, tally: Res<KzTally>, mut last
     *last = Some(minute);
     let t = &*tally;
     info!(
-        "killzone: {} sorties={}/{}/{} hits team={} ew={} vehicles={} robots={} men={} misses={} broken={} snagged={} netted={}/{} cars={}/{}/{}",
+        "killzone: {} sorties={}/{}/{} hits team={} ew={} vehicles={} robots={} men={} misses={} broken={} snagged={} netted={}/{} cars={}/{}/{} points={}/{} lost={:.1}",
         crate::director::clock_text(script.t),
         t.sorties[0],
         t.sorties[1],
@@ -1039,7 +1315,10 @@ fn log_tally(script: Res<crate::director::Script>, tally: Res<KzTally>, mut last
         t.net_saved,
         t.cars_out,
         t.cars_through,
-        t.cars_lost
+        t.cars_lost,
+        t.strikes,
+        t.struck,
+        t.lost
     );
 }
 

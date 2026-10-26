@@ -71,7 +71,7 @@ fn main() {
         .add_plugins((dev::DevPlugin, showcase::ShowcasePlugin, settings::SettingsPlugin, bav_sim::evac::EvacPlugin, bav_sim::drones::DronesPlugin, bav_sim::columns::ColumnsPlugin, bav_sim::ew::EwPlugin, bav_look::world::JammersLookPlugin, bav_sim::orders::OrdersPlugin, bav_sim::supply::SupplyPlugin, orders::OrdersScreenPlugin, table::TablePlugin))
         .add_plugins((bav_sim::staff::StaffPlugin, bav_sim::air::AirPlugin, bav_sim::manpads::ManpadsPlugin, bav_sim::bradley::BradleyPlugin, bav_sim::fight::FightPlugin, bav_look::air::AirLookPlugin, bav_look::thermal::ThermalPlugin, bav_look::night::NightPlugin))
         .add_plugins(bav_sim::seep::SeepPlugin)
-        .add_plugins((bav_sim::robots::RobotsPlugin, bav_look::robots::RobotsLookPlugin, bav_sim::killzone::KillzonePlugin, bav_look::killzone::KillzoneLookPlugin))
+        .add_plugins((bav_sim::robots::RobotsPlugin, bav_look::robots::RobotsLookPlugin, bav_sim::killzone::KillzonePlugin, bav_look::killzone::KillzoneLookPlugin, bav_sim::wings::WingsPlugin, bav_look::wings::WingsLookPlugin))
         .run();
 }
 

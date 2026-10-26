@@ -169,10 +169,20 @@ pub fn cursor_ground(window: &Window, camera: &Camera, cam_tf: &GlobalTransform)
     geo::raycast(ray.origin, *ray.direction, 9000.0)
 }
 
+/// What the goggles fly: a strike FPV, or an interceptor (`wings`).
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
+pub enum Airframe {
+    #[default]
+    Strike,
+    /// Faster, and climbing to their wings: it brings one down by passing within a few metres of it.
+    Interceptor,
+}
+
 /// The player's FPV: flown by hand through its goggles (the game's camera), struck by the battle where it meets a
 /// hull or the ground. The camera flies it in `Step::Camera`; `drones` resolves where it hits.
 #[derive(Resource, Default)]
 pub struct Fpv {
+    pub airframe: Airframe,
     /// Left for the day.
     pub left: u32,
     /// Of those, the heavy ones that fly in fog (`drones::launch_fpv`).

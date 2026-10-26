@@ -447,6 +447,9 @@ fn smoke(_args: &[String]) -> Result {
         // The robot's camera and the bomber's (where the day has robots; elsewhere the switches do nothing).
         ("robot", &[("BAV_VIEW", "robot"), ("BAV_UGV", "0.2:1")]),
         ("bomber", &[("BAV_VIEW", "bomber"), ("BAV_BOMBER", "0.2:0;0")]),
+        // The goggles' interceptor and the domes switched (where the day has wings and domes).
+        ("intercept", &[("BAV_INTERCEPT", "0.2")]),
+        ("dome", &[("BAV_DOME", "0.2:off,0.5:on")]),
         ("diag", &[("BAV_DIAG", "1")]),
     ];
     let root = root();
