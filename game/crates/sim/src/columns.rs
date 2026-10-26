@@ -17,7 +17,17 @@ pub struct ColumnsPlugin;
 
 impl Plugin for ColumnsPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<Columns>().add_systems(Update, scheduled_columns.run_if(crate::running).in_set(crate::Step::Script));
+        // Before the robots, their drones, the wings and our domes, which share the radio and the route book with it.
+        app.init_resource::<Columns>().add_systems(
+            Update,
+            scheduled_columns
+                .run_if(crate::running)
+                .in_set(crate::Step::Script)
+                .before(crate::robots::RobotSystems)
+                .before(crate::killzone::KillzoneSystems)
+                .before(crate::wings::WingsSystems)
+                .before(crate::ew::DomeSystems),
+        );
         if crate::dev::dev().column.is_some() {
             app.add_systems(Update, column_progress.run_if(crate::running).in_set(crate::Step::Script));
         }
