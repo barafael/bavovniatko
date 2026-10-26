@@ -69,6 +69,9 @@ pub struct RobotsSpec {
     /// (`evac::Casualties`; c15 §5, days to two weeks).
     #[serde(default)]
     pub casevac: bool,
+    /// The wounded already waiting when the day begins, from the days before it (an earlier part's aftermath).
+    #[serde(default)]
+    pub waiting: Vec<WaitingSpec>,
     /// How often an hour of the day's clock a robot's link drops out with no jamming at all (the ground, the
     /// relays, the range); their EW makes it up to five times as often.
     #[serde(default = "drops")]
@@ -80,6 +83,15 @@ pub struct RobotsSpec {
     /// The heavy bomber (none: the day has none).
     #[serde(default)]
     pub bomber: Option<BomberSpec>,
+}
+
+/// Wounded waiting at a post at first light: `n` of them at the layout's `ua_positions[post]`, waiting `hours` of the
+/// clock already.
+#[derive(Deserialize, Debug, Clone, Copy)]
+pub struct WaitingSpec {
+    pub post: usize,
+    pub n: u32,
+    pub hours: f32,
 }
 
 fn drops() -> f32 {
