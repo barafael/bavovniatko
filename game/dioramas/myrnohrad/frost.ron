@@ -1,0 +1,191 @@
+// Myrnohrad, part III, The frost (Мороз): the night of 19-20 January 2026. About -15 °C and 3-7 cm of snow (c15 §3;
+// ERA5 for the night: -12 to -15 °C, 5 cm, overcast, a north-westerly of 7-12 km/h); no moon (new on the 18th, its
+// crescent set by evening: `sun::moon`). The town is half theirs, the northern quarters ours, fed by heavy drones and
+// robots (c15 §2, 14-23 Jan). Until the robots and the bombers are built (phases 5, 9), and the dark reaches the
+// battle (phase 2), the night is a placeholder: a few groups by the infantry act and the posts. The schema is
+// bav_core::data and bav_sim::data; the map is map.ron.
+(
+    date: "19 January 2026",
+    tally_date: "19 JAN 2026",
+    // 22:00 to about 04:00 in the day's 1500 s.
+    day_start_min: 1320.0,
+    compression: 0.24,
+    season: Winter,
+    // 19 January is the 19th day of the year; Kyiv on UTC+2. The moon is worked out for the date.
+    sun: (19, 2.0),
+    moon: (2026, 1, 19),
+    overcast: true,
+    wind: (0.25, 0.0, 2.8),
+    // Most of the town's roofs gone by now; a few ruins smouldering in the snow; the cars of two months on the road.
+    ruined: (0.6, 11),
+    smouldering: 10,
+    cars: [
+        ((-1445.8, -213.4), 1.28),
+        ((-2102.3, -382.4), 1.61),
+        ((-517.5, -89.7), 2.04),
+        ((721.8, -313.2), -1.4),
+        ((-1577.9, -236.6), -1.4),
+        ((428.1, -297.3), -1.31),
+        ((-614.5, -94.7), -1.76),
+        ((332.8, -285.0), -1.69),
+        ((-1217.2, -152.5), -1.6),
+        ((-1674.8, -263.9), 1.66),
+        ((-750.0, -75.8), -1.46),
+        ((-1721.7, -285.3), -1.35),
+        ((-815.8, -94.3), 1.72),
+        ((-449.5, -98.9), 1.12),
+        ((168.1, -270.1), 2.22),
+        ((-2084.5, -377.9), -1.38),
+        ((74.7, -251.8), -1.71),
+        ((201.0, -262.3), -1.0),
+        ((-1923.3, -347.8), 1.04),
+        ((-331.8, -138.5), 1.47),
+        ((-1651.1, -252.7), -1.76),
+        ((-1533.9, -233.4), -2.36),
+        ((-341.5, -135.6), -1.08),
+        ((-1187.5, -146.4), -1.68),
+    ],
+    words: (
+        briefing: r#"MYRNOHRAD (МИРНОГРАД), THE ROAD INTO THE POCKET
+THE NIGHT OF 19-20 JANUARY 2026
+
+Minus fifteen, and a thin snow. Moscow claimed the town three weeks ago; the Russians are in about half of it. The
+garrison holds the northern quarters and the mine, and everything it eats and fires comes by night: on robots up
+the road, and under heavy drones. The cold freezes the fibre of both sides' drones.
+
+You are the same drone team, moved north, out of the basement that is now theirs. The observers are up on the
+Tsentralna headframe. There is no moon tonight.
+
+The night will run whether or not you do anything. What you do matters at the margin.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
+Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
+1/2 or Tab: drone / the observers on the headframe.  M: move the drone team when they find you.  P: pause.  [ ]: time.
+
+Press Enter."#,
+        op_label: "OBSERVERS, THE TSENTRALNA HEADFRAME (СПОСТЕРІГАЧІ, КОПЕР ШАХТИ «ЦЕНТРАЛЬНА»)",
+        op_lost: "The observers on the headframe are gone. No eyes from the mine.",
+        forward_belt: "the ruins",
+        mine_lines: ["Mine. He's stopped.", "Another one on a mine.", "Mine on the verge. That one's done."],
+        closing: [
+            "On 28 January their command posts and a commandant's office were in Myrnohrad. The marines in the north were told not to let them out. There was no order to leave.",
+            "The same day ISW last saw Ukrainians in Pokrovsk.",
+        ],
+        keys: "R: the same night again, in the same frost.     Esc: quit.",
+        sources: [
+            (
+                publisher: "Ukrainska Pravda",
+                date: "28 Jan 2026",
+                title: "Росіяни розгорнули в Мирнограді свою артилерію та штаби",
+                url: "https://www.pravda.com.ua/news/2026/01/28/8018382/",
+            ),
+            (
+                publisher: "Kyiv Independent",
+                date: "Jan 2026",
+                title: "Ukrainian infantry fight to survive on the Pokrovsk front as Russia closes in",
+                url: "https://kyivindependent.com/if-you-stop-you-die-inside-ukraines-last-fight-for-pokrovsk-and-myrnohrad/",
+            ),
+            (
+                publisher: "United24 Media",
+                date: "Jan 2026",
+                title: "Winter Is No Longer Russia's Ally on the Battlefield Near Pokrovsk",
+                url: "https://united24media.com/latest-news/winter-is-no-longer-russias-ally-on-the-battlefield-near-pokrovsk-15284",
+            ),
+            (
+                publisher: "Institute for the Study of War",
+                date: "28 Dec 2025",
+                title: "Russian Offensive Campaign Assessment, December 28, 2025",
+                url: "https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-28-2025/",
+            ),
+        ],
+    ),
+    // The debrief's rows (the schema is the game's screen.rs); the tally's and the fire panel's lines are map.ron's.
+    debrief: (
+        rows: [
+            Line("Their men sent in", Sent),
+            Line("    dead", AttackerDead),
+            Line("    came back", Returned),
+            Line("Our casualties", DefenderLosses),
+            Areas("{area} at dawn"),
+            Line("Shells left", Shells),
+            If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+        ],
+    ),
+    // The observers up the Tsentralna headframe, under its sheaves.
+    op: ((1475.0, -248.0), 40.0),
+
+    // The pocket on 19 January: the town half theirs, the front line north of the railway (c15 §2, ISW 28 Dec), the
+    // jaw closer over the north-east; the northern quarters, the mine, the villages and the road ours.
+    pocket: (
+        grey: [
+            [
+                (-5000.0, -380.0),
+                (-2400.0, -360.0),
+                (-1500.0, -80.0),
+                (-300.0, 0.0),
+                (400.0, -120.0),
+                (1200.0, -150.0),
+                (5000.0, -250.0),
+                (5000.0, 5000.0),
+                (-5000.0, 5000.0),
+            ],
+            [(200.0, -5000.0), (5000.0, -5000.0), (5000.0, -300.0), (1700.0, -420.0), (700.0, -1000.0)],
+        ],
+        theirs: [
+            [
+                (-5000.0, -200.0),
+                (-2200.0, -150.0),
+                (-1400.0, 250.0),
+                (-300.0, 300.0),
+                (400.0, 150.0),
+                (1200.0, 100.0),
+                (5000.0, 0.0),
+                (5000.0, 5000.0),
+                (-5000.0, 5000.0),
+            ],
+            [(700.0, -5000.0), (5000.0, -5000.0), (5000.0, -450.0), (1900.0, -650.0), (1100.0, -1200.0)],
+        ],
+    ),
+    // The garrison's posts: Svitle, Rivne, north of the H-32 in the town, the northern quarters, the mine, the
+    // H-32's western end.
+    ua_positions: [
+        (-560.0, -1250.0),
+        (-1750.0, -700.0),
+        (300.0, -450.0),
+        (800.0, -600.0),
+        (1400.0, -300.0),
+        (-300.0, -350.0),
+        (900.0, -700.0),
+    ],
+
+    // ---- The battle's part (bav_sim::data) ----
+    // The Record: riflemen at the seven posts, a battery's sixteen rounds, four FPVs, six grenades.
+    allotment: (
+        points: 80,
+        supply: (4, 0.5),
+        record: [
+            (id: "rifles", at: 0),
+            (id: "rifles", at: 1),
+            (id: "rifles", at: 2),
+            (id: "rifles", at: 3),
+            (id: "rifles", at: 4),
+            (id: "rifles", at: 5),
+            (id: "rifles", at: 6),
+            (id: "155", count: 1),
+            (id: "fpv", count: 4),
+            (id: "vog", count: 3),
+        ],
+    ),
+    // The night: twos from the jaw and the town's south, into the northern quarters.
+    script: [
+        (2.0, Say("Bird up, thermal. Minus fifteen. The battery won't last long in this.")),
+        (40.0, Say("All, this is {command}. Robots up the road tonight. Keep the road clear of them.")),
+        (
+            200.0,
+            Infantry(route: 1, groups: 3, size: 2, every: 180.0, label: "22:50  Twos from the jaw, towards the mine"),
+        ),
+        (500.0, Infantry(route: 0, groups: 3, size: 2, every: 200.0, label: "00:00  Twos out of the town's south")),
+        (900.0, Infantry(route: 2, groups: 2, size: 2, every: 150.0)),
+        (1300.0, Say("This is {op}. Quiet now. Too cold even for them.")),
+    ],
+)

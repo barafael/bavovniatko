@@ -222,10 +222,16 @@ fn spawn_table(mut commands: Commands, assets: Res<AssetServer>, mut images: Res
                             TextColor(Color::srgb(0.12, 0.25, 0.55)),
                         ));
                     }
-                    if let Some((z0, z1)) = f.grey {
-                        let grey = on_map(Vec2::new(-geo::HALF_X, (z0 + z1) * 0.5));
+                    // The label at the line's middle on the map's left edge, or in the middle of a pocket's grey outline.
+                    let pocket = bav_core::field::pocket();
+                    let label = match f.grey {
+                        Some((z0, z1)) => Some(on_map(Vec2::new(-geo::HALF_X, (z0 + z1) * 0.5))),
+                        None => pocket.grey.first().filter(|_| pocket.drawn).map(|o| on_map(o.iter().copied().sum::<Vec2>() / o.len() as f32)),
+                    };
+                    if let Some(grey) = label {
+                        let left = if f.grey.is_some() { 1.0 } else { grey.x * 100.0 };
                         m.spawn((
-                            Node { position_type: PositionType::Absolute, left: percent(1), top: percent(grey.y * 100.0), margin: UiRect { top: px(-8), ..default() }, ..default() },
+                            Node { position_type: PositionType::Absolute, left: percent(left), top: percent(grey.y * 100.0), margin: UiRect { top: px(-8), ..default() }, ..default() },
                             Text::new("GREY ZONE (СІРА ЗОНА)"),
                             font_of(&assets, 12.0),
                             TextColor(DIM_INK),
@@ -541,7 +547,7 @@ fn paint_map() -> Image {
             }
             // The grey zone: diagonal hatching.
             let p = world(x as f32, y as f32);
-            if f.grey.is_some_and(|(z0, z1)| (z0..z1).contains(&p.y)) && (x + y) % 14 < 2 {
+            if (x + y) % 14 < 2 && bav_core::field::pocket().ground(p) == Ground::Grey {
                 c = mix(c, [0.45, 0.43, 0.40], 0.45);
             }
             // Their barrier minefields, cross-hatched in red.

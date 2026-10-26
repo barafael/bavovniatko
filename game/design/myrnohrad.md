@@ -1,8 +1,9 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
-Status: planned (2026-10-25), nothing built. The owner's direction of the same day: the next diorama comes from the
-era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
-Progress will be logged at the end.
+Status: planned 2026-10-25; phases 0 and 1 built 2026-10-26 (the place, its map and set, the pocket; the days are
+placeholders). The owner's direction of 25 October: the next diorama comes from the era of humans against drones
+against other drones (2024–2026). This file first chooses the episode, then plans it.
+Progress is logged at the end.
 
 References: `c15` is `db/research/chapters/c15-pokrovsk-myrnohrad.md`, `c17` the Kupiansk dossier, `c19` Vivaldi's,
 `c14` Kursk's, `c18` the night over Kyiv; `01`, `02`, `05` are the topic files `db/research/01-drones-uncrewed.md`,
@@ -108,11 +109,11 @@ What it adds, each piece reusable by later chapters:
 
 | | **I. The fog (Туман)** | **II. The road (Дорога)** | **III. The frost (Мороз)** |
 |---|---|---|---|
-| window | 10 Nov 2025, about 06:30 → 12:30 (UTC+2) | a clear day of 3–7 Dec 2025, about 08:00 → 15:40 | the night of 19–20 Jan 2026, about 22:00 → 04:00 |
+| window | 10 Nov 2025, about 06:30 → 12:30 (UTC+2) | 3 Dec 2025 (no clear day that week, phase 1), about 08:00 → 15:40 | the night of 19–20 Jan 2026, about 22:00 → 04:00 |
 | player | a drone team of the Myrnohrad garrison (the 25th Airborne, 38th and 35th Marine, 79th Air Assault Brigades held the town and its corridor, c15 §4; the file names the 25th, probably the brigade whose UGV brought out two wounded after a direct FPV hit, §5) | the same, and its robot crew | the same, at night |
 | enemy | the 51st CAA's infantry seeping in from the Krasnyi Lyman jaw and the south-east edge, the 2nd CAA's from Pokrovsk (c15 §4); Rubikon, Sudny Den and the other drone units on the road (c15 §4, §5); KABs (c15 §5) | the same, the corridor about 1 km wide (c15 §3); the Russian claim to Pokrovsk of 1 Dec already made (c15 §2) | the same, the town half theirs (49% on 28 Dec, c15 §1) |
 | player's means | the drone (thermal), a few FPVs (the light ones useless in the wet, c15 §3), the drop, posts in the western quarters and Svitle, one vehicle run on the road while the fog holds, an EW dome | the drone, FPVs, interceptors against their reconnaissance wings, UGV runs for cargo or wounded, the heavy bomber at dusk, EW domes, a net over part of the road | heavy bomber sorties, UGV runs, the thermal drone, a few FPVs; fibre for both sides failing in the ice (c15 §3) |
-| light, weather | overcast, near-saturated air, light wind; fog 6–10 hours (ERA5 proxy, c15 §3), lifting before noon | dry and clear (the day picked from ERA5 in phase 1: 1–2 Dec were overcast with rain, c15 §3); sunset about 15:40 | about −15 °C, 3–7 cm of snow (c15 §3), moonlight computed in phase 1 |
+| light, weather | overcast, near-saturated air, light wind; fog 6–10 hours (ERA5 proxy, c15 §3), lifting before noon | dry but overcast (ERA5 has no clear day from 3 to 7 Dec: the 3rd, 95% cloud, calm, 4 °C, no snow, is the least grey); sunset about 15:40 | about −15 °C, 3–7 cm of snow (c15 §3), no moon (new on 18 Jan, computed in phase 1) |
 | Record band | 30–40 of theirs get into the box in the fog, against about 10 in a clear day (the rates Hromadske's officer gave for the towns, c15 §5); the vehicle run reaches Myrnohrad and is back under the fog; what is still on the road when it lifts is hit (c15 §5 Sternenko; the size of that loss is the design's, not the record's) | about 10 of theirs get in (c15 §5); nothing on wheels arrives; most of the day's UGV runs are lost on the road ("usually don't survive the trip", c15 §5); the bombers carry 60 mm bombs, never 120 mm (c15 §5); the queue of wounded is longer at dusk than at dawn (days to two weeks, c15 §5); Svitle and the western quarters ours, the south-eastern edge theirs (c15 §2, 14 Nov) | the northern quarters ours at dawn, supplied by heavy drones and UGVs (c15 §2, 14–23 Jan); the posts not starved; the garrison not cut off (a loss, c15 §10); the closing card on 28 January: their command posts move in, and there is no order to leave (c15 §6.13) |
 | what decides it | when the run goes and when it turns back, what the drone watches while it is half blind, and where the few FPVs that fly are spent | what goes by robot and what by bomber, which wounded go first, hunting the twos and threes before they reach a drone crew, and keeping their Orlans and launch points off the road | which posts are fed and which wounded go out in the dark; flying in the cold |
 
@@ -135,25 +136,30 @@ breaking up. Each is a person, as always.
 south-south-east, towards the railway and the Russian side of Myrnohrad), about 74,050 m per degree of longitude
 there. Map positions computed from the dossier's OSM points (c15 §3) with `Anchor::bearing` (+x is bearing 60):
 
+The dossier's points (c15 §3) and, where they disagree, the map's (OpenStreetMap, `dioramas/myrnohrad/osm.ron`;
+corrected in phase 1, see Progress):
+
 | place | lat, lon (c15 §3) | map (x, z) | role |
 |---|---|---|---|
-| Myrnohrad (centre) | 48.308, 37.259 | (1040, −170) | the garrison's town; its western quarters in the box, its east beyond the +x edge |
-| Tsentralna mine | 48.312, 37.263 | (1520, −410) | a headframe and a spoil heap in the town; a post |
-| the heap of mine No. 3 | 48.294, 37.272 | (1090, 1660) | the south-eastern edge, on the +z side; probably the ruined mine where their flag went up on 14 Nov (c15 §3: "a ruined mine on Myrnohrad's south-eastern edge"; to be checked against the OSM) |
-| Svitle | 48.309, 37.234 | (−510, −1190) | the village on the last road (c15 §3) |
-| Rivne | 48.300, 37.220 | (−1910, −840) | the other village on the last road |
-| Dinas (Pokrovsk) | 48.296, 37.201 | (−3350, −1160), 1 km beyond the −x edge | the road's western end in northern Pokrovsk; the west road head |
+| Myrnohrad (centre) | 48.308, 37.259 | (1040, −170) | the garrison's town; its private sector, blocks and the Tsentralna mine fill the +x, +z quarter of the box, its east beyond the +x edge |
+| Tsentralna mine | 48.312, 37.263 | the shaft (a mineshaft node) at (1475, −248), its heap at (1608, −478) | the headframe and the heap over the town; a post and, in III, the observers |
+| the heap of mine No. 3 | 48.294, 37.272 | the map's named heap at (1137, 1637), on the +z edge; no mine mapped | the south-eastern edge; probably where their flag went up on 14 Nov |
+| Svitle | 48.309, 37.234 | (−510, −1190); its streets and residential land at x −1300 to 100, z −1770 to −1000 | the village on the last road (c15 §3); no houses mapped |
+| Rivne | 48.300, 37.220 | (−1910, −840); its streets at x −2290 to −1240, z −1330 to −380 | the other village; no houses and no residential land mapped |
+| the H-32 | — | in at the −x edge at (−2304, −448), 0.5 km +z of Rivne and 1 km +z of Svitle, then the town's Tsentralna street (z about −270) past the mine, out at (2304, −470) | the road in from the west; the way through the villages is their streets and tracks off it |
+| Dinas (Pokrovsk) | 48.296, 37.201 | (−3350, −1160), 1 km beyond the −x edge | the road's western end in northern Pokrovsk |
 | Krasnyi Lyman | 48.341, 37.236 | (1400, −4200), 2.4 km beyond the −z edge | the north-eastern jaw (c15 §3); infiltrators from it into Myrnohrad on 18 Nov (c15 §2) |
 | Rodynske | 48.354, 37.203 | (0, −6670) | the rear, held by Azov into January (c15 §3); the corridor runs towards it |
-| Tsentralna's heap | 48.335, 37.276 | (3630, −2140), beyond the +x/−z corner | the jaw's side |
+| the nine-storey blocks | — | four on Soborna street about (870, 460), five in the Svitlyi quarter about (2100–2300, 900–1060) | the only nine tagged; the observers' roof in I and II |
+| (the dossier's "Tsentralna's heap") | 48.335, 37.276 | (3630, −2140), beyond the +x/−z corner | not the map's heap by the shaft; outside the box |
 
-**The pocket's shape.** Our way in is the road from Dinas east through Rivne and Svitle into Myrnohrad (c15 §3:
-"in December only roads through Rivne and Svitle remained"), entering at the −x edge, and the tracks north over the
-fields towards Rodynske, through the corridor's gap at the −z edge (3 km on 29 Oct, about 1 km by late November,
-c15 §3). Theirs are the +z edge (the railway and the south-eastern edge), the −x end beyond Dinas (Pokrovsk south
-of the railway was theirs by December, c15 §2, 2 Dec), and the +x/−z corner (the Krasnyi Lyman jaw). **Assumptions
-to check in phase 1:** the corridor's road has no name in the dossier and is picked from the OSM's tracks; the
-railway's line through the box is the OSM's; the OSM is the map of 2026, the towns in ruins there.
+**The pocket's shape.** Our way in is the H-32 from the west (c15 §3: "in December only roads through Rivne and
+Svitle remained"), entering at the −x edge, with the villages' streets and tracks off it, and the corridor north to
+Rodynske beyond the −z edge (3 km on 29 Oct, about 1 km by late November, c15 §3), off the box. Theirs are the +z
+side (Pokrovsk's fields south-west and the town's south-eastern edge, the heap of No. 3), and the +x/−z corner (the
+Krasnyi Lyman jaw). There is no live railway in the box: every line on the map is disused, and only a disused spur
+crosses the middle to Tsentralna (the line out of Pokrovsk passes beyond −z). The woods along that spur and the
+fields' shelterbelts are mapped as woods (184 polygons in the extract), not tree rows. The OSM is the map of 2026.
 
 **The ground.** Mining-town geometry (c15 §3): apartment blocks and private-house districts, mine headframes and
 spoil heaps, fields with shelterbelts running NNW–SSE between the villages (c15 §3 "the open ground": fields of a
@@ -175,9 +181,10 @@ concern its own system with a `Step`.
   newer).
 
 ### 1. The map and the set
-- Buildings from their footprints (`look/buildings.rs`): Myrnohrad's blocks at their storeys where the OSM has them,
-  the villages' houses; the Tsentralna headframe and the heaps (`Spoil` on a `Mound`, Avdiivka's `Heap`); the
-  railway; the belts and fields.
+- Buildings from their footprints (`look/buildings.rs`): Myrnohrad's blocks at their storeys where the OSM has them
+  (nine nine-storey blocks tagged), the rest by footprint; the villages' houses, which the map has none of, placed
+  along their streets; the Tsentralna headframe over the shaft node and the heaps (Avdiivka's `Heap` on the map's
+  two spoil outlines); the disused spur; the woods and fields.
 - **A pocket.** The grey zone and the enemy's side become polygons in the file (Command's data already plans
   `grey_zone: [polygon]`, `command.md`), so a position, a route's grey length and the staff's spotting stop
   assuming one front at +z. Where the older days use `defence_z`, `foothold_z` and `jam_z`, the polygons are built
@@ -356,3 +363,46 @@ the EW domes' masts.
 - **The information layer**: the flags for the cameras and the claims on schedule (c15 §5, §10).
 - **The Starlink cut-off** (February 2026): Vivaldi's prelude (c19 §10).
 - **E-points** (01 e8): a scoring economy the ledger could show; not without a tone test.
+
+## Progress
+
+- 2026-10-26: phases 0 and 1. **The plan against the map.** The map table and phase 1 are corrected against the
+  OpenStreetMap extract (above): the H-32 comes in at the −x edge at z −448 and runs 0.5 km +z of Rivne and 1 km
+  +z of Svitle, not through them, so the way through the villages is their streets and tracks; neither village has
+  a house mapped, and Rivne no residential land; the shelterbelts are woods; there is no live railway, only the
+  disused spur to Tsentralna; the shaft is at (1475, −248) and its heap at (1608, −478) (the dossier's
+  "Tsentralna's heap" is another, outside the box); No. 3's heap is at (1137, 1637) on the +z edge; nine
+  nine-storey blocks are tagged. The road head is the H-32 at the −x edge, our only way in. **Part II's day**:
+  ERA5 (Open-Meteo, queried for 48.30 N 37.25 E) has no clear day from 3 to 7 December, and no snow until mid-month;
+  II is 3 December, the least grey (95% cloud, dry, calm, 4 °C), autumn's bare ground, not snow; III has its 5 cm.
+  **The place as data**: `dioramas/myrnohrad/map.ron` (the ground with the two heaps as `Heap` cones of 60 and
+  45 m, the infiltration lines, the villages' and the private sector's houses, the areas, the road head, the
+  shared forces and screen), `fog.ron`, `road.ron`, `frost.ron` (date, clock, season, sun, weather, the pocket, the
+  posts, the observers, the words with sources from the dossier, the debrief, a placeholder script of infantry
+  groups and KABs), `myrnohrad-1|2|3` in the index, a minute's tour each in `shots/`. `osm2ron.py` gives a mining
+  town's untagged buildings storeys by footprint (a long one of 450–2500 m² a five-storey block, small ones houses
+  of one or two storeys, in the works' grounds workshops) and drops tree rows of no length; Myrnohrad's `osm.ron`
+  is regenerated with it, Avdiivka's comes out the same. **The set** (`Set::Headframe`, `look/myrnohrad.rs`): the
+  map's buildings with a share gutted by a seed (`buildings::Shelled`: a third of the roofs gone in I, half in II,
+  60% in III, the same buildings and more each time; walls broken off at their own heights over rubble), the
+  houses under pitched roofs, the houses the map leaves out raised along their streets (`data::HouseSpec`, seeded,
+  clear of the map's buildings, streets, woods, works and water), the Tsentralna headframe with its strut, sheaves,
+  shaft and winding houses and skip gallery, burnt Ladas and L200s on the road, smouldering ruins, the observers
+  on a Soborna roof (I, II) or the headframe (III). The light: the sun for each day, the fog as the picture shows it
+  (`fog`: 250 m to 10:00, gone by 11:20), and the night as Hostomel's sensor opens up to it; `sun::moon` works out
+  the moon (the Almanac's low-precision series, tested on the full moon of 5 Nov 2025 and the new moon of 18 Jan
+  2026): on the night of the frost it is down throughout. **The pocket** (`field::Pocket`): the grey zone and their
+  ground as outlines in each part's file, three sides closing from I to III; the older days' `grey_zone` is made
+  into two outlines as wide as the world whose edges reproduce the old test to the bit (a test checks the edges, a
+  hair either side and far off). The field's positions and routes, the Column's exposed length, the table's hatching,
+  the overlay, the staff's Lancets and Su-25s (from their side, not +z) and EW's rear ramp (into their ground, where
+  there is no jam line) ask it. **Checks**: Vuhledar, Mala Tokmachka, both Hostomel parts and Avdiivka III `same`
+  against `fx-v`, `r2-r`, `f3-h1`, `f3-h2`, `m3-a3-x`. Avdiivka I and II differ from `m4-a1` and `m4-a2`, but a
+  build of 800015c, this branch's base, differs from them identically, and this branch is byte for byte 800015c's
+  on both: the baselines are not 800015c's (new ones: `base-a1`, `base-a2` in this worktree's devlog). Each
+  Myrnohrad part filmed twice from one build is the same. `cargo test`, clippy, fmtron and `cargo xtask smoke`
+  (198 runs, all three new ids) pass. No older day's balance changed, so no bands. The placeholder days end at 63
+  sent and 56 dead (I), 15 and 13 (II), 16 and 6 (III). **Not done**: the dark does not reach the battle in III
+  (that is `fight::Sight`, phase 2's); the clock reads 24:00–27:59 after midnight (`director::clock_text`, a one-line
+  fix left for after the Hostomel branch that owns the file); the villages' gardens and trees; the robots, their
+  drones, the flow and the fog in the battle (phases 2–9).

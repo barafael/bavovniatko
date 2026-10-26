@@ -45,6 +45,10 @@ pub struct DioramaData {
     /// hand-made curve.
     #[serde(default)]
     pub sun: Option<(u32, f32)>,
+    /// The date the clock starts on (year, month, day), where the moon matters (a night part): the moon is worked
+    /// out for it (`sun::moon`). None: no moon is drawn.
+    #[serde(default)]
+    pub moon: Option<(i32, u32, u32)>,
     /// Whether the player's drone has a thermal channel here (a Mavic 2 Enterprise Advanced, key I): the hot things
     /// then carry their heat (`bav_look::thermal`).
     #[serde(default)]
@@ -100,6 +104,10 @@ pub struct DioramaData {
     /// The ground drawn from a map (tools/osm): its lines, roads and tree rows join the hand-drawn ones.
     #[serde(default)]
     pub osm: OsmSpec,
+    /// Houses the map does not have, raised along the streets inside these outlines (`HouseSpec`): Myrnohrad's
+    /// villages and its private sector, whose houses OpenStreetMap leaves out.
+    #[serde(default)]
+    pub houses: Vec<HouseSpec>,
     /// The line that is the river, if there is one.
     #[serde(default)]
     pub river: Option<String>,
@@ -125,6 +133,10 @@ pub struct DioramaData {
     /// front across the field (Hostomel's fight is for places, not a line), so all of it is ours to place on.
     #[serde(default)]
     pub grey_zone: Option<(f32, f32)>,
+    /// The front as outlines, where it is not one line across the field (Myrnohrad's pocket, with the enemy on three
+    /// sides): the grey zone's and the enemy's ground (`field::Pocket`). None: built from `grey_zone`.
+    #[serde(default)]
+    pub pocket: Option<PocketSpec>,
     #[serde(default)]
     pub trps: Vec<PointSpec>,
     #[serde(default)]
@@ -161,6 +173,18 @@ pub struct OsmSpec {
     pub belts: Vec<BeltSpec>,
     pub areas: Vec<(crate::geo::AreaKind, Vec<P>)>,
     pub buildings: Vec<BuildingSpec>,
+}
+
+/// A stretch of houses the map leaves out: on both sides of every street inside `within`, one every `every` metres
+/// or so, set back from the street, a share `two` of them of two storeys, where no building of the map stands near
+/// and on no other street. The places and sizes are drawn from `seed`, so they stand where they stood every day.
+#[derive(Deserialize, Debug, Clone)]
+pub struct HouseSpec {
+    pub within: Vec<P>,
+    pub every: f32,
+    #[serde(default)]
+    pub two: f32,
+    pub seed: u32,
 }
 
 #[derive(Deserialize, Debug)]
@@ -215,6 +239,13 @@ pub enum ObservedFrom {
     LineZ(f32),
     /// The player's own home.
     Home,
+}
+
+/// The grey zone and the enemy's ground, each a list of outlines; the rest of the box is ours.
+#[derive(Deserialize, Debug, Clone)]
+pub struct PocketSpec {
+    pub grey: Vec<Vec<P>>,
+    pub theirs: Vec<Vec<P>>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -636,6 +667,56 @@ fn terraced(rise: f32, height: f32, terrace: f32, wobble: f32) -> f32 {
     ((k + smoothstep(0.3, 1.0, frac)) * terrace).clamp(0.0, height)
 }
 
+/// The houses of a stretch the map leaves out (`HouseSpec`): along each street that runs inside the outline, on
+/// both sides, a plot every `every` metres or so; on it a house of 8-11 by 7-10 m facing the street, 9-13 m back
+/// from its edge, where it is clear of every other street, of the map's own buildings and of the houses already
+/// placed.
+fn houses(spec: &HouseSpec, roads: &[Road], mapped: &[crate::geo::Building], areas: &[crate::geo::Area]) -> Vec<crate::geo::Building> {
+    use crate::geo::{AreaKind, BuildingKind, hash01, in_bounds, inside};
+    let within: Vec<Vec2> = spec.within.iter().copied().map(v).collect();
+    let mapped: Vec<Vec2> = mapped.iter().map(|b| b.foot.iter().copied().sum::<Vec2>() / b.foot.len().max(1) as f32).collect();
+    let mut out: Vec<crate::geo::Building> = Vec::new();
+    let mut placed: HashMap<(i32, i32), Vec<Vec2>> = HashMap::new();
+    let cell = |p: Vec2| ((p.x / 20.0).floor() as i32, (p.y / 20.0).floor() as i32);
+    let mut n = 0u32;
+    for (ri, road) in roads.iter().enumerate() {
+        // Not along the highway (its verges are fields and garages, its houses on the streets off it).
+        if road.width > 8.0 {
+            continue;
+        }
+        let len = road.line.length();
+        let mut s = spec.every * 0.5;
+        while s < len {
+            let (p, t) = (road.line.point(s), road.line.tangent(s));
+            for side in [-1.0, 1.0] {
+                n += 1;
+                let h = |k: u32| hash01(n.wrapping_mul(7919).wrapping_add(ri as u32 * 31), spec.seed.wrapping_mul(101).wrapping_add(k));
+                let (w, deep) = (8.0 + 3.0 * h(1), 7.0 + 3.0 * h(2));
+                let back = road.width * 0.5 + 9.0 + 4.0 * h(3) + deep * 0.5;
+                let normal = t.perp() * side;
+                let at = p + normal * back + t * (h(4) - 0.5) * 4.0;
+                let clear_of_streets = roads.iter().enumerate().all(|(rj, r)| rj == ri || r.line.project(at).0 > r.width * 0.5 + deep * 0.5 + 4.0);
+                let (ci, cj) = cell(at);
+                let near_house = (-1..=1).any(|di| (-1..=1).any(|dj| placed.get(&(ci + di, cj + dj)).is_some_and(|v| v.iter().any(|q| q.distance(at) < 13.0))));
+                // Not in the works, on a heap, in the water, the woods or a cemetery.
+                let open = |a: &&crate::geo::Area| !matches!(a.kind, AreaKind::Farmland | AreaKind::Allotments | AreaKind::Residential) && a.contains(at);
+                if !inside(&within, at) || !in_bounds(at) || !clear_of_streets || near_house || mapped.iter().any(|q| q.distance(at) < 22.0) || areas.iter().any(|a| open(&a)) {
+                    continue;
+                }
+                // Turned a few degrees off the street, as they were built.
+                let turn = (h(5) - 0.5) * 0.12;
+                let (a, b) = (t.rotate(Vec2::from_angle(turn)), normal.rotate(Vec2::from_angle(turn)));
+                let foot = [(-1.0, -1.0), (1.0, -1.0), (1.0, 1.0), (-1.0, 1.0)].iter().map(|&(u, k)| at + a * u * w * 0.5 + b * k * deep * 0.5).collect();
+                let storeys = if h(6) < spec.two { 2.0 } else { 1.0 };
+                out.push(crate::geo::Building { kind: BuildingKind::House, height: storeys * 2.8 + 0.3 + h(7) * 0.4, foot });
+                placed.entry((ci, cj)).or_default().push(at);
+            }
+            s += spec.every * (0.85 + 0.3 * hash01(n, spec.seed.wrapping_add(17)));
+        }
+    }
+    out
+}
+
 /// Arc length where a road first climbs (northbound) past `z`.
 fn s_at_z(road: &Polyline, z: f32) -> f32 {
     let n = (road.length() / 4.0) as usize;
@@ -726,6 +807,12 @@ pub fn layout(d: &DioramaData) -> Layout {
             l.point(l.project(v(*p)).1) + v(*off)
         }
     };
+    let areas: Vec<crate::geo::Area> = d.osm.areas.iter().map(|(k, pts)| crate::geo::Area::new(*k, pts.iter().copied().map(v).collect())).collect();
+    let mut buildings: Vec<crate::geo::Building> = d.osm.buildings.iter().map(|b| crate::geo::Building { kind: b.kind, height: b.height, foot: b.foot.iter().copied().map(v).collect() }).collect();
+    for spec in &d.houses {
+        let more = houses(spec, &roads, &buildings, &areas);
+        buildings.extend(more);
+    }
     let rect = |r: Option<(P, P)>| r.map_or(Rect { min: Vec2::ZERO, max: Vec2::ZERO }, |(a, b)| Rect { min: v(a), max: v(b) });
     Layout {
         roads,
@@ -734,8 +821,8 @@ pub fn layout(d: &DioramaData) -> Layout {
         shoulder_fields,
         field_mines: d.field_mines.iter().enumerate().filter(|(i, _)| d.mines_laid.as_ref().is_none_or(|laid| laid.contains(i))).map(|(_, (pts, w))| (Polyline::new(pts.iter().copied().map(v).collect()), *w)).collect(),
         barriers: d.barriers.iter().map(|b| Barrier { z0: b.z0, z1: b.z1, at: 1.0 / b.at_per, stacked: b.stacked, ap: 1.0 / b.ap_per }).collect(),
-        areas: d.osm.areas.iter().map(|(k, pts)| crate::geo::Area::new(*k, pts.iter().copied().map(v).collect())).collect(),
-        buildings: d.osm.buildings.iter().map(|b| crate::geo::Building { kind: b.kind, height: b.height, foot: b.foot.iter().copied().map(v).collect() }).collect(),
+        areas,
+        buildings,
         runways: d.osm.runways.iter().map(|&(a, b, w)| (v(a), v(b), w)).collect(),
         rails: d.osm.rails.iter().map(|r| line(r).clone()).collect(),
         river: d.river.as_deref().map(|r| line(r).clone()),

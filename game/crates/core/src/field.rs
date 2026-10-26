@@ -133,9 +133,98 @@ pub struct Tree {
 pub struct Field {
     pub positions: Vec<Position>,
     pub road_heads: Vec<RoadHead>,
-    /// The grey zone: from this z to that one (the enemy is to +z on both days); None where there is no front across
-    /// the field.
+    /// The grey zone as a line across the field: from this z to that one (the enemy is to +z); None where there is
+    /// no such line (no front across the field, or a pocket drawn as outlines: `pocket()`).
     pub grey: Option<(f32, f32)>,
+}
+
+/// Whose ground a place is on: the grey zone's and the enemy's outlines (design/myrnohrad.md, the pocket), the rest
+/// ours. A front that is one line across the field (`grey_zone`: from z0 to z1, the enemy to +z) is two outlines
+/// as wide as the world, their edges placed so that a place on z1 itself is grey, as it always was.
+pub struct Pocket {
+    pub grey: Vec<Vec<Vec2>>,
+    pub theirs: Vec<Vec<Vec2>>,
+    /// Drawn in the file as outlines, not made from a line.
+    pub drawn: bool,
+}
+
+/// Far enough off the box to stand for the rest of the world.
+const FAR: f32 = 1.0e6;
+
+impl Pocket {
+    /// The grey zone from z0 to z1 and their side beyond, as outlines. (`geo::inside` counts a point on an outline's
+    /// low edge in and on its high edge out, so the grey zone's high edge is the next number after z1.)
+    fn line(z0: f32, z1: f32) -> Pocket {
+        let rect = |a: f32, b: f32| vec![Vec2::new(-FAR, a), Vec2::new(FAR, a), Vec2::new(FAR, b), Vec2::new(-FAR, b)];
+        let edge = z1.next_up();
+        Pocket { grey: vec![rect(z0, edge)], theirs: vec![rect(edge, FAR)], drawn: false }
+    }
+
+    /// Whose ground a place is on.
+    pub fn ground(&self, p: Vec2) -> Ground {
+        if self.theirs.iter().any(|o| geo::inside(o, p)) {
+            Ground::Theirs
+        } else if self.grey.iter().any(|o| geo::inside(o, p)) {
+            Ground::Grey
+        } else {
+            Ground::Ours
+        }
+    }
+
+    /// How far into their ground a place is (0 outside it): the distance to the nearest edge of their outline.
+    pub fn depth_in_theirs(&self, p: Vec2) -> f32 {
+        self.theirs.iter().filter(|o| geo::inside(o, p)).map(|o| edge_distance(o, p)).fold(0.0, f32::max)
+    }
+
+    /// Which way their ground lies from a place: towards the middle of the nearest of their outlines (+z, where the
+    /// front is a line).
+    pub fn towards_theirs(&self, p: Vec2) -> Vec2 {
+        if !self.drawn {
+            return Vec2::Y;
+        }
+        let near = self.theirs.iter().min_by(|a, b| edge_distance(a, p).total_cmp(&edge_distance(b, p)));
+        near.map_or(Vec2::Y, |o| ((o.iter().copied().sum::<Vec2>() / o.len() as f32) - p).normalize_or(Vec2::Y))
+    }
+
+    /// A point on their side of a place, for what comes at it from there: `out` metres towards their ground and
+    /// `along` across that way (where the front is a line, `out` along +z and `along` along x, as it always was).
+    pub fn from_their_side(&self, p: Vec2, along: f32, out: f32) -> Vec2 {
+        if !self.drawn {
+            return p + Vec2::new(along, out);
+        }
+        let d = self.towards_theirs(p);
+        p + d * out + d.perp() * along
+    }
+
+    /// Far out on their side, beyond the box, for an aircraft's start: `far` metres from the box's middle towards
+    /// their ground from the place, `along` across (where the front is a line, at z = `far`, `along` metres across
+    /// from the place's x, as it always was).
+    pub fn far_side(&self, p: Vec2, along: f32, far: f32) -> Vec2 {
+        if !self.drawn {
+            return Vec2::new(p.x + along, far);
+        }
+        let d = self.towards_theirs(p);
+        d * far + d.perp() * along
+    }
+}
+
+fn edge_distance(o: &[Vec2], p: Vec2) -> f32 {
+    (0..o.len()).map(|i| geo::segment_distance(p, o[i], o[(i + 1) % o.len()])).fold(f32::MAX, f32::min)
+}
+
+static POCKET: OnceLock<Pocket> = OnceLock::new();
+
+/// The diorama's pocket: the file's outlines, or its grey zone's line made into them; all ours where it has neither.
+pub fn pocket() -> &'static Pocket {
+    POCKET.get_or_init(|| {
+        let d = crate::data::data();
+        let outlines = |v: &[Vec<crate::data::P>]| v.iter().map(|o| o.iter().map(|&(x, z)| Vec2::new(x, z)).collect()).collect();
+        match (&d.pocket, d.grey_zone) {
+            (Some(p), _) => Pocket { grey: outlines(&p.grey), theirs: outlines(&p.theirs), drawn: true },
+            (None, Some((z0, z1))) => Pocket::line(z0, z1),
+            (None, None) => Pocket { grey: Vec::new(), theirs: Vec::new(), drawn: false },
+        }
+    })
 }
 
 /// The ways across the field: the graph, and for each road head a shortest-way tree per mover, each worked out the
@@ -193,23 +282,13 @@ impl Routes {
     }
 }
 
-fn ground_at(grey: Option<(f32, f32)>, p: Vec2) -> Ground {
-    let Some(grey) = grey else { return Ground::Ours };
-    if p.y < grey.0 {
-        Ground::Ours
-    } else if p.y > grey.1 {
-        Ground::Theirs
-    } else {
-        Ground::Grey
-    }
-}
-
 fn build() -> Field {
     let d = crate::data::data();
     let lay = geo::layout();
-    let grey = d.grey_zone;
+    let grey = if d.pocket.is_some() { None } else { d.grey_zone };
+    let pocket = pocket();
     let mut positions = Vec::new();
-    let push = |kind, at: Vec2, facing: Vec2, positions: &mut Vec<Position>| positions.push(Position { kind, at, facing, ground: ground_at(grey, at) });
+    let push = |kind, at: Vec2, facing: Vec2, positions: &mut Vec<Position>| positions.push(Position { kind, at, facing, ground: pocket.ground(at) });
     // The diorama's own posts first, in their order (the Allotment names them by index), then the hides, then what
     // the ground offers.
     for &p in &lay.ua_positions {
@@ -351,8 +430,8 @@ impl Graph {
         let root = reachable.min_by(by_distance).or_else(|| (0..self.nodes.len()).min_by(by_distance)).unwrap_or(0);
         // Ground in the grey zone costs three times as much to cross, the enemy's eight: our units keep back where
         // there is a way back there.
-        let grey = field().grey;
-        let exposure: Vec<f32> = self.nodes.iter().map(|&p| match ground_at(grey, p) {
+        let pocket = pocket();
+        let exposure: Vec<f32> = self.nodes.iter().map(|&p| match pocket.ground(p) {
             Ground::Ours => 1.0,
             Ground::Grey => 3.0,
             Ground::Theirs => 8.0,
@@ -437,5 +516,32 @@ impl Ord for Visit {
 impl PartialOrd for Visit {
     fn partial_cmp(&self, o: &Self) -> Option<Ordering> {
         Some(self.cmp(o))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Ground, Pocket};
+    use bevy::math::Vec2;
+
+    /// A line made into outlines says what the line said, to the bit: on its edges, a hair either side of them, and
+    /// across the box and beyond it.
+    #[test]
+    fn a_line_pocket_is_the_line() {
+        let old = |(z0, z1): (f32, f32), z: f32| if z < z0 { Ground::Ours } else if z > z1 { Ground::Theirs } else { Ground::Grey };
+        for grey in [(1250.0, 1400.0), (-300.0, 150.0), (0.0, 0.0), (-1792.5, 1791.25)] {
+            let p = Pocket::line(grey.0, grey.1);
+            let mut zs = vec![-1.0e5, -1792.0, 0.0, 1792.0, 1.0e5];
+            for e in [grey.0, grey.1] {
+                zs.extend([e, e.next_up(), e.next_down(), e + 0.5, e - 0.5]);
+            }
+            for &z in &zs {
+                for x in [-5000.0, -2304.0, 0.0, 17.3, 2304.0, 9000.0] {
+                    assert_eq!(p.ground(Vec2::new(x, z)), old(grey, z), "grey {grey:?} at ({x}, {z})");
+                }
+            }
+            assert_eq!(p.from_their_side(Vec2::new(3.0, 4.0), -120.0, 900.0), Vec2::new(3.0, 4.0) + Vec2::new(-120.0, 900.0));
+            assert_eq!(p.far_side(Vec2::new(3.0, 4.0), 700.0, 6500.0), Vec2::new(3.0 + 700.0, 6500.0));
+        }
     }
 }

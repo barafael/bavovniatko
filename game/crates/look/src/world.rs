@@ -49,6 +49,9 @@ impl Plugin for WorldPlugin {
             Set::CokePlant => {
                 app.add_systems(Startup, crate::avdiivka::spawn_set.after(spawn_belts)).add_systems(Update, crate::avdiivka::daylight.in_set(crate::Step::Effects));
             }
+            Set::Headframe => {
+                app.add_systems(Startup, crate::myrnohrad::spawn_set.after(spawn_belts)).add_systems(Update, crate::myrnohrad::daylight.in_set(crate::Step::Effects));
+            }
         }
     }
 }

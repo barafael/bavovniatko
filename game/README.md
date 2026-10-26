@@ -3,7 +3,7 @@
 The playable dioramas of bavovniatko, built in Bevy 0.19. Each is one bounded historical episode that runs by
 itself; the design is in [`design/`](design/) (the principles in [`chapters.md`](design/chapters.md), the
 campaign in [`campaign.md`](design/campaign.md), the work in progress in [`roadmap.md`](design/roadmap.md)). There
-are four places so far, the first two one minefield seen from both sides:
+are five places so far, the first two one minefield seen from both sides:
 
 - **Vuhledar, 6 February 2023** (`cargo run --release`): Russian columns into the 72nd Brigade's kill zone.
 - **Mala Tokmachka, 8 June 2023** (`cargo run --release -- robotyne`): the 47th Brigade's breach into the Russian
@@ -12,6 +12,9 @@ are four places so far, the first two one minefield seen from both sides:
   and the counterattack at dusk, in two parts ([`design/hostomel.md`](design/hostomel.md)).
 - **Avdiivka, October 2023 and January 2024** (`-- avdiivka-1`, `-- avdiivka-2`, `-- avdiivka-3`): the northern
   shoulder of the salient in three parts, in the making ([`design/avdiivka.md`](design/avdiivka.md)).
+- **Myrnohrad, November 2025 to January 2026** (`-- myrnohrad-1`, `-- myrnohrad-2`, `-- myrnohrad-3`): the road
+  into the pocket, in the fog, by day and in the frost; so far the place and its map, the days placeholders
+  ([`design/myrnohrad.md`](design/myrnohrad.md)).
 
 To watch rather than play, `cargo xtask film` produces a four-minute film of both, directed from
 `design/showcase.md` ([below](#the-showcase-film)).

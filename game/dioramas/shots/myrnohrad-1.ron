@@ -1,0 +1,63 @@
+// Myrnohrad, part I, the fog: its tour. It has no film yet (design/myrnohrad.md, phase 10).
+// The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
+// one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
+// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
+// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
+// `hud: false` films it without the interface, and `debrief` ends the day on it.
+(
+    // The tour's title card: the place and the date.
+    card: ("MYRNOHRAD, THE ROAD INTO THE POCKET", "10 NOVEMBER 2025, THE FOG"),
+    // The one-minute tour (`cargo xtask tour myrnohrad-1`).
+    minute: [
+        // 06:35: the H-32 into the town's western entrance, in the fog.
+        (
+            from: 20.0,
+            secs: 8.0,
+            pos: ((-600.0, -420.0, 90.0), (-450.0, -400.0, 90.0)),
+            aim: Drone(Point((300.0, -280.0))),
+            fov: (50.0, 44.0),
+        ),
+        // Twos and threes from the south-eastern edge, between the houses.
+        (
+            from: 230.0,
+            secs: 9.0,
+            pos: ((1000.0, 700.0, 110.0), (980.0, 720.0, 110.0)),
+            aim: Drone(MenNear((1150.0, 1050.0))),
+            fov: (24.0, 18.0),
+        ),
+        // 08:05: the KABs on the western quarters.
+        (
+            from: 410.0,
+            secs: 9.0,
+            pos: ((200.0, -150.0, 200.0), (220.0, -140.0, 200.0)),
+            aim: Drone(Point((700.0, 280.0))),
+            fov: (40.0, 36.0),
+        ),
+        // The observers' roof on Soborna, looking south over the ruins.
+        (from: 700.0, secs: 8.0, pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)), aim: Op((1150.0, 1050.0)), fov: (45.0, 40.0)),
+        // 10:40: the fog lifts over Svitle.
+        (
+            from: 1060.0,
+            secs: 10.0,
+            pos: ((-200.0, -700.0, 260.0), (-320.0, -760.0, 280.0)),
+            aim: Drone(Point((-550.0, -1400.0))),
+            fov: (52.0, 48.0),
+        ),
+        // The town in the clear: the mine, its heap and the road.
+        (
+            from: 1250.0,
+            secs: 9.0,
+            pos: ((300.0, -700.0, 420.0), (380.0, -720.0, 420.0)),
+            aim: Drone(Point((1300.0, -200.0))),
+            fov: (55.0, 50.0),
+        ),
+        (
+            from: 1474.0,
+            secs: 4.0,
+            pos: ((380.0, -720.0, 420.0), (380.0, -720.0, 420.0)),
+            aim: Drone(Point((1300.0, -200.0))),
+            fov: (50.0, 50.0),
+            debrief: true,
+        ),
+    ],
+)

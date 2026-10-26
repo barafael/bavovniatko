@@ -11,6 +11,21 @@ pub struct LookData {
     pub set: Set,
     #[serde(default)]
     pub woods: Woods,
+    /// The town after months of shelling (`buildings::Shelled`): the share of its buildings gutted, and the seed
+    /// that picks them. None: the buildings stand whole.
+    #[serde(default)]
+    pub ruined: Option<(f32, u32)>,
+    /// How many of the ruins are still smouldering.
+    #[serde(default)]
+    pub smouldering: u32,
+    /// Burnt-out cars where the drones caught them: where, and which way they face (radians).
+    #[serde(default)]
+    pub cars: Vec<((f32, f32), f32)>,
+    /// The fog through the day, as the picture shows it: how far one sees (m) at clock times (minutes after
+    /// midnight), between them in a straight line, the first and last held before and after. Empty: the set's own
+    /// haze.
+    #[serde(default)]
+    pub fog: Vec<(f32, f32)>,
 }
 
 /// A set: its buildings, its observers' post and its day's light, each a builder of its own (`world`).
@@ -27,6 +42,10 @@ pub enum Set {
     /// The map's buildings, the coke plant's skyline and the observers on the heap, under the sun computed for the place
     /// and date (`avdiivka`).
     CokePlant,
+    /// The map's buildings in ruins and the villages' houses, the Tsentralna mine's headframe and buildings over its
+    /// shaft, the observers on a nine-storey roof, the burnt-out cars; the sun (and the moon) computed for the
+    /// place and date, the fog through the morning, the dark of a winter night (`myrnohrad`).
+    Headframe,
 }
 
 /// What the map's woods are grown as.

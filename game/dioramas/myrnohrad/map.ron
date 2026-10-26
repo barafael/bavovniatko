@@ -1,0 +1,200 @@
+// The road into Myrnohrad: Rivne and Svitle, the H-32 between them and the town, the town's western quarters and
+// the Tsentralna mine, the ground the three parts share (design/myrnohrad.md). The history is in
+// db/research/chapters/c15-pokrovsk-myrnohrad.md (§3 the ground, §4 the forces, §5 the systems, §6 the set pieces).
+// The roads, the disused mine railway, tree rows, land cover, the two mines' heaps and the buildings come from
+// OpenStreetMap (osm.ron beside this, made by tools/osm/osm2ron.py); this file holds what the map does not: the
+// ground's shape, the heaps' heights, the villages' houses, the lines the battle uses, and what the parts share of
+// the day. Each part's file (fog.ron, road.ron, frost.ron) adds its date, clock, weather, pocket, posts and script.
+//
+// The box is the game's fixed 4608 x 3584 m, centred at 48.302 N 37.248 E and turned so that +z points
+// south-south-east (bearing 150), towards the town's south-eastern edge and Pokrovsk south of the railway; +x points
+// east-north-east. The H-32 comes in at the -x edge at z -448 from Dinas, runs 0.5 km +z of Rivne and 1 km +z of
+// Svitle, and through the town as its Tsentralna street (z about -270) past the mine. Rivne's streets are about
+// (-1800, -800), Svitle's about (-550, -1450), the town's private sector and blocks fill the +x, +z quarter, the
+// Tsentralna shaft is at (1475, -248) and its heap at (1608, -478), mine No. 3's heap at (1137, 1637) on the +z edge.
+// Krasnyi Lyman, the north-eastern jaw, is 2.4 km beyond the -z edge at about (1400, -4200).
+(
+    place: ("Myrnohrad", "Мирноград"),
+    attacker: Ru,
+    // The set raised over the ground, with its light (bav_look::data): the town in ruins, the villages' houses, the
+    // Tsentralna headframe.
+    set: Headframe,
+    // The drone teams flew Mavics with thermal by then (c15 §5): key I.
+    thermal: true,
+    // Fictional: the player (a kite), the guns (thunder), the observers (a beacon), the battalion's command post
+    // (a bastion).
+    callsigns: (
+        player: ("Shuliak", "Шуляк"),
+        guns: ("Hrim", "Грім"),
+        op: ("Mayak", "Маяк"),
+        command: ("Bastion", "Бастіон"),
+    ),
+    // Where the drone starts: over the H-32 at the town's western entrance, looking east down the road.
+    camera: (-300.0, -500.0),
+    // BAV_VIEW=ground: the post at the town's western entrance.
+    ground_team: (300.0, -150.0),
+    observed_from: Home,
+    // Months of shelling: old craters all over the fields and the road.
+    worn: true,
+    shelled: (400, -1700.0, 3400.0),
+
+    // A plateau of 210-240 m, a little higher to the north-west, cut by shallow balkas; the two mines' spoil heaps
+    // stand on the map's own outlines as cones, Tsentralna's about 60 m over the town and No. 3's about 45 (the
+    // Donbas terykony; SRTM gives no better at this scale, design/myrnohrad.md).
+    ground: [
+        Ramp(base: 214.0, amp: 16.0, power: 1.0, ramp: Falling(-1792.0, 1792.0)),
+        Noise(scale: 1300.0, octaves: 3, seed: 23, amp: 7.0),
+        Noise(scale: 260.0, octaves: 3, seed: 29, amp: 0.7),
+        Heap(inside: (1608.0, -478.0), height: 60.0, rim: 200.0, terrace: 0.0),
+        Heap(inside: (1137.0, 1637.0), height: 45.0, rim: 130.0, terrace: 0.0),
+    ],
+    curves: [],
+
+    // Their ways in, on foot: from the south-eastern edge up through the town's private sector, from the
+    // Krasnyi Lyman jaw down onto the mine, and from Pokrovsk's side over the fields onto Rivne (c15 §3: the
+    // infiltrators keep to the belts, the balkas and the ruins).
+    lines: [
+        (
+            "seep_se",
+            Smoothed([(1350.0, 1792.0), (1300.0, 1450.0), (1180.0, 1150.0), (1000.0, 850.0), (880.0, 600.0)], 2),
+        ),
+        (
+            "seep_jaw",
+            Smoothed([(2304.0, -1700.0), (2050.0, -1300.0), (1800.0, -900.0), (1600.0, -600.0), (1450.0, -350.0)], 2),
+        ),
+        (
+            "seep_sw",
+            Smoothed([(-1400.0, 1792.0), (-1500.0, 1100.0), (-1650.0, 400.0), (-1750.0, -200.0), (-1800.0, -650.0)], 2),
+        ),
+    ],
+    roads: [],
+    belts: [],
+    routes: [
+        // 0: from the south-eastern edge into the western quarters.
+        (line: "seep_se", deploy: (1180.0, 1150.0), objective: (750.0, 100.0)),
+        // 1: from the jaw onto the Tsentralna mine.
+        (line: "seep_jaw", deploy: (1800.0, -900.0), objective: (1450.0, -300.0)),
+        // 2: over the fields from Pokrovsk's side onto Rivne.
+        (line: "seep_sw", deploy: (-1650.0, 400.0), objective: (-1750.0, -650.0)),
+    ],
+
+    // The houses OpenStreetMap leaves out (its villages have none mapped, its private sector few), along their own
+    // streets: Rivne's, Svitle's, the north-western outskirts' and the town's private sector, most of one storey,
+    // a few of two in the town.
+    houses: [
+        (
+            within: [
+                (-2290.0, -1330.0),
+                (-1240.0, -1330.0),
+                (-1240.0, -940.0),
+                (-1420.0, -700.0),
+                (-1480.0, -420.0),
+                (-2290.0, -380.0),
+            ],
+            every: 27.0,
+            two: 0.03,
+            seed: 3,
+        ),
+        (
+            within: [(-1300.0, -1770.0), (100.0, -1770.0), (100.0, -1000.0), (-1300.0, -1000.0)],
+            every: 26.0,
+            two: 0.05,
+            seed: 5,
+        ),
+        (
+            within: [(280.0, -1560.0), (1150.0, -1560.0), (1150.0, -930.0), (280.0, -930.0)],
+            every: 25.0,
+            two: 0.1,
+            seed: 7,
+        ),
+        (
+            within: [
+                (-460.0, -290.0), (130.0, -290.0), (520.0, -280.0), (700.0, 120.0), (1100.0, 40.0), (1700.0, 180.0),
+                (2304.0, 120.0), (2304.0, 1792.0), (380.0, 1792.0), (-60.0, 1120.0), (-460.0, 860.0),
+            ],
+            every: 24.0,
+            two: 0.15,
+            seed: 9,
+        ),
+    ],
+
+    // The western quarters stand for the town: what the field's ruin positions face out from.
+    town: ((-450.0, -300.0), (1400.0, 900.0)),
+    // The field's areas, held by whoever has men in them (bav_sim::fight, without Hostomel's fight): the two
+    // villages on their streets, the western quarters, the Tsentralna mine, and the south-eastern edge by mine
+    // No. 3's heap (c15 §2, 14 Nov: the flag on a ruined mine there).
+    areas: [
+        (
+            key: "svitle",
+            name: ("Svitle", "Світле"),
+            poly: [(-1300.0, -1770.0), (100.0, -1770.0), (100.0, -1000.0), (-1300.0, -1000.0)],
+        ),
+        (
+            key: "rivne",
+            name: ("Rivne", "Рівне"),
+            poly: [(-2290.0, -1330.0), (-1240.0, -1330.0), (-1240.0, -940.0), (-1480.0, -420.0), (-2290.0, -380.0)],
+        ),
+        (
+            key: "west",
+            name: ("the western quarters", "західні квартали"),
+            poly: [(-450.0, -300.0), (1000.0, -300.0), (1000.0, 900.0), (-450.0, 900.0)],
+        ),
+        (
+            key: "mine",
+            name: ("the Tsentralna mine", "шахта «Центральна»"),
+            poly: [(1250.0, -700.0), (1900.0, -700.0), (1900.0, -100.0), (1250.0, -100.0)],
+        ),
+        (
+            key: "southeast",
+            name: ("the south-eastern edge", "південно-східна околиця"),
+            poly: [(900.0, 1100.0), (1700.0, 1100.0), (1700.0, 1792.0), (900.0, 1792.0)],
+        ),
+    ],
+
+    // The map table's: our only way in is the road from the west (c15 §3: in December only the roads through
+    // Rivne and Svitle remained); the corridor beyond it runs north to Rodynske, off the box.
+    road_heads: [(name: ("The H-32 from the west", "Н-32 із заходу"), at: (-2290.0, -444.0))],
+
+    advance: -1.0,
+    home: (450.0, -60.0),
+    // (No jam line: their EW reaches in from their ground on three sides, `pocket` in each part.)
+
+    // ---- The battle's part (bav_sim::data), the same in the three parts ----
+    // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
+    // left to fire (the debrief's rows are each part's).
+    hud: (
+        tally: "{date}   {clock}\nTheir men sent in {sent}   came back {returned}{air}\n{zones}",
+        stock: "155 mm  {shells} rds   FPV  {fpv}{vog}{speed}",
+    ),
+    space_key: Atgm,
+    // Their EW: jammers behind their lines on the three sides, the rest building up into their ground.
+    ew: (jammers: [(2000.0, -1500.0), (1300.0, 1750.0), (-1600.0, 1500.0)], radius: 900.0, depth: 600.0),
+    fpv: (endurance: 300.0),
+    // The drone team in a basement in the western quarters. Rubikon hunted the drone crews first (01 e8: over a
+    // quarter of its strikes): they are found often.
+    operator: (pos: (450.0, -60.0), found_per_hour: 0.6),
+    // The garrison's side as Units and Support: rifle sections for the posts; the guns' few rounds, FPVs and grenades
+    // for the drone.
+    catalog: [
+        (
+            id: "rifles",
+            name: ("Rifle section", "Стрілецьке відділення"),
+            what: Post(None),
+            cost: 3,
+            supply: 2,
+            available: 10,
+        ),
+    ],
+    support: [
+        (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 4),
+        (id: "fpv", name: ("FPV strike drone", "FPV-дрон"), what: Fpv, cost: 2, available: 20),
+        (
+            id: "vog",
+            name: ("Two grenades for the Mavic", "Два ВОГи для «Мавіка»"),
+            what: Drops(2),
+            cost: 1,
+            available: 8,
+        ),
+    ],
+    old_wreck_kinds: [],
+)

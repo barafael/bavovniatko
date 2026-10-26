@@ -363,8 +363,8 @@ fn lancets(
     staff.lancets -= 1;
     staff.next_lancet = script.t + rng.random_range(240.0..480.0);
     let p = tf.translation.xz();
-    // From their side (+z), high, a kilometre off.
-    let from = geo::ground(p + Vec2::new(rng.random_range(-500.0..500.0), 900.0)) + Vec3::Y * 320.0;
+    // From their side (+z where the front is a line), high, a kilometre off.
+    let from = geo::ground(bav_core::field::pocket().from_their_side(p, rng.random_range(-500.0..500.0), 900.0)) + Vec3::Y * 320.0;
     commands.spawn((
         Mesh3d(models.missile.clone()),
         MeshMaterial3d(palette.vertex.clone()),
@@ -413,8 +413,8 @@ fn su25s(mut commands: Commands, time: Res<Time>, script: Res<crate::director::S
     staff.su25 -= 1;
     let (lo, hi) = crate::data::sim_data().staff.su25_every;
     staff.next_su25 = script.t + rng.random_range(lo..hi);
-    // From their side (+z), well beyond the box, the wingman a few seconds behind and a little to one side.
-    let from = Vec2::new(s.at.x + rng.random_range(-1500.0..1500.0), 6500.0);
+    // From their side (+z where the front is a line), well beyond the box, the wingman a few seconds behind and a little to one side.
+    let from = bav_core::field::pocket().far_side(s.at, rng.random_range(-1500.0..1500.0), 6500.0);
     for k in 0..2 {
         let at = s.at + Vec2::new(k as f32 * 35.0, k as f32 * -25.0);
         crate::air::launch(&mut commands, &models, &crate::air::Sortie { kind: crate::air::AirKind::Su25, from: (from.x + k as f32 * 250.0, from.y), via: Vec::new(), at: (at.x, at.y), goal: None, delay: k as f32 * 7.0 });

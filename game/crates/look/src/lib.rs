@@ -17,6 +17,7 @@ pub mod fx;
 pub mod hostomel;
 pub mod meshes;
 pub mod models;
+pub mod myrnohrad;
 pub mod night;
 pub mod robotyne;
 pub mod sky;
