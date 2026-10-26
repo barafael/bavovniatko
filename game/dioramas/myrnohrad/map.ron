@@ -214,6 +214,11 @@
             cost: 1,
             available: 8,
         ),
+        // The garrison's ground robots for the day's runs from the road head (c15 §5: ammunition, food and fuel in,
+        // the wounded out), the script's in the Record and V's and Alt+click's in either; and the Vampire's sorties
+        // (01 §3: about a dozen in its life).
+        (id: "robot", name: ("Ground robot for a run", "НРК на рейс"), what: Robots(1), cost: 2, available: 6),
+        (id: "vampire", name: ("A sortie of the Vampire", "Виліт «Вампіра»"), what: Vampire(1), cost: 1, available: 4),
     ],
     old_wreck_kinds: [],
 )

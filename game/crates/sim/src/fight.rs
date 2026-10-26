@@ -619,11 +619,18 @@ fn log_areas(script: Res<crate::director::Script>, field: Res<Field>, soldiers: 
     info!("areas: t={:>4.0} {} areas={}", script.t, crate::director::clock_text(script.t), areas.join(","));
 }
 
-/// Who holds each area: whoever has men in it, the other side none.
-fn hold_zones(mut field: ResMut<Field>, soldiers: Query<(&Soldier, &Transform)>, posts: Query<&Post, Without<PulledOut>>) {
-    let men: Vec<(Side, Vec2)> = soldiers.iter().filter(|(s, _)| s.state != SState::Wounded).map(|(s, t)| (s.side, t.translation.xz())).chain(posts.iter().filter(|p| p.strength > 0).map(|p| (p.side, p.pos))).collect();
+/// Who holds each area: whoever has men in it, the other side none. Their men still on their way in, keeping to the
+/// ruins unseen (`seep::Cover::Sneaking`), hold nothing yet: an area is theirs, or contested, once they have gone to
+/// ground in it.
+fn hold_zones(mut field: ResMut<Field>, soldiers: Query<(&Soldier, &Transform, Option<&crate::seep::Cover>)>, posts: Query<&Post, Without<PulledOut>>) {
+    let men: Vec<(Side, Vec2)> = soldiers
+        .iter()
+        .filter(|(s, _, c)| s.state != SState::Wounded && c.is_none_or(|c| *c != crate::seep::Cover::Sneaking))
+        .map(|(s, t, _)| (s.side, t.translation.xz()))
+        .chain(posts.iter().filter(|p| p.strength > 0).map(|p| (p.side, p.pos)))
+        .collect();
     let attacker = crate::diorama::diorama().attacker();
-    let on: Vec<Vec2> = soldiers.iter().filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded)).map(|(_, t)| t.translation.xz()).collect();
+    let on: Vec<Vec2> = soldiers.iter().filter(|(s, _, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded)).map(|(_, t, _)| t.translation.xz()).collect();
     field.open = posts.iter().filter(|p| p.side != attacker && p.strength > 0 && !on.iter().any(|m| m.distance(p.pos) < 100.0)).map(|p| p.pos).collect();
     field.open.sort_by(|a, b| a.x.total_cmp(&b.x).then(a.y.total_cmp(&b.y)));
     for z in &mut field.zones {

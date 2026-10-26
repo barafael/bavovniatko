@@ -70,6 +70,11 @@ pub enum SupportKind {
     Illum(u32),
     /// A search-and-strike team (Command): it goes to a burrow we have found and clears it (`seep`).
     Search,
+    /// So many ground robots for the day's runs from the road head (`robots`): the script's in the Record, the
+    /// player's (V, Alt+click) in either.
+    Robots(u32),
+    /// So many sorties of the heavy bomber (`robots`, the Vampire), where the day has one.
+    Vampire(u32),
 }
 
 /// One entry of the catalog: what it is, called what, what it costs in allotment points (and later in Supply),
@@ -152,6 +157,9 @@ pub struct Allotment {
     pub drops: u32,
     /// Search-and-strike teams for the burrows (`seep`).
     pub search: u32,
+    /// Ground robots for the runs, and the heavy bomber's sorties (`robots`).
+    pub robots: u32,
+    pub sorties: u32,
     /// What it cost, of how many points.
     pub spent: u32,
     pub points: u32,
@@ -308,6 +316,8 @@ pub fn build(picks: &[Pick]) -> Result<Allotment, String> {
                 SupportKind::Drops(n) => a.drops += n * p.count,
                 SupportKind::Illum(n) => st.illum += n * p.count,
                 SupportKind::Search => a.search += p.count,
+                SupportKind::Robots(n) => a.robots += n * p.count,
+                SupportKind::Vampire(n) => a.sorties += n * p.count,
             }
         }
     }

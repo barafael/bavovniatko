@@ -21,6 +21,11 @@
 //! - **Rubikon** is a scripted arrival of tempo, not a unit to beat (c15 §10): a crew whose file gives it an arrival
 //!   joins then. In the Record its tempo is the day's; in Command the staff spends it, a budget of sorties on what it
 //!   has spotted.
+//! - **The clock and the road.** A crew's tempo is by the hour of the day's clock, which suits what sits through it
+//!   (the posts, the drone team, the domes). What is on the road is there for real minutes, so the crews' sorties at
+//!   vehicles and robots go by the real hour (`launch`).
+//! - **Our runs**: the day's cars into the town and back at their times; N sends the next run early, Shift+N turns
+//!   back what is on the way in or in the town (`RunOrder`; part I's "when the run goes and when it turns back").
 //!
 //! Only a day whose file has a `killzone` has any of this: the Record of the others must not change.
 
@@ -223,7 +228,12 @@ impl Class {
         }
     }
 
-    pub const ALL: [Class; 5] = [Class::DroneTeam, Class::Ew, Class::Vehicle, Class::Robot, Class::Men];
+    /// What moves on the road in real time rather than sitting through the clock's hours (`launch`).
+    fn on_road(self) -> bool {
+        matches!(self, Class::Vehicle | Class::Robot)
+    }
+
+    pub const ALL: [Class; 5] =[Class::DroneTeam, Class::Ew, Class::Vehicle, Class::Robot, Class::Men];
 
     pub fn name(self) -> &'static str {
         match self {
@@ -260,6 +270,10 @@ pub struct Crew {
     pub kind: Kind,
     /// Sorties it has ready: the tempo fills it, a launch spends one.
     charge: f32,
+    /// Sorties it has ready for what is on the road (`Class::Vehicle`, `Class::Robot`): the same tempo, by the hour
+    /// of real time rather than of the day's clock, and by the light alone: a crew the fog grounds readies its drones
+    /// all the same and flies them when it lifts (`launch`).
+    road: f32,
     /// A waiter: when it is on its shoulder again.
     rearm: f64,
     /// An arriving crew in Command: the staff's sorties left.
@@ -493,6 +507,7 @@ impl Plugin for KillzonePlugin {
             .init_resource::<Picture>()
             .init_resource::<KzTally>()
             .add_message::<Impact>()
+            .add_message::<RunOrder>()
             .add_systems(Startup, (spawn_crews, spawn_nets).in_set(crate::schedule::Setup::Field))
             // After the script, the team's systems, the jammers and the robots: the frame's operator, drone, domes and robots
             // are settled.
@@ -509,6 +524,9 @@ impl Plugin for KillzonePlugin {
                     .after(crate::robots::RobotSystems),
             )
             .add_systems(Update, log_tally.run_if(crate::running).in_set(crate::Step::Effects));
+        if spec().is_some_and(|s| !s.runs.is_empty()) {
+            app.add_systems(Update, run_input.run_if(crate::running).in_set(crate::Step::Control).after(crate::dev::DevSystems));
+        }
     }
 }
 
@@ -518,7 +536,7 @@ fn spawn_crews(mut commands: Commands) {
     for (idx, c) in spec.crews.iter().enumerate() {
         let at = Vec2::new(c.at.0, c.at.1);
         let relay = c.relay.map(|(x, z)| commands.spawn((Relay { crew: idx }, Transform::from_translation(ground(Vec2::new(x, z))))).id());
-        let mut e = commands.spawn((Crew { idx, kind: c.kind, charge: 0.0, rearm: 0.0, budget: if command { c.budget } else { 0 }, relay }, Transform::from_translation(ground(at))));
+        let mut e = commands.spawn((Crew { idx, kind: c.kind, charge: 0.0, road: 0.0, rearm: 0.0, budget: if command { c.budget } else { 0 }, relay }, Transform::from_translation(ground(at))));
         if let Some(t) = c.arrives {
             e.insert(Arriving(t));
         }
@@ -553,14 +571,19 @@ fn dist_to_line(line: &[Vec2], p: Vec2) -> f32 {
 /// The share of a crew's full tempo it flies at in this light and weather (`fight::Seeing`; none: clear daylight).
 pub fn tempo(kind: Kind, seeing: Option<&crate::fight::Seeing>) -> f32 {
     let Some(s) = seeing else { return 1.0 };
-    // Thermal cameras on most of them by 2025: the night is only a little safer than the day (c15 §5).
-    let light = 0.4 + 0.6 * s.dark;
+    let light = light(Some(s));
     let wet = match kind {
         Kind::Rf if s.grounds_light_fpvs() => 0.0,
         Kind::Rf => (s.murk / 2000.0).clamp(0.3, 1.0),
         Kind::Fibre | Kind::Waiter => (s.murk / 2000.0).clamp(0.2, 1.0),
     };
     light * wet
+}
+
+/// The share of a crew's full tempo the light alone allows. Thermal cameras on most of them by 2025: the night is only
+/// a little safer than the day (c15 §5).
+fn light(seeing: Option<&crate::fight::Seeing>) -> f32 {
+    seeing.map_or(1.0, |s| 0.4 + 0.6 * s.dark)
 }
 
 /// How readily their cameras find what is near the road in this light and weather, 0..1.
@@ -622,8 +645,38 @@ fn by_place<T>(v: &mut [(Mark, Class, Vec2, T)]) {
     v.sort_by(|a, b| a.2.x.total_cmp(&b.2.x).then(a.2.y.total_cmp(&b.2.y)));
 }
 
-/// Our cars drive their runs: in along the way, a while in the town, and out the way they came.
-#[allow(clippy::type_complexity)]
+/// An order for the day's car run (N, Shift+N, `BAV_RUN`): the plan's "what decides it" in part I, when the run goes
+/// and when it turns back.
+#[derive(Message, Clone, Copy, PartialEq, Eq, Debug)]
+pub enum RunOrder {
+    /// The next of the day's runs goes now, with the cars that were to follow it.
+    Go,
+    /// The cars on their way in or in the town turn back for the road head.
+    Back,
+}
+
+/// A car turned back short of the town: back at the road head it has not been through.
+#[derive(Component)]
+pub struct TurnedBack;
+
+/// N sends the day's next car run now, Shift+N turns back the cars on the road in and in the town; `BAV_RUN` gives
+/// the same orders at game times. Only where the day has runs.
+fn run_input(keys: Res<ButtonInput<KeyCode>>, script: Res<crate::director::Script>, view: Res<View>, mut orders: MessageWriter<RunOrder>, mut done: Local<usize>) {
+    let plan = &crate::dev::dev().run;
+    while *done < plan.len() && script.t >= plan[*done].0 {
+        orders.write(if plan[*done].1 == "back" { RunOrder::Back } else { RunOrder::Go });
+        *done += 1;
+    }
+    if keys.just_pressed(KeyCode::KeyN) && view.mode != bav_core::vocab::Mode::Fpv {
+        let shift = keys.pressed(KeyCode::ShiftLeft) || keys.pressed(KeyCode::ShiftRight);
+        orders.write(if shift { RunOrder::Back } else { RunOrder::Go });
+    }
+}
+
+/// Our cars drive their runs: in along the way, a while in the town, and out the way they came. N sends the next run
+/// before its time (the cars that were to follow it as far behind it as they were), Shift+N turns back what is on the
+/// way in or in the town.
+#[allow(clippy::type_complexity, clippy::too_many_arguments)]
 fn drive(
     mut commands: Commands,
     time: Res<Time>,
@@ -631,14 +684,53 @@ fn drive(
     mut tally: ResMut<KzTally>,
     mut radio: ResMut<Radio>,
     models: Option<Res<KillzoneModels>>,
-    mut cars: Query<(Entity, &mut Car, &mut Transform)>,
+    mut orders: MessageReader<RunOrder>,
+    mut cars: Query<(Entity, &mut Car, &mut Transform, Has<TurnedBack>)>,
     mut started: Local<usize>,
+    mut starts: Local<Vec<f32>>,
 ) {
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
+    if starts.len() != spec.runs.len() {
+        *starts = spec.runs.iter().map(|r| r.at).collect();
+    }
+    for o in orders.read() {
+        match o {
+            RunOrder::Go => match starts.get(*started).copied() {
+                Some(first) if first > script.t => {
+                    // The run is the cars that were to leave within a minute of the first; they go as far apart.
+                    let k = *started;
+                    for t in starts.iter_mut().skip(k).take_while(|t| **t < first + 60.0) {
+                        *t = script.t + (*t - first);
+                    }
+                    info!("killzone: the run ordered out now, {:.0} s early, at {now:.0} s", first - script.t);
+                    radio.say2(now, "Колона, рушайте зараз.", "Run, go now.");
+                }
+                _ => radio.say2(now, "Машин на сьогодні більше нема.", "There are no more cars to send today."),
+            },
+            RunOrder::Back => {
+                let mut n = 0;
+                for (e, mut car, _, _) in &mut cars {
+                    match car.leg {
+                        Leg::In => {
+                            car.leg = Leg::Out;
+                            commands.entity(e).insert(TurnedBack);
+                        }
+                        Leg::Stays(_) => car.leg = Leg::Out,
+                        _ => continue,
+                    }
+                    n += 1;
+                }
+                info!("killzone: {n} cars turned back, at {now:.0} s");
+                if n > 0 {
+                    radio.say2(now, "Машинам: назад, на виїзд.", "Cars: turn back, out to the road head.");
+                }
+            }
+        }
+    }
     // The day's runs, each at its time.
-    while *started < spec.runs.len() && script.t >= spec.runs[*started].at {
+    while *started < spec.runs.len() && script.t >= starts[*started] {
         let r = &spec.runs[*started];
         *started += 1;
         let way: Vec<Vec2> = r.way.iter().map(|&(x, z)| Vec2::new(x, z)).collect();
@@ -656,7 +748,7 @@ fn drive(
         info!("killzone: a {} out on the road, at {now:.0} s", r.kind.name());
         radio.say2(now, format!("{} пішов дорогою на місто.", r.kind.uk()), format!("A {} is on the road into the town.", r.kind.name()));
     }
-    for (e, mut car, mut tf) in &mut cars {
+    for (e, mut car, mut tf, turned) in &mut cars {
         let len: f32 = car.way.windows(2).map(|w| w[0].distance(w[1])).sum();
         let v = car.kind.speed();
         match car.leg {
@@ -682,7 +774,12 @@ fn drive(
             Leg::Out => {
                 car.s -= v * dt;
                 if car.s <= 0.0 {
-                    through(&mut tally, &mut radio, &car, true, now);
+                    if turned {
+                        info!("killzone: the {} back at the road head, turned back short of the town, at {now:.0} s", car.kind.name());
+                        radio.say2(now, "Машина повернулась, до міста не дійшла.", "The car's back. It turned back short of the town.");
+                    } else {
+                        through(&mut tally, &mut radio, &car, true, now);
+                    }
                     commands.entity(e).despawn();
                     continue;
                 }
@@ -785,6 +882,13 @@ fn arrive(mut commands: Commands, time: Res<Time>, script: Res<crate::director::
 
 /// Each crew's tempo fills its sorties; with one ready it launches at the best thing in its picture that has not
 /// already two of their FPVs on the way.
+///
+/// The tempo is by the hour of the day's clock, which runs fourteen to eighteen times faster than the game's
+/// (`compression`): over a post or the drone team, which sit through the clock's hours, that is the rate. What is on
+/// the road does not: a robot at 10 km/h, or a car, is out for real minutes, and a crew's sorties at it can only be
+/// those of the minutes it is there. So vehicles and robots draw on a charge of their own, filled by the hour of
+/// real time; on the clock's, a robot half an hour on the road met the sorties of seven hours. It fills by the light
+/// alone: in fog the crews ready their drones and wait, so what is on the road when it lifts meets them at once.
 #[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn launch(
     mut commands: Commands,
@@ -804,8 +908,9 @@ fn launch(
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
-    // Sorties an hour of the day's clock, as a rate a game second.
+    // Sorties an hour of the day's clock, as a rate a game second; and an hour of real time, for the road's.
     let per_s = crate::diorama::diorama().compression() / 60.0;
+    let real_s = 1.0 / 3600.0;
     let mut out: Vec<Mark> = flying.iter().map(|f| f.mark).collect();
     // A crew whose launch point or relay our fire has put out flies nothing until it is back (`points`).
     let mut crews: Vec<_> = crews.iter_mut().filter(|(_, c, _, _)| c.kind != Kind::Waiter && !c.relay.is_some_and(|r| relays.get(r).unwrap_or(false))).collect();
@@ -814,8 +919,12 @@ fn launch(
         let cs = &spec.crews[crew.idx];
         // In Command the staff spends an arriving crew's sorties, on what it has spotted.
         let staffed = cs.arrives.is_some() && spotted.is_some();
-        crew.charge = (crew.charge + cs.per_hour * per_s * tempo(crew.kind, seeing.as_deref()) * dt).min(2.0);
-        if crew.charge < 1.0 || (staffed && crew.budget == 0) {
+        let tempo = tempo(crew.kind, seeing.as_deref());
+        crew.charge = (crew.charge + cs.per_hour * tempo * per_s * dt).min(2.0);
+        crew.road = (crew.road + cs.per_hour * light(seeing.as_deref()) * real_s * dt).min(1.0);
+        let (ready, on_road) = (crew.charge >= 1.0, crew.road >= 1.0);
+        // Grounded (radio crews in thick fog), it flies nothing, whatever it has ready.
+        if !(ready || on_road) || tempo <= 0.0 || (staffed && crew.budget == 0) {
             continue;
         }
         let from = tf.translation.xz();
@@ -825,10 +934,14 @@ fn launch(
         }
         let best = options
             .into_iter()
-            .filter(|(m, _, _)| out.iter().filter(|o| *o == m).count() < PER_MARK && quarry.there(*m))
+            .filter(|(m, c, _)| if c.on_road() { on_road } else { ready } && out.iter().filter(|o| *o == m).count() < PER_MARK && quarry.there(*m))
             .min_by(|a, b| a.1.rank().cmp(&b.1.rank()).then(a.2.distance(from).total_cmp(&b.2.distance(from))).then(a.2.x.total_cmp(&b.2.x)));
         let Some((mark, class, at)) = best else { continue };
-        crew.charge -= 1.0;
+        if class.on_road() {
+            crew.road -= 1.0;
+        } else {
+            crew.charge -= 1.0;
+        }
         if staffed {
             crew.budget -= 1;
         }
@@ -1195,6 +1308,7 @@ fn points(
             {
                 // The drones it had ready are gone with it.
                 c.charge = 0.0;
+                c.road = 0.0;
             }
             info!("killzone: {}'s {what} out by a {weapon} burst {:.0} m off, for {down:.0} s, at {now:.0} s", name.0, p.at.distance(at));
             log.note(now, weapon, "our fire", &format!("{}'s {what}", name.0), Side::Ru, "out of action");

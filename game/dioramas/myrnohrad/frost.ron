@@ -210,9 +210,10 @@ Press Enter."#,
     // ---- The battle's part (bav_sim::data) ----
     // The night's robots (c15 §2, 14-23 Jan: the northern quarters supplied by heavy drones and UGVs; c15 §5: the
     // UGVs "usually don't survive the trip", the bombers lift 60 mm bombs and never 120 mm, keeping the drone teams in
-    // fuel took many sorties): four ground robots, the wounded waiting for them, and the Vampire with four sorties in
-    // it (the numbers are the design's). Their FPVs over the road are the kill zone's below.
-    robots: (ugvs: 4, casevac: true, bomber: (sorties: 4, endurance: 1000.0)),
+    // fuel took many sorties): five ground robots and the Vampire's four sorties (the allotment's, below; the numbers
+    // are the design's), and the wounded waiting for them: four of the robots the night's runs, the fifth for a call
+    // that has waited an hour of the clock (`fetch`). Their FPVs over the road are the kill zone's below.
+    robots: (casevac: true, fetch: 1.0, bomber: (endurance: 1000.0)),
     // What each post has to fire before it is dry, a robot's or a bundle's ammunition filling it by half: part I's
     // figure, the design's (the dossier gives none); the night asks whether the posts are fed (c15 §2, 14-23 Jan).
     post_ammo: 60,
@@ -231,6 +232,8 @@ Press Enter."#,
             (id: "155", count: 1),
             (id: "fpv", count: 4),
             (id: "vog", count: 3),
+            (id: "robot", count: 5),
+            (id: "vampire", count: 4),
         ],
     ),
     // Their drones over the road at night (bav_sim::killzone; c15 §4, §5: thermal cameras made the night only a
@@ -239,7 +242,8 @@ Press Enter."#,
     // ones, and a waiter of theirs on the H-32's shoulder. Icing stops the spools and snaps the cable, and the fibre's
     // modules lose 20-50% in the cold (06, icing; Euromaidan Press, 13 Jan): a third of the fibre sorties snag, the
     // design's reading of it. The dome over the drone team, and nets over the H-32 from the road head to the town
-    // (Kyiv Independent's photographs of January, c15 §11; no length is published, so the stretch is the design's).
+    // (Kyiv Independent's photographs of January, c15 §11; no length is published, so the stretch is the design's),
+    // and over the robots' track from the road head down to Rivne.
     // No car runs: nothing on wheels gets through (c15 §5).
     killzone: (
         crews: [
@@ -285,6 +289,17 @@ Press Enter."#,
                 (-718.8, -82.4),
                 (-415.7, -105.0),
             ],
+            [
+                (-2128.0, -398.0),
+                (-2111.0, -393.0),
+                (-2100.0, -415.0),
+                (-2061.0, -504.0),
+                (-2013.0, -607.0),
+                (-1911.0, -567.0),
+                (-1845.0, -593.0),
+                (-1787.0, -633.0),
+                (-1761.0, -676.0),
+            ],
         ],
         team: 1.0,
         snag: 0.33,
@@ -292,7 +307,7 @@ Press Enter."#,
     // The night (22:00 + 0.24 min a game second): robots and the Vampire through it, the wounded out as the robots
     // reach their posts, and single men seeping into the town's north, now and then two (c15 §5: single men by
     // January, Euromaidan Press 2 Jan; Interfax 14 Jan: attempts to infiltrate the north intensify), from the jaw
-    // towards the mine and the drone team, and out of the town's south for the drone team. About ten a day came in in
+    // past the mine for the drone team, and out of the town's south for it too. About ten a day came in in
     // clear weather (c15 §5); the night's rate, about seven in six hours, is the design's, in the cold that killed
     // theirs too (c15 §3, the 7th Corps).
     script: [
@@ -320,7 +335,7 @@ Press Enter."#,
                 from: 900.0,
                 width: 250.0,
                 per_hour: 0.6,
-                crews: 0.5,
+                crews: 1.0,
                 men: (1, 2),
                 label: "22:15  One at a time, from the jaw",
             ),

@@ -67,14 +67,27 @@ pub(super) fn launch_sorties(mut commands: Commands, time: Res<Time>, mut robots
     let (sorties, rest): (Vec<Order>, Vec<Order>) = std::mem::take(&mut robots.orders).into_iter().partition(|o| matches!(o, Order::Sortie { .. }));
     robots.orders = rest;
     let mut up = !flying.is_empty();
-    for o in sorties {
+    // The script's sorties kept back while the bomber was up or the team moving go first, in their order.
+    let kept = std::mem::take(&mut robots.queued);
+    let fresh = kept.len();
+    for (i, o) in kept.into_iter().chain(sorties).enumerate() {
         let Order::Sortie { to, load, flown } = o else { continue };
-        if up {
-            radio.say2(now, "Вампір уже в повітрі.", "The Vampire is already up.");
-            continue;
-        }
         if robots.sorties_left == 0 {
             radio.say2(now, "Вампіра більше не піднімемо сьогодні.", "The Vampire has no more sorties in it today.");
+            continue;
+        }
+        // The script's sortie waits for the bomber to be down and the team set up again; the player's is told.
+        let busy = up || now < op.moving_until;
+        if busy && to.is_some() && !flown {
+            if i >= fresh {
+                info!("bomber: a sortie to {to:?} kept until the {}, at {now:.0} s", if up { "Vampire is down" } else { "team is set up" });
+                radio.say2(now, "Наступний виліт Вампіра, коли сяде.", "The Vampire's next sortie goes when it's down.");
+            }
+            robots.queued.push(o);
+            continue;
+        }
+        if up {
+            radio.say2(now, "Вампір уже в повітрі.", "The Vampire is already up.");
             continue;
         }
         if now < op.moving_until {

@@ -4,18 +4,21 @@
 //! - **The ground robot** (`VKind::Ugv`, a tracked cart like the Zmiy: 500 kg, 10 km/h, 20 km of range) drives as a
 //!   Column of one from the road head to a position of ours (`columns::way`), unloads its cargo there (ammunition for
 //!   the post, food and water, fuel and batteries for the drone team), takes on the wounded waiting there, and
-//!   comes back. Its radio link frays in their EW and drops out, now and then for the best part of an hour of the
-//!   day's clock (the Zmiy's lasted 1.5 hours, c15 §5), and without it the robot stands where it is; it sticks in
-//!   craters and mud, and water is the end of it. In the Record the script sends the day's runs (`Act::Ugv`); where
-//!   the wounded wait for a robot (`casevac`), V sends one for the longest-waiting call and Alt+click one with
-//!   ammunition to the position nearest the cursor; in Command the robots come on Supply, and a UGV sent from the map
-//!   table as a Column carries ammunition.
+//!   comes back. It is out for real minutes while the day's clock runs fourteen to eighteen times faster, so what
+//!   happens to it on the road goes by the real hour: their FPVs' sorties at it (`killzone::launch`) and its radio
+//!   link, which frays in their EW and drops out, now and then for an hour or more (the Zmiy's lasted 1.5 hours,
+//!   c15 §5); without it the robot stands where it is. It sticks in craters and mud, and water is the end of it. The
+//!   robots are the Allotment's (`allot::SupportKind::Robots`): in the Record the script sends the day's runs
+//!   (`Act::Ugv`) and one goes for a call that has waited long (`fetch`); where the wounded wait for a robot
+//!   (`casevac`), V sends one for the longest-waiting call and Alt+click one with ammunition to the position nearest
+//!   the cursor; in Command more come on Supply, and a UGV sent from the map table as a Column carries ammunition.
 //!   Key 7 is the robot's own camera (`Mode::Robot`), from which the player can drive it (`Hand`) or leave it to its
 //!   route.
 //! - **The heavy bomber** (a Vampire, 01 §3: about 15 kg over 20 km, a dozen sorties in its life) flies a sortie from
 //!   the drone team's position with four 60 mm bombs (never 120 mm, c15 §5) or a bundle for a post. Key 8 launches
 //!   one and flies it (`Mode::Bomber`: the drone's sticks, C lets go, H brings it home); the script's sorties
-//!   (`Act::Sortie`) fly themselves to their point, drop and come home.
+//!   (`Act::Sortie`) fly themselves to their point, drop and come home, one at a time: a sortie the script orders while
+//!   the bomber is up or the team is moving waits its turn. Its sorties are the Allotment's (`SupportKind::Vampire`).
 //!
 //! None of it exists where the day's file has no `robots`: an entity or a resource more renumbers an older day's and
 //! changes it. `BAV_UGV` and `BAV_BOMBER` send runs and sorties at game times, for the bands.
@@ -37,15 +40,17 @@ pub struct RobotsPlugin;
 impl Plugin for RobotsPlugin {
     fn build(&self, app: &mut App) {
         let Some(spec) = spec() else { return };
-        // In Command the ground robots come up on Supply, sent from the map table as Columns.
-        let left = if crate::allot::at_table() { 0 } else { spec.ugvs };
-        app.insert_resource(Robots { left, sorties_left: spec.bomber.map_or(0, |b| b.sorties), ..default() })
+        // The robots and the bomber's sorties are the Allotment's (Support): the Record's from the start, Command's once
+        // the map table has settled it (`allotted_robots`). In Command more robots come up on Supply, as Columns.
+        let a = crate::allot::settled();
+        let sorties_left = if spec.bomber.is_some() { a.map_or(0, |a| a.sorties) } else { 0 };
+        app.insert_resource(Robots { left: a.map_or(0, |a| a.robots), sorties_left, ..default() })
             .insert_resource(RobotRng(SmallRng::seed_from_u64(crate::dev::seeded(5150))))
             .add_systems(Update, robot_input.run_if(crate::running).in_set(crate::Step::Control).after(crate::dev::DevSystems))
             // After the script, the evacuation's calls and the drone team's turn: they all speak on the same net.
             .add_systems(
                 Update,
-                (scheduled, send_runs, adopt, link, going, peril, at_the_post, home_or_lost, launch_sorties, fly, bombs_fall, log_robots)
+                (scheduled, fetch, send_runs, adopt, link, keep_to_track, going, peril, at_the_post, home_or_lost, launch_sorties, fly, bombs_fall, log_robots)
                     .chain()
                     .run_if(crate::running)
                     .in_set(crate::Step::Script)
@@ -53,18 +58,27 @@ impl Plugin for RobotsPlugin {
                     .after(crate::evac::EvacSystems)
                     .after(crate::ew::ew_update),
             );
+        if crate::allot::at_table() {
+            app.add_systems(OnEnter(crate::Phase::Playing), allotted_robots);
+        }
     }
+}
+
+/// Command: the robots and the bomber's sorties as the map table settled them, when the battle starts.
+fn allotted_robots(mut robots: ResMut<Robots>) {
+    let a = crate::allot::allotment();
+    robots.left = a.robots;
+    robots.sorties_left = if spec().is_some_and(|s| s.bomber.is_some()) { a.sorties } else { 0 };
 }
 
 /// The robots' systems, for what must run after them (their drones over the ground, `killzone`).
 #[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub struct RobotSystems;
 
-/// The day's robots (`robots` in its file).
+/// The day's robots (`robots` in its file); how many robots and sorties there are is the Allotment's
+/// (`allot::SupportKind::Robots`, `Vampire`).
 #[derive(Deserialize, Debug, Clone)]
 pub struct RobotsSpec {
-    /// Ground robots for the day: the runs the script and the player may send between them.
-    pub ugvs: u32,
     /// The wounded wait for a robot: the calls for evacuation become a queue only a robot empties
     /// (`evac::Casualties`; c15 §5, days to two weeks).
     #[serde(default)]
@@ -72,7 +86,12 @@ pub struct RobotsSpec {
     /// The wounded already waiting when the day begins, from the days before it (an earlier part's aftermath).
     #[serde(default)]
     pub waiting: Vec<WaitingSpec>,
-    /// How often an hour of the day's clock a robot's link drops out with no jamming at all (the ground, the
+    /// In the Record, a robot goes for the wounded once a call has waited this many hours of the clock and none is on
+    /// its way to them, if one is left over the script's runs still to come (`fetch`); none: only the script's runs
+    /// and the player's go.
+    #[serde(default)]
+    pub fetch: Option<f32>,
+    /// How often an hour of real time a robot's link drops out with no jamming at all (the ground, the
     /// relays, the range); their EW makes it up to five times as often.
     #[serde(default = "drops")]
     pub drops_per_hour: f32,
@@ -98,11 +117,9 @@ fn drops() -> f32 {
     0.5
 }
 
-/// The heavy bomber's day.
+/// The heavy bomber's day (its sorties are the Allotment's).
 #[derive(Deserialize, Debug, Clone, Copy)]
 pub struct BomberSpec {
-    /// Sorties left in it.
-    pub sorties: u32,
     /// How long one flies (game s) before it has to be home.
     pub endurance: f32,
 }
@@ -201,6 +218,8 @@ pub struct Robots {
     pub bombs: u32,
     pub bundles: u32,
     orders: Vec<Order>,
+    /// The script's sorties kept for when the bomber is down and the team set up (`launch_sorties`).
+    queued: Vec<Order>,
 }
 
 /// Ask for a run or a sortie (the script's acts, `director::Act::Ugv` and `Act::Sortie`).
@@ -236,6 +255,36 @@ fn scheduled(script: Res<crate::director::Script>, mut robots: ResMut<Robots>, m
         let load = if w.next() == Some("bundle") { Load::Bundle(Cargo::Ammo) } else { Load::Bombs };
         robots.orders.push(Order::Sortie { to: Some(at), load, flown: false });
     }
+}
+
+/// The Record's robot for the wounded (`RobotsSpec::fetch`): when the longest-waiting call that no robot is on its
+/// way to, nor the script's next runs, has waited the file's hours of the clock, and a robot is left over the
+/// script's runs still to come, one goes for it. The robots are few and the calls are not, so the queue still grows (c15 §5: the wounded waited days).
+fn fetch(time: Res<Time>, script: Res<crate::director::Script>, mut robots: ResMut<Robots>, casualties: Option<Res<crate::evac::Casualties>>, out: Query<&Robot>) {
+    let (Some(hours), Some(cas)) = (spec().and_then(|s| s.fetch), casualties) else { return };
+    if crate::allot::at_table() {
+        return;
+    }
+    let now = time.elapsed_secs_f64();
+    // The script's runs still to come, and where to: a call there waits for its run.
+    let positions = &bav_core::field::field().positions;
+    let to_come: Vec<Vec2> = crate::data::sim_data()
+        .script
+        .iter()
+        .filter(|(t, _)| *t > script.t)
+        .filter_map(|(_, a)| match a {
+            crate::director::Act::Ugv { to, .. } => Some(positions.get(*to).map_or(Vec2::INFINITY, |p| p.at)),
+            _ => None,
+        })
+        .collect();
+    if robots.left as usize <= to_come.len() || robots.orders.iter().any(|o| matches!(o, Order::Run { .. })) {
+        return;
+    }
+    let due = (hours * 60.0 / crate::diorama::diorama().compression()) as f64;
+    let going: Vec<Vec2> = out.iter().filter(|r| r.leg == Leg::In).map(|r| r.to).chain(to_come).collect();
+    let Some(call) = cas.waiting.iter().filter(|c| now - c.since >= due && !going.iter().any(|g| g.distance(c.at) < 200.0)).min_by(|a, b| a.since.total_cmp(&b.since).then(a.at.x.total_cmp(&b.at.x))) else { return };
+    info!("robot: one for the {} wounded at {:.0},{:.0}, waiting {:.1} h of the clock, at {now:.0} s", call.n, call.at.x, call.at.y, (now - call.since) as f32 * crate::diorama::diorama().compression() / 60.0);
+    robots.orders.push(Order::Run { to: Dest::Near(call.at), cargo: Cargo::Food });
 }
 
 /// The player's hand on the robots: where the wounded wait for a robot, V sends one for the longest-waiting call and
@@ -293,17 +342,18 @@ fn robot_input(
 }
 
 /// For the bands (`BAV_LOG_STATS`): the robots' day once a minute of game time: sent, back, lost and left, the loads
-/// delivered (ammunition, food, fuel and batteries), the wounded waiting, brought out and dead aboard, and the
-/// bomber's sorties left and flown, bombs and bundles.
-fn log_robots(script: Res<crate::director::Script>, robots: Res<Robots>, casualties: Option<Res<crate::evac::Casualties>>, mut last: Local<u32>) {
+/// delivered (ammunition, food, fuel and batteries), the wounded waiting, brought out, dead aboard and aboard a robot
+/// still on the road, and the bomber's sorties left and flown, bombs and bundles.
+fn log_robots(script: Res<crate::director::Script>, robots: Res<Robots>, casualties: Option<Res<crate::evac::Casualties>>, out: Query<&Robot>, mut last: Local<u32>) {
     if !crate::dev::dev().log_stats || script.t as u32 / 60 == *last {
         return;
     }
     *last = script.t as u32 / 60;
+    let aboard: u32 = out.iter().filter(|r| r.running()).map(|r| r.wounded).sum();
     let (waiting, out, died) = casualties.as_deref().map_or((0, 0, 0), |c| (c.count(), c.out, c.died));
     let r = &*robots;
     info!(
-        "robots: t={:>4.0} {} robots={}/{}/{}/{} delivered={}/{}/{} casevac={waiting}/{out}/{died} sorties={}/{} bombs={} bundles={}",
+        "robots: t={:>4.0} {} robots={}/{}/{}/{} delivered={}/{}/{} casevac={waiting}/{out}/{died}/{aboard} sorties={}/{} bombs={} bundles={}",
         script.t,
         crate::director::clock_text(script.t),
         r.sent,

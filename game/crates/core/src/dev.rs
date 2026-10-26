@@ -169,6 +169,9 @@ pub struct DevEnv {
     pub intercept: Vec<f32>,
     /// `BAV_DOME="<game s>:off|on,…"`: switch our EW domes off or on then, as J does (`bav_sim::ew`).
     pub dome: Vec<(f32, String)>,
+    /// `BAV_RUN="<game s>:go|back,…"`: send the day's next car run now, or turn back the cars on the road in and in the
+    /// town, as N and Shift+N do (`bav_sim::killzone`).
+    pub run: Vec<(f32, String)>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
     pub era_at: Option<f32>,
     /// `BAV_LINEUP_FIRE=1` with `BAV_LINEUP`: the burned-out row burns, a hull in flames, a smoulder and a pool of
@@ -361,6 +364,7 @@ impl DevEnv {
             bomber: timed("BAV_BOMBER"),
             intercept: var("BAV_INTERCEPT").map(|v| v.split(',').filter_map(|t| t.trim().parse().ok()).collect()).unwrap_or_default(),
             dome: timed("BAV_DOME"),
+            run: timed("BAV_RUN"),
             operator_off: var("BAV_OPERATOR").is_some_and(|v| v == "off"),
             fog_off: var("BAV_FOG").is_some_and(|v| v == "off"),
             fpv: var("BAV_FPV").and_then(|s| {

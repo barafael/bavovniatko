@@ -1,16 +1,18 @@
 //! Drones against drones in the air (design/myrnohrad.md, phase 6): their reconnaissance wings as aircraft on a path,
 //! and our interceptors against them.
 //!
-//! - **The wings.** An Orlan-10 or a ZALA flies a path over our side at height, and its camera spots what passes under
-//!   it as the staff's strip did (a post one time in three, a vehicle four times in five, less in fog): into the kill
-//!   zone's picture, which their FPV crews hunt from, and in Command into the staff's `Spotted` too. In the Record the
+//! - **The wings.** An Orlan-10 or a ZALA flies a path over our side at height, and its camera spots what passes
+//!   within its oblique sweep as the staff's strip did (a post one time in three, a vehicle four times in five, less in
+//!   fog): into the kill zone's picture, which their FPV crews hunt from, and in Command into the staff's `Spotted` too. In the Record the
 //!   day's file flies its passes; in Command the staff sends its own (`staff::orlan`). Where a day has no `wings` the
 //!   staff's Orlan is still the strip it was.
 //! - **Our interceptors.** Interceptor drones wore the Orlans down from 2024 and by March 2026 claimed tens of thousands
 //!   of Russian drones (01 e7, e9). 9 puts one up from the drone team and the player in its goggles, a faster airframe
 //!   than the strike FPV that climbs to the wing; it brings the wing down if it passes within a few metres of it. Where
-//!   the day has a radar, one goes up by itself at a wing inside its range and flies a lead pursuit onto it; a near
-//!   pass brings the wing down most times (`P_KILL`). Both are blinded inside our own EW domes (`ew::Ew::ours_at`), so
+//!   the day has a radar, one goes up by itself at a wing the radar has held inside its range (`TRACK`) and flies a
+//!   lead pursuit onto it, climbing slower than it flies; a near pass brings the wing down about half the time
+//!   (`P_KILL`), so a pass is a chance for both sides, and the wing's camera, which looks out obliquely (`SWATH`), has
+//!   mostly spotted something by then. Both are blinded inside our own EW domes (`ew::Ew::ours_at`), so
 //!   a radar-cued launch pauses them for the climb out (02 §6: EW pauses scheduled for a strike).
 //!
 //! Nothing of it exists where the day's file has no `wings`: an entity, a resource or a draw more would change an older
@@ -180,16 +182,27 @@ pub struct WingModels {
 #[derive(Resource)]
 struct WingRng(SmallRng);
 
-/// Half the width of the ground a wing's camera sweeps (m): the staff's strip was 600 m wide.
-const SWATH: f32 = 300.0;
+/// How far to either side of its track a wing's camera finds things (m): the staff's strip was 600 m wide, but a
+/// gimballed camera a kilometre up looks out obliquely, and a pass is worth something to them before an interceptor
+/// can climb to it.
+const SWATH: f32 = 900.0;
 /// How often the camera looks (s).
 const LOOK_EVERY: f64 = 1.0;
-/// An interceptor's speed (m/s), its battery (s), and the miss distance inside which its charge goes off (m).
+/// An interceptor's speed (m/s), how fast it climbs (m/s), its battery (s), and the miss distance inside which its
+/// charge goes off (m).
 const INTERCEPTOR_SPEED: f32 = 50.0;
+const INTERCEPTOR_CLIMB: f32 = 12.0;
 const INTERCEPTOR_BATTERY: f32 = 240.0;
 const PROXIMITY: f32 = 6.0;
-/// The chance a radar-cued interceptor's pass brings the wing down.
-const P_KILL: f64 = 0.6;
+/// The chance a radar-cued interceptor's pass brings the wing down: a chance, not a certainty (the wing's crew sees it
+/// coming and turns, the charge goes off a few metres wide).
+const P_KILL: f64 = 0.45;
+/// The radar holds a wing inside its range after about this long (s), on average.
+const TRACK: f32 = 25.0;
+
+/// A wing the radar holds: the interceptors may be cued onto it.
+#[derive(Component)]
+pub struct OnRadar;
 /// How near the goggles' interceptor must pass (m): the player has flown it there.
 pub const GOGGLES_PASS: f32 = 5.0;
 /// How long a radar-cued launch pauses our domes (s).
@@ -320,8 +333,8 @@ fn fly_wings(mut commands: Commands, time: Res<Time>, mut radio: ResMut<Radio>, 
     }
 }
 
-/// Every second each wing's camera looks at the ground it passes over: each thing of ours under it gets one chance a
-/// pass, as under the staff's strip (a post one time in three, a vehicle four times in five, our domes' masts and
+/// Every second each wing's camera looks out over the ground it passes: each thing of ours within its sweep gets one
+/// chance a pass, as under the staff's strip (a post one time in three, a vehicle four times in five, our domes' masts and
 /// our drone team's antennas between), less in fog as its camera sees through it from a kilometre up. What it finds
 /// goes into the kill zone's picture and, in Command, the staff's `Spotted`.
 #[allow(clippy::too_many_arguments, clippy::type_complexity)]
@@ -401,30 +414,40 @@ fn eyes(
     }
 }
 
-/// The radar cues an interceptor at the nearest wing inside its range that none is already after, from the drone
-/// team, while there are any; our domes pause for its climb out.
+/// The radar takes a while to hold a wing inside its range: a small airframe of foam and plywood a kilometre up
+/// (`TRACK`, a chance each second). Then it cues an interceptor at the nearest wing it holds that none is already
+/// after, from the drone team, while there are any; our domes pause for its climb out.
 #[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn cue(
     mut commands: Commands,
     time: Res<Time>,
+    mut rng: ResMut<WingRng>,
     mut radio: ResMut<Radio>,
     mut tally: ResMut<WingsTally>,
     mut stock: ResMut<Interceptors>,
     op: Res<Operator>,
     models: Option<Res<WingModels>>,
-    wings: Query<(Entity, &Wing, &Transform), Without<Downed>>,
+    wings: Query<(Entity, &Wing, &Transform, Has<OnRadar>), Without<Downed>>,
     up: Query<&Interceptor>,
     domes: Query<(Entity, &crate::ew::Dome), (Without<crate::ew::DomeDown>, Without<crate::ew::DomeOff>)>,
 ) {
     let Some(radar) = spec().and_then(|s| s.radar) else { return };
     let now = time.elapsed_secs_f64();
+    let at = Vec2::new(radar.at.0, radar.at.1);
+    let mut found: Vec<(Entity, Vec3)> = wings.iter().filter(|(_, _, t, held)| !held && t.translation.xz().distance(at) < radar.range).map(|(e, _, t, _)| (e, t.translation)).collect();
+    found.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.z.total_cmp(&b.1.z)));
+    let p = (crate::sim_dt(&time) / TRACK) as f64;
+    for (e, _) in found {
+        if rng.0.random_bool(p.min(1.0)) {
+            commands.entity(e).insert(OnRadar);
+        }
+    }
     if stock.left == 0 || now < op.moving_until {
         return;
     }
-    let at = Vec2::new(radar.at.0, radar.at.1);
-    let Some((target, w, tf)) = wings
+    let Some((target, w, tf, _)) = wings
         .iter()
-        .filter(|(e, _, t)| t.translation.xz().distance(at) < radar.range && up.iter().all(|i| i.target != *e))
+        .filter(|(e, _, t, held)| *held && t.translation.xz().distance(at) < radar.range && up.iter().all(|i| i.target != *e))
         .min_by(|a, b| a.2.translation.xz().distance(at).total_cmp(&b.2.translation.xz().distance(at)).then(a.2.translation.x.total_cmp(&b.2.translation.x)))
     else {
         return;
@@ -495,6 +518,8 @@ fn intercept(
                 let t_go = to.length() / INTERCEPTOR_SPEED;
                 let aim = wt.translation + wing.velocity() * t_go.min(20.0) - p;
                 i.vel = i.vel.lerp(aim.normalize_or(Vec3::Y) * INTERCEPTOR_SPEED, (3.0 * dt).min(1.0));
+                // It climbs to the wing's height slower than it flies: a quad's thrust is spent mostly on speed.
+                i.vel.y = i.vel.y.min(INTERCEPTOR_CLIMB);
                 if to.length() < PROXIMITY.max(INTERCEPTOR_SPEED * dt) {
                     commands.entity(e).despawn();
                     fx.explosion(p, 0.35, false);
