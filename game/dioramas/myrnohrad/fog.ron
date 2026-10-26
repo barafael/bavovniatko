@@ -1,8 +1,8 @@
 // Myrnohrad, part I, The fog (Туман): 10 November 2025, morning. Fog on the towns from first light until it lifts
 // before noon (ERA5, c15 §3: near-saturated air and 6-10 hours of fog on 5-7, 10 and 12 November), and under it
-// their infantry walks in by twos and threes, thirty to forty a day in such weather (c15 §5). Until the infiltration,
-// their drones and the vehicle run are built (design/myrnohrad.md, phases 3-7), the day is a placeholder: a few
-// groups by the infantry act, the posts, two KAB pairs. The schema is bav_core::data and bav_sim::data; the map is
+// their infantry walks in by twos and threes, thirty to forty a day in such weather (c15 §5). Until their drones and
+// the vehicle run are built (design/myrnohrad.md, phases 3-7), the day is a placeholder: the seep from four sides at
+// the fog's rate, the posts, two KAB pairs. The schema is bav_core::data and bav_sim::data; the map is
 // map.ron.
 (
     date: "10 November 2025",
@@ -103,6 +103,15 @@ Press Enter."#,
             Areas("{area} at the end"),
             Line("Shells left", Shells),
             If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+            If(
+                Seep,
+                [
+                    Line("Their burrows in the town", Burrows),
+                    Line("    found", BurrowsFound),
+                    Line("    emptied", BurrowsEmptied),
+                    Line("Their fire on our drone crew told", CrewsHit),
+                ],
+            ),
             If(
                 Robots,
                 [
@@ -282,7 +291,9 @@ Press Enter."#,
         // Their direction-finders locate our drone team's ground station about once an hour of drone time.
         team: 1.0,
     ),
-    // The morning: twos and threes from three sides under the fog, KABs on the town; the fog lifting before noon.
+    // The morning: twos and threes seeping in from four sides under the fog (bav_sim::seep), about three men an hour
+    // in clear air and three and a half times that in the thick of it, so thirty-odd by noon (c15 §5); most go for
+    // the drone crew in the western quarters. KABs on the town; the fog lifting before noon.
     script: [
         (2.0, Say("Bird up. Fog on everything. I can see the road for a hundred metres, no more.")),
         (20.0, Say("All, this is {command}. They walk in this weather. Watch the belts and the ruins.")),
@@ -291,16 +302,28 @@ Press Enter."#,
         (420.0, Ugv(to: 0, cargo: Food)),
         (
             60.0,
-            Infantry(
+            Seep(
                 route: 0,
-                groups: 6,
-                size: 3,
-                every: 90.0,
+                from: 450.0,
+                width: 300.0,
+                per_hour: 1.0,
+                crews: 0.6,
                 label: "06:45  Twos and threes from the south-eastern edge",
             ),
         ),
-        (120.0, Infantry(route: 1, groups: 5, size: 2, every: 110.0, label: "07:00  From the Krasnyi Lyman side")),
-        (200.0, Infantry(route: 2, groups: 4, size: 3, every: 120.0)),
+        (
+            120.0,
+            Seep(
+                route: 1,
+                from: 700.0,
+                width: 300.0,
+                per_hour: 0.7,
+                crews: 0.4,
+                label: "07:00  From the Krasnyi Lyman side",
+            ),
+        ),
+        (200.0, Seep(route: 2, from: 1550.0, width: 300.0, per_hour: 0.55, crews: 0.15)),
+        (260.0, Seep(route: 3, from: 1000.0, width: 300.0, per_hour: 0.7, crews: 0.15)),
         (
             400.0,
             Bombs(
@@ -311,8 +334,6 @@ Press Enter."#,
                 say: "Su-34s. Glide bombs on the town. Down.",
             ),
         ),
-        (600.0, Infantry(route: 0, groups: 5, size: 3, every: 80.0)),
-        (700.0, Infantry(route: 1, groups: 4, size: 2, every: 100.0)),
         (900.0, Bombs(from: (-650.0, -1350.0), to: (-450.0, -1250.0), n: 2, label: "", say: "KABs on Svitle.")),
         (1000.0, Say("This is {op}. The fog is thinning. I can see the heap.")),
         (1150.0, Say("Bird: it's clear. Everything on the road is seen now. Nothing moves on wheels till dark.")),

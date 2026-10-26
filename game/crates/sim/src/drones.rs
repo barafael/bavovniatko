@@ -129,7 +129,7 @@ fn drone_input(
 }
 
 /// Pack up and move: the feed is down until the team is set up again somewhere else.
-fn move_team(op: &mut Operator, view: &mut View, radio: &mut Radio, now: f64, hit: bool) {
+pub(crate) fn move_team(op: &mut Operator, view: &mut View, radio: &mut Radio, now: f64, hit: bool) {
     // About fifteen minutes of the day's clock: the antennas down, a few hundred metres along the tree line, up again.
     let secs = 15.0 / crate::diorama::diorama().compression();
     op.moving_until = now + secs as f64;

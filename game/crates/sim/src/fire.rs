@@ -1074,14 +1074,18 @@ fn small_arms(
     models: Res<Models>,
     palette: Res<Palette>,
     mut positions: Query<(&mut Post, Option<&mut crate::fight::Ammo>, Has<Suppressed>)>,
-    mut soldiers: Query<(Entity, &mut Soldier, &Transform)>,
+    mut soldiers: Query<(Entity, &mut Soldier, &Transform, Option<&crate::seep::Cover>)>,
     seeing: Option<Res<crate::fight::Seeing>>,
 ) {
     // Where the fight says so, a post down under fire fires only so much (`FightSpec::pinned`).
     let pinned = crate::fight::spec().map_or(1.0, |f| f.pinned);
     // In the dark men see less far, except under a flare, and in fog no further than it lets them (where the day
     // has either).
-    let reach = |p: Vec2| seeing.as_ref().map_or(750.0, |s| s.reach(750.0, p));
+    // A man in cover (`seep::Cover`) is seen nearer, or not at all.
+    let reach = |p: Vec2, cover: Option<&crate::seep::Cover>| {
+        let Some(base) = cover.map_or(Some(750.0), |c| c.seen(750.0)) else { return 0.0 };
+        seeing.as_ref().map_or(base, |s| s.reach(base, p))
+    };
     let dt = time.delta_secs();
     let rng = &mut fxr.0;
     let mut dead: Vec<Entity> = Vec::new();
@@ -1102,8 +1106,9 @@ fn small_arms(
         // The nearest man within rifle range that a belt or a crest does not hide.
         let mut near: Vec<(Entity, f32, Vec3)> = soldiers
             .iter()
-            .filter(|(e, s, tf)| s.side != pos.side && !dead.contains(e) && tf.translation.xz().distance(pos.pos) < reach(tf.translation.xz()))
-            .map(|(e, _, tf)| (e, tf.translation.xz().distance(pos.pos), tf.translation))
+            // (Not at men in a burrow nobody has found, `seep`.)
+            .filter(|(e, s, tf, cover)| s.side != pos.side && !dead.contains(e) && tf.translation.xz().distance(pos.pos) < reach(tf.translation.xz(), *cover))
+            .map(|(e, _, tf, _)| (e, tf.translation.xz().distance(pos.pos), tf.translation))
             .collect();
         near.sort_by(|a, b| a.1.total_cmp(&b.1));
         let Some(&(e, d, tp)) = near.iter().find(|(_, _, tp)| geo::line_of_sight(pos.pos, tp.xz())) else { continue };
@@ -1117,8 +1122,12 @@ fn small_arms(
             }
         }
         sound.at(from, Sfx::MachineGun, 0.5);
-        let Ok((_, mut s, tf)) = soldiers.get_mut(e) else { continue };
-        let prone = if matches!(s.state, SState::Prone | SState::DugIn) { 0.35 } else { 1.0 };
+        let Ok((_, mut s, tf, cover)) = soldiers.get_mut(e) else { continue };
+        let prone = match cover {
+            Some(c) => c.hit(),
+            None if matches!(s.state, SState::Prone | SState::DugIn) => 0.35,
+            None => 1.0,
+        };
         let p_kill = (0.42 * (1.0 - d / 800.0) * prone * (pos.strength as f32 / 6.0).sqrt()).clamp(0.02, 0.6) * if ammo.is_some() { crate::fight::spec().map_or(1.0, |s| s.rifles) } else { 1.0 };
         if rng.random_bool(p_kill as f64) {
             stats.died("rifles", (s.side == diorama().attacker()) as u32);

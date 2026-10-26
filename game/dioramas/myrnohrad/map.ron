@@ -51,8 +51,9 @@
     curves: [],
 
     // Their ways in, on foot: from the south-eastern edge up through the town's private sector, from the
-    // Krasnyi Lyman jaw down onto the mine, and from Pokrovsk's side over the fields onto Rivne (c15 §3: the
-    // infiltrators keep to the belts, the balkas and the ruins).
+    // Krasnyi Lyman jaw down onto the mine, from Pokrovsk's side over the fields onto Rivne, and from the
+    // south-western fields across the H-32 between Rivne and the town into Svitle (c15 §3: the infiltrators keep to
+    // the belts, the balkas and the ruins).
     lines: [
         (
             "seep_se",
@@ -66,6 +67,10 @@
             "seep_sw",
             Smoothed([(-1400.0, 1792.0), (-1500.0, 1100.0), (-1650.0, 400.0), (-1750.0, -200.0), (-1800.0, -650.0)], 2),
         ),
+        (
+            "seep_w",
+            Smoothed([(-2304.0, 250.0), (-1900.0, 0.0), (-1450.0, -350.0), (-1050.0, -800.0), (-650.0, -1150.0)], 2),
+        ),
     ],
     roads: [],
     belts: [],
@@ -76,6 +81,8 @@
         (line: "seep_jaw", deploy: (1800.0, -900.0), objective: (1450.0, -300.0)),
         // 2: over the fields from Pokrovsk's side onto Rivne.
         (line: "seep_sw", deploy: (-1650.0, 400.0), objective: (-1750.0, -650.0)),
+        // 3: from the south-western fields across the road into Svitle (`Seep` only).
+        (line: "seep_w", deploy: (-1450.0, -350.0), objective: (-600.0, -1300.0)),
     ],
 
     // The houses OpenStreetMap leaves out (its villages have none mapped, its private sector few), along their own
@@ -163,7 +170,7 @@
     // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
     // left to fire (the debrief's rows are each part's).
     hud: (
-        tally: "{date}   {clock}\nTheir men sent in {sent}   came back {returned}{air}\n{zones}{robots}",
+        tally: "{date}   {clock}\nTheir men sent in {sent}   came back {returned}{air}{seep}\n{zones}{robots}",
         stock: "155 mm  {shells} rds   FPV  {fpv}{vog}{ugv}{bomber}{speed}",
     ),
     space_key: Atgm,
@@ -191,6 +198,15 @@
     support: [
         (id: "155", name: ("155 mm, 16 rounds", "155 мм, 16 пострілів"), what: Shells(16), cost: 4, available: 4),
         (id: "fpv", name: ("FPV strike drone", "FPV-дрон"), what: Fpv, cost: 2, available: 20),
+        // Command: the SSO's, HUR's, SBU's and police's joint teams that hunted the infiltrators in the towns (c15 §5,
+        // "Kedr, we're your own"): one goes to each burrow found and clears it.
+        (
+            id: "search",
+            name: ("Search-and-strike team", "Пошуково-ударна група"),
+            what: Search,
+            cost: 4,
+            available: 2,
+        ),
         (
             id: "vog",
             name: ("Two grenades for the Mavic", "Два ВОГи для «Мавіка»"),

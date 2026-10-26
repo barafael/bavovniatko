@@ -88,6 +88,29 @@ pub enum Act {
     /// A heavy bomber's sortie from the drone team's position: its bombs on the enemy's men nearest the point, or its
     /// bundle for the post nearest it (`robots`).
     Sortie { to: (f32, f32), load: crate::robots::Load },
+    /// Infiltration as a flow (`seep`, c15 §5): groups of two or three out of a stretch of the edge of their ground,
+    /// `width` metres either side of the route's line `from` metres along it, `per_hour` men an hour of the day's clock in clear weather and `fog` times
+    /// as many in the thickest fog, along the route's line to a building where they go to ground; of the groups,
+    /// `crews` go for our drone crew, the rest for the route's objective. `until`: no more after this game second.
+    Seep {
+        route: usize,
+        #[serde(default)]
+        from: f32,
+        width: f32,
+        per_hour: f32,
+        #[serde(default = "fog_rate")]
+        fog: f32,
+        crews: f32,
+        #[serde(default)]
+        until: Option<f32>,
+        #[serde(default)]
+        label: String,
+    },
+}
+
+/// How many times as many come in the thickest fog as in sun: thirty to forty a day against about ten (c15 §5).
+fn fog_rate() -> f32 {
+    3.5
 }
 
 /// Where a column that stays deploys (a point near its route), and how long it holds there at least (s).
@@ -291,6 +314,13 @@ fn run_script(
                 commands.queue(move |w: &mut World| crate::robots::order(w, o));
             }
             Act::Ugv { .. } | Act::Sortie { .. } => {}
+            act @ Act::Seep { label, .. } => {
+                let act: &'static Act = act;
+                commands.queue(move |w: &mut World| crate::seep::start(w, act));
+                if !label.is_empty() {
+                    *banner = Some((label.to_string(), 7.0));
+                }
+            }
             Act::Say(s) => radio.say(now, s.as_str()),
             Act::Jam(j) => {
                 view.jamming = (view.jamming + j).min(1.0);

@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
-Status: planned 2026-10-25; phases 0, 1, 2, 3 and 5 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the robots; the days are placeholders). The owner's direction of 25 October: the next diorama comes from
+Status: planned 2026-10-25; phases 0 to 5 built 2026-10-26 (the place, its map and set, the pocket; the fog
+in the battle; their drones over the ground; the seep; the robots; the days are placeholders). The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -528,3 +528,48 @@ the EW domes' masts.
   crews yet (phases 8-9); the HUD and the debrief do not count their sorties (phase 7); the domes do not yet blind
   our own drones, and nothing of ours strikes a launch point (phase 6); fibre in the ice is only `snag` in the file;
   the FPVs make no sound of their own, and a fibre one draws no cable.
+- 2026-10-26: phase 4, infiltration as a flow (`bav_sim::seep`). **The flow**: `Act::Seep` starts a stretch of an
+  edge sending groups of two or three: `from` metres along one of the layout's routes (where their ground meets
+  ours), `width` metres either side, at `per_hour` men an hour of the day's clock in clear air and `fog` (3.5 unless
+  the file says) times that in the thickest fog, scaled by `fight::Seeing` between 2 km and 500 m. A group walks the
+  route's line, drawing in from its spread, every point of its way pushed out to 300 m from our posts, then across
+  to a building (the middle of a footprint among the map's and the set's houses, at least 150 m from a post and 40 m
+  from another group's): for the share `crews` of the groups one 120-280 m from our drone team, for the rest one
+  within 220 m of the route's objective. On the way a man is `Cover::Sneaking`: our posts see him at 150 m in clear
+  daylight (less in fog) instead of 750, and hit him as seldom as a man lying down. A fourth way in, `seep_w`,
+  crosses the H-32 between Rivne and the town into Svitle. **The burrow**: at the building the group goes to ground
+  (`Burrow`; its men `InBurrow` and `Cover::Hidden`, which our posts do not fire on), with six bursts for the drone
+  crew and a radio. A burrow within 280 m of the team fires on it every minute or so while it is set up, and may hit
+  a man, which moves the team (`drones::move_team`); every few minutes its second radio brings three corrected
+  152 mm rounds onto the team, if it is within 400 m, or onto the nearest post in its sight (600 m in clear
+  daylight), and in Command puts that post into the staff's `Spotted`. **Finding it**, once a second: by a post
+  (300 m in clear daylight, 0.6 a minute at no range), the observers (800 m, 0.2), the drone's day camera (0.12) or
+  its thermal (0.8 times `heat_shown`: a cloak shows all of a still man's heat within 250 m and the square of the
+  range's share beyond, at least 12%; a man on the move shows 80% at any range), each as far as the light and the
+  fog let it; by the crew it fires on (half the time); by its radio (12% a call). Found, its men are `Cover::Walls`:
+  the posts fire on them behind walls (an eighth of a standing man's chance); the drop, the FPV and the guns kill
+  them as anywhere. **In Command** the `search` support (`SupportKind::Search`, two teams in the catalog) sends a
+  team to each burrow found: it gets there at 2.5 m/s after 40 s, kills each man in it four times in five, loses
+  one of ours one time in three for each it does not, and walks back. **The look and the screen**: the thermal
+  markers of cloaked men shrink with `heat_shown` from the drone and go below 15%; the tally has `{seep}` (theirs on
+  the way in, in burrows, burrows found of made), the debrief the burrows made, found and emptied and the times
+  their fire hit the crew. **The parts**: the placeholder infantry acts are gone: I sends from the four ways at 1.0,
+  0.7, 0.55 and 0.7 men an hour (0.6, 0.4, 0.15, 0.15 of the groups for the crew), II at 0.45, 0.35, 0.25, 0.25.
+  **Numbers** (`band.sh`, seeds 0-3, the `seep:` line at the end): I in its fog sent 42/39/37/37 in 17/15/14/16
+  groups, dead 20/22/15/17, still on the way 16/16/13/17, burrows 6/4/4/4, found 5/4/2/3, emptied 3/3/1/2, the crew
+  hit once (seed 0), their guns called 5-8 times; our losses 10/5/4/7 with the killzone's. I with the fog off sent
+  16/17/17/14, dead 9/12/7/4, burrows 3/3/2/1, found 2/3/1/0, emptied 2/3/1/0; our losses 8/10/5/10. II sent
+  10/10/12/7, dead 4/6/0/2, burrows 3/3/2/0, found 1/3/1/0, emptied 1/2/0/0; our losses 0-1. Before (1af1b79, the
+  infantry acts) I sent 63 and 56-58 died, II sent 15 and 11-13 died. The fog brings in about two and a half times
+  as many, and leaves two to three times as many alive in the box at noon (17-22 against 5-10), near the record's
+  thirty to forty against about ten; most burrows are found, by the posts first, and few are emptied without the
+  player. In Command with two teams (seed 0) one team went out, to a burrow the posts had emptied first. **Checks**:
+  Vuhledar, Mala Tokmachka, both Hostomel parts and the three Avdiivka parts `same` against `fx-v`, `r2-r`, `f3-h1`,
+  `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; each Myrnohrad part filmed twice from one build is the same. `cargo test`,
+  clippy, fmtron and `cargo xtask smoke` pass. The seep's systems run in `Step::Units` after the units and before
+  the areas (`fight`) and the staff (`StaffSystems`); the killzone's run in `Step::Script`, before them. **Not
+  done**: the clock binds: a group walks a kilometre in about ten game minutes, so groups sent after about 1000 s
+  are still on their way at the end (13-17 in I), and the stretches they come from are where their ground meets
+  ours, not the box's edge; in the bands, where nobody flies the drone, it finds little; their FPVs do not go for
+  what the burrows spot (`Spotted` is Command's); a burrow found has its net line and no marker on the picture;
+  Avdiivka's grind and Kupiansk's moving mouth are left to their chapters.
