@@ -466,6 +466,9 @@ pub struct KzTally {
     pub cars_lost: u32,
     /// Cars turned back short of the town (Shift+N) that made it back to the road head.
     pub cars_turned: u32,
+    /// Cars of a run that went into the town and came back out to the road head (of `cars_through`): a day's task
+    /// reads it (`bav_core::data::Condition::CarsHome`).
+    pub home: u32,
     /// Bursts of ours within reach of a launch point or a relay, and of those the ones that put it out.
     pub strikes: u32,
     pub struck: u32,
@@ -800,6 +803,9 @@ fn drive(
 fn through(tally: &mut KzTally, radio: &mut Radio, car: &Car, back: bool, now: f64) {
     if back || car.back.is_none() {
         tally.cars_through += 1;
+    }
+    if back {
+        tally.home += 1;
     }
     info!("killzone: the {} {}, at {now:.0} s", car.kind.name(), if back { "back at the road head" } else { "in the town" });
     radio.say2(

@@ -55,7 +55,8 @@ infantry still comes in by twos and threes, fewer on a day like this, and goes f
 six ground robots, the Vampire for the dusk, three interceptors, two EW domes, and nets over the road from the
 edge to the town.
 
-The day will run whether or not you do anything. What you do matters at the margin.
+Your task today: get the wounded onto the robots, so that no more than six are still waiting at dusk, and keep
+Svitle and the western quarters.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
@@ -100,6 +101,26 @@ Press Enter."#,
             ),
         ],
     ),
+    // The day's task (bav_core::data::Goal): the wounded brought out against the queue at dusk, three of them waiting
+    // since yesterday or longer at first light (c15 §5: days, by November up to two weeks); and Svitle and the western
+    // quarters ours, the road in through Svitle with them (c15 §2, 14 Nov; §3). A wounded man aboard a robot is no
+    // longer waiting. The Record, as history had it, leaves the queue longer at dusk than at dawn: 7, 8, 8 and 10
+    // waiting in seeds 0-3, so the goal asks a little more than the record did; Svitle and the western quarters ours
+    // in three (in the fourth the western quarters contested).
+    objective: [
+        (
+            name: ("The wounded waiting at dusk", "Поранені в черзі до сутінків"),
+            test: WoundedWaiting(6),
+            met: "The robots kept the queue of the wounded short. In December most robots did not survive the trip, and every one that came back with men aboard was a day or a week less of waiting.",
+            missed: "The queue of the wounded was longer at dusk than the day could carry, as it was that winter: men waited days for a robot, some two weeks, and a robot marked with a red cross drew fire.",
+        ),
+        (
+            name: ("Svitle and the western quarters", "Світле і західні квартали"),
+            test: Held(["svitle", "west"]),
+            met: "Svitle and the western quarters were ours at dusk, and the road in through Svitle with them. Russia would claim the town on 27 December; it was still being fought for in January.",
+            missed: "Svitle or the western quarters were theirs at dusk. Historically both held through December, and the road through Svitle was the last way into the pocket.",
+        ),
+    ],
     // The debrief's rows (the schema is the game's screen.rs); the tally's and the fire panel's lines are map.ron's.
     debrief: (
         rows: [

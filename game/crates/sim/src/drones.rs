@@ -36,7 +36,7 @@ impl Plugin for DronesPlugin {
         // The part's own place for the team where it has one (`bav_core::data::DioramaData::team`).
         let team = bav_core::data::data().team.unwrap_or(d.operator.pos);
         app.insert_resource(Fpv { left: fpvs, heavy: heavy_of(fpvs), ..default() })
-            .insert_resource(Operator { pos: Vec2::new(team.0, team.1), found: None, moving_until: 0.0, moves: 0 })
+            .insert_resource(Operator { pos: Vec2::new(team.0, team.1), found: None, moving_until: 0.0, moves: 0, hits: 0 })
             .insert_resource(OperatorRng(SmallRng::seed_from_u64(crate::dev::seeded(1306))))
             .add_systems(Update, drone_input.in_set(crate::Step::Control).after(crate::dev::DevSystems))
             .add_systems(Update, (team_found, fpv_strikes, crate::ew::ew_update).chain().run_if(crate::running).in_set(crate::Step::Script).after(crate::evac::EvacSystems));
@@ -253,6 +253,7 @@ fn team_found(
 /// and the controller lost, the feed down while another is found, and the move.
 pub fn team_hit(op: &mut Operator, view: &mut View, radio: &mut Radio, now: f64) {
     info!("operator: hit at {:.0},{:.0}, at {now:.0} s", op.pos.x, op.pos.y);
+    op.hits += 1;
     view.drones_left = view.drones_left.saturating_sub(1);
     let wait = if view.drones_left == 0 { 240.0 } else { 75.0 };
     view.feed_down = view.feed_down.max(wait);
