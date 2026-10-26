@@ -79,6 +79,12 @@ impl SeepView<'_, '_> {
     }
 }
 
+/// Their drones' line in the tally, where the day has a kill zone: the FPVs they have flown, and our cars on the road.
+fn killzone_line(t: &bav_sim::killzone::KzTally) -> String {
+    let cars = if t.cars_out > 0 { format!("   our cars out {}   through {}   burnt {}", t.cars_out, t.cars_through, t.cars_lost) } else { String::new() };
+    format!("\nTheir FPVs flown {}{cars}", t.sorties.iter().sum::<u32>())
+}
+
 fn zones_line(f: &bav_sim::fight::Field) -> String {
     f.zones
         .iter()
@@ -324,7 +330,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops, robots, seep): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>, Option<Res<bav_sim::drones::Drops>>, RobotView, SeepView),
+    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops, robots, seep, kz): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>, Option<Res<bav_sim::drones::Drops>>, RobotView, SeepView, Option<Res<bav_sim::killzone::KzTally>>),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -480,6 +486,7 @@ fn update_hud(
         "runway" => runway.map_or(String::new(), runway_line),
         "robots" => robots.tally(now),
         "seep" => seep.line(),
+        "killzone" => kz.as_deref().map_or(String::new(), killzone_line),
         _ => String::new(),
     })));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
@@ -658,7 +665,7 @@ fn show_debrief(
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
-    (field, air, iglas, runway, drops, robots, seep): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&'static bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>, (Option<Res<bav_sim::robots::Robots>>, Option<Res<bav_sim::evac::Casualties>>), Option<Res<bav_sim::seep::Seep>>),
+    (field, air, iglas, runway, drops, robots, seep, kz): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&'static bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>, (Option<Res<bav_sim::robots::Robots>>, Option<Res<bav_sim::evac::Casualties>>), Option<Res<bav_sim::seep::Seep>>, Option<Res<bav_sim::killzone::KzTally>>),
     duel: DuelView,
 ) {
     for mut n in &mut root {
@@ -676,7 +683,7 @@ fn show_debrief(
     let place = spec.place.as_ref().unwrap_or(&data.place);
     let heading = format!("{}   {} ({})", data.date, place.0, place.1);
     let span = format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t));
-    let ledger = Ledger { stats: &stats, fc: &fc, positions: &positions, soldiers: &soldiers, evac: &evac, field: field.as_deref(), air: air.as_deref(), iglas: &iglas, runway: runway.as_deref(), drops: drops.as_deref(), robots: robots.0.as_deref(), casualties: robots.1.as_deref(), seep: seep.as_deref(), duel: &duel, script: &script };
+    let ledger = Ledger { stats: &stats, fc: &fc, positions: &positions, soldiers: &soldiers, evac: &evac, field: field.as_deref(), air: air.as_deref(), iglas: &iglas, runway: runway.as_deref(), drops: drops.as_deref(), robots: robots.0.as_deref(), casualties: robots.1.as_deref(), seep: seep.as_deref(), kz: kz.as_deref(), duel: &duel, script: &script };
     let mut rows = Vec::new();
     ledger.rows(&spec.rows, &mut rows);
     // The columns, as a small table: (name, vehicles, destroyed, abandoned).
@@ -775,6 +782,7 @@ struct Ledger<'a, 'w, 's> {
     robots: Option<&'a bav_sim::robots::Robots>,
     casualties: Option<&'a bav_sim::evac::Casualties>,
     seep: Option<&'a bav_sim::seep::Seep>,
+    kz: Option<&'a bav_sim::killzone::KzTally>,
     duel: &'a DuelView<'w, 's>,
 }
 
@@ -793,6 +801,7 @@ impl Ledger<'_, '_, '_> {
                         screen::Gate::Robots => self.robots.is_some(),
                         screen::Gate::Bomber => bav_sim::robots::spec().is_some_and(|s| s.bomber.is_some()),
                         screen::Gate::Seep => self.seep.is_some(),
+                        screen::Gate::Killzone => self.kz.is_some(),
                     };
                     if has {
                         self.rows(rows, out);
@@ -938,6 +947,12 @@ impl Ledger<'_, '_, '_> {
             F::BurrowsFound => self.seep.map_or(0, |s| s.found()).to_string(),
             F::BurrowsEmptied => self.seep.map_or(0, |s| s.emptied()).to_string(),
             F::CrewsHit => self.seep.map_or(0, |s| s.crews_hit).to_string(),
+            F::TheirSorties => self.kz.map_or(String::new(), |t| format!("{}: {} on radio, {} on fibre, {} from the shoulders", t.sorties.iter().sum::<u32>(), t.sorties[0], t.sorties[1], t.sorties[2])),
+            F::TheirHits => self.kz.map_or(String::new(), |t| {
+                let hit: Vec<String> = bav_sim::killzone::Class::ALL.iter().zip(t.hits).filter(|(_, n)| *n > 0).map(|(c, n)| format!("{} {n}", c.name())).collect();
+                if hit.is_empty() { "nothing".to_string() } else { hit.join(", ") }
+            }),
+            F::Cars => self.kz.map_or(String::new(), |t| format!("{} out, {} through, {} burnt", t.cars_out, t.cars_through, t.cars_lost)),
         }
     }
 }

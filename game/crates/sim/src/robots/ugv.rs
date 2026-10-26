@@ -338,7 +338,7 @@ pub(super) fn deliver(c: Cargo, at: Vec2, robots: &mut Robots, posts: &mut Query
         Cargo::Ammo => {
             let post = posts.iter_mut().filter(|(p, _)| p.side == Side::Ua && p.pos.distance(at) < 120.0).min_by(|a, b| a.0.pos.distance(at).total_cmp(&b.0.pos.distance(at)));
             if let Some((_, Some(mut ammo))) = post {
-                ammo.0 += crate::fight::spec().map_or(0, |f| f.ammo / 2);
+                ammo.0 += crate::fight::volleys().map_or(0, |n| n / 2);
             }
         }
         Cargo::Power if op.pos.distance(at) < 250.0 => {

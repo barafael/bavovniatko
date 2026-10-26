@@ -28,8 +28,9 @@ pub struct HudSpec {
 /// the ground where the day has aircraft, areas, a fight, a runway and a seep. `air`, `zones` and `seep` are whole
 /// phrases, empty where the day has none.
 /// `robots` is the ground robots' line (sent, back, lost, and the wounded waiting where they wait for a robot), empty
-/// where the day has none.
-pub const TALLY_KEYS: &[&str] = &["date", "clock", "committed", "out", "withdrawn", "sent", "returned", "air", "zones", "air_down", "landed", "men_out", "captured", "taken", "runway", "robots", "seep"];
+/// where the day has none; `killzone` their drones' (the FPVs they have flown, our cars on the road out, through and
+/// burnt), empty where the day has no kill zone.
+pub const TALLY_KEYS: &[&str] = &["date", "clock", "committed", "out", "withdrawn", "sent", "returned", "air", "zones", "air_down", "landed", "men_out", "captured", "taken", "runway", "robots", "seep", "killzone"];
 
 /// What the fire panel's template can name. `vog`, `ad`, `pull_out`, `ugv` and `bomber` are whole phrases, empty where
 /// the day has no grenades, no air defence left, nobody to pull out, no robots or no bomber; `speed` is the time's
@@ -78,6 +79,8 @@ pub enum Gate {
     Bomber,
     /// Their infantry seeps in (`bav_sim::seep`).
     Seep,
+    /// Their drones over the ground (`bav_sim::killzone`).
+    Killzone,
 }
 
 /// A figure of the day's account.
@@ -158,6 +161,10 @@ pub enum Figure {
     BurrowsFound,
     BurrowsEmptied,
     CrewsHit,
+    /// Their FPVs flown, by kind; what they hit, by what they were after; our cars on the road out, through and burnt.
+    TheirSorties,
+    TheirHits,
+    Cars,
 }
 
 /// The table of columns: its three heads, the columns' names by number from 1, and the name of one past them, with

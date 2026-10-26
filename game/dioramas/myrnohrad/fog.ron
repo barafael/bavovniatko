@@ -1,9 +1,11 @@
 // Myrnohrad, part I, The fog (Туман): 10 November 2025, morning. Fog on the towns from first light until it lifts
 // before noon (ERA5, c15 §3: near-saturated air and 6-10 hours of fog on 5-7, 10 and 12 November), and under it
-// their infantry walks in by twos and threes, thirty to forty a day in such weather (c15 §5). Until their drones and
-// the vehicle run are built (design/myrnohrad.md, phases 3-7), the day is a placeholder: the seep from four sides at
-// the fog's rate, the posts, two KAB pairs. The schema is bav_core::data and bav_sim::data; the map is
-// map.ron.
+// their infantry walks in by twos and threes, thirty to forty a day in such weather against about ten in sun
+// (c15 §5), mostly from the Krasnyi Lyman jaw and the south-eastern edge. Their drone crews are nearly grounded until
+// the lift; the fog is the one cover under which our vehicles reach the town (c15 §5, §6.9), so the morning's run goes
+// in and comes back under it, and what is still on the road when it lifts is seen. The posts in the villages and the
+// western quarters with what ammunition they have, the robots, two KAB pairs (850 on Pokrovsk in October, c15 §5).
+// The schema is bav_core::data and bav_sim::data; the map is map.ron (design/myrnohrad.md, part I).
 (
     date: "10 November 2025",
     tally_date: "10 NOV 2025",
@@ -47,13 +49,16 @@ FPVs, grenades to drop, and a gun battery's rounds when there are any. Riflemen 
 quarters and the Tsentralna mine.
 
 This morning there is fog. Under it nothing flies well, theirs or ours, and their infantry walks in by twos and
-threes: ten a day in sun, thirty or forty in weather like this. When it lifts, anything still on the road is seen.
+threes: ten a day in sun, thirty or forty in weather like this. It is also the only cover our vehicles have: two
+pickups go in from the road head at first light and must be back out before it lifts. When it lifts, anything
+still on the road is seen.
 
 The day will run whether or not you do anything. What you do matters at the margin.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
 V: a ground robot for the wounded.  Alt+click: a robot with ammunition.  7: the robot's camera.
+9: an interceptor at their Orlans.  J: our EW dome off or on.
 1/2 or Tab: drone / the observers on the high-rise.  M: move the drone team when they find you.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -122,6 +127,14 @@ Press Enter."#,
                 ],
             ),
             If(Bomber, [Line("The Vampire's sorties", Sorties)]),
+            If(
+                Killzone,
+                [
+                    Line("Their FPVs over the road", TheirSorties),
+                    Line("    what they hit", TheirHits),
+                    Line("Our cars on the road", Cars),
+                ],
+            ),
         ],
     ),
     // The observers on the roof of a nine-storey block on Soborna street.
@@ -178,6 +191,9 @@ Press Enter."#,
     // are a chance per kilometre until their drone crews are built (design/myrnohrad.md, phase 3), and small under
     // the fog.
     robots: (ugvs: 3, casevac: true, found_per_km: 0.1),
+    // What each post has to fire before it is dry, a robot's load of ammunition filling it by half. The dossier gives
+    // no figure: the design's, so that the posts that see most of the seep run low by noon unless a robot reaches them.
+    post_ammo: 60,
     // The Record: riflemen at the eight posts, a battery's sixteen rounds, four FPVs (the light ones useless in the
     // wet, c15 §3), six grenades for the drone.
     allotment: (
@@ -201,9 +217,8 @@ Press Enter."#,
     // "Irish" (Grom-Kaskad) from the Krasnyi Lyman jaw are grounded while the fog is under 500 m; the Archangels' fibre
     // ones fly, worse, and their waiters sit on the shoulders of both roads in. Rubikon comes onto the road with the
     // lift. The garrison has one EW dome, at the town's western entrance over the drone team, and nets over
-    // a kilometre of the H-32 from Rivne to the town (the run-in's procedure, c15 §5). Three runs from the road head: a Lada in
-    // the fog under the nets, a pickup by the northern road that is still out when the fog goes, and a Lada after the
-    // lift. The rates are the design's: the dossier gives none for the box (c15 §11).
+    // a kilometre of the H-32 from Rivne to the town (the run-in's procedure, c15 §5). The rates are the design's: the
+    // dossier gives none for the box (c15 §11).
     killzone: (
         crews: [
             (
@@ -252,10 +267,17 @@ Press Enter."#,
         ],
         domes: [(post: 7, radius: 300.0)],
         nets: [[(-1573.0, -240.2), (-1240.7, -150.3), (-779.5, -83.9), (-718.8, -82.4), (-415.7, -105.0)]],
+        // The morning's run (c15 §5, §6.9: vehicles reach the town only on the foggiest days): two of the brigade's
+        // pickups from the road head under the nets at about 07:05, in the town by 07:40, an hour of the clock there
+        // (unloading, and the wounded on board), and back at the road head by about 09:20, before the radio crews fly
+        // (the fog past 500 m about 09:35) and an hour before the lift (10:28). The dossier names
+        // no kind; the L200 is the brigades' pickup of the era. Then a volunteers' Lada that sets out late, at about
+        // 10:00, and is still on the road when the fog goes (c15 §5: "the main losses aren't at the positions, but on
+        // the road"; that it is lost is the design's).
         runs: [
             (
                 at: 150.0,
-                kind: Lada,
+                kind: L200,
                 way: [
                     (-2290.0, -444.0),
                     (-1795.4, -302.3),
@@ -270,20 +292,29 @@ Press Enter."#,
                     (14.4, -247.8),
                     (137.3, -262.4),
                 ],
-                back: 120.0,
+                back: 260.0,
             ),
             (
-                at: 640.0,
+                at: 162.0,
                 kind: L200,
                 way: [
-                    (-2304.0, 35.6), (-1218.6, 367.3), (-1130.6, 385.6), (-1003.4, 384.6), (-908.0, 363.0),
-                    (-833.1, 332.8), (-741.2, 275.4), (-674.8, 212.8), (-437.9, -80.9), (-415.7, -105.0),
-                    (-331.9, -132.8), (-199.3, -202.5), (-118.7, -227.9), (14.4, -247.8), (137.3, -262.4),
+                    (-2290.0, -444.0),
+                    (-1795.4, -302.3),
+                    (-1573.0, -240.2),
+                    (-1240.7, -150.3),
+                    (-779.5, -83.9),
+                    (-718.8, -82.4),
+                    (-415.7, -105.0),
+                    (-331.9, -132.8),
+                    (-199.3, -202.5),
+                    (-118.7, -227.9),
+                    (14.4, -247.8),
+                    (137.3, -262.4),
                 ],
-                back: 200.0,
+                back: 250.0,
             ),
             (
-                at: 1080.0,
+                at: 870.0,
                 kind: Lada,
                 way: [
                     (-2290.0, -444.0),
@@ -303,13 +334,14 @@ Press Enter."#,
         ],
         // Their direction-finders locate our drone team's ground station about once an hour of drone time.
         team: 1.0,
-        // After the lift (placeholders for phase 7): a 155 mm mission on Sudny Den's launch point, and an FPV of ours
-        // on the Irish's relay; a point hit is out for an hour of the clock (c15 §5, §10: a lever, not a win).
+        // After the lift: a 155 mm mission on Sudny Den's launch point, and an FPV of ours on the Irish's relay; a point
+        // hit is out for an hour of the clock (c15 §5, §10: the HUR's strike on a Rubikon base early in November had a
+        // limited effect, a lever, not a win). The times and targets are the design's.
         strikes: [(at: 1180.0, crew: 1, by: Guns), (at: 1300.0, crew: 2, by: Fpv, relay: true)],
     ),
-    // Their reconnaissance wings and our interceptors (bav_sim::wings; 01 e7, e9). After the lift an Orlan comes over
-    // the road from Pokrovsk's side and a ZALA from the jaw; the drone team has three interceptors and a radar that
-    // cues them. Placeholders for phase 7.
+    // Their reconnaissance wings and our interceptors (bav_sim::wings; 01 e7, e9). Nothing flies over the fog; after
+    // the lift an Orlan comes over the road from Pokrovsk's side and a ZALA from the jaw. The drone team has three
+    // interceptors and a radar that cues them. The passes and the stock are the design's.
     wings: (
         passes: [
             (
@@ -327,39 +359,46 @@ Press Enter."#,
         interceptors: 3,
         radar: (at: (450.0, -60.0), range: 2000.0),
     ),
-    // The morning: twos and threes seeping in from four sides under the fog (bav_sim::seep), about three men an hour
-    // in clear air and three and a half times that in the thick of it, so thirty-odd by noon (c15 §5); most go for
-    // the drone crew in the western quarters. KABs on the town; the fog lifting before noon.
+    // The morning: twos and threes seeping in under the fog (bav_sim::seep), the 51st CAA's from the south-eastern edge
+    // and the Krasnyi Lyman jaw, the 2nd CAA's fewer from Pokrovsk's side (c15 §4), about three men an hour in clear
+    // air and three and a half times that in the thick of it, so thirty to forty by noon (c15 §5); most of those from
+    // the edge and the jaw go for the drone crew in the western quarters (c15 §5: drone crews first). The run goes in
+    // under the fog and the net warns of the lift (bav_sim::fight::lift); KABs on the town.
     script: [
         (2.0, Say("Bird up. Fog on everything. I can see the road for a hundred metres, no more.")),
         (20.0, Say("All, this is {command}. They walk in this weather. Watch the belts and the ruins.")),
-        // Placeholder runs (the part's content is phase 7): ammunition to Rivne under the fog, food to Svitle.
-        (90.0, Ugv(to: 1, cargo: Ammo)),
-        (420.0, Ugv(to: 0, cargo: Food)),
         (
             60.0,
             Seep(
                 route: 0,
                 from: 450.0,
                 width: 300.0,
-                per_hour: 1.0,
+                per_hour: 1.1,
                 crews: 0.6,
                 label: "06:45  Twos and threes from the south-eastern edge",
             ),
         ),
+        // The robots (c15 §5: every supply run into the town by drone or robot from October): ammunition to Rivne
+        // under the fog, food and water to Svitle. Which posts and when are the design's.
+        (90.0, Ugv(to: 1, cargo: Ammo)),
         (
             120.0,
             Seep(
                 route: 1,
                 from: 700.0,
                 width: 300.0,
-                per_hour: 0.7,
+                per_hour: 0.9,
                 crews: 0.4,
                 label: "07:00  From the Krasnyi Lyman side",
             ),
         ),
-        (200.0, Seep(route: 2, from: 1550.0, width: 300.0, per_hour: 0.55, crews: 0.15)),
-        (260.0, Seep(route: 3, from: 1000.0, width: 300.0, per_hour: 0.7, crews: 0.15)),
+        (
+            140.0,
+            Say("All, this is {command}. The run is going in now, two pickups under the nets. Eyes on the shoulders."),
+        ),
+        (200.0, Seep(route: 2, from: 1550.0, width: 300.0, per_hour: 0.45, crews: 0.15)),
+        (260.0, Seep(route: 3, from: 1000.0, width: 300.0, per_hour: 0.45, crews: 0.15)),
+        (420.0, Ugv(to: 0, cargo: Food)),
         (
             400.0,
             Bombs(
@@ -368,6 +407,12 @@ Press Enter."#,
                 n: 2,
                 label: "08:05  KABs on the western quarters",
                 say: "Su-34s. Glide bombs on the town. Down.",
+            ),
+        ),
+        (
+            865.0,
+            Say(
+                "{command}: a volunteers' car at the road head, going in now. They say they'll make it before it clears.",
             ),
         ),
         (900.0, Bombs(from: (-650.0, -1350.0), to: (-450.0, -1250.0), n: 2, label: "", say: "KABs on Svitle.")),
