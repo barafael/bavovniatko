@@ -152,6 +152,15 @@ impl Spotted {
     pub fn vehicles(&self) -> Vec<Vec2> {
         by_place(self.0.values().filter(|s| s.what == What::Vehicle).map(|s| s.at).collect())
     }
+
+    /// What of it their drone crews may go for (`killzone`): the posts and hides as men, the vehicles as vehicles,
+    /// west to east.
+    pub fn prey(&self) -> Vec<(crate::killzone::Mark, crate::killzone::Class, Vec2)> {
+        use crate::killzone::{Class, Mark};
+        let mut v: Vec<_> = self.0.iter().map(|(e, s)| (Mark::Thing(*e), if s.what == What::Vehicle { Class::Vehicle } else { Class::Men }, s.at)).collect();
+        v.sort_by(|a, b| a.2.x.total_cmp(&b.2.x).then(a.2.y.total_cmp(&b.2.y)));
+        v
+    }
 }
 
 fn by_place(mut v: Vec<Vec2>) -> Vec<Vec2> {

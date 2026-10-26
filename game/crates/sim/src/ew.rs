@@ -98,6 +98,46 @@ impl Plugin for EwPlugin {
         app.insert_resource(Ew { radius: spec.as_ref().map_or(1.0, |s| s.radius), depth: spec.as_ref().map_or(0.0, |s| s.depth), lifts, ..default() })
             .insert_resource(EwRng(SmallRng::seed_from_u64(crate::dev::seeded(1702))))
             .add_systems(Startup, spawn_jammers.in_set(crate::schedule::Setup::Field));
+        // Our domes, only where the day has them: an entity more anywhere else would be in that day's Record.
+        if crate::killzone::spec().is_some_and(|k| !k.domes.is_empty()) {
+            app.add_systems(Startup, spawn_domes.in_set(crate::schedule::Setup::Field));
+        }
+    }
+}
+
+/// One of our EW domes (design/myrnohrad.md, phase 3: the field turned to our side): a jammer at a post that
+/// blankets the radio FPVs' control band 200–300 m round it (02 e8). It breaks most radio links that cross into it and
+/// none of the fibre ones; it is an emitter, so their direction-finders locate it, and a fibre FPV can knock it out
+/// (`killzone`).
+#[derive(serde::Deserialize, Debug, Clone, Copy)]
+pub struct DomeSpec {
+    /// The post it stands at (the layout's `ua_positions`).
+    pub post: usize,
+    pub radius: f32,
+}
+
+/// A dome of ours, while it stands.
+#[derive(Component)]
+pub struct Dome {
+    pub idx: usize,
+    pub radius: f32,
+}
+
+/// A dome their FPVs have knocked out: the mast is down and it jams nothing.
+#[derive(Component)]
+pub struct DomeDown;
+
+/// The chance a dome breaks the link of a radio FPV that crosses into it (frequency hopping gets some through).
+pub const DOME_BREAKS: f64 = 0.85;
+
+fn spawn_domes(mut commands: Commands) {
+    let Some(k) = crate::killzone::spec() else { return };
+    let lay = geo::layout();
+    for (idx, d) in k.domes.iter().enumerate() {
+        // The mast beside the post, not in it.
+        let Some(&p) = lay.ua_positions.get(d.post) else { continue };
+        let at = p + Vec2::new(9.0, 6.0);
+        commands.spawn((Dome { idx, radius: d.radius }, crate::killzone::Prey(crate::killzone::Class::Ew), Transform::from_translation(geo::ground(at))));
     }
 }
 

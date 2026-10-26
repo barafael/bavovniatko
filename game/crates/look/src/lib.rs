@@ -15,6 +15,7 @@ pub mod data;
 pub mod feed;
 pub mod fx;
 pub mod hostomel;
+pub mod killzone;
 pub mod meshes;
 pub mod models;
 pub mod myrnohrad;

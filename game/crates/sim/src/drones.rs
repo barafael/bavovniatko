@@ -180,16 +180,21 @@ fn team_found(
                 commands.spawn(Mission { target: op.pos, kind: ShellKind::Ru152, rounds: 6, sigma: 25.0, interval: 2.0, next: now, flight: 15.0, by: Side::Ru });
             }
             if now >= t + 38.0 {
-                info!("operator: hit at {:.0},{:.0}, at {now:.0} s", op.pos.x, op.pos.y);
-                view.drones_left = view.drones_left.saturating_sub(1);
-                let wait = if view.drones_left == 0 { 240.0 } else { 75.0 };
-                view.feed_down = view.feed_down.max(wait);
-                radio.say2(now, "Нас накрили. Двоє трьохсотих, пульт розбитий. Шукаємо новий.", "They've hit us. Two wounded, the controller's smashed. Looking for another.");
-                let o = &mut *op;
-                move_team(o, &mut view, &mut radio, now, true);
+                team_hit(&mut op, &mut view, &mut radio, now);
             }
         }
     }
+}
+
+/// The team hit where it stands, by the guns after the ranging round or by one of their FPVs (`killzone`): a drone
+/// and the controller lost, the feed down while another is found, and the move.
+pub fn team_hit(op: &mut Operator, view: &mut View, radio: &mut Radio, now: f64) {
+    info!("operator: hit at {:.0},{:.0}, at {now:.0} s", op.pos.x, op.pos.y);
+    view.drones_left = view.drones_left.saturating_sub(1);
+    let wait = if view.drones_left == 0 { 240.0 } else { 75.0 };
+    view.feed_down = view.feed_down.max(wait);
+    radio.say2(now, "Нас накрили. Двоє трьохсотих, пульт розбитий. Шукаємо новий.", "They've hit us. Two wounded, the controller's smashed. Looking for another.");
+    move_team(op, view, radio, now, true);
 }
 
 /// Where the FPV meets a hull or the ground, it goes in.

@@ -253,7 +253,8 @@ pub(super) fn peril(
     mut q: Query<(Entity, &mut Robot, &Vehicle, &Driver, &Transform)>,
 ) {
     let now = time.elapsed_secs_f64();
-    let per_km = spec().map_or(0.0, |s| s.found_per_km);
+    // Where the day has their drone crews as things of their own (`killzone`), they hunt the robots instead.
+    let per_km = if crate::killzone::present() { 0.0 } else { spec().map_or(0.0, |s| s.found_per_km) };
     let light = (bav_core::sun::sight(crate::director::clock_minutes(script.t)) - 0.35) / 0.65;
     let pocket = bav_core::field::pocket();
     for (e, mut r, v, d, tf) in &mut q {

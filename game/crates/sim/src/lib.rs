@@ -22,6 +22,7 @@ pub mod flares;
 pub mod fx;
 pub mod hits;
 pub mod jets;
+pub mod killzone;
 pub mod manpads;
 pub mod orders;
 pub mod paint;

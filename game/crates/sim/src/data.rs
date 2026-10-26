@@ -38,6 +38,10 @@ pub struct SimData {
     /// Their EW: jammers on their line, the rear ramp, the Ka-52 tell (none: only the scripted bursts).
     #[serde(default)]
     pub ew: Option<crate::ew::EwSpec>,
+    /// Their drones over the ground: the crews, the roads they watch, our domes and nets, our runs on the road (none:
+    /// no kill zone).
+    #[serde(default)]
+    pub killzone: Option<crate::killzone::KillzoneSpec>,
     /// The strike drones of the day (how many is the Allotment's; none: the drone is eyes only).
     #[serde(default)]
     pub fpv: Option<FpvSpec>,

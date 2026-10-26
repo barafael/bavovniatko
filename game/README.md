@@ -14,7 +14,8 @@ are five places so far, the first two one minefield seen from both sides:
   shoulder of the salient in three parts, in the making ([`design/avdiivka.md`](design/avdiivka.md)).
 - **Myrnohrad, November 2025 to January 2026** (`-- myrnohrad-1`, `-- myrnohrad-2`, `-- myrnohrad-3`): the road
   into the pocket, in the fog, by day and in the frost; so far the place and its map, the ground robots and the
-  heavy bomber, the days placeholders ([`design/myrnohrad.md`](design/myrnohrad.md)).
+  heavy bomber, their drone crews over the road (FPVs on radio and fibre, waiters on the shoulders) against our EW
+  domes and nets, the days placeholders ([`design/myrnohrad.md`](design/myrnohrad.md)).
 
 To watch rather than play, `cargo xtask film` produces a four-minute film of both, directed from
 `design/showcase.md` ([below](#the-showcase-film)).

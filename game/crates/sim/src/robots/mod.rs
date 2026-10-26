@@ -49,11 +49,16 @@ impl Plugin for RobotsPlugin {
                     .chain()
                     .run_if(crate::running)
                     .in_set(crate::Step::Script)
+                    .in_set(RobotSystems)
                     .after(crate::evac::EvacSystems)
                     .after(crate::ew::ew_update),
             );
     }
 }
+
+/// The robots' systems, for what must run after them (their drones over the ground, `killzone`).
+#[derive(SystemSet, Clone, Copy, PartialEq, Eq, Hash, Debug)]
+pub struct RobotSystems;
 
 /// The day's robots (`robots` in its file).
 #[derive(Deserialize, Debug, Clone)]

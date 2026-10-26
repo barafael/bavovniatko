@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
-Status: planned 2026-10-25; phases 0, 1, 2 and 5 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; the robots; the days are placeholders). The owner's direction of 25 October: the next diorama comes from
+Status: planned 2026-10-25; phases 0, 1, 2, 3 and 5 built 2026-10-26 (the place, its map and set, the pocket; the fog
+in the battle; their drones over the ground; the robots; the days are placeholders). The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -487,3 +487,44 @@ the EW domes' masts.
   Record's table (phases 7-9); a robot's range is not counted (the box is far inside its 20 km); a robot driven by
   hand keeps to its route's corridor (25 m either side) rather than going anywhere; nothing shoots at the bomber; the
   map table composes no cargo (a UGV sent on Supply carries ammunition).
+- 2026-10-26: phase 3, their drones over the ground (`bav_sim::killzone`, `look/killzone.rs`). **The crews** are
+  entities at their launch points (`Crew`): Sudny Den's radio FPVs beyond the +z edge, the "Irish" (Grom-Kaskad) at
+  the Krasnyi Lyman jaw, the Archangels' fibre ones, Rubikon's fibre ones as a scripted arrival, and the Archangels'
+  waiters on the shoulders of both roads in (`Kind::Rf`, `Fibre`, `Waiter`). Each fills its sorties at a rate an hour
+  of the clock times its tempo: the light and the fog's metres from `fight::Seeing` (radio ones grounded below
+  500 m, the fibre ones at a fifth in the thickest fog, the night at 0.4 of the day for their thermal cameras). A
+  waiter wakes when something of ours on wheels passes within 150 m, or as far as it sees in fog, and is laid again
+  after its rate. **Their picture** (`Picture`) is looked over every five seconds: what of ours is within 300 m of a
+  road they watch is found more readily in clear air (`finding`), our domes as emitters whatever the weather, a post
+  near the road now and then, and our drone team's ground station while a drone is up (`team`, an hour's rate). In
+  Command the staff's `Spotted` is added (`Spotted::prey`), and an arriving crew (Rubikon) goes only for what the
+  staff has spotted, with a budget of sorties: the staff spends its tempo. A launch goes for the best class
+  (`Class`: drone team, EW, vehicles and robots, men), then the nearest, never more than two at one thing. **The
+  FPV** (`TheirFpv`, the baked `fpv` drawn three times life size) flies out at 50 m and dives from 220 m, steering
+  onto its target as it moves, and comes down as an `Impact`: on our drone team only if it has not moved (M saves
+  it), a dome knocked out (`ew::DomeDown`), a post's man down and the post pinned, a car burnt, a robot or a column
+  game's vehicle a shaped charge from above (`DirectHit`, `Cause::Atgm`; `VKind::Ugv` is `Class::Robot`, and where the
+  day has a kill zone the robots' per-kilometre stand-in is off). **What stops them**: our domes (`ew::Dome`, at a
+  post, its mast with a green lamp) break a radio link 85% of the time it crosses in, never a fibre one; a fibre
+  cable snags on 4% of sorties; nets over a stretch of road (`Net`, a gallery of poles under a sagging mesh) leave
+  15% of a strike's chance until six holes are torn in them. **Our runs** (`Car`: the baked `l200` and `lada`)
+  drive a way from the road head into the town and back. **In part I**: the four crews and three waiters, one dome
+  at the town's western entrance over the drone team, nets over the kilometre of the H-32 from Rivne to the town,
+  a Lada under the nets at 150 s (back after two minutes), a pickup by the open northern road at 640 s, a Lada
+  after the lift at 1080 s; Rubikon arrives at 980 s with the lift. All the rates are the design's (c15 §11).
+  **Numbers**, Myrnohrad I seeds 0-3, `BAV_LOG_STATS`'s `killzone:` line at 12:15. In the fog: sorties 26-29 (radio
+  6-8, fibre 12-14, waiters 5-8); hits on the drone team 1-2, EW 1 (the Archangels' fibre FPVs take the dome by
+  about 09:40, before the radio ones fly), vehicles 1-3, robots 1-2, men 2-5; misses 12-16; links broken 0; nets
+  went in under 5-6 times and stopped 4-6; the cars 0/1/2/1 through and 3/2/1/2 lost (the Lada under the nets lives
+  in three of four, the pickup on the open road never, the Lada after the lift never). Without the fog
+  (`BAV_FOG=off`): sorties 53-76 (radio 41-53), drone team 1-3, EW 1-2, vehicles 3, robots 3-4, men 0-7, misses 15-27,
+  links broken by the dome 17-39, nets 5-6 and 3-6, every car lost. **Bands** (`band.sh`'s tallies): before (main
+  with the robots) sent 63, dead 55/57/57/58, our losses 0; after dead 56/57/56/57, our losses 6/4/6/9 in the fog
+  and 7/9/4/10 without it. The infantry's band does not move: their drones hunt what is on the road and the drone
+  team, not the men walking in (that is phase 4's). **Checks**: Vuhledar, Mala Tokmachka, both Hostomel parts and
+  the three Avdiivka parts `same` against `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`;
+  Myrnohrad I filmed twice from one build is the same; II and III have no `killzone` and nothing of it is spawned or
+  scheduled there. `cargo test`, clippy, fmtron and `cargo xtask smoke` pass. **Not done**: II and III have no
+  crews yet (phases 8-9); the HUD and the debrief do not count their sorties (phase 7); the domes do not yet blind
+  our own drones, and nothing of ours strikes a launch point (phase 6); fibre in the ice is only `snag` in the file;
+  the FPVs make no sound of their own, and a fibre one draws no cable.
