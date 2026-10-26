@@ -156,7 +156,9 @@ Press Enter."#,
     shift_fire: Smoke,
     // The field is fought for as in the morning; the areas say who has it.
     fight: (
-        ammo: 400,
+        // What the VDV's groups have left after a day's fighting: they came by helicopter with what they could carry,
+        // and the airlift that was to bring more turned back (c01 §2, §7).
+        ammo: 160,
         men_per: 5,
         out_to: (2350.0, 1850.0),
         rifles: 0.3,
@@ -164,6 +166,12 @@ Press Enter."#,
         assault: 0.25,
         // The VDV's posts each have a couple of hand flares for when they are rushed in the dark.
         flares: 2,
+        // A post down under the guns' and the BMPs' fire fires a third as often: the assault groups move under it.
+        pinned: 0.33,
+        // A section stays in each area our men have got into when the rest go on to the next post, and a post ringed
+        // by a dozen of ours draws no more: the rest go on.
+        keep: 4,
+        ring: 12,
         zones: [
             (
                 key: "hangar",
@@ -283,9 +291,10 @@ Press Enter."#,
         (800.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
         (840.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
         (880.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),
+        // Down the runway's centreline from its north-west end, a bomb every 170 m or so: the cratering (c01 §1, §6).
         (
             900.0,
-            Bombs(from: (-500.0, -800.0), to: (200.0, 800.0), n: 10, label: "19:42  The Su-24s again, on the runway"),
+            Bombs(from: (-1022.0, -1807.0), to: (-121.0, 90.0), n: 12, label: "19:42  The Su-24s again, on the runway"),
         ),
         (920.0, Flares([(800.0, 700.0), (955.0, 1075.0), (520.0, 1000.0)])),
         (960.0, Flares([(840.0, 380.0), (915.0, 650.0), (700.0, 330.0)])),

@@ -1,8 +1,9 @@
 # Hostomel: the third diorama, in two sub-chapters
 
-Status: both sub-chapters play, lit at night, with their minute tours and their Command bands (2026-10-25). Open: the
-counterattack's pressure (the field is not fully retaken by 21:00 in the Record), a Command evening that differs from
-the Record (its staff changes nothing at dusk), a place in the showcase film, and the fuel farm (not on the map).
+Status: both sub-chapters play, lit at night, with their minute tours and their Command bands; the counterattack
+retakes the field by 21:00, cratering the runway, and pulls back (2026-10-26). Open: a Command evening that differs from
+the Record (its staff changes nothing at dusk), the landing held nearer 13:00, a place in the showcase film, and the fuel
+farm (not on the map).
 Progress is logged at the end of this file.
 
 ## Context
@@ -366,3 +367,39 @@ parked civil aircraft (`meshes.rs`), the Igla tube for the first-person view, th
   Command with the day's picks is the Record exactly, and the staff changes nothing: there is no rule for a VDV
   without guns. `cargo xtask smoke` passes (70 runs). Not done: the
   field retaken by 21:00 (the attack's pressure), a staff for the evening, Hostomel in the showcase film.
+- 2026-10-26: phase 8, the counterattack's band: the field taken by 21:00. **A bug first.** The script's infantry
+  groups were spawned as Russians whatever the day (`Side::Ru` in `run_script`): at dusk the twelve groups of eight
+  from the E373 and Horenka were VDV, walking from our start lines into the apron, where they dug in and kept the
+  areas contested. They are the attacking side's now (only this day has an attacker of ours with `Infantry`). With it
+  alone (band a) the posts silenced at 20:57 were 4/5/5/4 of six, the radar never, our dead 61/56/68/62, and the
+  runway's longest whole stretch 1.6-2.4 km. **More pressure, from the file.** The guns' `Prep`, where there is no
+  line across the field, now falls on each of the VDV's posts still holding in turn (with six posts, every other
+  mission had gone to the same three, the rest scattered round the others), and lifts off a post once our men are
+  within 100 m of it (`fight::Field::open`, kept by the areas' system: the posts and men queried in the script's own
+  system moved the landing's Record, by the frame's order alone). A post down under fire (`fire::Suppressed`) fires a third as often (`fight.pinned: 0.33`), and
+  where posts can be pinned a burst within 25 m puts one down, the BMP-2s' 30 mm included, not only a shell's blast.
+  The attackers going on from post to post leave a section of four in each area they hold (`fight.keep`), so the base
+  stays ours once the Horenka company is through it, and a post with a dozen of ours round it or on their way to it
+  draws no more (`fight.ring`): the rest go on to the next, and the radar is taken in the same hour as the apron, not
+  an hour after it. The VDV's posts have 160 volleys, not 400 (`fight.ammo`): what is left after a day's
+  fighting to men who came by helicopter with what they carried, whose airlift turned back (c01 §2, §7); most posts
+  are dry by 20:00-20:40 and are overrun. The Su-24s' second pass (19:42) runs down the runway's centreline from its
+  north-west end, twelve bombs; before, its north-west half was left whole. The night's sight and the flares
+  are as they were. The sources give no count of the counterattack's dead (MWI: no reliable estimates for the battle
+  of Kyiv), so the dead are held to the band before. `scripts/band.sh hostomel-2 0 1 2 3`, the field at 20:57:
+
+  | | VDV posts silenced of 6 | our dead (end of day) | the field ours | runway, longest whole |
+  |---|---|---|---|---|
+  | Record before (f3) | 4/2/2/3 at the end | 55/48/52/50 | never; the hangar at the end in 1 of 4 | 1.8 km (td2, seed 0) |
+  | Record after (c4) | 6/5/6/6 | 55/53/43/52 | 20:46, all but the radar, 20:36, 20:57 | 0.5 km in all four |
+  | Command, staff off (c4) | 6/5/6/6 | 55/53/43/52 | as the Record, seed for seed | 0.5 km in all four |
+
+  In seed 1 the radar's post is dry with our men round it at 21:00 but not yet six within 35 m, so its area is
+  contested; the hangar, the apron, the tower and the base are ours in all four seeds by 20:46. Our men are ordered back at
+  21:03 (`Order(PullBack)`) and the debrief has the posts silenced 6/5/6/6, the runway too short to land on, and the
+  airlift turned back. Tried and dropped: the Horenka groups' objective moved south to the offices and the radar (the
+  apron lost its weight, our dead rose to 52-72), and a third route with its own groups for the radar (they walk
+  straight into the offices' post on the way; 4-5 posts, dead 45-66). New same-day
+  baseline for hostomel-2: c4-h2 (filmed twice from one build, byte for byte the same); the landing, Vuhledar, Mala
+  Tokmachka and the three Avdiivka parts are `same`. Not done: a staff for the evening, Command's own evening (the
+  player's picks and guns change it; the day's picks are the Record).
