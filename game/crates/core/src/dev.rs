@@ -164,6 +164,11 @@ pub struct DevEnv {
     /// 60 mm bombs on the enemy's men nearest the point (or a bundle of ammunition for the post nearest it), where
     /// the day has one (`bav_sim::robots`).
     pub bomber: Vec<(f32, String)>,
+    /// `BAV_INTERCEPT="<game s>,…"`: put the goggles' interceptor up then and fly it by itself at the nearest of their
+    /// wings, where the day has interceptors (`bav_sim::wings`).
+    pub intercept: Vec<f32>,
+    /// `BAV_DOME="<game s>:off|on,…"`: switch our EW domes off or on then, as J does (`bav_sim::ew`).
+    pub dome: Vec<(f32, String)>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
     pub era_at: Option<f32>,
     /// `BAV_LINEUP_FIRE=1` with `BAV_LINEUP`: the burned-out row burns, a hull in flames, a smoulder and a pool of
@@ -354,6 +359,8 @@ impl DevEnv {
             evac: parse("BAV_EVAC"),
             ugv: timed("BAV_UGV"),
             bomber: timed("BAV_BOMBER"),
+            intercept: var("BAV_INTERCEPT").map(|v| v.split(',').filter_map(|t| t.trim().parse().ok()).collect()).unwrap_or_default(),
+            dome: timed("BAV_DOME"),
             operator_off: var("BAV_OPERATOR").is_some_and(|v| v == "off"),
             fog_off: var("BAV_FOG").is_some_and(|v| v == "off"),
             fpv: var("BAV_FPV").and_then(|s| {

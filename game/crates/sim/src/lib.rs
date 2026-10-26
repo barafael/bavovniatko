@@ -33,6 +33,7 @@ pub mod sound;
 pub mod staff;
 pub mod supply;
 pub mod units;
+pub mod wings;
 
 use bevy::prelude::*;
 use rand::{SeedableRng, rngs::SmallRng};

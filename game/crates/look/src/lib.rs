@@ -26,6 +26,7 @@ pub mod sky;
 pub mod terrain;
 pub mod thermal;
 pub mod trees;
+pub mod wings;
 pub mod world;
 
 use bevy::prelude::*;

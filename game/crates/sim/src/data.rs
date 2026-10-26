@@ -42,6 +42,10 @@ pub struct SimData {
     /// no kill zone).
     #[serde(default)]
     pub killzone: Option<crate::killzone::KillzoneSpec>,
+    /// Their reconnaissance wings as aircraft and our interceptors against them (none: the staff's Orlan is a strip,
+    /// and there are no interceptors).
+    #[serde(default)]
+    pub wings: Option<crate::wings::WingsSpec>,
     /// The strike drones of the day (how many is the Allotment's; none: the drone is eyes only).
     #[serde(default)]
     pub fpv: Option<FpvSpec>,

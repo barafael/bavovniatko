@@ -190,6 +190,8 @@ the pieces that reach above a height, to write a ring from.
 | 7 | Myrnohrad: a ground robot's own camera, low on its nose; again for the next robot out. W/S take its throttle and A/D its lane across the route, and it goes as you drive it; G, or leaving its camera, gives it back to its route. Its link breaks up in their EW and drops out, now and then for most of an hour of the day's clock, and it stands while it is down; it sticks in craters and mud |
 | V, Alt+click | Myrnohrad: the wounded wait for a robot. V sends one for the longest-waiting call, Alt+click one with ammunition to the position nearest the cursor; it unloads, takes on two wounded and comes back |
 | 8 | Myrnohrad, II and III: the Vampire, the heavy bomber, on a sortie from the drone team with four 60 mm bombs (Shift+8: a bundle of ammunition for a post), flown with the drone's sticks; C lets one go, H brings it home, I its thermal camera, and 8 again puts you back in its camera |
+| 9 | Myrnohrad I: an interceptor from the drone team, flown in the goggles as the FPV is but faster and climbing (the mouse may point it up); it brings one of their Orlans or ZALAs down by passing within a few metres of it. Where the day has a radar, the rest go up by themselves at a wing inside its range |
+| J | Myrnohrad: switch our EW domes off, or on again. A dome that is on breaks their radio FPVs' links and gives itself away to their direction-finders, and it blinds our own FPVs and interceptors inside it; the radar's interceptors and our strikes on their launch points pause it by themselves |
 | O, G, K, B | Command: the orders over the drone's picture. A click picks one of our units, G / K / B order it to advance, hold or fall back, and a click on a ringed position sends it there; the order goes over the net, late and maybe not at all where they jam it |
 | T | Command: the map table over the picture, the battle running on: our units on the map, ordered from it the same way, and Columns sent on Supply |
 | P, `[`, `]` | pause, slow down, speed up |
@@ -260,6 +262,8 @@ on the enemy's man nearest the point, from 60 m over him, allowing for the mean 
 ground robot at each game second to a position of the field with its cargo (`ammo`, `food`, `power`), or for the
 longest-waiting call for evacuation, and `BAV_BOMBER="300:1800;-900,900:1400;-300:bundle"` flies the Vampire's
 sorties by themselves, on the enemy's men nearest each point or with a bundle for the post nearest it (Myrnohrad).
+`BAV_INTERCEPT="1100,1300"` puts the goggles' interceptor up at each game second and flies it by itself at the nearest
+of their wings, and `BAV_DOME="600:off,700:on"` switches our EW domes as J does.
 `BAV_OPERATOR=off` keeps the drone team from being found (the film sets it).
 
 The dioramas' RON is laid out by [fmtron](https://crates.io/crates/fmtron) (`cargo install fmtron --version

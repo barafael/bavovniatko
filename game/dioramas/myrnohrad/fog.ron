@@ -205,8 +205,21 @@ Press Enter."#,
                 arrives: 980.0,
                 budget: 12,
             ),
-            (name: ("Sudny Den", "Судний день"), kind: Rf, at: (-900.0, 2600.0), per_hour: 10.0),
-            (name: ("the Irish", "«Ірландці»"), kind: Rf, at: (2800.0, -2300.0), per_hour: 8.0),
+            // The radio crews fly through relays on masts on their ground, inside the box (phase 6).
+            (
+                name: ("Sudny Den", "Судний день"),
+                kind: Rf,
+                at: (-900.0, 2600.0),
+                per_hour: 10.0,
+                relay: (-700.0, 1620.0),
+            ),
+            (
+                name: ("the Irish", "«Ірландці»"),
+                kind: Rf,
+                at: (2800.0, -2300.0),
+                per_hour: 8.0,
+                relay: (2250.0, -1650.0),
+            ),
             (name: ("the Archangels", "«Архангели»"), kind: Fibre, at: (2700.0, 2200.0), per_hour: 6.0),
             (name: ("the Archangels", "«Архангели»"), kind: Waiter, at: (-1240.0, -162.0), per_hour: 2.0),
             (name: ("the Archangels", "«Архангели»"), kind: Waiter, at: (-560.0, -86.0), per_hour: 2.0),
@@ -281,6 +294,29 @@ Press Enter."#,
         ],
         // Their direction-finders locate our drone team's ground station about once an hour of drone time.
         team: 1.0,
+        // After the lift (placeholders for phase 7): a 155 mm mission on Sudny Den's launch point, and an FPV of ours
+        // on the Irish's relay; a point hit is out for an hour of the clock (c15 §5, §10: a lever, not a win).
+        strikes: [(at: 1180.0, crew: 1, by: Guns), (at: 1300.0, crew: 2, by: Fpv, relay: true)],
+    ),
+    // Their reconnaissance wings and our interceptors (bav_sim::wings; 01 e7, e9). After the lift an Orlan comes over
+    // the road from Pokrovsk's side and a ZALA from the jaw; the drone team has three interceptors and a radar that
+    // cues them. Placeholders for phase 7.
+    wings: (
+        passes: [
+            (
+                at: 1030.0,
+                kind: Orlan,
+                path: [(-200.0, 5200.0), (-700.0, 300.0), (-1700.0, -500.0), (-1300.0, 5200.0)],
+            ),
+            (
+                at: 1260.0,
+                kind: Zala,
+                path: [(2900.0, -3200.0), (1200.0, -600.0), (-200.0, -300.0), (2500.0, -3600.0)],
+                agl: 500.0,
+            ),
+        ],
+        interceptors: 3,
+        radar: (at: (450.0, -60.0), range: 2000.0),
     ),
     // The morning: twos and threes from three sides under the fog, KABs on the town; the fog lifting before noon.
     script: [

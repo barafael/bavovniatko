@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
-Status: planned 2026-10-25; phases 0, 1, 2, 3 and 5 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the robots; the days are placeholders). The owner's direction of 25 October: the next diorama comes from
+Status: planned 2026-10-25; phases 0, 1, 2, 3, 5 and 6 built 2026-10-26 (the place, its map and set, the pocket; the fog
+in the battle; their drones over the ground; the robots; drones against drones; the days are placeholders). The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -528,3 +528,24 @@ the EW domes' masts.
   crews yet (phases 8-9); the HUD and the debrief do not count their sorties (phase 7); the domes do not yet blind
   our own drones, and nothing of ours strikes a launch point (phase 6); fibre in the ice is only `snag` in the file;
   the FPVs make no sound of their own, and a fibre one draws no cable.
+- 2026-10-26: phase 6, **drones against drones** (`bav_sim::wings`, a module of its own). Their Orlan and ZALA are
+  things in the sky on a path at height, spotting what passes under them into their kill zone's picture (and in
+  Command the staff's `Spotted`), where the day's file has `wings`; older days keep the staff's strip. Our
+  interceptors share one stock: the radar launches one by itself onto a wing in its range (lead pursuit, 0.6 to bring
+  it down) and pauses our domes for 45 s; key 9 flies one in the goggles (`BAV_INTERCEPT` flies it by itself). Their
+  launch points and relays are targets: a 155 mm burst or our FPV near one puts it out for `down` hours of the day's
+  clock and the crew flies nothing meanwhile (`lost` counts the sorties it misses); a radio sortie can give its point
+  away (`Located`, its own stream). The file's `strikes` are the Record's own. Our domes now blind our own FPVs and
+  interceptors inside them (the Mavic's band is left alone); J or `BAV_DOME` switches them, and a switched-off dome
+  neither breaks their links nor is found. Part I's placeholders: relays for Sudny Den and the Irish, a gun mission on
+  Sudny Den at 1180 s and an FPV on the Irish's relay at 1300 s, an Orlan at 1030 s and a ZALA at 1260 s, three
+  interceptors and a 2 km radar at the drone team. **Numbers**, Myrnohrad I seeds 0-3: two passes, both brought down
+  in every seed, none missed, nothing spotted before they fell; Sudny Den located once; both strikes put their point
+  out, costing the crews 10.9-11.3 sorties; their sorties 6/13/5, 6/12/8, 5/15/8, 8/13/8 (radio/fibre/waiters).
+  **Bands**: before sent 63, dead 56/57/56/57, our losses 6/4/6/9; after dead 56/57/55/56, our losses 6/4/6/9.
+  **Checks**: the seven older days `same` against `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; the
+  three Myrnohrad parts each filmed twice from one build are the same. Clippy, `cargo test`, fmtron and `cargo xtask
+  smoke` pass. The agent that wrote it lost its shell before building; the integrator built, checked and measured
+  it. **Not done**: the wings are too easy to bring down and spot nothing before they fall (phase 10's bands); no
+  HUD stock for the interceptors or the domes' state; Russia's own interceptors (02 e8) are a rule for the staff,
+  later.
