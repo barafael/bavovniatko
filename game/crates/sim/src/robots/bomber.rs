@@ -69,7 +69,7 @@ pub(super) fn launch_sorties(mut commands: Commands, time: Res<Time>, mut robots
     let mut up = !flying.is_empty();
     // The script's sorties kept back while the bomber was up or the team moving go first, in their order.
     let kept = std::mem::take(&mut robots.queued);
-    let fresh = kept.len();
+    let n_kept = kept.len();
     for (i, o) in kept.into_iter().chain(sorties).enumerate() {
         let Order::Sortie { to, load, flown } = o else { continue };
         if robots.sorties_left == 0 {
@@ -79,9 +79,13 @@ pub(super) fn launch_sorties(mut commands: Commands, time: Res<Time>, mut robots
         // The script's sortie waits for the bomber to be down and the team set up again; the player's is told.
         let busy = up || now < op.moving_until;
         if busy && to.is_some() && !flown {
-            if i >= fresh {
+            if i >= n_kept {
                 info!("bomber: a sortie to {to:?} kept until the {}, at {now:.0} s", if up { "Vampire is down" } else { "team is set up" });
-                radio.say2(now, "Наступний виліт Вампіра, коли сяде.", "The Vampire's next sortie goes when it's down.");
+                if up {
+                    radio.say2(now, "Наступний виліт Вампіра, коли сяде.", "The Vampire's next sortie goes when it's down.");
+                } else {
+                    radio.say2(now, "Наступний виліт Вампіра, коли група стане.", "The Vampire's next sortie goes when the team is set up.");
+                }
             }
             robots.queued.push(o);
             continue;

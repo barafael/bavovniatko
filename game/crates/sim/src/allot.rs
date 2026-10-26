@@ -157,8 +157,9 @@ pub struct Allotment {
     pub drops: u32,
     /// Search-and-strike teams for the burrows (`seep`).
     pub search: u32,
-    /// Ground robots for the runs, and the heavy bomber's sorties (`robots`).
+    /// Ground robots for the runs (`robots`).
     pub robots: u32,
+    /// The heavy bomber's sorties (`robots`, the Vampire).
     pub sorties: u32,
     /// What it cost, of how many points.
     pub spent: u32,

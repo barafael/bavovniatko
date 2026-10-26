@@ -434,6 +434,12 @@ fn cue(
     let Some(radar) = spec().and_then(|s| s.radar) else { return };
     let now = time.elapsed_secs_f64();
     let at = Vec2::new(radar.at.0, radar.at.1);
+    // A wing gone out of its range is lost to it: back inside, the radar must find it again.
+    for (e, _, t, held) in &wings {
+        if held && t.translation.xz().distance(at) >= radar.range {
+            commands.entity(e).remove::<OnRadar>();
+        }
+    }
     let mut found: Vec<(Entity, Vec3)> = wings.iter().filter(|(_, _, t, held)| !held && t.translation.xz().distance(at) < radar.range).map(|(e, _, t, _)| (e, t.translation)).collect();
     found.sort_by(|a, b| a.1.x.total_cmp(&b.1.x).then(a.1.z.total_cmp(&b.1.z)));
     let p = (crate::sim_dt(&time) / TRACK) as f64;

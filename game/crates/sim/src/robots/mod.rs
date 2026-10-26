@@ -266,6 +266,11 @@ fn fetch(time: Res<Time>, script: Res<crate::director::Script>, mut robots: ResM
         return;
     }
     let now = time.elapsed_secs_f64();
+    let due = (hours * 60.0 / crate::diorama::diorama().compression()) as f64;
+    // Most frames no call has waited long enough: nothing to look up.
+    if !cas.waiting.iter().any(|c| now - c.since >= due) {
+        return;
+    }
     // The script's runs still to come, and where to: a call there waits for its run.
     let positions = &bav_core::field::field().positions;
     let to_come: Vec<Vec2> = crate::data::sim_data()
@@ -280,8 +285,9 @@ fn fetch(time: Res<Time>, script: Res<crate::director::Script>, mut robots: ResM
     if robots.left as usize <= to_come.len() || robots.orders.iter().any(|o| matches!(o, Order::Run { .. })) {
         return;
     }
-    let due = (hours * 60.0 / crate::diorama::diorama().compression()) as f64;
-    let going: Vec<Vec2> = out.iter().filter(|r| r.leg == Leg::In).map(|r| r.to).chain(to_come).collect();
+    // A robot on its way in, or at its post loading the wounded (`at_the_post` takes them on as it leaves), is going
+    // for the calls there.
+    let going: Vec<Vec2> = out.iter().filter(|r| matches!(r.leg, Leg::In | Leg::AtPost(_))).map(|r| r.to).chain(to_come).collect();
     let Some(call) = cas.waiting.iter().filter(|c| now - c.since >= due && !going.iter().any(|g| g.distance(c.at) < 200.0)).min_by(|a, b| a.since.total_cmp(&b.since).then(a.at.x.total_cmp(&b.at.x))) else { return };
     info!("robot: one for the {} wounded at {:.0},{:.0}, waiting {:.1} h of the clock, at {now:.0} s", call.n, call.at.x, call.at.y, (now - call.since) as f32 * crate::diorama::diorama().compression() / 60.0);
     robots.orders.push(Order::Run { to: Dest::Near(call.at), cargo: Cargo::Food });

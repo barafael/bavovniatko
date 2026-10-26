@@ -302,7 +302,7 @@ fn direct(
     // on, `thermal::toggle`).
     if shot.thermal {
         view.thermal = true;
-    } else if si > 0 && SHOTS[si - 1].thermal {
+    } else if si > 0 && SHOTS[si - 1].thermal && !crate::dev::dev().thermal {
         view.thermal = false;
     }
     // Fire missions for this shot, called at their own times (possibly before the shot starts).
@@ -408,12 +408,16 @@ fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op
             view.locked = false;
             return;
         }
-        Aim::Air(p) => {
+        Aim::Air(p) | Aim::Near(_, p) => {
             view.mode = Mode::Drone;
             view.drone_fov = fov;
             let at = shot.pos0.lerp(shot.pos1, ease);
             view.drone_pos = Vec3::new(at.x, crate::geo::height(at.x, at.y) + at.z, at.y);
-            let target = aircraft.iter().filter(|(_, a)| !matches!(a.flight, bav_sim::air::Flight::Waiting(_))).map(|(t, _)| t.translation).min_by(|a, b| a.xz().distance(p).total_cmp(&b.xz().distance(p))).unwrap_or(crate::geo::ground(p));
+            let found = match shot.aim {
+                Aim::Near(thing, _) => things.near(thing, p),
+                _ => aircraft.iter().filter(|(_, a)| !matches!(a.flight, bav_sim::air::Flight::Waiting(_))).map(|(t, _)| t.translation).min_by(|a, b| a.xz().distance(p).total_cmp(&b.xz().distance(p))),
+            };
+            let target = found.unwrap_or(crate::geo::ground(p));
             let a = aim.get_or_insert(target);
             *a = a.lerp(target, 0.06);
             (view.drone_yaw, view.gimbal) = look_angles(*a - view.drone_pos);
@@ -425,17 +429,6 @@ fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op
                 view.mode = Mode::Bomber;
             }
             view.locked = false;
-            return;
-        }
-        Aim::Near(thing, p) => {
-            view.mode = Mode::Drone;
-            view.drone_fov = fov;
-            let at = shot.pos0.lerp(shot.pos1, ease);
-            view.drone_pos = Vec3::new(at.x, crate::geo::height(at.x, at.y) + at.z, at.y);
-            let target = things.near(thing, p).unwrap_or(crate::geo::ground(p));
-            let a = aim.get_or_insert(target);
-            *a = a.lerp(target, 0.06);
-            (view.drone_yaw, view.gimbal) = look_angles(*a - view.drone_pos);
             return;
         }
         Aim::Drone(target) | Aim::Fly(target) => target,

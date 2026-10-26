@@ -233,7 +233,7 @@ impl Class {
         matches!(self, Class::Vehicle | Class::Robot)
     }
 
-    pub const ALL: [Class; 5] =[Class::DroneTeam, Class::Ew, Class::Vehicle, Class::Robot, Class::Men];
+    pub const ALL: [Class; 5] = [Class::DroneTeam, Class::Ew, Class::Vehicle, Class::Robot, Class::Men];
 
     pub fn name(self) -> &'static str {
         match self {
