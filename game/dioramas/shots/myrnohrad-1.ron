@@ -1,9 +1,13 @@
-// Myrnohrad, part I, the fog: its tour (design/myrnohrad.md, phase 7). It has no film yet (phase 10).
+// Myrnohrad, part I, the fog: its tour (design/myrnohrad.md, phases 7 and 10). It has no film.
 // The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
 // one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
-// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
-// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
-// `hud: false` films it without the interface, and `debrief` ends the day on it.
+// one to the other; `Near(thing, point)` follows the robot, car, wing, Vampire or burrow nearest the point, `Bomber`
+// is the Vampire's own camera, `thermal` puts the drone on its thermal channel; `fire` calls missions on the nearest
+// stalled vehicle at their game seconds, `fly` is a flown shot's stick script (seconds into the shot), `launch` a
+// ground shot's missile, `card` goes over black before it, `hud: false` films it without the interface, and
+// `debrief` ends the day on it. Shots go in the order of their `from`: one that starts before the
+// last has ended is filmed late. The times are what the Record does on this list's own steps (the battle is
+// integrated on them, so a shot moved early changes what the later ones find).
 (
     // The tour's title card: the place and the date.
     card: ("MYRNOHRAD, THE ROAD INTO THE POCKET", "10 NOVEMBER 2025, THE FOG"),
@@ -12,52 +16,67 @@
         // 06:35: the H-32 into the town's western entrance, in the fog.
         (
             from: 20.0,
-            secs: 7.0,
-            pos: ((-600.0, -420.0, 90.0), (-450.0, -400.0, 90.0)),
+            secs: 6.0,
+            pos: ((-600.0, -420.0, 90.0), (-470.0, -405.0, 90.0)),
             aim: Drone(Point((300.0, -280.0))),
             fov: (50.0, 44.0),
         ),
-        // 07:15: the first of the run's two pickups under the nets, past a waiter on the shoulder by Rivne.
+        // 07:18: the run's two pickups under the nets, past a waiter on the shoulder by Rivne.
         (
             from: 203.0,
             secs: 8.0,
-            pos: ((-1180.0, -330.0, 60.0), (-1200.0, -320.0, 60.0)),
-            aim: Drone(Point((-1320.0, -180.0))),
-            fov: (40.0, 34.0),
+            pos: ((-1300.0, -228.0, 30.0), (-1315.0, -222.0, 30.0)),
+            aim: Near(Car, (-1330.0, -175.0)),
+            fov: (44.0, 36.0),
         ),
-        // Twos and threes from the south-eastern edge, between the houses.
+        // 07:50: the first robot, with rounds for Rivne, off the H-32 onto the villages' track in the fog.
         (
-            from: 230.0,
+            from: 330.0,
             secs: 8.0,
-            pos: ((1000.0, 700.0, 110.0), (980.0, 720.0, 110.0)),
-            aim: Drone(MenNear((1150.0, 1050.0))),
-            fov: (24.0, 18.0),
+            pos: ((-1822.0, -582.0, 14.0), (-1820.0, -588.0, 14.0)),
+            aim: Near(Robot, (-1840.0, -600.0)),
+            fov: (38.0, 32.0),
         ),
         // 08:05: the KABs on the western quarters.
         (
             from: 410.0,
-            secs: 8.0,
-            pos: ((200.0, -150.0, 200.0), (220.0, -140.0, 200.0)),
+            secs: 7.0,
+            pos: ((580.0, 160.0, 70.0), (590.0, 168.0, 70.0)),
             aim: Drone(Point((700.0, 280.0))),
-            fov: (40.0, 36.0),
+            fov: (50.0, 46.0),
         ),
-        // The observers' roof on Soborna, looking south over the ruins.
-        (from: 700.0, secs: 8.0, pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)), aim: Op((1150.0, 1050.0)), fov: (45.0, 40.0)),
-        // 10:40: the fog lifts over Svitle.
+        // 09:46: a burrow of theirs by Rivne, found by the post there and under its fire, on the thermal channel.
         (
-            from: 1060.0,
+            from: 814.0,
             secs: 9.0,
-            pos: ((-200.0, -700.0, 260.0), (-320.0, -760.0, 280.0)),
-            aim: Drone(Point((-550.0, -1400.0))),
-            fov: (52.0, 48.0),
+            pos: ((-1715.0, -600.0, 70.0), (-1720.0, -596.0, 70.0)),
+            aim: Near(Burrow, (-1769.0, -531.0)),
+            fov: (34.0, 30.0),
+            thermal: true,
         ),
-        // 10:35: the volunteers' Lada, still on the road at the town's edge as the fog goes.
+        // 10:13: the volunteers' Lada sets out late from the road head, as the fog begins to thin.
         (
-            from: 1012.0,
-            secs: 9.0,
-            pos: ((-60.0, -420.0, 120.0), (-80.0, -410.0, 120.0)),
-            aim: Drone(Point((-150.0, -220.0))),
-            fov: (42.0, 36.0),
+            from: 928.0,
+            secs: 10.0,
+            pos: ((-2150.0, -470.0, 35.0), (-2140.0, -466.0, 35.0)),
+            aim: Near(Car, (-2200.0, -420.0)),
+            fov: (38.0, 30.0),
+        ),
+        // 10:27: the fog going, and the Lada still on the road by Rivne, where a waiter of theirs sits on the shoulder.
+        (
+            from: 989.0,
+            secs: 12.0,
+            pos: ((-1290.0, -235.0, 35.0), (-1298.0, -230.0, 35.0)),
+            aim: Near(Car, (-1330.0, -175.0)),
+            fov: (40.0, 32.0),
+        ),
+        // 11:36: an Orlan over Pokrovsk's side of the road, and the interceptor the radar sends up at it.
+        (
+            from: 1268.0,
+            secs: 10.0,
+            pos: ((-1460.0, 460.0, 560.0), (-1470.0, 500.0, 560.0)),
+            aim: Near(Wing, (-1640.0, 500.0)),
+            fov: (26.0, 22.0),
         ),
         (
             from: 1474.0,

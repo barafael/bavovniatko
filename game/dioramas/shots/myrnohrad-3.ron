@@ -1,9 +1,11 @@
-// Myrnohrad, part III, the frost: its tour (design/myrnohrad.md, phase 9).
+// Myrnohrad, part III, the frost: its tour (design/myrnohrad.md, phases 9 and 10). It has no film.
 // The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
 // one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
-// one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
-// shot's stick script (seconds into the shot), `launch` a ground shot's missile, `card` goes over black before it,
-// `hud: false` films it without the interface, and `debrief` ends the day on it.
+// one to the other; `Near(thing, point)` follows the robot, car, wing, Vampire or burrow nearest the point, `Bomber`
+// is the Vampire's own camera, `thermal` puts the drone on its thermal channel; `fire` calls missions on the nearest
+// stalled vehicle at their game seconds, `fly` is a flown shot's stick script (seconds into the shot), `launch` a
+// ground shot's missile, `card` goes over black before it, `hud: false` films it without the interface, and
+// `debrief` ends the day on it. The times are what the Record does on this list's own steps.
 (
     // The tour's title card: the place and the date.
     card: ("MYRNOHRAD, THE ROAD INTO THE POCKET", "19-20 JANUARY 2026, THE FROST"),
@@ -13,47 +15,40 @@
         (
             from: 20.0,
             secs: 9.0,
-            pos: ((-2150.0, -620.0, 110.0), (-2120.0, -600.0, 110.0)),
-            aim: Drone(Point((-2230.0, -435.0))),
+            pos: ((-2228.0, -456.0, 14.0), (-2222.0, -454.0, 14.0)),
+            aim: Near(Robot, (-2240.0, -430.0)),
             fov: (40.0, 34.0),
         ),
-        // 22:50: the Vampire with a bundle of rounds for the east post of the northern quarters.
+        // 22:49: the Vampire with a bundle of rounds for the east post of the northern quarters, from its camera.
+        (from: 205.0, secs: 9.0, pos: ((1030.0, -725.0, 80.0), (1036.0, -722.0, 80.0)), aim: Bomber, fov: (44.0, 38.0)),
+        // 23:39: the robot with food at Rivne, unloading before it turns for home.
         (
-            from: 205.0,
-            secs: 9.0,
-            pos: ((980.0, -820.0, 120.0), (1000.0, -810.0, 120.0)),
-            aim: Drone(Point((1150.0, -650.0))),
-            fov: (40.0, 34.0),
+            from: 412.0,
+            secs: 8.0,
+            pos: ((-1735.0, -722.0, 12.0), (-1733.0, -720.0, 12.0)),
+            aim: Near(Robot, (-1750.0, -705.0)),
+            fov: (38.0, 32.0),
         ),
-        // The observers on the headframe, looking south over the town that is half theirs.
-        (from: 300.0, secs: 8.0, pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)), aim: Op((900.0, 500.0)), fov: (50.0, 44.0)),
-        // 23:40: the robot with food at Rivne, turning for home.
+        // 00:20: the Vampire's 60 mm bombs on the jaw's way in, from its camera.
         (
-            from: 415.0,
-            secs: 9.0,
-            pos: ((-1620.0, -880.0, 110.0), (-1640.0, -860.0, 110.0)),
-            aim: Drone(Point((-1748.0, -705.0))),
-            fov: (34.0, 28.0),
+            from: 578.0,
+            secs: 10.0,
+            pos: ((1715.0, -915.0, 170.0), (1718.0, -912.0, 170.0)),
+            aim: Bomber,
+            fov: (44.0, 38.0),
         ),
-        // 00:15: the Vampire's 60 mm bombs on the jaw's way in.
-        (
-            from: 560.0,
-            secs: 9.0,
-            pos: ((1580.0, -1050.0, 150.0), (1600.0, -1040.0, 150.0)),
-            aim: Drone(Point((1750.0, -850.0))),
-            fov: (40.0, 34.0),
-        ),
-        // One man out of the town's south, for the drone team.
+        // One man out of the town's south for the drone team, on the thermal channel.
         (
             from: 800.0,
-            secs: 9.0,
+            secs: 8.0,
             pos: ((800.0, -350.0, 140.0), (820.0, -340.0, 140.0)),
             aim: Drone(MenNear((950.0, -100.0))),
             fov: (24.0, 18.0),
+            thermal: true,
         ),
         // The northern quarters and the mine from above.
         (
-            from: 1100.0,
+            from: 1125.0,
             secs: 9.0,
             pos: ((400.0, -900.0, 400.0), (460.0, -920.0, 400.0)),
             aim: Drone(Point((1100.0, -500.0))),

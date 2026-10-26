@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
 Status: planned 2026-10-25; phases 0 to 6 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 8, part II's day, 2026-10-26; phase 9, part III's night, 2026-10-26; phase 10, first half (balance and the gaps), 2026-10-26. The owner's direction of 25 October: the next diorama comes from
+in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 8, part II's day, 2026-10-26; phase 9, part III's night, 2026-10-26; phase 10, first half (balance and the gaps), 2026-10-26; phase 10, second half (the tours, the stills, the README), 2026-10-26: the three parts are built and played in the Record and in Command, each with its tour and none in the film. The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -363,6 +363,14 @@ the EW domes' masts.
 - **The information layer**: the flags for the cameras and the claims on schedule (c15 §5, §10).
 - **The Starlink cut-off** (February 2026): Vivaldi's prelude (c19 §10).
 - **E-points** (01 e8): a scoring economy the ledger could show; not without a tone test.
+- **What the phases left.** The burrows part I leaves are not carried into II (the seep starts empty each part), and
+  no part starts from the last one's `Aftermath` as the player left it: the wrecks, ruins and the wounded waiting
+  are written into each file as the Record has them, where Hostomel carries its morning's wrecks into its evening.
+  Russia's own interceptors against our Vampire and our wings (02 e8), a rule for the staff. Our own FPVs failing in
+  the cold as theirs do (ours are not fibre in the engine). The northern quarters as an area of their own (the mine
+  stands for them in III; an area added to `map.ron` would change I and II). The wounded brought all the way out
+  within a part: only Rivne is a round trip on the day's clock, so a robot that takes them on is mostly still on
+  the road at the end. A film or trailer reel for Myrnohrad (below, Progress).
 
 ## Progress
 
@@ -745,3 +753,37 @@ the EW domes' masts.
   back 1/1/1/1, the mine ours in all four. Staff on: I our losses 8-11, II 6-14, III 4-11, the rest as staff off.
   **Not done**: within a part the wounded are rarely brought out, since only Rivne is a round trip on the clock (they
   are aboard on the road at the end); the burrows I leaves are not carried over; Russia's own interceptors.
+- 2026-10-26: phase 10, second half: **the tours and the docs**. No change to the battle. **The tours**, filmed
+  again after the balance pass and looked at frame by frame: the old ones missed most of what they meant to show.
+  Part I's Lada shot started before the lift shot had ended and was filmed late, the robots were a few pixels at
+  their 110-150 m, the shots that looked into the fog from 200 m filmed grey, and in III the night picture and the
+  headframe's own struts hid the rest. The showcase can now follow Myrnohrad's things: `Near(thing, point)` keeps the
+  drone on the robot, car, wing, Vampire or burrow nearest a point (a found burrow first), `Bomber` films from the
+  Vampire's own camera, and `thermal` puts the drone on its thermal channel for a shot. The robots are framed from
+  12-14 m up and 20-30 m off. I: the run's pickups under the nets past the waiter at Rivne, the first robot off the
+  H-32, the KABs from 160 m in the fog, the burrow by Rivne in thermal under the post's fire (found at 09:45), the
+  Lada leaving at 10:13 and burnt by Rivne at 10:28 as the fog passes 2 km, and the Orlan and the radar's
+  interceptor at 11:36. II: a robot under the nets at the road head, their FPVs on the team, the Orlan brought down
+  at 10:08, the KABs, three robots at the town's western entrance where the nets are torn and Rubikon's FPV taking
+  the last at 11:42, the Vampire's camera over the high-rise with its bundle, its bombs from the observers' roof.
+  III: the first robot in the dark, the Vampire's camera with the bundle and with the bombs, the robot unloading at
+  Rivne, a man out of the town's south in thermal, the north from 400 m. Two shots were not to be had: the burrows
+  by the drone team in III are found at 03:40, when the team is moving with its feed down until the night ends; and
+  the jaw's men in II stayed behind a building from any height that kept them in reach. The times are what the
+  Record does on each list's own steps (the battle is integrated on them, so a shot moved changes what the later
+  ones find; the tour runs with `BAV_OPERATOR=off`). Devlog: the three tours
+  (`videos/20261026-1401-tour-myrnohrad-1.mp4`, `-1405-tour-myrnohrad-2`, `-1416-tour-myrnohrad-3`) and fourteen
+  stills (`shots/20261026-1420-m1-tour-*`, `m2-tour-*`, `m3-tour-*`). **The README**: Myrnohrad's section (the three
+  parts, the keys 7, 8, 9, J, N, V, the switches), its line among the places, and what was out of date: I for the
+  drone's thermal channel had no row, 4 and C were given to Mala Tokmachka and Avdiivka alone, 9 to part I alone (II
+  has interceptors too), `BAV_VIEW` lacked `robot` and `bomber`, M said nothing of Myrnohrad's direction-finders, and
+  the layout table had none of Myrnohrad's modules. **The film**: Myrnohrad is not in the trailer or the film. A
+  `reel` in a shots file would put a part in the trailer, but the reel finds its moments in the blasts and the hits
+  on vehicles the game logs, and Myrnohrad's action is mostly what that log does not hold (their FPVs' impacts, the
+  interceptions, the Vampire's drops), while the film's thesis is one minefield from both sides. It would take those
+  events logged and weighed in `xtask/src/reel.rs`, a reel's card, end and switches (`BAV_INTERCEPT`, `BAV_RUN`),
+  and a decision about the film's shape. **Checks**: Vuhledar, Mala Tokmachka, both Hostomel parts and the three
+  Avdiivka parts `same` against `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; the three Myrnohrad
+  parts on their old tours (54bf33c's shots files through `BAV_DATA`) `same` against `p10-m1`, `p10-m2`, `p10-m3`;
+  on the new tours each filmed twice from one build the same, the new references `p11-m1`, `p11-m2`, `p11-m3`.
+  Clippy, `cargo test` and fmtron pass.
