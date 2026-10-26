@@ -21,7 +21,7 @@ picture, the HUD's text, the debrief and the films do not change.
 | the tally's and the fire panel's lines, as templates (`{committed}`, `{shells}`, …) | each day's `hud` | `bavovniatko::screen`, `hud.rs` |
 | the debrief: the place in the heading (none: the diorama's own), its rows (a label and a figure, rows gated on what the day has: `If(Flew, …)`, `If(Field, …)`, `If(Runway, …)`, `If(Drops, …)`, a row per area, the duel's hits and runs), the columns' table | each day's `debrief` | `bavovniatko::screen`, `hud.rs` (`Ledger`) |
 | where `BAV_VIEW=ground` starts | `ground_team` (a place's map, or the single file) | `dev.rs` |
-| the set raised over the ground, with its own light (`PanelBlocks`, `WaterTower`, `Antonov`, `CokePlant`), and the woods (`Pine`, else the steppe's belts) | `set`, `woods` | `bav_look::data`, `world.rs` |
+| the set raised over the ground, with its own light (`PanelBlocks`, `WaterTower`, `Antonov`, `CokePlant`, `Headframe`), and the woods (`Pine`, else the steppe's belts) | `set`, `woods` | `bav_look::data`, `world.rs` |
 | the minute tour, the film's part, the tour's title card, the trailer's day (`reel`: card, end, switches) | `dioramas/shots/<id>.ron` | the showcase (`bav_core::data::shots_source`), the xtask (`xtask/src/days.rs`) |
 | what Avdiivka's three parts share (sides, callsigns, thermal, Space, the tally's lines, their guns, EW, FPVs, the drone team) | `dioramas/avdiivka/forces.ron`, merged after the map and before the part | the same readers as before |
 

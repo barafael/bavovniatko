@@ -24,10 +24,30 @@ const WALLS: [Wall; 3] = [Wall::Block, Wall::Works, Wall::House];
 /// A builder for a hangar's footprint: the walls' mesh, the roofs' mesh, the footprint, its base and its height.
 pub type HangarBuilder = dyn FnMut(&mut MeshBuilder, &mut MeshBuilder, &[Vec2], f32, f32);
 
+/// How a town after months of shelling stands (Myrnohrad's): a share of its buildings gutted, their roofs gone and
+/// their walls broken off at uneven heights over a floor of rubble, and its houses under pitched roofs. None:
+/// every building whole, its roof flat, as the other sets have them.
+#[derive(Clone, Copy, Debug)]
+pub struct Shelled {
+    /// The share of buildings without their roofs.
+    pub ruined: f32,
+    /// Drawn from this, so the same buildings are ruined every day.
+    pub seed: u32,
+}
+
+impl Shelled {
+    /// Whether the `i`th building is a ruin.
+    pub fn ruined(&self, i: usize) -> bool {
+        hash01(i as u32, self.seed) < self.ruined
+    }
+}
+
 /// The map's buildings raised from their footprints: one mesh per facade, spawned here, and their roofs added to
 /// `roofs` for the caller to finish (the set's own pieces go in the same mesh). A hangar goes through `hangar`.
-/// `snow` whitens the roofs (February); else they are the sheet and felt they are.
-pub fn raise(commands: &mut Commands, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>, roofs: &mut MeshBuilder, snow: bool, hangar: &mut HangarBuilder) {
+/// `snow` whitens the roofs (February); else they are the sheet and felt they are. `shelled`: the town after the
+/// shelling, its houses' roofs pitched.
+#[allow(clippy::too_many_arguments)]
+pub fn raise(commands: &mut Commands, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>, roofs: &mut MeshBuilder, snow: bool, hangar: &mut HangarBuilder, shelled: Option<Shelled>) {
     let lay = geo::layout();
     let mut walls: Vec<MeshBuilder> = WALLS.iter().map(|_| MeshBuilder::new()).collect();
     for (i, b) in lay.buildings.iter().enumerate() {
@@ -61,13 +81,39 @@ pub fn raise(commands: &mut Commands, meshes: &mut Assets<Mesh>, images: &mut As
         let foot: Vec<Vec2> = if signed_area(&b.foot) > 0.0 { b.foot.clone() } else { b.foot.iter().rev().copied().collect() };
         let shade = 0.88 + 0.12 * hash01(i as u32, 7);
         let mut u = hash01(i as u32, 8) * 12.0;
+        let ruin = shelled.filter(|s| s.ruined(i));
         for k in 0..n {
             let (a, c) = (foot[k], foot[(k + 1) % n]);
             let len = a.distance(c);
             let (s, t) = scale(wall);
+            // A ruin's walls break off at heights of their own, some down to a stub.
+            let top = match ruin {
+                Some(r) => {
+                    let h = hash01(i as u32 * 64 + k as u32, r.seed.wrapping_add(1));
+                    if h < 0.2 { base + 1.5 } else { top - (top - base) * (0.1 + 0.45 * h) }
+                }
+                None => top,
+            };
             let uv = [Vec2::new(u / s, 0.0), Vec2::new((u + len) / s, 0.0), Vec2::new((u + len) / s, -(top - base) / t), Vec2::new(u / s, -(top - base) / t)];
-            walls[w].poly_uv(&[Vec3::new(a.x, base, a.y), Vec3::new(c.x, base, c.y), Vec3::new(c.x, top, c.y), Vec3::new(a.x, top, a.y)], &uv, [shade; 3]);
+            let quad = [Vec3::new(a.x, base, a.y), Vec3::new(c.x, base, c.y), Vec3::new(c.x, top, c.y), Vec3::new(a.x, top, a.y)];
+            walls[w].poly_uv(&quad, &uv, [shade; 3]);
+            if ruin.is_some() {
+                // The inside of the wall, seen from above through the missing roof: sooted.
+                walls[w].poly_uv(&[quad[1], quad[0], quad[3], quad[2]], &[uv[1], uv[0], uv[3], uv[2]], [shade * 0.45; 3]);
+            }
             u += len;
+        }
+        if ruin.is_some() {
+            // No roof: the floors fallen in, a heap of rubble and burnt timber inside the walls.
+            let tris = triangulate(&foot);
+            let pts: Vec<Vec3> = foot.iter().map(|p| Vec3::new(p.x, base + 1.0, p.y)).collect();
+            let c = if snow { [0.55, 0.55, 0.56] } else { [0.24, 0.22, 0.21] };
+            roofs.tris(&pts, &vec![Vec2::ZERO; n], &tris, Vec3::Y, c);
+            continue;
+        }
+        if shelled.is_some() && wall == Wall::House && n == 4 {
+            gable(roofs, &foot, top, snow, i);
+            continue;
         }
         // Flat roofs under thin snow; the houses' pitched roofs read flat from the drone's height.
         let tris = triangulate(&foot);
@@ -89,6 +135,30 @@ pub fn raise(commands: &mut Commands, meshes: &mut Assets<Mesh>, images: &mut As
         let mat = materials.add(StandardMaterial { base_color_texture: Some(tex), perceptual_roughness: 0.92, ..default() });
         commands.spawn((Mesh3d(meshes.add(m.build())), MeshMaterial3d(mat)));
     }
+}
+
+/// A house's pitched roof over a four-cornered footprint: the ridge along the longer side, a third of the short
+/// side's width high, the gable ends closed in plaster. Tin, slate or tile, or snow on them.
+fn gable(m: &mut MeshBuilder, foot: &[Vec2], top: f32, snow: bool, i: usize) {
+    let (a, b, c, d) = if foot[0].distance(foot[1]) >= foot[1].distance(foot[2]) { (foot[0], foot[1], foot[2], foot[3]) } else { (foot[1], foot[2], foot[3], foot[0]) };
+    let rise = b.distance(c) * 0.33;
+    let at = |p: Vec2, y: f32| Vec3::new(p.x, y, p.y);
+    let (ra, rb) = (at((a + d) * 0.5, top + rise), at((b + c) * 0.5, top + rise));
+    let (a, b, c, d) = (at(a, top), at(b, top), at(c, top), at(d, top));
+    let colour = if snow {
+        [0.80, 0.81, 0.83]
+    } else {
+        [[0.38, 0.30, 0.26], [0.42, 0.44, 0.42], [0.47, 0.30, 0.24], [0.30, 0.33, 0.36]][(hash01(i as u32, 9) * 4.0) as usize % 4]
+    };
+    // Both ways round: the roofs' material culls back faces, and an outline may come either way.
+    let mut both = |pts: &[Vec3], col: [f32; 3]| {
+        m.poly(pts, col);
+        m.poly(&pts.iter().rev().copied().collect::<Vec<_>>(), col);
+    };
+    both(&[a, b, rb, ra], colour);
+    both(&[c, d, ra, rb], colour);
+    both(&[b, c, rb], [0.70, 0.66, 0.58]);
+    both(&[d, a, ra], [0.70, 0.66, 0.58]);
 }
 
 fn scale(w: Wall) -> (f32, f32) {

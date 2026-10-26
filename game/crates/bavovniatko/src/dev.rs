@@ -81,6 +81,17 @@ fn field_overlay_setup(mut commands: Commands, mut store: ResMut<GizmoConfigStor
     for z in f.grey.into_iter().flat_map(|(z0, z1)| [z0, z1]) {
         lines.strips.push((on_ground(&[Vec2::new(-crate::geo::HALF_X, z), Vec2::new(crate::geo::HALF_X, z)]), yellow));
     }
+    // A pocket drawn as outlines: the grey zone's yellow, theirs red.
+    let pocket = bav_core::field::pocket();
+    if pocket.drawn {
+        for (outlines, c) in [(&pocket.grey, yellow), (&pocket.theirs, Color::srgb(1.0, 0.25, 0.2))] {
+            for o in outlines {
+                let mut pts = o.clone();
+                pts.push(o[0]);
+                lines.strips.push((on_ground(&pts), c));
+            }
+        }
+    }
     let colours = [Color::srgb(0.2, 0.9, 1.0), Color::srgb(1.0, 0.4, 1.0), Color::srgb(1.0, 1.0, 1.0)];
     for h in 0..f.road_heads.len() {
         for p in f.positions.iter().filter(|p| p.ground == Ground::Ours).step_by(2) {

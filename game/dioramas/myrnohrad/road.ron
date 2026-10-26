@@ -1,0 +1,201 @@
+// Myrnohrad, part II, The road (Дорога): 3 December 2025, the short day. The corridor is about a kilometre wide
+// (c15 §3), nothing on wheels gets through by day, and their drones own the road (c15 §5). The plan wanted a clear
+// day of 3-7 December; ERA5 has none (design/myrnohrad.md, progress): the 3rd is the least grey of the week, dry and
+// calm under 95% cloud, 4 °C, the ground bare. Until the robots, their drones and the infiltration are built
+// (phases 3-8), the day is a placeholder: a few groups by the infantry act, the posts, a KAB pair. The schema is
+// bav_core::data and bav_sim::data; the map is map.ron.
+(
+    date: "3 December 2025",
+    tally_date: "03 DEC 2025",
+    // 08:00 to sunset, 15:40, in the day's 1500 s.
+    day_start_min: 480.0,
+    compression: 0.307,
+    // No snow yet that week (ERA5: snow depth 0 from 1 to 15 December): the late autumn's bare, frozen ground.
+    season: Autumn,
+    // 3 December is the 337th day of the year; Kyiv on UTC+2.
+    sun: (337, 2.0),
+    // Under cloud all day, dry, a light easterly (ERA5: 95% cloud, 9 km/h from the east).
+    overcast: true,
+    wind: (-2.0, 0.0, -1.55),
+    // Half the town's roofs gone by now, more ruins smouldering, the cars of three weeks on the road.
+    ruined: (0.5, 11),
+    smouldering: 16,
+    cars: [
+        ((-1445.8, -213.4), 1.28),
+        ((-2102.3, -382.4), 1.61),
+        ((-517.5, -89.7), 2.04),
+        ((721.8, -313.2), -1.4),
+        ((-1577.9, -236.6), -1.4),
+        ((428.1, -297.3), -1.31),
+        ((-614.5, -94.7), -1.76),
+        ((332.8, -285.0), -1.69),
+        ((-1217.2, -152.5), -1.6),
+        ((-1674.8, -263.9), 1.66),
+        ((-750.0, -75.8), -1.46),
+        ((-1721.7, -285.3), -1.35),
+        ((-815.8, -94.3), 1.72),
+        ((-449.5, -98.9), 1.12),
+        ((168.1, -270.1), 2.22),
+        ((-2084.5, -377.9), -1.38),
+    ],
+    words: (
+        briefing: r#"MYRNOHRAD (МИРНОГРАД), THE ROAD INTO THE POCKET
+3 DECEMBER 2025, DAY
+
+Two days ago Moscow announced that Pokrovsk had fallen. A NATO official says Myrnohrad is virtually encircled. The
+corridor out to the north is a kilometre wide, and the one road in, through Rivne and Svitle, is watched from the
+air every hour of the day. Nothing on wheels gets through it in daylight; what comes in comes by robot, by heavy
+bomber drone, or on foot at night. The wounded wait.
+
+You are the same drone team, in the same basement. The garrison still holds Svitle, Rivne, the western quarters
+and the mine. Their infantry still comes in by twos and threes, fewer on a day like this, and goes for the drone
+crews first.
+
+The day will run whether or not you do anything. What you do matters at the margin.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
+Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
+1/2 or Tab: drone / the observers on the high-rise.  M: move the drone team when they find you.  P: pause.  [ ]: time.
+
+Press Enter."#,
+        op_label: "OBSERVERS, A NINE-STOREY ROOF ON SOBORNA STREET (СПОСТЕРІГАЧІ, ДЕВ'ЯТИПОВЕРХІВКА НА СОБОРНІЙ)",
+        op_lost: "The observers on the high-rise are gone. No eyes from the roof.",
+        forward_belt: "the ruins",
+        mine_lines: ["Mine. He's stopped.", "Another one on a mine.", "Mine on the verge. That one's done."],
+        closing: [
+            "On 8 December the 7th Corps pulled out of the salient south of Pokrovsk. On the 10th the exits from Myrnohrad were reported to be collapsing.",
+            "On 27 December Russia claimed Myrnohrad. ISW saw them in about half of it.",
+        ],
+        keys: "R: the same day again, on the same road.     Esc: quit.",
+        sources: [
+            (
+                publisher: "Euromaidan Press",
+                date: "27 Nov 2025",
+                title: "Russia doesn't need to storm Myrnohrad—just wait for a sunny day",
+                url: "https://euromaidanpress.com/2025/11/27/road-into-myrnohrad/",
+            ),
+            (
+                publisher: "European Pravda",
+                date: "2 Dec 2025",
+                title: "NATO says Myrnohrad is \"virtually encircled\" and Russians control over 95% of Pokrovsk",
+                url: "https://www.eurointegration.com.ua/eng/news/2025/12/2/7226211/",
+            ),
+            (
+                publisher: "Euromaidan Press",
+                date: "10 Dec 2025",
+                title: "\"Impossible to stop them, they're everywhere\": Ukraine holds Pokrovsk against 170,000 Russians, but Myrnohrad evacuation routes collapse",
+                url: "https://euromaidanpress.com/2025/12/10/impossible-to-stop-them-theyre-everywhere-ukraine-holds-13-sq-km-of-pokrovsk-against-170000-russians-but-myrnohrad-evacuation-routes-collapse-video/",
+            ),
+            (
+                publisher: "Institute for the Study of War",
+                date: "28 Dec 2025",
+                title: "Russian Offensive Campaign Assessment, December 28, 2025",
+                url: "https://understandingwar.org/research/russia-ukraine/russian-offensive-campaign-assessment-december-28-2025/",
+            ),
+        ],
+    ),
+    // The debrief's rows (the schema is the game's screen.rs); the tally's and the fire panel's lines are map.ron's.
+    debrief: (
+        rows: [
+            Line("Their men sent in", Sent),
+            Line("    dead", AttackerDead),
+            Line("    came back", Returned),
+            Line("Our casualties", DefenderLosses),
+            Areas("{area} at the end"),
+            Line("Shells left", Shells),
+            If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+        ],
+    ),
+    op: ((868.0, 495.0), 30.0),
+
+    // The pocket on 3 December: the corridor about 1 km wide north of the box (c15 §3); theirs closer on the
+    // south-western fields, the south-eastern edge theirs (c15 §2, 14 Nov), the jaw over the north-eastern corner.
+    // The road in stays ours to Rivne.
+    pocket: (
+        grey: [
+            [
+                (-5000.0, -400.0),
+                (-2400.0, -380.0),
+                (-1500.0, -50.0),
+                (-300.0, 450.0),
+                (700.0, 600.0),
+                (1600.0, 750.0),
+                (5000.0, 600.0),
+                (5000.0, 5000.0),
+                (-5000.0, 5000.0),
+            ],
+            [(500.0, -5000.0), (5000.0, -5000.0), (5000.0, -150.0), (1700.0, -350.0), (900.0, -1000.0)],
+        ],
+        theirs: [
+            [
+                (-5000.0, -250.0),
+                (-2400.0, -200.0),
+                (-1600.0, 300.0),
+                (-400.0, 800.0),
+                (700.0, 950.0),
+                (1500.0, 1100.0),
+                (5000.0, 1000.0),
+                (5000.0, 5000.0),
+                (-5000.0, 5000.0),
+            ],
+            [(1000.0, -5000.0), (5000.0, -5000.0), (5000.0, -500.0), (1800.0, -700.0), (1200.0, -1300.0)],
+        ],
+    ),
+    // The garrison's posts: Svitle, Rivne, the western quarters, the high-rise, the mine, the western entrance.
+    ua_positions: [
+        (-560.0, -1250.0),
+        (-1750.0, -700.0),
+        (-100.0, 250.0),
+        (500.0, 400.0),
+        (880.0, 525.0),
+        (1400.0, -300.0),
+        (300.0, -150.0),
+    ],
+
+    // ---- The battle's part (bav_sim::data) ----
+    // The Record: riflemen at the seven posts, a battery's sixteen rounds, eight FPVs, eight grenades for the drone.
+    allotment: (
+        points: 80,
+        supply: (6, 1.0),
+        record: [
+            (id: "rifles", at: 0),
+            (id: "rifles", at: 1),
+            (id: "rifles", at: 2),
+            (id: "rifles", at: 3),
+            (id: "rifles", at: 4),
+            (id: "rifles", at: 5),
+            (id: "rifles", at: 6),
+            (id: "155", count: 1),
+            (id: "fpv", count: 8),
+            (id: "vog", count: 4),
+        ],
+    ),
+    // The day: about ten get in on a day like this (c15 §5), a KAB pair, the claim of 1 December on the net.
+    script: [
+        (2.0, Say("Bird up. Cloud, but it's dry. They can see everything today, and so can we.")),
+        (
+            30.0,
+            Say(
+                "All, this is {command}. Moscow says Pokrovsk is theirs. It changes nothing here. Nobody on the road by day.",
+            ),
+        ),
+        (
+            150.0,
+            Infantry(route: 0, groups: 2, size: 2, every: 200.0, label: "08:45  Two of them at the south-eastern edge"),
+        ),
+        (400.0, Infantry(route: 1, groups: 2, size: 3, every: 240.0, label: "10:05  From the jaw, towards the mine")),
+        (
+            600.0,
+            Bombs(
+                from: (300.0, 100.0),
+                to: (500.0, 250.0),
+                n: 2,
+                label: "11:05  KABs on the western quarters",
+                say: "Su-34s. Glide bombs. Down.",
+            ),
+        ),
+        (800.0, Infantry(route: 2, groups: 1, size: 2, every: 60.0)),
+        (1000.0, Infantry(route: 0, groups: 1, size: 3, every: 60.0)),
+        (1350.0, Say("This is {op}. It's getting dark. The road will be busy tonight.")),
+    ],
+)

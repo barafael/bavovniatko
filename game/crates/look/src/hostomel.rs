@@ -13,7 +13,7 @@ use bevy::{camera::Exposure, pbr::FogFalloff, prelude::*};
 pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>, mut paint: ResMut<Assets<crate::baked::VehicleMaterial>>) {
     let lay = geo::layout();
     let mut roofs = MeshBuilder::new();
-    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, true, &mut hangar);
+    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, true, &mut hangar, None);
     // The Mriya in the Antonov hangar, as she stood that morning, ready to fly since 22:00 the night before
     // (c01 §6 set piece 4): along the hangar's long axis, under the vault.
     if let Some(h) = lay.buildings.iter().find(|b| b.kind == BuildingKind::Hangar) {

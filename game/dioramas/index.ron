@@ -40,4 +40,23 @@
         files: ["avdiivka/map.ron", "avdiivka/osm.ron", "avdiivka/forces.ron", "avdiivka/stepove.ron"],
         shots: "shots/avdiivka-3.ron",
     ),
+    // 10 November 2025, the road into Myrnohrad in the fog: the pocket's one road, and their infantry walking in
+    // under the fog (db/research/chapters/c15-pokrovsk-myrnohrad.md; design/myrnohrad.md, part I).
+    (
+        id: "myrnohrad-1",
+        files: ["myrnohrad/map.ron", "myrnohrad/osm.ron", "myrnohrad/fog.ron"],
+        shots: "shots/myrnohrad-1.ron",
+    ),
+    // 3 December 2025: the road by day, the corridor a kilometre wide (part II).
+    (
+        id: "myrnohrad-2",
+        files: ["myrnohrad/map.ron", "myrnohrad/osm.ron", "myrnohrad/road.ron"],
+        shots: "shots/myrnohrad-2.ron",
+    ),
+    // The night of 19-20 January 2026, the frost: the northern quarters fed by night (part III).
+    (
+        id: "myrnohrad-3",
+        files: ["myrnohrad/map.ron", "myrnohrad/osm.ron", "myrnohrad/frost.ron"],
+        shots: "shots/myrnohrad-3.ron",
+    ),
 ]

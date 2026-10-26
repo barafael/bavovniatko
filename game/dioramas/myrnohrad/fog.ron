@@ -1,0 +1,206 @@
+// Myrnohrad, part I, The fog (Туман): 10 November 2025, morning. Fog on the towns from first light until it lifts
+// before noon (ERA5, c15 §3: near-saturated air and 6-10 hours of fog on 5-7, 10 and 12 November), and under it
+// their infantry walks in by twos and threes, thirty to forty a day in such weather (c15 §5). Until the infiltration,
+// their drones and the vehicle run are built (design/myrnohrad.md, phases 3-7), the day is a placeholder: a few
+// groups by the infantry act, the posts, two KAB pairs. The schema is bav_core::data and bav_sim::data; the map is
+// map.ron.
+(
+    date: "10 November 2025",
+    tally_date: "10 NOV 2025",
+    // 06:30 to about 12:30 in the day's 1500 s.
+    day_start_min: 390.0,
+    compression: 0.24,
+    season: Autumn,
+    // 10 November is the 314th day of the year; Kyiv on UTC+2.
+    sun: (314, 2.0),
+    // Overcast all day, the air near saturation until mid-morning, a light southerly wind (ERA5 for 10 November:
+    // humidity 97-98% to 08:00, 83% by 10:00; wind 3-10 km/h from the south).
+    overcast: true,
+    wind: (0.8, 0.0, -1.0),
+    // The fog as the picture shows it: a few hundred metres until mid-morning, thinning from 10:00, gone by 11:20.
+    fog: [(390.0, 250.0), (540.0, 300.0), (600.0, 700.0), (650.0, 3000.0), (680.0, 6000.0)],
+    // The town after five months of it: a third of the roofs gone, a dozen ruins smouldering, a few cars caught on
+    // the road.
+    ruined: (0.35, 11),
+    smouldering: 12,
+    cars: [
+        ((-1445.8, -213.4), 1.28),
+        ((-2102.3, -382.4), 1.61),
+        ((-517.5, -89.7), 2.04),
+        ((721.8, -313.2), -1.4),
+        ((-1577.9, -236.6), -1.4),
+        ((428.1, -297.3), -1.31),
+        ((-614.5, -94.7), -1.76),
+        ((332.8, -285.0), -1.69),
+    ],
+    words: (
+        briefing: r#"MYRNOHRAD (МИРНОГРАД), THE ROAD INTO THE POCKET
+10 NOVEMBER 2025, MORNING
+
+Myrnohrad is a mining town of 46,000 people, seven kilometres east of Pokrovsk: headframes and spoil heaps,
+nine-storey blocks and streets of private houses. By November the Russians are on three sides of it. One road
+comes in from the west, past the villages of Rivne and Svitle, and their drones watch every metre of it.
+
+You are a drone team of the town's garrison, in a basement in the western quarters, with a thermal Mavic, a few
+FPVs, grenades to drop, and a gun battery's rounds when there are any. Riflemen hold the villages, the western
+quarters and the Tsentralna mine.
+
+This morning there is fog. Under it nothing flies well, theirs or ours, and their infantry walks in by twos and
+threes: ten a day in sun, thirty or forty in weather like this. When it lifts, anything still on the road is seen.
+
+The day will run whether or not you do anything. What you do matters at the margin.
+
+Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
+Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
+1/2 or Tab: drone / the observers on the high-rise.  M: move the drone team when they find you.  P: pause.  [ ]: time.
+
+Press Enter."#,
+        op_label: "OBSERVERS, A NINE-STOREY ROOF ON SOBORNA STREET (СПОСТЕРІГАЧІ, ДЕВ'ЯТИПОВЕРХІВКА НА СОБОРНІЙ)",
+        op_lost: "The observers on the high-rise are gone. No eyes from the roof.",
+        forward_belt: "the ruins",
+        mine_lines: ["Mine. He's stopped.", "Another one on a mine.", "Mine on the verge. That one's done."],
+        closing: [
+            "More than 300 Russians got into Pokrovsk under that week's fog.",
+            "On 14 November they raised a flag on a ruined mine on Myrnohrad's south-eastern edge. It was down within the day.",
+        ],
+        keys: "R: the same morning again, in the same fog.     Esc: quit.",
+        sources: [
+            (
+                publisher: "BBC",
+                date: "Nov 2025",
+                title: "Pokrovsk: Russian forces use fog cover to push further into key Ukraine town",
+                url: "https://www.bbc.com/news/articles/cx276px3280o",
+            ),
+            (
+                publisher: "Hromadske",
+                date: "Nov 2025",
+                title: "Is there a risk of encirclement in Pokrovsk and what awaits Myrnohrad? Soldiers explain",
+                url: "https://hromadske.ua/en/war/254005-ti-khto-v-pokrovsku-na-peredovykh-pozytsiiakh-vze-v-pryntsypi-v-otochenni-z-iakoho-malo-shansiv-vyyty",
+            ),
+            (
+                publisher: "Euromaidan Press",
+                date: "15 Nov 2025",
+                title: "Russia's Pokrovsk twin city strategy: can't capture it, so plant flag on ruined mine, die, let Ukraine remove it",
+                url: "https://euromaidanpress.com/2025/11/15/russias-pokrovsk-twin-city-strategy-cant-capture-it-so-plant-flag-on-ruined-mine-die-let-ukraine-remove-it-video/",
+            ),
+            (
+                publisher: "Open-Meteo (ECMWF ERA5 reanalysis)",
+                date: "2026",
+                title: "Historical weather, Pokrovsk, July 2025 – February 2026",
+                url: "https://archive-api.open-meteo.com/v1/archive?latitude=48.28&longitude=37.18&start_date=2025-07-15&end_date=2026-02-28&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,snow_depth_max,cloud_cover_mean,relative_humidity_2m_mean,wind_speed_10m_max,sunrise,sunset&hourly=relative_humidity_2m,wind_speed_10m,cloud_cover_low&timezone=Europe%2FKyiv",
+            ),
+        ],
+    ),
+    // The debrief's rows (the schema is the game's screen.rs); the tally's and the fire panel's lines are map.ron's.
+    debrief: (
+        rows: [
+            Line("Their men sent in", Sent),
+            Line("    dead", AttackerDead),
+            Line("    came back", Returned),
+            Line("Our casualties", DefenderLosses),
+            Areas("{area} at the end"),
+            Line("Shells left", Shells),
+            If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+        ],
+    ),
+    // The observers on the roof of a nine-storey block on Soborna street.
+    op: ((868.0, 495.0), 30.0),
+
+    // The pocket on 10 November (c15 §3: the gap between the pincers about 3 km on 29 October, about 1 km by late
+    // November, both north of the box): theirs beyond the south-eastern edge and Pokrovsk's fields to the south-west,
+    // and the Krasnyi Lyman jaw at the north-eastern corner; the grey zone a few hundred metres in from both.
+    pocket: (
+        grey: [
+            [
+                (-5000.0, -350.0),
+                (-2700.0, -300.0),
+                (-1800.0, 250.0),
+                (-500.0, 900.0),
+                (800.0, 1050.0),
+                (2000.0, 1100.0),
+                (5000.0, 1100.0),
+                (5000.0, 5000.0),
+                (-5000.0, 5000.0),
+            ],
+            [(1300.0, -5000.0), (5000.0, -5000.0), (5000.0, -600.0), (1900.0, -850.0)],
+        ],
+        theirs: [
+            [
+                (-5000.0, -150.0),
+                (-2700.0, -100.0),
+                (-2000.0, 550.0),
+                (-600.0, 1300.0),
+                (2000.0, 1500.0),
+                (5000.0, 1500.0),
+                (5000.0, 5000.0),
+                (-5000.0, 5000.0),
+            ],
+            [(1700.0, -5000.0), (5000.0, -5000.0), (5000.0, -1000.0), (2200.0, -1300.0)],
+        ],
+    ),
+    // The garrison's posts: Svitle's south edge, Rivne, the western quarters' west and south, the high-rise on
+    // Soborna, the Tsentralna mine, the south-eastern edge, and the town's western entrance on the H-32.
+    ua_positions: [
+        (-560.0, -1250.0),
+        (-1750.0, -700.0),
+        (-100.0, 250.0),
+        (500.0, 600.0),
+        (880.0, 525.0),
+        (1400.0, -300.0),
+        (1150.0, 1000.0),
+        (300.0, -150.0),
+    ],
+
+    // ---- The battle's part (bav_sim::data) ----
+    // The Record: riflemen at the eight posts, a battery's sixteen rounds, four FPVs (the light ones useless in the
+    // wet, c15 §3), six grenades for the drone.
+    allotment: (
+        points: 80,
+        supply: (6, 1.0),
+        record: [
+            (id: "rifles", at: 0),
+            (id: "rifles", at: 1),
+            (id: "rifles", at: 2),
+            (id: "rifles", at: 3),
+            (id: "rifles", at: 4),
+            (id: "rifles", at: 5),
+            (id: "rifles", at: 6),
+            (id: "rifles", at: 7),
+            (id: "155", count: 1),
+            (id: "fpv", count: 4),
+            (id: "vog", count: 3),
+        ],
+    ),
+    // The morning: twos and threes from three sides under the fog, KABs on the town; the fog lifting before noon.
+    script: [
+        (2.0, Say("Bird up. Fog on everything. I can see the road for a hundred metres, no more.")),
+        (20.0, Say("All, this is {command}. They walk in this weather. Watch the belts and the ruins.")),
+        (
+            60.0,
+            Infantry(
+                route: 0,
+                groups: 6,
+                size: 3,
+                every: 90.0,
+                label: "06:45  Twos and threes from the south-eastern edge",
+            ),
+        ),
+        (120.0, Infantry(route: 1, groups: 5, size: 2, every: 110.0, label: "07:00  From the Krasnyi Lyman side")),
+        (200.0, Infantry(route: 2, groups: 4, size: 3, every: 120.0)),
+        (
+            400.0,
+            Bombs(
+                from: (600.0, 200.0),
+                to: (800.0, 350.0),
+                n: 2,
+                label: "08:05  KABs on the western quarters",
+                say: "Su-34s. Glide bombs on the town. Down.",
+            ),
+        ),
+        (600.0, Infantry(route: 0, groups: 5, size: 3, every: 80.0)),
+        (700.0, Infantry(route: 1, groups: 4, size: 2, every: 100.0)),
+        (900.0, Bombs(from: (-650.0, -1350.0), to: (-450.0, -1250.0), n: 2, label: "", say: "KABs on Svitle.")),
+        (1000.0, Say("This is {op}. The fog is thinning. I can see the heap.")),
+        (1150.0, Say("Bird: it's clear. Everything on the road is seen now. Nothing moves on wheels till dark.")),
+    ],
+)

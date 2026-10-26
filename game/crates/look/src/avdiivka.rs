@@ -12,7 +12,7 @@ use bevy::{camera::Exposure, pbr::DistanceFog, prelude::*};
 pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
     let mut roofs = MeshBuilder::new();
     let snow = !bav_core::diorama::diorama().summer();
-    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, snow, &mut crate::hostomel::hangar);
+    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, snow, &mut crate::hostomel::hangar, None);
     // The observers: on the heap's first terrace, where the 110th saw every Russian move from the heights.
     let ((x, z), h) = bav_core::data::data().op.expect("Avdiivka's parts place the observers");
     let at = Vec2::new(x, z);
