@@ -92,6 +92,8 @@ pub enum Act {
     /// `width` metres either side of the route's line `from` metres along it, `per_hour` men an hour of the day's clock in clear weather and `fog` times
     /// as many in the thickest fog, along the route's line to a building where they go to ground; of the groups,
     /// `crews` go for our drone crew, the rest for the route's objective. `until`: no more after this game second.
+    /// `men`: the fewest and the most in a group (twos and threes where the file does not say; single men by January
+    /// 2026, c15 §5).
     Seep {
         route: usize,
         #[serde(default)]
@@ -103,9 +105,16 @@ pub enum Act {
         crews: f32,
         #[serde(default)]
         until: Option<f32>,
+        #[serde(default = "twos_and_threes")]
+        men: (u32, u32),
         #[serde(default)]
         label: String,
     },
+}
+
+/// Groups of two or three, "with the expectation that two will be destroyed" (c15 §5).
+fn twos_and_threes() -> (u32, u32) {
+    (2, 3)
 }
 
 /// How many times as many come in the thickest fog as in sun: thirty to forty a day against about ten (c15 §5).

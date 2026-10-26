@@ -1,9 +1,12 @@
 // Myrnohrad, part III, The frost (Мороз): the night of 19-20 January 2026. About -15 °C and 3-7 cm of snow (c15 §3;
 // ERA5 for the night: -12 to -15 °C, 5 cm, overcast, a north-westerly of 7-12 km/h); no moon (new on the 18th, its
-// crescent set by evening: `sun::moon`). The town is half theirs, the northern quarters ours, fed by heavy drones and
-// robots (c15 §2, 14-23 Jan). Until the robots and the bombers are built (phases 5, 9), and the dark reaches the
-// battle (phase 2), the night is a placeholder: a few groups by the infantry act and the posts. The schema is
-// bav_core::data and bav_sim::data; the map is map.ron.
+// crescent set by evening: `sun::moon`). The town is half theirs, the front line north of the railway (ISW, 28 Dec);
+// the garrison holds the northern quarters, the mine, Svitle and Rivne, fed by heavy drones and ground robots
+// (c15 §2, 14-23 Jan). The night is not a battle: robots up the road and the Vampire over the roofs with fuel,
+// food and rounds, the wounded out in the dark, their drones over the road at the night's tempo with the fibre ones
+// failing in the ice (c15 §3), and single men seeping in from the jaw and the town's south. The dossier gives no
+// numbers for the night; the rates and the times below are the design's, and say so. The schema is bav_core::data
+// and bav_sim::data; the map is map.ron.
 (
     date: "19 January 2026",
     tally_date: "19 JAN 2026",
@@ -49,18 +52,21 @@
         briefing: r#"MYRNOHRAD (МИРНОГРАД), THE ROAD INTO THE POCKET
 THE NIGHT OF 19-20 JANUARY 2026
 
-Minus fifteen, and a thin snow. Moscow claimed the town three weeks ago; the Russians are in about half of it. The
-garrison holds the northern quarters and the mine, and everything it eats and fires comes by night: on robots up
-the road, and under heavy drones. The cold freezes the fibre of both sides' drones.
+Minus fifteen, and a thin snow. Moscow claimed the town three weeks ago; the Russians are in about half of it,
+south of the railway. The garrison holds the northern quarters, the Tsentralna mine, Svitle and Rivne, and
+everything it eats and fires comes by night: on ground robots up the one road, and under heavy drones. Their FPVs
+still hunt the road in the dark, on thermal; the cold freezes the fibre of both sides' drones. They no longer come
+in threes: one man at a time, and now and then two.
 
-You are the same drone team, moved north, out of the basement that is now theirs. The observers are up on the
-Tsentralna headframe. There is no moon tonight.
+You are the same drone team, moved north into the blocks by the mine, out of the basement that is now theirs.
+The observers are up on the Tsentralna headframe. There is no moon tonight. The wounded wait for a robot.
 
 The night will run whether or not you do anything. What you do matters at the margin.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
-Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
-V: a ground robot for the wounded.  7: the robot's camera.  8: the Vampire (Shift+8 with a bundle); in it C drops.
+Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.  J: our EW dome.
+V: a ground robot for the wounded.  Alt+click: a robot with ammunition.  7: the robot's camera.
+8: the Vampire with bombs (Shift+8 with a bundle); in it C drops, H brings it home.
 1/2 or Tab: drone / the observers on the headframe.  M: move the drone team when they find you.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -93,6 +99,24 @@ Press Enter."#,
                 url: "https://united24media.com/latest-news/winter-is-no-longer-russias-ally-on-the-battlefield-near-pokrovsk-15284",
             ),
             (
+                publisher: "Interfax-Ukraine",
+                date: "14 Jan 2026",
+                title: "Skhid force: Occupiers intensify attempts to infiltrate northern Pokrovsk; Defense Forces repelling them",
+                url: "https://en.interfax.com.ua/news/general/1136424.html",
+            ),
+            (
+                publisher: "Euromaidan Press",
+                date: "2 Jan 2026",
+                title: "Russia switches to one-by-one infiltrations near Pokrovsk, hoping to slip past unnoticed",
+                url: "https://euromaidanpress.com/2026/01/02/russia-switches-to-one-by-one-infiltrations-near-pokrovsk-hoping-to-slip-past-unnoticed/",
+            ),
+            (
+                publisher: "Euromaidan Press",
+                date: "13 Jan 2026",
+                title: "Ukraine's jam-proof drones have one weakness: icy weather",
+                url: "https://euromaidanpress.com/2026/01/13/ukraines-jam-proof-drones-have-one-weakness-icy-weather/",
+            ),
+            (
                 publisher: "Institute for the Study of War",
                 date: "28 Dec 2025",
                 title: "Russian Offensive Campaign Assessment, December 28, 2025",
@@ -120,10 +144,23 @@ Press Enter."#,
                 ],
             ),
             If(Bomber, [Line("The Vampire's sorties", Sorties)]),
+            If(
+                Seep,
+                [
+                    Line("Their burrows in the northern quarters", Burrows),
+                    Line("    found", BurrowsFound),
+                    Line("    emptied", BurrowsEmptied),
+                    Line("Their fire on our drone crew told", CrewsHit),
+                ],
+            ),
+            If(Killzone, [Line("Their FPVs over the road", TheirSorties), Line("    what they hit", TheirHits)]),
         ],
     ),
     // The observers up the Tsentralna headframe, under its sheaves.
     op: ((1475.0, -248.0), 40.0),
+    // The drone team in the five-storey blocks north of the mine's street, out of the western quarters' basement, which
+    // is theirs by now (the block is the design's).
+    team: (900.0, -700.0),
 
     // The pocket on 19 January: the town half theirs, the front line north of the railway (c15 §2, ISW 28 Dec), the
     // jaw closer over the north-east; the northern quarters, the mine, the villages and the road ours.
@@ -157,23 +194,28 @@ Press Enter."#,
             [(700.0, -5000.0), (5000.0, -5000.0), (5000.0, -450.0), (1900.0, -650.0), (1100.0, -1200.0)],
         ],
     ),
-    // The garrison's posts: Svitle, Rivne, north of the H-32 in the town, the northern quarters, the mine, the
-    // H-32's western end.
+    // The garrison's posts (c15 §2, 14-23 Jan: the north of the town, Svitle and Rivne held): Svitle, Rivne, the
+    // town's western entrance north of the H-32, the blocks north of Tsentralna street, the northern quarters' south
+    // edge over the drone team, the mine, and the northern quarters' east towards the jaw.
     ua_positions: [
         (-560.0, -1250.0),
         (-1750.0, -700.0),
-        (300.0, -450.0),
-        (800.0, -600.0),
-        (1400.0, -300.0),
         (-300.0, -350.0),
-        (900.0, -700.0),
+        (300.0, -450.0),
+        (850.0, -520.0),
+        (1400.0, -300.0),
+        (1150.0, -650.0),
     ],
 
     // ---- The battle's part (bav_sim::data) ----
-    // The night's robots (c15 §2, 14-23 Jan: the northern quarters supplied by heavy drones and UGVs): two ground
-    // robots, the wounded waiting for them, and the Vampire with three sorties in it, about twenty minutes in the air
-    // each in the cold. Their FPVs see less in the dark (a third of the day's chance per kilometre).
-    robots: (ugvs: 2, casevac: true, found_per_km: 0.2, bomber: (sorties: 3, endurance: 1000.0)),
+    // The night's robots (c15 §2, 14-23 Jan: the northern quarters supplied by heavy drones and UGVs; c15 §5: the
+    // UGVs "usually don't survive the trip", the bombers lift 60 mm bombs and never 120 mm, keeping the drone teams in
+    // fuel took many sorties): four ground robots, the wounded waiting for them, and the Vampire with four sorties in
+    // it (the numbers are the design's). Their FPVs over the road are the kill zone's below.
+    robots: (ugvs: 4, casevac: true, bomber: (sorties: 4, endurance: 1000.0)),
+    // What each post has to fire before it is dry, a robot's or a bundle's ammunition filling it by half: part I's
+    // figure, the design's (the dossier gives none); the night asks whether the posts are fed (c15 §2, 14-23 Jan).
+    post_ammo: 60,
     // The Record: riflemen at the seven posts, a battery's sixteen rounds, four FPVs, six grenades.
     allotment: (
         points: 80,
@@ -191,21 +233,114 @@ Press Enter."#,
             (id: "vog", count: 3),
         ],
     ),
-    // The night: twos from the jaw and the town's south, into the northern quarters.
+    // Their drones over the road at night (bav_sim::killzone; c15 §4, §5: thermal cameras made the night only a
+    // little safer than the day), at about a third of part I's rates, a night's and the design's (c15 §11). The town's
+    // south is theirs now, so Sudny Den flies from inside it; Rubikon is on the road all night; the Archangels' fibre
+    // ones, and a waiter of theirs on the H-32's shoulder. Icing stops the spools and snaps the cable, and the fibre's
+    // modules lose 20-50% in the cold (06, icing; Euromaidan Press, 13 Jan): a third of the fibre sorties snag, the
+    // design's reading of it. The dome over the drone team, and nets over the H-32 from the road head to the town
+    // (Kyiv Independent's photographs of January, c15 §11; no length is published, so the stretch is the design's).
+    // No car runs: nothing on wheels gets through (c15 §5).
+    killzone: (
+        crews: [
+            (name: ("Rubikon", "Рубікон"), kind: Fibre, at: (600.0, 2900.0), per_hour: 4.0),
+            (
+                name: ("Sudny Den", "Судний день"),
+                kind: Rf,
+                at: (-200.0, 1400.0),
+                per_hour: 3.0,
+                relay: (300.0, 600.0),
+            ),
+            (
+                name: ("the Irish", "«Ірландці»"),
+                kind: Rf,
+                at: (2800.0, -2300.0),
+                per_hour: 2.0,
+                relay: (2250.0, -1650.0),
+            ),
+            (name: ("the Archangels", "«Архангели»"), kind: Fibre, at: (2700.0, 2200.0), per_hour: 2.0),
+            (name: ("the Archangels", "«Архангели»"), kind: Waiter, at: (-1240.0, -162.0), per_hour: 1.0),
+        ],
+        // The H-32 from the road head to the town's western entrance, "the single road into Myrnohrad" (c15 §5); in the
+        // town the blocks and the ruins hide the street.
+        watch: [
+            [
+                (-2304.0, -448.5),
+                (-1795.4, -302.3),
+                (-1573.0, -240.2),
+                (-1240.7, -150.3),
+                (-779.5, -83.9),
+                (-415.7, -105.0),
+                (-199.3, -202.5),
+            ],
+        ],
+        domes: [(post: 4, radius: 300.0)],
+        nets: [
+            [
+                (-2304.0, -448.5),
+                (-1795.4, -302.3),
+                (-1573.0, -240.2),
+                (-1240.7, -150.3),
+                (-779.5, -83.9),
+                (-718.8, -82.4),
+                (-415.7, -105.0),
+            ],
+        ],
+        team: 1.0,
+        snag: 0.33,
+    ),
+    // The night (22:00 + 0.24 min a game second): robots and the Vampire through it, the wounded out as the robots
+    // reach their posts, and single men seeping into the town's north, now and then two (c15 §5: single men by
+    // January, Euromaidan Press 2 Jan; Interfax 14 Jan: attempts to infiltrate the north intensify), from the jaw
+    // towards the mine and the drone team, and out of the town's south for the drone team. About ten a day came in in
+    // clear weather (c15 §5); the night's rate, about seven in six hours, is the design's, in the cold that killed
+    // theirs too (c15 §3, the 7th Corps).
     script: [
         (2.0, Say("Bird up, thermal. Minus fifteen. The battery won't last long in this.")),
-        (40.0, Say("All, this is {command}. Robots up the road tonight. Keep the road clear of them.")),
-        // Placeholder runs and sorties (the part's content is phase 9): a robot with fuel and batteries for Rivne, the
-        // Vampire's bombs on the twos coming from the jaw, and a bundle of ammunition for the mine.
-        (80.0, Ugv(to: 1, cargo: Power)),
-        (330.0, Sortie(to: (1800.0, -900.0), load: Bombs)),
-        (950.0, Sortie(to: (1400.0, -300.0), load: Bundle(Ammo))),
         (
-            200.0,
-            Infantry(route: 1, groups: 3, size: 2, every: 180.0, label: "22:50  Twos from the jaw, towards the mine"),
+            40.0,
+            Say("All, this is {command}. Robots up the road tonight, and the Vampire. Keep the road clear for them."),
         ),
-        (500.0, Infantry(route: 0, groups: 3, size: 2, every: 200.0, label: "00:00  Twos out of the town's south")),
-        (900.0, Infantry(route: 2, groups: 2, size: 2, every: 150.0)),
-        (1300.0, Say("This is {op}. Quiet now. Too cold even for them.")),
+        // The robots go out early: at 10 km/h the northern quarters are three and a half kilometres and most of the
+        // night from the road head. Fuel and batteries for the drone team, ammunition for the town's western entrance,
+        // food for Rivne, ammunition for Svitle; each brings back the wounded waiting where it unloads.
+        (5.0, Ugv(to: 4, cargo: Power)),
+        (25.0, Ugv(to: 2, cargo: Ammo)),
+        (60.0, Ugv(to: 1, cargo: Food)),
+        (450.0, Ugv(to: 0, cargo: Ammo)),
+        // The Vampire: rounds for the east post, bombs on the jaw's path, food for the mine, bombs on the town's south.
+        (200.0, Sortie(to: (1150.0, -650.0), load: Bundle(Ammo))),
+        (520.0, Sortie(to: (1750.0, -850.0), load: Bombs)),
+        (880.0, Sortie(to: (1400.0, -300.0), load: Bundle(Food))),
+        (1240.0, Sortie(to: (900.0, 250.0), load: Bombs)),
+        (
+            60.0,
+            Seep(
+                route: 1,
+                from: 900.0,
+                width: 250.0,
+                per_hour: 0.6,
+                crews: 0.5,
+                men: (1, 2),
+                label: "22:15  One at a time, from the jaw",
+            ),
+        ),
+        (
+            150.0,
+            Seep(
+                route: 0,
+                from: 1150.0,
+                width: 250.0,
+                per_hour: 0.6,
+                crews: 1.0,
+                men: (1, 2),
+                label: "22:35  Out of the town's south, for the drone team",
+            ),
+        ),
+        (
+            1000.0,
+            Say("All, this is {command}. The cold is killing theirs too. Frostbite, hypothermia. They keep coming."),
+        ),
+        (1300.0, Say("This is {op}. Quiet now. Hours yet to first light.")),
     ],
 )

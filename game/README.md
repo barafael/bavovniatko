@@ -16,7 +16,8 @@ are five places so far, the first two one minefield seen from both sides:
   into the pocket, in the fog, by day and in the frost; so far the place and its map, the ground robots and the
   heavy bomber, their drone crews over the road (FPVs on radio and fibre, waiters on the shoulders) against our EW
   domes and nets, their infantry seeping in by twos and threes. Part I is the day of 10 November: the fog, the
-  morning's run into the town under it, and the seep at the fog's rate; II and III are still placeholders
+  morning's run into the town under it, and the seep at the fog's rate; III is the night of 19-20 January: robots
+  and the Vampire feeding the north, single men seeping in, the wounded waiting; II is still a placeholder
   ([`design/myrnohrad.md`](design/myrnohrad.md)).
 
 To watch rather than play, `cargo xtask film` produces a four-minute film of both, directed from

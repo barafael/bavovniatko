@@ -159,6 +159,10 @@ pub struct DioramaData {
     #[serde(default)]
     pub start_z: Option<f32>,
     pub home: P,
+    /// Where the drone team sits in this part, in place of the map's `home` and `operator` (a place whose parts share
+    /// one map and whose team moves between them: Myrnohrad's in the frost, out of a basement that is now theirs).
+    #[serde(default)]
+    pub team: Option<P>,
     #[serde(default)]
     pub jam_z: Option<f32>,
     #[serde(default)]
@@ -863,7 +867,7 @@ pub fn layout(d: &DioramaData) -> Layout {
         defence_z: d.defence_z,
         trench_z: d.trench_z,
         start_z: d.start_z,
-        home: v(d.home),
+        home: v(d.team.unwrap_or(d.home)),
         jam_z: d.jam_z,
         mortar_band: d.mortar_band,
     }
