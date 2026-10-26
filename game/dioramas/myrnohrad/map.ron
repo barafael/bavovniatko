@@ -169,7 +169,8 @@
     space_key: Atgm,
     // Their EW: jammers behind their lines on the three sides, the rest building up into their ground.
     ew: (jammers: [(2000.0, -1500.0), (1300.0, 1750.0), (-1600.0, 1500.0)], radius: 900.0, depth: 600.0),
-    fpv: (endurance: 300.0),
+    // FPVs: half the garrison's heavy enough to fly in fog; the light ones are useless in the wet (c15 §3).
+    fpv: (endurance: 300.0, heavy: 0.5),
     // The drone team in a basement in the western quarters. Rubikon hunted the drone crews first (01 e8: over a
     // quarter of its strikes): they are found often.
     operator: (pos: (450.0, -60.0), found_per_hour: 0.6),

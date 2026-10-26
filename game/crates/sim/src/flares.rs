@@ -1,12 +1,12 @@
 //! Light over the field at night (design/hostomel.md, phase 6): the hand flares the attackers send up as they go in
 //! and the defenders' posts fire when they are rushed in the dark, and the illumination rounds the player calls from
 //! the guns (L). A flare is a light in the air for as long as it burns, falling as it goes; under it men see as far as
-//! by day, whichever side they are on (`fight::Sight::at`). The picture lights it (`bav_look::fx`).
+//! by day, whichever side they are on (`fight::Seeing::light`). The picture lights it (`bav_look::fx`).
 //!
 //! Only a fight whose file gives its posts flares, or a day with illumination rounds in its support, has any of this:
 //! a system more would change another day's Record.
 
-use crate::fight::{FightRng, PulledOut, Sight};
+use crate::fight::{FightRng, PulledOut, Seeing};
 use crate::fire::{Post, Strike, StrikeMission};
 use crate::geo;
 use crate::units::{Radio, SState, Soldier};
@@ -86,8 +86,8 @@ pub(crate) fn add(app: &mut App) {
 }
 
 /// The ground the flares light, for the fight's sight lines.
-fn see_lit(mut sight: ResMut<Sight>, flares: Query<(&Flare, &Transform)>) {
-    sight.lit = flares.iter().map(|(f, t)| (t.translation.xz(), f.kind.reach())).collect();
+fn see_lit(mut seeing: ResMut<Seeing>, flares: Query<(&Flare, &Transform)>) {
+    seeing.lit = flares.iter().map(|(f, t)| (t.translation.xz(), f.kind.reach())).collect();
 }
 
 /// A flare of this kind lights at `at` (in the air) now.
@@ -139,14 +139,14 @@ pub(crate) fn call_illum(
 pub(crate) fn post_flares(
     mut commands: Commands,
     time: Res<Time>,
-    sight: Res<Sight>,
+    seeing: Res<Seeing>,
     mut rng: ResMut<FightRng>,
     mut radio: ResMut<Radio>,
     soldiers: Query<(&Soldier, &Transform)>,
     mut posts: Query<(&Post, &mut HandFlares), Without<PulledOut>>,
 ) {
     // Only when the dark hides them.
-    if sight.dark > 0.8 {
+    if seeing.dark > 0.8 {
         return;
     }
     let now = time.elapsed_secs_f64();

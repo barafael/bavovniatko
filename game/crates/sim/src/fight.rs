@@ -18,6 +18,13 @@ pub struct FightPlugin;
 impl Plugin for FightPlugin {
     fn build(&self, app: &mut App) {
         let Some(spec) = spec() else {
+            // A fog or a night without the fight (Myrnohrad): the one visibility all the same, for the posts' rifles,
+            // the observers, the staff, the drone and the FPVs; before the script, so the frame's fire sees this
+            // frame's light.
+            if seeing_here() {
+                app.insert_resource(Seeing::new()).add_systems(Update, (see, lift).chain().run_if(crate::running).in_set(crate::Step::Script).before(crate::director::DirectorSystems));
+                app.add_systems(Update, log_seen.run_if(crate::running).in_set(crate::Step::Effects));
+            }
             // The areas without the fight (Avdiivka): who holds each, and nothing else of it. The posts there are the
             // column game's, worn down by its own fire.
             let areas = &crate::data::sim_data().areas;
@@ -27,7 +34,7 @@ impl Plugin for FightPlugin {
             return;
         };
         app.insert_resource(FightRng(SmallRng::seed_from_u64(crate::dev::seeded(2202))))
-            .insert_resource(Sight { dark: 1.0, lit: Vec::new() })
+            .insert_resource(Seeing::new())
             .insert_resource(Field { zones: zones(&spec.zones), ..default() })
             // After the units have moved, fought and died this frame: the fight reads and writes the same men, posts and
             // places, and in no fixed order against them a day would not replay itself.
@@ -96,24 +103,146 @@ fn zones(specs: &[ZoneSpec]) -> Vec<Zone> {
 #[derive(Resource)]
 pub(crate) struct FightRng(pub(crate) SmallRng);
 
-/// How far men see now, as a share of the day's: in the dark (`bav_core::sun::sight`), and under the flares burning
-/// over the field, where they see as by day. The posts' rifles and the attackers' fire reach no further.
+/// Whether the day has a visibility of its own without the fight: a fog in its file, or a night (a part whose file
+/// dates its moon, `bav_core::sun::moon`). Elsewhere there is no `Seeing` and the battle sees as on a clear day.
+fn seeing_here() -> bool {
+    let d = bav_core::data::data();
+    !d.fog.is_empty() || d.moon.is_some()
+}
+
+/// How far one sees now: the battle's one visibility (design/myrnohrad.md, phase 2), asked by the posts' rifles, the
+/// attackers' return fire, the observers, the staff's eyes, the drone's picture and the FPVs. Two terms, light and
+/// weather. The light is a share of the day's: the dark (`bav_core::sun::sight`), and under the flares burning over
+/// the field as by day. The weather is the fog's metres (`bav_core::data::fog_at`): men see a few hundred metres in
+/// it, the drone's day camera as little, its thermal some (c15 §5 "fog"). Only where the day has a fight, a fog or a
+/// night: a resource more would be in another day's Record.
 #[derive(Resource)]
-pub struct Sight {
+pub struct Seeing {
     pub dark: f32,
     /// The ground the flares light: under each, so far round (`flares::FlareKind::reach`).
     pub lit: Vec<(Vec2, f32)>,
+    /// How far anything is seen through the weather now (m): the fog's; infinite in clear air.
+    pub murk: f32,
 }
 
-impl Sight {
-    /// How far men see a man or a post at `p`, as a share of the day's.
-    pub fn at(&self, p: Vec2) -> f32 {
+/// What is looking through the weather.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum Eye {
+    /// A man's, through binoculars or a sight; and a day camera's, which sees no further in fog.
+    Man,
+    /// A thermal camera's: long-wave infrared carries through fog's fine droplets about three times as far as light
+    /// (the drone's channel I; c15 §5: in fog the thermal sees "some").
+    Thermal,
+}
+
+/// How much further a thermal camera sees through fog than an eye.
+const THERMAL_IN_FOG: f32 = 3.0;
+
+impl Seeing {
+    fn new() -> Self {
+        Seeing { dark: 1.0, lit: Vec::new(), murk: bav_core::data::fog_at(crate::director::clock_minutes(0.0)).unwrap_or(f32::INFINITY) }
+    }
+
+    /// The light at `p`, as a share of the day's.
+    pub fn light(&self, p: Vec2) -> f32 {
         if self.lit.iter().any(|(c, r)| c.distance(p) < *r) { 1.0 } else { self.dark }
+    }
+
+    /// How far this eye sees through the weather now (m).
+    pub fn through(&self, eye: Eye) -> f32 {
+        match eye {
+            Eye::Man => self.murk,
+            Eye::Thermal => self.murk * THERMAL_IN_FOG,
+        }
+    }
+
+    /// How far men see a man or a post at `p`, for what they would see at `base` metres in clear daylight: the
+    /// light's share of it, times the weather's (the fog's metres as a share of `base`, at most all of it).
+    pub fn reach(&self, base: f32, p: Vec2) -> f32 {
+        base * self.light(p) * (self.murk / base).min(1.0)
+    }
+
+    /// Whether the fog is thick enough to keep the light FPVs on the ground (c15 §3: useless in the wet).
+    pub fn grounds_light_fpvs(&self) -> bool {
+        self.murk < FPV_FOG
     }
 }
 
-pub(crate) fn see(script: Res<crate::director::Script>, mut sight: ResMut<Sight>) {
-    sight.dark = bav_core::sun::sight(crate::director::clock_minutes(script.t));
+/// Below this much sight through the fog (m) a light FPV's pilot cannot find his way in the goggles.
+const FPV_FOG: f32 = 500.0;
+
+pub(crate) fn see(script: Res<crate::director::Script>, mut seeing: ResMut<Seeing>) {
+    let minutes = crate::director::clock_minutes(script.t);
+    seeing.dark = bav_core::sun::sight(minutes);
+    seeing.murk = bav_core::data::fog_at(minutes).unwrap_or(f32::INFINITY);
+}
+
+/// The fog has lifted when it lets one see this far (m): the road is open to their drones.
+const LIFTED: f32 = 2000.0;
+
+/// When the fog lifts (minutes after midnight): where its metres first pass `LIFTED` in the day's table, if they do.
+fn lift_time() -> Option<f32> {
+    if crate::dev::dev().fog_off {
+        return None;
+    }
+    let fog = &bav_core::data::data().fog;
+    if fog.first()?.1 >= LIFTED {
+        return None;
+    }
+    let w = fog.windows(2).find(|w| w[1].1 >= LIFTED)?;
+    Some(w[0].0 + (w[1].0 - w[0].0) * (LIFTED - w[0].1) / (w[1].1 - w[0].1))
+}
+
+/// The net says the fog is going twenty minutes of the day's clock before it lifts, as the forecast gave it: what is
+/// on the road then has that long to get off it (c15 §5: what is still on the road when it lifts is seen).
+fn lift(script: Res<crate::director::Script>, time: Res<Time>, mut radio: ResMut<Radio>, mut said: Local<bool>) {
+    if *said {
+        return;
+    }
+    let Some(at) = lift_time() else {
+        *said = true;
+        return;
+    };
+    if crate::director::clock_minutes(script.t) < at - 20.0 {
+        return;
+    }
+    *said = true;
+    radio.say2(
+        time.elapsed_secs_f64(),
+        "Всім, я {command}. Туман сходить, за двадцять хвилин буде видно. Усе з дороги. Пташки готуйте.",
+        "All, this is {command}. The fog's lifting, clear in twenty minutes. Everything off the road. Get the birds ready.",
+    );
+    info!("seeing: the net warns of the lift at {}", crate::director::clock_text(script.t));
+}
+
+/// For the bands (`BAV_LOG_STATS`), where the day has a fog or a night: how far one sees once a minute of the day's
+/// clock, and each of the attackers' men once, when a post of ours first has him in its rifles' reach, and how far
+/// from it he is then.
+#[allow(clippy::type_complexity)]
+fn log_seen(script: Res<crate::director::Script>, seeing: Res<Seeing>, soldiers: Query<(Entity, &Soldier, &Transform)>, posts: Query<&Post>, mut seen: Local<std::collections::BTreeSet<Entity>>, mut last: Local<Option<u32>>) {
+    if !crate::dev::dev().log_stats {
+        return;
+    }
+    let minute = script.t as u32 / 60;
+    if *last != Some(minute) {
+        *last = Some(minute);
+        let m = |v: f32| if v.is_finite() { format!("{v:.0} m") } else { "clear".to_string() };
+        info!("seeing: {} light {:.2}, eye {}, thermal {}, the posts' rifles {:.0} m", crate::director::clock_text(script.t), seeing.dark, m(seeing.through(Eye::Man)), m(seeing.through(Eye::Thermal)), 750.0 * seeing.dark * (seeing.murk / 750.0).min(1.0));
+    }
+    let attacker = crate::diorama::diorama().attacker();
+    for (e, s, tf) in &soldiers {
+        if s.side != attacker || seen.contains(&e) {
+            continue;
+        }
+        let p = tf.translation.xz();
+        let near = posts.iter().filter(|q| q.side != attacker && q.strength > 0).map(|q| q.pos.distance(p)).min_by(f32::total_cmp);
+        if let Some(d) = near
+            && d < seeing.reach(750.0, p)
+        {
+            seen.insert(e);
+            info!("seen: one of theirs {d:.0} m from a post, {}", crate::director::clock_text(script.t));
+        }
+    }
 }
 
 /// A post's ammunition: volleys left. (The posts' own fire, `fire::small_arms`, spends it.)
@@ -260,7 +389,7 @@ fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, fie
 pub(crate) fn return_fire(
     mut commands: Commands,
     time: Res<Time>,
-    sight: Res<Sight>,
+    seeing: Res<Seeing>,
     mut rng: ResMut<FightRng>,
     mut fx: ResMut<crate::fx::FxQueue>,
     mut stats: ResMut<Stats>,
@@ -282,7 +411,7 @@ pub(crate) fn return_fire(
             .iter()
             .filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded))
             .map(|(_, t)| (t.translation, t.translation.xz().distance(post.pos)))
-            .filter(|(_, d)| *d < 400.0 * sight.at(post.pos))
+            .filter(|(_, d)| *d < seeing.reach(400.0, post.pos))
             .collect();
         near.sort_by(|a, b| a.1.total_cmp(&b.1));
         let shooters: Vec<(Vec3, f32)> = near.into_iter().filter(|(p, _)| geo::line_of_sight(p.xz(), post.pos)).take(10).collect();

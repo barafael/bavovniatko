@@ -122,26 +122,12 @@ fn headframe(m: &mut MeshBuilder, snow: bool) {
     }
 }
 
-/// How far one sees in the day's fog at this clock time (`fog` in the file), if it gives one.
-fn fog_at(minutes: f32) -> Option<f32> {
-    let fog = &crate::data::look_data().fog;
-    let (first, last) = (fog.first()?, fog.last()?);
-    if minutes <= first.0 {
-        return Some(first.1);
-    }
-    if minutes >= last.0 {
-        return Some(last.1);
-    }
-    let k = fog.windows(2).find(|w| minutes < w[1].0)?;
-    let t = (minutes - k[0].0) / (k[1].0 - k[0].0);
-    Some(k[0].1 + (k[1].1 - k[0].1) * t)
-}
-
 /// The light from the sun computed for the place and date (`bav_core::sun`): November's grey morning in fog that
 /// lifts before noon, December's low clear sun to its setting, and January's night over snow, which the camera opens
 /// up to as Hostomel's does; the moon where it is up (`sun::moon`), and on the night of the frost it is not. The
 /// sun's own direction is floored so the ground does not shadow itself black at dawn; its true elevation sets the
-/// brightness.
+/// brightness. In the fog the camera sees as far as the battle does (`bav_sim::fight::Seeing`): the observers, the
+/// drone's day channel and the FPV's goggles as far as a man, the drone's thermal channel further.
 #[allow(clippy::too_many_arguments)]
 pub fn daylight(
     script: Res<bav_sim::director::Script>,
@@ -155,6 +141,7 @@ pub fn daylight(
     mut sky_dome: crate::sky::Sky,
     mut last: Local<Option<Color>>,
     look: Res<crate::LookSettings>,
+    (view, seeing): (Res<bav_sim::player::View>, Option<Res<bav_sim::fight::Seeing>>),
 ) {
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(crate::dev::DayDebug::Off) {
@@ -162,7 +149,7 @@ pub fn daylight(
     }
     let minutes = bav_sim::director::clock_minutes(script.t);
     let winter = !bav_core::diorama::diorama().summer();
-    let fog = fog_at(minutes);
+    let fog = bav_core::data::fog_at(minutes);
     let weather = crate::dev::dev().sky.unwrap_or(if bav_core::data::data().overcast || fog.is_some() { crate::sky::Weather::Overcast } else { crate::sky::Weather::Sun });
     let overcast = weather == crate::sky::Weather::Overcast;
     let (elev, azim) = bav_core::sun::position(minutes);
@@ -229,7 +216,8 @@ pub fn daylight(
     sky_dome.set(weather, minutes / 60.0, Color::srgb(zenith[0], zenith[1], zenith[2]), sky, sun_at, sun_colour, strength, 0.15 + 0.85 * twilight);
     for (mut f, mut ex) in &mut cam {
         f.color = sky;
-        let vis = fog.unwrap_or(if overcast { 5000.0 } else { 7000.0 });
+        let eye = if view.thermal && view.mode == bav_core::vocab::Mode::Drone { bav_sim::fight::Eye::Thermal } else { bav_sim::fight::Eye::Man };
+        let vis = seeing.as_ref().map(|s| s.through(eye)).filter(|m| m.is_finite()).unwrap_or(if overcast { 5000.0 } else { 7000.0 });
         let (near, far) = if thick > 0.0 { (Color::srgb(0.55, 0.56, 0.57), Color::srgb(0.70, 0.71, 0.72)) } else if overcast { (Color::srgb(0.50, 0.51, 0.53), Color::srgb(0.70, 0.71, 0.72)) } else { (Color::srgb(0.52, 0.52, 0.52), Color::srgb(0.76, 0.77, 0.78)) };
         f.falloff = bevy::pbr::FogFalloff::from_visibility_colors(vis * look.haze, near, far);
         if twilight <= 0.0 {

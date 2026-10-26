@@ -291,6 +291,7 @@ The other switches, by what they are for (the full list, with each one's format,
 | `BAV_RES=<w>x<h>` | the window's or the headless frame's size |
 | `BAV_VIEW=op\|ground\|manpads\|bradley` | start on the observers' post, in a tree line with a `BAV_TEAM=stugna\|javelin\|…` launcher (`BAV_AUTO_ATGM=<s>` fires it then), with the first Igla team, or in a Bradley's gunner's seat |
 | `BAV_THERMAL=1` | the drone on its thermal channel from the start, where there is one |
+| `BAV_FOG=off` | the day's fog lifted from the start, in the picture and the battle (Myrnohrad I with and without it) |
 | `BAV_FLY="3-9:w+,9-12:q"` | fly the drone by script: legs of game time with what the sticks do |
 | `BAV_NO_BATTERY=1` | the drone never runs down (the same-day runs) |
 | `BAV_LOG_STATS=1` | the tally once a game minute in the log (the same-day and band runs read it) |
