@@ -1,4 +1,5 @@
-// Myrnohrad, part II, the road: its tour. It has no film yet (design/myrnohrad.md, phase 10).
+// Myrnohrad, part II, the road: its tour (the robots out at first light, their FPVs on the dome and the team, an
+// Orlan, a robot where the nets are torn, the KABs, the jaw, the Vampire at dusk). It has no film yet (phase 10).
 // The schema is the game's showcase.rs. A shot films from game second `from` for `secs`: the drone sliding from
 // one place to the other (`pos`: x, z and height above the ground), looking at `aim`, its fov (degrees) going from
 // one to the other; `fire` calls missions on the nearest stalled vehicle at their game seconds, `fly` is a flown
@@ -9,54 +10,76 @@
     card: ("MYRNOHRAD, THE ROAD INTO THE POCKET", "3 DECEMBER 2025, THE ROAD"),
     // The one-minute tour (`cargo xtask tour myrnohrad-2`).
     minute: [
-        // 08:10: the road from Rivne, the burnt cars on it.
+        // 08:10: the first robots leave the road head under the nets, for the mine and the drone team.
         (
-            from: 20.0,
-            secs: 9.0,
-            pos: ((-1900.0, -600.0, 160.0), (-1750.0, -560.0, 160.0)),
-            aim: Drone(Point((-1200.0, -160.0))),
-            fov: (40.0, 34.0),
+            from: 40.0,
+            secs: 8.0,
+            pos: ((-2050.0, -700.0, 110.0), (-2000.0, -660.0, 110.0)),
+            aim: Drone(Point((-2200.0, -430.0))),
+            fov: (34.0, 28.0),
         ),
-        // Two of them at the south-eastern edge.
+        // 08:35: their FPVs come for the dome and the drone team at the town's western entrance.
         (
-            from: 260.0,
-            secs: 9.0,
-            pos: ((1000.0, 800.0, 120.0), (990.0, 820.0, 120.0)),
-            aim: Drone(MenNear((1150.0, 1050.0))),
-            fov: (22.0, 16.0),
+            from: 104.0,
+            secs: 8.0,
+            pos: ((100.0, -450.0, 150.0), (130.0, -430.0, 150.0)),
+            aim: Drone(Point((330.0, -120.0))),
+            fov: (36.0, 32.0),
         ),
-        // From the jaw towards the mine.
+        // 09:15: an Orlan over the road from Pokrovsk's side.
         (
-            from: 520.0,
+            from: 262.0,
+            secs: 7.0,
+            pos: ((-600.0, -300.0, 250.0), (-620.0, -280.0, 250.0)),
+            aim: Air((-700.0, 300.0)),
+            fov: (30.0, 26.0),
+        ),
+        // 10:12: a robot on the H-32 where the nets are torn.
+        (
+            from: 430.0,
             secs: 9.0,
-            pos: ((1500.0, -900.0, 150.0), (1520.0, -880.0, 150.0)),
-            aim: Drone(MenNear((1800.0, -900.0))),
-            fov: (24.0, 18.0),
+            pos: ((-1150.0, -430.0, 120.0), (-1130.0, -410.0, 120.0)),
+            aim: Drone(Point((-1235.0, -166.0))),
+            fov: (30.0, 26.0),
         ),
         // 11:05: the KABs on the western quarters.
         (
-            from: 610.0,
-            secs: 9.0,
+            from: 608.0,
+            secs: 8.0,
             pos: ((-100.0, -300.0, 220.0), (-80.0, -290.0, 220.0)),
             aim: Drone(Point((400.0, 180.0))),
             fov: (40.0, 36.0),
         ),
-        // The observers' roof, looking west down the road.
-        (from: 900.0, secs: 8.0, pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)), aim: Op((-300.0, -150.0)), fov: (45.0, 40.0)),
-        // 15:20: the town as the light goes.
+        // Two of them from the jaw towards the mine.
         (
-            from: 1400.0,
+            from: 676.0,
             secs: 8.0,
-            pos: ((0.0, -800.0, 400.0), (60.0, -820.0, 400.0)),
-            aim: Drone(Point((1100.0, 100.0))),
-            fov: (55.0, 50.0),
+            pos: ((1500.0, -900.0, 150.0), (1520.0, -880.0, 150.0)),
+            aim: Drone(MenNear((1800.0, -900.0))),
+            fov: (24.0, 18.0),
+        ),
+        // 13:55: the Vampire's bundle for the high-rise.
+        (
+            from: 1192.0,
+            secs: 8.0,
+            pos: ((650.0, 250.0, 140.0), (670.0, 270.0, 140.0)),
+            aim: Drone(Point((880.0, 525.0))),
+            fov: (32.0, 28.0),
+        ),
+        // 15:10: its bombs by the mine, from the observers' roof (the drone is down for a battery by then).
+        (
+            from: 1405.0,
+            secs: 9.0,
+            pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)),
+            aim: Op((1600.0, -350.0)),
+            fov: (30.0, 26.0),
         ),
         (
             from: 1474.0,
             secs: 4.0,
-            pos: ((60.0, -820.0, 400.0), (60.0, -820.0, 400.0)),
-            aim: Drone(Point((1100.0, 100.0))),
-            fov: (50.0, 50.0),
+            pos: ((0.0, 0.0, 0.0), (0.0, 0.0, 0.0)),
+            aim: Op((1600.0, -350.0)),
+            fov: (26.0, 26.0),
             debrief: true,
         ),
     ],

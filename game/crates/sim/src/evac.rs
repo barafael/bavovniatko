@@ -21,7 +21,7 @@ impl Plugin for EvacPlugin {
         // Where the wounded wait for a robot (`robots.casevac` in the day's file), and only there: the Record of the
         // others must not change.
         if crate::robots::casevac() {
-            app.init_resource::<Casualties>().add_systems(Update, wounded_wait.run_if(crate::running).in_set(crate::Step::Script).in_set(EvacSystems).after(call_for_evacuation));
+            app.insert_resource(Casualties::at_first_light()).add_systems(Update, wounded_wait.run_if(crate::running).in_set(crate::Step::Script).in_set(EvacSystems).after(call_for_evacuation));
         }
     }
 }
@@ -219,6 +219,16 @@ pub struct Call {
 }
 
 impl Casualties {
+    /// The queue as the day begins: the wounded the day's file has waiting already (`robots.waiting`), since as many
+    /// hours of the clock before it.
+    fn at_first_light() -> Self {
+        let lay = geo::layout();
+        let waiting = crate::robots::spec()
+            .map(|s| s.waiting.iter().filter_map(|w| Some(Call { at: *lay.ua_positions.get(w.post)?, n: w.n, since: -(w.hours as f64) * 60.0 / diorama().compression() as f64 })).collect())
+            .unwrap_or_default();
+        Casualties { waiting, ..default() }
+    }
+
     /// The wounded waiting, all told.
     pub fn count(&self) -> u32 {
         self.waiting.iter().map(|c| c.n).sum()

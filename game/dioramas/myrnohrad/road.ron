@@ -1,9 +1,11 @@
 // Myrnohrad, part II, The road (Дорога): 3 December 2025, the short day. The corridor is about a kilometre wide
 // (c15 §3), nothing on wheels gets through by day, and their drones own the road (c15 §5). The plan wanted a clear
 // day of 3-7 December; ERA5 has none (design/myrnohrad.md, progress): the 3rd is the least grey of the week, dry and
-// calm under 95% cloud, 4 °C, the ground bare. Until the robots and their drones are built (phases 3-8), the day is
-// a placeholder: the seep at the clear day's rate, the posts, a KAB pair. The schema is
-// bav_core::data and bav_sim::data; the map is map.ron.
+// calm under 95% cloud, 4 °C, the ground bare. No fog, so their drones fly at the day's full tempo from first light
+// to dusk; their infantry seeps in at the clear day's rate; what comes in comes by ground robot and, at dusk, by the
+// Vampire (c15 §5), and the wounded wait for the robots. The day starts from part I's aftermath as the Record has it:
+// the cars burnt on the road, the south-eastern edge's post gone, wounded still waiting at the mine and the high-rise.
+// The schema is bav_core::data and bav_sim::data; the map is map.ron.
 (
     date: "3 December 2025",
     tally_date: "03 DEC 2025",
@@ -45,17 +47,20 @@
 Two days ago Moscow announced that Pokrovsk had fallen. A NATO official says Myrnohrad is virtually encircled. The
 corridor out to the north is a kilometre wide, and the one road in, through Rivne and Svitle, is watched from the
 air every hour of the day. Nothing on wheels gets through it in daylight; what comes in comes by robot, by heavy
-bomber drone, or on foot at night. The wounded wait.
+bomber drone, or on foot at night. The wounded wait: three of them have waited since yesterday or longer.
 
 You are the same drone team, in the same basement. The garrison still holds Svitle, Rivne, the western quarters
-and the mine. Their infantry still comes in by twos and threes, fewer on a day like this, and goes for the drone
-crews first.
+and the mine. Today there is no fog. Their FPV crews fly all day, their Orlans come over the road, and their
+infantry still comes in by twos and threes, fewer on a day like this, and goes for the drone crews first. You have
+six ground robots, the Vampire for the dusk, three interceptors, two EW domes, and nets over the road from the
+edge to the town.
 
 The day will run whether or not you do anything. What you do matters at the margin.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
 V: a ground robot for the wounded.  Alt+click: a robot with ammunition.  7: the robot's camera.  8: the Vampire.
+9: an interceptor.  J: our EW domes off and on (they blind our own FPVs too).
 1/2 or Tab: drone / the observers on the high-rise.  M: move the drone team when they find you.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -115,6 +120,7 @@ Press Enter."#,
                 ],
             ),
             If(Bomber, [Line("The Vampire's sorties", Sorties)]),
+            If(Killzone, [Line("Their FPVs over the road", TheirSorties), Line("    what they hit", TheirHits)]),
             If(
                 Seep,
                 [
@@ -161,7 +167,8 @@ Press Enter."#,
             [(1000.0, -5000.0), (5000.0, -5000.0), (5000.0, -500.0), (1800.0, -700.0), (1200.0, -1300.0)],
         ],
     ),
-    // The garrison's posts: Svitle, Rivne, the western quarters, the high-rise, the mine, the western entrance.
+    // The garrison's posts: Svitle, Rivne, the western quarters, the high-rise, the mine, the western entrance; and
+    // the road head's EW mast, where the robots leave the H-32, with no riflemen.
     ua_positions: [
         (-560.0, -1250.0),
         (-1750.0, -700.0),
@@ -170,12 +177,30 @@ Press Enter."#,
         (880.0, 525.0),
         (1400.0, -300.0),
         (300.0, -150.0),
+        (-2150.0, -470.0),
     ],
+    // Theirs on the south-eastern edge since mid-November (c15 §2, 14 Nov: the flag on a ruined mine there): a
+    // position in the ruins by mine No. 3's heap; its strength is the design's.
+    ru_positions: [(1250.0, 1450.0)],
 
     // ---- The battle's part (bav_sim::data) ----
-    // Ground robots and a heavy bomber: four robots, the wounded waiting for them, their FPVs on a clear day's road
-    // (until phase 3 builds their crews, a chance per kilometre); the Vampire's two sorties for the dusk.
-    robots: (ugvs: 4, casevac: true, found_per_km: 0.3, bomber: (sorties: 2, endurance: 900.0)),
+    // Ground robots and a heavy bomber (c15 §5: every supply run into the town by drone or UGV, and the UGVs "usually
+    // don't survive the trip"; bombers lift 60 mm bombs, never 120 mm). Six robots, four of them the Record's runs;
+    // two sorties of the Vampire left for the dusk. The wounded wait for a robot, and three already wait at first
+    // light from the days before (c15 §5: days, by November up to two weeks): two at the mine and one at the
+    // high-rise; the numbers and the hours are the design's. With their drone crews on the road the per-kilometre
+    // stand-in is off.
+    // What each post has to fire before it is dry, as in the fog (fog.ron, the design's): a robot's load of
+    // ammunition or the Vampire's bundle fills it by half.
+    post_ammo: 60,
+    // Their position on the south-eastern edge: riflemen only.
+    ru_weapons: [None],
+    robots: (
+        ugvs: 6,
+        casevac: true,
+        waiting: [(post: 5, n: 2, hours: 30.0), (post: 4, n: 1, hours: 14.0)],
+        bomber: (sorties: 2, endurance: 900.0),
+    ),
     // The Record: riflemen at the seven posts, a battery's sixteen rounds, eight FPVs, eight grenades for the drone.
     allotment: (
         points: 80,
@@ -193,8 +218,100 @@ Press Enter."#,
             (id: "vog", count: 4),
         ],
     ),
+    // Their drones over the road (bav_sim::killzone; c15 §4, §5): the same crews as in the fog, at the full day's tempo
+    // from first light on a dry day, Rubikon on the road all day (it held the single road "almost constantly under
+    // fire control", c15 §5). Our two EW domes: over the drone team at the town's western entrance, and at the road
+    // head, where the robots leave the H-32 for the villages' tracks; nets over the road's west stretch, from the
+    // edge past Rivne and Svitle to the town's western entrance. No car on the road in the Record: nothing on wheels
+    // gets through by day (c15 §5). The rates are the design's (c15 §11).
+    killzone: (
+        crews: [
+            (name: ("Rubikon", "Рубікон"), kind: Fibre, at: (600.0, 2900.0), per_hour: 14.0, budget: 12),
+            (
+                name: ("Sudny Den", "Судний день"),
+                kind: Rf,
+                at: (-900.0, 2600.0),
+                per_hour: 10.0,
+                relay: (-700.0, 1620.0),
+            ),
+            (
+                name: ("the Irish", "«Ірландці»"),
+                kind: Rf,
+                at: (2800.0, -2300.0),
+                per_hour: 8.0,
+                relay: (2250.0, -1650.0),
+            ),
+            (name: ("the Archangels", "«Архангели»"), kind: Fibre, at: (2700.0, 2200.0), per_hour: 6.0),
+            (name: ("the Archangels", "«Архангели»"), kind: Waiter, at: (-1240.0, -162.0), per_hour: 2.0),
+            (name: ("the Archangels", "«Архангели»"), kind: Waiter, at: (-560.0, -86.0), per_hour: 2.0),
+            (name: ("the Archangels", "«Архангели»"), kind: Waiter, at: (-1100.0, 392.0), per_hour: 2.0),
+        ],
+        // The H-32 from the road head into the town, and the northern road by Rivne's north.
+        watch: [
+            [
+                (-2304.0, -448.5),
+                (-1795.4, -302.3),
+                (-1573.0, -240.2),
+                (-1240.7, -150.3),
+                (-779.5, -83.9),
+                (-415.7, -105.0),
+                (-199.3, -202.5),
+                (14.4, -247.8),
+                (628.6, -368.4),
+                (1076.7, -414.0),
+            ],
+            [(-2304.0, 35.6), (-1218.6, 367.3), (-1003.4, 384.6), (-833.1, 332.8), (-674.8, 212.8), (-437.9, -80.9)],
+        ],
+        domes: [(post: 6, radius: 300.0), (post: 7, radius: 300.0)],
+        nets: [
+            [
+                (-2304.0, -448.5),
+                (-1795.4, -302.3),
+                (-1573.0, -240.2),
+                (-1240.7, -150.3),
+                (-779.5, -83.9),
+                (-718.8, -82.4),
+                (-415.7, -105.0),
+            ],
+        ],
+        // Their direction-finders locate our drone team's ground station about once an hour of drone time.
+        team: 1.0,
+    ),
+    // Their reconnaissance wings and our interceptors (bav_sim::wings; 01 e7, e9): on a dry day their Orlans and ZALAs
+    // come over the road through the day, four passes against the drone team's three interceptors and the radar that
+    // cues them. The times and paths are the design's.
+    wings: (
+        passes: [
+            (
+                at: 230.0,
+                kind: Orlan,
+                path: [(-200.0, 5200.0), (-700.0, 300.0), (-1700.0, -500.0), (-1300.0, 5200.0)],
+            ),
+            (
+                at: 700.0,
+                kind: Zala,
+                path: [(2900.0, -3200.0), (1200.0, -600.0), (-200.0, -300.0), (2500.0, -3600.0)],
+                agl: 500.0,
+            ),
+            (
+                at: 1040.0,
+                kind: Orlan,
+                path: [(1400.0, 5200.0), (600.0, 200.0), (-1200.0, -300.0), (-2200.0, -900.0), (-1800.0, 5200.0)],
+            ),
+            (
+                at: 1250.0,
+                kind: Zala,
+                path: [(2900.0, -3200.0), (1500.0, -400.0), (300.0, 400.0), (2800.0, 1400.0)],
+                agl: 500.0,
+            ),
+        ],
+        interceptors: 3,
+        radar: (at: (450.0, -60.0), range: 2000.0),
+    ),
     // The day: about ten get in on a day like this (c15 §5), seeping from four sides at about 1.3 men an hour
-    // (bav_sim::seep), a KAB pair, the claim of 1 December on the net.
+    // (bav_sim::seep); four robot runs by day, and the Vampire's two sorties at dusk; a KAB pair; the claim of
+    // 1 December on the net (c15 §9), which changes nothing on the ground. The runs' times and cargoes are the
+    // design's.
     script: [
         (2.0, Say("Bird up. Cloud, but it's dry. They can see everything today, and so can we.")),
         (
@@ -203,6 +320,15 @@ Press Enter."#,
                 "All, this is {command}. Moscow says Pokrovsk is theirs. It changes nothing here. Nobody on the road by day.",
             ),
         ),
+        // A robot makes 10 km/h, and the day's clock runs about eighteen times faster than the game's (c15 §5, the
+        // Zmiy): the long runs leave at first light. Food and water to the mine, where two wounded wait, nearly four
+        // kilometres; fuel and batteries for the drone team at the town's western entrance; ammunition to Svitle; and
+        // at midday ammunition to Rivne, the post nearest the road head, there and back. The high-rise's wounded are
+        // left to the player (V).
+        (20.0, Ugv(to: 5, cargo: Food)),
+        (60.0, Ugv(to: 6, cargo: Power)),
+        (120.0, Ugv(to: 0, cargo: Ammo)),
+        (600.0, Ugv(to: 1, cargo: Ammo)),
         (
             150.0,
             Seep(
@@ -227,6 +353,10 @@ Press Enter."#,
                 say: "Su-34s. Glide bombs. Down.",
             ),
         ),
-        (1350.0, Say("This is {op}. It's getting dark. The road will be busy tonight.")),
+        (1250.0, Say("This is {op}. It's getting dark. The road will be busy tonight.")),
+        // As the light goes the Vampire, one sortie at a time: a bundle of ammunition for the high-rise (13:53), then
+        // 60 mm bombs on the ruins by the mine, where the groups from the jaw go to ground (14:51).
+        (1150.0, Sortie(to: (880.0, 525.0), load: Bundle(Ammo))),
+        (1340.0, Sortie(to: (1600.0, -350.0), load: Bombs)),
     ],
 )

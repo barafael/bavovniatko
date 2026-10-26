@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
 Status: planned 2026-10-25; phases 0 to 6 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 9, part III's night, 2026-10-26. The owner's direction of 25 October: the next diorama comes from
+in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 8, part II's day, 2026-10-26; phase 9, part III's night, 2026-10-26. The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -663,3 +663,45 @@ the EW domes' masts.
   in the cold (ours are not fibre in the engine); the map's areas have no "northern quarters" (the mine stands for
   it, and adding an area to `map.ron` would change I and II); the robots in the tour are too small to see at the
   shots' range.
+- 2026-10-26: phase 8, **part II's day** (`road.ron`, `shots/myrnohrad-2.ron`). 08:00 to 15:40 on 3 December, dry
+  and overcast, no fog (phase 1's day, not the plan's clear one under snow), so their drones fly at the full day's
+  tempo from first light. **From I's aftermath**, as the Record has it and written into the file: the cars of three
+  weeks burnt on the road, half the roofs gone, the south-eastern edge's post gone and a position of theirs in the
+  ruins by mine No. 3's heap (`ru_positions`, riflemen only), so the edge is theirs at dusk; and **the wounded already
+  waiting**: `robots.waiting` (new, `robots::WaitingSpec`, read by `evac::Casualties` at first light) puts two at the
+  mine waiting 30 hours and one at the high-rise waiting 14 (the numbers are the design's; c15 §5, days to two
+  weeks). **Their drones**: part I's crews with Rubikon on the road all day, the waiters on both roads; our two
+  domes over the drone team and at the road head (a mast at a position of its own with no riflemen, where the
+  robots leave the H-32 for the villages' tracks); nets over the H-32 from the edge to the town's western entrance;
+  no car on the road. **Wings**: four passes (two Orlans, two ZALAs) against three interceptors and the radar.
+  **The robots**: six, four the Record's runs, all at first light or near it because at 10 km/h and the day's clock
+  (about eighteen clock seconds to the game's one) the mine is 3.8 km and seven hours away: food for the mine (where
+  the wounded wait) at 20 s, fuel and batteries for the drone team at 60 s, ammunition for Svitle at 120 s and for
+  Rivne at 600 s; the high-rise's wounded are left to the player. **The Vampire** at dusk, one sortie at a time: a
+  bundle for the high-rise at 13:53 and 60 mm bombs on the mine's approach at 14:51. `post_ammo` 60 as in I, the
+  debrief's `Killzone` rows, the claim of 1 December on the net at 08:09, the briefing with 9 and J. **Bands**
+  (`band.sh myrnohrad-2 0 1 2 3`, the Record). Before (the placeholder, its file through `BAV_DATA` on this build):
+  sent 10/10/12/7, dead 4/6/0/2, our losses 0/1/1/0, no robot sent, no wounded, the south-eastern edge nobody's.
+  After: sent 10/10/12/7, dead 4/5/1/2, our losses 8/6/6/8; robots 4 sent, 0 back, 4 lost in every seed (Rubikon's
+  fibre FPVs on the H-32 once the nets have six holes, by about 10:00, and at the turn off the road head, Sudny
+  Den's radio ones once the dome there is knocked out), no load delivered by a robot; the wounded waiting 3 at dawn and 7/6/6/7
+  at dusk, none brought out; the Vampire's bundle in at the high-rise in three of four, its bombs flown in one and
+  hitting nobody (the team moving or the bomber still up when the order comes); their FPVs 49-59 a day (13-17 radio,
+  34-42 fibre), hitting robots 7-10 times, the team 1-4, the domes 2-4, men 5-9; the wings 1-3 of four brought
+  down. Svitle ours in two seeds and contested in two, Rivne ours in three, the western quarters ours in one and
+  contested by the burrows near the team in three (as before: the seep is unchanged), the edge theirs in all four.
+  Against the Record's table: about ten get in, nothing on wheels arrives, the robots do not survive the trip (all
+  four, where the table says most), 60 mm bombs and never 120, the queue longer at dusk than at dawn, the
+  south-eastern edge theirs; Svitle and the western quarters are not reliably ours. Command, the historical
+  allotment (the runs and sorties are the player's there, so none went): staff off sent 10/10/12/7, dead 5/5/0/2,
+  our losses 5/6/6/6, waiting at dusk 6 in all; staff on dead 5/7/0/2, our losses 11/13/9/6, waiting 9/10/8/6.
+  **Checks** (main merged after phases 7 and 9): the seven older days `same` against `fx-v`, `r2-r`, `f3-h1`,
+  `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; Myrnohrad I `same` against `p7-m1`, III against `p9-m3`; II filmed twice
+  from one build the same (`p8f-m2`). Clippy, `cargo test` and fmtron pass. The tour (devlog stills
+  `m2-road-t7`, `-t33`, `-t59`): the robots leaving under the nets with the dawn's three wounded in the tally, a robot
+  hit where the nets are torn, the observers on the mine at dusk. **Not done**: the robots are slower than the
+  clock (a run spends hours of it on the road), which makes every Record run die; a faster robot on the clock, or
+  runs that only go at dusk, is a change to `robots` for later; the burrows I leaves are not carried over (the seep
+  starts empty); the Vampire's script order is dropped when the team is moving or the bomber is still up, rather
+  than kept; in Command the robots are the map table's catalog and no switch sends them without one allotted.
+
