@@ -39,4 +39,6 @@ for s in $seeds; do
   grep groups= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    seep: /"
   # Robots (Myrnohrad): sent/back/lost/left, loads delivered, the wounded waiting/out/dead aboard, the bomber.
   grep robots= "$out/seed-$s/tally.txt" | tail -1 | sed "s/^/    robots: /"
+  # The day's task, where it states one (Myrnohrad): each goal, met or missed, and its figure, from the debrief.
+  grep "^task" "$out/seed-$s/ledger.txt" 2>/dev/null | sed "s/^task\t/    task: /; s/\t/: /g"
 done

@@ -53,7 +53,7 @@ threes: ten a day in sun, thirty or forty in weather like this. It is also the o
 pickups go in from the road head at first light and must be back out before it lifts. When it lifts, anything
 still on the road is seen.
 
-The day will run whether or not you do anything. What you do matters at the margin.
+Your task this morning: the run in and back out before the fog lifts, and the drone team still flying at noon.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
@@ -98,6 +98,27 @@ Press Enter."#,
             ),
         ],
     ),
+    // The morning's task (bav_core::data::Goal), read at the end against the day's own count: the run in and back
+    // out under the fog, the one cover under which our vehicles still reached the town (c15 §5, §6.9); and the drone
+    // team still flying at noon, the crews their infiltrators went for first (c15 §5, §10). A team hit where it stands
+    // is two wounded (their guns once they have found it, or an FPV), a burrow's fire one; the team, six men, is out
+    // of the fight when all six are hit (the number is the design's). The Record: the run home in three seeds of four
+    // (in the fourth an FPV burns a pickup on the way out); the team, with no hand on M to move it when it is found,
+    // 5, 4, 7 and 8 wounded, so met in two.
+    objective: [
+        (
+            name: ("The run in and back out", "Рейс туди й назад"),
+            test: CarsHome(2),
+            met: "Both pickups were in the town and back at the road head before the fog lifted. Days like this one were the only days on which anything on wheels still reached Myrnohrad.",
+            missed: "Not both pickups came back out under the fog. What is on the road when it lifts is seen; that autumn the main losses were not at the positions but on the road.",
+        ),
+        (
+            name: ("The drone team in the fight", "Розрахунок у строю"),
+            test: TeamWounded(5),
+            met: "The drone team was still flying at noon. The men who walked in under the fog went for the drone crews first, and this crew they did not put out of the fight.",
+            missed: "The drone team was hit too often to keep flying. Their infiltrators went for the drone crews first, and each crew they put out left the ruins a little blinder.",
+        ),
+    ],
     // The debrief's rows (the schema is the game's screen.rs); the tally's and the fire panel's lines are map.ron's.
     debrief: (
         rows: [

@@ -100,7 +100,13 @@ December, the road by day with no fog: the robots mostly do not survive the trip
 the FPVs against our three interceptors and a radar, the Vampire flies at dusk, and the queue of the wounded is
 longer at dusk than at dawn. Part III (`myrnohrad-3`, 22:00 to 03:45) is the night of 19-20 January at -15 °C, with
 no moon: robots and the Vampire feed the northern quarters, single men seep in, and the fibre snags in the ice. Each
-part starts from the last as the Record has it. The keys are 7 (a robot's own camera), 8 (the Vampire), 9 (an
+part starts from the last as the Record has it. Each part also gives you a task, of two goals: the briefing states
+it, the tally's last line shows where it stands, and the debrief opens with the verdict, each goal met or missed and
+what that meant then. In I, the run's two pickups in and back out under the fog, and the drone team still in the
+fight (no more than five of its men hit); in II, no more than six wounded still waiting at dusk, and Svitle and the
+western quarters ours; in III, every post with at least half its rounds at dawn, and Rivne and Svitle, the road out,
+ours. A goal missed is told as the history it would have been, not as a game over. The goals are data, in each part's
+`objective` (`bav_core::data::Goal`); the other dioramas have none. The keys are 7 (a robot's own camera), 8 (the Vampire), 9 (an
 interceptor), J (our domes off and on), N (the run) and V (a robot for the wounded), with 4 for an FPV, C for a
 grenade from the drone and I for its thermal channel ([Controls](#controls)); `BAV_FOG=off`, `BAV_UGV`,
 `BAV_BOMBER`, `BAV_INTERCEPT`, `BAV_DOME` and `BAV_RUN` play the same from the shell, for the bands

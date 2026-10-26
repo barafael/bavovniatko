@@ -71,6 +71,10 @@ pub struct DioramaData {
     pub wind: Option<(f32, f32, f32)>,
     /// What the day says that is this place's own.
     pub words: Words,
+    /// The player's task, where the day states one (Myrnohrad's parts): the goals the HUD shows while playing and the
+    /// debrief's verdict reads at the end. None: the day runs and is counted, and nothing is met or missed.
+    #[serde(default)]
+    pub objective: Vec<Goal>,
     /// Where the drone starts.
     pub camera: P,
     /// Where the observers are and their eye's height above the ground, where the set does not decide it.
@@ -230,6 +234,61 @@ pub struct Words {
     pub closing: Vec<String>,
     pub keys: String,
     pub sources: Vec<SourceSpec>,
+}
+
+/// One goal of the day's task: its name (English, Ukrainian), what it asks of the day's count, and what it meant, met
+/// or missed, in the day's own terms (one sentence each, for the debrief).
+#[derive(Deserialize, Debug)]
+pub struct Goal {
+    pub name: (String, String),
+    pub test: Condition,
+    pub met: String,
+    pub missed: String,
+}
+
+/// What a goal asks of the figures the day counts, each as the debrief's rows read it ([`Count`]).
+#[derive(Deserialize, Debug, Clone, PartialEq)]
+pub enum Condition {
+    /// The run's cars that went into the town and came back out to the road head: at least this many.
+    CarsHome(u32),
+    /// Our drone team's men hit (two each time it is hit where it stands, one each time a burrow's fire tells): at most
+    /// this many.
+    TeamWounded(u32),
+    /// Our wounded still waiting for a robot at the end: at most this many.
+    WoundedWaiting(u32),
+    /// Our wounded brought out by robot: at least this many.
+    WoundedOut(u32),
+    /// These areas (by key) ours at the end.
+    Held(Vec<String>),
+    /// Every post of ours with men in it has at least this many volleys left at the end (1: none dry).
+    PostsFed(u32),
+}
+
+/// The day's figures a goal can read.
+#[derive(Debug, Default, Clone)]
+pub struct Count {
+    pub cars_home: u32,
+    pub team_wounded: u32,
+    pub wounded_waiting: u32,
+    pub wounded_out: u32,
+    /// The fewest volleys left at a post of ours with men in it (none: no post's are counted).
+    pub post_least: Option<u32>,
+    /// The areas ours, by key.
+    pub ours: Vec<String>,
+}
+
+impl Condition {
+    /// Whether the count meets it.
+    pub fn met(&self, c: &Count) -> bool {
+        match self {
+            Condition::CarsHome(n) => c.cars_home >= *n,
+            Condition::TeamWounded(n) => c.team_wounded <= *n,
+            Condition::WoundedWaiting(n) => c.wounded_waiting <= *n,
+            Condition::WoundedOut(n) => c.wounded_out >= *n,
+            Condition::Held(keys) => keys.iter().all(|k| c.ours.contains(k)),
+            Condition::PostsFed(n) => c.post_least.is_none_or(|v| v >= *n),
+        }
+    }
 }
 
 /// A source the day rests on.
@@ -870,6 +929,49 @@ pub fn layout(d: &DioramaData) -> Layout {
         home: v(d.team.unwrap_or(d.home)),
         jam_z: d.jam_z,
         mortar_band: d.mortar_band,
+    }
+}
+
+#[cfg(test)]
+mod objective_tests {
+    use super::{Condition as C, Count};
+
+    #[test]
+    fn goals_read_the_count() {
+        let c = Count { cars_home: 2, team_wounded: 3, wounded_waiting: 5, wounded_out: 1, post_least: Some(30), ours: vec!["svitle".into(), "west".into()] };
+        assert!(C::CarsHome(2).met(&c) && !C::CarsHome(3).met(&c));
+        assert!(C::TeamWounded(3).met(&c) && !C::TeamWounded(2).met(&c));
+        assert!(C::WoundedWaiting(5).met(&c) && !C::WoundedWaiting(4).met(&c));
+        assert!(C::WoundedOut(1).met(&c) && !C::WoundedOut(2).met(&c));
+        assert!(C::Held(vec!["svitle".into(), "west".into()]).met(&c) && !C::Held(vec!["mine".into()]).met(&c));
+        assert!(C::PostsFed(30).met(&c) && !C::PostsFed(31).met(&c));
+        assert!(C::PostsFed(30).met(&Count { post_least: None, ..c }));
+    }
+
+    /// Every goal's areas are areas of its map.
+    #[test]
+    fn goals_name_real_areas() {
+        for d in crate::diorama::Diorama::ALL {
+            let text = super::builtin_text(d);
+            let data: super::DioramaData = super::parse(&text).unwrap();
+            #[derive(serde::Deserialize)]
+            struct Area {
+                key: String,
+            }
+            #[derive(serde::Deserialize)]
+            struct Areas {
+                #[serde(default)]
+                areas: Vec<Area>,
+            }
+            let areas: Areas = super::parse(&text).unwrap();
+            for g in &data.objective {
+                if let C::Held(keys) = &g.test {
+                    for k in keys {
+                        assert!(areas.areas.iter().any(|a| &a.key == k), "{d}: {} names no area {k}", g.name.0);
+                    }
+                }
+            }
+        }
     }
 }
 

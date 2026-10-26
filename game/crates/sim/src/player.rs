@@ -219,4 +219,7 @@ pub struct Operator {
     /// On the move until then: the feed is down.
     pub moving_until: f64,
     pub moves: u32,
+    /// Times the team was hit where it stood, by their guns or an FPV (`drones::team_hit`): two wounded and the
+    /// controller each time. A day's task reads it (`bav_core::data::Condition::TeamWounded`).
+    pub hits: u32,
 }

@@ -170,7 +170,7 @@
     // The screen in the place's words (the schema is the game's screen.rs): the tally under the clock and what is
     // left to fire (the debrief's rows are each part's).
     hud: (
-        tally: "{date}   {clock}\nTheir men sent in {sent}   came back {returned}{air}{seep}\n{zones}{robots}{killzone}",
+        tally: "{date}   {clock}\nTheir men sent in {sent}   came back {returned}{air}{seep}\n{zones}{robots}{killzone}{task}",
         stock: "155 mm  {shells} rds   FPV  {fpv}{vog}{ugv}{bomber}{speed}",
     ),
     space_key: Atgm,

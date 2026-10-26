@@ -61,7 +61,8 @@ in threes: one man at a time, and now and then two.
 You are the same drone team, moved north into the blocks by the mine, out of the basement that is now theirs.
 The observers are up on the Tsentralna headframe. There is no moon tonight. The wounded wait for a robot.
 
-The night will run whether or not you do anything. What you do matters at the margin.
+Your task tonight: every post with at least half its rounds at dawn (a robot's load of ammunition fills a post by
+half), and the road out through Rivne and Svitle still ours.
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.  J: our EW dome.
@@ -124,6 +125,25 @@ Press Enter."#,
             ),
         ],
     ),
+    // The night's task (bav_core::data::Goal): every post with half its rounds at dawn (30 of `post_ammo`'s 60), the
+    // garrison living on what the heavy drones and robots brought in (c15 §2, 14-23 Jan); and the garrison not cut off,
+    // Rivne and Svitle, the road out, still ours (c15 §10: an encirclement of the garrison is a loss). The Record: the
+    // leanest post at dawn 60, 60, 15 and 32 volleys in seeds 0-3, so met in three; the road out ours in all four (the
+    // night's single men go for the drone team, not the villages), so only a player who loses it misses it.
+    objective: [
+        (
+            name: ("Every post fed", "Кожна позиція з набоями"),
+            test: PostsFed(30),
+            met: "Every post had rounds to fire at dawn. That January both towns were held on what the heavy drones and the ground robots carried in by night.",
+            missed: "A post was running dry at dawn. A post that cannot fire is one their single men walk past into the northern quarters, and the next night's robots had the same road to come up.",
+        ),
+        (
+            name: ("The road out open", "Дорога назовні відкрита"),
+            test: Held(["rivne", "svitle"]),
+            met: "Rivne and Svitle were ours at dawn, and the garrison was not cut off. On 28 January their command posts moved into the town, and there was still no order to leave.",
+            missed: "Rivne or Svitle was theirs by dawn, and the road with it. An encirclement of the garrison, the thousand men and more an officer feared for in November, was the loss the defence existed to avoid.",
+        ),
+    ],
     // The debrief's rows (the schema is the game's screen.rs); the tally's and the fire panel's lines are map.ron's.
     debrief: (
         rows: [

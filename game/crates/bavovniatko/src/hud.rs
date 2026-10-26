@@ -1,5 +1,6 @@
 //! The screen: drone telemetry, the radio net, fire control, the tally, the briefing and the debrief.
-//! The debrief is the day's own account. The record shaped the day; it does not grade it (design/next.md).
+//! The debrief is the day's own account. The record shaped the day; it does not grade it (design/next.md), except where
+//! the day's file states the player's task (`objective`, Myrnohrad): then it opens with the verdict (`task`).
 
 use crate::camera::{Mode, View};
 use crate::director::{self, Script};
@@ -330,7 +331,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops, robots, seep, kz): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>, Option<Res<bav_sim::drones::Drops>>, RobotView, SeepView, Option<Res<bav_sim::killzone::KzTally>>),
+    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops, robots, seep, kz, task): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>, Option<Res<bav_sim::drones::Drops>>, RobotView, SeepView, Option<Res<bav_sim::killzone::KzTally>>, crate::task::TaskView),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -487,6 +488,7 @@ fn update_hud(
         "robots" => robots.tally(now),
         "seep" => seep.line(),
         "killzone" => kz.as_deref().map_or(String::new(), killzone_line),
+        "task" => task.line(),
         _ => String::new(),
     })));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
@@ -667,6 +669,7 @@ fn show_debrief(
     mut hud: HudNodes,
     (field, air, iglas, runway, drops, robots, seep, kz): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&'static bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>, (Option<Res<bav_sim::robots::Robots>>, Option<Res<bav_sim::evac::Casualties>>), Option<Res<bav_sim::seep::Seep>>, Option<Res<bav_sim::killzone::KzTally>>),
     duel: DuelView,
+    task: crate::task::TaskView,
 ) {
     for mut n in &mut root {
         n.display = Display::Flex;
@@ -692,10 +695,15 @@ fn show_debrief(
     let words = &bav_core::data::data().words;
     let (closing, sources, keys) = (&words.closing, &words.sources, words.keys.as_str());
     let dim = Color::srgba(0.72, 0.72, 0.70, 0.85);
-    // The film's end card reads this: one label and value per row, and the closing lines prefixed `closing\t`.
-    // Written fresh, once, when the screen comes up.
+    // The verdict, where the day states a task: each goal met or missed, and what that meant.
+    let verdict = task.verdict();
+    // The film's end card reads this: one label and value per row, and the closing lines prefixed `closing\t`; the
+    // bands read the verdict's lines, prefixed `task\t`. Written fresh, once, when the screen comes up.
     if let Some(dir) = crate::dev::dev().showcase.as_deref() {
         let mut text = rows.iter().map(|(l, v)| format!("{l}\t{v}\n")).collect::<String>();
+        for (g, figure, met) in &verdict {
+            text.push_str(&format!("task\t{}\t{}\t{figure}\n", g.name.0, if *met { "met" } else { "missed" }));
+        }
         for line in closing {
             text.push_str(&format!("closing\t{line}\n"));
         }
@@ -718,6 +726,20 @@ fn show_debrief(
     commands.entity(*body).despawn_children().with_children(|p| {
         p.spawn((Text::new(heading), tf(26.0), TextColor(WHITE)));
         p.spawn((Text::new(span), tf(15.0), TextColor(dim), Node { margin: UiRect::bottom(px(22)), ..default() }));
+        // The verdict first: each goal, its figure and whether it was met, and under it what that meant in the day's
+        // terms. A goal missed is a historical outcome as much as one met.
+        if !verdict.is_empty() {
+            p.spawn((Text::new("The task (Завдання)"), tf(13.0), TextColor(dim), Node { margin: UiRect::bottom(px(6)), ..default() }));
+            for (g, figure, met) in &verdict {
+                p.spawn(Node { flex_direction: FlexDirection::Row, column_gap: px(16), ..default() }).with_children(|r| {
+                    r.spawn((Text::new(format!("{} ({})", g.name.0, g.name.1)), tf(16.0), TextColor(WHITE), Node { flex_grow: 1.0, ..default() }));
+                    let value = format!("{figure}: {}", if *met { "met (виконано)" } else { "missed (не виконано)" });
+                    right(r, value, 16.0, if *met { WHITE } else { AMBER }, 420.0);
+                });
+                p.spawn((Text::new(if *met { g.met.as_str() } else { g.missed.as_str() }), tf(14.0), TextColor(dim), Node { margin: UiRect::bottom(px(8)), ..default() }));
+            }
+            p.spawn(Node { height: px(14), ..default() });
+        }
         for (label, value) in &rows {
             row(p, label, value, 15.0, if label.starts_with(' ') { dim } else { WHITE });
         }

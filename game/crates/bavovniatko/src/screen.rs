@@ -29,8 +29,9 @@ pub struct HudSpec {
 /// phrases, empty where the day has none.
 /// `robots` is the ground robots' line (sent, back, lost, and the wounded waiting where they wait for a robot), empty
 /// where the day has none; `killzone` their drones' (the FPVs they have flown, our cars on the road out, through and
-/// burnt), empty where the day has no kill zone.
-pub const TALLY_KEYS: &[&str] = &["date", "clock", "committed", "out", "withdrawn", "sent", "returned", "air", "zones", "air_down", "landed", "men_out", "captured", "taken", "runway", "robots", "seep", "killzone"];
+/// burnt), empty where the day has no kill zone; `task` the day's task, each goal and its figure so far (`task`), empty
+/// where the day states none.
+pub const TALLY_KEYS: &[&str] = &["date", "clock", "committed", "out", "withdrawn", "sent", "returned", "air", "zones", "air_down", "landed", "men_out", "captured", "taken", "runway", "robots", "seep", "killzone", "task"];
 
 /// What the fire panel's template can name. `vog`, `ad`, `pull_out`, `ugv` and `bomber` are whole phrases, empty where
 /// the day has no grenades, no air defence left, nobody to pull out, no robots or no bomber; `speed` is the time's

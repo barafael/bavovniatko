@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
 Status: planned 2026-10-25; phases 0 to 6 built 2026-10-26 (the place, its map and set, the pocket; the fog
-in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 8, part II's day, 2026-10-26; phase 9, part III's night, 2026-10-26; phase 10, first half (balance and the gaps), 2026-10-26; phase 10, second half (the tours, the stills, the README), 2026-10-26: the three parts are built and played in the Record and in Command, each with its tour and none in the film. The owner's direction of 25 October: the next diorama comes from
+in the battle; their drones over the ground; the seep; the robots; drones against drones; the days are placeholders); phase 7, part I's day, 2026-10-26; phase 8, part II's day, 2026-10-26; phase 9, part III's night, 2026-10-26; phase 10, first half (balance and the gaps), 2026-10-26; phase 10, second half (the tours, the stills, the README), 2026-10-26: the three parts are built and played in the Record and in Command, each with its tour and none in the film; each part's task and the debrief's verdict, 2026-10-26. The owner's direction of 25 October: the next diorama comes from
 the era of humans against drones against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -787,3 +787,29 @@ the EW domes' masts.
   parts on their old tours (54bf33c's shots files through `BAV_DATA`) `same` against `p10-m1`, `p10-m2`, `p10-m3`;
   on the new tours each filmed twice from one build the same, the new references `p11-m1`, `p11-m2`, `p11-m3`.
   Clippy, `cargo test` and fmtron pass.
+- 2026-10-26: **each part's task, and the debrief's verdict**. The owner played Myrnohrad and asked what the player's
+  mission is; there was none: the briefing said the day would run whether or not you did anything, and the debrief
+  only counted. Each part now states one task of two goals, as data: `objective` in the part's file, a list of
+  `bav_core::data::Goal` (an English and a Ukrainian name, a `Condition` with its threshold, and one sentence for
+  met and one for missed). The conditions read the figures the debrief's rows read (`Count`): `CarsHome` (the run's
+  cars back at the road head, `KzTally::home`, new), `TeamWounded` (two for each time the team is hit where it
+  stands, `Operator::hits`, new, and one for each time a burrow's fire tells), `WoundedWaiting`, `WoundedOut`, `Held`
+  (areas by key) and `PostsFed` (the leanest manned post's volleys). The new counts are fields on resources every
+  day already has, so no day's Record moves; the other dioramas have no `objective` and look as before. The
+  briefing's "the day will run whether or not you do anything" line is the task in Myrnohrad's three files; the
+  tally's last line (`{task}` in map.ron's template) shows each goal and its figure so far; the debrief opens with
+  the verdict, each goal met or missed (виконано, не виконано) and its sentence, and writes it to the ledger as
+  `task` lines, which `band.sh` prints. A goal missed is told as history (the queue of the wounded longer at dusk,
+  the road lost), not as a game over. **The goals and the Record** (no input, seeds 0-3): I, the run's two pickups
+  in and back out: met in three (in seed 3 an FPV burns one on the way out); no more than five of the drone team's
+  six men hit: 5, 4, 7 and 8, met in two, since with nobody on M the team stays where their direction-finders found
+  it and the guns come in (the player's lever). II, no more than six wounded waiting at dusk: 7, 8, 8 and 10, missed
+  in all four by one to four, as history had the queue longer at dusk than at dawn (a man aboard a robot is no
+  longer waiting, so V meets it); Svitle and the western quarters ours: met in three (the western quarters
+  contested in seed 2). III, every manned post with half its rounds (30 volleys) at dawn: the leanest 60, 60, 15
+  and 32, met in three; Rivne and Svitle ours: met in all four, because the night's single men go for the drone team
+  and never for the villages, so only a player who loses the road misses it. Thresholds were tuned, not the battle.
+  **Checks**: the ten days `same` against `fx-v`, `r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`, `p11-m1`,
+  `p11-m2`, `p11-m3`; clippy, `cargo test`, fmtron and the smoke runs pass. Devlog:
+  `shots/20261026-2227-task-m1-hud.jpg` (the tally's task line in the fog), `shots/20261026-2232-task-m2-debrief.jpg`
+  (II's debrief, ended early with `BAV_DEBRIEF`).

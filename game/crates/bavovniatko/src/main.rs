@@ -12,6 +12,7 @@ mod screen;
 mod settings;
 mod showcase;
 mod table;
+mod task;
 
 pub use bav_core::schedule::{MAX_STEP, Phase, Setup, Step, running, sim_dt};
 pub use bav_core::{diorama, geo, text};
