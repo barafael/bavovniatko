@@ -19,6 +19,7 @@ pub mod meshes;
 pub mod models;
 pub mod myrnohrad;
 pub mod night;
+pub mod robots;
 pub mod robotyne;
 pub mod sky;
 pub mod terrain;

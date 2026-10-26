@@ -260,7 +260,7 @@ fn wind_at(agl: f32, at: Option<f64>) -> Vec3 {
 }
 
 /// One step of the fall: gravity, and the drag of the air going past it, which carries it off with the wind.
-fn fall_step(pos: &mut Vec3, vel: &mut Vec3, dt: f32, at: Option<f64>) {
+pub(crate) fn fall_step(pos: &mut Vec3, vel: &mut Vec3, dt: f32, at: Option<f64>) {
     let agl = pos.y - geo::height(pos.x, pos.z);
     let rel = *vel - wind_at(agl, at);
     *vel += (Vec3::NEG_Y * 9.81 - rel * rel.length() * (9.81 / (TERMINAL * TERMINAL))) * dt;
@@ -268,7 +268,7 @@ fn fall_step(pos: &mut Vec3, vel: &mut Vec3, dt: f32, at: Option<f64>) {
 }
 
 /// Where a grenade let go from here, still, would land in the mean wind.
-fn landing(from: Vec3) -> Vec2 {
+pub(crate) fn landing(from: Vec3) -> Vec2 {
     let (mut p, mut v) = (from, Vec3::ZERO);
     for _ in 0..2000 {
         fall_step(&mut p, &mut v, 0.02, None);

@@ -55,6 +55,7 @@ The day will run whether or not you do anything. What you do matters at the marg
 
 Mouse: right-drag to look, wheel to zoom.  WASD: fly the drone.  Q/E: turn.  R/F: climb/descend.  I: thermal.
 Left click: 155 mm fire mission (4 rounds).  4: an FPV.  C: drop a grenade from the drone.
+V: a ground robot for the wounded.  Alt+click: a robot with ammunition.  7: the robot's camera.  8: the Vampire.
 1/2 or Tab: drone / the observers on the high-rise.  M: move the drone team when they find you.  P: pause.  [ ]: time.
 
 Press Enter."#,
@@ -104,6 +105,16 @@ Press Enter."#,
             Areas("{area} at the end"),
             Line("Shells left", Shells),
             If(Drops, [Line("Grenades dropped from the drone", Drops)]),
+            If(
+                Robots,
+                [
+                    Line("Ground robots", Robots),
+                    Line("    loads delivered", Delivered),
+                    Line("Wounded brought out by robot", WoundedCarried),
+                    Line("    still waiting", WoundedWaiting),
+                ],
+            ),
+            If(Bomber, [Line("The Vampire's sorties", Sorties)]),
         ],
     ),
     op: ((868.0, 495.0), 30.0),
@@ -153,6 +164,9 @@ Press Enter."#,
     ],
 
     // ---- The battle's part (bav_sim::data) ----
+    // Ground robots and a heavy bomber: four robots, the wounded waiting for them, their FPVs on a clear day's road
+    // (until phase 3 builds their crews, a chance per kilometre); the Vampire's two sorties for the dusk.
+    robots: (ugvs: 4, casevac: true, found_per_km: 0.3, bomber: (sorties: 2, endurance: 900.0)),
     // The Record: riflemen at the seven posts, a battery's sixteen rounds, eight FPVs, eight grenades for the drone.
     allotment: (
         points: 80,

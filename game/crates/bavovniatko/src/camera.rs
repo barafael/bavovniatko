@@ -5,6 +5,9 @@
 //! - **The OP**: the observer on the roof of a nine-storey block at the town's southern edge, with binoculars.
 //!   Closer to the noise, and inside the TOS-1A's target area.
 //! - **The tree line**: eye level behind an ATGM team's launcher, and through its sight.
+//! - **The robot's camera** (7, design/myrnohrad.md phase 5): low on a ground robot's nose, slow and jolting, over
+//!   a link that breaks up; the player can drive it from there or leave it to its route.
+//! - **The bomber's camera** (8): under a Vampire's belly, flown with the drone's sticks.
 
 use crate::dev::{self, dev};
 use crate::geo;
@@ -20,6 +23,7 @@ use bevy::{
     render::view::Msaa,
 };
 pub use bav_core::vocab::{Mode, Target};
+use bav_sim::robots::{Hand, Robot, Vampire};
 
 pub struct CameraPlugin;
 
@@ -29,7 +33,12 @@ impl Plugin for CameraPlugin {
             .init_resource::<Shake>()
             .add_systems(Startup, spawn_camera.before(FeedSetup))
             .add_systems(Startup, (spawn_launcher, spawn_igla).after(spawn_camera))
-            .add_systems(Update, (switch_view, igla_view, bradley_view, drone_control, fpv_control, op_control, ground_control, igla_control, bradley_control, hide_own_turret, apply_view, crate::feed::update_feed, cursor_grab, show_launcher).chain().in_set(crate::Step::Camera));
+            .add_systems(
+                Update,
+                (switch_view, igla_view, bradley_view, robot_view, drone_control, fpv_control, op_control, ground_control, igla_control, bradley_control, robot_control, bomber_control, hide_own_turret, apply_view, crate::feed::update_feed, cursor_grab, show_launcher)
+                    .chain()
+                    .in_set(crate::Step::Camera),
+            );
     }
 }
 
@@ -543,6 +552,7 @@ fn ground_control(
     };
 }
 
+#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn apply_view(
     time: Res<Time>,
     view: Res<View>,
@@ -550,6 +560,8 @@ fn apply_view(
     op: Res<ObservationPost>,
     mut shake: ResMut<Shake>,
     camera: Single<(&mut Transform, &mut Projection), With<MainCamera>>,
+    robots: Query<(&Transform, &bav_sim::units::Driver), (With<Robot>, Without<MainCamera>)>,
+    vampires: Query<&Vampire>,
 ) {
     let (mut tf, mut proj) = camera.into_inner();
     let t = time.elapsed_secs();
@@ -591,6 +603,23 @@ fn apply_view(
             let rot = Quat::from_euler(EulerRot::YXZ, view.ground_yaw + tremble.x, view.ground_pitch + tremble.y, 0.0);
             (view.ground_eye, rot, View::GROUND_FOV / view.zoom())
         }
+        Mode::Robot => {
+            // On the nose of a cart a metre off the ground: every rut comes through, the more the faster it goes.
+            match view.ground_team.and_then(|e| robots.get(e).ok()) {
+                Some((tf, d)) => {
+                    let jolt = Vec2::new(geo::value_noise(d.odometer * 1.7, 5.0, 74), geo::value_noise(d.odometer * 1.3, 7.0, 75)) * 0.012 * (0.2 + d.speed / 2.8);
+                    let eye = tf.translation + tf.rotation * Vec3::new(0.0, 0.85, -0.95);
+                    let rot = tf.rotation * Quat::from_euler(EulerRot::YXZ, view.ground_yaw + jolt.x, view.ground_pitch + jolt.y, jolt.x * 0.5);
+                    (eye, rot, ROBOT_FOV)
+                }
+                None => (tf.translation, tf.rotation, ROBOT_FOV),
+            }
+        }
+        Mode::Bomber => match vampires.iter().next() {
+            // Under the belly, on a gimbal that takes most of the airframe's motion out.
+            Some(v) => (v.pos - Vec3::Y * 0.3, Quat::from_euler(EulerRot::YXZ, v.yaw, v.gimbal, 0.0), BOMBER_FOV),
+            None => (tf.translation, tf.rotation, BOMBER_FOV),
+        },
         Mode::Ground => {
             // Kneeling, breathing; the sight on its tripod is steadier, but the gunner's hands are not.
             let breath = (t * 1.4).sin();
@@ -606,13 +635,13 @@ fn apply_view(
     };
     // Shake from nearby blasts.
     let tr = shake.trauma * shake.trauma;
-    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground | Mode::Manpads => 0.35, Mode::Bradley => 0.2, Mode::Drone | Mode::Fpv => 0.25 };
+    let jitter = Vec3::new((t * 53.0).sin(), (t * 61.0 + 2.0).sin(), (t * 47.0 + 4.0).sin()) * tr * match view.mode { Mode::Op => 0.6, Mode::Ground | Mode::Manpads => 0.35, Mode::Bradley | Mode::Robot => 0.2, Mode::Drone | Mode::Fpv | Mode::Bomber => 0.25 };
     let rjit = Quat::from_euler(EulerRot::YXZ, (t * 37.0).sin() * tr * 0.02, (t * 43.0).sin() * tr * 0.02, (t * 29.0).sin() * tr * 0.03);
     tf.translation = pos + jitter;
     tf.rotation = rot * rjit;
     if let Projection::Perspective(p) = proj.as_mut() {
         p.fov = fov;
-        p.near = if matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley) { 0.1 } else { 0.5 };
+        p.near = if matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley | Mode::Robot | Mode::Bomber) { 0.1 } else { 0.5 };
     }
     shake.trauma = (shake.trauma - dt * 0.9).max(0.0);
     shake.flash = (shake.flash - dt * 2.5).max(0.0);
@@ -815,5 +844,114 @@ fn cursor_grab(view: Res<View>, mut last: Local<Option<Mode>>, mut cursor: Query
         let grab = matches!(view.mode, Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley);
         c.grab_mode = if grab { bevy::window::CursorGrabMode::Locked } else { bevy::window::CursorGrabMode::None };
         c.visible = !grab;
+    }
+}
+
+/// The robot's camera: wide, as a driving camera is.
+const ROBOT_FOV: f32 = 1.25;
+/// The bomber's camera, a fixed lens.
+const BOMBER_FOV: f32 = 0.85;
+
+/// 7: into a ground robot's camera (where the day has robots), the first one out; again for the next. Back in the
+/// drone (1) or in another view, the robot drives its route again. `BAV_VIEW=robot` takes the first one out as soon as
+/// there is one.
+fn robot_view(keys: Res<ButtonInput<KeyCode>>, time: Res<Time>, mut view: ResMut<View>, mut radio: ResMut<bav_sim::units::Radio>, robots: Query<(Entity, &Robot)>) {
+    if view.mode == Mode::Fpv {
+        return;
+    }
+    let pressed = keys.just_pressed(KeyCode::Digit7);
+    let auto = dev().view == Some(Mode::Robot) && view.mode != Mode::Robot;
+    if pressed || auto {
+        let mut live: Vec<(Entity, u32)> = robots.iter().filter(|(_, r)| r.running()).map(|(e, r)| (e, r.n)).collect();
+        live.sort_by_key(|(_, n)| *n);
+        if live.is_empty() {
+            if pressed && bav_sim::robots::present() {
+                radio.say2(time.elapsed_secs_f64(), "Роботів у дорозі нема.", "No robot out.");
+            }
+            return;
+        }
+        let i = match (view.mode, view.ground_team) {
+            (Mode::Robot, Some(cur)) => live.iter().position(|(e, _)| *e == cur).map(|i| (i + 1) % live.len()).unwrap_or(0),
+            _ => 0,
+        };
+        view.mode = Mode::Robot;
+        view.ground_team = Some(live[i].0);
+        view.ground_yaw = 0.0;
+        view.ground_pitch = -0.06;
+    }
+    // Home and gone: back to the drone.
+    if view.mode == Mode::Robot && !view.ground_team.is_some_and(|e| robots.contains(e)) {
+        view.mode = Mode::Drone;
+    }
+}
+
+/// From the robot's camera: right-drag looks about; W/S take the throttle, A/D the lane across the route, and the
+/// robot goes as the player drives it; G gives it back to its route, and so does leaving its camera.
+fn robot_control(
+    time: Res<Time>,
+    keys: Res<ButtonInput<KeyCode>>,
+    buttons: Res<ButtonInput<MouseButton>>,
+    motion: Res<AccumulatedMouseMotion>,
+    mut view: ResMut<View>,
+    mut hands: Query<(Entity, &mut Hand)>,
+) {
+    let dt = time.delta_secs();
+    let seat = (view.mode == Mode::Robot).then_some(view.ground_team).flatten();
+    for (e, mut h) in &mut hands {
+        if Some(e) != seat {
+            if h.held {
+                *h = Hand::default();
+            }
+            continue;
+        }
+        let axis = |a, b| keys.pressed(a) as u8 as f32 - keys.pressed(b) as u8 as f32;
+        let (throttle, lane) = (axis(KeyCode::KeyW, KeyCode::KeyS), axis(KeyCode::KeyD, KeyCode::KeyA));
+        if !h.held && (throttle != 0.0 || lane != 0.0) {
+            *h = Hand { held: true, throttle: 1.0, lat: 0.0 };
+        }
+        if keys.just_pressed(KeyCode::KeyG) {
+            *h = Hand::default();
+        }
+        if h.held {
+            h.throttle = (h.throttle + throttle * dt * 0.8).clamp(0.0, 1.0);
+            h.lat = (h.lat + lane * dt * 2.5).clamp(-25.0, 25.0);
+        }
+    }
+    if view.mode == Mode::Robot && (buttons.pressed(MouseButton::Right) || buttons.pressed(MouseButton::Middle)) {
+        view.ground_yaw = (view.ground_yaw - motion.delta.x * 0.003).clamp(-1.3, 1.3);
+        view.ground_pitch = (view.ground_pitch - motion.delta.y * 0.003).clamp(-0.5, 0.35);
+    }
+}
+
+/// From the bomber's camera: the drone's sticks fly it (W/S, A/D, R/F, Q/E), right-drag tilts the camera. A sortie
+/// of the script's flies itself until the player touches the sticks; out of its camera, any sortie is its own.
+fn bomber_control(
+    keys: Res<ButtonInput<KeyCode>>,
+    buttons: Res<ButtonInput<MouseButton>>,
+    motion: Res<AccumulatedMouseMotion>,
+    mut view: ResMut<View>,
+    mut vampires: Query<&mut Vampire>,
+) {
+    if view.mode == Mode::Bomber && vampires.is_empty() {
+        view.mode = Mode::Drone;
+    }
+    // `BAV_VIEW=bomber`: into its camera as soon as one is up.
+    if dev().view == Some(Mode::Bomber) && view.mode == Mode::Drone && !vampires.is_empty() {
+        view.mode = Mode::Bomber;
+    }
+    let axis = |a, b| keys.pressed(a) as u8 as f32 - keys.pressed(b) as u8 as f32;
+    for mut v in &mut vampires {
+        if view.mode != Mode::Bomber {
+            v.held = false;
+            v.stick = [0.0; 4];
+            continue;
+        }
+        let stick = [axis(KeyCode::KeyW, KeyCode::KeyS), axis(KeyCode::KeyD, KeyCode::KeyA), axis(KeyCode::KeyR, KeyCode::KeyF), axis(KeyCode::KeyQ, KeyCode::KeyE)];
+        v.held = v.held || v.target.is_none() || stick.iter().any(|s| *s != 0.0);
+        v.stick = stick;
+        if buttons.pressed(MouseButton::Right) || buttons.pressed(MouseButton::Middle) {
+            v.gimbal = (v.gimbal - motion.delta.y * 0.003).clamp(-1.55, 0.1);
+            v.yaw -= motion.delta.x * 0.003;
+        }
     }
 }

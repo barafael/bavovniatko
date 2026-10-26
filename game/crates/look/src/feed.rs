@@ -209,6 +209,7 @@ pub fn update_feed(
     mut materials: ResMut<Assets<FeedMaterial>>,
     teams: Query<&crate::fire::AtgmTeam>,
     look: Res<crate::LookSettings>,
+    robots: (Query<&bav_sim::robots::Robot>, Query<&bav_sim::robots::Vampire>),
 ) {
     let Some(screen) = screen else { return };
     let Some(mut m) = materials.get_mut(&screen.0) else { return };
@@ -225,9 +226,11 @@ pub fn update_feed(
         Mode::Bradley if view.sight => FeedMode::Sight,
         Mode::Ground | Mode::Manpads | Mode::Bradley => FeedMode::Eye,
         Mode::Fpv => FeedMode::Fpv,
+        Mode::Bomber if view.thermal => FeedMode::Thermal,
+        Mode::Robot | Mode::Bomber => FeedMode::Drone,
     } as u32;
     fx.grain = match view.mode {
-        Mode::Drone | Mode::Fpv => 1.0,
+        Mode::Drone | Mode::Fpv | Mode::Robot | Mode::Bomber => 1.0,
         Mode::Op => 0.45,
         Mode::Ground | Mode::Manpads | Mode::Bradley => 0.3,
     } * if look.video == crate::VideoLook::Light { 0.35 } else { 1.0 };
@@ -259,5 +262,20 @@ pub fn update_feed(
         fx.glitch = 1.0 - fpv.signal + if fpv.control { 0.0 } else { 0.15 };
         fx.down = if fpv.flying { 0.0 } else { 1.0 };
         cam.is_active = fpv.flying;
+    }
+    if view.mode == Mode::Robot {
+        // Digital, over the robot's own link: it smears and blocks as the link frays, and is gone while it is down.
+        let link = view.ground_team.and_then(|e| robots.0.get(e).ok()).map_or(0.0, |r| if r.running() { r.link } else { 0.0 });
+        fx.glitch = (1.0 - link) * 0.9;
+        fx.bitrate = link;
+        fx.down = if link > 0.0 { 0.0 } else { 1.0 };
+        cam.is_active = link > 0.0;
+    }
+    if view.mode == Mode::Bomber
+        && let Some(v) = robots.1.iter().next()
+    {
+        fx.glitch = v.jam;
+        fx.bitrate = 1.0 - v.jam;
+        fx.down = if v.control { 0.0 } else { 1.0 };
     }
 }

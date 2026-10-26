@@ -310,7 +310,7 @@ fn update_hud(
     stats: Res<Stats>,
     fc: Res<FireControl>,
     radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>, Option<Res<bav_sim::drones::Drops>>),
+    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops, robots): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>, Option<Res<bav_sim::drones::Drops>>, RobotView),
     positions: Query<(&Post, Option<&AtgmTeam>)>,
     mut texts: ParamSet<(
         Single<&mut Text, With<Telemetry>>,
@@ -370,6 +370,8 @@ fn update_hud(
     // Each text is written only when it reads differently, so Bevy lays out again only what changed.
     let telemetry = match view.mode {
         Mode::Drone => Text::new(String::new()),
+        Mode::Robot => Text::new(robots.robot_line(&view, now)),
+        Mode::Bomber => Text::new(robots.bomber_line(&view)),
         Mode::Fpv => {
             let (fpv, op) = (&team.0, &team.1);
             let bars = ["     ", "|    ", "||   ", "|||  ", "|||| ", "|||||"][(fpv.signal * 5.0).round().clamp(0.0, 5.0) as usize];
@@ -462,6 +464,7 @@ fn update_hud(
         "captured" => field.map_or(0, |f| f.captured).to_string(),
         "taken" => field.map_or(0, |f| f.lost).to_string(),
         "runway" => runway.map_or(String::new(), runway_line),
+        "robots" => robots.tally(now),
         _ => String::new(),
     })));
     // The net, in two registers: what was said, full weight; what it means, dimmer beneath it.
@@ -525,6 +528,9 @@ fn update_hud(
             _ => String::new(),
         },
         "speed" => speed_line.clone(),
+        // The robots left to send, and the bomber's sorties, where the day has them.
+        "ugv" => robots.robots.as_deref().map_or(String::new(), |r| format!("   UGV  {}{}", r.left, if bav_sim::robots::casevac() { " [V]" } else { "" })),
+        "bomber" => robots.robots.as_deref().filter(|_| bav_sim::robots::spec().is_some_and(|s| s.bomber.is_some())).map_or(String::new(), |r| format!("   VAMPIRE  {} [8]", r.sorties_left)),
         _ => String::new(),
     })));
     // The day's caption, the same way: the Ukrainian line over its gloss.
@@ -549,10 +555,10 @@ fn update_hud(
     } else if view.mode == Mode::Drone && view.feed_down > 0.0 {
         format!("NO SIGNAL\nbattery swap, relaunching ({:.0} s)", view.feed_down)
     } else {
-        String::new()
+        robots.no_signal(&view, now).unwrap_or_default()
     }));
     for mut v in &mut crosshair {
-        v.set_if_neq(if view.mode == Mode::Drone && view.feed_down <= 0.0 && *phase.get() == Phase::Playing { Visibility::Inherited } else { Visibility::Hidden });
+        v.set_if_neq(if (view.mode == Mode::Drone && view.feed_down <= 0.0 || view.mode == Mode::Bomber) && *phase.get() == Phase::Playing { Visibility::Inherited } else { Visibility::Hidden });
     }
 }
 
@@ -637,7 +643,7 @@ fn show_debrief(
     mut root: Query<&mut Node, With<Debrief>>,
     body: Single<Entity, With<DebriefText>>,
     mut hud: HudNodes,
-    (field, air, iglas, runway, drops): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&'static bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>),
+    (field, air, iglas, runway, drops, robots): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&'static bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>, (Option<Res<bav_sim::robots::Robots>>, Option<Res<bav_sim::evac::Casualties>>)),
     duel: DuelView,
 ) {
     for mut n in &mut root {
@@ -655,7 +661,7 @@ fn show_debrief(
     let place = spec.place.as_ref().unwrap_or(&data.place);
     let heading = format!("{}   {} ({})", data.date, place.0, place.1);
     let span = format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t));
-    let ledger = Ledger { stats: &stats, fc: &fc, positions: &positions, soldiers: &soldiers, evac: &evac, field: field.as_deref(), air: air.as_deref(), iglas: &iglas, runway: runway.as_deref(), drops: drops.as_deref(), duel: &duel, script: &script };
+    let ledger = Ledger { stats: &stats, fc: &fc, positions: &positions, soldiers: &soldiers, evac: &evac, field: field.as_deref(), air: air.as_deref(), iglas: &iglas, runway: runway.as_deref(), drops: drops.as_deref(), robots: robots.0.as_deref(), casualties: robots.1.as_deref(), duel: &duel, script: &script };
     let mut rows = Vec::new();
     ledger.rows(&spec.rows, &mut rows);
     // The columns, as a small table: (name, vehicles, destroyed, abandoned).
@@ -751,6 +757,8 @@ struct Ledger<'a, 'w, 's> {
     iglas: &'a Query<'w, 's, &'static bav_sim::manpads::Igla>,
     runway: Option<&'a bav_sim::air::Airfield>,
     drops: Option<&'a bav_sim::drones::Drops>,
+    robots: Option<&'a bav_sim::robots::Robots>,
+    casualties: Option<&'a bav_sim::evac::Casualties>,
     duel: &'a DuelView<'w, 's>,
 }
 
@@ -766,6 +774,8 @@ impl Ledger<'_, '_, '_> {
                         screen::Gate::Field => self.field.is_some(),
                         screen::Gate::Runway => self.runway.is_some(),
                         screen::Gate::Drops => self.drops.is_some(),
+                        screen::Gate::Robots => self.robots.is_some(),
+                        screen::Gate::Bomber => bav_sim::robots::spec().is_some_and(|s| s.bomber.is_some()),
                     };
                     if has {
                         self.rows(rows, out);
@@ -899,6 +909,14 @@ impl Ledger<'_, '_, '_> {
                 format!("{ap} and {he}")
             }
             F::FpvsLeft => self.duel.fpv.left.to_string(),
+            F::Robots => self.robots.map_or(String::new(), |r| format!("{} sent, {} back, {} lost", r.sent, r.back, r.lost)),
+            F::Delivered => self.robots.map_or(String::new(), |r| format!("ammunition {}, food and water {}, fuel and batteries {}", r.delivered[0], r.delivered[1], r.delivered[2])),
+            F::WoundedCarried => self.casualties.map_or(0, |c| c.out).to_string(),
+            F::WoundedWaiting => self.casualties.map_or("none".to_string(), |c| {
+                let hours = c.longest(self.duel.time.elapsed_secs_f64()) as f32 * diorama().compression() / 60.0;
+                if c.count() == 0 { "none".to_string() } else { format!("{}, the longest {hours:.1} h", c.count()) }
+            }),
+            F::Sorties => self.robots.map_or(String::new(), |r| format!("{} flown, {} bombs, {} bundles", r.sorties, r.bombs, r.bundles)),
         }
     }
 }
@@ -948,5 +966,96 @@ fn update_hit_feed(mut commands: Commands, time: Res<Time>, script: Res<Script>,
                 p.spawn((TextSpan::new(s.clone()), TextFont { font: FontSource::Handle(fonts.0.clone()), font_size: FontSize::Px(*size), ..default() }, TextColor(*colour)));
             }
         });
+    }
+}
+
+/// What the HUD reads of the robots (`bav_sim::robots`), where the day has them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct RobotView<'w, 's> {
+    robots: Option<Res<'w, bav_sim::robots::Robots>>,
+    casualties: Option<Res<'w, bav_sim::evac::Casualties>>,
+    ugvs: Query<'w, 's, (&'static bav_sim::robots::Robot, &'static crate::units::Driver, &'static bav_sim::robots::Hand)>,
+    vampires: Query<'w, 's, &'static bav_sim::robots::Vampire>,
+    book: Res<'w, crate::units::RouteBook>,
+}
+
+impl RobotView<'_, '_> {
+    /// The tally's line: the robots sent, back and lost, and the wounded waiting for one.
+    fn tally(&self, now: f64) -> String {
+        let Some(r) = self.robots.as_deref() else { return String::new() };
+        let waiting = self.casualties.as_deref().map_or(String::new(), |c| {
+            let hours = c.longest(now) as f32 * diorama().compression() / 60.0;
+            if c.count() == 0 { "   wounded waiting 0".to_string() } else { format!("   wounded waiting {} ({hours:.1} h)", c.count()) }
+        });
+        format!("\nRobots sent {}   back {}   lost {}{waiting}", r.sent, r.back, r.lost)
+    }
+
+    /// The robot's camera: its number, its link, how fast and how far, what it carries, and whose hand it is in.
+    fn robot_line(&self, view: &View, now: f64) -> String {
+        let Some((r, d, h)) = view.ground_team.and_then(|e| self.ugvs.get(e).ok()) else { return String::new() };
+        let bars = ["DOWN ", "|    ", "||   ", "|||  ", "|||| ", "|||||"][(r.link * 5.0).ceil().clamp(0.0, 5.0) as usize];
+        let left = (self.book.0[d.route].line.length() - d.s).max(0.0);
+        let load = match (r.cargo, r.wounded) {
+            (Some(c), _) => c.name().1.to_uppercase(),
+            (None, 0) => "EMPTY".to_string(),
+            (None, n) => format!("{n} WOUNDED"),
+        };
+        let state = if r.leg == bav_sim::robots::Leg::Lost {
+            "LOST".to_string()
+        } else if now < r.stuck_until {
+            format!("STUCK {:.0} s", r.stuck_until - now)
+        } else if now < r.down_until {
+            "NO LINK: STANDING".to_string()
+        } else if let bav_sim::robots::Leg::AtPost(_) = r.leg {
+            "AT THE POST".to_string()
+        } else if h.held {
+            format!("YOUR HAND  {:.0}%  LANE {:+.0} m", h.throttle * 100.0, h.lat)
+        } else {
+            "ON ITS ROUTE".to_string()
+        };
+        let way = if r.leg == bav_sim::robots::Leg::Out { format!("{:.2} km home", d.s / 1000.0) } else { format!("{:.2} km to go", left / 1000.0) };
+        format!(
+            "UGV (НРК) {}   LINK {bars}   {:>2.0} km/h   {load}   {way}   {state}\n[W/S] throttle  [A/D] lane  [G] its route  [RMB] look  [7] next robot  [1] drone",
+            r.n,
+            d.speed * 3.6
+        )
+    }
+
+    /// The bomber's camera: the link, the battery, the height and speed, what is left on the rack.
+    fn bomber_line(&self, view: &View) -> String {
+        let Some(v) = self.vampires.iter().next() else { return String::new() };
+        let endurance = bav_sim::robots::spec().and_then(|s| s.bomber).map_or(1.0, |b| b.endurance);
+        let agl = v.pos.y - geo::height(v.pos.x, v.pos.z);
+        let rack = match v.load {
+            bav_sim::robots::Load::Bombs => format!("60 mm x{}", v.left),
+            bav_sim::robots::Load::Bundle(c) => if v.left > 0 { format!("BUNDLE: {}", c.name().1.to_uppercase()) } else { "RACK EMPTY".to_string() },
+        };
+        format!(
+            "VAMPIRE (ВАМПІР)   RC {}   BAT {:>3.0}%   ALT {:>4.0} m   {:>3.0} km/h   {rack}{}{}\nW/S A/D fly  R/F climb  Q/E turn  [C] drop  [H] home  [I] thermal  [1] drone",
+            if v.control { "OK " } else { "-- " },
+            (v.battery / endurance * 100.0).max(0.0),
+            agl,
+            v.vel.length() * 3.6,
+            if v.home { "   HOMING" } else if v.held { "" } else { "   ON ITS OWN" },
+            if view.thermal { "   WHITE HOT" } else { "" }
+        )
+    }
+
+    /// The screen's warning when the robot's or the bomber's link is down.
+    fn no_signal(&self, view: &View, now: f64) -> Option<String> {
+        match view.mode {
+            Mode::Robot => {
+                let (r, _, _) = view.ground_team.and_then(|e| self.ugvs.get(e).ok())?;
+                if r.leg == bav_sim::robots::Leg::Lost {
+                    Some("NO SIGNAL\nthe robot is lost".to_string())
+                } else if now < r.down_until {
+                    Some(format!("NO SIGNAL\nthe link to robot {} is down ({:.0} s)", r.n, r.down_until - now))
+                } else {
+                    None
+                }
+            }
+            Mode::Bomber => self.vampires.iter().next().filter(|v| !v.control).map(|_| "NO SIGNAL\nthe Vampire is flying itself home".to_string()),
+            _ => None,
+        }
     }
 }

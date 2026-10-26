@@ -27,11 +27,14 @@ pub struct HudSpec {
 /// What the tally's template can name: the date and the clock; the vehicles and the men; what is in the air and on
 /// the ground where the day has aircraft, areas, a fight and a runway. `air` and `zones` are whole phrases, empty
 /// where the day has none.
-pub const TALLY_KEYS: &[&str] = &["date", "clock", "committed", "out", "withdrawn", "sent", "returned", "air", "zones", "air_down", "landed", "men_out", "captured", "taken", "runway"];
+/// `robots` is the ground robots' line (sent, back, lost, and the wounded waiting where they wait for a robot), empty
+/// where the day has none.
+pub const TALLY_KEYS: &[&str] = &["date", "clock", "committed", "out", "withdrawn", "sent", "returned", "air", "zones", "air_down", "landed", "men_out", "captured", "taken", "runway", "robots"];
 
-/// What the fire panel's template can name. `vog`, `ad` and `pull_out` are whole phrases, empty where the day has
-/// no grenades, no air defence left, or nobody to pull out; `speed` is the time's speed when it is not 1.
-pub const STOCK_KEYS: &[&str] = &["shells", "cluster", "raam", "himars", "smoke", "illum", "fpv", "vog", "ad", "teams", "missiles", "atgm_mode", "order", "pull_out", "speed"];
+/// What the fire panel's template can name. `vog`, `ad`, `pull_out`, `ugv` and `bomber` are whole phrases, empty where
+/// the day has no grenades, no air defence left, nobody to pull out, no robots or no bomber; `speed` is the time's
+/// speed when it is not 1.
+pub const STOCK_KEYS: &[&str] = &["shells", "cluster", "raam", "himars", "smoke", "illum", "fpv", "vog", "ad", "teams", "missiles", "atgm_mode", "order", "pull_out", "speed", "ugv", "bomber"];
 
 /// The end of the day: the heading's place (none: the diorama's own), the rows of its account, and the table of
 /// its columns (none: no table).
@@ -70,6 +73,9 @@ pub enum Gate {
     Runway,
     /// The drone carries grenades.
     Drops,
+    /// Ground robots, and a heavy bomber.
+    Robots,
+    Bomber,
 }
 
 /// A figure of the day's account.
@@ -138,6 +144,13 @@ pub enum Figure {
     Trench,
     Fired25,
     FpvsLeft,
+    /// The ground robots sent, back and lost; the loads they and the bomber delivered; the wounded they brought out
+    /// and those still waiting; the bomber's sorties.
+    Robots,
+    Delivered,
+    WoundedCarried,
+    WoundedWaiting,
+    Sorties,
 }
 
 /// The table of columns: its three heads, the columns' names by number from 1, and the name of one past them, with

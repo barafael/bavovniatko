@@ -104,6 +104,7 @@ impl VKind {
             VKind::Wisent => "Wisent",
             VKind::Bmr2 => "BMR-2",
             VKind::Bradley => "Bradley",
+            VKind::Ugv => "ground robot",
         }
     }
 }

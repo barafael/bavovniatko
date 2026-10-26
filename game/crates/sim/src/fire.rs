@@ -408,7 +408,7 @@ fn observed_sigma(view: &View, target: Vec2, blind: bool) -> f32 {
             let d = view.drone_pos.xz().distance(target);
             if view.feed_down > 0.0 { 40.0 } else { 9.0 + d * 0.006 }
         }
-        Mode::Op | Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley => match bav_core::data::data().observed_from {
+        Mode::Op | Mode::Ground | Mode::Fpv | Mode::Manpads | Mode::Bradley | Mode::Robot | Mode::Bomber => match bav_core::data::data().observed_from {
             bav_core::data::ObservedFrom::LineZ(z) => 14.0 + 0.004 * (target.y - z).abs(),
             bav_core::data::ObservedFrom::Home => 14.0 + 0.004 * target.distance(geo::layout().home),
         },

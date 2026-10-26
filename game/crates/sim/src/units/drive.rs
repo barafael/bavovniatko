@@ -150,6 +150,8 @@ pub(super) struct Driving {
     plow: Has<Plow>,
     holding: Has<crate::orders::Holding>,
     stay: Option<&'static Stay>,
+    stalled: Has<crate::robots::Stalled>,
+    hand: Option<&'static crate::robots::Hand>,
 }
 
 /// The driver's head: what state the vehicle is in, where he means to be, how fast he wants to go.
@@ -176,7 +178,7 @@ pub(super) fn drive_decisions(
     let attacker = diorama().attacker();
     let rng = &mut rng.0;
 
-    for DrivingItem { e, mut v, mut d, tf, traffic, mut intent, evac_at, rescue, plow, holding, stay } in &mut q {
+    for DrivingItem { e, mut v, mut d, tf, traffic, mut intent, evac_at, rescue, plow, holding, stay, stalled, hand } in &mut q {
         if !drives(&v, &d, &book, attacker) {
             continue;
         }
@@ -288,8 +290,8 @@ pub(super) fn drive_decisions(
                     let spread = [0.0f32, -22.0, 24.0, -45.0, 40.0, -64.0, 60.0, -15.0, 15.0, -34.0, 34.0, -55.0];
                     d.target_lat = if plow { 0.0 } else { spread[(v.idx as usize) % spread.len()] + rng.random_range(-6.0..6.0) };
                 }
-                // Panic: a hit nearby, and a mobilised driver yanks the tiller.
-                if v.panic > 0.55 && rng.random_bool((dt * 0.12) as f64) {
+                // Panic: a hit nearby, and a mobilised driver yanks the tiller. (A robot has no nerves to lose.)
+                if v.panic > 0.55 && v.kind != VKind::Ugv && rng.random_bool((dt * 0.12) as f64) {
                     if rng.random_bool(0.55) {
                         d.target_lat = d.lat + sign(rng) * rng.random_range(8.0..25.0);
                     } else {
@@ -298,7 +300,8 @@ pub(super) fn drive_decisions(
                 }
             }
             VState::Deploying => {
-                want_speed = 3.8;
+                // (A robot has no faster gear to fan out in.)
+                want_speed = if v.kind == VKind::Ugv { v.kind.speed() } else { 3.8 };
                 if blocker.is_some_and(|b| !b.state.mobile() && (b.s - d.s).abs() < 20.0) {
                     d.target_lat += if rng.random_bool(0.5) { 6.0 } else { -6.0 };
                 }
@@ -404,9 +407,14 @@ pub(super) fn drive_decisions(
             d.hesitate -= dt;
             want_speed = want_speed.min(0.7);
         }
-        // Told to hold (Command's orders): stop where it is, going either way.
-        if holding {
+        // Told to hold (Command's orders): stop where it is, going either way. A robot without its link, or stuck,
+        // stops too; one the player drives goes at his throttle in his lane (`robots`).
+        if holding || stalled {
             want_speed = 0.0;
+        }
+        if let Some(h) = hand.filter(|h| h.held) {
+            want_speed *= h.throttle;
+            d.target_lat = h.lat;
         }
         intent.want_speed = want_speed;
     }

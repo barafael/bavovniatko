@@ -1,7 +1,7 @@
 # Myrnohrad: the fifth diorama, the road into the pocket in three parts
 
-Status: planned 2026-10-25; phases 0 and 1 built 2026-10-26 (the place, its map and set, the pocket; the days are
-placeholders). The owner's direction of 25 October: the next diorama comes from the era of humans against drones
+Status: planned 2026-10-25; phases 0, 1 and 5 built 2026-10-26 (the place, its map and set, the pocket; the robots;
+the days are placeholders). The owner's direction of 25 October: the next diorama comes from the era of humans against drones
 against other drones (2024–2026). This file first chooses the episode, then plans it.
 Progress is logged at the end.
 
@@ -406,3 +406,49 @@ the EW domes' masts.
   (that is `fight::Sight`, phase 2's); the clock reads 24:00–27:59 after midnight (`director::clock_text`, a one-line
   fix left for after the Hostomel branch that owns the file); the villages' gardens and trees; the robots, their
   drones, the flow and the fog in the battle (phases 2–9).
+- 2026-10-26: phase 5, **the robots** (`bav_sim::robots`, a module of its own: `ugv.rs`, `bomber.rs`). Nothing of it
+  exists where a day's file has no `robots`: the seven older days are `same` against `fx-v`, `r2-r`, `f3-h1`,
+  `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`. **The ground robot** is a vehicle kind, `VKind::Ugv` (10 km/h, no crew, no
+  gun, its tracks 0.95 m apart; a hand-built tracked cart with crates strapped on its bed and a mast, `meshes::ugv`,
+  as the catalogue has no robot that fits). A run is a Column of one from the road head to a position
+  (`columns::way`): it unloads its cargo there (ammunition into the post's `Ammo` where the posts carry it, food and
+  water, fuel and batteries that give the drone team a drone and a full battery back when it is near them), takes on
+  the wounded waiting there (two at most), turns for home and is counted back at the road head, or lost where it is
+  knocked out, stuck for good or drowned, with the wounded aboard. Its radio link frays in their EW and drops out on
+  the robots' own stream (`drops_per_hour`, up to five times as often in jamming), mostly for under a minute and one
+  time in seven for 60 to 90 minutes of the day's clock (the Zmiy's 1.5 hours, c15 §5); without it the robot stands
+  (`Stalled`, which the driving reads). Every five metres the ground may hold it: a crater (8-20% by the season's wet,
+  a quarter of those for good), the mud off the road, a marsh; water is the end of it. Their FPVs on the road are a
+  stand-in until phase 3 builds their crews: every 50 m a chance (`found_per_km`, twice off our ground, a third in the
+  dark) that one goes in from above (`DirectHit`, `Cause::Fpv`). **The wounded wait for a robot** where the file says
+  `casevac`: `evac::Casualties` is a queue of calls, filled by three in five of the men a post of ours loses, and only
+  a robot at the post empties it; V sends one for the longest-waiting call and Alt+click one with ammunition to the
+  position nearest the cursor. In the Record the script's `Act::Ugv` sends the day's runs; in Command a UGV is a
+  catalog vehicle sent on Supply from the map table (and the script's runs and sorties are not the Command's).
+  **Key 7** is the robot's own camera (`Mode::Robot`): wide and low on its nose, jolting with the odometer and the
+  speed, the picture smearing as the link frays and gone while it is down; W/S take its throttle and A/D its lane
+  across the route (`Hand`, which the driving reads), G or leaving the camera gives it back to its route. **The heavy
+  bomber** (`Vampire`, the baked `vampire` model): 8 launches a sortie from the drone team's position with four 60 mm
+  bombs (Shift+8 a bundle of ammunition) and puts the player in its camera (`Mode::Bomber`, thermal on I), flown with
+  the drone's sticks; C lets go (the drop's fall in the day's wind, `drones::fall_step`, and a 60 mm burst, radius 5
+  against the VOG's 2); H, an empty rack, a low battery or six seconds without its link bring it home by itself.
+  The script's sorties (`Act::Sortie`) fly themselves to their point, aim upwind of the enemy's men nearest it as the
+  scripted drop does, let go one bomb at a time and come home; a bundle that lands within 40 m of a post of ours is
+  delivered. The HUD's tally has the robots (sent, back, lost, the wounded waiting and for how long), the fire panel
+  the robots and sorties left, the debrief rows for them (`Gate::Robots`, `Gate::Bomber`), and `BAV_LOG_STATS` a
+  `robots=` line that `band.sh` prints. `BAV_UGV` and `BAV_BOMBER` send runs and sorties for the bands; `cargo xtask
+  smoke` has a `robot` and a `bomber` run (120 runs, all pass). **In the placeholder parts:** I has three robots,
+  ammunition to Rivne at 90 s and food to Svitle at 420 s; II four robots and two sorties, none sent in the Record
+  (they are the player's until phase 8); III two robots and three sorties, fuel and batteries to Rivne at 80 s, bombs on
+  the jaw's path at 330 s and a bundle for the mine at 950 s. Each part filmed twice from one build is the same.
+  **Bands** (`band.sh myrnohrad-N 0 1 2 3`; before is phase 1's files read through `BAV_DATA` on this build): I
+  before sent 63, dead 56/57/57/58; after dead 55/57/57/58, robots 2 sent each, back 1/0/0/1, lost 0/0/1/1 (an FPV
+  each time), ammunition delivered in three of four; II unchanged (nothing sent in the Record); III before sent 16,
+  dead 6/8/10/6, after 7/6/8/6, the one robot back in two runs and lost in one, both sorties flown each time (four
+  bombs, the bundle in at the mine). No wounded called in any of them: the placeholder days' infantry never wounds a
+  post (`ua_losses=0`), so the queue was checked with a test file that puts KABs on Rivne (the call at 33 s, robot 1
+  bringing the man out) and a unit test. **Not done**: the killzone's crews (the FPV chance per kilometre is a
+  stand-in), nets over the road, the robots' runs and sorties as the parts' content and their bands against the
+  Record's table (phases 7-9); a robot's range is not counted (the box is far inside its 20 km); a robot driven by
+  hand keeps to its route's corridor (25 m either side) rather than going anywhere; nothing shoots at the bomber; the
+  map table composes no cargo (a UGV sent on Supply carries ammunition).

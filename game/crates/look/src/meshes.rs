@@ -525,3 +525,45 @@ pub fn combine() -> MeshBuilder {
     m.cuboid(Vec3::new(1.6, 3.4, 1.8), Vec3::new(0.18, 0.18, 2.2), Quat::from_rotation_x(0.3) * Quat::from_rotation_y(0.4), c);
     m
 }
+
+/// A ground robot of the Zmiy's kind (c15 §5): a tracked cart about 2 m long and 1.3 m wide, its two tracks either
+/// side of a low hull with the batteries in it, a flat cargo bed with rails over it, and a camera and lamps on the
+/// nose. The top (the turret's place) is the load: crates strapped on, and the radio's mast behind. Its nose is -Z.
+pub fn ugv(body: Rgb) -> (MeshBuilder, MeshBuilder, Vec3) {
+    let mut h = MeshBuilder::new();
+    let track = [0.11, 0.11, 0.10];
+    for x in [-0.5f32, 0.5] {
+        // Each track: a flat run with a sprocket and an idler rounding its ends, and road wheels along its side.
+        h.boxc(Vec3::new(x, 0.24, 0.0), Vec3::new(0.28, 0.44, 1.5), track);
+        for z in [-0.75f32, 0.75] {
+            h.cylinder(Vec3::new(x - 0.14, 0.24, z), Vec3::new(0.28, 0.0, 0.0), 0.22, 10, track);
+        }
+        for k in 0..4 {
+            let z = -0.55 + k as f32 * 0.37;
+            h.cylinder(Vec3::new(x + 0.14 * x.signum(), 0.2, z), Vec3::new(0.02 * x.signum(), 0.0, 0.0), 0.13, 8, STEEL);
+        }
+    }
+    // The hull between the tracks, and the bed over all of it.
+    h.boxc(Vec3::new(0.0, 0.36, 0.0), Vec3::new(0.72, 0.42, 1.8), body);
+    h.boxc(Vec3::new(0.0, 0.6, 0.05), Vec3::new(1.32, 0.06, 1.75), body);
+    for x in [-0.64f32, 0.64] {
+        h.boxc(Vec3::new(x, 0.72, 0.05), Vec3::new(0.04, 0.04, 1.7), STEEL);
+    }
+    // The nose: the driving camera in its box, two lamps, and the bumper.
+    h.boxc(Vec3::new(0.0, 0.72, -0.86), Vec3::new(0.22, 0.16, 0.14), [0.14, 0.15, 0.13]);
+    h.boxc(Vec3::new(0.0, 0.72, -0.94), Vec3::new(0.08, 0.08, 0.02), [0.05, 0.06, 0.07]);
+    for x in [-0.42f32, 0.42] {
+        h.boxc(Vec3::new(x, 0.52, -0.92), Vec3::new(0.12, 0.08, 0.04), [0.75, 0.72, 0.6]);
+    }
+    h.boxc(Vec3::new(0.0, 0.3, -1.0), Vec3::new(1.0, 0.08, 0.06), STEEL);
+    let mut t = MeshBuilder::new();
+    let (crate_a, crate_b) = ([0.36, 0.34, 0.22], [0.27, 0.30, 0.20]);
+    t.boxc(Vec3::new(-0.3, 0.17, -0.35), Vec3::new(0.5, 0.34, 0.6), crate_a);
+    t.boxc(Vec3::new(0.3, 0.14, -0.3), Vec3::new(0.48, 0.28, 0.5), crate_b);
+    t.boxc(Vec3::new(0.0, 0.15, 0.3), Vec3::new(1.0, 0.3, 0.55), crate_a);
+    // The strap over them, and the mast with its antenna.
+    t.boxc(Vec3::new(0.0, 0.31, 0.3), Vec3::new(1.04, 0.02, 0.06), [0.12, 0.12, 0.1]);
+    t.cylinder(Vec3::new(0.5, 0.0, 0.72), Vec3::new(0.0, 0.9, 0.0), 0.02, 5, STEEL);
+    t.cylinder(Vec3::new(0.5, 0.9, 0.72), Vec3::new(0.0, 0.5, 0.0), 0.008, 4, [0.08, 0.08, 0.08]);
+    (h, t, Vec3::new(0.0, 0.63, 0.0))
+}

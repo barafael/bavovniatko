@@ -83,6 +83,11 @@ pub enum Act {
     Airlift(u32),
     /// The attackers send up hand flares over these points as they go in at night (`flares`).
     Flares(Vec<(f32, f32)>),
+    /// One of our ground robots from the road head to a position of the field with its cargo (`robots`).
+    Ugv { to: usize, cargo: crate::robots::Cargo },
+    /// A heavy bomber's sortie from the drone team's position: its bombs on the enemy's men nearest the point, or its
+    /// bundle for the post nearest it (`robots`).
+    Sortie { to: (f32, f32), load: crate::robots::Load },
 }
 
 /// Where a column that stays deploys (a point near its route), and how long it holds there at least (s).
@@ -276,6 +281,16 @@ fn run_script(
                 let (k, fails, say) = (*bradley, *fails, say.as_str());
                 commands.queue(move |w: &mut World| crate::bradley::order_run(w, k, fails, say));
             }
+            // The day's runs and sorties, in the Record; in Command they are the player's (Supply, V, 8).
+            Act::Ugv { to, cargo } if !crate::allot::at_table() => {
+                let o = crate::robots::Order::Run { to: crate::robots::Dest::Position(*to), cargo: *cargo };
+                commands.queue(move |w: &mut World| crate::robots::order(w, o));
+            }
+            Act::Sortie { to, load } if !crate::allot::at_table() => {
+                let o = crate::robots::Order::Sortie { to: Some(Vec2::new(to.0, to.1)), load: *load, flown: false };
+                commands.queue(move |w: &mut World| crate::robots::order(w, o));
+            }
+            Act::Ugv { .. } | Act::Sortie { .. } => {}
             Act::Say(s) => radio.say(now, s.as_str()),
             Act::Jam(j) => {
                 view.jamming = (view.jamming + j).min(1.0);
