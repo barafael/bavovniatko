@@ -161,10 +161,12 @@ pub enum Figure {
     BurrowsFound,
     BurrowsEmptied,
     CrewsHit,
-    /// Their FPVs flown, by kind; what they hit, by what they were after; our cars on the road out, through and burnt.
+    /// Their FPVs flown, by kind; what they hit, by what they were after; our cars on the road out, through and burnt;
+    /// and those turned back short of the town that made it back to the road head.
     TheirSorties,
     TheirHits,
     Cars,
+    CarsTurned,
 }
 
 /// The table of columns: its three heads, the columns' names by number from 1, and the name of one past them, with

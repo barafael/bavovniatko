@@ -953,6 +953,7 @@ impl Ledger<'_, '_, '_> {
                 if hit.is_empty() { "nothing".to_string() } else { hit.join(", ") }
             }),
             F::Cars => self.kz.map_or(String::new(), |t| format!("{} out, {} through, {} burnt", t.cars_out, t.cars_through, t.cars_lost)),
+            F::CarsTurned => self.kz.map_or(String::new(), |t| if t.cars_turned == 0 { "none".to_string() } else { t.cars_turned.to_string() }),
         }
     }
 }

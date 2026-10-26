@@ -464,6 +464,8 @@ pub struct KzTally {
     pub cars_out: u32,
     pub cars_through: u32,
     pub cars_lost: u32,
+    /// Cars turned back short of the town (Shift+N) that made it back to the road head.
+    pub cars_turned: u32,
     /// Bursts of ours within reach of a launch point or a relay, and of those the ones that put it out.
     pub strikes: u32,
     pub struck: u32,
@@ -775,6 +777,7 @@ fn drive(
                 car.s -= v * dt;
                 if car.s <= 0.0 {
                     if turned {
+                        tally.cars_turned += 1;
                         info!("killzone: the {} back at the road head, turned back short of the town, at {now:.0} s", car.kind.name());
                         radio.say2(now, "Машина повернулась, до міста не дійшла.", "The car's back. It turned back short of the town.");
                     } else {
