@@ -130,6 +130,7 @@ fn run_script(
     models: Res<Models>,
     palette: Res<Palette>,
     (mut order, book, staff, air): (ResMut<ColumnOrder>, Res<crate::units::RouteBook>, Option<Res<crate::staff::Staff>>, Option<Res<crate::air::AirModels>>),
+    field: Option<Res<crate::fight::Field>>,
 ) {
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
@@ -203,13 +204,17 @@ fn run_script(
             Act::Prep { missions, over } => {
                 // The guns walk up and down the crest trench line and the positions behind it.
                 let lay_posts = &lay.ru_positions;
+                let line = lay.trench_z.or(lay.defence_z);
+                // No line across the field (Hostomel): their posts still holding, each in turn, the sheaf a little off it
+                // ("artillery and Su-24 bombs fall on the airfield at dusk", c01 §6 set piece 3); the guns lift off a
+                // post once our men are on it (`fight::Field::open`).
+                let live: &[Vec2] = field.as_deref().map_or(&[], |f| &f.open[..]);
                 for k in 0..*missions {
-                    let base = match lay.trench_z.or(lay.defence_z) {
+                    let base = match line {
+                        None if !live.is_empty() => live[k as usize % live.len()] + Vec2::new(rng.random_range(-40.0..40.0), rng.random_range(-40.0..40.0)),
+                        None => continue,
                         _ if k % 2 == 0 && !lay_posts.is_empty() => lay_posts[k as usize % lay_posts.len()],
                         Some(z) => Vec2::new(rng.random_range(-2000.0..2000.0), z + rng.random_range(-10.0..60.0)),
-                        // No line across the field (Hostomel): between their posts instead.
-                        None if !lay_posts.is_empty() => lay_posts[rng.random_range(0..lay_posts.len())] + Vec2::new(rng.random_range(-120.0..120.0), rng.random_range(-120.0..120.0)),
-                        None => continue,
                     };
                     let at = now + (k as f32 / *missions as f32 * over) as f64;
                     commands.spawn(Mission { target: base, kind: ShellKind::He155, rounds: 6, sigma: 45.0, interval: 1.6, next: at, flight: 18.0, by: Side::Ua });
@@ -278,7 +283,8 @@ fn run_script(
             }
         }
     }
-    // Release infantry groups as their time comes: they walk from the start line straight across the field.
+    // Release infantry groups as their time comes: they walk from the start line straight across the field. They are
+    // the attacking side's (the Russians' at Vuhledar and Avdiivka, ours at Hostomel's dusk).
     let (due, waiting) = std::mem::take(infantry).into_iter().partition::<Vec<_>, _>(|g| t >= g.0);
     *infantry = waiting;
     for (_, route, size) in due {
@@ -289,7 +295,7 @@ fn run_script(
         for k in 0..size {
             let at = start + Vec2::new(k as f32 * 4.0, rng.random_range(-3.0..3.0));
             let goal = r.objective + Vec2::new(rng.random_range(-150.0..150.0), rng.random_range(-10.0..10.0));
-            units::spawn_soldier(&mut commands, &models, &palette, Side::Ru, at, goal, r.line.point(0.0), 0.0, None, rng);
+            units::spawn_soldier(&mut commands, &models, &palette, diorama().attacker(), at, goal, r.line.point(0.0), 0.0, None, rng);
         }
         stats.sent += size;
     }

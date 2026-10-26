@@ -740,6 +740,9 @@ fn shells_on_jammers(
     }
 }
 
+/// How near a burst of any kind puts a post down, where the fight says posts can be pinned.
+const PIN_REACH: f32 = 25.0;
+
 /// Fire on the tree lines and trenches hurts the men in them, and puts the rest down in the trench for a while,
 /// longer the closer it lands: a team under fire does not stand up to guide a missile.
 fn shells_on_posts(
@@ -753,14 +756,18 @@ fn shells_on_posts(
 ) {
     let now = time.elapsed_secs_f64();
     let rng = &mut fxr.0;
+    // Where the fight counts a post's fire as pinned (`FightSpec::pinned`), a cannon's burst close by puts it down too,
+    // not only a shell's blast: the BMP-2s' 30 mm on the VDV's groups at dusk.
+    let pins = crate::fight::spec().is_some_and(|f| f.pinned < 1.0);
     for s in landed.read() {
         for (e, mut pos, down) in &mut positions {
             if pos.side == s.by {
                 continue;
             }
             let d = pos.pos.distance(s.at);
-            if d < s.radius * 3.0 {
-                let until = now + (20.0 + 40.0 * (1.0 - d / (s.radius * 3.0))) as f64;
+            let reach = if pins { (s.radius * 3.0).max(PIN_REACH) } else { s.radius * 3.0 };
+            if d < reach {
+                let until = now + (20.0 + 40.0 * (1.0 - d / reach)) as f64;
                 commands.entity(e).insert(Suppressed { until: down.map_or(until, |w| w.until.max(until)) });
             }
             if pos.strength > 0 && d < s.radius * 1.6 && rng.random_bool((0.5 * (1.0 - d / (s.radius * 1.6))) as f64) {
@@ -1047,16 +1054,18 @@ fn small_arms(
     mut sound: Sound,
     models: Res<Models>,
     palette: Res<Palette>,
-    mut positions: Query<(&mut Post, Option<&mut crate::fight::Ammo>)>,
+    mut positions: Query<(&mut Post, Option<&mut crate::fight::Ammo>, Has<Suppressed>)>,
     mut soldiers: Query<(Entity, &mut Soldier, &Transform)>,
     sight: Option<Res<crate::fight::Sight>>,
 ) {
+    // Where the fight says so, a post down under fire fires only so much (`FightSpec::pinned`).
+    let pinned = crate::fight::spec().map_or(1.0, |f| f.pinned);
     // In the dark men see less far, except under a flare (only where the fight counts it).
     let reach = |p: Vec2| 750.0 * sight.as_ref().map_or(1.0, |s| s.at(p));
     let dt = time.delta_secs();
     let rng = &mut fxr.0;
     let mut dead: Vec<Entity> = Vec::new();
-    for (mut pos, mut ammo) in &mut positions {
+    for (mut pos, mut ammo, down) in &mut positions {
         // (A post with its ammunition counted, where the fight counts it, fires no more when it is dry.)
         if pos.strength == 0 || ammo.as_ref().is_some_and(|a| a.0 == 0) {
             continue;
@@ -1066,6 +1075,9 @@ fn small_arms(
             continue;
         }
         pos.fire_timer = rng.random_range(1.5..3.5);
+        if down && pinned < 1.0 {
+            pos.fire_timer /= pinned;
+        }
         let from = geo::ground(pos.pos) + Vec3::Y * 0.8;
         // The nearest man within rifle range that a belt or a crest does not hide.
         let mut near: Vec<(Entity, f32, Vec3)> = soldiers

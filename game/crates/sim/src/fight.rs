@@ -53,6 +53,16 @@ pub struct FightSpec {
     /// Hand flares at each of the defenders' posts, sent up over the men rushing it in the dark (`flares`).
     #[serde(default)]
     pub flares: u32,
+    /// How much of a post's fire still goes out while it is down under shells and cannon fire (`fire::Suppressed`):
+    /// 1 (all of it) unless the file says less.
+    #[serde(default = "whole")]
+    pub pinned: f32,
+    /// Men the attackers leave in an area they hold when the rest go on to the next post, so that it stays theirs.
+    #[serde(default)]
+    pub keep: usize,
+    /// So many of the attackers round a post (within 60 m) and it draws no more of them: the rest go on to the next.
+    #[serde(default)]
+    pub ring: usize,
     /// The field's areas.
     pub zones: Vec<ZoneSpec>,
 }
@@ -63,6 +73,10 @@ pub struct ZoneSpec {
     pub key: String,
     pub name: (String, String),
     pub poly: Vec<(f32, f32)>,
+}
+
+fn whole() -> f32 {
+    1.0
 }
 
 pub fn spec() -> Option<&'static FightSpec> {
@@ -134,6 +148,9 @@ pub struct Field {
     pub held_until: Option<f32>,
     /// The order to pull out has been given.
     pub ordered_out: bool,
+    /// The defenders' posts still holding with none of the attackers' men within 100 m: where the attackers' guns may
+    /// still fire (`Act::Prep` where there is no line across the field), west to east.
+    pub open: Vec<Vec2>,
 }
 
 /// The defenders' posts get their ammunition once they are on the ground (ours in the morning, the VDV's at dusk).
@@ -162,7 +179,7 @@ fn order_out(keys: Res<ButtonInput<KeyCode>>, time: Res<Time>, mut field: ResMut
 /// The attackers do not stop at the end of their road: every few seconds a few of the men who have got where they
 /// were going (dug in at their goal) get up and go for the nearest of the defenders' posts still holding, to within
 /// a stone's throw of it, where they go to ground again round it.
-fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, posts: Query<&Post, Without<PulledOut>>, mut soldiers: Query<(&mut Soldier, &Transform), Without<Leaving>>) {
+fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, field: Res<Field>, posts: Query<&Post, Without<PulledOut>>, mut soldiers: Query<(&mut Soldier, &Transform), Without<Leaving>>) {
     *tick -= crate::sim_dt(&time);
     if *tick > 0.0 {
         return;
@@ -173,15 +190,62 @@ fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, pos
     if holding.is_empty() {
         return;
     }
+    // Where the file says so, a section stays behind in each area of the field the attackers have got into: their men
+    // dug in there, area by area, and how many may still go on.
+    let keep = spec().map_or(0, |f| f.keep);
+    let zone_of = |p: Vec2| field.zones.iter().position(|z| geo::inside(&z.poly, p));
+    let mut spare: Vec<usize> = vec![0; field.zones.len()];
+    if keep > 0 {
+        for (s, tf) in &soldiers {
+            if s.side == attacker && s.state == SState::DugIn
+                && let Some(z) = zone_of(tf.translation.xz())
+            {
+                spare[z] += 1;
+            }
+        }
+        for n in &mut spare {
+            *n = n.saturating_sub(keep);
+        }
+    }
+    // Where the file says so, a post already ringed by so many of ours draws no more: the rest go on to the next.
+    let ring = spec().map_or(0, |f| f.ring);
+    // (Round it: there, or on the way there.)
+    let mut round: Vec<usize> = vec![0; holding.len()];
+    if ring > 0 {
+        for (s, tf) in &soldiers {
+            if s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded) {
+                for (i, h) in holding.iter().enumerate() {
+                    if h.distance(tf.translation.xz()) < 60.0 || (s.state == SState::Advance && h.distance(s.goal) < 60.0) {
+                        round[i] += 1;
+                    }
+                }
+            }
+        }
+    }
     for (mut s, tf) in &mut soldiers {
         let p = tf.translation.xz();
         if s.side != attacker || s.state != SState::DugIn || !rng.0.random_bool(spec().map_or(0.0, |f| f.assault)) {
             continue;
         }
         let Some(&post) = holding.iter().min_by(|a, b| a.distance(p).total_cmp(&b.distance(p))) else { continue };
-        let d = post.distance(p);
-        if d < 40.0 || d > 900.0 {
+        if post.distance(p) < 40.0 {
             continue;
+        }
+        // The nearest post not yet ringed by enough of ours (any post, where the file does not say how many).
+        let post = holding.iter().enumerate().filter(|(i, _)| ring == 0 || round[*i] < ring).min_by(|a, b| a.1.distance(p).total_cmp(&b.1.distance(p))).map_or(post, |(i, &q)| {
+            round[i] += 1;
+            q
+        });
+        if post.distance(p) > 900.0 {
+            continue;
+        }
+        if keep > 0
+            && let Some(z) = zone_of(p)
+        {
+            if spare[z] == 0 {
+                continue;
+            }
+            spare[z] -= 1;
         }
         // Not straight at it: round to a side, about twenty-five metres out.
         let side = Vec2::from_angle(rng.0.random_range(-1.2..1.2)).rotate((p - post).normalize_or(Vec2::Y));
@@ -353,7 +417,9 @@ fn log_field(script: Res<crate::director::Script>, field: Res<Field>, air: Optio
         return;
     }
     *last = script.t as u32 / 60;
-    let holding: Vec<String> = posts.iter().filter(|(p, _)| p.side == Side::Ua && p.strength > 0).map(|(p, a)| format!("{}/{}", p.strength, a.map_or(0, |a| a.0))).collect();
+    // The defenders' posts still holding, strength/ammunition (ours in the morning, the VDV's at dusk).
+    let defender = crate::diorama::diorama().defender();
+    let holding: Vec<String> = posts.iter().filter(|(p, _)| p.side == defender && p.strength > 0).map(|(p, a)| format!("{}/{}", p.strength, a.map_or(0, |a| a.0))).collect();
     let zones: Vec<String> = field.zones.iter().map(|z| format!("{}={}", z.name.0.trim_start_matches("the "), z.held.map_or("-", |s| if s == Side::Ua { "ua" } else { "ru" }))).collect();
     let (flown, down, off) = air.as_ref().map_or((0, 0, 0), |a| (a.flown, a.down.len(), a.driven_off));
     let landed = airfield.as_ref().map_or(0, |f| f.men_landed);
@@ -392,6 +458,10 @@ fn log_areas(script: Res<crate::director::Script>, field: Res<Field>, soldiers: 
 /// Who holds each area: whoever has men in it, the other side none.
 fn hold_zones(mut field: ResMut<Field>, soldiers: Query<(&Soldier, &Transform)>, posts: Query<&Post, Without<PulledOut>>) {
     let men: Vec<(Side, Vec2)> = soldiers.iter().filter(|(s, _)| s.state != SState::Wounded).map(|(s, t)| (s.side, t.translation.xz())).chain(posts.iter().filter(|p| p.strength > 0).map(|p| (p.side, p.pos))).collect();
+    let attacker = crate::diorama::diorama().attacker();
+    let on: Vec<Vec2> = soldiers.iter().filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded)).map(|(_, t)| t.translation.xz()).collect();
+    field.open = posts.iter().filter(|p| p.side != attacker && p.strength > 0 && !on.iter().any(|m| m.distance(p.pos) < 100.0)).map(|p| p.pos).collect();
+    field.open.sort_by(|a, b| a.x.total_cmp(&b.x).then(a.y.total_cmp(&b.y)));
     for z in &mut field.zones {
         let ua = men.iter().any(|(s, p)| *s == Side::Ua && geo::inside(&z.poly, *p));
         let ru = men.iter().any(|(s, p)| *s == Side::Ru && geo::inside(&z.poly, *p));
