@@ -174,6 +174,9 @@ pub struct DevEnv {
     pub run: Vec<(f32, String)>,
     /// `BAV_ERA_AT=<game s>`: set off the reactive armour on every lineup hull that has it, once.
     pub era_at: Option<f32>,
+    /// `BAV_FX_AT=<game s>` with `BAV_LINEUP`: a row of bursts 60 m in front of the lineup, once, smallest to
+    /// largest: a 60 mm drop, an FPV, a 155 mm round, a KAB, and a hull's ammunition going all at once.
+    pub fx_at: Option<f32>,
     /// `BAV_LINEUP_FIRE=1` with `BAV_LINEUP`: the burned-out row burns, a hull in flames, a smoulder and a pool of
     /// diesel in turn, to look at the fires and their smoke side by side.
     pub lineup_fire: bool,
@@ -358,6 +361,7 @@ impl DevEnv {
             ground: var("BAV_GROUND"),
             log_stats: var("BAV_LOG_STATS").is_some(),
             era_at: parse("BAV_ERA_AT"),
+            fx_at: parse("BAV_FX_AT"),
             lineup_fire: var("BAV_LINEUP_FIRE").is_some(),
             evac: parse("BAV_EVAC"),
             ugv: timed("BAV_UGV"),

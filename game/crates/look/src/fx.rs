@@ -252,6 +252,28 @@ pub struct Particle {
     mirror: f32,
     /// Its own eddy: where in the turbulence field it samples.
     eddy: f32,
+    /// Seconds it takes to thicken to full strength, and how steeply it thins towards its end (higher is sooner).
+    rise: f32,
+    fade: f32,
+    /// How soon it spreads to its full size (2 is the usual; higher spreads sooner).
+    spread: f32,
+}
+
+/// How a long-lived puff comes and goes: a plume's puffs thicken at once at the fire and hold their body for most of
+/// their life, where a burst's quick puffs thin from the start; a dust pall over a burst thickens as its column climbs.
+/// A plume's puffs also spread sooner, so that one overlaps the next and the column reads as one.
+#[derive(Clone, Copy)]
+pub struct Body {
+    pub rise: f32,
+    pub fade: f32,
+    pub spread: f32,
+}
+
+impl Body {
+    /// A puff's usual way: it thickens in the first twentieth of its life and thins from then on.
+    fn of(life: f32) -> Self {
+        Body { rise: life * 0.05, fade: 1.8, spread: 2.0 }
+    }
 }
 
 pub const MAX_PARTICLES: usize = 9000;
@@ -263,6 +285,12 @@ pub fn spawn(commands: &mut Commands, fx: &mut FxAssets, s: Spawn) {
 
 /// A puff of the burning kinds' smoke in a colour of its own.
 pub fn spawn_toned(commands: &mut Commands, fx: &mut FxAssets, s: Spawn, tone: Tone) {
+    let body = Body::of(s.life);
+    spawn_bodied(commands, fx, s, tone, body);
+}
+
+/// A puff in a colour of its own that comes and goes its own way.
+pub fn spawn_bodied(commands: &mut Commands, fx: &mut FxAssets, s: Spawn, tone: Tone, body: Body) {
     if fx.count >= fx.budget || crate::dev::off(crate::dev::Part::Particles) {
         return;
     }
@@ -278,7 +306,7 @@ pub fn spawn_toned(commands: &mut Commands, fx: &mut FxAssets, s: Spawn, tone: T
         MeshMaterial3d(fx.mat(s.kind, tone.at(s.kind, 0.0), s.alpha)),
         Transform::from_translation(s.pos).with_scale(Vec3::splat(s.size0)),
         NotShadowCaster,
-        Particle { kind: s.kind, vel: s.vel, age: 0.0, life: s.life, size0: s.size0, size1: s.size1, alpha: s.alpha, drag: s.drag, gravity: s.gravity, buoyancy: s.buoyancy, tone, step: usize::MAX, streak: s.streak, spin, spin_rate, mirror, eddy },
+        Particle { kind: s.kind, vel: s.vel, age: 0.0, life: s.life, size0: s.size0, size1: s.size1, alpha: s.alpha, drag: s.drag, gravity: s.gravity, buoyancy: s.buoyancy, tone, step: usize::MAX, streak: s.streak, spin, spin_rate, mirror, eddy, rise: body.rise.max(0.01), fade: body.fade, spread: body.spread },
     ));
 }
 
@@ -321,9 +349,9 @@ fn update_particles(
             Vec3::ZERO
         };
         tf.translation += (p.vel + windward + eddy) * dt;
-        let size = p.size0 + (p.size1 - p.size0) * (1.0 - (1.0 - k) * (1.0 - k));
+        let size = p.size0 + (p.size1 - p.size0) * (1.0 - (1.0 - k).powf(p.spread));
         // Fade in fast; fade out slowly, so old smoke thins into a wide veil rather than vanishing.
-        let a = p.alpha * (k / 0.05).min(1.0) * (1.0 - k).powf(1.8) * (1.0 - 0.45 * k);
+        let a = p.alpha * (p.age / p.rise).min(1.0) * (1.0 - k).powf(p.fade) * (1.0 - 0.45 * k);
         let tone = p.tone.at(p.kind, k);
         let step = tone * STEPS + ((a * (STEPS - 1) as f32).round() as usize).min(STEPS - 1);
         if step != p.step {
@@ -375,12 +403,12 @@ pub(crate) fn play_requests(mut commands: Commands, mut fx: ResMut<FxAssets>, mu
         match call {
             FxCall::Spawn(s) => spawn(c, f, s),
             FxCall::Flash { pos, intensity, range, life } => flash(c, pos, intensity, range, life),
-            FxCall::Explosion { at, size, ground } => explosion(c, f, at, size, ground),
+            FxCall::Explosion { at, size, ground } => explosion(c, f, &mut paint, at, size, ground),
             FxCall::Cookoff { at, strength } => cookoff(c, f, at, strength),
             FxCall::EraPops { hull, top } => era_pops(c, f, &hull, top),
             FxCall::PoolFire { hull, violent } => pool_fire(c, f, &mut paint, &hull, violent),
-            FxCall::Fireball { at } => fireball(c, f, at),
-            FxCall::Thermobaric { at } => thermobaric(c, f, at),
+            FxCall::Fireball { at } => fireball(c, f, &mut paint, at),
+            FxCall::Thermobaric { at } => thermobaric(c, f, &mut paint, at),
             FxCall::Muzzle { at, dir, big } => muzzle(c, f, at, dir, big),
             FxCall::Backblast { from, dir } => backblast(c, f, from, dir),
             FxCall::Phosphorus { at } => phosphorus(c, f, at),
@@ -431,11 +459,20 @@ fn update_emitters(
             match em.kind {
                 EmitterKind::WreckFire => {
                     // Soot-black over the fire, greying as it climbs and as the fire burns down; how black, how
-                    // thick and how wide is the hull's own (what burns in it, how the hatches are open).
-                    let from = 2.4 * (1.0 - pl.soot) + 1.2 * done;
-                    let tone = Tone { hue: pl.brown as u8, from, to: from + 2.6 };
+                    // thick and how wide is the hull's own (what burns in it, how the hatches are open). The puffs
+                    // keep their body for most of their two minutes, so the column stands thick over the hull, climbs
+                    // a hundred metres and leans off downwind, readable from a kilometre and more. A bigger fire
+                    // (an aircraft's, a building's: the battle sets it burning faster) makes a wider column.
+                    let heat = (em.rate / 5.0).sqrt().clamp(0.8, 2.0);
+                    let from = 1.1 * (1.0 - pl.soot) + 1.2 * done;
+                    let tone = Tone { hue: pl.brown as u8, from, to: from + 3.0 };
                     let fierce = 1.0 - 0.45 * done;
-                    spawn_toned(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 2.5, vel: Vec3::Y * r.random_range(3.0..6.0) * (0.7 + 0.3 * fierce), life: r.random_range(35.0..60.0), size0: 2.5 * pl.size, size1: r.random_range(28.0..46.0) * pl.size, alpha: 0.5 * pl.alpha * breath * fierce, drag: 0.15, buoyancy: 0.4, ..default() }, tone);
+                    // The long-lived puffs leave the last sixth of the budget to the bursts, so that a shell landing
+                    // in a field of burning wrecks still shows.
+                    if r.random_bool(0.55) && fx.count * 6 < fx.budget * 5 {
+                        let s = Spawn { kind: Kind::BlackSmoke, pos: base + jitter * heat + Vec3::Y * 2.5, vel: Vec3::Y * r.random_range(4.0..7.0) * (0.7 + 0.3 * fierce), life: r.random_range(70.0..120.0), size0: 4.0 * pl.size * heat, size1: r.random_range(30.0..50.0) * pl.size * heat, alpha: (0.45 + 0.3 * pl.alpha) * breath * fierce, drag: 0.15, buoyancy: 0.9, ..default() };
+                        spawn_bodied(&mut commands, &mut fx, s, tone, Body { rise: 0.4, fade: 1.3, spread: 4.0 });
+                    }
                     // Flames big enough to read in daylight: the footage shows a hull as a torch.
                     for _ in 0..if r.random_bool(0.5 * fierce as f64) { 2 } else { 1 } {
                         spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.2 + Vec3::Y * r.random_range(0.6..2.0), vel: Vec3::Y * r.random_range(2.0..5.0), life: r.random_range(0.5..1.0), size0: r.random_range(3.0..5.0) * (0.6 + 0.4 * fierce), size1: 1.2, alpha: 0.95, ..default() });
@@ -454,11 +491,19 @@ fn update_emitters(
                     }
                 }
                 EmitterKind::Smoulder => {
-                    // A burnt-out hull breathes a thin grey or brownish smoke that thins over the next quarter
-                    // hour; the ones burnt out before the day began only wisp.
-                    let left = if em.secs > 5000.0 { 0.5 } else { 1.0 - 0.7 * done };
-                    let tone = Tone { hue: (pl.brown || pl.soot < 0.45) as u8, from: 2.6 + 0.8 * done, to: 5.0 };
-                    spawn_toned(&mut commands, &mut fx, Spawn { kind: Kind::GreySmoke, pos: base + jitter + Vec3::Y, vel: Vec3::Y * r.random_range(1.0..2.5), life: r.random_range(25.0..45.0), size0: 1.5, size1: r.random_range(10.0..20.0) * pl.size, alpha: 0.3 * pl.alpha * left, drag: 0.2, buoyancy: 0.2, ..default() }, tone);
+                    // A hull that has burned out still burns down for minutes: low flames now and then in the
+                    // hull and a dark smoke, greying and thinning over the next quarter hour into a grey or brownish
+                    // breath; the ones burnt out before the day began only wisp.
+                    let old = em.secs > 5000.0;
+                    let left = if old { 0.5 } else { 1.0 - 0.7 * done };
+                    let dark = if old { 0.0 } else { (1.0 - done / 0.4).clamp(0.0, 1.0) };
+                    let tone = Tone { hue: (pl.brown || pl.soot < 0.45) as u8, from: 2.6 + 0.8 * done - 2.0 * dark, to: 5.0 - dark };
+                    let s = Spawn { kind: Kind::GreySmoke, pos: base + jitter + Vec3::Y, vel: Vec3::Y * r.random_range(1.0..2.5) * (1.0 + dark), life: r.random_range(25.0..45.0) * (1.0 + dark), size0: 1.5, size1: r.random_range(10.0..20.0) * pl.size * (1.0 + 0.8 * dark), alpha: (0.3 + 0.3 * dark) * pl.alpha * left, drag: 0.2, buoyancy: 0.2 + 0.4 * dark, ..default() };
+                    let body = Body { rise: 0.05 * s.life, fade: 1.8 - 0.4 * dark, spread: 2.0 + 2.0 * dark };
+                    spawn_bodied(&mut commands, &mut fx, s, tone, body);
+                    if r.random_bool((0.5 * dark) as f64) {
+                        spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 0.8 + Vec3::Y * r.random_range(0.4..1.4), vel: Vec3::Y * r.random_range(1.5..3.0), life: r.random_range(0.4..0.8), size0: r.random_range(1.2..2.4), size1: 0.8, alpha: 0.9, ..default() });
+                    }
                 }
                 EmitterKind::SmokeScreen => {
                     // A fog, not a fire: it neither rises nor sinks, and the wind lays it out as a ribbon.
@@ -478,7 +523,7 @@ fn update_emitters(
                     spawn(&mut commands, &mut fx, Spawn { kind: Kind::Fire, pos: base + jitter * 1.4 + Vec3::Y * r.random_range(0.4..1.0), vel: Vec3::Y * r.random_range(1.5..3.5), life: r.random_range(0.45..0.9), size0: r.random_range(2.0..3.2), size1: 1.0, alpha: 0.95, ..default() });
                     if r.random_bool(0.2) {
                         let tone = Tone { hue: pl.brown as u8, from: 0.3, to: 3.2 };
-                        spawn_toned(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 2.5, vel: Vec3::Y * r.random_range(2.0..4.0), life: r.random_range(25.0..40.0), size0: 1.5, size1: r.random_range(14.0..24.0) * pl.size, alpha: 0.3 * pl.alpha, drag: 0.2, buoyancy: 0.3, ..default() }, tone);
+                        spawn_toned(&mut commands, &mut fx, Spawn { kind: Kind::BlackSmoke, pos: base + jitter + Vec3::Y * 2.5, vel: Vec3::Y * r.random_range(2.0..4.0), life: r.random_range(40.0..70.0), size0: 1.5, size1: r.random_range(14.0..24.0) * pl.size, alpha: 0.3 * pl.alpha, drag: 0.2, buoyancy: 0.3, ..default() }, tone);
                     }
                     // In the first minutes the snow round it melts and steams.
                     if !diorama().summer() && em.age() < 180.0 && r.random_bool(0.15) {
@@ -646,13 +691,19 @@ pub fn flash(commands: &mut Commands, pos: Vec3, intensity: f32, range: f32, lif
 
 /// A shell burst (`size` 1 is a 155 mm round; `ground` for a burst in the field rather than on a hull): a white-hot
 /// core, an orange fireball that rolls up into its own soot, the blast wave racing out (a pale dome, and a ring of snow
-/// or dust off the ground), then the earth. In February a dark column of frozen clods with a white skirt of snow and a
-/// pale haze that clears in half a minute; in June a khaki column of dry earth and a brown haze that hangs for minutes.
-pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, size: f32, ground: bool) {
+/// or dust off the ground), then the earth. In February a dark column of frozen clods with a white skirt of snow; in
+/// June a khaki column of dry earth. What the column leaves hangs as a pall of earth and smoke, as tall as the column
+/// went, and drifts off with the wind for a minute or two; on a hull it is the explosive's grey-white smoke. A KAB or
+/// a HIMARS warhead also sends up a dark column that climbs for a minute and leans off downwind, and every burst in
+/// the field blackens the ground it went off on.
+pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, paint: &mut PaintQueue, at: Vec3, size: f32, ground: bool) {
     let mut rng = std::mem::replace(&mut fx.rng, SmallRng::seed_from_u64(0));
     let rng = &mut rng;
     let summer = diorama().summer();
     let earth = if summer { Kind::Dust } else { Kind::Dirt };
+    // How high the earth goes: a few metres under a grenade, some 15 m under a 155 mm round, twice that under a
+    // KAB (the column grows faster than the charge's size, slower than its weight).
+    let height = 12.0 * size.powf(1.3) * if ground { 1.0 } else { 0.6 };
     flash(commands, at + Vec3::Y * 2.0, 4.0e7 * size, 120.0 * size, 0.35);
     commands.spawn((
         Mesh3d(fx.sphere.clone()),
@@ -664,18 +715,20 @@ pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, size: f32
     ));
     // A warm glow on the ground for as long as the fireball burns.
     flash(commands, at + Vec3::Y * 4.0, 1.2e7 * size, 90.0 * size, 0.6);
-    // 0. The core: white-hot for two frames.
-    spawn(commands, fx, Spawn { kind: Kind::Flash, pos: at + Vec3::Y * 2.0, vel: Vec3::ZERO, life: 0.14, size0: 8.0 * size, size1: 3.0 * size, alpha: 1.0, ..default() });
+    // 0. The core: white-hot for a few frames, big enough to read as a wink from a kilometre.
+    spawn(commands, fx, Spawn { kind: Kind::Flash, pos: at + Vec3::Y * 2.0, vel: Vec3::ZERO, life: 0.18, size0: 10.0 * size, size1: 4.0 * size, alpha: 1.0, ..default() });
     // 1. The fireball: orange, swelling to some 20 m across at 155 mm for half a second above the spray, its top
     // rising as it goes.
     for _ in 0..(4.0 + 18.0 * size) as u32 {
         let d = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.0..1.0), rng.random_range(-1.0..1.0));
-        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 2.5 * size.sqrt() + d * 1.5 * size, vel: d * rng.random_range(5.0..14.0) * size.sqrt() + Vec3::Y * 3.0, life: rng.random_range(0.3..0.7), size0: 4.0 * size, size1: 11.0 * size, alpha: 1.0, drag: 3.5, buoyancy: 0.8, ..default() });
+        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 2.5 * size.sqrt() + d * 1.5 * size, vel: d * rng.random_range(5.0..14.0) * size.sqrt() + Vec3::Y * 3.0, life: rng.random_range(0.35..0.8), size0: 4.0 * size, size1: 11.0 * size, alpha: 1.0, drag: 3.5, buoyancy: 0.8, ..default() });
     }
-    // 2. Its soot: the fireball rolls up into a dark puff that climbs out of the earth and greys away.
-    for _ in 0..(5.0 * size).ceil() as u32 {
+    // 2. Its soot: the fireball rolls up into a dark puff that climbs out of the earth and greys away over half a
+    // minute.
+    for _ in 0..(2.0 + 5.0 * size).ceil() as u32 {
         let jitter = Vec3::new(rng.random_range(-2.0..2.0), 0.0, rng.random_range(-2.0..2.0)) * size;
-        spawn(commands, fx, Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::Y * rng.random_range(2.5..5.0) * size.sqrt() + jitter, vel: Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(2.0..5.0), rng.random_range(-1.0..1.0)), life: rng.random_range(10.0..20.0), size0: 3.0 * size, size1: 15.0 * size, alpha: 0.45, drag: 0.7, buoyancy: 0.35, ..default() });
+        let s = Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::Y * rng.random_range(2.5..5.0) * size.sqrt() + jitter, vel: Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(2.0..5.0), rng.random_range(-1.0..1.0)), life: rng.random_range(25.0..50.0), size0: 3.0 * size, size1: 18.0 * size, alpha: 0.6, drag: 0.7, buoyancy: 0.35, ..default() };
+        spawn_bodied(commands, fx, s, Tone { hue: 0, from: 0.6, to: 3.6 }, Body { rise: 0.4, fade: 1.4, spread: 2.0 });
     }
     // 3. The blast wave: a faint dome racing out some 18 m at 155 mm, and on open ground a ring of snow or dust
     // whipped off it, out ahead of the slower skirt.
@@ -691,15 +744,18 @@ pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, size: f32
         }
     }
     // 4. Spikes: earth thrown out in fast jets, the splash silhouette of a hit.
-    for _ in 0..(14.0 * size) as u32 {
+    for _ in 0..(18.0 * size) as u32 {
         let dir = Vec3::new(rng.random_range(-0.65..0.65), 1.0, rng.random_range(-0.65..0.65)).normalize();
-        spawn(commands, fx, Spawn { kind: Kind::Dirt, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(30.0..62.0) * size.sqrt(), life: rng.random_range(0.6..1.2), size0: 0.7 * size, size1: 1.4 * size, alpha: 0.95, drag: 0.9, gravity: 9.8, streak: 4.5, ..default() });
+        let s = Spawn { kind: Kind::Dirt, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(30.0..62.0) * size.sqrt(), life: rng.random_range(0.8..1.6), size0: 0.9 * size, size1: 2.0 * size, alpha: 0.95, drag: 0.9, gravity: 9.8, streak: 4.5, ..default() };
+        spawn_bodied(commands, fx, s, Tone::default(), Body { rise: 0.03, fade: 1.0, spread: 2.0 });
     }
-    // 5. The column: earth heaving up 20–35 m and collapsing back; frozen it is dark and chunky, dry it is wide.
-    for _ in 0..(14.0 * size) as u32 {
-        let spread = if summer { 0.5 } else { 0.35 };
+    // 5. The column: earth heaving up and hanging a moment before it collapses; frozen it is dark and chunky, dry it is
+    // wide.
+    let spread = if summer { 0.5 } else { 0.35 };
+    for _ in 0..(8.0 + 16.0 * size) as u32 {
         let dir = Vec3::new(rng.random_range(-spread..spread), 1.0, rng.random_range(-spread..spread)).normalize();
-        spawn(commands, fx, Spawn { kind: earth, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(16.0..38.0) * size.sqrt(), life: rng.random_range(1.8..3.4), size0: 2.2 * size, size1: if summer { 11.0 } else { 9.0 } * size, alpha: 0.95, drag: 1.4, gravity: 9.0, ..default() });
+        let s = Spawn { kind: earth, pos: at + Vec3::Y * 0.5, vel: dir * rng.random_range(16.0..38.0) * size.sqrt(), life: rng.random_range(2.2..4.2), size0: 2.4 * size, size1: if summer { 12.0 } else { 10.0 } * size, alpha: 0.95, drag: 1.2, gravity: 6.0, ..default() };
+        spawn_bodied(commands, fx, s, Tone::default(), Body { rise: 0.05, fade: 0.9, spread: 2.0 });
     }
     // 6. Clods: bits of earth arcing out and falling, pocking the ground round the crater.
     for _ in 0..(18.0 * size) as u32 {
@@ -714,9 +770,25 @@ pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, size: f32
         let kind = if !ground { Kind::GreySmoke } else if summer { Kind::Dust } else { Kind::Snow };
         spawn(commands, fx, Spawn { kind, pos: at + Vec3::Y * 0.8, vel: v, life: rng.random_range(2.5..5.0), size0: 2.5 * size, size1: 12.0 * size, alpha: 0.75, drag: 2.2, gravity: 1.0, ..default() });
     }
-    // 8. The haze: in winter pale snow dust and grey smoke that clears in half a minute; in June a brown dust
-    // cloud that hangs for minutes and drifts off with the wind.
-    let (n, life, kinds): (u32, std::ops::Range<f32>, [Kind; 2]) = if summer { ((10.0 * size) as u32, 60.0..120.0, [Kind::Dust, Kind::GreySmoke]) } else { ((8.0 * size) as u32, 20.0..40.0, [Kind::Snow, Kind::GreySmoke]) };
+    // 8. The pall: what the column leaves in the air, standing where it went and thickening as it climbs, then going
+    // off with the wind. Over the field brown earth and smoke (khaki dust in June), on a hull the explosive's grey.
+    let n = (4.0 + 10.0 * size) as u32;
+    let linger = if summer { 80.0..160.0 } else { 50.0..100.0 };
+    for i in 0..n {
+        let h = height * (i as f32 + 0.5) / n as f32 * rng.random_range(0.7..1.1);
+        let wide = 1.5 + 0.25 * h;
+        let pos = at + Vec3::new(rng.random_range(-wide..wide), h * 0.85 + 1.0, rng.random_range(-wide..wide));
+        let (kind, tone) = match (ground, summer) {
+            (false, _) => (Kind::GreySmoke, Tone { hue: 0, from: 3.0, to: 4.6 }),
+            (true, true) if rng.random_bool(0.7) => (Kind::Dust, Tone::default()),
+            _ => (Kind::GreySmoke, Tone { hue: 1, from: 1.0, to: 4.0 }),
+        };
+        let s = Spawn { kind, pos, vel: Vec3::new(rng.random_range(-0.5..0.5), rng.random_range(0.3..1.2), rng.random_range(-0.5..0.5)), life: rng.random_range(linger.clone()) * (0.7 + 0.3 * size.min(2.0)), size0: 2.0 + 0.35 * height, size1: 8.0 + 1.1 * height, alpha: if ground { 0.55 } else { 0.45 }, drag: 0.5, buoyancy: 0.05, ..default() };
+        spawn_bodied(commands, fx, s, tone, Body { rise: 0.6 + 0.12 * h, fade: 1.2, spread: 2.0 });
+    }
+    // 9. The haze: in winter pale snow dust that settles in half a minute out of the pall; in June a brown dust cloud
+    // that hangs for minutes and drifts off with the wind.
+    let (n, life, kinds): (u32, std::ops::Range<f32>, [Kind; 2]) = if summer { ((10.0 * size) as u32, 80.0..150.0, [Kind::Dust, Kind::GreySmoke]) } else { ((6.0 * size) as u32, 15.0..30.0, [Kind::Snow, Kind::GreySmoke]) };
     for _ in 0..n {
         let k = if rng.random_bool(0.3) { kinds[1] } else { kinds[0] };
         spawn(commands, fx, Spawn { kind: k, pos: at + Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(2.0..9.0), rng.random_range(-3.0..3.0)), vel: Vec3::new(rng.random_range(-2.0..2.0), rng.random_range(1.0..3.5), rng.random_range(-2.0..2.0)), life: rng.random_range(life.clone()), size0: 6.0 * size, size1: (if summer { 40.0 } else { 32.0 }) * size, alpha: if k == Kind::GreySmoke { 0.4 } else { 0.5 }, drag: 0.6, buoyancy: 0.15, ..default() });
@@ -724,6 +796,18 @@ pub fn explosion(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, size: f32
     for _ in 0..(8.0 * size) as u32 {
         let dir = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.3..1.2), rng.random_range(-1.0..1.0)).normalize();
         spawn(commands, fx, Spawn { kind: Kind::Spark, pos: at + Vec3::Y, vel: dir * rng.random_range(25.0..60.0), life: rng.random_range(0.3..0.8), size0: 0.25, size1: 0.1, alpha: 1.0, drag: 0.5, gravity: 9.8, streak: 6.0, ..default() });
+    }
+    // 10. A heavy warhead's column: dark smoke and dust climbing out of the burst to 60-80 m over the first minute,
+    // its head spreading, the whole of it leaning off downwind and visible for kilometres.
+    if size >= 1.8 {
+        for _ in 0..(6.0 * size) as u32 {
+            let s = Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::new(rng.random_range(-4.0..4.0), rng.random_range(4.0..height), rng.random_range(-4.0..4.0)), vel: Vec3::new(rng.random_range(-1.5..1.5), rng.random_range(6.0..14.0), rng.random_range(-1.5..1.5)), life: rng.random_range(90.0..180.0), size0: 8.0, size1: rng.random_range(40.0..60.0) * size / 2.2, alpha: 0.6, drag: 0.35, buoyancy: 0.9, ..default() };
+            spawn_bodied(commands, fx, s, Tone { hue: 1, from: 1.0, to: 4.0 }, Body { rise: 1.5, fade: 1.3, spread: 2.0 });
+        }
+    }
+    // 11. The ground it went off on, blackened: a small scorch in the crater's middle, or where nothing cratered.
+    if ground && size >= 0.25 {
+        paint.push(crate::terrain::Paint::Scorch { at: at.xz(), radius: 1.0 + 2.0 * size.min(1.0) });
     }
     fx.rng = std::mem::replace(rng, SmallRng::seed_from_u64(0));
 }
@@ -744,6 +828,11 @@ pub fn cookoff(commands: &mut Commands, fx: &mut FxAssets, at: Vec3, strength: f
     }
     for _ in 0..3 {
         spawn(commands, fx, Spawn { kind: Kind::WhiteSmoke, pos: at + Vec3::Y * 2.5, vel: Vec3::new(rng.random_range(-2.0..2.0), rng.random_range(4.0..9.0), rng.random_range(-2.0..2.0)), life: rng.random_range(6.0..12.0), size0: 2.0, size1: 12.0, alpha: 0.6, drag: 0.6, buoyancy: 0.5, ..default() });
+    }
+    // Each burst pushes a gout of black smoke up into the column.
+    for _ in 0..(1.0 + 2.0 * strength) as u32 {
+        let s = Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::Y * 3.0, vel: Vec3::new(rng.random_range(-2.0..2.0), rng.random_range(8.0..14.0) * strength.sqrt(), rng.random_range(-2.0..2.0)), life: rng.random_range(30.0..60.0), size0: 4.0, size1: 24.0 * strength.sqrt(), alpha: 0.7, drag: 0.5, buoyancy: 0.8, ..default() };
+        spawn_bodied(commands, fx, s, Tone { hue: 0, from: 0.0, to: 3.0 }, Body { rise: 0.3, fade: 1.4, spread: 2.0 });
     }
     fx.rng = std::mem::replace(rng, SmallRng::seed_from_u64(0));
 }
@@ -875,30 +964,32 @@ fn grass_fires(mut commands: Commands, time: Res<Time>, wind: Res<Wind>, mut fx:
 }
 
 /// The ammunition going all at once: an orange-white fireball 15–25 m across for a second, burning charges
-/// raining out to 50 m, and a sooty mushroom that climbs for twenty seconds.
-pub fn fireball(commands: &mut Commands, fx: &mut FxAssets, at: Vec3) {
+/// raining out to 50 m, and a black mushroom that climbs for half a minute and hangs, leaning downwind, for a minute
+/// or two more: the column the footage shows from kilometres off.
+pub fn fireball(commands: &mut Commands, fx: &mut FxAssets, paint: &mut PaintQueue, at: Vec3) {
     let mut rng = std::mem::replace(&mut fx.rng, SmallRng::seed_from_u64(0));
     let rng = &mut rng;
     flash(commands, at + Vec3::Y * 5.0, 2.5e8, 350.0, 0.9);
-    for _ in 0..12 {
+    for _ in 0..16 {
         let d = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.2..1.0), rng.random_range(-1.0..1.0));
-        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 4.0 + d * 3.0, vel: d * rng.random_range(6.0..14.0), life: rng.random_range(0.6..1.1), size0: 8.0, size1: 22.0, alpha: 1.0, drag: 2.0, ..default() });
+        spawn(commands, fx, Spawn { kind: Kind::Fire, pos: at + Vec3::Y * 4.0 + d * 3.0, vel: d * rng.random_range(6.0..14.0), life: rng.random_range(0.8..1.4), size0: 8.0, size1: 22.0, alpha: 1.0, drag: 2.0, ..default() });
     }
     for _ in 0..40 {
         let dir = Vec3::new(rng.random_range(-1.0..1.0), rng.random_range(0.4..1.4), rng.random_range(-1.0..1.0)).normalize();
         spawn(commands, fx, Spawn { kind: Kind::Propellant, pos: at + Vec3::Y * 3.0, vel: dir * rng.random_range(15.0..45.0), life: rng.random_range(1.0..3.0), size0: 0.5, size1: 0.3, alpha: 1.0, drag: 0.3, gravity: 9.8, streak: 5.0, ..default() });
     }
-    for _ in 0..8 {
-        spawn(commands, fx, Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::Y * 6.0 + Vec3::new(rng.random_range(-3.0..3.0), 0.0, rng.random_range(-3.0..3.0)), vel: Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(6.0..14.0), rng.random_range(-3.0..3.0)), life: rng.random_range(15.0..25.0), size0: 8.0, size1: 45.0, alpha: 0.7, drag: 0.4, buoyancy: 1.2, ..default() });
+    for _ in 0..12 {
+        let s = Spawn { kind: Kind::BlackSmoke, pos: at + Vec3::Y * 6.0 + Vec3::new(rng.random_range(-3.0..3.0), 0.0, rng.random_range(-3.0..3.0)), vel: Vec3::new(rng.random_range(-3.0..3.0), rng.random_range(6.0..14.0), rng.random_range(-3.0..3.0)), life: rng.random_range(60.0..120.0), size0: 8.0, size1: 55.0, alpha: 0.75, drag: 0.4, buoyancy: 1.2, ..default() };
+        spawn_bodied(commands, fx, s, Tone { hue: 0, from: 0.0, to: 3.2 }, Body { rise: 0.5, fade: 1.3, spread: 2.0 });
     }
     fx.rng = std::mem::replace(rng, SmallRng::seed_from_u64(0));
-    explosion(commands, fx, at, 1.0, false);
+    explosion(commands, fx, paint, at, 1.0, false);
 }
 
 /// A TOS-1A rocket (§2.7 of design/next-items.md): a two-frame flash, an orange fireball 20–25 m across that
 /// darkens inside two seconds, a ring of lifted snow or dust racing out along the ground, a sooty head on a
 /// grey-brown stem that climbs for half a minute, and haze that hangs; over the town, pale concrete dust.
-pub fn thermobaric(commands: &mut Commands, fx: &mut FxAssets, at: Vec3) {
+pub fn thermobaric(commands: &mut Commands, fx: &mut FxAssets, paint: &mut PaintQueue, at: Vec3) {
     let mut rng = std::mem::replace(&mut fx.rng, SmallRng::seed_from_u64(0));
     let rng = &mut rng;
     let summer = diorama().summer();
@@ -936,7 +1027,7 @@ pub fn thermobaric(commands: &mut Commands, fx: &mut FxAssets, at: Vec3) {
         spawn(commands, fx, Spawn { kind: Kind::Snow, pos: at + Vec3::Y * 2.0, vel: Vec3::new(a.cos() * rng.random_range(3.0..6.0), rng.random_range(0.5..2.0), a.sin() * rng.random_range(3.0..6.0)), life: rng.random_range(50.0..90.0), size0: 6.0, size1: 35.0, alpha: 0.45, drag: 0.6, ..default() });
     }
     fx.rng = std::mem::replace(rng, SmallRng::seed_from_u64(0));
-    explosion(commands, fx, at, 0.8, true);
+    explosion(commands, fx, paint, at, 0.8, true);
 }
 
 
