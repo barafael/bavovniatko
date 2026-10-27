@@ -350,6 +350,7 @@ The other switches, by what they are for (the full list, with each one's format,
 | `BAV_COMPOSE="0:bmp2+mtlb@10:stugna"` | a Column made up on the battle's map table and not sent, for shots of it |
 | `BAV_SETTINGS=open` | start with the settings overlay open, for shots of it |
 | `BAV_ERA_AT=<s>` | with `BAV_LINEUP`: set off the lineup's reactive armour then |
+| `BAV_FX_AT=<s>` | with `BAV_LINEUP`: a row of bursts 60 m in front of it then, 60 m apart: a 60 mm drop, an FPV, a 155 mm round, a KAB and a hull's ammunition going up, to look at them side by side |
 | `BAV_LIGHT=<sun>,<ambient>,<ev>` | scale the sun and the ambient light and shift the exposure, to judge a day's light |
 | `BAV_AMBIGUITY=1` | log the pairs of systems that touch the same data in no fixed order, which make a day replay differently (build with `--features bevy/debug` for their names) |
 | `BAV_DAYDBG=off\|nosun` | daylight debugging: hold the light as it was at startup, or animate it with the sun held where it is |

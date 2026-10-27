@@ -16,7 +16,7 @@ impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(crate::camera::Flight(dev().fly.clone()))
             .add_systems(Startup, lineup.after(crate::Setup::Kit));
-        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, env_manpads, env_bradley, scripted_gun, era_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
+        app.add_systems(Update, (auto_shot, key_shot, env_view, env_look, record, log_stats, warp, env_debrief, scripted_fire, frame_times, env_ground, env_manpads, env_bradley, scripted_gun, era_test, fx_test).chain().in_set(crate::Step::Control).in_set(DevSystems));
         if dev().field {
             app.add_systems(Startup, field_overlay_setup).add_systems(Update, field_overlay.in_set(crate::Step::Screen));
         }
@@ -202,6 +202,22 @@ fn era_test(mut commands: Commands, script: Res<crate::director::Script>, mut fx
             crate::fx::era_pops(&mut commands, &mut fx, &Transform::from_translation(p).with_rotation(rot), false);
         }
     }
+}
+
+/// `BAV_FX_AT` with `BAV_LINEUP`: the bursts of every size side by side, 60 m apart in a row 60 m in front of the
+/// lineup, to look at them against each other from one camera.
+fn fx_test(mut commands: Commands, script: Res<crate::director::Script>, mut fx: ResMut<crate::fx::FxAssets>, mut paint: ResMut<bav_sim::paint::PaintQueue>, mut done: Local<bool>) {
+    let (Some(at), Some([x, z, heading])) = (dev().fx_at, dev().lineup) else { return };
+    if *done || script.t < at {
+        return;
+    }
+    *done = true;
+    let rot = Quat::from_rotation_y(heading.to_radians());
+    let p = |i: f32| crate::geo::ground((Vec3::new(x, 0.0, z) + rot * Vec3::new(i * 60.0, 0.0, -60.0)).xz());
+    for (i, size) in [0.3, 0.7, 1.2, 2.2].into_iter().enumerate() {
+        crate::fx::explosion(&mut commands, &mut fx, &mut paint, p(i as f32), size, true);
+    }
+    crate::fx::fireball(&mut commands, &mut fx, &mut paint, p(4.0));
 }
 
 fn shot_of(target: Option<&HeadlessTarget>) -> Screenshot {

@@ -188,6 +188,52 @@ much again, which is why they no longer do. Going back to `Hardware2x2` is a one
 the 780M needs it; the sun's steps and the fixed dither keep shadows still without it, but zoomed in, a shadow
 texel's stair steps show.
 
+## Fire and smoke that read (2026-10-27)
+
+The owner found the fire and the explosions flimsy at Myrnohrad. Filmed side by side (`BAV_FX_AT` with a burning
+`BAV_LINEUP`, from 300 m and from a kilometre), the faults were these. A burst was an orange blob for a third of a
+second and then a small pale puff; the earth column was gone in a second, and a KAB was a 155 mm round a little
+larger. Nothing hung after a burst but a pale haze, gone in half a minute. A burning hull's smoke was a grey-brown
+smear lying low along the ground, its puffs half transparent by the time they left the fire, so a field of wrecks
+did not read from a kilometre. A ground burst left no mark where the battle painted no crater. The light flash and
+the sound were already right.
+
+What changed, all in `bav_look::fx`:
+
+- **A puff's body.** Each particle has its own time to thicken, its own fade and how soon it spreads (`Body`); the
+  old puffs keep the old curve. A plume's puffs thicken at once, hold their body for most of their life and spread
+  early, so one overlaps the next and the column reads as one.
+- **Bursts by the charge.** The earth column holds a moment before it falls and goes about 12 × size^1.3 m (a few
+  metres under a grenade, 15 m under a 155 mm round, 33 m under a KAB or a HIMARS warhead). What it leaves hangs as
+  a pall of brown earth and smoke as tall as it went (khaki dust in June, the explosive's grey on a hull), thickening
+  as the column climbs and drifting downwind for one to three minutes. A KAB or HIMARS warhead also sends up a dark
+  column to 60–80 m. The fireball's soot lasts half a minute instead of fifteen seconds; in winter the white snow
+  haze settles sooner, out of the pall. A ground burst paints a small scorch (the painter's queue; the battle's
+  crater list takes craters only).
+- **A hull's ammunition** going all at once leaves a black mushroom for one to two minutes; each cook-off burst
+  pushes a gout of black smoke into the column.
+- **Wreck fires.** The column is soot-black over the fire, climbs about a hundred metres before the wind bends it,
+  and is wider for a bigger fire (an aircraft's, a building's: the battle burns those faster). After the fire the
+  hull burns down for the first six minutes of its smoulder, low flames now and then and a dark smoke greying out;
+  when the Emitter goes is unchanged (it is the battle's entity's component). The long-lived puffs stop at five
+  sixths of the particle budget, so a shell landing among burning wrecks still shows.
+
+The battle is untouched: every particle, light and scorch is the picture's, from its own random stream; all ten
+days (Vuhledar, Mala Tokmachka, Hostomel I and II, Avdiivka I to III, Myrnohrad I to III) are `same` against `fx-v`,
+`r2-r`, `f3-h1`, `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`, `p11-m1`, `p11-m2`, `p11-m3`.
+
+The cost, on the 8060S at 1920x1080, at Avdiivka I's busiest moment (game second 760–790, the most particles of any
+day measured; interleaved, two rounds, the machine at load 3–14):
+
+| | frame | CPU, all threads | particles |
+|---|---|---|---|
+| before | 6.2 ms | 20.6 ms | 5,200–7,100 |
+| after | 6.7 ms | 24.5 ms | 6,500–7,800 |
+
+The frame is within the noise; the particles' CPU, spread over the task pool, is about 4 ms more across threads.
+Hostomel II at its busiest (second 730) went from about 4,000 to 4,400 particles with no change in the frame
+measurable under load 36. The 9,000 cap (`MAX_PARTICLES`) is unchanged, so the worst case is bounded as before.
+
 ## Next levers, not pulled yet
 
 - **Shade on what stands in the belts.** The men and vehicles there could read the same map.
