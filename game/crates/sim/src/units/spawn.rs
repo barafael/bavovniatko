@@ -6,7 +6,7 @@ pub fn vehicle_yaw(dir: Vec2) -> f32 {
     f32::atan2(-dir.x, -dir.y)
 }
 
-pub(super) fn ground_rotation(p: Vec2, yaw: f32) -> Quat {
+pub(crate) fn ground_rotation(p: Vec2, yaw: f32) -> Quat {
     let n = geo::normal(p.x, p.y);
     Quat::from_rotation_arc(Vec3::Y, n) * Quat::from_rotation_y(yaw)
 }

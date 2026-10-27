@@ -610,7 +610,7 @@ pub(super) fn turret_tracking(time: Res<Time>, book: Res<RouteBook>, mut q: Quer
 }
 
 /// A damped spring on the hull's pitch and roll.
-pub(super) fn suspension(sus: &mut Suspension, pitch_target: f32, roll_target: f32, dt: f32) {
+pub(crate) fn suspension(sus: &mut Suspension, pitch_target: f32, roll_target: f32, dt: f32) {
     let (w, z) = (5.5f32, 0.28f32);
     sus.pitch_v += (w * w * (pitch_target.clamp(-0.12, 0.12) - sus.pitch) - 2.0 * z * w * sus.pitch_v) * dt;
     sus.pitch += sus.pitch_v * dt;
