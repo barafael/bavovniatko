@@ -31,10 +31,10 @@
 
 use crate::fire::{Post, Suppressed};
 use crate::fx::{Emitter, EmitterKind, FxQueue};
-use crate::geo;
+use crate::geo::{self, Polyline};
 use crate::player::{Fpv, Operator, View};
 use crate::sound::{Sfx, Sound};
-use crate::units::{Cause, Coasting, DirectHit, Part, Radio, Side, Skin, Stats, VKind, Vehicle, VehicleMaterial};
+use crate::units::{Cause, Coasting, DirectHit, Part, Radio, Side, Skin, Stats, Suspension, VKind, Vehicle, VehicleMaterial};
 use bav_core::diorama::{Play, play};
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -192,6 +192,39 @@ impl CarKind {
         match self {
             CarKind::L200 => 17.0,
             CarKind::Lada => 15.0,
+        }
+    }
+
+    /// How hard it pulls away (m/s²) on a broken road: the L200's 2.4-litre diesel with a load in the bed, the Lada's
+    /// 1.5 or 1.7 with four men in it.
+    fn accel(self) -> f32 {
+        match self {
+            CarKind::L200 => 2.0,
+            CarKind::Lada => 1.6,
+        }
+    }
+
+    /// How hard the driver brakes (m/s²) on that road: the pickup two tonnes and more laden, the Lada one and a bit.
+    fn brake(self) -> f32 {
+        match self {
+            CarKind::L200 => 3.0,
+            CarKind::Lada => 3.4,
+        }
+    }
+
+    /// Its wheelbase (m) and the front wheels' full lock (rad): an L200's 3.0 m and a turning circle of about 12 m, a
+    /// 2107's 2.42 m and about 11 m. Neither turns round in a road's width in one go.
+    fn wheelbase(self) -> f32 {
+        match self {
+            CarKind::L200 => 3.0,
+            CarKind::Lada => 2.42,
+        }
+    }
+
+    fn lock(self) -> f32 {
+        match self {
+            CarKind::L200 => 0.47,
+            CarKind::Lada => 0.42,
         }
     }
 }
@@ -416,16 +449,24 @@ impl Net {
     }
 }
 
-/// A car of ours on the road.
+/// A car of ours on the road, driven as a car: it pulls away and brakes at its kind's rates, steers its front wheels
+/// at a point a little way up the road and turns by them, slows for the corners it sees coming, and turns round in
+/// the road's width. (The column game's `units::drive` is a tracked hull's skid steering, which turns on the spot; a
+/// car's springs are its `Suspension` all the same.)
 #[derive(Component)]
 pub struct Car {
     pub kind: CarKind,
-    way: Vec<Vec2>,
-    /// Metres along the way.
+    way: Polyline,
+    /// Metres along the way, where it is nearest to it.
     s: f32,
     pub leg: Leg,
     /// How long it stays in the town before it comes back (none: it stays).
     back: Option<f32>,
+    /// Its speed along its nose (m/s; less than nothing while it backs up), its heading, and its front wheels' angle
+    /// (rad, to the left).
+    speed: f32,
+    yaw: f32,
+    steer: f32,
 }
 
 /// Where a car is in its run.
@@ -434,11 +475,41 @@ pub enum Leg {
     In,
     /// In the town until then.
     Stays(f64),
+    /// Turning round on the road.
+    Turning(Turn),
     Out,
     /// Through: in the town for good, or back at the road head.
     Done,
     Burnt,
 }
+
+/// A three-point turn in the road's width, which neither car can turn round in on one lock: it brakes to a stop,
+/// pulls across to the left on full lock, backs up on the other lock, and drives off the way it came.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum Turn {
+    Brake,
+    Pull,
+    Reverse,
+}
+
+/// A car's speed through the turns of a three-point turn (m/s), forward and backing up.
+const CREEP: f32 = 2.2;
+const CREEP_BACK: f32 = 1.6;
+/// How far either side of the way's line a car turning round means to stop (m): with what it rolls on, a road and its
+/// verges, about seven metres.
+const TURN_HALF: f32 = 2.2;
+/// How fast the driver turns the wheel (rad/s at the front wheels).
+const WHEEL_RATE: f32 = 0.8;
+/// The sideways pull a driver takes a bend at on a broken road (m/s²).
+const GRIP: f32 = 3.0;
+/// How far up the road the driver steers for (m), and how much further for each m/s: he rounds a corner of the way
+/// over about that much road.
+const LOOK: f32 = 5.0;
+const LOOK_PER: f32 = 0.6;
+/// How far behind the car ahead on the same way a driver keeps (m, nose to nose), stopped.
+const GAP: f32 = 10.0;
+/// How hard a burning car slows with nobody driving it (m/s²).
+const COASTS: f32 = 4.5;
 
 /// The models their FPVs and our cars wear, as the look loads them.
 #[derive(Resource)]
@@ -675,9 +746,10 @@ fn run_input(keys: Res<ButtonInput<KeyCode>>, script: Res<crate::director::Scrip
     }
 }
 
-/// Our cars drive their runs: in along the way, a while in the town, and out the way they came. N sends the next run
-/// before its time (the cars that were to follow it as far behind it as they were), Shift+N turns back what is on the
-/// way in or in the town.
+/// Our cars drive their runs: in along the way, a while in the town, round in the road and out the way they came.
+/// N sends the next run before its time (the cars that were to follow it as far behind it as they were), Shift+N
+/// turns back what is on the way in or in the town: a car on its way in brakes and turns round where it is, and is a
+/// target all the while.
 #[allow(clippy::type_complexity, clippy::too_many_arguments)]
 fn drive(
     mut commands: Commands,
@@ -687,7 +759,7 @@ fn drive(
     mut radio: ResMut<Radio>,
     models: Option<Res<KillzoneModels>>,
     mut orders: MessageReader<RunOrder>,
-    mut cars: Query<(Entity, &mut Car, &mut Transform, Has<TurnedBack>)>,
+    mut cars: Query<(Entity, &mut Car, &mut Suspension, &mut Transform, Has<TurnedBack>)>,
     mut started: Local<usize>,
     mut starts: Local<Vec<f32>>,
 ) {
@@ -713,13 +785,13 @@ fn drive(
             },
             RunOrder::Back => {
                 let mut n = 0;
-                for (e, mut car, _, _) in &mut cars {
+                for (e, mut car, _, _, _) in &mut cars {
                     match car.leg {
                         Leg::In => {
-                            car.leg = Leg::Out;
+                            car.leg = Leg::Turning(Turn::Brake);
                             commands.entity(e).insert(TurnedBack);
                         }
-                        Leg::Stays(_) => car.leg = Leg::Out,
+                        Leg::Stays(_) => car.leg = Leg::Turning(Turn::Pull),
                         _ => continue,
                     }
                     n += 1;
@@ -731,16 +803,17 @@ fn drive(
             }
         }
     }
-    // The day's runs, each at its time.
+    // The day's runs, each at its time, from a standstill at the road head.
     while *started < spec.runs.len() && script.t >= starts[*started] {
         let r = &spec.runs[*started];
         *started += 1;
-        let way: Vec<Vec2> = r.way.iter().map(|&(x, z)| Vec2::new(x, z)).collect();
-        if way.len() < 2 {
+        if r.way.len() < 2 {
             continue;
         }
-        let tf = Transform::from_translation(geo::ground(way[0])).with_rotation(Quat::from_rotation_y(crate::units::vehicle_yaw(way[1] - way[0])));
-        let mut e = commands.spawn((Car { kind: r.kind, way, s: 0.0, leg: Leg::In, back: r.back }, Prey(Class::Vehicle), tf));
+        let way = Polyline::new(r.way.iter().map(|&(x, z)| Vec2::new(x, z)).collect());
+        let (at, yaw) = (way.pts[0], crate::units::vehicle_yaw(way.tangent(0.0)));
+        let tf = Transform::from_translation(geo::ground(at)).with_rotation(crate::units::ground_rotation(at, yaw));
+        let mut e = commands.spawn((Car { kind: r.kind, way, s: 0.0, leg: Leg::In, back: r.back, speed: 0.0, yaw, steer: 0.0 }, Suspension::default(), Prey(Class::Vehicle), tf));
         if let Some(m) = &models {
             let parts = m.car(r.kind);
             e.insert(crate::units::skin(parts));
@@ -750,49 +823,131 @@ fn drive(
         info!("killzone: a {} out on the road, at {now:.0} s", r.kind.name());
         radio.say2(now, format!("{} пішов дорогою на місто.", r.kind.uk()), format!("A {} is on the road into the town.", r.kind.name()));
     }
-    for (e, mut car, mut tf, turned) in &mut cars {
-        let len: f32 = car.way.windows(2).map(|w| w[0].distance(w[1])).sum();
-        let v = car.kind.speed();
-        match car.leg {
-            Leg::In => {
-                car.s = (car.s + v * dt).min(len);
-                if car.s >= len {
-                    car.leg = match car.back {
-                        Some(stay) => Leg::Stays(now + stay as f64),
-                        None => Leg::Done,
-                    };
-                    through(&mut tally, &mut radio, &car, false, now);
-                    if car.leg == Leg::Done {
-                        commands.entity(e).remove::<Prey>();
-                    }
-                }
+    // Where each car was on its way: one on the same way keeps its distance behind the one ahead.
+    let road: Vec<(Entity, Vec2, Vec2, f32, Leg)> = cars.iter().map(|(e, c, _, _, _)| (e, c.way.pts[0], c.way.pts[c.way.pts.len() - 1], c.s, c.leg)).collect();
+    for (e, mut car, mut sus, mut tf, turned) in &mut cars {
+        let k = car.kind;
+        let me = tf.translation.xz();
+        car.s = car.way.lateral_near(me, car.s, 20.0).1;
+        // The one ahead on the same way, and whether it is parked in the town: on the way in, what is in the town or
+        // turning there; on the way out, what is out ahead, turning round or still parked behind it in the town. A
+        // burning car is driven round.
+        let (head, end) = (car.way.pts[0], car.way.pts[car.way.pts.len() - 1]);
+        let ahead = road
+            .iter()
+            .filter(|o| o.0 != e && o.1 == head && o.2 == end)
+            .filter_map(|o| match (car.leg, o.4) {
+                (Leg::In, Leg::In | Leg::Stays(_) | Leg::Done | Leg::Turning(_)) if o.3 > car.s => Some((o.3 - car.s, matches!(o.4, Leg::Stays(_) | Leg::Done))),
+                (Leg::Out, Leg::Out | Leg::Turning(_) | Leg::Stays(_)) if o.3 < car.s => Some((car.s - o.3, false)),
+                _ => None,
+            })
+            .min_by(|a, b| a.0.total_cmp(&b.0));
+        // Square off the way's line (m, to the right), past its ends too.
+        let lat = (me - car.way.point(car.s)).dot(car.way.normal(car.s));
+        // What the driver wants: a speed along the nose and the wheels' angle; and how hard it slows.
+        let (want, wheel, brake) = match car.leg {
+            Leg::In | Leg::Out => {
+                let (v, w) = car.follow(me, if car.leg == Leg::In { 1.0 } else { -1.0 });
+                let room = ahead.map_or(f32::MAX, |a| a.0 - GAP);
+                (v.min((2.0 * 0.8 * k.brake() * room.max(0.0)).sqrt()), w, k.brake())
             }
-            Leg::Stays(until) => {
-                if now >= until {
-                    car.leg = Leg::Out;
-                    info!("killzone: the {} back out onto the road, at {now:.0} s", car.kind.name());
-                }
-            }
-            Leg::Out => {
-                car.s -= v * dt;
-                if car.s <= 0.0 {
-                    if turned {
-                        tally.cars_turned += 1;
-                        info!("killzone: the {} back at the road head, turned back short of the town, at {now:.0} s", car.kind.name());
-                        radio.say2(now, "Машина повернулась, до міста не дійшла.", "The car's back. It turned back short of the town.");
-                    } else {
-                        through(&mut tally, &mut radio, &car, true, now);
-                    }
-                    commands.entity(e).despawn();
-                    continue;
-                }
-            }
-            Leg::Done | Leg::Burnt => continue,
+            Leg::Turning(Turn::Brake) => (0.0, car.follow(me, 1.0).1, k.brake()),
+            // The wheel over to the lock before it moves off.
+            Leg::Turning(Turn::Pull) => (if car.steer > k.lock() - 0.05 { CREEP } else { 0.0 }, k.lock(), k.brake()),
+            Leg::Turning(Turn::Reverse) => (if car.steer < 0.05 - k.lock() { -CREEP_BACK } else { 0.0 }, -k.lock(), k.brake()),
+            Leg::Stays(_) | Leg::Done => (0.0, car.steer, k.brake()),
+            Leg::Burnt => (0.0, car.steer, COASTS),
+        };
+        let parked = matches!(car.leg, Leg::Stays(_) | Leg::Done | Leg::Burnt) && car.speed == 0.0 && sus.pitch.abs() + sus.pitch_v.abs() + sus.roll.abs() + sus.roll_v.abs() < 1e-4;
+        if !parked {
+            // Into the other gear only from a stop; it pulls away more slowly the faster it goes.
+            let want = if want * car.speed < 0.0 { 0.0 } else { want };
+            let rate = if want.abs() < car.speed.abs() { brake } else { k.accel() * (1.0 - 0.5 * (car.speed.abs() / k.speed()).min(1.0)) };
+            let prev = car.speed;
+            car.speed += (want - car.speed).clamp(-rate * dt, rate * dt);
+            car.steer += (wheel.clamp(-k.lock(), k.lock()) - car.steer).clamp(-WHEEL_RATE * dt, WHEEL_RATE * dt);
+            // It turns by its front wheels, as far as it moves: a car does not turn on the spot.
+            let yaw_rate = car.speed * car.steer.tan() / k.wheelbase();
+            car.yaw = crate::units::wrap(car.yaw + yaw_rate * dt);
+            let p = me + Vec2::new(-car.yaw.sin(), -car.yaw.cos()) * car.speed * dt;
+            tf.translation = geo::ground(p);
+            // On its springs: nose down under the brakes, squatting as it pulls away, leaning out of a bend.
+            let accel = (car.speed - prev) / dt.max(1e-4);
+            crate::units::suspension(&mut sus, accel * 0.012, -yaw_rate * car.speed * 0.012, dt);
+            tf.rotation = crate::units::ground_rotation(p, car.yaw) * Quat::from_rotation_x(sus.pitch) * Quat::from_rotation_z(sus.roll);
         }
-        let (p, dir) = along(&car.way, car.s);
-        let dir = if car.leg == Leg::Out { -dir } else { dir };
-        tf.translation = geo::ground(p);
-        tf.rotation = Quat::from_rotation_y(crate::units::vehicle_yaw(dir));
+        // How far it has come round from the way in (rad, to the left).
+        let round = crate::units::wrap(car.yaw - crate::units::vehicle_yaw(car.way.tangent(car.s)));
+        match car.leg {
+            // At the town's end of the way, or stopped behind a car parked there.
+            Leg::In if (car.way.length() - car.s < 0.8 || ahead.is_some_and(|a| a.1 && a.0 < GAP + 0.8)) && car.speed.abs() < 0.3 => {
+                car.leg = match car.back {
+                    Some(stay) => Leg::Stays(now + stay as f64),
+                    None => Leg::Done,
+                };
+                through(&mut tally, &mut radio, &car, false, now);
+                if car.leg == Leg::Done {
+                    commands.entity(e).remove::<Prey>();
+                }
+            }
+            Leg::Stays(until) if now >= until => {
+                car.leg = Leg::Turning(Turn::Pull);
+                info!("killzone: the {} turning round to come out, at {now:.0} s", k.name());
+            }
+            Leg::Turning(Turn::Brake) if car.speed == 0.0 => {
+                car.leg = Leg::Turning(Turn::Pull);
+                info!("killzone: the {} stopped {:.0} m along the way, turning round, at {now:.0} s", k.name(), car.s);
+            }
+            Leg::Turning(Turn::Pull) if round > 0.9 || lat < -TURN_HALF => car.leg = Leg::Turning(Turn::Reverse),
+            Leg::Turning(Turn::Reverse) if round > 2.0 || lat > TURN_HALF => {
+                car.leg = Leg::Out;
+                info!("killzone: the {} round and back out onto the road, at {now:.0} s", k.name());
+            }
+            Leg::Out if car.s < 0.5 => {
+                if turned {
+                    tally.cars_turned += 1;
+                    info!("killzone: the {} back at the road head, turned back short of the town, at {now:.0} s", k.name());
+                    radio.say2(now, "Машина повернулась, до міста не дійшла.", "The car's back. It turned back short of the town.");
+                } else {
+                    through(&mut tally, &mut radio, &car, true, now);
+                }
+                commands.entity(e).despawn();
+            }
+            _ => {}
+        }
+    }
+}
+
+impl Car {
+    /// Along the way (`dir` 1 in, -1 out): the speed the driver wants, for the corners he sees coming, the end of the
+    /// way in where he stops, and how far his nose is off the road; and the wheels' angle that brings it onto a point a
+    /// little way up the road, further the faster it goes.
+    fn follow(&self, me: Vec2, dir: f32) -> (f32, f32) {
+        let k = self.kind;
+        let aim = self.way.point_beyond(self.s + dir * (LOOK + LOOK_PER * self.speed.abs()));
+        let off = crate::units::wrap(crate::units::vehicle_yaw(aim - me) - self.yaw);
+        let wheel = (2.0 * k.wheelbase() * off.sin() / me.distance(aim).max(1.0)).atan();
+        // He plans on a little less than his brakes have.
+        let b = 0.8 * k.brake();
+        let (pts, cum) = (&self.way.pts, &self.way.cum);
+        let mut v = k.speed();
+        for i in 1..pts.len() - 1 {
+            let d = (cum[i] - self.s) * dir;
+            let turn = (pts[i] - pts[i - 1]).angle_to(pts[i + 1] - pts[i]).abs();
+            if !(-3.0..250.0).contains(&d) || !turn.is_finite() {
+                continue;
+            }
+            // Round a turn over his look ahead, at no more than the grip: v² = GRIP (LOOK + LOOK_PER v) / turn.
+            let (a, c) = (LOOK_PER * GRIP / turn.max(1e-3), LOOK * GRIP / turn.max(1e-3));
+            let corner = (a + (a * a + 4.0 * c).sqrt()) / 2.0;
+            v = v.min((corner * corner + 2.0 * b * (d - 4.0).max(0.0)).sqrt());
+        }
+        if dir > 0.0 {
+            v = v.min((2.0 * b * (self.way.length() - self.s - 0.3).max(0.0)).sqrt());
+        }
+        // A nose well off the road comes round slowly.
+        v = v.min(CREEP + (k.speed() - CREEP) * (1.0 - off.abs() / 0.8).max(0.0));
+        (v, wheel)
     }
 }
 

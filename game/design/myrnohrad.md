@@ -787,3 +787,33 @@ the EW domes' masts.
   parts on their old tours (54bf33c's shots files through `BAV_DATA`) `same` against `p10-m1`, `p10-m2`, `p10-m3`;
   on the new tours each filmed twice from one build the same, the new references `p11-m1`, `p11-m2`, `p11-m3`.
   Clippy, `cargo test` and fmtron pass.
+- 2026-10-26: **the cars drive like cars** (`killzone::drive`). The owner watched part I and found the cars abrupt: a
+  point sliding along its line at one speed, full speed from the road head, the yaw snapped at each corner, and a
+  turn back done on the spot in one frame. A car now has a speed, a heading and front wheels: it pulls away from a
+  standstill at its kind's rate (the L200 2.0 m/s², the Lada 1.6), brakes at 3.0 and 3.4, steers for a point five
+  metres up the road and 0.6 m more for every m/s, turns by its wheels as far as it moves (wheelbase 3.0 m and 2.42 m,
+  full lock 0.47 and 0.42 rad, the 12 and 11 m turning circles), slows for the corners it sees coming at the
+  sideways pull a driver takes on a broken road, brakes to a stop at the town's end of its way, and keeps ten metres
+  behind the car ahead on the same way (the run's second pickup used to stop inside the first). Turned back (Shift+N)
+  or out of the town after its stay it makes a three-point turn in the road's width (`Leg::Turning`, `Turn::Brake`,
+  `Pull`, `Reverse`): brakes, pulls across on full lock, backs up on the other, and drives off; from 17 m/s that is
+  six seconds of braking and nine of turning, a target all the while. The body rides the ground's slope on the
+  column game's `Suspension` (nose down under the brakes, squatting as it pulls away, leaning out of a bend); a burnt
+  car rolls to a stop. The tracked hulls' `units::drive` is skid steering that turns on the spot, which a car cannot,
+  so only the springs and the ground rotation are shared. Myrnohrad's cars now pass the road's points at other
+  times, so part I's Record changes; II and III have no cars and do not. **Bands** (`band.sh`-style, seeds 0-3, the
+  Record), before → after: I sent 32/40/40/35 → 34/40/40/35, dead 21/17/14/15 → 15/16/14/16, our losses 5/8/7/6 →
+  8/5/7/5, cars (out/through/burnt) 3/2/1, 3/2/1, 3/2/1, 3/1/2 → 3/3/0, 3/3/0, 3/2/1, 3/2/1: the pickups back in all
+  four (before, one lost in seed 3), the Lada burnt in seeds 2 and 3 and through to the town in 0 and 1 (before,
+  burnt in all four). Over seeds 0-11 the pickups are both back in 10 of 12 before and 8 of 12 after, the Lada
+  burnt in 10 of 12 before and 8 of 12 after. What moved is which of the things on the road the crews' few road
+  sorties go for (in seed 0 the Irish took the robot at the road head rather than the Lada), not the time the Lada
+  spends on the road: at 13 m/s instead of 15 it fared the same in seeds 0-7. II and III unchanged. **Checks**:
+  Vuhledar, Mala Tokmachka, both Hostomel parts and the three Avdiivka parts `same` against `fx-v`, `r2-r`, `f3-h1`,
+  `c4-h2`, `m4-a1`, `m4-a2`, `m3-a3-x`; II and III `same` against `p11-m2`, `p11-m3`; each Myrnohrad part filmed
+  twice from one build the same, the new references `p12-m1`, `p12-m2`, `p12-m3`. Clippy, `cargo test` and fmtron
+  pass. Devlog: a pickup turned back on the road under Rivne's nets with `BAV_RUN="60:go,140:back"`
+  (`videos/20261026-cars-turn-back.mp4`) and the run braking into the town and turning round to come out
+  (`videos/20261026-cars-into-town.mp4`), with contact sheets (`shots/20261026-cars-*-sheet.jpg`). **Not done**: the
+  Lada's balance in part I (burnt in two of the four seeds now) is left to the balance pass; the cars keep their
+  distance from the car ahead alone, and drive through a burnt car, a robot or a wreck.
