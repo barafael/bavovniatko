@@ -265,6 +265,27 @@
   - c03-azovstal
   notes: 'Unconfirmed Telegram photos (6 Apr) of a FAB-3000 beside a Tu-22M, allegedly for Azovstal; FAB-3000 specs (1,400
     kg HE). Low: unverified social-media imagery.'
+- id: algorithmwatch-2022-andriushchenko-zvook
+  title: 'From cloning actors'' voices to detecting missiles: Ukraine''s AI scene contributes to air defense'
+  url: https://algorithmwatch.org/en/zvook-ukraine-air-defense/
+  publisher: AlgorithmWatch
+  authors:
+  - Yevhenii Andriushchenko
+  published: '2022-12-07'
+  accessed: '2026-11-18'
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - air-defence
+  - acoustic
+  found_in:
+  - 12-air-sensing
+  notes: Zvook founders (Bielievtsov, Tsiupka, Sulym); acoustic mirrors; 40 instances; training data with ~0.1% missile sounds;
+    domain shift; ~50% accuracy in early tests; 'cow problem' false positive; false negatives brought to zero (team claim).
 - id: aljazeera-2022-convoy-dispersed
   title: Satellite images show Russian army convoy near Kyiv has dispersed
   url: https://www.aljazeera.com/news/2022/3/11/satellite-images-show-russian-army-convoy-near-kyiv-re-deployed
@@ -839,6 +860,69 @@
   - c07-bakhmut
   notes: 'Col Palisa (93rd): in Bakhmut since Aug 2022, re-entered in January; holding buys time for the new units; enemy
     losses ''colossal but insufficient''. Medium: MoD outlet.'
+- id: armyinform-2025-68th-hunt-in-dark
+  title: 'They hunt in the dark: how our anti-aircraft gunners fight against shaheds'
+  url: https://armyinform.com.ua/en/2025/10/06/they-hunt-in-the-dark-how-our-anti-aircraft-gunners-fight-against-shaheds/
+  publisher: ArmyInform
+  authors: []
+  published: '2025-10-06'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - mobile-fire-groups
+  - cueing
+  - shahed
+  found_in:
+  - 13-air-effectors
+  notes: '68th Jaeger Brigade: teams of 3 on 2-h shifts, underground positions plus a spare (FPV threat); Browning ~4 km max,
+    ~2 km effective; thermal sight; tablet in underground CP with all detected air targets; aim with lead; hold fire without
+    visual; scout Shahed then others around positions; clouds hide targets. Ministry of Defence outlet.'
+- id: armyinform-2026-autonomous-interceptors
+  title: Ukrainian-made interceptor drones are already autonomously take down Shahed-type UAVs
+  url: https://armyinform.com.ua/en/2026/06/10/ukrainian-made-interceptor-drones-are-already-autonomously-take-down-shahed-type-uavs/
+  publisher: ArmyInform
+  authors: []
+  published: '2026-06-10'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - autonomy
+  found_in:
+  - 13-air-effectors
+  notes: 'Same event as the Fedorov announcement: operators designate a target, after authorisation the system navigates,
+    detects, identifies, tracks and intercepts, up to 95% of operations; combat-tested in Kharkiv region.'
+- id: armyrecognition-2023-lancet-trml4d
+  title: Russian Lancet drone disables Ukrainian IRIS-T SLM's air defense capabilities by destroying its radar
+  url: https://www.armyrecognition.com/focus-analysis-conflicts/army/conflicts-in-the-world/russia-ukraine-war-2022/russian-lancet-drone-disables-ukrainian-iris-t-slm-s-air-defense-capabilities-by-destroying-its-radar
+  publisher: Army Recognition
+  authors: []
+  published: '2023-06-09'
+  accessed: '2026-11-18'
+  type: news
+  origin: other
+  reliability: low
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - lancet
+  - radar
+  - air-defence
+  found_in:
+  - 14-frontline-counter-drone
+  notes: Social-media video of a Lancet hitting an IRIS-T SLM TRML-4D radar; no location, uploader or independent confirmation;
+    other reports call it damaged rather than destroyed.
 - id: asn-2024-a50u-rf50610
   title: Accident Beriev A-50U RF-50610 42 R, Friday 23 February 2024 (ASN Wikibase 351939)
   url: https://www.aviation-safety.net/wikibase/351939
@@ -1042,6 +1126,29 @@
   - c13-black-sea-drone-war
   notes: Reads the 31 Dec 2024 video (helicopter gunfire splashes, flares, hit and splash); R-73 range about 30 km and 8 kg
     warhead when air-launched; twin tilted rails seen since May 2024; two of the three dishes reported as Starlink terminals.
+- id: aviationweek-2024-osborne-low-cost-kills
+  title: Ukraine Achieving Low-Cost Kills Against Russia's Attack Drones
+  url: https://aviationweek.com/shownews/gascc-riat/ukraine-achieving-low-cost-kills-against-russias-attack-drones
+  publisher: Aviation Week
+  authors:
+  - Tony Osborne
+  published: '2024-07-21'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  topics:
+  - air-defence
+  - acoustic
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: 'Hecker at RIAT: Skyfortress 9,500 sensors, cellphone on ~6 ft pole, $400-500 each; central computer sends flight
+    routes to fire teams on iPads; 84/80 raid; tested at Ramstein and in Romania.'
 - id: babel-2022-andreikovets-bucha-458
   title: At least 458 Ukrainians died in the Bucha community as a result of the actions of the Russians
   url: https://babel.ua/en/news/82626-at-least-458-ukrainians-died-in-the-bucha-community-as-a-result-of-the-actions-of-the-russians
@@ -1128,6 +1235,27 @@
   - c07-bakhmut
   notes: 'Dossier Center: Wagner in Soledar commanded by ex-GRU officer Anton Yelizarov (''Lotos''), 41, ex-VDV, Hero of Russia.
     Secondary report of an investigation.'
+- id: babel-2024-perepechko-eppo-80pct
+  title: The "ePPO" application helps to close the Ukrainian sky by 80%
+  url: https://babel.ua/en/news/112976-the-eppo-application-helps-to-close-the-ukrainian-sky-by-80
+  publisher: Babel
+  authors:
+  - Iryna Perepechko
+  published: '2024-11-24'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - air-defence
+  - eppo
+  found_in:
+  - 12-air-sensing
+  notes: 'Same Chernohorenko announcement as Ukrinform: 80% claim, 600k downloads/200k active, 2-7 s latency, ''Flying Nearby''
+    alerts.'
 - id: babel-2024-perepechko-times-a50
   title: 'The Times: Ukraine shot down Russian A-50 aircraft with Patriot and Soviet S-200 systems'
   url: https://babel.ua/en/news/111134-the-times-ukraine-shot-down-russian-a-50-aircraft-with-patriot-and-soviet-s-200-systems
@@ -2282,6 +2410,115 @@
   notes: 'BGG listing (403 on fetch) of a simulation of the war''s first year. Search results also surfaced other BGG listings:
     ''Putin''s War 2022'' (area-impulse), ''Ukraine 2022: Tabletop Wargame'' (tactical) and ''To Kyiv!'' (two-player strategic).
     Existence only; designers and publishers not verified.'
+- id: bi-2025-baker-panic-jamming
+  title: Soldiers in Ukraine panic and jam everything when they can't tell friendly and enemy drones apart, a drone operator
+    says
+  url: https://www.yahoo.com/news/soldiers-ukraine-panic-jam-everything-090501576.html
+  publisher: Business Insider (via Yahoo)
+  authors:
+  - Sinéad Baker
+  published: '2025-04-17'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - ew
+  - iff
+  - fratricide
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Zhluktenko (USF): drones ''all sound the same''; infantry jam all bands out of fear, or shoot every drone; operators
+    announce flights in Signal group chats; crowded frequencies show others'' feeds.'
+- id: bi-2025-epstein-fibre-wires
+  title: Unjammable drones are leaving wires everywhere, forcing Ukrainian troops to move with caution
+  url: https://www.yahoo.com/news/articles/unjammable-drones-leaving-wires-everywhere-114504509.html
+  publisher: Business Insider (via Yahoo)
+  authors:
+  - Jake Epstein
+  published: '2025-12-02'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - fiber-optic
+  found_in:
+  - 14-frontline-counter-drone
+  notes: '4th Ranger Regiment ''Khyzhak'': cables everywhere, could be booby traps, slow night missions; snags stop flights;
+    visible only in direct sunlight or certain angles; typical range 10-25 km, Russian ~50 km types; nets not a guarantee.
+    Date is the Yahoo ''updated'' stamp.'
+- id: bi-2025-loh-gerbera-cameras
+  title: A Russian decoy for the Shahed was found with cameras on its back, highlighting how Moscow is adapting in the drone
+    war
+  url: https://www.aol.com/articles/russian-decoy-shahed-found-cameras-051236889.html
+  publisher: Business Insider (via AOL)
+  authors:
+  - Matthew Loh
+  published: '2025-09-26'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - decoys
+  found_in:
+  - 12-air-sensing
+  notes: 'Fetched via AOL syndication. Gerbera with two cameras, one skyward and one rearward, filmed by an interceptor (117th
+    Brigade unit); Beskrestnov: Supercam carrying a radio-signal detector that triggers evasion, often a dive.'
+- id: bi-2025-loh-shahed-crpa-16
+  title: Russia is leveling up its Shahed drones with new Chinese antennae to defeat Kyiv's jammers, Ukrainians say
+  url: https://www.yahoo.com/news/russia-leveling-shahed-drones-chinese-074956942.html
+  publisher: Business Insider (via Yahoo News)
+  authors:
+  - Matthew Loh
+  published: '2025-03-25'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - ew
+  - crpa
+  - shahed
+  found_in:
+  - 13-air-effectors
+  notes: 'Chinese CRPAs on Shaheds from Jan 2025 (8 elements), a 16-element dish reported by Beskrestnov in Mar 2025, Russian
+    12-element Kometa found Feb 2025; Ihnat: ''The more antennas the drone has, the more suppression systems we need.'''
+- id: bi-2025-shotguns-fibre
+  title: The Ukrainian soldier's best chance against Russia's advanced unjammable drones is as low-tech as it gets
+  url: https://www.businessinsider.com/ukraine-soldiers-best-chance-russia-fiber-optic-drones-shotguns-2025-6
+  publisher: Business Insider
+  authors: []
+  published: '2025-06-16'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: search-only
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - shotguns
+  - fiber-optic
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Known only from search-engine excerpts (the .nl URL redirected and the article was not fetched): trainers (Dronarium,
+    KRUK) call the shotgun a mechanical stopgap; ''EVERY unit is equipped with a shotgun''; effectiveness depends on training.'
 - id: big-space
   title: Big Space — a floating origin plugin for Bevy
   url: https://github.com/aevyrie/big_space
@@ -2442,6 +2679,50 @@
   - 11-drones-ru-ew-2023
   notes: 'AeroScope reads Remote ID to locate pilots; Karlson unit: Russia targets operators in 5-6 minutes; open-source Remote
     ID-off hack from May 2022, blocked on newer DJI firmware from about June 2022.'
+- id: c4isrnet-2026-livingstone-interceptor-economics
+  title: Novel interceptor drones bend air-defense economics in Ukraine's favor
+  url: https://www.c4isrnet.com/global/europe/2026/03/05/novel-interceptor-drones-bend-air-defense-economics-in-ukraines-favor
+  publisher: C4ISRNet
+  authors:
+  - Katie Livingstone
+  published: '2026-03-05'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - radar
+  - interceptors
+  found_in:
+  - 12-air-sensing
+  notes: Intercepts start from radar tracks, acoustic spotters and Mission Control feeds; track hand-off across sectors; 'We
+    just need better radar' (Lazar's Group); decoys about one-third of mass attacks (Defence-UA).
+- id: caliber-2023-russia-radar-app
+  title: Russia launches app for public reporting of drones, suspicious items
+  url: https://caliber.az/en/post/russia-launches-app-for-public-reporting-of-drones-suspicious-items
+  publisher: Caliber.Az (reprinting The Washington Post)
+  authors: []
+  published: '2023-09-22'
+  accessed: '2026-11-18'
+  type: news
+  origin: other
+  reliability: low
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - air-defence
+  - eppo
+  - russia
+  found_in:
+  - 12-air-sensing
+  notes: 'Reprint of a Washington Post report of 20 Sep 2023: Russia''s ''Radar'' app by All-Russia People''s Front activists,
+    pushed via the state portal; near-identical to ePPO; developer claims 50k downloads and two drones downed over Bryansk
+    (Russian claim). The text also calls it a defence-ministry launch, which contradicts the ONF attribution.'
 - id: canadianarmytoday-2026-thatcher-wargaming-modernization
   title: Wargaming modernization
   url: https://canadianarmytoday.com/wargaming-modernization/
@@ -3967,6 +4248,28 @@
   notes: Ukrainian OSINT frontline map, updated continuously, and the standard Ukrainian reference for occupied area. Reliable
     for geometry, though it can lag or run conservative on marking losses. The page is JS-only, so pull the numbers from its
     periodic reports (see kyivindependent-2026-basmat-deepstate-2025).
+- id: defenceexpress-2022-mfg-tactics
+  title: Ukrainians apply mobile firing groups tactics to create effective air defense
+  url: https://en.defence-ua.com/analysis/ukrianians_apply_mobile_firing_groups_tactics_to_create_effective_air_defense-4599.html
+  publisher: Defense Express
+  authors: []
+  published: '2022-10-21'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - shahed
+  - mobile-fire-groups
+  - manpads
+  found_in:
+  - 13-air-effectors
+  notes: 'MFG = 4-5 people, usually 2 MANPADS, radio, vehicle, fed ''centralized information''; National Guard ~130 MFGs among
+    250+ firing groups; 223 Shahed-136 destroyed since 13 Sep; Ihnat (to RFE/RL): 85% of Shaheds downed; reports rarely say
+    which means killed a drone.'
 - id: defenceexpress-2024-kakhovka-refill
   title: 'Satellite Images Show Water Returning to Kakhovka Reservoir: How It Can Affect Military Operations'
   url: https://en.defence-ua.com/news/satellite_images_show_water_returning_to_kakhovka_reservoir_how_it_can_affect_military_operations-9835.html
@@ -4010,6 +4313,29 @@
   - c05-kerch-bridge
   notes: Floating crane in the strait; surface protection under construction since 7 May; a second barrier line of 21 barges
     by end of June; piers under construction near the bridge foundations.
+- id: defenceexpress-2024-shcherbak-russian-acoustic
+  title: The russians Begin Deploying Acoustic Detection System for UAVs and Cruise Missiles, Copying Ukrainian Solution Again
+  url: https://en.defence-ua.com/weapon_and_tech/the_russians_begin_deploying_acoustic_detection_system_for_uavs_and_cruise_missiles_copying_ukrainian_solution_again-11820.html
+  publisher: Defense Express
+  authors:
+  - Svitlana Shcherbak
+  published: '2024-09-11'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - air-defence
+  - acoustic
+  - russia
+  found_in:
+  - 12-air-sensing
+  notes: Beskrestnov photo of a Russian 4-microphone sensor on a cell tower; acoustic accuracy 'significantly lower than radar'
+    but dense low-altitude field; radars see a 100 m-altitude target at 40-50 km depending on terrain; Zvook shown at Brave1
+    in Apr 2023.
 - id: defenceexpress-2025-sting-effectiveness
   title: Ukrainian Wild Hornets Workshop Revealed Impressive Effectiveness of Their Sting Interceptors Against Shahed/Gerbera
     Type UAVs
@@ -4451,6 +4777,51 @@
   notes: 'Makarivka encirclement dispute. DeepState warned on 17 Dec, Khortytsia denied it on 23 Dec, MP Bezuhla alleged pressure
     from Syrskyi, and AFU leadership denied any conflict. Quote: ''not all commanders-in-chief like the truth''. Medium reliability:
     tech-news outlet relaying claims.'
+- id: devua-2024-kuzmenko-ru-fpv-traffic-lights
+  title: Russians install 'traffic lights' warning of FPV drones on the front line
+  url: https://dev.ua/en/news/rosiiski-svitlofory-dlia-droniv-1733758308
+  publisher: dev.ua
+  authors:
+  - Oleksandr Kuzmenko
+  published: '2024-12-09'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - detectors
+  - russia
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Beskrestnov: Russian mast-mounted lights by equipment routes with states ''FPV absent / nearby / far away''; probably
+    an RF detector, possibly acoustic (speculative). Title paraphrased.'
+- id: devua-2025-khandusenko-zhduny
+  title: 'Drones-zhduny: how Russian waiting drones work and how to counter them'
+  url: https://dev.ua/en/news/drony-zhduny-1759308097
+  publisher: dev.ua
+  authors:
+  - Nataliia Khandusenko
+  published: '2025-10-01'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - waiting-drones
+  - fiber-optic
+  - counter-uas
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Zhduny wait on roads or high points ''sometimes a whole day''; mostly fibre, some solar panels; TAF tests: 8,000
+    mAh ~30% used in 3 days, 15,000 mAh ~30% in 2 weeks (manufacturer). Hard to see from the air; route sweeps by drone; grenade,
+    cut fibre or strike operator; ''practically no effective countermeasure'' (Narozhnyi). Ukrainian radio waiting drones
+    since ~summer 2024. Title paraphrased.'
 - id: dfrlab-2023-vuhledar-war-report
   title: 'Russian War Report: Failed Russian push on Vuhledar results in losses as Moscow increases troops'
   url: https://dfrlab.org/2023/02/18/russian-war-report-failed-russian-push-on-vuhledar-results-in-losses-as-moscow-increases-troops/
@@ -4631,6 +5002,30 @@
   notes: 'Fetched via the Wayback Machine. A senior DOD official saw no credence in the ''goodwill'' claim: Ukraine applied
     pressure ''including by using Harpoon missiles ... to attack a resupply ship'', and the barren island depends on resupply.
     Exact day not shown on the page (same day as the $820M package announcement).'
+- id: dou-2022-gurska-eppo-interview
+  title: єППО — як розробляли та погоджували з військовими застосунок, що допомагає ловити «Калібри» та «Шахеди»
+  url: https://dou.ua/lenta/interviews/air-defense-app/
+  publisher: DOU
+  authors:
+  - Maria Gurska
+  published: '2022-10-31'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - air-defence
+  - eppo
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: Ukrainian-language interview with Tekhnari co-founders Kosiak and Suldin and IT WAR UA's Kryvosheiev. Idea May 2022,
+    beta Aug, coordinated with OC South; report = geolocation + compass heading, sound reports too; Diia against fake reports;
+    first Kalibr kill 22 Oct 2022 with ~4 min warning; 19 of 20 Shaheds one night; 'supplementary, not primary'; DDoS on IT
+    WAR services. Developer claims, approved for publication by the military.
 - id: dronedj-2022-crumley-brovary
   title: Drone video captures Ukraine ambush of Russian convoy nearing Kyiv
   url: https://dronedj.com/2022/03/11/drone-video-captures-ukraine-ambush-of-russian-convoy-nearing-kyiv/
@@ -4674,6 +5069,76 @@
   - 11-drones-ru-ew-2023
   notes: Fedorov's letter (claims Russia uses an extended AeroScope from Syria at up to 50 km) and DJI's statement that AeroScope
     broadcasting is built in and cannot be turned off.
+- id: dronewarfare-2026-cuas-costs
+  title: 'Counter-UAS 101: Drone Defeat and Kinetic Mitigation'
+  url: https://drone-warfare.com/2026/02/20/counter-uas-101-counter-uas-drone-defeat
+  publisher: drone-warfare.com
+  authors: []
+  published: '2026-09-05'
+  accessed: '2026-11-18'
+  type: think-tank
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - costs
+  - guns
+  - interceptors
+  - lasers
+  found_in:
+  - 13-air-effectors
+  notes: 'Cost survey (last updated 5 Sep 2026; URL dated Feb 2026): AHEAD ~EUR1,119.50/round from a Romanian contract (EUR449.75m
+    / 401,760 rounds, via Defense Express); 35 mm Gepard ~$600 (via Forbes, Hambling, Sep 2025); .50 cal $2.67-7; APKWS $20-35k;
+    Merops ~$15k; laser <$5 and HPM ~$0.05 per shot (vendor claims). Anonymous; many derived figures; type is an aggregator,
+    not a think tank proper.'
+- id: dronexl-2026-kesteloo-skyfall-autonomy
+  title: SkyFall's AI Interceptors Hunt Shaheds Without a Pilot's Eyes, and Ukraine Knows the Risk It Is Taking
+  url: https://dronexl.co/2026/06/17/skyfall-ai-interceptor-shahed-autonomy/
+  publisher: DroneXL
+  authors:
+  - Haye Kesteloo
+  published: '2026-06-17'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - autonomy
+  - costs
+  found_in:
+  - 13-air-effectors
+  notes: 'Draws on the NYT: P1-SUN pilot flies until shape is clear, hands over to auto-target (green box), commits strike;
+    trained on 10,000+ interception videos; ~$1,000; dozens of AI-assisted strikes since Nov; claim of 50,000/month capacity;
+    MaXon fixed-wing ~$3,500, first interceptions 8 Jun (Kharkiv); open question of per-target authorisation under saturation;
+    pilot shortage.'
+- id: dronexl-2026-sunray
+  title: Ukraine's Sunray laser burns drones out of the sky
+  url: https://dronexl.co/2026/02/11/ukraines-sunray-laser-burns-drones/
+  publisher: DroneXL
+  authors:
+  - Haye Kesteloo
+  published: '2026-02-11'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - lasers
+  found_in:
+  - 13-air-effectors
+  notes: 'Relays The Atlantic (Simon Shuster, 10 Feb 2026): Sunray, a telescope-like laser on a pickup, burned a small drone
+    in seconds, silent, no visible beam; price given both as ''a few hundred thousand'' and ''a few million'' dollars; prototype;
+    no Shahed claim. Title approximated from the URL.'
 - id: dw-2024-first-clash-north-korean
   title: Ukraine reports first clash with North Korean troops
   url: https://www.dw.com/en/ukraine-reports-first-clash-with-north-korean-troops/a-70706179
@@ -4886,6 +5351,27 @@
   notes: 10 m global land cover for 2021 (v100 covers 2020) from Sentinel-1/2, with 11 classes (tree cover, shrubland, grassland,
     cropland, built-up, bare, snow/ice, water, herbaceous wetland, mangroves, moss/lichen). CC BY 4.0. The 2021 map is the
     last full-year baseline before the invasion. Project site is esa-worldcover.org.
+- id: esd-2025-felstead-obriy
+  title: 'MSPO 2025: Kara Dag Technologies continues to enhance Obriy personal drone detector'
+  url: https://euro-sd.com/2025/09/major-news/46437/kara-dag-drone-detector-range/
+  publisher: European Security & Defence
+  authors:
+  - Peter Felstead
+  published: '2025-09-06'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - detectors
+  found_in:
+  - 14-frontline-counter-drone
+  notes: Obriy 1.3 reads FPV video in 1080-1360, 2370-2510 (or 2700-4040) and 4900-6050 MHz; typical ~2.5 km, up to 5 km;
+    380 g; optional jammer integration, video app, control-frequency display; 1.5 to cover 0.3-7 GHz; 2.0 to add mesh triangulation.
+    Vendor interview.
 - id: espreso-2022-prokopenko-stop-defending
   title: Ukraine's military leadership issues orders to save Azovstal fighters' lives, stop defending Mariupol
   url: https://global.espreso.tv/ukraines-military-leadership-issues-orders-to-save-azovstal-fighters-lives-stop-defending-mariupol
@@ -4906,6 +5392,26 @@
   - c03-azovstal
   notes: 'Prokopenko''s 20 May video: senior leadership ordered the garrison''s lives preserved and the defence ceased; civilians
     and wounded evacuated; fallen to be returned.'
+- id: espreso-2022-zvook
+  title: Zvook project, Ukrainian know-how for detecting air targets
+  url: https://global.espreso.tv/zvook-project-ukrainian-know-how-for-detecting-air-targets
+  publisher: Espreso
+  authors: []
+  published: '2022-12-09'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - air-defence
+  - acoustic
+  found_in:
+  - 12-air-sensing
+  notes: 'Sulym: parabolic mirror and microphone; sensors at 10-12 m on telecom towers; 40+ stations, plan to double; classes
+    helicopters, jets, cruise missiles, drones; ''200 km'' coverage figure ambiguous.'
 - id: espreso-2023-storm-barrier
   title: Barrier against naval drones washed away near Crimea bridge
   url: https://global.espreso.tv/barrier-against-marine-drones-washed-away-near-crimean-bridge-after-storm
@@ -4947,6 +5453,27 @@
   - c12-a50-hunt
   notes: 'Relays Defense Express: a ''wandering Patriot'' 15–25 km from the front, GEM-T range 160 km, as the likely shooter
     of 14 Jan. Analysis, not an official attribution; byline unclear on the page.'
+- id: espreso-2025-skynex-rounds
+  title: How many smart-fused rounds does it take for Skynex to down a Shahed
+  url: https://global.espreso.tv/russia-ukraine-war-how-many-smart-fused-rounds-does-it-take-for-skynex-to-down-a-shahed
+  publisher: Espreso Global
+  authors: []
+  published: '2025-08-27'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e8-drone-kill-zone
+  topics:
+  - guns
+  - skynex
+  found_in:
+  - 13-air-effectors
+  notes: 'Relays Defense Express: Skynex in use since spring 2023; about 10 AHEAD rounds per target, first round killed in
+    an Aug 2025 video; each round releases 152 tungsten pellets; a system costs ~EUR73m (Italian contract, Jan 2025).'
 - id: euobserver-2026-vasilko-vivaldi
   title: 'First blind the Russians, then catch them with robots: Ukraine''s Operation Vivaldi shows cutting edge of modern
     warfare'
@@ -5253,6 +5780,26 @@
   - 10-drones-ua-2023
   notes: R18 at the front since 2019; up to 13 km with explosives; RKG-3/RKG-1600; crews of pilot, navigator and sapper trained
     in groups of 3-4 crews; claims EW resistance.
+- id: euromaidan-2023-mfg-five-shaheds
+  title: Ukrainian mobile machine gun units down five Russia's explosive drones
+  url: https://euromaidanpress.com/2023/12/18/ukrainian-mobile-machine-gun-units-down-five-russias-explosive-drones/
+  publisher: Euromaidan Press
+  authors: []
+  published: '2023-12-18'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - mobile-fire-groups
+  - shahed
+  found_in:
+  - 13-air-effectors
+  notes: 'Air Force: 5 of 5 Shaheds downed by Air Force and Defense Forces MFGs; describes MFGs as small units with MGs or
+    AA guns and searchlights deployed along routes to kill ''low-flying slow Shaheds''.'
 - id: euromaidan-2023-mokri-yaly-dam
   title: Russian forces blow up a dam in Zaporizhzhia Oblast, Ukraine's military spox says
   url: https://euromaidanpress.com/2023/06/11/russian-forces-blow-up-a-dam-in-zaporizhzhia-oblast-ukraines-military-spox-says/
@@ -6208,6 +6755,28 @@
   - c13-black-sea-drone-war
   notes: 'Budanov to The War Zone: six direct Magura V5 hits on the Ivanovets ''on the raid of Lake Donuzlav''; the ship rolled
     astern and sank; UK claim of 20% of the BSF destroyed in four months (Dec 2023).'
+- id: euromaidan-2025-axe-fibre-everywhere
+  title: Ukraine found a way to beat Russia's unjammable drones. It doesn't work anymore.
+  url: https://euromaidanpress.com/2025/05/24/fiber-optics-everywhere/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-05-24'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - fiber-optic
+  - operator-hunting
+  found_in:
+  - 14-frontline-counter-drone
+  notes: Fibre litter around Pokrovsk and Chasiv Yar makes tracing 'difficult, if not impossible'; many fibres lead to abandoned
+    sites; buildings block radio FPVs but fibre FPVs fly through doors/windows; Apr 2025 Birds of Magyar fibre FPV hits a
+    BMP inside a warehouse.
 - id: euromaidan-2025-axe-foggy-advance
   title: Foggy advance (Pokrovsk and Myrnohrad, November 2025)
   url: https://euromaidanpress.com/2025/11/12/foggy-advance/
@@ -6230,6 +6799,31 @@
   - 06-terrain-geodata
   notes: '7th Rapid Response Corps: Russia used thick fog, which reduces aerial reconnaissance; over 300 Russian troops got
     inside Pokrovsk during the foggy period (7-12 Nov 2025).'
+- id: euromaidan-2025-axe-gepard-math
+  title: Ukraine just solved the hardest math problem in modern air defense – with a 1970s German gun
+  url: https://euromaidanpress.com/2025/07/20/ukraine-drone-defense
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-07-20'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e8-drone-kill-zone
+  topics:
+  - guns
+  - gepard
+  - costs
+  - ew
+  found_in:
+  - 13-air-effectors
+  notes: '~80 Gepards plus Cheetahs; ''a handful of rounds''; ''a few thousand dollars'' per Shahed; $181m for 300,000 rounds,
+    then 180,000 more; LMM >$500k; 4 Jul 2025: 539 drones/decoys, 268 shot down, 208 diverted (likely jamming), 63 hit; Alchemist
+    on dense 35 mm clouds. Shahed $50-150k is high against other estimates.'
 - id: euromaidan-2025-axe-huliaipole-fell
   title: Huliaipole fell. Its defenders had been abandoned long before.
   url: https://euromaidanpress.com/2025/12/31/huliaipole-territorials/
@@ -6253,6 +6847,28 @@
   notes: The 102nd and 106th Territorial Defence brigades, unrotated for months after heavy losses (CIT), broke when a 57th
     Motor Rifle Brigade assault group infiltrated central Huliaipole on 17 Dec 2025. Battalions swapped between brigades mid-battle;
     late-arriving assault units could not stabilise.
+- id: euromaidan-2025-axe-hunt-drone-crews
+  title: Ukraine just declared open season on Russia's drone nests in urgent strategy shift
+  url: https://euromaidanpress.com/2025/06/29/ukraine-drone-chief-hunts-russian-crews/
+  publisher: Euromaidan Press
+  authors:
+  - David Axe
+  published: '2025-06-29'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - operator-hunting
+  - e-points
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Brovdi (USF commander) makes Russian operators the main target (per ''Roy''); e-points: 25 killed operator, 12 wounded
+    operator, 12 killed soldier, 8 wounded; fibre tracing, short-range strikes on dugouts, deep strikes on fibre plants; Russian
+    bloggers advise camouflage, frequent moves, false antennas, separating operators from engineers.'
 - id: euromaidan-2025-axe-razyne-river
   title: One river stands between Russia and Ukraine's fortress city Pokrovsk
   url: https://euromaidanpress.com/2025/07/14/russia-pokrovsk-river-crossing/
@@ -6438,6 +7054,29 @@
   - c14-kursk
   notes: 'Zelensky''s interrogation video: POW came by cargo ferry with 100+ others, a reconnaissance-battalion conscript
     since 17, did not know he was going to war; prisoners say they came for training.'
+- id: euromaidan-2025-looijen-fibre-ir-sound
+  title: Russia's fiber-optic drones dodge jamming, but Ukraine hunts them with infrared and sound
+  url: https://euromaidanpress.com/2025/02/03/russias-fiber-optic-drones-dodge-jamming-but-ukraine-hunts-them-with-infrared-and-sound/
+  publisher: Euromaidan Press
+  authors:
+  - Benjamin Looijen
+  published: '2025-02-03'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - fiber-optic
+  - detection
+  - acoustic
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Concepts, not fielded: microphone arrays (conventional mics struggle beyond ~100 m; fibre drones louder because
+    of spool weight), IR laser sweep catching fibre reflection (Kara Dag), motor heat. Spool several kg; ranges ~2 to ~20
+    km; turrets, net launchers, shotguns, lasers studied.'
 - id: euromaidan-2025-martyniuk-218-days
   title: After 218 days in Russia, Ukraine is ending its Kursk campaign
   url: https://euromaidanpress.com/2025/03/12/after-218-days-in-russia-ukraine-is-ending-its-kursk-campaign/
@@ -6460,6 +7099,27 @@
   - c14-kursk
   notes: 'Matveev: Russian advance followed the Ukrainian retreat rather than attempting encirclement; east bank of the Psel
     lost (Myrny, Bondarevka); flags in Makhnovka, Dmitryukov, Zamostye; no evidence of mass surrender.'
+- id: euromaidan-2025-martyniuk-aerostat-ir
+  title: Ukraine's new aerostat-mounted drones use infrared sensors to spot and destroy Russian Shaheds
+  url: https://euromaidanpress.com/2025/03/13/ukraines-new-aerostat-mounted-drones-use-infrared-sensors-to-spot-and-destroy-russian-shaheds/
+  publisher: Euromaidan Press
+  authors:
+  - Yevheniia Martyniuk
+  published: '2025-03-13'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - air-defence
+  - interceptors
+  found_in:
+  - 12-air-sensing
+  notes: 'Based on social-media images: Aerobavovna tethered aerostat with IR sensor drops an interceptor on detecting a Shahed.
+    No ranges.'
 - id: euromaidan-2025-martyniuk-drone-firmware
   title: UK tech is protecting Ukrainian drones from Russian hackers in real-time
   url: https://euromaidanpress.com/2025/03/21/british-tech-is-protecting-ukrainian-drones-from-russian-hackers-in-real-time/
@@ -6484,6 +7144,27 @@
   notes: 'Relays Forbes (Hambling) on Periphery''s drone cyber-protection. Quantified firmware cadence: Russian forces flash
     thousands of DJI drones with new firmware every month from central servers (the IT Army disrupted those servers in Feb
     2024); ''Firmware 1001'' for DJI quadcopters went through more than 40 versions in two years.'
+- id: euromaidan-2025-martyniuk-fibre-trace
+  title: 'Forbes: Ukrainians track Russian fiber-optic drones by following cables to hidden base'
+  url: https://euromaidanpress.com/2025/02/20/forbes-ukrainians-track-russian-fiber-optic-drones-by-following-cables-to-hidden-base/
+  publisher: Euromaidan Press
+  authors:
+  - Yevheniia Martyniuk
+  published: '2025-02-20'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - fiber-optic
+  - operator-hunting
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Relays David Axe (Forbes, 19 Feb 2025): Kara Dag Brigade south of Vodyane followed sunlight-reflecting fibres to
+    a Russian crew in snow-covered buildings and struck it with FPVs (post dated 18 Feb 2025).'
 - id: euromaidan-2025-martyniuk-matveyev-final-battle
   title: Putin's army hammers Ukrainian trenches near Pokrovsk—the final battle for Donbas may have just begun
   url: https://euromaidanpress.com/2025/05/21/putins-army-hammers-ukrainian-trenches-near-pokrovsk-the-final-battle-for-donbas-may-have-just-begun/
@@ -6613,6 +7294,27 @@
   - 06-terrain-geodata
   notes: Russia crossed the Oskil and took Novomlynsk north of Kupiansk; the pre-war bridge is almost certainly destroyed,
     and the Ukrainian Air Force usually targets the floating spans when Russian engineers build pontoons (CDS). No river dimensions.
+- id: euromaidan-2025-mukhina-rubikon-fedorov
+  title: Ukraine's drone face Rubikon, Russia's deadly new unit targeting drone operators
+  url: https://euromaidanpress.com/2025/07/14/ukraines-drone-face-rubikon-russias-deadly-new-unit-targeting-drone-operators/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2025-07-14'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - rubikon
+  - operator-hunting
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Relays RBC: Fedorov says Rubikon was created to hunt Ukrainian drone operators; answer is maximum remote control,
+    then autonomy (years away). No methods described.'
 - id: euromaidan-2025-mukhina-rubikon-izium
   title: 'Russia''s secret weapon: Elite Rubikon unit with unlimited budget cuts key Ukrainian supply route between Kharkiv
     and Donetsk'
@@ -6750,6 +7452,47 @@
   - 07-maps-ui-conventions
   notes: 'DeepState: 700+ km2 in November 2024 and 133 km2 in March 2025; the UK MoD put March 2025 at 143 km2. DeepState
     also counted 35.6 assaults per km2 gained in March, against 7.1 in November.'
+- id: euromaidan-2025-shandra-shaheds-dive
+  title: Shahed drones now dive like missiles—and Ukraine can't shoot fast enough
+  url: https://euromaidanpress.com/2025/06/29/why-cant-ukraine-stop-russias-shahed-drones-anymore/
+  publisher: Euromaidan Press
+  authors:
+  - Alya Shandra
+  published: '2025-06-29'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: Shaheds cruise 2,500-2,800 m at 200-210 km/h, approach at 2,000-2,500 m and dive near-vertically; jets 550-600 km/h;
+    SAM systems track ~10-20 targets; Parody decoys look like transport aircraft on radar; draws on a Texty analysis.
+- id: euromaidan-2025-sting-jet-first
+  title: Ukraine's interceptor drone downs Russia's jet-propelled Shahed UAV in historic first
+  url: https://euromaidanpress.com/2025/12/01/ukraines-interceptor-drone-downs-russias-jet-propelled-shahed-uav-in-historic-first/
+  publisher: Euromaidan Press
+  authors: []
+  published: '2025-12-01'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - interceptors
+  - jet-geran
+  found_in:
+  - 13-air-effectors
+  notes: Sting kills of Geran-3 on 30 Nov 2025 (Sternenko); 138 Geran-3 launched; claimed 550-600 km/h but observed cruise
+    300-350 km/h for fuel, sprints near known AD; 50 kg warhead.
 - id: euromaidan-2025-third-strike
   title: SBU hits Crimean bridge underwater in third major strike, video shows massive blast (updated)
   url: https://euromaidanpress.com/2025/06/03/explosion-reported-at-russias-kerch-bridge-updates/
@@ -6859,6 +7602,49 @@
   found_in:
   - c15-pokrovsk-myrnohrad
   notes: Dnipro–Pokrovsk railway cut near Kotlyne; Butusov on Khortytsia.
+- id: euromaidan-2025-tryzub-frontline-report
+  title: 'Frontline report: Ukraine''s sci-fi laser weapon Tryzub blinds Russian pilots and melts drones mid-air'
+  url: https://euromaidanpress.com/2025/04/19/frontline-report-ukraines-sci-fi-laser-weapon-tryzub-blinds-russian-pilots-and-melts-drones-mid-air
+  publisher: Euromaidan Press (Reporting from Ukraine)
+  authors: []
+  published: '2025-04-19'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - lasers
+  found_in:
+  - 13-air-effectors
+  notes: 'Relays Sukharevskyi''s Tryzub reveal: claimed 3 km vs FPVs/bombs/missiles, 5 km vs Shaheds/aircraft, 10 km dazzling;
+    power classified; joystick aiming; no engagement cited, service date unknown. Author''s projections are speculative; low
+    reliability for capability claims.'
+- id: euromaidan-2025-woodall-underground-interceptors
+  title: Russian spy drones owned the sky—until Ukraine took the fight underground
+  url: https://euromaidanpress.com/2025/10/31/you-cant-hunt-spy-drones-from-underground-except-ukraine-does-and-its-working/
+  publisher: Euromaidan Press
+  authors:
+  - Devin Woodall
+  published: '2025-10-31'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - interceptors
+  - orlan
+  - radar
+  found_in:
+  - 14-frontline-counter-drone
+  notes: '113th TDF battery and Phoenix (Kharkiv): radar tracks scouts from launch; live map with speed, altitude, emissions;
+    pilot+navigator in bunker, sapper launches away from it; ~$600 interceptor vs $30-120k scout; scouts at 4-5 km, rear-view
+    cameras, decoy drones; daylight gun fire at scouts had been barred; interceptors weak at night; misses flown home to disarm.'
 - id: euromaidan-2025-zoria-16-km2
   title: Ukrainian forces liberate 16 km² near Pokrovsk, top general says
   url: https://euromaidanpress.com/2025/04/17/ukrainian-forces-liberate-16-km%c2%b2-near-pokrovsk-top-general-says/
@@ -6995,6 +7781,28 @@
     spread to 750–1050 MHz: 1 module (spring 2024) → 4–5 (summer) → 7 (autumn), with power problems. End 2024 = collapse of
     conventional EW because of fibre FPVs; Russian FPV reach grew from 3 km to 10 km by spring 2025. Big vehicle EW (Bukovel-AD,
     Nota, Ai-Petri, Damba, Beton) pulled back from the front.'
+- id: euromaidan-2025-zoria-khyzhak-zhduny
+  title: Russia deploys FPV drone ambushes on roads. Ukraine hunts and destroys them
+  url: https://euromaidanpress.com/2025/05/25/drone-on-drone-ukrainian-military-shows-destruction-of-russian-fpv-ambush-drones/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-05-25'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - waiting-drones
+  - fiber-optic
+  - counter-uas
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Khyzhak Patrol Police Brigade video: perched fibre FPVs on standby by roads found and killed with FPVs and bombers;
+    ''we constantly have to monitor the airspace''. No wait-time figures. Relays Militarnyi.'
 - id: euromaidan-2025-zoria-magura-v7
   title: Ukraine unveils Magura v7 naval drone, which downed two Russian Su-30 fighter jets in early May
   url: https://euromaidanpress.com/2025/05/15/ukraine-unveils-new-magura-v7-naval-drone-used-to-shoot-down-two-russian-su-30-jets/
@@ -7123,6 +7931,28 @@
   found_in:
   - c15-pokrovsk-myrnohrad
   notes: Trehubov; DeepState 11 Feb.
+- id: euromaidan-2025-zoria-shaheds-evade-kyiv
+  title: Why Russian Shahed explosive drones increasingly evade Ukrainian air defenses and reach Kyiv (updated)
+  url: https://euromaidanpress.com/2025/05/07/why-russian-shahed-explosive-drones-increasingly-evade-ukrainian-air-defenses-and-reach-kyiv/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2025-05-07'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - shahed
+  - radar
+  found_in:
+  - 12-air-sensing
+  notes: 'Summarises Texty: Shaheds at 1.5-2 km; Parody decoys with devices mimicking Il-76-size returns confuse Skynex; helicopters
+    with 30 kg FLIR; corridors 60-70 km wide; Air Force 6-7 May 2025: 187 drones, 81 shot down, 64 decoys ''lost from radar''.'
 - id: euromaidan-2026-axe-bomber-drones
   title: FPV drones get all the attention. Ukraine's reusable heavy bombers are doing the real killing
   url: https://euromaidanpress.com/2026/02/13/bomber-drones/
@@ -7448,6 +8278,28 @@
   - 06-terrain-geodata
   notes: Fibre freezes on spools and unreels badly; iced cable is brittle, snaps and sticks to obstacles; electronics rated
     0-70 C lose 20-50% of signal to condensation; the Dronarium centre grounded its fibre drones in mid-January 2026.
+- id: euromaidan-2026-kossov-obriy-detectors
+  title: The Ukrainian drone detectors that may soon protect everyone else
+  url: https://euromaidanpress.com/2026/05/28/in-the-age-of-drone-warfare-early-detection-grows-ever-more-urgent-not-just-in-ukraine-but-worldwide/
+  publisher: Euromaidan Press
+  authors:
+  - Igor Kossov
+  published: '2026-05-28'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - detectors
+  - fiber-optic
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Produced in cooperation with Kara Dag. Digital video detectable but not viewable on cheap devices; subscription
+    updates because controls change weekly; Azov EW specialist wants 200 MHz-15 GHz; Rob Lee: up to 50% fibre FPVs in some
+    Russian units; auto-jammer coupling (''No threat, no activation'').'
 - id: euromaidan-2026-kossov-starlink-russian-drones
   title: How Starlink made Russia's drones deadlier—and harder to jam
   url: https://euromaidanpress.com/2026/02/03/why-starlink-makes-russian-drones-so-hard-to-stop/
@@ -7542,6 +8394,28 @@
   - 04-ground-tactics-manpower
   notes: The military ombudsperson reports soldiers kept on positions for up to 502 days. Syrskyi's order caps continuous
     deployment at two months after a food-supply scandal in the 14th Mechanized Brigade.
+- id: euromaidan-2026-mukhina-airforce-tracking
+  title: Ukraine's Air Force fundamentally changes how it tracks Russian Shaheds
+  url: https://euromaidanpress.com/2026/04/30/ukraines-air-force-fundamentally-changes-how-it-tracks-russian-shaheds/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-04-30'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - radar
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: 'Deputy Air Force Commander Yelizarov (via Ukrainska Pravda): every drone''s route tracked across regions, drones
+    previously ''dropped out'' of regional statistics; radar siting now coordinated from attack patterns, moved after strikes.'
 - id: euromaidan-2026-mukhina-anti-drone-nets
   aliases:
   - euromaidanpress-2026-mukhina-net-tunnels-1000km
@@ -7730,6 +8604,27 @@
   notes: 'Beskrestnov: for a year nobody in the armed forces systematically worked on countering the Russian MESH networks
     used for jet Gerans, so Geran-5 now strikes under mesh control. Rassvet has about 32 satellites of the 200–250 needed;
     the counter-EW must be fielded before the constellation is complete. A documented Ukrainian adaptation lag.'
+- id: euromaidan-2026-mukhina-guided-shahed-mfg
+  title: Russia is now using one Shahed to distract — and second to kill crew shooting it down
+  url: https://euromaidanpress.com/2026/04/13/russia-is-now-using-one-shahed-to-distract-and-second-to-kill-crew-shooting-it-down/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-04-13'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: 'Beskrestnov (Telegram): ''another hit by a guided Shahed on a mobile fire group crew''; one drone holds the crew''s
+    attention while another hunts it. No counts or method of finding the crew. UNITED24 carried the same report the same day.'
 - id: euromaidan-2026-mukhina-jet-interceptors
   title: Combat shows speed alone can't catch Russia's jet-powered drones, despite eight Ukrainian makers' assurances. So
     why can't they stop them?
@@ -7777,6 +8672,27 @@
   - c18-night-over-kyiv
   notes: 'Informational Resistance (via OBOZ.UA): June 5,749 drones (92% intercepted); Kh-101 launches 34 of 92 possible,
     bomber wear; 2 July as one of the largest-ever jet Shahed-238/Karrar deployments. Analyst group, medium reliability.'
+- id: euromaidan-2026-mukhina-lebedenko-laser
+  title: Deputy commander-in-chief says Ukraine's new laser can already kill FPVs
+  url: https://euromaidanpress.com/2026/07/22/deputy-commander-in-chief-says-ukraines-new-laser-can-already-kill-fpvs
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-07-22'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - lasers
+  found_in:
+  - 13-air-effectors
+  notes: 'Lebedenko (via UNIAN): laser kills FPVs, ''already working on Shaheds'', laser AD in 2-3 months, better than MGs;
+    Tryzub in final testing in May 2026, 5 km stated vs drones; no documented Shahed kill; date has slipped; line of sight,
+    weather and dwell limits; cost per shot mainly electricity.'
 - id: euromaidan-2026-mukhina-molniya
   title: 'Ukraine''s prominent drone expert ''Flash'': Russia''s cheap Molniya drones fly too low for radar and hop frequencies
     too fast for standard jamming'
@@ -7827,6 +8743,27 @@
     portable analogue-video detectors useless; the fix is detectors that sense presence and bearing without decoding the image.
     Molniya (about $300) already moved to 4.1–4.5 GHz video; an autonomous AI-guided version with no radio link is appearing;
     up to 10 a day in the Zaporizhzhia direction.'
+- id: euromaidan-2026-mukhina-one-click-interceptor
+  title: 'One click from operator: Ukraine just shot down Russian Shahed with AI drone that automated 95% of kill'
+  url: https://euromaidanpress.com/2026/06/08/one-click-from-operator-ukraine-just-shot-down-russian-shahed-with-ai-drone-that-automated-95-of-kill/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-06-08'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - autonomy
+  found_in:
+  - 13-air-effectors
+  notes: 'Fedorov: a Brave1 developer''s interceptor automated 95% of an engagement in Kharkiv oblast; operator selects target
+    ''in software, one click'', AI recognises and guides on approach; prototype to combat in under a year.'
 - id: euromaidan-2026-mukhina-prosthetics
   title: Death toll of Russia's war is widely reported. Ukrainians left without limb are less visible — more than 44,000 received
     prosthetics so far
@@ -7849,6 +8786,26 @@
   - 04-ground-tactics-manpower
   notes: 'Social Policy Minister Uliutin: over 44,000 people received prosthetics under the state programme since February
     2022 (military and civilian, not all amputees covered). 2023 estimates of limb loss ran 20,000-50,000.'
+- id: euromaidan-2026-mukhina-serval-cube
+  title: Ukrainian brigade trials Serval Cube EW dome in combat-like conditions, suppresses every drone launched at it
+  url: https://euromaidanpress.com/2026/09/03/ukrainian-brigade-trials-serval-cube-ew-dome-in-combat-like-conditions-suppresses-every-drone-launched-at-it/
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-09-03'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ew
+  found_in:
+  - 14-frontline-counter-drone
+  notes: '58th Bde staged trial (via Armyinform): dome jammer suppressed every Mavic and FPV launched; no bands, radius or
+    sample size; fibre not mentioned. Unit claim.'
 - id: euromaidan-2026-mukhina-syrskyi-fpv-ratio
   title: Ukraine's drone output grew 12.7% month-on-month, but chief commander says don't relax
   url: https://euromaidanpress.com/2026/06/11/ukraines-drone-output-grew-12-7-month-on-month-but-chief-commander-says-dont-relax/
@@ -7941,6 +8898,27 @@
   notes: Second Zhitel claimed by Lasar's Group in 2026, hit by in-house bomber drones 55 km behind the front near Sievierodonetsk
     after its own ISR located it; it was used to blind Ukrainian recon drones. Shows emitter hunting at 50+ km depth by a
     single unit.
+- id: euromaidan-2026-mukhina-zvook-hydrophones
+  title: Zvook covers Ukraine's skies for under €50 million. Now, it has started testing hydrophones underwater
+  url: https://euromaidanpress.com/?p=423073
+  publisher: Euromaidan Press
+  authors:
+  - Olena Mukhina
+  published: '2026-08-26'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - acoustic
+  found_in:
+  - 12-air-sensing
+  notes: 'Company LinkedIn claim: acoustic sensors cover Ukraine at 1,000 m and below for under EUR 50m; NATO ASG Goffus called
+    it ''crazy'' cost-effective; Lithuania adopting.'
 - id: euromaidan-2026-murdoch-19-july-ballistic
   title: Russia launches record ballistic missile barrage on Kyiv, firing over 40 missiles in under an hour
   url: https://euromaidanpress.com/2026/07/19/russia-launches-record-ballistic-missile-barrage-on-kyiv/
@@ -8320,6 +9298,30 @@
   - c18-night-over-kyiv
   notes: 'Zelensky: one missile destroyed 64 apartments in Darnytskyi; police put the injured above 110; Russian MoD called
     the strike retaliation for refinery strikes.'
+- id: euromaidan-2026-vivdych-ai-molniya
+  title: Russia's AI drone can't be jammed or detected—so Ukraine shot it down
+  url: https://euromaidanpress.com/2026/07/09/russias-ai-drone-cant-be-jammed-or-detected-so-ukraine-shot-it-down/
+  publisher: Euromaidan Press
+  authors:
+  - Taisiia Vivdych
+  published: '2026-07-09'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - molniya
+  - autonomy
+  - interceptors
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'First intercept of AI Molniya (no control antenna, onboard computer, anti-tamper charge) over Zaporizhzhia with
+    General Cherry AIR and Bullet interceptors; Beskrestnov: low radar and IR signature may delay detection until nearly on
+    target; General Cherry 43% of Molniya kills in Mar 2026; up to 10 Molniyas a day on the Zaporizhzhia axis; 50th Varyag
+    Bde (preliminary).'
 - id: euromaidan-2026-vivdych-ng-fibre-70
   title: '20% to 70%: Ukraine''s National Guard rewired its drone war around cables'
   url: https://euromaidanpress.com/2026/09/09/20-to-70-ukraines-national-guard-rewired-its-drone-war-around-cables/
@@ -8461,6 +9463,30 @@
   - 04-ground-tactics-manpower
   notes: Air Assault Forces, the 425th Assault Regiment (with Abrams) and the 37th Marines retook 300+ km² and 8 settlements.
     Russia's Starlink cutoff 'blinded headquarters'. Up to 50 engagements a day.
+- id: euromaidan-2026-zoria-cd-t10
+  title: 'One radar to rule them all: Ukraine''s CD-T10 spots everything from FPV drones to guided aerial bombs inside a 15
+    km dome'
+  url: https://euromaidanpress.com/2026/03/06/one-radar-to-rule-them-all-ukraines-cd-t10-spots-everything-from-fpv-drones-to-guided-aerial-bombs-inside-a-15-km-dome/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-03-06'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - radar
+  - detectors
+  found_in:
+  - 12-air-sensing
+  - 14-frontline-counter-drone
+  notes: 'Contra-Drone CD-T10 X-band: 15 km, 3 km altitude, AI bird filtering; tested with mobile fire groups; deliveries
+    end 2026. Sense 4 detector: four bands to 8.2 GHz, >20% of Russian drones in 6-8.2 GHz (developer), UAH 42,000. Vendor
+    claims via Oboronka.'
 - id: euromaidan-2026-zoria-february-126
   title: 126 km² in February, 245 in January, some 630 last November — Russia's gains drop while its attacks hold steady,
     Deep State says
@@ -8609,6 +9635,29 @@
   - 01-drones-uncrewed
   notes: 'Russian hexacopter copies nicknamed ''Baba Yaga'' fielded from 2025; the 81st Brigade shot down five. SkyFall Vampire:
     up to 15 kg payload, 20 km range, about $8,500.'
+- id: euromaidan-2026-zoria-six-air-defence
+  title: Ukraine destroys six Russian air defense systems in 48 hours — with drones they were meant to stop (VIDEO)
+  url: https://euromaidanpress.com/2026/01/14/ukraine-destroys-six-russian-air-defense-systems-in-48-hours-with-drones-they-were-meant-to-stop-video/
+  publisher: Euromaidan Press
+  authors:
+  - Yuri Zoria
+  published: '2026-01-14'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - radar
+  - deep-strike
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Brovdi: 12-14 Jan 2026 USF mid-range drones (>10 kg warheads; 412th Nemesis, 413th Raid) hit Tor, Tor-M2, Buk-M1,
+    Buk, Strela-10 and a Vityaz 50N6E radar 46-160 km behind the line; target acquisition not described. Official claim.'
 - id: euromaidanpress-2022-petryk-withdrawal-announced
   title: Russia announces troop withdrawal from western-bank Kherson Oblast
   url: https://euromaidanpress.com/2022/11/09/russia-announced-withdrawing-its-troops-from-kherson-oblast/
@@ -11474,6 +12523,27 @@
   - 09-bevy-rendering
   notes: 'README fetched: bevy-osm (OSM buildings/roads), bevy-terrain (quadtree), bevy-adsb (live ADS-B traffic), bevy-earth,
     bevy-flight-sim, bevy-night-sky, bevy-skybox, bevy-svg; author states demo quality, not published to crates.io.'
+- id: fakty-2023-ihnat-mfg-most
+  title: 'They shoot down most of the Shahed: Ihnat on the effectiveness of mobile fire groups'
+  url: https://fakty.com.ua/en/ukraine/20231221-zbyvayut-bilshist-shahediv-ignat-pro-efektyvnist-mobilnyh-vognevyh-grup
+  publisher: Fakty (ICTV)
+  authors: []
+  published: '2023-12-21'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - mobile-fire-groups
+  - shahed
+  found_in:
+  - 13-air-effectors
+  notes: 'Ihnat: MFGs now shoot down most Shaheds; 3,700 launched since Sep 2022, 2,900 destroyed; lets Ukraine stock SAM
+    missiles; waiting for automatic systems. Official claim; no percentage for MFGs.'
 - id: ffm-oleshky-shelterbelts
   title: State of the protective forest belts of various purposes in the Oleshky district of Kherson Region
   url: https://forestry-forestmelioration.org.ua/index.php/journal/article/view/236
@@ -12112,6 +13182,31 @@
   - 04-ground-tactics-manpower
   notes: North Korean units dropped Soviet-style company assaults for small teams and adopted anti-drone drills, their own
     FPV and reconnaissance drone teams, and mobile ATGM crews.
+- id: frontliner-2026-derkachov-mfg-modernise
+  title: 'The fight against Shaheds: why mobile fire groups need to be modernized'
+  url: https://frontliner.ua/en/the-fight-against-shaheds-why-mobile-fire-groups-need-to-be-modernized/
+  publisher: Frontliner
+  authors:
+  - Artem Derkachov
+  published: '2026-03-06'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - mobile-fire-groups
+  - cueing
+  - interceptors
+  found_in:
+  - 12-air-sensing
+  - 13-air-effectors
+  notes: 'Chernihiv oblast, Feb 2026: crews of 2-3 in pickups; M2 with thermal most effective; Igla/Stinger vs faster targets;
+    warnings often only after the drone is heard; Shaheds above 2 km; expert Romanenko proposes 30 kg vehicle radars; Fedorov''s
+    ''anti-drone dome'' (radars, acoustics, Cerberus); weather grounds MFG interceptors; Igla seen on a Shahed; Shaheds carrying
+    FPVs/mines hunt vehicles.'
 - id: frontliner-2026-zvirynskyi-strike-intensity
   title: 'Over 8,000 drones a month: How strike intensity across Ukraine has changed and what to expect this winter'
   url: https://frontliner.ua/en/how-strike-intensity-across-ukraine-has-changed/
@@ -13049,6 +14144,54 @@
   - c13-black-sea-drone-war
   notes: 'Official HUR statement (Ukrainian; fetched via the Wayback Machine): one Mi-8 destroyed with R-73 ''SeeDragon''
     near Cape Tarkhankut, a second hit and reached its airfield; embeds video (YouTube FsVGYeCfwSY). Official claim.'
+- id: gwara-2025-kulish-decoy-waves
+  title: Russia shifts to massive waves of drone strikes, overwhelming Ukrainian air defense with numbers, decoy tactics
+  url: https://gwaramedia.com/en/russia-shifts-to-massive-waves-of-drone-strikes-overwhelming-ukrainian-air-defense-with-numbers-decoy-tactics/
+  publisher: Gwara Media
+  authors:
+  - Polina Kulish
+  published: '2025-07-18'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - decoys
+  - shahed
+  - radar
+  - mobile-fire-groups
+  found_in:
+  - 12-air-sensing
+  - 13-air-effectors
+  notes: 'Kharkiv: Parodiya looks like a Shahed on radar; Gerbera foam/wood, Luneburg lenses; radars cannot separate 3-4 simultaneous
+    targets; decoys overload radar and MFGs and map AD; Shaheds very low (to ~200 m) or 1,000-4,000 m, groups of 5-10, ~200
+    km/h; 5,438 Shaheds in June 2025.'
+- id: gwara-2025-kulish-mfg-zu23
+  title: Ukrainian mobile firing groups hunt for Russian Shaheds with guns unfit to efficiently down them
+  url: https://gwaramedia.com/en/ukrainian-mobile-firing-groups-hunt-for-russian-shaheds-with-guns-unfit-to-efficiently-down-them/
+  publisher: Gwara Media
+  authors:
+  - Polina Kulish
+  published: '2025-09-30'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - mobile-fire-groups
+  - guns
+  - shahed
+  found_in:
+  - 13-air-effectors
+  notes: 'MFG of 3 (2 on duty); ZU-23 on GAZ-66 with ZIR+ (optics, rangefinder, thermal, camera), 2,500 m effective; Shaheds
+    at 1,500-2,800 m, sometimes 3,000; ''Readiness number one'' ~40 min before arrival; Gerberas reveal positions when fired
+    on; red lights; gunner: ''every hundredth shot hits''; brigade moving to interceptors.'
 - id: gwara-2026-diachenko-pipeline-damaged
   title: Gas pipeline Russians used to get locals out of Kupiansk is severely damaged
   url: https://gwaramedia.com/en/gas-pipeline-used-by-russians-to-get-civilians-out-of-kupiansk-is-damaged-in-some-sections-ukrainian-military-says/
@@ -13335,6 +14478,29 @@
   - 11-drones-ru-ew-2023
   notes: A drone losing both pilot link and orientation crashes or drifts until its battery dies; spoofing can fake altitude;
     multi-band hopping and visual navigation as counters. Originally posted 6 April 2025.
+- id: imi-2026-ratynskyi-detector
+  title: Will a drone detector save you? A war reporter's experience
+  url: https://imi.org.ua/en/monitorings/will-a-drone-detector-save-you-a-war-reporters-experience
+  publisher: Institute of Mass Information
+  authors:
+  - Viacheslav Ratynskyi
+  published: '2026-04-03'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - detectors
+  - waiting-drones
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'First-hand: Tsukorok obsolete by late 2024; Chuika/Whoover/Dzyga show feeds; soldiers carry several detectors; poor
+    distance sense; Druzhkivka Jan 2026 Molniya <1 km, ''a couple dozen seconds'' from impact; Kostiantynivka Dec 2025 fibre
+    ''sleeper'' by the road, escaped at >160 km/h (claims fibre drones cannot catch cars >~120 km/h).'
 - id: independent-2022-james-convoy-40-miles
   title: 'Ukraine: 40 mile-long Russian convoy heading to Kyiv twice as long as previously thought'
   url: https://www.independent.co.uk/news/world/europe/russia-ukraine-war-kyiv-maxar-b2025365.html
@@ -13606,6 +14772,30 @@
   found_in:
   - 09-bevy-rendering
   notes: 'GitHub search metadata: young (2026-03), GPL-3.0 with modding exception; watch.'
+- id: isis-2024-anokhin-decoy-drones
+  title: Russian Decoy Drones that Depend on Western Parts Pose a Great Challenge to Ukrainian Defenses
+  url: https://isis-online.org/isis-reports/detail/russian-decoy-drones-that-depend-on-western-parts-pose-a-great-challenge
+  publisher: Institute for Science and International Security
+  authors:
+  - Igor Anokhin
+  - Spencer Faragasso
+  published: '2024-12-18'
+  accessed: '2026-11-18'
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - air-defence
+  - shahed
+  - decoys
+  found_in:
+  - 12-air-sensing
+  notes: 'Gerbera: plywood and foam V-wing, DLE60 two-stroke, some ~10 kg charge, some cameras/ELINT, Alabuga up to 50/day,
+    ~$10k (Ukrainian officials), first seen late Jul 2024. Parody: plywood high-wing, DLE55RA, no warhead, Luneburg lenses
+    give Shahed-like RCS. Decoys reveal AD, radar and EW positions.'
 - id: isis-2026-anokhin-shahed-2025
   title: A Comprehensive Analytical Review of Russian Shahed-type UAVs Deployment against Ukraine in 2025
   url: https://isis-online.org/isis-reports/a-comprehensive-analytical-review-of-russian-shahed-type-uavs-deployment-against-ukraine-in-2025
@@ -24801,6 +25991,28 @@
   found_in:
   - c15-pokrovsk-myrnohrad
   notes: RU MoD claim 29 Oct; Kastehelmi.
+- id: kyivindependent-2024-york-skynex
+  title: 'Skynex: The German drone destroyer reinforcing Ukraine''s air defense'
+  url: https://kyivindependent.com/skynex-german-drone-destroyer-reinforcing-ukraines-air-defense
+  publisher: The Kyiv Independent
+  authors:
+  - Chris York
+  published: '2024-04-30'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - guns
+  - skynex
+  - costs
+  found_in:
+  - 13-air-effectors
+  notes: Second Skynex delivered (Apr 2024); Revolver Mk3 1,000 rds/min, 4 km; AHEAD; Skymaster BMS; 'just over $4,000' per
+    target (citing RBC-Ukraine); Shahed export ~$193k, Russian $10-50k; NASAMS $0.6-1m, Patriot ~$4m, IRIS-T ~$450k.
 - id: kyivindependent-2025-czech-initiative
   title: Czech initiative to deliver up to 1.8 million shells to Ukraine in 2025, Pavel says
   url: https://kyivindependent.com/czech-initiative-to-deliver-up-to-1-8-million-shells-to-ukraine-pavel-says/
@@ -25516,6 +26728,28 @@
   notes: On 20 Jun 2025 the USF and the Drone Line units were put under one command group led by Brovdi. This is the source
     of the 'June 2025' date. The USF became a separate branch in June 2024 (Sukharevskyi appointed 10 Jun 2024, dismissed
     3 Jun 2025).
+- id: kyivindependent-2025-ihnat-high-altitude
+  title: Russia has changed drone attack tactics against Ukraine to bypass air defense, Ukraine's Air Force says
+  url: https://kyivindependent.com/russia-has-changed-drone-attack-tactics-against-ukraine-to-bypass-air-defense-ukraines-air-force-says
+  publisher: The Kyiv Independent
+  authors: []
+  published: '2025-05-27'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - shahed
+  - mobile-fire-groups
+  - decoys
+  found_in:
+  - 12-air-sensing
+  - 13-air-effectors
+  notes: 'Ihnat (RBC interview): Shaheds above 2 km, route changes, terminal dive; ''more visible to our radars'' but beyond
+    small arms, heavy MGs and MFGs; ~60% attack drones / 40% Parodiya decoys; 26 May 2025 record of 355.'
 - id: kyivindependent-2025-mirage-arrive
   title: First French Mirage fighter jets reportedly arrive in Ukraine — here's what they can do
   url: https://kyivindependent.com/first-french-mirage-fighter-jets-reportedly-arrive-in-ukraine-heres-what-they-can-do/
@@ -25616,6 +26850,29 @@
   found_in:
   - c15-pokrovsk-myrnohrad
   notes: Trehubov "crab claws" cut off and surrounded.
+- id: kyivindependent-2025-post-autumn-rains
+  title: Ukraine's autumn rains are dampening Kyiv's air defense
+  url: https://kyivindependent.com/ukraines-autumn-rains-help-shahed-type-drones-evade-ukrainian-air-defense
+  publisher: Kyiv Independent
+  authors:
+  - Kollen Post
+  published: '2025-10-13'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - weather
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: 'Zelensky: effectiveness down 20-30% in overcast; scope sees 100-200 m in rain/snow vs ~2,000 m; Khrapchynskyi: cloud,
+    rain, snow, fog defeat thermal too; RADA ieMHR ~$1m vs Ukrainian analogue ~$120k (MFG coordinator estimate); Sting ~600
+    kills (FT).'
 - id: kyivindependent-2025-post-ballistic-production
   title: 'Exclusive: Russia''s ballistic missile production up at least 66% over past year, according to Ukrainian intel figures'
   url: https://kyivindependent.com/exclusive-russias-ballistic-missile-production-up-at-least-66-over-past-year-according-to-ukrainian-intel-figures/
@@ -25639,6 +26896,30 @@
   notes: 'HUR data on monthly production: Iskander-M 60-70 (40 in May 2024), Kinzhal 10-15, Kh-101 60-70, Iskander-K 20-30,
     Kalibr 25-30, Onyx/Zircon 20-30, Kh-32 up to 10. Stocks: ~600 Iskander-M, >100 Kinzhal, 60 KN-23. PAC-3 MSE output (650/yr
     by 2027) trails Russian ballistic production.'
+- id: kyivindependent-2025-post-shaheds-evolving
+  title: How Russia's Shahed drones are getting more deadly — and what Ukraine is doing about it
+  url: https://kyivindependent.com/how-russias-shaheds-are-evolving-and-what-ukraines-air-defenses-are-doing-about-it/
+  publisher: Kyiv Independent
+  authors:
+  - Kollen Post
+  published: '2025-05-17'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - shahed
+  - radar
+  found_in:
+  - 12-air-sensing
+  notes: Jet Shaheds 380-400 km/h, record 477 km/h (Mar 2025) seen by radar at 300 m; some glide at 100 m; ground radar poor
+    below the horizon; ~half of radar-detected Shaheds decoys ('Lost/Fell'); units share a radar-based app ('Visage', probably
+    Virazh) integrated with Delta; tablets with linked thermal targeting; 5-6 s engagement window; Shaheds react to searchlights,
+    some steered online and filming positions.
 - id: kyivindependent-2025-sudzha-withdrawal-confirmed
   title: 'Ukraine war latest: Ukraine confirms withdrawal from Sudzha in Russia''s Kursk Oblast'
   url: https://kyivindependent.com/ukraine-war-latest-ukraine-confirms-withdrawal-from-sudzha-in-russias-kursk-oblast/
@@ -26293,6 +27574,30 @@
   - c05-kerch-bridge
   notes: SSO destroy the North Crimean Canal rail bridge at Razdolne (22-23 Jun 2026), then hit the repair train; fires at
     Port Kavkaz oil terminal and Kerch Yuzhna station; Kerch Bridge shut ~23:30-05:10.
+- id: kyivindependent-2026-moroziuk-jet-drone-crews
+  title: With Kyiv's air defense crews as they race to keep up with Russia's jet-powered drones
+  url: https://kyivindependent.com/with-kyivs-air-defense-crews-as-they-race-to-keep-up-with-russias-jet-powered-drones/
+  publisher: Kyiv Independent
+  authors:
+  - Polina Moroziuk
+  - Jakub Laichter
+  published: '2026-10-26'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - shahed
+  - ew
+  found_in:
+  - 12-air-sensing
+  notes: Reporting chain radar -> command posts -> units; MFG gets direction, altitude, distance and corrects with own optics;
+    thermal hampered by cloud; jet Gerans ~600 km/h, some at 5-6 km; jets heard late; 20 s sector crossing; spectrum-analyser
+    monitoring of Russian links; Gerans with cameras and mesh; 'They're probing'.
 - id: kyivindependent-2026-myronyshena-starlink-whitelist
   title: Ukraine implementing Starlink registration to counter Russian use of US-produced terminals
   url: https://kyivindependent.com/ukraine-launches-verification-system-for-starlink-in-ukraine/
@@ -26432,6 +27737,28 @@
   notes: 'Middle strike at 25-200 km: Hornet drones ($5k, 5 kg, 200 km), 412th Nemesis, Azov, HUR. Geolocated strikes 55 (Apr)
     to 130+ (May); 125 trucks hit; R-280 restrictions; fuel shortages in Crimea; Fedorov''s ''Logistical Lockdown''. High:
     geolocation-based.'
+- id: kyivindependent-2026-rushton-upper-hand
+  title: 'Analysis: How Ukraine gained the upper hand in the drone war against Russia'
+  url: https://kyivindependent.com/analysis-how-ukraine-gained-the-upper-hand-in-the-drone-war/
+  publisher: Kyiv Independent
+  authors:
+  - Jimmy Rushton
+  published: '2026-05-19'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - fiber-optic
+  - interceptors
+  - air-defence
+  found_in:
+  - 14-frontline-counter-drone
+  notes: '50 km fibre spool ~$300 to ~$2,500; radio FPV from ~$350; interceptors regularly kill Lancets and thousands of Russian
+    recon drones; CIR: attacks on Russian air defence/EW up 300% in Mar-Apr 2026, nearly 80 systems.'
 - id: kyivindependent-2026-starlink-catastrophe
   title: Starlink 'catastrophe' for Russia as Musk shuts down access across front line in Ukraine
   url: https://kyivindependent.com/not-a-problem-a-catastrophe-russias-starlinks-switch-off-across-front-line/
@@ -26998,6 +28325,29 @@
   notes: 'Catalogue of measures (UK intel): floating and sunken barges, anti-USV nets, naval mines, barrels linked with cables,
     smoke generators; a permanent structure alongside the bridge by mid-Aug 2024; metal anti-USV ''ruffs'' sunk nearby; a
     Pantsir-S1M deployed on the bridge itself.'
+- id: kyivpost-2024-brown-smartphone-apps
+  title: After Drones, Smartphone Apps Are Ukraine's Next Secret Weapon
+  url: https://www.kyivpost.com/post/30149
+  publisher: Kyiv Post
+  authors:
+  - Steve Brown
+  published: '2024-03-27'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e6-avdiivka-attrition
+  topics:
+  - air-defence
+  - eppo
+  - acoustic
+  found_in:
+  - 12-air-sensing
+  notes: ePPO unveiled autumn 2022; uses GPS and compass, user points phone at approaching object; acoustic phones feed 'Virazh'
+    (~40 sensor types); next-gen Zvook plans 12,000+ sensors with 5/6/10 km ranges for drones/cruise/ballistic.
 - id: kyivpost-2024-chiu-gps-weapons
   title: 'Analysis: Off Target – Are Kyiv''s GPS-Aided Weapons Susceptible to Kremlin EW Jamming?'
   url: https://www.kyivpost.com/analysis/33448
@@ -27532,6 +28882,50 @@
   notes: 'Relays Baza (Russian security-linked Telegram) on the organiser (37, Ukrainian-born, Chelyabinsk cargo company registered
     Oct 2024) and the drivers'' accounts: Rosneft station near Olenya, Teremok cafe car park in Usolye-Sibirskoye about 10
     km from Belaya, roof lifting near Ryazan, Ivanovo, the Seryshevo fire. Baza-derived, hence low.'
+- id: kyivpost-2025-chereshnya-gerbera
+  title: Ukrainian Drone Tech Outsmarts Russia's Shahed UAV Decoys
+  url: https://www.kyivpost.com/post/55848
+  publisher: Kyiv Post
+  authors: []
+  published: '2025-07-07'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - interceptors
+  - decoys
+  - gerbera
+  found_in:
+  - 13-air-effectors
+  notes: 'Maker claim: General Chereshnya AIR interceptor downed Gerberas for the first time; Gerbera foam-built, low radar
+    signature, 4G modem for live video (open sources), ~300 km range unloaded. Kyiv Post could not verify the footage.'
+- id: kyivpost-2025-korshak-how-ukraine-shoots-shaheds
+  title: 'EXPLAINED: How Ukraine Shoots Down Russian Shahed Drones'
+  url: https://www.kyivpost.com/post/59923
+  publisher: Kyiv Post
+  authors:
+  - Stefan Korshak
+  published: '2025-09-11'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - acoustic
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: '''Sky Watch'' acoustic network of phones on poles triangulating by relative loudness; analysts'' 10-15k sensors
+    and $5-54m; air wardens and Telegram channels main real-time source by early 2024; early warning hours ahead from bomber
+    movements and launch-site sightings; Gerbera ~$10k; Shaheds faster and lower than observation drones.'
 - id: kyivpost-2025-korshak-reserves-contain
   title: Ukraine Reserves Contain Russian Penetration Threatening Critical Pokrovsk Sector
   url: https://www.kyivpost.com/post/58196
@@ -27574,6 +28968,27 @@
   - c05-kerch-bridge
   notes: Southern Military Court in Rostov-on-Don gives eight Russian, Ukrainian and Armenian defendants life terms after
     a closed trial; none pleaded guilty; prosecutors' version (via Mediazona) of how the import route was set up.
+- id: kyivpost-2025-madyar-fibre-radar
+  title: '''Madyar''s Birds'' Find Key to Defeating Russia''s ''Invulnerable'' Fiber-Optic FPV Drones'
+  url: https://www.kyivpost.com/post/46321
+  publisher: Kyiv Post
+  authors: []
+  published: '2025-01-30'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - fiber-optic
+  - radar
+  - interceptors
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Same event as twz-2025-altman-fibre-radar: mobile radar detects fibre FPV (likely ''Prince Vandal of Novgorod'',
+    ~10 km spool) and cues a kamikaze drone; ''radar every 2-4 km''; detectors cannot see fibre drones.'
 - id: kyivpost-2025-nk-tactics-kursk
   title: Kim's Human Blitzkrieg – Ukrainian Troops Reveal North Korean Tactics in Kursk
   url: https://www.kyivpost.com/post/45948
@@ -27685,6 +29100,29 @@
   - c12-a50-hunt
   notes: Mizarvision commercial imagery of Ivanovo-Severny after Spiderweb (1 Jun 2025) shows a possibly damaged, blackened
     A-50; Zelensky and Malyuk listed 'an A-50' among the aircraft hit.
+- id: kyivpost-2025-struck-drone-ambush
+  title: '''Alive, Concussed, Happy'' – Ukrainian Soldier Survives Russian ''Drone Ambush,'' Describes Evolving Tactics'
+  url: https://www.kyivpost.com/post/51764
+  publisher: Kyiv Post
+  authors:
+  - Julia Struck-Feshchenko
+  published: '2025-04-30'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - waiting-drones
+  - ew
+  - counter-uas
+  found_in:
+  - 14-frontline-counter-drone
+  notes: '58th Bde operator ''Potter'', Kharkiv sector: FPV hidden ''under the road'' for the return trip; stationary EW likely
+    stopped lift-off; detonation absorbed by engine guard; four concussed; two jammed drones nearby; Russian free-roaming
+    ''hunter'' FPVs; fibre drones now used on pickups.'
 - id: kyivpost-2025-struck-feshchenko-kotlyne
   title: Ukrainian Paratroopers Crush Russian Forces Near Pokrovsk – Hundreds Eliminated
   url: https://www.kyivpost.com/post/47896
@@ -27705,6 +29143,25 @@
   found_in:
   - c15-pokrovsk-myrnohrad
   notes: 25th AAB retakes Kotlyne.
+- id: kyivpost-2026-chuika-civilians
+  title: Ukrainian Military-Grade Drone Detector 'Chuika' Now Available to Civilians
+  url: https://www.kyivpost.com/post/83139
+  publisher: Kyiv Post
+  authors: []
+  published: '2026-08-26'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - detectors
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Chuika 3.0 (BlueBird): passive analogue-video detector, up to 4 km against FPV and fixed-wing, audible alarm, shows
+    the drone''s feed; on civilian sale for UAH 30,840 (~$690); Fedorov: detectors ''should be everywhere''.'
 - id: kyivpost-2026-khartiia-pipeline-civilians
   title: 'WATCH: Ukraine Says Russian Troops Led Children Into Gas Pipeline to Cover Retreat'
   url: https://www.kyivpost.com/post/85561
@@ -27980,6 +29437,32 @@
   - v01-brovary-ambush
   notes: 'SSO video: the 8th Company of the 128th TDF Battalion, the 72nd Brigade and SSO stop a column of about three dozen
     tanks and IFVs in Brovary district at 50–100 m (1 tank destroyed, 1 IFV damaged). Recalls the 10 Mar Azov/72nd strike.'
+- id: lb-2026-amelina-merops-crews
+  title: '''Drone itself is just ammunition''. An evening with crews training to operate Merops'
+  url: https://en.lb.ua/news/2026/09/01/40818_drone_itself_just_ammunition.html
+  publisher: LB.ua
+  authors:
+  - Kateryna Amelina
+  published: '2026-09-01'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - merops
+  - cueing
+  - weather
+  found_in:
+  - 13-air-effectors
+  notes: Merops in Ukraine since May 2025; crews of 3-4; best data from a calibrated radar with a competent operator, flight-path
+    programmes off by ~1 km; earlier interceptor searched from ~200 m with a poorer camera; onboard sensor locks from further;
+    weather main limit; best shifts 47/54 and 32/34 kills/drones; ground station needs 32+ drones a month; Shahed evasion
+    (Jul-Aug 2025) countered in ~2 weeks; jets slow when manoeuvring, one downed after 5 attempts.
 - id: lb-2026-navy-strikes-guard-boats
   title: Navy strikes Russian boats guarding the Kerch Bridge
   url: https://en.lb.ua/news/2026/04/30/37909_navy_strikes_russian_boats.html
@@ -28886,6 +30369,29 @@
     of the release you use. The mix of imagery dates means the Ukrainian front shows a mix of pre-war and war-time footprints.
     The measurements used the 2026-02-03 release (level-9 quadkeys 120312321, 120330030-033, 120330101-102) to count 815-3,833
     buildings per sample box, where OSM had only 1-18% of them.
+- id: migflug-2026-grunwald-interceptors
+  title: 'How Cheap Drone Interceptors Work: Sting, Coyote and Roadrunner'
+  url: https://migflug.com/afterburner/how-cheap-drone-interceptors-work-sting-coyote-roadrunner/
+  publisher: MiGFlug Afterburner
+  authors:
+  - Max Grünwald
+  published: '2026-10-13'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - sting
+  - cueing
+  found_in:
+  - 13-air-effectors
+  notes: 'Explainer: ground radar detects, Sting launched, pilot flies it in over video with a thermal camera, manual control
+    in the final seconds; 343 km/h (maker); ~$2,100-2,500; ~3,900 kills by early 2026 (maker); depends on radar cueing and
+    trained pilots; weather; jets. Secondary, aviation-blog source.'
 - id: militarnyi-2022-delta-unveiled
   title: Ukraine unveiled its own Delta situational awareness system
   url: https://militarnyi.com/en/news/ukraine-unveiled-its-own-delta-situational-awareness-system/
@@ -29218,6 +30724,53 @@
   - 10-drones-ua-2023
   notes: 'Fedorov: a DJI Mavic 3 and a Matrice M30T spotted a Russian convoy near Vuhledar and passed coordinates to artillery
     (21st Sep. Bn, 55th Arty, 72nd Mech); claims 2 BMP-3, a BTR-82A and a T-80BV hit. Official claim.'
+- id: militarnyi-2023-safronov-gepard
+  title: 'Gepard: "Predator" of the Ukrainian air defense'
+  url: https://militarnyi.com/en/articles/gepard-predator-of-the-ukrainian-air-defense/
+  publisher: Militarnyi
+  authors:
+  - Taras Safronov
+  published: '2023-07-22'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - air-defence
+  - radar
+  found_in:
+  - 12-air-sensing
+  notes: Search radar up to 15 km, MPDR-18 S-band upgrade up to 18 km; first Gepards July 2022, 40 a year later; Shaheds 'a
+    very easy target'; ammunition constraints.
+- id: militarnyi-2023-safronov-mobile-teams
+  title: Ukraine Ramps Up Mobile Air Defense Teams to Combat Russian Drone Onslaught
+  url: https://militarnyi.com/en/articles/ukraine-ramps-up-mobile-air-defense-teams-to-combat-russian-drone-onslaught
+  publisher: Militarnyi
+  authors:
+  - Taras Safronov
+  published: '2023-11-25'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e4-bakhmut
+  - e5-counteroffensive-23
+  topics:
+  - mobile-fire-groups
+  - shahed
+  - ew
+  - acoustic
+  found_in:
+  - 13-air-effectors
+  notes: 'MFGs since spring 2022: Mistral on SUVs; PKT/DShKM/Maxim/Browning; ZU-23-2 on trucks; Zastava M75 20 mm with HikVision
+    thermal to tablet; Nota mobile EW; Spaceray searchlights detect drones to ~2 km; acoustic sensors into one database; Come
+    Back Alive comms kits. 2022: 440 Shahed-136, 78 hit (~18%), which conflicts with ~95% reported downed elsewhere.'
 - id: militarnyi-2023-vuhledar-vehicles
   title: Russian vehicles destroyed in the Vuhledar direction
   url: https://militarnyi.com/en/news/russian-vehicles-destroyed-in-the-vuhledar-direction/
@@ -29369,6 +30922,28 @@
   - c05-kerch-bridge
   notes: 'Crimean Wind imagery: seven barge sections installed, each 90-100 m long; earlier barrel-and-cable booms torn up
     by storms and washed up on the Kerch embankment.'
+- id: militarnyi-2024-kushnikov-hecker-acoustic
+  title: US General discussed the work of the Ukrainian acoustic drone detection system
+  url: https://militarnyi.com/en/news/us-general-discussed-the-work-of-the-ukrainian-acoustic-drone-detection-system
+  publisher: Militarnyi
+  authors:
+  - Vadim Kushnikov
+  published: '2024-03-26'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - air-defence
+  - acoustic
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: 'Hecker: 8,000 sensors on 6-ft poles, ~$500 each; combined stations give speed and direction; tablet display learned
+    in six hours; 84 drones tracked, 80 destroyed by mobile fire teams.'
 - id: militarnyi-2024-kushnikov-second-a50
   title: Russians Lose Second A-50 Airborne Early Warning and Control Aircraft over the Sea of Azov
   url: https://militarnyi.com/en/news/russians-lose-second-a-50-airborne-early-warning-and-control-aircraft-over-the-sea-of-azov/
@@ -29439,6 +31014,70 @@
   notes: 'Captured Volnorez: a magnet-mounted cone jammer creating a ''dome'' over a vehicle against FPVs, first shown at
     Army-2023 and in Russian service from autumn 2023. DIY FPVs drop as soon as the link is lost. The Russian counterpart
     to Ukrainian vehicle and trench jammers.'
+- id: militarnyi-2024-kvertus-infantry-ew
+  title: '"Protect Warrior from Drone": Four Ways to Counter Drones and Importance of Infantry Electronic Warfare'
+  url: https://militarnyi.com/en/articles/protect-warrior-from-drone-four-ways-to-counter-drones-and-importance-of-infantry-electronic-warfare/
+  publisher: Militarnyi
+  authors:
+  - Volodymyr B.
+  published: '2024-09-01'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  - e7-kursk-pokrovsk
+  topics:
+  - ew
+  - counter-uas
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Kvertus demo: small arms ''ineffective but still common''; AD Counter FPV F2 M30 dome 420-1050 MHz, 150 m, 24 h;
+    AD G-6+ gun 1.5 km, 30°, 6.5 kg; Backpack F3 U 850-5900 MHz, 150 m, 180 min, <=15 kg; Kraken F3 vehicle 700-1050 MHz,
+    >200 m, 30/50 W, ~40 kg, UAH 350-400k. Vendor specs.'
+- id: militarnyi-2024-searchlights
+  title: Ukraine Tests New Searchlights for Drone Detection in Night Skies
+  url: https://militarnyi.com/en/news/ukraine-tests-new-searchlights-for-drone-detection-in-night-skies/
+  publisher: Militarnyi
+  authors: []
+  published: '2024-04-23'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - mobile-fire-groups
+  - searchlights
+  found_in:
+  - 13-air-effectors
+  notes: Ukrainian-built searchlights tested by mobile AD groups, part of a set with a laser and thermal sight to identify,
+    track and adjust fire. No power or range given.
+- id: militarnyi-2024-special-sights-shaheds
+  title: The Ukrainian military uses special sights to shoot down Shaheds
+  url: https://militarnyi.com/en/news/the-ukrainian-military-uses-special-sights-to-shoot-down-shaheds/
+  publisher: Militarnyi
+  authors: []
+  published: '2024-01-02'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - mobile-fire-groups
+  - manpads
+  - sights
+  found_in:
+  - 13-air-effectors
+  notes: Digital thermal sight with automatic target acquisition on M2HB; thermal sight on Strela-2; Igla with Guide TK 431
+    thermal imagers (100 from the Prytula Foundation for Navy and Air Command South). No results or ranges.
 - id: militarnyi-2025-astras
   title: 'Delta Analogue: ASTRAS System Spotted in Russian Headquarters'
   url: https://militarnyi.com/en/news/delta-analogue-astras-system-spotted-in-russian-headquarters/
@@ -29529,6 +31168,28 @@
   notes: 'Shmyhal: Ukrainian industry with KNDS has repaired the first three Gepards. Gepard is ''one of the key'' Ukrainian
     AA gun systems against Shaheds and cruise missiles (twin 35 mm plus own radars) and also escorts frontline units. Qualitative;
     no kill share.'
+- id: militarnyi-2025-kalchenko-shahed-rear-cameras
+  title: New Cameras and Antennas Found on Downed Shaheds – Attempts to Counter Interceptors
+  url: https://militarnyi.com/en/news/new-cameras-and-antennas-found-on-downed-shaheds-attempts-to-counter-interceptors/
+  publisher: Militarnyi
+  authors:
+  - Anzhelika Kalchenko
+  published: '2025-11-13'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - shahed
+  - interceptors
+  - countermeasures
+  found_in:
+  - 13-air-effectors
+  notes: Rear-view cameras above and below the hull, extra tail antennas, new video modem; likely to spot interceptors in
+    the rear sector and evade, and to study interception tactics. Analysis via Beskrestnov's channel.
 - id: militarnyi-2025-kallas-2m-rounds
   title: 'Kallas: EU Fulfills 80% of Plan to Supply 2M Artillery Rounds to Ukraine'
   url: https://militarnyi.com/en/news/kallas-eu-fulfills-80-of-plan-to-supply-2m-artillery-rounds-to-ukraine/
@@ -29682,6 +31343,27 @@
   notes: 'Minister Smetanin: EW output rose 340x in 2024 vs 2023, from trench to vehicle systems; Lima throws UMPK glide bombs
     off course. Fedorov: from about 10 EW solutions when Brave1 started to more than 140 producing companies; 90 Ai-Petri
     SV systems delivered in 2024. Official claims.'
+- id: militarnyi-2025-safronov-dormant-fpvs
+  title: 'Ambush Revealed: Kyiv Brigade Drones Destroy Dormant FPVs in Their Zone'
+  url: https://militarnyi.com/en/news/ambush-revealed-kyiv-brigade-drones-destroy-dormant-fpvs-in-their-zone/
+  publisher: Militarnyi
+  authors:
+  - Taras Safronov
+  published: '2025-10-15'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - waiting-drones
+  - counter-uas
+  found_in:
+  - 14-frontline-counter-drone
+  notes: '5th Assault Brigade destroys several ''zhduny'' before launch (Oct 2025). Perch: on the ground, in bushes, or hovering
+    low over a field; operator activates on a target. Method of destruction not stated.'
 - id: militarnyi-2025-shumlianskyi-skynex-shaheds
   title: Skynex Anti-Aircraft Systems Were Used to Shoot Down Shaheds
   url: https://militarnyi.com/en/news/skynex-anti-aircraft-systems-were-used-to-shoot-down-shaheds/
@@ -29867,6 +31549,29 @@
   notes: 'Pokrova is the nationwide, all-services GNSS-spoofing system, operational since early 2024. Lima share of Pokrova:
     85% (end 2024), 95% (early 2025), more than 90% now, up to 98% on some sectors. Lima combines jamming, spoofing and attacks
     on the navigation receiver. Claims from the unit that co-developed Lima.'
+- id: militarnyi-2026-khomenko-shotguns-15inch
+  title: Shotguns Ineffective Against 15-Inch FPV Drones Due to the Risk of a Powerful Warhead Detonating at Close Range
+  url: https://militarnyi.com/en/news/shotguns-ineffective-15-inch-fpv-drones/
+  publisher: Militarnyi
+  authors:
+  - Vladyslav Khomenko
+  published: '2026-06-23'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - counter-uas
+  - fiber-optic
+  - shotguns
+  found_in:
+  - 14-frontline-counter-drone
+  notes: '151st Training Centre (Donik): Russian 15-inch fibre FPVs with warheads near TM-62 mass; 10-15 m life-threatening;
+    About Weapons: safe distance >=40-50 m; rifle at 50-100 m; No. 1-5 shot too fine; some mobile fire teams carry only shotguns;
+    drones fly through net gaps.'
 - id: militarnyi-2026-khomenko-skynex-issues
   title: 'Stern: Skynex Systems Used in Ukraine Reportedly Facing Technical Issues'
   url: https://militarnyi.com/en/news/skynex-used-ukraine-facing-technical-issues/
@@ -30239,6 +31944,28 @@
   notes: 'ZIRKA (NOCTIS / Vyriy Industries, with input from the Darknode battalion of the 412th Nemesis brigade): 340+ km/h,
     6 km ceiling, 30 km radius, 20 min endurance, up to $2,000, automatic detection, tracking and guidance. Specs are the
     manufacturer''s.'
+- id: militarnyi-2026-zvook-nw0
+  title: Ukraine Develops Acoustic Detector for FPV Drones
+  url: https://militarnyi.com/en/news/ukraine-develops-acoustic-detector-for-fpv-drones/
+  publisher: Militarnyi
+  authors:
+  - Dmytro Shumlianskyi
+  published: '2026-01-23'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - acoustic
+  - detection
+  - fiber-optic
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'ZVOOK NW0 tactical acoustic sensor: 150-450 m declared, 360°, AI, claims fibre FPV detection, 15-20 W, fibre/twisted
+    pair/LTE/LoRa links, spacing 400-600 m. Vendor claims.'
 - id: militaryscience-2025-syrskyi-kharkiv-defence
   title: 'The Kharkiv area defence operation in 2022: the course and strategic significance of the north-eastern direction'
   url: https://themilitaryscience.com/index.php/journal/article/download/126/172
@@ -30342,6 +32069,29 @@
   - 05-isr-c2-logistics
   notes: 'Official claims: Avengers classifies 70% of enemy vehicles in as little as 2.2 s, day or night; Delta enables up
     to 2,000 enemy assets neutralised per day. Medium: self-reported.'
+- id: mod-2025-volunteer-air-defence-groups
+  title: Government approves the formation of air defense groups within volunteer formations of territorial communities to
+    counter strike drones
+  url: https://mod.gov.ua/en/news/government-approves-the-formation-of-air-defense-groups-within-volunteer-formations-of-territorial-communities-to-counter-strike-drones
+  publisher: Ministry of Defence of Ukraine
+  authors: []
+  published: '2025-06-12'
+  accessed: '2026-11-18'
+  type: official
+  origin: ukrainian
+  reliability: high
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - mobile-fire-groups
+  - volunteers
+  - rules
+  found_in:
+  - 13-air-effectors
+  notes: 'Cabinet pilot (11 Jun 2025): volunteer air-defence groups under TDF commanders, and the Air Force Command for AD
+    tasks; members exempt from mobilisation, trained; may use small arms, strike UAVs, private manned aircraft, EW, AI; private
+    aircraft registration in 10 days; military social guarantees; funding from MoD, local budgets, UNITED24.'
 - id: mod-2026-adb-results
   title: '''Army of Drones Bonus'' program delivers results: nearly 820,000 russian targets hit in 2025, says Mykhailo Fedorov'
   url: https://mod.gov.ua/en/news/army-of-drones-bonus-program-delivers-results-nearly-820-000-russian-targets-hit-in-2025-says-mykhailo-fedorov
@@ -30929,6 +32679,27 @@
   notes: Commentary. Two USF brigades 'blind' Russian depth; the Rubicon unit was 'neutralised' via strikes on logistics,
     launch sites and operators; 81 air-defence systems were reportedly destroyed Mar–May 2026; drone strikes beyond 50 km
     rose 44x between Jan and Jun 2026. Relays Ukrainian claims.
+- id: nato-2026-nsatu-acoustic-lessons
+  title: Acoustic Sensor Systems for Artillery and Drone Threat Detection in Ukraine
+  url: https://nllp.jallc.nato.int/iks/sharing%20public/20260109_(nu)_%20uas_acoustic_sensor_systems_for_artillery_and_drone_threat_detection.pdf
+  publisher: NATO NSATU Lessons Learned (JALLC portal)
+  authors: []
+  published: 2026-01
+  accessed: '2026-11-18'
+  type: official
+  origin: international
+  reliability: low
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - acoustic
+  found_in:
+  - 12-air-sensing
+  notes: Four-page note, self-declared as drafted with GPT-based AI help and sourced only to press (TechUkraine, United24,
+    Defense One, TWZ, Eurasian Times). Repeats 14,000 sensors, $400-1,000, 84/80; adds a 5-sensor complex of ~25 kg (Vidar
+    Systems) and vulnerability to physical decoys and cyberattack. Used only for the latter.
 - id: naturalearth-10m-land
   title: 'Natural Earth 1:10m Physical Vectors: Land'
   url: https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_land.geojson
@@ -31914,6 +33685,28 @@
   notes: Ukrainian scholar (Odesa Polytechnic). Vol. 44 (1), pp. 45–57; DOI 10.21272/obraz.2024.1(44)-45-57. Argues war games
     act as immersive 'deep media' used for information dissemination and counter-propaganda, and that this role calls for
     ethical and regulatory frameworks for game design. A Ukrainian journal article; the argument is general, so medium.
+- id: onlineua-2024-oleshchuk-mfg-80pct
+  title: Ukraine's air defence shot down over 2000 Russo-Iranian Shaheds since 2024 beginning
+  url: https://news.online.ua/en/ukraines-air-defence-shot-down-over-2000-russo-iranian-shaheds-since-2024-beginning-880876/
+  publisher: Online.ua
+  authors: []
+  published: '2024-06-26'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - mobile-fire-groups
+  - shahed
+  - lasers
+  found_in:
+  - 13-air-effectors
+  notes: 'Air Force commander Oleshchuk: 2,277 Shaheds since 1 Jan 2024, ~86% destroyed, MFGs >80% of those downed; ''thousands
+    of servicemen'' nightly; MFG kit (NVGs, thermals, laser pointers, searchlights, EW, software); future MFGs to add interceptor
+    operators and combat lasers. Official claim.'
 - id: onlineua-2026-deepstate-legend
   title: 'Ukraine War Map Online: DeepStateMap and Frontline Updates'
   url: https://www.online.ua/en/interactive-map-of-the-war-in-ukraine-879033/
@@ -31937,6 +33730,27 @@
   notes: Ukrainian explainer of the DeepState legend and layers (FIRMS fires, artillery ranges, timeline compare). It reports
     the 2026 redefinition of grey as areas of Russian infiltration with intermixed positions. Medium reliability as an aggregator
     explainer; datePublished 2026-07-24 in page metadata.
+- id: onlineua-beskrestnov-guided-shahed-mfg
+  title: Occupiers attack Ukrainian MVGs led by shaheeds — "Flash"
+  url: https://news.online.ua/en/occupiers-attack-ukrainian-mvgs-led-by-shaheeds-flash-903149/
+  publisher: Online.ua
+  authors: []
+  published: unknown
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - mobile-fire-groups
+  - shahed
+  - countermeasures
+  found_in:
+  - 13-air-effectors
+  notes: 'Beskrestnov: ''another hit'' by a guided Shahed on an MFG crew while it engaged another Shahed; advises camouflage
+    and pre-planned actions. Page shows 13 April without a year (likely 2026 given the article id); undated.'
 - id: open-meteo-2026-era5-avdiivka-2023-24
   title: 'Open-Meteo Historical Weather API (ERA5): Avdiivka, 8 Oct 2023 – 20 Feb 2024 (query)'
   url: https://archive-api.open-meteo.com/v1/archive?latitude=48.14&longitude=37.74&start_date=2023-10-08&end_date=2024-02-20&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,cloud_cover_mean,wind_speed_10m_max,sunrise,sunset&timezone=Europe%2FKyiv
@@ -34228,6 +36042,27 @@
   found_in:
   - 10-drones-ua-2023
   notes: 'Fedorov: eight more strike drone companies with pickups and FPV drones, funded via UNITED24 and the state budget.'
+- id: pravda-2023-balachuk-pavliuk-mobile-groups
+  title: Ukraine's Ground Forces show Shahed and "missile hunters" capable of deploying in 1 minute
+  url: https://www.pravda.com.ua/eng/news/2023/02/09/7388602/
+  publisher: Ukrainska Pravda
+  authors:
+  - Iryna Balachuk
+  published: '2023-02-09'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e4-bakhmut
+  topics:
+  - mobile-fire-groups
+  - kyiv
+  found_in:
+  - 13-air-effectors
+  notes: 'Lt Gen Pavliuk (Telegram): Kyiv mobile fire teams in off-road cars with heavy MGs, thermal imagers, laser designators;
+    ready in no more than one minute. No cueing or kill data.'
 - id: pravda-2023-bridge-attack-sep-claim
   title: Russians claim Ukraine tried to attack Crimean Bridge again
   url: https://www.pravda.com.ua/eng/news/2023/09/2/7418120/
@@ -37092,6 +38927,26 @@
   notes: Pre-war RAND hex-and-counter wargame on a Russian attack on the Baltics. The URL was confirmed via a 2022 roundup
     of Ukraine-crisis simulations (Bryan Alexander) and returned 403. Title and authors come from prior knowledge. It shows
     the pre-2022 professional focus on NATO–Russia massed manoeuvre.
+- id: razomua-2026-tryzub-manual
+  title: '"Tryzub" Strikes Aircraft at 5 km — But Manual Targeting. Where''s the AI?'
+  url: https://razomua.media/en/news/tekhnolohiyi/tryzub-urazhaye-litaky-na-5-km-ale-navodytsya-vruchnu-de-tut-shi
+  publisher: Razom UA
+  authors: []
+  published: '2026-05-07'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - lasers
+  found_in:
+  - 13-air-effectors
+  notes: 'Tryzub (Celebra) shown by Sukharevskyi: 3 km vs drones/bombs/missiles, 5 km vs aircraft, 10 km dazzle; quote on
+    shooting down aircraft above 2 km; joystick aiming, no visible auto-tracking; earlier burned FPVs, damaged recon UAV optics
+    at 1,500 m; analysts call it a functional prototype; no cost or production plan; weather limits.'
 - id: rbc-2025-sabotage-team-railway-station
   title: Ukrainian forces stop Russian sabotage team in Pokrovsk after civilian killings
   url: https://newsukraine.rbc.ua/news/ukrainian-forces-stop-russian-sabotage-team-1760958683.html
@@ -37162,6 +39017,31 @@
   - c03-azovstal
   notes: Serbov flew in on 5 Apr on 'the last helicopter'; it was shot down returning and the Dnipro rescue helicopter was
     downed by MANPADS (mission 7); Biletskyi's '100 km' quote; freed 29 Jun 2022.
+- id: rbc-2026-ihnat-interview-ranges
+  title: Ukraine's Air Force explains how Russia's Shaheds are evolving
+  url: https://newsukraine.rbc.ua/comment/ukraine-s-air-force-explains-how-russia-s-1770049176.html
+  publisher: RBC-Ukraine
+  authors:
+  - Uliana Bezpalko
+  - Daryna Vialko
+  published: '2026-02-02'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - mobile-fire-groups
+  - manpads
+  - shahed
+  - rules
+  found_in:
+  - 13-air-effectors
+  notes: 'Ihnat: MGs effective to 1 km altitude; MANPADS to 4 km, effective ~2 km; Shaheds high or low along reservoirs/riverbeds
+    on routes planned from satellite, SIGINT and weather; some carry cameras, SIMs, modems, Starlink, act as relays; over
+    populated areas intercept means chosen mainly for civilian safety. Title approximated from the page.'
 - id: rbc-2026-vialko-flamingo
   title: What we know about Ukrainian Flamingo missiles destroying Russia's defense industry
   url: https://newsukraine.rbc.ua/news/flamingo-over-russia-what-is-known-about-1781097982.html
@@ -37797,6 +39677,53 @@
   - c16-spiderweb
   notes: 'Read via the Wayback Machine (snapshot 2025-06-29). Two US officials: as many as 20 warplanes hit, around 10 destroyed;
     US given no notice; Zelensky said half of 41 cannot be repaired; Kellogg on escalation risk.'
+- id: reuters-2026-hunder-defeat-shahed
+  title: Inside Ukraine's drive to defeat the dreaded Shahed drone
+  url: https://www.thestar.com.my/news/world/2026/04/29/inside-ukraine039s-drive-to-defeat-the-dreaded-shahed-drone
+  publisher: Reuters (via The Star)
+  authors:
+  - Max Hunder
+  published: '2026-04-29'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - cueing
+  - weather
+  - ew
+  found_in:
+  - 13-air-effectors
+  notes: 'Kharkiv, 420th USF battalion: steer toward the radar dot until the Shahed is on camera; a few minutes from radar
+    pop-up to leaving range; 10 launches, no Shahed found; fog aborts; ~1,000 crews; interceptors ~40% of kills (from ~25%
+    in winter); EW nearly half on some nights; F-16 up to 10/night; Shahed 170 -> 200+ km/h made first interceptor useless
+    in 4 months, upgraded to 300 km/h; 15-20% jets at ~400 km/h; cheapest interceptor <$1,500; ''Even if you use 50 drones...''.'
+- id: reuters-2026-peleschuk-interceptors-gulf
+  title: Inside the Ukrainian interceptor drones wanted around the Gulf
+  url: https://www.thestar.com.my/news/world/2026/03/17/inside-the-ukrainian-interceptor-drones-wanted-around-the-gulf
+  publisher: Reuters (via The Star)
+  authors:
+  - Dan Peleschuk
+  published: '2026-03-17'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - sting
+  found_in:
+  - 13-air-effectors
+  notes: 'Sting: quadcopter up to 280 km/h, ~37 km, pilot with HD camera feed and 360-degree antenna, FPV pilots learn in
+    3-4 days; ~$2,000 or less vs $20-50k Shahed; 3,000+ Shaheds since regular service in Jun 2025 (maker); 10,000+/month;
+    second generation for jets.'
 - id: rferl-2022-aeroscope-aerorozvidka
   title: 'Drone Wars: Ukraine''s Homegrown Response To ''Deadly'' Chinese Detection Tech'
   url: https://www.rferl.org/a/drone-detection-war-ukraine-china-russia/31943191.html
@@ -39466,6 +41393,31 @@
   - c04-kherson-antonivskyi
   notes: 'Washington Post interviews with nine wounded soldiers from seven units: Russian Orlan spotting, counter-battery
     radar, tanks in concrete shelters, EW hijacking drones, unit-level losses; ''We lost five people for every one they did''.'
+- id: stripes-2022-wapo-drone-hunters
+  title: Ukraine's drone hunters take aim at Iranian-made Shaheds
+  url: https://www.stripes.com/theaters/europe/2022-11-28/ukraine-war-iranian-drones-8226151.html
+  publisher: The Washington Post (via Stars and Stripes)
+  authors:
+  - Michael E. Miller
+  - Anastacia Galouchka
+  published: '2022-11-29'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - shahed
+  - mobile-fire-groups
+  - air-defence
+  found_in:
+  - 13-air-effectors
+  notes: 'Mykolaiv anti-drone units of about six (police, army, TDF, National Guard); ~10 min from alert to position; tablets
+    and residents'' Telegram reports; thermal sensor plus laser marking; .50 cal from a Russian tank; Shaheds about $20k;
+    one team 3 kills by early Nov; firing points chosen for civilian safety; no injuries in Mykolaiv, deaths from debris in
+    Kyiv. Lushenko: fighters vs $20k drones ''completely wasteful''.'
 - id: stripes-2024-khurshudyan-jamming
   title: Russian jamming leaves some high-tech US weapons ineffective in Ukraine
   url: https://www.stripes.com/theaters/europe/2024-05-24/russian-jamming-high-tech-weapons-ukraine-13964032.html
@@ -39592,6 +41544,29 @@
     NLAW head-and-tail ambush in Irpin, ''30,000 Russians against around 3,000 Ukrainians'', and Zaluzhnyi refusing withdrawal
     (dated 21 Mar here). An enthusiastic personal account with some loose claims (''100%'' of a battalion destroyed), so low
     reliability.'
+- id: swj-2026-woods-citizen-sensors
+  title: 'Citizen Sensors: Crowd-Sourcing sUAS Intelligence Using Smartphone Apps – A New Tool for Special Operations'
+  url: https://smallwarsjournal.com/2026/07/13/citizen-sensors/
+  publisher: Small Wars Journal
+  authors:
+  - Catherine M. Woods
+  published: '2026-07-13'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - eppo
+  found_in:
+  - 12-air-sensing
+  notes: 'Secondary: 4m+ ePPO reports by Dec 2025 (citing Snake Island Institute, ''Holding Back the Sky'', not fetched),
+    850k+ Diia-verified users in 2026, 10-minute overflight warning, real-time aggregation for direction and speed; data-poisoning
+    risk in general terms.'
 - id: tandf-2024-usachova-play-for-ukraine
   title: 'Play for Ukraine: wargaming as a resistance pleasure'
   url: https://doi.org/10.1080/14735784.2024.2379814
@@ -39663,6 +41638,28 @@
   - c08-vuhledar
   notes: Soviet-era mines plus about 6,000 US RAAM; offensive escalating since 24 Jan; Ukrainian claim of 36 tanks in mid-Feb;
     Wallace's 'brigade effectively annihilated', 1,000 killed on 14–15 Feb.
+- id: telegraph-2023-barnes-iris-t-decoy
+  title: Russian drone destroys Ukraine's top secret air defence system – but all was not as it seemed
+  url: https://uk.news.yahoo.com/decoy-war-inside-ukraine-most-114848911.html
+  publisher: The Telegraph (via Yahoo News UK)
+  authors:
+  - Joe Barnes
+  published: '2023-09-16'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - decoys
+  - lancet
+  - air-defence
+  found_in:
+  - 14-frontline-counter-drone
+  notes: Lancet hit a dummy IRIS-T launcher in Kherson whose camouflage had 'failed'; dozens of decoys on the front; Metinvest
+    metal decoys with heat and radar sources; M777 replica ~£800, ~30 min to erect.
 - id: telegraph-2024-barnes-krynky-1000
   title: Ukraine loses more than 1,000 men in battle for single village
   url: https://www.yahoo.com/news/ukraine-loses-more-1-000-105033392.html
@@ -39687,6 +41684,29 @@
   notes: Telegraph original (telegraph.co.uk/world-news/2024/07/19/ukraine-loses-thousand-men-battle-for-single-village/)
     blocks fetching; read via Yahoo copy. More than 1,000 feared killed; 30–60 minute boat journey; Sodol 'later sacked'.
     Prints 778 missing, a typo for Slidstvo's 788.
+- id: telegraph-2024-barnes-phones-on-poles
+  title: How Ukraine is using mobile phones on 6ft poles to stop drones
+  url: https://sg.news.yahoo.com/ukraine-using-mobile-phones-6ft-183615041.html
+  publisher: The Telegraph (via Yahoo News)
+  authors:
+  - Joe Barnes
+  published: '2024-03-26'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e6-avdiivka-attrition
+  topics:
+  - air-defence
+  - acoustic
+  found_in:
+  - 12-air-sensing
+  notes: 'Fetched via Yahoo syndication. Skyfortress NGO Android-phone sensors; Safe Skies fundraising for 12,500 Ajax Systems
+    sensors; Virazh combines 40+ sensor networks; Zvook 210 sensors, ~5% of Ukraine, 8,000 for whole country, ~GBP 400 each,
+    ranges ~3/4/6 miles; CEO Sulym: ''auxiliary system''.'
 - id: telegraph-2025-barnes-a50-spy-planes
   title: Ukraine strikes Putin's prized spy planes
   url: https://www.telegraph.co.uk/world-news/2025/06/03/ukraine-strikes-putin-prized-spy-plane/
@@ -39860,6 +41880,28 @@
   - c12-a50-hunt
   notes: 'FighterBomber (31 May 2026): another modernised A-50U handed over; estimates 5–7 A-50U in service; A-100 still not
     in production. Misattributes the Feb 2024 kill to Patriot (contradicts HUR/S-200 reporting).'
+- id: thedefensenews-2026-kumar-zvook-batt26
+  title: Ukrainian Firm Zvook Tests Vehicle-Mounted Acoustic Drone Detection System at NATO Exercise
+  url: https://www.thedefensenews.com/Ukrainian-Firm-Zvook-Tests-Vehicle-Mounted-Acoustic-Drone-Detection-System-at-NATO-Exercise/
+  publisher: World Defense News (thedefensenews.com)
+  authors:
+  - Aditya Kumar
+  published: '2026-08-11'
+  accessed: '2026-11-18'
+  type: news
+  origin: international
+  reliability: low
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - acoustic
+  found_in:
+  - 12-air-sensing
+  notes: 'Aggregator relaying company statements: fixed networks since 2022 on 10-12 m towers; ~5 km drones, ~7 km cruise
+    missiles; detections to Delta with ~12 s ''warning times''; ML cut false positives to ~1.6%; ~$500 per sensor; mobile
+    trial at BATT26 ''not completely trouble-free''. All vendor figures.'
 - id: theinsider-2024-meat-grinder-avdiivka
   title: '“A meat grinder worse than Bakhmut”: Russia paid a shocking price for the ruins of Avdiivka'
   url: https://theins.ru/en/politics/270061
@@ -39905,6 +41947,28 @@
   notes: By Tue 1 Mar the convoy was about 25 km from Kyiv and commanders were weighing how to attack it; TB2 tally (3 SAM
     systems, four 152 mm guns, 10+ trucks, several tanks) per evidence given to RUSI; at least 12 TB2s; GPS/radio signature
     makes them trackable; RUSI's Cranny-Evans on 'unmasking'.
+- id: therecord-2024-antoniuk-spoofing-phones
+  title: Ukrainian military's anti-drone GPS spoofing spills into civilians' phones
+  url: https://therecord.media/ukraine-anti-drone-gps-spoofing-affects-civilian-mobile-phones
+  publisher: The Record (Recorded Future News)
+  authors:
+  - Daryna Antoniuk
+  published: '2024-11-07'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - ew
+  - gnss
+  - side-effects
+  found_in:
+  - 13-air-effectors
+  notes: 'General Staff: EW spoofing used against Russian air attacks can shift phones'' location and time; phones showed
+    Moscow, Bryansk, Kursk, Belgorod; missed alarms, taxis; advice to disable automatic time. Sep-Oct 2024: record 3,482 drones.'
 - id: time-2024-spencer-collins-mariupol-helicopters
   title: The Untold Story of the Ukrainian Helicopter Missions During the Mariupol Siege
   url: https://time.com/6694858/ukrainian-helicopter-missions-mariupol-siege/
@@ -39929,6 +41993,97 @@
   notes: 'Pilot ''Vitaliy'' (mission 3) and Ruslan Serbov accounts: 80-min flights, 42 min over enemy ground, 10–15 m AGL,
     10-min ground time, FARP, Pantsir threat; totals 16 helicopters, 30+ t cargo, 72 troops in, 64 wounded out, 3 lost. Medium:
     states Dnipro airfield is ''82 km'' from Mariupol, which is wrong (about 233 km).'
+- id: trenchart-2025-axe-waiting-drones
+  title: Russia's Best Drones Lie in Wait Beside the Road, Patiently Watching for Passing Ukrainian Troops
+  url: https://www.trenchart.us/p/russias-best-drones-lie-in-wait-beside
+  publisher: Trench Art (Substack)
+  authors:
+  - David Axe
+  published: '2025-05-27'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - waiting-drones
+  - fiber-optic
+  - rubikon
+  found_in:
+  - 14-frontline-counter-drone
+  notes: Fibre FPVs wait up to 12 h (Roy); Rubikon saturates 100-300 m road sections, group strikes, drones detonated under
+    vehicles (Perpetua, via X); major factor cutting Sudzha road Feb 2025; Ukrainian drone sweeps of routes. Analyst commentary
+    relying on X posts.
+- id: trenchart-2025-axe-wasting-f16s
+  title: Ukraine Is Wasting Its F-16s
+  url: https://www.trenchart.us/p/ukraine-is-wasting-its-f-16s
+  publisher: Trench Art (Substack)
+  authors:
+  - David Axe
+  published: '2025-06-29'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  - e8-drone-kill-zone
+  topics:
+  - fighters
+  - shahed
+  - debris
+  - ew
+  found_in:
+  - 13-air-effectors
+  notes: Ustymenko killed after downing 7 targets (last blast likely damaged his F-16); 3 of 4 F-16 losses on AD patrols;
+    37 F-16s left; MiG-29 pilot Voroshylov wounded by drone debris (12 Oct 2022); argues jammers (Lima) are the cost-effective
+    counter. Opinion-led.
+- id: trenchart-2026-axe-laser-roads
+  title: Is Ukraine Sweeping Roads With Lasers To Fry Unjammable Russian Drones?
+  url: https://www.trenchart.us/p/is-ukraine-sweeping-roads-with-lasers
+  publisher: Trench Art (Substack)
+  authors:
+  - David Axe
+  published: '2026-03-11'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: low
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - waiting-drones
+  - fiber-optic
+  found_in:
+  - 14-frontline-counter-drone
+  notes: Purported Russian video of a drone sweeping a road with a laser, perhaps against fibre 'waiters'; gun-armed UGVs
+    reportedly patrol roads to find waiting drones. Speculative; paywalled beyond the excerpt.
+- id: tsn-2026-shostak-molniya-ew
+  title: 'Why Ukraine''s EW doesn''t always stop "Molniya" drones: "Flash" explains'
+  url: https://tsn.ua/en/ato/why-ukraines-ew-doesnt-always-stop-molniya-drones-flash-explains-3037439.html
+  publisher: TSN
+  authors:
+  - Kyrylo Shostak
+  published: '2026-03-09'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - ew
+  - molniya
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Beskrestnov: Molniya video detectable by ELINT, but its control receiver does not transmit, so the control band
+    could be ~150-2800 MHz; operator 30-60 km away; ''signal chaos''; EW teams suppress some by experience and coordination.'
 - id: twz-2022-altman-flag-snake-island
   title: Ukraine Plants Flag On Snake Island, Russians Claim Deadly Response
   url: https://www.twz.com/ukraine-plants-flag-on-snake-island-russians-claim-deadly-response
@@ -40112,6 +42267,29 @@
   notes: TB2 footage of two Su-27s coming in from the south below lighthouse height with flares, toss-bombing the main complex,
     pier buildings and east point; secondary explosions. It frames the TB2 kills of ZU-23-2, Tor and Strela-10 as SEAD for
     the jets.
+- id: twz-2022-trevithick-drone-hunters
+  title: Ukrainian Teams Hunt Russian Drones With Laser Rifles, Gun Trucks, Apps
+  url: https://www.twz.com/ukrainian-teams-hunt-russian-drones-with-laser-rifles-gun-trucks-apps
+  publisher: The War Zone
+  authors:
+  - Joseph Trevithick
+  published: '2022-12-08'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - shahed
+  - mobile-fire-groups
+  - air-defence
+  found_in:
+  - 13-air-effectors
+  notes: 'Largely relays the Washington Post: small ad hoc teams, thermal spotter then laser marker, PKT twin mount on a UAZ-452,
+    MANPADS on vehicles the exception; Telegram reports; ''hard to know which unit destroyed a drone''. US announced 150 heavy
+    MGs with thermal sights for C-UAS (23 Nov 2022). Laser model (IZLID-type) is TWZ''s inference.'
 - id: twz-2022-trevithick-snake-island-satellite
   title: Ukrainian Strikes On Russian-Occupied Snake Island Confirmed In Satellite Imagery
   url: https://www.twz.com/ukrainian-strikes-on-russian-occupied-snake-island-confirmed-in-satellite-imagery
@@ -40247,6 +42425,28 @@
   - c09-robotyne
   notes: Ka-52s close to the front against Ukrainian armour; 20 helicopters moved to Berdiansk; UK MoD on unusually active
     Russian aviation; SHORAD gap.
+- id: twz-2023-newdick-su25-decoy
+  title: Ukrainian Su-25 Struck By Lancet Drone Was An Elaborate Decoy
+  url: https://www.twz.com/ukrainian-su-25-attack-jet-stuck-by-lancet-drone-was-a-decoy
+  publisher: The War Zone
+  authors:
+  - Thomas Newdick
+  published: '2023-12-01'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  - e6-avdiivka-attrition
+  topics:
+  - decoys
+  - lancet
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 30 Nov 2023 Lancet strike, with Orlan-type relay/overwatch, on a detailed Su-25 decoy at Dolgintsevo (Kryvyi Rih),
+    ~45 mi from the front; a real MiG-29 (Sep) and Su-25 (Oct) hit there earlier; Lancet range ~45 mi.
 - id: twz-2023-situation-report-2023-11-22
   title: 'Ukraine Situation Report: New Ground-Based Air Defense Coalition Announced'
   url: https://www.twz.com/ukraine-situation-report-new-ground-based-air-defense-coalition-announced
@@ -40288,6 +42488,28 @@
   - v02-stepove-bradley
   notes: Night footage of an M2 knocking out three MT-LBs with infantry during an attack on Stepove. One account credits TOW
     and 25 mm. The author is inferred from WordPress author id 101 and Wikipedia's citation.
+- id: twz-2023-trevithick-iris-t-lancet
+  title: Ukraine's Prized IRIS-T Air Defense System Attacked By Russian Drone In Video
+  url: https://www.twz.com/ukraines-prized-iris-t-air-defense-system-attacked-by-russian-drone-in-video
+  publisher: The War Zone
+  authors:
+  - Joseph Trevithick
+  published: '2023-06-07'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - air-defence
+  - radar
+  - lancet
+  found_in:
+  - 12-air-sensing
+  notes: Russian video of a Lancet striking a TRML-4D (IRIS-T SLM) radar; damage unclear, truck immobile after; 'radars are
+    notoriously fragile'; one TRML-4D listed as delivered by Germany at the time.
 - id: twz-2024-altman-ammo-depots
   title: Satellite Images Show Massive Devastation At Russian Ammo Storage Sites Struck By Ukrainian Drones
   url: https://www.twz.com/news-features/satellite-images-show-massive-devastation-at-russian-ammo-storage-sites-struck-by-ukrainian-drones
@@ -40426,6 +42648,27 @@
   notes: 'Early Western analysis of 14 Jan: A-50 downed entering the Kyrylivka patrol zone at 21:10–21:15, stopped answering
     tactical aviation, Su-30 pilot saw a fire; Il-22M hit near Strilkove, emergency landing at Anapa; Zaluzhnyi''s flight-track
     video; Robotyne about 55 miles from the Azov coast; ~10 A-50s, ~5 operational.'
+- id: twz-2024-newdick-aero-azimuth
+  title: Balloon-Based Sensor That Pinpoints Location Of Drone Operators Emerges In Ukraine
+  url: https://www.twz.com/air/balloon-based-sensor-that-pinpoints-location-of-drone-operators-emerges-in-ukraine
+  publisher: The War Zone
+  authors:
+  - Thomas Newdick
+  published: '2024-09-03'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - direction-finding
+  - operator-hunting
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Kvertus Aero Azimuth on an Aerobavovna aerostat (7 days aloft, 25 kg payload): passive SIGINT on operator emissions;
+    ~37 mi detection raised vs ~9 mi ground version; triangulation at 15-19 mi; vendor claims, deployment status unclear.'
 - id: twz-2024-newdick-first-abrams-video
   title: This May Be The First Video Of A Ukrainian M1 Abrams In Combat
   url: https://www.twz.com/land/this-may-be-the-first-video-of-a-ukrainian-m1-abrams-in-combat
@@ -40513,6 +42756,51 @@
   - v02-stepove-bradley
   notes: 'A video from about 21 Jan 2024 near Stepove: an M2 destroys a Russian BMP at point-blank range while the 109th Territorial
     Defence Brigade holds a position.'
+- id: twz-2024-trevithick-networked-microphones
+  title: Ukraine Using Thousands Of Networked Microphones To Track Russian Drones
+  url: https://www.twz.com/land/thousands-of-networked-microphones-are-tracking-drones-in-ukraine
+  publisher: The War Zone
+  authors:
+  - Joseph Trevithick
+  published: '2024-02-12'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e6-avdiivka-attrition
+  topics:
+  - air-defence
+  - acoustic
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: 'Gen. James Hecker (USAFE): about 6,000 acoustic sensors ''all over the country''; picture passed to mobile teams
+    with AAA; six hours'' training; NATO testing interest.'
+- id: twz-2025-altman-fibre-radar
+  title: Ukraine Discloses New Method To Defeat Russian Fiber-Optic-Controlled FPV Drones
+  url: https://www.twz.com/news-features/ukraine-discloses-new-method-to-defeat-russian-fiber-optic-controlled-fpv-drones
+  publisher: The War Zone
+  authors:
+  - Howard Altman
+  published: '2025-01-29'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: high
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - fiber-optic
+  - radar
+  - interceptors
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Birds of Magyar: mobile radar warns of fibre FPVs several km out, own drone intercepts; Brovdi: radars every 2-4
+    km of front. TWZ assesses likely Ku-band; limited early warning; commercial radar emissions can be detected, triangulated
+    and targeted.'
 - id: twz-2025-altman-revenge-strikes
   title: Russia Executes Revenge Strikes Against Ukraine For Blowing Up Its Bombers
   url: https://www.twz.com/news-features/russia-executes-revenge-strikes-against-ukraine-for-blowing-up-its-bombers
@@ -40697,6 +42985,29 @@
   - c16-spiderweb
   notes: ICEYE SAR of Belaya on 1 June (at least four Tu-95s likely damaged/destroyed), cloud cover forcing SAR, OSINT coordinates
     of aircraft at Olenya, AviVector counts at Olenya (3 Jun) and Dyagilevo (2 Jun, no serious damage).
+- id: twz-2026-altman-merops
+  title: Cheap Interceptor Drones Proven In Ukraine Protected U.S. Troops Against Iranian Shaheds
+  url: https://www.twz.com/land/cheap-interceptor-drones-proven-in-ukraine-protected-u-s-troops-against-iranian-shaheds
+  publisher: The War Zone
+  authors:
+  - Howard Altman
+  published: '2026-04-16'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - interceptors
+  - merops
+  - costs
+  found_in:
+  - 13-air-effectors
+  notes: 'Merops/Surveyor: >280 km/h, autonomous or piloted, onboard tracking sensors, collision or proximity kill; ~$15,000
+    each (Driscoll), Coyote ~10x; 13,000 bought by the US Army; unit = command station, launchers, drones. No Ukrainian kill
+    counts.'
 - id: twz-2026-altman-rogoway-starlink-scramble
   title: Russian Forces In Ukraine Scramble To Overcome Musk's Starlink Restrictions
   url: https://www.twz.com/news-features/russian-forces-in-ukraine-scramble-to-overcome-musks-starlink-restrictions
@@ -40768,6 +43079,30 @@
   - c16-spiderweb
   notes: 'Planet imagery of 20 June 2026: at least 17 bomber-sized shelters under construction at Engels-2 (home of the 22nd
     Heavy Bomber Aviation Division); work began April 2025, before Spiderweb; Belousov shown a Tu-160 hangar model.'
+- id: twz-2026-newdick-shahed-manpads
+  title: Russian Shahed-136 Kamikaze Drones Now Carrying MANPADS Missiles
+  url: https://www.twz.com/air/russian-shahed-136-kamikaze-drones-now-carrying-manpads-missiles
+  publisher: The War Zone
+  authors:
+  - Thomas Newdick
+  published: '2026-01-05'
+  accessed: '2026-11-18'
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  - e9-counteroffensive-26
+  topics:
+  - shahed
+  - helicopters
+  - countermeasures
+  found_in:
+  - 13-air-effectors
+  notes: Igla-S or Verba carried in its tube atop a Shahed (one found intact, unused, in Chernihiv oblast); camera and RF
+    modem, operator-triggered; aimed at Mi-8/Mi-24 drone hunters; no evidence of a kill; effectiveness 'questionable', possibly
+    a deterrent.
 - id: uacrisis-2025-day-1251-mashovets
   title: 'Day 1,251: Russia trying to envelop Pokrovsk, military analyst says'
   url: https://uacrisis.org/en/1251
@@ -41323,6 +43658,26 @@
   - c07-bakhmut
   notes: 'Ukrainian Eastern Group: 524 Russian strikes/day on Bakhmut axis; Wagner still main attacking force but increasingly
     reliant on regular units. Official Ukrainian claim.'
+- id: ukrinform-2023-ihnat-mfg-40pct
+  title: 'Drone attack: nearly 40% of Shaheds downed by mobile groups'
+  url: https://www.ukrinform.net/rubric-ato/3791669-drone-attack-nearly-40-of-shaheds-downed-by-mobile-groups.html
+  publisher: Ukrinform
+  authors: []
+  published: '2023-11-25'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e5-counteroffensive-23
+  topics:
+  - mobile-fire-groups
+  - shahed
+  found_in:
+  - 13-air-effectors
+  notes: 'Ihnat on the telethon: 75 Shaheds launched, 74 downed; MFGs ~40% that night, earlier up to 50% but only 5-10 drones;
+    MFGs save costly SAMs. Official claim.'
 - id: ukrinform-2023-ivan-khurs
   title: Russian recon ship reportedly attacked by drones
   url: https://www.ukrinform.net/rubric-ato/3713455-russian-recon-ship-allegedly-attacked-by-drones.html
@@ -41634,6 +43989,26 @@
   - c05-kerch-bridge
   notes: 'Krym.Realii and Brady Africk (AEI) imagery: more than 30 barges; work began 7 May 2024; an echeloned boom system;
     two Russian boats on constant guard.'
+- id: ukrinform-2024-eppo-80pct
+  title: EPPO app helps Ukraine close sky by 80%
+  url: https://www.ukrinform.net/rubric-ato/3930665-eppo-app-helps-ukraine-close-sky-by-80.html
+  publisher: Ukrinform
+  authors: []
+  published: '2024-11-24'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - air-defence
+  - eppo
+  found_in:
+  - 12-air-sensing
+  notes: 'Deputy Defence Minister Chernohorenko: 600,000+ downloads, ~200,000 active users; report on officers'' maps in 2-7
+    s; AI trajectory prediction; MFGs respond; 80% claim without method.'
 - id: ukrinform-2024-ihnat-a50-sixth-day
   title: Russian A-50s not flying over Sea of Azov for sixth day – Ukrainian Air Force
   url: https://ukrinform.net/rubric-ato/3834855-russian-a50s-not-flying-over-sea-of-azov-for-sixth-day-ukrainian-air-force.html
@@ -42309,6 +44684,29 @@
   notes: 'Ground-level counters from units (93rd Brigade; 21st Unmanned Systems Regiment): nets, which burn, melt and hide
     ''waiting'' drones; heated tungsten wire that snaps fibre; shotgun teams; net guns; switching logistics to daytime and
     foot movement; varied routes. Government-run outlet.'
+- id: united24-2025-brizard-sky-fortress
+  title: Sky Fortress—Ukraine's Acoustic Detection System That Tracks Drones Cheap and Fast
+  url: https://united24media.com/war-in-ukraine/sky-fortress-ukraines-acoustic-detection-system-that-tracks-drones-cheap-and-fast-9451
+  publisher: UNITED24 Media
+  authors:
+  - Lucile Brizard
+  published: '2025-07-01'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - acoustic
+  - shahed
+  found_in:
+  - 12-air-sensing
+  notes: 14,000 sensors; 15,000 third-generation funded by NATO allies; $400-1,000 each; first generation used phones as CPUs;
+    ~20% of targets tracked by acoustics alone; Russian noise changes cut accuracy 3%; fused with radar, sent to tablet-equipped
+    fire teams; Zvook ~5% coverage. Government-run outlet; unattributed figures.
 - id: united24-2025-daly-starlink-military
   title: How Starlink Keeps Ukraine's Military Online and Ahead in Battle
   url: https://united24media.com/war-in-ukraine/how-starlink-keeps-ukraines-military-online-and-ahead-in-battle-6797
@@ -42356,6 +44754,26 @@
   - 08-prior-art-games
   notes: 'Army of Drones Bonus: points for DELTA-verified strikes, spent on Brave1 Market. Infantry kills tripled from 2 to
     6 points, which reportedly doubled confirmed eliminations within a month. State-run outlet.'
+- id: united24-2025-khomenko-fibre-detectors
+  title: Ukrainian Forces Deploy Fiber-Optic Drone Detectors to Counter Russian FPV Threats
+  url: https://united24media.com/latest-news/ukrainian-forces-deploy-fiber-optic-drone-detectors-to-counter-russian-fpv-threats-5457
+  publisher: United24 Media
+  authors:
+  - Ivan Khomenko
+  published: '2025-01-29'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  topics:
+  - fiber-optic
+  - radar
+  found_in:
+  - 14-frontline-counter-drone
+  notes: Same Madyar radar event; detection at 'several kilometers'; principle and maker not named. Listed but not cited inline.
 - id: united24-2025-khomenko-kometa-umpk
   title: Russia Equips Glide Bombs With 12-Channel 'Kometa' Antennas to Counter Ukrainian Jamming
   url: https://united24media.com/latest-news/russia-equips-glide-bombs-with-12-channel-kometa-antennas-to-counter-ukrainian-jamming-7653
@@ -42420,6 +44838,76 @@
   found_in:
   - c15-pokrovsk-myrnohrad
   notes: Pokrovsk Under Fire As Russia Commits 155,000 of Its Invasion Force to Single Front
+- id: united24-2025-litnarovych-h125-flir
+  title: 'Outdated Soviet Choppers, Cutting-Edge Sensors: Ukraine''s New Drone Killers'
+  url: https://united24media.com/latest-news/outdated-soviet-choppers-cutting-edge-sensors-ukraines-new-drone-killers-9939
+  publisher: UNITED24 Media
+  authors:
+  - Vlad Litnarovych
+  published: '2025-07-16'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - helicopters
+  - shahed
+  - cueing
+  found_in:
+  - 13-air-effectors
+  notes: 'Citing Defence Blog: unarmed H125/H225 with FLIR UltraFORCE 350 track Shaheds at night and guide Mi-8/Mi-24 gunships;
+    ground radar gives initial coordinates; aim to drop debris in open terrain; Mi-8/24 alone far less effective at night;
+    deployed from mid-2024.'
+- id: united24-2025-litnarovych-iris-range
+  title: 'Ukraine''s Fight With Shaheds Spurs Breakthrough: Robin Radar Almost Triples IRIS Detection Range'
+  url: https://united24media.com/latest-news/ukraines-fight-with-shaheds-spurs-breakthrough-robin-radar-almost-triples-iris-detection-range-11499
+  publisher: UNITED24 Media
+  authors:
+  - Vlad Litnarovych
+  - Tetiana Frolova
+  published: '2025-09-09'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e8-drone-kill-zone
+  topics:
+  - air-defence
+  - radar
+  found_in:
+  - 12-air-sensing
+  notes: 'Robin Radar IRIS software Long-Range Mode tested in Ukraine: 5 -> 12 km for drones above 180 km/h; field-upgradable;
+    vehicle-mountable. Vendor claim.'
+- id: united24-2025-toporkova-fpv-interceptors
+  title: 'Drone-On-Drone War: How Ukraine''s FPV Interceptors Are Beating Russia in the Sky'
+  url: https://united24media.com/war-in-ukraine/drone-on-drone-war-how-ukraines-fpv-interceptors-are-beating-russia-in-the-sky-7770
+  publisher: United24 Media
+  authors:
+  - Vlada Toporkova
+  published: '2025-04-22'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e7-kursk-pokrovsk
+  - e8-drone-kill-zone
+  topics:
+  - interceptors
+  - lancet
+  - orlan
+  found_in:
+  - 14-frontline-counter-drone
+  notes: 'Targets Orlan/ZALA/Supercam at 60-100 mph, ~1,500 m; interceptors need radar cueing; 38th Marine Bde interceptors
+    160 km/h, 35 km, 1 h, $1,600-2,500; Sternenko: Lancet strikes 180 (Aug 2024) to 24 (Nov 2024); doctrine: hit ZALA scouts
+    guiding Lancets; radio intelligence traced a Molniya to its operators. Government-run outlet.'
 - id: united24-2025-wesdorp-rubikon
   title: Russia's New Deadly Rubikon Unit Escalates Drone War Against Ukrainian Civilians
   url: https://united24media.com/war-in-ukraine/russias-new-deadly-rubicon-unit-escalates-drone-war-against-ukrainian-civilians-9916
@@ -42490,6 +44978,27 @@
   notes: Coldest winter in more than a decade, down to -20 C. Drone operators 'clearly see tracks in the snow'. Without snow
     'everything looks grey'. Bare treelines stay dark against snow, and cold makes thermal cameras more effective. Troops
     use white ponchos and ghillie suits. Ukrainian state-backed outlet.
+- id: united24-2026-f16-apkws
+  title: Ukraine turns F-16s into mass drone hunters using low-cost APKWS II guided rockets
+  url: https://united24media.com/latest-news/ukraine-turns-f-16s-into-mass-drone-hunters-using-low-cost-apkws-ii-guided-rockets-16009
+  publisher: UNITED24 Media
+  authors: []
+  published: '2026-02-18'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - fighters
+  - costs
+  - shahed
+  found_in:
+  - 13-air-effectors
+  notes: 'Citing Defense Express: first footage of F-16 APKWS II kill on a Shahed (16-17 Feb 2026), via Sniper pod laser designation;
+    pods and APKWS seen from Dec 2025; APKWS ~$30-31k; ~6 AAMs vs up to 28+ rockets per sortie; 511 rounds of 20 mm.'
 - id: united24-2026-kabachynskyi-pipelines
   title: Russian Troops Used Pipelines for Surprise Attacks. Now It's a Disaster
   url: https://united24media.com/war-in-ukraine/russian-troops-used-pipelines-for-surprise-attacks-now-its-a-disaster-16065
@@ -42578,6 +45087,27 @@
   notes: 'Zelensky: the Air Assault Forces operation (Jan-Aug 2026) retook 745 km2 and 26 villages and killed 9,550 Russians
     (6,600+ wounded), reported by C-in-C Drapatyi, CGS Skybiuk and DShV commander Apostol. State-run outlet relaying presidential
     claims.'
+- id: united24-2026-kohanets-giraffe
+  title: Swedish Giraffe Radars Improve Ukraine's Early Warning Against Russian Missiles and Drones
+  url: https://united24media.com/war-in-ukraine/swedish-giraffe-radars-improve-ukraines-early-warning-against-russian-missiles-and-drones-20117
+  publisher: UNITED24 Media
+  authors:
+  - Roman Kohanets
+  published: '2026-06-24'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - air-defence
+  - radar
+  found_in:
+  - 12-air-sensing
+  notes: 'MoD (23 Jun 2026): Giraffe family (PS-90, PS-100, 1X, AMB, Mk IV) ''performed well''; 360 deg; up to 100 km range
+    and 20 km altitude by variant; detects small slow low drones. Variants and numbers in Ukraine not stated.'
 - id: united24-2026-kosoy-ugv-kill-zone
   title: Ukraine plans 25,000 ground robotic systems by mid-2026, confirms UGV rise
   url: https://united24media.com/war-in-ukraine/how-ukraine-builds-its-ground-robots-for-the-kill-zone-18666
@@ -42643,6 +45173,28 @@
   - 04-ground-tactics-manpower
   notes: 'Russian sign-up bonuses in March 2026: federal minimum 400k RUB; regional mean 1.47M, median 1.55M; up to 3.6M (YaNAO,
     Magadan). Recruitment about 800/day, down about 20% (citing Kluge).'
+- id: united24-2026-litnarovych-gepard-17
+  title: 'Russian drones came one after another: Ukraine''s Gepard crew shot down 17'
+  url: https://united24media.com/war-in-ukraine/russian-drones-came-one-after-another-ukraines-gepard-crew-shot-down-17-19881
+  publisher: UNITED24 Media
+  authors:
+  - Vlad Litnarovych
+  published: '2026-06-16'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e9-counteroffensive-26
+  topics:
+  - guns
+  - gepard
+  found_in:
+  - 13-air-effectors
+  notes: 'Cheetah crew: 17 drones in one night over Khmelnytskyi (Western Air Command); up to 1,100 rds/min; bursts of 7-11
+    often enough, average 20-30 per target; up to 3 km altitude; Shaheds now above 1.5 km; commander 39 kills total; Belgium
+    refurbishing 15 Gepards. Title approximated from the URL.'
 - id: united24-2026-litnarovych-starlink
   title: Ukrainian Forces Launch Counterattacks as Russian Starlink and Telegram Communications Falter
   url: https://united24media.com/latest-news/ukrainian-forces-launch-counterattacks-as-russian-starlink-and-telegram-communications-falter-15881
@@ -46590,3 +49142,24 @@
     two ''Neptune 360 MC'' missiles were fired at a target 120 km out. It covers the 26 and 30 Apr strikes (command post,
     Strela-10, Repellent-1 EW), the 8 May airborne assault with eight Mi-8s (one Mi-14 and a boat lost), and Bohdana and Caesar
     moved by Danube pontoon. Special forces landed on 7 Jul. The framing is A2/AD: cut the supply, don''t storm.'
+- id: zaxid-2022-eppo-launch
+  title: З'явився мобільний застосунок для допомоги силам ППО виявляти ворожі цілі
+  url: https://zaxid.net/zyavivsya_mobilniy_zastosunok_dlya_dopomogi_silam_ppo_viyavlyati_vorozhi_tsili_n1551087/amp
+  publisher: Zaxid.net
+  authors: []
+  published: '2022-10-13'
+  accessed: '2026-11-18'
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras:
+  - e3-counteroffensives-22
+  topics:
+  - air-defence
+  - eppo
+  found_in:
+  - 12-air-sensing
+  notes: Launch of ePPO by Tekhnari on Google Play; choose type, point the phone in the direction the target is moving, press
+    the red button; marker appears on air-defence maps next to radar data; Diia login 'so that enemies and fools don't interfere
+    with gunners with false targets'.

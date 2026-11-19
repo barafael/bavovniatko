@@ -17,7 +17,7 @@
   - fiber-optic
   - counter-uas
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Khyzhak Patrol Police Brigade video: perched fibre FPVs on standby by roads found and killed with FPVs and bombers;
     ''we constantly have to monitor the airspace''. No wait-time figures. Relays Militarnyi.'
 - id: militarnyi-2025-safronov-dormant-fpvs
@@ -38,7 +38,7 @@
   - waiting-drones
   - counter-uas
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: '5th Assault Brigade destroys several ''zhduny'' before launch (Oct 2025). Perch: on the ground, in bushes, or hovering
     low over a field; operator activates on a target. Method of destruction not stated.'
 - id: devua-2025-khandusenko-zhduny
@@ -60,7 +60,7 @@
   - fiber-optic
   - counter-uas
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Zhduny wait on roads or high points ''sometimes a whole day''; mostly fibre, some solar panels; TAF tests: 8,000
     mAh ~30% used in 3 days, 15,000 mAh ~30% in 2 weeks (manufacturer). Hard to see from the air; route sweeps by drone; grenade,
     cut fibre or strike operator; ''practically no effective countermeasure'' (Narozhnyi). Ukrainian radio waiting drones
@@ -85,7 +85,7 @@
   - fiber-optic
   - rubikon
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: Fibre FPVs wait up to 12 h (Roy); Rubikon saturates 100-300 m road sections, group strikes, drones detonated under
     vehicles (Perpetua, via X); major factor cutting Sudzha road Feb 2025; Ukrainian drone sweeps of routes. Analyst commentary
     relying on X posts.
@@ -108,7 +108,7 @@
   - ew
   - counter-uas
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: '58th Bde operator ''Potter'', Kharkiv sector: FPV hidden ''under the road'' for the return trip; stationary EW likely
     stopped lift-off; detonation absorbed by engine guard; four concussed; two jammed drones nearby; Russian free-roaming
     ''hunter'' FPVs; fibre drones now used on pickups.'
@@ -131,7 +131,7 @@
   - detection
   - acoustic
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Concepts, not fielded: microphone arrays (conventional mics struggle beyond ~100 m; fibre drones louder because
     of spool weight), IR laser sweep catching fibre reflection (Kara Dag), motor heat. Spool several kg; ranges ~2 to ~20
     km; turrets, net launchers, shotguns, lasers studied.'
@@ -154,7 +154,7 @@
   - radar
   - interceptors
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Birds of Magyar: mobile radar warns of fibre FPVs several km out, own drone intercepts; Brovdi: radars every 2-4
     km of front. TWZ assesses likely Ku-band; limited early warning; commercial radar emissions can be detected, triangulated
     and targeted.'
@@ -176,7 +176,7 @@
   - radar
   - interceptors
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Same event as twz-2025-altman-fibre-radar: mobile radar detects fibre FPV (likely ''Prince Vandal of Novgorod'',
     ~10 km spool) and cues a kamikaze drone; ''radar every 2-4 km''; detectors cannot see fibre drones.'
 - id: united24-2025-khomenko-fibre-detectors
@@ -197,7 +197,7 @@
   - fiber-optic
   - radar
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: Same Madyar radar event; detection at 'several kilometers'; principle and maker not named. Listed but not cited inline.
 - id: euromaidan-2025-martyniuk-fibre-trace
   title: 'Forbes: Ukrainians track Russian fiber-optic drones by following cables to hidden base'
@@ -217,7 +217,7 @@
   - fiber-optic
   - operator-hunting
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Relays David Axe (Forbes, 19 Feb 2025): Kara Dag Brigade south of Vodyane followed sunlight-reflecting fibres to
     a Russian crew in snow-covered buildings and struck it with FPVs (post dated 18 Feb 2025).'
 - id: euromaidan-2025-axe-fibre-everywhere
@@ -238,7 +238,7 @@
   - fiber-optic
   - operator-hunting
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: Fibre litter around Pokrovsk and Chasiv Yar makes tracing 'difficult, if not impossible'; many fibres lead to abandoned
     sites; buildings block radio FPVs but fibre FPVs fly through doors/windows; Apr 2025 Birds of Magyar fibre FPV hits a
     BMP inside a warehouse.
@@ -259,7 +259,7 @@
   topics:
   - fiber-optic
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: '4th Ranger Regiment ''Khyzhak'': cables everywhere, could be booby traps, slow night missions; snags stop flights;
     visible only in direct sunlight or certain angles; typical range 10-25 km, Russian ~50 km types; nets not a guarantee.
     Date is the Yahoo ''updated'' stamp.'
@@ -281,7 +281,7 @@
   - operator-hunting
   - e-points
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Brovdi (USF commander) makes Russian operators the main target (per ''Roy''); e-points: 25 killed operator, 12 wounded
     operator, 12 killed soldier, 8 wounded; fibre tracing, short-range strikes on dugouts, deep strikes on fibre plants; Russian
     bloggers advise camouflage, frequent moves, false antennas, separating operators from engineers.'
@@ -303,7 +303,7 @@
   - rubikon
   - operator-hunting
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Relays RBC: Fedorov says Rubikon was created to hunt Ukrainian drone operators; answer is maximum remote control,
     then autonomy (years away). No methods described.'
 - id: twz-2024-newdick-aero-azimuth
@@ -324,7 +324,7 @@
   - direction-finding
   - operator-hunting
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Kvertus Aero Azimuth on an Aerobavovna aerostat (7 days aloft, 25 kg payload): passive SIGINT on operator emissions;
     ~37 mi detection raised vs ~9 mi ground version; triangulation at 15-19 mi; vendor claims, deployment status unclear.'
 - id: kyivpost-2026-chuika-civilians
@@ -343,7 +343,7 @@
   topics:
   - detectors
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Chuika 3.0 (BlueBird): passive analogue-video detector, up to 4 km against FPV and fixed-wing, audible alarm, shows
     the drone''s feed; on civilian sale for UAH 30,840 (~$690); Fedorov: detectors ''should be everywhere''.'
 - id: esd-2025-felstead-obriy
@@ -363,7 +363,7 @@
   topics:
   - detectors
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: Obriy 1.3 reads FPV video in 1080-1360, 2370-2510 (or 2700-4040) and 4900-6050 MHz; typical ~2.5 km, up to 5 km;
     380 g; optional jammer integration, video app, control-frequency display; 1.5 to cover 0.3-7 GHz; 2.0 to add mesh triangulation.
     Vendor interview.
@@ -385,7 +385,7 @@
   - detectors
   - fiber-optic
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Produced in cooperation with Kara Dag. Digital video detectable but not viewable on cheap devices; subscription
     updates because controls change weekly; Azov EW specialist wants 200 MHz-15 GHz; Rob Lee: up to 50% fibre FPVs in some
     Russian units; auto-jammer coupling (''No threat, no activation'').'
@@ -408,7 +408,7 @@
   - detectors
   - waiting-drones
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'First-hand: Tsukorok obsolete by late 2024; Chuika/Whoover/Dzyga show feeds; soldiers carry several detectors; poor
     distance sense; Druzhkivka Jan 2026 Molniya <1 km, ''a couple dozen seconds'' from impact; Kostiantynivka Dec 2025 fibre
     ''sleeper'' by the road, escaped at >160 km/h (claims fibre drones cannot catch cars >~120 km/h).'
@@ -431,7 +431,7 @@
   - detection
   - fiber-optic
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'ZVOOK NW0 tactical acoustic sensor: 150-450 m declared, 360°, AI, claims fibre FPV detection, 15-20 W, fibre/twisted
     pair/LTE/LoRa links, spacing 400-600 m. Vendor claims.'
 - id: euromaidan-2026-zoria-cd-t10
@@ -453,8 +453,8 @@
   - radar
   - detectors
   found_in:
-  - frontline-counter-drone
-  - air-sensing
+  - 14-frontline-counter-drone
+  - 12-air-sensing
   notes: 'Contra-Drone CD-T10 X-band: 15 km, 3 km altitude, AI bird filtering; tested with mobile fire groups; deliveries
     end 2026. Sense 4 detector: four bands to 8.2 GHz, >20% of Russian drones in 6-8.2 GHz (developer), UAH 42,000. Vendor
     claims via Oboronka.'
@@ -476,7 +476,7 @@
   - detectors
   - russia
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Beskrestnov: Russian mast-mounted lights by equipment routes with states ''FPV absent / nearby / far away''; probably
     an RF detector, possibly acoustic (speculative). Title paraphrased.'
 - id: militarnyi-2024-kvertus-infantry-ew
@@ -498,7 +498,7 @@
   - ew
   - counter-uas
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Kvertus demo: small arms ''ineffective but still common''; AD Counter FPV F2 M30 dome 420-1050 MHz, 150 m, 24 h;
     AD G-6+ gun 1.5 km, 30°, 6.5 kg; Backpack F3 U 850-5900 MHz, 150 m, 180 min, <=15 kg; Kraken F3 vehicle 700-1050 MHz,
     >200 m, 30/50 W, ~40 kg, UAH 350-400k. Vendor specs.'
@@ -519,7 +519,7 @@
   topics:
   - ew
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: '58th Bde staged trial (via Armyinform): dome jammer suppressed every Mavic and FPV launched; no bands, radius or
     sample size; fibre not mentioned. Unit claim.'
 - id: bi-2025-baker-panic-jamming
@@ -542,7 +542,7 @@
   - iff
   - fratricide
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Zhluktenko (USF): drones ''all sound the same''; infantry jam all bands out of fear, or shoot every drone; operators
     announce flights in Signal group chats; crowded frequencies show others'' feeds.'
 - id: tsn-2026-shostak-molniya-ew
@@ -563,7 +563,7 @@
   - ew
   - molniya
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Beskrestnov: Molniya video detectable by ELINT, but its control receiver does not transmit, so the control band
     could be ~150-2800 MHz; operator 30-60 km away; ''signal chaos''; EW teams suppress some by experience and coordination.'
 - id: euromaidan-2026-vivdych-ai-molniya
@@ -585,7 +585,7 @@
   - autonomy
   - interceptors
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'First intercept of AI Molniya (no control antenna, onboard computer, anti-tamper charge) over Zaporizhzhia with
     General Cherry AIR and Bullet interceptors; Beskrestnov: low radar and IR signature may delay detection until nearly on
     target; General Cherry 43% of Molniya kills in Mar 2026; up to 10 Molniyas a day on the Zaporizhzhia axis; 50th Varyag
@@ -609,7 +609,7 @@
   - fiber-optic
   - shotguns
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: '151st Training Centre (Donik): Russian 15-inch fibre FPVs with warheads near TM-62 mass; 10-15 m life-threatening;
     About Weapons: safe distance >=40-50 m; rifle at 50-100 m; No. 1-5 shot too fine; some mobile fire teams carry only shotguns;
     drones fly through net gaps.'
@@ -630,7 +630,7 @@
   - shotguns
   - fiber-optic
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Known only from search-engine excerpts (the .nl URL redirected and the article was not fetched): trainers (Dronarium,
     KRUK) call the shotgun a mechanical stopgap; ''EVERY unit is equipped with a shotgun''; effectiveness depends on training.'
 - id: trenchart-2026-axe-laser-roads
@@ -651,7 +651,7 @@
   - waiting-drones
   - fiber-optic
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: Purported Russian video of a drone sweeping a road with a laser, perhaps against fibre 'waiters'; gun-armed UGVs
     reportedly patrol roads to find waiting drones. Speculative; paywalled beyond the excerpt.
 - id: united24-2025-toporkova-fpv-interceptors
@@ -674,7 +674,7 @@
   - lancet
   - orlan
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Targets Orlan/ZALA/Supercam at 60-100 mph, ~1,500 m; interceptors need radar cueing; 38th Marine Bde interceptors
     160 km/h, 35 km, 1 h, $1,600-2,500; Sternenko: Lancet strikes 180 (Aug 2024) to 24 (Nov 2024); doctrine: hit ZALA scouts
     guiding Lancets; radio intelligence traced a Molniya to its operators. Government-run outlet.'
@@ -697,7 +697,7 @@
   - orlan
   - radar
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: '113th TDF battery and Phoenix (Kharkiv): radar tracks scouts from launch; live map with speed, altitude, emissions;
     pilot+navigator in bunker, sapper launches away from it; ~$600 interceptor vs $30-120k scout; scouts at 4-5 km, rear-view
     cameras, decoy drones; daylight gun fire at scouts had been barred; interceptors weak at night; misses flown home to disarm.'
@@ -720,7 +720,7 @@
   - lancet
   - air-defence
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: Lancet hit a dummy IRIS-T launcher in Kherson whose camouflage had 'failed'; dozens of decoys on the front; Metinvest
     metal decoys with heat and radar sources; M777 replica ~£800, ~30 min to erect.
 - id: twz-2023-newdick-su25-decoy
@@ -742,7 +742,7 @@
   - decoys
   - lancet
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 30 Nov 2023 Lancet strike, with Orlan-type relay/overwatch, on a detailed Su-25 decoy at Dolgintsevo (Kryvyi Rih),
     ~45 mi from the front; a real MiG-29 (Sep) and Su-25 (Oct) hit there earlier; Lancet range ~45 mi.
 - id: armyrecognition-2023-lancet-trml4d
@@ -763,7 +763,7 @@
   - radar
   - air-defence
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: Social-media video of a Lancet hitting an IRIS-T SLM TRML-4D radar; no location, uploader or independent confirmation;
     other reports call it damaged rather than destroyed.
 - id: euromaidan-2026-zoria-six-air-defence
@@ -786,7 +786,7 @@
   - radar
   - deep-strike
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: 'Brovdi: 12-14 Jan 2026 USF mid-range drones (>10 kg warheads; 412th Nemesis, 413th Raid) hit Tor, Tor-M2, Buk-M1,
     Buk, Strela-10 and a Vityaz 50N6E radar 46-160 km behind the line; target acquisition not described. Official claim.'
 - id: kyivindependent-2026-rushton-upper-hand
@@ -808,6 +808,6 @@
   - interceptors
   - air-defence
   found_in:
-  - frontline-counter-drone
+  - 14-frontline-counter-drone
   notes: '50 km fibre spool ~$300 to ~$2,500; radio FPV from ~$350; interceptors regularly kill Lancets and thousands of Russian
     recon drones; CIR: attacks on Russian air defence/EW up 300% in Mar-Apr 2026, nearly 80 systems.'

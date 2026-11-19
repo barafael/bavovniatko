@@ -1,0 +1,30 @@
+{"pair": "b6e76184b531", "relation": "none", "rationale": "Simulator weapons and fielded MFG weapons in 2026 are different subjects."}
+{"pair": "bc757aa1f1be", "relation": "none", "rationale": "Production rate and flight speed are different quantities."}
+{"pair": "be2f11e0ebad", "relation": "none", "rationale": "Speed and detection-to-kill time are different quantities."}
+{"pair": "c1d3cfc5b036", "relation": "none", "rationale": "The absence of RCS data and decoys in one strike are unrelated."}
+{"pair": "c2b376d5a432", "relation": "refines", "from": "claim:c12_0041_07", "to": "claim:c12_0005_14", "strength": 0.6, "rationale": "Details the Parodiya decoy whose Luneburg lenses give it a Shahed-like radar return."}
+{"pair": "c33e105f0de7", "relation": "duplicates", "from": "claim:c14_0020_05", "to": "claim:c02_0010_70", "strength": 0.85, "rationale": "The same list of ground counters to fibre drones from the same United24 source."}
+{"pair": "c6ec84b09a92", "relation": "none", "rationale": "Date of scale use and engagement time are different facts."}
+{"pair": "c8d57d686d4e", "relation": "none", "rationale": "Gepard/Skynex overflight limits and the 2023 counter-Shahed mix are different assertions."}
+{"pair": "ccc86dd1c2e5", "relation": "supports", "from": "claim:c14_0009_01", "to": "claim:c14_0005_01", "strength": 0.6, "rationale": "Both say detectors such as Chuika, Obriy and ZORKO show the attacker's analogue camera feed; sources overlap.", "independent": false}
+{"pair": "cd37e6565733", "relation": "none", "rationale": "The real Su-25 destroyed at Dovhyntseve and the decoy Su-25 struck later are different events."}
+{"pair": "ce176d5dacd7", "relation": "none", "rationale": "The absence of RCS data and the composition of one strike are unrelated."}
+{"pair": "d2224d631f14", "relation": "supports", "from": "claim:c14_0044_11", "to": "claim:c14_0005_16", "strength": 0.6, "rationale": "Both say waiting drones hid under nets; the United24 source is shared.", "independent": false}
+{"pair": "d2929f93d4b1", "relation": "refines", "from": "claim:c14_0009_02", "to": "claim:c14_0005_01", "strength": 0.7, "rationale": "Splits the 2.5–4 km detector range into Chuika about 4 km and Obriy about 2.5 km."}
+{"pair": "d2a7149f7e3e", "relation": "none", "rationale": "Decoy speeds and the composition of one strike are different assertions."}
+{"pair": "d3e8118af448", "relation": "supports", "from": "claim:c13_0009_08", "to": "claim:c13_0059_04", "strength": 0.6, "rationale": "The November 2023 MFG kit with ZU-23-2 and M75 corroborates the 2023 counter-Shahed mix; the Militarnyi source is shared.", "independent": false}
+{"pair": "d42193d30f99", "relation": "none", "rationale": "Flight speed and production rate are different quantities."}
+{"pair": "d70be4453cd3", "relation": "supports", "from": "claim:c13_0029_16", "to": "claim:c13_0059_10", "strength": 0.5, "rationale": "The first APKWS Shahed kill footage in February 2026 corroborates APKWS on F-16s in that period; same source.", "independent": false}
+{"pair": "d772cd363239", "relation": "none", "rationale": "Different Molniya variants and different detection problems."}
+{"pair": "dcde00565f22", "relation": "supports", "from": "claim:c13_0053_04", "to": "claim:c12_0005_14", "strength": 0.7, "rationale": "Both say decoys carry Luneburg lenses to look like Shaheds on radar; the Gwara source is shared.", "independent": false}
+{"pair": "dd23ac0c07c1", "relation": "supports", "from": "claim:c14_0011_05", "to": "claim:c14_0009_04", "strength": 0.5, "rationale": "Widening Chuika 4.0's bands for Molniya video underlies its showing Molniya video; same source.", "independent": false}
+{"pair": "e568aa2c4d16", "relation": "supports", "from": "claim:c13_0033_05", "to": "claim:c13_0005_16", "strength": 0.6, "rationale": "Both describe radar-cued Sting launch and piloting over a video link; the Reuters source is shared.", "independent": false}
+{"pair": "e9091af4fe42", "relation": "refines", "from": "claim:c14_0009_03", "to": "claim:c14_0005_02", "strength": 0.6, "rationale": "Qualifies detectors going blind on digital video: they still detect it but cannot show it."}
+{"pair": "ebc6adbd5848", "relation": "supports", "from": "claim:c13_0029_10", "to": "claim:c13_0059_08", "strength": 0.7, "rationale": "Both report MANPADS and R-60 missiles on Shaheds against Ukrainian helicopters; the TWZ source is shared.", "independent": false}
+{"pair": "ed1cb4df6e68", "relation": "duplicates", "from": "claim:c14_0037_01", "to": "claim:c11_0028_01", "strength": 0.95, "rationale": "The same Oryx finding that Lancet hits until March 2023 were mostly artillery, radars and SAM launchers."}
+{"pair": "edb3ac3488bf", "relation": "supports", "from": "claim:c01_0022_07", "to": "claim:c14_0040_07", "strength": 0.6, "rationale": "Militarnyi's date of Brovdi taking command on 3 June 2025 corroborates his being the new USF commander in June 2025.", "independent": true}
+{"pair": "ef617ad234a0", "relation": "supports", "from": "claim:c12_0005_14", "to": "claim:c12_0052_03", "strength": 0.5, "rationale": "Decoys with Luneburg lenses looking like Shaheds supports operators having to judge Shahed or decoy; the ISIS source is shared.", "independent": false}
+{"pair": "f2a398638334", "relation": "none", "rationale": "Missile prices and service presence are different facts."}
+{"pair": "f8dc32ca8eee", "relation": "refines", "from": "claim:c02_0010_91", "to": "claim:c14_0022_02", "strength": 0.6, "rationale": "Gives the first Zaporizhzhia tunnel's 6.4 km length and plans."}
+{"pair": "fae9b8344a1a", "relation": "none", "rationale": "Detector alarm features and detection ranges are different facts."}
+{"pair": "fe8adc24b50a", "relation": "duplicates", "from": "claim:c13_0046_13", "to": "claim:c02_0010_109", "strength": 0.9, "rationale": "The same Lima-Quant ban by brigade commanders for blinding their Mavics, same Forbes source."}

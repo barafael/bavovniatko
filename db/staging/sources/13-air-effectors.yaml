@@ -18,7 +18,7 @@
   - mobile-fire-groups
   - air-defence
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Mykolaiv anti-drone units of about six (police, army, TDF, National Guard); ~10 min from alert to position; tablets and residents'' Telegram reports; thermal sensor plus laser marking; .50 cal from a Russian tank; Shaheds about $20k; one team 3 kills by early Nov; firing points chosen for civilian safety; no injuries in Mykolaiv, deaths from debris in Kyiv. Lushenko: fighters vs $20k drones ''completely wasteful''.'
 - id: twz-2022-trevithick-drone-hunters
   title: Ukrainian Teams Hunt Russian Drones With Laser Rifles, Gun Trucks, Apps
@@ -39,7 +39,7 @@
   - mobile-fire-groups
   - air-defence
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Largely relays the Washington Post: small ad hoc teams, thermal spotter then laser marker, PKT twin mount on a UAZ-452, MANPADS on vehicles the exception; Telegram reports; ''hard to know which unit destroyed a drone''. US announced 150 heavy MGs with thermal sights for C-UAS (23 Nov 2022). Laser model (IZLID-type) is TWZ''s inference.'
 - id: defenceexpress-2022-mfg-tactics
   title: Ukrainians apply mobile firing groups tactics to create effective air defense
@@ -59,7 +59,7 @@
   - mobile-fire-groups
   - manpads
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'MFG = 4-5 people, usually 2 MANPADS, radio, vehicle, fed ''centralized information''; National Guard ~130 MFGs among 250+ firing groups; 223 Shahed-136 destroyed since 13 Sep; Ihnat (to RFE/RL): 85% of Shaheds downed; reports rarely say which means killed a drone.'
 - id: pravda-2023-balachuk-pavliuk-mobile-groups
   title: Ukraine's Ground Forces show Shahed and "missile hunters" capable of deploying in 1 minute
@@ -79,7 +79,7 @@
   - mobile-fire-groups
   - kyiv
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Lt Gen Pavliuk (Telegram): Kyiv mobile fire teams in off-road cars with heavy MGs, thermal imagers, laser designators; ready in no more than one minute. No cueing or kill data.'
 - id: militarnyi-2023-safronov-mobile-teams
   title: Ukraine Ramps Up Mobile Air Defense Teams to Combat Russian Drone Onslaught
@@ -103,7 +103,7 @@
   - ew
   - acoustic
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'MFGs since spring 2022: Mistral on SUVs; PKT/DShKM/Maxim/Browning; ZU-23-2 on trucks; Zastava M75 20 mm with HikVision thermal to tablet; Nota mobile EW; Spaceray searchlights detect drones to ~2 km; acoustic sensors into one database; Come Back Alive comms kits. 2022: 440 Shahed-136, 78 hit (~18%), which conflicts with ~95% reported downed elsewhere.'
 - id: ukrinform-2023-ihnat-mfg-40pct
   title: 'Drone attack: nearly 40% of Shaheds downed by mobile groups'
@@ -122,7 +122,7 @@
   - mobile-fire-groups
   - shahed
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Ihnat on the telethon: 75 Shaheds launched, 74 downed; MFGs ~40% that night, earlier up to 50% but only 5-10 drones; MFGs save costly SAMs. Official claim.'
 - id: fakty-2023-ihnat-mfg-most
   title: 'They shoot down most of the Shahed: Ihnat on the effectiveness of mobile fire groups'
@@ -142,7 +142,7 @@
   - mobile-fire-groups
   - shahed
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Ihnat: MFGs now shoot down most Shaheds; 3,700 launched since Sep 2022, 2,900 destroyed; lets Ukraine stock SAM missiles; waiting for automatic systems. Official claim; no percentage for MFGs.'
 - id: euromaidan-2023-mfg-five-shaheds
   title: Ukrainian mobile machine gun units down five Russia's explosive drones
@@ -161,7 +161,7 @@
   - mobile-fire-groups
   - shahed
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Air Force: 5 of 5 Shaheds downed by Air Force and Defense Forces MFGs; describes MFGs as small units with MGs or AA guns and searchlights deployed along routes to kill ''low-flying slow Shaheds''.'
 - id: militarnyi-2024-special-sights-shaheds
   title: The Ukrainian military uses special sights to shoot down Shaheds
@@ -181,7 +181,7 @@
   - manpads
   - sights
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Digital thermal sight with automatic target acquisition on M2HB; thermal sight on Strela-2; Igla with Guide TK 431 thermal imagers (100 from the Prytula Foundation for Navy and Air Command South). No results or ranges.
 - id: militarnyi-2024-searchlights
   title: Ukraine Tests New Searchlights for Drone Detection in Night Skies
@@ -200,7 +200,7 @@
   - mobile-fire-groups
   - searchlights
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Ukrainian-built searchlights tested by mobile AD groups, part of a set with a laser and thermal sight to identify, track and adjust fire. No power or range given.
 - id: kyivindependent-2024-york-skynex
   title: 'Skynex: The German drone destroyer reinforcing Ukraine''s air defense'
@@ -221,7 +221,7 @@
   - skynex
   - costs
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Second Skynex delivered (Apr 2024); Revolver Mk3 1,000 rds/min, 4 km; AHEAD; Skymaster BMS; 'just over $4,000' per target (citing RBC-Ukraine); Shahed export ~$193k, Russian $10-50k; NASAMS $0.6-1m, Patriot ~$4m, IRIS-T ~$450k.
 - id: onlineua-2024-oleshchuk-mfg-80pct
   title: Ukraine's air defence shot down over 2000 Russo-Iranian Shaheds since 2024 beginning
@@ -241,7 +241,7 @@
   - shahed
   - lasers
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Air Force commander Oleshchuk: 2,277 Shaheds since 1 Jan 2024, ~86% destroyed, MFGs >80% of those downed; ''thousands of servicemen'' nightly; MFG kit (NVGs, thermals, laser pointers, searchlights, EW, software); future MFGs to add interceptor operators and combat lasers. Official claim.'
 - id: therecord-2024-antoniuk-spoofing-phones
   title: Ukrainian military's anti-drone GPS spoofing spills into civilians' phones
@@ -262,7 +262,7 @@
   - gnss
   - side-effects
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'General Staff: EW spoofing used against Russian air attacks can shift phones'' location and time; phones showed Moscow, Bryansk, Kursk, Belgorod; missed alarms, taxis; advice to disable automatic time. Sep-Oct 2024: record 3,482 drones.'
 - id: bi-2025-loh-shahed-crpa-16
   title: Russia is leveling up its Shahed drones with new Chinese antennae to defeat Kyiv's jammers, Ukrainians say
@@ -284,7 +284,7 @@
   - crpa
   - shahed
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Chinese CRPAs on Shaheds from Jan 2025 (8 elements), a 16-element dish reported by Beskrestnov in Mar 2025, Russian 12-element Kometa found Feb 2025; Ihnat: ''The more antennas the drone has, the more suppression systems we need.'''
 - id: euromaidan-2025-tryzub-frontline-report
   title: 'Frontline report: Ukraine''s sci-fi laser weapon Tryzub blinds Russian pilots and melts drones mid-air'
@@ -302,7 +302,7 @@
   topics:
   - lasers
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Relays Sukharevskyi''s Tryzub reveal: claimed 3 km vs FPVs/bombs/missiles, 5 km vs Shaheds/aircraft, 10 km dazzling; power classified; joystick aiming; no engagement cited, service date unknown. Author''s projections are speculative; low reliability for capability claims.'
 - id: kyivindependent-2025-ihnat-high-altitude
   title: Russia has changed drone attack tactics against Ukraine to bypass air defense, Ukraine's Air Force says
@@ -322,8 +322,8 @@
   - mobile-fire-groups
   - decoys
   found_in:
-  - air-effectors
-  - air-sensing
+  - 13-air-effectors
+  - 12-air-sensing
   notes: 'Ihnat (RBC interview): Shaheds above 2 km, route changes, terminal dive; ''more visible to our radars'' but beyond small arms, heavy MGs and MFGs; ~60% attack drones / 40% Parodiya decoys; 26 May 2025 record of 355.'
 - id: mod-2025-volunteer-air-defence-groups
   title: Government approves the formation of air defense groups within volunteer formations of territorial communities to counter strike drones
@@ -343,7 +343,7 @@
   - volunteers
   - rules
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Cabinet pilot (11 Jun 2025): volunteer air-defence groups under TDF commanders, and the Air Force Command for AD tasks; members exempt from mobilisation, trained; may use small arms, strike UAVs, private manned aircraft, EW, AI; private aircraft registration in 10 days; military social guarantees; funding from MoD, local budgets, UNITED24.'
 - id: trenchart-2025-axe-wasting-f16s
   title: Ukraine Is Wasting Its F-16s
@@ -366,7 +366,7 @@
   - debris
   - ew
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Ustymenko killed after downing 7 targets (last blast likely damaged his F-16); 3 of 4 F-16 losses on AD patrols; 37 F-16s left; MiG-29 pilot Voroshylov wounded by drone debris (12 Oct 2022); argues jammers (Lima) are the cost-effective counter. Opinion-led.
 - id: kyivpost-2025-chereshnya-gerbera
   title: Ukrainian Drone Tech Outsmarts Russia's Shahed UAV Decoys
@@ -386,7 +386,7 @@
   - decoys
   - gerbera
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Maker claim: General Chereshnya AIR interceptor downed Gerberas for the first time; Gerbera foam-built, low radar signature, 4G modem for live video (open sources), ~300 km range unloaded. Kyiv Post could not verify the footage.'
 - id: gwara-2025-kulish-decoy-waves
   title: Russia shifts to massive waves of drone strikes, overwhelming Ukrainian air defense with numbers, decoy tactics
@@ -408,8 +408,8 @@
   - radar
   - mobile-fire-groups
   found_in:
-  - air-effectors
-  - air-sensing
+  - 13-air-effectors
+  - 12-air-sensing
   notes: 'Kharkiv: Parodiya looks like a Shahed on radar; Gerbera foam/wood, Luneburg lenses; radars cannot separate 3-4 simultaneous targets; decoys overload radar and MFGs and map AD; Shaheds very low (to ~200 m) or 1,000-4,000 m, groups of 5-10, ~200 km/h; 5,438 Shaheds in June 2025.'
 - id: united24-2025-litnarovych-h125-flir
   title: 'Outdated Soviet Choppers, Cutting-Edge Sensors: Ukraine''s New Drone Killers'
@@ -431,7 +431,7 @@
   - shahed
   - cueing
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Citing Defence Blog: unarmed H125/H225 with FLIR UltraFORCE 350 track Shaheds at night and guide Mi-8/Mi-24 gunships; ground radar gives initial coordinates; aim to drop debris in open terrain; Mi-8/24 alone far less effective at night; deployed from mid-2024.'
 - id: euromaidan-2025-axe-gepard-math
   title: Ukraine just solved the hardest math problem in modern air defense – with a 1970s German gun
@@ -454,7 +454,7 @@
   - costs
   - ew
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: '~80 Gepards plus Cheetahs; ''a handful of rounds''; ''a few thousand dollars'' per Shahed; $181m for 300,000 rounds, then 180,000 more; LMM >$500k; 4 Jul 2025: 539 drones/decoys, 268 shot down, 208 diverted (likely jamming), 63 hit; Alchemist on dense 35 mm clouds. Shahed $50-150k is high against other estimates.'
 - id: espreso-2025-skynex-rounds
   title: How many smart-fused rounds does it take for Skynex to down a Shahed
@@ -474,7 +474,7 @@
   - guns
   - skynex
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Relays Defense Express: Skynex in use since spring 2023; about 10 AHEAD rounds per target, first round killed in an Aug 2025 video; each round releases 152 tungsten pellets; a system costs ~EUR73m (Italian contract, Jan 2025).'
 - id: gwara-2025-kulish-mfg-zu23
   title: Ukrainian mobile firing groups hunt for Russian Shaheds with guns unfit to efficiently down them
@@ -495,7 +495,7 @@
   - guns
   - shahed
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'MFG of 3 (2 on duty); ZU-23 on GAZ-66 with ZIR+ (optics, rangefinder, thermal, camera), 2,500 m effective; Shaheds at 1,500-2,800 m, sometimes 3,000; ''Readiness number one'' ~40 min before arrival; Gerberas reveal positions when fired on; red lights; gunner: ''every hundredth shot hits''; brigade moving to interceptors.'
 - id: armyinform-2025-68th-hunt-in-dark
   title: 'They hunt in the dark: how our anti-aircraft gunners fight against shaheds'
@@ -515,7 +515,7 @@
   - cueing
   - shahed
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: '68th Jaeger Brigade: teams of 3 on 2-h shifts, underground positions plus a spare (FPV threat); Browning ~4 km max, ~2 km effective; thermal sight; tablet in underground CP with all detected air targets; aim with lead; hold fire without visual; scout Shahed then others around positions; clouds hide targets. Ministry of Defence outlet.'
 - id: militarnyi-2025-kalchenko-shahed-rear-cameras
   title: New Cameras and Antennas Found on Downed Shaheds – Attempts to Counter Interceptors
@@ -536,7 +536,7 @@
   - interceptors
   - countermeasures
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Rear-view cameras above and below the hull, extra tail antennas, new video modem; likely to spot interceptors in the rear sector and evade, and to study interception tactics. Analysis via Beskrestnov's channel.
 - id: euromaidan-2025-sting-jet-first
   title: Ukraine's interceptor drone downs Russia's jet-propelled Shahed UAV in historic first
@@ -555,7 +555,7 @@
   - interceptors
   - jet-geran
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Sting kills of Geran-3 on 30 Nov 2025 (Sternenko); 138 Geran-3 launched; claimed 550-600 km/h but observed cruise 300-350 km/h for fuel, sprints near known AD; 50 kg warhead.
 - id: twz-2026-newdick-shahed-manpads
   title: Russian Shahed-136 Kamikaze Drones Now Carrying MANPADS Missiles
@@ -577,7 +577,7 @@
   - helicopters
   - countermeasures
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Igla-S or Verba carried in its tube atop a Shahed (one found intact, unused, in Chernihiv oblast); camera and RF modem, operator-triggered; aimed at Mi-8/Mi-24 drone hunters; no evidence of a kill; effectiveness 'questionable', possibly a deterrent.
 - id: rbc-2026-ihnat-interview-ranges
   title: Ukraine's Air Force explains how Russia's Shaheds are evolving
@@ -600,7 +600,7 @@
   - shahed
   - rules
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Ihnat: MGs effective to 1 km altitude; MANPADS to 4 km, effective ~2 km; Shaheds high or low along reservoirs/riverbeds on routes planned from satellite, SIGINT and weather; some carry cameras, SIMs, modems, Starlink, act as relays; over populated areas intercept means chosen mainly for civilian safety. Title approximated from the page.'
 - id: dronexl-2026-sunray
   title: Ukraine's Sunray laser burns drones out of the sky
@@ -619,7 +619,7 @@
   topics:
   - lasers
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Relays The Atlantic (Simon Shuster, 10 Feb 2026): Sunray, a telescope-like laser on a pickup, burned a small drone in seconds, silent, no visible beam; price given both as ''a few hundred thousand'' and ''a few million'' dollars; prototype; no Shahed claim. Title approximated from the URL.'
 - id: united24-2026-f16-apkws
   title: Ukraine turns F-16s into mass drone hunters using low-cost APKWS II guided rockets
@@ -639,7 +639,7 @@
   - costs
   - shahed
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Citing Defense Express: first footage of F-16 APKWS II kill on a Shahed (16-17 Feb 2026), via Sniper pod laser designation; pods and APKWS seen from Dec 2025; APKWS ~$30-31k; ~6 AAMs vs up to 28+ rockets per sortie; 511 rounds of 20 mm.'
 - id: frontliner-2026-derkachov-mfg-modernise
   title: 'The fight against Shaheds: why mobile fire groups need to be modernized'
@@ -660,8 +660,8 @@
   - cueing
   - interceptors
   found_in:
-  - air-effectors
-  - air-sensing
+  - 13-air-effectors
+  - 12-air-sensing
   notes: 'Chernihiv oblast, Feb 2026: crews of 2-3 in pickups; M2 with thermal most effective; Igla/Stinger vs faster targets; warnings often only after the drone is heard; Shaheds above 2 km; expert Romanenko proposes 30 kg vehicle radars; Fedorov''s ''anti-drone dome'' (radars, acoustics, Cerberus); weather grounds MFG interceptors; Igla seen on a Shahed; Shaheds carrying FPVs/mines hunt vehicles.'
 - id: reuters-2026-peleschuk-interceptors-gulf
   title: Inside the Ukrainian interceptor drones wanted around the Gulf
@@ -681,7 +681,7 @@
   - interceptors
   - sting
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Sting: quadcopter up to 280 km/h, ~37 km, pilot with HD camera feed and 360-degree antenna, FPV pilots learn in 3-4 days; ~$2,000 or less vs $20-50k Shahed; 3,000+ Shaheds since regular service in Jun 2025 (maker); 10,000+/month; second generation for jets.'
 - id: twz-2026-altman-merops
   title: Cheap Interceptor Drones Proven In Ukraine Protected U.S. Troops Against Iranian Shaheds
@@ -702,7 +702,7 @@
   - merops
   - costs
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Merops/Surveyor: >280 km/h, autonomous or piloted, onboard tracking sensors, collision or proximity kill; ~$15,000 each (Driscoll), Coyote ~10x; 13,000 bought by the US Army; unit = command station, launchers, drones. No Ukrainian kill counts.'
 - id: reuters-2026-hunder-defeat-shahed
   title: Inside Ukraine's drive to defeat the dreaded Shahed drone
@@ -724,7 +724,7 @@
   - weather
   - ew
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Kharkiv, 420th USF battalion: steer toward the radar dot until the Shahed is on camera; a few minutes from radar pop-up to leaving range; 10 launches, no Shahed found; fog aborts; ~1,000 crews; interceptors ~40% of kills (from ~25% in winter); EW nearly half on some nights; F-16 up to 10/night; Shahed 170 -> 200+ km/h made first interceptor useless in 4 months, upgraded to 300 km/h; 15-20% jets at ~400 km/h; cheapest interceptor <$1,500; ''Even if you use 50 drones...''.'
 - id: razomua-2026-tryzub-manual
   title: '"Tryzub" Strikes Aircraft at 5 km — But Manual Targeting. Where''s the AI?'
@@ -742,7 +742,7 @@
   topics:
   - lasers
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Tryzub (Celebra) shown by Sukharevskyi: 3 km vs drones/bombs/missiles, 5 km vs aircraft, 10 km dazzle; quote on shooting down aircraft above 2 km; joystick aiming, no visible auto-tracking; earlier burned FPVs, damaged recon UAV optics at 1,500 m; analysts call it a functional prototype; no cost or production plan; weather limits.'
 - id: euromaidan-2026-mukhina-one-click-interceptor
   title: 'One click from operator: Ukraine just shot down Russian Shahed with AI drone that automated 95% of kill'
@@ -762,7 +762,7 @@
   - interceptors
   - autonomy
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Fedorov: a Brave1 developer''s interceptor automated 95% of an engagement in Kharkiv oblast; operator selects target ''in software, one click'', AI recognises and guides on approach; prototype to combat in under a year.'
 - id: armyinform-2026-autonomous-interceptors
   title: Ukrainian-made interceptor drones are already autonomously take down Shahed-type UAVs
@@ -781,7 +781,7 @@
   - interceptors
   - autonomy
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Same event as the Fedorov announcement: operators designate a target, after authorisation the system navigates, detects, identifies, tracks and intercepts, up to 95% of operations; combat-tested in Kharkiv region.'
 - id: united24-2026-litnarovych-gepard-17
   title: 'Russian drones came one after another: Ukraine''s Gepard crew shot down 17'
@@ -801,7 +801,7 @@
   - guns
   - gepard
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Cheetah crew: 17 drones in one night over Khmelnytskyi (Western Air Command); up to 1,100 rds/min; bursts of 7-11 often enough, average 20-30 per target; up to 3 km altitude; Shaheds now above 1.5 km; commander 39 kills total; Belgium refurbishing 15 Gepards. Title approximated from the URL.'
 - id: dronexl-2026-kesteloo-skyfall-autonomy
   title: SkyFall's AI Interceptors Hunt Shaheds Without a Pilot's Eyes, and Ukraine Knows the Risk It Is Taking
@@ -822,7 +822,7 @@
   - autonomy
   - costs
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Draws on the NYT: P1-SUN pilot flies until shape is clear, hands over to auto-target (green box), commits strike; trained on 10,000+ interception videos; ~$1,000; dozens of AI-assisted strikes since Nov; claim of 50,000/month capacity; MaXon fixed-wing ~$3,500, first interceptions 8 Jun (Kharkiv); open question of per-target authorisation under saturation; pilot shortage.'
 - id: euromaidan-2026-mukhina-lebedenko-laser
   title: Deputy commander-in-chief says Ukraine's new laser can already kill FPVs
@@ -841,7 +841,7 @@
   topics:
   - lasers
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Lebedenko (via UNIAN): laser kills FPVs, ''already working on Shaheds'', laser AD in 2-3 months, better than MGs; Tryzub in final testing in May 2026, 5 km stated vs drones; no documented Shahed kill; date has slipped; line of sight, weather and dwell limits; cost per shot mainly electricity.'
 - id: lb-2026-amelina-merops-crews
   title: '''Drone itself is just ammunition''. An evening with crews training to operate Merops'
@@ -864,7 +864,7 @@
   - cueing
   - weather
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: Merops in Ukraine since May 2025; crews of 3-4; best data from a calibrated radar with a competent operator, flight-path programmes off by ~1 km; earlier interceptor searched from ~200 m with a poorer camera; onboard sensor locks from further; weather main limit; best shifts 47/54 and 32/34 kills/drones; ground station needs 32+ drones a month; Shahed evasion (Jul-Aug 2025) countered in ~2 weeks; jets slow when manoeuvring, one downed after 5 attempts.
 - id: dronewarfare-2026-cuas-costs
   title: 'Counter-UAS 101: Drone Defeat and Kinetic Mitigation'
@@ -886,7 +886,7 @@
   - interceptors
   - lasers
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Cost survey (last updated 5 Sep 2026; URL dated Feb 2026): AHEAD ~EUR1,119.50/round from a Romanian contract (EUR449.75m / 401,760 rounds, via Defense Express); 35 mm Gepard ~$600 (via Forbes, Hambling, Sep 2025); .50 cal $2.67-7; APKWS $20-35k; Merops ~$15k; laser <$5 and HPM ~$0.05 per shot (vendor claims). Anonymous; many derived figures; type is an aggregator, not a think tank proper.'
 - id: migflug-2026-grunwald-interceptors
   title: 'How Cheap Drone Interceptors Work: Sting, Coyote and Roadrunner'
@@ -907,7 +907,7 @@
   - sting
   - cueing
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Explainer: ground radar detects, Sting launched, pilot flies it in over video with a thermal camera, manual control in the final seconds; 343 km/h (maker); ~$2,100-2,500; ~3,900 kills by early 2026 (maker); depends on radar cueing and trained pilots; weather; jets. Secondary, aviation-blog source.'
 - id: onlineua-beskrestnov-guided-shahed-mfg
   title: Occupiers attack Ukrainian MVGs led by shaheeds — "Flash"
@@ -927,5 +927,5 @@
   - shahed
   - countermeasures
   found_in:
-  - air-effectors
+  - 13-air-effectors
   notes: 'Beskrestnov: ''another hit'' by a guided Shahed on an MFG crew while it engaged another Shahed; advises camouflage and pre-planned actions. Page shows 13 April without a year (likely 2026 given the article id); undated.'

@@ -4,7 +4,7 @@
 
 Pairs of claims that cannot both be true as stated, judged from rule-based candidates (db/tools/relate.py) and stored as `contradicts` edges. *Explained* means the difference has a stated cause (method, scope, date); *open* means it is unresolved. Claim ids resolve in the knowledge base; source ids in [sources.yaml](sources.yaml).
 
-143 distinct contradictions (duplicate claims collapsed): 143 explained, 0 open.
+146 distinct contradictions (duplicate claims collapsed): 146 explained, 0 open.
 
 ## 00 Timeline & eras
 
@@ -48,6 +48,10 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - `00-0074-52` Key figure: ISW's Russian net change from 8 March to 8 September 2026 was −195.19 km² for advanced areas and +361.47 km² including infiltration. *(claimant: Institute for the Study of War; `isw-2026-09-08-roca`)*
   - `07-0029-08` Computed from DeepStateMap versions, the net Russian territorial change in era e9 (Feb–Sep 2026) was +620 km², about 78 km² a month, against 444 km² recaptured by Ukraine. *(claimant: —; `deepstate-api-history`)*
   - *Resolution:* Different mappers and methods (ISW advanced/infiltration categories vs DeepState line), and the DeepState window includes February.
+- **explained** · strength 0.5 — The first Sting kill of a Geran-3 is dated December 2025 in one and 30 November 2025 in the other.
+  - `00-0056-06` The Sting interceptor drone made the first Geran-3 kill in December 2025. *(claimant: —; `wikipedia-sting-drone`)*
+  - `13-0037-04` On 30 November 2025 Stings made their first kills of jet Geran-3s, downing several of 138 launched. *(claimant: —; `euromaidan-2025-sting-jet-first`)*
+  - *Resolution:* Wikipedia likely dates by the report or the overnight raid of 30 November–1 December; Euromaidan's contemporaneous 30 November date is more specific.
 - **explained** · strength 0.5 — The SBU flew 117 FPVs in Spiderweb by the official account, while Butusov says 116 were launched.
   - `00-0055-09` In Operation Spiderweb on 1 June 2025 the SBU flew 117 FPVs from trucks against five Russian airbases. *(claimant: —; `euromaidanpress-2025-tril-spiderweb`)*
   - `c16-0026-13` Butusov says 150 drones were smuggled into Russia for Operation Spiderweb and 116 launched. *(claimant: Yurii Butusov; `texty-2025-butusov-pavutyna-preparation`)*
@@ -79,6 +83,10 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
 
 ## 01 Drones & uncrewed systems
 
+- **explained** · strength 0.7 — Beskrestnov's "about 10% in winter" conflicts with Reuters' about 25% for interceptor drones' share of Shahed kills in winter 2025–26.
+  - `01-0024-46` Beskrestnov said interceptor drones now destroy about 50% of incoming Shahed-types (May 2026), up from about 10% in winter. *(claimant: Serhii Beskrestnov; `kyivpost-2026-syrsky-may-interceptors`)*
+  - `13-0037-06` Reuters put interceptor drones' share of Shahed kills at about 25% in winter 2025–26. *(claimant: —; `reuters-2026-hunder-defeat-shahed`)*
+  - *Resolution:* Different claimants with unstated bases: Beskrestnov's is a rough estimate, possibly of all incoming Shaheds, and Reuters' may count only those downed.
 - **explained** · strength 0.5 · 3 judged pairs — SBU says 117 drones were used in Spiderweb while Butusov says 116 were launched.
   - `01-0029-46` Ukraine claims Operation Spiderweb used 117 drones, hit 41 aircraft and caused about $7bn in damage. *(claimant: Security Service of Ukraine (SBU); `kyivindependent-2025-york-spiderweb`)*
   - `c16-0026-13` Butusov says 150 drones were smuggled into Russia for Operation Spiderweb and 116 launched. *(claimant: Yurii Butusov; `texty-2025-butusov-pavutyna-preparation`)*
@@ -276,6 +284,13 @@ Pairs of claims that cannot both be true as stated, judged from rule-based candi
   - `10-0035-14` Ukrainska Pravda put an FPV's cost at $300–400. *(claimant: —; `pravda-2023-khalilov-fpv-negotiating-table`)*
   - `10-0035-16` Euromaidan Press put an FPV's cost at $600–1,000. *(claimant: —; `euromaidan-2023-voichuk-fpv-small-drones`)*
   - *Resolution:* Different outlets likely priced different builds (frame, camera, video link) and whether the warhead or radio is included.
+
+## 13 Shooting down long-range drones
+
+- **explained** · strength 0.8 — Beskrestnov's about 10% and Reuters' about 25% are incompatible figures for interceptor drones' share of Shahed kills in the same winter.
+  - `13-0037-05` Beskrestnov put interceptor drones' share of Shahed kills at about 10% in winter 2025–26. *(claimant: Serhii Beskrestnov; `kyivpost-2026-syrsky-may-interceptors`)*
+  - `13-0037-06` Reuters put interceptor drones' share of Shahed kills at about 25% in winter 2025–26. *(claimant: —; `reuters-2026-hunder-defeat-shahed`)*
+  - *Resolution:* Different claimants with unstated bases: Beskrestnov's is a rough estimate that may count all incoming Shaheds, and Reuters' share may count only those downed.
 
 ## c01 Chapter: The march on Kyiv
 

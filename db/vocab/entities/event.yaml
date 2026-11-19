@@ -1382,3 +1382,10 @@
   en: "NATO summit in Ankara"
   aliases: ["NATO summit in Ankara", "NATO Ankara summit"]
   note: "7–8 Jul 2026. NATO summit in Ankara; Trump said the US would license Ukraine to build Patriot interceptors."
+- id: event:volunteer_air_defence_groups_pilot
+  type: event
+  kind: policy
+  en: "Volunteer air-defence groups pilot"
+  uk: "Добровольчі групи ППО"
+  aliases: ["volunteer air-defence groups", "volunteer air-defence groups pilot"]
+  note: "From Jun 2025. Cabinet of Ministers pilot letting volunteer formations of territorial communities form air-defence groups under Territorial Defence commanders and, for air-defence tasks, Air Force Command."

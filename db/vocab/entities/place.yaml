@@ -1156,7 +1156,7 @@
   kind: airfield
   en: Dovhyntseve airbase
   uk: аеродром Довгинцеве
-  aliases: [Dovhyntseve air base, Kryvyi Rih airbase]
+  aliases: [Dovhyntseve air base, Kryvyi Rih airbase, Dolgintsevo airfield, Dolgintsevo]
   parent: place:kryvyi_rih
   geocode_query: Dovhyntseve, Kryvyi Rih, Dnipropetrovsk Oblast, Ukraine
 
@@ -8895,3 +8895,21 @@
   aliases: ["east", "the east"]
   note: "Notional: the eastern directions as a delivery destination, not a located place."
   no_geocode: true
+
+- id: place:belgium
+  type: place
+  kind: country
+  en: Belgium
+  uk: Бельгія
+  geocode_query: Belgium
+  countrycodes: be
+
+- id: place:khmelnytskyi_oblast
+  type: place
+  kind: oblast
+  en: Khmelnytskyi Oblast
+  uk: Хмельницька область
+  aliases: [Khmelnytskyi region]
+  parent: place:ukraine
+  geocode_query: Khmelnytskyi Oblast, Ukraine
+  countrycodes: ua

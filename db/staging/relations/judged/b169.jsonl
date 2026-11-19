@@ -1,0 +1,40 @@
+{"pair": "a0870e51c569", "relation": "supports", "from": "claim:c12_0041_01", "to": "claim:c13_0039_04", "strength": 0.6, "rationale": "A piston Shahed speed of about 200–210 km/h in 2024–25 corroborates Reuters' account of the speed-up to over 200 km/h.", "independent": true}
+{"pair": "a29eab270e71", "relation": "none", "rationale": ""}
+{"pair": "a545c031ba70", "relation": "supports", "from": "claim:c14_0040_04", "to": "claim:c14_0018_13", "strength": 0.8, "rationale": "The same LostArmour figure of about 15% of Rubikon strikes on radar, comms and EW, relayed by the same RFE/RL article.", "independent": false}
+{"pair": "ac3267a66198", "relation": "none", "rationale": ""}
+{"pair": "af2943cad731", "relation": "supports", "from": "claim:c13_0005_15", "to": "claim:c13_0049_10", "strength": 0.7, "rationale": "The Sting's roughly $2,000 price matches the Sting's $2,000–2,500 in the interceptor price list, from overlapping sources.", "independent": false}
+{"pair": "b1793e541e20", "relation": "weakens", "from": "claim:c14_0033_05", "to": "claim:c14_0033_04", "strength": 0.5, "rationale": "TAF battery tests showing waits of days to two weeks cast doubt on 12 hours as the ceiling; the analyst's estimate and the maker's bench test differ in method."}
+{"pair": "ba30903c0367", "relation": "supports", "from": "claim:c13_0059_09", "to": "claim:c02_0031_58", "strength": 0.8, "rationale": "ISIS's 8,161 and the MoD's 8,150 May 2026 launches agree within rounding; they are compiled separately, but both ultimately rest on Ukrainian Air Force reporting.", "independent": false}
+{"pair": "ba5a288d28d8", "relation": "none", "rationale": ""}
+{"pair": "bd244601bcbe", "relation": "none", "rationale": ""}
+{"pair": "bfc70bcebe2c", "relation": "none", "rationale": ""}
+{"pair": "bfd270244872", "relation": "weakens", "from": "claim:c13_0039_06", "to": "claim:c03_0027_070", "strength": 0.5, "rationale": "A Geran-3 cruising at only 300–350 km/h casts doubt on \"about 500 km/h or more\" as a figure for the whole jet family, the Geran-3 included."}
+{"pair": "c32935e200fd", "relation": "refines", "from": "claim:c12_0049_10", "to": "claim:c12_0005_15", "strength": 0.7, "rationale": "The full Oryx radar breakdown by type is consistent with the 32 36D6 and 30 P-18-family, from the same source."}
+{"pair": "c65fe20d8c7a", "relation": "refines", "from": "claim:c14_0033_04", "to": "claim:c14_0005_14", "strength": 0.7, "rationale": "Attributes the 12-hour waiting estimate in the combined claim to analyst Roy."}
+{"pair": "d29fce39d31d", "relation": "none", "rationale": ""}
+{"pair": "d7c0bea071ab", "relation": "duplicates", "from": "claim:c13_0039_04", "to": "claim:c13_0016_10", "strength": 0.85, "rationale": "The same Reuters report of Shahed speed rising from about 170 to over 200 km/h."}
+{"pair": "d96a1cd57a8e", "relation": "refines", "from": "claim:c12_0019_13", "to": "claim:c12_0005_09", "strength": 0.7, "rationale": "The same Zvook vendor ranges from the same sources, with the cruise-missile range given as 6–7 km and a ballistic range added."}
+{"pair": "da449bf1ca7f", "relation": "supports", "from": "claim:c14_0018_04", "to": "claim:c02_0010_85", "strength": 0.5, "rationale": "Captured chips that cover 300–1100 MHz explain the frequency diversity across bands, from the same source.", "independent": false}
+{"pair": "e23e31523df7", "relation": "none", "rationale": ""}
+{"pair": "e2464d8122ad", "relation": "none", "rationale": ""}
+{"pair": "e622aa11af9c", "relation": "supports", "from": "claim:c13_0049_02", "to": "claim:c01_0027_39", "strength": 0.6, "rationale": "The 2022 figure of about $20,000 falls in CSIS's $20,000–50,000 range.", "independent": true}
+{"pair": "e66d9bfc14a2", "relation": "supports", "from": "claim:c14_0029_03", "to": "claim:c14_0029_02", "strength": 0.4, "rationale": "An analyst's 2–20 km early-2025 range brackets the operators' roughly 10 km.", "independent": true}
+{"pair": "e877bec04b95", "relation": "supports", "from": "claim:c14_0029_03", "to": "claim:c14_0005_09", "strength": 0.4, "rationale": "An analyst's 2–20 km early-2025 range brackets RUSI's roughly 10 km.", "independent": true}
+{"pair": "f0fc0c62da34", "relation": "none", "rationale": ""}
+{"pair": "f2f0d28eb530", "relation": "none", "rationale": ""}
+{"pair": "f36522ce194f", "relation": "none", "rationale": ""}
+{"pair": "f3e83a9bc69d", "relation": "supports", "from": "claim:c13_0050_01", "to": "claim:c01_0027_39", "strength": 0.4, "rationale": "The US officer's \"$20,000 drones\" falls at the bottom of CSIS's $20,000–50,000 range.", "independent": true}
+{"pair": "f5cc38552657", "relation": "supports", "from": "claim:c13_0033_06", "to": "claim:c13_0049_10", "strength": 0.7, "rationale": "The P1-SUN at about $1,000 matches the interceptor price list's entry, which draws on the same DroneXL source.", "independent": false}
+{"pair": "f63d39647561", "relation": "refines", "from": "claim:c12_0020_02", "to": "claim:c12_0019_13", "strength": 0.6, "rationale": "Gives the Zvook ranges per source (6.4 km against 7 km), which explains the 6–7 km cruise-missile figure."}
+{"pair": "f72f8c5593ae", "relation": "duplicates", "from": "claim:c13_0025_15", "to": "claim:c02_0029_44", "strength": 0.95, "rationale": "The same Skynex battery tally of 35 Shaheds, 2 cruise missiles and 12 targets in one engagement, from the same source."}
+{"pair": "f961f0e4acb0", "relation": "none", "rationale": ""}
+{"pair": "f9f967bc99b0", "relation": "supports", "from": "claim:c12_0049_09", "to": "claim:c12_0005_15", "strength": 0.8, "rationale": "The same Oryx total of 152 Ukrainian radar and comms losses, from the same list.", "independent": false}
+{"pair": "fbcc7b905b1d", "relation": "none", "rationale": ""}
+{"pair": "fc983b14da14", "relation": "none", "rationale": ""}
+{"pair": "fd12db4b2439", "relation": "none", "rationale": ""}
+{"pair": "00af8652a74d", "relation": "supports", "from": "claim:c13_0039_05", "to": "claim:c03_0024_54", "strength": 0.7, "rationale": "Jet Gerans at 300–600 km/h outrunning propeller interceptors corroborates jets at about 500 km/h being beyond interceptor drones.", "independent": true}
+{"pair": "02b640222c21", "relation": "duplicates", "from": "claim:c14_0040_01", "to": "claim:c11_0059_01", "strength": 0.9, "rationale": "The same AeroScope report of a time to targeting of 5–6 minutes, from the same C4ISRNet source."}
+{"pair": "079ffeb656ee", "relation": "supports", "from": "claim:c12_0052_04", "to": "claim:c12_0020_01", "strength": 0.5, "rationale": "14,000 Sky Fortress nodes falls in the analysts' estimate of 10,000–15,000 acoustic sensors.", "independent": true}
+{"pair": "0dc0e3e0b4ba", "relation": "duplicates", "from": "claim:c13_0059_09", "to": "claim:c01_0032_26", "strength": 0.85, "rationale": "The same ISIS figure of 8,161 Shahed-type launches in May 2026."}
+{"pair": "0ff56f331514", "relation": "refines", "from": "claim:c13_0046_07", "to": "claim:c13_0005_21", "strength": 0.8, "rationale": "The same BI-reported CRPA progression from 8 to 16 elements, with the January start and the Kometa find added."}
+{"pair": "11953416ff57", "relation": "supports", "from": "claim:c12_0009_08", "to": "claim:c12_0005_06", "strength": 0.8, "rationale": "The same secondary figure of more than 850,000 verified ePPO users, from the same SWJ source.", "independent": false}

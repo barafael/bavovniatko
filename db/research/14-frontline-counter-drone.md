@@ -1,4 +1,6 @@
-# Defending against tactical drones at the front, 2023–2026
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
+# 14 — Defending against tactical drones at the front, 2023–2026
 
 Scope: how Ukrainian units at the front sense and counter Russian tactical drones (Lancets, radio and fibre-optic FPVs, roadside "waiting" drones, Orlan/ZALA/Supercam scouts, Molniya and bombers), and how both sides hunt each other's drone crews. The weight is on the defender: what each sensor can and cannot see, what each counter costs, and how each one failed in turn. Topics already covered in the knowledge base are summarised briefly here and cited to their existing sources: the measure → countermeasure table in `02-ew-countermeasures`, the 2023 Russian EW and Lancet picture in `11-drones-ru-ew-2023`, and the road-interdiction stories in the Kursk (c14) and Pokrovsk (c15) dossiers.
 
@@ -259,7 +261,7 @@ These are design readings of the facts above for Sword or Shield and bavovniatko
 
 ## 11. Sources
 
-New (in `db/staging/sources/frontline-counter-drone.yaml`):
+New (in `db/staging/sources/14-frontline-counter-drone.yaml`):
 - **euromaidan-2025-zoria-khyzhak-zhduny**: Khyzhak brigade kills perched fibre FPVs with drones (May 2025).
 - **militarnyi-2025-safronov-dormant-fpvs**: 5th Assault Brigade finds and kills zhduny; how they perch (Oct 2025).
 - **devua-2025-khandusenko-zhduny**: Zhduny mechanics, wait times, battery tests, counters (Oct 2025).

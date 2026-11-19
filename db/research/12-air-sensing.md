@@ -1,4 +1,6 @@
-# Sensing and reporting the air threat, 2022–2026
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
+# 12 — Sensing and reporting the air threat, 2022–2026
 
 Scope: how Ukraine detects, reports, classifies and fuses long-range and reconnaissance drones over the rear and the cities: Shahed-136/Geran-2, Gerbera and Parodiya decoys, jet Geran-3/4/5, and Orlan/ZALA/Supercam scouts. It covers the citizen app ePPO, the acoustic networks (Sky Fortress, Zvook), radars, visual and thermal observation, RF sensing, how the picture is fused and passed on, the signatures of the drones, and the attacker's own sensing of the defence. The effectors and their kill shares are in the sibling draft `air-effectors.md`; frontline FPV sensing (RF detectors, Zvook NW0, counter-FPV radars) is in `frontline-counter-drone.md`. This draft repeats neither except where the sensor is the point.
 
@@ -13,7 +15,7 @@ Accessed 2026-11-18. English and Ukrainian-language sources, Ukrainian outlets p
 - **The acoustic net is thousands of cheap, passive nodes.** Sky Fortress counts rose in successive reports from about 6,000 (Feb 2024) to 8,000 (Mar 2024), 9,500 (Jul 2024) and 14,000 (Jul 2025), at about $400–1,000 a node [src:twz-2024-trevithick-networked-microphones][src:militarnyi-2024-kushnikov-hecker-acoustic][src:aviationweek-2024-osborne-low-cost-kills][src:united24-2025-brizard-sky-fortress]. The separate Zvook net uses fewer, longer-range mirror sensors on 10–12 m towers. It had 210 nodes covering about 5% of Ukraine in 2024, and it reports detection ranges of about 5 km for drones and 7 km for cruise missiles, with data in Delta within about 12 seconds (vendor claims) [src:telegraph-2024-barnes-phones-on-poles][src:thedefensenews-2026-kumar-zvook-batt26].
 - **The famous result is one raid.** The 84-drone raid with 80 downed by fire teams using acoustic tracks, told by Gen. James Hecker in 2024, is repeated in every later source and is the only quantified field result [src:militarnyi-2024-kushnikov-hecker-acoustic][src:aviationweek-2024-osborne-low-cost-kills]. United24 adds that about 20% of targets entering Ukraine are tracked by acoustic data alone [src:united24-2025-brizard-sky-fortress].
 - **Russia answered the sensors by flying high, low and fake.** From 2024–25, Shaheds cruised above 2 km, where Ihnat said they are "more visible to our radars" but out of gun reach. Others flew low (up to about 200 m) in radar blind spots, and decoys made up about 40% of waves [src:kyivindependent-2025-ihnat-high-altitude][src:gwara-2025-kulish-decoy-waves]. Decoys carry Luneburg lenses to look like Shaheds on radar, radars merge 3–4 close targets into one, and decoys that vanish are logged as "lost from location" [src:isis-2024-anokhin-decoy-drones][src:gwara-2025-kulish-decoy-waves][src:euromaidan-2025-zoria-shaheds-evade-kyiv].
-- **The sensors are also targets.** Oryx has visually confirmed 152 Ukrainian radars and communications systems lost, including 16 36D6, 18 P-18-family, 2 TRML-4D (IRIS-T), 2 AN/MPQ-53 (Patriot) and 2 RADA ieMHR [src:oryx-ukrainian-losses]. Decoys "identify positions" of air defence for later strikes, and from April 2026 guided Shaheds hunt the mobile fire groups that fire on them [src:gwara-2025-kulish-decoy-waves][src:euromaidan-2026-mukhina-guided-shahed-mfg].
+- **The sensors are also targets.** Oryx has visually confirmed 152 Ukrainian radars and communications systems lost, including 32 36D6 (16 "Tin Shield" and 16 ST-68U), 30 P-18-family, 2 TRML-4D (IRIS-T), 2 AN/MPQ-53 (Patriot) and 2 RADA ieMHR [src:oryx-ukrainian-losses]. Decoys "identify positions" of air defence for later strikes, and from April 2026 guided Shaheds hunt the mobile fire groups that fire on them [src:gwara-2025-kulish-decoy-waves][src:euromaidan-2026-mukhina-guided-shahed-mfg].
 
 ---
 
@@ -234,7 +236,7 @@ Design observations, not facts. Each rests on the cited facts above.
 
 ## 12. Sources
 
-New (in `db/staging/sources/air-sensing.yaml`):
+New (in `db/staging/sources/12-air-sensing.yaml`):
 - **dou-2022-gurska-eppo-interview** — DOU interview with ePPO's developers: timeline, what a report sends, Diia, first successes, "supplementary system".
 - **zaxid-2022-eppo-launch** — ePPO launch on 13 Oct 2022; point along the flight path; Diia against false targets.
 - **ukrinform-2024-eppo-80pct** — Chernohorenko: 600,000 downloads, 200,000 active, 2–7 s to maps, AI trajectories.

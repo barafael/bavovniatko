@@ -360,7 +360,7 @@ def fresh_db(ns: str, db: str) -> tuple[Surreal, Surreal]:
     return root, conn
 
 
-CODE = r"(?:\d\d|[cv]\d\d)"          # document codes: 00–11 (topic files), cNN (chapters), vNN (vignettes)
+CODE = r"(?:\d\d|[cv]\d\d)"          # document codes: 00–14 (topic files), cNN (chapters), vNN (vignettes)
 
 
 def topic_key(code: str) -> str:

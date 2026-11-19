@@ -1168,6 +1168,8 @@
   type: actor
   kind: company
   en: General Cherry
+  aliases:
+  - "General Chereshnya"
   side: ua
   note: Ukrainian drone maker (Bullet interceptor).
 - id: actor:bazu
@@ -2081,6 +2083,11 @@
   kind: person
   en: Ukrainian commanders (unnamed)
   aliases:
+  - "Ukrainian air-defence commander"
+  - "Ukrainian air-defence officer"
+  - "Skynex battery commander"
+  - "Ukrainian interceptor platoon commander"
+  - "brigade EW chief"
   - Ukrainian commanders
   - Ukrainian officers
   - senior Ukrainian officer
@@ -2118,6 +2125,9 @@
   kind: person
   en: Ukrainian soldier (unnamed)
   aliases:
+  - "ZU-23-2 gunner"
+  - "68th Jaeger Brigade gunner"
+  - "Igla operator"
   - a Ukrainian soldier
   - Ukrainian soldiers
   - ground sources
@@ -7982,3 +7992,326 @@
   aliases: ["Ukrainian drone operators", "Ukrainian drone operator", "Ukrainian FPV operators", "47th Mechanised Brigade FPV crews", "FPV pilot (Ukrainska Pravda)", "Ukrainian drone instructor", "drone instructor"]
   side: "ua"
   note: "generic: unnamed Ukrainian drone pilots, crews and instructors quoted by outlets"
+- id: actor:small_wars_journal
+  type: actor
+  kind: "outlet"
+  en: "Small Wars Journal"
+  side: "western"
+- id: actor:frontliner
+  type: actor
+  kind: "outlet"
+  en: "Frontliner"
+  side: "ua"
+- id: actor:rbc_ukraine
+  type: actor
+  kind: "outlet"
+  en: "RBC-Ukraine"
+  side: "ua"
+- id: actor:drone_warfare_com
+  type: actor
+  kind: "think_tank"
+  en: "drone-warfare.com"
+  side: "western"
+- id: actor:trench_art
+  type: actor
+  kind: "outlet"
+  en: "Trench Art"
+  aliases: ["Trench Art (Substack)"]
+  side: "western"
+- id: actor:the_atlantic
+  type: actor
+  kind: "outlet"
+  en: "The Atlantic"
+  side: "western"
+  note: "US magazine; reported the Sunray laser prototype (Feb 2026)."
+- id: actor:pavlo_yelizarov
+  type: actor
+  kind: "person"
+  en: "Pavlo Yelizarov"
+  uk: "Павло Єлізаров"
+  parent: actor:ukrainian_air_force
+  side: "ua"
+  note: "Deputy Commander of the Ukrainian Air Force (2026); described the coordinated radar-placement plan from spring 2026. Not Anton Yelizarov (Wagner)."
+- id: actor:kateryna_chernohorenko
+  type: actor
+  kind: "person"
+  en: "Kateryna Chernohorenko"
+  uk: "Катерина Черногоренко"
+  side: "ua"
+  note: "Deputy Minister of Defence of Ukraine (digital development), quoted on ePPO in Nov 2024."
+- id: actor:james_hecker
+  type: actor
+  kind: "person"
+  en: "James Hecker"
+  aliases: ["Gen. James Hecker"]
+  side: "western"
+  note: "Gen., commander of US Air Forces in Europe and NATO Allied Air Command (2024); told of the 84-drone raid in which acoustic cueing helped down 80."
+- id: actor:lebedenko
+  type: actor
+  kind: "person"
+  en: "Lebedenko"
+  side: "ua"
+  note: "Deputy Commander-in-Chief of the Armed Forces of Ukraine (Jul 2026); spoke on the Tryzub laser. First name not given in the text."
+- id: actor:sukharevskyi
+  type: actor
+  kind: "person"
+  en: "Sukharevskyi"
+  aliases: ["Sukharevskyi"]
+  side: "ua"
+  note: "Called 'USF commander' by topic 13 when speaking on the Tryzub laser (May 2026); commanded the Unmanned Systems Forces from Feb 2024. First name not given in the text."
+- id: actor:ustymenko
+  type: actor
+  kind: "person"
+  en: "Ustymenko"
+  aliases: ["Ustymenko", "Lt. Col. Ustymenko"]
+  parent: actor:ukrainian_air_force
+  side: "ua"
+  note: "Lt. Col., Ukrainian F-16 pilot; downed seven targets and was killed in Jun 2025. First name not given in the text."
+- id: actor:ihor_shutyi
+  type: actor
+  kind: "person"
+  en: "Ihor Shutyi"
+  parent: actor:ua_56th_brigade
+  side: "ua"
+  note: "Member of the 56th Brigade's EW company; recalled vehicle jammers falling behind Russian FPV bands in 2024."
+- id: actor:romanenko_aviation_expert
+  type: actor
+  kind: "person"
+  en: "Romanenko"
+  aliases: ["Romanenko", "expert quoted by Frontliner"]
+  side: "ua"
+  note: "Ukrainian aviation expert; proposed 30 kg vehicle radars for mobile fire groups and an 'anti-drone dome' (Frontliner, Jan–Feb 2026). First name not given in the text."
+- id: actor:khrapchynskyi
+  type: actor
+  kind: "person"
+  en: "Khrapchynskyi"
+  aliases: ["Khrapchynskyi"]
+  side: "ua"
+  note: "Ukrainian aviation and EW expert; on weather limits to visual drone acquisition (Oct 2025). First name not given in the text."
+- id: actor:roy_trench_art_analyst
+  type: actor
+  kind: "person"
+  en: "Roy (analyst)"
+  aliases: ["Roy"]
+  note: "Analyst quoted by Trench Art (2025) on how long fibre-linked waiting drones can wait. Full name and nationality not given."
+- id: actor:tekhnari
+  type: actor
+  kind: "organisation"
+  en: "Tekhnari"
+  uk: "Технарі"
+  aliases: ["ePPO developers", "ePPO team"]
+  parent: actor:it_war_ua
+  side: "ua"
+  note: "Volunteer group (about 10 people) that built and launched the ePPO app (13 Oct 2022); merged with IT WAR UA in May 2022."
+- id: actor:it_war_ua
+  type: actor
+  kind: "organisation"
+  en: "IT WAR UA"
+  aliases: ["IT WAR"]
+  side: "ua"
+  note: "Ukrainian volunteer IT organisation behind ePPO; its services suffered Russian DDoS attacks (2022). Not the IT Army of Ukraine."
+- id: actor:andriy_kosiak
+  type: actor
+  kind: "person"
+  en: "Andriy Kosiak"
+  side: "ua"
+  note: "Proposed the idea of the ePPO app in early May 2022."
+- id: actor:suldin
+  type: actor
+  kind: "person"
+  en: "Suldin"
+  parent: actor:tekhnari
+  side: "ua"
+  note: "Member of the ePPO team; described the first week of Shahed waves (Oct 2022). First name not given in the text."
+- id: actor:zvook
+  type: actor
+  kind: "organisation"
+  en: "Zvook"
+  uk: "Звук"
+  side: "ua"
+  note: "Lviv volunteer project that built the Zvook acoustic air-surveillance network (2022–); the organisation, not the sensor system."
+- id: actor:zvook_ceo
+  type: actor
+  kind: "person"
+  en: "Zvook CEO (unnamed)"
+  aliases: ["Zvook CEO"]
+  parent: actor:zvook
+  side: "ua"
+  note: "Chief executive of Zvook, quoted unnamed by The Telegraph (2024)."
+- id: actor:dmytro_bielievtsov
+  type: actor
+  kind: "person"
+  en: "Dmytro Bielievtsov"
+  side: "ua"
+  note: "Respeecher co-founder; a founder of Zvook (2022)."
+- id: actor:pavlo_tsiupka
+  type: actor
+  kind: "person"
+  en: "Pavlo Tsiupka"
+  side: "ua"
+  note: "CEO of i3 Engineering; a founder of Zvook (2022)."
+- id: actor:marian_sulym
+  type: actor
+  kind: "person"
+  en: "Marian Sulym"
+  side: "ua"
+  note: "Ukrainian serviceman; a founder of Zvook (2022)."
+- id: actor:ajax_systems
+  type: actor
+  kind: "company"
+  en: "Ajax Systems"
+  side: "ua"
+  note: "Ukrainian security-systems maker, named for a 12,500-sensor Sky Fortress fundraising tranche."
+- id: actor:snake_island_institute
+  type: actor
+  kind: "think_tank"
+  en: "Snake Island Institute"
+  side: "ua"
+  note: "Ukrainian think tank; cited for ePPO's 4 million+ reports (Dec 2025)."
+- id: actor:all_russia_peoples_front
+  type: actor
+  kind: "organisation"
+  en: "All-Russia People's Front"
+  uk: "Общероссийский народный фронт"
+  aliases: ["ONF", "Radar app developers"]
+  side: "ru"
+  note: "Pro-Kremlin movement whose activists developed the Russian 'Radar' drone-reporting app (Sep 2023)."
+- id: actor:saab
+  type: actor
+  kind: "company"
+  en: "Saab"
+  side: "western"
+  note: "Swedish defence company; maker of the Giraffe radar family."
+- id: actor:robin_radar
+  type: actor
+  kind: "company"
+  en: "Robin Radar"
+  side: "western"
+  note: "Dutch maker of the IRIS counter-drone radar."
+- id: actor:contra_drone
+  type: actor
+  kind: "company"
+  en: "Contra-Drone"
+  side: "ua"
+  note: "Ukrainian maker of the CD-T10 X-band radar (2026)."
+- id: actor:aerobavovna
+  type: actor
+  kind: "company"
+  en: "Aerobavovna"
+  uk: "Аеробавовна"
+  side: "ua"
+  note: "Ukrainian start-up making tethered aerostats (sensor aerostat Mar 2025; carrier of Kvertus's Aero Azimuth, Sep 2024)."
+- id: actor:celebra_tech
+  type: actor
+  kind: "company"
+  en: "Celebra Tech"
+  side: "ua"
+  note: "Ukrainian maker of the Tryzub laser weapon (claims Apr 2025)."
+- id: actor:project_eagle
+  type: actor
+  kind: "company"
+  en: "Project Eagle"
+  side: "western"
+  note: "Maker of the Merops (Surveyor) interceptor drone."
+- id: actor:bluebird_detectors
+  type: actor
+  kind: "company"
+  en: "BlueBird"
+  note: "Drone-detector maker quoted by United24 (2026) on Russian frequency shifts; nationality not stated in the text."
+- id: actor:kara_dag
+  type: actor
+  kind: "organisation"
+  en: "Kara Dag"
+  side: "ua"
+  note: "Named in topic 14 as selling drone-detector updates by subscription and proposing an IR-laser fibre detector (2025–26). Possibly linked to actor:ua_15th_operational_brigade_ngu ('Kara-Dag'), but the text does not say; kept separate."
+- id: actor:taf_drones
+  type: actor
+  kind: "company"
+  en: "TAF"
+  aliases: ["TAF Drones"]
+  side: "ua"
+  note: "Ukrainian drone maker; ran waiting-drone battery tests (2025)."
+- id: actor:centre_for_information_resilience
+  type: actor
+  kind: "ngo"
+  en: "Centre for Information Resilience"
+  aliases: ["CIR"]
+  side: "western"
+  note: "UK open-source investigations NGO; counted Ukrainian strikes on Russian air defence and EW (Mar–Apr 2026)."
+- id: actor:dronarium
+  type: actor
+  kind: "organisation"
+  en: "Dronarium"
+  side: "ua"
+  note: "Ukrainian drone training centre; grounded its fibre-optic drones in frost (Jan 2026)."
+- id: actor:ua_151st_training_centre
+  type: actor
+  kind: "military_unit"
+  en: "151st Training Centre"
+  side: "ua"
+  note: "Ukrainian training centre; issued guidance on shotgun and rifle fire against 15-inch fibre-optic FPVs (Jun 2026). Not the 151st Reconnaissance Battalion."
+- id: actor:ua_air_command_west
+  type: actor
+  kind: "military_unit"
+  en: "Air Command West"
+  aliases: ["Western Air Command"]
+  parent: actor:ukrainian_air_force
+  side: "ua"
+  note: "Ukrainian Air Force regional command; reported a Gepard crew's 17 kills in one night over Khmelnytskyi Oblast (Jun 2026)."
+- id: actor:khyzhak_brigade
+  type: actor
+  kind: "military_unit"
+  en: "Khyzhak brigade"
+  uk: "Хижак"
+  aliases: ["Khyzhak", "Khyzhak Patrol Police brigade"]
+  parent: actor:national_police_of_ukraine
+  side: "ua"
+  note: "Patrol Police assault brigade; hunted perched fibre-optic waiting drones (May 2025)."
+- id: actor:directed_energy_vendors_unnamed
+  type: actor
+  kind: "company"
+  en: "Directed-energy weapon vendors (unnamed)"
+  aliases: ["microwave weapon vendor", "laser weapon vendor"]
+  note: "generic: unnamed vendors quoted for per-shot costs of laser and microwave weapons"
+- id: actor:kyiv_oblast_mfg_coordinator_unnamed
+  type: actor
+  kind: "person"
+  en: "Kyiv Oblast mobile fire group coordinator (unnamed)"
+  aliases: ["Kyiv Oblast mobile fire group coordinator", "mobile fire group coordinator"]
+  side: "ua"
+  note: "generic: unnamed mobile-fire-group coordinator quoted by Kyiv Independent (Oct 2025); both claims cite the same article"
+- id: actor:kyiv_mfg_commander_unnamed
+  type: actor
+  kind: "person"
+  en: "Kyiv mobile fire group commander (unnamed)"
+  aliases: ["Kyiv mobile fire group commander", "Kyiv mobile-defence commander"]
+  side: "ua"
+  note: "generic: unnamed Kyiv mobile-fire-group commander quoted by Kyiv Independent (2025); both claims cite the same article"
+- id: actor:ukrainian_air_defence_crews_unnamed
+  type: actor
+  kind: "military_unit"
+  en: "Ukrainian air-defence crews (unnamed)"
+  aliases: ["Ukrainian air-defence crews", "mobile fire group crews", "Ukrainian mobile fire groups", "Gepard operators", "Gepard crew"]
+  side: "ua"
+  note: "generic: unnamed Ukrainian ground-based air-defence crews, gun teams and mobile fire groups"
+- id: actor:ukrainian_interceptor_drone_crews_unnamed
+  type: actor
+  kind: "military_unit"
+  en: "Ukrainian interceptor-drone crews (unnamed)"
+  aliases: ["interceptor drone crews", "Ukrainian interceptor-drone units", "Ukrainian interceptor drone crews", "Merops crew", "Merops crews"]
+  side: "ua"
+  note: "generic: unnamed Ukrainian interceptor-drone crews and units"
+- id: actor:ukrainian_helicopter_crews_unnamed
+  type: actor
+  kind: "military_unit"
+  en: "Ukrainian helicopter crews (unnamed)"
+  aliases: ["Ukrainian helicopter crews", "Ukrainian Mi-8 and Mi-24 crews"]
+  side: "ua"
+  note: "generic: unnamed Ukrainian helicopter crews shooting down Shaheds"
+- id: actor:ukrainian_ew_crews_unnamed
+  type: actor
+  kind: "military_unit"
+  en: "Ukrainian EW crews (unnamed)"
+  aliases: ["Lima operators", "Ukrainian EW crews"]
+  side: "ua"
+  note: "generic: unnamed Ukrainian electronic-warfare operators, including the operators of the Pokrova/Lima system"

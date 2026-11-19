@@ -196,7 +196,7 @@
   type: system
   kind: technique
   en: "high-flying Gerans"
-  aliases: ["High-flying Gerans"]
+  aliases: ["High-flying Gerans", "Shahed high-altitude flight (above 2 km)", "Shahed-136 waves above gun reach"]
   parent: system:shahed_geran_family
   sides: ["ru"]
   note: "Gerans flown at higher altitude, out of reach of mobile fire groups"
@@ -205,7 +205,7 @@
   type: system
   kind: long_range_drone
   en: "Shahed-type decoy drones"
-  aliases: ["decoy drones (Parodiya, Gerbera)"]
+  aliases: ["decoy drones (Parodiya, Gerbera)", "decoys (Gerbera, Parodiya)"]
   sides: ["ru"]
   note: "decoys mimicking Shahed/Geran signatures"
 
@@ -691,7 +691,7 @@
   type: system
   kind: interceptor_drone
   en: "propeller interceptor drone (anti-Shahed)"
-  aliases: ["propeller-driven interceptor drones", "propeller interceptor drone"]
+  aliases: ["propeller-driven interceptor drones", "propeller interceptor drone", "propeller interceptor drones"]
   parent: system:interceptor_drone
   sides: ["ua"]
 
@@ -769,7 +769,7 @@
   type: system
   kind: interceptor_drone
   en: "Last Shadow T200"
-  aliases: ["Last Shadow T200", "channel- and band-hopping interceptors (Last Shadow T200)"]
+  aliases: ["Last Shadow T200", "channel- and band-hopping interceptors (Last Shadow T200)", "video-channel hopping (Last Shadow T200)"]
   parent: system:interceptor_drone
   sides: ["ua"]
   note: "channel- and band-hopping video link against Shtora"
@@ -3186,7 +3186,7 @@
   kind: gnss_countermeasure
   en: "Pokrova"
   uk: "Покрова"
-  aliases: ["Pokrova", "Pokrova jamming", "Pokrova national GNSS-spoofing system (Lima)"]
+  aliases: ["Pokrova", "Pokrova jamming", "Pokrova national GNSS-spoofing system (Lima)", "GNSS jamming and spoofing (Pokrova/Lima)"]
   parent: system:gnss_jamming
   sides: ["ua"]
   note: "Ukraine's national GNSS jamming and spoofing system, early 2024"
@@ -9227,3 +9227,810 @@
   parent: "system:drone_drop"
   sides: ["ua", "ru"]
   note: "Handmade drop munitions, e.g. with 3D-printed fins."
+
+# --- Topics 12-14: air sensing, air effectors, frontline counter-drone ---
+
+# Radars
+- id: system:radar_generic
+  type: system
+  kind: sensor
+  en: "radar (generic)"
+  aliases: ["radar", "radar (generic)"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:counter_drone_radar
+  type: system
+  kind: sensor
+  en: "counter-drone radar (generic)"
+  aliases: ["counter-drone radar"]
+  parent: system:radar_generic
+  sides: ["ua", "ru"]
+  note: "generic: small, emitting radars that detect FPVs and fibre-optic drones at several km"
+
+- id: system:networked_ad_radar_map
+  type: system
+  kind: sensor
+  en: "networked air-defence radar and live map"
+  aliases: ["networked air-defence radar map"]
+  parent: system:radar_generic
+  sides: ["ua"]
+  note: "shows aircraft above a set altitude; cues interceptors against Orlan and ZALA; misses low fliers"
+
+- id: system:radar_36d6
+  type: system
+  kind: sensor
+  en: "36D6 (Tin Shield / ST-68U)"
+  uk: "36Д6"
+  aliases: ["36D6"]
+  parent: system:radar_generic
+  sides: ["ua", "ru"]
+  note: "Soviet-era surveillance radar; part of Ukraine's national radar net"
+
+- id: system:radar_p18
+  type: system
+  kind: sensor
+  en: "P-18 family (Malakhit, P-18ML)"
+  uk: "П-18"
+  aliases: ["P-18"]
+  parent: system:radar_generic
+  sides: ["ua", "ru"]
+  note: "Soviet-era VHF surveillance radar family"
+
+- id: system:radar_p19
+  type: system
+  kind: sensor
+  en: "P-19"
+  uk: "П-19"
+  aliases: ["P-19"]
+  parent: system:radar_generic
+  sides: ["ua", "ru"]
+  note: "Soviet-era low-altitude surveillance radar"
+
+- id: system:radar_5n63
+  type: system
+  kind: sensor
+  en: "5N63 (S-300PS engagement radar)"
+  uk: "5Н63"
+  aliases: ["5N63"]
+  parent: system:s_300ps
+  sides: ["ua", "ru"]
+
+- id: system:trml_4d
+  type: system
+  kind: sensor
+  en: "TRML-4D"
+  aliases: ["TRML-4D", "TRML-4D radar"]
+  parent: system:iris_t_slm
+  sides: ["ua"]
+  note: "Hensoldt radar of the IRIS-T SLM battery"
+
+- id: system:an_mpq_53
+  type: system
+  kind: sensor
+  en: "AN/MPQ-53 (Patriot radar)"
+  aliases: ["AN/MPQ-53"]
+  parent: system:patriot
+  sides: ["ua"]
+
+- id: system:an_mpq_64_sentinel
+  type: system
+  kind: sensor
+  en: "AN/MPQ-64 Sentinel"
+  aliases: ["AN/MPQ-64 Sentinel"]
+  parent: system:nasams
+  sides: ["ua"]
+  note: "X-band air-surveillance radar used with NASAMS"
+
+- id: system:rada_iemhr
+  type: system
+  kind: sensor
+  en: "RADA ieMHR"
+  aliases: ["RADA ieMHR"]
+  parent: system:radar_generic
+  sides: ["ua"]
+  note: "Israeli multi-mission hemispheric tactical radar"
+
+- id: system:mr_18
+  type: system
+  kind: sensor
+  en: "MR-18"
+  aliases: ["MR-18"]
+  parent: system:radar_generic
+  sides: ["ua"]
+  note: "radar listed once in the Oryx Ukrainian radar losses; type not described in the source"
+
+- id: system:giraffe
+  type: system
+  kind: sensor
+  en: "Saab Giraffe family (PS-90, PS-100, Giraffe 1X, AMB, Mk IV)"
+  aliases: ["Giraffe"]
+  parent: system:radar_generic
+  sides: ["ua", "western"]
+
+- id: system:robin_radar_iris
+  type: system
+  kind: sensor
+  en: "Robin Radar IRIS"
+  aliases: ["Robin Radar IRIS"]
+  parent: system:counter_drone_radar
+  sides: ["ua", "western"]
+  note: "compact vehicle-mountable counter-drone radar; 'Long-Range Mode' software (Sep 2025)"
+
+- id: system:cd_t10
+  type: system
+  kind: sensor
+  en: "CD-T10 (Contra-Drone)"
+  aliases: ["CD-T10"]
+  parent: system:counter_drone_radar
+  sides: ["ua"]
+  note: "Ukrainian X-band counter-drone radar with AI bird filtering"
+
+- id: system:vityaz_50n6e_radar
+  type: system
+  kind: sensor
+  en: "50N6E radar (S-350 Vityaz)"
+  aliases: ["Vityaz 50N6E radar"]
+  parent: system:radar_generic
+  sides: ["ru"]
+
+# Acoustic sensing
+- id: system:acoustic_sensor_generic
+  type: system
+  kind: sensor
+  en: "acoustic sensors (generic)"
+  aliases: ["acoustic sensors", "microphone array"]
+  sides: ["ua", "ru"]
+  note: "generic"
+
+- id: system:sky_fortress
+  type: system
+  kind: sensor
+  en: "Sky Fortress"
+  uk: "Небесна фортеця"
+  aliases: ["Sky Fortress"]
+  parent: system:acoustic_sensor_generic
+  sides: ["ua"]
+  note: "Ukraine's national acoustic air-surveillance network; thousands of cheap passive nodes"
+
+- id: system:zvook
+  type: system
+  kind: sensor
+  en: "Zvook"
+  uk: "Звук"
+  aliases: ["Zvook"]
+  parent: system:acoustic_sensor_generic
+  sides: ["ua"]
+  note: "Ukrainian acoustic drone-detection network and its maker"
+
+- id: system:zvook_nw0
+  type: system
+  kind: sensor
+  en: "Zvook NW0"
+  aliases: ["Zvook NW0"]
+  parent: system:zvook
+  sides: ["ua"]
+  note: "acoustic FPV sensor, 150-450 m (vendor claim), hears fibre-optic drones"
+
+- id: system:ru_acoustic_sensor
+  type: system
+  kind: sensor
+  en: "Russian acoustic sensor"
+  aliases: ["Russian acoustic sensor"]
+  parent: system:acoustic_sensor_generic
+  sides: ["ru"]
+  note: "four-microphone sensor on mobile-phone towers, photographed Sep 2024"
+
+# C2, apps, networks
+- id: system:eppo
+  type: system
+  kind: c2_software
+  en: "ePPO"
+  uk: "єППО"
+  aliases: ["ePPO"]
+  sides: ["ua"]
+  note: "Ukrainian citizen app for reporting aerial targets (2022)"
+
+- id: system:radar_app_ru
+  type: system
+  kind: c2_software
+  en: "Radar (Russian app)"
+  aliases: ["Radar (Russian app)"]
+  sides: ["ru"]
+  note: "All-Russia People's Front copy of ePPO, Sep 2023"
+
+- id: system:virazh
+  type: system
+  kind: c2_software
+  en: "Virazh"
+  uk: "Віраж"
+  aliases: ["Virazh"]
+  sides: ["ua"]
+  note: "national air-defence network combining 40+ kinds of sensor network"
+
+- id: system:anti_drone_dome
+  type: system
+  kind: programme
+  en: "anti-drone dome"
+  aliases: ["anti-drone dome"]
+  sides: ["ua"]
+  note: "Jan 2026 concept of classic radars, compact radars and acoustic sensors"
+
+- id: system:signal_messenger
+  type: system
+  kind: communications
+  en: "Signal"
+  aliases: ["Signal"]
+  sides: ["ua"]
+  note: "messenger; drone operators announce flights in group chats to avoid fratricide"
+
+- id: system:air_wardens
+  type: system
+  kind: technique
+  en: "volunteer air wardens"
+  aliases: ["air wardens"]
+  sides: ["ua"]
+  note: "villagers reporting aircraft seen or heard by phone, text or to the nearest unit"
+
+# RF drone detectors
+- id: system:chuika_3
+  type: system
+  kind: sensor
+  en: "Chuika 3.0"
+  aliases: ["Chuika 3.0"]
+  parent: system:chuika
+  sides: ["ua"]
+
+- id: system:obriy_detector
+  type: system
+  kind: sensor
+  en: "Obriy drone detector"
+  aliases: ["Obriy"]
+  parent: system:analogue_video_detector
+  sides: ["ua"]
+  note: "handheld RF detector, ~2.5 km typical, up to 5 km (vendor); not the Obrii jammer (system:obrii)"
+
+- id: system:zorko
+  type: system
+  kind: sensor
+  en: "ZORKO"
+  aliases: ["ZORKO"]
+  parent: system:analogue_video_detector
+  sides: ["ua"]
+
+- id: system:whoover
+  type: system
+  kind: sensor
+  en: "Whoover"
+  aliases: ["Whoover"]
+  parent: system:analogue_video_detector
+  sides: ["ua"]
+
+- id: system:dzyga
+  type: system
+  kind: sensor
+  en: "Dzyga"
+  aliases: ["Dzyga"]
+  parent: system:analogue_video_detector
+  sides: ["ua"]
+
+- id: system:sense_4
+  type: system
+  kind: sensor
+  en: "Sense 4"
+  aliases: ["Sense 4"]
+  parent: system:drone_detector
+  sides: ["ua"]
+  note: "four-band detector up to 8.2 GHz"
+
+- id: system:tsukorok
+  type: system
+  kind: sensor
+  en: "Tsukorok"
+  aliases: ["Tsukorok"]
+  parent: system:drone_detector
+  sides: ["ua"]
+  note: "early detector that could not tell friend from foe"
+
+- id: system:spectrum_analyser
+  type: system
+  kind: sensor
+  en: "spectrum analyser"
+  aliases: ["spectrum analyser"]
+  sides: ["ua", "ru"]
+  note: "used by EW crews to watch drone links"
+
+- id: system:ir_laser_fibre_detector
+  type: system
+  kind: sensor
+  en: "IR laser fibre detector (Kara Dag concept)"
+  aliases: ["IR laser fibre detector"]
+  sides: ["ua"]
+  note: "proposal, not shown fielded; laser emits"
+
+- id: system:aero_azimuth
+  type: system
+  kind: sensor
+  en: "Aero Azimuth"
+  aliases: ["Aero Azimuth"]
+  parent: system:azimuth
+  sides: ["ua"]
+  note: "Kvertus passive SIGINT on a helium aerostat (Aerobavovna), shown Sep 2024"
+
+- id: system:aerobavovna_aerostat
+  type: system
+  kind: sensor
+  en: "Aerobavovna aerostat"
+  aliases: ["Aerobavovna aerostat", "Aerobavovna"]
+  sides: ["ua"]
+  note: "tethered aerostat start-up; IR-sensor version drops an interceptor (Mar 2025); also carries Aero Azimuth"
+
+# Optical sensors
+- id: system:flir_turret
+  type: system
+  kind: sensor
+  en: "helicopter FLIR turret"
+  aliases: ["FLIR turret"]
+  parent: system:thermal_imaging
+  sides: ["ua"]
+
+- id: system:flir_ultraforce_350
+  type: system
+  kind: sensor
+  en: "FLIR UltraFORCE 350"
+  aliases: ["FLIR UltraFORCE 350"]
+  parent: system:flir_turret
+  sides: ["ua"]
+
+- id: system:guide_tk_431
+  type: system
+  kind: sensor
+  en: "Guide TK 431 thermal imager"
+  aliases: ["Guide TK 431"]
+  parent: system:thermal_imaging
+  sides: ["ua"]
+  note: "thermal sight fitted to Igla launchers (Jan 2024)"
+
+- id: system:sniper_pod
+  type: system
+  kind: sensor
+  en: "Sniper targeting pod"
+  aliases: ["Sniper pod"]
+  parent: system:f_16
+  sides: ["ua", "western"]
+
+- id: system:spaceray
+  type: system
+  kind: sensor
+  en: "Spaceray searchlight"
+  aliases: ["Spaceray"]
+  sides: ["ua"]
+  note: "National Guard searchlights detecting drones to ~2 km"
+
+# Shahed / Geran and decoy components, variants, techniques
+- id: system:md550_engine
+  type: system
+  kind: drone_component
+  en: "MD550 engine"
+  aliases: ["MD550"]
+  parent: system:geran_2
+  sides: ["ru"]
+  note: "two-stroke piston engine of the Shahed-136 (replica)"
+
+- id: system:dle60_engine
+  type: system
+  kind: drone_component
+  en: "DLE60 engine"
+  aliases: ["DLE60"]
+  parent: system:gerbera
+  sides: ["ru"]
+  note: "60 cc Chinese hobby two-stroke"
+
+- id: system:dle55ra_engine
+  type: system
+  kind: drone_component
+  en: "DLE55RA engine"
+  aliases: ["DLE55RA"]
+  parent: system:parody
+  sides: ["ru"]
+  note: "55 cc two-stroke"
+
+- id: system:luneburg_lens
+  type: system
+  kind: drone_component
+  en: "Luneburg lens"
+  aliases: ["Luneburg lens"]
+  parent: system:shahed_decoy
+  sides: ["ru"]
+  note: "radar reflector giving decoys a Shahed-like radar cross-section"
+
+- id: system:geran_2_aa_armed
+  type: system
+  kind: long_range_drone
+  en: "R-60- or MANPADS-armed Shahed"
+  aliases: ["R-60- or MANPADS-armed Shahed"]
+  parent: system:geran_2
+  sides: ["ru"]
+  note: "composite: R-60 (system:geran_2_r60) or Igla-S/Verba fired via onboard camera against helicopters"
+
+- id: system:shahed_evasive_manoeuvres
+  type: system
+  kind: technique
+  en: "Shahed evasive manoeuvres"
+  aliases: ["Shahed evasive manoeuvres"]
+  parent: system:shahed_geran_family
+  sides: ["ru"]
+  note: "evasion against tail-chasing interceptors, Jul-Aug 2025"
+
+- id: system:shahed_rear_cameras_evasion
+  type: system
+  kind: drone_component
+  en: "Shahed rear-view cameras and evasive manoeuvres"
+  aliases: ["Shahed rear-view cameras and evasive manoeuvres"]
+  parent: system:shahed_evasive_manoeuvres
+  sides: ["ru"]
+  note: "composite"
+
+- id: system:shahed_cameras_modems_starlink
+  type: system
+  kind: communications
+  en: "Shahed cameras, SIM cards, modems and Starlink"
+  aliases: ["Shahed cameras, SIM cards, modems and Starlink"]
+  parent: system:shahed_geran_family
+  sides: ["ru"]
+  note: "composite: online links that make Shaheds harder to jam and steerable"
+
+- id: system:scouting_guided_shaheds
+  type: system
+  kind: technique
+  en: "scouting and guided Shaheds against mobile fire groups"
+  aliases: ["scouting and guided Shaheds"]
+  parent: system:shahed_geran_family
+  sides: ["ru"]
+
+- id: system:ew_vs_shahed_navigation
+  type: system
+  kind: gnss_countermeasure
+  en: "EW jamming of Shahed navigation"
+  aliases: ["EW jamming of Shahed navigation"]
+  parent: system:gnss_jamming
+  sides: ["ua"]
+
+- id: system:ru_scout_high_altitude_rear_cameras
+  type: system
+  kind: technique
+  en: "high-altitude scout flight and rear-view cameras"
+  aliases: ["high-altitude scout flight and rear-view cameras"]
+  parent: system:ru_fixed_wing_isr
+  sides: ["ru"]
+  note: "composite: Russian scouts at 4-5 km with rear-view cameras against interceptors"
+
+- id: system:ai_molniya
+  type: system
+  kind: long_range_drone
+  en: "AI Molniya"
+  aliases: ["AI Molniya"]
+  parent: system:molniya
+  sides: ["ru"]
+  note: "autonomous variant with no control antenna, first downed Jul 2026"
+
+# Effectors: guns, MANPADS, SHORAD
+- id: system:zastava_m75
+  type: system
+  kind: air_defence
+  en: "Zastava M75 20 mm"
+  aliases: ["Zastava M75"]
+  parent: system:aa_guns
+  sides: ["ua"]
+
+- id: system:cheetah
+  type: system
+  kind: air_defence
+  en: "Cheetah (Dutch Gepard)"
+  aliases: ["Cheetah"]
+  parent: system:gepard
+  sides: ["ua"]
+  note: "ex-Jordanian"
+
+- id: system:revolver_mk3
+  type: system
+  kind: air_defence
+  en: "Revolver Mk3 35 mm gun"
+  aliases: ["Revolver Mk3"]
+  parent: system:skynex
+  sides: ["ua"]
+
+- id: system:skymaster
+  type: system
+  kind: c2_software
+  en: "Skymaster battle management"
+  aliases: ["Skymaster"]
+  parent: system:skynex
+  sides: ["ua"]
+
+- id: system:slinger
+  type: system
+  kind: air_defence
+  en: "Slinger"
+  aliases: ["Slinger"]
+  parent: system:aa_guns
+  sides: ["ua"]
+  note: "30 mm counter-drone gun turret"
+
+- id: system:avenger
+  type: system
+  kind: air_defence
+  en: "Avenger"
+  aliases: ["Avenger"]
+  parent: system:air_defence_generic
+  sides: ["ua"]
+  note: "Stinger-based vehicle SHORAD; not the Avengers AI software (system:avengers)"
+
+- id: system:mistral
+  type: system
+  kind: air_defence
+  en: "Mistral"
+  aliases: ["Mistral"]
+  parent: system:manpads
+  sides: ["ua"]
+
+- id: system:strela_2
+  type: system
+  kind: air_defence
+  en: "Strela-2"
+  aliases: ["Strela-2"]
+  parent: system:strela_manpads
+  sides: ["ua"]
+
+- id: system:igla_s
+  type: system
+  kind: air_defence
+  en: "Igla-S"
+  aliases: ["Igla-S"]
+  parent: system:igla
+  sides: ["ru", "ua"]
+
+- id: system:verba
+  type: system
+  kind: air_defence
+  en: "Verba"
+  aliases: ["Verba"]
+  parent: system:manpads
+  sides: ["ru"]
+
+- id: system:pkt
+  type: system
+  kind: small_arms
+  en: "PKT 7.62 mm machine gun"
+  aliases: ["PKT"]
+  sides: ["ua", "ru"]
+
+- id: system:uaz_452
+  type: system
+  kind: vehicle
+  en: "UAZ-452"
+  aliases: ["UAZ-452"]
+  sides: ["ua", "ru"]
+
+- id: system:high_power_microwave
+  type: system
+  kind: air_defence
+  en: "high-power microwave (generic)"
+  aliases: ["high-power microwave"]
+  sides: ["ua", "western"]
+  note: "generic"
+
+- id: system:tryzub_laser
+  type: system
+  kind: air_defence
+  en: "Tryzub laser"
+  uk: "Тризуб"
+  aliases: ["Tryzub"]
+  sides: ["ua"]
+  note: "Ukrainian laser weapon (Celebra Tech); claimed 3 km vs drones, 5 km vs aircraft"
+
+- id: system:sunray_laser
+  type: system
+  kind: air_defence
+  en: "Sunray laser"
+  aliases: ["Sunray"]
+  sides: ["ua"]
+  note: "pickup-mounted laser prototype, Feb 2026"
+
+- id: system:chaika_sim
+  type: system
+  kind: training_sim
+  en: "Chaika / Chaika-M VR simulators"
+  aliases: ["Chaika / Chaika-M"]
+  sides: ["ua"]
+  note: "mobile fire group trainers codified Nov 2025"
+
+- id: system:radar_watch_mfg
+  type: system
+  kind: technique
+  en: "radar watch and mobile fire groups"
+  aliases: ["radar watch and mobile fire groups"]
+  parent: system:mobile_fire_group
+  sides: ["ua"]
+  note: "composite"
+
+# Aircraft and air-launched effectors
+- id: system:h125
+  type: system
+  kind: helicopter
+  en: "Airbus H125"
+  aliases: ["H125"]
+  parent: system:helicopter_generic
+  sides: ["ua"]
+
+- id: system:h225
+  type: system
+  kind: helicopter
+  en: "Airbus H225"
+  aliases: ["H225"]
+  parent: system:helicopter_generic
+  sides: ["ua"]
+
+- id: system:apkws_ii
+  type: system
+  kind: munition
+  en: "APKWS II"
+  aliases: ["APKWS II"]
+  sides: ["ua", "western"]
+  note: "laser-guided 70 mm rocket, used from F-16s against Shaheds from Dec 2025"
+
+- id: system:lmm_martlet
+  type: system
+  kind: missile
+  en: "LMM (Martlet)"
+  aliases: ["LMM (Martlet)"]
+  parent: system:missile_generic
+  sides: ["ua", "western"]
+
+# Interceptor drones
+- id: system:merops
+  type: system
+  kind: interceptor_drone
+  en: "Merops / Surveyor (Project Eagle)"
+  aliases: ["Merops"]
+  parent: system:propeller_interceptor
+  sides: ["ua", "western"]
+  note: "catapult-launched one-way interceptor, ~$15,000"
+
+- id: system:maxon
+  type: system
+  kind: interceptor_drone
+  en: "MaXon"
+  aliases: ["MaXon"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+  note: "Brave1 fixed-wing one-click interceptor, ~$3,500"
+
+- id: system:general_chereshnya_air
+  type: system
+  kind: interceptor_drone
+  en: "General Chereshnya AIR"
+  aliases: ["General Chereshnya AIR"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+
+- id: system:interceptor_software_updates
+  type: system
+  kind: technique
+  en: "interceptor drone software updates"
+  aliases: ["interceptor drone software updates"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+
+- id: system:interceptor_video_link
+  type: system
+  kind: communications
+  en: "interceptor drone video links"
+  aliases: ["interceptor drone video links"]
+  parent: system:interceptor_drone
+  sides: ["ua"]
+
+# Frontline counter-FPV: jammers
+- id: system:kvertus_ad_counter_fpv_f2_m30
+  type: system
+  kind: ew_system
+  en: "Kvertus AD Counter FPV F2 M30"
+  aliases: ["Kvertus AD Counter FPV F2 M30"]
+  parent: system:kvertus_jammers
+  sides: ["ua"]
+  note: "static dome jammer, 420-1050 MHz"
+
+- id: system:kvertus_fpv_backpack_f3_u
+  type: system
+  kind: ew_system
+  en: "Kvertus FPV Backpack F3 U"
+  aliases: ["Kvertus FPV Backpack F3 U"]
+  parent: system:kvertus_backpack
+  sides: ["ua"]
+
+- id: system:kvertus_ad_g6_plus
+  type: system
+  kind: ew_system
+  en: "Kvertus AD G-6+"
+  aliases: ["Kvertus AD G-6+"]
+  parent: system:kvertus_jammers
+  sides: ["ua"]
+  note: "directional jammer gun"
+
+- id: system:kvertus_kraken_f3
+  type: system
+  kind: ew_system
+  en: "Kvertus Kraken F3"
+  aliases: ["Kvertus Kraken F3"]
+  parent: system:kvertus_jammers
+  sides: ["ua"]
+  note: "vehicle jammer, directional or dome"
+
+- id: system:serval_cube
+  type: system
+  kind: ew_system
+  en: "Serval Cube"
+  aliases: ["Serval Cube"]
+  parent: system:tactical_jammer
+  sides: ["ua"]
+  note: "dome jammer (58th Brigade claim, 2026)"
+
+# Fibre-optic FPV and counters
+- id: system:fpv_15_inch_fibre
+  type: system
+  kind: fpv_drone
+  en: "15-inch fibre-optic FPV"
+  aliases: ["15-inch fibre-optic FPV"]
+  parent: system:fibre_optic_fpv
+  sides: ["ru"]
+  note: "warhead close to a TM-62 mine (Jun 2026)"
+
+- id: system:fibre_tracing
+  type: system
+  kind: technique
+  en: "fibre tracing"
+  aliases: ["fibre tracing"]
+  sides: ["ua"]
+  note: "following a fibre-optic cable back to the drone crew"
+
+- id: system:fibre_litter
+  type: system
+  kind: technique
+  en: "fibre litter"
+  aliases: ["fibre litter"]
+  parent: system:fibre_optic_fpv
+  sides: ["ru", "ua"]
+  note: "accumulated old fibre that makes tracing impossible (by May 2025)"
+
+- id: system:route_sweep_by_drone
+  type: system
+  kind: technique
+  en: "route sweep by drone"
+  aliases: ["route sweep by drone"]
+  sides: ["ua"]
+  note: "drone check of the route for perched fibre-optic drones before a convoy moves"
+
+- id: system:camouflage_nets
+  type: system
+  kind: passive_defence
+  en: "camouflage nets"
+  aliases: ["camouflage nets"]
+  parent: system:camouflage_generic
+  sides: ["ua", "ru"]
+
+- id: system:building_cover
+  type: system
+  kind: passive_defence
+  en: "building cover"
+  aliases: ["building cover"]
+  sides: ["ua", "ru"]
+  note: "vehicles hidden indoors; blocks radio FPVs but not fibre FPVs"
+
+- id: system:rubikon_radio_recon
+  type: system
+  kind: technique
+  en: "Rubikon radio-signal reconnaissance"
+  aliases: ["Rubikon radio-signal reconnaissance"]
+  parent: system:rubikon_deep_interdiction
+  sides: ["ru"]
+  note: "locating Ukrainian drone operators by their radio signals"

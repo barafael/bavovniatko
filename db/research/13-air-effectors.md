@@ -1,4 +1,6 @@
-# Shooting down long-range drones: effectors and their cueing, 2022–2026
+<!-- Generated from the knowledge base by db/tools/render.py. Edit the data, not this file (see db/README.md). -->
+
+# 13 — Shooting down long-range drones: effectors and their cueing, 2022–2026
 
 Scope: the Ukrainian means that kill or divert Russian long-range drones over the rear and the cities: Shahed-136/Geran-2, Gerbera and Parodiya decoys, the jet Geran-3/4/5, and reconnaissance drones on the same routes. It covers mobile fire groups, anti-aircraft guns, MANPADS, helicopters and fighters, interceptor drones, lasers and electronic warfare (EW) against navigation, and for each the cue it needs, its reach, its cost and how it fails. Ballistic and cruise-missile defence appears only where it competes for the same means. Detection and fusion (radars, acoustic sensors, ePPO) are a sibling draft (air-sensing) and appear here only as the cue an effector receives.
 
@@ -264,7 +266,7 @@ Design observations for Sword or Shield and bavovniatko. These are suggestions d
 
 ## 14. Sources
 
-New (in `db/staging/sources/air-effectors.yaml`):
+New (in `db/staging/sources/13-air-effectors.yaml`):
 - **stripes-2022-wapo-drone-hunters** — Washington Post (via Stars and Stripes), Nov 2022: Mykolaiv drone-hunter teams, 10-minute alerts, Telegram, thermal and laser, $20k Shahed.
 - **twz-2022-trevithick-drone-hunters** — TWZ, Dec 2022: team composition, laser marking, improvised gun trucks, US machine guns with thermal sights.
 - **defenceexpress-2022-mfg-tactics** — Defense Express, Oct 2022: MFGs of 4–5 people with 2 MANPADS; 130 National Guard MFGs; 223 Shaheds downed; 85% (Ihnat).

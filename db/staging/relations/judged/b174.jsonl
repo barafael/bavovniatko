@@ -1,0 +1,40 @@
+{"pair": "4c342d81213c", "relation": "none", "rationale": "Sting speed/reach and the maker's kill claim are different quantities."}
+{"pair": "4f038f4b4e09", "relation": "none", "rationale": "The air force's role under Russian IADS and drone-blast losses of fighters are different subjects."}
+{"pair": "501e2034afb8", "relation": "none", "rationale": "Date of scale use and top speed are different facts."}
+{"pair": "540b46edbc8b", "relation": "supports", "from": "claim:c13_0046_01", "to": "claim:c02_0023_13", "strength": 0.6, "rationale": "Both have Pokrova operating from early 2024; the Militarnyi source is shared.", "independent": false}
+{"pair": "55daeee40510", "relation": "none", "rationale": "Decoy speeds and swarm tactics are different assertions."}
+{"pair": "59bd2a47b978", "relation": "supports", "from": "claim:c11_0016_07", "to": "claim:c14_0026_01", "strength": 0.7, "rationale": "Both relay RUSI's finding that radar-cued interceptors began inflicting losses on Orlans and ZALAs from late 2024.", "independent": false}
+{"pair": "5abce4ffd926", "relation": "none", "rationale": "Why the networks were built and how they triangulate are different assertions."}
+{"pair": "5ccb0df147a1", "relation": "refines", "from": "claim:c14_0024_03", "to": "claim:c14_0005_23", "strength": 0.7, "rationale": "Dates and details the Su-25 decoy strike at Dolgintsevo/Kryvyi Rih."}
+{"pair": "5fa0546ecc83", "relation": "supports", "from": "claim:c14_0011_08", "to": "claim:c14_0009_03", "strength": 0.7, "rationale": "Euromaidan's report that digital video is detected but not shown corroborates the same limit from other sources.", "independent": true}
+{"pair": "6082a90bc28f", "relation": "supports", "from": "claim:c12_0049_07", "to": "claim:c14_0037_03", "strength": 0.7, "rationale": "TWZ's report of the June 2023 Lancet hit on a TRML-4D corroborates the Army Recognition report.", "independent": true}
+{"pair": "62af8a9b6673", "relation": "supports", "from": "claim:c14_0022_06", "to": "claim:c14_0044_11", "strength": 0.6, "rationale": "Both say nets burn and waiting drones hide under them; the United24 source is shared.", "independent": false}
+{"pair": "65269ebff93a", "relation": "none", "rationale": "Decoy speeds and their presence in one strike are different assertions."}
+{"pair": "65ecefed922e", "relation": "refines", "from": "claim:c14_0018_10", "to": "claim:c14_0044_12", "strength": 0.6, "rationale": "Dates the AI Molniya variant's first shoot-down to July 2026 and adds its signature."}
+{"pair": "678ae215c6cb", "relation": "duplicates", "from": "claim:c14_0037_04", "to": "claim:c14_0005_21", "strength": 0.9, "rationale": "The same RUSI finding that forward air defence was found and hit, usually by Iskander/9M723."}
+{"pair": "6874894d28de", "relation": "supports", "from": "claim:c14_0034_02", "to": "claim:c14_0005_05", "strength": 0.7, "rationale": "Both say route sweeps by drone are the counter to waiting drones; same DEV.ua source.", "independent": false}
+{"pair": "69a8f90f3db0", "relation": "duplicates", "from": "claim:c14_0037_03", "to": "claim:c14_0005_22", "strength": 0.9, "rationale": "The same unverified June 2023 Lancet hit on a TRML-4D, same Army Recognition source."}
+{"pair": "74a06be9262d", "relation": "supports", "from": "claim:c14_0005_06", "to": "claim:c14_0044_04", "strength": 0.7, "rationale": "Both give dome jammers a radius of about 150–300 m; the Kvertus source is shared.", "independent": false}
+{"pair": "76f51a1ae0fb", "relation": "refines", "from": "claim:c12_0049_10", "to": "claim:c12_0029_01", "strength": 0.6, "rationale": "Gives Oryx's per-type counts for the Soviet-era radar losses."}
+{"pair": "787cab6a15f7", "relation": "contradicts", "from": "claim:c00_0056_06", "to": "claim:c13_0037_04", "strength": 0.5, "rationale": "The first Sting kill of a Geran-3 is dated December 2025 in one and 30 November 2025 in the other.", "resolution": "Wikipedia likely dates by the report or the overnight raid of 30 November–1 December; Euromaidan's contemporaneous 30 November date is more specific."}
+{"pair": "79da42b45108", "relation": "none", "rationale": "The game edition debut and the P1-SUN's cost and guidance are different subjects."}
+{"pair": "79def36d56d7", "relation": "duplicates", "from": "claim:c14_0018_05", "to": "claim:c14_0005_07", "strength": 0.8, "rationale": "The same Shutyi dating of frontline EW's collapse to end-2024 because of fibre drones, same source."}
+{"pair": "7a6955aab6eb", "relation": "refines", "from": "claim:c14_0011_08", "to": "claim:c14_0005_02", "strength": 0.5, "rationale": "Qualifies 'go blind' to digital video: it is still detected, only not shown."}
+{"pair": "80e5b9d376c8", "relation": "none", "rationale": "Different Molniya variants and different detection problems."}
+{"pair": "816d4c199e24", "relation": "supports", "from": "claim:c12_0042_02", "to": "claim:c12_0041_06", "strength": 0.4, "rationale": "The Gerbera's weak bare return explains why its Luneburg lens makes it look like a Shahed; the ISIS source is shared.", "independent": false}
+{"pair": "82709e1e0b0e", "relation": "none", "rationale": "Coverage area and data delivery are different assertions."}
+{"pair": "82dee69c2c13", "relation": "refines", "from": "claim:c13_0009_10", "to": "claim:c13_0029_03", "strength": 0.7, "rationale": "Specifies the thermal sights on Strela-2 and Igla, with date and supplier."}
+{"pair": "84c357b7505f", "relation": "refines", "from": "claim:c12_0041_06", "to": "claim:c12_0005_14", "strength": 0.6, "rationale": "Names the Gerbera as the decoy whose Luneburg lens makes it look like a Shahed."}
+{"pair": "85ddd496f75f", "relation": "none", "rationale": "Data delivery and the lack of environmental accuracy data are different subjects."}
+{"pair": "8a7f3dba3e48", "relation": "supports", "from": "claim:c14_0024_02", "to": "claim:c05_0017_06", "strength": 0.7, "rationale": "The Telegraph's £800 M777 replica matches Kyiv Post's decoy M777 at about $1,000.", "independent": true}
+{"pair": "8e467fe6c4d2", "relation": "none", "rationale": "Production rate and flight speed are different quantities."}
+{"pair": "96e77a05f626", "relation": "none", "rationale": "Decoy radar effects and the Gerbera's build are different assertions."}
+{"pair": "9727d678d639", "relation": "none", "rationale": "When Metinvest began decoys and what its decoys contained and cost are different facts."}
+{"pair": "9dc42207135f", "relation": "duplicates", "from": "claim:c12_0005_04", "to": "claim:c12_0013_01", "strength": 0.8, "rationale": "The same Tekhnari statement that Diia login defends ePPO against false reports."}
+{"pair": "a0beaa55427c", "relation": "none", "rationale": "The hit/miss count and the target mix are different facts."}
+{"pair": "a613a9325ba7", "relation": "none", "rationale": "Simulator weapons and fielded mobile-team weapons are different subjects."}
+{"pair": "b17e47d6cc72", "relation": "supports", "from": "claim:c13_0039_06", "to": "claim:c00_0056_06", "strength": 0.5, "rationale": "The Geran-3's slow cruise letting Stings catch some corroborates Sting Geran-3 kills in late 2025.", "independent": false}
+{"pair": "b1f7a6425525", "relation": "supports", "from": "claim:c12_0052_01", "to": "claim:c12_0005_01", "strength": 0.7, "rationale": "ePPO launching and Zvook fielding stations in autumn 2022 against radar blind zones corroborates both being built in 2022 for that gap; sources overlap.", "independent": false}
+{"pair": "b398ec4e18f6", "relation": "none", "rationale": "Vendor ranges and the lack of environmental accuracy data are different subjects."}
+{"pair": "b4d8257a5f4e", "relation": "supports", "from": "claim:c14_0017_05", "to": "claim:c14_0005_06", "strength": 0.6, "rationale": "Dome jammers protecting 200–300 m fits the 150–300 m bubble; the Pravda source is shared.", "independent": false}
+{"pair": "b59da3cbf2eb", "relation": "duplicates", "from": "claim:c14_0022_02", "to": "claim:c02_0027_16", "strength": 0.9, "rationale": "The same start of Zaporizhzhia net tunnels in September 2025, same source."}

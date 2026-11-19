@@ -31,7 +31,7 @@ cargo run --release -- avdiivka-1   # Avdiivka, the first wave (avdiivka-2, avdi
 
 ## [db/](db/README.md): the knowledge base
 
-A SurrealDB graph of about 10,800 cited claims, with their claimants, places, numbers and relations (supports,
+A SurrealDB graph of about 11,900 cited claims, with their claimants, places, numbers and relations (supports,
 contradicts, …). It is the source of truth for everything the game takes from history.
 
 | path | contents |

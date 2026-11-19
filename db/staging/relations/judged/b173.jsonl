@@ -1,0 +1,40 @@
+{"pair": "efce32ab55c8", "relation": "supports", "from": "claim:c02_0029_49", "to": "claim:c13_0039_05", "strength": 0.7, "rationale": "Ihnat's jet Gerans at up to 500 km/h outrunning interceptors corroborates the claim; the Pravda source is shared.", "independent": false}
+{"pair": "f018063b1271", "relation": "refines", "from": "claim:c14_0005_19", "to": "claim:c14_0044_07", "strength": 0.6, "rationale": "Attributes the 180-to-24 Lancet fall to a volunteer figure and links it to breaking the Orlan-to-Lancet chain."}
+{"pair": "f24aa8a9b586", "relation": "duplicates", "from": "claim:c02_0029_37", "to": "claim:c13_0037_07", "strength": 0.9, "rationale": "The same 6,300 sorties and 1,500+ interceptor kills in February 2026, same ISIS source."}
+{"pair": "f5e34b3a7403", "relation": "none", "rationale": "EW's share of one night's attack and helicopters' share in their zones are different quantities."}
+{"pair": "f9a41e962df5", "relation": "supports", "from": "claim:c13_0049_06", "to": "claim:c13_0025_09", "strength": 0.7, "rationale": "The about $603 per round derived from Germany's contract corroborates the $600 Gepard round; same sources.", "independent": false}
+{"pair": "fabc816c4410", "relation": "duplicates", "from": "claim:c12_0019_06", "to": "claim:c12_0005_07", "strength": 0.85, "rationale": "The same Sky Fortress node counts of 6,000, 8,000, 9,500 and 14,000."}
+{"pair": "fdfda581cca8", "relation": "refines", "from": "claim:c01_0024_46", "to": "claim:c13_0005_04", "strength": 0.7, "rationale": "Beskrestnov's 10% winter and 50% May figures are the attributed points within the 10–25% to 40–50% range."}
+{"pair": "fe42c42d4898", "relation": "duplicates", "from": "claim:c13_0033_09", "to": "claim:c01_0027_50", "strength": 0.85, "rationale": "The same 30 km ZIRKA radius from the same Militarnyi source."}
+{"pair": "032fb71dbd34", "relation": "none", "rationale": "A decoy strike on 30 November and earlier losses of real aircraft at the same base are different events."}
+{"pair": "03c850b6c8b2", "relation": "none", "rationale": "The real MiG-29/Su-25 losses and the later Su-25 decoy strike are different events."}
+{"pair": "047593efa2ae", "relation": "refines", "from": "claim:c12_0041_09", "to": "claim:cc18_0028_06", "strength": 0.6, "rationale": "Gives the per-source speed ranges for jet Geran-4/5 behind the 300–600 km/h figure."}
+{"pair": "054eb4864cd1", "relation": "none", "rationale": "A general assessment of Ukraine's air force role and specific aircraft losses at one base are unrelated."}
+{"pair": "0571b8aa83e9", "relation": "supports", "from": "claim:c13_0009_14", "to": "claim:c13_0025_17", "strength": 0.5, "rationale": "Both describe the ZU-23 with ZIR+ (optics, rangefinder, thermal imager, camera), same Gwara source.", "independent": false}
+{"pair": "05dc72f954a1", "relation": "none", "rationale": "The absence of RCS data and the composition of one July 2026 strike are unrelated."}
+{"pair": "0843b3788028", "relation": "refines", "from": "claim:c12_0005_15", "to": "claim:c12_0029_01", "strength": 0.6, "rationale": "Gives Oryx's counts for the radar losses the general claim mentions."}
+{"pair": "10620f69617d", "relation": "supports", "from": "claim:c14_0024_04", "to": "claim:c01_0016_07", "strength": 0.8, "rationale": "TWZ and the Kyiv Independent both report a MiG-29 and an Su-25 lost to Lancets at Dovhyntseve in autumn 2023.", "independent": true}
+{"pair": "113e4488222d", "relation": "supports", "from": "claim:c12_0019_03", "to": "claim:c12_0005_01", "strength": 0.6, "rationale": "Sky Fortress and Zvook both starting in 2022 corroborates acoustic networks being built in 2022; sources overlap.", "independent": false}
+{"pair": "133be8ab470f", "relation": "duplicates", "from": "claim:c13_0010_01", "to": "claim:c08_0008_16", "strength": 0.8, "rationale": "The same Chaika VR training with virtual Igla, Stinger, DShK and M2 and searchlights, same source."}
+{"pair": "139e82688180", "relation": "supports", "from": "claim:c12_0049_07", "to": "claim:c14_0005_22", "strength": 0.7, "rationale": "TWZ's report of the June 2023 Lancet hit on a TRML-4D corroborates the Army Recognition report.", "independent": true}
+{"pair": "16ce7755e168", "relation": "none", "rationale": "Russia's shift to jet Gerans and their speed figures are different assertions."}
+{"pair": "1992ee40376c", "relation": "supports", "from": "claim:c13_0039_06", "to": "claim:c13_0037_04", "strength": 0.5, "rationale": "The Geran-3's slow cruise explains how Stings could make the first kills; same source.", "independent": false}
+{"pair": "1b01ff8503dd", "relation": "none", "rationale": "Who led on cages and the stages of armour protection are different assertions."}
+{"pair": "1bec4be62542", "relation": "none", "rationale": "Start dates of the networks and the triangulation method are different facts."}
+{"pair": "1e64c5997e7c", "relation": "supports", "from": "claim:c13_0053_04", "to": "claim:c12_0044_01", "strength": 0.7, "rationale": "Both say the Parodiya flies at Shahed-like speed and looks like a Shahed on radar; the Gwara source is shared.", "independent": false}
+{"pair": "1f458c8a8744", "relation": "refines", "from": "claim:c13_0029_15", "to": "claim:c13_0059_10", "strength": 0.5, "rationale": "Details the APKWS-on-F-16 element: Sniper pods, cost and load per sortie."}
+{"pair": "1f7470b45990", "relation": "supports", "from": "claim:c14_0022_06", "to": "claim:c14_0005_16", "strength": 0.6, "rationale": "Both say waiting drones can hide under anti-drone nets; the United24 source is shared.", "independent": false}
+{"pair": "2c58e3444615", "relation": "none", "rationale": "Decoys' radar appearance and their tactical effect on swarms are different assertions."}
+{"pair": "2f695e390d69", "relation": "none", "rationale": "Decoys looking like Shaheds and decoys revealing air-defence positions are different assertions."}
+{"pair": "2fb57eedc14a", "relation": "supports", "from": "claim:c14_0024_02", "to": "claim:c05_0017_07", "strength": 0.6, "rationale": "The Telegraph's Metinvest decoys with heat and radar sources corroborate Kyiv Post's report of added heat and emitters.", "independent": true}
+{"pair": "2ff6637b31e0", "relation": "none", "rationale": "Coverage area and detection range are different quantities."}
+{"pair": "3042d3650235", "relation": "duplicates", "from": "claim:c14_0020_05", "to": "claim:c02_0027_17", "strength": 0.85, "rationale": "The same hot wire, shotgun and net-gun counters to fibre drones, same United24 source."}
+{"pair": "34b906e67cb5", "relation": "none", "rationale": "Decoy speeds and the composition of one strike are different assertions."}
+{"pair": "3690252a01c5", "relation": "none", "rationale": "Service presence and missile prices are different facts."}
+{"pair": "3861a579cab9", "relation": "none", "rationale": "Virtual simulator weapons and fielded thermal sights are different subjects."}
+{"pair": "3b980445725c", "relation": "none", "rationale": "The absence of measured RCS numbers does not bear on speeds or qualitative radar appearance."}
+{"pair": "3c6b2538f0c5", "relation": "none", "rationale": "Zvook's ranges and its data latency are different quantities."}
+{"pair": "3ec55c2bce6d", "relation": "none", "rationale": "Decoys revealing positions and the introduction of new decoy types are different assertions."}
+{"pair": "4205f8175a17", "relation": "none", "rationale": "The shift to jet Gerans and their speed figures are different assertions."}
+{"pair": "430116bbf4f2", "relation": "none", "rationale": "The spread of jammers and their protected radius are different assertions."}
+{"pair": "4ba9dfa630fe", "relation": "none", "rationale": "Decoy characteristics and swarm tactics are different assertions."}

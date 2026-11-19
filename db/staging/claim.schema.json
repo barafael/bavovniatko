@@ -358,7 +358,9 @@
                   "cm",
                   "knot",
                   "nmi",
-                  "hour_of_day"
+                  "hour_of_day",
+                  "ms",
+                  "gb"
                 ]
               },
               "time": {
