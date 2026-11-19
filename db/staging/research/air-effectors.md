@@ -231,7 +231,7 @@ The same logic recurs at every date. In 2022 a US officer called fighters agains
 
 ---
 
-## 12. For the games
+## 12. Game/sim relevance
 
 Design observations for Sword or Shield and bavovniatko. These are suggestions drawn from the facts above, not facts themselves.
 

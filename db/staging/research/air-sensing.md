@@ -200,7 +200,7 @@ Orlan, ZALA and Supercam are the frontline sibling draft's subject. For the air 
 
 ---
 
-## 10. For the games
+## 10. Game/sim relevance
 
 Design observations, not facts. Each rests on the cited facts above.
 

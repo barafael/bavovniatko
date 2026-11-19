@@ -215,7 +215,7 @@ Additions to the chain in `02-ew-countermeasures` §2. Only the counter-drone st
 
 ---
 
-## 9. For the games (design observations, not facts)
+## 9. Game/sim relevance
 
 These are design readings of the facts above for Sword or Shield and bavovniatko. They are kept apart from the cited text.
 
