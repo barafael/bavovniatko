@@ -1,0 +1,510 @@
+- id: dou-2022-gurska-eppo-interview
+  title: "єППО — як розробляли та погоджували з військовими застосунок, що допомагає ловити «Калібри» та «Шахеди»"
+  url: https://dou.ua/lenta/interviews/air-defense-app/
+  publisher: DOU
+  authors: [Maria Gurska]
+  published: "2022-10-31"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [air-defence, eppo, shahed]
+  found_in: [air-sensing]
+  notes: "Ukrainian-language interview with Tekhnari co-founders Kosiak and Suldin and IT WAR UA's Kryvosheiev. Idea May 2022, beta Aug, coordinated with OC South; report = geolocation + compass heading, sound reports too; Diia against fake reports; first Kalibr kill 22 Oct 2022 with ~4 min warning; 19 of 20 Shaheds one night; 'supplementary, not primary'; DDoS on IT WAR services. Developer claims, approved for publication by the military."
+- id: zaxid-2022-eppo-launch
+  title: "З'явився мобільний застосунок для допомоги силам ППО виявляти ворожі цілі"
+  url: https://zaxid.net/zyavivsya_mobilniy_zastosunok_dlya_dopomogi_silam_ppo_viyavlyati_vorozhi_tsili_n1551087/amp
+  publisher: Zaxid.net
+  authors: []
+  published: "2022-10-13"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [air-defence, eppo]
+  found_in: [air-sensing]
+  notes: "Launch of ePPO by Tekhnari on Google Play; choose type, point the phone in the direction the target is moving, press the red button; marker appears on air-defence maps next to radar data; Diia login 'so that enemies and fools don't interfere with gunners with false targets'."
+- id: ukrinform-2024-eppo-80pct
+  title: "EPPO app helps Ukraine close sky by 80%"
+  url: https://www.ukrinform.net/rubric-ato/3930665-eppo-app-helps-ukraine-close-sky-by-80.html
+  publisher: Ukrinform
+  authors: []
+  published: "2024-11-24"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [air-defence, eppo]
+  found_in: [air-sensing]
+  notes: "Deputy Defence Minister Chernohorenko: 600,000+ downloads, ~200,000 active users; report on officers' maps in 2-7 s; AI trajectory prediction; MFGs respond; 80% claim without method."
+- id: babel-2024-perepechko-eppo-80pct
+  title: "The \"ePPO\" application helps to close the Ukrainian sky by 80%"
+  url: https://babel.ua/en/news/112976-the-eppo-application-helps-to-close-the-ukrainian-sky-by-80
+  publisher: Babel
+  authors: [Iryna Perepechko]
+  published: "2024-11-24"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [air-defence, eppo]
+  found_in: [air-sensing]
+  notes: "Same Chernohorenko announcement as Ukrinform: 80% claim, 600k downloads/200k active, 2-7 s latency, 'Flying Nearby' alerts."
+- id: kyivpost-2024-brown-smartphone-apps
+  title: "After Drones, Smartphone Apps Are Ukraine's Next Secret Weapon"
+  url: https://www.kyivpost.com/post/30149
+  publisher: Kyiv Post
+  authors: [Steve Brown]
+  published: "2024-03-27"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e6-avdiivka-attrition]
+  topics: [air-defence, eppo, acoustic]
+  found_in: [air-sensing]
+  notes: "ePPO unveiled autumn 2022; uses GPS and compass, user points phone at approaching object; acoustic phones feed 'Virazh' (~40 sensor types); next-gen Zvook plans 12,000+ sensors with 5/6/10 km ranges for drones/cruise/ballistic."
+- id: swj-2026-woods-citizen-sensors
+  title: "Citizen Sensors: Crowd-Sourcing sUAS Intelligence Using Smartphone Apps – A New Tool for Special Operations"
+  url: https://smallwarsjournal.com/2026/07/13/citizen-sensors/
+  publisher: Small Wars Journal
+  authors: [Catherine M. Woods]
+  published: "2026-07-13"
+  accessed: "2026-11-18"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone, e9-counteroffensive-26]
+  topics: [air-defence, eppo]
+  found_in: [air-sensing]
+  notes: "Secondary: 4m+ ePPO reports by Dec 2025 (citing Snake Island Institute, 'Holding Back the Sky', not fetched), 850k+ Diia-verified users in 2026, 10-minute overflight warning, real-time aggregation for direction and speed; data-poisoning risk in general terms."
+- id: caliber-2023-russia-radar-app
+  title: "Russia launches app for public reporting of drones, suspicious items"
+  url: https://caliber.az/en/post/russia-launches-app-for-public-reporting-of-drones-suspicious-items
+  publisher: "Caliber.Az (reprinting The Washington Post)"
+  authors: []
+  published: "2023-09-22"
+  accessed: "2026-11-18"
+  type: news
+  origin: other
+  reliability: low
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [air-defence, eppo, russia]
+  found_in: [air-sensing]
+  notes: "Reprint of a Washington Post report of 20 Sep 2023: Russia's 'Radar' app by All-Russia People's Front activists, pushed via the state portal; near-identical to ePPO; developer claims 50k downloads and two drones downed over Bryansk (Russian claim). The text also calls it a defence-ministry launch, which contradicts the ONF attribution."
+- id: twz-2024-trevithick-networked-microphones
+  title: "Ukraine Using Thousands Of Networked Microphones To Track Russian Drones"
+  url: https://www.twz.com/land/thousands-of-networked-microphones-are-tracking-drones-in-ukraine
+  publisher: The War Zone
+  authors: [Joseph Trevithick]
+  published: "2024-02-12"
+  accessed: "2026-11-18"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, acoustic, shahed]
+  found_in: [air-sensing]
+  notes: "Gen. James Hecker (USAFE): about 6,000 acoustic sensors 'all over the country'; picture passed to mobile teams with AAA; six hours' training; NATO testing interest."
+- id: militarnyi-2024-kushnikov-hecker-acoustic
+  title: "US General discussed the work of the Ukrainian acoustic drone detection system"
+  url: https://militarnyi.com/en/news/us-general-discussed-the-work-of-the-ukrainian-acoustic-drone-detection-system
+  publisher: Militarnyi
+  authors: [Vadim Kushnikov]
+  published: "2024-03-26"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition]
+  topics: [air-defence, acoustic, shahed]
+  found_in: [air-sensing]
+  notes: "Hecker: 8,000 sensors on 6-ft poles, ~$500 each; combined stations give speed and direction; tablet display learned in six hours; 84 drones tracked, 80 destroyed by mobile fire teams."
+- id: telegraph-2024-barnes-phones-on-poles
+  title: "How Ukraine is using mobile phones on 6ft poles to stop drones"
+  url: https://sg.news.yahoo.com/ukraine-using-mobile-phones-6ft-183615041.html
+  publisher: "The Telegraph (via Yahoo News)"
+  authors: [Joe Barnes]
+  published: "2024-03-26"
+  accessed: "2026-11-18"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22, e6-avdiivka-attrition]
+  topics: [air-defence, acoustic]
+  found_in: [air-sensing]
+  notes: "Fetched via Yahoo syndication. Skyfortress NGO Android-phone sensors; Safe Skies fundraising for 12,500 Ajax Systems sensors; Virazh combines 40+ sensor networks; Zvook 210 sensors, ~5% of Ukraine, 8,000 for whole country, ~GBP 400 each, ranges ~3/4/6 miles; CEO Sulym: 'auxiliary system'."
+- id: aviationweek-2024-osborne-low-cost-kills
+  title: "Ukraine Achieving Low-Cost Kills Against Russia's Attack Drones"
+  url: https://aviationweek.com/shownews/gascc-riat/ukraine-achieving-low-cost-kills-against-russias-attack-drones
+  publisher: Aviation Week
+  authors: [Tony Osborne]
+  published: "2024-07-21"
+  accessed: "2026-11-18"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e6-avdiivka-attrition, e7-kursk-pokrovsk]
+  topics: [air-defence, acoustic, shahed]
+  found_in: [air-sensing]
+  notes: "Hecker at RIAT: Skyfortress 9,500 sensors, cellphone on ~6 ft pole, $400-500 each; central computer sends flight routes to fire teams on iPads; 84/80 raid; tested at Ramstein and in Romania."
+- id: united24-2025-brizard-sky-fortress
+  title: "Sky Fortress—Ukraine's Acoustic Detection System That Tracks Drones Cheap and Fast"
+  url: https://united24media.com/war-in-ukraine/sky-fortress-ukraines-acoustic-detection-system-that-tracks-drones-cheap-and-fast-9451
+  publisher: UNITED24 Media
+  authors: [Lucile Brizard]
+  published: "2025-07-01"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, acoustic, shahed]
+  found_in: [air-sensing]
+  notes: "14,000 sensors; 15,000 third-generation funded by NATO allies; $400-1,000 each; first generation used phones as CPUs; ~20% of targets tracked by acoustics alone; Russian noise changes cut accuracy 3%; fused with radar, sent to tablet-equipped fire teams; Zvook ~5% coverage. Government-run outlet; unattributed figures."
+- id: algorithmwatch-2022-andriushchenko-zvook
+  title: "From cloning actors' voices to detecting missiles: Ukraine's AI scene contributes to air defense"
+  url: https://algorithmwatch.org/en/zvook-ukraine-air-defense/
+  publisher: AlgorithmWatch
+  authors: [Yevhenii Andriushchenko]
+  published: "2022-12-07"
+  accessed: "2026-11-18"
+  type: news
+  origin: international
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [air-defence, acoustic]
+  found_in: [air-sensing]
+  notes: "Zvook founders (Bielievtsov, Tsiupka, Sulym); acoustic mirrors; 40 instances; training data with ~0.1% missile sounds; domain shift; ~50% accuracy in early tests; 'cow problem' false positive; false negatives brought to zero (team claim)."
+- id: espreso-2022-zvook
+  title: "Zvook project, Ukrainian know-how for detecting air targets"
+  url: https://global.espreso.tv/zvook-project-ukrainian-know-how-for-detecting-air-targets
+  publisher: Espreso
+  authors: []
+  published: "2022-12-09"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e3-counteroffensives-22]
+  topics: [air-defence, acoustic]
+  found_in: [air-sensing]
+  notes: "Sulym: parabolic mirror and microphone; sensors at 10-12 m on telecom towers; 40+ stations, plan to double; classes helicopters, jets, cruise missiles, drones; '200 km' coverage figure ambiguous."
+- id: thedefensenews-2026-kumar-zvook-batt26
+  title: "Ukrainian Firm Zvook Tests Vehicle-Mounted Acoustic Drone Detection System at NATO Exercise"
+  url: https://www.thedefensenews.com/Ukrainian-Firm-Zvook-Tests-Vehicle-Mounted-Acoustic-Drone-Detection-System-at-NATO-Exercise/
+  publisher: "World Defense News (thedefensenews.com)"
+  authors: [Aditya Kumar]
+  published: "2026-08-11"
+  accessed: "2026-11-18"
+  type: news
+  origin: international
+  reliability: low
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, acoustic]
+  found_in: [air-sensing]
+  notes: "Aggregator relaying company statements: fixed networks since 2022 on 10-12 m towers; ~5 km drones, ~7 km cruise missiles; detections to Delta with ~12 s 'warning times'; ML cut false positives to ~1.6%; ~$500 per sensor; mobile trial at BATT26 'not completely trouble-free'. All vendor figures."
+- id: euromaidan-2026-mukhina-zvook-hydrophones
+  title: "Zvook covers Ukraine's skies for under €50 million. Now, it has started testing hydrophones underwater"
+  url: https://euromaidanpress.com/?p=423073
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-08-26"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, acoustic]
+  found_in: [air-sensing]
+  notes: "Company LinkedIn claim: acoustic sensors cover Ukraine at 1,000 m and below for under EUR 50m; NATO ASG Goffus called it 'crazy' cost-effective; Lithuania adopting."
+- id: defenceexpress-2024-shcherbak-russian-acoustic
+  title: "The russians Begin Deploying Acoustic Detection System for UAVs and Cruise Missiles, Copying Ukrainian Solution Again"
+  url: https://en.defence-ua.com/weapon_and_tech/the_russians_begin_deploying_acoustic_detection_system_for_uavs_and_cruise_missiles_copying_ukrainian_solution_again-11820.html
+  publisher: Defense Express
+  authors: [Svitlana Shcherbak]
+  published: "2024-09-11"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [air-defence, acoustic, russia]
+  found_in: [air-sensing]
+  notes: "Beskrestnov photo of a Russian 4-microphone sensor on a cell tower; acoustic accuracy 'significantly lower than radar' but dense low-altitude field; radars see a 100 m-altitude target at 40-50 km depending on terrain; Zvook shown at Brave1 in Apr 2023."
+- id: nato-2026-nsatu-acoustic-lessons
+  title: "Acoustic Sensor Systems for Artillery and Drone Threat Detection in Ukraine"
+  url: https://nllp.jallc.nato.int/iks/sharing%20public/20260109_(nu)_%20uas_acoustic_sensor_systems_for_artillery_and_drone_threat_detection.pdf
+  publisher: "NATO NSATU Lessons Learned (JALLC portal)"
+  authors: []
+  published: "2026-01"
+  accessed: "2026-11-18"
+  type: official
+  origin: international
+  reliability: low
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, acoustic]
+  found_in: [air-sensing]
+  notes: "Four-page note, self-declared as drafted with GPT-based AI help and sourced only to press (TechUkraine, United24, Defense One, TWZ, Eurasian Times). Repeats 14,000 sensors, $400-1,000, 84/80; adds a 5-sensor complex of ~25 kg (Vidar Systems) and vulnerability to physical decoys and cyberattack. Used only for the latter."
+- id: kyivpost-2025-korshak-how-ukraine-shoots-shaheds
+  title: "EXPLAINED: How Ukraine Shoots Down Russian Shahed Drones"
+  url: https://www.kyivpost.com/post/59923
+  publisher: Kyiv Post
+  authors: [Stefan Korshak]
+  published: "2025-09-11"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, acoustic, shahed]
+  found_in: [air-sensing]
+  notes: "'Sky Watch' acoustic network of phones on poles triangulating by relative loudness; analysts' 10-15k sensors and $5-54m; air wardens and Telegram channels main real-time source by early 2024; early warning hours ahead from bomber movements and launch-site sightings; Gerbera ~$10k; Shaheds faster and lower than observation drones."
+- id: kyivindependent-2025-post-shaheds-evolving
+  title: "How Russia's Shahed drones are getting more deadly — and what Ukraine is doing about it"
+  url: https://kyivindependent.com/how-russias-shaheds-are-evolving-and-what-ukraines-air-defenses-are-doing-about-it/
+  publisher: Kyiv Independent
+  authors: [Kollen Post]
+  published: "2025-05-17"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, shahed, radar]
+  found_in: [air-sensing]
+  notes: "Jet Shaheds 380-400 km/h, record 477 km/h (Mar 2025) seen by radar at 300 m; some glide at 100 m; ground radar poor below the horizon; ~half of radar-detected Shaheds decoys ('Lost/Fell'); units share a radar-based app ('Visage', probably Virazh) integrated with Delta; tablets with linked thermal targeting; 5-6 s engagement window; Shaheds react to searchlights, some steered online and filming positions."
+- id: kyivindependent-2025-post-autumn-rains
+  title: "Ukraine's autumn rains are dampening Kyiv's air defense"
+  url: https://kyivindependent.com/ukraines-autumn-rains-help-shahed-type-drones-evade-ukrainian-air-defense
+  publisher: Kyiv Independent
+  authors: [Kollen Post]
+  published: "2025-10-13"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, weather, shahed]
+  found_in: [air-sensing]
+  notes: "Zelensky: effectiveness down 20-30% in overcast; scope sees 100-200 m in rain/snow vs ~2,000 m; Khrapchynskyi: cloud, rain, snow, fog defeat thermal too; RADA ieMHR ~$1m vs Ukrainian analogue ~$120k (MFG coordinator estimate); Sting ~600 kills (FT)."
+- id: kyivindependent-2026-moroziuk-jet-drone-crews
+  title: "With Kyiv's air defense crews as they race to keep up with Russia's jet-powered drones"
+  url: https://kyivindependent.com/with-kyivs-air-defense-crews-as-they-race-to-keep-up-with-russias-jet-powered-drones/
+  publisher: Kyiv Independent
+  authors: [Polina Moroziuk, Jakub Laichter]
+  published: "2026-10-26"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, shahed, ew]
+  found_in: [air-sensing]
+  notes: "Reporting chain radar -> command posts -> units; MFG gets direction, altitude, distance and corrects with own optics; thermal hampered by cloud; jet Gerans ~600 km/h, some at 5-6 km; jets heard late; 20 s sector crossing; spectrum-analyser monitoring of Russian links; Gerans with cameras and mesh; 'They're probing'."
+- id: euromaidan-2025-shandra-shaheds-dive
+  title: "Shahed drones now dive like missiles—and Ukraine can't shoot fast enough"
+  url: https://euromaidanpress.com/2025/06/29/why-cant-ukraine-stop-russias-shahed-drones-anymore/
+  publisher: Euromaidan Press
+  authors: [Alya Shandra]
+  published: "2025-06-29"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, shahed]
+  found_in: [air-sensing]
+  notes: "Shaheds cruise 2,500-2,800 m at 200-210 km/h, approach at 2,000-2,500 m and dive near-vertically; jets 550-600 km/h; SAM systems track ~10-20 targets; Parody decoys look like transport aircraft on radar; draws on a Texty analysis."
+- id: euromaidan-2025-zoria-shaheds-evade-kyiv
+  title: "Why Russian Shahed explosive drones increasingly evade Ukrainian air defenses and reach Kyiv (updated)"
+  url: https://euromaidanpress.com/2025/05/07/why-russian-shahed-explosive-drones-increasingly-evade-ukrainian-air-defenses-and-reach-kyiv/
+  publisher: Euromaidan Press
+  authors: [Yuri Zoria]
+  published: "2025-05-07"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, shahed, radar]
+  found_in: [air-sensing]
+  notes: "Summarises Texty: Shaheds at 1.5-2 km; Parody decoys with devices mimicking Il-76-size returns confuse Skynex; helicopters with 30 kg FLIR; corridors 60-70 km wide; Air Force 6-7 May 2025: 187 drones, 81 shot down, 64 decoys 'lost from radar'."
+- id: euromaidan-2026-mukhina-airforce-tracking
+  title: "Ukraine's Air Force fundamentally changes how it tracks Russian Shaheds"
+  url: https://euromaidanpress.com/2026/04/30/ukraines-air-force-fundamentally-changes-how-it-tracks-russian-shaheds/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-04-30"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, radar, shahed]
+  found_in: [air-sensing]
+  notes: "Deputy Air Force Commander Yelizarov (via Ukrainska Pravda): every drone's route tracked across regions, drones previously 'dropped out' of regional statistics; radar siting now coordinated from attack patterns, moved after strikes."
+- id: united24-2025-litnarovych-iris-range
+  title: "Ukraine's Fight With Shaheds Spurs Breakthrough: Robin Radar Almost Triples IRIS Detection Range"
+  url: https://united24media.com/latest-news/ukraines-fight-with-shaheds-spurs-breakthrough-robin-radar-almost-triples-iris-detection-range-11499
+  publisher: UNITED24 Media
+  authors: [Vlad Litnarovych, Tetiana Frolova]
+  published: "2025-09-09"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, radar]
+  found_in: [air-sensing]
+  notes: "Robin Radar IRIS software Long-Range Mode tested in Ukraine: 5 -> 12 km for drones above 180 km/h; field-upgradable; vehicle-mountable. Vendor claim."
+- id: united24-2026-kohanets-giraffe
+  title: "Swedish Giraffe Radars Improve Ukraine's Early Warning Against Russian Missiles and Drones"
+  url: https://united24media.com/war-in-ukraine/swedish-giraffe-radars-improve-ukraines-early-warning-against-russian-missiles-and-drones-20117
+  publisher: UNITED24 Media
+  authors: [Roman Kohanets]
+  published: "2026-06-24"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, radar]
+  found_in: [air-sensing]
+  notes: "MoD (23 Jun 2026): Giraffe family (PS-90, PS-100, 1X, AMB, Mk IV) 'performed well'; 360 deg; up to 100 km range and 20 km altitude by variant; detects small slow low drones. Variants and numbers in Ukraine not stated."
+- id: militarnyi-2023-safronov-gepard
+  title: "Gepard: \"Predator\" of the Ukrainian air defense"
+  url: https://militarnyi.com/en/articles/gepard-predator-of-the-ukrainian-air-defense/
+  publisher: Militarnyi
+  authors: [Taras Safronov]
+  published: "2023-07-22"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [air-defence, radar]
+  found_in: [air-sensing]
+  notes: "Search radar up to 15 km, MPDR-18 S-band upgrade up to 18 km; first Gepards July 2022, 40 a year later; Shaheds 'a very easy target'; ammunition constraints."
+- id: isis-2024-anokhin-decoy-drones
+  title: "Russian Decoy Drones that Depend on Western Parts Pose a Great Challenge to Ukrainian Defenses"
+  url: https://isis-online.org/isis-reports/detail/russian-decoy-drones-that-depend-on-western-parts-pose-a-great-challenge
+  publisher: Institute for Science and International Security
+  authors: [Igor Anokhin, Spencer Faragasso]
+  published: "2024-12-18"
+  accessed: "2026-11-18"
+  type: think-tank
+  origin: western
+  reliability: high
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [air-defence, shahed, decoys]
+  found_in: [air-sensing]
+  notes: "Gerbera: plywood and foam V-wing, DLE60 two-stroke, some ~10 kg charge, some cameras/ELINT, Alabuga up to 50/day, ~$10k (Ukrainian officials), first seen late Jul 2024. Parody: plywood high-wing, DLE55RA, no warhead, Luneburg lenses give Shahed-like RCS. Decoys reveal AD, radar and EW positions."
+- id: bi-2025-loh-gerbera-cameras
+  title: "A Russian decoy for the Shahed was found with cameras on its back, highlighting how Moscow is adapting in the drone war"
+  url: https://www.aol.com/articles/russian-decoy-shahed-found-cameras-051236889.html
+  publisher: "Business Insider (via AOL)"
+  authors: [Matthew Loh]
+  published: "2025-09-26"
+  accessed: "2026-11-18"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e8-drone-kill-zone]
+  topics: [air-defence, decoys]
+  found_in: [air-sensing]
+  notes: "Fetched via AOL syndication. Gerbera with two cameras, one skyward and one rearward, filmed by an interceptor (117th Brigade unit); Beskrestnov: Supercam carrying a radio-signal detector that triggers evasion, often a dive."
+- id: euromaidan-2026-mukhina-guided-shahed-mfg
+  title: "Russia is now using one Shahed to distract — and second to kill crew shooting it down"
+  url: https://euromaidanpress.com/2026/04/13/russia-is-now-using-one-shahed-to-distract-and-second-to-kill-crew-shooting-it-down/
+  publisher: Euromaidan Press
+  authors: [Olena Mukhina]
+  published: "2026-04-13"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, shahed]
+  found_in: [air-sensing]
+  notes: "Beskrestnov (Telegram): 'another hit by a guided Shahed on a mobile fire group crew'; one drone holds the crew's attention while another hunts it. No counts or method of finding the crew. UNITED24 carried the same report the same day."
+- id: twz-2023-trevithick-iris-t-lancet
+  title: "Ukraine's Prized IRIS-T Air Defense System Attacked By Russian Drone In Video"
+  url: https://www.twz.com/ukraines-prized-iris-t-air-defense-system-attacked-by-russian-drone-in-video
+  publisher: The War Zone
+  authors: [Joseph Trevithick]
+  published: "2023-06-07"
+  accessed: "2026-11-18"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e5-counteroffensive-23]
+  topics: [air-defence, radar, lancet]
+  found_in: [air-sensing]
+  notes: "Russian video of a Lancet striking a TRML-4D (IRIS-T SLM) radar; damage unclear, truck immobile after; 'radars are notoriously fragile'; one TRML-4D listed as delivered by Germany at the time."
+- id: c4isrnet-2026-livingstone-interceptor-economics
+  title: "Novel interceptor drones bend air-defense economics in Ukraine's favor"
+  url: https://www.c4isrnet.com/global/europe/2026/03/05/novel-interceptor-drones-bend-air-defense-economics-in-ukraines-favor
+  publisher: C4ISRNet
+  authors: [Katie Livingstone]
+  published: "2026-03-05"
+  accessed: "2026-11-18"
+  type: news
+  origin: western
+  reliability: medium
+  verified: fetched
+  eras: [e9-counteroffensive-26]
+  topics: [air-defence, radar, interceptors]
+  found_in: [air-sensing]
+  notes: "Intercepts start from radar tracks, acoustic spotters and Mission Control feeds; track hand-off across sectors; 'We just need better radar' (Lazar's Group); decoys about one-third of mass attacks (Defence-UA)."
+- id: euromaidan-2025-martyniuk-aerostat-ir
+  title: "Ukraine's new aerostat-mounted drones use infrared sensors to spot and destroy Russian Shaheds"
+  url: https://euromaidanpress.com/2025/03/13/ukraines-new-aerostat-mounted-drones-use-infrared-sensors-to-spot-and-destroy-russian-shaheds/
+  publisher: Euromaidan Press
+  authors: [Yevheniia Martyniuk]
+  published: "2025-03-13"
+  accessed: "2026-11-18"
+  type: news
+  origin: ukrainian
+  reliability: low
+  verified: fetched
+  eras: [e7-kursk-pokrovsk]
+  topics: [air-defence, interceptors]
+  found_in: [air-sensing]
+  notes: "Based on social-media images: Aerobavovna tethered aerostat with IR sensor drops an interceptor on detecting a Shahed. No ranges."
