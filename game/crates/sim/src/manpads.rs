@@ -92,19 +92,25 @@ fn flying(a: &Aircraft) -> bool {
     !matches!(a.flight, Flight::Waiting(_) | Flight::Falling)
 }
 
+/// What the player holds up: the view through the Igla's sight, and the time left to the seeker's next growl.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Sight<'w, 's> {
+    view: ResMut<'w, View>,
+    tone: Local<'s, f32>,
+}
+
 /// The player's Igla: the growl while something hot is in the ring, the tone once it is held, and the shot.
-#[allow(clippy::too_many_arguments)]
 fn player_igla(
     mut commands: Commands,
     time: Res<Time>,
     buttons: Res<ButtonInput<MouseButton>>,
-    mut view: ResMut<View>,
-    mut fx: ResMut<FxQueue>,
+    sight: Sight,
+    effects: crate::fx::Effects,
     mut radio: ResMut<Radio>,
-    mut sound: crate::sound::Sound,
     mut teams: Query<(&crate::fire::Post, &mut Igla)>,
-    mut tone: Local<f32>,
 ) {
+    let Sight { mut view, mut tone } = sight;
+    let crate::fx::Effects { mut fx, mut sound } = effects;
     if view.mode != Mode::Manpads {
         return;
     }
@@ -147,17 +153,16 @@ fn launch(commands: &mut Commands, fx: &mut FxQueue, from: Vec3, dir: Vec3, targ
 }
 
 /// The teams the player is not holding fire by themselves at a helicopter in reach, now and then.
-#[allow(clippy::type_complexity)]
 fn auto_iglas(
     mut commands: Commands,
     time: Res<Time>,
     view: Res<View>,
     mut rng: ResMut<ManpadsRng>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: crate::sound::Sound,
+    effects: crate::fx::Effects,
     mut teams: Query<(Entity, &crate::fire::Post, &mut Igla)>,
     aircraft: Query<(Entity, &Aircraft, &Transform)>,
 ) {
+    let crate::fx::Effects { mut fx, mut sound } = effects;
     let dt = crate::sim_dt(&time);
     for (e, post, mut igla) in &mut teams {
         igla.reload = (igla.reload - dt).max(0.0);
@@ -186,7 +191,6 @@ fn auto_iglas(
 }
 
 /// The ZU-23-2: a burst at the nearest aircraft within two kilometres, every few seconds while it has rounds.
-#[allow(clippy::too_many_arguments)]
 fn zu23(
     time: Res<Time>,
     mut rng: ResMut<ManpadsRng>,
@@ -234,7 +238,6 @@ fn zu23(
 
 /// The missiles: a boost to speed, then steering on the target's lead (or the flare it took instead), a hit inside
 /// a few metres once armed, and out of motor after seventeen seconds.
-#[allow(clippy::too_many_arguments)]
 fn fly_iglas(
     mut commands: Commands,
     time: Res<Time>,

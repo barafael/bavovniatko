@@ -128,38 +128,43 @@ type TurretMats<'w, 's> = Query<
     (With<Turret>, Without<Skin>),
 >;
 
-/// The turret of every vehicle, for charring its skin and throwing it when the charges go.
+/// A wreck as it is made one: its hull, the turret of every vehicle (for charring its skin and throwing it when the
+/// charges go), each part's skin and the children that hold them, and the ground it scorches.
 #[derive(bevy::ecs::system::SystemParam)]
-pub struct Turrets<'w, 's> {
-    mats: TurretMats<'w, 's>,
+pub struct Wreck<'w, 's> {
+    hulls: WreckQuery<'w, 's>,
+    turrets: TurretMats<'w, 's>,
+    children: Query<'w, 's, &'static Children>,
+    skins: Query<'w, 's, (&'static Skin, &'static mut MeshMaterial3d<VehicleMaterial>), Without<Vehicle>>,
+    paint: ResMut<'w, PaintQueue>,
+}
+
+/// What a burning wreck makes: the fire and smoke, their random stream, the sound, and the blasts of its
+/// ammunition.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct WreckFire<'w, 's> {
+    fx: ResMut<'w, FxQueue>,
+    fxr: ResMut<'w, FxRng>,
+    sound: Sound<'w, 's>,
+    blasts: MessageWriter<'w, Blast>,
 }
 
 pub fn on_wrecked(
     ev: On<Wrecked>,
     mut commands: Commands,
     time: Res<Time>,
-    palette: Res<Palette>,
-    models: Res<Models>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
-    mut sound: Sound,
-    mut paint: ResMut<PaintQueue>,
-    mut blasts: MessageWriter<Blast>,
-    mut q: WreckQuery,
-    mut turrets: Turrets,
-    children: Query<&Children>,
-    mut skins: Query<(&Skin, &mut MeshMaterial3d<VehicleMaterial>), Without<Vehicle>>,
-    mut log: ResMut<crate::hits::HitLog>,
+    dress: Dress,
+    mut fire: WreckFire,
+    mut record: Record,
+    mut wreck: Wreck,
 ) {
-    let Ok((mut v, mut sus, tf, mut mat, rescue, plow)) = q.get_mut(ev.vehicle) else { return };
+    let Ok((mut v, mut sus, tf, mut mat, rescue, plow)) = wreck.hulls.get_mut(ev.vehicle) else { return };
     // Several blasts can claim a wreck in one frame; the first one counts.
     if v.state == VState::Destroyed {
         return;
     }
     let now = time.elapsed_secs_f64();
-    if !log.add(now, ev.vehicle, crate::hits::fate(ev.how)) {
+    if !record.log.add(now, ev.vehicle, crate::hits::fate(ev.how)) {
         let weapon = match ev.cause {
             Cause::Mine => "a mine",
             Cause::Artillery if v.side == Side::Ru => "our guns",
@@ -173,19 +178,19 @@ pub fn on_wrecked(
             Cause::Autocannon | Cause::Blinding => "25 mm fire",
             Cause::Drop => "a dropped grenade",
         };
-        log.open(now, weapon, "", ev.vehicle, &v, rescue, format!("destroyed{}", crate::hits::fate(ev.how)));
+        record.log.open(now, weapon, "", Victim { target: ev.vehicle, vehicle: &v, rescue }, format!("destroyed{}", crate::hits::fate(ev.how)));
     }
     // An abandoned hull that burns now is no longer "abandoned" in the ledger.
     if v.state == VState::Abandoned {
         if v.side == diorama().attacker() {
-            stats.abandoned -= 1;
-            stats.wave(v.wave).abandoned -= 1;
+            record.stats.abandoned -= 1;
+            record.stats.wave(v.wave).abandoned -= 1;
         } else {
-            stats.defender_vehicles -= 1;
+            record.stats.defender_vehicles -= 1;
         }
     }
     let now = time.elapsed_secs_f64();
-    let rng = &mut fxr.0;
+    let rng = &mut fire.fxr.0;
     // It does not stop dead: the driver is gone, the engine dies, the hull rolls on and slews. (A vehicle already
     // immobilised, by a mine say, keeps the slew round its dead track that it already has.)
     if v.state.mobile() {
@@ -193,19 +198,19 @@ pub fn on_wrecked(
     }
     sus.pitch_v -= rng.random_range(0.8..1.6);
     v.state = VState::Destroyed;
-    let m = models.vehicle(v.kind);
-    char_skins(ev.vehicle, &mut mat, if plow { m.plow_hull.as_ref().unwrap_or(&m.hull) } else { &m.hull }, &children, &mut skins);
+    let m = dress.models.vehicle(v.kind);
+    char_skins(ev.vehicle, &mut mat, if plow { m.plow_hull.as_ref().unwrap_or(&m.hull) } else { &m.hull }, &wreck.children, &mut wreck.skins);
     let attacker = v.side == diorama().attacker();
     if attacker {
-        stats.destroyed += 1;
-        stats.wave(v.wave).destroyed += 1;
+        record.stats.destroyed += 1;
+        record.stats.wave(v.wave).destroyed += 1;
     } else {
-        stats.defender_vehicles += 1;
+        record.stats.defender_vehicles += 1;
     }
     match ev.cause {
-        Cause::Atgm => stats.atgm_kills += 1,
-        Cause::Fpv => stats.fpv_kills += 1,
-        Cause::Artillery | Cause::Himars | Cause::TankGun => stats.artillery_kills += 1,
+        Cause::Atgm => record.stats.atgm_kills += 1,
+        Cause::Fpv => record.stats.fpv_kills += 1,
+        Cause::Artillery | Cause::Himars | Cause::TankGun => record.stats.artillery_kills += 1,
         _ => {}
     }
     // Who gets out depends on how it dies. A brew-up kills everyone aboard; a hull that catches fire lets most
@@ -219,45 +224,45 @@ pub fn on_wrecked(
         Kill::Torch => v.crew.min(rng.random_range(0..=(v.crew / 2).max(1))) + (v.troops as f32 * rng.random_range(0.2..0.5)) as u32,
     };
     if attacker {
-        stats.attacker_dead += dead;
-        stats.died("in vehicles", dead);
+        record.stats.attacker_dead += dead;
+        record.stats.died("in vehicles", dead);
     } else {
-        stats.defender_losses += dead;
+        record.stats.defender_losses += dead;
     }
     v.crew -= v.crew.min(dead);
     v.troops = v.troops.saturating_sub(dead);
     let p = tf.translation;
-    paint.push(Paint::Scorch { at: p.xz(), radius: 9.0 });
+    wreck.paint.push(Paint::Scorch { at: p.xz(), radius: 9.0 });
     // Men riding on top are thrown off: a brew-up flings them, a fire tips them into the snow.
     for _ in 0..dead.min(5) {
         let a = rng.random_range(0.0..std::f32::consts::TAU);
         let speed = if ev.how == Kill::BrewUp { rng.random_range(5.0..9.0) } else { rng.random_range(1.5..3.0) };
-        throw_body(&mut commands, &models, &palette, v.side, p + Vec3::Y * 2.2, Vec3::new(a.cos() * speed, rng.random_range(2.0..5.0), a.sin() * speed), rng);
+        throw_body(&mut commands, &dress.models, &dress.palette, v.side, p + Vec3::Y * 2.2, Vec3::new(a.cos() * speed, rng.random_range(2.0..5.0), a.sin() * speed), rng);
     }
-    let turret = turrets.mats.get_mut(v.turret).ok().map(|(mut tm, tgt)| {
-        char_skins(v.turret, &mut tm, &m.turret, &children, &mut skins);
+    let turret = wreck.turrets.get_mut(v.turret).ok().map(|(mut tm, tgt)| {
+        char_skins(v.turret, &mut tm, &m.turret, &wreck.children, &mut wreck.skins);
         *tgt
     });
     let torch_secs = rng.random_range(150.0..320.0);
     let toss_later = ev.how != Kill::BrewUp && v.kind.carousel() && rng.random_bool(0.5);
     match ev.how {
         Kill::BrewUp => {
-            cook_off_blast(&mut fx, &mut sound, &mut blasts, p);
+            cook_off_blast(&mut fire.fx, &mut fire.sound, &mut fire.blasts, p);
             if v.kind.carousel()
                 && let Some(t) = turret.as_ref()
             {
-                toss_turret(&mut commands, rng, &mut stats, &mut radio, &v, t, now);
+                toss_turret(&mut commands, rng, &mut record.stats, &mut record.radio, &v, t, now);
             }
         }
         Kill::Torch => {
-            fx.explosion(p + Vec3::Y, 0.9, false);
-            sound.at(p, Sfx::BlastNear, 1.0);
+            fire.fx.explosion(p + Vec3::Y, 0.9, false);
+            fire.sound.at(p, Sfx::BlastNear, 1.0);
         }
         Kill::Quiet => {}
     }
     commands.entity(ev.vehicle).insert((Fire::torch(rng, ev.cause, v.kind, toss_later, torch_secs), Emitter::new(EmitterKind::WreckFire, 5.0, torch_secs, Vec3::Y * 1.5)));
     // Fuel running out of a holed tank burns in a pool beside the hull; in June it can set the field alight.
-    fx.pool_fire(tf, ev.how != Kill::Quiet);
+    fire.fx.pool_fire(tf, ev.how != Kill::Quiet);
 }
 
 /// The fire on a knocked-out vehicle, minute by minute: an engine-bay fire that grows into the hull or dies
@@ -265,18 +270,15 @@ pub fn on_wrecked(
 pub(super) fn burn(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut sound: Sound,
+    mut fire: WreckFire,
     mut stats: ResMut<Stats>,
     mut radio: ResMut<Radio>,
-    mut blasts: MessageWriter<Blast>,
     turrets: Query<&GlobalTransform, With<Turret>>,
     mut q: Query<(Entity, &Vehicle, &Transform, &mut Fire)>,
 ) {
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
-    let rng = &mut fxr.0;
+    let rng = &mut fire.fxr.0;
     for (e, v, tf, mut f) in &mut q {
         f.t += dt;
         let p = tf.translation;
@@ -299,14 +301,14 @@ pub(super) fn burn(
                     f.next_burst = f.t + rng.random_range(8.0..90.0);
                     if toss {
                         f.toss_at = None;
-                        cook_off_blast(&mut fx, &mut sound, &mut blasts, p);
+                        cook_off_blast(&mut fire.fx, &mut fire.sound, &mut fire.blasts, p);
                         if let Ok(t) = turrets.get(v.turret) {
                             toss_turret(&mut commands, rng, &mut stats, &mut radio, v, t, now);
                         }
                     } else {
                         let s = burst_strength(v.kind);
-                        fx.cookoff(p, s);
-                        sound.at(p, Sfx::CookOff, 0.4 + 0.5 * s);
+                        fire.fx.cookoff(p, s);
+                        fire.sound.at(p, Sfx::CookOff, 0.4 + 0.5 * s);
                     }
                 }
                 if f.t > f.torch_secs {

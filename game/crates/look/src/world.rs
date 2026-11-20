@@ -62,6 +62,22 @@ pub use bav_sim::units::Palette;
 #[derive(Resource)]
 pub struct Skirt(pub Handle<StandardMaterial>);
 
+/// What every diorama's daylight sets from the day's clock: the sun, the ambient light, the clear colour, the sky
+/// dome, and the skirt's colour (kept to the haze, `last` being the colour last given it), with the player's look
+/// settings. The camera's fog and exposure each daylight queries for itself.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Daylight<'w, 's> {
+    pub script: Res<'w, crate::director::Script>,
+    pub sun: Query<'w, 's, (&'static mut DirectionalLight, &'static mut Transform)>,
+    pub ambient: ResMut<'w, GlobalAmbientLight>,
+    pub clear: ResMut<'w, ClearColor>,
+    pub skirt: Option<Res<'w, Skirt>>,
+    pub materials: ResMut<'w, Assets<StandardMaterial>>,
+    pub sky_dome: crate::sky::Sky<'w, 's>,
+    pub last: Local<'s, Option<Color>>,
+    pub look: Res<'w, crate::LookSettings>,
+}
+
 /// The steppe beyond the diorama: a coarse skirt out to 9 km so the box never shows its edge.
 fn spawn_skirt(commands: &mut Commands, meshes: &mut Assets<Mesh>, materials: &mut Assets<StandardMaterial>) {
     let mut m = MeshBuilder::new();
@@ -192,7 +208,7 @@ pub struct Crown {
 
 impl Crown {
     fn cards(&self, m: &mut MeshBuilder) {
-        crate::trees::crown(m, self.kind, self.at, self.w, self.h, self.yaw, self.flip, self.colour);
+        crate::trees::crown(m, self);
     }
 }
 
@@ -554,7 +570,7 @@ fn spawn_town(mut commands: Commands, palette: Res<Palette>, mut meshes: ResMut<
             // Courtyard trees: lime, birch, poplar, the odd walnut.
             let kind = [Kind::Elm, Kind::Ash, Kind::Poplar, Kind::Walnut][(hash01(k, 99) * 4.0) as usize % 4];
             let ch = h * 0.75;
-            crate::trees::crown(&mut cards_for_town, kind, p + Vec3::Y * h * 0.25, ch * kind.aspect() * (0.85 + 0.3 * hash01(k, 90)), ch, hash01(k, 98) * 3.0, k % 2 == 0, [tone, tone * 0.95, tone * 0.9]);
+            crate::trees::crown(&mut cards_for_town, &Crown { kind, at: p + Vec3::Y * h * 0.25, w: ch * kind.aspect() * (0.85 + 0.3 * hash01(k, 90)), h: ch, yaw: hash01(k, 98) * 3.0, flip: k % 2 == 0, colour: [tone, tone * 0.95, tone * 0.9] });
         }
     }
     commands.spawn((Mesh3d(meshes.add(yard.build())), MeshMaterial3d(solid.clone())));
@@ -623,17 +639,10 @@ pub fn sun_hours(minutes: f32) -> f32 {
 /// burning wrecks start to show. Early February at 47.8 N: sunrise 06:51, sunset 16:38 Kyiv time (the dossier's
 /// 07:50–17:40 is Moscow time, the clock of occupied Donetsk).
 fn daylight(
-    script: Res<crate::director::Script>,
-    mut sun: Query<(&mut DirectionalLight, &mut Transform)>,
-    mut ambient: ResMut<GlobalAmbientLight>,
-    mut clear: ResMut<ClearColor>,
+    day: Daylight,
     mut fog: Query<(&mut bevy::pbr::DistanceFog, &mut bevy::camera::Exposure)>,
-    skirt: Option<Res<Skirt>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-    mut sky_dome: crate::sky::Sky,
-    mut last: Local<Option<Color>>,
-    look: Res<crate::LookSettings>,
 ) {
+    let Daylight { script, mut sun, mut ambient, mut clear, skirt, mut materials, mut sky_dome, mut last, look } = day;
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(DayDebug::Off) {
         return;
@@ -674,7 +683,7 @@ fn daylight(
         crate::sky::Weather::Overcast => Color::srgb(0.58 * light, 0.62 * light, 0.68 * light),
         _ => Color::srgb(0.46 * light, 0.56 * light, 0.74 * light),
     };
-    sky_dome.set(weather, h, zenith, sky, sun_at, Color::srgb(1.0, 0.93, 0.82), 1.6 * day.powf(0.3), 0.6 + 0.4 * day);
+    sky_dome.set(weather, h, zenith, sky, crate::sky::SkySun { dir: sun_at, colour: Color::srgb(1.0, 0.93, 0.82), strength: 1.6 * day.powf(0.3) }, 0.6 + 0.4 * day);
     for (mut f, mut ex) in &mut fog {
         f.color = sky;
         // The frost's clear air, and how far the player has opened or closed it.

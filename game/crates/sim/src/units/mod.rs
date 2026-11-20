@@ -10,6 +10,7 @@ use crate::sound::{Sfx, Sound};
 use crate::diorama::diorama;
 use crate::fx::{self, Emitter, EmitterKind, FxQueue, FxRng};
 use crate::geo::{self, Polyline};
+use crate::hits::Victim;
 use crate::paint::{Paint, PaintQueue};
 use bevy::{light::NotShadowCaster, platform::collections::HashMap, prelude::*};
 use rand::{Rng, SeedableRng, rngs::SmallRng};

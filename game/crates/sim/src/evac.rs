@@ -6,9 +6,10 @@
 
 use crate::diorama::{Side, diorama};
 use crate::geo;
-use crate::player::{MainCamera, cursor_ground};
-use crate::units::{Models, Palette, Radio, SState, Soldier, Stats, VKind, Vehicle, VehicleSpec};
-use bevy::{prelude::*, window::PrimaryWindow};
+use crate::orders::FieldInput;
+use crate::player::{Controls, Pointer, cursor_ground};
+use crate::units::{Dress, Radio, Report, SState, Soldier, VKind, Vehicle, VehicleSpec};
+use bevy::prelude::*;
 
 pub struct EvacPlugin;
 
@@ -73,16 +74,14 @@ impl Evacuation {
 
 /// V answers the last call; Alt+click asks for an evacuation at the cursor (and fires nothing).
 fn evac_input(
-    keys: Res<ButtonInput<KeyCode>>,
-    buttons: Res<ButtonInput<MouseButton>>,
-    window: Option<Single<&Window, With<PrimaryWindow>>>,
-    cam: Single<(&Camera, &GlobalTransform), With<MainCamera>>,
+    input: FieldInput,
     time: Res<Time>,
     evac: Res<Evacuation>,
     mut radio: ResMut<Radio>,
     mut requests: MessageWriter<EvacRequest>,
-    orders: Option<Res<crate::orders::OrdersView>>,
 ) {
+    let FieldInput { controls: Controls { keys, buttons }, pointer: Pointer { window, cam }, orders } = input;
+
     // Where the wounded wait for a robot, V and Alt+click send one (`robots`).
     if crate::robots::casevac() {
         return;
@@ -112,22 +111,20 @@ fn answer_requests(
     time: Res<Time>,
     mut requests: MessageReader<EvacRequest>,
     mut evac: ResMut<Evacuation>,
-    mut radio: ResMut<Radio>,
-    mut stats: ResMut<Stats>,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    mut report: Report,
+    dress: Dress,
     book: Res<crate::units::RouteBook>,
 ) {
     let now = time.elapsed_secs_f64();
     for r in requests.read() {
         let (lat, lon) = geo::latlon(r.at);
-        radio.say2(now, format!("{{command}}, я {{player}}. Евакуація, {lat:.4} {lon:.4}."), format!("{{command}}, this is {{player}}. Evacuation at {lat:.4} {lon:.4}."));
+        report.radio.say2(now, format!("{{command}}, я {{player}}. Евакуація, {lat:.4} {lon:.4}."), format!("{{command}}, this is {{player}}. Evacuation at {lat:.4} {lon:.4}."));
         let Some(spec) = crate::data::sim_data().evacuation else {
-            radio.say2(now, "{player}, я {command}. Вдень туди нічого не дійде. Чекатимуть темряви.", "{player}, this is {command}. Nothing gets down there in daylight. They wait for dark.");
+            report.radio.say2(now, "{player}, я {command}. Вдень туди нічого не дійде. Чекатимуть темряви.", "{player}, this is {command}. Nothing gets down there in daylight. They wait for dark.");
             continue;
         };
         if evac.left == 0 {
-            radio.say2(now, "{player}, я {command}. Більше нікого відправити.", "{player}, this is {command}. Nothing left to send.");
+            report.radio.say2(now, "{player}, я {command}. Більше нікого відправити.", "{player}, this is {command}. Nothing left to send.");
             continue;
         }
         let lay = geo::layout();
@@ -137,19 +134,19 @@ fn answer_requests(
         let s = spec.start.min(stop - 80.0).max(0.0);
         let e = crate::units::spawn_vehicle(
             &mut commands,
-            &models,
-            &palette,
+            &dress.models,
+            &dress.palette,
             &book,
             VehicleSpec { side, kind: spec.kind, route, s, lat: 0.0, wave: evac.wave, idx: evac.sent, plow: false, smoke: false, rescue: true, column_pace: f32::INFINITY },
         );
         commands.entity(e).insert(EvacTarget(stop - 25.0));
         evac.sent += 1;
         info!("evacuation sent: {:?} up route {route} to {:.0},{:.0}, {} left, at {now:.0} s", spec.kind, r.at.x, r.at.y, evac.left);
-        stats.vehicles_committed += 1;
-        stats.wave(evac.wave).vehicles += 1;
-        stats.sent += spec.kind.crew();
+        report.stats.vehicles_committed += 1;
+        report.stats.wave(evac.wave).vehicles += 1;
+        report.stats.sent += spec.kind.crew();
         let (uk, en) = if spec.kind == VKind::Bradley { ("Бредлі пішов", "Bradley on its way") } else { ("Машина пішла", "A vehicle on its way") };
-        radio.say2(now + 2.0, format!("{{player}}, я {{command}}. {uk}. Лишилось {}.", evac.left), format!("{{player}}, this is {{command}}. {en}. {} left.", evac.left));
+        report.radio.say2(now + 2.0, format!("{{player}}, я {{command}}. {uk}. Лишилось {}.", evac.left), format!("{{player}}, this is {{command}}. {en}. {} left.", evac.left));
     }
 }
 

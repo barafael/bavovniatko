@@ -82,9 +82,18 @@ pub struct Sky<'w, 's> {
     wind: Res<'w, bav_sim::fx::Wind>,
 }
 
+/// The sun as the sky shows it: `dir` points at it, `colour` is its own, and `strength` is how much of it shows at
+/// all.
+pub struct SkySun {
+    pub dir: Vec3,
+    pub colour: Color,
+    pub strength: f32,
+}
+
 impl Sky<'_, '_> {
-    /// `horizon` is the fog's colour; `sun` points at the sun; `strength` is how much of it shows at all.
-    pub fn set(&mut self, weather: Weather, hour: f32, zenith: Color, horizon: Color, sun: Vec3, sun_colour: Color, strength: f32, light: f32) {
+    /// `horizon` is the fog's colour.
+    pub fn set(&mut self, weather: Weather, hour: f32, zenith: Color, horizon: Color, sun: SkySun, light: f32) {
+        let SkySun { dir: sun, colour: sun_colour, strength } = sun;
         let Some(h) = self.dome.iter().next() else { return };
         let Some(mut m) = self.materials.get_mut(h) else { return };
         let lin = |c: Color| {

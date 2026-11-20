@@ -3,7 +3,7 @@
 //! February day at 50.6 N, from an overcast late morning to the dark after the counterattack.
 
 use crate::meshes::MeshBuilder;
-use crate::world::Skirt;
+use crate::world::Daylight;
 use bav_core::geo::{self, BuildingKind, smoothstep};
 use bav_sim::player::MainCamera;
 use bevy::{camera::Exposure, pbr::FogFalloff, prelude::*};
@@ -13,7 +13,7 @@ use bevy::{camera::Exposure, pbr::FogFalloff, prelude::*};
 pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>, mut paint: ResMut<Assets<crate::baked::VehicleMaterial>>) {
     let lay = geo::layout();
     let mut roofs = MeshBuilder::new();
-    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, true, &mut hangar, None);
+    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, crate::buildings::Town { snow: true, hangar: &mut hangar, shelled: None });
     // The Mriya in the Antonov hangar, as she stood that morning, ready to fly since 22:00 the night before
     // (c01 §6 set piece 4): along the hangar's long axis, under the vault.
     if let Some(h) = lay.buildings.iter().find(|b| b.kind == BuildingKind::Hangar) {
@@ -110,20 +110,12 @@ pub(crate) fn hangar(walls: &mut MeshBuilder, roofs: &mut MeshBuilder, foot: &[V
 /// The light under a low deck of cloud, from the late morning to full dark: the sun a brightness behind the cloud
 /// and never a hard shadow, the ambient carrying the day; after sunset the blue hour, then the night, which the
 /// camera opens up to (a drone's sensor), and the fires and flares carry it from then on (`FxLight`).
-#[allow(clippy::too_many_arguments)]
 pub fn daylight(
-    script: Res<bav_sim::director::Script>,
-    mut sun: Query<(&mut DirectionalLight, &mut Transform)>,
-    mut ambient: ResMut<GlobalAmbientLight>,
-    mut clear: ResMut<ClearColor>,
+    day: Daylight,
     mut cam: Query<(&mut DistanceFog, &mut Exposure), With<MainCamera>>,
-    skirt: Option<Res<Skirt>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
     mut fx_light: ResMut<crate::fx::FxLight>,
-    mut sky_dome: crate::sky::Sky,
-    mut last: Local<Option<Color>>,
-    look: Res<crate::LookSettings>,
 ) {
+    let Daylight { script, mut sun, mut ambient, mut clear, skirt, mut materials, mut sky_dome, mut last, look } = day;
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(crate::dev::DayDebug::Off) {
         return;
@@ -168,7 +160,7 @@ pub fn daylight(
     };
     let z = mix3([0.02, 0.03, 0.05], [0.24, 0.27, 0.36], twilight);
     let z = mix3(z, [0.58, 0.60, 0.64], day);
-    sky_dome.set(crate::sky::Weather::Overcast, minutes / 60.0, Color::srgb(z[0], z[1], z[2]), sky_c, sun_at, Color::srgb(1.0, 0.9, 0.8), 0.6 * day, 0.15 + 0.85 * twilight);
+    sky_dome.set(crate::sky::Weather::Overcast, minutes / 60.0, Color::srgb(z[0], z[1], z[2]), sky_c, crate::sky::SkySun { dir: sun_at, colour: Color::srgb(1.0, 0.9, 0.8), strength: 0.6 * day }, 0.15 + 0.85 * twilight);
     for (mut f, mut ex) in &mut cam {
         f.color = sky_c;
         // Drizzle under a low deck: the far edge of the field greys out.

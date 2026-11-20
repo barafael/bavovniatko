@@ -183,6 +183,13 @@ pub enum FxCall {
 #[derive(Resource, Default)]
 pub struct FxQueue(pub Vec<FxCall>);
 
+/// What a system needs to show and sound what happens: the effects' queue and the sound.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Effects<'w, 's> {
+    pub fx: ResMut<'w, FxQueue>,
+    pub sound: crate::sound::Sound<'w, 's>,
+}
+
 impl FxQueue {
     pub fn spawn(&mut self, s: Spawn) {
         self.0.push(FxCall::Spawn(s));

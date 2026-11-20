@@ -13,8 +13,7 @@
 use crate::diorama::diorama;
 use crate::fire::{Mission, ShellKind};
 use crate::geo;
-use crate::units::{self, ColumnOrder, Models, Radio, SState, Side, Stats, VKind, VState, VehicleSpec};
-use crate::units::Palette;
+use crate::units::{self, ColumnOrder, SState, Side, Stats, VKind, VState, VehicleSpec};
 use crate::{Phase, sound as audio};
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -153,22 +152,53 @@ impl Script {
     }
 }
 
-#[allow(clippy::type_complexity)]
+/// The day's script, and the director's own random stream.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Director<'w> {
+    script: ResMut<'w, Script>,
+    rng: ResMut<'w, DirRng>,
+}
+
+/// What sends their waves in: the dress of their vehicles and men, the routes they take, the order to the column,
+/// and the Enemy staff that may send a column otherwise than the script has it (Command).
+#[derive(bevy::ecs::system::SystemParam)]
+struct Waves<'w> {
+    dress: units::Dress<'w>,
+    book: Res<'w, units::RouteBook>,
+    order: ResMut<'w, ColumnOrder>,
+    staff: Option<Res<'w, crate::staff::Staff>>,
+}
+
+/// Where the player is: the view, the observers' post, and the sound heard there.
+#[derive(bevy::ecs::system::SystemParam)]
+struct AtThePost<'w, 's> {
+    view: ResMut<'w, crate::player::View>,
+    op: Res<'w, crate::player::ObservationPost>,
+    sound: audio::Sound<'w, 's>,
+}
+
+/// What else of the day the script reaches into, where the day has it: the aircraft, and the fight for the posts.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Reach<'w> {
+    air: Option<Res<'w, crate::air::AirModels>>,
+    field: Option<Res<'w, crate::fight::Field>>,
+}
+
 fn run_script(
     mut commands: Commands,
     time: Res<Time>,
-    mut script: ResMut<Script>,
-    mut rng: ResMut<DirRng>,
-    mut radio: ResMut<Radio>,
-    mut stats: ResMut<Stats>,
-    mut view: ResMut<crate::player::View>,
-    mut sound: audio::Sound,
-    op: Res<crate::player::ObservationPost>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    (mut order, book, staff, air): (ResMut<ColumnOrder>, Res<crate::units::RouteBook>, Option<Res<crate::staff::Staff>>, Option<Res<crate::air::AirModels>>),
-    field: Option<Res<crate::fight::Field>>,
+    director: Director,
+    report: units::Report,
+    waves: Waves,
+    player: AtThePost,
+    extras: Reach,
 ) {
+    let Director { mut script, mut rng } = director;
+    let units::Report { mut stats, mut radio } = report;
+    let Waves { dress: units::Dress { models, palette }, book, mut order, staff } = waves;
+    let AtThePost { mut view, op, mut sound } = player;
+    let Reach { air, field } = extras;
+
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
     script.t += dt;
@@ -349,7 +379,7 @@ fn run_script(
         for k in 0..size {
             let at = start + Vec2::new(k as f32 * 4.0, rng.random_range(-3.0..3.0));
             let goal = r.objective + Vec2::new(rng.random_range(-150.0..150.0), rng.random_range(-10.0..10.0));
-            units::spawn_soldier(&mut commands, &models, &palette, diorama().attacker(), at, goal, r.line.point(0.0), 0.0, None, rng);
+            units::spawn_soldier(&mut commands, &models, &palette, units::NewSoldier { side: diorama().attacker(), at, goal, home: r.line.point(0.0), sprint: 0.0, cover: None }, rng);
         }
         stats.sent += size;
     }
@@ -364,20 +394,29 @@ pub enum RuGuns {
     Column { seen_z: f32, field: (f32, f32, f32, f32) },
 }
 
+/// What their guns can fire on: our posts, the vehicles and men on the field, and what their staff has spotted of
+/// ours (Command).
+#[derive(bevy::ecs::system::SystemParam)]
+struct GunTargets<'w, 's> {
+    positions: Query<'w, 's, &'static crate::fire::Post>,
+    vehicles: Query<'w, 's, (&'static units::Vehicle, &'static Transform)>,
+    soldiers: Query<'w, 's, (&'static units::Soldier, &'static Transform)>,
+    spotted: Option<Res<'w, crate::staff::Spotted>>,
+}
+
 /// Russian artillery works the tree lines and the town all day: 152 mm barrages every minute or so. South of Mala
 /// Tokmachka it hunts the column instead, cued by its drones: whatever has stopped and is not under smoke, and
 /// now and then a single Krasnopol, guided, onto a vehicle that cannot move ("effect over volume", RUSI).
 fn russian_artillery(
     mut commands: Commands,
     time: Res<Time>,
-    mut script: ResMut<Script>,
-    mut rng: ResMut<DirRng>,
+    director: Director,
     smoke: Res<crate::fx::Smoke>,
-    positions: Query<&crate::fire::Post>,
-    vehicles: Query<(&units::Vehicle, &Transform)>,
-    soldiers: Query<(&units::Soldier, &Transform)>,
-    spotted: Option<Res<crate::staff::Spotted>>,
+    targets: GunTargets,
 ) {
+    let Director { mut script, mut rng } = director;
+    let GunTargets { positions, vehicles, soldiers, spotted } = targets;
+
     let now = time.elapsed_secs_f64();
     // Command's Enemy staff: their guns fire on what they have spotted of ours, not on where it truly is.
     let spotted = spotted.filter(|_| crate::staff::rule("guns")).map(|s| s.positions());

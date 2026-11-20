@@ -62,11 +62,10 @@ pub struct Intent {
 
 /// Who is ahead of me in my lane, and which hulls are right in front of me or beside me. Two hulls that have slid
 /// into each other sideways (where neither test looks) work apart.
-#[allow(clippy::type_complexity)]
 pub(super) fn sense_traffic(
     time: Res<Time>,
     book: Res<RouteBook>,
-    mut q: ParamSet<(Query<(Entity, &Vehicle, &Driver, &Transform)>, Sensing)>,
+    mut q: ParamSet<(AllHulls, Sensing)>,
     mut snaps: Local<Vec<Snap>>,
 ) {
     let dt = crate::sim_dt(&time);
@@ -132,6 +131,9 @@ pub(super) fn sense_traffic(
 /// A vehicle under way: not knocked out (and not a turret).
 type Underway = (Without<Turret>, Without<Coasting>);
 
+/// Every hull on the field, as the others see it this frame.
+type AllHulls<'w, 's> = Query<'w, 's, (Entity, &'static Vehicle, &'static Driver, &'static Transform)>;
+
 /// The vehicles under way as `sense_traffic` works them over.
 type Sensing<'w, 's> = Query<'w, 's, (Entity, &'static Vehicle, &'static mut Driver, &'static mut Transform, &'static mut Traffic), Without<Coasting>>;
 
@@ -154,23 +156,33 @@ pub(super) struct Driving {
     hand: Option<&'static crate::robots::Hand>,
 }
 
+/// The drivers on the move, the routes they drive, the player's order to the column, and the drivers' own random
+/// stream.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(super) struct Drivers<'w, 's> {
+    q: Query<'w, 's, Driving, Without<Coasting>>,
+    book: Res<'w, RouteBook>,
+    order: Res<'w, ColumnOrder>,
+    rng: ResMut<'w, DriveRng>,
+}
+
+/// What a vehicle needs to pop smoke: the effects, their random stream, and the smoke on the ground.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(super) struct SmokeScreen<'w> {
+    fx: ResMut<'w, FxQueue>,
+    fxr: ResMut<'w, FxRng>,
+    smoke: ResMut<'w, fx::Smoke>,
+}
+
 /// The driver's head: what state the vehicle is in, where he means to be, how fast he wants to go.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn drive_decisions(
     mut commands: Commands,
     time: Res<Time>,
     mut rng: ResMut<UnitRng>,
-    mut drive: ResMut<DriveRng>,
-    mut fxr: ResMut<FxRng>,
-    mut fx: ResMut<FxQueue>,
-    mut stats: ResMut<Stats>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    order: Res<ColumnOrder>,
-    mut radio: ResMut<Radio>,
-    mut smoke: ResMut<fx::Smoke>,
-    book: Res<RouteBook>,
-    mut q: Query<Driving, Without<Coasting>>,
+    mut screen: SmokeScreen,
+    mut report: Report,
+    dress: Dress,
+    mut drivers: Drivers,
 ) {
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
@@ -178,11 +190,11 @@ pub(super) fn drive_decisions(
     let attacker = diorama().attacker();
     let rng = &mut rng.0;
 
-    for DrivingItem { e, mut v, mut d, tf, traffic, mut intent, evac_at, rescue, plow, holding, stay, stalled, hand } in &mut q {
-        if !drives(&v, &d, &book, attacker) {
+    for DrivingItem { e, mut v, mut d, tf, traffic, mut intent, evac_at, rescue, plow, holding, stay, stalled, hand } in &mut drivers.q {
+        if !drives(&v, &d, &drivers.book, attacker) {
             continue;
         }
-        let rt = &book.0[d.route];
+        let rt = &drivers.book.0[d.route];
         let route: &Polyline = &rt.line;
         let deploy_s = stay.map_or(rt.deploy_s, |s| s.deploy_s);
         // (On a holding route the end of it comes first: the position.)
@@ -203,7 +215,7 @@ pub(super) fn drive_decisions(
         // The player's order to the column (Robotyne): hold everyone where they are, or bring them all back. (A
         // Column at its position answers to its own orders.)
         if v.state != VState::Withdrawing && !rescue && !rt.hold {
-            match *order {
+            match *drivers.order {
                 ColumnOrder::PullBack => start_withdrawal(&mut v, &mut d, rng),
                 ColumnOrder::Hold if matches!(v.state, VState::Advancing | VState::Halted | VState::Deploying) => {
                     want_speed = 0.0;
@@ -216,8 +228,8 @@ pub(super) fn drive_decisions(
         if rescue && v.state == VState::Advancing && (blocker.is_some_and(|b| !b.state.mobile() && (b.s - d.s).abs() < 70.0) || evac_at.is_some_and(|t| d.s >= t.0)) {
             v.state = VState::Overwatch;
             v.timer = 0.0;
-            pop_smoke(&mut commands, &mut fx, &mut fxr.0, &mut smoke, v.side, tf, now);
-            radio.say(now, "Bradley at the wrecks. Ramp down. Get on, get on!");
+            pop_smoke(&mut commands, &mut screen.fx, &mut screen.fxr.0, &mut screen.smoke, v.side, tf, now);
+            report.radio.say(now, "Bradley at the wrecks. Ramp down. Get on, get on!");
             info!("rescue: Bradley {}/{} stopped at {:.0},{:.0}, at {now:.0} s", v.wave, v.idx, tf.translation.x, tf.translation.z);
         }
         match v.state {
@@ -332,7 +344,7 @@ pub(super) fn drive_decisions(
                         } else {
                             obj + Vec2::new(rng.random_range(-120.0..120.0), rng.random_range(-20.0..20.0)) + Vec2::X * (k as f32 - 3.0) * 6.0
                         };
-                        spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, route.point(0.0), rng.random_range(6.0..12.0), None, rng);
+                        spawn_soldier(&mut commands, &dress.models, &dress.palette, NewSoldier { side: v.side, at, goal, home: route.point(0.0), sprint: rng.random_range(6.0..12.0), cover: None }, rng);
                     }
                     v.troops = 0;
                 }
@@ -348,7 +360,7 @@ pub(super) fn drive_decisions(
                 let wait = if evac_at.is_some() { 240.0 } else { 110.0 };
                 if v.troops >= 7 || v.timer > wait || (v.panic > 0.95 && v.timer > 45.0) {
                     start_withdrawal(&mut v, &mut d, rng);
-                    radio.say2(now, format!("Бредлі виходить, на борту {}.", v.troops), format!("Bradley coming out with {} aboard.", v.troops));
+                    report.radio.say2(now, format!("Бредлі виходить, на борту {}.", v.troops), format!("Bradley coming out with {} aboard.", v.troops));
                     info!("rescue: Bradley {}/{} coming out with {} aboard after {:.0} s, at {now:.0} s", v.wave, v.idx, v.troops, v.timer);
                 }
             }
@@ -366,8 +378,8 @@ pub(super) fn drive_decisions(
                 if d.s < 30.0 {
                     // (The tally is the attacker's: our Columns coming back at Vuhledar are not in it.)
                     if v.side == attacker {
-                        stats.withdrawn += 1;
-                        stats.returned += v.crew + v.troops;
+                        report.stats.withdrawn += 1;
+                        report.stats.returned += v.crew + v.troops;
                     }
                     commands.entity(e).despawn();
                     intent.want_speed = 0.0;
@@ -400,8 +412,8 @@ pub(super) fn drive_decisions(
 
         // Hesitations: a driver slows to a crawl for a few seconds (a look round, a word on the intercom, a missed
         // gear), and the ones behind close up on him.
-        if v.state == VState::Advancing && !rescue && d.s < deploy_s - 50.0 && d.hesitate <= 0.0 && d.speed > 1.5 && drive.0.random_bool((dt / 150.0) as f64) {
-            d.hesitate = drive.0.random_range(1.5..5.0);
+        if v.state == VState::Advancing && !rescue && d.s < deploy_s - 50.0 && d.hesitate <= 0.0 && d.speed > 1.5 && drivers.rng.0.random_bool((dt / 150.0) as f64) {
+            d.hesitate = drivers.rng.0.random_range(1.5..5.0);
         }
         if d.hesitate > 0.0 {
             d.hesitate -= dt;
@@ -553,8 +565,7 @@ pub(super) fn track_marks(
     mut fxr: ResMut<FxRng>,
     mut fx: ResMut<FxQueue>,
     mut paint: ResMut<PaintQueue>,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    dress: Dress,
     book: Res<RouteBook>,
     mut q: Query<(&Vehicle, &mut Driver, &Transform, Has<Plow>), Without<Coasting>>,
 ) {
@@ -579,7 +590,7 @@ pub(super) fn track_marks(
                 let route = &book.0[d.route].line;
                 for side in [-1.0f32, 1.0] {
                     let at = p + route.normal(d.s) * side * 2.6;
-                    commands.spawn((Mesh3d(models.marker.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)), NotShadowCaster));
+                    commands.spawn((Mesh3d(dress.models.marker.clone()), MeshMaterial3d(dress.palette.vertex.clone()), Transform::from_translation(geo::ground(at)), NotShadowCaster));
                 }
             }
         }

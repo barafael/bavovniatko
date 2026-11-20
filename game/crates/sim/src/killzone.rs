@@ -30,7 +30,7 @@
 //! Only a day whose file has a `killzone` has any of this: the Record of the others must not change.
 
 use crate::fire::{Post, Suppressed};
-use crate::fx::{Emitter, EmitterKind, FxQueue};
+use crate::fx::{Effects, Emitter, EmitterKind, FxQueue};
 use crate::geo::{self, Polyline};
 use crate::player::{Fpv, Operator, View};
 use crate::sound::{Sfx, Sound};
@@ -673,6 +673,140 @@ type Ground = (Without<Coasting>, Without<TheirFpv>);
 /// Our domes that stand and jam: neither knocked out nor switched off.
 type Standing = (Without<crate::ew::DomeDown>, Without<crate::ew::DomeOff>, Without<TheirFpv>);
 
+/// What the kill zone's systems answer to: its tally, and the net.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Ledger<'w> {
+    tally: ResMut<'w, KzTally>,
+    radio: ResMut<'w, Radio>,
+}
+
+/// Our drone team as their cameras may find it: where it is and whether it is moving, whether its feed is up, and
+/// whether a drone of ours is in the air.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(crate) struct DroneTeam<'w> {
+    pub(crate) view: Res<'w, View>,
+    pub(crate) fpv: Res<'w, Fpv>,
+    pub(crate) op: Res<'w, Operator>,
+}
+
+/// The runs as ordered: N's orders, when each run is to leave (an order moves it up), and how many have gone.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Runs<'w, 's> {
+    orders: MessageReader<'w, 's, RunOrder>,
+    started: Local<'s, usize>,
+    starts: Local<'s, Vec<f32>>,
+}
+
+/// What they go by in choosing a mark: the kill zone's picture, what their staff has spotted (in Command), and the
+/// day's seeing.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Intel<'w> {
+    picture: Res<'w, Picture>,
+    spotted: Option<Res<'w, crate::staff::Spotted>>,
+    seeing: Option<Res<'w, crate::fight::Seeing>>,
+}
+
+/// A launch crew able to fly: not on its way in, not put out of action by our fire.
+type Ready = (Without<Arriving>, Without<Struck>);
+
+/// Their crews at their launch points: the crews (and whether we have located each), their relays, the FPVs they
+/// have up, the FPV's model, and the kill zone's random stream.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Crews<'w, 's> {
+    crews: Query<'w, 's, (Entity, &'static mut Crew, &'static Transform, Has<Located>), Ready>,
+    relays: Query<'w, 's, Has<Struck>, With<Relay>>,
+    flying: Query<'w, 's, &'static TheirFpv>,
+    models: Option<Res<'w, KillzoneModels>>,
+    rng: ResMut<'w, KzRng>,
+}
+
+/// One of their FPVs going up: its crew and kind, where from, what it is after (the mark, its class, the point it
+/// aims at), and where along the way its fibre snags, if it does.
+struct Sortie {
+    crew: usize,
+    kind: Kind,
+    from: Vec3,
+    mark: Mark,
+    class: Class,
+    aim: Vec3,
+    snag_at: Option<f32>,
+}
+
+/// Their FPVs in the air, and where they come down.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Flights<'w, 's> {
+    fpvs: Query<'w, 's, (Entity, &'static mut TheirFpv, &'static mut Transform)>,
+    impacts: MessageWriter<'w, Impact>,
+}
+
+/// What a strike's outcome goes into: the kill zone's tally and the net, the day's stats, and the hit feed.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Toll<'w> {
+    ledger: Ledger<'w>,
+    stats: ResMut<'w, Stats>,
+    log: ResMut<'w, crate::hits::HitLog>,
+}
+
+/// The pilot bringing an FPV in: the kill zone's random stream, and the fog he finds his mark in.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Pilot<'w> {
+    rng: ResMut<'w, KzRng>,
+    seeing: Option<Res<'w, crate::fight::Seeing>>,
+}
+
+/// A car of the run with its own paint, if it wears any.
+type CarPaint = (&'static mut Car, Option<&'static mut MeshMaterial3d<VehicleMaterial>>);
+/// The skins on a car's parts.
+type PartSkins = (&'static Skin, &'static mut MeshMaterial3d<VehicleMaterial>);
+
+/// What a strike may hit: the nets that catch it, our posts, the cars (with the skins they burn in, and the model's
+/// charred paint), our drone team where it was located, and the hulls it puts a charge into.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Targets<'w, 's> {
+    nets: Query<'w, 's, &'static mut Net>,
+    posts: Query<'w, 's, &'static mut Post>,
+    cars: Query<'w, 's, CarPaint, Without<Skin>>,
+    children: Query<'w, 's, &'static Children>,
+    skins: Query<'w, 's, PartSkins, Without<Car>>,
+    models: Option<Res<'w, KillzoneModels>>,
+    op: ResMut<'w, Operator>,
+    view: ResMut<'w, View>,
+    hits: MessageWriter<'w, DirectHit>,
+}
+
+/// Our fire as it lands near their points: the shells and the FPV blasts, and the random stream that decides what it
+/// puts out of action (and whether our direction-finders take a bearing).
+#[derive(bevy::ecs::system::SystemParam)]
+struct OurFire<'w, 's> {
+    landed: MessageReader<'w, 's, crate::fire::ShellLanded>,
+    blasts: MessageReader<'w, 's, crate::units::Blast>,
+    rng: ResMut<'w, PointRng>,
+}
+
+/// A launch crew of theirs, apart from its relay, as our fire finds it: struck when, if it is.
+type CrewPoint = (Entity, &'static mut Crew, &'static Transform, Option<&'static Struck>);
+/// A relay as our fire finds it.
+type RelayPoint = (Entity, &'static Relay, &'static Transform, Option<&'static Struck>);
+
+/// Their launch points and relays, and the day's seeing that sets the crews' tempo.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Points<'w, 's> {
+    crews: Query<'w, 's, CrewPoint, (Without<Relay>, Without<Arriving>)>,
+    relays: Query<'w, 's, RelayPoint, Without<Crew>>,
+    seeing: Option<Res<'w, crate::fight::Seeing>>,
+}
+
+/// The Record's own strikes on their points: the day's script and how many have gone in, our drone team they fly
+/// from, the FPV's model, and our domes that pause for the climb out.
+#[derive(bevy::ecs::system::SystemParam)]
+struct OurStrikes<'w, 's> {
+    script: Res<'w, crate::director::Script>,
+    done: Local<'s, usize>,
+    op: Res<'w, Operator>,
+    models: Option<Res<'w, KillzoneModels>>,
+    domes: Query<'w, 's, (Entity, &'static crate::ew::Dome), crate::ew::DomesOn>,
+}
+
 /// What of ours they can hunt, and where it is now (none: gone, burnt, emptied).
 #[derive(bevy::ecs::system::SystemParam)]
 pub struct Quarry<'w, 's> {
@@ -753,19 +887,17 @@ fn run_input(keys: Res<ButtonInput<KeyCode>>, script: Res<crate::director::Scrip
 /// N sends the next run before its time (the cars that were to follow it as far behind it as they were), Shift+N
 /// turns back what is on the way in or in the town: a car on its way in brakes and turns round where it is, and is a
 /// target all the while.
-#[allow(clippy::type_complexity, clippy::too_many_arguments)]
 fn drive(
     mut commands: Commands,
     time: Res<Time>,
     script: Res<crate::director::Script>,
-    mut tally: ResMut<KzTally>,
-    mut radio: ResMut<Radio>,
+    ledger: Ledger,
     models: Option<Res<KillzoneModels>>,
-    mut orders: MessageReader<RunOrder>,
+    runs: Runs,
     mut cars: Query<(Entity, &mut Car, &mut Suspension, &mut Transform, Has<TurnedBack>)>,
-    mut started: Local<usize>,
-    mut starts: Local<Vec<f32>>,
 ) {
+    let Ledger { mut tally, mut radio } = ledger;
+    let Runs { mut orders, mut started, mut starts } = runs;
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
@@ -987,18 +1119,8 @@ pub(crate) fn along(line: &[Vec2], mut s: f32) -> (Vec2, Vec2) {
 /// Every five seconds their cameras look over the roads: what of ours moves within reach of one they may find (more
 /// readily in clear air and by day), our domes they locate as emitters, a post near the road now and then, and our
 /// drone team's ground station while a drone of ours is up.
-#[allow(clippy::too_many_arguments)]
-fn look_over(
-    time: Res<Time>,
-    mut rng: ResMut<KzRng>,
-    mut picture: ResMut<Picture>,
-    seeing: Option<Res<crate::fight::Seeing>>,
-    view: Res<View>,
-    fpv: Res<Fpv>,
-    op: Res<Operator>,
-    quarry: Quarry,
-    mut next: Local<f64>,
-) {
+fn look_over(time: Res<Time>, mut rng: ResMut<KzRng>, mut picture: ResMut<Picture>, seeing: Option<Res<crate::fight::Seeing>>, team: DroneTeam, quarry: Quarry, mut next: Local<f64>) {
+    let DroneTeam { view, fpv, op } = team;
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     if now < *next {
@@ -1053,22 +1175,10 @@ fn arrive(mut commands: Commands, time: Res<Time>, script: Res<crate::director::
 /// those of the minutes it is there. So vehicles and robots draw on a charge of their own, filled by the hour of
 /// real time; on the clock's, a robot half an hour on the road met the sorties of seven hours. It fills by the light
 /// alone: in fog the crews ready their drones and wait, so what is on the road when it lifts meets them at once.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn launch(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut tally: ResMut<KzTally>,
-    picture: Res<Picture>,
-    seeing: Option<Res<crate::fight::Seeing>>,
-    spotted: Option<Res<crate::staff::Spotted>>,
-    models: Option<Res<KillzoneModels>>,
-    mut rng: ResMut<KzRng>,
-    (mut found, mut radio): (ResMut<PointRng>, ResMut<Radio>),
-    quarry: Quarry,
-    mut crews: Query<(Entity, &mut Crew, &Transform, Has<Located>), (Without<Arriving>, Without<Struck>)>,
-    relays: Query<Has<Struck>, With<Relay>>,
-    flying: Query<&TheirFpv>,
-) {
+fn launch(mut commands: Commands, time: Res<Time>, ledger: Ledger, intel: Intel, mut found: ResMut<PointRng>, quarry: Quarry, crews: Crews) {
+    let Ledger { mut tally, mut radio } = ledger;
+    let Intel { picture, spotted, seeing } = intel;
+    let Crews { mut crews, relays, flying, models, mut rng } = crews;
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
@@ -1112,7 +1222,7 @@ fn launch(
         out.push(mark);
         let k = crew.kind;
         let snag_at = (k == Kind::Fibre && rng.0.random_bool(spec.snag as f64)).then(|| rng.0.random_range(300.0..from.distance(at).max(400.0)));
-        put_up(&mut commands, models.as_deref(), crew.idx, k, tf.translation + Vec3::Y * 2.0, mark, class, ground(at) + Vec3::Y, snag_at);
+        put_up(&mut commands, models.as_deref(), Sortie { crew: crew.idx, kind: k, from: tf.translation + Vec3::Y * 2.0, mark, class, aim: ground(at) + Vec3::Y, snag_at });
         tally.sorties[k as usize] += 1;
         info!("killzone: {} sends a {} FPV at the {} at {:.0},{:.0}, {:.1} km, at {now:.0} s", cs.name.0, k.name(), class.name(), at.x, at.y, from.distance(at) / 1000.0);
         // A radio crew's control link is an emitter: our direction-finders may take a bearing on it, and on its relay.
@@ -1132,8 +1242,8 @@ fn launch(
     }
 }
 
-#[allow(clippy::too_many_arguments)]
-fn put_up(commands: &mut Commands, models: Option<&KillzoneModels>, crew: usize, kind: Kind, from: Vec3, mark: Mark, class: Class, aim: Vec3, snag_at: Option<f32>) {
+fn put_up(commands: &mut Commands, models: Option<&KillzoneModels>, sortie: Sortie) {
+    let Sortie { crew, kind, from, mark, class, aim, snag_at } = sortie;
     let mut e = commands.spawn((
         TheirFpv { crew, kind, mark, class, aim, vel: Vec3::Y * 4.0, link: Link::Held, domes: 0, snag_at, flown: 0.0, battery: BATTERY },
         // Drawn larger than life: a seven-inch quad is a speck from the drone's height, and the player must see it
@@ -1149,7 +1259,6 @@ fn put_up(commands: &mut Commands, models: Option<&KillzoneModels>, crew: usize,
 
 /// The waiters on the shoulders: one wakes when something of ours on wheels passes within what it sees, and goes for
 /// it; its crew lays another there after a while.
-#[allow(clippy::too_many_arguments)]
 fn wait(
     mut commands: Commands,
     time: Res<Time>,
@@ -1175,7 +1284,7 @@ fn wait(
         let cs = &spec.crews[crew.idx];
         // Laid again an hour of the day's clock over its rate later.
         crew.rearm = now + (60.0 / (cs.per_hour.max(0.01) * crate::diorama::diorama().compression())) as f64;
-        put_up(&mut commands, models.as_deref(), crew.idx, Kind::Waiter, tf.translation + Vec3::Y * 0.3, mark, class, geo::ground(p) + Vec3::Y, None);
+        put_up(&mut commands, models.as_deref(), Sortie { crew: crew.idx, kind: Kind::Waiter, from: tf.translation + Vec3::Y * 0.3, mark, class, aim: geo::ground(p) + Vec3::Y, snag_at: None });
         tally.sorties[Kind::Waiter as usize] += 1;
         info!("killzone: a waiter of {} wakes at {:.0},{:.0} for the {} {:.0} m off, at {now:.0} s", cs.name.0, at.x, at.y, class.name(), p.distance(at));
     }
@@ -1184,18 +1293,9 @@ fn wait(
 /// Their FPVs fly: out at fifty metres, then the dive onto what they are after, steering onto it as it moves. A radio
 /// one crossing into a dome of ours loses its link, most times; a fibre one's cable may snag; and one whose link is
 /// gone, or whose battery is spent, comes down where it is going.
-#[allow(clippy::too_many_arguments)]
-fn fly(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<KzRng>,
-    mut tally: ResMut<KzTally>,
-    mut radio: ResMut<Radio>,
-    domes: Query<(&crate::ew::Dome, &Transform), Standing>,
-    quarry: Quarry,
-    mut fpvs: Query<(Entity, &mut TheirFpv, &mut Transform)>,
-    mut impacts: MessageWriter<Impact>,
-) {
+fn fly(mut commands: Commands, time: Res<Time>, mut rng: ResMut<KzRng>, ledger: Ledger, domes: Query<(&crate::ew::Dome, &Transform), Standing>, quarry: Quarry, flights: Flights) {
+    let Ledger { mut tally, mut radio } = ledger;
+    let Flights { mut fpvs, mut impacts } = flights;
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
@@ -1278,23 +1378,11 @@ fn fly(
 /// Where their FPVs come down: on what they came for, under a net, or blind into the ground. A strike that goes in
 /// burns a car, puts a post's man down, knocks out a dome, or hits our drone team where it was located; on a vehicle
 /// of the column game it is a shaped charge from above.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn strike(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<KzRng>,
-    mut impacts: MessageReader<Impact>,
-    (mut tally, mut radio, mut stats, mut log): (ResMut<KzTally>, ResMut<Radio>, ResMut<Stats>, ResMut<crate::hits::HitLog>),
-    (mut fx, mut sound, mut hits): (ResMut<FxQueue>, Sound, MessageWriter<DirectHit>),
-    seeing: Option<Res<crate::fight::Seeing>>,
-    (mut op, mut view): (ResMut<Operator>, ResMut<View>),
-    models: Option<Res<KillzoneModels>>,
-    mut nets: Query<&mut Net>,
-    mut posts: Query<&mut Post>,
-    mut cars: Query<(&mut Car, Option<&mut MeshMaterial3d<VehicleMaterial>>), Without<Skin>>,
-    children: Query<&Children>,
-    mut skins: Query<(&Skin, &mut MeshMaterial3d<VehicleMaterial>), Without<Car>>,
-) {
+fn strike(mut commands: Commands, time: Res<Time>, mut impacts: MessageReader<Impact>, pilot: Pilot, toll: Toll, effects: Effects, targets: Targets) {
+    let Pilot { mut rng, seeing } = pilot;
+    let Toll { ledger: Ledger { mut tally, mut radio }, mut stats, mut log } = toll;
+    let Effects { mut fx, mut sound } = effects;
+    let Targets { mut nets, mut posts, mut cars, children, mut skins, models, mut op, mut view, mut hits } = targets;
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
@@ -1408,22 +1496,11 @@ struct Point {
 /// Our fire on their launch points and relays (c15 §5, §10; 02 §6): a 155 mm burst or an FPV of ours near one may put
 /// it out for a while (`KillzoneSpec::down`), and its crew flies nothing until it is back; what it did not fly in that
 /// time is counted. In the Record the day's own strikes go in at their times.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn points(
-    mut commands: Commands,
-    time: Res<Time>,
-    script: Res<crate::director::Script>,
-    mut rng: ResMut<PointRng>,
-    (mut tally, mut radio, mut log): (ResMut<KzTally>, ResMut<Radio>, ResMut<crate::hits::HitLog>),
-    seeing: Option<Res<crate::fight::Seeing>>,
-    op: Res<Operator>,
-    models: Option<Res<KillzoneModels>>,
-    (mut landed, mut blasts): (MessageReader<crate::fire::ShellLanded>, MessageReader<crate::units::Blast>),
-    mut crews: Query<(Entity, &mut Crew, &Transform, Option<&Struck>), (Without<Relay>, Without<Arriving>)>,
-    relays: Query<(Entity, &Relay, &Transform, Option<&Struck>), Without<Crew>>,
-    domes: Query<(Entity, &crate::ew::Dome), (Without<crate::ew::DomeDown>, Without<crate::ew::DomeOff>)>,
-    mut done: Local<usize>,
-) {
+fn points(mut commands: Commands, time: Res<Time>, ledger: Ledger, mut log: ResMut<crate::hits::HitLog>, fire: OurFire, points: Points, strikes: OurStrikes) {
+    let Ledger { mut tally, mut radio } = ledger;
+    let OurFire { mut landed, mut blasts, mut rng } = fire;
+    let Points { mut crews, relays, seeing } = points;
+    let OurStrikes { script, mut done, op, models, domes } = strikes;
     let Some(spec) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);

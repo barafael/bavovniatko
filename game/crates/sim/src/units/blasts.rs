@@ -52,8 +52,7 @@ pub(super) fn resolve_blasts(
     mut blasts: MessageReader<Blast>,
     mut rng: ResMut<UnitRng>,
     mut stats: ResMut<Stats>,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    dress: Dress,
     mut vehicles: Query<(Entity, &mut Vehicle, &mut Suspension, &Transform)>,
     mut soldiers: Query<(Entity, &mut Soldier, &Transform)>,
 ) {
@@ -132,7 +131,7 @@ pub(super) fn resolve_blasts(
                     let speed = rng.random_range(3.0..10.0) * (1.0 - d / throw_r).max(0.3);
                     Vec3::new(away.x * speed, rng.random_range(2.0..5.0), away.y * speed)
                 });
-                kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, throw, rng);
+                kill_soldier(&mut commands, &dress.models, &dress.palette, &mut stats, (e, &s, tf), throw, rng);
             } else {
                 s.fear += 1.0;
                 // Knocked flat and stunned, five to twenty seconds, when it lands within ten metres.
@@ -156,8 +155,10 @@ pub fn throw_body(commands: &mut Commands, models: &Models, palette: &Palette, s
     ));
 }
 
-/// A man killed where he stands, or thrown (`throw`: the blast's push on him) a few metres and left there.
-pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette, stats: &mut Stats, e: Entity, s: &Soldier, tf: &Transform, throw: Option<Vec3>, rng: &mut SmallRng) {
+/// A man (his entity, himself, where he is) killed where he stands, or thrown (`throw`: the blast's push on him) a
+/// few metres and left there.
+pub fn kill_soldier(commands: &mut Commands, models: &Models, palette: &Palette, stats: &mut Stats, man: (Entity, &Soldier, &Transform), throw: Option<Vec3>, rng: &mut SmallRng) {
+    let (e, s, tf) = man;
     commands.entity(e).despawn();
     let p = tf.translation.xz();
     if let Some(vel) = throw {
@@ -199,12 +200,12 @@ pub(super) fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut l
             continue;
         }
         if blinded && matches!(h.cause, Cause::Autocannon | Cause::Blinding) {
-            log.open(now, h.weapon, h.from, h.target, &v, rescue, "on a hull already blind: nothing more");
+            log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, "on a hull already blind: nothing more");
             continue;
         }
         // The sights shot out: the hull drives blind on its last order, slewing, and the crew gets out.
         let mut blind = |v: &mut Vehicle, rng: &mut SmallRng| {
-            log.open(now, h.weapon, h.from, h.target, v, rescue, "blinded: the sights gone, driving blind, the crew getting out");
+            log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: v, rescue }, "blinded: the sights gone, driving blind, the crew getting out");
             let coasting = v.immobilise(0.0, 0.0);
             let secs = rng.random_range(20.0..40.0);
             v.plan = CrewPlan::Ghost { secs, at: secs + rng.random_range(5.0..15.0) };
@@ -217,7 +218,7 @@ pub(super) fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut l
             if rng.0.random_bool(0.6) {
                 blind(&mut v, &mut rng.0);
             } else {
-                log.open(now, h.weapon, h.from, h.target, &v, rescue, "HE on the turret: the sights smeared, still seeing");
+                log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, "HE on the turret: the sights smeared, still seeing");
                 v.panic = (v.panic + 0.3).min(1.0);
             }
             continue;
@@ -229,17 +230,17 @@ pub(super) fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut l
             if roll < 0.35 {
                 blind(&mut v, &mut rng.0);
             } else if roll < 0.60 {
-                log.open(now, h.weapon, h.from, h.target, &v, rescue, "a track off: stopped");
+                log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, "a track off: stopped");
                 let coasting = v.immobilise(2.5, rng.0.random_range(-0.4..0.4));
                 commands.entity(h.target).insert(coasting);
                 v.crew_plan(&mut rng.0, h.cause);
             } else if roll < 0.72 {
-                log.open(now, h.weapon, h.from, h.target, &v, rescue, "into the engine deck: on fire, crawling, crew getting out");
+                log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, "into the engine deck: on fire, crawling, crew getting out");
                 let coasting = v.immobilise(rng.0.random_range(0.6..1.2), rng.0.random_range(-0.2..0.2));
                 v.crew_plan(&mut rng.0, h.cause);
                 commands.entity(h.target).insert((coasting, Fire::deck(&mut rng.0, h.cause, v.kind), Emitter::new(EmitterKind::EngineSmoke, 4.0, 400.0, Vec3::new(0.0, 1.5, 2.2))));
             } else {
-                log.open(now, h.weapon, h.from, h.target, &v, rescue, "sparks off the turret: nothing");
+                log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, "sparks off the turret: nothing");
                 v.panic = (v.panic + 0.4).min(1.0);
             }
             continue;
@@ -248,17 +249,17 @@ pub(super) fn resolve_direct_hits(mut commands: Commands, time: Res<Time>, mut l
         let how = format!("{}{}", if h.top { "from above: " } else { "" }, if v.kind.era() && !matches!(h.cause, Cause::TankGun | Cause::Autocannon | Cause::Blinding) { "reactive armour went; " } else { "" });
         if rng.0.random_bool(p_kill) {
             if rng.0.random_bool(0.2) {
-                log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}into the engine: on fire, crawling, crew getting out"));
+                log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, format!("{how}into the engine: on fire, crawling, crew getting out"));
                 // A hit on the engine: it crawls on trailing smoke, the crew gets out, and the fire decides.
                 let coasting = v.immobilise(rng.0.random_range(0.6..1.2), rng.0.random_range(-0.2..0.2));
                 v.crew_plan(&mut rng.0, h.cause);
                 commands.entity(h.target).insert((coasting, Fire::deck(&mut rng.0, h.cause, v.kind), Emitter::new(EmitterKind::EngineSmoke, 4.0, 400.0, Vec3::new(0.0, 1.5, 2.2))));
             } else {
-                log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}penetrated"));
+                log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, format!("{how}penetrated"));
                 commands.trigger(Wrecked { vehicle: h.target, cause: h.cause, how: kill_how(v.kind, h.cause, &mut rng.0) });
             }
         } else {
-            log.open(now, h.weapon, h.from, h.target, &v, rescue, format!("{how}did not get through: stopped, crew shaken"));
+            log.open(now, h.weapon, h.from, Victim { target: h.target, vehicle: &v, rescue }, format!("{how}did not get through: stopped, crew shaken"));
             let coasting = v.immobilise(3.5, rng.0.random_range(-0.3..0.3));
             commands.entity(h.target).insert(coasting);
             v.crew_plan(&mut rng.0, h.cause);
@@ -294,14 +295,22 @@ fn cover_near(p: Vec2, home: Vec2, craters: &crate::paint::Craters, hulls: &[Vec
     }
 }
 
+/// Where a crew getting out runs: the routes back, and the craters and stopped hulls to take cover by.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(super) struct Escape<'w, 's> {
+    book: Res<'w, RouteBook>,
+    paint: Res<'w, PaintQueue>,
+    hulls: Local<'s, Vec<Vec2>>,
+}
+
 /// Crews of knocked-out vehicles get out one at a time, out of the hatches on either side, once the crew's plan
 /// says so (`bail_at`); dismounts from wrecks, if any live, too. A fit crew is out in seconds; a concussed one
 /// takes a minute. Each man sprints for the nearest cover before he thinks of the way home.
-pub(super) fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng>, mut stats: ResMut<Stats>, models: Res<Models>, palette: Res<Palette>, paint: Res<PaintQueue>, mut q: Query<(&mut Vehicle, &Driver, &Transform)>, mut hulls: Local<Vec<Vec2>>, book: Res<RouteBook>) {
+pub(super) fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: ResMut<UnitRng>, mut stats: ResMut<Stats>, dress: Dress, mut escape: Escape, mut q: Query<(&mut Vehicle, &Driver, &Transform)>) {
     let dt = time.delta_secs();
     let lay = geo::layout();
-    hulls.clear();
-    hulls.extend(q.iter().filter(|(v, ..)| !v.state.mobile()).map(|(_, _, t)| t.translation.xz()));
+    escape.hulls.clear();
+    escape.hulls.extend(q.iter().filter(|(v, ..)| !v.state.mobile()).map(|(_, _, t)| t.translation.xz()));
     for (mut v, d, tf) in &mut q {
         if v.crew + v.troops == 0 {
             continue;
@@ -321,7 +330,7 @@ pub(super) fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: Res
             continue;
         }
         v.exit_timer = rng.0.random_range(0.5..3.0);
-        let route = &book.0[d.route];
+        let route = &escape.book.0[d.route];
         let p = tf.translation.xz();
         let fwd = (tf.rotation * Vec3::NEG_Z).xz().normalize_or_zero();
         let right = Vec2::new(-fwd.y, fwd.x);
@@ -335,8 +344,8 @@ pub(super) fn crew_bailout(mut commands: Commands, time: Res<Time>, mut rng: Res
         let forward = attacker && !is_crew && rng.0.random_bool(p_forward);
         let at = p + right * sign(&mut rng.0) * 2.2 + fwd * rng.0.random_range(-1.5..1.5);
         let goal = if forward { route.objective + Vec2::new(rng.0.random_range(-100.0..100.0), 0.0) } else { home };
-        let leg = (!forward).then(|| cover_near(at, home, &paint.craters, &hulls, &mut rng.0));
-        let e = spawn_soldier(&mut commands, &models, &palette, v.side, at, goal, home, rng.0.random_range(10.0..25.0), leg, &mut rng.0);
+        let leg = (!forward).then(|| cover_near(at, home, &escape.paint.craters, &escape.hulls, &mut rng.0));
+        let e = spawn_soldier(&mut commands, &dress.models, &dress.palette, NewSoldier { side: v.side, at, goal, home, sprint: rng.0.random_range(10.0..25.0), cover: leg }, &mut rng.0);
         if !forward {
             commands.entity(e).insert(Fleeing);
         }

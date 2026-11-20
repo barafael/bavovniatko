@@ -3,10 +3,9 @@
 
 use super::*;
 use crate::diorama::diorama;
-use crate::fx::FxQueue;
 use crate::geo;
-use crate::sound::{Sfx, Sound};
-use crate::units::{Blast, Cause, Models, Palette, Part, SState, Side, Soldier};
+use crate::sound::Sfx;
+use crate::units::{Blast, Cause, Dress, Part, SState, Side, Soldier};
 
 /// The bomber's model, built by the look where the day has one.
 #[derive(Resource)]
@@ -57,7 +56,6 @@ const SPEED: f32 = 14.0;
 const BOMB_BLAST: f32 = 5.0;
 
 /// Launch the sorties asked for, one at a time, while there are any in it.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn launch_sorties(mut commands: Commands, time: Res<Time>, mut robots: ResMut<Robots>, mut radio: ResMut<Radio>, op: Res<crate::player::Operator>, model: Option<Res<BomberModel>>, flying: Query<(), With<Vampire>>) {
     let now = time.elapsed_secs_f64();
     let Some(spec) = spec().and_then(|s| s.bomber) else {
@@ -119,17 +117,12 @@ pub(super) fn launch_sorties(mut commands: Commands, time: Res<Time>, mut robots
 
 /// Fly it: the player's sticks while he holds it, else by itself to its point, over it to drop, and home; the link
 /// frays in their EW as the drone's does, and a lost link, an empty rack or a low battery bring it home.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn fly(
     mut commands: Commands,
     time: Res<Time>,
     ew: Res<crate::ew::Ew>,
-    op: Res<crate::player::Operator>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    mut robots: ResMut<Robots>,
-    mut radio: ResMut<Radio>,
-    mut view: ResMut<crate::player::View>,
+    dress: Dress,
+    mut station: Station,
     soldiers: Query<(&Soldier, &Transform)>,
     mut q: Query<(Entity, &mut Vampire, &mut Transform), Without<Soldier>>,
 ) {
@@ -146,7 +139,7 @@ pub(super) fn fly(
         if !v.home && (v.battery < endurance * 0.2 || v.lost_for > 6.0) {
             v.home = true;
             let (uk, en) = if v.lost_for > 6.0 { ("Вампір без зв'язку, повертається сам.", "No link to the Vampire. It's coming home by itself.") } else { ("Батарея на Вампірі сідає, повертаю.", "The Vampire's battery is low. Bringing it home.") };
-            radio.say2(now, uk, en);
+            station.radio.say2(now, uk, en);
         }
         let ground = geo::height(v.pos.x, v.pos.z);
         let agl = v.pos.y - ground;
@@ -163,7 +156,7 @@ pub(super) fn fly(
             ((fwd * f + right * r).normalize_or_zero() * SPEED, climb, None)
         } else {
             let aim = if v.home {
-                Some(op.pos)
+                Some(station.op.pos)
             } else {
                 v.target.map(|t| {
                     // The men nearest its point, then upwind of them by the drift of the mean wind, as the drop does.
@@ -208,13 +201,13 @@ pub(super) fn fly(
         v.pos.z = v.pos.z.clamp(-geo::HALF_Z + 30.0, geo::HALF_Z - 30.0);
         let ground = geo::height(v.pos.x, v.pos.z);
         // Home and down: the sortie is over.
-        if v.home && v.pos.y - ground < 1.5 && v.pos.xz().distance(op.pos) < 15.0 {
-            robots.sorties += 1;
+        if v.home && v.pos.y - ground < 1.5 && v.pos.xz().distance(station.op.pos) < 15.0 {
+            station.robots.sorties += 1;
             info!("bomber: home with {} aboard, at {now:.0} s", v.left);
-            radio.say2(now, "Вампір сів.", "The Vampire is down, home.");
+            station.radio.say2(now, "Вампір сів.", "The Vampire is down, home.");
             commands.entity(e).despawn();
-            if view.mode == Mode::Bomber {
-                view.mode = Mode::Drone;
+            if station.view.mode == Mode::Bomber {
+                station.view.mode = Mode::Drone;
             }
             continue;
         }
@@ -223,10 +216,10 @@ pub(super) fn fly(
         }
         if v.pos.y <= ground {
             info!("bomber: down at {:.0},{:.0} (battery {:.0} s), at {now:.0} s", v.pos.x, v.pos.z, v.battery);
-            radio.say2(now, "Вампіра втратили.", "We've lost the Vampire.");
+            station.radio.say2(now, "Вампіра втратили.", "We've lost the Vampire.");
             commands.entity(e).despawn();
-            if view.mode == Mode::Bomber {
-                view.mode = Mode::Drone;
+            if station.view.mode == Mode::Bomber {
+                station.view.mode = Mode::Drone;
             }
             continue;
         }
@@ -236,21 +229,21 @@ pub(super) fn fly(
             let (from, vel, load) = (v.pos - Vec3::Y * 0.4, v.vel, v.load);
             let scale = if load == Load::Bombs { Vec3::new(0.9, 0.9, 0.35) } else { Vec3::new(3.0, 3.0, 0.4) };
             commands.spawn((
-                Mesh3d(models.missile.clone()),
-                MeshMaterial3d(palette.vertex.clone()),
+                Mesh3d(dress.models.missile.clone()),
+                MeshMaterial3d(dress.palette.vertex.clone()),
                 Transform::from_translation(from).looking_to(Vec3::NEG_Y, Vec3::Z).with_scale(scale),
                 Bomb { vel, load },
                 bevy::light::NotShadowCaster,
             ));
             match load {
-                Load::Bombs => robots.bombs += 1,
-                Load::Bundle(_) => robots.bundles += 1,
+                Load::Bombs => station.robots.bombs += 1,
+                Load::Bundle(_) => station.robots.bundles += 1,
             }
             info!("bomber: released over {:.0},{:.0} from {:.0} m, {} left, at {now:.0} s", from.x, from.z, from.y - ground, v.left);
-            radio.say2(now, "Скид з Вампіра.", "Drop from the Vampire.");
+            station.radio.say2(now, "Скид з Вампіра.", "Drop from the Vampire.");
             if v.left == 0 && !v.home {
                 v.home = true;
-                radio.say2(now, "Пусто. Вампір додому.", "Rack's empty. The Vampire is coming home.");
+                station.radio.say2(now, "Пусто. Вампір додому.", "Rack's empty. The Vampire is coming home.");
             }
         }
         // Its attitude: nose into the way it is going, a little tilt for its acceleration.
@@ -261,18 +254,11 @@ pub(super) fn fly(
 
 /// The bombs fall in the day's wind as the drop's grenades do, and burst; a bundle lands, and the post nearest it
 /// within 40 m takes it.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn bombs_fall(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
-    mut blasts: MessageWriter<Blast>,
-    mut log: ResMut<crate::hits::HitLog>,
-    mut robots: ResMut<Robots>,
-    mut radio: ResMut<Radio>,
-    mut view: ResMut<crate::player::View>,
-    op: Res<crate::player::Operator>,
+    mut burst: crate::drones::Burst,
+    mut station: Station,
     mut posts: Query<(&crate::fire::Post, Option<&mut crate::fight::Ammo>)>,
     mut q: Query<(Entity, &mut Bomb, &mut Transform)>,
     soldiers: Query<(&Soldier, &Transform), Without<Bomb>>,
@@ -292,9 +278,9 @@ pub(super) fn bombs_fall(
         let at = Vec3::new(p.x, ground, p.z);
         match b.load {
             Load::Bombs => {
-                fx.explosion(at, 0.5, true);
-                sound.at(at, Sfx::BlastNear, 0.9);
-                blasts.write(Blast { at, radius: BOMB_BLAST, cause: Cause::Drop });
+                burst.fx.explosion(at, 0.5, true);
+                burst.sound.at(at, Sfx::BlastNear, 0.9);
+                burst.blasts.write(Blast { at, radius: BOMB_BLAST, cause: Cause::Drop });
                 let attacker = diorama().attacker();
                 let near: Vec<f32> = soldiers.iter().filter(|(s, _)| s.side == attacker && s.state != SState::Wounded).map(|(_, t)| t.translation.xz().distance(at.xz())).collect();
                 let among = near.iter().filter(|&&d| d < BOMB_BLAST * 3.0).count();
@@ -305,20 +291,20 @@ pub(super) fn bombs_fall(
                     1 => ("a man in the open", "burst beside him".to_string()),
                     n => ("men in the open", format!("burst among {n}")),
                 };
-                log.note(now, "60 mm bomb", "the Vampire", what, attacker, result);
+                burst.log.note(now, "60 mm bomb", "the Vampire", what, attacker, result);
                 info!("bomber: a bomb burst at {:.0},{:.0}, {among} men within {:.0} m, the nearest {closest:.0} m, at {now:.0} s", at.x, at.z, BOMB_BLAST * 3.0);
             }
             Load::Bundle(c) => {
                 let post = posts.iter().filter(|(p, _)| p.side == Side::Ua && p.strength > 0).map(|(p, _)| p.pos).filter(|q| q.distance(at.xz()) < 40.0).min_by(|a, b| a.distance(at.xz()).total_cmp(&b.distance(at.xz())));
                 match post {
                     Some(q) => {
-                        super::deliver(c, q, &mut robots, &mut posts, &mut view, &op);
+                        station.deliver(c, q, &mut posts);
                         info!("bomber: the bundle of {} landed {:.0} m from the post at {:.0},{:.0}, at {now:.0} s", c.name().1, q.distance(at.xz()), q.x, q.y);
-                        radio.say2(now, format!("Скид прийняли: {}.", c.name().0), format!("Bundle in at the post: {}.", c.name().1));
+                        station.radio.say2(now, format!("Скид прийняли: {}.", c.name().0), format!("Bundle in at the post: {}.", c.name().1));
                     }
                     None => {
                         info!("bomber: the bundle of {} landed at {:.0},{:.0}, nobody's, at {now:.0} s", c.name().1, at.x, at.z);
-                        radio.say2(now, "Скид упав мимо. Не дістати.", "The bundle came down wide. Nobody can get to it.");
+                        station.radio.say2(now, "Скид упав мимо. Не дістати.", "The bundle came down wide. Nobody can get to it.");
                     }
                 }
             }

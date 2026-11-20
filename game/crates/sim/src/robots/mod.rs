@@ -29,9 +29,11 @@ mod ugv;
 pub use bomber::*;
 pub use ugv::*;
 
+use crate::orders::FieldInput;
+use crate::player::{Controls, Pointer};
 use crate::units::Radio;
 use bav_core::vocab::Mode;
-use bevy::{prelude::*, window::PrimaryWindow};
+use bevy::prelude::*;
 use rand::{SeedableRng, rngs::SmallRng};
 use serde::Deserialize;
 
@@ -202,6 +204,15 @@ pub enum Order {
     Sortie { to: Option<Vec2>, load: Load, flown: bool },
 }
 
+/// The robots' ground station: their tally and orders, the radio, the player's view, and the operator's post.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(super) struct Station<'w> {
+    robots: ResMut<'w, Robots>,
+    radio: ResMut<'w, Radio>,
+    view: ResMut<'w, crate::player::View>,
+    op: Res<'w, crate::player::Operator>,
+}
+
 /// The robots' day: what is left, what went, what came back.
 #[derive(Resource, Default)]
 pub struct Robots {
@@ -297,19 +308,16 @@ fn fetch(time: Res<Time>, script: Res<crate::director::Script>, mut robots: ResM
 /// Alt+click one with ammunition to the position nearest the cursor; 8 launches the bomber (Shift+8 with a bundle of
 /// ammunition) and puts the player in its camera, or back in it while it flies; in its camera C lets a bomb go and H
 /// brings it home.
-#[allow(clippy::too_many_arguments)]
 fn robot_input(
-    keys: Res<ButtonInput<KeyCode>>,
-    buttons: Res<ButtonInput<MouseButton>>,
-    window: Option<Single<&Window, With<PrimaryWindow>>>,
-    cam: Single<(&Camera, &GlobalTransform), With<crate::player::MainCamera>>,
+    input: FieldInput,
     time: Res<Time>,
     mut view: ResMut<crate::player::View>,
     mut robots: ResMut<Robots>,
     mut radio: ResMut<Radio>,
     mut vampires: Query<&mut Vampire>,
-    orders: Option<Res<crate::orders::OrdersView>>,
 ) {
+    let FieldInput { controls: Controls { keys, buttons }, pointer: Pointer { window, cam }, orders } = input;
+
     let now = time.elapsed_secs_f64();
     if casevac() && view.mode != Mode::Fpv {
         if keys.just_pressed(KeyCode::KeyV) {

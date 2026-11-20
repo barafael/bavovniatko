@@ -7,15 +7,15 @@
 
 use crate::sound::{Sfx, Sound};
 use crate::diorama::diorama;
-use crate::player::{self, MainCamera, Shake, View};
+use crate::player::{self, Controls, MainCamera, Shake, View};
 use bav_core::vocab::Mode;
 use crate::dev::dev;
-use crate::fx::{self, FxQueue, FxRng};
+use crate::fx::{self, Effects, FxQueue, FxRng};
 use crate::geo;
 use crate::paint::{Paint, PaintQueue};
 use crate::units::{self, Blast, Cause, ColumnOrder, DirectHit, Driver, Gun, Line, Mine, Minefield, Models, Radio, SState, Side, Soldier, Stats, VState, Vehicle};
 use crate::player::ObservationPost;
-use crate::units::Palette;
+use crate::units::{Dress, Palette};
 use bevy::{light::NotShadowCaster, prelude::*, window::PrimaryWindow};
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 pub use bav_core::vocab::{Atgm, Strike};
@@ -56,6 +56,52 @@ impl Plugin for FirePlugin {
 
 #[derive(Resource)]
 pub struct FireRng(pub SmallRng);
+
+/// What a weapon going off needs: the clock, the effects' random stream, and the effects and the sound.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Gunfire<'w, 's> {
+    time: Res<'w, Time>,
+    fxr: ResMut<'w, FxRng>,
+    effects: Effects<'w, 's>,
+}
+
+/// What a missile's arrival leaves: the hit on the hull, and the mark on the ground.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Impacts<'w> {
+    hits: MessageWriter<'w, DirectHit>,
+    paint: ResMut<'w, PaintQueue>,
+}
+
+/// Where the cursor falls on the field: the window, and the camera that looks through it.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Cursor<'w, 's> {
+    window: Single<'w, 's, &'static Window, With<PrimaryWindow>>,
+    cam: Single<'w, 's, (&'static Camera, &'static GlobalTransform), With<MainCamera>>,
+}
+
+/// What decides whether a fire mission is observed: the view the player calls it from, the observers' post, the smoke,
+/// and the day's seeing.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Observation<'w> {
+    view: Res<'w, View>,
+    op: Option<Res<'w, ObservationPost>>,
+    smoke: Res<'w, fx::Smoke>,
+    seeing: Option<Res<'w, crate::fight::Seeing>>,
+}
+
+/// The player's click for a fire mission: the keys and buttons, and the orders panel, which takes clicks while open.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Clicks<'w> {
+    controls: Controls<'w>,
+    orders: Option<Res<'w, crate::orders::OrdersView>>,
+}
+
+/// The radio, and the sound of its handset.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Handset<'w, 's> {
+    radio: ResMut<'w, Radio>,
+    sound: Sound<'w, 's>,
+}
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum AtgmMode {
@@ -431,20 +477,11 @@ fn observed_sigma(view: &View, target: Vec2, blind: bool) -> f32 {
     }
 }
 
-fn player_fire(
-    mut commands: Commands,
-    time: Res<Time>,
-    buttons: Res<ButtonInput<MouseButton>>,
-    keys: Res<ButtonInput<KeyCode>>,
-    window: Single<&Window, With<PrimaryWindow>>,
-    cam: Single<(&Camera, &GlobalTransform), With<MainCamera>>,
-    view: Res<View>,
-    mut fc: ResMut<FireControl>,
-    mut radio: ResMut<Radio>,
-    mut sound: Sound,
-    orders: Option<Res<crate::orders::OrdersView>>,
-    (op, smoke, seeing): (Option<Res<ObservationPost>>, Res<fx::Smoke>, Option<Res<crate::fight::Seeing>>),
-) {
+fn player_fire(mut commands: Commands, time: Res<Time>, clicks: Clicks, cursor: Cursor, observation: Observation, mut fc: ResMut<FireControl>, handset: Handset) {
+    let Clicks { controls: Controls { keys, buttons }, orders } = clicks;
+    let Cursor { window, cam } = cursor;
+    let Observation { view, op, smoke, seeing } = observation;
+    let Handset { mut radio, mut sound } = handset;
     // Alt+click asks for an evacuation instead (`evac`); with the orders open (Command) a click is for them (`orders`);
     // in a sight (a launcher, a Bradley's gun) it fires that.
     if !buttons.just_pressed(MouseButton::Left) || matches!(view.mode, Mode::Ground | Mode::Bradley) || keys.pressed(KeyCode::AltLeft) || keys.pressed(KeyCode::AltRight) || orders.is_some_and(|o| o.takes_clicks()) {
@@ -526,16 +563,9 @@ fn player_fire(
     sound.now(Sfx::Radio, 0.25);
 }
 
-fn aim_gizmo(
-    mut gizmos: Gizmos,
-    window: Single<&Window, With<PrimaryWindow>>,
-    cam: Single<(&Camera, &GlobalTransform), With<MainCamera>>,
-    view: Res<View>,
-    keys: Res<ButtonInput<KeyCode>>,
-    missions: Query<&Mission, With<PlayerCalled>>,
-    time: Res<Time>,
-    (op, smoke, seeing): (Option<Res<ObservationPost>>, Res<fx::Smoke>, Option<Res<crate::fight::Seeing>>),
-) {
+fn aim_gizmo(mut gizmos: Gizmos, cursor: Cursor, observation: Observation, keys: Res<ButtonInput<KeyCode>>, missions: Query<&Mission, With<PlayerCalled>>, time: Res<Time>) {
+    let Cursor { window, cam } = cursor;
+    let Observation { view, op, smoke, seeing } = observation;
     if view.mode == Mode::Ground {
         return;
     }
@@ -625,21 +655,18 @@ fn shell_whistle(mut commands: Commands, time: Res<Time>, mut sound: Sound, q: Q
 /// Shells land: the burst, its sound and its crater, the blast on whoever is near, and what a RAAM or a smoke
 /// shell leaves instead. What a landing does to the positions, the jammers, the OP and the picture follows from
 /// `ShellLanded`.
-fn land_shells(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut paint: ResMut<PaintQueue>,
-    mut sound: Sound,
-    mut blasts: MessageWriter<Blast>,
-    mut landed: MessageWriter<ShellLanded>,
-    mut mf: ResMut<Minefield>,
-    mut smoke: ResMut<fx::Smoke>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    q: Query<(Entity, &Shell)>,
-) {
+/// What a shell's landing changes on the ground: the marks it leaves, the minefield a RAAM sows, and the smoke.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Ground<'w> {
+    paint: ResMut<'w, PaintQueue>,
+    mf: ResMut<'w, Minefield>,
+    smoke: ResMut<'w, fx::Smoke>,
+}
+
+fn land_shells(mut commands: Commands, gunfire: Gunfire, ground: Ground, mut blasts: MessageWriter<Blast>, mut landed: MessageWriter<ShellLanded>, dress: Dress, q: Query<(Entity, &Shell)>) {
+    let Gunfire { time, mut fxr, effects: Effects { mut fx, mut sound } } = gunfire;
+    let Ground { mut paint, mut mf, mut smoke } = ground;
+    let Dress { models, palette } = dress;
     let now = time.elapsed_secs_f64();
     let rng = &mut fxr.0;
     for (e, s) in &q {
@@ -874,24 +901,36 @@ fn reload_launchers(time: Res<Time>, mut teams: Query<&mut AtgmTeam>) {
     }
 }
 
-fn atgm_teams(
-    mut commands: Commands,
-    time: Res<Time>,
-    fc: Res<FireControl>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut sound: Sound,
-    mut radio: ResMut<Radio>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    vehicles: Query<(Entity, &Vehicle, &Driver, &Transform)>,
-    missiles: Query<&Missile>,
-    mut teams: Query<(Entity, &Post, &mut AtgmTeam), Without<Suppressed>>,
-    view: Res<View>,
-    smoke: Res<fx::Smoke>,
-    mut stats: ResMut<Stats>,
-    mut sightings: Sightings,
-) {
+/// The ATGM teams not pinned down, with the fire control's standing orders for them, and the view (the player's own
+/// team fires from the ground view).
+#[derive(bevy::ecs::system::SystemParam)]
+struct Teams<'w, 's> {
+    teams: Query<'w, 's, (Entity, &'static Post, &'static mut AtgmTeam), Without<Suppressed>>,
+    fc: Res<'w, FireControl>,
+    view: Res<'w, View>,
+}
+
+/// The field as the teams weigh it: the hulls with their drivers' routes, and the missiles already on the way.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Hulls<'w, 's> {
+    vehicles: Query<'w, 's, (Entity, &'static Vehicle, &'static Driver, &'static Transform)>,
+    missiles: Query<'w, 's, &'static Missile>,
+}
+
+/// What a team can see: its sightings, held a while, the smoke, and the day's count of shots the ground hid.
+#[derive(bevy::ecs::system::SystemParam)]
+struct TeamSight<'w, 's> {
+    sightings: Sightings<'s>,
+    smoke: Res<'w, fx::Smoke>,
+    stats: ResMut<'w, Stats>,
+}
+
+fn atgm_teams(mut commands: Commands, gunfire: Gunfire, mut radio: ResMut<Radio>, dress: Dress, hulls: Hulls, teams: Teams, sight: TeamSight) {
+    let Gunfire { time, mut fxr, effects: Effects { mut fx, mut sound } } = gunfire;
+    let Dress { models, palette } = dress;
+    let Hulls { vehicles, missiles } = hulls;
+    let Teams { mut teams, fc, view } = teams;
+    let TeamSight { mut sightings, smoke, mut stats } = sight;
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
     let lay = geo::layout();
@@ -991,17 +1030,16 @@ fn atgm_teams(
     }
 }
 
-fn fly_missiles(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut hits: MessageWriter<DirectHit>,
-    mut paint: ResMut<PaintQueue>,
-    mut log: ResMut<crate::hits::HitLog>,
-    targets: Query<(&Transform, &Vehicle, Has<units::Rescue>), Without<Missile>>,
-    mut q: Query<(Entity, &mut Missile, &mut Transform)>,
-) {
+/// The missiles in flight, and the hulls they fly at (and whether each carries `units::Rescue`, for the hit feed).
+#[derive(bevy::ecs::system::SystemParam)]
+struct Missiles<'w, 's> {
+    q: Query<'w, 's, (Entity, &'static mut Missile, &'static mut Transform)>,
+    targets: Query<'w, 's, (&'static Transform, &'static Vehicle, Has<units::Rescue>), Without<Missile>>,
+}
+
+fn fly_missiles(mut commands: Commands, time: Res<Time>, mut fx: ResMut<FxQueue>, mut fxr: ResMut<FxRng>, impacts: Impacts, mut log: ResMut<crate::hits::HitLog>, missiles: Missiles) {
+    let Impacts { mut hits, mut paint } = impacts;
+    let Missiles { mut q, targets } = missiles;
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     for (e, mut m, mut tf) in &mut q {
@@ -1051,7 +1089,7 @@ fn fly_missiles(
                 fx.explosion(aim, 0.7, false);
             } else {
                 // A miss: it ploughs into the snow beyond.
-                log.open(now, m.weapon, m.from, m.target, tv, rescue, "missed: into the ground beyond");
+                log.open(now, m.weapon, m.from, crate::hits::Victim { target: m.target, vehicle: tv, rescue }, "missed: into the ground beyond");
                 let miss = aim.xz() + gauss2(rng) * 12.0;
                 fx.explosion(geo::ground(miss), 0.6, true);
                 paint.push(Paint::Crater { at: miss, radius: 1.2, seed: rng.random() });
@@ -1066,17 +1104,15 @@ fn fly_missiles(
 /// Rifles and machine guns from the positions at the other side's men in the open.
 fn small_arms(
     mut commands: Commands,
-    time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
+    gunfire: Gunfire,
     mut stats: ResMut<Stats>,
-    mut sound: Sound,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    dress: Dress,
     mut positions: Query<(&mut Post, Option<&mut crate::fight::Ammo>, Has<Suppressed>)>,
     mut soldiers: Query<(Entity, &mut Soldier, &Transform, Option<&crate::seep::Cover>)>,
     seeing: Option<Res<crate::fight::Seeing>>,
 ) {
+    let Gunfire { time, mut fxr, effects: Effects { mut fx, mut sound } } = gunfire;
+    let Dress { models, palette } = dress;
     // Where the fight says so, a post down under fire fires only so much (`FightSpec::pinned`).
     let pinned = crate::fight::spec().map_or(1.0, |f| f.pinned);
     // In the dark men see less far, except under a flare, and in fog no further than it lets them (where the day
@@ -1131,7 +1167,7 @@ fn small_arms(
         let p_kill = (0.42 * (1.0 - d / 800.0) * prone * (pos.strength as f32 / 6.0).sqrt()).clamp(0.02, 0.6) * if ammo.is_some() { crate::fight::spec().map_or(1.0, |s| s.rifles) } else { 1.0 };
         if rng.random_bool(p_kill as f64) {
             stats.died("rifles", (s.side == diorama().attacker()) as u32);
-            units::kill_soldier(&mut commands, &models, &palette, &mut stats, e, &s, tf, None, rng);
+            units::kill_soldier(&mut commands, &models, &palette, &mut stats, (e, &s, tf), None, rng);
             dead.push(e);
         } else {
             s.fear += 0.7;
@@ -1144,16 +1180,14 @@ fn small_arms(
 /// line, mostly harmless.
 fn attacker_guns(
     mut commands: Commands,
-    time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut sound: Sound,
+    gunfire: Gunfire,
     positions: Query<&Post>,
     turrets: Query<&GlobalTransform, With<units::Turret>>,
     // (A hull whose sights are shot out sees nothing to fire at.)
     mut guns: Query<(&Vehicle, &mut Gun, &Transform), Without<units::Blinded>>,
     soldiers: Query<(&Soldier, &Transform)>,
 ) {
+    let Gunfire { time, mut fxr, effects: Effects { mut fx, mut sound } } = gunfire;
     let dt = time.delta_secs();
     let now = time.elapsed_secs_f64();
     let rng = &mut fxr.0;
@@ -1232,46 +1266,34 @@ fn attacker_guns(
 }
 
 /// The defenders' dug-in tanks fire on the attacking vehicles they can see.
-fn defender_tanks(
-    time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut sound: Sound,
-    mut hits: MessageWriter<DirectHit>,
-    smoke: Res<fx::Smoke>,
-    turrets: Query<&GlobalTransform, With<units::Turret>>,
-    vehicles: Query<(Entity, &Vehicle, &Transform)>,
-    mut guns: Query<(&Vehicle, &mut Gun, &Transform)>,
-) {
-    let dt = time.delta_secs();
-    let now = time.elapsed_secs_f64();
-    let rng = &mut fxr.0;
+/// A defending tank's gunnery: the gunfire, the hits it makes, the smoke that hides a target, the turrets the muzzles
+/// are on, and the hulls on the field.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Gunline<'w, 's> {
+    gunfire: Gunfire<'w, 's>,
+    hits: MessageWriter<'w, DirectHit>,
+    smoke: Res<'w, fx::Smoke>,
+    turrets: Query<'w, 's, &'static GlobalTransform, With<units::Turret>>,
+    vehicles: Query<'w, 's, (Entity, &'static Vehicle, &'static Transform)>,
+}
+
+fn defender_tanks(mut line: Gunline, mut guns: Query<(&Vehicle, &mut Gun, &Transform)>) {
+    let dt = line.gunfire.time.delta_secs();
+    let now = line.gunfire.time.elapsed_secs_f64();
     let attacker = diorama().attacker();
     for (v, mut gun, tf) in &mut guns {
         if v.side == attacker || !v.state.alive() || v.crew == 0 || !v.kind.is_tank() {
             continue;
         }
-        defender_tank(&mut fx, rng, &mut sound, &mut hits, &smoke, &turrets, v, &mut gun, tf, &vehicles, dt, now);
+        defender_tank(&mut line, v, &mut gun, tf, dt, now);
     }
 }
 
 /// A dug-in tank on the crest: picks an attacking vehicle it can see, prefers one that has stopped, and fires
 /// at it with the main gun. A hit at two kilometres is a matter of luck and of how still the target is.
-#[allow(clippy::too_many_arguments)]
-fn defender_tank(
-    fx: &mut FxQueue,
-    rng: &mut SmallRng,
-    sound: &mut Sound,
-    hits: &mut MessageWriter<DirectHit>,
-    smoke: &fx::Smoke,
-    turrets: &Query<&GlobalTransform, With<units::Turret>>,
-    v: &Vehicle,
-    gun: &mut Gun,
-    tf: &Transform,
-    vehicles: &Query<(Entity, &Vehicle, &Transform)>,
-    dt: f32,
-    now: f64,
-) {
+fn defender_tank(line: &mut Gunline, v: &Vehicle, gun: &mut Gun, tf: &Transform, dt: f32, now: f64) {
+    let Gunline { gunfire: Gunfire { fxr, effects: Effects { fx, sound }, .. }, hits, smoke, turrets, vehicles } = line;
+    let rng = &mut fxr.0;
     gun.fire_timer -= dt;
     let from = tf.translation.xz();
     // What it can see: the other side's vehicles out of the smoke, within two kilometres.
@@ -1307,18 +1329,18 @@ fn defender_tank(
 /// The brigade's pre-registered fires: when a column stalls on a known point, the guns fire on their own.
 /// At Vuhledar the 72nd's guns; south of Mala Tokmachka the Russian guns, cued by their drones, which do not see
 /// through smoke.
-fn pre_registered_fires(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut fc: ResMut<FireControl>,
-    mut radio: ResMut<Radio>,
-    smoke: Res<fx::Smoke>,
-    mut last: Local<Vec<f64>>,
-    // Where the attackers' stalled vehicles and their men in the open are, gathered once a frame when a point is ready.
-    mut seen: Local<(Vec<Vec2>, Vec<Vec2>)>,
-    vehicles: Query<(&Vehicle, &Transform)>,
-    soldiers: Query<(&Soldier, &Transform)>,
-) {
+/// What the registered fires watch: when each point last fired, and where the attackers' stalled vehicles and their
+/// men in the open are, gathered once a frame when a point is ready, from the vehicles and the men.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Registered<'w, 's> {
+    last: Local<'s, Vec<f64>>,
+    seen: Local<'s, (Vec<Vec2>, Vec<Vec2>)>,
+    vehicles: Query<'w, 's, (&'static Vehicle, &'static Transform)>,
+    soldiers: Query<'w, 's, (&'static Soldier, &'static Transform)>,
+}
+
+fn pre_registered_fires(mut commands: Commands, time: Res<Time>, mut fc: ResMut<FireControl>, mut radio: ResMut<Radio>, smoke: Res<fx::Smoke>, registered: Registered) {
+    let Registered { mut last, mut seen, vehicles, soldiers } = registered;
     let now = time.elapsed_secs_f64();
     let trps = &geo::layout().trps;
     let (attacker, defender) = (diorama().attacker(), diorama().defender());
@@ -1438,22 +1460,28 @@ pub struct GuidedMissile {
 /// Javelin seekers lock after this long on the target.
 pub const JAVELIN_LOCK: f32 = 2.5;
 
-fn player_atgm(
-    mut commands: Commands,
-    time: Res<Time>,
-    buttons: Res<ButtonInput<MouseButton>>,
-    mut view: ResMut<View>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut sound: Sound,
-    mut radio: ResMut<Radio>,
-    mut shake: ResMut<Shake>,
-    (models, palette): (Res<Models>, Res<Palette>),
-    cam: Single<&GlobalTransform, With<MainCamera>>,
-    guided: Query<(), With<GuidedMissile>>,
-    mut teams: Query<(&Post, &mut AtgmTeam)>,
-    mut pulls: MessageReader<crate::player::TriggerPull>,
-) {
+/// What fires the launcher: the left button, or a pull of the trigger by a script.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Trigger<'w, 's> {
+    buttons: Res<'w, ButtonInput<MouseButton>>,
+    pulls: MessageReader<'w, 's, crate::player::TriggerPull>,
+}
+
+/// The player at a launcher: the view and the sight's camera, the missile they are guiding, if one is in the air,
+/// and the shake the launch gives the camera.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Launcher<'w, 's> {
+    view: ResMut<'w, View>,
+    cam: Single<'w, 's, &'static GlobalTransform, With<MainCamera>>,
+    guided: Query<'w, 's, (), With<GuidedMissile>>,
+    shake: ResMut<'w, Shake>,
+}
+
+fn player_atgm(mut commands: Commands, gunfire: Gunfire, trigger: Trigger, launcher: Launcher, mut radio: ResMut<Radio>, dress: Dress, mut teams: Query<(&Post, &mut AtgmTeam)>) {
+    let Gunfire { time, mut fxr, effects: Effects { mut fx, mut sound } } = gunfire;
+    let Trigger { buttons, mut pulls } = trigger;
+    let Launcher { mut view, cam, guided, mut shake } = launcher;
+    let Dress { models, palette } = dress;
     let now = time.elapsed_secs_f64();
     let scripted = pulls.read().count() > 0 || dev().auto_atgm.is_some_and(|t| now >= t && now - time.delta_secs_f64() < t);
     let fire = buttons.just_pressed(MouseButton::Left) || scripted;
@@ -1516,20 +1544,25 @@ fn segment_distance(a: Vec3, b: Vec3, c: Vec3) -> f32 {
     (a + ab * t).distance(c)
 }
 
+/// The sight a missile is guided by: the view, and the camera the player holds the crosshair with.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Guide<'w, 's> {
+    view: Res<'w, View>,
+    cam: Single<'w, 's, &'static GlobalTransform, With<MainCamera>>,
+}
+
 fn fly_guided(
     mut commands: Commands,
-    time: Res<Time>,
-    view: Res<View>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut hits: MessageWriter<DirectHit>,
-    mut paint: ResMut<PaintQueue>,
-    mut sound: Sound,
+    gunfire: Gunfire,
+    guide: Guide,
+    impacts: Impacts,
     mut radio: ResMut<Radio>,
-    cam: Single<&GlobalTransform, With<MainCamera>>,
     vehicles: Query<(Entity, &Vehicle, &Transform), Without<GuidedMissile>>,
     mut q: Query<(Entity, &mut GuidedMissile, &mut Transform)>,
 ) {
+    let Gunfire { time, mut fxr, effects: Effects { mut fx, mut sound } } = gunfire;
+    let Guide { view, cam } = guide;
+    let Impacts { mut hits, mut paint } = impacts;
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     let gt = cam.compute_transform();

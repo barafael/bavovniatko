@@ -5,7 +5,7 @@
 //! lifting before noon, a clear December day to sunset, and a January night with no moon.
 
 use crate::meshes::MeshBuilder;
-use crate::world::Skirt;
+use crate::world::Daylight;
 use bav_core::geo::{self, hash01, smoothstep};
 use bav_sim::fx::{Emitter, EmitterKind};
 use bevy::{camera::Exposure, pbr::DistanceFog, prelude::*};
@@ -15,7 +15,6 @@ const SHAFT: Vec2 = Vec2::new(1475.0, -248.0);
 
 /// The set: the map's buildings and the villages' houses, the headframe, the cars, the smouldering ruins, and the
 /// observers' post where the part's file puts it.
-#[allow(clippy::too_many_arguments)]
 pub fn spawn_set(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -27,7 +26,7 @@ pub fn spawn_set(
     let snow = !bav_core::diorama::diorama().summer();
     let shelled = look.ruined.map(|(ruined, seed)| crate::buildings::Shelled { ruined, seed });
     let mut roofs = MeshBuilder::new();
-    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, snow, &mut crate::hostomel::hangar, shelled);
+    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, crate::buildings::Town { snow, hangar: &mut crate::hostomel::hangar, shelled });
     headframe(&mut roofs, snow);
     // The observers: on the roof of a nine-storey block, the town's high ground.
     let ((x, z), h) = bav_core::data::data().op.expect("Myrnohrad's parts place the observers");
@@ -122,27 +121,27 @@ fn headframe(m: &mut MeshBuilder, snow: bool) {
     }
 }
 
+/// What the camera sees by in the fog: the channel the player is looking through, and how far the battle sees.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct FogSight<'w> {
+    view: Res<'w, bav_sim::player::View>,
+    seeing: Option<Res<'w, bav_sim::fight::Seeing>>,
+}
+
 /// The light from the sun computed for the place and date (`bav_core::sun`): November's grey morning in fog that
 /// lifts before noon, December's low clear sun to its setting, and January's night over snow, which the camera opens
 /// up to as Hostomel's does; the moon where it is up (`sun::moon`), and on the night of the frost it is not. The
 /// sun's own direction is floored so the ground does not shadow itself black at dawn; its true elevation sets the
 /// brightness. In the fog the camera sees as far as the battle does (`bav_sim::fight::Seeing`): the observers, the
 /// drone's day channel and the FPV's goggles as far as a man, the drone's thermal channel further.
-#[allow(clippy::too_many_arguments)]
 pub fn daylight(
-    script: Res<bav_sim::director::Script>,
-    mut sun: Query<(&mut DirectionalLight, &mut Transform)>,
-    mut ambient: ResMut<GlobalAmbientLight>,
-    mut clear: ResMut<ClearColor>,
+    day: Daylight,
     mut cam: Query<(&mut DistanceFog, &mut Exposure), With<bav_sim::player::MainCamera>>,
-    skirt: Option<Res<Skirt>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
     mut fx_light: ResMut<crate::fx::FxLight>,
-    mut sky_dome: crate::sky::Sky,
-    mut last: Local<Option<Color>>,
-    look: Res<crate::LookSettings>,
-    (view, seeing): (Res<bav_sim::player::View>, Option<Res<bav_sim::fight::Seeing>>),
+    fog_sight: FogSight,
 ) {
+    let Daylight { script, mut sun, mut ambient, mut clear, skirt, mut materials, mut sky_dome, mut last, look } = day;
+    let FogSight { view, seeing } = fog_sight;
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(crate::dev::DayDebug::Off) {
         return;
@@ -213,7 +212,7 @@ pub fn daylight(
     fx_light.0 = 0.3 + 0.7 * s(-6.0, 10.0, elev);
     let sun_colour = if overcast { Color::srgb(0.9, 0.9, 0.9) } else { Color::srgb(1.0, 0.88, 0.70) };
     let strength = if overcast { 0.4 * day } else { 1.5 * day.powf(0.3) } * (1.0 - thick);
-    sky_dome.set(weather, minutes / 60.0, Color::srgb(zenith[0], zenith[1], zenith[2]), sky, sun_at, sun_colour, strength, 0.15 + 0.85 * twilight);
+    sky_dome.set(weather, minutes / 60.0, Color::srgb(zenith[0], zenith[1], zenith[2]), sky, crate::sky::SkySun { dir: sun_at, colour: sun_colour, strength }, 0.15 + 0.85 * twilight);
     for (mut f, mut ex) in &mut cam {
         f.color = sky;
         let eye = if view.thermal && view.mode == bav_core::vocab::Mode::Drone { bav_sim::fight::Eye::Thermal } else { bav_sim::fight::Eye::Man };

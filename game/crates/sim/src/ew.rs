@@ -159,16 +159,21 @@ pub fn pause(commands: &mut Commands, dome: Entity, until: f64) {
     commands.entity(dome).insert((DomeOff, Pause(until)));
 }
 
+/// A dome as its switch sees it: which one, whether it is off, and the pause it is off for, if any.
+type Switch = (Entity, &'static Dome, Has<DomeOff>, Option<&'static Pause>);
+
+/// Our domes that stand and are switched on.
+pub(crate) type DomesOn = (Without<DomeDown>, Without<DomeOff>);
+
 /// J switches our standing domes off for our FPVs to fly through, or on again (02 §6, the friendly-fire toggle);
 /// `BAV_DOME="<game s>:off|on,…"` does it at game times. A pause runs out by itself.
-#[allow(clippy::type_complexity)]
 fn switch_domes(
     mut commands: Commands,
     keys: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
     script: Res<crate::director::Script>,
     mut radio: ResMut<Radio>,
-    domes: Query<(Entity, &Dome, Has<DomeOff>, Option<&Pause>), Without<DomeDown>>,
+    domes: Query<Switch, Without<DomeDown>>,
     mut done: Local<usize>,
 ) {
     let now = time.elapsed_secs_f64();
@@ -215,8 +220,7 @@ fn switch_domes(
 }
 
 /// Where our standing domes jam this frame, for our own drones' links.
-#[allow(clippy::type_complexity)]
-fn our_domes(mut ew: ResMut<Ew>, domes: Query<(&Dome, &Transform), (Without<DomeDown>, Without<DomeOff>)>) {
+fn our_domes(mut ew: ResMut<Ew>, domes: Query<(&Dome, &Transform), DomesOn>) {
     let mut ours: Vec<(usize, Vec3, f32)> = domes.iter().map(|(d, t)| (d.idx, t.translation, d.radius)).collect();
     ours.sort_by_key(|d| d.0);
     ew.ours = ours.into_iter().map(|(_, c, r)| (c, r)).collect();

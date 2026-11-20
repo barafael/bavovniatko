@@ -1,12 +1,12 @@
 //! The ground robot: sent, driven, its link, the ground under it, the FPVs that find it, its post and its way home.
 
 use super::*;
-use crate::columns::{self, Columns};
+use crate::columns::{self, Dispatch};
 use crate::evac::Casualties;
-use crate::fx::FxQueue;
+use crate::fx::Effects;
 use crate::geo;
-use crate::sound::{Sfx, Sound};
-use crate::units::{Coasting, DirectHit, Cause, Driver, Models, Palette, RouteBook, Side, VKind, VState, Vehicle, VehicleSpec};
+use crate::sound::Sfx;
+use crate::units::{Coasting, DirectHit, Cause, Driver, RouteBook, Side, VKind, VState, Vehicle, VehicleSpec};
 use bav_core::field::{Ground, field};
 use rand::Rng;
 
@@ -81,17 +81,11 @@ fn nearest_position(p: Vec2) -> Option<usize> {
 }
 
 /// Send the runs asked for while there are robots: each from the road head to its position, a Column of one.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn send_runs(
-    mut commands: Commands,
     time: Res<Time>,
     mut robots: ResMut<Robots>,
     casualties: Option<Res<Casualties>>,
-    mut radio: ResMut<Radio>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    mut book: ResMut<RouteBook>,
-    mut columns: ResMut<Columns>,
+    mut dispatch: Dispatch,
 ) {
     let now = time.elapsed_secs_f64();
     let (runs, rest): (Vec<Order>, Vec<Order>) = std::mem::take(&mut robots.orders).into_iter().partition(|o| matches!(o, Order::Run { .. }));
@@ -104,14 +98,14 @@ pub(super) fn send_runs(
             Dest::Wounded => match casualties.as_deref().and_then(|c| c.oldest()) {
                 Some(p) => nearest_position(p),
                 None => {
-                    radio.say2(now, "Викликів на евакуацію нема.", "No calls for evacuation.");
+                    dispatch.radio.say2(now, "Викликів на евакуацію нема.", "No calls for evacuation.");
                     continue;
                 }
             },
         };
         let Some(to) = to else { continue };
         if robots.left == 0 {
-            radio.say2(now, "{player}, я {command}. Роботів більше нема.", "{player}, this is {command}. No robots left to send.");
+            dispatch.radio.say2(now, "{player}, я {command}. Роботів більше нема.", "{player}, this is {command}. No robots left to send.");
             continue;
         }
         let way = match columns::way(0, to) {
@@ -128,18 +122,18 @@ pub(super) fn send_runs(
             continue;
         }
         let pos = field().positions[to].at;
-        let r = book.0.len();
-        book.0.push(geo::Route { line, deploy_s: len - 30.0, objective: pos, hold: true });
-        let wave = 100 + columns.sent;
-        columns.sent += 1;
+        let r = dispatch.book.0.len();
+        dispatch.book.0.push(geo::Route { line, deploy_s: len - 30.0, objective: pos, hold: true });
+        let wave = 100 + dispatch.columns.sent;
+        dispatch.columns.sent += 1;
         robots.left -= 1;
         robots.sent += 1;
         let n = robots.sent;
-        let e = crate::units::spawn_vehicle(&mut commands, &models, &palette, &book, VehicleSpec { side: Side::Ua, kind: VKind::Ugv, route: r, s: 8.0, lat: 0.0, wave, idx: 0, plow: false, smoke: false, rescue: false, column_pace: f32::INFINITY });
-        commands.entity(e).insert((Robot::new(n, Some(cargo), pos), Hand::default()));
+        let e = crate::units::spawn_vehicle(&mut dispatch.commands, &dispatch.dress.models, &dispatch.dress.palette, &dispatch.book, VehicleSpec { side: Side::Ua, kind: VKind::Ugv, route: r, s: 8.0, lat: 0.0, wave, idx: 0, plow: false, smoke: false, rescue: false, column_pace: f32::INFINITY });
+        dispatch.commands.entity(e).insert((Robot::new(n, Some(cargo), pos), Hand::default()));
         info!("robot {n}: sent with {} to position {to} at {:.0},{:.0}, {len:.0} m ({:.0} m exposed), {} left, at {now:.0} s", cargo.name().1, pos.x, pos.y, way.exposed + 0.0, robots.left);
         let (uk, en) = cargo.name();
-        radio.say2(now, format!("Робот {n} пішов: {uk}. {:.1} км.", len / 1000.0), format!("Robot {n} on its way with {en}: {:.1} km.", len / 1000.0));
+        dispatch.radio.say2(now, format!("Робот {n} пішов: {uk}. {:.1} км.", len / 1000.0), format!("Robot {n} on its way with {en}: {:.1} km.", len / 1000.0));
     }
 }
 
@@ -156,7 +150,6 @@ pub(super) fn adopt(mut commands: Commands, mut robots: ResMut<Robots>, book: Re
 /// The radio link: it frays in their EW, and drops out now and then, mostly for a minute or less, now and then for
 /// an hour or an hour and a half (the Zmiy's 1.5 hours, c15 §5), by the hour of real time. Without it the robot
 /// stands.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn link(mut commands: Commands, time: Res<Time>, ew: Res<crate::ew::Ew>, mut rng: ResMut<RobotRng>, mut radio: ResMut<Radio>, mut q: Query<(Entity, &mut Robot, &Transform, Has<Stalled>)>) {
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
@@ -205,7 +198,6 @@ pub(super) fn keep_to_track(time: Res<Time>, mut q: Query<(&Robot, &mut crate::u
 
 /// The ground under it, every five metres: a crater may hold it a while or for good (more in the autumn's mud), the
 /// mud off the road now and then, a marsh more often; water is the end of it.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn going(mut commands: Commands, time: Res<Time>, paint: Res<crate::paint::PaintQueue>, mut rng: ResMut<RobotRng>, mut radio: ResMut<Radio>, mut q: Query<(Entity, &mut Robot, &mut Vehicle, &Driver, &Transform), Without<Coasting>>) {
     let now = time.elapsed_secs_f64();
     let lay = geo::layout();
@@ -257,13 +249,11 @@ pub(super) fn going(mut commands: Commands, time: Res<Time>, paint: Res<crate::p
 
 /// Their FPVs on the road: every 50 m driven a chance that one finds the robot, by the day's light and whose ground it
 /// is on (`found_per_km`). It goes in from above.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn peril(
     time: Res<Time>,
     script: Res<crate::director::Script>,
     mut rng: ResMut<RobotRng>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
+    mut effects: Effects,
     mut hits: MessageWriter<DirectHit>,
     mut radio: ResMut<Radio>,
     mut q: Query<(Entity, &mut Robot, &Vehicle, &Driver, &Transform)>,
@@ -290,9 +280,9 @@ pub(super) fn peril(
             continue;
         }
         let at = tf.translation + Vec3::Y * 0.8;
-        fx.explosion(at, 0.6, false);
-        fx.flash(at, 5.0e6, 50.0, 0.12);
-        sound.at(at, Sfx::BlastNear, 1.4);
+        effects.fx.explosion(at, 0.6, false);
+        effects.fx.flash(at, 5.0e6, 50.0, 0.12);
+        effects.sound.at(at, Sfx::BlastNear, 1.4);
         hits.write(DirectHit { target: e, cause: Cause::Fpv, weapon: "FPV", from: "their drone crew", top: true });
         info!("robot {}: an FPV found it at {:.0},{:.0}, at {now:.0} s", r.n, p.x, p.y);
         radio.say2(now, format!("FPV по роботу {}!", r.n), format!("FPV on robot {}!", r.n));
@@ -300,15 +290,11 @@ pub(super) fn peril(
 }
 
 /// At the post: it unloads, takes on the wounded waiting there, and turns for home.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 pub(super) fn at_the_post(
     time: Res<Time>,
     mut rng: ResMut<RobotRng>,
-    mut robots: ResMut<Robots>,
+    mut station: Station,
     mut casualties: Option<ResMut<Casualties>>,
-    mut radio: ResMut<Radio>,
-    mut view: ResMut<crate::player::View>,
-    op: Res<crate::player::Operator>,
     mut posts: Query<(&crate::fire::Post, Option<&mut crate::fight::Ammo>)>,
     mut q: Query<(&mut Robot, &mut Vehicle, &mut Driver, &Transform)>,
 ) {
@@ -320,9 +306,9 @@ pub(super) fn at_the_post(
             Leg::In if v.state == VState::Overwatch => {
                 r.leg = Leg::AtPost(0.0);
                 if let Some(c) = r.cargo.take() {
-                    deliver(c, p, &mut robots, &mut posts, &mut view, &op);
+                    station.deliver(c, p, &mut posts);
                     info!("robot {}: at its post at {:.0},{:.0} with {}, at {now:.0} s", r.n, p.x, p.y, c.name().1);
-                    radio.say2(now, format!("Робот {} на позиції. Розвантажують: {}.", r.n, c.name().0), format!("Robot {} at the post. Unloading the {}.", r.n, c.name().1));
+                    station.radio.say2(now, format!("Робот {} на позиції. Розвантажують: {}.", r.n, c.name().0), format!("Robot {} at the post. Unloading the {}.", r.n, c.name().1));
                 }
             }
             Leg::AtPost(secs) => {
@@ -336,9 +322,9 @@ pub(super) fn at_the_post(
                 crate::units::start_withdrawal(&mut v, &mut d, &mut rng.0);
                 info!("robot {}: coming out with {} wounded, at {now:.0} s", r.n, r.wounded);
                 if r.wounded > 0 {
-                    radio.say2(now, format!("Робот {} виходить, на борту {} трьохсотих.", r.n, r.wounded), format!("Robot {} coming out with {} wounded aboard.", r.n, r.wounded));
+                    station.radio.say2(now, format!("Робот {} виходить, на борту {} трьохсотих.", r.n, r.wounded), format!("Robot {} coming out with {} wounded aboard.", r.n, r.wounded));
                 } else {
-                    radio.say2(now, format!("Робот {} розвантажився, виходить.", r.n), format!("Robot {} unloaded, coming out.", r.n));
+                    station.radio.say2(now, format!("Робот {} розвантажився, виходить.", r.n), format!("Robot {} unloaded, coming out.", r.n));
                 }
             }
             _ => {}
@@ -348,26 +334,27 @@ pub(super) fn at_the_post(
 
 /// What a load does where it arrives: ammunition into the post's `Ammo` (where the posts carry it), fuel and
 /// batteries back into the drone team's hands near it (a drone and a full battery); every load counted.
-pub(super) fn deliver(c: Cargo, at: Vec2, robots: &mut Robots, posts: &mut Query<(&crate::fire::Post, Option<&mut crate::fight::Ammo>)>, view: &mut crate::player::View, op: &crate::player::Operator) {
-    robots.delivered[c.index()] += 1;
-    match c {
-        Cargo::Ammo => {
-            let post = posts.iter_mut().filter(|(p, _)| p.side == Side::Ua && p.pos.distance(at) < 120.0).min_by(|a, b| a.0.pos.distance(at).total_cmp(&b.0.pos.distance(at)));
-            if let Some((_, Some(mut ammo))) = post {
-                ammo.0 += crate::fight::volleys().map_or(0, |n| n / 2);
+impl Station<'_> {
+    pub(super) fn deliver(&mut self, c: Cargo, at: Vec2, posts: &mut Query<(&crate::fire::Post, Option<&mut crate::fight::Ammo>)>) {
+        self.robots.delivered[c.index()] += 1;
+        match c {
+            Cargo::Ammo => {
+                let post = posts.iter_mut().filter(|(p, _)| p.side == Side::Ua && p.pos.distance(at) < 120.0).min_by(|a, b| a.0.pos.distance(at).total_cmp(&b.0.pos.distance(at)));
+                if let Some((_, Some(mut ammo))) = post {
+                    ammo.0 += crate::fight::volleys().map_or(0, |n| n / 2);
+                }
             }
+            Cargo::Power if self.op.pos.distance(at) < 250.0 => {
+                self.view.drones_left = (self.view.drones_left + 1).min(3);
+                self.view.battery = 1.0;
+            }
+            _ => {}
         }
-        Cargo::Power if op.pos.distance(at) < 250.0 => {
-            view.drones_left = (view.drones_left + 1).min(3);
-            view.battery = 1.0;
-        }
-        _ => {}
     }
 }
 
 /// Home, or lost: back at the road head it counts and goes; knocked out, stuck for good or drowned, it is lost, and
 /// the wounded aboard with it.
-#[allow(clippy::too_many_arguments)]
 pub(super) fn home_or_lost(
     mut commands: Commands,
     time: Res<Time>,

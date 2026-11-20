@@ -106,23 +106,23 @@ pub(super) struct Hulls {
     rescue: Has<Rescue>,
 }
 
+/// The anti-tank mines a hull drives onto: the minefield, a scratch list of the mines near, and what one going off
+/// makes.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(super) struct TrackMines<'w, 's> {
+    field: ResMut<'w, Minefield>,
+    near: Local<'s, Vec<usize>>,
+    blast: MineBlast<'w, 's>,
+}
+
 pub(super) fn check_mines(
     mut commands: Commands,
     time: Res<Time>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    mut mf: ResMut<Minefield>,
-    mut fx: ResMut<FxQueue>,
-    mut fxr: ResMut<FxRng>,
-    mut paint: ResMut<PaintQueue>,
-    mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
-    mut sound: Sound,
-    mut blasts: MessageWriter<Blast>,
-    mut log: ResMut<crate::hits::HitLog>,
+    dress: Dress,
+    mut mines: TrackMines,
+    mut record: Record,
     mut rng: ResMut<UnitRng>,
     mut q: Query<Hulls, Without<Coasting>>,
-    mut near: Local<Vec<usize>>,
 ) {
     let now = time.elapsed_secs_f64();
     for HullsItem { e: _e, mut v, d, mut sus, tf, plow: has_plow, rescue } in &mut q {
@@ -134,9 +134,9 @@ pub(super) fn check_mines(
         let fwd3 = tf.rotation * Vec3::NEG_Z;
         let fwd = fwd3.xz().normalize_or_zero();
         let right = Vec2::new(-fwd.y, fwd.x);
-        mf.near_into(p, 6.0, &mut near);
-        for &i in near.iter() {
-            let m = mf.mines[i];
+        mines.field.near_into(p, 6.0, &mut mines.near);
+        for &i in mines.near.iter() {
+            let m = mines.field.mines[i];
             if m.ap {
                 continue;
             }
@@ -144,14 +144,14 @@ pub(super) fn check_mines(
             let (f, x) = (off.dot(fwd), off.dot(right));
             // The plow's teeth turn mines out of the ground ahead of the tracks; now and then one goes off.
             if plow && (-4.7..-3.6).contains(&-f) && x.abs() < 1.9 {
-                mf.mines[i].live = false;
+                mines.field.mines[i].live = false;
                 if let Some(ent) = m.entity {
                     commands.entity(ent).despawn();
                 }
                 // A stacked pair wrecks the plow or rollers outright (a 47th T-64 commander: rollers survive "up to
                 // four explosions", but stacked mines destroyed one after a single blast).
                 if rng.0.random_bool(if m.stacked { 0.45 } else { 0.12 }) {
-                    detonate(&mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
+                    mines.blast.detonate(m.pos);
                     plow = false;
                     commands.entity(_e).remove::<Plow>();
                     if m.stacked && rng.0.random_bool(0.5) {
@@ -159,25 +159,25 @@ pub(super) fn check_mines(
                         commands.entity(_e).insert(coasting);
                         v.crew_plan(&mut rng.0, Cause::Mine);
                         sus.pitch_v += rng.0.random_range(2.0..3.0);
-                        stats.mine_hits += 1;
-                        log.open(now, "a double mine", "", _e, &v, rescue, "under the plow: plow gone, stopped");
-                        radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
+                        record.stats.mine_hits += 1;
+                        record.log.open(now, "a double mine", "", Victim { target: _e, vehicle: &v, rescue }, "under the plow: plow gone, stopped");
+                        record.radio.say(now, "Double mine under the plow. Plow's gone, he's not moving. The lane stops here.");
                     } else if let Some(line) = &bav_core::data::data().words.plow_mine {
-                        radio.say(now, line.as_str());
+                        record.radio.say(now, line.as_str());
                     }
                 }
                 continue;
             }
             if f.abs() < 3.3 && (x.abs() - 1.4).abs() < 0.5 {
-                mf.mines[i].live = false;
+                mines.field.mines[i].live = false;
                 if let Some(ent) = m.entity {
                     commands.entity(ent).despawn();
                 }
-                detonate(&mut fx, &mut fxr.0, &mut paint, &mut sound, &mut blasts, m.pos);
-                stats.mine_hits += 1;
+                mines.blast.detonate(m.pos);
+                record.stats.mine_hits += 1;
                 // TM-62 under a track: the track and road wheels are gone. Often more.
                 let kill = rng.0.random_bool(v.kind.mine_kill(m.stacked));
-                log.open(now, if m.stacked { "a double mine" } else { "a mine" }, "", _e, &v, rescue, if kill { "under the track: destroyed" } else { "under the track: track off, stopped" });
+                record.log.open(now, if m.stacked { "a double mine" } else { "a mine" }, "", Victim { target: _e, vehicle: &v, rescue }, if kill { "under the track: destroyed" } else { "under the track: track off, stopped" });
                 // The track is off on that side: it lurches, yaws round the dead side and grinds to a stop within
                 // a length or two; the cut track lies out behind it, a road wheel beside it.
                 let coasting = v.immobilise(rng.0.random_range(2.0..3.5), x.signum() * -rng.0.random_range(0.35..0.8));
@@ -187,8 +187,8 @@ pub(super) fn check_mines(
                 sus.roll_v += x.signum() * rng.0.random_range(1.5..2.5);
                 let side = right * x.signum();
                 let yaw = d.yaw;
-                for (mesh, at, spin) in [(&models.track_strip, p - fwd * 4.5 + side * 1.4, 0.0), (&models.road_wheel, p + side * 2.4 - fwd * rng.0.random_range(0.5..2.5), rng.0.random_range(-0.4..0.4))] {
-                    commands.spawn((Mesh3d(mesh.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(ground_rotation(at, yaw + spin)), NotShadowCaster));
+                for (mesh, at, spin) in [(&dress.models.track_strip, p - fwd * 4.5 + side * 1.4, 0.0), (&dress.models.road_wheel, p + side * 2.4 - fwd * rng.0.random_range(0.5..2.5), rng.0.random_range(-0.4..0.4))] {
+                    commands.spawn((Mesh3d(mesh.clone()), MeshMaterial3d(dress.palette.vertex.clone()), Transform::from_translation(geo::ground(at)).with_rotation(ground_rotation(at, yaw + spin)), NotShadowCaster));
                 }
                 if kill {
                     if rng.0.random_bool(0.15) {
@@ -202,7 +202,7 @@ pub(super) fn check_mines(
                 }
                 let lines = &bav_core::data::data().words.mine_lines;
                 if rng.0.random_bool(0.6) && !lines.is_empty() {
-                    radio.say(now, lines[rng.0.random_range(0..lines.len())].as_str());
+                    record.radio.say(now, lines[rng.0.random_range(0..lines.len())].as_str());
                 }
                 break;
             }
@@ -210,10 +210,23 @@ pub(super) fn check_mines(
     }
 }
 
-fn detonate(fx: &mut FxQueue, rng: &mut SmallRng, paint: &mut PaintQueue, sound: &mut Sound, blasts: &mut MessageWriter<Blast>, at: Vec2) {
-    let p = geo::ground(at);
-    fx.explosion(p, 1.1, true);
-    paint.push(Paint::Crater { at, radius: 2.0, seed: rng.random() });
-    sound.at(p, Sfx::MineBlast, 1.0);
-    blasts.write(Blast { at: p, radius: 6.0, cause: Cause::Mine });
+/// What an anti-tank mine going off makes: the flash, the crater (seeded from the effects' stream), the sound and
+/// the blast.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(super) struct MineBlast<'w, 's> {
+    fx: ResMut<'w, FxQueue>,
+    fxr: ResMut<'w, FxRng>,
+    paint: ResMut<'w, PaintQueue>,
+    sound: Sound<'w, 's>,
+    blasts: MessageWriter<'w, Blast>,
+}
+
+impl MineBlast<'_, '_> {
+    fn detonate(&mut self, at: Vec2) {
+        let p = geo::ground(at);
+        self.fx.explosion(p, 1.1, true);
+        self.paint.push(Paint::Crater { at, radius: 2.0, seed: self.fxr.0.random() });
+        self.sound.at(p, Sfx::MineBlast, 1.0);
+        self.blasts.write(Blast { at: p, radius: 6.0, cause: Cause::Mine });
+    }
 }

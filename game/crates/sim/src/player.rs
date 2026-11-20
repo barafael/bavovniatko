@@ -14,6 +14,20 @@ pub struct MainCamera;
 #[derive(Message)]
 pub struct TriggerPull;
 
+/// The keyboard and the mouse buttons as the player holds them this frame.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Controls<'w> {
+    pub keys: Res<'w, ButtonInput<KeyCode>>,
+    pub buttons: Res<'w, ButtonInput<MouseButton>>,
+}
+
+/// What the pointer is over: the window, when there is one, and the camera that looks through it.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Pointer<'w, 's> {
+    pub window: Option<Single<'w, 's, &'static Window, With<bevy::window::PrimaryWindow>>>,
+    pub cam: Single<'w, 's, (&'static Camera, &'static GlobalTransform), With<MainCamera>>,
+}
+
 #[derive(Resource)]
 pub struct View {
     pub mode: Mode,

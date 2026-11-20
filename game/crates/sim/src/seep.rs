@@ -17,11 +17,10 @@
 use crate::diorama::diorama;
 use crate::fight::{Eye, Seeing};
 use crate::fire::{Mission, Post, ShellKind};
-use crate::fx::FxQueue;
 use crate::geo;
 use crate::player::{ObservationPost, Operator, View};
-use crate::sound::{Sfx, Sound};
-use crate::units::{Models, Palette, Radio, SState, Side, Soldier, Stats};
+use crate::sound::Sfx;
+use crate::units::{Dress, Radio, Report, SState, Side, Soldier, Stats};
 use bav_core::diorama::{Play, play};
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -259,24 +258,39 @@ fn round_posts(mut p: Vec2, posts: &[Vec2]) -> Vec2 {
     p
 }
 
+/// The seep, and its own random stream.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Seepage<'w> {
+    seep: ResMut<'w, Seep>,
+    rng: ResMut<'w, SeepRng>,
+}
+
+/// What decides where a group goes: the light, our drone crew's post, our posts, the burrows already taken, and where
+/// the groups on the way are going.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Lay<'w, 's> {
+    seeing: Option<Res<'w, Seeing>>,
+    op: Res<'w, Operator>,
+    posts: Query<'w, 's, &'static Post>,
+    burrows: Query<'w, 's, &'static Burrow>,
+    walking: Query<'w, 's, &'static Seeping>,
+}
+
 /// The flows send their groups as the rate owes them: out of the stretch of the edge, along the route's line, to a
 /// building near our drone crew (most) or near the route's objective.
-#[allow(clippy::too_many_arguments)]
 fn flow(
     mut commands: Commands,
     time: Res<Time>,
     script: Res<crate::director::Script>,
-    mut seep: ResMut<Seep>,
-    mut rng: ResMut<SeepRng>,
+    seepage: Seepage,
     mut stats: ResMut<Stats>,
-    seeing: Option<Res<Seeing>>,
-    op: Res<Operator>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    posts: Query<&Post>,
-    burrows: Query<&Burrow>,
-    walking: Query<&Seeping>,
+    dress: Dress,
+    lay: Lay,
 ) {
+    let Seepage { mut seep, mut rng } = seepage;
+    let Dress { models, palette } = dress;
+    let Lay { seeing, op, posts, burrows, walking } = lay;
+
     let dt = crate::sim_dt(&time);
     // Hours of the day's clock in this step.
     let hours = dt * diorama().compression() / 60.0;
@@ -329,7 +343,7 @@ fn flow(
         info!("seep: a group of {size} in on route {} at {:.0},{:.0} for {} at {:.0},{:.0}, {}", f.route, start.x, start.y, if crews { "the drone crew" } else { "the objective" }, goal.x, goal.y, crate::director::clock_text(script.t));
         for k in 0..size {
             let at = start + Vec2::new(k as f32 * 3.0, rng.random_range(-2.0..2.0));
-            let e = crate::units::spawn_soldier(&mut commands, &models, &palette, attacker, at, way[0], start, 0.0, None, rng);
+            let e = crate::units::spawn_soldier(&mut commands, &models, &palette, crate::units::NewSoldier { side: attacker, at, goal: way[0], home: start, sprint: 0.0, cover: None }, rng);
             commands.entity(e).insert((Seeping { way: way.clone(), next: 0, group: *groups }, Cloaked, Cover::Sneaking));
         }
     }
@@ -337,7 +351,6 @@ fn flow(
 
 /// On their way the men make for one point of it after another; at the building they go to ground in it, a burrow,
 /// hidden.
-#[allow(clippy::type_complexity)]
 fn walk(mut commands: Commands, time: Res<Time>, mut rng: ResMut<SeepRng>, mut seep: ResMut<Seep>, mut men: Query<(Entity, &mut Soldier, &Transform, &mut Seeping)>, burrows: Query<(Entity, &Burrow, Has<Found>)>) {
     let now = time.elapsed_secs_f64();
     let mut made: Vec<(u32, Entity)> = Vec::new();
@@ -382,22 +395,25 @@ const BY_OBSERVERS: (f32, f32) = (800.0, 0.2);
 const BY_DRONE: (f32, f32) = (900.0, 0.12);
 const BY_THERMAL: (f32, f32) = (900.0, 0.8);
 
+/// Who of ours may find a burrow: our posts, the observers, the drone, and the light they see by.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Lookouts<'w, 's> {
+    seeing: Option<Res<'w, Seeing>>,
+    view: Res<'w, View>,
+    observers: Res<'w, ObservationPost>,
+    posts: Query<'w, 's, &'static Post>,
+}
+
 /// Once a second, each burrow nobody has found may be: by whichever of ours is looking, the nearer the likelier.
-#[allow(clippy::too_many_arguments)]
 fn find(
-    mut commands: Commands,
     time: Res<Time>,
     mut tick: Local<f32>,
-    mut rng: ResMut<SeepRng>,
-    mut seep: ResMut<Seep>,
-    mut radio: ResMut<Radio>,
-    seeing: Option<Res<Seeing>>,
-    view: Res<View>,
-    observers: Res<ObservationPost>,
-    posts: Query<&Post>,
+    mut seepage: Seepage,
+    mut finding: Finding,
+    lookouts: Lookouts,
     burrows: Query<(Entity, &Burrow), Without<Found>>,
-    men: Query<(Entity, &InBurrow)>,
 ) {
+    let Lookouts { seeing, view, observers, posts } = lookouts;
     *tick -= crate::sim_dt(&time);
     if *tick > 0.0 {
         return;
@@ -426,83 +442,94 @@ fn find(
             }
         }
         for (how, per_min) in by {
-            if per_min > 0.0 && rng.0.random_bool((per_min / 60.0).min(1.0) as f64) {
-                reveal(&mut commands, &mut seep, &mut radio, b, p, burrow.group, how, &men, now);
+            if per_min > 0.0 && seepage.rng.0.random_bool((per_min / 60.0).min(1.0) as f64) {
+                finding.reveal(&mut seepage.seep, b, p, burrow.group, how, now);
                 break;
             }
         }
     }
 }
 
-/// We have found a burrow: the net says where, and its men are no longer hidden from our posts.
-#[allow(clippy::too_many_arguments)]
-fn reveal(commands: &mut Commands, seep: &mut Seep, radio: &mut Radio, b: Entity, p: Vec2, group: u32, how: Finder, men: &Query<(Entity, &InBurrow)>, now: f64) {
-    commands.entity(b).insert(Found(how));
-    for (e, i) in men {
-        if i.0 == b {
-            commands.entity(e).insert(Cover::Walls);
+/// What finding a burrow takes: the commands to mark it and its men, the radio, and the men in the burrows.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Finding<'w, 's> {
+    commands: Commands<'w, 's>,
+    radio: ResMut<'w, Radio>,
+    men: Query<'w, 's, (Entity, &'static InBurrow)>,
+}
+
+impl Finding<'_, '_> {
+    /// We have found a burrow: the net says where, and its men are no longer hidden from our posts.
+    fn reveal(&mut self, seep: &mut Seep, b: Entity, p: Vec2, group: u32, how: Finder, now: f64) {
+        let Self { commands, radio, men } = self;
+        commands.entity(b).insert(Found(how));
+        for (e, i) in men.iter() {
+            if i.0 == b {
+                commands.entity(e).insert(Cover::Walls);
+            }
         }
+        once(&mut seep.found, group);
+        let (x, z) = (p.x, p.y);
+        let (uk, en) = match how {
+            Finder::Post => (format!("Рух у будинку на {x:.0}, {z:.0}. Двоє-троє, засіли."), format!("Movement in a house at {x:.0}, {z:.0}. Two or three, dug in.")),
+            Finder::Observers => (format!("Я {{op}}. Бачу їх у будинку на {x:.0}, {z:.0}."), format!("This is {{op}}. I see them in a house at {x:.0}, {z:.0}.")),
+            Finder::Drone => (format!("Є рух у вікні на {x:.0}, {z:.0}. Там хтось є."), format!("Movement at a window at {x:.0}, {z:.0}. Someone's in there.")),
+            Finder::Thermal => (format!("Тепло в руїні на {x:.0}, {z:.0}. Сидять, під накидками."), format!("Heat in a ruin at {x:.0}, {z:.0}. Sitting under cloaks.")),
+            Finder::Crew => (format!("Б'ють з будинку на {x:.0}, {z:.0}!"), format!("Fire from a house at {x:.0}, {z:.0}!")),
+            Finder::Intercept => (format!("Перехоплення: коригувальник біля {x:.0}, {z:.0}."), format!("Intercept: their spotter is near {x:.0}, {z:.0}.")),
+        };
+        radio.say2(now, uk, en);
+        info!("seep: a burrow at {x:.0},{z:.0} found by {how:?}, at {now:.0} s");
     }
-    once(&mut seep.found, group);
-    let (x, z) = (p.x, p.y);
-    let (uk, en) = match how {
-        Finder::Post => (format!("Рух у будинку на {x:.0}, {z:.0}. Двоє-троє, засіли."), format!("Movement in a house at {x:.0}, {z:.0}. Two or three, dug in.")),
-        Finder::Observers => (format!("Я {{op}}. Бачу їх у будинку на {x:.0}, {z:.0}."), format!("This is {{op}}. I see them in a house at {x:.0}, {z:.0}.")),
-        Finder::Drone => (format!("Є рух у вікні на {x:.0}, {z:.0}. Там хтось є."), format!("Movement at a window at {x:.0}, {z:.0}. Someone's in there.")),
-        Finder::Thermal => (format!("Тепло в руїні на {x:.0}, {z:.0}. Сидять, під накидками."), format!("Heat in a ruin at {x:.0}, {z:.0}. Sitting under cloaks.")),
-        Finder::Crew => (format!("Б'ють з будинку на {x:.0}, {z:.0}!"), format!("Fire from a house at {x:.0}, {z:.0}!")),
-        Finder::Intercept => (format!("Перехоплення: коригувальник біля {x:.0}, {z:.0}."), format!("Intercept: their spotter is near {x:.0}, {z:.0}.")),
-    };
-    radio.say2(now, uk, en);
-    info!("seep: a burrow at {x:.0},{z:.0} found by {how:?}, at {now:.0} s");
 }
 
 /// A drone crew this close to a burrow is under its fire (m): the crew cannot put a drone up without being seen.
 const CLOSE: f32 = 280.0;
 
+/// Our drone crew: where it is set up, and the player's view through its drone.
+#[derive(bevy::ecs::system::SystemParam)]
+struct DroneCrew<'w> {
+    op: ResMut<'w, Operator>,
+    view: ResMut<'w, View>,
+}
+
 /// A burrow with rounds left fires on our drone crew when the crew is within reach and set up, a burst every minute or
 /// so: it may hit a man, and then the crew has to move (`drones::move_team`); the crew sees where it came from.
-#[allow(clippy::too_many_arguments)]
 fn close_in(
-    mut commands: Commands,
     time: Res<Time>,
-    mut rng: ResMut<SeepRng>,
-    mut seep: ResMut<Seep>,
+    mut seepage: Seepage,
+    mut finding: Finding,
     mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
-    mut op: ResMut<Operator>,
-    mut view: ResMut<View>,
+    mut effects: crate::fx::Effects,
+    mut crew: DroneCrew,
     mut burrows: Query<(Entity, &mut Burrow, Has<Found>)>,
-    men: Query<(Entity, &InBurrow)>,
 ) {
     let now = time.elapsed_secs_f64();
-    let rng = &mut rng.0;
+    let rng = &mut seepage.rng.0;
     let attacker = diorama().attacker();
     for (b, mut burrow, found) in &mut burrows {
-        let d = burrow.at.distance(op.pos);
-        if burrow.rounds == 0 || now < burrow.next_shot || d > CLOSE || now < op.moving_until || !men.iter().any(|(_, i)| i.0 == b) {
+        let d = burrow.at.distance(crew.op.pos);
+        if burrow.rounds == 0 || now < burrow.next_shot || d > CLOSE || now < crew.op.moving_until || !finding.men.iter().any(|(_, i)| i.0 == b) {
             continue;
         }
         burrow.rounds -= 1;
         burrow.next_shot = now + rng.random_range(40.0..80.0);
         let from = geo::ground(burrow.at) + Vec3::Y * 1.2;
         for _ in 0..2 {
-            fx.tracer(from, geo::ground(op.pos + Vec2::new(rng.random_range(-6.0..6.0), rng.random_range(-6.0..6.0))) + Vec3::Y, 700.0, attacker);
+            effects.fx.tracer(from, geo::ground(crew.op.pos + Vec2::new(rng.random_range(-6.0..6.0), rng.random_range(-6.0..6.0))) + Vec3::Y, 700.0, attacker);
         }
-        sound.at(from, Sfx::MachineGun, 0.6);
+        effects.sound.at(from, Sfx::MachineGun, 0.6);
         if rng.random_bool((0.15 + 0.35 * (1.0 - d / CLOSE)) as f64) {
             stats.defender_losses += 1;
-            seep.crews_hit += 1;
-            info!("seep: the burrow at {:.0},{:.0} hits the drone crew at {:.0},{:.0}, at {now:.0} s", burrow.at.x, burrow.at.y, op.pos.x, op.pos.y);
-            radio.say2(now, "По нас стріляють впритул! Один трьохсотий. Згортаємось, міняємо точку.", "They're shooting at us from close in! One wounded. Packing up, moving.");
-            crate::drones::move_team(&mut op, &mut view, &mut radio, now, true);
+            seepage.seep.crews_hit += 1;
+            info!("seep: the burrow at {:.0},{:.0} hits the drone crew at {:.0},{:.0}, at {now:.0} s", burrow.at.x, burrow.at.y, crew.op.pos.x, crew.op.pos.y);
+            finding.radio.say2(now, "По нас стріляють впритул! Один трьохсотий. Згортаємось, міняємо точку.", "They're shooting at us from close in! One wounded. Packing up, moving.");
+            crate::drones::move_team(&mut crew.op, &mut crew.view, &mut finding.radio, now, true);
         } else {
-            radio.say2(now, "Обстріл по нашій точці зі стрілецької!", "Small arms on our position!");
+            finding.radio.say2(now, "Обстріл по нашій точці зі стрілецької!", "Small arms on our position!");
         }
         if !found && rng.random_bool(0.5) {
-            reveal(&mut commands, &mut seep, &mut radio, b, burrow.at, burrow.group, Finder::Crew, &men, now);
+            finding.reveal(&mut seepage.seep, b, burrow.at, burrow.group, Finder::Crew, now);
         }
     }
 }
@@ -511,49 +538,51 @@ fn close_in(
 const SPOTS_POST: f32 = 600.0;
 const SPOTS_CREW: f32 = 400.0;
 
+/// What a burrow's spotter may see of ours: our drone crew, our posts, and the light he sees them by.
+#[derive(bevy::ecs::system::SystemParam)]
+struct SpotterView<'w, 's> {
+    seeing: Option<Res<'w, Seeing>>,
+    op: Res<'w, Operator>,
+    posts: Query<'w, 's, (Entity, &'static Post)>,
+}
+
 /// Every few minutes a burrow's second radio brings their guns onto what it sees: our drone crew if it is near, else
 /// the nearest post of ours in sight, corrected (a tighter sheaf than their guns fire blind). In Command what it sees
 /// goes into the staff's picture. A radio heard is a radio found, now and then.
-#[allow(clippy::too_many_arguments)]
 fn calls(
-    mut commands: Commands,
     time: Res<Time>,
-    mut rng: ResMut<SeepRng>,
-    mut seep: ResMut<Seep>,
-    mut radio: ResMut<Radio>,
-    seeing: Option<Res<Seeing>>,
-    op: Res<Operator>,
+    mut seepage: Seepage,
+    mut finding: Finding,
+    spotter: SpotterView,
     mut spotted: Option<ResMut<crate::staff::Spotted>>,
     mut burrows: Query<(Entity, &mut Burrow, Has<Found>)>,
-    posts: Query<(Entity, &Post)>,
-    men: Query<(Entity, &InBurrow)>,
 ) {
     let now = time.elapsed_secs_f64();
-    let rng = &mut rng.0;
+    let rng = &mut seepage.rng.0;
     let attacker = diorama().attacker();
-    let reach = |base: f32, p: Vec2| seeing.as_deref().map_or(base, |s| s.reach(base, p));
+    let reach = |base: f32, p: Vec2| spotter.seeing.as_deref().map_or(base, |s| s.reach(base, p));
     for (b, mut burrow, found) in &mut burrows {
-        if now < burrow.next_call || !men.iter().any(|(_, i)| i.0 == b) {
+        if now < burrow.next_call || !finding.men.iter().any(|(_, i)| i.0 == b) {
             continue;
         }
         burrow.next_call = now + rng.random_range(150.0..300.0);
         let p = burrow.at;
-        let crew = (op.pos.distance(p) < reach(SPOTS_CREW, op.pos)).then_some((None, op.pos));
-        let post = posts
+        let crew = (spotter.op.pos.distance(p) < reach(SPOTS_CREW, spotter.op.pos)).then_some((None, spotter.op.pos));
+        let post = spotter.posts
             .iter()
             .filter(|(_, q)| q.side != attacker && q.strength > 0 && q.pos.distance(p) < reach(SPOTS_POST, q.pos) && geo::line_of_sight(p, q.pos))
             .min_by(|a, b| a.1.pos.distance(p).total_cmp(&b.1.pos.distance(p)))
             .map(|(e, q)| (Some(e), q.pos));
         let Some((post_e, target)) = crew.or(post) else { continue };
-        seep.calls += 1;
+        seepage.seep.calls += 1;
         let aim = target + Vec2::new(rng.random_range(-15.0..15.0), rng.random_range(-15.0..15.0));
-        commands.spawn(Mission { target: aim, kind: ShellKind::Ru152, rounds: 3, sigma: 18.0, interval: 2.5, next: now + 20.0, flight: 18.0, by: Side::Ru });
+        finding.commands.spawn(Mission { target: aim, kind: ShellKind::Ru152, rounds: 3, sigma: 18.0, interval: 2.5, next: now + 20.0, flight: 18.0, by: Side::Ru });
         info!("seep: the burrow at {:.0},{:.0} calls their guns onto {:.0},{:.0}, at {now:.0} s", p.x, p.y, target.x, target.y);
         if let (Some(s), Some(e)) = (spotted.as_deref_mut(), post_e) {
             s.0.insert(e, crate::staff::Sighting { at: aim, seen: now, how: crate::staff::How::Seen, what: crate::staff::What::Post });
         }
         if !found && rng.random_bool(0.12) {
-            reveal(&mut commands, &mut seep, &mut radio, b, p, burrow.group, Finder::Intercept, &men, now);
+            finding.reveal(&mut seepage.seep, b, p, burrow.group, Finder::Intercept, now);
         }
     }
 }
@@ -573,26 +602,29 @@ struct SearchRun {
 const TEAM_PACE: f32 = 2.5;
 const TEAM_READY: f32 = 40.0;
 
+/// The burrows we have found, and the men in them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct FoundBurrows<'w, 's> {
+    burrows: Query<'w, 's, (Entity, &'static Burrow), With<Found>>,
+    men: Query<'w, 's, (Entity, &'static Soldier, &'static Transform, &'static InBurrow)>,
+}
+
 /// Command: a free search-and-strike team goes to each burrow found, and clears it when it gets there: most of the
 /// men in it killed, now and then one of ours hit; then it walks back.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn search(
     mut commands: Commands,
     time: Res<Time>,
     mut runs: ResMut<Searches>,
     mut rng: ResMut<SeepRng>,
-    mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    burrows: Query<(Entity, &Burrow), With<Found>>,
-    men: Query<(Entity, &Soldier, &Transform, &InBurrow)>,
+    mut report: Report,
+    dress: Dress,
+    found: FoundBurrows,
 ) {
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
     let teams = crate::allot::settled().map_or(0, |a| a.search) as usize;
     let home = geo::layout().home;
-    for (b, burrow) in &burrows {
+    for (b, burrow) in &found.burrows {
         if runs.0.len() >= teams {
             break;
         }
@@ -601,23 +633,23 @@ fn search(
         }
         let arrive = now + (TEAM_READY + home.distance(burrow.at) / TEAM_PACE) as f64;
         runs.0.push(SearchRun { burrow: b, at: burrow.at, arrive, back: None });
-        radio.say2(now, format!("Пошуково-ударна група виходить на {:.0}, {:.0}.", burrow.at.x, burrow.at.y), format!("The search team is going for {:.0}, {:.0}.", burrow.at.x, burrow.at.y));
+        report.radio.say2(now, format!("Пошуково-ударна група виходить на {:.0}, {:.0}.", burrow.at.x, burrow.at.y), format!("The search team is going for {:.0}, {:.0}.", burrow.at.x, burrow.at.y));
     }
     for run in &mut runs.0 {
         if run.back.is_some() || now < run.arrive {
             continue;
         }
         let (mut killed, mut hit) = (0, 0);
-        for (e, s, tf, i) in &men {
+        for (e, s, tf, i) in &found.men {
             if i.0 != run.burrow || s.state == SState::Wounded {
                 continue;
             }
             if rng.random_bool(0.8) {
-                stats.died("search teams", 1);
-                crate::units::kill_soldier(&mut commands, &models, &palette, &mut stats, e, s, tf, None, rng);
+                report.stats.died("search teams", 1);
+                crate::units::kill_soldier(&mut commands, &dress.models, &dress.palette, &mut report.stats, (e, s, tf), None, rng);
                 killed += 1;
             } else if rng.random_bool(0.3) {
-                stats.defender_losses += 1;
+                report.stats.defender_losses += 1;
                 hit += 1;
             }
         }
@@ -628,7 +660,7 @@ fn search(
             (k, 0) => (format!("Зачищено. Двохсотих у них: {k}. Повертаємось."), format!("Cleared. {k} of them dead. Coming back.")),
             (k, h) => (format!("Зачищено, {k} у них. У нас {h} трьохсотих."), format!("Cleared, {k} of them. {h} of ours wounded.")),
         };
-        radio.say2(now, uk, en);
+        report.radio.say2(now, uk, en);
     }
     runs.0.retain(|r| r.back.is_none_or(|t| now < t));
 }

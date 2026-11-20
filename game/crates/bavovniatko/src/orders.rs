@@ -7,7 +7,7 @@ use bav_core::{
     diorama::{Play, play},
     field::{Ground, field},
 };
-use bav_sim::orders::{Doing, Net, Ours, OrdersView, callsign, position_near, takes_orders, units};
+use bav_sim::orders::{Doing, Net, Ours, OrdersView, OurUnits, callsign, position_near, takes_orders};
 use bav_sim::player::{MainCamera, cursor_ground};
 use bav_sim::units::RouteBook;
 use bevy::{prelude::*, text::FontSource, window::PrimaryWindow};
@@ -61,23 +61,21 @@ fn vehicles(kinds: &[bav_sim::units::VKind]) -> String {
     counted.iter().map(|(k, n)| if *n > 1 { format!("{} ×{n}", k.name()) } else { k.name().to_string() }).collect::<Vec<_>>().join(", ")
 }
 
+/// The callsigns over our units on the picture: the camera they are placed through, the labels, and what makes
+/// more of them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Callsigns<'w, 's> {
+    commands: Commands<'w, 's>,
+    assets: Res<'w, AssetServer>,
+    cam: Single<'w, 's, (&'static Camera, &'static GlobalTransform), With<MainCamera>>,
+    labels: Labels<'w, 's>,
+}
+
 /// The units, what each is doing (or the order on its way to it), and the keys; closed, only the key to open it.
-#[allow(clippy::too_many_arguments)]
-fn panel(
-    mut commands: Commands,
-    assets: Res<AssetServer>,
-    ui: Res<OrdersView>,
-    net: Res<Net>,
-    supply: Res<bav_sim::supply::Supply>,
-    view: Res<View>,
-    ours: Ours,
-    book: Res<RouteBook>,
-    cam: Single<(&Camera, &GlobalTransform), With<MainCamera>>,
-    mut text: Single<&mut Text, With<Panel>>,
-    mut labels: Labels,
-) {
+fn panel(ui: Res<OrdersView>, net: Res<Net>, supply: Res<bav_sim::supply::Supply>, view: Res<View>, ours: OurUnits, mut text: Single<&mut Text, With<Panel>>, callsigns: Callsigns) {
+    let Callsigns { mut commands, assets, cam, mut labels } = callsigns;
     let open = ui.open && view.mode == Mode::Drone;
-    let units = if open { units(ours.iter(), &book) } else { Vec::new() };
+    let units = if open { ours.units() } else { Vec::new() };
     let supply = format!("Supply (підвіз): {:.0}", supply.have.floor());
     let s = if !open {
         format!("[O] Orders (Накази)   [T] the map table (карта)\n{supply}")

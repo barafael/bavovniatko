@@ -12,13 +12,13 @@
 //! times instead, for the headless runs: `"200:100:hold,260:100:advance,300:100:position@40,500:100:back"`.
 
 use crate::geo;
-use crate::player::{MainCamera, cursor_ground};
+use crate::player::{Controls, Pointer, cursor_ground};
 use crate::units::{self, Coasting, Driver, Gear, Radio, Rescue, RouteBook, Side, VKind, VState, Vehicle};
 use bav_core::{
     diorama::{Play, play},
     field::{Mover, field, routes},
 };
-use bevy::{prelude::*, window::PrimaryWindow};
+use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use std::collections::BTreeMap;
 
@@ -83,6 +83,15 @@ pub struct OrderRequest {
 /// stays on it), until the next order.
 #[derive(Component)]
 pub struct Holding;
+
+/// The player's hand on the field outside the orders: the keys and buttons, the pointer, and the field view of the
+/// orders, which takes the clicks while it is open.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct FieldInput<'w, 's> {
+    pub controls: Controls<'w>,
+    pub pointer: Pointer<'w, 's>,
+    pub orders: Option<Res<'w, OrdersView>>,
+}
 
 /// The field view of the orders: open or not, and which unit is picked.
 #[derive(Resource, Default)]
@@ -179,6 +188,19 @@ impl Doing {
 /// Our vehicles that take orders: under way, and not a vehicle sent for the wounded (it answers to the call).
 pub type Ours<'w, 's> = Query<'w, 's, (Entity, &'static Vehicle, &'static Driver, &'static Transform, Has<Holding>), (Without<Coasting>, Without<Rescue>)>;
 
+/// Our units that take orders, from our vehicles on the field and the routes they are on.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct OurUnits<'w, 's> {
+    pub ours: Ours<'w, 's>,
+    pub book: Res<'w, RouteBook>,
+}
+
+impl OurUnits<'_, '_> {
+    pub fn units(&self) -> Vec<Unit> {
+        units(self.ours.iter(), &self.book)
+    }
+}
+
 /// The same, to work them over.
 type OursMut<'w, 's> = Query<'w, 's, (Entity, &'static mut Vehicle, &'static mut Driver, &'static Transform, Has<Holding>), (Without<Coasting>, Without<Rescue>)>;
 
@@ -227,25 +249,23 @@ pub fn units<'a>(vehicles: impl Iterator<Item = (Entity, &'a Vehicle, &'a Driver
 
 /// O opens and closes the field view of the orders; in it a click picks one of ours or sends the picked one to a
 /// position, and G / K / B order it on, to hold, or back.
-#[allow(clippy::too_many_arguments)]
 fn orders_input(
-    keys: Res<ButtonInput<KeyCode>>,
-    buttons: Res<ButtonInput<MouseButton>>,
-    window: Option<Single<&Window, With<PrimaryWindow>>>,
-    cam: Single<(&Camera, &GlobalTransform), With<MainCamera>>,
+    controls: Controls,
+    pointer: Pointer,
     view: Res<crate::player::View>,
     mut ui: ResMut<OrdersView>,
-    ours: Ours,
-    book: Res<RouteBook>,
+    our: OurUnits,
     mut requests: MessageWriter<OrderRequest>,
 ) {
+    let (Controls { keys, buttons }, Pointer { window, cam }) = (controls, pointer);
+
     if keys.just_pressed(KeyCode::KeyO) {
         ui.open = !ui.open;
     }
     if !ui.open || ui.on_table || view.mode != bav_core::vocab::Mode::Drone {
         return;
     }
-    let units = units(ours.iter(), &book);
+    let units = our.units();
     if ui.selected.is_some_and(|w| !units.iter().any(|u| u.wave == w)) {
         ui.selected = None;
     }
@@ -262,7 +282,7 @@ fn orders_input(
     let Some(hit) = window.and_then(|w| cursor_ground(&w, cam.0, cam.1)) else { return };
     let at = hit.xz();
     // One of ours under the cursor: pick it.
-    let near = ours.iter().filter(|(e, ..)| units.iter().any(|u| u.vehicles.contains(e))).map(|(_, v, _, tf, _)| (v.wave, tf.translation.xz().distance(at))).filter(|(_, d)| *d < 40.0).min_by(|a, b| a.1.total_cmp(&b.1));
+    let near = our.ours.iter().filter(|(e, ..)| units.iter().any(|u| u.vehicles.contains(e))).map(|(_, v, _, tf, _)| (v.wave, tf.translation.xz().distance(at))).filter(|(_, d)| *d < 40.0).min_by(|a, b| a.1.total_cmp(&b.1));
     if let Some((wave, _)) = near {
         ui.selected = Some(wave);
         return;
@@ -318,22 +338,27 @@ fn scheduled_orders(script: Res<crate::director::Script>, mut requests: MessageW
     }
 }
 
+/// The net the orders go out on: the orders on their way, and the stream that decides how long they take and whether
+/// they get through.
+#[derive(bevy::ecs::system::SystemParam)]
+struct OrdersNet<'w> {
+    orders: ResMut<'w, Net>,
+    rng: ResMut<'w, OrderRng>,
+}
+
 /// The player says the order on the net; it reaches the unit after the operator has passed it on and the commander
 /// has answered: four to eight seconds, and up to half a minute more of repeats through jamming. Where the jamming is
 /// thick it may not get through at all.
-#[allow(clippy::too_many_arguments)]
 fn put_on_net(
     time: Res<Time>,
     mut requests: MessageReader<OrderRequest>,
-    mut net: ResMut<Net>,
-    mut rng: ResMut<OrderRng>,
+    mut net: OrdersNet,
     mut radio: ResMut<Radio>,
     ew: Res<crate::ew::Ew>,
-    ours: Ours,
-    book: Res<RouteBook>,
+    our: OurUnits,
 ) {
     let now = time.elapsed_secs_f64();
-    let units = units(ours.iter(), &book);
+    let units = our.units();
     for r in requests.read() {
         let Some(unit) = units.iter().find(|u| u.wave == r.wave) else {
             warn!("order {:?} for wave {}: no such unit of ours", r.order, r.wave);
@@ -353,30 +378,28 @@ fn put_on_net(
         };
         radio.say2(now, format!("{}, я {{player}}. {}.", cs.1, what.0), format!("{}, this is {{player}}. {}.", cs.0, what.1));
         let jam = ew.radio_jam_at(geo::ground(unit.centre));
-        let rng = &mut rng.0;
+        let rng = &mut net.rng.0;
         let delay = rng.random_range(4.0..8.0) + jam as f64 * rng.random_range(10.0..25.0);
         let lost = rng.random_bool((((jam - 0.45) / 0.55).clamp(0.0, 1.0) * 0.85) as f64);
         info!("order {:?} to {} (wave {}, {} vehicles at {:.0},{:.0}): jamming {jam:.2}, {} in {delay:.1} s, at {now:.0} s", r.order, cs.0, r.wave, unit.vehicles.len(), unit.centre.x, unit.centre.y, if lost { "lost" } else { "through" });
         // A newer order to a unit replaces one still on its way.
-        net.pending.retain(|p| p.wave != r.wave);
-        net.pending.push(Pending { at: now + delay, wave: r.wave, order: r.order, lost });
+        net.orders.pending.retain(|p| p.wave != r.wave);
+        net.orders.pending.push(Pending { at: now + delay, wave: r.wave, order: r.order, lost });
     }
 }
 
 /// An order reaches its unit, and the unit answers and does it; one lost in the noise is met with silence.
-#[allow(clippy::too_many_arguments)]
 fn deliver(
     mut commands: Commands,
     time: Res<Time>,
-    mut net: ResMut<Net>,
+    mut net: OrdersNet,
     mut radio: ResMut<Radio>,
     mut book: ResMut<RouteBook>,
-    mut rng: ResMut<OrderRng>,
     mut vehicles: OursMut,
 ) {
     let now = time.elapsed_secs_f64();
-    let (due, waiting): (Vec<_>, Vec<_>) = std::mem::take(&mut net.pending).into_iter().partition(|p| p.at <= now);
-    net.pending = waiting;
+    let (due, waiting): (Vec<_>, Vec<_>) = std::mem::take(&mut net.orders.pending).into_iter().partition(|p| p.at <= now);
+    net.orders.pending = waiting;
     if due.is_empty() {
         return;
     }
@@ -415,7 +438,7 @@ fn deliver(
                     if let Ok((_, mut v, mut d, ..)) = vehicles.get_mut(e)
                         && v.state != VState::Withdrawing
                     {
-                        units::start_withdrawal(&mut v, &mut d, &mut rng.0);
+                        units::start_withdrawal(&mut v, &mut d, &mut net.rng.0);
                     }
                 }
                 Ok(())
@@ -426,7 +449,7 @@ fn deliver(
             Ok(()) => {
                 let (uk, en) = p.order.answer();
                 radio.say2(now, format!("{{player}}, я {}. {uk}.", cs.1), format!("{{player}}, this is {}. {en}.", cs.0));
-                net.standing.insert(p.wave, p.order);
+                net.orders.standing.insert(p.wave, p.order);
                 info!("order {:?} to {} carried out, at {now:.0} s", p.order, cs.0);
             }
             Err(e) => {

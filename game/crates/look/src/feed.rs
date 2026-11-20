@@ -162,18 +162,19 @@ fn setup(
     commands.insert_resource(FeedImage(feed));
 }
 
+/// What the picture's size is held in: the feed's image, the screen's quad, and the main camera's render target.
+#[derive(bevy::ecs::system::SystemParam)]
+struct FeedSize<'w, 's> {
+    feed: Option<Res<'w, FeedImage>>,
+    images: ResMut<'w, Assets<Image>>,
+    meshes: ResMut<'w, Assets<Mesh>>,
+    screen: Option<Single<'w, 's, &'static Mesh2d, With<Screen>>>,
+    cam: Query<'w, 's, &'static mut RenderTarget, With<MainCamera>>,
+}
+
 /// The window changed size, or the player the picture's: the picture and the quad follow.
-#[allow(clippy::too_many_arguments)]
-fn resize(
-    mut resized: MessageReader<WindowResized>,
-    look: Res<crate::LookSettings>,
-    window: Option<Single<&Window, With<PrimaryWindow>>>,
-    feed: Option<Res<FeedImage>>,
-    mut images: ResMut<Assets<Image>>,
-    mut meshes: ResMut<Assets<Mesh>>,
-    screen: Option<Single<&Mesh2d, With<Screen>>>,
-    mut cam: Query<&mut RenderTarget, With<MainCamera>>,
-) {
+fn resize(mut resized: MessageReader<WindowResized>, look: Res<crate::LookSettings>, window: Option<Single<&Window, With<PrimaryWindow>>>, size: FeedSize) {
+    let FeedSize { feed, mut images, mut meshes, screen, mut cam } = size;
     if resized.read().last().is_none() && !look.is_changed() {
         return;
     }
@@ -192,25 +193,48 @@ fn resize(
     }
 }
 
+/// The screen's quad, whose material carries what the shader is told.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct FeedPicture<'w, 's> {
+    screen: Option<Single<'w, 's, &'static MeshMaterial2d<FeedMaterial>, With<Screen>>>,
+    materials: ResMut<'w, Assets<FeedMaterial>>,
+}
+
+/// What the feed is showing: the player's view, the FPV, the ATGM teams (for the sight), and the robots, whose
+/// own links the picture follows.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Watching<'w, 's> {
+    view: Res<'w, View>,
+    fpv: Res<'w, bav_sim::player::Fpv>,
+    teams: Query<'w, 's, &'static crate::fire::AtgmTeam>,
+    robots: (Query<'w, 's, &'static bav_sim::robots::Robot>, Query<'w, 's, &'static bav_sim::robots::Vampire>),
+}
+
+/// The drone's link as the feed has it: when it next rolls for a freeze (from the effects' stream), and what the
+/// operator hears of it.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Uplink<'w, 's> {
+    link: ResMut<'w, Link>,
+    levels: ResMut<'w, crate::audio::AmbienceLevels>,
+    sound: crate::audio::Sound<'w, 's>,
+    fxa: ResMut<'w, crate::fx::FxAssets>,
+}
+
 /// What the shader is told this frame, and whether the picture moves at all. Under jamming the link climbs a
 /// ladder: soft and smeary, then blocks and a halved frame rate, then freezes of a fraction of a second to two
 /// seconds that catch up with a jump; past the jam line it is gone.
 pub fn update_feed(
     time: Res<Time>,
-    view: Res<View>,
-    fpv: Res<bav_sim::player::Fpv>,
     shake: Res<Shake>,
-    mut link: ResMut<Link>,
-    mut levels: ResMut<crate::audio::AmbienceLevels>,
-    mut sound: crate::audio::Sound,
-    mut fxa: ResMut<crate::fx::FxAssets>,
-    mut cam: Single<&mut Camera, With<MainCamera>>,
-    screen: Option<Single<&MeshMaterial2d<FeedMaterial>, With<Screen>>>,
-    mut materials: ResMut<Assets<FeedMaterial>>,
-    teams: Query<&crate::fire::AtgmTeam>,
     look: Res<crate::LookSettings>,
-    robots: (Query<&bav_sim::robots::Robot>, Query<&bav_sim::robots::Vampire>),
+    mut cam: Single<&mut Camera, With<MainCamera>>,
+    picture: FeedPicture,
+    watching: Watching,
+    uplink: Uplink,
 ) {
+    let FeedPicture { screen, mut materials } = picture;
+    let Watching { view, fpv, teams, robots } = watching;
+    let Uplink { mut link, mut levels, mut sound, mut fxa } = uplink;
     let Some(screen) = screen else { return };
     let Some(mut m) = materials.get_mut(&screen.0) else { return };
     let now = time.elapsed_secs_f64();

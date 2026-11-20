@@ -4,7 +4,7 @@
 //! January afternoon under cloud and snow.
 
 use crate::meshes::MeshBuilder;
-use crate::world::Skirt;
+use crate::world::Daylight;
 use bav_core::geo::{self, smoothstep};
 use bevy::{camera::Exposure, pbr::DistanceFog, prelude::*};
 
@@ -12,7 +12,7 @@ use bevy::{camera::Exposure, pbr::DistanceFog, prelude::*};
 pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut images: ResMut<Assets<Image>>, mut materials: ResMut<Assets<StandardMaterial>>) {
     let mut roofs = MeshBuilder::new();
     let snow = !bav_core::diorama::diorama().summer();
-    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, snow, &mut crate::hostomel::hangar, None);
+    crate::buildings::raise(&mut commands, &mut meshes, &mut images, &mut materials, &mut roofs, crate::buildings::Town { snow, hangar: &mut crate::hostomel::hangar, shelled: None });
     // The observers: on the heap's first terrace, where the 110th saw every Russian move from the heights.
     let ((x, z), h) = bav_core::data::data().op.expect("Avdiivka's parts place the observers");
     let at = Vec2::new(x, z);
@@ -58,19 +58,11 @@ fn plant(m: &mut MeshBuilder) {
 /// morning with hard shadows (parts I and II; the second day's overcast is the sky switch), or January's flat
 /// grey over snow (part III). The sun's own direction is floored at 12 degrees so the steppe does not shadow
 /// itself black at dawn; its true elevation sets the brightness.
-#[allow(clippy::too_many_arguments)]
 pub fn daylight(
-    script: Res<bav_sim::director::Script>,
-    mut sun: Query<(&mut DirectionalLight, &mut Transform)>,
-    mut ambient: ResMut<GlobalAmbientLight>,
-    mut clear: ResMut<ClearColor>,
+    day: Daylight,
     mut cam: Query<(&mut DistanceFog, &mut Exposure), With<bav_sim::player::MainCamera>>,
-    skirt: Option<Res<Skirt>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-    mut sky_dome: crate::sky::Sky,
-    mut last: Local<Option<Color>>,
-    look: Res<crate::LookSettings>,
 ) {
+    let Daylight { script, mut sun, mut ambient, mut clear, skirt, mut materials, mut sky_dome, mut last, look } = day;
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(crate::dev::DayDebug::Off) {
         return;
@@ -114,7 +106,7 @@ pub fn daylight(
     };
     clear.0 = sky;
     let sun_colour = if overcast { Color::srgb(0.9, 0.9, 0.9) } else { Color::srgb(1.0, 0.90, 0.72) };
-    sky_dome.set(weather, minutes / 60.0, zenith, sky, sun_at, sun_colour, if overcast { 0.4 } else { 1.5 * day.powf(0.3) }, 0.5 + 0.5 * day);
+    sky_dome.set(weather, minutes / 60.0, zenith, sky, crate::sky::SkySun { dir: sun_at, colour: sun_colour, strength: if overcast { 0.4 } else { 1.5 * day.powf(0.3) } }, 0.5 + 0.5 * day);
     for (mut f, mut ex) in &mut cam {
         f.color = sky;
         // Dry air, far horizons; the haze thickens under January's cloud.

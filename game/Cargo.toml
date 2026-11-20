@@ -28,9 +28,11 @@ fmtron = { version = "1.0.0-rc.2", default-features = false }
 # The ground chunks as PNGs (the version Bevy's own image loading uses).
 image = { version = "0.25", default-features = false, features = ["png"] }
 
-# Bevy systems and spawn helpers take many parameters by design.
+# A Bevy system that needs many parameters groups them into `#[derive(SystemParam)]` structs named for what they
+# are (the camera's state, the HUD's texts), and a plain helper that would take many arguments takes a struct
+# instead. The lint is denied so the grouping stays that way.
 [workspace.lints.clippy]
-too_many_arguments = "allow"
+too_many_arguments = "deny"
 
 # Fast iteration: optimise dependencies even in dev builds.
 [profile.dev]

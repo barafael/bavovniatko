@@ -6,25 +6,31 @@ use super::*;
 pub(super) type Wrecks = (With<Vehicle>, With<Coasting>, Without<Soldier>);
 type Rides = (Without<Coasting>, Without<Soldier>);
 
+/// What a man on foot goes by: the player's order to the column, the wrecks he can take cover behind, and the
+/// vehicles that can pick him up.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(super) struct Bearings<'w, 's> {
+    order: Res<'w, ColumnOrder>,
+    wrecks: Query<'w, 's, &'static Transform, Wrecks>,
+    bradleys: Query<'w, 's, (&'static Vehicle, &'static Transform, Has<Rescue>), Rides>,
+}
+
 pub(super) fn move_soldiers(
     mut commands: Commands,
     time: Res<Time>,
     mut rng: ResMut<UnitRng>,
     mut stats: ResMut<Stats>,
-    mut paint: ResMut<PaintQueue>,
-    mut mines: FootMines,
-    order: Res<ColumnOrder>,
-    wrecks: Query<&Transform, Wrecks>,
-    bradleys: Query<(&Vehicle, &Transform, Has<Rescue>), Rides>,
+    mut footfall: Footfall,
+    bearings: Bearings,
     mut q: Query<(Entity, &mut Soldier, &mut Transform, Option<&Fleeing>)>,
 ) {
     let dt = crate::sim_dt(&time);
     let rng = &mut rng.0;
     let lay = geo::layout();
     let attacker = diorama().attacker();
-    let wreck_pos: Vec<Vec2> = wrecks.iter().map(|t| t.translation.xz()).collect();
+    let wreck_pos: Vec<Vec2> = bearings.wrecks.iter().map(|t| t.translation.xz()).collect();
     // Bradleys waiting for men: whoever is falling back runs for the nearest one.
-    let pickups: Vec<Vec2> = bradleys
+    let pickups: Vec<Vec2> = bearings.bradleys
         .iter()
         .filter(|(v, _, rescue)| v.kind == VKind::Bradley && v.side == attacker && v.troops < 7 && (*rescue || v.state == VState::Overwatch))
         .map(|(_, t, _)| t.translation.xz())
@@ -41,7 +47,7 @@ pub(super) fn move_soldiers(
             continue;
         }
         // Ordered back, everyone on foot falls back too, to the vehicles or the start line.
-        if (fleeing.is_some() && s.state == SState::Advance) || (*order == ColumnOrder::PullBack && !matches!(s.state, SState::Flee | SState::Wounded)) {
+        if (fleeing.is_some() && s.state == SState::Advance) || (*bearings.order == ColumnOrder::PullBack && !matches!(s.state, SState::Flee | SState::Wounded)) {
             s.state = SState::Flee;
         }
         s.fear = (s.fear - dt * 0.15).max(0.0);
@@ -67,7 +73,7 @@ pub(super) fn move_soldiers(
                     s.timer = 0.0;
                     // "They'd come in groups of five. We'd kill four, one would stay and dig in."
                     let near_wreck = wreck_pos.iter().any(|w| w.distance(p) < 35.0);
-                    s.state = if fleeing.is_some() || (s.side == Side::Ua && *order == ColumnOrder::PullBack) {
+                    s.state = if fleeing.is_some() || (s.side == Side::Ua && *bearings.order == ColumnOrder::PullBack) {
                         SState::Flee
                     } else if s.fear > 2.2 && near_wreck && rng.random_bool(0.5) {
                         SState::DugIn
@@ -166,9 +172,9 @@ pub(super) fn move_soldiers(
                 dragged_to.push((w, back, Quat::from_rotation_y(vehicle_yaw(step)) * Quat::from_rotation_x(-1.45)));
             }
             if rng.random_bool((dt * 0.6) as f64) {
-                paint.push(Paint::Footprints { at: np });
+                footfall.paint.push(Paint::Footprints { at: np });
             }
-            mines.step(np);
+            footfall.step(np);
         } else if !(s.state == SState::Wounded && carried.contains(&e)) {
             // Prone or dug in: lie flat.
             tf.translation = geo::ground(p) + Vec3::Y * if s.state == SState::DugIn { -0.6 } else { -0.75 };
@@ -188,9 +194,11 @@ pub(super) fn move_soldiers(
     }
 }
 
-/// Anti-personnel mines among the anti-tank ones, and what a soldier's step needs to set one off.
+/// What a man's step does to the ground: now and then a footprint, and an anti-personnel mine (among the anti-tank
+/// ones) set off when it finds one.
 #[derive(bevy::ecs::system::SystemParam)]
-pub(super) struct FootMines<'w, 's> {
+pub(super) struct Footfall<'w, 's> {
+    paint: ResMut<'w, PaintQueue>,
     mf: ResMut<'w, Minefield>,
     fx: ResMut<'w, FxQueue>,
     sound: Sound<'w, 's>,
@@ -198,7 +206,7 @@ pub(super) struct FootMines<'w, 's> {
     near: Local<'s, Vec<usize>>,
 }
 
-impl FootMines<'_, '_> {
+impl Footfall<'_, '_> {
     /// A foot comes down at `p`: if it finds an anti-personnel mine, the mine goes off.
     fn step(&mut self, p: Vec2) {
         let mf = &mut self.mf;

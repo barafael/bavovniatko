@@ -135,7 +135,6 @@ pub(crate) fn call_illum(
 
 /// The defenders' posts, rushed in the dark, send up a hand flare over the men coming at them: one at a time, a
 /// minute or two apart, while they have any.
-#[allow(clippy::type_complexity)]
 pub(crate) fn post_flares(
     mut commands: Commands,
     time: Res<Time>,

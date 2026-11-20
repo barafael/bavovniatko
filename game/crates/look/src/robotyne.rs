@@ -3,7 +3,7 @@
 //! side is `bav_sim::robotyne`.
 
 use crate::meshes::{self, MeshBuilder};
-use crate::world::Skirt;
+use crate::world::Daylight;
 use bav_core::geo::{self, smoothstep};
 use bav_sim::player::{MainCamera, ObservationPost};
 use bevy::{camera::Exposure, pbr::FogFalloff, prelude::*};
@@ -26,7 +26,7 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut m
         let p = Vec2::new(-1020.0 + k as f32 * 9.0, -1470.0);
         let mut silo = MeshBuilder::new();
         silo.cylinder(Vec3::ZERO, Vec3::new(0.0, 14.0, 0.0), 3.6, 10, [0.62, 0.61, 0.58]);
-        silo.frustum(Vec3::new(0.0, 14.0, 0.0), Vec3::new(0.0, 1.6, 0.0), 3.6, 0.4, 10, [0.45, 0.46, 0.45], false);
+        silo.frustum(Vec3::new(0.0, 14.0, 0.0), Vec3::new(0.0, 1.6, 0.0), (3.6, 0.4), 10, [0.45, 0.46, 0.45], false);
         if k == 2 {
             silo.boxc(Vec3::new(2.8, 9.0, -2.0), Vec3::new(2.0, 3.0, 1.0), [0.08, 0.08, 0.08]);
         }
@@ -67,20 +67,12 @@ pub fn spawn_set(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut m
 // The light: 8 June at 47.5 N. Sunrise 04:40 in the north-east, 79% cloud (ERA5, dossier §3). The column moves
 // off in the blue before dawn and reaches the minefield as the sky colours behind it.
 
-#[allow(clippy::too_many_arguments)]
 pub fn daylight(
-    script: Res<crate::director::Script>,
-    mut sun: Query<(&mut DirectionalLight, &mut Transform)>,
-    mut ambient: ResMut<GlobalAmbientLight>,
-    mut clear: ResMut<ClearColor>,
+    day: Daylight,
     mut cam: Query<(&mut DistanceFog, &mut Exposure), With<MainCamera>>,
-    skirt: Option<Res<Skirt>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
     mut fx_light: ResMut<crate::fx::FxLight>,
-    mut sky_dome: crate::sky::Sky,
-    mut last: Local<Option<Color>>,
-    look: Res<crate::LookSettings>,
 ) {
+    let Daylight { script, mut sun, mut ambient, mut clear, skirt, mut materials, mut sky_dome, mut last, look } = day;
     let dbg = crate::dev::dev().daydbg;
     if dbg == Some(crate::dev::DayDebug::Off) {
         return;
@@ -130,7 +122,7 @@ pub fn daylight(
     };
     let z = mix3([0.10, 0.14, 0.28], [0.52, 0.60, 0.78], twilight);
     let z = mix3(z, [0.58, 0.66, 0.80], day);
-    sky_dome.set(crate::sky::Weather::Veil, h, Color::srgb(z[0], z[1], z[2]), sky, sun_at, Color::srgb(1.0, 0.78 + 0.18 * day, 0.55 + 0.35 * day), 2.0 * s(-3.0, 10.0, elev), 0.3 + 0.7 * s(-4.0, 12.0, elev));
+    sky_dome.set(crate::sky::Weather::Veil, h, Color::srgb(z[0], z[1], z[2]), sky, crate::sky::SkySun { dir: sun_at, colour: Color::srgb(1.0, 0.78 + 0.18 * day, 0.55 + 0.35 * day), strength: 2.0 * s(-3.0, 10.0, elev) }, 0.3 + 0.7 * s(-4.0, 12.0, elev));
     for (mut f, mut ex) in &mut cam {
         f.color = sky;
         // Clearer than February's haze, though the morning was 79% cloud: the cloud was high, the air dry.

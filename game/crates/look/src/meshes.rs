@@ -196,8 +196,9 @@ impl MeshBuilder {
         }
     }
 
-    /// A frustum along `axis` from `base`, radii r0 → r1.
-    pub fn frustum(&mut self, base: Vec3, axis: Vec3, r0: f32, r1: f32, segs: u32, c: Rgb, caps: bool) {
+    /// A frustum along `axis` from `base`, its radius going from `radii.0` at the base to `radii.1` at the end.
+    pub fn frustum(&mut self, base: Vec3, axis: Vec3, radii: (f32, f32), segs: u32, c: Rgb, caps: bool) {
+        let (r0, r1) = radii;
         let len = axis.length();
         let dir = axis / len;
         let u = dir.any_orthonormal_vector();
@@ -220,7 +221,7 @@ impl MeshBuilder {
     }
 
     pub fn cylinder(&mut self, base: Vec3, axis: Vec3, r: f32, segs: u32, c: Rgb) {
-        self.frustum(base, axis, r, r, segs, c, true);
+        self.frustum(base, axis, (r, r), segs, c, true);
     }
 
     /// The upper half of an ellipsoid (a turret).
@@ -407,7 +408,7 @@ pub fn dacha(seed: u32, ruined: bool) -> MeshBuilder {
 /// A winter shelterbelt tree: a trunk (the crown is a separate alpha-tested card set).
 pub fn trunk(h: f32, r: f32) -> MeshBuilder {
     let mut m = MeshBuilder::new();
-    m.frustum(Vec3::ZERO, Vec3::new(0.0, h * 0.75, 0.0), r, r * 0.35, 5, [0.30, 0.27, 0.24], false);
+    m.frustum(Vec3::ZERO, Vec3::new(0.0, h * 0.75, 0.0), (r, r * 0.35), 5, [0.30, 0.27, 0.24], false);
     m
 }
 
@@ -478,7 +479,7 @@ pub fn kmt_rollers() -> MeshBuilder {
 /// BMR-2: on a turretless T-55 hull (here the T-64's), an armoured cab with a heavy machine gun.
 pub fn bmr2_top(body: Rgb) -> (MeshBuilder, Vec3) {
     let mut t = MeshBuilder::new();
-    t.frustum(Vec3::ZERO, Vec3::new(0.0, 0.55, 0.0), 0.75, 0.6, 8, body, true);
+    t.frustum(Vec3::ZERO, Vec3::new(0.0, 0.55, 0.0), (0.75, 0.6), 8, body, true);
     t.cylinder(Vec3::new(0.0, 0.62, -0.2), Vec3::new(0.0, 0.0, -1.4), 0.03, 5, STEEL);
     (t, Vec3::new(0.0, 1.5, -0.6))
 }
@@ -487,10 +488,10 @@ pub fn bmr2_top(body: Rgb) -> (MeshBuilder, Vec3) {
 /// steel tank. The eye sits in the tank's hatch at about 18 m.
 pub fn water_tower() -> MeshBuilder {
     let mut m = MeshBuilder::new();
-    m.frustum(Vec3::ZERO, Vec3::new(0.0, 14.5, 0.0), 1.5, 1.2, 10, [0.55, 0.36, 0.28], false);
-    m.frustum(Vec3::new(0.0, 14.5, 0.0), Vec3::new(0.0, 1.0, 0.0), 1.2, 2.5, 12, [0.38, 0.40, 0.38], false);
+    m.frustum(Vec3::ZERO, Vec3::new(0.0, 14.5, 0.0), (1.5, 1.2), 10, [0.55, 0.36, 0.28], false);
+    m.frustum(Vec3::new(0.0, 14.5, 0.0), Vec3::new(0.0, 1.0, 0.0), (1.2, 2.5), 12, [0.38, 0.40, 0.38], false);
     m.cylinder(Vec3::new(0.0, 15.5, 0.0), Vec3::new(0.0, 2.6, 0.0), 2.5, 12, [0.42, 0.44, 0.42]);
-    m.frustum(Vec3::new(0.0, 18.1, 0.0), Vec3::new(0.0, 1.1, 0.0), 2.6, 0.2, 12, [0.30, 0.31, 0.30], false);
+    m.frustum(Vec3::new(0.0, 18.1, 0.0), Vec3::new(0.0, 1.1, 0.0), (2.6, 0.2), 12, [0.30, 0.31, 0.30], false);
     // A shell hole through the tank, and the ladder.
     m.boxc(Vec3::new(1.9, 16.6, 1.2), Vec3::new(0.6, 0.9, 0.9), [0.06, 0.06, 0.06]);
     m.boxc(Vec3::new(0.0, 7.5, -1.45), Vec3::new(0.5, 15.0, 0.05), [0.2, 0.2, 0.2]);

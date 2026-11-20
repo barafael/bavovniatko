@@ -18,11 +18,11 @@
 //! Nothing of it exists where the day's file has no `wings`: an entity, a resource or a draw more would change an older
 //! day's Record. `BAV_INTERCEPT` puts the goggles' interceptor up at game times, flown by itself at the nearest wing.
 
-use crate::fx::{Emitter, EmitterKind, FxQueue};
+use crate::fx::{Effects, Emitter, EmitterKind, FxQueue};
 use crate::geo;
 use crate::killzone::{Class, Mark, Prey};
-use crate::player::{Fpv, Operator, View};
-use crate::sound::{Sfx, Sound};
+use crate::player::{Fpv, Operator};
+use crate::sound::Sfx;
 use crate::units::{Coasting, Part, Radio, Side, Vehicle};
 use bav_core::diorama::{Play, play};
 use bevy::prelude::*;
@@ -182,6 +182,81 @@ pub struct WingModels {
 #[derive(Resource)]
 struct WingRng(SmallRng);
 
+/// Where a wing brought down is told: the hit feed and the net.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Tidings<'w> {
+    log: ResMut<'w, crate::hits::HitLog>,
+    radio: ResMut<'w, Radio>,
+}
+
+/// Wings still in the air, not interceptors.
+type Aloft = (Without<Downed>, Without<Interceptor>);
+
+/// What a wing's camera looks through: the day's seeing, and the smoke on the ground.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Haze<'w> {
+    seeing: Option<Res<'w, crate::fight::Seeing>>,
+    smoke: Res<'w, crate::fx::Smoke>,
+}
+
+/// Vehicles under way, not coasting to a stop (and not a wing).
+type Underway = (Without<Coasting>, Without<Wing>);
+
+/// What of ours a wing's camera may find: the posts, the vehicles, the masts and antennas, and our drone team (where
+/// it is, whether it is moving, and whether its feed is up or a drone in the air).
+#[derive(bevy::ecs::system::SystemParam)]
+struct OursToSee<'w, 's> {
+    posts: Query<'w, 's, (Entity, &'static crate::fire::Post)>,
+    vehicles: Query<'w, 's, (Entity, &'static Vehicle, &'static Transform), Underway>,
+    prey: Query<'w, 's, (Entity, &'static Prey, &'static Transform, Has<crate::ew::DomeOff>), Without<Wing>>,
+    team: crate::killzone::DroneTeam<'w>,
+}
+
+/// Where what a wing finds goes: the wings' tally, the kill zone's picture, and in Command the staff's `Spotted`.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Finds<'w> {
+    tally: ResMut<'w, WingsTally>,
+    picture: Option<ResMut<'w, crate::killzone::Picture>>,
+    spotted: Option<ResMut<'w, crate::staff::Spotted>>,
+}
+
+/// A thing of ours a wing may see: its mark, its class, where it is, how readily it is seen, and what the staff
+/// would note it as.
+type Seen = (Mark, Class, Vec2, f64, Option<(Entity, crate::staff::What)>);
+
+/// The drone team putting up an interceptor: its stock, where it is, the airframe's model, and our standing domes it
+/// pauses for the climb out.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Launcher<'w, 's> {
+    stock: ResMut<'w, Interceptors>,
+    op: Res<'w, Operator>,
+    models: Option<Res<'w, WingModels>>,
+    domes: Query<'w, 's, (Entity, &'static crate::ew::Dome), crate::ew::DomesOn>,
+}
+
+/// The radar's picture: the wings about, whether it holds each, and the interceptors already after them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Scope<'w, 's> {
+    wings: Query<'w, 's, (Entity, &'static Wing, &'static Transform, Has<OnRadar>), Without<Downed>>,
+    up: Query<'w, 's, &'static Interceptor>,
+}
+
+/// The chase: our interceptors in the air, the wings they can go for, and our domes' jamming that takes their links.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Chase<'w, 's> {
+    ew: Res<'w, crate::ew::Ew>,
+    ours: Query<'w, 's, (Entity, &'static mut Interceptor, &'static mut Transform), Without<Wing>>,
+    wings: Query<'w, 's, (Entity, &'static Wing, &'static Transform), Aloft>,
+}
+
+/// A wing brought down: which, the wing, where it is, and who brought it down.
+pub struct Downing<'a> {
+    pub e: Entity,
+    pub wing: &'a Wing,
+    pub at: Vec3,
+    pub by: &'static str,
+}
+
 /// How far to either side of its track a wing's camera finds things (m): the staff's strip was 600 m wide, but a
 /// gimballed camera a kilometre up looks out obliquely, and a pass is worth something to them before an interceptor
 /// can climb to it.
@@ -266,15 +341,17 @@ pub fn launch(commands: &mut Commands, models: Option<&WingModels>, kind: WingKi
 
 /// The goggles' FPV, an interceptor or a strike FPV, that passes close enough to a wing brings it down: an
 /// interceptor's few metres, a strike FPV's less.
-#[allow(clippy::too_many_arguments)]
 fn goggles(
     mut commands: Commands,
     time: Res<Time>,
     mut fpv: ResMut<Fpv>,
     mut tally: ResMut<WingsTally>,
-    (mut fx, mut sound, mut log, mut radio): (ResMut<FxQueue>, Sound, ResMut<crate::hits::HitLog>, ResMut<Radio>),
+    effects: Effects,
+    tidings: Tidings,
     wings: Query<(Entity, &Wing, &Transform), Without<Downed>>,
 ) {
+    let Effects { mut fx, mut sound } = effects;
+    let Tidings { mut log, mut radio } = tidings;
     if !fpv.flying {
         return;
     }
@@ -288,7 +365,7 @@ fn goggles(
     fx.flash(p, 3.0e6, 40.0, 0.1);
     sound.at(p, Sfx::BlastNear, 1.0);
     tally.downed[1] += 1;
-    bring_down(&mut commands, e, wing, t.translation, &mut log, &mut radio, now, "your drone team");
+    bring_down(&mut commands, Downing { e, wing, at: t.translation, by: "your drone team" }, &mut log, &mut radio, now);
 }
 
 /// The Record's passes, each at its time.
@@ -337,22 +414,10 @@ fn fly_wings(mut commands: Commands, time: Res<Time>, mut radio: ResMut<Radio>, 
 /// chance a pass, as under the staff's strip (a post one time in three, a vehicle four times in five, our domes' masts and
 /// our drone team's antennas between), less in fog as its camera sees through it from a kilometre up. What it finds
 /// goes into the kill zone's picture and, in Command, the staff's `Spotted`.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn eyes(
-    time: Res<Time>,
-    mut rng: ResMut<WingRng>,
-    mut tally: ResMut<WingsTally>,
-    seeing: Option<Res<crate::fight::Seeing>>,
-    smoke: Res<crate::fx::Smoke>,
-    (view, fpv, op): (Res<View>, Res<Fpv>, Res<Operator>),
-    mut picture: Option<ResMut<crate::killzone::Picture>>,
-    mut spotted: Option<ResMut<crate::staff::Spotted>>,
-    mut wings: Query<(&mut Wing, &Transform), Without<Downed>>,
-    posts: Query<(Entity, &crate::fire::Post)>,
-    vehicles: Query<(Entity, &Vehicle, &Transform), (Without<Coasting>, Without<Wing>)>,
-    prey: Query<(Entity, &Prey, &Transform, Has<crate::ew::DomeOff>), Without<Wing>>,
-    mut next: Local<f64>,
-) {
+fn eyes(time: Res<Time>, mut rng: ResMut<WingRng>, haze: Haze, ours: OursToSee, finds: Finds, mut wings: Query<(&mut Wing, &Transform), Without<Downed>>, mut next: Local<f64>) {
+    let Haze { seeing, smoke } = haze;
+    let OursToSee { posts, vehicles, prey, team: crate::killzone::DroneTeam { view, fpv, op } } = ours;
+    let Finds { mut tally, mut picture, mut spotted } = finds;
     let now = time.elapsed_secs_f64();
     if now < *next {
         return;
@@ -360,7 +425,7 @@ fn eyes(
     *next = now + LOOK_EVERY;
     let fog = seeing.as_ref().map_or(1.0, |s| (s.through(crate::fight::Eye::Man) / 1000.0).min(1.0) as f64);
     // What of ours there is to see, and how readily: west to east, an order that does not hang on entity ids.
-    let mut things: Vec<(Mark, Class, Vec2, f64, Option<(Entity, crate::staff::What)>)> = Vec::new();
+    let mut things: Vec<Seen> = Vec::new();
     for (e, p) in &posts {
         if p.side == Side::Ua && p.strength > 0 {
             things.push((Mark::Thing(e), Class::Men, p.pos, 0.35, Some((e, crate::staff::What::Post))));
@@ -417,20 +482,9 @@ fn eyes(
 /// The radar takes a while to hold a wing inside its range: a small airframe of foam and plywood a kilometre up
 /// (`TRACK`, a chance each second). Then it cues an interceptor at the nearest wing it holds that none is already
 /// after, from the drone team, while there are any; our domes pause for its climb out.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn cue(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<WingRng>,
-    mut radio: ResMut<Radio>,
-    mut tally: ResMut<WingsTally>,
-    mut stock: ResMut<Interceptors>,
-    op: Res<Operator>,
-    models: Option<Res<WingModels>>,
-    wings: Query<(Entity, &Wing, &Transform, Has<OnRadar>), Without<Downed>>,
-    up: Query<&Interceptor>,
-    domes: Query<(Entity, &crate::ew::Dome), (Without<crate::ew::DomeDown>, Without<crate::ew::DomeOff>)>,
-) {
+fn cue(mut commands: Commands, time: Res<Time>, mut rng: ResMut<WingRng>, mut radio: ResMut<Radio>, mut tally: ResMut<WingsTally>, launcher: Launcher, scope: Scope) {
+    let Launcher { mut stock, op, models, domes } = launcher;
+    let Scope { wings, up } = scope;
     let Some(radar) = spec().and_then(|s| s.radar) else { return };
     let now = time.elapsed_secs_f64();
     let at = Vec2::new(radar.at.0, radar.at.1);
@@ -482,17 +536,10 @@ fn cue(
 /// The radar's interceptors fly a lead pursuit onto their wing, faster than it, and go off when they pass within a few
 /// metres: most times it comes down. Inside one of our own domes an interceptor loses its link and falls; one whose
 /// wing has gone takes another near it, or comes down.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn intercept(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<WingRng>,
-    mut tally: ResMut<WingsTally>,
-    (mut radio, mut log, mut fx, mut sound): (ResMut<Radio>, ResMut<crate::hits::HitLog>, ResMut<FxQueue>, Sound),
-    ew: Res<crate::ew::Ew>,
-    mut ours: Query<(Entity, &mut Interceptor, &mut Transform), Without<Wing>>,
-    wings: Query<(Entity, &Wing, &Transform), (Without<Downed>, Without<Interceptor>)>,
-) {
+fn intercept(mut commands: Commands, time: Res<Time>, mut rng: ResMut<WingRng>, mut tally: ResMut<WingsTally>, tidings: Tidings, effects: Effects, chase: Chase) {
+    let Tidings { mut log, mut radio } = tidings;
+    let Effects { mut fx, mut sound } = effects;
+    let Chase { ew, mut ours, wings } = chase;
     let now = time.elapsed_secs_f64();
     let dt = crate::sim_dt(&time);
     let mut gone: Vec<Entity> = Vec::new();
@@ -533,7 +580,7 @@ fn intercept(
                     if rng.0.random_bool(P_KILL) {
                         gone.push(w);
                         tally.downed[0] += 1;
-                        bring_down(&mut commands, w, wing, wt.translation, &mut log, &mut radio, now, "the radar's interceptor");
+                        bring_down(&mut commands, Downing { e: w, wing, at: wt.translation, by: "the radar's interceptor" }, &mut log, &mut radio, now);
                     } else {
                         tally.missed += 1;
                         info!("wings: an interceptor misses the {}, at {now:.0} s", wing.kind.name());
@@ -563,8 +610,8 @@ fn intercept(
 }
 
 /// A wing hit: it falls trailing smoke, and the hit feed and the net say so.
-#[allow(clippy::too_many_arguments)]
-pub fn bring_down(commands: &mut Commands, e: Entity, wing: &Wing, at: Vec3, log: &mut crate::hits::HitLog, radio: &mut Radio, now: f64, by: &'static str) {
+pub fn bring_down(commands: &mut Commands, downing: Downing, log: &mut crate::hits::HitLog, radio: &mut Radio, now: f64) {
+    let Downing { e, wing, at, by } = downing;
     commands.entity(e).insert((Downed { vel: wing.velocity() * 0.8 }, Emitter::new(EmitterKind::EngineSmoke, 8.0, 40.0, Vec3::ZERO)));
     info!("wings: the {} brought down by {by} at {:.0},{:.0}, at {now:.0} s", wing.kind.name(), at.x, at.z);
     log.note(now, "interceptor", by, wing.kind.name(), Side::Ru, "brought down");

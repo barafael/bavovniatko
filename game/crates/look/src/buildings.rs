@@ -42,12 +42,18 @@ impl Shelled {
     }
 }
 
+/// How a set's town is raised: `snow` whitens the roofs (February), else they are the sheet and felt they are; a
+/// hangar goes through `hangar`; `shelled`: the town after the shelling, its houses' roofs pitched.
+pub struct Town<'a> {
+    pub snow: bool,
+    pub hangar: &'a mut HangarBuilder,
+    pub shelled: Option<Shelled>,
+}
+
 /// The map's buildings raised from their footprints: one mesh per facade, spawned here, and their roofs added to
-/// `roofs` for the caller to finish (the set's own pieces go in the same mesh). A hangar goes through `hangar`.
-/// `snow` whitens the roofs (February); else they are the sheet and felt they are. `shelled`: the town after the
-/// shelling, its houses' roofs pitched.
-#[allow(clippy::too_many_arguments)]
-pub fn raise(commands: &mut Commands, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>, roofs: &mut MeshBuilder, snow: bool, hangar: &mut HangarBuilder, shelled: Option<Shelled>) {
+/// `roofs` for the caller to finish (the set's own pieces go in the same mesh), the town as `town` has it.
+pub fn raise(commands: &mut Commands, meshes: &mut Assets<Mesh>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>, roofs: &mut MeshBuilder, town: Town) {
+    let Town { snow, hangar, shelled } = town;
     let lay = geo::layout();
     let mut walls: Vec<MeshBuilder> = WALLS.iter().map(|_| MeshBuilder::new()).collect();
     for (i, b) in lay.buildings.iter().enumerate() {

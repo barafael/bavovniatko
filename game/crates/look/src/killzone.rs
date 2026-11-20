@@ -123,13 +123,15 @@ fn mast(commands: &mut Commands, kit: &PointKit, palette: &Palette, e: Entity, a
     commands.spawn((Mesh3d(kit.lamp.clone()), MeshMaterial3d(kit.lit.clone()), Transform::from_translation(at + Vec3::Y * 9.3), PointLamp(e), bevy::light::NotShadowCaster));
 }
 
+/// Their launch crews that we located this frame.
+type JustLocated = (Added<Located>, With<Crew>);
+
 /// A launch point we have just located gets its mast; each lamp goes dark while our fire has it out.
-#[allow(clippy::type_complexity)]
 fn point_lamps(
     mut commands: Commands,
     kit: Option<Res<PointKit>>,
     palette: Res<Palette>,
-    located: Query<(Entity, &Transform), (Added<Located>, With<Crew>)>,
+    located: Query<(Entity, &Transform), JustLocated>,
     struck: Query<Has<Struck>>,
     mut lamps: Query<(&PointLamp, &mut MeshMaterial3d<StandardMaterial>)>,
 ) {

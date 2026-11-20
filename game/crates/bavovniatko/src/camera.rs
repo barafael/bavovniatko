@@ -23,6 +23,7 @@ use bevy::{
     render::view::Msaa,
 };
 pub use bav_core::vocab::{Mode, Target};
+use bav_sim::player::Controls;
 use bav_sim::robots::{Hand, Robot, Vampire};
 
 pub struct CameraPlugin;
@@ -221,7 +222,8 @@ struct Stick {
 pub struct Flight(pub Vec<(f32, f32, String)>);
 
 impl Stick {
-    fn read(keys: &ButtonInput<KeyCode>, buttons: &ButtonInput<MouseButton>, motion: &AccumulatedMouseMotion, scroll: &AccumulatedMouseScroll, view: &View) -> Self {
+    fn read(controls: &Controls, mouse: &Mouse, view: &View) -> Self {
+        let (keys, buttons, motion, scroll) = (&controls.keys, &controls.buttons, &mouse.motion, &mouse.scroll);
         let axis = |a, b| keys.pressed(a) as u8 as f32 - keys.pressed(b) as u8 as f32;
         let mut s = Self { fwd: axis(KeyCode::KeyW, KeyCode::KeyS), right: axis(KeyCode::KeyD, KeyCode::KeyA), yaw: axis(KeyCode::KeyQ, KeyCode::KeyE), climb: axis(KeyCode::KeyR, KeyCode::KeyF), sport: keys.pressed(KeyCode::ShiftLeft), zoom: scroll.delta.y, ..default() };
         if buttons.pressed(MouseButton::Right) || buttons.pressed(MouseButton::Middle) {
@@ -259,17 +261,15 @@ impl Stick {
     }
 }
 
-fn drone_control(
-    time: Res<Time>,
-    keys: Res<ButtonInput<KeyCode>>,
-    buttons: Res<ButtonInput<MouseButton>>,
-    motion: Res<AccumulatedMouseMotion>,
-    scroll: Res<AccumulatedMouseScroll>,
-    script: Res<crate::director::Script>,
-    flight: Res<Flight>,
-    ew: Res<bav_sim::ew::Ew>,
-    mut view: ResMut<View>,
-) {
+/// The mouse this frame: how far it moved and how far its wheel turned.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Mouse<'w> {
+    motion: Res<'w, AccumulatedMouseMotion>,
+    scroll: Res<'w, AccumulatedMouseScroll>,
+}
+
+fn drone_control(time: Res<Time>, controls: Controls, mouse: Mouse, script: Res<crate::director::Script>, flight: Res<Flight>, ew: Res<bav_sim::ew::Ew>, mut view: ResMut<View>) {
+    let keys = &controls.keys;
     let dt = time.delta_secs();
     // The battery drains whether or not you are watching. A Matrice gives you about 35 minutes; we compress.
     if view.feed_down <= 0.0 && !dev().no_battery {
@@ -307,7 +307,7 @@ fn drone_control(
     if (view.mode != Mode::Drone && view.rth.is_none()) || view.locked {
         return;
     }
-    let stick = Stick::scripted(script.t, dt, &flight).unwrap_or_else(|| Stick::read(&keys, &buttons, &motion, &scroll, &view));
+    let stick = Stick::scripted(script.t, dt, &flight).unwrap_or_else(|| Stick::read(&controls, &mouse, &view));
     // A Mavic 3: 15 m/s in its normal mode, 21 in sport, and a gentle 7 in cine for steady filming.
     let (max_speed, max_accel) = if stick.sport { (21.0, 6.0) } else if stick.cine { (7.0, 2.5) } else { (15.0, 4.0) };
     let yaw = view.drone_yaw;
@@ -393,24 +393,37 @@ fn drone_control(
     view.tilt = cur + (target_tilt - cur) * (1.0 - (-dt * 5.0).exp());
 }
 
+/// What the FPV's two links depend on: where its operator is, and the jamming.
+#[derive(bevy::ecs::system::SystemParam)]
+struct FpvLinks<'w> {
+    op: Res<'w, Operator>,
+    ew: Res<'w, bav_sim::ew::Ew>,
+}
+
+/// What the test pilot (`BAV_FPV`, `BAV_INTERCEPT`) flies the FPV at: the vehicles, and the wings still up.
+#[derive(bevy::ecs::system::SystemParam)]
+struct TestPilotTargets<'w, 's> {
+    vehicles: Query<'w, 's, (&'static Vehicle, &'static Transform)>,
+    wings: Query<'w, 's, (&'static bav_sim::wings::Wing, &'static Transform), Without<bav_sim::wings::Downed>>,
+}
+
 /// Fly the FPV: it goes where it is pointed. The mouse points it (and turns it); W/S are the throttle; A/D bank it
 /// sideways, and it levels itself when let go. Its analogue video thins with range and behind the ground; near
 /// their jammers the control link drops out in spells, and without it the drone falls; inside one of our own EW
 /// domes that is switched on it has no link at all (J switches them off). An interceptor (9) is faster and climbs
 /// to their wings. `BAV_FPV` flies it by itself at the vehicle nearest a point, `BAV_INTERCEPT` the interceptor at
 /// the nearest wing.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn fpv_control(
     time: Res<Time>,
     keys: Res<ButtonInput<KeyCode>>,
     motion: Res<AccumulatedMouseMotion>,
     mut fpv: ResMut<Fpv>,
     mut view: ResMut<View>,
-    op: Res<Operator>,
-    ew: Res<bav_sim::ew::Ew>,
-    vehicles: Query<(&Vehicle, &Transform)>,
-    wings: Query<(&bav_sim::wings::Wing, &Transform), Without<bav_sim::wings::Downed>>,
+    links: FpvLinks,
+    targets: TestPilotTargets,
 ) {
+    let FpvLinks { op, ew } = links;
+    let TestPilotTargets { vehicles, wings } = targets;
     let dt = time.delta_secs();
     if !fpv.flying {
         // After it goes in: static in the goggles for a moment, then back to the drone.
@@ -566,17 +579,18 @@ fn ground_control(
     };
 }
 
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn apply_view(
-    time: Res<Time>,
-    view: Res<View>,
-    fpv: Res<Fpv>,
-    op: Res<ObservationPost>,
-    mut shake: ResMut<Shake>,
-    camera: Single<(&mut Transform, &mut Projection), With<MainCamera>>,
-    robots: Query<(&Transform, &bav_sim::units::Driver), (With<Robot>, Without<MainCamera>)>,
-    vampires: Query<&Vampire>,
-) {
+/// The robots off the camera itself: where the robot view rides.
+type RobotsOnly = (With<Robot>, Without<MainCamera>);
+
+/// What the robot's and the bomber's views ride on: the robots with their drivers, and the Vampires.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Rides<'w, 's> {
+    robots: Query<'w, 's, (&'static Transform, &'static bav_sim::units::Driver), RobotsOnly>,
+    vampires: Query<'w, 's, &'static Vampire>,
+}
+
+fn apply_view(time: Res<Time>, view: Res<View>, fpv: Res<Fpv>, op: Res<ObservationPost>, mut shake: ResMut<Shake>, camera: Single<(&mut Transform, &mut Projection), With<MainCamera>>, rides: Rides) {
+    let Rides { robots, vampires } = rides;
     let (mut tf, mut proj) = camera.into_inner();
     let t = time.elapsed_secs();
     let dt = time.delta_secs();

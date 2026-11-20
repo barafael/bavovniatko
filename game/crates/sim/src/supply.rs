@@ -2,15 +2,15 @@
 //! Columns sent in. There is some at the start and more each minute of the day's clock (the diorama's
 //! `allotment.supply`); each vehicle and each team costs its catalog `supply`. A Column is vehicles of the day's
 //! kinds, as many as there were less what is already out (in the Allotment, or sent before), from a road head to a
-//! position (`columns::send`); it may bring a team with it (Stugna, Javelin or riflemen), which takes the position as
-//! a post of ours when the Column gets there, and is lost with it if none of it does.
+//! position (`columns::Dispatch::send`); it may bring a team with it (Stugna, Javelin or riflemen), which takes the
+//! position as a post of ours when the Column gets there, and is lost with it if none of it does.
 //!
 //! The map table composes and sends them (`bavovniatko::table`); `BAV_SEND="200:0:bmp2+mtlb@20:stugna"` sends one at a
 //! game time the same way (when, road head, vehicles, position, and the team), for the headless runs.
 
 use crate::allot::UnitKind;
-use crate::columns::{self, ColumnSpec, Columns};
-use crate::units::{Coasting, Models, Palette, Radio, RouteBook, Side, VState, Vehicle};
+use crate::columns::{ColumnSpec, Dispatch};
+use crate::units::{Coasting, Dress, Radio, Side, VState, Vehicle};
 use bav_core::{
     diorama::{Play, play},
     field::field,
@@ -161,18 +161,12 @@ fn scheduled_sends(script: Res<crate::director::Script>, mut requests: MessageWr
 }
 
 /// Send what was asked for, if the Supply is there and so are the vehicles: spend it, and the Column goes.
-#[allow(clippy::too_many_arguments)]
 fn send_requested(
-    mut commands: Commands,
     time: Res<Time>,
     mut requests: MessageReader<ColumnRequest>,
     mut supply: ResMut<Supply>,
     mut teams: ResMut<Teams>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    mut book: ResMut<RouteBook>,
-    mut columns: ResMut<Columns>,
-    mut radio: ResMut<Radio>,
+    mut dispatch: Dispatch,
 ) {
     let now = time.elapsed_secs_f64();
     let d = crate::data::sim_data();
@@ -180,7 +174,7 @@ fn send_requested(
         let cost = match supply.cost(r) {
             Ok(c) if c as f32 <= supply.have => c,
             Ok(c) => {
-                radio.say2(now, format!("{{player}}, я {{command}}. Підвозу не вистачає: треба {c}, є {:.0}.", supply.have), format!("{{player}}, this is {{command}}. Not enough Supply: it needs {c}, there is {:.0}.", supply.have));
+                dispatch.radio.say2(now, format!("{{player}}, я {{command}}. Підвозу не вистачає: треба {c}, є {:.0}.", supply.have), format!("{{player}}, this is {{command}}. Not enough Supply: it needs {c}, there is {:.0}.", supply.have));
                 continue;
             }
             Err(e) => {
@@ -194,7 +188,7 @@ fn send_requested(
                 kinds.extend(std::iter::repeat_n(k, *n as usize));
             }
         }
-        match columns::send(&mut commands, &models, &palette, &mut book, &mut columns, &mut radio, now, &ColumnSpec { kinds, head: r.head, to: r.to }) {
+        match dispatch.send(now, &ColumnSpec { kinds, head: r.head, to: r.to }) {
             Ok(wave) => {
                 supply.have -= cost as f32;
                 for (id, n) in &r.vehicles {
@@ -208,20 +202,18 @@ fn send_requested(
                 }
                 info!("supply: column {wave} for {cost}, {:.0} left, at {now:.0} s", supply.have);
             }
-            Err(e) => radio.say2(now, format!("{{player}}, я {{command}}. Колона не пройде: {e}."), format!("{{player}}, this is {{command}}. The column cannot go: {e}.")),
+            Err(e) => dispatch.radio.say2(now, format!("{{player}}, я {{command}}. Колона не пройде: {e}."), format!("{{player}}, this is {{command}}. The column cannot go: {e}.")),
         }
     }
 }
 
 /// A team riding with a Column takes the position when the first of the Column is there; if none of the Column is
 /// left on the way, the team is lost with it.
-#[allow(clippy::too_many_arguments)]
 fn teams_arrive(
     mut commands: Commands,
     time: Res<Time>,
     mut teams: ResMut<Teams>,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    dress: Dress,
     mut radio: ResMut<Radio>,
     vehicles: Query<&Vehicle, Without<Coasting>>,
     posts: Query<&crate::fire::Post>,
@@ -242,7 +234,7 @@ fn teams_arrive(
         }
         if column.iter().any(|v| v.state == VState::Overwatch) {
             let pos = &field().positions[*to];
-            crate::fire::spawn_post(&mut commands, &models, &palette, ours, Side::Ua, pos.at, *weapon);
+            crate::fire::spawn_post(&mut commands, &dress.models, &dress.palette, ours, Side::Ua, pos.at, *weapon);
             radio.say2(now, format!("{{player}}, я {}. {} на позиції.", crate::orders::callsign(*wave).1, name.1), format!("{{player}}, this is {}. The {} is in the position.", crate::orders::callsign(*wave).0, name.0));
             info!("supply: the {} with column {wave} in position {to} at {:.0},{:.0}, at {now:.0} s", name.0, pos.at.x, pos.at.y);
             return false;

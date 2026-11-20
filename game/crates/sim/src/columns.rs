@@ -6,7 +6,7 @@
 //! Until the map table and Supply exist, `BAV_COLUMN` sends Columns at game times:
 //! `"120:0:leo2a6+bradley+bradley@37,300:1:bradley@40"`: when, from which road head, what, to which position.
 
-use crate::units::{Models, Palette, Radio, RouteBook, Side, VKind, VehicleSpec, spawn_vehicle};
+use crate::units::{Dress, Radio, RouteBook, Side, VKind, VehicleSpec, spawn_vehicle};
 use bav_core::{
     field::{Ground, Mover, field, routes},
     geo,
@@ -51,36 +51,48 @@ pub struct ColumnSpec {
 /// Between two vehicles of a Column on the road (m).
 const SPACING: f32 = 35.0;
 
-/// Send a Column for our side: its way from the road head to the position, the vehicles in a line at the road
-/// head, the lead first, all at the slowest one's pace (a little under it, so every driver can keep it). Its wave.
-#[allow(clippy::too_many_arguments)]
-pub fn send(commands: &mut Commands, models: &Models, palette: &Palette, book: &mut RouteBook, columns: &mut Columns, radio: &mut Radio, now: f64, order: &ColumnSpec) -> Result<u32, String> {
-    if order.kinds.is_empty() {
-        return Err("a column of nothing".into());
+/// What sending a Column takes: the commands to spawn it, its vehicles' dress, the route book its way goes into, the
+/// Columns sent so far, and the radio that reports it.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Dispatch<'w, 's> {
+    pub commands: Commands<'w, 's>,
+    pub dress: Dress<'w>,
+    pub book: ResMut<'w, RouteBook>,
+    pub columns: ResMut<'w, Columns>,
+    pub radio: ResMut<'w, Radio>,
+}
+
+impl Dispatch<'_, '_> {
+    /// Send a Column for our side: its way from the road head to the position, the vehicles in a line at the road
+    /// head, the lead first, all at the slowest one's pace (a little under it, so every driver can keep it). Its wave.
+    pub fn send(&mut self, now: f64, order: &ColumnSpec) -> Result<u32, String> {
+        if order.kinds.is_empty() {
+            return Err("a column of nothing".into());
+        }
+        let line = way(order.head, order.to)?.line;
+        let f = field();
+        let pos = &f.positions[order.to];
+        let len = line.length();
+        let n = order.kinds.len();
+        if len < SPACING * n as f32 + 60.0 {
+            return Err(format!("position {} is too near road head {} for {n} vehicles", order.to, order.head));
+        }
+        let r = self.book.0.len();
+        // They fan out over the last 60 m.
+        self.book.0.push(geo::Route { line, deploy_s: len - 60.0, objective: pos.at, hold: true });
+        let pace = order.kinds.iter().map(|k| k.speed()).fold(f32::INFINITY, f32::min) * 0.9;
+        let wave = 100 + self.columns.sent;
+        self.columns.sent += 1;
+        for (i, &kind) in order.kinds.iter().enumerate() {
+            let s = 8.0 + SPACING * (n - 1 - i) as f32;
+            spawn_vehicle(&mut self.commands, &self.dress.models, &self.dress.palette, &self.book, VehicleSpec { side: Side::Ua, kind, route: r, s, lat: 0.0, wave, idx: i as u32, plow: false, smoke: false, rescue: false, column_pace: pace });
+        }
+        if let Some(head) = f.road_heads.get(order.head).map(|h| &h.name) {
+            self.radio.say2(now, format!("Колона пішла: {n} од., {}.", head.1), format!("Column on its way: {n} vehicles, from {}.", head.0));
+        }
+        info!("column {wave}: {n} vehicles ({:?}) from road head {} to position {} ({:?} at {:.0},{:.0}), {len:.0} m at {pace:.1} m/s, at {now:.0} s", order.kinds, order.head, order.to, pos.kind, pos.at.x, pos.at.y);
+        Ok(wave)
     }
-    let line = way(order.head, order.to)?.line;
-    let f = field();
-    let pos = &f.positions[order.to];
-    let len = line.length();
-    let n = order.kinds.len();
-    if len < SPACING * n as f32 + 60.0 {
-        return Err(format!("position {} is too near road head {} for {n} vehicles", order.to, order.head));
-    }
-    let r = book.0.len();
-    // They fan out over the last 60 m.
-    book.0.push(geo::Route { line, deploy_s: len - 60.0, objective: pos.at, hold: true });
-    let pace = order.kinds.iter().map(|k| k.speed()).fold(f32::INFINITY, f32::min) * 0.9;
-    let wave = 100 + columns.sent;
-    columns.sent += 1;
-    for (i, &kind) in order.kinds.iter().enumerate() {
-        let s = 8.0 + SPACING * (n - 1 - i) as f32;
-        spawn_vehicle(commands, models, palette, book, VehicleSpec { side: Side::Ua, kind, route: r, s, lat: 0.0, wave, idx: i as u32, plow: false, smoke: false, rescue: false, column_pace: pace });
-    }
-    if let Some(head) = f.road_heads.get(order.head).map(|h| &h.name) {
-        radio.say2(now, format!("Колона пішла: {n} од., {}.", head.1), format!("Column on its way: {n} vehicles, from {}.", head.0));
-    }
-    info!("column {wave}: {n} vehicles ({:?}) from road head {} to position {} ({:?} at {:.0},{:.0}), {len:.0} m at {pace:.1} m/s, at {now:.0} s", order.kinds, order.head, order.to, pos.kind, pos.at.x, pos.at.y);
-    Ok(wave)
 }
 
 /// A Column's way, and how much of it runs forward of our side.
@@ -127,16 +139,10 @@ fn plan() -> Vec<(f32, ColumnSpec)> {
         .collect()
 }
 
-#[allow(clippy::too_many_arguments)]
 fn scheduled_columns(
-    mut commands: Commands,
     time: Res<Time>,
     script: Res<crate::director::Script>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    mut book: ResMut<RouteBook>,
-    mut columns: ResMut<Columns>,
-    mut radio: ResMut<Radio>,
+    mut dispatch: Dispatch,
     mut planned: Local<Option<Vec<(f32, ColumnSpec)>>>,
 ) {
     let planned = planned.get_or_insert_with(plan);
@@ -144,7 +150,7 @@ fn scheduled_columns(
         && script.t >= *t
     {
         let (_, order) = planned.remove(0);
-        if let Err(e) = send(&mut commands, &models, &palette, &mut book, &mut columns, &mut radio, time.elapsed_secs_f64(), &order) {
+        if let Err(e) = dispatch.send(time.elapsed_secs_f64(), &order) {
             warn!("column not sent: {e}");
         }
     }

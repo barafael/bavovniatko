@@ -6,10 +6,10 @@
 //! Anything that shoots at aircraft shoots at it (`manpads`), and a hit goes the helicopters' way (`air::take_hits`):
 //! a hit Su-25 smokes and turns for home, a killed one falls and burns.
 
-use crate::air::{AirRng, AirTally, Aircraft, Flight};
+use crate::air::{AirTally, Aircraft, Flight};
 use crate::fx::{self, FxQueue};
 use crate::geo;
-use crate::units::{Radio, Side};
+use crate::units::Side;
 use bevy::prelude::*;
 use rand::Rng;
 
@@ -102,18 +102,16 @@ fn turn(yaw: &mut f32, want: f32, rate: f32, dt: f32) -> f32 {
 
 /// The flying of a fixed-wing pass: in low along the route, the pop-up, the dive and the ripple, the break with
 /// flares, and out low.
-#[allow(clippy::too_many_arguments)]
 pub(crate) fn fly_jets(
     mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<AirRng>,
+    war: crate::air::AirWar,
     mut tally: ResMut<AirTally>,
-    mut radio: ResMut<Radio>,
     mut fx: ResMut<FxQueue>,
     mut log: ResMut<crate::hits::HitLog>,
     mut q: Query<(Entity, &mut Aircraft, &mut Jet, &mut Transform, &mut Visibility)>,
     mut said: Local<f64>,
 ) {
+    let crate::air::AirWar { time, mut rng, mut radio } = war;
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
@@ -175,7 +173,7 @@ pub(crate) fn fly_jets(
                     let slant = p.distance(t);
                     let on = fwd.xz().normalize_or_zero().dot((j.target - here).normalize_or_zero()) > 0.9;
                     if slant < FIRE_AT && on && j.rockets > 0 {
-                        ripple(&mut commands, &mut fx, rng, &tf, j.target, j.rockets, a.speed, now);
+                        ripple(&mut commands, &mut fx, rng, &tf, Salvo { target: j.target, rockets: j.rockets, speed: a.speed }, now);
                         j.rockets = 0;
                         log.note(now, "S-8 rockets", "a Su-25", target_name(j.target), Side::Ua, "a rocket run");
                         if rng.random_bool(0.4) {
@@ -262,8 +260,15 @@ pub(crate) fn fly_jets(
 
 /// The ripple: the rockets leave the pods a beat apart, and each lands in a beaten zone long along the line of
 /// flight (unguided, from a diving aircraft at two kilometres) as an S-8's burst (`fire::ShellKind::Rocket`).
-#[allow(clippy::too_many_arguments)]
-fn ripple(commands: &mut Commands, fx: &mut FxQueue, rng: &mut rand::rngs::SmallRng, tf: &Transform, target: Vec2, n: u32, speed: f32, now: f64) {
+/// A ripple's aim: the point it is fired at, how many rockets, and the aircraft's speed as they leave.
+struct Salvo {
+    target: Vec2,
+    rockets: u32,
+    speed: f32,
+}
+
+fn ripple(commands: &mut Commands, fx: &mut FxQueue, rng: &mut rand::rngs::SmallRng, tf: &Transform, salvo: Salvo, now: f64) {
+    let Salvo { target, rockets: n, speed } = salvo;
     let fwd = tf.rotation * Vec3::NEG_Z;
     let right = tf.rotation * Vec3::X;
     let along = fwd.xz().normalize_or(Vec2::NEG_Y);

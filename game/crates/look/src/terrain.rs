@@ -963,7 +963,7 @@ fn apply_paint(time: Res<Time>, mut queue: ResMut<PaintQueue>, ground: Option<Re
     for op in ops {
         seed = seed.wrapping_add(7919);
         if let Paint::Track { at, dir, gauge, tread, churn } = op {
-            lay_track(&mut images, &ground, &mut touched, &mut trails, now, at, dir, gauge, tread, churn, seed);
+            lay_track(&mut images, &ground, &mut touched, &mut trails, now, TrackMark { at, dir, gauge, tread, churn }, seed);
             continue;
         }
         let (at, r) = match op {
@@ -1037,13 +1037,23 @@ struct Trail {
     at_time: f32,
 }
 
+/// A tracked hull's mark as the paint queue has it: where the hull is and which way it heads, its track gauge and
+/// tread width, and how hard it churned the ground.
+struct TrackMark {
+    at: Vec2,
+    dir: Vec2,
+    gauge: f32,
+    tread: f32,
+    churn: f32,
+}
+
 /// A tracked hull's last stretch: two ruts from where its previous mark ended to `at`, bending with it, so a
 /// trail is continuous however the hull turned. A first pass presses a rut a little wider than the tread, darker
 /// than the snow and paler than the grass; every hull that follows, and every skid, digs it deeper towards
 /// churned earth, and a hard turn or a skid throws clods out to the sides. The ground between the ruts is
 /// dirtied a little, and the ruts flatten the furrows.
-#[allow(clippy::too_many_arguments)]
-fn lay_track(images: &mut Assets<Image>, ground: &Ground, touched: &mut Vec<usize>, trails: &mut Vec<Trail>, now: f32, at: Vec2, dir: Vec2, gauge: f32, tread: f32, churn: f32, seed: u32) {
+fn lay_track(images: &mut Assets<Image>, ground: &Ground, touched: &mut Vec<usize>, trails: &mut Vec<Trail>, now: f32, mark: TrackMark, seed: u32) {
+    let TrackMark { at, dir, gauge, tread, churn } = mark;
     let dir = dir.normalize_or_zero();
     if dir == Vec2::ZERO {
         return;

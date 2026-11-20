@@ -272,25 +272,43 @@ struct Tour {
     ground: Option<usize>,
 }
 
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn direct(
-    mut commands: Commands,
-    mut tour: ResMut<Tour>,
-    mut strategy: ResMut<TimeUpdateStrategy>,
-    time: Res<Time>,
-    script: Res<crate::director::Script>,
-    target: Option<Res<crate::camera::HeadlessTarget>>,
-    op: Res<ObservationPost>,
-    mut view: ResMut<View>,
-    mut next_phase: ResMut<NextState<crate::Phase>>,
-    mut flight: ResMut<Flight>,
-    mut hud: ResMut<crate::hud::HudHidden>,
-    (vehicles, men, aircraft): (Query<(&Vehicle, &Transform)>, Query<(&Soldier, &Transform)>, Query<(&Transform, &Aircraft)>),
-    (fpv, things): (Res<Fpv>, Things),
-    teams: Query<(Entity, &Post, &AtgmTeam)>,
-    mut exit: MessageWriter<AppExit>,
-    mut pulls: MessageWriter<TriggerPull>,
-) {
+/// The film being made: the tour through its shots, the step the game clock takes, the image the frames are
+/// rendered into, and the exit after the last shot.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Film<'w> {
+    tour: ResMut<'w, Tour>,
+    strategy: ResMut<'w, TimeUpdateStrategy>,
+    target: Option<Res<'w, crate::camera::HeadlessTarget>>,
+    exit: MessageWriter<'w, AppExit>,
+}
+
+/// What the director sets for a shot: the view, the flight plan, whether the interface shows, the day's phase, and
+/// the ATGM's trigger.
+#[derive(bevy::ecs::system::SystemParam)]
+struct ShotSetup<'w> {
+    view: ResMut<'w, View>,
+    flight: ResMut<'w, Flight>,
+    hud: ResMut<'w, crate::hud::HudHidden>,
+    next_phase: ResMut<'w, NextState<crate::Phase>>,
+    pulls: MessageWriter<'w, TriggerPull>,
+}
+
+/// What the shots look at and follow: the OP, the vehicles, the men, the aircraft, the other things a shot can
+/// name, our ATGM teams, and the FPV.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Subjects<'w, 's> {
+    op: Res<'w, ObservationPost>,
+    vehicles: Query<'w, 's, (&'static Vehicle, &'static Transform)>,
+    men: Query<'w, 's, (&'static Soldier, &'static Transform)>,
+    aircraft: Query<'w, 's, (&'static Transform, &'static Aircraft)>,
+    things: Things<'w, 's>,
+    teams: Query<'w, 's, (Entity, &'static Post, &'static AtgmTeam)>,
+    fpv: Res<'w, Fpv>,
+}
+
+fn direct(mut commands: Commands, time: Res<Time>, script: Res<crate::director::Script>, film: Film, setup: ShotSetup, subjects: Subjects) {
+    let Film { mut tour, mut strategy, target, mut exit } = film;
+    let ShotSetup { mut view, mut flight, mut hud, mut next_phase, mut pulls } = setup;
     let t = script.t;
     let Some(shot) = SHOTS.get(tour.shot) else {
         exit.write(AppExit::Success);
@@ -309,7 +327,7 @@ fn direct(
     for (k, &(at, kind)) in shot.fire.iter().enumerate() {
         if t >= at && !tour.fired.contains(&(si, k)) {
             tour.fired.push((si, k));
-            let at = kind.on_nearest_stalled(&mut commands, &vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
+            let at = kind.on_nearest_stalled(&mut commands, &subjects.vehicles, view.drone_pos.xz(), time.elapsed_secs_f64());
             info!("showcase: {kind:?} called on {at:?}, at game {t:.0} s");
         }
     }
@@ -317,7 +335,7 @@ fn direct(
     // is already there when filming starts.
     if let Aim::Ground(near, sight) = shot.aim
         && tour.ground != Some(si)
-        && let Some((e, p, _)) = teams.iter().filter(|(_, _, t)| t.atgm > 0).min_by(|a, b| a.1.pos.distance(near).total_cmp(&b.1.pos.distance(near)))
+        && let Some((e, p, _)) = subjects.teams.iter().filter(|(_, _, t)| t.atgm > 0).min_by(|a, b| a.1.pos.distance(near).total_cmp(&b.1.pos.distance(near)))
     {
         enter_ground(&mut view, e, p.pos);
         view.sight = sight;
@@ -328,9 +346,9 @@ fn direct(
         let step = if shot.from - t > 1.0 { step_skip() } else { STEP_FILM };
         *strategy = TimeUpdateStrategy::ManualDuration(Duration::from_secs_f64(step));
         tour.aim = None;
-        place_camera(&mut view, shot, 0.0, &mut tour.aim, &op, &vehicles, &men, &aircraft, &things);
+        place_camera(&mut view, shot, 0.0, &mut tour.aim, &subjects);
         if matches!(shot.aim, Aim::Ground(..)) {
-            track_nearest(&mut view, &vehicles);
+            track_nearest(&mut view, &subjects.vehicles);
         }
         return;
     }
@@ -341,15 +359,15 @@ fn direct(
     // placement touches nothing.
     if let Aim::Fly(_) = shot.aim {
         if tour.shot_frames == 0 {
-            place_fly(&mut view, shot, &mut flight, &vehicles, &men);
+            place_fly(&mut view, shot, &mut flight, &subjects.vehicles, &subjects.men);
         }
     } else if let Aim::Goggles = shot.aim {
         view.locked = false;
-        if fpv.flying {
+        if subjects.fpv.flying {
             view.mode = crate::camera::Mode::Fpv;
         }
     } else {
-        place_camera(&mut view, shot, k, &mut tour.aim, &op, &vehicles, &men, &aircraft, &things);
+        place_camera(&mut view, shot, k, &mut tour.aim, &subjects);
     }
     // The debrief shot ends the day, once: re-setting the state every frame would re-fire `OnEnter` (and
     // `show_debrief`) every frame.
@@ -388,8 +406,8 @@ fn direct(
     }
 }
 
-#[allow(clippy::too_many_arguments)]
-fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, op: &ObservationPost, vehicles: &Query<(&Vehicle, &Transform)>, men: &Query<(&Soldier, &Transform)>, aircraft: &Query<(&Transform, &Aircraft)>, things: &Things) {
+fn place_camera(view: &mut View, shot: &Shot, k: f32, aim: &mut Option<Vec3>, subjects: &Subjects) {
+    let Subjects { op, vehicles, men, aircraft, things, .. } = subjects;
     let ease = k * k * (3.0 - 2.0 * k);
     let fov = (shot.fov.0 + (shot.fov.1 - shot.fov.0) * ease).to_radians();
     // The view is placed by hand this frame: the flight controller and the ground view's own controls stand down.

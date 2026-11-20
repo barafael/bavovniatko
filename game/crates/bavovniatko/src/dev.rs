@@ -3,8 +3,8 @@
 
 pub use bav_core::dev::*;
 use crate::camera::{HeadlessTarget, View, look_angles};
-use crate::fire::{FireControl, Post};
-use crate::units::{Soldier, Stats, VState, Vehicle};
+use crate::fire::Post;
+use crate::units::{Soldier, VState, Vehicle};
 use bav_core::vocab::{Atgm, Mode};
 use crate::camera::Locate;
 use crate::fire::StrikeMission;
@@ -365,15 +365,14 @@ fn record(
 /// last line (hull centres closer than 4 m: certainly through each other; closer than 6.5 m: touching or nearly).
 fn log_stats(
     view: Res<View>,
-    script: Res<crate::director::Script>,
-    stats: Res<Stats>,
-    fc: Res<FireControl>,
+    day: crate::hud::Day,
     order: Res<crate::units::ColumnOrder>,
     soldiers: Query<&Soldier>,
     vehicles: Query<(&Vehicle, &Transform)>,
     mut last: Local<u32>,
     mut overlap: Local<(u32, u32, u32, u32)>,
 ) {
+    let crate::hud::Day { script, stats, fc } = day;
     if !dev().log_stats {
         return;
     }
@@ -543,10 +542,18 @@ fn env_bradley(mut view: ResMut<View>, bradleys: Query<(Entity, &Transform), Wit
     }
 }
 
+/// Where the scripted gunner is: the hands of the plan done, what it pressed last frame (keys, and the left button),
+/// and the Bradley it sits in.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Gunner<'s> {
+    done: Local<'s, usize>,
+    held: Local<'s, (Vec<KeyCode>, bool)>,
+    sat: Local<'s, Option<Entity>>,
+}
+
 /// `BAV_GUN`: a gunner in a Bradley's seat by script, for the headless bands. At its times the hand takes a seat, fires
 /// a burst of AP or HE, launches a TOW or orders the driver, through the seat's own keys and buttons as a player would
 /// press them; between times the sight is up and held on the nearest of their hulls still in the fight.
-#[allow(clippy::too_many_arguments)]
 fn scripted_gun(
     script: Res<crate::director::Script>,
     mut view: ResMut<View>,
@@ -554,10 +561,9 @@ fn scripted_gun(
     mut buttons: ResMut<ButtonInput<MouseButton>>,
     bradleys: Query<(Entity, &Vehicle, &Transform, &bav_sim::bradley::BradleyArms)>,
     q: Query<(&Vehicle, &Transform)>,
-    mut done: Local<usize>,
-    mut held: Local<(Vec<KeyCode>, bool)>,
-    mut sat: Local<Option<Entity>>,
+    gunner: Gunner,
 ) {
+    let Gunner { mut done, mut held, mut sat } = gunner;
     let plan = &dev().gun;
     if plan.is_empty() {
         return;

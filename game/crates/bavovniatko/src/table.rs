@@ -385,7 +385,6 @@ fn try_picks(table: &mut Table, picks: Vec<Pick>, done: String) {
     table.dirty = true;
 }
 
-#[allow(clippy::type_complexity)]
 fn table_clicks(
     mut table: ResMut<Table>,
     mut next: ResMut<NextState<crate::Phase>>,
@@ -468,17 +467,28 @@ fn table_hover(mut table: ResMut<Table>, markers: Query<(&Interaction, &Marker),
     }
 }
 
+/// The allotment panel's texts, each apart from the others: the unit counts, the points, the status line, and the
+/// letters on the map's markers.
+#[derive(bevy::ecs::system::SystemParam)]
+struct AllotTexts<'w, 's> {
+    counts: Query<'w, 's, (&'static CountText, &'static mut Text), CountsOnly>,
+    points: Single<'w, 's, &'static mut Text, PointsOnly>,
+    status: Single<'w, 's, &'static mut Text, StatusOnly>,
+    letters: Query<'w, 's, (&'static MarkerLetter, &'static mut Text), LettersOnly>,
+}
+
+/// The unit counts' texts, apart from the panel's other texts.
+type CountsOnly = (Without<PointsText>, Without<StatusText>, Without<MarkerLetter>);
+/// The points' text, apart from the panel's other texts.
+type PointsOnly = (With<PointsText>, Without<StatusText>, Without<MarkerLetter>);
+/// The status line's text, apart from the panel's other texts.
+type StatusOnly = (With<StatusText>, Without<PointsText>, Without<MarkerLetter>);
+/// The markers' letters, apart from the panel's other texts.
+type LettersOnly = (Without<PointsText>, Without<StatusText>, Without<CountText>);
+
 /// The panel's counts, the points, the line under it, and the markers, after a change.
-#[allow(clippy::type_complexity)]
-fn show_table(
-    mut table: ResMut<Table>,
-    mut counts: Query<(&CountText, &mut Text), (Without<PointsText>, Without<StatusText>, Without<MarkerLetter>)>,
-    mut points: Single<&mut Text, (With<PointsText>, Without<StatusText>, Without<MarkerLetter>)>,
-    mut status: Single<&mut Text, (With<StatusText>, Without<PointsText>, Without<MarkerLetter>)>,
-    mut rows: Query<(&UnitRow, &mut BackgroundColor), Without<Marker>>,
-    mut markers: Query<(&Marker, &mut BackgroundColor), Without<UnitRow>>,
-    mut letters: Query<(&MarkerLetter, &mut Text), (Without<PointsText>, Without<StatusText>, Without<CountText>)>,
-) {
+fn show_table(mut table: ResMut<Table>, texts: AllotTexts, mut rows: Query<(&UnitRow, &mut BackgroundColor), Without<Marker>>, mut markers: Query<(&Marker, &mut BackgroundColor), Without<UnitRow>>) {
+    let AllotTexts { mut counts, mut points, mut status, mut letters } = texts;
     if !table.dirty {
         return;
     }
@@ -659,24 +669,28 @@ fn to_battle(mut root: Single<&mut Node, With<TableRoot>>, mut panels: Panels) {
     }
 }
 
+/// Our units' marks on the table's map, with their labels, and what makes more of them under the map.
+#[derive(bevy::ecs::system::SystemParam)]
+struct UnitMarks<'w, 's> {
+    commands: Commands<'w, 's>,
+    assets: Res<'w, AssetServer>,
+    map: Single<'w, 's, Entity, With<MapNode>>,
+    marks: Query<'w, 's, (&'static mut UnitMark, &'static mut Node, &'static mut Visibility, &'static Children, &'static mut BorderColor), Without<TableRoot>>,
+    labels: Query<'w, 's, &'static mut Text, Without<BattleText>>,
+}
+
+/// The table in the battle: its root node, and the panel's text.
+#[derive(bevy::ecs::system::SystemParam)]
+struct BattleScreen<'w, 's> {
+    root: Single<'w, 's, &'static mut Node, With<TableRoot>>,
+    panel: Single<'w, 's, &'static mut Text, With<BattleText>>,
+}
+
 /// During the battle T opens and closes the table; the battle runs on under it. Our units are marked where they are,
 /// and the panel lists them, what each is doing, and the keys.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn battle_table(
-    mut commands: Commands,
-    assets: Res<AssetServer>,
-    keys: Res<ButtonInput<KeyCode>>,
-    mut ui: ResMut<bav_sim::orders::OrdersView>,
-    net: Res<bav_sim::orders::Net>,
-    ours: bav_sim::orders::Ours,
-    book: Res<bav_sim::units::RouteBook>,
-    mut root: Single<&mut Node, With<TableRoot>>,
-    map: Single<Entity, With<MapNode>>,
-    mut marks: Query<(&mut UnitMark, &mut Node, &mut Visibility, &Children, &mut BorderColor), Without<TableRoot>>,
-    mut labels: Query<&mut Text, Without<BattleText>>,
-    mut panel: Single<&mut Text, With<BattleText>>,
-    mut first: Local<bool>,
-) {
+fn battle_table(keys: Res<ButtonInput<KeyCode>>, mut ui: ResMut<bav_sim::orders::OrdersView>, net: Res<bav_sim::orders::Net>, ours: bav_sim::orders::OurUnits, screen: BattleScreen, marks: UnitMarks, mut first: Local<bool>) {
+    let BattleScreen { mut root, mut panel } = screen;
+    let UnitMarks { mut commands, assets, map, mut marks, mut labels } = marks;
     if !*first {
         *first = true;
         ui.on_table = crate::dev::dev().table_battle;
@@ -691,7 +705,7 @@ fn battle_table(
     if !ui.on_table {
         return;
     }
-    let units = bav_sim::orders::units(ours.iter(), &book);
+    let units = ours.units();
     if ui.selected.is_some_and(|w| !units.iter().any(|u| u.wave == w)) {
         ui.selected = None;
     }
@@ -794,18 +808,18 @@ fn battle_clicks(
     }
 }
 
+/// The composer's buttons, as they change: a vehicle's more or fewer, a team, the road head, and send.
+#[derive(bevy::ecs::system::SystemParam)]
+struct ComposerButtons<'w, 's> {
+    counts: Query<'w, 's, (&'static Interaction, &'static SendCount), Changed<Interaction>>,
+    teams: Query<'w, 's, (&'static Interaction, &'static TeamPick), Changed<Interaction>>,
+    head: Query<'w, 's, &'static Interaction, (Changed<Interaction>, With<HeadPick>)>,
+    send: Query<'w, 's, &'static Interaction, (Changed<Interaction>, With<SendButton>)>,
+}
+
 /// The Column composer's buttons: one more or fewer of a vehicle, a team or none, the next road head, and send.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn compose_clicks(
-    ui: Res<bav_sim::orders::OrdersView>,
-    mut composer: ResMut<Composer>,
-    counts: Query<(&Interaction, &SendCount), Changed<Interaction>>,
-    teams: Query<(&Interaction, &TeamPick), Changed<Interaction>>,
-    head: Query<&Interaction, (Changed<Interaction>, With<HeadPick>)>,
-    send: Query<&Interaction, (Changed<Interaction>, With<SendButton>)>,
-    supply: Res<bav_sim::supply::Supply>,
-    mut requests: MessageWriter<bav_sim::supply::ColumnRequest>,
-) {
+fn compose_clicks(ui: Res<bav_sim::orders::OrdersView>, mut composer: ResMut<Composer>, buttons: ComposerButtons, supply: Res<bav_sim::supply::Supply>, mut requests: MessageWriter<bav_sim::supply::ColumnRequest>) {
+    let ComposerButtons { counts, teams, head, send } = buttons;
     if !ui.on_table {
         return;
     }
@@ -854,17 +868,29 @@ fn request(composer: &Composer, to: usize) -> bav_sim::supply::ColumnRequest {
     }
 }
 
+/// The one text node marked `M`.
+type TextOf<'w, 's, M> = Single<'w, 's, &'static mut Text, With<M>>;
+
+/// The composer's text nodes, one at a time: each vehicle's line, the Supply's, the road head's, and the Column's.
+type ComposerTextSet<'w, 's> = ParamSet<'w, 's, (Query<'w, 's, (&'static SendText, &'static mut Text)>, TextOf<'w, 's, SupplyText>, TextOf<'w, 's, HeadText>, TextOf<'w, 's, ComposeText>)>;
+
+/// The composer's texts.
+#[derive(bevy::ecs::system::SystemParam)]
+struct ComposerTexts<'w, 's> {
+    set: ComposerTextSet<'w, 's>,
+}
+
 /// The composer's texts: the Supply, each vehicle and team with its cost and what is left, the road head, and the
 /// Column's way and cost.
-#[allow(clippy::type_complexity)]
 fn show_composer(
     ui: Res<bav_sim::orders::OrdersView>,
     composer: Res<Composer>,
     supply: Res<bav_sim::supply::Supply>,
-    mut texts: ParamSet<(Query<(&SendText, &mut Text)>, Single<&mut Text, With<SupplyText>>, Single<&mut Text, With<HeadText>>, Single<&mut Text, With<ComposeText>>)>,
+    texts: ComposerTexts,
     mut teams: Query<(&TeamPick, &mut BackgroundColor), Without<Marker>>,
     mut markers: Query<(&Marker, &mut BackgroundColor), Without<TeamPick>>,
 ) {
+    let ComposerTexts { set: mut texts } = texts;
     if !ui.on_table {
         return;
     }

@@ -18,11 +18,11 @@
 
 use crate::diorama::{Side, diorama};
 use crate::fire::{Mission, ShellKind};
-use crate::fx::FxQueue;
+use crate::fx::{Effects, FxQueue};
 use crate::geo;
 use crate::player::{Fpv, Operator, View};
 use crate::sound::{Sfx, Sound};
-use crate::units::{Blast, Cause, DirectHit, Models, Palette, Radio, SState, Soldier, Stats, Vehicle};
+use crate::units::{Blast, Cause, DirectHit, Dress, Radio, Report, SState, Soldier, Vehicle};
 use bav_core::vocab::Mode;
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
@@ -127,20 +127,44 @@ pub fn launch_interceptor(fpv: &mut Fpv, view: &mut View, op: &Operator, radio: 
 /// How long the goggles' interceptor flies (s).
 const INTERCEPTOR_ENDURANCE: f32 = 240.0;
 
-#[allow(clippy::too_many_arguments)]
+/// What putting a drone up takes: the FPVs, the player's view, the operator's post, and the radio.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Launchpad<'w> {
+    fpv: ResMut<'w, Fpv>,
+    view: ResMut<'w, View>,
+    op: ResMut<'w, Operator>,
+    radio: ResMut<'w, Radio>,
+}
+
+/// Our interceptors, where the day has them: those left, and the tally of the wings and what went up after them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct InterceptorStock<'w> {
+    stock: Option<ResMut<'w, crate::wings::Interceptors>>,
+    wings: Option<ResMut<'w, crate::wings::WingsTally>>,
+}
+
+/// The launches `BAV_FPV` and `BAV_INTERCEPT` make by the day's clock: the clock, whether the FPV has gone up, and
+/// how many of the interceptors have.
+#[derive(bevy::ecs::system::SystemParam)]
+struct AutoLaunch<'w, 's> {
+    script: Res<'w, crate::director::Script>,
+    fpv_launched: Local<'s, bool>,
+    intercepts: Local<'s, usize>,
+}
+
 fn drone_input(
     keys: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
-    script: Res<crate::director::Script>,
-    mut fpv: ResMut<Fpv>,
-    mut view: ResMut<View>,
-    mut op: ResMut<Operator>,
-    mut radio: ResMut<Radio>,
+    launchpad: Launchpad,
     seeing: Option<Res<crate::fight::Seeing>>,
-    (ew, mut stock, mut wings): (Res<crate::ew::Ew>, Option<ResMut<crate::wings::Interceptors>>, Option<ResMut<crate::wings::WingsTally>>),
-    mut auto_launched: Local<bool>,
-    mut intercepts: Local<usize>,
+    ew: Res<crate::ew::Ew>,
+    interceptors: InterceptorStock,
+    auto: AutoLaunch,
 ) {
+    let Launchpad { mut fpv, mut view, mut op, mut radio } = launchpad;
+    let InterceptorStock { mut stock, mut wings } = interceptors;
+    let AutoLaunch { script, fpv_launched: mut auto_launched, mut intercepts } = auto;
+
     let now = time.elapsed_secs_f64();
     // Our own domes blind what goes up under them (02 §6): J switches them off.
     let under_dome = ew.ours_at(geo::ground(op.pos) + Vec3::Y * 2.0) > 0.5;
@@ -208,7 +232,6 @@ pub(crate) fn move_team(op: &mut Operator, view: &mut View, radio: &mut Radio, n
 }
 
 /// While a drone is up the enemy may find its controller: a ranging round first, then the mission.
-#[allow(clippy::too_many_arguments)]
 fn team_found(
     mut commands: Commands,
     time: Res<Time>,
@@ -263,16 +286,13 @@ pub fn team_hit(op: &mut Operator, view: &mut View, radio: &mut Radio, now: f64)
 
 /// Where the FPV meets a hull or the ground, it goes in. (One that passes close enough to a wing of theirs brings it
 /// down instead: `wings`.)
-#[allow(clippy::too_many_arguments)]
 fn fpv_strikes(
     time: Res<Time>,
     mut fpv: ResMut<Fpv>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
+    mut effects: Effects,
     mut hits: MessageWriter<DirectHit>,
     mut blasts: MessageWriter<Blast>,
-    mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
+    mut report: Report,
     vehicles: Query<(Entity, &Vehicle, &Transform)>,
 ) {
     if !fpv.flying {
@@ -291,23 +311,23 @@ fn fpv_strikes(
     }
     fpv.flying = false;
     fpv.gone = 0.0;
-    fx.explosion(p, 0.7, hull.is_none());
-    fx.flash(p, 6.0e6, 60.0, 0.12);
-    sound.at(p, Sfx::BlastNear, 1.6);
+    effects.fx.explosion(p, 0.7, hull.is_none());
+    effects.fx.flash(p, 6.0e6, 60.0, 0.12);
+    effects.sound.at(p, Sfx::BlastNear, 1.6);
     blasts.write(Blast { at: p, radius: FPV_BLAST, cause: Cause::Fpv });
     if fpv.airframe == crate::player::Airframe::Strike {
-        stats.fpv_strikes += 1;
+        report.stats.fpv_strikes += 1;
     }
     match hull {
         Some((e, v, t)) => {
             let top = p.y > t.translation.y + 1.6;
             hits.write(DirectHit { target: e, cause: Cause::Fpv, top, weapon: "FPV", from: "your drone team" });
             info!("fpv: in on {:?} {}/{} at {:.0},{:.0}, {}, at {now:.0} s", v.kind, v.wave, v.idx, t.translation.x, t.translation.z, if top { "from above" } else { "from the side" });
-            radio.say2(now, "Є влучання. Відео пропало.", "Hit. Video's gone.");
+            report.radio.say2(now, "Є влучання. Відео пропало.", "Hit. Video's gone.");
         }
         None => {
             info!("fpv: into the ground at {:.0},{:.0}, at {now:.0} s", p.x, p.z);
-            radio.say2(now, "Мимо. В землю.", "Missed. Into the ground.");
+            report.radio.say2(now, "Мимо. В землю.", "Missed. Into the ground.");
         }
     }
 }
@@ -365,45 +385,50 @@ pub(crate) fn landing(from: Vec3) -> Vec2 {
     p.xz()
 }
 
-/// Let one go from `from` with the drone's own way on it.
-#[allow(clippy::too_many_arguments)]
-fn release(commands: &mut Commands, models: &Models, palette: &Palette, drops: &mut Drops, radio: &mut Radio, from: Vec3, vel: Vec3, now: f64) {
-    drops.left -= 1;
-    drops.dropped += 1;
-    commands.spawn((
-        Mesh3d(models.missile.clone()),
-        MeshMaterial3d(palette.vertex.clone()),
-        Transform::from_translation(from).looking_to(Vec3::NEG_Y, Vec3::Z).with_scale(Vec3::new(0.6, 0.6, 0.2)),
-        Falling { vel },
-        bevy::light::NotShadowCaster,
-    ));
-    info!("drop: released over {:.0},{:.0} from {:.0} m, {} left, at {now:.0} s", from.x, from.z, from.y - geo::height(from.x, from.z), drops.left);
-    radio.say2(now, "Скид.", "Drop.");
+/// What letting a grenade go takes: the commands to spawn it, its dress, the grenades left, and the radio.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Dropper<'w, 's> {
+    commands: Commands<'w, 's>,
+    dress: Dress<'w>,
+    drops: ResMut<'w, Drops>,
+    radio: ResMut<'w, Radio>,
+}
+
+impl Dropper<'_, '_> {
+    /// Let one go from `from` with the drone's own way on it.
+    fn release(&mut self, from: Vec3, vel: Vec3, now: f64) {
+        self.drops.left -= 1;
+        self.drops.dropped += 1;
+        self.commands.spawn((
+            Mesh3d(self.dress.models.missile.clone()),
+            MeshMaterial3d(self.dress.palette.vertex.clone()),
+            Transform::from_translation(from).looking_to(Vec3::NEG_Y, Vec3::Z).with_scale(Vec3::new(0.6, 0.6, 0.2)),
+            Falling { vel },
+            bevy::light::NotShadowCaster,
+        ));
+        info!("drop: released over {:.0},{:.0} from {:.0} m, {} left, at {now:.0} s", from.x, from.z, from.y - geo::height(from.x, from.z), self.drops.left);
+        self.radio.say2(now, "Скид.", "Drop.");
+    }
 }
 
 /// C lets a grenade go from the drone while its picture is up; `BAV_DROP` drops by itself.
-#[allow(clippy::too_many_arguments)]
 fn drop_input(
-    mut commands: Commands,
     keys: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
     script: Res<crate::director::Script>,
     view: Res<View>,
-    mut drops: ResMut<Drops>,
-    mut radio: ResMut<Radio>,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    mut dropper: Dropper,
     soldiers: Query<(&Soldier, &Transform)>,
     mut done: Local<usize>,
 ) {
     let now = time.elapsed_secs_f64();
     if keys.just_pressed(KeyCode::KeyC) && view.mode == Mode::Drone {
-        if drops.left == 0 {
-            radio.say2(now, "ВОГів більше нема.", "No grenades left.");
+        if dropper.drops.left == 0 {
+            dropper.radio.say2(now, "ВОГів більше нема.", "No grenades left.");
         } else if view.feed_down > 0.0 || !view.control {
-            radio.say2(now, "Не зараз: пташка не на зв'язку.", "Not now: the bird is off the link.");
+            dropper.radio.say2(now, "Не зараз: пташка не на зв'язку.", "Not now: the bird is off the link.");
         } else {
-            release(&mut commands, &models, &palette, &mut drops, &mut radio, view.drone_pos - Vec3::Y * 0.4, view.drone_vel, now);
+            dropper.release(view.drone_pos - Vec3::Y * 0.4, view.drone_vel, now);
         }
     }
     // The scripted drops: on the enemy's man nearest the point (or the point), from 60 m up and upwind of him by the
@@ -412,7 +437,7 @@ fn drop_input(
     while *done < plan.len() && script.t >= plan[*done].0 {
         let at = Vec2::new(plan[*done].1.0, plan[*done].1.1);
         *done += 1;
-        if drops.left == 0 {
+        if dropper.drops.left == 0 {
             continue;
         }
         let attacker = diorama().attacker();
@@ -424,19 +449,25 @@ fn drop_input(
             .unwrap_or(at);
         let over = |p: Vec2| geo::ground(p) + Vec3::Y * SCRIPTED_AGL;
         let from = aim + (aim - landing(over(aim)));
-        release(&mut commands, &models, &palette, &mut drops, &mut radio, over(from), Vec3::ZERO, now);
+        dropper.release(over(from), Vec3::ZERO, now);
     }
 }
 
+/// What a grenade or a bomb dropped from a drone does where it lands: the flash, the sound, the blast, and its
+/// note in the hit log.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(crate) struct Burst<'w, 's> {
+    pub(crate) fx: ResMut<'w, FxQueue>,
+    pub(crate) sound: Sound<'w, 's>,
+    pub(crate) blasts: MessageWriter<'w, Blast>,
+    pub(crate) log: ResMut<'w, crate::hits::HitLog>,
+}
+
 /// The grenades fall, and burst where they meet the ground.
-#[allow(clippy::too_many_arguments)]
 fn fall(
     mut commands: Commands,
     time: Res<Time>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
-    mut blasts: MessageWriter<Blast>,
-    mut log: ResMut<crate::hits::HitLog>,
+    mut burst: Burst,
     mut q: Query<(Entity, &mut Falling, &mut Transform)>,
     soldiers: Query<(&Soldier, &Transform), Without<Falling>>,
 ) {
@@ -453,9 +484,9 @@ fn fall(
         }
         commands.entity(e).despawn();
         let at = Vec3::new(p.x, ground, p.z);
-        fx.explosion(at, 0.3, true);
-        sound.at(at, Sfx::BlastNear, 0.6);
-        blasts.write(Blast { at, radius: VOG_BLAST, cause: Cause::Drop });
+        burst.fx.explosion(at, 0.3, true);
+        burst.sound.at(at, Sfx::BlastNear, 0.6);
+        burst.blasts.write(Blast { at, radius: VOG_BLAST, cause: Cause::Drop });
         // The feed's line: how close it came to the men it was meant for.
         let attacker = diorama().attacker();
         let near: Vec<f32> = soldiers.iter().filter(|(s, _)| s.side == attacker && s.state != SState::Wounded).map(|(_, t)| t.translation.xz().distance(at.xz())).collect();
@@ -467,7 +498,7 @@ fn fall(
             1 => ("a man in the open", "burst beside him".to_string()),
             n => ("men in the open", format!("burst among {n}")),
         };
-        log.note(now, "VOG-17", "your drone", what, attacker, result);
+        burst.log.note(now, "VOG-17", "your drone", what, attacker, result);
         info!("drop: burst at {:.0},{:.0}, {among} men within {:.0} m, the nearest {closest:.0} m, at {now:.0} s", at.x, at.z, VOG_BLAST * 3.0);
     }
 }

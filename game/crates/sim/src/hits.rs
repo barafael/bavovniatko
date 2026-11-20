@@ -24,6 +24,13 @@ pub struct HitEntry {
     pub result: String,
 }
 
+/// The vehicle a hit is logged against: its entity, the vehicle, and whether it carries `units::Rescue`.
+pub struct Victim<'a> {
+    pub target: Entity,
+    pub vehicle: &'a Vehicle,
+    pub rescue: bool,
+}
+
 /// The last twenty.
 #[derive(Resource, Default)]
 pub struct HitLog {
@@ -33,8 +40,8 @@ pub struct HitLog {
 }
 
 impl HitLog {
-    /// `rescue`: whether the vehicle carries `units::Rescue`.
-    pub fn open(&mut self, at: f64, weapon: &'static str, from: &'static str, target: Entity, v: &Vehicle, rescue: bool, result: impl Into<String>) {
+    pub fn open(&mut self, at: f64, weapon: &'static str, from: &'static str, victim: Victim, result: impl Into<String>) {
+        let Victim { target, vehicle: v, rescue } = victim;
         let result = result.into();
         bevy::log::debug!("hit: {weapon} {from} on {:?} {} ({}/{}): {result}, at {at:.0} s", v.side, name_of(v, rescue), v.wave, v.idx);
         self.entries.push(HitEntry { at, weapon, from, target, target_name: name_of(v, rescue), side: v.side, result });

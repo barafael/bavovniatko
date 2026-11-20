@@ -200,20 +200,50 @@ enum Loss {
     Other,
 }
 
+/// Their staff's picture of ours, and the stream it draws on.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Spotting<'w> {
+    spotted: ResMut<'w, Spotted>,
+    rng: ResMut<'w, StaffRng>,
+}
+
+/// What hides ours from their eyes: the smoke on the ground, and the light.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Cover<'w> {
+    smoke: Res<'w, crate::fx::Smoke>,
+    seeing: Option<Res<'w, crate::fight::Seeing>>,
+}
+
+/// Their staff's plan: the day's clock, what it has left and when it sends it next, and the radio that hears it come.
+#[derive(bevy::ecs::system::SystemParam)]
+struct StaffPlan<'w> {
+    script: Res<'w, crate::director::Script>,
+    staff: ResMut<'w, Staff>,
+    radio: ResMut<'w, Radio>,
+}
+
+/// What gives ours away by firing: the missiles just launched and the hulls they fly at, our posts, the tanks in their
+/// hides, and the Bradleys that have shown themselves.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Giveaways<'w, 's> {
+    missiles: Query<'w, 's, &'static Missile, Added<Missile>>,
+    vehicles: Query<'w, 's, &'static Vehicle>,
+    posts: Query<'w, 's, (Entity, &'static Post)>,
+    tanks: Query<'w, 's, (Entity, &'static UaTank, &'static Transform)>,
+    bradleys: Query<'w, 's, (Entity, &'static Transform), Changed<crate::bradley::Revealed>>,
+}
+
 /// A post of ours that launches, a tank in its hide that fires, and a Bradley's TOW or long burst
 /// (`bradley::Revealed`) give themselves away.
-#[allow(clippy::type_complexity, clippy::too_many_arguments)]
 fn spot_fire(
     time: Res<Time>,
-    mut spotted: ResMut<Spotted>,
-    mut rng: ResMut<StaffRng>,
-    missiles: Query<&Missile, Added<Missile>>,
-    vehicles: Query<&Vehicle>,
-    posts: Query<(Entity, &Post)>,
-    tanks: Query<(Entity, &UaTank, &Transform)>,
-    bradleys: Query<(Entity, &Transform), Changed<crate::bradley::Revealed>>,
+    spotting: Spotting,
+    giveaways: Giveaways,
     mut timers: Local<BTreeMap<Entity, f32>>,
 ) {
+    let Spotting { mut spotted, mut rng } = spotting;
+    let Giveaways { missiles, vehicles, posts, tanks, bradleys } = giveaways;
+
     let now = time.elapsed_secs_f64();
     for m in &missiles {
         if vehicles.get(m.target).is_ok_and(|v| v.side == Side::Ru)
@@ -239,7 +269,6 @@ fn spot_fire(
 }
 
 /// Our air defence firing: an Igla's launch from a post, a ZU-23-2's burst (its bursts going down).
-#[allow(clippy::type_complexity)]
 fn spot_air(
     time: Res<Time>,
     mut spotted: ResMut<Spotted>,
@@ -268,17 +297,17 @@ fn spot_air(
 
 /// Every two seconds: our vehicles that one of their posts or vehicles has in sight, within 1.5 km, not through smoke;
 /// in the dark and in fog only as far as men see (`fight::Seeing`).
-#[allow(clippy::too_many_arguments)]
 fn spot_by_eye(
     time: Res<Time>,
-    mut spotted: ResMut<Spotted>,
-    mut rng: ResMut<StaffRng>,
-    smoke: Res<crate::fx::Smoke>,
-    seeing: Option<Res<crate::fight::Seeing>>,
+    spotting: Spotting,
+    cover: Cover,
     posts: Query<&Post>,
     vehicles: Query<(Entity, &Vehicle, &Transform), Without<Coasting>>,
     mut next: Local<f64>,
 ) {
+    let Spotting { mut spotted, mut rng } = spotting;
+    let Cover { smoke, seeing } = cover;
+
     let now = time.elapsed_secs_f64();
     if now < *next {
         return;
@@ -302,25 +331,40 @@ fn spot_by_eye(
     }
 }
 
+/// What an Orlan's flight takes: our drone crew's post, which its line crosses, and the wings' models, where the day
+/// has them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct OrlanFlight<'w> {
+    op: Res<'w, crate::player::Operator>,
+    wing_models: Option<Res<'w, crate::wings::WingModels>>,
+}
+
+/// Our posts and our vehicles on the move, as an Orlan overhead may find them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct OursAbroad<'w, 's> {
+    posts: Query<'w, 's, (Entity, &'static Post)>,
+    vehicles: Query<'w, 's, (Entity, &'static Vehicle, &'static Transform), Without<Coasting>>,
+}
+
 /// Now and then an Orlan crosses our side along a strip 600 m wide: what is in the strip and not under smoke it may
 /// see (a post under the trees one time in three, a vehicle four times in five); in fog as much less as its camera
 /// sees through it from a kilometre up (`fight::Seeing`). Where the day has its wings as aircraft (`wings`, Myrnohrad) the
 /// Orlan is one, on a path from their side over ours and back, which the interceptors can bring down.
-#[allow(clippy::too_many_arguments)]
 fn orlan(
     mut commands: Commands,
-    (op, wing_models): (Res<crate::player::Operator>, Option<Res<crate::wings::WingModels>>),
+    flight: OrlanFlight,
     time: Res<Time>,
-    script: Res<crate::director::Script>,
-    mut staff: ResMut<Staff>,
-    mut spotted: ResMut<Spotted>,
-    mut rng: ResMut<StaffRng>,
-    mut radio: ResMut<Radio>,
-    smoke: Res<crate::fx::Smoke>,
-    seeing: Option<Res<crate::fight::Seeing>>,
-    posts: Query<(Entity, &Post)>,
-    vehicles: Query<(Entity, &Vehicle, &Transform), Without<Coasting>>,
+    plan: StaffPlan,
+    spotting: Spotting,
+    cover: Cover,
+    ours: OursAbroad,
 ) {
+    let OrlanFlight { op, wing_models } = flight;
+    let StaffPlan { script, mut staff, mut radio } = plan;
+    let Spotting { mut spotted, mut rng } = spotting;
+    let Cover { smoke, seeing } = cover;
+    let OursAbroad { posts, vehicles } = ours;
+
     if script.t < staff.next_orlan {
         return;
     }
@@ -361,27 +405,28 @@ fn orlan(
 }
 
 /// Sightings fade: a post's after five minutes, a vehicle's after two; and what is gone is forgotten.
-#[allow(clippy::type_complexity)]
-fn forget(time: Res<Time>, mut spotted: ResMut<Spotted>, alive: Query<(), Or<(With<Post>, With<UaTank>, With<Vehicle>)>>) {
+/// What their staff can have spotted: a post, a tank in its hide, a vehicle.
+type Spottable = Or<(With<Post>, With<UaTank>, With<Vehicle>)>;
+
+fn forget(time: Res<Time>, mut spotted: ResMut<Spotted>, alive: Query<(), Spottable>) {
     let now = time.elapsed_secs_f64();
     spotted.0.retain(|e, s| alive.contains(*e) && now - s.seen < if s.what == What::Vehicle { 120.0 } else { 300.0 });
 }
 
 /// A Lancet at a vehicle of ours they have spotted, while they have Lancets: it comes down out of the sky from their
 /// side, every four to eight minutes at most.
-#[allow(clippy::too_many_arguments)]
 fn lancets(
     mut commands: Commands,
     time: Res<Time>,
-    script: Res<crate::director::Script>,
-    mut staff: ResMut<Staff>,
+    plan: StaffPlan,
     spotted: Res<Spotted>,
     mut rng: ResMut<StaffRng>,
-    mut radio: ResMut<Radio>,
-    models: Res<crate::units::Models>,
-    palette: Res<crate::units::Palette>,
+    dress: crate::units::Dress,
     vehicles: Query<(&Vehicle, &Transform), Without<Coasting>>,
 ) {
+    let StaffPlan { script, mut staff, mut radio } = plan;
+    let crate::units::Dress { models, palette } = dress;
+
     if !rule("lancet") || staff.lancets == 0 || script.t < staff.next_lancet {
         return;
     }
@@ -411,7 +456,9 @@ fn lancets(
 /// A glide bomb on the freshest post or hide of ours they have spotted: a Su-34 from forty kilometres back, the
 /// bomb a minute in the air, a FAB-500's blast where they think the post is (design/avdiivka.md, phase 2: the air
 /// war the player cannot answer).
-fn kabs(mut commands: Commands, time: Res<Time>, script: Res<crate::director::Script>, mut staff: ResMut<Staff>, spotted: Res<Spotted>, mut rng: ResMut<StaffRng>, mut radio: ResMut<Radio>) {
+fn kabs(mut commands: Commands, time: Res<Time>, plan: StaffPlan, spotted: Res<Spotted>, mut rng: ResMut<StaffRng>) {
+    let StaffPlan { script, mut staff, mut radio } = plan;
+
     if !rule("kab") || staff.kabs == 0 || script.t < staff.next_kab {
         return;
     }
@@ -431,7 +478,6 @@ fn kabs(mut commands: Commands, time: Res<Time>, script: Res<crate::director::Sc
 
 /// A pair of Su-25s on the freshest post or hide of ours they have spotted: in low from their side, a rocket run
 /// each, and home (`jets`). Where the Iglas are, a pair may not come back whole.
-#[allow(clippy::too_many_arguments)]
 fn su25s(mut commands: Commands, time: Res<Time>, script: Res<crate::director::Script>, mut staff: ResMut<Staff>, spotted: Res<Spotted>, mut rng: ResMut<StaffRng>, models: Option<Res<crate::air::AirModels>>) {
     if !rule("su25") || staff.su25 == 0 || script.t < staff.next_su25 {
         return;

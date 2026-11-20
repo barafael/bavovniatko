@@ -553,6 +553,21 @@ impl Line {
     }
 }
 
+/// What the day is told of what happens: the tallies and the radio net.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Report<'w> {
+    pub stats: ResMut<'w, Stats>,
+    pub radio: ResMut<'w, Radio>,
+}
+
+/// What the day keeps of what happens: the tallies, the radio net and the hit log.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Record<'w> {
+    pub stats: ResMut<'w, Stats>,
+    pub radio: ResMut<'w, Radio>,
+    pub log: ResMut<'w, crate::hits::HitLog>,
+}
+
 #[derive(Resource, Default)]
 pub struct Radio {
     pub lines: Vec<(f64, Line)>,
@@ -690,6 +705,13 @@ pub struct Models {
     /// What a mine leaves on the ground: the cut track lying out behind, and a road wheel.
     pub track_strip: Handle<Mesh>,
     pub road_wheel: Handle<Mesh>,
+}
+
+/// What a system dresses the vehicles and men it spawns in: their models and the shared materials.
+#[derive(bevy::ecs::system::SystemParam)]
+pub struct Dress<'w> {
+    pub models: Res<'w, Models>,
+    pub palette: Res<'w, Palette>,
 }
 
 impl Models {

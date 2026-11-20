@@ -12,7 +12,7 @@
 
 use crate::fx::{self, Emitter, EmitterKind, FxQueue};
 use crate::geo;
-use crate::units::{Models, Palette, Part, Radio, SState, Side, Soldier, Stats};
+use crate::units::{Dress, Part, Radio, SState, Side, Soldier, Stats};
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use serde::Deserialize;
@@ -211,6 +211,14 @@ impl AirModels {
 
 #[derive(Resource)]
 pub(crate) struct AirRng(pub(crate) SmallRng);
+
+/// What the air war's systems share: the clock, the air war's own random stream, and the radio they report on.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(crate) struct AirWar<'w> {
+    pub(crate) time: Res<'w, Time>,
+    pub(crate) rng: ResMut<'w, AirRng>,
+    pub(crate) radio: ResMut<'w, Radio>,
+}
 
 /// The day's count of what flew and what fell.
 #[derive(Resource, Default, Debug)]
@@ -509,17 +517,16 @@ pub fn runway_open(field: &crate::fight::Field, runway: &Airfield) -> bool {
 
 /// The Il-76s: in Command, if the runway is theirs and open, they come in over the threshold and land, and the day is
 /// lost outside the record; else (and always in the Record) they turn back in the air.
-#[allow(clippy::too_many_arguments)]
-fn airlift(
-    mut commands: Commands,
-    time: Res<Time>,
-    lift: Option<ResMut<Airlift>>,
-    field: Option<Res<crate::fight::Field>>,
-    models: Option<Res<AirModels>>,
-    mut radio: ResMut<Radio>,
-    mut script: ResMut<crate::director::Script>,
-    mut runway: ResMut<Airfield>,
-) {
+/// What the airlift's coming turns on and what it settles: who holds the field, the runway, and the day's script.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Landing<'w> {
+    field: Option<Res<'w, crate::fight::Field>>,
+    runway: ResMut<'w, Airfield>,
+    script: ResMut<'w, crate::director::Script>,
+}
+
+fn airlift(mut commands: Commands, time: Res<Time>, lift: Option<ResMut<Airlift>>, models: Option<Res<AirModels>>, mut radio: ResMut<Radio>, landing: Landing) {
+    let Landing { field, mut runway, mut script } = landing;
     let Some(mut lift) = lift else { return };
     if lift.decided {
         return;
@@ -582,20 +589,25 @@ pub fn launch_station(commands: &mut Commands, models: &AirModels, at: Vec2) {
 
 /// On station: hang low behind the ridge, sway, pop up to fire a Vikhr at what of ours the smoke does not hide
 /// (preferably something that cannot move), and drop back; out of missiles, or hit, away home.
-#[allow(clippy::too_many_arguments)]
+/// What a Ka-52 on station can fire at: our vehicles, and the smoke that may hide them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct InSight<'w, 's> {
+    smoke: Res<'w, fx::Smoke>,
+    vehicles: Query<'w, 's, (Entity, &'static crate::units::Vehicle, &'static Transform), Without<Aircraft>>,
+}
+
 fn station(
     mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<AirRng>,
+    war: AirWar,
     mut fx: ResMut<FxQueue>,
     mut fxr: ResMut<crate::fx::FxRng>,
-    mut radio: ResMut<Radio>,
-    smoke: Res<fx::Smoke>,
-    models: Res<Models>,
-    palette: Res<Palette>,
-    vehicles: Query<(Entity, &crate::units::Vehicle, &Transform), Without<Aircraft>>,
+    sight: InSight,
+    dress: Dress,
     mut q: Query<(&mut Aircraft, &mut Transform)>,
 ) {
+    let AirWar { time, mut rng, mut radio } = war;
+    let InSight { smoke, vehicles } = sight;
+    let Dress { models, palette } = dress;
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
@@ -660,17 +672,17 @@ fn station(
 #[derive(Resource)]
 struct AdRng(SmallRng);
 
-#[allow(clippy::too_many_arguments)]
-fn air_defence(
-    time: Res<Time>,
-    mut rng: ResMut<AdRng>,
-    mut fc: ResMut<crate::fire::FireControl>,
-    mut fx: ResMut<FxQueue>,
-    mut radio: ResMut<Radio>,
-    mut hits: MessageWriter<AirHit>,
-    mut q: Query<(Entity, &mut Aircraft, &Transform)>,
-    mut engaged: Local<std::collections::BTreeMap<Entity, u32>>,
-) {
+/// The battery on call: its random stream, its missiles left (in `FireControl`), and the Ka-52s it has had its shot
+/// at, each with the salvos it had then.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Battery<'w, 's> {
+    rng: ResMut<'w, AdRng>,
+    fc: ResMut<'w, crate::fire::FireControl>,
+    engaged: Local<'s, std::collections::BTreeMap<Entity, u32>>,
+}
+
+fn air_defence(time: Res<Time>, battery: Battery, mut fx: ResMut<FxQueue>, mut radio: ResMut<Radio>, mut hits: MessageWriter<AirHit>, mut q: Query<(Entity, &mut Aircraft, &Transform)>) {
+    let Battery { mut rng, mut fc, mut engaged } = battery;
     if fc.air_defence == 0 || !crate::allot::at_table() {
         return;
     }
@@ -713,19 +725,17 @@ fn turn(yaw: f32, want: f32, rate: f32, dt: f32) -> f32 {
 }
 
 /// The flying: along the route, onto the landing zone and off it, round the field, and home.
-#[allow(clippy::too_many_arguments)]
 fn fly(
     mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<AirRng>,
+    war: AirWar,
     mut tally: ResMut<AirTally>,
     mut airfield: Option<ResMut<Airfield>>,
     mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    dress: Dress,
     mut q: Query<(Entity, &mut Aircraft, &mut Transform, &mut Visibility), Without<crate::jets::Jet>>,
 ) {
+    let AirWar { time, mut rng, mut radio } = war;
+    let Dress { models, palette } = dress;
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     for (e, mut a, mut tf, mut vis) in &mut q {
@@ -783,7 +793,7 @@ fn fly(
                     let back = (Quat::from_rotation_y(a.yaw) * Vec3::Z).xz() * 9.0;
                     let at = here + back + Vec2::new(rng.0.random_range(-3.0..3.0), rng.0.random_range(-3.0..3.0));
                     let goal = a.goal + Vec2::new(rng.0.random_range(-40.0..40.0), rng.0.random_range(-40.0..40.0));
-                    crate::units::spawn_soldier(&mut commands, &models, &palette, Side::Ru, at, goal, a.lz, 1.0, None, &mut rng.0);
+                    crate::units::spawn_soldier(&mut commands, &models, &palette, crate::units::NewSoldier { side: Side::Ru, at, goal, home: a.lz, sprint: 1.0, cover: None }, &mut rng.0);
                     stats.sent += 1;
                     if let Some(f) = airfield.as_mut() {
                         f.men_landed += 1;
@@ -847,18 +857,16 @@ fn fly(
 
 /// The gunships' runs: from the orbit onto something of ours they can see, rockets at a kilometre, the gun closer,
 /// and away.
-#[allow(clippy::too_many_arguments)]
 fn fight(
     mut commands: Commands,
-    time: Res<Time>,
-    mut rng: ResMut<AirRng>,
+    war: AirWar,
     mut fx: ResMut<FxQueue>,
-    mut radio: ResMut<Radio>,
     spotted: Option<Res<crate::staff::Spotted>>,
     posts: Query<&crate::fire::Post>,
     soldiers: Query<(&Soldier, &Transform), Without<Aircraft>>,
     mut q: Query<(&mut Aircraft, &Transform)>,
 ) {
+    let AirWar { time, mut rng, mut radio } = war;
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
     for (mut a, tf) in &mut q {
@@ -909,14 +917,13 @@ fn fight(
 /// Hits: a hit aircraft smokes and turns for home; one hit past what it takes falls.
 fn take_hits(
     mut commands: Commands,
-    time: Res<Time>,
+    war: AirWar,
     mut hits: MessageReader<AirHit>,
     mut tally: ResMut<AirTally>,
     mut log: ResMut<crate::hits::HitLog>,
-    mut radio: ResMut<Radio>,
-    mut rng: ResMut<AirRng>,
     mut q: Query<(&mut Aircraft, &Transform)>,
 ) {
+    let AirWar { time, mut rng, mut radio } = war;
     let now = time.elapsed_secs_f64();
     for h in hits.read() {
         let Ok((mut a, tf)) = q.get_mut(h.target) else { continue };

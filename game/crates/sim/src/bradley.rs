@@ -13,12 +13,12 @@
 //! the Lancets come for it.
 
 use crate::fire::{GuidedMissile, Missile};
-use crate::fx::{self, FxQueue};
+use crate::fx::{self, Effects, FxQueue};
 use crate::geo;
-use crate::hits::{HitEntry, HitLog};
-use crate::player::{MainCamera, View};
+use crate::hits::{HitEntry, HitLog, Victim};
+use crate::player::{Controls, MainCamera, View};
 use crate::sound::{Sfx, Sound};
-use crate::units::{self, Blast, Blinded, Cause, Coasting, CrewPlan, DirectHit, Driver, Gear, Gun, Radio, Turret, VState, Vehicle};
+use crate::units::{self, Blast, Dress, Blinded, Cause, Coasting, CrewPlan, DirectHit, Driver, Gear, Gun, Radio, Turret, VState, Vehicle};
 use bav_core::diorama::{Play, Side, play};
 use bav_core::vocab::Mode;
 use bevy::light::NotShadowCaster;
@@ -55,6 +55,64 @@ impl Plugin for BradleyPlugin {
 
 #[derive(Resource)]
 struct BradleyRng(SmallRng);
+
+/// Our Bradleys under way, not coasting to a stop.
+type Bradleys = (With<BradleyArms>, Without<Coasting>);
+
+/// Where a run is told: the radio, and the duel's record of runs when the day keeps one.
+#[derive(bevy::ecs::system::SystemParam)]
+struct RunLog<'w> {
+    radio: ResMut<'w, Radio>,
+    duel: Option<ResMut<'w, Duel>>,
+}
+
+/// What a gun firing at a hull needs: the clock, the Bradleys' random stream, the effects and the sound, the hits it
+/// makes, and the turrets its muzzle is on.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Gunnery<'w, 's> {
+    time: Res<'w, Time>,
+    rng: ResMut<'w, BradleyRng>,
+    effects: Effects<'w, 's>,
+    hits: MessageWriter<'w, DirectHit>,
+    turrets: Query<'w, 's, &'static GlobalTransform, With<Turret>>,
+}
+
+/// What a crew left to themselves can see: the hulls on the field, and the smoke that may hide them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Sight<'w, 's> {
+    smoke: Res<'w, fx::Smoke>,
+    vehicles: Query<'w, 's, (Entity, &'static Vehicle, &'static Transform)>,
+}
+
+/// The player in a Bradley's seat: the keys and buttons, the view and the sight's camera, the TOW they are guiding,
+/// if one is in the air, and the crew's voice on the radio.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Seat<'w, 's> {
+    controls: Controls<'w>,
+    view: ResMut<'w, View>,
+    cam: Single<'w, 's, &'static GlobalTransform, With<MainCamera>>,
+    guided: Query<'w, 's, (), With<GuidedMissile>>,
+    radio: ResMut<'w, Radio>,
+}
+
+/// What putting up a smoke screen takes: the Bradleys' random stream, the effects, and the smoke on the field.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Screen<'w> {
+    rng: ResMut<'w, BradleyRng>,
+    fx: ResMut<'w, FxQueue>,
+    smoke: ResMut<'w, fx::Smoke>,
+}
+
+/// A Bradley's gun as its crew work it on their own: the hull, its arms and gun, the run it is on, and whether it is
+/// to keep quiet or is on the pass that fails.
+type Gunner = (Entity, &'static Vehicle, &'static Transform, &'static mut BradleyArms, &'static mut Gun, Option<&'static mut Run>, Has<Quiet>, Has<Failing>);
+
+/// A Bradley on a run as its driver takes it: the hull, the driver, where it is, the run, and whether it is the pass
+/// that fails.
+type OnRun = (Entity, &'static Vehicle, &'static mut Driver, &'static mut Transform, &'static mut Run, Has<Failing>);
+
+/// Hulls that can answer a Bradley: not Bradleys themselves, and not blinded.
+type Answering = (Without<BradleyArms>, Without<Blinded>);
 
 /// The sight's magnification (the ISU's low setting).
 pub const SIGHT_ZOOM: f32 = 4.0;
@@ -246,17 +304,16 @@ fn run_length() -> f32 {
 
 /// From the seat, G / K / B order the driver on, to hold, or back: out of the hide along the gunner's line, stop
 /// where it is, back into the hide. The driver answers on the intercom.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn seat_orders(
     mut commands: Commands,
     time: Res<Time>,
     keys: Res<ButtonInput<KeyCode>>,
     view: Res<View>,
-    mut radio: ResMut<Radio>,
-    mut duel: Option<ResMut<Duel>>,
+    log: RunLog,
     cam: Single<&GlobalTransform, With<MainCamera>>,
-    mut q: Query<(&Vehicle, &Transform, Option<&mut Run>), (With<BradleyArms>, Without<Coasting>)>,
+    mut q: Query<(&Vehicle, &Transform, Option<&mut Run>), Bradleys>,
 ) {
+    let RunLog { mut radio, mut duel } = log;
     if view.mode != Mode::Bradley {
         return;
     }
@@ -304,17 +361,16 @@ fn new_run(hide: Vec2, end: Vec2, target: Option<Entity>) -> Run {
 
 /// A run the script ordered goes once a hull of theirs has stopped within reach of the hide, in its sight and out of
 /// the smoke (a tank before anything else), and once the other Bradley is back in its hide.
-#[allow(clippy::type_complexity)]
 fn start_runs(
     mut commands: Commands,
     time: Res<Time>,
-    mut radio: ResMut<Radio>,
-    mut duel: Option<ResMut<Duel>>,
+    log: RunLog,
     smoke: Res<fx::Smoke>,
     out: Query<&Vehicle, (With<Run>, Without<Coasting>)>,
     vehicles: Query<(Entity, &Vehicle, &Transform, Has<Blinded>)>,
     ordered: Query<(Entity, &Vehicle, &Transform, &RunOrdered), Without<Run>>,
 ) {
+    let RunLog { mut radio, mut duel } = log;
     if out.iter().any(|v| v.state.alive() && v.crew > 0) {
         return;
     }
@@ -352,24 +408,18 @@ fn start_runs(
 }
 
 /// The player's seat: the right button is the sight, the left a burst of what X has selected, T a TOW.
-#[allow(clippy::too_many_arguments)]
 fn player_gun(
     mut commands: Commands,
-    time: Res<Time>,
-    (keys, buttons): (Res<ButtonInput<KeyCode>>, Res<ButtonInput<MouseButton>>),
-    mut view: ResMut<View>,
-    mut rng: ResMut<BradleyRng>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
-    mut radio: ResMut<Radio>,
-    (mut hits, mut blasts): (MessageWriter<DirectHit>, MessageWriter<Blast>),
-    (models, palette): (Res<units::Models>, Res<units::Palette>),
-    cam: Single<&GlobalTransform, With<MainCamera>>,
-    turrets: Query<&GlobalTransform, With<Turret>>,
+    seat: Seat,
+    gunnery: Gunnery,
+    mut blasts: MessageWriter<Blast>,
+    dress: Dress,
     vehicles: Query<(Entity, &Vehicle, &Transform)>,
     mut arms: Query<(&Vehicle, &Transform, &mut BradleyArms, &mut Gun, Option<&mut Run>)>,
-    guided: Query<(), With<GuidedMissile>>,
 ) {
+    let Seat { controls: Controls { keys, buttons }, mut view, cam, guided, mut radio } = seat;
+    let Gunnery { time, mut rng, effects: Effects { mut fx, mut sound }, mut hits, turrets } = gunnery;
+    let Dress { models, palette } = dress;
     if view.mode != Mode::Bradley {
         return;
     }
@@ -475,22 +525,10 @@ fn player_gun(
 /// else, a burst at a tank's front when the launcher is reloading. One on a run goes for what it went out for, as
 /// fast as the gun will take it ("we fired with all we could", v02 §6): AP first, and when that does nothing to a
 /// tank, HE at its sights.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn auto_guns(
-    mut commands: Commands,
-    time: Res<Time>,
-    view: Res<View>,
-    mut rng: ResMut<BradleyRng>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
-    mut hits: MessageWriter<DirectHit>,
-    mut log: ResMut<HitLog>,
-    smoke: Res<fx::Smoke>,
-    (models, palette): (Res<units::Models>, Res<units::Palette>),
-    turrets: Query<&GlobalTransform, With<Turret>>,
-    vehicles: Query<(Entity, &Vehicle, &Transform)>,
-    mut arms: Query<(Entity, &Vehicle, &Transform, &mut BradleyArms, &mut Gun, Option<&mut Run>, Has<Quiet>, Has<Failing>)>,
-) {
+fn auto_guns(mut commands: Commands, view: Res<View>, gunnery: Gunnery, mut log: ResMut<HitLog>, sight: Sight, dress: Dress, mut arms: Query<Gunner>) {
+    let Gunnery { time, mut rng, effects: Effects { mut fx, mut sound }, mut hits, turrets } = gunnery;
+    let Sight { smoke, vehicles } = sight;
+    let Dress { models, palette } = dress;
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     let rng = &mut rng.0;
@@ -564,7 +602,7 @@ fn auto_guns(
         burst_fx(&mut fx, &mut sound, rng, muzzle, dir, d, Side::Ua);
         if failing && o.kind.is_tank() {
             // The first pass: the AP off the front of the tank, and nothing to show for it.
-            log.open(now, "25 mm", "the first Bradley", t, o, false, "AP off the front armour: nothing");
+            log.open(now, "25 mm", "the first Bradley", Victim { target: t, vehicle: o, rescue: false }, "AP off the front armour: nothing");
             fx.explosion(p + Vec3::Y * 1.0, 0.3, false);
             continue;
         }
@@ -590,19 +628,17 @@ fn reach() -> f32 {
 /// The driver on a run: he turns the hull onto the run's line, takes it out at a run, holds where he is told, and
 /// backs it into the hide again under its smoke. Left to themselves the crew come back when what they went for is out
 /// of the fight, after a minute and a half out, or, on the pass that fails, after a few bursts that did nothing.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
 fn drive_runs(
     mut commands: Commands,
     time: Res<Time>,
     view: Res<View>,
-    mut rng: ResMut<BradleyRng>,
-    mut fx: ResMut<FxQueue>,
-    mut smoke: ResMut<fx::Smoke>,
-    mut radio: ResMut<Radio>,
-    mut duel: Option<ResMut<Duel>>,
+    screen: Screen,
+    log: RunLog,
     targets: Query<(&Vehicle, Has<Blinded>), Without<BradleyArms>>,
-    mut q: Query<(Entity, &Vehicle, &mut Driver, &mut Transform, &mut Run, Has<Failing>), (With<BradleyArms>, Without<Coasting>)>,
+    mut q: Query<OnRun, Bradleys>,
 ) {
+    let Screen { mut rng, mut fx, mut smoke } = screen;
+    let RunLog { mut radio, mut duel } = log;
     let dt = crate::sim_dt(&time);
     let now = time.elapsed_secs_f64();
     for (e, v, mut d, mut tf, mut r, failing) in &mut q {
@@ -659,18 +695,8 @@ fn drive_runs(
 /// A tank of theirs that sees one of our Bradleys out of its hide turns its gun on it and fires when it is next
 /// loaded, in place of the trench (`fire::attacker_guns`). The first shot at a run goes wide, as the T-90M's did at
 /// Stepove; after it, a hit is a matter of range and of whether the Bradley is moving.
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn tanks_answer(
-    time: Res<Time>,
-    mut rng: ResMut<BradleyRng>,
-    mut fx: ResMut<FxQueue>,
-    mut sound: Sound,
-    mut hits: MessageWriter<DirectHit>,
-    smoke: Res<fx::Smoke>,
-    turrets: Query<&GlobalTransform, With<Turret>>,
-    mut runs: Query<(Entity, &Vehicle, &Transform, &Driver, &mut Run), Without<Coasting>>,
-    mut tanks: Query<(&Vehicle, &mut Gun, &Transform), (Without<BradleyArms>, Without<Blinded>)>,
-) {
+fn tanks_answer(gunnery: Gunnery, smoke: Res<fx::Smoke>, mut runs: Query<(Entity, &Vehicle, &Transform, &Driver, &mut Run), Without<Coasting>>, mut tanks: Query<(&Vehicle, &mut Gun, &Transform), Answering>) {
+    let Gunnery { time, mut rng, effects: Effects { mut fx, mut sound }, mut hits, turrets } = gunnery;
     if runs.is_empty() {
         return;
     }

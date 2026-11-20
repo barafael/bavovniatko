@@ -296,16 +296,7 @@ fn hide_briefing(mut q: Query<&mut Node, With<Briefing>>) {
 /// The showcase films some shots with the interface off: while [`HudHidden`] says so, every top-level node is
 /// hidden (as under the debrief); the [`HudKeep`] ones come back with it, after the display has already re-tuned
 /// the rest this frame.
-#[allow(clippy::type_complexity)]
-fn hud_switch(
-    hidden: Res<HudHidden>,
-    phase: Res<State<Phase>>,
-    mut nodes: ParamSet<(
-        Query<&mut Visibility, (With<Node>, Without<ChildOf>, Without<Debrief>)>,
-        Query<&mut Visibility, (With<HudKeep>, Without<ChildOf>, Without<Debrief>)>,
-    )>,
-    mut hid: Local<bool>,
-) {
+fn hud_switch(hidden: Res<HudHidden>, phase: Res<State<Phase>>, mut nodes: ParamSet<(TopLevel, KeptTopLevel)>, mut hid: Local<bool>) {
     if *phase.get() != Phase::Playing {
         return;
     }
@@ -322,33 +313,94 @@ fn hud_switch(
     }
 }
 
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn update_hud(
-    time: Res<Time>,
-    vtime: Res<Time<Virtual>>,
-    view: Res<View>,
-    script: Res<Script>,
-    stats: Res<Stats>,
-    fc: Res<FireControl>,
-    radio: Res<Radio>,
-    (order, fpv_res, op_res, iglas, field, air, runway, bradleys, drops, robots, seep, kz, task): (Res<ColumnOrder>, Res<bav_sim::player::Fpv>, Res<bav_sim::player::Operator>, Query<&bav_sim::manpads::Igla>, Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Option<Res<bav_sim::air::Airfield>>, Query<(&bav_sim::bradley::BradleyArms, Option<&bav_sim::bradley::Run>)>, Option<Res<bav_sim::drones::Drops>>, RobotView, SeepView, Option<Res<bav_sim::killzone::KzTally>>, crate::task::TaskView),
-    positions: Query<(&Post, Option<&AtgmTeam>)>,
-    mut texts: ParamSet<(
-        Single<&mut Text, With<Telemetry>>,
-        Single<&mut Text, With<Tally>>,
-        Single<&mut Text, With<FirePanel>>,
-        Single<&mut Text, With<NoSignal>>,
-        Query<(&Osd, &mut Text, &mut Visibility)>,
-    )>,
-    mut crosshair: Query<&mut Visibility, (With<Crosshair>, Without<Reticle>, Without<Osd>, Without<Gate>)>,
-    mut reticle: Query<&mut Visibility, (With<Reticle>, Without<Crosshair>, Without<Osd>, Without<Gate>)>,
-    sight: (Query<(&Gate, &mut Node, &mut Visibility, &mut BackgroundColor), (Without<Crosshair>, Without<Reticle>, Without<Osd>)>, Single<(&Camera, &GlobalTransform), With<crate::camera::MainCamera>>, Query<&Transform, With<crate::units::Vehicle>>),
-    phase: Res<State<Phase>>,
-    mut commands: Commands,
-    net: (Res<Fonts>, Single<Entity, With<RadioLog>>, Single<Entity, With<Banner>>, Local<(String, String)>),
-) {
-    let team = (&*fpv_res, &*op_res);
-    let (fonts, log_root, banner_root, mut shown) = net;
+/// The day's clock and counts: the script, the tally, and what the guns have left.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(crate) struct Day<'w> {
+    pub script: Res<'w, Script>,
+    pub stats: Res<'w, Stats>,
+    pub fc: Res<'w, FireControl>,
+}
+
+/// What the day has besides its columns, where it has it: the fight's areas, the aircraft and the runway, the
+/// drone's grenades, their drones' tally; and our Igla teams.
+#[derive(bevy::ecs::system::SystemParam)]
+struct DayTallies<'w, 's> {
+    field: Option<Res<'w, bav_sim::fight::Field>>,
+    air: Option<Res<'w, bav_sim::air::AirTally>>,
+    runway: Option<Res<'w, bav_sim::air::Airfield>>,
+    drops: Option<Res<'w, bav_sim::drones::Drops>>,
+    kz: Option<Res<'w, bav_sim::killzone::KzTally>>,
+    iglas: Query<'w, 's, &'static bav_sim::manpads::Igla>,
+}
+
+/// The drone team: the FPV in the air and the operator who flies it.
+#[derive(bevy::ecs::system::SystemParam)]
+struct DroneTeam<'w> {
+    fpv: Res<'w, bav_sim::player::Fpv>,
+    op: Res<'w, bav_sim::player::Operator>,
+}
+
+/// Everything the display reads of the battle: the view, the day, the order to the columns, the drone team, the
+/// day's own parts, the Bradleys' arms, and our posts with their teams.
+#[derive(bevy::ecs::system::SystemParam)]
+struct HudReadings<'w, 's> {
+    view: Res<'w, View>,
+    day: Day<'w>,
+    order: Res<'w, ColumnOrder>,
+    team: DroneTeam<'w>,
+    tallies: DayTallies<'w, 's>,
+    bradleys: Query<'w, 's, (&'static bav_sim::bradley::BradleyArms, Option<&'static bav_sim::bradley::Run>)>,
+    positions: Query<'w, 's, (&'static Post, Option<&'static AtgmTeam>)>,
+    robots: RobotView<'w, 's>,
+    seep: SeepView<'w, 's>,
+    task: crate::task::TaskView<'w, 's>,
+}
+
+/// The one text node marked `M`.
+type TextOf<'w, 's, M> = Single<'w, 's, &'static mut Text, With<M>>;
+/// The drone's OSD texts, each with what it shows.
+type OsdTexts<'w, 's> = Query<'w, 's, (&'static Osd, &'static mut Text, &'static mut Visibility)>;
+/// The display's texts, one at a time.
+type HudTexts<'w, 's> = ParamSet<'w, 's, (TextOf<'w, 's, Telemetry>, TextOf<'w, 's, Tally>, TextOf<'w, 's, FirePanel>, TextOf<'w, 's, NoSignal>, OsdTexts<'w, 's>)>;
+/// The drone's crosshair, apart from the other marks.
+type CrosshairOnly = (With<Crosshair>, Without<Reticle>, Without<Osd>, Without<Gate>);
+/// The ground sight's reticle, apart from the other marks.
+type ReticleOnly = (With<Reticle>, Without<Crosshair>, Without<Osd>, Without<Gate>);
+/// The gate's corner marks, apart from the other marks.
+type GateOnly = (Without<Crosshair>, Without<Reticle>, Without<Osd>);
+
+/// What the display writes: its texts (the telemetry, the tally, the fire panel, the no-signal card, the drone's
+/// OSD), and the sight's marks over the picture (the crosshair, the reticle and the gate's corners, with the camera
+/// and the hulls the gate is drawn around).
+#[derive(bevy::ecs::system::SystemParam)]
+struct HudDisplay<'w, 's> {
+    texts: HudTexts<'w, 's>,
+    crosshair: Query<'w, 's, &'static mut Visibility, CrosshairOnly>,
+    reticle: Query<'w, 's, &'static mut Visibility, ReticleOnly>,
+    gate: Query<'w, 's, (&'static Gate, &'static mut Node, &'static mut Visibility, &'static mut BackgroundColor), GateOnly>,
+    cam: Single<'w, 's, (&'static Camera, &'static GlobalTransform), With<crate::camera::MainCamera>>,
+    targets: Query<'w, 's, &'static Transform, With<crate::units::Vehicle>>,
+}
+
+/// The net's log and the day's caption: the radio, the font, the two roots the lines are written under, what they
+/// show now, and the commands that rewrite them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct NetLog<'w, 's> {
+    commands: Commands<'w, 's>,
+    radio: Res<'w, Radio>,
+    fonts: Res<'w, Fonts>,
+    log_root: Single<'w, 's, Entity, With<RadioLog>>,
+    banner_root: Single<'w, 's, Entity, With<Banner>>,
+    shown: Local<'s, (String, String)>,
+}
+
+fn update_hud(time: Res<Time>, vtime: Res<Time<Virtual>>, phase: Res<State<Phase>>, readings: HudReadings, display: HudDisplay, net: NetLog) {
+    let HudReadings { view, day, order, team, tallies, bradleys, positions, robots, seep, task } = readings;
+    let Day { script, stats, fc } = day;
+    let DayTallies { field, air, runway, drops, kz, iglas } = tallies;
+    let team = (&*team.fpv, &*team.op);
+    let HudDisplay { mut texts, mut crosshair, mut reticle, mut gate, cam, targets } = display;
+    let NetLog { mut commands, radio, fonts, log_root, banner_root, mut shown } = net;
     // Under the debrief the display stays as `show_debrief` left it: hidden.
     if *phase.get() == Phase::Debrief {
         return;
@@ -359,7 +411,6 @@ fn update_hud(
     }
     // The gate: the hull's box on the screen, flashing until the seeker has locked (a Stugna's tracker holds at
     // once), and the corner marks drawn as L-shapes by colour alone.
-    let (mut gate, cam, targets) = sight;
     let team_weapon = view.ground_team.and_then(|e| positions.get(e).ok()).and_then(|(_, t)| t.map(|t| t.weapon));
     let held = (view.mode == Mode::Ground && view.sight).then_some(view.lock).flatten();
     let gate_box = held.and_then(|(e, t)| {
@@ -643,6 +694,8 @@ struct SourceLink(String);
 
 /// Every top-level UI node: no parent, and not the debrief's own.
 type TopLevel<'w, 's> = Query<'w, 's, &'static mut Visibility, (With<Node>, Without<ChildOf>, Without<Debrief>)>;
+/// The top-level nodes that come back when the showcase turns the interface on again.
+type KeptTopLevel<'w, 's> = Query<'w, 's, &'static mut Visibility, (With<HudKeep>, Without<ChildOf>, Without<Debrief>)>;
 
 /// The drone's screen and its overlays: they go under the debrief screen when the day ends.
 #[derive(bevy::ecs::system::SystemParam)]
@@ -654,23 +707,9 @@ struct HudNodes<'w, 's> {
 /// lines about what came after, with no heading; and the sources the day rests on, each a row that opens in the
 /// browser. No figures from the record are set against the day's own: the sources say where the day came from,
 /// the ledger what it cost (design/next-items.md, package K).
-#[allow(clippy::type_complexity)]
-fn show_debrief(
-    mut commands: Commands,
-    fonts: Res<Fonts>,
-    stats: Res<Stats>,
-    fc: Res<FireControl>,
-    script: Res<Script>,
-    positions: Query<&'static Post>,
-    soldiers: Query<&'static crate::units::Soldier>,
-    evac: Res<bav_sim::evac::Evacuation>,
-    mut root: Query<&mut Node, With<Debrief>>,
-    body: Single<Entity, With<DebriefText>>,
-    mut hud: HudNodes,
-    (field, air, iglas, runway, drops, robots, seep, kz): (Option<Res<bav_sim::fight::Field>>, Option<Res<bav_sim::air::AirTally>>, Query<&'static bav_sim::manpads::Igla>, Option<Res<bav_sim::air::Airfield>>, Option<Res<bav_sim::drones::Drops>>, (Option<Res<bav_sim::robots::Robots>>, Option<Res<bav_sim::evac::Casualties>>), Option<Res<bav_sim::seep::Seep>>, Option<Res<bav_sim::killzone::KzTally>>),
-    duel: DuelView,
-    task: crate::task::TaskView,
-) {
+fn show_debrief(mut commands: Commands, fonts: Res<Fonts>, counts: LedgerView, screen: DebriefScreen, task: crate::task::TaskView) {
+    let DebriefScreen { mut root, body, mut hud } = screen;
+    let (stats, script) = (&counts.day.stats, &counts.day.script);
     for mut n in &mut root {
         n.display = Display::Flex;
     }
@@ -686,7 +725,7 @@ fn show_debrief(
     let place = spec.place.as_ref().unwrap_or(&data.place);
     let heading = format!("{}   {} ({})", data.date, place.0, place.1);
     let span = format!("{} – {}", director::clock_text(0.0), director::clock_text(script.t));
-    let ledger = Ledger { stats: &stats, fc: &fc, positions: &positions, soldiers: &soldiers, evac: &evac, field: field.as_deref(), air: air.as_deref(), iglas: &iglas, runway: runway.as_deref(), drops: drops.as_deref(), robots: robots.0.as_deref(), casualties: robots.1.as_deref(), seep: seep.as_deref(), kz: kz.as_deref(), duel: &duel, script: &script };
+    let ledger = counts.ledger();
     let mut rows = Vec::new();
     ledger.rows(&spec.rows, &mut rows);
     // The columns, as a small table: (name, vehicles, destroyed, abandoned).
@@ -786,6 +825,52 @@ struct DuelView<'w, 's> {
     vehicles: Query<'w, 's, (&'static crate::units::Vehicle, Has<crate::units::Blinded>)>,
     arms: Query<'w, 's, &'static bav_sim::bradley::BradleyArms>,
     fpv: Res<'w, bav_sim::player::Fpv>,
+}
+
+/// The debrief's screen: its root, the node its text goes under, and the display it hides.
+#[derive(bevy::ecs::system::SystemParam)]
+struct DebriefScreen<'w, 's> {
+    root: Query<'w, 's, &'static mut Node, With<Debrief>>,
+    body: Single<'w, 's, Entity, With<DebriefText>>,
+    hud: HudNodes<'w, 's>,
+}
+
+/// What the debrief's rows are counted from, as the system reads it; [`LedgerView::ledger`] lends it out.
+#[derive(bevy::ecs::system::SystemParam)]
+struct LedgerView<'w, 's> {
+    day: Day<'w>,
+    tallies: DayTallies<'w, 's>,
+    positions: Query<'w, 's, &'static Post>,
+    soldiers: Query<'w, 's, &'static crate::units::Soldier>,
+    evac: Res<'w, bav_sim::evac::Evacuation>,
+    robots: Option<Res<'w, bav_sim::robots::Robots>>,
+    casualties: Option<Res<'w, bav_sim::evac::Casualties>>,
+    seep: Option<Res<'w, bav_sim::seep::Seep>>,
+    duel: DuelView<'w, 's>,
+}
+
+impl<'w, 's> LedgerView<'w, 's> {
+    fn ledger(&self) -> Ledger<'_, 'w, 's> {
+        let t = &self.tallies;
+        Ledger {
+            stats: &self.day.stats,
+            fc: &self.day.fc,
+            positions: &self.positions,
+            soldiers: &self.soldiers,
+            evac: &self.evac,
+            field: t.field.as_deref(),
+            air: t.air.as_deref(),
+            iglas: &t.iglas,
+            runway: t.runway.as_deref(),
+            drops: t.drops.as_deref(),
+            robots: self.robots.as_deref(),
+            casualties: self.casualties.as_deref(),
+            seep: self.seep.as_deref(),
+            kz: t.kz.as_deref(),
+            duel: &self.duel,
+            script: &self.day.script,
+        }
+    }
 }
 
 /// Everything the debrief's rows can count.

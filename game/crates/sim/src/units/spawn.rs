@@ -142,7 +142,19 @@ pub(super) fn spawn_old_wrecks(mut commands: Commands, models: Res<Models>) {
     }
 }
 
-pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette, side: Side, at: Vec2, goal: Vec2, home: Vec2, sprint: f32, cover: Option<Vec2>, rng: &mut SmallRng) -> Entity {
+/// A man to put on the field: his side, where he stands, where he is going, where he falls back to, how hard he
+/// runs, and the cover he makes for, if any.
+pub struct NewSoldier {
+    pub side: Side,
+    pub at: Vec2,
+    pub goal: Vec2,
+    pub home: Vec2,
+    pub sprint: f32,
+    pub cover: Option<Vec2>,
+}
+
+pub fn spawn_soldier(commands: &mut Commands, models: &Models, palette: &Palette, man: NewSoldier, rng: &mut SmallRng) -> Entity {
+    let NewSoldier { side, at, goal, home, sprint, cover } = man;
     let (body, leg) = (models.figure(side).body.clone(), models.figure(side).leg.clone());
     let hip = models.hip;
     let l0 = commands.spawn((Mesh3d(leg.clone()), MeshMaterial3d(palette.vertex.clone()), Transform::from_translation(hip), Leg(0.0), NotShadowCaster)).id();

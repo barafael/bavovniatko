@@ -8,7 +8,7 @@
 
 use crate::fire::Post;
 use crate::geo;
-use crate::units::{Models, Palette, Radio, SState, Side, Soldier, Stats};
+use crate::units::{Dress, Radio, Report, SState, Side, Soldier};
 use bevy::prelude::*;
 use rand::{Rng, SeedableRng, rngs::SmallRng};
 use serde::Deserialize;
@@ -222,7 +222,6 @@ fn lift(script: Res<crate::director::Script>, time: Res<Time>, mut radio: ResMut
 /// For the bands (`BAV_LOG_STATS`), where the day has a fog or a night: how far one sees once a minute of the day's
 /// clock, and each of the attackers' men once, when a post of ours first has him in its rifles' reach, and how far
 /// from it he is then.
-#[allow(clippy::type_complexity)]
 fn log_seen(script: Res<crate::director::Script>, seeing: Res<Seeing>, soldiers: Query<(Entity, &Soldier, &Transform)>, posts: Query<&Post>, mut seen: Local<std::collections::BTreeSet<Entity>>, mut last: Local<Option<u32>>) {
     if !crate::dev::dev().log_stats {
         return;
@@ -269,6 +268,21 @@ pub struct Zone {
     pub held: Option<Side>,
 }
 
+/// The fight for the posts as the day keeps it: the field's count, the day's clock, and the radio.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(crate) struct FieldWatch<'w> {
+    field: ResMut<'w, Field>,
+    script: Res<'w, crate::director::Script>,
+    radio: ResMut<'w, Radio>,
+}
+
+/// Their men on the field, and how far the light lets a post see them.
+#[derive(bevy::ecs::system::SystemParam)]
+pub(crate) struct InSight<'w, 's> {
+    seeing: Res<'w, Seeing>,
+    soldiers: Query<'w, 's, (&'static Soldier, &'static Transform)>,
+}
+
 /// The field: its areas, and the day's count of our posts and men.
 #[derive(Resource, Default)]
 pub struct Field {
@@ -286,9 +300,11 @@ pub struct Field {
     pub open: Vec<Vec2>,
 }
 
+/// Posts still holding that have not had their ammunition yet.
+type Unsupplied = (Without<Ammo>, Without<PulledOut>);
+
 /// The defenders' posts get their ammunition once they are on the ground (ours in the morning, the VDV's at dusk).
-#[allow(clippy::type_complexity)]
-pub(crate) fn supply_posts(mut commands: Commands, posts: Query<(Entity, &Post), (Without<Ammo>, Without<PulledOut>)>) {
+pub(crate) fn supply_posts(mut commands: Commands, posts: Query<(Entity, &Post), Unsupplied>) {
     let Some(s) = spec() else { return };
     for (e, p) in &posts {
         if p.side == crate::diorama::diorama().defender() {
@@ -420,16 +436,13 @@ fn assault(time: Res<Time>, mut rng: ResMut<FightRng>, mut tick: Local<f32>, fie
 
 /// Their men fire back: a man lying or dug in within rifle range of a post he can see, now and then, and the post
 /// loses a man to it now and then.
-#[allow(clippy::type_complexity)]
 pub(crate) fn return_fire(
     mut commands: Commands,
     time: Res<Time>,
-    seeing: Res<Seeing>,
+    sight: InSight,
     mut rng: ResMut<FightRng>,
     mut fx: ResMut<crate::fx::FxQueue>,
-    mut stats: ResMut<Stats>,
-    mut radio: ResMut<Radio>,
-    soldiers: Query<(&Soldier, &Transform)>,
+    mut report: Report,
     mut posts: Query<(Entity, &mut Post), Without<PulledOut>>,
 ) {
     let dt = crate::sim_dt(&time);
@@ -442,11 +455,11 @@ pub(crate) fn return_fire(
         }
         // Only so many can fire on one post at once, from where they lie: the nearest ten that can see it (the sight
         // lines tested nearest first, and no more than needed).
-        let mut near: Vec<(Vec3, f32)> = soldiers
+        let mut near: Vec<(Vec3, f32)> = sight.soldiers
             .iter()
             .filter(|(s, _)| s.side == attacker && !matches!(s.state, SState::Flee | SState::Wounded))
             .map(|(_, t)| (t.translation, t.translation.xz().distance(post.pos)))
-            .filter(|(_, d)| *d < seeing.reach(400.0, post.pos))
+            .filter(|(_, d)| *d < sight.seeing.reach(400.0, post.pos))
             .collect();
         near.sort_by(|a, b| a.1.total_cmp(&b.1));
         let shooters: Vec<(Vec3, f32)> = near.into_iter().filter(|(p, _)| geo::line_of_sight(p.xz(), post.pos)).take(10).collect();
@@ -462,12 +475,12 @@ pub(crate) fn return_fire(
         }
         if rng.random_bool(p.min(0.9) as f64) {
             post.strength -= 1;
-            stats.defender_losses += 1;
+            report.stats.defender_losses += 1;
             if let Some(f) = post.figures.pop() {
                 commands.entity(f).despawn();
             }
             if post.strength == 0 {
-                radio.say2(now, format!("Втратили позицію на {:.0}, {:.0}.", post.pos.x, post.pos.y), format!("We've lost the position at {:.0}, {:.0}.", post.pos.x, post.pos.y));
+                report.radio.say2(now, format!("Втратили позицію на {:.0}, {:.0}.", post.pos.x, post.pos.y), format!("We've lost the position at {:.0}, {:.0}.", post.pos.x, post.pos.y));
                 let _ = e;
             }
         }
@@ -475,55 +488,51 @@ pub(crate) fn return_fire(
 }
 
 /// A post out of ammunition, or told to, pulls out: its men get up and go, and it fires no more.
-#[allow(clippy::too_many_arguments)]
 pub(crate) fn pull_out(
     mut commands: Commands,
     time: Res<Time>,
-    script: Res<crate::director::Script>,
     mut rng: ResMut<FightRng>,
-    mut field: ResMut<Field>,
-    mut radio: ResMut<Radio>,
-    models: Res<Models>,
-    palette: Res<Palette>,
+    mut watch: FieldWatch,
+    dress: Dress,
     mut posts: Query<(Entity, &mut Post, &Ammo), Without<PulledOut>>,
 ) {
     let Some(s) = spec() else { return };
     let now = time.elapsed_secs_f64();
     let out_to = Vec2::new(s.out_to.0, s.out_to.1);
     for (e, mut post, ammo) in &mut posts {
-        if post.side != Side::Ua || post.strength == 0 || !(ammo.0 == 0 || field.ordered_out) {
+        if post.side != Side::Ua || post.strength == 0 || !(ammo.0 == 0 || watch.field.ordered_out) {
             continue;
         }
         if ammo.0 == 0 {
-            radio.say2(now, "Набої закінчились! Відходимо.", "Out of ammunition! We're pulling out.");
+            watch.radio.say2(now, "Набої закінчились! Відходимо.", "Out of ammunition! We're pulling out.");
         }
         let men = (post.strength * s.men_per).min(12);
         for k in 0..men {
             let at = post.pos + Vec2::new(k as f32 * 1.5 - 8.0, rng.0.random_range(-3.0..3.0));
-            let man = crate::units::spawn_soldier(&mut commands, &models, &palette, Side::Ua, at, out_to, out_to, 1.2, None, &mut rng.0);
+            let man = crate::units::spawn_soldier(&mut commands, &dress.models, &dress.palette, crate::units::NewSoldier { side: Side::Ua, at, goal: out_to, home: out_to, sprint: 1.2, cover: None }, &mut rng.0);
             commands.entity(man).insert(Leaving(out_to + Vec2::new(rng.0.random_range(-40.0..40.0), rng.0.random_range(-40.0..40.0))));
         }
-        info!("fight: the post at {:.0},{:.0} pulls out ({}), {} men, at {:.0} s", post.pos.x, post.pos.y, if ammo.0 == 0 { "dry" } else { "ordered" }, post.strength * s.men_per, script.t);
-        field.out += post.strength * s.men_per;
+        info!("fight: the post at {:.0},{:.0} pulls out ({}), {} men, at {:.0} s", post.pos.x, post.pos.y, if ammo.0 == 0 { "dry" } else { "ordered" }, post.strength * s.men_per, watch.script.t);
+        watch.field.out += post.strength * s.men_per;
         post.strength = 0;
         for f in post.figures.drain(..) {
             commands.entity(f).despawn();
         }
         commands.entity(e).insert(PulledOut);
-        field.held_until = Some(script.t);
+        watch.field.held_until = Some(watch.script.t);
     }
 }
 
+/// A post as `overrun` weighs it: whether it is pinned down, and what ammunition it has left.
+type HoldingPost = (Entity, &'static mut Post, Option<&'static crate::fire::Suppressed>, Option<&'static Ammo>);
+
 /// A post still holding with their men all round it and no answer left is taken.
-#[allow(clippy::type_complexity)]
 fn overrun(
     mut commands: Commands,
     time: Res<Time>,
-    script: Res<crate::director::Script>,
-    mut field: ResMut<Field>,
-    mut radio: ResMut<Radio>,
+    mut watch: FieldWatch,
     soldiers: Query<(&Soldier, &Transform)>,
-    mut posts: Query<(Entity, &mut Post, Option<&crate::fire::Suppressed>, Option<&Ammo>), Without<PulledOut>>,
+    mut posts: Query<HoldingPost, Without<PulledOut>>,
 ) {
     let Some(s) = spec() else { return };
     let now = time.elapsed_secs_f64();
@@ -538,18 +547,18 @@ fn overrun(
         let _ = down;
         if close >= 6 && spent {
             let men = post.strength.max(1) * s.men_per;
-            field.captured += men;
-            field.lost += 1;
+            watch.field.captured += men;
+            watch.field.lost += 1;
             post.strength = 0;
             for f in post.figures.drain(..) {
                 commands.entity(f).despawn();
             }
             commands.entity(e).insert(PulledOut);
-            field.held_until = Some(script.t);
+            watch.field.held_until = Some(watch.script.t);
             if post.side == Side::Ua {
-                radio.say2(now, "Позиція оточена. Зв'язку нема.", "The position is surrounded. No contact.");
+                watch.radio.say2(now, "Позиція оточена. Зв'язку нема.", "The position is surrounded. No contact.");
             } else {
-                radio.say2(now, "Їхню позицію взяли. Полонені є.", "Their position is ours. We have prisoners.");
+                watch.radio.say2(now, "Їхню позицію взяли. Полонені є.", "Their position is ours. We have prisoners.");
             }
             info!("fight: a post at {:.0},{:.0} taken, {men} men, at {now:.0} s", post.pos.x, post.pos.y);
         }

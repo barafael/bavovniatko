@@ -140,8 +140,9 @@ impl Canvas {
         }
     }
 
-    /// A limb from `p0` to `p1`, `w0` thick tapering to `w1`, at depth `z`, in colour `c`.
-    fn limb(&mut self, p0: Vec2, p1: Vec2, w0: f32, w1: f32, z: f32, c: [f32; 3], aspect: f32) {
+    /// A limb from `p0` to `p1`, `w.0` thick tapering to `w.1`, at depth `z`, in colour `c`.
+    fn limb(&mut self, p0: Vec2, p1: Vec2, w: (f32, f32), z: f32, c: [f32; 3], aspect: f32) {
+        let (w0, w1) = w;
         let (c0, c1, r0, r1) = Canvas::span(p0.min(p1) + (p0.max(p1) - p0.min(p1)) * 0.5, (p1 - p0).length() * 0.5 + w0, aspect);
         let d = p1 - p0;
         let len2 = d.length_squared().max(1e-8);
@@ -163,10 +164,30 @@ impl Canvas {
     }
 }
 
-/// A branching limb system: from `p` along `dir` for `len`, `w` thick, splitting `depth` more times. `spread` is
-/// how far the children turn, `up` how much they bend back towards the sky.
-#[allow(clippy::too_many_arguments)]
-fn branch(cv: &mut Canvas, p: Vec2, dir: Vec2, len: f32, w: f32, depth: u32, seed: u32, spread: f32, up: f32, z: f32, c: [f32; 3], aspect: f32, keep: &dyn Fn(Vec2) -> bool) {
+/// A limb to draw: from `p` along `dir` for `len`, `w` thick, at depth `z`, in colour `c`.
+struct Limb {
+    p: Vec2,
+    dir: Vec2,
+    len: f32,
+    w: f32,
+    z: f32,
+    c: [f32; 3],
+}
+
+/// How a tree's limbs grow: `spread` is how far the children turn, `up` how much they bend back towards the sky.
+/// They are drawn at `aspect`, and stop where `keep` says no.
+#[derive(Clone, Copy)]
+struct Habit<'a> {
+    spread: f32,
+    up: f32,
+    aspect: f32,
+    keep: &'a dyn Fn(Vec2) -> bool,
+}
+
+/// A branching limb system: `limb`, splitting `depth` more times, growing as `habit` has it.
+fn branch(cv: &mut Canvas, limb: Limb, depth: u32, seed: u32, habit: &Habit) {
+    let Limb { p, dir, len, w, z, c } = limb;
+    let Habit { spread, up, aspect, keep } = *habit;
     // A limb is a few kinked segments, not a ruled line.
     let segs = 3;
     let mut q = p;
@@ -180,7 +201,7 @@ fn branch(cv: &mut Canvas, p: Vec2, dir: Vec2, len: f32, w: f32, depth: u32, see
         }
         let t0 = k as f32 / segs as f32;
         let t1 = (k + 1) as f32 / segs as f32;
-        cv.limb(q, next, w * (1.0 - 0.45 * t0), w * (1.0 - 0.45 * t1), z, c, aspect);
+        cv.limb(q, next, (w * (1.0 - 0.45 * t0), w * (1.0 - 0.45 * t1)), z, c, aspect);
         q = next;
     }
     if depth == 0 {
@@ -195,7 +216,7 @@ fn branch(cv: &mut Canvas, p: Vec2, dir: Vec2, len: f32, w: f32, depth: u32, see
         let nd = (Vec2::from_angle(ang).rotate(d) + Vec2::Y * up).normalize();
         let zk = z + (hash01(seed * 17 + k, 9) - 0.5) * 0.2;
         let paler = c.map(|v| (v * 1.05).min(0.75));
-        branch(cv, start, nd, len * (0.5 + 0.25 * hash01(seed + k, 6)), w * 0.62, depth - 1, seed * 5 + k + 1, spread, up, zk, paler, aspect, keep);
+        branch(cv, Limb { p: start, dir: nd, len: len * (0.5 + 0.25 * hash01(seed + k, 6)), w: w * 0.62, z: zk, c: paler }, depth - 1, seed * 5 + k + 1, habit);
     }
 }
 
@@ -259,12 +280,12 @@ fn pine_side(seed: u32) -> Canvas {
     let half = aspect * 0.5;
     let outline = outline(Kind::Pine);
     let bark = [0.62, 0.46, 0.36];
-    cv.limb(Vec2::new(0.0, -0.05), Vec2::new(0.01, 0.92), 0.05, 0.02, 0.0, bark, aspect);
+    cv.limb(Vec2::new(0.0, -0.05), Vec2::new(0.01, 0.92), (0.05, 0.02), 0.0, bark, aspect);
     for k in 0..7u32 {
         let y = 0.2 + 0.7 * hash01(seed + k, 50);
         let side = if k % 2 == 0 { 1.0 } else { -1.0 };
         let reach = (outline)(y) * half * (0.7 + 0.3 * hash01(seed + k, 51));
-        cv.limb(Vec2::new(0.0, y - 0.05), Vec2::new(side * reach, y + 0.04), 0.022, 0.01, -0.1, bark, aspect);
+        cv.limb(Vec2::new(0.0, y - 0.05), Vec2::new(side * reach, y + 0.04), (0.022, 0.01), -0.1, bark, aspect);
     }
     for k in 0..70u32 {
         let id = seed * 7919 + k;
@@ -321,11 +342,11 @@ fn bare_side(kind: Kind, seed: u32) -> Canvas {
         let x0 = (hash01(seed + k, 30) - 0.5) * half * 0.25;
         let lean = if kind == Kind::Poplar { 0.15 } else { 1.2 };
         let dir = Vec2::new((hash01(seed + k, 31) - 0.5) * lean * aspect, 1.0).normalize();
-        branch(&mut cv, Vec2::new(x0, -0.05), dir, len, w, 5, seed * 3 + k, spread, up, (hash01(seed + k, 34) - 0.5) * 0.4, bark, aspect, &keep);
+        branch(&mut cv, Limb { p: Vec2::new(x0, -0.05), dir, len, w, z: (hash01(seed + k, 34) - 0.5) * 0.4, c: bark }, 5, seed * 3 + k, &Habit { spread, up, aspect, keep: &keep });
     }
     if kind == Kind::Broken {
         // The split stem: pale wood where the top was torn off.
-        cv.limb(Vec2::new(0.0, -0.05), Vec2::new(0.02, 0.5), 0.05, 0.035, 1.0, [0.78, 0.72, 0.62], aspect);
+        cv.limb(Vec2::new(0.0, -0.05), Vec2::new(0.02, 0.5), (0.05, 0.035), 1.0, [0.78, 0.72, 0.62], aspect);
     }
     cv
 }
@@ -342,7 +363,7 @@ fn bare_top(cell: usize, seed: u32) -> Canvas {
     for k in 0..n {
         let ang = (k as f32 + hash01(seed + k, 1) * 0.6) / n as f32 * std::f32::consts::TAU;
         let dir = Vec2::from_angle(ang);
-        branch(&mut cv, Vec2::new(0.0, 0.5), dir, 0.2, 0.025, 5, seed * 3 + k, 0.7, 0.0, hash01(seed + k, 2), [0.5, 0.47, 0.44], 1.0, &keep);
+        branch(&mut cv, Limb { p: Vec2::new(0.0, 0.5), dir, len: 0.2, w: 0.025, z: hash01(seed + k, 2), c: [0.5, 0.47, 0.44] }, 5, seed * 3 + k, &Habit { spread: 0.7, up: 0.0, aspect: 1.0, keep: &keep });
     }
     cv
 }
@@ -464,9 +485,9 @@ pub fn atlas(season: bav_core::data::Season) -> Image {
 
 /// A leafy crown as patches: cards placed through the ellipsoid of the crown, each about three quarters of the
 /// crown across and turned its own way, its picture's top kept towards the sky. The seed is the crown's turn, so
-/// every crown is its own arrangement.
-#[allow(clippy::too_many_arguments)]
-fn patches(m: &mut crate::meshes::MeshBuilder, kind: Kind, mid: Vec3, w: f32, h: f32, yaw: f32, c: crate::meshes::Rgb, normal: &dyn Fn(Vec3) -> Vec3) {
+/// every crown is its own arrangement. `mid` is the crown's middle, `normal` its normals.
+fn patches(m: &mut crate::meshes::MeshBuilder, crown: &crate::world::Crown, mid: Vec3, normal: &dyn Fn(Vec3) -> Vec3) {
+    let &crate::world::Crown { kind, w, h, yaw, colour: c, .. } = crown;
     let n = if matches!(kind, Kind::Shrub | Kind::Thicket | Kind::Broken) { 3 } else { 5 };
     let seed = (yaw * 10_000.0) as u32;
     let half = Vec3::new(w * 0.5, h * 0.5, w * 0.5);
@@ -503,19 +524,19 @@ fn cell_uv(cell: usize, u: f32, v: f32) -> Vec2 {
 }
 
 /// A crown from the kind's cells: in June leafy patches, in February three crossed upright cards and one across
-/// its top. Its foot's centre is `at`, its width `w` and height `h` (the kind's aspect, give or take). The normals
-/// point out of a ball round the crown's middle, leaning up, so the crown is lit like a mass of leaves (sunny
-/// side, shade side, lit top) and not like flat boards; the cards are drawn from both faces with the same normals
-/// (the material is not double-sided), so no card's back goes dark.
-#[allow(clippy::too_many_arguments)]
-pub fn crown(m: &mut crate::meshes::MeshBuilder, kind: Kind, at: Vec3, w: f32, h: f32, yaw: f32, flip: bool, c: crate::meshes::Rgb) {
+/// its top, as `crown` has it: its foot's centre `at`, its width `w` and height `h` (the kind's aspect, give or
+/// take). The normals point out of a ball round the crown's middle, leaning up, so the crown is lit like a mass of
+/// leaves (sunny side, shade side, lit top) and not like flat boards; the cards are drawn from both faces with the
+/// same normals (the material is not double-sided), so no card's back goes dark.
+pub fn crown(m: &mut crate::meshes::MeshBuilder, crown: &crate::world::Crown) {
+    let &crate::world::Crown { kind, at, w, h, yaw, flip, colour: c } = crown;
     let mid = at + Vec3::Y * h * 0.5;
     let normal = |p: Vec3| {
         let d = (p - mid) / Vec3::new(w * 0.5, h * 0.5, w * 0.5);
         (d + Vec3::Y * 1.4).normalize_or(Vec3::Y)
     };
     if crate::diorama::diorama().summer() {
-        patches(m, kind, mid, w, h, yaw, c, &normal);
+        patches(m, crown, mid, &normal);
         return;
     }
     let side = kind.side_cell();

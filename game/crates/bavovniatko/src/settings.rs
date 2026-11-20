@@ -273,21 +273,40 @@ fn settings_input(keys: Res<ButtonInput<KeyCode>>, phase: Res<State<crate::Phase
     *settings = s;
 }
 
+/// The window and the main camera, which the settings go into.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Outputs<'w, 's> {
+    window: Single<'w, 's, &'static mut Window, With<PrimaryWindow>>,
+    camera: Single<'w, 's, Entity, With<crate::player::MainCamera>>,
+}
+
+/// The sun's shadows: its light with the cascades, and the shadow map's size.
+#[derive(bevy::ecs::system::SystemParam)]
+struct Shadows<'w, 's> {
+    sun: Query<'w, 's, (&'static mut DirectionalLight, &'static mut bevy::light::CascadeShadowConfig)>,
+    map: ResMut<'w, DirectionalLightShadowMap>,
+}
+
+/// The tree cards' material, which the shared palette holds once the look has made it.
+#[derive(bevy::ecs::system::SystemParam)]
+struct TreeCards<'w> {
+    palette: Option<Res<'w, crate::units::Palette>>,
+    materials: ResMut<'w, Assets<StandardMaterial>>,
+}
+
+/// The look's settings, and the effects' particle budget that follows from them.
+#[derive(bevy::ecs::system::SystemParam)]
+struct PictureLook<'w> {
+    look: ResMut<'w, LookSettings>,
+    fx: ResMut<'w, FxAssets>,
+}
+
 /// Put the settings into the window, the camera, the sun and the look, when they change (and once at start).
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn apply(
-    mut commands: Commands,
-    settings: Res<Settings>,
-    mut window: Single<&mut Window, With<PrimaryWindow>>,
-    camera: Single<Entity, With<crate::player::MainCamera>>,
-    mut sun: Query<(&mut DirectionalLight, &mut bevy::light::CascadeShadowConfig)>,
-    mut shadow_map: ResMut<DirectionalLightShadowMap>,
-    mut look: ResMut<LookSettings>,
-    mut fx: ResMut<FxAssets>,
-    palette: Option<Res<crate::units::Palette>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-    mut started: Local<bool>,
-) {
+fn apply(mut commands: Commands, settings: Res<Settings>, outputs: Outputs, shadows: Shadows, cards: TreeCards, picture: PictureLook, mut started: Local<bool>) {
+    let Outputs { mut window, camera } = outputs;
+    let Shadows { mut sun, map: mut shadow_map } = shadows;
+    let TreeCards { palette, mut materials } = cards;
+    let PictureLook { mut look, mut fx } = picture;
     if !settings.is_changed() {
         return;
     }
@@ -335,21 +354,23 @@ fn apply(
     fx.budget = (MAX_PARTICLES as f32 * l.particles) as usize;
 }
 
-#[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn show(
-    time: Res<Time<Real>>,
-    settings: Res<Settings>,
-    mut rate: ResMut<FrameRate>,
-    overlay: Single<(&Overlay, &mut Node)>,
-    text: Single<Entity, With<OverlayText>>,
-    counter: Single<(&mut Text, &mut Visibility), (With<Counter>, Without<OverlayText>)>,
-    font: Res<OverlayFont>,
-    window: Single<&Window, With<PrimaryWindow>>,
-    look: Res<LookSettings>,
-    mut commands: Commands,
-    mut shown: Local<String>,
-    mut tick: Local<f32>,
-) {
+/// The frame counter's text, apart from the overlay's.
+type CounterOnly = (With<Counter>, Without<OverlayText>);
+
+/// The settings overlay and the frame counter: the overlay's node, the entity its lines go under and their font, the
+/// counter's text, what the overlay shows now, and the commands that rewrite it.
+#[derive(bevy::ecs::system::SystemParam)]
+struct OverlayUi<'w, 's> {
+    commands: Commands<'w, 's>,
+    overlay: Single<'w, 's, (&'static Overlay, &'static mut Node)>,
+    text: Single<'w, 's, Entity, With<OverlayText>>,
+    font: Res<'w, OverlayFont>,
+    counter: Single<'w, 's, (&'static mut Text, &'static mut Visibility), CounterOnly>,
+    shown: Local<'s, String>,
+}
+
+fn show(time: Res<Time<Real>>, settings: Res<Settings>, mut rate: ResMut<FrameRate>, ui: OverlayUi, window: Single<&Window, With<PrimaryWindow>>, look: Res<LookSettings>, mut tick: Local<f32>) {
+    let OverlayUi { mut commands, overlay, text, font, counter, mut shown } = ui;
     let dt = time.delta_secs();
     if dt > 0.0 {
         rate.mean = if rate.mean == 0.0 { dt } else { rate.mean + (dt - rate.mean) * 0.05 };
